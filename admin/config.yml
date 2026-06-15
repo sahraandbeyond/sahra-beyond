@@ -45,3 +45,37 @@ collections:
       - { label: "Cover Photo", name: "cover", widget: "image", required: false }
 
   - name: "blog"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "content/blog"
+    create: true
+    format: json
+    slug: "{{year}}-{{month}}-{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - label: "Tag"
+        name: "tag"
+        widget: "select"
+        options: ["Adventure", "Camping", "Off-Road", "Stargazing", "Hiking", "Wildlife", "Photography"]
+      - { label: "Linked Location (use location slug)", name: "locationId", widget: "string", required: false, hint: "e.g. big-red, wadi-shab, jebel-hafeet" }
+      - { label: "Cover Photo", name: "cover", widget: "image", required: false }
+      - label: "Photos & Videos"
+        name: "media"
+        widget: "list"
+        required: false
+        field: { label: "File", name: "url", widget: "image" }
+      - { label: "Story", name: "body", widget: "markdown" }
+
+  - name: "settings"
+    label: "Settings"
+    files:
+      - label: "App Settings"
+        name: "general"
+        file: "content/settings.json"
+        fields:
+          - { label: "App Name", name: "appName", widget: "string", default: "Sahra & Beyond" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Google Maps API Key", name: "gmapsKey", widget: "string" }
+          - { label: "OpenWeatherMap API Key", name: "weatherKey", widget: "string" }
