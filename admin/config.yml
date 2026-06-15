@@ -1,0 +1,79 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+site_url: https://sahraandbeyond.netlify.app
+
+collections:
+
+  - name: "locations"
+    label: "Locations"
+    label_singular: "Location"
+    folder: "content/locations"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{emoji}} {{name}} — {{emirate}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Emoji Icon", name: "emoji", widget: "string", default: "📍" }
+      - { label: "Emirate", name: "emirate", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Dunes", "Mountains", "Wadis", "Coast", "Camping", "Night"]
+      - label: "Difficulty"
+        name: "difficulty"
+        widget: "select"
+        options: ["Easy", "Moderate", "Hard"]
+      - { label: "Best Season", name: "season", widget: "string", default: "Oct–Apr" }
+      - { label: "Distance from Dubai", name: "distance", widget: "string", required: false }
+      - { label: "Latitude", name: "lat", widget: "number", value_type: "float" }
+      - { label: "Longitude", name: "lng", widget: "number", value_type: "float" }
+      - label: "Condition Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Ideal", value: "safe" }
+          - { label: "Warm", value: "warn" }
+          - { label: "Hot / Extreme", value: "hot" }
+      - { label: "Description", name: "desc", widget: "text" }
+      - { label: "Cover Photo", name: "cover", widget: "image", required: false }
+
+  - name: "blog"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - label: "Tag"
+        name: "tag"
+        widget: "select"
+        options: ["Adventure", "Camping", "Off-Road", "Stargazing", "Hiking", "Wildlife", "Photography"]
+      - { label: "Linked Location (use location slug)", name: "locationId", widget: "string", required: false, hint: "e.g. big-red, wadi-shab, jebel-hafeet" }
+      - { label: "Cover Photo", name: "cover", widget: "image", required: false }
+      - label: "Photos & Videos"
+        name: "media"
+        widget: "list"
+        required: false
+        field: { label: "File", name: "url", widget: "image" }
+      - { label: "Story", name: "body", widget: "markdown" }
+
+  - name: "settings"
+    label: "Settings"
+    files:
+      - label: "App Settings"
+        name: "general"
+        file: "content/settings.json"
+        fields:
+          - { label: "App Name", name: "appName", widget: "string", default: "Sahra & Beyond" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Google Maps API Key", name: "gmapsKey", widget: "string" }
+          - { label: "OpenWeatherMap API Key", name: "weatherKey", widget: "string" }

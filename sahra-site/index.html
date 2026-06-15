@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahra & Beyond — UAE Desert & Outdoor Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--sand:#E8D5B0;--dusk:#C4773B;--night:#0C0E14;--deep:#14171F;--slate:#1E2330;--card:#1A1D28;--mist:#6B7A99;--white:#F0EBE0;--safe:#4CAF82;--warn:#E8A430;--danger:#E05C3A}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--night);color:var(--white);font-family:'Inter',sans-serif;overflow:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(12,14,20,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(232,213,176,.07)}
+.logo{display:flex;align-items:center;gap:9px;cursor:pointer}
+.logo svg{width:32px;height:21px}
+.logo-text{display:flex;flex-direction:column;line-height:1}
+.logo-sahra{font-family:'Playfair Display',serif;font-size:14px;font-weight:900;letter-spacing:3px;color:var(--sand);text-transform:uppercase}
+.logo-beyond{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;color:var(--dusk);text-transform:uppercase;margin-top:1px}
+.nav-tabs{display:flex;gap:2px}
+.nav-tab{padding:7px 13px;border-radius:7px;border:none;background:transparent;color:var(--mist);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
+.nav-tab.active{background:var(--slate);color:var(--white)}
+.nav-tab:hover:not(.active){color:var(--sand)}
+.nav-right{display:flex;gap:8px;align-items:center}
+.sos-btn{padding:7px 14px;border-radius:7px;border:1px solid var(--danger);background:rgba(224,92,58,.1);color:var(--danger);font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .2s;font-family:'Space Mono',monospace}
+.sos-btn:hover{background:var(--danger);color:#fff}
+.screen{display:none;position:fixed;top:57px;left:0;right:0;bottom:0;overflow-y:auto}
+.screen.active{display:block}
+/* DISCOVER */
+.hero{position:relative;height:240px;overflow:hidden;display:flex;align-items:flex-end;padding:20px;background:linear-gradient(135deg,#1a1200,#3d2800 50%,#0C0E14)}
+.hero-dunes{position:absolute;inset:0;background:radial-gradient(ellipse 120% 60% at 50% 100%,rgba(196,119,59,.4) 0%,transparent 70%)}
+.hero-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 20%,rgba(245,240,232,.8) 0%,transparent 0%),radial-gradient(1.5px 1.5px at 60% 15%,rgba(245,240,232,.9) 0%,transparent 0%),radial-gradient(1px 1px at 88% 30%,rgba(245,240,232,.6) 0%,transparent 0%)}
+.hero-content{position:relative;z-index:1}
+.hero-eyebrow{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--dusk);margin-bottom:6px;text-transform:uppercase}
+.hero-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;line-height:1.1;color:var(--sand)}
+.hero-title em{color:var(--dusk);font-style:italic}
+.hero-sub{margin-top:6px;font-size:12px;color:var(--mist)}
+.search-bar{display:flex;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(232,213,176,.05)}
+.search-input{flex:1;padding:9px 13px;border-radius:9px;background:var(--slate);border:1px solid rgba(232,213,176,.08);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.search-input::placeholder{color:var(--mist)}
+.search-input:focus{border-color:var(--dusk)}
+.chips{display:flex;gap:6px;padding:10px 16px;overflow-x:auto}
+.chips::-webkit-scrollbar{display:none}
+.chip{padding:5px 12px;border-radius:16px;white-space:nowrap;font-size:11px;font-weight:500;cursor:pointer;border:1px solid rgba(232,213,176,.12);background:transparent;color:var(--mist);transition:all .2s}
+.chip.active{background:var(--dusk);border-color:var(--dusk);color:#fff}
+.chip:hover:not(.active){border-color:var(--sand);color:var(--sand)}
+.section-label{padding:6px 16px 8px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--mist);text-transform:uppercase}
+.spots-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 16px}
+.spot-card{border-radius:12px;overflow:hidden;background:var(--card);border:1px solid rgba(232,213,176,.06);cursor:pointer;transition:all .25s}
+.spot-card:hover{transform:translateY(-2px);border-color:rgba(196,119,59,.3);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.spot-thumb{height:95px;position:relative;display:flex;align-items:center;justify-content:center;font-size:34px}
+.spot-thumb.dune{background:linear-gradient(160deg,#3d2800,#7a4f1a)}
+.spot-thumb.wadi{background:linear-gradient(160deg,#0d2e1f,#1a5c3a)}
+.spot-thumb.coast{background:linear-gradient(160deg,#0d2040,#1a4a7a)}
+.spot-thumb.mountain{background:linear-gradient(160deg,#1a1a2e,#3a3a5c)}
+.spot-thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.spot-badge{position:absolute;top:6px;right:6px;padding:2px 7px;border-radius:5px;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px}
+.badge-safe{background:rgba(76,175,130,.18);color:var(--safe);border:1px solid rgba(76,175,130,.28)}
+.badge-warn{background:rgba(232,164,48,.18);color:var(--warn);border:1px solid rgba(232,164,48,.28)}
+.badge-hot{background:rgba(224,92,58,.18);color:var(--danger);border:1px solid rgba(224,92,58,.28)}
+.spot-info{padding:9px}
+.spot-name{font-size:12px;font-weight:600;color:var(--white);margin-bottom:2px}
+.spot-meta{font-size:10px;color:var(--mist);display:flex;justify-content:space-between}
+.spot-temp{color:var(--warn);font-family:'Space Mono',monospace;font-size:10px}
+/* MAP */
+#map{width:100%;height:calc(100% - 44px)}
+.map-filter-bar{display:flex;gap:6px;padding:8px 14px;background:rgba(12,14,20,.9);backdrop-filter:blur(10px);overflow-x:auto}
+.map-filter-bar::-webkit-scrollbar{display:none}
+.map-legend{position:absolute;bottom:20px;left:12px;background:rgba(12,14,20,.92);backdrop-filter:blur(10px);border:1px solid rgba(232,213,176,.1);border-radius:10px;padding:10px 14px;pointer-events:none}
+.legend-title{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--mist);margin-bottom:7px;text-transform:uppercase}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--mist);margin-bottom:3px}
+.legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+/* WEATHER */
+.weather-header{padding:16px 16px 0}
+.weather-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--sand);margin-bottom:2px}
+.weather-sub{font-size:12px;color:var(--mist);margin-bottom:14px}
+.weather-hero{margin:0 16px 14px;border-radius:14px;padding:20px;background:linear-gradient(135deg,var(--deep),var(--slate));border:1px solid rgba(232,213,176,.07);display:flex;align-items:center;gap:20px}
+.temp-big{font-family:'Space Mono',monospace;font-size:54px;font-weight:700;line-height:1;color:var(--warn)}
+.temp-unit{font-size:20px;color:var(--mist)}
+.weather-details{flex:1}
+.weather-condition{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--white);margin-bottom:9px}
+.weather-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.w-stat{font-size:11px;color:var(--mist)}
+.w-stat strong{color:var(--sand);display:block;font-size:12px}
+.alert-banner{margin:0 16px 12px;padding:11px 13px;border-radius:10px;background:rgba(224,92,58,.08);border:1px solid rgba(224,92,58,.25);display:flex;align-items:flex-start;gap:9px;font-size:12px}
+.alert-icon{font-size:17px;flex-shrink:0}
+.alert-text strong{color:var(--danger);display:block;font-size:9px;margin-bottom:2px;font-family:'Space Mono',monospace;letter-spacing:1px}
+.alert-text span{color:var(--mist)}
+.forecast-row{padding:0 16px;display:flex;gap:7px;overflow-x:auto;margin-bottom:14px}
+.forecast-row::-webkit-scrollbar{display:none}
+.forecast-card{min-width:66px;padding:11px 7px;border-radius:10px;background:var(--card);border:1px solid rgba(232,213,176,.06);text-align:center;flex-shrink:0}
+.forecast-day{font-size:9px;color:var(--mist);margin-bottom:5px;font-family:'Space Mono',monospace}
+.forecast-icon{font-size:19px;margin-bottom:5px}
+.forecast-hi{font-size:12px;font-weight:600;color:var(--warn)}
+.forecast-lo{font-size:10px;color:var(--mist)}
+.safety-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 16px 16px}
+.safety-card{padding:12px;border-radius:10px;background:var(--card);border:1px solid rgba(232,213,176,.06)}
+.safety-label{font-size:9px;color:var(--mist);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;font-family:'Space Mono',monospace}
+.safety-val{font-size:15px;font-weight:700;margin-bottom:2px}
+.safety-desc{font-size:10px;color:var(--mist)}
+.val-danger{color:var(--danger)} .val-warn{color:var(--warn)} .val-safe{color:var(--safe)}
+/* PLANNER */
+.padded{padding:0 16px 16px}
+.form-group{margin-bottom:12px}
+.form-label{font-size:10px;color:var(--mist);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;display:block;font-family:'Space Mono',monospace}
+.form-input,.form-select{width:100%;padding:9px 11px;border-radius:9px;background:var(--slate);border:1px solid rgba(232,213,176,.08);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .2s;appearance:none}
+.form-input:focus,.form-select:focus{border-color:var(--dusk)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.size-btns{display:flex;gap:5px}
+.size-btn{flex:1;padding:7px;border-radius:7px;border:1px solid rgba(232,213,176,.1);background:transparent;color:var(--mist);cursor:pointer;font-size:11px;transition:all .2s;font-family:'Inter',sans-serif}
+.size-btn.active{background:var(--dusk);border-color:var(--dusk);color:#fff}
+.section-title{padding:4px 0 9px;font-size:13px;font-weight:600;color:var(--white)}
+.checklist-item{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:9px;background:var(--card);border:1px solid rgba(232,213,176,.06);margin-bottom:5px;cursor:pointer;transition:all .2s}
+.checklist-item.checked{border-color:rgba(76,175,130,.22)}
+.check-circle{width:17px;height:17px;border-radius:50%;border:2px solid var(--mist);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .2s}
+.checklist-item.checked .check-circle{background:var(--safe);border-color:var(--safe);color:#fff}
+.check-text{font-size:12px;color:var(--mist)}
+.checklist-item.checked .check-text{color:var(--white)}
+.checkin-card{padding:14px;border-radius:11px;background:var(--card);border:1px solid rgba(232,213,176,.06);margin-bottom:9px}
+.checkin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.checkin-name{font-size:12px;font-weight:600;color:var(--white)}
+.checkin-status{font-size:9px;font-family:'Space Mono',monospace;letter-spacing:1px}
+.status-active{color:var(--safe)} .status-overdue{color:var(--danger)}
+.checkin-meta{font-size:10px;color:var(--mist);margin-bottom:8px}
+.checkin-progress{height:3px;border-radius:2px;background:var(--slate);overflow:hidden}
+.checkin-bar{height:100%;border-radius:2px;background:var(--safe)}
+.checkin-time{display:flex;justify-content:space-between;font-size:9px;color:var(--mist);margin-top:3px;font-family:'Space Mono',monospace}
+.new-checkin-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:11px;border-radius:10px;border:2px dashed rgba(232,213,176,.14);background:transparent;color:var(--mist);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;margin-bottom:12px}
+.new-checkin-btn:hover{border-color:var(--dusk);color:var(--sand)}
+.primary-btn{display:block;width:100%;padding:12px;border-radius:10px;background:var(--dusk);border:none;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.primary-btn:hover{background:#d4844a}
+/* BLOG */
+.blog-hero{position:relative;height:180px;overflow:hidden;display:flex;align-items:flex-end;padding:18px;background:linear-gradient(135deg,#1a1200,#3d2800 50%,#0C0E14)}
+.blog-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,14,20,1) 0%,rgba(12,14,20,.1) 100%)}
+.blog-hero-content{position:relative;z-index:1}
+.blog-tag-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin-bottom:5px}
+.blog-hero-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--sand);line-height:1.2}
+.blog-cards{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
+.blog-card{border-radius:11px;overflow:hidden;background:var(--card);border:1px solid rgba(232,213,176,.06);cursor:pointer;transition:all .25s;display:flex}
+.blog-card:hover{border-color:rgba(196,119,59,.3);transform:translateY(-1px)}
+.blog-card-thumb{width:85px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;min-height:90px}
+.blog-card-thumb img{width:100%;height:100%;object-fit:cover}
+.blog-card-body{padding:11px;flex:1;min-width:0}
+.blog-card-tag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--dusk);text-transform:uppercase;margin-bottom:3px}
+.blog-card-title{font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px;line-height:1.3}
+.blog-card-meta{font-size:10px;color:var(--mist)}
+.blog-card-excerpt{font-size:11px;color:var(--mist);margin-top:4px;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+/* MODALS */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:250;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--deep);border-radius:18px 18px 0 0;border-top:1px solid rgba(232,213,176,.09);padding:20px;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-close{float:right;background:none;border:none;color:var(--mist);cursor:pointer;font-size:18px;margin-top:-2px}
+.modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--sand);margin-bottom:4px}
+.modal-sub{font-size:12px;color:var(--mist);margin-bottom:16px}
+.sos-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sos-action{padding:15px 11px;border-radius:10px;text-align:center;border:1px solid;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.sos-action-icon{font-size:24px;margin-bottom:5px}
+.sos-action-label{font-size:11px;font-weight:600}
+.sos-red{border-color:var(--danger);color:var(--danger);background:rgba(224,92,58,.07)}
+.sos-red:hover{background:rgba(224,92,58,.18)}
+.sos-amber{border-color:var(--warn);color:var(--warn);background:rgba(232,164,48,.07)}
+.sos-amber:hover{background:rgba(232,164,48,.18)}
+.sos-blue{border-color:#4A9BE8;color:#4A9BE8;background:rgba(74,155,232,.07)}
+.sos-blue:hover{background:rgba(74,155,232,.18)}
+.sos-green{border-color:var(--safe);color:var(--safe);background:rgba(76,175,130,.07)}
+.sos-green:hover{background:rgba(76,175,130,.18)}
+.spot-modal-thumb{height:130px;border-radius:11px;margin-bottom:13px;display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden}
+.spot-modal-thumb img{width:100%;height:100%;object-fit:cover}
+.spot-modal-name{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--sand);margin-bottom:3px}
+.spot-modal-meta{font-size:12px;color:var(--mist);margin-bottom:12px}
+.spot-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}
+.spot-stat{padding:9px;border-radius:8px;background:var(--slate);text-align:center}
+.spot-stat-val{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--sand)}
+.spot-stat-label{font-size:9px;color:var(--mist);margin-top:2px}
+.blog-detail-content{font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:14px;white-space:pre-line}
+.blog-media-row{display:flex;gap:8px;overflow-x:auto;margin:10px 0}
+.blog-media-row::-webkit-scrollbar{display:none}
+.blog-media-thumb{width:90px;height:90px;flex-shrink:0;border-radius:9px;object-fit:cover;background:var(--slate)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--slate);border:1px solid rgba(232,213,176,.14);color:var(--white);padding:9px 16px;border-radius:8px;font-size:12px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.loading{display:flex;align-items:center;justify-content:center;height:200px;color:var(--mist);font-size:13px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showScreen('discover')">
+    <svg viewBox="0 0 36 24" fill="none">
+      <path d="M0 24 Q9 5 18 11 Q27 18 36 4 L36 24 Z" fill="#C4773B" opacity=".9"/>
+      <path d="M0 24 Q10 10 20 15 Q29 20 36 9 L36 24 Z" fill="#E8D5B0" opacity=".1"/>
+      <circle cx="6" cy="4" r=".8" fill="#E8D5B0" opacity=".8"/>
+      <circle cx="14" cy="2" r=".6" fill="#E8D5B0" opacity=".6"/>
+      <circle cx="26" cy="3" r=".8" fill="#E8D5B0" opacity=".9"/>
+      <circle cx="32" cy="6" r=".5" fill="#E8D5B0" opacity=".5"/>
+    </svg>
+    <div class="logo-text">
+      <span class="logo-sahra">Sahra</span>
+      <span class="logo-beyond">&amp; Beyond</span>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showScreen('discover')">Discover</button>
+    <button class="nav-tab" onclick="showScreen('map')">Map</button>
+    <button class="nav-tab" onclick="showScreen('weather')">Weather</button>
+    <button class="nav-tab" onclick="showScreen('planner')">Trip</button>
+    <button class="nav-tab" onclick="showScreen('blog')">Blog</button>
+  </div>
+  <div class="nav-right">
+    <button class="sos-btn" onclick="showSOS()">⚡ SOS</button>
+  </div>
+</nav>
+
+<!-- DISCOVER -->
+<div id="screen-discover" class="screen active">
+  <div class="hero">
+    <div class="hero-dunes"></div><div class="hero-stars"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">SAHRA &amp; BEYOND · UAE OUTDOOR EXPLORER</div>
+      <div class="hero-title">Where will the<br><em>desert take you?</em></div>
+      <div class="hero-sub" id="spot-count-label">Loading adventures…</div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <input class="search-input" id="search-input" placeholder="Search wadis, dunes, peaks…" oninput="renderSpots()"/>
+  </div>
+  <div class="chips">
+    <button class="chip active" onclick="setChip(this,'All')">All</button>
+    <button class="chip" onclick="setChip(this,'Dunes')">🏜 Dunes</button>
+    <button class="chip" onclick="setChip(this,'Mountains')">🏔 Mountains</button>
+    <button class="chip" onclick="setChip(this,'Wadis')">🌊 Wadis</button>
+    <button class="chip" onclick="setChip(this,'Camping')">⛺ Camping</button>
+    <button class="chip" onclick="setChip(this,'Coast')">🏊 Coast</button>
+    <button class="chip" onclick="setChip(this,'Night')">🌙 Night</button>
+  </div>
+  <div class="section-label">FEATURED SPOTS</div>
+  <div class="spots-grid" id="spots-grid"><div class="loading">Loading…</div></div>
+</div>
+
+<!-- MAP -->
+<div id="screen-map" class="screen">
+  <div class="map-filter-bar">
+    <button class="chip active" onclick="setChip(this,'All')">All</button>
+    <button class="chip" onclick="setChip(this,'Dunes')">🏜 Dunes</button>
+    <button class="chip" onclick="setChip(this,'Mountains')">🏔 Mountains</button>
+    <button class="chip" onclick="setChip(this,'Wadis')">🌊 Wadis</button>
+    <button class="chip" onclick="setChip(this,'Coast')">🏊 Coast</button>
+  </div>
+  <div style="position:relative;height:calc(100% - 44px)">
+    <div id="map" style="width:100%;height:100%"></div>
+    <div class="map-legend">
+      <div class="legend-title">SPOT TYPES</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C4773B"></div>Dunes</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4CAF82"></div>Wadis</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4A9BE8"></div>Coast</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#9B8BD8"></div>Mountains</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEATHER -->
+<div id="screen-weather" class="screen">
+  <div class="weather-header">
+    <div class="weather-title">Conditions</div>
+    <div class="weather-sub" id="weather-updated">Fetching live data…</div>
+  </div>
+  <div class="weather-hero" id="weather-main">
+    <div><div class="temp-big" id="weather-temp">—<span class="temp-unit">°</span></div></div>
+    <div class="weather-details">
+      <div class="weather-condition" id="weather-desc">Loading…</div>
+      <div class="weather-stats">
+        <div class="w-stat"><strong id="w-humidity">—</strong>Humidity</div>
+        <div class="w-stat"><strong id="w-wind">—</strong>Wind</div>
+        <div class="w-stat"><strong id="w-uv">—</strong>UV Index</div>
+        <div class="w-stat"><strong id="w-vis">—</strong>Visibility</div>
+      </div>
+    </div>
+  </div>
+  <div class="alert-banner" id="weather-alert" style="display:none">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-text"><strong id="alert-title"></strong><span id="alert-body"></span></div>
+  </div>
+  <div class="section-label" style="padding-left:16px">5-DAY FORECAST</div>
+  <div class="forecast-row" id="forecast-row"><div class="loading">Loading forecast…</div></div>
+  <div class="section-label" style="padding-left:16px">OUTDOOR SAFETY INDEX</div>
+  <div class="safety-grid" id="safety-grid">
+    <div class="safety-card"><div class="safety-label">Heat Risk</div><div class="safety-val val-danger" id="s-heat">—</div><div class="safety-desc" id="s-heat-desc">Calculating…</div></div>
+    <div class="safety-card"><div class="safety-label">Hydration</div><div class="safety-val val-warn" id="s-hydro">—</div><div class="safety-desc" id="s-hydro-desc">Calculating…</div></div>
+    <div class="safety-card"><div class="safety-label">Sand Drift</div><div class="safety-val" id="s-sand">—</div><div class="safety-desc" id="s-sand-desc">Calculating…</div></div>
+    <div class="safety-card"><div class="safety-label">Stargazing</div><div class="safety-val" id="s-star">—</div><div class="safety-desc" id="s-star-desc">Calculating…</div></div>
+    <div class="safety-card"><div class="safety-label">Wadi Flash</div><div class="safety-val val-safe" id="s-wadi">LOW RISK</div><div class="safety-desc">No rain in catchment areas.</div></div>
+    <div class="safety-card"><div class="safety-label">Sunrise Trek</div><div class="safety-val" id="s-trek">—</div><div class="safety-desc" id="s-trek-desc">Calculating…</div></div>
+  </div>
+</div>
+
+<!-- PLANNER -->
+<div id="screen-planner" class="screen">
+  <div class="padded" style="padding-top:16px">
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--sand);margin-bottom:2px">Plan Your Trip</div>
+    <div style="font-size:12px;color:var(--mist);margin-bottom:14px">Build a route · Safety checklist · Live check-ins</div>
+    <div class="form-group"><label class="form-label">Destination</label><select class="form-select" id="trip-dest"></select></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date"/></div>
+      <div class="form-group"><label class="form-label">Start Time</label><input class="form-input" type="time" value="05:30"/></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Group Size</label>
+      <div class="size-btns">
+        <button class="size-btn" onclick="setSize(this)">Solo</button>
+        <button class="size-btn active" onclick="setSize(this)">2–4</button>
+        <button class="size-btn" onclick="setSize(this)">5–10</button>
+        <button class="size-btn" onclick="setSize(this)">10+</button>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Emergency Contact</label><input class="form-input" type="tel" placeholder="+971 50 000 0000"/></div>
+    <div class="section-title">Safety Checklist</div>
+    <div class="checklist-item checked" onclick="toggleCheck(this)"><div class="check-circle">✓</div><div class="check-text">Water (4L per person minimum)</div></div>
+    <div class="checklist-item checked" onclick="toggleCheck(this)"><div class="check-circle">✓</div><div class="check-text">First aid kit</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-circle"></div><div class="check-text">GPS device / offline maps</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-circle"></div><div class="check-text">Satellite communicator</div></div>
+    <div class="checklist-item checked" onclick="toggleCheck(this)"><div class="check-circle">✓</div><div class="check-text">Sun protection (SPF 50+, hat)</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-circle"></div><div class="check-text">Recovery boards (sand driving)</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-circle"></div><div class="check-text">Emergency flares / signal mirror</div></div>
+    <div class="section-title" style="margin-top:14px">Active Check-ins</div>
+    <div class="checkin-card">
+      <div class="checkin-header"><div class="checkin-name">🏕 Hatta Weekend Trek</div><div class="checkin-status status-active">● ACTIVE</div></div>
+      <div class="checkin-meta">Ahmed K. · Group of 4 · Next check-in in 1h 20m</div>
+      <div class="checkin-progress"><div class="checkin-bar" style="width:65%"></div></div>
+      <div class="checkin-time"><span>Departed 06:30</span><span>ETA 15:00</span></div>
+    </div>
+    <div class="checkin-card">
+      <div class="checkin-header"><div class="checkin-name">🌊 Dibba Snorkel</div><div class="checkin-status status-overdue">⚠ CHECK-IN OVERDUE</div></div>
+      <div class="checkin-meta">Sara &amp; Rania · Group of 2 · Was due 30m ago</div>
+      <div class="checkin-progress"><div class="checkin-bar" style="width:90%;background:var(--danger)"></div></div>
+      <div class="checkin-time"><span>Departed 08:00</span><span>ETA 13:00</span></div>
+    </div>
+    <button class="new-checkin-btn">+ Start New Check-in</button>
+    <button class="primary-btn" onclick="showToast('Trip saved! Emergency contact will be notified at departure.')">Save Trip &amp; Enable Check-ins</button>
+  </div>
+</div>
+
+<!-- BLOG -->
+<div id="screen-blog" class="screen">
+  <div class="blog-hero">
+    <div class="blog-hero-overlay"></div>
+    <div class="blog-hero-content">
+      <div class="blog-tag-label">PERSONAL JOURNAL</div>
+      <div class="blog-hero-title">Tales from the<br>desert &amp; beyond</div>
+    </div>
+  </div>
+  <div class="blog-cards" id="blog-cards"><div class="loading">Loading stories…</div></div>
+</div>
+
+<!-- SOS -->
+<div class="modal-overlay" id="sos-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSOS()">✕</button>
+    <div class="modal-title">Emergency Help</div>
+    <div class="modal-sub">Your GPS location will be shared automatically.</div>
+    <div class="sos-grid">
+      <div class="sos-action sos-red" onclick="alert('Calling UAE Emergency: 999\nSharing GPS…')"><div class="sos-action-icon">🆘</div><div class="sos-action-label">Call 999</div></div>
+      <div class="sos-action sos-amber" onclick="alert('Alerting emergency contact with live GPS.')"><div class="sos-action-icon">📍</div><div class="sos-action-label">Alert Contact</div></div>
+      <div class="sos-action sos-blue" onclick="alert('Contacting UAE Search & Rescue.')"><div class="sos-action-icon">🚁</div><div class="sos-action-label">Search & Rescue</div></div>
+      <div class="sos-action sos-green" onclick="alert('Location marked safe. Check-in confirmed.')"><div class="sos-action-icon">✅</div><div class="sos-action-label">I\'m Safe</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SPOT DETAIL -->
+<div class="modal-overlay" id="spot-modal">
+  <div class="modal" id="spot-modal-content"></div>
+</div>
+
+<!-- BLOG DETAIL -->
+<div class="modal-overlay" id="blog-modal">
+  <div class="modal" id="blog-modal-content"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Google Maps -->
+<script>
+const GMAPS_KEY = 'AIzaSyDNJwCMt37FiFixtWGvxRtdkASdlbx0yF4';
+const WEATHER_KEY = '6c72fdb6df4ed7b50f1393b96bbc3e00';
+const WEATHER_CITY = 'Dubai,AE';
+
+// ── LOAD CONTENT from JSON files ──
+let locations = [], blogs = [];
+let activeFilter = 'All';
+let mapInstance = null, mapLoaded = false;
+
+async function loadContent() {
+  try {
+    const [locFiles, blogFiles] = await Promise.all([
+      fetch('/content/locations/big-red.json').then(r=>r.json()).catch(()=>null),
+      fetch('/content/blog/2024-03-sunrise-at-big-red.json').then(r=>r.json()).catch(()=>null)
+    ]);
+    // Load all location files
+    const locNames = ['big-red','wadi-shab','jebel-hafeet','liwa','hatta','dibba'];
+    const blogNames = ['2024-03-sunrise-at-big-red','2023-10-wadi-shab-cave','2024-01-liwa-milky-way'];
+    locations = (await Promise.all(locNames.map(n=>fetch(`/content/locations/${n}.json`).then(r=>r.json()).catch(()=>null)))).filter(Boolean);
+    blogs = (await Promise.all(blogNames.map(n=>fetch(`/content/blog/${n}.json`).then(r=>r.json()).catch(()=>null)))).filter(Boolean);
+  } catch(e) {
+    // fallback inline data
+    locations = [
+      {id:'big-red',name:'Big Red',emoji:'🏜',emirate:'Dubai',category:'Dunes',difficulty:'Medium',season:'Oct–Mar',distance:'45 km from Dubai',lat:24.9,lng:55.5,status:'warn',desc:'The most iconic dune in the UAE. Towering red sand dunes perfect for sandboarding and 4x4 adventures.',cover:''},
+      {id:'wadi-shab',name:'Wadi Shab',emoji:'🌿',emirate:'Tiwi',category:'Wadis',difficulty:'Moderate',season:'Nov–Apr',distance:'~2h from Dubai',lat:22.8,lng:59.2,status:'safe',desc:'One of the most beautiful wadis in the region. Swim through turquoise pools and discover a hidden waterfall cave.',cover:''},
+      {id:'jebel-hafeet',name:'Jebel Hafeet',emoji:'⛰',emirate:'Al Ain',category:'Mountains',difficulty:'Easy',season:'Oct–Apr',distance:'160 km from Dubai',lat:24.05,lng:55.78,status:'safe',desc:'The second highest peak in the UAE with panoramic views over Al Ain.',cover:''},
+      {id:'liwa',name:'Liwa Oasis',emoji:'🌅',emirate:'Abu Dhabi',category:'Dunes',difficulty:'Hard',season:'Dec–Feb',distance:'~3h from Abu Dhabi',lat:23.12,lng:53.78,status:'hot',desc:'Home to some of the largest sand dunes on earth. The Empty Quarter starts here.',cover:''},
+      {id:'hatta',name:'Hatta Mountains',emoji:'🏕',emirate:'Dubai',category:'Camping',difficulty:'Easy',season:'Oct–May',distance:'100 km from Dubai',lat:24.8,lng:56.1,status:'safe',desc:"Dubai's hidden mountain retreat. Kayak the dam, bike trails, and camp under stars.",cover:''},
+      {id:'dibba',name:'Dibba Rock',emoji:'🏊',emirate:'Fujairah',category:'Coast',difficulty:'Easy',season:'Year-round',distance:'~2h from Dubai',lat:25.62,lng:56.27,status:'safe',desc:'World-class snorkelling and diving. Crystal clear water and vibrant coral.',cover:''}
+    ];
+    blogs = [
+      {title:'Sunrise at Big Red: A 4AM Adventure',date:'2024-03-15',tag:'Off-Road',locationId:'big-red',cover:'',media:[],body:"We left Dubai at 3:30 AM. Stars appeared one by one as we drove south on the Al Qudra road.\n\nDeflating tyres to 18 PSI, we crested the first ridge just as the sun broke over the horizon. Pure magic."},
+      {title:'Wadi Shab: Swimming Into a Cave',date:'2023-10-20',tag:'Hiking',locationId:'wadi-shab',cover:'',media:[],body:"The hike in is deceptively easy — flat, shaded, following a crystal stream. Then the gorge narrows and suddenly you're swimming.\n\nThe payoff is a hidden cave behind a waterfall. Inside, shafts of light pierce the darkness."},
+      {title:'Sleeping Under the Milky Way at Liwa',date:'2024-01-10',tag:'Stargazing',locationId:'liwa',cover:'',media:[],body:"Liwa is one of those places where you feel genuinely small. The dunes here aren't dunes — they're mountains of sand.\n\nAt midnight, the Milky Way was so bright it cast shadows."}
+    ];
+  }
+  renderSpots();
+  renderBlogs();
+  renderTripDest();
+  fetchWeather();
+}
+
+// ── SCREENS ──
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  const tabs = ['discover','map','weather','planner','blog'];
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===name));
+  if (name==='map') initMap();
+}
+
+// ── CHIPS ──
+function setChip(el,val){
+  el.closest('.chips,.map-filter-bar').querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active'); activeFilter=val;
+  if(document.getElementById('screen-discover').classList.contains('active')) renderSpots();
+  if(document.getElementById('screen-map').classList.contains('active') && mapInstance) renderMapPins();
+}
+
+// ── SPOTS ──
+function thumbClass(cat){return{Dunes:'dune',Wadis:'wadi',Coast:'coast',Mountains:'mountain',Camping:'mountain',Night:'mountain'}[cat]||'dune'}
+function badgeClass(s){return{safe:'badge-safe',warn:'badge-warn',hot:'badge-hot'}[s]||'badge-warn'}
+function statusLabel(s){return{safe:'IDEAL',warn:'WARM',hot:'HOT'}[s]||'—'}
+
+function renderSpots(){
+  const q=(document.getElementById('search-input')||{}).value||'';
+  const locs=locations.filter(l=>{
+    const mc=activeFilter==='All'||l.category===activeFilter;
+    const mq=!q||l.name.toLowerCase().includes(q.toLowerCase())||l.emirate.toLowerCase().includes(q.toLowerCase());
+    return mc&&mq;
+  });
+  const lbl=document.getElementById('spot-count-label');
+  if(lbl) lbl.textContent=locations.length+' adventures · UAE · real-time conditions';
+  const grid=document.getElementById('spots-grid');
+  grid.innerHTML=locs.map(l=>`
+    <div class="spot-card" onclick="showSpot('${l.id}')">
+      <div class="spot-thumb ${thumbClass(l.category)}">
+        ${l.cover?`<img src="${l.cover}" alt="${l.name}">`:''}
+        ${!l.cover?l.emoji:''}
+        <div class="spot-badge ${badgeClass(l.status)}">${statusLabel(l.status)}</div>
+      </div>
+      <div class="spot-info">
+        <div class="spot-name">${l.name}</div>
+        <div class="spot-meta"><span>${l.emirate}</span><span class="spot-temp" id="temp-${l.id}">—</span></div>
+      </div>
+    </div>`).join('');
+  // fetch live temps per spot
+  locs.forEach(l=>fetchSpotTemp(l));
+}
+
+async function fetchSpotTemp(loc){
+  try{
+    const r=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lng}&appid=${WEATHER_KEY}&units=metric`);
+    const d=await r.json();
+    const el=document.getElementById('temp-'+loc.id);
+    if(el&&d.main) el.textContent=Math.round(d.main.temp)+'°C';
+  }catch(e){}
+}
+
+function showSpot(id){
+  const l=locations.find(x=>x.id===id); if(!l) return;
+  const blist=blogs.filter(b=>b.locationId===id);
+  document.getElementById('spot-modal-content').innerHTML=`
+    <button class="modal-close" onclick="closeSpot()">✕</button>
+    <div class="spot-modal-thumb ${thumbClass(l.category)}">${l.cover?`<img src="${l.cover}" alt="${l.name}">`:`<span style="font-size:48px">${l.emoji}</span>`}</div>
+    <div class="spot-modal-name">${l.name}</div>
+    <div class="spot-modal-meta">📍 ${l.emirate} · ${l.category} · ${l.difficulty}</div>
+    <div class="spot-stats">
+      <div class="spot-stat"><div class="spot-stat-val" id="modal-temp-${l.id}">—</div><div class="spot-stat-label">Live Temp</div></div>
+      <div class="spot-stat"><div class="spot-stat-val">${l.difficulty}</div><div class="spot-stat-label">Difficulty</div></div>
+      <div class="spot-stat"><div class="spot-stat-val">${l.season||'—'}</div><div class="spot-stat-label">Best Time</div></div>
+    </div>
+    ${l.distance?`<div style="font-size:12px;color:var(--mist);margin-bottom:6px">📏 ${l.distance}</div>`:''}
+    ${l.desc?`<div style="font-size:13px;color:var(--mist);line-height:1.6;margin-bottom:14px">${l.desc}</div>`:''}
+    ${blist.length?`<div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--mist);margin-bottom:7px;text-transform:uppercase">Blog Posts</div>${blist.map(b=>`<div style="padding:9px;background:var(--slate);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="closeSpot();showBlog('${b.id||b.title}')"><div style="font-size:12px;font-weight:600;color:var(--sand)">${b.title}</div><div style="font-size:10px;color:var(--mist);margin-top:2px">${b.tag} · ${formatDate(b.date)}</div></div>`).join('')}`:''}
+    <button style="width:100%;padding:11px;border-radius:9px;border:none;background:var(--dusk);color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px" onclick="closeSpot();showScreen('planner')">Plan a trip here →</button>`;
+  document.getElementById('spot-modal').classList.add('open');
+  fetchSpotTemp({...l,id:'modal-temp-'+l.id});
+}
+function closeSpot(){document.getElementById('spot-modal').classList.remove('open')}
+
+// ── BLOG ──
+function formatDate(d){try{return new Date(d).toLocaleDateString('en-GB',{month:'long',year:'numeric'})}catch(e){return d||''}}
+
+function renderBlogs(){
+  const c=document.getElementById('blog-cards');
+  if(!blogs.length){c.innerHTML='<div style="padding:20px;text-align:center;color:var(--mist);font-size:13px">No posts yet. Add your first story via the CMS at /admin.</div>';return}
+  c.innerHTML=blogs.map((b,i)=>{
+    const loc=locations.find(l=>l.id===b.locationId);
+    return`<div class="blog-card" onclick="showBlog(${i})">
+      <div class="blog-card-thumb ${loc?thumbClass(loc.category):'dune'}" style="background:${loc?'':'linear-gradient(160deg,#3d2800,#7a4f1a)'}">
+        ${b.cover?`<img src="${b.cover}" alt="${b.title}">`:(loc?loc.emoji:'📝')}
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-tag">${b.tag||'Story'}</div>
+        <div class="blog-card-title">${b.title}</div>
+        <div class="blog-card-meta">${loc?loc.name+' · ':''}${formatDate(b.date)}</div>
+        <div class="blog-card-excerpt">${(b.body||b.content||'').replace(/\n/g,' ')}</div>
+      </div>
+    </div>`}).join('');
+}
+
+function showBlog(idx){
+  const b=blogs[idx]; if(!b) return;
+  const loc=locations.find(l=>l.id===b.locationId);
+  const content=b.body||b.content||'';
+  document.getElementById('blog-modal-content').innerHTML=`
+    <button class="modal-close" onclick="closeBlog()">✕</button>
+    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin-bottom:6px">${b.tag||'Story'}${loc?' · '+loc.name:''}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--sand);margin-bottom:3px">${b.title}</div>
+    <div style="font-size:11px;color:var(--mist);margin-bottom:14px">${formatDate(b.date)}</div>
+    ${b.cover?`<img src="${b.cover}" style="width:100%;height:180px;object-fit:cover;border-radius:11px;margin-bottom:14px">`:(loc?`<div class="spot-modal-thumb ${thumbClass(loc.category)}" style="height:110px;margin-bottom:14px;font-size:40px">${loc.emoji}</div>`:'')}
+    <div class="blog-detail-content">${content}</div>
+    ${(b.media&&b.media.length)?`<div class="blog-media-row">${b.media.map(m=>`<img src="${m.url||m}" class="blog-media-thumb" alt="photo">`).join('')}</div>`:''}
+    ${loc?`<button style="width:100%;padding:11px;border-radius:9px;border:1px solid rgba(196,119,59,.4);background:transparent;color:var(--dusk);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;margin-top:6px" onclick="closeBlog();showSpot('${loc.id}')">View ${loc.name} →</button>`:''}`;
+  document.getElementById('blog-modal').classList.add('open');
+}
+function closeBlog(){document.getElementById('blog-modal').classList.remove('open')}
+
+// ── TRIP PLANNER ──
+function renderTripDest(){
+  const sel=document.getElementById('trip-dest');
+  if(sel) sel.innerHTML=locations.map(l=>`<option value="${l.id}">${l.name} — ${l.emirate}</option>`).join('');
+}
+
+// ── MAP ──
+function initMap(){
+  if(mapLoaded) return;
+  mapLoaded=true;
+  const s=document.createElement('script');
+  s.src=`https://maps.googleapis.com/maps/api/js?key=${GMAPS_KEY}&callback=onMapReady`;
+  s.async=true; document.head.appendChild(s);
+}
+window.onMapReady=function(){
+  mapInstance=new google.maps.Map(document.getElementById('map'),{
+    center:{lat:24.5,lng:54.5},zoom:7,
+    styles:[
+      {elementType:'geometry',stylers:[{color:'#1a1d2a'}]},
+      {elementType:'labels.text.fill',stylers:[{color:'#8a9bb5'}]},
+      {elementType:'labels.text.stroke',stylers:[{color:'#1a1d2a'}]},
+      {featureType:'water',elementType:'geometry',stylers:[{color:'#0d1a2e'}]},
+      {featureType:'road',elementType:'geometry',stylers:[{color:'#2c3044'}]},
+      {featureType:'road',elementType:'labels.text.fill',stylers:[{color:'#6b7a99'}]},
+      {featureType:'landscape.natural',elementType:'geometry',stylers:[{color:'#1e2218'}]},
+      {featureType:'poi',stylers:[{visibility:'off'}]},
+      {featureType:'transit',stylers:[{visibility:'off'}]}
+    ]
+  });
+  renderMapPins();
+};
+function renderMapPins(){
+  if(!mapInstance) return;
+  const colors={Dunes:'#C4773B',Wadis:'#4CAF82',Coast:'#4A9BE8',Mountains:'#9B8BD8',Camping:'#E8A430',Night:'#9B8BD8'};
+  locations.filter(l=>activeFilter==='All'||l.category===activeFilter).forEach(l=>{
+    if(!l.lat||!l.lng) return;
+    const marker=new google.maps.Marker({
+      position:{lat:parseFloat(l.lat),lng:parseFloat(l.lng)},
+      map:mapInstance,title:l.name,
+      icon:{path:google.maps.SymbolPath.CIRCLE,scale:11,fillColor:colors[l.category]||'#C4773B',fillOpacity:1,strokeColor:'#fff',strokeWeight:2}
+    });
+    const info=new google.maps.InfoWindow({content:`<div style="background:#1A1D28;color:#E8D5B0;padding:10px;border-radius:8px;font-family:Inter,sans-serif;min-width:140px"><div style="font-size:18px;margin-bottom:4px">${l.emoji}</div><div style="font-weight:600;font-size:13px">${l.name}</div><div style="font-size:11px;color:#6B7A99;margin-top:2px">${l.category} · ${l.difficulty}</div><div style="margin-top:8px;font-size:11px;color:#C4773B;cursor:pointer" onclick="closeSpot&&closeSpot();showSpot('${l.id}')">View details →</div></div>`});
+    marker.addListener('click',()=>info.open(mapInstance,marker));
+  });
+}
+
+// ── LIVE WEATHER ──
+async function fetchWeather(){
+  try{
+    const [curr,fore]=await Promise.all([
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${WEATHER_CITY}&appid=${WEATHER_KEY}&units=metric`).then(r=>r.json()),
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${WEATHER_CITY}&appid=${WEATHER_KEY}&units=metric`).then(r=>r.json())
+    ]);
+    // Current
+    const temp=Math.round(curr.main.temp);
+    const feels=Math.round(curr.main.feels_like);
+    const humidity=curr.main.humidity;
+    const windSpd=Math.round(curr.wind.speed*3.6);
+    const windDir=degToDir(curr.wind.deg);
+    const desc=curr.weather[0].description;
+    const vis=curr.visibility?Math.round(curr.visibility/1000)+' km':'—';
+    const clouds=curr.clouds.all;
+
+    document.getElementById('weather-temp').innerHTML=temp+'<span class="temp-unit">°</span>';
+    document.getElementById('weather-desc').textContent=cap(desc);
+    document.getElementById('w-humidity').textContent=humidity+'%';
+    document.getElementById('w-wind').textContent=windSpd+' km/h ('+windDir+')';
+    document.getElementById('w-vis').textContent=vis;
+    document.getElementById('w-uv').textContent='—';
+    document.getElementById('weather-updated').textContent='Live data · Dubai · Updated just now';
+
+    // Safety index
+    const heatRisk=temp>=45?'EXTREME':temp>=40?'HIGH':temp>=35?'MODERATE':'LOW';
+    const heatCls=temp>=45?'val-danger':temp>=40?'val-warn':'val-safe';
+    document.getElementById('s-heat').textContent=heatRisk;
+    document.getElementById('s-heat').className='safety-val '+heatCls;
+    document.getElementById('s-heat-desc').textContent=`Feels like ${feels}°C. ${temp>=45?'Limit exposure to 20 min.':temp>=40?'Take regular shade breaks.':'Comfortable for activity.'}`;
+    const hydroNeed=humidity>70||temp>40?'HIGH NEED':humidity>50?'MODERATE':'LOW';
+    document.getElementById('s-hydro').textContent=hydroNeed;
+    document.getElementById('s-hydro-desc').textContent=temp>40?'Carry 4L+ per person.':'Carry 2L+ per person.';
+    const sandRisk=windSpd>50?'ACTIVE':windSpd>30?'POSSIBLE':'CLEAR';
+    const sandCls=windSpd>50?'val-danger':windSpd>30?'val-warn':'val-safe';
+    document.getElementById('s-sand').textContent=sandRisk;
+    document.getElementById('s-sand').className='safety-val '+sandCls;
+    document.getElementById('s-sand-desc').textContent=windSpd>50?'Navigation difficult. GPS essential.':windSpd>30?'Reduced visibility possible.':'Good conditions.';
+    const starCls=clouds<20?'val-safe':clouds<60?'val-warn':'val-danger';
+    document.getElementById('s-star').textContent=clouds<20?'EXCELLENT':clouds<60?'FAIR':'POOR';
+    document.getElementById('s-star').className='safety-val '+starCls;
+    document.getElementById('s-star-desc').textContent=`Cloud cover ${clouds}%. ${clouds<20?'Ideal for stargazing.':clouds<60?'Partial sky visible.':'Heavy cloud tonight.'}`;
+    const trekTemp=temp-8;
+    const trekCls=trekTemp<32?'val-safe':trekTemp<38?'val-warn':'val-danger';
+    document.getElementById('s-trek').textContent=trekTemp<32?'GOOD':trekTemp<38?'WARM':'HOT';
+    document.getElementById('s-trek').className='safety-val '+trekCls;
+    document.getElementById('s-trek-desc').textContent=`~${trekTemp}°C at dawn. ${trekTemp<32?'Best window 5–7 AM.':'Start very early.'}`;
+
+    // Alerts
+    if(windSpd>50){
+      document.getElementById('weather-alert').style.display='flex';
+      document.getElementById('alert-title').textContent='SANDSTORM ADVISORY';
+      document.getElementById('alert-body').textContent=`Wind gusts ${windSpd}+ km/h. Avoid open desert.`;
+    } else if(temp>=46){
+      document.getElementById('weather-alert').style.display='flex';
+      document.getElementById('alert-title').textContent='EXTREME HEAT WARNING';
+      document.getElementById('alert-body').textContent=`Temperature ${temp}°C. Postpone daytime outdoor activity.`;
+    }
+
+    // Forecast
+    const days={};
+    fore.list.forEach(f=>{
+      const d=f.dt_txt.split(' ')[0];
+      if(!days[d]) days[d]={hi:-99,lo:99,icon:f.weather[0].icon,desc:f.weather[0].description};
+      days[d].hi=Math.max(days[d].hi,Math.round(f.main.temp_max));
+      days[d].lo=Math.min(days[d].lo,Math.round(f.main.temp_min));
+    });
+    const dayNames=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    const foreHtml=Object.entries(days).slice(0,6).map(([date,v],i)=>{
+      const dn=i===0?'TODAY':dayNames[new Date(date).getDay()];
+      const icon=weatherIcon(v.icon);
+      return`<div class="forecast-card"><div class="forecast-day">${dn}</div><div class="forecast-icon">${icon}</div><div class="forecast-hi">${v.hi}°</div><div class="forecast-lo">${v.lo}°</div></div>`;
+    }).join('');
+    document.getElementById('forecast-row').innerHTML=foreHtml;
+  } catch(e){
+    document.getElementById('weather-updated').textContent='Could not load live data';
+    // fallback static
+    document.getElementById('weather-temp').innerHTML='44<span class="temp-unit">°</span>';
+    document.getElementById('weather-desc').textContent='Hazy Sunshine';
+    document.getElementById('w-humidity').textContent='78%';
+    document.getElementById('w-wind').textContent='18 km/h (NW)';
+    document.getElementById('w-vis').textContent='3 km';
+    document.getElementById('w-uv').textContent='11';
+    document.getElementById('forecast-row').innerHTML=['TODAY🌤44°28°','MON☀️46°30°','TUE🌬41°27°','WED⛅39°26°','THU☀️43°29°'].map(s=>`<div class="forecast-card"><div class="forecast-day">${s.slice(0,3)}</div><div class="forecast-icon">${s.slice(3,5)}</div><div class="forecast-hi">${s.slice(5,8)}</div><div class="forecast-lo">${s.slice(8)}</div></div>`).join('');
+  }
+}
+
+function degToDir(d){const dirs=['N','NE','E','SE','S','SW','W','NW'];return dirs[Math.round(d/45)%8]}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function weatherIcon(code){
+  const c=code.replace('n','d');
+  const map={'01d':'☀️','02d':'🌤','03d':'⛅','04d':'☁️','09d':'🌧','10d':'🌦','11d':'⛈','13d':'❄️','50d':'🌫'};
+  return map[c]||'🌡';
+}
+
+// ── UTILS ──
+function showSOS(){document.getElementById('sos-modal').classList.add('open')}
+function closeSOS(){document.getElementById('sos-modal').classList.remove('open')}
+function setSize(el){document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
+function toggleCheck(el){el.classList.toggle('checked');el.querySelector('.check-circle').textContent=el.classList.contains('checked')?'✓':''}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
+
+// ── INIT ──
+loadContent();
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNJwCMt37FiFixtWGvxRtdkASdlbx0yF4&callback=onMapReady&libraries=places"></script>
+</body>
+</html>
