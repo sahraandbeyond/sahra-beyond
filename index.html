@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sahra & Beyond — UAE Desert & Outdoor Planner</title>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9362630267881122" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -179,7 +180,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .blog-media-thumb{width:90px;height:90px;flex-shrink:0;border-radius:9px;object-fit:cover;background:var(--slate)}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--slate);border:1px solid rgba(232,213,176,.14);color:var(--white);padding:9px 16px;border-radius:8px;font-size:12px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
-.loading{display:flex;align-items:center;justify-content:center;height:200px;color:var(--mist);font-size:13px}
+.ad-slot{margin:0 16px 14px;border-radius:10px;overflow:hidden;background:var(--deep);border:1px solid rgba(232,213,176,.06);min-height:90px;display:flex;align-items:center;justify-content:center}
+.ad-slot ins{display:block;width:100%}
+/* PACKING LIST */
+.pack-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;background:var(--card);border:1px solid rgba(232,213,176,.06);margin-bottom:6px;cursor:pointer;transition:all .2s}
+.pack-item.checked{border-color:rgba(76,175,130,.22);background:#151a22}
+.pack-item.checked .check-circle{background:var(--safe);border-color:var(--safe);color:#fff}
+.pack-item.checked .pack-text{color:var(--mist);text-decoration:line-through;opacity:.6}
+.pack-text{font-size:12px;color:var(--white);flex:1;line-height:1.4}
+.pack-links{display:flex;gap:5px;flex-shrink:0}
+.shop-link{padding:3px 8px;border-radius:5px;font-size:9px;font-weight:700;text-decoration:none;letter-spacing:.5px;transition:all .2s;white-space:nowrap}
+.shop-link.noon{background:rgba(255,191,0,.12);color:#FFB800;border:1px solid rgba(255,191,0,.25)}
+.shop-link.noon:hover{background:rgba(255,191,0,.25)}
+.shop-link.amz{background:rgba(255,153,0,.12);color:#FF9900;border:1px solid rgba(255,153,0,.25)}
+.shop-link.amz:hover{background:rgba(255,153,0,.25)}
 </style>
 </head>
 <body>
@@ -234,6 +248,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
     <button class="chip" onclick="setChip(this,'Night')">🌙 Night</button>
   </div>
   <div class="section-label">FEATURED SPOTS</div>
+  <!-- AdSense: Discover feed -->
+  <div class="ad-slot">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-9362630267881122"
+      data-ad-slot="9337878081"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
   <div class="spots-grid" id="spots-grid"><div class="loading">Loading…</div></div>
 </div>
 
@@ -283,6 +307,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   <div class="section-label" style="padding-left:16px">5-DAY FORECAST</div>
   <div class="forecast-row" id="forecast-row"><div class="loading">Loading forecast…</div></div>
   <div class="section-label" style="padding-left:16px">OUTDOOR SAFETY INDEX</div>
+  <!-- AdSense: Weather screen -->
+  <div class="ad-slot">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-9362630267881122"
+      data-ad-slot="9337878081"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
   <div class="safety-grid" id="safety-grid">
     <div class="safety-card"><div class="safety-label">Heat Risk</div><div class="safety-val val-danger" id="s-heat">—</div><div class="safety-desc" id="s-heat-desc">Calculating…</div></div>
     <div class="safety-card"><div class="safety-label">Hydration</div><div class="safety-val val-warn" id="s-hydro">—</div><div class="safety-desc" id="s-hydro-desc">Calculating…</div></div>
@@ -297,7 +331,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 <div id="screen-planner" class="screen">
   <div class="padded" style="padding-top:16px">
     <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--sand);margin-bottom:2px">Plan Your Trip</div>
-    <div style="font-size:12px;color:var(--mist);margin-bottom:14px">Build a route · Safety checklist · Live check-ins</div>
+    <div style="font-size:12px;color:var(--mist);margin-bottom:14px">Destination · Group size · Complete packing list</div>
+
     <div class="form-group"><label class="form-label">Destination</label><select class="form-select" id="trip-dest"></select></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date"/></div>
@@ -312,30 +347,267 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
         <button class="size-btn" onclick="setSize(this)">10+</button>
       </div>
     </div>
-    <div class="form-group"><label class="form-label">Emergency Contact</label><input class="form-input" type="tel" placeholder="+971 50 000 0000"/></div>
-    <div class="section-title">Safety Checklist</div>
-    <div class="checklist-item checked" onclick="toggleCheck(this)"><div class="check-circle">✓</div><div class="check-text">Water (4L per person minimum)</div></div>
-    <div class="checklist-item checked" onclick="toggleCheck(this)"><div class="check-circle">✓</div><div class="check-text">First aid kit</div></div>
-    <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-circle"></div><div class="check-text">GPS device / offline maps</div></div>
-    <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-circle"></div><div class="check-text">Satellite communicator</div></div>
-    <div class="checklist-item checked" onclick="toggleCheck(this)"><div class="check-circle">✓</div><div class="check-text">Sun protection (SPF 50+, hat)</div></div>
-    <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-circle"></div><div class="check-text">Recovery boards (sand driving)</div></div>
-    <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-circle"></div><div class="check-text">Emergency flares / signal mirror</div></div>
-    <div class="section-title" style="margin-top:14px">Active Check-ins</div>
-    <div class="checkin-card">
-      <div class="checkin-header"><div class="checkin-name">🏕 Hatta Weekend Trek</div><div class="checkin-status status-active">● ACTIVE</div></div>
-      <div class="checkin-meta">Ahmed K. · Group of 4 · Next check-in in 1h 20m</div>
-      <div class="checkin-progress"><div class="checkin-bar" style="width:65%"></div></div>
-      <div class="checkin-time"><span>Departed 06:30</span><span>ETA 15:00</span></div>
+
+    <!-- PACKING LIST -->
+    <div class="section-title" style="margin-top:6px">🎒 Packing List</div>
+    <div style="font-size:11px;color:var(--mist);margin-bottom:12px">Tap any item to check it off. Shop links open on Noon and Amazon UAE.</div>
+
+    <!-- WATER & HYDRATION -->
+    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin:10px 0 7px">💧 Water & Hydration</div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Water (4L per person minimum)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=water+jerry+can" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=water+jerry+can+camping" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
     </div>
-    <div class="checkin-card">
-      <div class="checkin-header"><div class="checkin-name">🌊 Dibba Snorkel</div><div class="checkin-status status-overdue">⚠ CHECK-IN OVERDUE</div></div>
-      <div class="checkin-meta">Sara &amp; Rania · Group of 2 · Was due 30m ago</div>
-      <div class="checkin-progress"><div class="checkin-bar" style="width:90%;background:var(--danger)"></div></div>
-      <div class="checkin-time"><span>Departed 08:00</span><span>ETA 13:00</span></div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Electrolyte tablets or sachets</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=electrolyte+tablets" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=electrolyte+tablets" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
     </div>
-    <button class="new-checkin-btn">+ Start New Check-in</button>
-    <button class="primary-btn" onclick="showToast('Trip saved! Emergency contact will be notified at departure.')">Save Trip &amp; Enable Check-ins</button>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Insulated water bottle (keeps cold 24h)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=insulated+water+bottle" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=insulated+water+bottle+hydro+flask" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+
+    <!-- SUN PROTECTION -->
+    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin:14px 0 7px">☀️ Sun Protection</div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Sunscreen SPF 50+ (face & body)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=sunscreen+spf+50" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=sunscreen+spf+50" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Wide-brim hat or desert keffiyeh</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=wide+brim+sun+hat" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=desert+sun+hat+wide+brim" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">UV-protective long sleeve shirt</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=uv+protection+shirt" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=upf+50+long+sleeve+shirt" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Sunglasses (polarised)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=polarised+sunglasses" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=polarized+sunglasses+outdoor" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin:14px 0 7px">🧭 Navigation</div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">GPS device (handheld)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=handheld+gps" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=garmin+handheld+gps" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Offline maps downloaded (Maps.me or Gaia)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=phone+car+mount" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=car+phone+mount+off+road" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Portable power bank (20,000+ mAh)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=power+bank+20000mah" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=power+bank+20000mah" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+
+    <!-- VEHICLE & RECOVERY -->
+    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin:14px 0 7px">🚙 Vehicle & Recovery</div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Sand recovery boards (x2)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=sand+recovery+boards" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=maxtrax+sand+recovery+boards" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Tyre pressure gauge + deflator kit</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=tyre+pressure+gauge" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=tyre+deflator+kit+4x4" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Portable air compressor / inflator</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=portable+air+compressor" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=portable+air+compressor+12v+off+road" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Tow rope / snatch strap</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=tow+rope+4x4" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=snatch+strap+recovery+4x4" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Hi-lift jack</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=hi+lift+jack" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=hi+lift+farm+jack" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Spare fuel (jerry can)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=fuel+jerry+can" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=metal+fuel+jerry+can+20l" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+
+    <!-- SAFETY & FIRST AID -->
+    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin:14px 0 7px">🏥 Safety & First Aid</div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Comprehensive first aid kit</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=first+aid+kit+outdoor" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=outdoor+first+aid+kit" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Satellite communicator (Garmin inReach)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=satellite+communicator" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=garmin+inreach+mini" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Emergency signal mirror / flares</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=signal+mirror+emergency" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=emergency+signal+mirror+survival" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Headlamp + spare batteries</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=headlamp+led" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=led+headlamp+camping" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Mylar emergency blanket</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=emergency+blanket+mylar" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=emergency+mylar+blanket" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+
+    <!-- CAMPING (if overnight) -->
+    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin:14px 0 7px">⛺ Camping (if overnight)</div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Lightweight tent or bivvy</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=camping+tent+lightweight" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=lightweight+camping+tent+2+person" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Sleeping bag (desert nights get cold Oct–Mar)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=sleeping+bag+camping" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=sleeping+bag+camping+lightweight" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Camping stove + gas canister</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=camping+stove+gas" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=portable+camping+stove" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Cooler box with ice</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=cooler+box+camping" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=camping+cooler+box+ice" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+
+    <!-- PHOTOGRAPHY -->
+    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin:14px 0 7px">📸 Photography</div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Camera + extra batteries</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=mirrorless+camera" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=mirrorless+camera+travel" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Lightweight tripod (for stargazing shots)</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=lightweight+travel+tripod" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=travel+tripod+lightweight+camera" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">GoPro / action camera</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=gopro+action+camera" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=gopro+hero+action+camera" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+    <div class="pack-item" onclick="toggleCheck(this)">
+      <div class="check-circle"></div>
+      <div class="pack-text">Drone (DJI Mini) for aerial shots</div>
+      <div class="pack-links">
+        <a href="https://www.noon.com/uae-en/search/?q=dji+mini+drone" target="_blank" onclick="event.stopPropagation()" class="shop-link noon">Noon</a>
+        <a href="https://www.amazon.ae/s?k=dji+mini+drone" target="_blank" onclick="event.stopPropagation()" class="shop-link amz">Amazon</a>
+      </div>
+    </div>
+
+    <div style="height:16px"></div>
+    <button class="primary-btn" onclick="showToast('Trip saved! Check your packing list before departure.')">Save Trip Plan</button>
+    <div style="height:24px"></div>
   </div>
 </div>
 
@@ -488,16 +760,26 @@ function showSpot(id){
     <div class="spot-modal-name">${l.name}</div>
     <div class="spot-modal-meta">📍 ${l.emirate} · ${l.category} · ${l.difficulty}</div>
     <div class="spot-stats">
-      <div class="spot-stat"><div class="spot-stat-val" id="modal-temp-${l.id}">—</div><div class="spot-stat-label">Live Temp</div></div>
+      <div class="spot-stat"><div class="spot-stat-val" id="modal-temp-${l.id}">…</div><div class="spot-stat-label">Live Temp</div></div>
       <div class="spot-stat"><div class="spot-stat-val">${l.difficulty}</div><div class="spot-stat-label">Difficulty</div></div>
       <div class="spot-stat"><div class="spot-stat-val">${l.season||'—'}</div><div class="spot-stat-label">Best Time</div></div>
     </div>
     ${l.distance?`<div style="font-size:12px;color:var(--mist);margin-bottom:6px">📏 ${l.distance}</div>`:''}
     ${l.desc?`<div style="font-size:13px;color:var(--mist);line-height:1.6;margin-bottom:14px">${l.desc}</div>`:''}
-    ${blist.length?`<div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--mist);margin-bottom:7px;text-transform:uppercase">Blog Posts</div>${blist.map(b=>`<div style="padding:9px;background:var(--slate);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="closeSpot();showBlog('${b.id||b.title}')"><div style="font-size:12px;font-weight:600;color:var(--sand)">${b.title}</div><div style="font-size:10px;color:var(--mist);margin-top:2px">${b.tag} · ${formatDate(b.date)}</div></div>`).join('')}`:''}
+    ${blist.length?`<div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--mist);margin-bottom:7px;text-transform:uppercase">Blog Posts</div>${blist.map((b,bi)=>{const globalIdx=blogs.indexOf(b);return`<div style="padding:9px;background:var(--slate);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="closeSpot();showBlog(${globalIdx})"><div style="font-size:12px;font-weight:600;color:var(--sand)">${b.title}</div><div style="font-size:10px;color:var(--mist);margin-top:2px">${b.tag} · ${formatDate(b.date)}</div></div>`}).join('')}`:''}
     <button style="width:100%;padding:11px;border-radius:9px;border:none;background:var(--dusk);color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px" onclick="closeSpot();showScreen('planner')">Plan a trip here →</button>`;
   document.getElementById('spot-modal').classList.add('open');
-  fetchSpotTemp({...l,id:'modal-temp-'+l.id});
+  // Fetch temp AFTER modal is in DOM so element exists
+  setTimeout(()=>{
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${l.lat}&lon=${l.lng}&appid=${WEATHER_KEY}&units=metric`)
+      .then(r=>r.json()).then(d=>{
+        const el=document.getElementById('modal-temp-'+l.id);
+        if(el&&d.main) el.textContent=Math.round(d.main.temp)+'°C';
+      }).catch(()=>{
+        const el=document.getElementById('modal-temp-'+l.id);
+        if(el) el.textContent='—';
+      });
+  },100);
 }
 function closeSpot(){document.getElementById('spot-modal').classList.remove('open')}
 
@@ -685,7 +967,11 @@ function weatherIcon(code){
 function showSOS(){document.getElementById('sos-modal').classList.add('open')}
 function closeSOS(){document.getElementById('sos-modal').classList.remove('open')}
 function setSize(el){document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
-function toggleCheck(el){el.classList.toggle('checked');el.querySelector('.check-circle').textContent=el.classList.contains('checked')?'✓':''}
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  const circle=el.querySelector('.check-circle');
+  if(circle) circle.textContent=el.classList.contains('checked')?'✓':'';
+}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
 
