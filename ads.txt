@@ -1,0 +1,7 @@
+# ads.txt for Sahra & Beyond
+# Authorized Digital Sellers — https://support.google.com/adsense/answer/12171612
+#
+# TODO: replace pub-XXXXXXXXXXXXXXXX with your AdSense publisher ID (the digits
+# from your ca-pub-XXXXXXXXXXXXXXXX, WITHOUT the "ca-" prefix), then uncomment:
+#
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

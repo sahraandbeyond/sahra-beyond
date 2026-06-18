@@ -1,0 +1,23 @@
+{
+  "id": "/",
+  "name": "Sahra & Beyond — UAE Outdoor Explorer",
+  "short_name": "Sahra & Beyond",
+  "description": "Discover hidden desert, wadi, mountain and coast adventures across the UAE — with live conditions and trip planning.",
+  "start_url": "/?platform=android",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF6EF",
+  "theme_color": "#C0702E",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["travel", "lifestyle", "navigation"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://sahraandbeyond.netlify.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://sahraandbeyond.netlify.app/#dunes</loc><priority>0.8</priority></url>
+  <url><loc>https://sahraandbeyond.netlify.app/#mountains</loc><priority>0.8</priority></url>
+  <url><loc>https://sahraandbeyond.netlify.app/#wadis</loc><priority>0.8</priority></url>
+  <url><loc>https://sahraandbeyond.netlify.app/#camping</loc><priority>0.8</priority></url>
+  <url><loc>https://sahraandbeyond.netlify.app/#coast</loc><priority>0.8</priority></url>
+  <url><loc>https://sahraandbeyond.netlify.app/#night</loc><priority>0.8</priority></url>
+</urlset>

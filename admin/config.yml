@@ -32,8 +32,8 @@ collections:
         options: ["Easy", "Moderate", "Hard"]
       - { label: "Best Season", name: "season", widget: "string", default: "Oct–Apr" }
       - { label: "Distance from Dubai", name: "distance", widget: "string", required: false }
-      - { label: "Latitude", name: "lat", widget: "number", value_type: "float" }
-      - { label: "Longitude", name: "lng", widget: "number", value_type: "float" }
+      - { label: "Latitude", name: "lat", widget: "number", value_type: "float", step: 0.0001, hint: "Decimal degrees, e.g. 24.9183. Tip: right-click the exact spot in Google Maps and the FIRST number shown is the latitude." }
+      - { label: "Longitude", name: "lng", widget: "number", value_type: "float", step: 0.0001, hint: "Decimal degrees, e.g. 55.5672. The SECOND number from Google Maps is the longitude." }
       - label: "Condition Status"
         name: "status"
         widget: "select"
@@ -43,6 +43,12 @@ collections:
           - { label: "Hot / Extreme", value: "hot" }
       - { label: "Description", name: "desc", widget: "text" }
       - { label: "Cover Photo", name: "cover", widget: "image", required: false }
+      - label: "Instagram Posts"
+        name: "igPosts"
+        widget: "list"
+        required: false
+        hint: "Paste full Instagram post/reel URLs (e.g. https://www.instagram.com/p/XXXXXXXXX/). Each one is embedded in the location's 'On the gram' section. Leave empty if none."
+        field: { label: "Instagram Post URL", name: "url", widget: "string" }
 
   - name: "blog"
     label: "Blog Posts"
@@ -66,6 +72,12 @@ collections:
         widget: "list"
         required: false
         field: { label: "File", name: "url", widget: "image" }
+      - label: "Instagram Posts"
+        name: "igPosts"
+        widget: "list"
+        required: false
+        hint: "Paste full Instagram post/reel URLs to embed inside the story (e.g. https://www.instagram.com/p/XXXXXXXXX/). Leave empty if none."
+        field: { label: "Instagram Post URL", name: "url", widget: "string" }
       - { label: "Story", name: "body", widget: "markdown" }
 
   - name: "settings"
@@ -79,3 +91,11 @@ collections:
           - { label: "Tagline", name: "tagline", widget: "string" }
           - { label: "Google Maps API Key", name: "gmapsKey", widget: "string" }
           - { label: "OpenWeatherMap API Key", name: "weatherKey", widget: "string" }
+          - label: "Social Profiles"
+            name: "social"
+            widget: "object"
+            hint: "Links used by the footer social icons. Leave a field blank to hide that icon."
+            fields:
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, default: "https://instagram.com/sahraandbeyond" }
+              - { label: "TikTok URL", name: "tiktok", widget: "string", required: false, default: "https://tiktok.com/@sahraandbeyond" }
+              - { label: "YouTube URL", name: "youtube", widget: "string", required: false, default: "https://youtube.com/@sahraandbeyond" }
