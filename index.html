@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Sahra & Beyond — UAE Desert & Outdoor Planner</title>
 <meta name="description" content="Discover hidden desert, wadi, mountain and coast adventures across the UAE — with live conditions, safety advisories and a smart trip planner.">
-<link rel="canonical" href="https://sahraandbeyond.netlify.app/">
+<link rel="canonical" href="https://sahra-beyond.netlify.app/">
 <meta name="theme-color" content="#C0702E">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,13 +17,13 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sahra & Beyond — UAE Outdoor Explorer">
 <meta property="og:description" content="Hidden desert, wadi, mountain and coast adventures across the UAE, with live conditions and trip planning.">
-<meta property="og:url" content="https://sahraandbeyond.netlify.app/">
-<meta property="og:image" content="https://sahraandbeyond.netlify.app/icon.svg">
+<meta property="og:url" content="https://sahra-beyond.netlify.app/">
+<meta property="og:image" content="https://sahra-beyond.netlify.app/icon.svg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sahra & Beyond — UAE Outdoor Explorer">
 <meta name="twitter:description" content="Hidden UAE adventures with live conditions and trip planning.">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"Sahra & Beyond","url":"https://sahraandbeyond.netlify.app/","description":"Hidden desert, wadi, mountain and coast adventures across the UAE.","publisher":{"@type":"Organization","name":"Sahra & Beyond"}}
+{"@context":"https://schema.org","@type":"WebSite","name":"Sahra & Beyond","url":"https://sahra-beyond.netlify.app/","description":"Hidden desert, wadi, mountain and coast adventures across the UAE.","publisher":{"@type":"Organization","name":"Sahra & Beyond"}}
 </script>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <!-- Google AdSense loader — web only. Suppressed inside the Android app (TWA),
@@ -728,7 +728,8 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
     <div class="footer-social-label">Follow the journey</div>
     <div class="social-row" id="social-row"><!-- populated by renderSocial() --></div>
     <div class="footer-handle" id="footer-handle">@sahra_and_beyond</div>
-    <div class="footer-copy">© <span id="footer-year"></span> Sahra &amp; Beyond · Explore responsibly</div>
+    <div class="footer-copy">As an Amazon Associate, Sahra &amp; Beyond earns from qualifying purchases.</div>
+    <div class="footer-copy" style="margin-top:6px">© <span id="footer-year"></span> Sahra &amp; Beyond · Explore responsibly</div>
   </footer>
 </div>
 
@@ -1299,6 +1300,7 @@ async function loadContent() {
   try {
     const s = await fetch('/content/settings.json').then(r=>r.ok?r.json():null).catch(()=>null);
     if(s) settings = Object.assign({}, DEFAULT_SETTINGS, s, { social: Object.assign({}, DEFAULT_SETTINGS.social, s.social||{}) });
+    if(settings.amazonTag) AMAZON_TAG = settings.amazonTag; // CMS-editable affiliate tag
   } catch(e) { /* keep defaults */ }
   // If the CMS files couldn't be loaded (e.g. local file:// preview), use built-in data
   if(!locations.length) locations = FALLBACK_LOCATIONS;
@@ -2038,6 +2040,25 @@ function pruneAds(){
 }
 setTimeout(pruneAds,2500);
 setTimeout(pruneAds,6000);
+
+// ── AMAZON ASSOCIATES: append tracking tag to every Amazon link (static + dynamic) ──
+let AMAZON_TAG = 'sahraandbeyon-21'; // Amazon.ae Associates tracking ID (overridden by CMS settings.amazonTag)
+function tagAmazonLink(a){
+  try{
+    const u = new URL(a.getAttribute('href'), location.href);
+    if(/(^|\.)amazon\./.test(u.hostname) && !u.searchParams.get('tag')){
+      u.searchParams.set('tag', AMAZON_TAG);
+      a.setAttribute('href', u.toString());
+    }
+  }catch(e){}
+}
+// Tag at click-time (covers planner-generated links too), capture phase before navigation
+document.addEventListener('click', function(e){
+  const a = e.target.closest ? e.target.closest('a') : null;
+  if(a && a.href && a.href.indexOf('amazon.') !== -1) tagAmazonLink(a);
+}, true);
+// Also tag any static Amazon links already in the DOM
+document.querySelectorAll('a[href*="amazon."]').forEach(tagAmazonLink);
 
 // ── INIT ──
 // Restore saved trip plan
