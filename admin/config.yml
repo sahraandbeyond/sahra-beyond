@@ -96,6 +96,6 @@ collections:
             widget: "object"
             hint: "Links used by the footer social icons. Leave a field blank to hide that icon."
             fields:
-              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, default: "https://instagram.com/sahraandbeyond" }
-              - { label: "TikTok URL", name: "tiktok", widget: "string", required: false, default: "https://tiktok.com/@sahraandbeyond" }
-              - { label: "YouTube URL", name: "youtube", widget: "string", required: false, default: "https://youtube.com/@sahraandbeyond" }
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, default: "https://instagram.com/sahra_and_beyond" }
+              - { label: "TikTok URL", name: "tiktok", widget: "string", required: false, default: "https://tiktok.com/@sahra_and_beyond" }
+              - { label: "YouTube URL", name: "youtube", widget: "string", required: false, default: "https://youtube.com/@sahra_and_beyond" }
