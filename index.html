@@ -485,11 +485,11 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
   <div class="opts-wrap">
     <div class="opts">
       <button class="opt active" data-cat="All" onclick="goAll()"><span class="opt-ic">✨</span>All</button>
-      <button class="opt" data-cat="Dunes" onclick="openCategory('Dunes')"><span class="opt-ic">🏜️</span>Dunes</button>
-      <button class="opt" data-cat="Mountains" onclick="openCategory('Mountains')"><span class="opt-ic">⛰️</span>Mountains</button>
-      <button class="opt" data-cat="Wadis" onclick="openCategory('Wadis')"><span class="opt-ic">🌊</span>Wadis</button>
       <button class="opt" data-cat="Camping" onclick="openCategory('Camping')"><span class="opt-ic">⛺</span>Camping</button>
+      <button class="opt" data-cat="Wadis" onclick="openCategory('Wadis')"><span class="opt-ic">🌊</span>Wadis</button>
+      <button class="opt" data-cat="Mountains" onclick="openCategory('Mountains')"><span class="opt-ic">⛰️</span>Mountains</button>
       <button class="opt" data-cat="Coast" onclick="openCategory('Coast')"><span class="opt-ic">🤿</span>Coast</button>
+      <button class="opt" data-cat="Dunes" onclick="openCategory('Dunes')"><span class="opt-ic">🏜️</span>Dunes</button>
       <button class="opt" data-cat="__saved" onclick="openSaved()"><span class="opt-ic">♥</span>Saved</button>
     </div>
   </div>
@@ -500,43 +500,42 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
   </div>
   <div class="journey" id="adv-carousel" role="region" aria-roledescription="carousel" aria-label="Five UAE adventures" tabindex="0">
     <div class="journey-stage" id="car-track">
-  <!-- 01 DUNES -->
-  <div class="jscene adv-dunes" data-cat="Dunes">
+  <!-- 01 CAMPING -->
+  <div class="jscene adv-camp" data-cat="Camping">
     <div class="adv-scene">
       <svg class="ssvg" data-par="0.10" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <linearGradient id="dnSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBE6BC"/><stop offset=".55" stop-color="#F6CB8C"/><stop offset="1" stop-color="#EEAD68"/></linearGradient>
-          <radialGradient id="dnSun" cx="74%" cy="22%" r="42%"><stop offset="0" stop-color="#FFF7DE"/><stop offset=".42" stop-color="#FFE3A6" stop-opacity=".85"/><stop offset="1" stop-color="#FFE3A6" stop-opacity="0"/></radialGradient>
-          <linearGradient id="dnFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1C690"/><stop offset="1" stop-color="#E2AC76"/></linearGradient>
-          <linearGradient id="dnMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ECB266"/><stop offset=".55" stop-color="#DC9647"/><stop offset="1" stop-color="#C9842F"/></linearGradient>
-          <linearGradient id="dnNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D7964A"/><stop offset=".5" stop-color="#BD7A2B"/><stop offset="1" stop-color="#9A591A"/></linearGradient>
-          <filter id="dnGrain" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.055" numOctaves="3" seed="11" result="n"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.16"/></feComponentTransfer><feComposite operator="in" in2="SourceGraphic"/></filter>
+          <linearGradient id="cpSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#221C4A"/><stop offset=".4" stop-color="#5E3A63"/><stop offset=".72" stop-color="#B85B47"/><stop offset=".9" stop-color="#E2864E"/><stop offset="1" stop-color="#F2B069"/></linearGradient>
+          <linearGradient id="cpDune" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A3A2E"/><stop offset="1" stop-color="#311E1B"/></linearGradient>
+          <radialGradient id="cpGlow" cx="74%" cy="100%" r="60%"><stop offset="0" stop-color="#FFCB7E" stop-opacity=".55"/><stop offset="1" stop-color="#FFCB7E" stop-opacity="0"/></radialGradient>
+          <filter id="cpGrain" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.05" numOctaves="3" seed="14" result="n"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.16"/></feComponentTransfer><feComposite operator="in" in2="SourceGraphic"/></filter>
         </defs>
-        <rect width="1440" height="900" fill="url(#dnSky)"/>
-        <circle cx="1080" cy="210" r="360" fill="url(#dnSun)"/>
-        <circle cx="1080" cy="210" r="56" fill="#FFF3D0"/>
-        <rect y="430" width="1440" height="120" fill="#FBE2A8" opacity=".32"/>
-        <path d="M0,520 C320,452 560,536 820,492 C1060,452 1280,520 1440,486 L1440,900 L0,900 Z" fill="url(#dnFar)"/>
-        <path d="M0,636 C260,560 520,652 800,598 C1060,548 1280,630 1440,602 L1440,900 L0,900 Z" fill="url(#dnMid)"/>
-        <path d="M0,636 C260,560 520,652 800,598 C1060,548 1280,630 1440,602" fill="none" stroke="#FCDDA0" stroke-width="2.5" opacity=".55"/>
-        <path d="M0,636 C260,560 520,652 800,598 C1060,548 1280,630 1440,602 L1440,900 L0,900 Z" fill="#000" filter="url(#dnGrain)" opacity=".45"/>
-        <path d="M300,742 C520,690 760,710 1000,756 C760,800 520,808 300,772 Z" fill="#8F5418" opacity=".22"/>
-        <path d="M0,772 C280,700 560,802 900,742 C1140,704 1320,774 1440,752 L1440,900 L0,900 Z" fill="url(#dnNear)"/>
-        <path d="M0,772 C280,700 560,802 900,742 C1140,704 1320,774 1440,752" fill="none" stroke="#EFAE62" stroke-width="2.5" opacity=".5"/>
-        <path d="M0,772 C280,700 560,802 900,742 C1140,704 1320,774 1440,752 L1440,900 L0,900 Z" fill="#000" filter="url(#dnGrain)" opacity=".55"/>
-        <path d="M120,824 C360,790 620,824 900,802" fill="none" stroke="#7A4A16" stroke-width="2" opacity=".16"/>
-        <path d="M60,858 C380,828 700,860 1040,840" fill="none" stroke="#7A4A16" stroke-width="2" opacity=".13"/>
+        <rect width="1440" height="900" fill="url(#cpSky)"/>
+        <rect y="430" width="1440" height="260" fill="url(#cpGlow)"/>
+        <circle cx="1086" cy="296" r="40" fill="#FBE8C0" opacity=".6"/>
+        <path d="M0,640 C320,580 620,660 940,610 C1180,572 1330,632 1440,612 L1440,900 L0,900 Z" fill="url(#cpDune)"/>
+        <path d="M0,640 C320,580 620,660 940,610 C1180,572 1330,632 1440,612 L1440,900 L0,900 Z" fill="#000" filter="url(#cpGrain)" opacity=".5"/>
+        <path d="M548,716 L660,604 L772,716 Z" fill="#14324F"/>
+        <path d="M660,604 L690,716 L630,716 Z" fill="#0C2438"/>
       </svg>
-      <div class="s-haze" style="top:50%;height:13%;background:linear-gradient(180deg,rgba(255,240,210,.6),transparent)"></div>
-      <div class="s-sand"></div>
+      <div class="s-stars" style="opacity:.6"></div>
+      <div style="position:absolute;right:30%;bottom:22%;width:60px;height:60px">
+        <div style="position:absolute;left:6px;bottom:0;width:48px;height:7px;border-radius:4px;background:#3A2A1C;transform:rotate(10deg)"></div>
+        <div style="position:absolute;left:6px;bottom:0;width:48px;height:7px;border-radius:4px;background:#2A1D12;transform:rotate(-10deg)"></div>
+        <div style="position:absolute;left:4px;bottom:2px;width:52px;height:20px;background:radial-gradient(ellipse,rgba(255,150,60,.55),transparent 70%);filter:blur(4px)"></div>
+        <div class="s-fire" style="position:absolute;left:16px;bottom:6px;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-bottom:46px solid #FF9A3C"></div>
+        <div class="s-fire" style="position:absolute;left:21px;bottom:6px;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:30px solid #FFD23C;animation-delay:-.09s"></div>
+        <div class="s-smoke" style="position:absolute;left:24px;bottom:42px"></div>
+        <div class="s-smoke" style="position:absolute;left:28px;bottom:42px;animation-delay:2s"></div>
+      </div>
     </div>
     <div class="adv-grad"></div>
     <div class="adv-content">
-      <button class="adv-card" type="button" onclick="openCategory('Dunes')">
-        <div class="adv-card-top"><span class="adv-num">01 / 05</span><span class="adv-icon">🏜️</span></div>
-        <div class="adv-name">Dunes</div>
-        <div class="adv-desc">Towering red sand seas — sandboarding, dune bashing and golden-hour silhouettes.</div>
-        <div class="adv-cta"><span class="adv-count" data-cat="Dunes">—</span><span class="adv-go">Explore →</span></div>
+      <button class="adv-card" type="button" onclick="openCategory('Camping')">
+        <div class="adv-card-top"><span class="adv-num">01 / 05</span><span class="adv-icon">⛺</span></div>
+        <div class="adv-name">Camping</div>
+        <div class="adv-desc">Pitch a tent, light a fire and watch the dunes turn violet at dusk.</div>
+        <div class="adv-cta"><span class="adv-count" data-cat="Camping">—</span><span class="adv-go">Explore →</span></div>
       </button>
     </div>
   </div>
@@ -662,42 +661,43 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
       </button>
     </div>
   </div>
-  <!-- 05 CAMPING -->
-  <div class="jscene adv-camp" data-cat="Camping">
+  <!-- 05 DUNES -->
+  <div class="jscene adv-dunes" data-cat="Dunes">
     <div class="adv-scene">
       <svg class="ssvg" data-par="0.10" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <linearGradient id="cpSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#221C4A"/><stop offset=".4" stop-color="#5E3A63"/><stop offset=".72" stop-color="#B85B47"/><stop offset=".9" stop-color="#E2864E"/><stop offset="1" stop-color="#F2B069"/></linearGradient>
-          <linearGradient id="cpDune" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A3A2E"/><stop offset="1" stop-color="#311E1B"/></linearGradient>
-          <radialGradient id="cpGlow" cx="74%" cy="100%" r="60%"><stop offset="0" stop-color="#FFCB7E" stop-opacity=".55"/><stop offset="1" stop-color="#FFCB7E" stop-opacity="0"/></radialGradient>
-          <filter id="cpGrain" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.05" numOctaves="3" seed="14" result="n"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.16"/></feComponentTransfer><feComposite operator="in" in2="SourceGraphic"/></filter>
+          <linearGradient id="dnSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBE6BC"/><stop offset=".55" stop-color="#F6CB8C"/><stop offset="1" stop-color="#EEAD68"/></linearGradient>
+          <radialGradient id="dnSun" cx="74%" cy="22%" r="42%"><stop offset="0" stop-color="#FFF7DE"/><stop offset=".42" stop-color="#FFE3A6" stop-opacity=".85"/><stop offset="1" stop-color="#FFE3A6" stop-opacity="0"/></radialGradient>
+          <linearGradient id="dnFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1C690"/><stop offset="1" stop-color="#E2AC76"/></linearGradient>
+          <linearGradient id="dnMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ECB266"/><stop offset=".55" stop-color="#DC9647"/><stop offset="1" stop-color="#C9842F"/></linearGradient>
+          <linearGradient id="dnNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D7964A"/><stop offset=".5" stop-color="#BD7A2B"/><stop offset="1" stop-color="#9A591A"/></linearGradient>
+          <filter id="dnGrain" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.055" numOctaves="3" seed="11" result="n"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.16"/></feComponentTransfer><feComposite operator="in" in2="SourceGraphic"/></filter>
         </defs>
-        <rect width="1440" height="900" fill="url(#cpSky)"/>
-        <rect y="430" width="1440" height="260" fill="url(#cpGlow)"/>
-        <circle cx="1086" cy="296" r="40" fill="#FBE8C0" opacity=".6"/>
-        <path d="M0,640 C320,580 620,660 940,610 C1180,572 1330,632 1440,612 L1440,900 L0,900 Z" fill="url(#cpDune)"/>
-        <path d="M0,640 C320,580 620,660 940,610 C1180,572 1330,632 1440,612 L1440,900 L0,900 Z" fill="#000" filter="url(#cpGrain)" opacity=".5"/>
-        <path d="M548,716 L660,604 L772,716 Z" fill="#14324F"/>
-        <path d="M660,604 L690,716 L630,716 Z" fill="#0C2438"/>
+        <rect width="1440" height="900" fill="url(#dnSky)"/>
+        <circle cx="1080" cy="210" r="360" fill="url(#dnSun)"/>
+        <circle cx="1080" cy="210" r="56" fill="#FFF3D0"/>
+        <rect y="430" width="1440" height="120" fill="#FBE2A8" opacity=".32"/>
+        <path d="M0,520 C320,452 560,536 820,492 C1060,452 1280,520 1440,486 L1440,900 L0,900 Z" fill="url(#dnFar)"/>
+        <path d="M0,636 C260,560 520,652 800,598 C1060,548 1280,630 1440,602 L1440,900 L0,900 Z" fill="url(#dnMid)"/>
+        <path d="M0,636 C260,560 520,652 800,598 C1060,548 1280,630 1440,602" fill="none" stroke="#FCDDA0" stroke-width="2.5" opacity=".55"/>
+        <path d="M0,636 C260,560 520,652 800,598 C1060,548 1280,630 1440,602 L1440,900 L0,900 Z" fill="#000" filter="url(#dnGrain)" opacity=".45"/>
+        <path d="M300,742 C520,690 760,710 1000,756 C760,800 520,808 300,772 Z" fill="#8F5418" opacity=".22"/>
+        <path d="M0,772 C280,700 560,802 900,742 C1140,704 1320,774 1440,752 L1440,900 L0,900 Z" fill="url(#dnNear)"/>
+        <path d="M0,772 C280,700 560,802 900,742 C1140,704 1320,774 1440,752" fill="none" stroke="#EFAE62" stroke-width="2.5" opacity=".5"/>
+        <path d="M0,772 C280,700 560,802 900,742 C1140,704 1320,774 1440,752 L1440,900 L0,900 Z" fill="#000" filter="url(#dnGrain)" opacity=".55"/>
+        <path d="M120,824 C360,790 620,824 900,802" fill="none" stroke="#7A4A16" stroke-width="2" opacity=".16"/>
+        <path d="M60,858 C380,828 700,860 1040,840" fill="none" stroke="#7A4A16" stroke-width="2" opacity=".13"/>
       </svg>
-      <div class="s-stars" style="opacity:.6"></div>
-      <div style="position:absolute;right:30%;bottom:22%;width:60px;height:60px">
-        <div style="position:absolute;left:6px;bottom:0;width:48px;height:7px;border-radius:4px;background:#3A2A1C;transform:rotate(10deg)"></div>
-        <div style="position:absolute;left:6px;bottom:0;width:48px;height:7px;border-radius:4px;background:#2A1D12;transform:rotate(-10deg)"></div>
-        <div style="position:absolute;left:4px;bottom:2px;width:52px;height:20px;background:radial-gradient(ellipse,rgba(255,150,60,.55),transparent 70%);filter:blur(4px)"></div>
-        <div class="s-fire" style="position:absolute;left:16px;bottom:6px;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-bottom:46px solid #FF9A3C"></div>
-        <div class="s-fire" style="position:absolute;left:21px;bottom:6px;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:30px solid #FFD23C;animation-delay:-.09s"></div>
-        <div class="s-smoke" style="position:absolute;left:24px;bottom:42px"></div>
-        <div class="s-smoke" style="position:absolute;left:28px;bottom:42px;animation-delay:2s"></div>
-      </div>
+      <div class="s-haze" style="top:50%;height:13%;background:linear-gradient(180deg,rgba(255,240,210,.6),transparent)"></div>
+      <div class="s-sand"></div>
     </div>
     <div class="adv-grad"></div>
     <div class="adv-content">
-      <button class="adv-card" type="button" onclick="openCategory('Camping')">
-        <div class="adv-card-top"><span class="adv-num">05 / 05</span><span class="adv-icon">⛺</span></div>
-        <div class="adv-name">Camping</div>
-        <div class="adv-desc">Pitch a tent, light a fire and watch the dunes turn violet at dusk.</div>
-        <div class="adv-cta"><span class="adv-count" data-cat="Camping">—</span><span class="adv-go">Explore →</span></div>
+      <button class="adv-card" type="button" onclick="openCategory('Dunes')">
+        <div class="adv-card-top"><span class="adv-num">05 / 05</span><span class="adv-icon">🏜️</span></div>
+        <div class="adv-name">Dunes</div>
+        <div class="adv-desc">Towering red sand seas — sandboarding, dune bashing and golden-hour silhouettes.</div>
+        <div class="adv-cta"><span class="adv-count" data-cat="Dunes">—</span><span class="adv-go">Explore →</span></div>
       </button>
     </div>
   </div>
@@ -705,11 +705,11 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
     <button class="car-btn car-prev" type="button" aria-label="Previous adventure" onclick="carouselPrev()">‹</button>
     <button class="car-btn car-next" type="button" aria-label="Next adventure" onclick="carouselNext()">›</button>
     <div class="jprogress" role="group" aria-label="Choose adventure">
-      <button class="jdot active" type="button" onclick="carouselGo(0)" aria-label="Show Dunes"></button>
+      <button class="jdot active" type="button" onclick="carouselGo(0)" aria-label="Show Camping"></button>
       <button class="jdot" type="button" onclick="carouselGo(1)" aria-label="Show Wadis"></button>
       <button class="jdot" type="button" onclick="carouselGo(2)" aria-label="Show Mountains"></button>
       <button class="jdot" type="button" onclick="carouselGo(3)" aria-label="Show Coast"></button>
-      <button class="jdot" type="button" onclick="carouselGo(4)" aria-label="Show Camping"></button>
+      <button class="jdot" type="button" onclick="carouselGo(4)" aria-label="Show Dunes"></button>
     </div>
     <div class="sr-only" id="car-live" aria-live="polite"></div>
   </div>
@@ -751,19 +751,21 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
 <div id="screen-map" class="screen">
   <div class="map-filter-bar">
     <button class="chip active" onclick="setChip(this,'All')">All</button>
-    <button class="chip" onclick="setChip(this,'Dunes')">🏜 Dunes</button>
-    <button class="chip" onclick="setChip(this,'Mountains')">🏔 Mountains</button>
+    <button class="chip" onclick="setChip(this,'Camping')">⛺ Camping</button>
     <button class="chip" onclick="setChip(this,'Wadis')">🌊 Wadis</button>
+    <button class="chip" onclick="setChip(this,'Mountains')">🏔 Mountains</button>
     <button class="chip" onclick="setChip(this,'Coast')">🏊 Coast</button>
+    <button class="chip" onclick="setChip(this,'Dunes')">🏜 Dunes</button>
   </div>
   <div style="position:relative;height:calc(100% - 44px)">
     <div id="map" style="width:100%;height:100%"></div>
     <div class="map-legend">
       <div class="legend-title">SPOT TYPES</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#C4773B"></div>Dunes</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#E0962A"></div>Camping</div>
       <div class="legend-item"><div class="legend-dot" style="background:#4CAF82"></div>Wadis</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#4A9BE8"></div>Coast</div>
       <div class="legend-item"><div class="legend-dot" style="background:#9B8BD8"></div>Mountains</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4A9BE8"></div>Coast</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C4773B"></div>Dunes</div>
     </div>
   </div>
 </div>
