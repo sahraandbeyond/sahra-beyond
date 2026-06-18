@@ -1,0 +1,353 @@
+{
+  "items": [
+    {
+      "group": "💧 Water & Hydration",
+      "name": "Drinking water",
+      "qty": "{water}L total",
+      "note": "",
+      "query": "water jerry can",
+      "show": []
+    },
+    {
+      "group": "💧 Water & Hydration",
+      "name": "Electrolyte tablets",
+      "qty": "{p} packs",
+      "note": "",
+      "query": "electrolyte tablets",
+      "show": []
+    },
+    {
+      "group": "💧 Water & Hydration",
+      "name": "Insulated water bottle",
+      "qty": "×{p}",
+      "note": "",
+      "query": "insulated water bottle",
+      "show": []
+    },
+    {
+      "group": "☀️ Sun Protection",
+      "name": "Sunscreen SPF 50+",
+      "qty": "",
+      "note": "",
+      "query": "sunscreen spf 50",
+      "show": []
+    },
+    {
+      "group": "☀️ Sun Protection",
+      "name": "Wide-brim hat / keffiyeh",
+      "qty": "×{p}",
+      "note": "",
+      "query": "wide brim sun hat",
+      "show": []
+    },
+    {
+      "group": "☀️ Sun Protection",
+      "name": "UV long-sleeve shirt",
+      "qty": "×{p}",
+      "note": "",
+      "query": "upf 50 long sleeve shirt",
+      "show": []
+    },
+    {
+      "group": "☀️ Sun Protection",
+      "name": "Polarised sunglasses",
+      "qty": "×{p}",
+      "note": "",
+      "query": "polarised sunglasses",
+      "show": []
+    },
+    {
+      "group": "🚙 Vehicle & Recovery",
+      "name": "Sand recovery boards",
+      "qty": "×2",
+      "note": "",
+      "query": "sand recovery boards",
+      "show": [
+        "Dunes",
+        "Camping"
+      ]
+    },
+    {
+      "group": "🚙 Vehicle & Recovery",
+      "name": "Tyre deflator + pressure gauge",
+      "qty": "",
+      "note": "",
+      "query": "tyre deflator kit 4x4",
+      "show": [
+        "Dunes",
+        "Camping"
+      ]
+    },
+    {
+      "group": "🚙 Vehicle & Recovery",
+      "name": "Portable air compressor (12V)",
+      "qty": "",
+      "note": "",
+      "query": "portable air compressor 12v off road",
+      "show": [
+        "Dunes",
+        "Camping"
+      ]
+    },
+    {
+      "group": "🚙 Vehicle & Recovery",
+      "name": "Tow rope / snatch strap",
+      "qty": "",
+      "note": "",
+      "query": "snatch strap recovery 4x4",
+      "show": [
+        "Dunes",
+        "Camping"
+      ]
+    },
+    {
+      "group": "🚙 Vehicle & Recovery",
+      "name": "Spare fuel (jerry can)",
+      "qty": "",
+      "note": "",
+      "query": "metal fuel jerry can 20l",
+      "show": [
+        "Dunes",
+        "Camping"
+      ]
+    },
+    {
+      "group": "🥾 Wadi & Water",
+      "name": "Water shoes / sandals",
+      "qty": "×{p}",
+      "note": "",
+      "query": "water shoes",
+      "show": [
+        "Wadis"
+      ]
+    },
+    {
+      "group": "🥾 Wadi & Water",
+      "name": "Dry bag (waterproof)",
+      "qty": "",
+      "note": "",
+      "query": "dry bag waterproof",
+      "show": [
+        "Wadis"
+      ]
+    },
+    {
+      "group": "🥾 Wadi & Water",
+      "name": "Quick-dry towel",
+      "qty": "×{p}",
+      "note": "",
+      "query": "quick dry towel",
+      "show": [
+        "Wadis"
+      ]
+    },
+    {
+      "group": "🥾 Wadi & Water",
+      "name": "10m rope (for scrambling)",
+      "qty": "",
+      "note": "",
+      "query": "climbing rope 10m",
+      "show": [
+        "Wadis"
+      ]
+    },
+    {
+      "group": "🤿 Snorkel & Beach",
+      "name": "Mask, snorkel & fins",
+      "qty": "×{p}",
+      "note": "",
+      "query": "snorkel set mask fins",
+      "show": [
+        "Coast"
+      ]
+    },
+    {
+      "group": "🤿 Snorkel & Beach",
+      "name": "Reef-safe sunscreen",
+      "qty": "",
+      "note": "",
+      "query": "reef safe sunscreen",
+      "show": [
+        "Coast"
+      ]
+    },
+    {
+      "group": "🤿 Snorkel & Beach",
+      "name": "Beach towel",
+      "qty": "×{p}",
+      "note": "",
+      "query": "beach towel",
+      "show": [
+        "Coast"
+      ]
+    },
+    {
+      "group": "🤿 Snorkel & Beach",
+      "name": "Dry bag (waterproof)",
+      "qty": "",
+      "note": "",
+      "query": "dry bag waterproof",
+      "show": [
+        "Coast"
+      ]
+    },
+    {
+      "group": "⛰ Trekking",
+      "name": "Hiking boots",
+      "qty": "×{p}",
+      "note": "",
+      "query": "hiking boots",
+      "show": [
+        "Mountains"
+      ]
+    },
+    {
+      "group": "⛰ Trekking",
+      "name": "Trekking poles",
+      "qty": "",
+      "note": "",
+      "query": "trekking poles",
+      "show": [
+        "Mountains"
+      ]
+    },
+    {
+      "group": "⛰ Trekking",
+      "name": "Light gloves",
+      "qty": "×{p}",
+      "note": "",
+      "query": "hiking gloves",
+      "show": [
+        "Mountains"
+      ]
+    },
+    {
+      "group": "🌌 Stargazing",
+      "name": "Red-light head torch",
+      "qty": "×{p}",
+      "note": "",
+      "query": "red light headlamp astronomy",
+      "show": [
+        "Camping"
+      ]
+    },
+    {
+      "group": "🌌 Stargazing",
+      "name": "Warm layer (nights get cold)",
+      "qty": "×{p}",
+      "note": "",
+      "query": "fleece jacket",
+      "show": [
+        "Camping"
+      ]
+    },
+    {
+      "group": "🌌 Stargazing",
+      "name": "Star-map app (offline)",
+      "qty": "",
+      "note": "Free — SkySafari / Stellarium",
+      "query": "",
+      "show": [
+        "Camping"
+      ]
+    },
+    {
+      "group": "🧭 Navigation & Power",
+      "name": "Offline maps downloaded",
+      "qty": "",
+      "note": "Free — Maps.me / Gaia GPS",
+      "query": "",
+      "show": []
+    },
+    {
+      "group": "🧭 Navigation & Power",
+      "name": "Power bank 20,000mAh",
+      "qty": "×{half}",
+      "note": "",
+      "query": "power bank 20000mah",
+      "show": []
+    },
+    {
+      "group": "🧭 Navigation & Power",
+      "name": "Headlamp + spare batteries",
+      "qty": "×{p}",
+      "note": "",
+      "query": "led headlamp camping",
+      "show": []
+    },
+    {
+      "group": "🏥 Safety & First Aid",
+      "name": "Comprehensive first-aid kit",
+      "qty": "",
+      "note": "",
+      "query": "outdoor first aid kit",
+      "show": []
+    },
+    {
+      "group": "🏥 Safety & First Aid",
+      "name": "Mylar emergency blanket",
+      "qty": "×{p}",
+      "note": "",
+      "query": "emergency mylar blanket",
+      "show": []
+    },
+    {
+      "group": "🏥 Safety & First Aid",
+      "name": "Phone charged + share live location",
+      "qty": "",
+      "note": "Tell someone your route & return time",
+      "query": "",
+      "show": []
+    },
+    {
+      "group": "⛺ Overnight Camping",
+      "name": "Tent",
+      "qty": "×{half}",
+      "note": "",
+      "query": "lightweight camping tent 2 person",
+      "show": [
+        "Overnight"
+      ]
+    },
+    {
+      "group": "⛺ Overnight Camping",
+      "name": "Sleeping bag",
+      "qty": "×{p}",
+      "note": "",
+      "query": "sleeping bag camping",
+      "show": [
+        "Overnight"
+      ]
+    },
+    {
+      "group": "⛺ Overnight Camping",
+      "name": "Camping stove + gas",
+      "qty": "",
+      "note": "",
+      "query": "portable camping stove gas",
+      "show": [
+        "Overnight"
+      ]
+    },
+    {
+      "group": "⛺ Overnight Camping",
+      "name": "Cooler box with ice",
+      "qty": "",
+      "note": "",
+      "query": "camping cooler box ice",
+      "show": [
+        "Overnight"
+      ]
+    },
+    {
+      "group": "⛺ Overnight Camping",
+      "name": "Camp chair",
+      "qty": "×{p}",
+      "note": "",
+      "query": "folding camp chair",
+      "show": [
+        "Overnight"
+      ]
+    }
+  ]
+}
