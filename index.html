@@ -477,8 +477,8 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
     </svg>
     <div class="adv-grad"></div>
     <div class="dt-hero-inner">
-      <div class="hero-eyebrow">SAHRA &amp; BEYOND · UAE OUTDOOR EXPLORER</div>
-      <div class="hero-title">Find your next <em>desert adventure</em></div>
+      <div class="hero-eyebrow" id="hero-eyebrow">SAHRA &amp; BEYOND · UAE OUTDOOR EXPLORER</div>
+      <div class="hero-title" id="hero-title">Find your next <em>desert adventure</em></div>
       <div class="dt-search"><input class="search-input" id="search-input" placeholder="Search wadis, dunes, peaks…" oninput="renderSpots()"/></div>
     </div>
   </div>
@@ -728,7 +728,7 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
     <div class="footer-social-label">Follow the journey</div>
     <div class="social-row" id="social-row"><!-- populated by renderSocial() --></div>
     <div class="footer-handle" id="footer-handle">@sahra_and_beyond</div>
-    <div class="footer-copy">As an Amazon Associate, Sahra &amp; Beyond earns from qualifying purchases.</div>
+    <div class="footer-copy" id="affiliate-disclosure">As an Amazon Associate, Sahra &amp; Beyond earns from qualifying purchases.</div>
     <div class="footer-copy" style="margin-top:6px">© <span id="footer-year"></span> Sahra &amp; Beyond · Explore responsibly</div>
   </footer>
 </div>
@@ -1157,6 +1157,13 @@ const SOCIAL_ICONS = {
 const SOCIAL_LABELS = { instagram:'Instagram', tiktok:'TikTok', youtube:'YouTube' };
 
 // Render the social buttons in the footer from current settings
+// Apply optional CMS text overrides (disclosure, hero) — only when a value is set
+function applyContentSettings(){
+  const s = settings || {};
+  const d = document.getElementById('affiliate-disclosure'); if(d && s.affiliateDisclosure) d.textContent = s.affiliateDisclosure;
+  const he = document.getElementById('hero-eyebrow'); if(he && s.heroEyebrow) he.textContent = s.heroEyebrow;
+  const ht = document.getElementById('hero-title'); if(ht && s.heroTitle) ht.textContent = s.heroTitle;
+}
 function renderSocial(){
   const row = document.getElementById('social-row');
   if(!row) return;
@@ -1265,7 +1272,7 @@ function nearMe(){
 function navTo(lat, lng, ev){ if(ev) ev.stopPropagation(); window.open('https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng, '_blank'); }
 
 // ── LOAD CONTENT from JSON files ──
-let locations = [], blogs = [];
+let locations = [], blogs = [], packing = [];
 let activeFilter = 'All';
 let mapInstance = null, mapLoaded = false, markerLayer = null;
 
@@ -1302,13 +1309,17 @@ async function loadContent() {
     if(s) settings = Object.assign({}, DEFAULT_SETTINGS, s, { social: Object.assign({}, DEFAULT_SETTINGS.social, s.social||{}) });
     if(settings.amazonTag) AMAZON_TAG = settings.amazonTag; // CMS-editable affiliate tag
   } catch(e) { /* keep defaults */ }
+  // Packing list (CMS-editable; falls back to built-in logic when the file is absent)
+  try { const pk = await fetch('/content/packing.json').then(r=>r.ok?r.json():null).catch(()=>null); if(pk && Array.isArray(pk.items) && pk.items.length) packing = pk.items; } catch(e){}
   // If the CMS files couldn't be loaded (e.g. local file:// preview), use built-in data
   if(!locations.length) locations = FALLBACK_LOCATIONS;
   if(!blogs.length) blogs = FALLBACK_BLOGS;
   renderSocial();
+  applyContentSettings();
   renderSpots();
   renderBlogs();
   renderTripDest();
+  renderPlanner();
   fillAdvCounts();
   renderDiscoverAd();
   fetchWeather();
@@ -1684,7 +1695,24 @@ function updateTrip(){
 
 function sl(q){const n=encodeURIComponent(q);return{noon:`https://www.noon.com/uae-en/search/?q=${n}`,amz:`https://www.amazon.ae/s?k=${n}`};}
 
+function packQty(tpl,p){ if(!tpl) return ''; return String(tpl).replace(/\{water\}/g,4*p).replace(/\{half\}/g,Math.max(1,Math.ceil(p/2))).replace(/\{p\}/g,p); }
+function packShow(item,cat,overnight){ const s=item.show||[]; if(!s.length) return true; for(let i=0;i<s.length;i++){ const c=s[i]; if(c==='Overnight'){ if(overnight) return true; } else if(c===cat){ return true; } } return false; }
+// Data-driven packing list (from CMS content/packing.json); falls back to built-in logic
 function buildPacking(loc,p,overnight){
+  if(!packing||!packing.length) return buildPackingFallback(loc,p,overnight);
+  const cat=loc?loc.category:'';
+  const groups=[], idx={};
+  packing.forEach(function(it){
+    if(!packShow(it,cat,overnight)) return;
+    const links = it.query ? sl(it.query) : {};
+    const item = { t: it.name, q: packQty(it.qty,p), note: it.note||'', noon: links.noon, amz: links.amz };
+    const g = it.group||'';
+    if(!(g in idx)){ idx[g]=groups.length; groups.push({h:g,items:[]}); }
+    groups[idx[g]].items.push(item);
+  });
+  return groups;
+}
+function buildPackingFallback(loc,p,overnight){
   const cats=[];
   cats.push({h:'💧 Water & Hydration',items:[
     {t:'Drinking water',q:`${4*p}L total`,...sl('water jerry can')},
