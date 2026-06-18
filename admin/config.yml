@@ -92,6 +92,9 @@ collections:
           - { label: "Google Maps API Key", name: "gmapsKey", widget: "string" }
           - { label: "OpenWeatherMap API Key", name: "weatherKey", widget: "string" }
           - { label: "Amazon Associates Tag", name: "amazonTag", widget: "string", required: false, hint: "Your Amazon.ae tracking ID (e.g. sahraandbeyon-21). Applied to every Amazon link on the site." }
+          - { label: "Affiliate Disclosure", name: "affiliateDisclosure", widget: "text", required: false, hint: "Shown in the footer. Required for Amazon/affiliate compliance." }
+          - { label: "Hero Eyebrow (optional)", name: "heroEyebrow", widget: "string", required: false, hint: "Small label above the homepage title. Leave blank to keep the default." }
+          - { label: "Hero Title (optional)", name: "heroTitle", widget: "string", required: false, hint: "Main homepage headline. Leave blank to keep the default styled title." }
           - label: "Social Profiles"
             name: "social"
             widget: "object"
@@ -100,3 +103,30 @@ collections:
               - { label: "Instagram URL", name: "instagram", widget: "string", required: false, default: "https://instagram.com/sahra_and_beyond" }
               - { label: "TikTok URL", name: "tiktok", widget: "string", required: false, default: "https://tiktok.com/@sahra_and_beyond" }
               - { label: "YouTube URL", name: "youtube", widget: "string", required: false, default: "https://youtube.com/@sahra_and_beyond" }
+
+  - name: "packing"
+    label: "Packing List"
+    files:
+      - label: "Packing List Items"
+        name: "items"
+        file: "content/packing.json"
+        description: "Master packing list. Items appear in the Trip planner, grouped by heading and filtered to the trip's adventure type."
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            label_singular: "Item"
+            summary: "{{fields.name}}  ·  {{fields.group}}"
+            fields:
+              - { label: "Group heading", name: "group", widget: "string", hint: "Items with the same heading are grouped together, e.g. '💧 Water & Hydration'." }
+              - { label: "Item name", name: "name", widget: "string" }
+              - { label: "Quantity", name: "qty", widget: "string", required: false, hint: "Optional. Tokens: {p} = group size, {half} = half the group, {water} = 4L × group. e.g. ×{p}  or  {water}L total" }
+              - { label: "Note", name: "note", widget: "string", required: false, hint: "Small grey sub-text under the item (e.g. a free app name)." }
+              - { label: "Shop search term", name: "query", widget: "string", required: false, hint: "Drives the Amazon & Noon buttons, e.g. 'sand recovery boards'. Leave blank for no shop links." }
+              - label: "Show only for"
+                name: "show"
+                widget: "select"
+                multiple: true
+                required: false
+                options: ["Overnight", "Dunes", "Wadis", "Coast", "Mountains", "Camping"]
+                hint: "Leave empty to always show. 'Overnight' shows on overnight trips; an adventure type shows only for that destination category."
