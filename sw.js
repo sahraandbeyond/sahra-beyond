@@ -1,16 +1,16 @@
 /* Sahra & Beyond service worker — offline app shell + content caching */
-const CACHE = 'sahra-v2';
+const CACHE = 'sahra-v3';
 const SHELL = [
   '/', '/?platform=android', '/index.html', '/manifest.json',
   '/icon.svg', '/icon-maskable.svg',
   '/icon-192.png', '/icon-512.png', '/icon-maskable-192.png', '/icon-maskable-512.png',
   '/content/settings.json',
-  '/content/locations/big-red.json', '/content/locations/wadi-shab.json',
-  '/content/locations/jebel-hafeet.json', '/content/locations/liwa.json',
-  '/content/locations/hatta.json', '/content/locations/dibba.json',
-  '/content/blog/2024-03-sunrise-at-big-red.json',
-  '/content/blog/2023-10-wadi-shab-cave.json',
-  '/content/blog/2024-01-liwa-milky-way.json'
+  '/content/locations/snoopy-island.json', '/content/locations/al-quaa-desert.json',
+  '/content/locations/half-desert.json', '/content/locations/mleiha-desert.json',
+  '/content/locations/wadi-showka.json', '/content/locations/jabal-yanas.json',
+  '/content/locations/crescent-moon-lake.json', '/content/locations/desert-camping-lake-view.json',
+  '/content/locations/love-lake.json', '/content/locations/shuweihat-island.json',
+  '/content/locations/sir-bani-yas-island.json'
 ];
 
 self.addEventListener('install', e => {
