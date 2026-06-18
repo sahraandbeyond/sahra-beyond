@@ -5,7 +5,7 @@ backend:
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
-site_url: https://sahraandbeyond.netlify.app
+site_url: https://sahra-beyond.netlify.app
 
 collections:
 
@@ -91,6 +91,7 @@ collections:
           - { label: "Tagline", name: "tagline", widget: "string" }
           - { label: "Google Maps API Key", name: "gmapsKey", widget: "string" }
           - { label: "OpenWeatherMap API Key", name: "weatherKey", widget: "string" }
+          - { label: "Amazon Associates Tag", name: "amazonTag", widget: "string", required: false, hint: "Your Amazon.ae tracking ID (e.g. sahraandbeyon-21). Applied to every Amazon link on the site." }
           - label: "Social Profiles"
             name: "social"
             widget: "object"
