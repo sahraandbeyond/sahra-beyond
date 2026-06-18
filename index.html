@@ -29,8 +29,8 @@
 <!-- Google AdSense loader — web only. Suppressed inside the Android app (TWA),
      which serves AdMob instead (AdSense-in-app violates AdSense policy). -->
 <script>
-  // TODO: replace with your AdSense publisher ID
-  window.ADSENSE_CLIENT = 'ca-pub-XXXXXXXXXXXXXXXX';
+  // AdSense publisher ID
+  window.ADSENSE_CLIENT = 'ca-pub-9362630267881122';
   // App (TWA) context detection: android-app:// referrer OR the ?platform=android start flag.
   window.IS_APP_CONTEXT = (function(){
     try {
@@ -2000,7 +2000,7 @@ document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click
 // ── ADSENSE UNITS (web only — suppressed inside the Android app via IS_APP_CONTEXT) ──
 function adsEnabled(){ return !window.IS_APP_CONTEXT; }
 // TODO: replace these placeholder data-ad-slot IDs with your real AdSense ad-unit slot IDs
-const AD_SLOTS = { discover: '0000000000', blog: '0000000000' };
+const AD_SLOTS = { discover: '9337878081', blog: '9337878081' }; // reuses your existing ad unit; create separate units in AdSense for per-placement reporting
 function adUnitHtml(slotId, extraClass){
   if(!adsEnabled()) return '';                 // never render AdSense in app context
   return '<div class="ad-slot ad-card '+(extraClass||'')+'">'
