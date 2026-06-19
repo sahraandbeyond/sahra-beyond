@@ -11,8 +11,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/icon.svg">
+<link rel="icon" href="/logo/Sahra_and_Beyond_AppIcon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/logo/Sahra_and_Beyond_AppIcon.png">
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sahra & Beyond — UAE Outdoor Explorer">
@@ -443,14 +443,7 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
 
 <nav>
   <div class="logo" onclick="showScreen('discover')">
-    <svg viewBox="0 0 36 24" fill="none">
-      <path d="M0 24 Q9 5 18 11 Q27 18 36 4 L36 24 Z" fill="#C0702E" opacity=".95"/>
-      <path d="M0 24 Q10 10 20 15 Q29 20 36 9 L36 24 Z" fill="#9C521B" opacity=".22"/>
-      <circle cx="6" cy="4" r=".8" fill="#33271B" opacity=".85"/>
-      <circle cx="14" cy="2" r=".6" fill="#33271B" opacity=".6"/>
-      <circle cx="26" cy="3" r=".8" fill="#C0702E" opacity=".95"/>
-      <circle cx="32" cy="6" r=".5" fill="#33271B" opacity=".55"/>
-    </svg>
+    <img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra & Beyond" width="34" height="34" style="display:block;width:34px;height:34px">
     <div class="logo-text">
       <span class="logo-sahra">Sahra</span>
       <span class="logo-beyond">&amp; Beyond</span>
@@ -727,12 +720,12 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
     <div class="footer-social-label">Follow the journey</div>
     <div class="social-row" id="social-row"><!-- populated by renderSocial() --></div>
     <div class="footer-handle" id="footer-handle">@sahra_and_beyond</div>
-    <nav class="footer-guides" style="margin-top:16px;font-size:11.5px;line-height:1.9">
+    <div class="footer-guides" style="margin-top:16px;font-size:11.5px;line-height:1.9">
       <a href="/camping/" style="color:var(--dusk-deep);margin:0 7px;text-decoration:none">Best camping spots in the UAE</a>·
       <a href="/secluded-camping/" style="color:var(--dusk-deep);margin:0 7px;text-decoration:none">Secluded camping</a>·
       <a href="/snorkeling/" style="color:var(--dusk-deep);margin:0 7px;text-decoration:none">Best snorkeling in the UAE</a>·
       <a href="/stargazing/" style="color:var(--dusk-deep);margin:0 7px;text-decoration:none">Milky Way stargazing</a>
-    </nav>
+    </div>
     <div class="footer-copy" id="affiliate-disclosure">As an Amazon Associate, Sahra &amp; Beyond earns from qualifying purchases.</div>
     <div class="footer-copy" style="margin-top:6px">© <span id="footer-year"></span> Sahra &amp; Beyond · Explore responsibly</div>
   </footer>
@@ -1483,7 +1476,7 @@ function openSaved(fromRoute){
 
 function locCardHTML(l){
   const dist = (l._dist!=null) ? ('<span class="loc-tag">'+l._dist+' km away</span>') : '';
-  return '<div class="loc-card" onclick="showSpot(\''+l.id+'\')">'
+  return '<div class="loc-card" onclick="location.href=\'/locations/'+l.id+'/\'">'
     +'<div class="loc-thumb" style="background:'+thumbBg(l.category)+'">'
     +(l.cover?'<img loading="lazy" src="'+l.cover+'" alt="'+l.name+'">':'<span>'+(l.emoji||'📍')+'</span>')
     +'<div class="loc-badge '+badgeClass(l.status)+'">'+statusLabel(l.status)+'</div>'
@@ -1554,7 +1547,7 @@ function renderSpots(){
     return;
   }
   const cards=locs.map(l=>`
-    <div class="spot-card" onclick="showSpot('${l.id}')">
+    <div class="spot-card" onclick="location.href='/locations/${l.id}/'">
       <div class="spot-thumb ${thumbClass(l.category)}">
         ${l.cover?`<img loading="lazy" src="${l.cover}" alt="${l.name}">`:''}
         ${!l.cover?l.emoji:''}
@@ -1920,7 +1913,7 @@ function renderMapPins(){
     const m=L.circleMarker([parseFloat(l.lat),parseFloat(l.lng)],{
       radius:9, fillColor:colors[l.category]||'#C0702E', color:'#fff', weight:2, opacity:1, fillOpacity:1
     });
-    m.bindPopup('<div style="font-family:Inter,sans-serif;min-width:150px"><div style="font-size:20px;margin-bottom:3px">'+(l.emoji||'📍')+'</div><div style="font-weight:700;font-size:14px;color:#33271B">'+l.name+'</div><div style="font-size:11px;color:#7C7264;margin-top:2px">'+l.category+' · '+l.difficulty+'</div><div style="font-family:monospace;font-size:10.5px;color:#9C521B;margin-top:4px">'+fmtCoords(l.lat,l.lng)+'</div><div style="margin-top:8px;font-size:12px;font-weight:700;color:#9C521B;cursor:pointer" onclick="showSpot(\''+l.id+'\')">View details →</div></div>');
+    m.bindPopup('<div style="font-family:Inter,sans-serif;min-width:150px"><div style="font-size:20px;margin-bottom:3px">'+(l.emoji||'📍')+'</div><div style="font-weight:700;font-size:14px;color:#33271B">'+l.name+'</div><div style="font-size:11px;color:#7C7264;margin-top:2px">'+l.category+' · '+l.difficulty+'</div><div style="font-family:monospace;font-size:10.5px;color:#9C521B;margin-top:4px">'+fmtCoords(l.lat,l.lng)+'</div><a href="/locations/'+l.id+'/" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#9C521B;text-decoration:none">View details →</a></div>');
     m.addTo(markerLayer);
   });
   if(shown.length){

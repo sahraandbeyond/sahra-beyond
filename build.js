@@ -31,7 +31,11 @@ const CSS = `
 body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;background:#FAF6EF;line-height:1.65}
 a{color:#9C521B}
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,5vw,48px);border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.92);backdrop-filter:blur(10px);z-index:5;flex-wrap:wrap}
-.brand{font-family:'Playfair Display',serif;font-weight:900;letter-spacing:2px;color:#33271B;text-decoration:none;font-size:16px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:'Playfair Display',serif;font-weight:900;letter-spacing:2px;color:#33271B;text-decoration:none;font-size:16px}
+.brand img{display:block;width:30px;height:30px}
+.hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:18px;margin:0 0 24px}
+.ig{margin:28px 0}
+.ig .instagram-media{margin:0 auto 14px!important}
 .hdr-nav a{margin-left:16px;font-size:13px;font-weight:600;color:#7C7264;text-decoration:none}
 .hdr-nav a:hover{color:#C0702E}
 main{max-width:820px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(16px,5vw,32px)}
@@ -100,13 +104,19 @@ function shell({ title, desc, canonical, jsonld, bodyHtml }) {
 <style>${CSS}</style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/">SAHRA &amp; BEYOND</a><nav class="hdr-nav"><a href="/camping/">Camping</a><a href="/snorkeling/">Snorkeling</a><a href="/stargazing/">Stargazing</a><a href="/">Map &amp; Planner</a></nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="" width="30" height="30"> Sahra &amp; Beyond</a><nav class="hdr-nav"><a href="/">Explore</a><a href="/#map">Map</a><a href="/#weather">Weather</a><a href="/#planner">Trip</a></nav></header>
 <main>${bodyHtml}</main>
 <footer class="ftr">${footerHtml()}</footer>
 </body>
 </html>`;
 }
 
+function igSection(posts) {
+  if (!posts || !posts.length) return '';
+  const items = posts.map(p => { const u = (typeof p === 'string' ? p : (p && p.url) || '').split('?')[0]; return u ? `<blockquote class="instagram-media" data-instgrm-permalink="${u}" data-instgrm-version="14" style="max-width:540px;width:100%;margin:0 auto 14px"><a href="${u}">View this post on Instagram</a></blockquote>` : ''; }).join('');
+  if (!items) return '';
+  return `<section class="ig"><h2>On the &rsquo;gram</h2>${items}<script async src="https://www.instagram.com/embed.js"></script></section>`;
+}
 function locCard(l) {
   return `<a class="card" href="/locations/${l.id}/"><span class="card-emoji">${l.emoji || '📍'}</span><span class="card-body"><strong>${esc(l.name)}</strong><em>${esc(l.emirate)} · ${esc(l.category)}</em><span>${esc(l.desc)}</span></span></a>`;
 }
@@ -138,7 +148,9 @@ locations.forEach(l => {
     <nav class="crumbs"><a href="/">Home</a> &rsaquo; ${esc(l.category)} &rsaquo; <span>${esc(l.name)}</span></nav>
     <h1>${esc(l.name)}</h1>
     <p class="lede">${esc(l.emirate)} · ${esc(l.category)} · ${esc(l.difficulty)} · Best ${esc(l.season)}</p>
+    ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}">` : ''}
     <div class="content">${paras(l.body || l.desc)}</div>
+    ${igSection(l.igPosts)}
     <aside class="facts">
       <h2>Quick facts</h2>
       <ul>
@@ -150,11 +162,13 @@ locations.forEach(l => {
         <li><strong>GPS:</strong> ${l.lat}, ${l.lng}</li>
       </ul>
       <div class="cta">
-        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}" target="_blank" rel="noopener">Open in Google Maps</a>
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}" target="_blank" rel="noopener">Google Maps</a>
+        <a class="btn alt" href="https://maps.apple.com/?ll=${l.lat},${l.lng}&q=${encodeURIComponent(l.name)}" target="_blank" rel="noopener">Apple Maps</a>
         ${hash ? `<a class="btn alt" href="/#${hash}">Plan a trip in the app</a>` : `<a class="btn alt" href="/">Plan a trip in the app</a>`}
       </div>
     </aside>
     ${related.length ? `<section class="related"><h2>More ${esc(l.category)} spots in the UAE</h2><div class="cards">${related.map(locCard).join('')}</div></section>` : ''}
+    <p class="back" style="margin-top:26px"><a href="/">← Back to the map &amp; all spots</a></p>
   </article>`;
   write(`locations/${l.id}/index.html`, shell({ title, desc, canonical, jsonld, bodyHtml: body }));
 });
