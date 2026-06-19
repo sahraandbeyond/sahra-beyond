@@ -1,7 +1,6 @@
 {
   "buildCommand": "node build.js",
   "outputDirectory": ".",
-  "trailingSlash": false,
   "headers": [
     {
       "source": "/sw.js",

@@ -1,5 +1,5 @@
 /* Sahra & Beyond service worker — offline app shell + content caching */
-const CACHE = 'sahra-v3';
+const CACHE = 'sahra-v4';
 const SHELL = [
   '/', '/?platform=android', '/index.html', '/manifest.json',
   '/icon.svg', '/icon-maskable.svg',
@@ -36,6 +36,9 @@ self.addEventListener('fetch', e => {
 
   // Only handle same-origin requests; let weather/maps/ads APIs go to network.
   if (url.origin !== self.location.origin) return;
+
+  // Never cache the admin CMS or API routes (avoids stale config / OAuth issues).
+  if (url.pathname.startsWith('/admin') || url.pathname.startsWith('/api')) return;
 
   // Content JSON: network-first so edits show, fall back to cache offline.
   if (url.pathname.startsWith('/content/')) {
