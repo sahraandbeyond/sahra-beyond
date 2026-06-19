@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="400" height="350">
+<defs><clipPath id="emClip"><circle cx="100" cy="92" r="72"/></clipPath></defs>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Space+Mono:wght@400;700&display=swap');.wm{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-weight:900}.tg{font-family:'Space Mono','Courier New',monospace;font-weight:400}</style>
+<g transform="translate(100,18)"><circle cx="100" cy="92" r="78" fill="none" stroke="#E8D5B0" stroke-width="2.6"/>
+<circle cx="100" cy="92" r="67" fill="none" stroke="#E8D5B0" stroke-width="1" opacity="0.4"/>
+<polygon points="100,6 93,22 107,22" fill="#E8D5B0"/>
+<line x1="171" y1="92" x2="178" y2="92" stroke="#E8D5B0" stroke-width="1.6" opacity="0.6"/>
+<line x1="22" y1="92" x2="29" y2="92" stroke="#E8D5B0" stroke-width="1.6" opacity="0.6"/>
+<line x1="100" y1="163" x2="100" y2="170" stroke="#E8D5B0" stroke-width="1.6" opacity="0.6"/>
+<g clip-path="url(#emClip)">
+<line x1="100" y1="72" x2="100" y2="60" stroke="#E8D5B0" stroke-width="2.4"/>
+<line x1="82" y1="78" x2="73" y2="67" stroke="#E8D5B0" stroke-width="2.4"/>
+<line x1="118" y1="78" x2="127" y2="67" stroke="#E8D5B0" stroke-width="2.4"/>
+<path d="M75,104 A25,25 0 0 1 125,104 Z" fill="#E8D5B0"/>
+<path d="M28,106 Q72,84 100,102 Q138,124 172,103 L172,170 L28,170 Z" fill="#E8D5B0"/>
+<path d="M28,132 Q74,112 118,128 Q150,138 172,124 L172,170 L28,170 Z" fill="#E8D5B0" opacity="0.55"/>
+</g></g>
+<text class="wm" x="200" y="270" text-anchor="middle" font-size="50" fill="#E8D5B0">Sahra <tspan font-style="italic">&amp;</tspan> Beyond</text>
+<text class="tg" x="200" y="305" text-anchor="middle" font-size="17" letter-spacing="6" fill="#E8D5B0" opacity="0.7">UAE DESERT &amp; OUTDOOR</text>
+</svg>
