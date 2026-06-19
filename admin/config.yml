@@ -44,7 +44,8 @@ collections:
           - { label: "Ideal", value: "safe" }
           - { label: "Warm", value: "warn" }
           - { label: "Hot / Extreme", value: "hot" }
-      - { label: "Description", name: "desc", widget: "text" }
+      - { label: "Short Description", name: "desc", widget: "text", hint: "One or two sentences. Shown on cards, the map and as the page meta description." }
+      - { label: "Full Description (SEO page)", name: "body", widget: "text", required: false, hint: "A few paragraphs (separate with a blank line). This is the main content of the location's own Google-indexed page. Leave blank to fall back to the short description." }
       - { label: "Cover Photo", name: "cover", widget: "image", required: false }
       - label: "Instagram Posts"
         name: "igPosts"

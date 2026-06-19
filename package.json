@@ -1,0 +1,9 @@
+{
+  "name": "sahra-beyond",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sahra & Beyond — UAE desert & outdoor planner",
+  "scripts": {
+    "build": "node build.js"
+  }
+}

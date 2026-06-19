@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://sahra-beyond-qo5i.vercel.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://sahra-beyond-qo5i.vercel.app/#camping</loc><priority>0.8</priority></url>
-  <url><loc>https://sahra-beyond-qo5i.vercel.app/#wadis</loc><priority>0.8</priority></url>
-  <url><loc>https://sahra-beyond-qo5i.vercel.app/#mountains</loc><priority>0.8</priority></url>
-  <url><loc>https://sahra-beyond-qo5i.vercel.app/#coast</loc><priority>0.8</priority></url>
-  <url><loc>https://sahra-beyond-qo5i.vercel.app/#dunes</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/camping/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/secluded-camping/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/snorkeling/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/stargazing/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/al-quaa-desert/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/big-red/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/crescent-moon-lake/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/desert-camping-lake-view/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/dibba/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/half-desert/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/hatta/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/jabal-yanas/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/jebel-hafeet/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/liwa/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/love-lake/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/mleiha-desert/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/shuweihat-island/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/sir-bani-yas-island/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/snoopy-island/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/wadi-shab/</loc><priority>0.8</priority></url>
+  <url><loc>https://sahra-beyond-qo5i.vercel.app/locations/wadi-showka/</loc><priority>0.8</priority></url>
 </urlset>
