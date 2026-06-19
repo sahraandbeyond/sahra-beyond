@@ -1,1 +1,17 @@
-{"id": "snoopy-island", "name": "Snoopy Island", "emoji": "🐠", "emirate": "Fujairah", "category": "Coast", "difficulty": "Easy", "season": "Oct–May", "distance": "~1.5h from Dubai", "lat": 25.5036, "lng": 56.3621, "status": "safe", "desc": "A rocky island off Al Aqah named for its dog-like profile, ringed by coral and home to turtles, reef sharks and clouds of tropical fish — the UAE's most beloved shore snorkel.", "cover": "", "igPosts": [], "body": "Snoopy Island is the UAE's most popular shore snorkeling spot, lying just off Al Aqah beach on the Fujairah coast. Named for its resemblance to the cartoon dog lying on its back, the island is wrapped in shallow coral reef you can reach by swimming straight out from the sand — no boat required.\n\nExpect green turtles, blacktip reef sharks, parrotfish and clouds of sergeant majors in clear, calm water that's ideal for beginners. Go early on a weekday for the best visibility and fewest crowds, bring your own mask and fins, and wear reef-safe sunscreen. It's an easy day trip from Dubai or Sharjah and ranks among the best snorkeling experiences in the UAE."}
+{
+  "emirate": "Fujairah",
+  "body": "Snoopy Island is the UAE's most popular shore snorkeling spot, lying just off Al Aqah beach on the Fujairah coast. Named for its resemblance to the cartoon dog lying on its back, the island is wrapped in shallow coral reef you can reach by swimming straight out from the sand — no boat required.\n\nExpect green turtles, blacktip reef sharks, parrotfish and clouds of sergeant majors in clear, calm water that's ideal for beginners. Go early on a weekday for the best visibility and fewest crowds, bring your own mask and fins, and wear reef-safe sunscreen. It's an easy day trip from Dubai or Sharjah and ranks among the best snorkeling experiences in the UAE.",
+  "season": "Oct–May",
+  "lng": 56.364053,
+  "emoji": "🐠",
+  "name": "Snoopy Island",
+  "desc": "A rocky island off Al Aqah named for its dog-like profile, ringed by coral and home to turtles, reef sharks and clouds of tropical fish — the UAE's most beloved shore snorkel.",
+  "status": "safe",
+  "igPosts": [],
+  "distance": "~1.5h from Dubai",
+  "cover": "",
+  "id": "snoopy-island",
+  "difficulty": "Easy",
+  "category": "Coast",
+  "lat": 25.492221
+}
