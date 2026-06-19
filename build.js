@@ -25,6 +25,27 @@ const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
 const social = settings.social || {};
 const disclosure = settings.affiliateDisclosure || 'As an Amazon Associate, Sahra & Beyond earns from qualifying purchases.';
 const CAT_HASH = { Camping: 'camping', Wadis: 'wadis', Mountains: 'mountains', Coast: 'coast', Dunes: 'dunes' };
+const AMAZON_TAG = settings.amazonTag || 'sahraandbeyon-21';
+const WEATHER_KEY = settings.weatherKey || '';
+const packingData = readJSON(path.join(ROOT, 'content/packing.json'));
+const PACKING = (packingData && Array.isArray(packingData.items)) ? packingData.items : [];
+// Category hero gradients (echo the app's scene palettes)
+const CAT_BG = {
+  Camping: 'linear-gradient(140deg,#3A2F66 0%,#7A4F63 45%,#C0702E 100%)',
+  Wadis: 'linear-gradient(140deg,#1F8A74 0%,#3FA98E 50%,#7FCBB0 100%)',
+  Coast: 'linear-gradient(140deg,#1C7AA2 0%,#3AA0C8 50%,#7EC8E6 100%)',
+  Mountains: 'linear-gradient(140deg,#333E5C 0%,#5E6E92 50%,#90A4C8 100%)',
+  Dunes: 'linear-gradient(140deg,#9A591A 0%,#C9842F 45%,#EBB36B 100%)'
+};
+// Packing items that apply to a location's category (always + this category + overnight-only)
+function packItemsFor(l) {
+  return PACKING.filter(it => {
+    const s = it.show || [];
+    if (!s.length) return true;
+    if (s.indexOf('Overnight') !== -1) return true;
+    return s.indexOf(l.category) !== -1;
+  }).map(it => ({ group: it.group, name: it.name, qty: it.qty || '', note: it.note || '', query: it.query || '', overnight: (it.show || []).indexOf('Overnight') !== -1 }));
+}
 
 const CSS = `
 *{margin:0;padding:0;box-sizing:border-box}
@@ -45,6 +66,33 @@ h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(28px,5vw
 .lede{font-size:14px;color:#9C521B;font-weight:600;margin-bottom:22px}
 h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33271B;margin:30px 0 12px}
 .content p{margin-bottom:16px;font-size:16.5px;color:#4A4136}
+/* location hero */
+.loc-hero{position:relative;color:#fff;padding:clamp(36px,7vw,76px) clamp(16px,5vw,32px) clamp(30px,5vw,54px);overflow:hidden}
+.loc-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 80% 0%,rgba(255,255,255,.18),transparent 55%),linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.26));pointer-events:none}
+.loc-hero-inner{position:relative;z-index:1;max-width:820px;margin:0 auto}
+.loc-hero .crumbs,.loc-hero .crumbs a{color:rgba(255,255,255,.85)}
+.loc-emoji{font-size:56px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.3))}
+.loc-hero h1{color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.35);margin-bottom:8px}
+.loc-hero .lede{color:rgba(255,255,255,.96);margin-bottom:16px}
+.wx{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:14px;padding:9px 15px;font-size:13.5px;font-weight:600;color:#fff;min-height:42px}
+.wx .wx-ic{font-size:20px}
+.wx .wx-temp{font-family:'Space Mono',monospace;font-size:20px;font-weight:700}
+.wx .wx-desc{text-transform:capitalize;opacity:.95}
+/* packing */
+.pack{margin:34px 0}
+.pack-controls{display:flex;flex-wrap:wrap;gap:18px;margin:12px 0 18px}
+.pack-controls .grp{display:flex;gap:6px;flex-wrap:wrap}
+.pack-btn{padding:8px 13px;border-radius:10px;border:1px solid rgba(43,37,32,.15);background:#fff;color:#4A4136;font-size:13px;font-weight:600;cursor:pointer}
+.pack-btn.on{background:#C0702E;border-color:#C0702E;color:#fff}
+.pack-grp-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9C521B;font-weight:700;margin:18px 0 8px}
+.pack-row{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(43,37,32,.1);border-radius:12px;padding:11px 14px;margin-bottom:8px;box-shadow:0 2px 10px rgba(58,42,28,.04)}
+.pack-row .pk-main{flex:1;min-width:0}
+.pack-row .pk-name{font-size:14.5px;color:#2B2620;font-weight:500}
+.pack-row .pk-note{font-size:11.5px;color:#7C7264;margin-top:2px}
+.pack-row .pk-qty{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#9C521B;background:rgba(192,112,46,.12);padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pk-amz{padding:6px 12px;border-radius:9px;background:rgba(255,153,0,.14);border:1px solid rgba(255,153,0,.4);color:#C56A00;font-size:11.5px;font-weight:700;text-decoration:none;white-space:nowrap}
+.pk-amz:hover{background:rgba(255,153,0,.26)}
+.disc-note{font-size:11px;color:#7C7264;margin-top:10px}
 .facts{background:#fff;border:1px solid rgba(43,37,32,.1);border-radius:16px;padding:20px 22px;margin:26px 0;box-shadow:0 2px 12px rgba(58,42,28,.06)}
 .facts h2{margin-top:0;font-size:18px}
 .facts ul{list-style:none}
@@ -97,7 +145,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml }) {
 <meta property="og:image" content="${SITE}/icon-512.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
@@ -105,7 +153,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml }) {
 </head>
 <body>
 <header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="" width="30" height="30"> Sahra &amp; Beyond</a><nav class="hdr-nav"><a href="/">Explore</a><a href="/#map">Map</a><a href="/#weather">Weather</a><a href="/#planner">Trip</a></nav></header>
-<main>${bodyHtml}</main>
+${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
 </body>
 </html>`;
@@ -143,11 +191,18 @@ locations.forEach(l => {
       ]
     }
   ];
+  const packItems = packItemsFor(l);
   const body = `
-  <article>
-    <nav class="crumbs"><a href="/">Home</a> &rsaquo; ${esc(l.category)} &rsaquo; <span>${esc(l.name)}</span></nav>
-    <h1>${esc(l.name)}</h1>
-    <p class="lede">${esc(l.emirate)} · ${esc(l.category)} · ${esc(l.difficulty)} · Best ${esc(l.season)}</p>
+  <section class="loc-hero" style="background:${CAT_BG[l.category] || CAT_BG.Dunes}">
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; ${esc(l.category)} &rsaquo; <span>${esc(l.name)}</span></nav>
+      <div class="loc-emoji">${l.emoji || '📍'}</div>
+      <h1>${esc(l.name)}</h1>
+      <p class="lede">${esc(l.emirate)} · ${esc(l.category)} · ${esc(l.difficulty)} · Best ${esc(l.season)}</p>
+      <div class="wx" id="wx" data-lat="${l.lat}" data-lng="${l.lng}">Loading live weather…</div>
+    </div>
+  </section>
+  <main>
     ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}">` : ''}
     <div class="content">${paras(l.body || l.desc)}</div>
     ${igSection(l.igPosts)}
@@ -164,12 +219,43 @@ locations.forEach(l => {
       <div class="cta">
         <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}" target="_blank" rel="noopener">Google Maps</a>
         <a class="btn alt" href="https://maps.apple.com/?ll=${l.lat},${l.lng}&q=${encodeURIComponent(l.name)}" target="_blank" rel="noopener">Apple Maps</a>
-        ${hash ? `<a class="btn alt" href="/#${hash}">Plan a trip in the app</a>` : `<a class="btn alt" href="/">Plan a trip in the app</a>`}
       </div>
     </aside>
+    <section class="pack">
+      <h2>What to pack for ${esc(l.name)}</h2>
+      <div class="pack-controls">
+        <div class="grp" role="group" aria-label="Group size">
+          <button class="pack-btn" type="button" data-grp="1">Solo</button>
+          <button class="pack-btn on" type="button" data-grp="4">2&ndash;4</button>
+          <button class="pack-btn" type="button" data-grp="8">5&ndash;10</button>
+          <button class="pack-btn" type="button" data-grp="12">10+</button>
+        </div>
+        <div class="grp" role="group" aria-label="Trip type">
+          <button class="pack-btn on" type="button" data-ov="0">Day trip</button>
+          <button class="pack-btn" type="button" data-ov="1">Overnight</button>
+        </div>
+      </div>
+      <div id="pack-list"></div>
+      <p class="disc-note">${esc(disclosure)}</p>
+    </section>
     ${related.length ? `<section class="related"><h2>More ${esc(l.category)} spots in the UAE</h2><div class="cards">${related.map(locCard).join('')}</div></section>` : ''}
-    <p class="back" style="margin-top:26px"><a href="/">← Back to the map &amp; all spots</a></p>
-  </article>`;
+    <p class="back" style="margin-top:26px"><a href="/">&larr; Back to the map &amp; all spots</a></p>
+  </main>
+  <script>
+  (function(){
+    var wx=document.getElementById('wx');
+    if(wx){var lat=wx.getAttribute('data-lat'),lng=wx.getAttribute('data-lng'),k=${JSON.stringify(WEATHER_KEY)};
+      if(lat&&lng&&k){fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+'&appid='+k+'&units=metric').then(function(r){return r.json();}).then(function(d){if(d&&d.main){var c=(d.weather&&d.weather[0]&&d.weather[0].icon||'').slice(0,2);var ic={'01':'☀️','02':'🌤','03':'⛅','04':'☁️','09':'🌧','10':'🌦','11':'⛈','13':'❄️','50':'🌫'}[c]||'🌡';wx.innerHTML='<span class="wx-ic">'+ic+'</span><span class="wx-temp">'+Math.round(d.main.temp)+'°C</span><span class="wx-desc">'+(d.weather&&d.weather[0]?d.weather[0].description:'')+'</span>';}else{wx.style.display='none';}}).catch(function(){wx.style.display='none';});}else{wx.style.display='none';}}
+    var PACK=${JSON.stringify(packItems)},TAG=${JSON.stringify(AMAZON_TAG)},state={p:4,ov:false};
+    function qy(t){if(!t)return '';return String(t).replace(/\\{water\\}/g,4*state.p).replace(/\\{half\\}/g,Math.max(1,Math.ceil(state.p/2))).replace(/\\{p\\}/g,state.p);}
+    function amz(q){return 'https://www.amazon.ae/s?k='+encodeURIComponent(q)+'&tag='+TAG;}
+    function he(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function render(){var el=document.getElementById('pack-list');if(!el)return;var items=PACK.filter(function(it){return !it.overnight||state.ov;});var groups=[],idx={};items.forEach(function(it){if(!(it.group in idx)){idx[it.group]=groups.length;groups.push({h:it.group,items:[]});}groups[idx[it.group]].items.push(it);});el.innerHTML=groups.map(function(g){return '<div class="pack-grp-title">'+he(g.h)+'</div>'+g.items.map(function(it){var q=qy(it.qty);return '<div class="pack-row"><div class="pk-main"><div class="pk-name">'+he(it.name)+'</div>'+(it.note?'<div class="pk-note">'+he(it.note)+'</div>':'')+'</div>'+(q?'<span class="pk-qty">'+he(q)+'</span>':'')+(it.query?'<a class="pk-amz" href="'+amz(it.query)+'" target="_blank" rel="noopener sponsored">Amazon</a>':'')+'</div>';}).join('');}).join('');}
+    document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
+    document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
+    render();
+  })();
+  </script>`;
   write(`locations/${l.id}/index.html`, shell({ title, desc, canonical, jsonld, bodyHtml: body }));
 });
 
@@ -224,14 +310,14 @@ LANDINGS.forEach(L => {
     }
   ];
   const body = `
-  <div>
+  <main>
     <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(L.h1)}</span></nav>
     <h1>${esc(L.h1)}</h1>
     <div class="content">${paras(L.intro)}</div>
     <h2>Our top picks</h2>
     <div class="cards">${L.pick.map(locCard).join('')}</div>
-    <p class="back"><a href="/">Explore all spots on the interactive map &amp; trip planner →</a></p>
-  </div>`;
+    <p class="back"><a href="/">Explore all spots on the interactive map &rarr;</a></p>
+  </main>`;
   write(`${L.slug}/index.html`, shell({ title: L.title, desc: L.desc, canonical, jsonld, bodyHtml: body }));
 });
 

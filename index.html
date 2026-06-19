@@ -453,7 +453,6 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
     <button class="nav-tab active" onclick="showScreen('discover')">Discover</button>
     <button class="nav-tab" onclick="showScreen('map')">Map</button>
     <button class="nav-tab" onclick="showScreen('weather')">Weather</button>
-    <button class="nav-tab" onclick="showScreen('planner')">Trip</button>
     <button class="nav-tab" onclick="showScreen('blog')">Blog</button>
   </div>
 </nav>
@@ -1328,7 +1327,7 @@ let currentCat = null;
 function showScreen(name, fromRoute) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
-  const tabs = ['discover','map','weather','planner','blog'];
+  const tabs = ['discover','map','weather','blog'];
   document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===name));
   window.scrollTo(0,0);
   currentCat = null;
