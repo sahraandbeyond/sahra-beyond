@@ -30,7 +30,7 @@ the PWA bits below are deployed.
 ## Option A — PWABuilder (recommended, no command line)
 
 1. Go to **https://www.pwabuilder.com**.
-2. Enter your live URL (e.g. `https://sahra-beyond.netlify.app`) and click
+2. Enter your live URL (e.g. `https://sahra-beyond-qo5i.vercel.app`) and click
    **Start**. It scores the manifest/SW (should pass).
 3. Click **Package for stores → Android → Google Play**.
 4. Set:
@@ -49,7 +49,7 @@ the PWA bits below are deployed.
 
 ```bash
 npm i -g @bubblewrap/cli
-bubblewrap init --manifest https://sahra-beyond.netlify.app/manifest.json
+bubblewrap init --manifest https://sahra-beyond-qo5i.vercel.app/manifest.json
 # When prompted: Application ID = app.sahraandbeyond.twa
 #                Launch URL     = /?platform=android
 bubblewrap build

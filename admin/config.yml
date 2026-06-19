@@ -1,11 +1,14 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: sahraandbeyond/sahra-beyond
   branch: main
+  base_url: https://sahra-beyond-qo5i.vercel.app
+  auth_endpoint: api/auth
 
-media_folder: "public/uploads"
+media_folder: "uploads"
 public_folder: "/uploads"
 
-site_url: https://sahra-beyond.netlify.app
+site_url: https://sahra-beyond-qo5i.vercel.app
 
 collections:
 
