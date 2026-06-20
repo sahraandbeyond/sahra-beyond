@@ -1347,7 +1347,7 @@ function showScreen(name, fromRoute) {
   if(window.__advUpdate) requestAnimationFrame(window.__advUpdate);
   if (name==='map') {
     initMap();
-    if (mapInstance) setTimeout(()=>{ mapInstance.invalidateSize(); renderMapPins(); },200);
+    [60,200,500,1000].forEach(d=>setTimeout(()=>{ if(mapInstance){ mapInstance.invalidateSize(); renderMapPins(); } },d));
   }
 }
 
@@ -1911,7 +1911,14 @@ function buildMap(){
   }).addTo(mapInstance);
   markerLayer=L.layerGroup().addTo(mapInstance);
   renderMapPins();
-  setTimeout(function(){ if(mapInstance) mapInstance.invalidateSize(); },200);
+  // Recalculate size several times — slow WebViews/devices lay out the container late,
+  // and Leaflet won't fetch tiles until it knows the real dimensions.
+  [60,200,500,1000,2000].forEach(function(d){
+    setTimeout(function(){ if(mapInstance){ mapInstance.invalidateSize(); renderMapPins(); } },d);
+  });
+  // Recover from late layout / orientation changes inside app WebViews.
+  window.addEventListener('resize', function(){ if(mapInstance) mapInstance.invalidateSize(); });
+  window.addEventListener('orientationchange', function(){ setTimeout(function(){ if(mapInstance) mapInstance.invalidateSize(); },300); });
 }
 function renderMapPins(){
   if(!mapInstance||!window.L) return;
