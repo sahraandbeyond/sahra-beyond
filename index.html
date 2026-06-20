@@ -2130,8 +2130,15 @@ loadContent();
 applyRoute();
 
 // Register service worker (offline + installable). Skipped on file:// where it can't run.
+// In the native app we deliberately do NOT use a service worker — the app must always show
+// live content — so unregister any existing worker and clear its caches there.
 if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
-  window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); });
+  if(window.IS_APP_CONTEXT){
+    navigator.serviceWorker.getRegistrations().then(function(rs){ rs.forEach(function(r){ r.unregister(); }); }).catch(function(){});
+    if(window.caches && caches.keys){ caches.keys().then(function(ks){ ks.forEach(function(k){ caches.delete(k); }); }).catch(function(){}); }
+  } else {
+    window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); });
+  }
 }
 
 // Privacy-friendly analytics: add a Plausible (or similar) script tag in <head>
