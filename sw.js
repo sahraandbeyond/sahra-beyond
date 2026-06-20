@@ -1,5 +1,5 @@
 /* Sahra & Beyond service worker — offline app shell + content caching */
-const CACHE = 'sahra-v4';
+const CACHE = 'sahra-v5';
 const SHELL = [
   '/', '/?platform=android', '/index.html', '/manifest.json',
   '/icon.svg', '/icon-maskable.svg',
@@ -52,12 +52,25 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // App shell: cache-first, then network, with index fallback for navigations.
+  // HTML pages & navigations: network-first so the latest version always loads when online;
+  // fall back to cache (then the app shell) only when offline. This stops the "old version on first open" issue.
+  if (req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html')) {
+    e.respondWith(
+      fetch(req).then(r => {
+        const copy = r.clone();
+        caches.open(CACHE).then(c => c.put(req, copy));
+        return r;
+      }).catch(() => caches.match(req).then(c => c || caches.match('/index.html')))
+    );
+    return;
+  }
+
+  // Other static assets (icons, fonts, manifest): cache-first for speed, then network.
   e.respondWith(
     caches.match(req).then(c => c || fetch(req).then(r => {
       const copy = r.clone();
       caches.open(CACHE).then(ca => ca.put(req, copy));
       return r;
-    }).catch(() => req.mode === 'navigate' ? caches.match('/index.html') : undefined))
+    }))
   );
 });
