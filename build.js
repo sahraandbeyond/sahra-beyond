@@ -227,6 +227,7 @@ locations.forEach(l => {
         <a class="btn alt" href="https://maps.apple.com/?ll=${l.lat},${l.lng}&q=${encodeURIComponent(l.name)}" target="_blank" rel="noopener">Apple Maps</a>
       </div>
     </aside>
+    ${igSection(l.igPosts)}
     <section class="pack">
       <h2>What to pack for ${esc(l.name)}</h2>
       <div class="pack-controls">
@@ -244,7 +245,6 @@ locations.forEach(l => {
       <div id="pack-list"></div>
       <p class="disc-note">${esc(disclosure)}</p>
     </section>
-    ${igSection(l.igPosts)}
     ${related.length ? `<section class="related"><h2>More ${esc(l.category)} spots in the UAE</h2><div class="cards">${related.map(locCard).join('')}</div></section>` : ''}
     <p class="back" style="margin-top:26px"><a href="/">&larr; Back to the map &amp; all spots</a></p>
   </main>
