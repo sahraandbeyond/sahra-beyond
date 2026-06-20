@@ -39,6 +39,8 @@
       return inApp || flagged;
     } catch (e) { return false; }
   })();
+  // In the native Android app shell, mark <html> so we can hide the web nav and fix layout.
+  if (window.IS_APP_CONTEXT) { try { document.documentElement.classList.add('is-app'); } catch (e) {} }
   // Only inject the AdSense library on the web. Never in-app.
   if (!window.IS_APP_CONTEXT) {
     var adsScript = document.createElement('script');
@@ -438,6 +440,14 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
 .social-btn svg{width:22px;height:22px;display:block}
 .footer-handle{font-family:'Space Mono',monospace;font-size:11px;color:var(--dusk-deep);margin-top:14px}
 .footer-copy{font-size:10.5px;color:var(--mist);margin-top:18px}
+/* ===== NATIVE ANDROID APP SHELL (?platform=android) ===== */
+html.is-app body>nav{display:none!important}
+html.is-app body{padding-top:0!important}
+html.is-app .opts-wrap{top:0!important}
+/* Map fills the WebView reliably via flexbox (100vh math collapses in WebViews) */
+html.is-app #screen-map.active{display:flex!important;flex-direction:column!important;height:100vh!important}
+html.is-app #screen-map>div:not(.map-filter-bar){flex:1 1 auto!important;height:auto!important;min-height:0}
+html.is-app #map{height:100%!important}
 </style>
 </head>
 <body>
