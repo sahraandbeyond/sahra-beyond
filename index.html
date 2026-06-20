@@ -444,10 +444,12 @@ body.anim-off .s-sun,body.anim-off .s-haze,body.anim-off .s-sand,body.anim-off .
 html.is-app body>nav{display:none!important}
 html.is-app body{padding-top:0!important}
 html.is-app .opts-wrap{top:0!important}
-/* Map fills the WebView reliably via flexbox (100vh math collapses in WebViews) */
-html.is-app #screen-map.active{display:flex!important;flex-direction:column!important;height:100vh!important}
-html.is-app #screen-map>div:not(.map-filter-bar){flex:1 1 auto!important;height:auto!important;min-height:0}
-html.is-app #map{height:100%!important}
+/* Map fills the WebView reliably. `vh` units collapse to 0 in Android WebView during
+   layout, so we pin the map screen to the real viewport rectangle with position:fixed
+   (top/bottom anchored, no vh) and let flexbox distribute the children. */
+html.is-app #screen-map.active{position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;height:auto!important;width:auto!important;display:flex!important;flex-direction:column!important;z-index:1!important}
+html.is-app #screen-map>div:not(.map-filter-bar){flex:1 1 auto!important;height:auto!important;min-height:0!important}
+html.is-app #map{height:100%!important;min-height:0!important}
 </style>
 </head>
 <body>
@@ -1346,8 +1348,8 @@ function showScreen(name, fromRoute) {
   if(!fromRoute) location.hash = name==='discover' ? '' : ('#'+name);
   if(window.__advUpdate) requestAnimationFrame(window.__advUpdate);
   if (name==='map') {
-    initMap();
-    [60,200,500,1000].forEach(d=>setTimeout(()=>{ if(mapInstance){ mapInstance.invalidateSize(); renderMapPins(); } },d));
+    initMap(); sizeAppMap();
+    [60,200,500,1000].forEach(d=>setTimeout(()=>{ sizeAppMap(); if(mapInstance){ mapInstance.invalidateSize(); renderMapPins(); } },d));
   }
 }
 
@@ -1913,6 +1915,7 @@ function mapWatchdog(){
     const cx=Math.round(window.innerWidth/2), cy=Math.round(window.innerHeight/2);
     const hit=document.elementFromPoint(cx,cy);
     const hitTag=hit?(hit.tagName+(hit.id?'#'+hit.id:'')+(hit.className&&hit.className.toString?('.'+hit.className.toString().split(' ').filter(Boolean)[0]):'')):'null';
+    if(r.height>60 && loaded>0){ var ex=document.getElementById('map-debug'); if(ex) ex.remove(); return; } // map is healthy — no banner
     const info='vp:'+window.innerWidth+'x'+window.innerHeight
       +' | screenMap top:'+Math.round(sr.top)+' h:'+Math.round(sr.height)
       +' | map top:'+Math.round(r.top)+' size:'+Math.round(r.width)+'x'+Math.round(r.height)
@@ -1926,6 +1929,20 @@ function mapError(){
   const m=document.getElementById('map');
   if(m) m.innerHTML='<div style="display:flex;height:100%;align-items:center;justify-content:center;color:var(--mist);font-size:13px;padding:30px;text-align:center">Map could not load — check your connection and try again.</div>';
 }
+// Force explicit pixel heights for the map screen in app context — avoids any reliance on
+// `vh`/`%` chains that Android WebView collapses to 0.
+function sizeAppMap(){
+  if(!window.IS_APP_CONTEXT) return;
+  const sm=document.getElementById('screen-map'); if(!sm) return;
+  const h=window.innerHeight||document.documentElement.clientHeight;
+  if(!h) return;
+  sm.style.height=h+'px';
+  const fb=sm.querySelector('.map-filter-bar');
+  const rel=[].slice.call(sm.children).filter(c=>c!==fb)[0];
+  const fbh=fb?fb.getBoundingClientRect().height:0;
+  if(rel) rel.style.height=Math.max(0,h-fbh)+'px';
+  const m=document.getElementById('map'); if(m) m.style.height=Math.max(0,h-fbh)+'px';
+}
 function buildMap(){
   if(!window.L){ mapError(); return; }
   mapInstance=L.map('map',{scrollWheelZoom:true,zoomControl:true}).setView([24.4,54.6],7);
@@ -1937,10 +1954,10 @@ function buildMap(){
   // Recalculate size several times — slow WebViews/devices lay out the container late,
   // and Leaflet won't fetch tiles until it knows the real dimensions.
   [60,200,500,1000,2000].forEach(function(d){
-    setTimeout(function(){ if(mapInstance){ mapInstance.invalidateSize(); renderMapPins(); } },d);
+    setTimeout(function(){ sizeAppMap(); if(mapInstance){ mapInstance.invalidateSize(); renderMapPins(); } },d);
   });
   // Recover from late layout / orientation changes inside app WebViews.
-  window.addEventListener('resize', function(){ if(mapInstance) mapInstance.invalidateSize(); });
+  window.addEventListener('resize', function(){ sizeAppMap(); if(mapInstance) mapInstance.invalidateSize(); });
   window.addEventListener('orientationchange', function(){ setTimeout(function(){ if(mapInstance) mapInstance.invalidateSize(); },300); });
 }
 function renderMapPins(){
