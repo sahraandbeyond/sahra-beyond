@@ -55,8 +55,13 @@ a{color:#9C521B}
 .brand{display:inline-flex;align-items:center;gap:9px;font-family:'Playfair Display',serif;font-weight:900;letter-spacing:2px;color:#33271B;text-decoration:none;font-size:16px}
 .brand img{display:block;width:30px;height:30px}
 .hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:18px;margin:0 0 24px}
-.ig{margin:28px 0}
-.ig .instagram-media{margin:0 auto 14px!important}
+.ig{margin:30px 0}
+.ig-hint{font-size:12px;color:#7C7264;margin:-4px 0 10px}
+.ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.ig-strip::-webkit-scrollbar{height:6px}
+.ig-strip::-webkit-scrollbar-thumb{background:rgba(43,37,32,.2);border-radius:3px}
+.ig-strip .ig-item{flex:0 0 auto;scroll-snap-align:start}
+.ig-strip .instagram-media{margin:0!important;min-width:326px!important;width:326px!important;max-width:326px!important}
 .hdr-nav a{margin-left:16px;font-size:13px;font-weight:600;color:#7C7264;text-decoration:none}
 .hdr-nav a:hover{color:#C0702E}
 main{max-width:820px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(16px,5vw,32px)}
@@ -161,9 +166,11 @@ ${bodyHtml}
 
 function igSection(posts) {
   if (!posts || !posts.length) return '';
-  const items = posts.map(p => { const u = (typeof p === 'string' ? p : (p && p.url) || '').split('?')[0]; return u ? `<blockquote class="instagram-media" data-instgrm-permalink="${u}" data-instgrm-version="14" style="max-width:540px;width:100%;margin:0 auto 14px"><a href="${u}">View this post on Instagram</a></blockquote>` : ''; }).join('');
-  if (!items) return '';
-  return `<section class="ig"><h2>On the &rsquo;gram</h2>${items}<script async src="https://www.instagram.com/embed.js"></script></section>`;
+  const urls = posts.map(p => (typeof p === 'string' ? p : (p && p.url) || '').split('?')[0]).filter(Boolean);
+  if (!urls.length) return '';
+  const items = urls.map(u => `<div class="ig-item"><blockquote class="instagram-media" data-instgrm-permalink="${u}" data-instgrm-version="14" style="margin:0;min-width:326px;width:326px;max-width:326px"><a href="${u}">View this post on Instagram</a></blockquote></div>`).join('');
+  const hint = urls.length > 1 ? '<p class="ig-hint">Swipe to see more &rarr;</p>' : '';
+  return `<section class="ig"><h2>On the &rsquo;gram</h2>${hint}<div class="ig-strip">${items}</div><script async src="https://www.instagram.com/embed.js"></script></section>`;
 }
 function locCard(l) {
   return `<a class="card" href="/locations/${l.id}/"><span class="card-emoji">${l.emoji || '📍'}</span><span class="card-body"><strong>${esc(l.name)}</strong><em>${esc(l.emirate)} · ${esc(l.category)}</em><span>${esc(l.desc)}</span></span></a>`;
@@ -205,7 +212,6 @@ locations.forEach(l => {
   <main>
     ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}">` : ''}
     <div class="content">${paras(l.body || l.desc)}</div>
-    ${igSection(l.igPosts)}
     <aside class="facts">
       <h2>Quick facts</h2>
       <ul>
@@ -238,6 +244,7 @@ locations.forEach(l => {
       <div id="pack-list"></div>
       <p class="disc-note">${esc(disclosure)}</p>
     </section>
+    ${igSection(l.igPosts)}
     ${related.length ? `<section class="related"><h2>More ${esc(l.category)} spots in the UAE</h2><div class="cards">${related.map(locCard).join('')}</div></section>` : ''}
     <p class="back" style="margin-top:26px"><a href="/">&larr; Back to the map &amp; all spots</a></p>
   </main>
