@@ -5,8 +5,9 @@
       "name": "Drinking water",
       "qty": "{water}L total",
       "note": "",
-      "query": "water jerry can",
-      "show": []
+      "query": "Water",
+      "show": [],
+      "amazon": "https://www.amazon.ae/Al-Ain-Bottled-Drinking-Water/dp/B0BN63RZQY/ref=sr_1_8_ae_f3_0o_lulu?crid=1ATFDF4JU1AFM&dib=eyJ2IjoiMSJ9.MBunF1mijb853RqBLXrZESRh3oraJghLDOHHMnK0ttZoQVffFScbpuRKAlDKchF9o6TjmUUtbrhsC-nn0IZXYZBlM-QAoGzxcT_d_yodsH3Xyn1amoU2D6mnXBWoXV4auLSlqhAu26MPOlEjUQJP_XVInfB6WrqQDjPx4Wxn_-ve5RgooJ9vjsPeB2UdcCqmBm5EOZJ1wFUSTWIArBfihAVSAQLxP_EGmt5PNWlur_j0vqktghBrkcfA_Gwd1eXo6pXqZWIekMBitB71TJ2FUNXU-eGvYiXyVSxmRxvVK0Q._TuEH1WVlkrvvS7etclGTGLcgkEXqdEZ2jyHwVeHc6g&dib_tag=se&keywords=water&qid=1781933894&sprefix=water%2Caps%2C246&sr=8-8"
     },
     {
       "group": "💧 Water & Hydration",
@@ -14,7 +15,8 @@
       "qty": "{p} packs",
       "note": "",
       "query": "electrolyte tablets",
-      "show": []
+      "show": [],
+      "amazon": "https://www.amazon.ae/gp/aw/d/B0CCJNJZBB/?_encoding=UTF8&pd_rd_plhdr=t&aaxitk=e0879536fa84408b55e161fd2d17f59b&hsa_cr_id=0&qid=1781933968&sr=1-2-e0fa1fdd-d857-4087-adda-5bd576b25987&aref=XbWki7PgqO&ref_=sbx_s_sparkle_sbtcd_asin_1_title&pd_rd_w=0sjd8&content-id=amzn1.sym.b34c3f27-482f-4e46-93b0-6562a345246c%3Aamzn1.sym.b34c3f27-482f-4e46-93b0-6562a345246c&pf_rd_p=b34c3f27-482f-4e46-93b0-6562a345246c&pf_rd_r=DTEBK4R9NX6P4HZZKAJH&pd_rd_wg=c6Ihi&pd_rd_r=6bccfe53-62b6-4140-9c9e-969982274874&th=1"
     },
     {
       "group": "💧 Water & Hydration",
