@@ -8,7 +8,7 @@ backend:
 media_folder: "uploads"
 public_folder: "/uploads"
 
-site_url: https://sahra-beyond-qo5i.vercel.app
+site_url: https://www.sahraandbeyond.ae
 
 collections:
 
