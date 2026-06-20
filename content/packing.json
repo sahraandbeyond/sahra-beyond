@@ -313,8 +313,10 @@
       "note": "",
       "query": "camping cooler box ice",
       "show": [
-        "Overnight"
-      ]
+        "Overnight",
+        "Camping"
+      ],
+      "amazon": "https://link.amazon/B0fhu7zoq"
     },
     {
       "group": "⛺ Overnight Camping",
@@ -324,7 +326,8 @@
       "query": "folding camp chair",
       "show": [
         "Overnight"
-      ]
+      ],
+      "amazon": "https://link.amazon/B0i8suH5h"
     }
   ]
 }
