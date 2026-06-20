@@ -175,16 +175,6 @@
       "amazon": "https://www.amazon.ae/Bliss-Casa-Oversized-Towels-90x180/dp/B0B45QM8XY?crid=1XKRVEGK4FR89&dib=eyJ2IjoiMSJ9.360YTlNPzQDFnQQycilLJ0HohYoOXMt9iZOaC4ob5WYyxQ5o4m5n3thkgL8Hs4TMoNcMeILTSzIRp03BgF2nXrAcwQgakLXHo7hoSz7Dldx352fEgB3Hbsl07AXPOyB246jzUvXdwlG5jiXkkqfigqRoif-OOkaKCNSuG0_foTeLGhAx-7PUShIPNaVr-3TkFzlZL6ADSXxvUyHDHrQftgqt4ne5kCvVPq9Ijihq32OlNlLWKbr_mLd6JrkzAOSgLFXmP8FqhzKUIR_btLn93jU1liDfP2bpv5xskfRW200.PSFijWkI-jvq74Mn8ofNRdjOYACXNKVgrhch3AyaTfU&dib_tag=se&keywords=beach%2Btowel&qid=1781951171&sprefix=beach%2Btowel%2Caps%2C240&sr=8-1-spons&ufe=app_do%3Aamzn1.fos.b4f74a7b-9d54-420b-9003-7e54957e6f89&aref=zALcq6BxRw&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll2&tag=sahraandbeyon-21&linkId=8992ac64c2c843b9ea14af46e7acd330&ref_=as_li_ss_tl"
     },
     {
-      "group": "🤿 Snorkel & Beach",
-      "name": "Dry bag (waterproof)",
-      "qty": "",
-      "note": "",
-      "query": "dry bag waterproof",
-      "show": [
-        "Coast"
-      ]
-    },
-    {
       "group": "⛰ Trekking",
       "name": "Hiking boots",
       "qty": "×{p}",
@@ -192,7 +182,8 @@
       "query": "hiking boots",
       "show": [
         "Mountains"
-      ]
+      ],
+      "amazon": "https://link.amazon/B041pd5FR"
     },
     {
       "group": "⛰ Trekking",
@@ -202,27 +193,19 @@
       "query": "trekking poles",
       "show": [
         "Mountains"
-      ]
-    },
-    {
-      "group": "⛰ Trekking",
-      "name": "Light gloves",
-      "qty": "×{p}",
-      "note": "",
-      "query": "hiking gloves",
-      "show": [
-        "Mountains"
-      ]
+      ],
+      "amazon": "https://link.amazon/B08uEOHZh"
     },
     {
       "group": "🌌 Stargazing",
-      "name": "Red-light head torch",
+      "name": "Red-light headlamp",
       "qty": "×{p}",
       "note": "",
       "query": "red light headlamp astronomy",
       "show": [
         "Camping"
-      ]
+      ],
+      "amazon": "https://link.amazon/B03cOZaQl"
     },
     {
       "group": "🌌 Stargazing",
@@ -232,7 +215,8 @@
       "query": "fleece jacket",
       "show": [
         "Camping"
-      ]
+      ],
+      "amazon": "https://link.amazon/B0e0C3qqg"
     },
     {
       "group": "🌌 Stargazing",
@@ -241,7 +225,8 @@
       "note": "Free — SkySafari / Stellarium",
       "query": "",
       "show": [
-        "Camping"
+        "Camping",
+        "Overnight"
       ]
     },
     {
@@ -258,15 +243,8 @@
       "qty": "×{half}",
       "note": "",
       "query": "power bank 20000mah",
-      "show": []
-    },
-    {
-      "group": "🧭 Navigation & Power",
-      "name": "Headlamp + spare batteries",
-      "qty": "×{p}",
-      "note": "",
-      "query": "led headlamp camping",
-      "show": []
+      "show": [],
+      "amazon": "https://link.amazon/B0dqljMWg"
     },
     {
       "group": "🏥 Safety & First Aid",
@@ -274,7 +252,8 @@
       "qty": "",
       "note": "",
       "query": "outdoor first aid kit",
-      "show": []
+      "show": [],
+      "amazon": "https://link.amazon/B0dD6JfaA"
     },
     {
       "group": "🏥 Safety & First Aid",
@@ -282,7 +261,8 @@
       "qty": "×{p}",
       "note": "",
       "query": "emergency mylar blanket",
-      "show": []
+      "show": [],
+      "amazon": "https://link.amazon/B0hpchXfr"
     },
     {
       "group": "🏥 Safety & First Aid",
@@ -300,7 +280,8 @@
       "query": "lightweight camping tent 2 person",
       "show": [
         "Overnight"
-      ]
+      ],
+      "amazon": "https://link.amazon/A0cBOuBmB"
     },
     {
       "group": "⛺ Overnight Camping",
@@ -309,8 +290,10 @@
       "note": "",
       "query": "sleeping bag camping",
       "show": [
-        "Overnight"
-      ]
+        "Overnight",
+        "Camping"
+      ],
+      "amazon": "https://link.amazon/B01BULUlk"
     },
     {
       "group": "⛺ Overnight Camping",
@@ -320,7 +303,8 @@
       "query": "portable camping stove gas",
       "show": [
         "Overnight"
-      ]
+      ],
+      "amazon": "https://link.amazon/B07IQac4e"
     },
     {
       "group": "⛺ Overnight Camping",
