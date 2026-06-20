@@ -338,4 +338,17 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
 console.log('  ✓ sitemap.xml (' + urls.length + ' urls)');
 
+// ---- content feed for the native Android app (one request → all content) ----
+const feed = {
+  updated: new Date().toISOString(),
+  site: SITE,
+  amazonTag: AMAZON_TAG,
+  weatherKey: WEATHER_KEY,
+  social: settings.social || {},
+  locations: locations.map(l => Object.assign({}, l, { url: SITE + '/locations/' + l.id + '/' })),
+  packing: PACKING
+};
+fs.writeFileSync(path.join(ROOT, 'feed.json'), JSON.stringify(feed));
+console.log('  ✓ feed.json (' + locations.length + ' locations)');
+
 console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.length + ' landing pages.');
