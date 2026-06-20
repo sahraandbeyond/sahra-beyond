@@ -126,7 +126,8 @@ collections:
               - { label: "Item name", name: "name", widget: "string" }
               - { label: "Quantity", name: "qty", widget: "string", required: false, hint: "Optional. Tokens: {p} = group size, {half} = half the group, {water} = 4L × group. e.g. ×{p}  or  {water}L total" }
               - { label: "Note", name: "note", widget: "string", required: false, hint: "Small grey sub-text under the item (e.g. a free app name)." }
-              - { label: "Shop search term", name: "query", widget: "string", required: false, hint: "Drives the Amazon & Noon buttons, e.g. 'sand recovery boards'. Leave blank for no shop links." }
+              - { label: "Amazon search term", name: "query", widget: "string", required: false, hint: "What the Amazon button searches for, e.g. 'sand recovery boards'. Leave blank (and no product link) for no button." }
+              - { label: "Amazon product link (optional)", name: "amazon", widget: "string", required: false, hint: "Paste a specific Amazon.ae product URL (e.g. https://www.amazon.ae/dp/B0XXXXXXX) to link straight to that product instead of a search. Your affiliate tag is added automatically. Overrides the search term above." }
               - label: "Show only for"
                 name: "show"
                 widget: "select"
