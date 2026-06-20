@@ -44,7 +44,7 @@ function packItemsFor(l) {
     if (!s.length) return true;
     if (s.indexOf('Overnight') !== -1) return true;
     return s.indexOf(l.category) !== -1;
-  }).map(it => ({ group: it.group, name: it.name, qty: it.qty || '', note: it.note || '', query: it.query || '', overnight: (it.show || []).indexOf('Overnight') !== -1 }));
+  }).map(it => ({ group: it.group, name: it.name, qty: it.qty || '', note: it.note || '', query: it.query || '', amazon: it.amazon || '', overnight: (it.show || []).indexOf('Overnight') !== -1 }));
 }
 
 const CSS = `
@@ -248,9 +248,9 @@ locations.forEach(l => {
       if(lat&&lng&&k){fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+'&appid='+k+'&units=metric').then(function(r){return r.json();}).then(function(d){if(d&&d.main){var c=(d.weather&&d.weather[0]&&d.weather[0].icon||'').slice(0,2);var ic={'01':'☀️','02':'🌤','03':'⛅','04':'☁️','09':'🌧','10':'🌦','11':'⛈','13':'❄️','50':'🌫'}[c]||'🌡';wx.innerHTML='<span class="wx-ic">'+ic+'</span><span class="wx-temp">'+Math.round(d.main.temp)+'°C</span><span class="wx-desc">'+(d.weather&&d.weather[0]?d.weather[0].description:'')+'</span>';}else{wx.style.display='none';}}).catch(function(){wx.style.display='none';});}else{wx.style.display='none';}}
     var PACK=${JSON.stringify(packItems)},TAG=${JSON.stringify(AMAZON_TAG)},state={p:4,ov:false};
     function qy(t){if(!t)return '';return String(t).replace(/\\{water\\}/g,4*state.p).replace(/\\{half\\}/g,Math.max(1,Math.ceil(state.p/2))).replace(/\\{p\\}/g,state.p);}
-    function amz(q){return 'https://www.amazon.ae/s?k='+encodeURIComponent(q)+'&tag='+TAG;}
+    function amzLink(it){var u=it.amazon;if(u){return u+(u.indexOf('tag=')!==-1?'':(u.indexOf('?')!==-1?'&':'?')+'tag='+TAG);}return it.query?'https://www.amazon.ae/s?k='+encodeURIComponent(it.query)+'&tag='+TAG:'';}
     function he(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-    function render(){var el=document.getElementById('pack-list');if(!el)return;var items=PACK.filter(function(it){return !it.overnight||state.ov;});var groups=[],idx={};items.forEach(function(it){if(!(it.group in idx)){idx[it.group]=groups.length;groups.push({h:it.group,items:[]});}groups[idx[it.group]].items.push(it);});el.innerHTML=groups.map(function(g){return '<div class="pack-grp-title">'+he(g.h)+'</div>'+g.items.map(function(it){var q=qy(it.qty);return '<div class="pack-row"><div class="pk-main"><div class="pk-name">'+he(it.name)+'</div>'+(it.note?'<div class="pk-note">'+he(it.note)+'</div>':'')+'</div>'+(q?'<span class="pk-qty">'+he(q)+'</span>':'')+(it.query?'<a class="pk-amz" href="'+amz(it.query)+'" target="_blank" rel="noopener sponsored">Amazon</a>':'')+'</div>';}).join('');}).join('');}
+    function render(){var el=document.getElementById('pack-list');if(!el)return;var items=PACK.filter(function(it){return !it.overnight||state.ov;});var groups=[],idx={};items.forEach(function(it){if(!(it.group in idx)){idx[it.group]=groups.length;groups.push({h:it.group,items:[]});}groups[idx[it.group]].items.push(it);});el.innerHTML=groups.map(function(g){return '<div class="pack-grp-title">'+he(g.h)+'</div>'+g.items.map(function(it){var q=qy(it.qty);return '<div class="pack-row"><div class="pk-main"><div class="pk-name">'+he(it.name)+'</div>'+(it.note?'<div class="pk-note">'+he(it.note)+'</div>':'')+'</div>'+(q?'<span class="pk-qty">'+he(q)+'</span>':'')+((it.amazon||it.query)?'<a class="pk-amz" href="'+amzLink(it)+'" target="_blank" rel="noopener sponsored">'+(it.amazon?'Buy on Amazon':'Amazon')+'</a>':'')+'</div>';}).join('');}).join('');}
     document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
     document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
     render();
