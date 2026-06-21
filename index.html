@@ -472,7 +472,6 @@ html.is-app .journey-note{display:none!important}
     <button class="nav-tab active" onclick="showScreen('discover')">Discover</button>
     <button class="nav-tab" onclick="showScreen('map')">Map</button>
     <button class="nav-tab" onclick="showScreen('weather')">Weather</button>
-    <button class="nav-tab" onclick="showScreen('blog')">Blog</button>
   </div>
 </nav>
 
@@ -1119,26 +1118,9 @@ html.is-app .journey-note{display:none!important}
   </div>
 </div>
 
-<!-- BLOG -->
-<div id="screen-blog" class="screen">
-  <div class="blog-hero">
-    <div class="blog-hero-overlay"></div>
-    <div class="blog-hero-content">
-      <div class="blog-tag-label">PERSONAL JOURNAL</div>
-      <div class="blog-hero-title">Tales from the<br>desert &amp; beyond</div>
-    </div>
-  </div>
-  <div class="blog-cards" id="blog-cards"><div class="loading">Loading stories…</div></div>
-</div>
-
 <!-- SPOT DETAIL -->
 <div class="modal-overlay" id="spot-modal">
   <div class="modal" id="spot-modal-content"></div>
-</div>
-
-<!-- BLOG DETAIL -->
-<div class="modal-overlay" id="blog-modal">
-  <div class="modal" id="blog-modal-content"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1287,7 +1269,7 @@ function nearMe(){
 function navTo(lat, lng, ev){ if(ev) ev.stopPropagation(); window.open('https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng, '_blank'); }
 
 // ── LOAD CONTENT from JSON files ──
-let locations = [], blogs = [], packing = [];
+let locations = [], packing = [];
 let activeFilter = 'All';
 let mapInstance = null, mapLoaded = false, markerLayer = null;
 
@@ -1307,16 +1289,13 @@ const FALLBACK_LOCATIONS = [
   {id:'shuweihat-island',name:'Shuweihat Island',emoji:'🪨',emirate:'Abu Dhabi',category:'Coast',difficulty:'Hard',season:'Oct–Mar',distance:'~3.5h from Abu Dhabi',lat:24.3,lng:52.45,status:'warn',desc:'A remote western island famous for surreal mushroom-shaped rock formations sculpted by wind and sea — raw, sculptural and gloriously empty.',cover:'',igPosts:[]},
   {id:'sir-bani-yas-island',name:'Sir Bani Yas Island',emoji:'🦁',emirate:'Abu Dhabi',category:'Coast',difficulty:'Easy',season:'Oct–Apr',distance:'~3h from Abu Dhabi',lat:24.32,lng:52.59,status:'safe',desc:'A natural island and pioneering wildlife reserve, home to free-roaming Arabian oryx, giraffe and cheetah as part of a decades-long conservation effort.',cover:'',igPosts:[]}
 ];
-const FALLBACK_BLOGS = [];
 
 async function loadContent() {
   try {
     const locNames = ['snoopy-island','al-quaa-desert','half-desert','mleiha-desert','wadi-showka','jabal-yanas','crescent-moon-lake','desert-camping-lake-view','love-lake','shuweihat-island','sir-bani-yas-island'];
-    const blogNames = [];
     locations = (await Promise.all(locNames.map(n=>fetch(`/content/locations/${n}.json`).then(r=>r.ok?r.json():null).catch(()=>null)))).filter(Boolean);
-    blogs = (await Promise.all(blogNames.map(n=>fetch(`/content/blog/${n}.json`).then(r=>r.ok?r.json():null).catch(()=>null)))).filter(Boolean);
   } catch(e) {
-    locations = []; blogs = [];
+    locations = [];
   }
   // Settings (social links, app name) — editable via the CMS. Merge over defaults.
   try {
@@ -1328,11 +1307,9 @@ async function loadContent() {
   try { const pk = await fetch('/content/packing.json').then(r=>r.ok?r.json():null).catch(()=>null); if(pk && Array.isArray(pk.items) && pk.items.length) packing = pk.items; } catch(e){}
   // If the CMS files couldn't be loaded (e.g. local file:// preview), use built-in data
   if(!locations.length) locations = FALLBACK_LOCATIONS;
-  if(!blogs.length) blogs = FALLBACK_BLOGS;
   renderSocial();
   applyContentSettings();
   renderSpots();
-  renderBlogs();
   renderTripDest();
   renderPlanner();
   fillAdvCounts();
@@ -1345,7 +1322,7 @@ let currentCat = null;
 function showScreen(name, fromRoute) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
-  const tabs = ['discover','map','weather','blog'];
+  const tabs = ['discover','map','weather'];
   document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===name));
   window.scrollTo(0,0);
   currentCat = null;
@@ -1369,7 +1346,7 @@ function applyRoute(){
   if(h === 'saved'){ openSaved(true); return; }
   if(h.indexOf('cat/') === 0){ const c = h.slice(4); openCategory(c, true); return; }
   if(CAT_SLUG[h]){ openCategory(CAT_SLUG[h], true); return; }
-  if(['discover','map','weather','planner','blog'].indexOf(h) !== -1){ showScreen(h, true); return; }
+  if(['discover','map','weather','planner'].indexOf(h) !== -1){ showScreen(h, true); return; }
   showScreen('discover', true);
 }
 window.addEventListener('hashchange', applyRoute);
@@ -1591,7 +1568,6 @@ function fetchSpotTemp(loc){
 
 function showSpot(id){
   const l=locations.find(x=>x.id===id); if(!l) return;
-  const blist=blogs.filter(b=>b.locationId===id);
   document.getElementById('spot-modal-content').innerHTML=`
     <button class="modal-close" onclick="closeSpot()">✕</button>
     <div class="spot-modal-thumb ${thumbClass(l.category)}">${l.cover?`<img src="${l.cover}" alt="${l.name}">`:`<span style="font-size:48px">${l.emoji}</span>`}</div>
@@ -1613,7 +1589,6 @@ function showSpot(id){
         <a class="gps-btn" href="${applemapsLink(l.lat,l.lng,l.name)}" target="_blank" rel="noopener noreferrer"> Apple Maps</a>
       </div>
     </div>`:''}
-    ${blist.length?`<div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--mist);margin-bottom:7px;text-transform:uppercase">Blog Posts</div>${blist.map((b,bi)=>{const globalIdx=blogs.indexOf(b);return`<div style="padding:9px;background:var(--slate);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="closeSpot();showBlog(${globalIdx})"><div style="font-size:12px;font-weight:600;color:var(--sand)">${b.title}</div><div style="font-size:10px;color:var(--mist);margin-top:2px">${b.tag} · ${formatDate(b.date)}</div></div>`}).join('')}`:''}
     ${igSectionHtml(l.igPosts)}
     <div style="display:flex;gap:8px;margin-top:6px">
       ${l.lat&&l.lng?`<button style="flex:1;padding:11px;border-radius:9px;border:1px solid var(--line);background:var(--deep);color:var(--dusk-deep);font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer" onclick="navTo(${l.lat},${l.lng},event)">Navigate ↗</button>`:''}
@@ -1626,47 +1601,8 @@ function showSpot(id){
 }
 function closeSpot(){document.getElementById('spot-modal').classList.remove('open')}
 
-// ── BLOG ──
+// Date helper (used by spot cards / planner)
 function formatDate(d){try{return new Date(d).toLocaleDateString('en-GB',{month:'long',year:'numeric'})}catch(e){return d||''}}
-
-function renderBlogs(){
-  const c=document.getElementById('blog-cards');
-  if(!blogs.length){c.innerHTML='<div style="padding:20px;text-align:center;color:var(--mist);font-size:13px">No posts yet. Add your first story via the CMS at /admin.</div>';return}
-  c.innerHTML=blogs.map((b,i)=>{
-    const loc=locations.find(l=>l.id===b.locationId);
-    return`<div class="blog-card" onclick="showBlog(${i})">
-      <div class="blog-card-thumb ${loc?thumbClass(loc.category):'dune'}" style="background:${loc?'':'linear-gradient(160deg,#3d2800,#7a4f1a)'}">
-        ${b.cover?`<img src="${b.cover}" alt="${b.title}">`:(loc?loc.emoji:'📝')}
-      </div>
-      <div class="blog-card-body">
-        <div class="blog-card-tag">${b.tag||'Story'}</div>
-        <div class="blog-card-title">${b.title}</div>
-        <div class="blog-card-meta">${loc?loc.name+' · ':''}${formatDate(b.date)}</div>
-        <div class="blog-card-excerpt">${(b.body||b.content||'').replace(/\n/g,' ')}</div>
-      </div>
-    </div>`}).join('');
-}
-
-function showBlog(idx){
-  const b=blogs[idx]; if(!b) return;
-  const loc=locations.find(l=>l.id===b.locationId);
-  const content=b.body||b.content||'';
-  document.getElementById('blog-modal-content').innerHTML=`
-    <button class="modal-close" onclick="closeBlog()">✕</button>
-    <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dusk);text-transform:uppercase;margin-bottom:6px">${b.tag||'Story'}${loc?' · '+loc.name:''}</div>
-    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--sand);margin-bottom:3px">${b.title}</div>
-    <div style="font-size:11px;color:var(--mist);margin-bottom:14px">${formatDate(b.date)}</div>
-    ${b.cover?`<img src="${b.cover}" style="width:100%;height:180px;object-fit:cover;border-radius:11px;margin-bottom:14px">`:(loc?`<div class="spot-modal-thumb ${thumbClass(loc.category)}" style="height:110px;margin-bottom:14px;font-size:40px">${loc.emoji}</div>`:'')}
-    <div class="blog-detail-content">${content}</div>
-    ${(b.media&&b.media.length)?`<div class="blog-media-row">${b.media.map(m=>`<img src="${m.url||m}" class="blog-media-thumb" alt="photo">`).join('')}</div>`:''}
-    ${adUnitHtml(AD_SLOTS.blog)}
-    ${igSectionHtml(b.igPosts)}
-    ${loc?`<button style="width:100%;padding:11px;border-radius:9px;border:1px solid rgba(196,119,59,.4);background:transparent;color:var(--dusk);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;margin-top:6px" onclick="closeBlog();showSpot('${loc.id}')">View ${loc.name} →</button>`:''}`;
-  document.getElementById('blog-modal').classList.add('open');
-  pushAds(document.getElementById('blog-modal-content'));
-  if(b.igPosts && b.igPosts.length) processIgEmbeds();
-}
-function closeBlog(){document.getElementById('blog-modal').classList.remove('open')}
 
 // ── TRIP PLANNER ──
 const tripState={destId:null,date:'',time:'05:30',people:4,sizeLabel:'2–4',overnight:false};
@@ -1978,9 +1914,15 @@ function renderMapPins(){
     m.bindPopup('<div style="font-family:Inter,sans-serif;min-width:150px"><div style="font-size:20px;margin-bottom:3px">'+(l.emoji||'📍')+'</div><div style="font-weight:700;font-size:14px;color:#33271B">'+l.name+'</div><div style="font-size:11px;color:#7C7264;margin-top:2px">'+l.category+' · '+l.difficulty+'</div><div style="font-family:monospace;font-size:10.5px;color:#9C521B;margin-top:4px">'+fmtCoords(l.lat,l.lng)+'</div><a href="/locations/'+l.id+'/" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#9C521B;text-decoration:none">View details →</a></div>');
     m.addTo(markerLayer);
   });
-  if(shown.length){
-    try{ mapInstance.fitBounds(L.latLngBounds(shown.map(function(l){return [parseFloat(l.lat),parseFloat(l.lng)];})).pad(0.25)); }catch(e){}
+  const pts=shown.map(function(l){return [parseFloat(l.lat),parseFloat(l.lng)];});
+  // Cap zoom so a single (or tightly-clustered) spot doesn't zoom to level 19, where map
+  // tiles don't exist and the map appears blank — especially in the app's WebView.
+  if(pts.length===1){
+    mapInstance.setView(pts[0], 11);
+  } else if(pts.length>1){
+    try{ mapInstance.fitBounds(L.latLngBounds(pts).pad(0.2), {maxZoom:11}); }catch(e){}
   }
+  if(window.IS_APP_CONTEXT && mapInstance){ setTimeout(function(){ mapInstance.invalidateSize(); },80); }
 }
 
 // ── LIVE WEATHER ──
