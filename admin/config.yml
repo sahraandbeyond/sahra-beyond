@@ -46,7 +46,13 @@ collections:
           - { label: "Hot / Extreme", value: "hot" }
       - { label: "Short Description", name: "desc", widget: "text", hint: "One or two sentences. Shown on cards, the map and as the page meta description." }
       - { label: "Full Description (SEO page)", name: "body", widget: "text", required: false, hint: "A few paragraphs (separate with a blank line). This is the main content of the location's own Google-indexed page. Leave blank to fall back to the short description." }
-      - { label: "Cover Photo", name: "cover", widget: "image", required: false }
+      - { label: "Cover Photo", name: "cover", widget: "image", required: false, hint: "Main photo — used as the page banner AND the preview image when the page is shared on WhatsApp/Instagram/etc. A wide landscape photo works best." }
+      - label: "Photo Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        hint: "Add as many photos as you like — they appear in a gallery on the location's page. Upload from your computer; no coding needed."
+        field: { label: "Photo", name: "image", widget: "image" }
       - label: "Instagram Posts"
         name: "igPosts"
         widget: "list"
