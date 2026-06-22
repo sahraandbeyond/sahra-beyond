@@ -133,7 +133,8 @@ function footerHtml() {
   <div class="disc">${esc(disclosure)}</div>`;
 }
 
-function shell({ title, desc, canonical, jsonld, bodyHtml }) {
+function shell({ title, desc, canonical, jsonld, bodyHtml, image }) {
+  const ogImg = image || `${SITE}/icon-512.png`;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -147,12 +148,24 @@ function shell({ title, desc, canonical, jsonld, bodyHtml }) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${esc(canonical)}">
-<meta property="og:image" content="${SITE}/icon-512.png">
+<meta property="og:image" content="${esc(ogImg)}">
+<meta property="og:site_name" content="Sahra & Beyond">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:image" content="${esc(ogImg)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-5NVFDWT29F');
+  var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
+  gtag('set','user_properties',{platform:_app?'app':'web'});
+</script>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <style>${CSS}</style>
 </head>
@@ -183,14 +196,21 @@ locations.forEach(l => {
   const desc = metaDesc(l.desc);
   const related = locations.filter(x => x.category === l.category && x.id !== l.id).slice(0, 4);
   const hash = CAT_HASH[l.category] || '';
+  // Photos: cover + gallery. Absolute URLs for OG/schema; used for the on-page gallery too.
+  const abs = p => (!p ? '' : (String(p).charAt(0) === '/' ? SITE + p : p));
+  const galleryRaw = Array.isArray(l.gallery) ? l.gallery.map(g => (g && g.image) || g).filter(Boolean) : [];
+  const photos = [l.cover].concat(galleryRaw).filter(Boolean);
+  const ogImage = photos.length ? abs(photos[0]) : '';
+  const tourist = {
+    "@context": "https://schema.org", "@type": "TouristAttraction",
+    "name": l.name, "description": l.desc, "url": canonical,
+    "address": { "@type": "PostalAddress", "addressRegion": l.emirate, "addressCountry": "AE" },
+    "geo": { "@type": "GeoCoordinates", "latitude": l.lat, "longitude": l.lng },
+    "isAccessibleForFree": true, "touristType": "UAE residents, outdoor & adventure"
+  };
+  if (photos.length) tourist.image = photos.map(abs);
   const jsonld = [
-    {
-      "@context": "https://schema.org", "@type": "TouristAttraction",
-      "name": l.name, "description": l.desc, "url": canonical,
-      "address": { "@type": "PostalAddress", "addressRegion": l.emirate, "addressCountry": "AE" },
-      "geo": { "@type": "GeoCoordinates", "latitude": l.lat, "longitude": l.lng },
-      "isAccessibleForFree": true, "touristType": "UAE residents, outdoor & adventure"
-    },
+    tourist,
     {
       "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
@@ -199,6 +219,13 @@ locations.forEach(l => {
     }
   ];
   const packItems = packItemsFor(l);
+  // On-page photo gallery (everything after the cover photo).
+  const galleryHtml = galleryRaw.length
+    ? `<section class="gallery" aria-label="Photos of ${esc(l.name)}"><h2>Photos</h2>
+       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">
+       ${galleryRaw.map((g, i) => `<img src="${esc(g)}" alt="${esc(l.name)} — ${esc(l.category)} in ${esc(l.emirate)}, photo ${i + 2}" loading="lazy" style="width:100%;height:140px;object-fit:cover;border-radius:11px;display:block">`).join('')}
+       </div></section>`
+    : '';
   const body = `
   <section class="loc-hero" style="background:${CAT_BG[l.category] || CAT_BG.Dunes}">
     <div class="loc-hero-inner">
@@ -207,10 +234,12 @@ locations.forEach(l => {
       <h1>${esc(l.name)}</h1>
       <p class="lede">${esc(l.emirate)} · ${esc(l.category)} · ${esc(l.difficulty)} · Best ${esc(l.season)}</p>
       <div class="wx" id="wx" data-lat="${l.lat}" data-lng="${l.lng}">Loading live weather…</div>
+      <button type="button" id="share-btn" style="margin-top:12px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)">↗ Share this spot</button>
     </div>
   </section>
   <main>
     ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}">` : ''}
+    ${galleryHtml}
     <div class="content">${paras(l.body || l.desc)}</div>
     <aside class="facts">
       <h2>Quick facts</h2>
@@ -261,9 +290,22 @@ locations.forEach(l => {
     document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
     document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
     render();
+    // Share button: native share sheet where supported (WhatsApp etc.), else copy the link.
+    var sb=document.getElementById('share-btn');
+    if(sb){sb.addEventListener('click',function(){
+      var data={title:${JSON.stringify(l.name + ' — Sahra & Beyond')},text:${JSON.stringify(l.desc || '')},url:location.href};
+      if(window.gtag){gtag('event','share',{method:navigator.share?'native':'copy',location:${JSON.stringify(l.name)}});}
+      if(navigator.share){navigator.share(data).catch(function(){});}
+      else if(navigator.clipboard){navigator.clipboard.writeText(location.href).then(function(){var t=sb.textContent;sb.textContent='✓ Link copied';setTimeout(function(){sb.textContent=t;},1800);});}
+    });}
+    // Affiliate click tracking → GA4.
+    document.addEventListener('click',function(e){
+      var a=e.target.closest&&e.target.closest('a.pk-amz, a[rel~="sponsored"]');
+      if(a&&window.gtag){gtag('event','affiliate_click',{link_url:a.href,store:/amazon/i.test(a.href)?'amazon':'other',location:${JSON.stringify(l.name)}});}
+    },true);
   })();
   </script>`;
-  write(`locations/${l.id}/index.html`, shell({ title, desc, canonical, jsonld, bodyHtml: body }));
+  write(`locations/${l.id}/index.html`, shell({ title, desc, canonical, jsonld, bodyHtml: body, image: ogImage }));
 });
 
 // ---- keyword landing pages ----
