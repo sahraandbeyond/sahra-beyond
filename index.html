@@ -1857,7 +1857,6 @@ function saveTrip(){
 // ── MAP ──
 // Map via Leaflet + OpenStreetMap (no API key required, works everywhere)
 function initMap(){
-  mapWatchdog();
   if(mapLoaded) return;
   mapLoaded=true;
   if(window.L){ buildMap(); return; }
@@ -1867,29 +1866,6 @@ function initMap(){
   const s=document.createElement('script');
   s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
   s.onload=buildMap; s.onerror=mapError; document.head.appendChild(s);
-}
-// Temporary on-screen diagnostic (app context only): a fixed banner that nothing can cover,
-// reporting the real map metrics on the device so we can pinpoint why the map appears blank.
-function mapWatchdog(){
-  if(!window.IS_APP_CONTEXT) return;
-  setTimeout(function(){
-    const m=document.getElementById('map'); if(!m) return;
-    const r=m.getBoundingClientRect();
-    const sm=document.getElementById('screen-map'); const sr=sm?sm.getBoundingClientRect():{top:0,height:0};
-    const imgs=m.querySelectorAll('img.leaflet-tile');
-    const loaded=[].slice.call(imgs).filter(function(i){return i.complete&&i.naturalWidth>0;}).length;
-    const cx=Math.round(window.innerWidth/2), cy=Math.round(window.innerHeight/2);
-    const hit=document.elementFromPoint(cx,cy);
-    const hitTag=hit?(hit.tagName+(hit.id?'#'+hit.id:'')+(hit.className&&hit.className.toString?('.'+hit.className.toString().split(' ').filter(Boolean)[0]):'')):'null';
-    if(r.height>60 && loaded>0){ var ex=document.getElementById('map-debug'); if(ex) ex.remove(); return; } // map is healthy — no banner
-    const info='vp:'+window.innerWidth+'x'+window.innerHeight
-      +' | screenMap top:'+Math.round(sr.top)+' h:'+Math.round(sr.height)
-      +' | map top:'+Math.round(r.top)+' size:'+Math.round(r.width)+'x'+Math.round(r.height)
-      +' | L:'+(!!window.L)+' inst:'+(!!mapInstance)+' tiles:'+imgs.length+' loaded:'+loaded
-      +' | center:'+hitTag;
-    var old=document.getElementById('map-debug'); if(old) old.remove();
-    document.body.insertAdjacentHTML('beforeend','<div id="map-debug" style="position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#C0702E;color:#fff;font:11px/1.5 monospace;padding:8px 10px;border-bottom:2px solid #fff;white-space:normal;word-break:break-word"><b>MAP DEBUG</b> '+info+'</div>');
-  },4000);
 }
 function mapError(){
   const m=document.getElementById('map');
