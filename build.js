@@ -29,6 +29,54 @@ const AMAZON_TAG = settings.amazonTag || 'sahraandbeyon-21';
 const WEATHER_KEY = settings.weatherKey || '';
 const packingData = readJSON(path.join(ROOT, 'content/packing.json'));
 const PACKING = (packingData && Array.isArray(packingData.items)) ? packingData.items : [];
+// Monetization config (CMS-editable). Each block renders only when its value is set,
+// so nothing half-finished ships to visitors.
+const MON = settings.monetization || {};
+function affLink(template, query) { if (!template) return ''; try { return template.replace(/\{query\}/g, encodeURIComponent(query)); } catch (e) { return ''; } }
+function diffText(d) {
+  if (d === 'Easy') return 'Most fitness levels and families can manage it with basic preparation.';
+  if (d === 'Hard') return 'It suits experienced, well-prepared adventurers — plan carefully and don’t go alone.';
+  return 'It suits reasonably active visitors who come prepared with water, sun protection and a plan.';
+}
+function faqsFor(l) {
+  const f = [];
+  f.push(['When is the best time to visit ' + l.name + '?',
+    'The best season for ' + l.name + ' is ' + (l.season || 'the cooler months (roughly October to April)') + ', when conditions in ' + l.emirate + ' are most comfortable for ' + String(l.category).toLowerCase() + '.']);
+  f.push(['How difficult is ' + l.name + '?',
+    l.name + ' is rated ' + (l.difficulty || 'Moderate').toLowerCase() + '. ' + diffText(l.difficulty)]);
+  if (l.distance) f.push(['How far is ' + l.name + '?', l.name + ' is around ' + l.distance + '. Exact GPS coordinates and map links are on this page.']);
+  f.push(['What should I bring to ' + l.name + '?',
+    'Pack for ' + String(l.category).toLowerCase() + ' conditions in ' + l.emirate + ' — water, sun protection, navigation and the essentials. See the tailored packing checklist on this page.']);
+  return f;
+}
+function toursBlock(l) {
+  const url = affLink(MON.toursUrlTemplate, l.name + ' ' + l.emirate);
+  if (!url) return '';
+  return `<section class="book"><h2>Book a tour or experience near ${esc(l.name)}</h2>
+    <p>Prefer a guided trip, rental or organised experience? Browse bookable tours and activities around ${esc(l.emirate)}.</p>
+    <a class="btn book-btn" href="${esc(url)}" target="_blank" rel="noopener sponsored">See experiences in ${esc(l.emirate)} &rarr;</a></section>`;
+}
+function stayBlock(l) {
+  const url = affLink(MON.bookingUrlTemplate, l.name + ' ' + l.emirate);
+  if (!url) return '';
+  return `<section class="book"><h2>Where to stay near ${esc(l.name)}</h2>
+    <p>Turning it into an overnight trip? Find hotels and stays close to ${esc(l.name)}.</p>
+    <a class="btn book-btn alt" href="${esc(url)}" target="_blank" rel="noopener sponsored">Find places to stay &rarr;</a></section>`;
+}
+function faqBlock(l) {
+  const faqs = faqsFor(l);
+  if (!faqs.length) return '';
+  return `<section class="faq"><h2>Frequently asked questions</h2>${faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>`;
+}
+function newsletterBlock() {
+  if (!MON.newsletterAction) return '';
+  const blurb = MON.newsletterBlurb || 'Get the best new UAE spots and seasonal tips in your inbox.';
+  return `<section class="news"><h2>Never miss a new spot</h2><p>${esc(blurb)}</p>
+    <form class="news-form" action="${esc(MON.newsletterAction)}" method="post" target="_blank">
+      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
+      <button type="submit">Subscribe</button>
+    </form></section>`;
+}
 // Category hero gradients (echo the app's scene palettes)
 const CAT_BG = {
   Camping: 'linear-gradient(140deg,#3A2F66 0%,#7A4F63 45%,#C0702E 100%)',
@@ -55,6 +103,24 @@ a{color:#9C521B}
 .brand{display:inline-flex;align-items:center;gap:9px;font-family:'Playfair Display',serif;font-weight:900;letter-spacing:2px;color:#33271B;text-decoration:none;font-size:16px}
 .brand img{display:block;width:30px;height:30px}
 .hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:18px;margin:0 0 24px}
+.book{margin:26px 0;padding:20px 22px;border:1px solid rgba(192,112,46,.3);background:rgba(255,247,237,.7);border-radius:16px}
+.book h2{margin:0 0 6px;font-size:18px}
+.book p{margin:0 0 14px;color:#5C5346;font-size:14px}
+.book-btn{display:inline-block;background:#C0702E;color:#fff;font-weight:700;padding:11px 20px;border-radius:999px;text-decoration:none}
+.book-btn.alt{background:#2E7DA8}
+.faq{margin:30px 0}
+.faq details{border-bottom:1px solid rgba(43,37,32,.12);padding:12px 2px}
+.faq summary{cursor:pointer;font-weight:700;font-size:15px;color:#33271B;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:'+ ';color:#C0702E;font-weight:800}
+.faq details[open] summary::before{content:'– '}
+.faq details p{margin:9px 0 2px;color:#5C5346;font-size:14px}
+.news{margin:30px 0;padding:22px;border-radius:16px;background:linear-gradient(135deg,#FBEAD2,#F4C98E);text-align:center}
+.news h2{margin:0 0 6px}
+.news p{margin:0 0 14px;color:#5A4326;font-size:14px}
+.news-form{display:flex;gap:8px;max-width:420px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.news-form input{flex:1;min-width:200px;padding:12px 14px;border-radius:10px;border:1px solid rgba(43,37,32,.2);font-size:14px}
+.news-form button{padding:12px 20px;border-radius:10px;border:none;background:#33271B;color:#fff;font-weight:700;cursor:pointer}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#7C7264;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -209,6 +275,7 @@ locations.forEach(l => {
     "isAccessibleForFree": true, "touristType": "UAE residents, outdoor & adventure"
   };
   if (photos.length) tourist.image = photos.map(abs);
+  const faqs = faqsFor(l);
   const jsonld = [
     tourist,
     {
@@ -216,6 +283,10 @@ locations.forEach(l => {
         { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
         { "@type": "ListItem", "position": 2, "name": l.name, "item": canonical }
       ]
+    },
+    {
+      "@context": "https://schema.org", "@type": "FAQPage",
+      "mainEntity": faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } }))
     }
   ];
   const packItems = packItemsFor(l);
@@ -256,6 +327,8 @@ locations.forEach(l => {
         <a class="btn alt" href="https://maps.apple.com/?ll=${l.lat},${l.lng}&q=${encodeURIComponent(l.name)}" target="_blank" rel="noopener">Apple Maps</a>
       </div>
     </aside>
+    ${toursBlock(l)}
+    ${stayBlock(l)}
     ${igSection(l.igPosts)}
     <section class="pack">
       <h2>What to pack for ${esc(l.name)}</h2>
@@ -274,6 +347,8 @@ locations.forEach(l => {
       <div id="pack-list"></div>
       <p class="disc-note">${esc(disclosure)}</p>
     </section>
+    ${faqBlock(l)}
+    ${newsletterBlock()}
     ${related.length ? `<section class="related"><h2>More ${esc(l.category)} spots in the UAE</h2><div class="cards">${related.map(locCard).join('')}</div></section>` : ''}
     <p class="back" style="margin-top:26px"><a href="/">&larr; Back to the map &amp; all spots</a></p>
   </main>
