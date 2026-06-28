@@ -83,6 +83,15 @@ collections:
               - { label: "Instagram URL", name: "instagram", widget: "string", required: false, default: "https://instagram.com/sahra_and_beyond" }
               - { label: "TikTok URL", name: "tiktok", widget: "string", required: false, default: "https://tiktok.com/@sahra_and_beyond" }
               - { label: "YouTube URL", name: "youtube", widget: "string", required: false, default: "https://youtube.com/@sahra_and_beyond" }
+          - label: "Monetization (fill in when ready)"
+            name: "monetization"
+            widget: "object"
+            hint: "Each booking/tours/newsletter block on the site only appears once you paste a value here. Leave blank to keep it hidden."
+            fields:
+              - { label: "Tours/Activities link template", name: "toursUrlTemplate", widget: "string", required: false, hint: "Your affiliate search URL with {query} where the place name goes. e.g. https://www.getyourguide.com/s/?q={query}&partner_id=YOURID" }
+              - { label: "Hotel/Booking link template", name: "bookingUrlTemplate", widget: "string", required: false, hint: "e.g. https://www.booking.com/searchresults.html?ss={query}&aid=YOURID" }
+              - { label: "Newsletter form endpoint", name: "newsletterAction", widget: "string", required: false, hint: "The form POST URL from your email provider (Mailchimp/Buttondown/etc.). When set, the email sign-up box appears." }
+              - { label: "Newsletter blurb", name: "newsletterBlurb", widget: "text", required: false, hint: "Short line shown above the email sign-up box." }
 
   - name: "packing"
     label: "Packing List"
