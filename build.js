@@ -11,7 +11,7 @@ const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 
 // Clean previously-generated output so deleted locations don't leave orphan pages
-['locations', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
+['locations', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
 
 function readJSON(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return null; } }
 function metaDesc(s) { s = String(s || ''); if (s.length <= 160) return s; const cut = s.slice(0, 157); return cut.slice(0, cut.lastIndexOf(' ')) + '…'; }
@@ -196,7 +196,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
   return `<div class="soc">${soc}</div>
-  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/">Map &amp; planner</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner</div>
   <div class="disc">${esc(disclosure)}</div>`;
 }
@@ -490,6 +490,101 @@ const LANDINGS = [
       ['Is it cooler in the UAE mountains?', 'Yes. Higher elevation means noticeably lower temperatures than the coast or desert, which is why the mountains are a popular escape when the lowlands are hot. Winter at altitude can even be cold and windy.'],
       ['What should I bring for a mountain hike in the UAE?', 'Proper hiking shoes, plenty of water, sun protection, snacks, a first-aid kit, a warm/windproof layer and offline maps. Start early and turn back with daylight to spare.'],
       ['When is the best time to visit the UAE mountains?', 'October to April for comfortable hiking. Bring a warm layer for the higher, windier spots, and avoid strenuous midday hikes in summer.']
+    ]
+  },
+  {
+    slug: 'hatta-guide', h1: 'Hatta: A Complete Guide to the Mountain Escape',
+    title: 'Hatta Guide — Dam, Kayaking, Hiking & Things to Do | Sahra & Beyond',
+    desc: 'A complete guide to Hatta — the Hatta Dam, kayaking, mountain biking, hiking and the best time to visit this mountain escape near Dubai.',
+    pick: ['hatta'].map(id => locations.find(l => l.id === id)).filter(Boolean),
+    intro: "Tucked into the Hajar mountains as a mountain exclave of Dubai, Hatta is the emirate's favourite high-altitude escape — cooler air, turquoise dam water and a whole hub of outdoor activities, all around a 90-minute drive from the city. It's the easiest way to swap skyscrapers for switchback roads and mountain views without leaving the emirate.\n\nThis guide covers what to do in Hatta, how to get there, the best time to go and what to bring, so you can plan a great day trip or weekend.",
+    sections: [
+      { h2: 'Things to do in Hatta', body: "Hatta packs a lot in. The headline is the Hatta Dam, where you can hire kayaks and pedal boats on the famously blue water. Nearby, the activity hub offers mountain biking trails, a zipline, archery and more. Add scenic hiking and mountain-bike trails of varying difficulty, the heritage village, and some of the best stargazing and drone scenery in the emirate, and there's easily a full day — or a weekend — here." },
+      { h2: 'The Hatta Dam and kayaking', body: "The dam is the postcard shot: vivid blue-green water hemmed in by rocky peaks. Kayaks and pedal boats are available to rent on site, and a slow paddle into the quieter arms of the reservoir is the best way to take it in. Go early in the day for calm water, cooler temperatures and smaller crowds, especially on weekends." },
+      { h2: 'Getting there and the best time to go', body: "Hatta sits about 90 minutes to two hours from central Dubai by car along a good, scenic road. The drive passes briefly through territory near the Oman border but the main route stays within the UAE — carry your ID just in case. The cooler months from October to April are by far the best time; summer is hot, though the altitude keeps it a touch cooler than the city." },
+      { h2: 'What to bring', body: "Comfortable shoes for walking and trails, sun protection, plenty of water, a hat and a light layer for breezy viewpoints. Bring cash or card for activity rentals, a power bank, and a camera or drone if you have one — the scenery rewards it. If you plan to hike, treat it like any mountain outing: more water than you think, snacks and a charged phone with offline maps." }
+    ],
+    faqs: [
+      ['Is Hatta worth visiting?', 'Yes — Hatta offers mountain scenery, the turquoise Hatta Dam, kayaking, mountain biking and hiking, all within about a 90-minute drive of Dubai. It is one of the best outdoor day trips in the emirate.'],
+      ['Can you kayak at Hatta Dam?', 'Yes. Kayaks and pedal boats are available to rent at the Hatta Dam. Go early in the day for calmer water and fewer crowds, especially on weekends.'],
+      ['How far is Hatta from Dubai?', 'Hatta is roughly a 90-minute to two-hour drive from central Dubai along a scenic mountain road. Carry your ID, as the route passes close to the Oman border.'],
+      ['When is the best time to visit Hatta?', 'October to April, when the weather is cool and comfortable for outdoor activities. The mountain altitude keeps it slightly cooler than the city year-round.']
+    ]
+  },
+  {
+    slug: 'best-beaches', h1: 'Best Beaches in the UAE for a Day Out',
+    title: 'Best Beaches in the UAE — Swimming, Snorkeling & Calm Water | Sahra & Beyond',
+    desc: 'The best beaches in the UAE for swimming, snorkeling and a relaxed day by the sea, with the best season, access notes and tips for residents.',
+    pick: locations.filter(l => l.category === 'Coast'),
+    intro: "With two very different coastlines — the calm Arabian Gulf to the west and the clear, reef-rich Gulf of Oman to the east — the UAE has a beach for every kind of day out. Whether you want gentle water for the family, a snorkel over a living reef or a quiet stretch away from the resorts, the spots below are our favourites.\n\nEach has access notes, the best season and a difficulty rating, so you can pick the right beach for your plans and travel prepared.",
+    sections: [
+      { h2: 'East coast vs west coast', body: "The west coast (Dubai, Abu Dhabi, Sharjah) has long, sandy, generally calm beaches that are great for families and easy swims. The east coast (Fujairah and the Gulf of Oman) trades some of that calm for clearer water, coral reefs and marine life — it is the place to go for snorkeling and a more natural feel. Pick based on whether you want easy sand or underwater scenery." },
+      { h2: 'Best beaches for snorkeling', body: "For snorkeling, the east coast wins. Healthy coral, turtles and reef fish are reachable straight from shore at the best spots, making it a brilliant outing for families and beginners. Go early on a weekday for the calmest, clearest water, bring your own mask and fins, and always wear reef-safe sunscreen to protect the coral." },
+      { h2: 'Beach safety and etiquette', body: "Swim where it is permitted, be aware of currents and check for flags or signage. Keep an eye on children near the water, stay hydrated, and use shade and high-SPF sun protection — the UAE sun is strong even in winter. Take all your rubbish home, give wildlife space, and never touch or stand on coral." },
+      { h2: 'Best season for the beach', body: "The sea is most comfortable from around October to May, with pleasant air temperatures and warm-but-refreshing water. Summer is swimmable but very hot on the sand, so go early or late in the day. Winter mornings can be breezy on the east coast, so bring a layer." }
+    ],
+    faqs: [
+      ['Which UAE coast is best for snorkeling?', 'The east coast, on the Gulf of Oman around Fujairah, has the clearest water and coral reefs with turtles and reef fish reachable from shore. The west coast is calmer and sandier, better for easy swimming.'],
+      ['When is the best time to go to the beach in the UAE?', 'October to May offers the most comfortable air and water temperatures. Summer is hot on the sand, so visit early morning or late afternoon.'],
+      ['Are UAE beaches good for families?', 'Yes — the west-coast beaches are generally calm and sandy, ideal for children, while gentler east-coast spots are great for an easy first snorkel. Always supervise kids near the water.'],
+      ['Do I need to pay to access UAE beaches?', 'Many public beaches are free, while some managed or resort beaches charge an entry fee. Check the specific beach before you go.']
+    ]
+  },
+  {
+    slug: 'desert-safari', h1: 'Desert Safari & Best Dune Spots in the UAE',
+    title: 'Desert Safari & Best Dune Spots in the UAE | Sahra & Beyond',
+    desc: 'Where to find the best dunes in the UAE for a desert safari, dune drives, sandboarding and overnight desert camps, with seasons and safety tips.',
+    pick: locations.filter(l => l.category === 'Dunes'),
+    intro: "Rolling golden dunes are the classic image of the UAE, and there is no better way to experience them than out in the desert itself — whether on a guided safari or a self-drive adventure. From the towering dunes of Liwa to the accessible sands closer to the cities, the spots below are where the desert is at its most spectacular.\n\nThis guide covers what to expect, whether to self-drive or book a tour, dune-driving safety and the best season to go.",
+    sections: [
+      { h2: 'What to expect from a desert safari', body: "A desert safari can mean many things: a sunset dune drive, sandboarding, a camel ride, an overnight camp under the stars, or simply a quiet walk among the dunes. The dunes change colour through the day and are at their most magical at sunrise and sunset, when the light is soft and the temperatures are bearable." },
+      { h2: 'Self-drive or book a tour', body: "If you have a capable 4x4 and the skills, self-driving the dunes is hugely rewarding — but it demands experience, the right recovery gear and never going alone. If you are new to it, a guided tour or experience is the safer, easier option: someone else handles the driving and logistics, and you just enjoy the ride. Many of the dune areas in this guide work for both approaches." },
+      { h2: 'Dune-driving safety', body: "Soft sand is unforgiving of mistakes. Lower your tyre pressures, keep momentum, travel in a convoy of at least two vehicles, and carry a tow rope, recovery boards and a way to re-inflate before tarmac. Tell someone your plans, carry plenty of water, and avoid the dunes in the heat of summer. If you are not confident, do not go alone — book a guide instead." },
+      { h2: 'Best season for the desert', body: "October to April is the season for the desert — comfortable by day and cool, sometimes cold, at night. Summer brings extreme heat that makes desert trips genuinely dangerous, so plan dune adventures for the cooler months and still carry far more water than you expect to need." }
+    ],
+    faqs: [
+      ['Where are the best dunes in the UAE?', 'The Liwa area in Abu Dhabi has the tallest, most dramatic dunes, while spots like Big Red and the desert near the cities are more accessible. This guide lists the best dune locations with access and safety notes.'],
+      ['Should I self-drive the dunes or book a tour?', 'If you are experienced, have a 4x4 with recovery gear and travel in a convoy, self-driving is rewarding. If you are new, book a guided safari — it is safer and handles the driving for you.'],
+      ['Is a desert safari safe?', 'Yes, with preparation or a reputable guide. For self-drive, lower tyre pressures, travel in a convoy, carry recovery gear and water, and never go alone. Avoid the summer heat.'],
+      ['When is the best time for a desert safari?', 'October to April, when daytime temperatures are comfortable and nights are cool. Avoid the extreme summer heat.']
+    ]
+  },
+  {
+    slug: 'family-friendly-outdoors', h1: 'Family-Friendly Outdoor Spots Near Dubai',
+    title: 'Family-Friendly Outdoor Spots in the UAE — Easy Days Out | Sahra & Beyond',
+    desc: 'The best family-friendly outdoor spots in the UAE — easy, safe places for a day out with kids, from calm lakes to gentle beaches, with tips.',
+    pick: ['love-lake', 'crescent-moon-lake', 'snoopy-island', 'sir-bani-yas-island', 'big-red'].map(id => locations.find(l => l.id === id)).filter(Boolean),
+    intro: "Getting kids outdoors in the UAE is easier than it looks — you just need spots that are safe, accessible and genuinely fun for all ages. This guide gathers the gentlest, most family-friendly places we love, from calm desert lakes and easy beaches to wildlife and dunes that little ones will remember.\n\nEach has access notes and the best season, so you can plan a relaxed day out without the stress.",
+    sections: [
+      { h2: 'Choosing a spot for kids', body: "Look for easy access (firm ground you can reach without serious off-roading), shade, and something to do — water to paddle in, wildlife to spot, or gentle dunes to roll down. The calm lakes and accessible beaches in our picks are ideal first outings, while a short, easy desert visit makes a great introduction to camping without committing to a night out." },
+      { h2: 'Keeping it safe and comfortable', body: "Sun and heat are the main things to manage. Bring hats, high-SPF sunscreen, plenty of water and snacks, and go in the cooler part of the day. Keep a close eye on children near water and in the desert, where it is easy to wander. A small first-aid kit and a fully charged phone are sensible additions to any family day out." },
+      { h2: 'What to pack for a family day out', body: "Water (more than you think), sun protection, snacks, wet wipes, a change of clothes, a picnic blanket and a rubbish bag for the way home. For beaches add towels and reef-safe sunscreen; for the desert add closed shoes and a light layer for later in the day. Each location page has a tailored checklist you can adjust." },
+      { h2: 'Best season for family trips', body: "October to April is the sweet spot — comfortable temperatures for kids and adults alike. In summer, stick to early mornings, shaded spots and water-based outings, and keep trips short to avoid the heat." }
+    ],
+    faqs: [
+      ['What are the best outdoor activities for kids in the UAE?', 'Calm desert lakes for paddling, gentle beaches for a first snorkel, wildlife spotting and easy dune visits are all great for families. This guide lists safe, accessible spots near Dubai and beyond.'],
+      ['Are these spots safe for young children?', 'The picks here are chosen for easy access and a gentle experience, but always supervise children near water and in the desert, manage sun and heat, and carry water and a first-aid kit.'],
+      ['When is the best time for a family day out?', 'October to April for comfortable temperatures. In summer, go early in the day, choose shaded or water-based spots and keep outings short.'],
+      ['Do I need a 4x4 for family outdoor trips?', 'Not for most of these. The lakes, beaches and accessible spots can be reached without serious off-roading. Always check the access notes on each location page first.']
+    ]
+  },
+  {
+    slug: 'outdoor-things-to-do', h1: 'Outdoor Things to Do in the UAE This Weekend',
+    title: 'Outdoor Things to Do in the UAE — Weekend Adventure Ideas | Sahra & Beyond',
+    desc: 'Outdoor things to do in the UAE this weekend — camping, wadis, beaches, dunes and mountains, with the best spots, seasons and tips for residents.',
+    pick: ['big-red', 'wadi-shab', 'jebel-hafeet', 'snoopy-island', 'crescent-moon-lake'].map(id => locations.find(l => l.id === id)).filter(Boolean),
+    intro: "Stuck for ideas this weekend? The UAE's outdoors offer far more than most people realise — desert camping, wadi swims, mountain hikes, reef snorkeling and golden dunes, all within a couple of hours of the cities. This guide is a quick-start menu of the best outdoor things to do, whatever kind of day you are after.\n\nPick a vibe below, then dive into the full guide or location page for GPS, the best season and what to bring.",
+    sections: [
+      { h2: 'For a first-time adventure', body: "If you are easing into the outdoors, start gentle: a calm desert lake for an easy camp or picnic, an accessible beach for a first snorkel, or a short scenic drive into the mountains. These give you the scenery and the experience without demanding off-road skills or a big commitment." },
+      { h2: 'For a cooler-weather day', body: "When the weather is kind, this is prime time for the bigger trips: a wadi hike to a swimmable pool, a proper mountain hike with views, or a night of desert camping under the stars. The cooler months unlock the full range of what the UAE outdoors has to offer." },
+      { h2: 'For a weekend with friends', body: "Make a weekend of it: dune driving or a desert safari by day and a camp by night, a wadi-and-mountain combo, or a coast trip with snorkeling and a beach camp. Travel in a group for the dune and remote trips, share the gear, and plan around the season and the weather." },
+      { h2: 'Planning your trip', body: "Whatever you choose, the basics are the same: check the weather, carry plenty of water, tell someone your plans, download offline maps and pack out all your rubbish. Every location and guide on this site includes GPS, the best season, a difficulty rating and a tailored packing list to make planning easy." }
+    ],
+    faqs: [
+      ['What outdoor activities can you do in the UAE?', 'Plenty — desert camping, dune driving and safaris, wadi hikes and swims, mountain hiking, beach days and reef snorkeling, and stargazing, all within a couple of hours of the cities.'],
+      ['What can I do outdoors in the UAE this weekend?', 'Pick by mood: an easy lake or beach day for a gentle outing, a wadi or mountain hike in cooler weather, or a desert camp and dune drive for a bigger weekend. This guide links to the best spots for each.'],
+      ['When is the best season for outdoor activities in the UAE?', 'October to April offers the most comfortable conditions for camping, hiking and the desert. Summer suits early-morning beach and water trips to avoid the heat.'],
+      ['Do I need special gear to start?', 'Not to begin. Gentle lakes, beaches and viewpoints need little more than water, sun protection and good shoes. Bigger desert and mountain trips need more kit — each page has a tailored checklist.']
     ]
   }
 ];
