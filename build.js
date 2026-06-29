@@ -539,14 +539,16 @@ LANDINGS.forEach(L => {
 });
 
 // ---- sitemap ----
-const urls = [`${SITE}/`]
-  .concat(LANDINGS.map(L => `${SITE}/${L.slug}/`))
-  .concat(locations.map(l => `${SITE}/locations/${l.id}/`));
+const buildDate = new Date().toISOString().slice(0, 10);
+function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
+const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
+  .concat(LANDINGS.map(L => ({ u: `${SITE}/${L.slug}/`, m: buildDate, p: '0.8' })))
+  .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
-  + urls.map((u, i) => `  <url><loc>${u}</loc><priority>${i === 0 ? '1.0' : '0.8'}</priority></url>`).join('\n')
+  + entries.map(e => `  <url><loc>${e.u}</loc><lastmod>${e.m}</lastmod><priority>${e.p}</priority></url>`).join('\n')
   + `\n</urlset>\n`;
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
-console.log('  ✓ sitemap.xml (' + urls.length + ' urls)');
+console.log('  ✓ sitemap.xml (' + entries.length + ' urls)');
 
 // ---- content feed for the native Android app (one request → all content) ----
 const feed = {
