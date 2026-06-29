@@ -11,7 +11,7 @@ const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 
 // Clean previously-generated output so deleted locations don't leave orphan pages
-['locations', 'camping', 'secluded-camping', 'snorkeling', 'stargazing'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
+['locations', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
 
 function readJSON(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return null; } }
 function metaDesc(s) { s = String(s || ''); if (s.length <= 160) return s; const cut = s.slice(0, 157); return cut.slice(0, cut.lastIndexOf(' ')) + '…'; }
@@ -121,6 +121,8 @@ a{color:#9C521B}
 .news-form{display:flex;gap:8px;max-width:420px;margin:0 auto;flex-wrap:wrap;justify-content:center}
 .news-form input{flex:1;min-width:200px;padding:12px 14px;border-radius:10px;border:1px solid rgba(43,37,32,.2);font-size:14px}
 .news-form button{padding:12px 20px;border-radius:10px;border:none;background:#33271B;color:#fff;font-weight:700;cursor:pointer}
+.guide-sec{margin:24px 0}
+.guide-sec h2{font-size:20px;margin:0 0 8px}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#7C7264;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -194,7 +196,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
   return `<div class="soc">${soc}</div>
-  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/">Map &amp; planner</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner</div>
   <div class="disc">${esc(disclosure)}</div>`;
 }
@@ -412,6 +414,83 @@ const LANDINGS = [
     desc: 'Where to see the Milky Way in the UAE — the darkest desert skies for stargazing and astrophotography, with GPS and the best months to go.',
     pick: ['al-quaa-desert', 'crescent-moon-lake', 'desert-camping-lake-view', 'mleiha-desert'].map(id => locations.find(l => l.id === id)).filter(Boolean),
     intro: "Want to know the best place to view the Milky Way galaxy in the UAE? It comes down to one thing: darkness. Escape the city glow and the desert delivers some of the clearest night skies in the region, where the Milky Way's core is bright enough to photograph — and on the darkest nights, to cast a faint shadow.\n\nThese are the spots we recommend for stargazing and astrophotography, ranked by how dark and accessible they are. Aim for clear, moonless nights between October and March, bring warm layers and a red-light torch, and give your eyes 20 minutes to adjust."
+  },
+  {
+    slug: 'camping-near-dubai', h1: 'Camping Near Dubai: Best Spots for a Weekend Escape',
+    title: 'Camping Near Dubai — Best Spots for a Weekend Escape | Sahra & Beyond',
+    desc: 'The best camping spots near Dubai — desert lakes and dunes within a short drive, with GPS, the best season and what to bring for a weekend.',
+    pick: ['love-lake', 'crescent-moon-lake', 'desert-camping-lake-view', 'big-red', 'half-desert'].map(id => locations.find(l => l.id === id)).filter(Boolean),
+    intro: "You don't have to drive for hours to camp under a sky full of stars. Some of the best camping near Dubai is less than an hour from the city — quiet desert lakes, rolling dunes and wide-open sand where you can pitch a tent, light a fire and watch the sun go down.\n\nThis guide rounds up our favourite weekend camping spots within easy reach of Dubai, each with accurate GPS, the best season to go and a difficulty rating. Most are free, facility-free desert sites, so the trade-off for that solitude is coming fully self-sufficient.",
+    sections: [
+      { h2: 'How far is each spot from the city?', body: "All of the picks above sit within roughly a 40–75 minute drive of central Dubai, which makes them ideal for a Friday-night-out, Saturday-morning-back weekend. The desert-lake sites are the gentlest introduction; the dune spots reward a bit more confidence behind the wheel. Always check the access notes on each location page, because the last stretch is often soft sand." },
+      { h2: 'Do you need a 4x4?', body: "For the lake and lake-view sites you can usually park on firm ground near the edge and walk in. For the dune spots, a 4x4 with lowered tyre pressures is strongly recommended, and you should never head into soft sand alone — go in a convoy of at least two vehicles, carry a tow rope and recovery boards, and know how to air your tyres back up before you hit tarmac." },
+      { h2: 'What to bring', body: "These are wild sites with no toilets, bins, water or shops. Bring more water than you think you need (around four litres per person per day), shade, warm layers for the night, a power bank, a first-aid kit and rubbish bags. Each location page on this site has a packing checklist you can tailor to your group size and whether you're staying overnight." },
+      { h2: 'Rules and etiquette', body: "Camping in the desert is a privilege, not a right. Pack out everything you bring in, keep fires small and contained, give wildlife and other campers space, and avoid driving over vegetation. Leaving these places exactly as you found them is what keeps them open and beautiful for the next group." }
+    ],
+    faqs: [
+      ['Where can I camp near Dubai for free?', 'Several desert sites near Dubai — including the lakes and dune areas in this guide — are free, wild camping spots with no booking required. They have no facilities, so you must be fully self-sufficient and pack out all your rubbish.'],
+      ['Is it safe to camp in the desert near Dubai?', 'Yes, with preparation. Tell someone your plans, carry plenty of water, avoid driving into soft sand alone, bring a first-aid kit and check the weather. The cooler months (October to April) are far safer and more comfortable than the summer heat.'],
+      ['When is the best time to camp near Dubai?', 'October to April. Daytime temperatures are pleasant and nights are cool, sometimes cold, so bring warm layers. Summer desert camping is not recommended due to extreme heat.'],
+      ['Do I need a permit to camp in the desert?', 'Most wild desert sites near Dubai do not require a permit, but rules vary by emirate and some protected or private areas do. Always respect signage and local regulations, and never camp in clearly restricted zones.']
+    ]
+  },
+  {
+    slug: 'wadis', h1: 'Best Wadis in the UAE for Hiking & Swimming',
+    title: 'Best Wadis in the UAE — Hiking & Natural Pools | Sahra & Beyond',
+    desc: 'The best wadis in the UAE for hiking and swimming in natural pools, with GPS, the best season, difficulty and essential flash-flood safety tips.',
+    pick: locations.filter(l => l.category === 'Wadis'),
+    intro: "A wadi is a valley or dry riverbed cut through the mountains — and after the rains, many fill with cool, clear natural pools that are perfect for a swim. The UAE's wadis are some of the most rewarding outdoor escapes in the region: shaded canyons, turquoise pools and scrambly hikes, all within a couple of hours of the cities.\n\nBelow are our favourite wadis in the UAE, with access notes, the best season and difficulty. Wadis are beautiful but demand respect — read the safety section before you go.",
+    sections: [
+      { h2: 'What makes a good wadi trip', body: "The best wadi days combine an easy-to-moderate hike with a reward at the end: a swimmable pool, a waterfall, or a viewpoint. Wear shoes you can get wet, bring a dry bag for your phone, and start early to beat both the heat and the crowds. Many wadis involve some boulder-hopping or wading, so a reasonable level of fitness helps." },
+      { h2: 'Flash-flood safety — read this first', body: "Wadis can flood fast and without warning, even when it isn't raining where you are — rain in the mountains upstream can send a wall of water down a dry valley. Never enter a wadi if rain is forecast anywhere in the catchment, check the weather before you go, keep an eye on the sky, and know your exit route to higher ground. If water starts rising or turning muddy, get out immediately." },
+      { h2: 'What to bring', body: "Plenty of water, sun protection, sturdy wet-grip footwear, a dry bag, a small first-aid kit and snacks. A change of clothes for the drive home is welcome after a swim. Each wadi's page has a tailored packing list. Carry out every scrap of rubbish — wadi pools are fragile ecosystems." },
+      { h2: 'Best season for wadis', body: "The cooler months (roughly October to April) are ideal — comfortable hiking temperatures and pools topped up by winter rain. Avoid wadis during and immediately after heavy rain because of flash-flood risk, and avoid the peak summer months when the heat makes the approach hikes dangerous." }
+    ],
+    faqs: [
+      ['Can you swim in the wadis in the UAE?', 'Yes — many UAE wadis have natural pools you can swim in, especially after the winter rains. Always check water depth and conditions, never dive into unknown pools, and avoid wadis when rain is forecast due to flash-flood risk.'],
+      ['Are the wadis safe?', 'They are safe with preparation, but flash floods are a real danger. Never enter a wadi if rain is forecast anywhere upstream, check the weather, and have an escape route to higher ground. Wear grippy footwear and do not go alone.'],
+      ['When is the best time to visit a wadi?', 'October to April offers comfortable temperatures and fuller pools. Avoid the summer heat and steer clear during or right after heavy rain.'],
+      ['Do I need a 4x4 to reach the wadis?', 'It depends on the wadi. Some have paved access and car parks; others need a 4x4 for the final stretch. Check the access notes on each location page before you set off.']
+    ]
+  },
+  {
+    slug: 'desert-camping-beginners', h1: 'Desert Camping for Beginners in the UAE',
+    title: 'Desert Camping for Beginners in the UAE — A Complete Guide | Sahra & Beyond',
+    desc: 'A beginner-friendly guide to desert camping in the UAE: where to go, what to pack, sand-driving basics, safety and leave-no-trace tips.',
+    pick: locations.filter(l => l.category === 'Camping'),
+    intro: "Never camped in the desert before? It's one of the most magical things you can do in the UAE — and it's easier to get right than you'd think. This beginner's guide walks you through choosing a spot, packing the essentials, staying safe and camping responsibly, so your first night under the stars is a great one.\n\nStart with one of the gentler, easy-to-reach sites in our picks below, go with a friend or two, and build up from there.",
+    sections: [
+      { h2: 'Choosing your first spot', body: "For a first trip, pick an easy-rated site with firm ground you can reach without serious off-roading — the desert-lake sites in our picks are ideal. Go on a weekend with good weather in the cooler season, arrive with a couple of hours of daylight left so you can set up your tent and get oriented before dark, and avoid committing to deep, soft dunes until you're confident." },
+      { h2: 'The essential kit', body: "You don't need expensive gear to start. The essentials: a tent and pegs that hold in sand, a sleeping bag and mat, four-plus litres of water per person per day, a head torch, warm layers for the night, sun protection, a first-aid kit, a power bank and plenty of rubbish bags. A small shovel and a sturdy ground sheet make life easier. Every location page here has a packing checklist you can tailor." },
+      { h2: 'Sand-driving basics', body: "If your spot needs any off-road driving, the golden rules are: lower your tyre pressures (this is the single biggest factor in not getting stuck), keep momentum, steer smoothly, and never drive into soft sand alone. Travel with at least one other vehicle, carry a tow rope and recovery boards, and bring a compressor or have a plan to re-inflate before tarmac. If in doubt, park on firm ground and walk in." },
+      { h2: 'Staying safe', body: "Tell someone where you're going and when you'll be back. Download offline maps and note your GPS coordinates — phone signal is patchy. Watch the night-time temperature drop, which catches beginners out in winter. Keep a torch handy, secure food from wildlife, and never leave a campfire unattended. If conditions change, it's always fine to pack up and head home early." },
+      { h2: 'Leave no trace', body: "This is the rule that matters most. Take every piece of rubbish home with you, including food scraps and anything that blew away. Keep fires small and fully extinguish them, don't drive over plants, and leave the site cleaner than you found it. Responsible camping is what keeps these places open to everyone." }
+    ],
+    faqs: [
+      ['Is desert camping in the UAE safe for beginners?', 'Yes — choose an easy, accessible site in the cooler months, go with others, carry plenty of water and a first-aid kit, and tell someone your plans. Start simple and build up as you gain confidence.'],
+      ['What do I need for my first desert camping trip?', 'A sand-worthy tent, sleeping bag and mat, four-plus litres of water per person per day, a head torch, warm night layers, sun protection, a first-aid kit, a power bank and rubbish bags. Each location page has a full tailored checklist.'],
+      ['Do I need a 4x4 to go desert camping?', 'Not always. Several beginner-friendly sites have firm ground you can reach in a normal car and walk in from. For dune sites you need a 4x4, lowered tyre pressures and a convoy — never tackle soft sand alone.'],
+      ['When should beginners go desert camping in the UAE?', 'Between October and April, when temperatures are comfortable by day and cool at night. Avoid the extreme summer heat entirely.']
+    ]
+  },
+  {
+    slug: 'mountain-escapes', h1: 'Best Mountain Escapes in the UAE',
+    title: 'Best Mountain Escapes in the UAE — Hikes & Cool-Air Getaways | Sahra & Beyond',
+    desc: 'The best mountain escapes in the UAE — cooler air, big views and hikes in the Hajar range, with GPS, the best season and what to bring.',
+    pick: locations.filter(l => l.category === 'Mountains'),
+    intro: "When the lowlands heat up, the mountains are where the UAE goes to cool down. The rugged Hajar range rises dramatically near the east coast and along the Oman border, offering cooler air, sweeping views and proper hiking — a completely different side of the Emirates to the dunes and beaches.\n\nThese are our favourite mountain escapes in the UAE, with access notes, the best season and difficulty. Pack for changeable conditions and respect the terrain — the mountains are unforgiving of the unprepared.",
+    sections: [
+      { h2: 'Why head for the mountains', body: "Altitude brings noticeably cooler temperatures, which makes the mountains comfortable even on the shoulders of summer. Add big horizon views, winding scenic drives and quiet trails, and they're a brilliant antidote to the city. Some spots are an easy drive-up viewpoint; others are full-day hikes — there's something for every level." },
+      { h2: 'Hiking safely in the Hajar', body: "Mountain terrain is rocky, exposed and steep in places. Wear proper hiking shoes, carry far more water than you'd expect (there's rarely any on the trail), start early, and turn back with plenty of daylight to spare. Tell someone your route, download offline maps, and don't rely on phone signal. Loose rock and sudden drop-offs mean this is not the place to wander off-trail." },
+      { h2: 'What to bring', body: "Sturdy footwear, sun protection, a hat, two-plus litres of water per person for a half-day (more for longer), snacks, a first-aid kit, a windproof layer for exposed ridges and a fully charged phone with offline maps. Each location page has a packing checklist you can tailor to your trip." },
+      { h2: 'Best season for the mountains', body: "October to April is ideal for hiking, with comfortable daytime temperatures. The higher elevations can be genuinely cold and windy in winter, so bring a warm layer. Summer hiking at altitude is possible early in the morning but the heat lower down makes the approach tough — plan accordingly." }
+    ],
+    faqs: [
+      ['Are there mountains to hike in the UAE?', 'Yes — the Hajar mountains near the east coast and the Oman border offer everything from easy drive-up viewpoints to full-day hikes, with cooler air and big views.'],
+      ['Is it cooler in the UAE mountains?', 'Yes. Higher elevation means noticeably lower temperatures than the coast or desert, which is why the mountains are a popular escape when the lowlands are hot. Winter at altitude can even be cold and windy.'],
+      ['What should I bring for a mountain hike in the UAE?', 'Proper hiking shoes, plenty of water, sun protection, snacks, a first-aid kit, a warm/windproof layer and offline maps. Start early and turn back with daylight to spare.'],
+      ['When is the best time to visit the UAE mountains?', 'October to April for comfortable hiking. Bring a warm layer for the higher, windier spots, and avoid strenuous midday hikes in summer.']
+    ]
   }
 ];
 
@@ -433,13 +512,27 @@ LANDINGS.forEach(L => {
       ]
     }
   ];
+  if (Array.isArray(L.faqs) && L.faqs.length) {
+    jsonld.push({
+      "@context": "https://schema.org", "@type": "FAQPage",
+      "mainEntity": L.faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } }))
+    });
+  }
+  const sectionsHtml = Array.isArray(L.sections)
+    ? L.sections.map(s => `<section class="guide-sec"><h2>${esc(s.h2)}</h2><div class="content">${paras(s.body)}</div></section>`).join('')
+    : '';
+  const faqHtml = (Array.isArray(L.faqs) && L.faqs.length)
+    ? `<section class="faq"><h2>Frequently asked questions</h2>${L.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>`
+    : '';
   const body = `
   <main>
     <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(L.h1)}</span></nav>
     <h1>${esc(L.h1)}</h1>
     <div class="content">${paras(L.intro)}</div>
-    <h2>Our top picks</h2>
-    <div class="cards">${L.pick.map(locCard).join('')}</div>
+    ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
+    ${sectionsHtml}
+    ${faqHtml}
+    ${newsletterBlock()}
     <p class="back"><a href="/">Explore all spots on the interactive map &rarr;</a></p>
   </main>`;
   write(`${L.slug}/index.html`, shell({ title: L.title, desc: L.desc, canonical, jsonld, bodyHtml: body }));
@@ -469,3 +562,5 @@ fs.writeFileSync(path.join(ROOT, 'feed.json'), JSON.stringify(feed));
 console.log('  ✓ feed.json (' + locations.length + ' locations)');
 
 console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.length + ' landing pages.');
+// end of build
+
