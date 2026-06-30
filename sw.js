@@ -1,9 +1,10 @@
 /* Sahra & Beyond service worker — offline app shell + content caching */
-const CACHE = 'sahra-v5';
+const CACHE = 'sahra-v6';
 const SHELL = [
   '/', '/?platform=android', '/index.html', '/manifest.json',
   '/icon.svg', '/icon-maskable.svg',
   '/icon-192.png', '/icon-512.png', '/icon-maskable-192.png', '/icon-maskable-512.png',
+  '/feed.json',
   '/content/settings.json',
   '/content/locations/snoopy-island.json', '/content/locations/al-quaa-desert.json',
   '/content/locations/half-desert.json', '/content/locations/mleiha-desert.json',
@@ -40,8 +41,8 @@ self.addEventListener('fetch', e => {
   // Never cache the admin CMS or API routes (avoids stale config / OAuth issues).
   if (url.pathname.startsWith('/admin') || url.pathname.startsWith('/api')) return;
 
-  // Content JSON: network-first so edits show, fall back to cache offline.
-  if (url.pathname.startsWith('/content/')) {
+  // Content JSON & the location feed: network-first so edits show, fall back to cache offline.
+  if (url.pathname.startsWith('/content/') || url.pathname === '/feed.json') {
     e.respondWith(
       fetch(req).then(r => {
         const copy = r.clone();

@@ -1351,8 +1351,9 @@ const FALLBACK_LOCATIONS = [
 
 async function loadContent() {
   try {
-    const locNames = ['snoopy-island','al-quaa-desert','half-desert','mleiha-desert','wadi-showka','jabal-yanas','crescent-moon-lake','desert-camping-lake-view','love-lake','shuweihat-island','sir-bani-yas-island'];
-    locations = (await Promise.all(locNames.map(n=>fetch(`/content/locations/${n}.json`).then(r=>r.ok?r.json():null).catch(()=>null)))).filter(Boolean);
+    // Load every location from the build-generated feed (auto-includes anything added via the CMS).
+    const feed = await fetch('/feed.json').then(r=>r.ok?r.json():null).catch(()=>null);
+    locations = (feed && Array.isArray(feed.locations)) ? feed.locations : [];
   } catch(e) {
     locations = [];
   }
