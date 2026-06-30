@@ -72,10 +72,12 @@ function newsletterBlock() {
   if (!MON.newsletterAction) return '';
   const blurb = MON.newsletterBlurb || 'Get the best new UAE spots and seasonal tips in your inbox.';
   return `<section class="news"><h2>Never miss a new spot</h2><p>${esc(blurb)}</p>
-    <form class="news-form" action="${esc(MON.newsletterAction)}" method="post" target="_blank">
-      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
+    <form class="news-form" action="${esc(MON.newsletterAction)}" method="post">
+      <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
       <button type="submit">Subscribe</button>
-    </form></section>`;
+    </form>
+    <p class="news-ok" style="display:none;margin-top:12px;font-weight:700;color:#0c905c">Thanks! Check your email to confirm your subscription.</p>
+    <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>`;
 }
 // Category hero gradients (echo the app's scene palettes)
 const CAT_BG = {
