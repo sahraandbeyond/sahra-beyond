@@ -15,7 +15,7 @@
   "monetization": {
     "toursUrlTemplate": "",
     "bookingUrlTemplate": "",
-    "newsletterAction": "",
+    "newsletterAction": "https://app.kit.com/forms/9627814/subscriptions",
     "newsletterBlurb": "Get the best new UAE spots, seasonal tips and weekend ideas — straight to your inbox. No spam."
   }
 }
