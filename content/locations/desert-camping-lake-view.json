@@ -6,10 +6,13 @@
   "emoji": "⛺",
   "name": "Desert Camping (Lake View)",
   "desc": "A hidden, little-known camping spot tucked beside a desert lake — calm water, soft dunes and almost no crowds. A local secret for a peaceful overnight.",
+  "gallery": [
+    "/uploads/img_20260207_072923.jpg"
+  ],
   "status": "safe",
   "igPosts": [],
   "distance": "~1h from Dubai",
-  "cover": "",
+  "cover": "/uploads/img_20260206_175829.jpg",
   "id": "desert-camping-lake-view",
   "difficulty": "Moderate",
   "category": "Camping",
