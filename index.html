@@ -1532,7 +1532,7 @@ function locCardHTML(l){
   const dist = (l._dist!=null) ? ('<span class="loc-tag">'+l._dist+' km away</span>') : '';
   return '<div class="loc-card" onclick="location.href=\'/locations/'+l.id+'/\'">'
     +'<div class="loc-thumb" style="background:'+thumbBg(l.category)+'">'
-    +(l.cover?'<img loading="lazy" src="'+l.cover+'" alt="'+l.name+'">':'<span>'+(l.emoji||'📍')+'</span>')
+    +(l.cover?'<img loading="lazy" src="'+l.cover+'" alt="'+l.name+'" style="object-position:'+(l.coverFocus||'50% 50%')+'">':'<span>'+(l.emoji||'📍')+'</span>')
     +'<div class="loc-badge '+badgeClass(l.status)+'">'+statusLabel(l.status)+'</div>'
     +'<button class="fav-btn'+(isFav(l.id)?' on':'')+'" data-fav="'+l.id+'" title="Save spot" onclick="toggleFav(\''+l.id+'\',event)">'+(isFav(l.id)?'♥':'♡')+'</button>'
     +'</div>'
@@ -1603,7 +1603,7 @@ function renderSpots(){
   const cards=locs.map(l=>`
     <div class="spot-card" onclick="location.href='/locations/${l.id}/'">
       <div class="spot-thumb ${thumbClass(l.category)}">
-        ${l.cover?`<img loading="lazy" src="${l.cover}" alt="${l.name}">`:''}
+        ${l.cover?`<img loading="lazy" src="${l.cover}" alt="${l.name}" style="object-position:${l.coverFocus||'50% 50%'}">`:''}
         ${!l.cover?l.emoji:''}
         <div class="spot-badge ${badgeClass(l.status)}">${statusLabel(l.status)}</div>
         <button class="spot-fav${isFav(l.id)?' on':''}" data-fav="${l.id}" title="Save spot" onclick="toggleFav('${l.id}',event)">${isFav(l.id)?'♥':'♡'}</button>
@@ -1630,7 +1630,7 @@ function showSpot(id){
   const l=locations.find(x=>x.id===id); if(!l) return;
   document.getElementById('spot-modal-content').innerHTML=`
     <button class="modal-close" onclick="closeSpot()">✕</button>
-    <div class="spot-modal-thumb ${thumbClass(l.category)}">${l.cover?`<img src="${l.cover}" alt="${l.name}">`:`<span style="font-size:48px">${l.emoji}</span>`}</div>
+    <div class="spot-modal-thumb ${thumbClass(l.category)}">${l.cover?`<img src="${l.cover}" alt="${l.name}" style="object-position:${l.coverFocus||'50% 50%'}">`:`<span style="font-size:48px">${l.emoji}</span>`}</div>
     <div class="spot-modal-name">${l.name}</div>
     <div class="spot-modal-meta">📍 ${l.emirate} · ${l.category} · ${l.difficulty}</div>
     <div class="spot-stats">

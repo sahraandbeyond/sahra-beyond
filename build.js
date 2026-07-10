@@ -313,7 +313,7 @@ locations.forEach(l => {
     </div>
   </section>
   <main>
-    ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}">` : ''}
+    ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}" style="object-position:${esc(l.coverFocus || '50% 50%')}">` : ''}
     ${galleryHtml}
     <div class="content">${paras(l.body || l.desc)}</div>
     <aside class="facts">
