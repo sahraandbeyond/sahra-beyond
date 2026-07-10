@@ -47,6 +47,20 @@ collections:
       - { label: "Short Description", name: "desc", widget: "text", hint: "One or two sentences. Shown on cards, the map and as the page meta description." }
       - { label: "Full Description (SEO page)", name: "body", widget: "text", required: false, hint: "A few paragraphs (separate with a blank line). This is the main content of the location's own Google-indexed page. Leave blank to fall back to the short description." }
       - { label: "Cover Photo", name: "cover", widget: "image", required: false, hint: "Main photo — used as the page banner AND the preview image when the page is shared on WhatsApp/Instagram/etc. A wide landscape photo works best." }
+      - label: "Cover Photo Framing"
+        name: "coverFocus"
+        widget: "select"
+        required: false
+        default: "50% 50%"
+        hint: "The cover is cropped to fit the card and banner. Pick which part of the photo to keep in view. Try 'Top' or 'Upper' if the important part is near the top of a tall photo."
+        options:
+          - { label: "Center (default)", value: "50% 50%" }
+          - { label: "Top", value: "50% 0%" }
+          - { label: "Upper third", value: "50% 25%" }
+          - { label: "Lower third", value: "50% 75%" }
+          - { label: "Bottom", value: "50% 100%" }
+          - { label: "Left", value: "0% 50%" }
+          - { label: "Right", value: "100% 50%" }
       - label: "Photo Gallery"
         name: "gallery"
         widget: "list"
