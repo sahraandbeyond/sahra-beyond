@@ -8,5 +8,75 @@
 </head>
 <body>
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  <script>
+  // Custom "cover focus" widget: drag sliders over a live thumbnail preview to choose
+  // which part of the cover photo shows in the card and banner. Stores "X% Y%".
+  (function () {
+    if (!window.CMS || !window.h || !window.createClass) return;
+    var h = window.h, createClass = window.createClass;
+
+    function parseFocus(v) {
+      var nums = String(v || '').match(/(\d+)%/g) || [];
+      var x = nums[0] ? parseInt(nums[0], 10) : 50;
+      var y = nums[1] ? parseInt(nums[1], 10) : 50;
+      if (isNaN(x)) x = 50; if (isNaN(y)) y = 50;
+      return { x: x, y: y };
+    }
+
+    var Control = createClass({
+      coverUrl: function () {
+        try {
+          var cover = (this.props.entry && this.props.entry.getIn) ? this.props.entry.getIn(['data', 'cover']) : '';
+          if (!cover) return '';
+          if (this.props.getAsset) {
+            try {
+              var a = this.props.getAsset(cover);
+              var s = a && a.toString ? a.toString() : String(a);
+              if (s && s.indexOf('[object') !== 0) return s;
+            } catch (e) {}
+          }
+          return String(cover);
+        } catch (e) { return ''; }
+      },
+      set: function (x, y) { this.props.onChange(x + '% ' + y + '%'); },
+      render: function () {
+        var self = this;
+        var p = parseFocus(this.props.value);
+        var x = p.x, y = p.y;
+        var url = this.coverUrl();
+
+        var preview = url
+          ? h('div', { style: { width: '100%', maxWidth: '360px', height: '150px', borderRadius: '10px', overflow: 'hidden', background: '#e9e4da', border: '1px solid #ddd' } },
+              h('img', { src: url, style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: x + '% ' + y + '%', display: 'block' } }))
+          : h('div', { style: { padding: '12px', color: '#888', fontStyle: 'italic' } }, 'Add a Cover Photo above, then drag the sliders to frame it.');
+
+        function slider(label, axis, val) {
+          return h('div', { style: { margin: '10px 0 2px' } },
+            h('div', { style: { fontSize: '12px', color: '#555', marginBottom: '2px' } }, label + ': ' + val + '%'),
+            h('input', {
+              type: 'range', min: 0, max: 100, value: val, style: { width: '100%', maxWidth: '360px' },
+              onChange: function (e) {
+                var n = parseInt(e.target.value, 10);
+                if (axis === 'x') self.set(n, y); else self.set(x, n);
+              }
+            })
+          );
+        }
+
+        return h('div', { className: this.props.classNameWrapper },
+          preview,
+          slider('Horizontal (left ↔ right)', 'x', x),
+          slider('Vertical (top ↕ bottom)', 'y', y)
+        );
+      }
+    });
+
+    var Preview = createClass({
+      render: function () { return h('div', {}, this.props.value); }
+    });
+
+    CMS.registerWidget('coverfocus', Control, Preview);
+  })();
+  </script>
 </body>
 </html>

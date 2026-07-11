@@ -49,18 +49,10 @@ collections:
       - { label: "Cover Photo", name: "cover", widget: "image", required: false, hint: "Main photo — used as the page banner AND the preview image when the page is shared on WhatsApp/Instagram/etc. A wide landscape photo works best." }
       - label: "Cover Photo Framing"
         name: "coverFocus"
-        widget: "select"
+        widget: "coverfocus"
         required: false
         default: "50% 50%"
-        hint: "The cover is cropped to fit the card and banner. Pick which part of the photo to keep in view. Try 'Top' or 'Upper' if the important part is near the top of a tall photo."
-        options:
-          - { label: "Center (default)", value: "50% 50%" }
-          - { label: "Top", value: "50% 0%" }
-          - { label: "Upper third", value: "50% 25%" }
-          - { label: "Lower third", value: "50% 75%" }
-          - { label: "Bottom", value: "50% 100%" }
-          - { label: "Left", value: "0% 50%" }
-          - { label: "Right", value: "100% 50%" }
+        hint: "Drag the sliders to choose which part of the cover photo shows in the card and banner. The preview updates live."
       - label: "Photo Gallery"
         name: "gallery"
         widget: "list"
