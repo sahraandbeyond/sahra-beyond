@@ -101,9 +101,12 @@ const CSS = `
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;background:#FAF6EF;line-height:1.65}
 a{color:#9C521B}
-.hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,5vw,48px);border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.92);backdrop-filter:blur(10px);z-index:5;flex-wrap:wrap}
-.brand{display:inline-flex;align-items:center;gap:9px;font-family:'Playfair Display',serif;font-weight:900;letter-spacing:2px;color:#33271B;text-decoration:none;font-size:16px}
-.brand img{display:block;width:30px;height:30px}
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none}
+.brand img{display:block;width:34px;height:34px}
+.brand-text{display:flex;flex-direction:column;line-height:1}
+.brand-sahra{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;letter-spacing:3px;color:#33271B;text-transform:uppercase}
+.brand-beyond{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;color:#C0702E;text-transform:uppercase;margin-top:2px}
 .hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:18px;margin:0 0 24px}
 .book{margin:26px 0;padding:20px 22px;border:1px solid rgba(192,112,46,.3);background:rgba(255,247,237,.7);border-radius:16px}
 .book h2{margin:0 0 6px;font-size:18px}
@@ -132,8 +135,10 @@ a{color:#9C521B}
 .ig-strip::-webkit-scrollbar-thumb{background:rgba(43,37,32,.2);border-radius:3px}
 .ig-strip .ig-item{flex:0 0 auto;scroll-snap-align:start}
 .ig-strip .instagram-media{margin:0!important;min-width:326px!important;width:326px!important;max-width:326px!important}
-.hdr-nav a{margin-left:16px;font-size:13px;font-weight:600;color:#7C7264;text-decoration:none}
-.hdr-nav a:hover{color:#C0702E}
+.hdr-nav{display:flex;gap:3px;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.hdr-nav::-webkit-scrollbar{display:none}
+.hdr-nav a{flex:0 0 auto;padding:8px 14px;border-radius:999px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#7C7264;text-decoration:none;white-space:nowrap;transition:all .2s}
+.hdr-nav a:hover{background:rgba(192,112,46,.1);color:#9C521B}
 main{max-width:820px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(16px,5vw,32px)}
 .crumbs{font-size:12px;color:#7C7264;margin-bottom:14px}
 .crumbs a{color:#7C7264;text-decoration:none}
@@ -240,7 +245,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image }) {
 <style>${CSS}</style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="" width="30" height="30"> Sahra &amp; Beyond</a><nav class="hdr-nav"><a href="/">Explore</a><a href="/#map">Map</a><a href="/#weather">Weather</a><a href="/about/">About us</a></nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra &amp; Beyond" width="34" height="34"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/">Discover</a><a href="/#map">Map</a><a href="/#weather">Weather</a><a href="/about/">About us</a></nav></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
 </body>
