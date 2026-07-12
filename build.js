@@ -240,7 +240,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image }) {
 <style>${CSS}</style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="" width="30" height="30"> Sahra &amp; Beyond</a><nav class="hdr-nav"><a href="/">Explore</a><a href="/#map">Map</a><a href="/#weather">Weather</a><a href="/about/">About</a></nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="" width="30" height="30"> Sahra &amp; Beyond</a><nav class="hdr-nav"><a href="/">Explore</a><a href="/#map">Map</a><a href="/#weather">Weather</a><a href="/about/">About us</a></nav></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
 </body>
