@@ -139,6 +139,7 @@ a{color:#9C521B}
 .hdr-nav::-webkit-scrollbar{display:none}
 .hdr-nav a{flex:0 0 auto;padding:8px 14px;border-radius:999px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#7C7264;text-decoration:none;white-space:nowrap;transition:all .2s}
 .hdr-nav a:hover{background:rgba(192,112,46,.1);color:#9C521B}
+.hdr-nav a.active{background:#C0702E;color:#fff;box-shadow:0 4px 12px rgba(192,112,46,.3)}
 main{max-width:820px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(16px,5vw,32px)}
 .crumbs{font-size:12px;color:#7C7264;margin-bottom:14px}
 .crumbs a{color:#7C7264;text-decoration:none}
@@ -208,8 +209,10 @@ function footerHtml() {
   <div class="disc">${esc(disclosure)}</div>`;
 }
 
-function shell({ title, desc, canonical, jsonld, bodyHtml, image }) {
+function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'discover' }) {
   const ogImg = image || `${SITE}/icon-512.png`;
+  const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
+  const navHtml = nav('/', 'Discover', 'discover') + nav('/#map', 'Map', 'map') + nav('/#weather', 'Weather', 'weather') + nav('/about/', 'About us', 'about');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -245,7 +248,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image }) {
 <style>${CSS}</style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra &amp; Beyond" width="34" height="34"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/">Discover</a><a href="/#map">Map</a><a href="/#weather">Weather</a><a href="/about/">About us</a></nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra &amp; Beyond" width="34" height="34"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
 </body>
@@ -683,7 +686,7 @@ LANDINGS.forEach(L => {
     </div></section>
     <p class="back" style="margin-top:26px"><a href="/">Explore the map &amp; all spots &rarr;</a></p>
   </main>`;
-  write('about/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, image: SITE + '/icon-512.png' }));
+  write('about/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, image: SITE + '/icon-512.png', activeNav: 'about' }));
 })();
 
 // ---- sitemap ----
