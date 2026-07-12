@@ -11,7 +11,7 @@ const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 
 // Clean previously-generated output so deleted locations don't leave orphan pages
-['locations', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
+['locations', 'about', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
 
 function readJSON(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return null; } }
 function metaDesc(s) { s = String(s || ''); if (s.length <= 160) return s; const cut = s.slice(0, 157); return cut.slice(0, cut.lastIndexOf(' ')) + '…'; }
@@ -198,7 +198,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
   return `<div class="soc">${soc}</div>
-  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner</div>
   <div class="disc">${esc(disclosure)}</div>`;
 }
@@ -240,7 +240,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image }) {
 <style>${CSS}</style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="" width="30" height="30"> Sahra &amp; Beyond</a><nav class="hdr-nav"><a href="/">Explore</a><a href="/#map">Map</a><a href="/#weather">Weather</a></nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="" width="30" height="30"> Sahra &amp; Beyond</a><nav class="hdr-nav"><a href="/">Explore</a><a href="/#map">Map</a><a href="/#weather">Weather</a><a href="/about/">About</a></nav></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
 </body>
@@ -635,10 +635,56 @@ LANDINGS.forEach(L => {
   write(`${L.slug}/index.html`, shell({ title: L.title, desc: L.desc, canonical, jsonld, bodyHtml: body }));
 });
 
+// ---- About page ----
+(function () {
+  const canonical = `${SITE}/about/`;
+  const title = 'About Sahra & Beyond — Discover the Wild Side of the UAE';
+  const desc = 'The story behind Sahra & Beyond — a UAE outdoor adventure guide inspired by the unique landscapes of the Emirates, built to help you discover the wild side of the UAE.';
+  const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
+  const jsonld = [
+    { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical },
+    { "@context": "https://schema.org", "@type": "Organization", "name": "Sahra & Beyond", "url": SITE + "/", "logo": SITE + "/icon-512.png", "sameAs": sameAs },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+      { "@type": "ListItem", "position": 2, "name": "About", "item": canonical }
+    ] }
+  ];
+  const body = `
+  <section class="loc-hero" style="background:linear-gradient(140deg,#3A2F66 0%,#7A4F63 45%,#C0702E 100%)">
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>About</span></nav>
+      <div class="loc-emoji">🌅</div>
+      <h1>Discover the wild side of the UAE</h1>
+      <p class="lede">Inspired by the unique landscapes of the Emirates</p>
+    </div>
+  </section>
+  <main>
+    <div class="content">
+      <p>Sahra &amp; Beyond was born out of a love for the wild, quiet corners of the Emirates &mdash; the places most people drive straight past without ever knowing they are there. Inspired by the unique landscapes of the UAE, from rolling dunes and star-filled desert skies to hidden wadis, rugged mountains and empty stretches of coast, we exist to help you get out and experience them for yourself.</p>
+    </div>
+    <section class="guide-sec"><h2>How it started</h2><div class="content">
+      <p>It started with a simple camping trip in the desert. One night under a sky thick with stars was all it took &mdash; that trip lit a spark, and a passion to explore more of this landscape that only grew with every journey after it.</p>
+      <p>The further we went, the more we realised how much the UAE holds beyond its cities, and how little of it is mapped for the people who actually want to find it. Sahra &amp; Beyond grew out of that: years of exploring the farthest corners of the country, turned into a guide for everyone who feels the same pull.</p>
+    </div></section>
+    <section class="guide-sec"><h2>What we are about</h2><div class="content">
+      <p>Our mission is simple &mdash; to help you discover the wild side of the UAE. Not the polished, curated version, but the real one: the secluded camp spots, the wadis that flow after the rains, the mountain roads and the dark-sky deserts where the Milky Way still shows.</p>
+      <p>We want to make the outdoors feel within reach, so that anyone &mdash; first-timers and seasoned adventurers alike &mdash; can head out prepared, safe and inspired.</p>
+    </div></section>
+    <section class="guide-sec"><h2>What you will find here</h2><div class="content">
+      <p>Every place on Sahra &amp; Beyond is somewhere we would actually go. You will find an interactive map with real GPS coordinates, honest guides to camping, wadis, mountains, coast and dunes, live weather for each spot, and tailored packing lists so you arrive ready. There is a companion Android app too, so your next adventure is always in your pocket.</p>
+    </div></section>
+    <section class="guide-sec"><h2>The name</h2><div class="content">
+      <p>&ldquo;Sahra&rdquo; means desert in Arabic &mdash; and &ldquo;beyond&rdquo; is everything else the Emirates hold once you leave the tarmac behind: the wadis, the mountains, the coast and the quiet. That is the invitation &mdash; come explore it with us.</p>
+    </div></section>
+    <p class="back" style="margin-top:26px"><a href="/">Explore the map &amp; all spots &rarr;</a></p>
+  </main>`;
+  write('about/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, image: SITE + '/icon-512.png' }));
+})();
+
 // ---- sitemap ----
 const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
-const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
+const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }]
   .concat(LANDINGS.map(L => ({ u: `${SITE}/${L.slug}/`, m: buildDate, p: '0.8' })))
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
