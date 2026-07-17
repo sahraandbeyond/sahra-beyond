@@ -12,6 +12,11 @@
   "lang": "en",
   "dir": "ltr",
   "categories": ["travel", "lifestyle", "navigation"],
+  "shortcuts": [
+    { "name": "Open the map", "short_name": "Map", "url": "/?platform=android#map" },
+    { "name": "Spots near me", "short_name": "Near me", "url": "/?platform=android#discover" },
+    { "name": "Camping spots", "short_name": "Camping", "url": "/?platform=android#cat/Camping" }
+  ],
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
