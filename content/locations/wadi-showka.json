@@ -1,17 +1,1 @@
-{
-  "emirate": "Ras Al Khaimah",
-  "body": "Wadi Showka sits in the Hajar foothills of Ras Al Khaimah, an accessible mountain wadi laced with rock pools, shaded gravel trails and dam-fed streams. It's a favourite for easy hiking, mountain biking and beginner-friendly camping, with sweeping ridge views and a network of marked paths.\n\nAfter rain the pools fill and the wadi comes alive; in the cooler months it's a perfect half-day escape or relaxed overnight under the mountains. A 2WD reaches the main areas, though a high-clearance vehicle opens up more of the trails.",
-  "season": "Oct–Apr",
-  "lng": 56.03,
-  "emoji": "🏞",
-  "name": "Wadi Showka",
-  "desc": "A mountain wadi in the Hajar foothills with rock pools, shaded trails and sweeping ridge views — a favourite for hiking, biking and easy camping.",
-  "status": "safe",
-  "igPosts": [],
-  "distance": "~1h from Dubai",
-  "cover": "/uploads/17951464709964948.webp",
-  "id": "wadi-showka",
-  "difficulty": "Moderate",
-  "category": "Wadis",
-  "lat": 25.02
-}
+{"id": "wadi-showka", "name": "Wadi Showka", "emoji": "🏞", "emirate": "Ras Al Khaimah", "category": "Wadis", "difficulty": "Moderate", "season": "Oct–Apr", "distance": "~1h from Dubai", "lat": 25.02, "lng": 56.03, "status": "safe", "desc": "A mountain wadi in the Hajar foothills with rock pools, shaded trails and sweeping ridge views — a favourite for hiking, biking and easy camping.", "cover": "", "igPosts": [], "body": "Wadi Showka sits in the Hajar foothills of Ras Al Khaimah, an accessible mountain wadi laced with rock pools, shaded gravel trails and dam-fed streams. It's a favourite for easy hiking, mountain biking and beginner-friendly camping, with sweeping ridge views and a network of marked paths.\n\nAfter rain the pools fill and the wadi comes alive; in the cooler months it's a perfect half-day escape or relaxed overnight under the mountains. A 2WD reaches the main areas, though a high-clearance vehicle opens up more of the trails."}

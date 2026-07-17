@@ -5,9 +5,8 @@
       "name": "Drinking water",
       "qty": "{water}L total",
       "note": "",
-      "query": "Water",
-      "show": [],
-      "amazon": "https://link.amazon/B07dFiEEu"
+      "query": "water jerry can",
+      "show": []
     },
     {
       "group": "💧 Water & Hydration",
@@ -15,8 +14,7 @@
       "qty": "{p} packs",
       "note": "",
       "query": "electrolyte tablets",
-      "show": [],
-      "amazon": "https://link.amazon/A06Hws7KA"
+      "show": []
     },
     {
       "group": "💧 Water & Hydration",
@@ -24,8 +22,7 @@
       "qty": "×{p}",
       "note": "",
       "query": "insulated water bottle",
-      "show": [],
-      "amazon": "https://link.amazon/B05O1pFtz"
+      "show": []
     },
     {
       "group": "☀️ Sun Protection",
@@ -33,8 +30,23 @@
       "qty": "",
       "note": "",
       "query": "sunscreen spf 50",
-      "show": [],
-      "amazon": "https://link.amazon/B0a0QkDac"
+      "show": []
+    },
+    {
+      "group": "☀️ Sun Protection",
+      "name": "Wide-brim hat / keffiyeh",
+      "qty": "×{p}",
+      "note": "",
+      "query": "wide brim sun hat",
+      "show": []
+    },
+    {
+      "group": "☀️ Sun Protection",
+      "name": "UV long-sleeve shirt",
+      "qty": "×{p}",
+      "note": "",
+      "query": "upf 50 long sleeve shirt",
+      "show": []
     },
     {
       "group": "☀️ Sun Protection",
@@ -42,8 +54,7 @@
       "qty": "×{p}",
       "note": "",
       "query": "polarised sunglasses",
-      "show": [],
-      "amazon": "https://link.amazon/A01X4hwDP"
+      "show": []
     },
     {
       "group": "🚙 Vehicle & Recovery",
@@ -54,8 +65,7 @@
       "show": [
         "Dunes",
         "Camping"
-      ],
-      "amazon": "https://link.amazon/A06iCJ3Jk"
+      ]
     },
     {
       "group": "🚙 Vehicle & Recovery",
@@ -66,8 +76,7 @@
       "show": [
         "Dunes",
         "Camping"
-      ],
-      "amazon": "https://link.amazon/B073IHYgf"
+      ]
     },
     {
       "group": "🚙 Vehicle & Recovery",
@@ -78,8 +87,7 @@
       "show": [
         "Dunes",
         "Camping"
-      ],
-      "amazon": "https://link.amazon/B0hbUT8HG"
+      ]
     },
     {
       "group": "🚙 Vehicle & Recovery",
@@ -90,8 +98,7 @@
       "show": [
         "Dunes",
         "Camping"
-      ],
-      "amazon": "https://link.amazon/B00tdDacR"
+      ]
     },
     {
       "group": "🚙 Vehicle & Recovery",
@@ -102,8 +109,7 @@
       "show": [
         "Dunes",
         "Camping"
-      ],
-      "amazon": "https://link.amazon/B00r5KeVZ"
+      ]
     },
     {
       "group": "🥾 Wadi & Water",
@@ -112,10 +118,8 @@
       "note": "",
       "query": "water shoes",
       "show": [
-        "Wadis",
-        "Coast"
-      ],
-      "amazon": "https://link.amazon/B05UO84ZZ"
+        "Wadis"
+      ]
     },
     {
       "group": "🥾 Wadi & Water",
@@ -124,10 +128,8 @@
       "note": "",
       "query": "dry bag waterproof",
       "show": [
-        "Wadis",
-        "Coast"
-      ],
-      "amazon": "https://link.amazon/A0hE43FZn"
+        "Wadis"
+      ]
     },
     {
       "group": "🥾 Wadi & Water",
@@ -136,21 +138,28 @@
       "note": "",
       "query": "quick dry towel",
       "show": [
-        "Wadis",
-        "Coast"
-      ],
-      "amazon": "https://link.amazon/B05OrJhPb"
+        "Wadis"
+      ]
+    },
+    {
+      "group": "🥾 Wadi & Water",
+      "name": "10m rope (for scrambling)",
+      "qty": "",
+      "note": "",
+      "query": "climbing rope 10m",
+      "show": [
+        "Wadis"
+      ]
     },
     {
       "group": "🤿 Snorkel & Beach",
-      "name": "Mask & snorkel ",
+      "name": "Mask, snorkel & fins",
       "qty": "×{p}",
       "note": "",
       "query": "snorkel set mask fins",
       "show": [
         "Coast"
-      ],
-      "amazon": "https://link.amazon/B07hV99Qo"
+      ]
     },
     {
       "group": "🤿 Snorkel & Beach",
@@ -160,8 +169,7 @@
       "query": "reef safe sunscreen",
       "show": [
         "Coast"
-      ],
-      "amazon": "https://link.amazon/B0c7md5KU"
+      ]
     },
     {
       "group": "🤿 Snorkel & Beach",
@@ -171,8 +179,17 @@
       "query": "beach towel",
       "show": [
         "Coast"
-      ],
-      "amazon": "https://link.amazon/B0gcFyX2u"
+      ]
+    },
+    {
+      "group": "🤿 Snorkel & Beach",
+      "name": "Dry bag (waterproof)",
+      "qty": "",
+      "note": "",
+      "query": "dry bag waterproof",
+      "show": [
+        "Coast"
+      ]
     },
     {
       "group": "⛰ Trekking",
@@ -182,8 +199,7 @@
       "query": "hiking boots",
       "show": [
         "Mountains"
-      ],
-      "amazon": "https://link.amazon/B041pd5FR"
+      ]
     },
     {
       "group": "⛰ Trekking",
@@ -193,19 +209,27 @@
       "query": "trekking poles",
       "show": [
         "Mountains"
-      ],
-      "amazon": "https://link.amazon/B08uEOHZh"
+      ]
+    },
+    {
+      "group": "⛰ Trekking",
+      "name": "Light gloves",
+      "qty": "×{p}",
+      "note": "",
+      "query": "hiking gloves",
+      "show": [
+        "Mountains"
+      ]
     },
     {
       "group": "🌌 Stargazing",
-      "name": "Red-light headlamp",
+      "name": "Red-light head torch",
       "qty": "×{p}",
       "note": "",
       "query": "red light headlamp astronomy",
       "show": [
         "Camping"
-      ],
-      "amazon": "https://link.amazon/B03cOZaQl"
+      ]
     },
     {
       "group": "🌌 Stargazing",
@@ -215,8 +239,7 @@
       "query": "fleece jacket",
       "show": [
         "Camping"
-      ],
-      "amazon": "https://link.amazon/B0e0C3qqg"
+      ]
     },
     {
       "group": "🌌 Stargazing",
@@ -225,8 +248,7 @@
       "note": "Free — SkySafari / Stellarium",
       "query": "",
       "show": [
-        "Camping",
-        "Overnight"
+        "Camping"
       ]
     },
     {
@@ -243,8 +265,15 @@
       "qty": "×{half}",
       "note": "",
       "query": "power bank 20000mah",
-      "show": [],
-      "amazon": "https://link.amazon/B0dqljMWg"
+      "show": []
+    },
+    {
+      "group": "🧭 Navigation & Power",
+      "name": "Headlamp + spare batteries",
+      "qty": "×{p}",
+      "note": "",
+      "query": "led headlamp camping",
+      "show": []
     },
     {
       "group": "🏥 Safety & First Aid",
@@ -252,8 +281,7 @@
       "qty": "",
       "note": "",
       "query": "outdoor first aid kit",
-      "show": [],
-      "amazon": "https://link.amazon/B0dD6JfaA"
+      "show": []
     },
     {
       "group": "🏥 Safety & First Aid",
@@ -261,8 +289,7 @@
       "qty": "×{p}",
       "note": "",
       "query": "emergency mylar blanket",
-      "show": [],
-      "amazon": "https://link.amazon/B0hpchXfr"
+      "show": []
     },
     {
       "group": "🏥 Safety & First Aid",
@@ -280,8 +307,7 @@
       "query": "lightweight camping tent 2 person",
       "show": [
         "Overnight"
-      ],
-      "amazon": "https://link.amazon/A0cBOuBmB"
+      ]
     },
     {
       "group": "⛺ Overnight Camping",
@@ -290,10 +316,8 @@
       "note": "",
       "query": "sleeping bag camping",
       "show": [
-        "Overnight",
-        "Camping"
-      ],
-      "amazon": "https://link.amazon/B01BULUlk"
+        "Overnight"
+      ]
     },
     {
       "group": "⛺ Overnight Camping",
@@ -303,8 +327,7 @@
       "query": "portable camping stove gas",
       "show": [
         "Overnight"
-      ],
-      "amazon": "https://link.amazon/B07IQac4e"
+      ]
     },
     {
       "group": "⛺ Overnight Camping",
@@ -313,10 +336,8 @@
       "note": "",
       "query": "camping cooler box ice",
       "show": [
-        "Overnight",
-        "Camping"
-      ],
-      "amazon": "https://link.amazon/B0fhu7zoq"
+        "Overnight"
+      ]
     },
     {
       "group": "⛺ Overnight Camping",
@@ -326,8 +347,7 @@
       "query": "folding camp chair",
       "show": [
         "Overnight"
-      ],
-      "amazon": "https://link.amazon/B0i8suH5h"
+      ]
     }
   ]
 }

@@ -1,18 +1,1 @@
-{
-  "emirate": "Sharjah",
-  "coverFocus": "50% 82%",
-  "body": "Jabal Yanas is a rugged peak rising above the UAE's east coast near Khorfakkan, prized for its surreal, fiery sunsets and panoramic Hajar mountain views. The drive and short scramble to the high points reward you with one of the most dramatic vantage points in the country.\n\nIt's a popular spot for sunset camping — pitch up on a flat shoulder, watch the light turn the ridges copper and violet, then enjoy clear mountain skies after dark. Bring proper footwear, plenty of water and a head for heights; the views over the coast and surrounding peaks are unforgettable.",
-  "season": "Oct–Apr",
-  "lng": 56.089363,
-  "emoji": "🌄",
-  "name": "Jabal Yanas",
-  "desc": "A rugged peak above the east coast known for surreal, fiery sunsets and panoramic mountain views — a dramatic spot to camp high above the valleys.",
-  "status": "safe",
-  "igPosts": [],
-  "distance": "~2h from Dubai",
-  "cover": "/uploads/unsorted-no-geotag_03.webp",
-  "id": "jabal-yanas",
-  "difficulty": "Moderate",
-  "category": "Mountains",
-  "lat": 25.726756
-}
+{"id": "jabal-yanas", "name": "Jabal Yanas", "emoji": "🌄", "emirate": "Sharjah", "category": "Mountains", "difficulty": "Moderate", "season": "Oct–Apr", "distance": "~2h from Dubai", "lat": 25.35, "lng": 56.3, "status": "safe", "desc": "A rugged peak above the east coast known for surreal, fiery sunsets and panoramic mountain views — a dramatic spot to camp high above the valleys.", "cover": "", "igPosts": [], "body": "Jabal Yanas is a rugged peak rising above the UAE's east coast near Khorfakkan, prized for its surreal, fiery sunsets and panoramic Hajar mountain views. The drive and short scramble to the high points reward you with one of the most dramatic vantage points in the country.\n\nIt's a popular spot for sunset camping — pitch up on a flat shoulder, watch the light turn the ridges copper and violet, then enjoy clear mountain skies after dark. Bring proper footwear, plenty of water and a head for heights; the views over the coast and surrounding peaks are unforgettable."}

@@ -1,18 +1,1 @@
-{
-  "emirate": "Dubai",
-  "coverFocus": "50% 43%",
-  "body": "Crescent Moon Lake is a quiet desert lake on the edge of Dubai, ringed by reeds and soft dunes and known for its wildlife. At dawn and dusk you can spot Arabian oryx, gazelle and deer coming to drink, along with rich birdlife — making it one of the best easy-access spots near the city for nature watching.\n\nIt's a calm, scenic place for a low-key camp or picnic, with that rare feeling of wilderness just a short drive from town. Keep your distance from the animals, take all litter home, and arrive early for the best sightings and softest light.",
-  "season": "Oct–Apr",
-  "lng": 55.306326,
-  "emoji": "🦌",
-  "name": "Crescent Moon Lake",
-  "desc": "A quiet desert lake where Arabian oryx, gazelle and deer come to drink at dawn and dusk. One of the best spots near the city for wildlife and birdlife.",
-  "status": "safe",
-  "igPosts": [],
-  "distance": "~50 min from Dubai",
-  "cover": "/uploads/17865510819668242.webp",
-  "id": "crescent-moon-lake",
-  "difficulty": "Easy",
-  "category": "Camping",
-  "lat": 24.786829
-}
+{"id": "crescent-moon-lake", "name": "Crescent Moon Lake", "emoji": "🦌", "emirate": "Dubai", "category": "Camping", "difficulty": "Easy", "season": "Oct–Apr", "distance": "~50 min from Dubai", "lat": 24.81, "lng": 55.33, "status": "safe", "desc": "A quiet desert lake where Arabian oryx, gazelle and deer come to drink at dawn and dusk. One of the best spots near the city for wildlife and birdlife.", "cover": "", "igPosts": [], "body": "Crescent Moon Lake is a quiet desert lake on the edge of Dubai, ringed by reeds and soft dunes and known for its wildlife. At dawn and dusk you can spot Arabian oryx, gazelle and deer coming to drink, along with rich birdlife — making it one of the best easy-access spots near the city for nature watching.\n\nIt's a calm, scenic place for a low-key camp or picnic, with that rare feeling of wilderness just a short drive from town. Keep your distance from the animals, take all litter home, and arrive early for the best sightings and softest light."}
