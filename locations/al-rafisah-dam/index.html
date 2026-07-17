@@ -34,9 +34,12 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;background:#FAF6EF;line-height:1.65}
 a{color:#9C521B}
-.hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,5vw,48px);border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.92);backdrop-filter:blur(10px);z-index:5;flex-wrap:wrap}
-.brand{display:inline-flex;align-items:center;gap:9px;font-family:'Playfair Display',serif;font-weight:900;letter-spacing:2px;color:#33271B;text-decoration:none;font-size:16px}
-.brand img{display:block;width:30px;height:30px}
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none}
+.brand img{display:block;width:34px;height:34px}
+.brand-text{display:flex;flex-direction:column;line-height:1}
+.brand-sahra{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;letter-spacing:3px;color:#33271B;text-transform:uppercase}
+.brand-beyond{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;color:#C0702E;text-transform:uppercase;margin-top:2px}
 .hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:18px;margin:0 0 24px}
 .book{margin:26px 0;padding:20px 22px;border:1px solid rgba(192,112,46,.3);background:rgba(255,247,237,.7);border-radius:16px}
 .book h2{margin:0 0 6px;font-size:18px}
@@ -65,8 +68,11 @@ a{color:#9C521B}
 .ig-strip::-webkit-scrollbar-thumb{background:rgba(43,37,32,.2);border-radius:3px}
 .ig-strip .ig-item{flex:0 0 auto;scroll-snap-align:start}
 .ig-strip .instagram-media{margin:0!important;min-width:326px!important;width:326px!important;max-width:326px!important}
-.hdr-nav a{margin-left:16px;font-size:13px;font-weight:600;color:#7C7264;text-decoration:none}
-.hdr-nav a:hover{color:#C0702E}
+.hdr-nav{display:flex;gap:3px;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.hdr-nav::-webkit-scrollbar{display:none}
+.hdr-nav a{flex:0 0 auto;padding:8px 14px;border-radius:999px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#7C7264;text-decoration:none;white-space:nowrap;transition:all .2s}
+.hdr-nav a:hover{background:rgba(192,112,46,.1);color:#9C521B}
+.hdr-nav a.active{background:#C0702E;color:#fff;box-shadow:0 4px 12px rgba(192,112,46,.3)}
 main{max-width:820px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(16px,5vw,32px)}
 .crumbs{font-size:12px;color:#7C7264;margin-bottom:14px}
 .crumbs a{color:#7C7264;text-decoration:none}
@@ -126,10 +132,30 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .ftr .links{margin:12px 0}
 .ftr .links a{margin:0 8px;color:#7C7264;text-decoration:none;font-size:12px}
 .ftr .disc{margin-top:12px;font-size:11px;opacity:.85}
+/* premium brand layer */
+.ftr-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:#9C521B;margin-bottom:14px}
+.loc-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 46%,transparent 62%);background-size:240% 100%;animation:heroSweep 9s ease-in-out infinite;pointer-events:none}
+@keyframes heroSweep{0%,100%{background-position:110% 0}50%{background-position:-10% 0}}
+.loc-hero h1::after{content:"";display:block;width:52px;height:3px;margin-top:12px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
+.hdr-nav a.shopnav{color:#9C521B;font-weight:700}
+/* shop CTA band — living night sky */
+.shopcta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;padding:34px 26px;text-align:center;color:#fff;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 90%)}
+.shopcta .stars,.shopcta .stars2{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 12% 28%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 14%,#fff,transparent),radial-gradient(1.6px 1.6px at 54% 34%,#fff,transparent),radial-gradient(1.2px 1.2px at 71% 18%,#fff,transparent),radial-gradient(1.6px 1.6px at 88% 30%,#fff,transparent),radial-gradient(1px 1px at 44% 52%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite}
+.shopcta .stars2{background-image:radial-gradient(1.2px 1.2px at 22% 44%,#FFE9C4,transparent),radial-gradient(1.5px 1.5px at 62% 12%,#FFE9C4,transparent),radial-gradient(1px 1px at 80% 48%,#fff,transparent),radial-gradient(1.4px 1.4px at 8% 12%,#fff,transparent);animation-delay:2.2s}
+@keyframes ctaTwinkle{0%,100%{opacity:.9}50%{opacity:.3}}
+.shopcta .shoot{position:absolute;top:16%;left:-12%;width:110px;height:1.5px;background:linear-gradient(90deg,transparent,#FFF6DF);border-radius:2px;transform:rotate(9deg);animation:ctaShoot 7.5s ease-in infinite;pointer-events:none}
+@keyframes ctaShoot{0%,64%{left:-12%;opacity:0}68%{opacity:1}78%,100%{left:104%;opacity:0}}
+.shopcta-eyebrow{position:relative;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#E9B978;margin-bottom:10px}
+.shopcta h2{position:relative;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,4.4vw,36px);color:#fff;margin:0 0 8px;line-height:1.12}
+.shopcta h2 em{font-style:italic;color:#E9B978}
+.shopcta p{position:relative;color:rgba(255,255,255,.85);font-size:14.5px;max-width:460px;margin:0 auto 18px}
+.shopcta .btn{position:relative;background:#fff;color:#2A2016;border-radius:999px;padding:12px 26px}
+.shopcta .btn:hover{background:#E9B978}
+@media(prefers-reduced-motion:reduce){.loc-hero::before,.shopcta .stars,.shopcta .stars2,.shopcta .shoot{animation:none}}
 </style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="" width="30" height="30"> Sahra &amp; Beyond</a><nav class="hdr-nav"><a href="/">Explore</a><a href="/#map">Map</a><a href="/#weather">Weather</a></nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra &amp; Beyond" width="34" height="34"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/" class="active">Home</a><a href="/shop/">Shop</a><a href="/about/">About us</a></nav></header>
 
   <section class="loc-hero" style="background:linear-gradient(140deg,#333E5C 0%,#5E6E92 50%,#90A4C8 100%)">
     <div class="loc-hero-inner">
@@ -162,6 +188,11 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
     </aside>
     
     
+    <section class="shopcta"><div class="stars"></div><div class="stars2"></div><div class="shoot"></div>
+    <div class="shopcta-eyebrow">Sahra &amp; Beyond · Original Tees</div>
+    <h2>Wear the <em>wild side</em> of the UAE</h2>
+    <p>Original tees inspired by real places like Al Rafisah Dam — every design carries a place.</p>
+    <a class="btn" href="/shop/">Shop the collection &rarr;</a></section>
     
     <section class="pack">
       <h2>What to pack for Al Rafisah Dam</h2>
@@ -188,8 +219,8 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
     </form>
     <p class="news-ok" style="display:none;margin-top:12px;font-weight:700;color:#0c905c">Thanks! Check your email to confirm your subscription.</p>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>
-    <section class="related"><h2>More Mountains spots in the UAE</h2><div class="cards"><a class="card" href="/locations/jabal-yanas/"><span class="card-emoji">🌄</span><span class="card-body"><strong>Jabal Yanas</strong><em>Sharjah · Mountains</em><span>A rugged peak above the east coast known for surreal, fiery sunsets and panoramic mountain views — a dramatic spot to camp high above the valleys.</span></span></a><a class="card" href="/locations/jebel-hafeet/"><span class="card-emoji">⛰</span><span class="card-body"><strong>Jebel Hafeet</strong><em>Al Ain · Mountains</em><span>The second highest peak in the UAE. A spectacular winding road climbs 1,240m with panoramic views over Al Ain and the desert beyond.</span></span></a></div></section>
-    <p class="back" style="margin-top:26px"><a href="/">&larr; Back to the map &amp; all spots</a></p>
+    <section class="related"><h2>More Mountains spots in the UAE</h2><div class="cards"><a class="card" href="/locations/jabal-yanas/"><span class="card-emoji">🌄</span><span class="card-body"><strong>Jabal Yanas</strong><em>Sharjah · Mountains</em><span>A rugged peak above the east coast known for surreal, fiery sunsets and panoramic mountain views — a dramatic spot to camp high above the valleys.</span></span></a><a class="card" href="/locations/jebel-hafeet/"><span class="card-emoji">⛰</span><span class="card-body"><strong>Jebel Hafeet</strong><em>Al Ain · Mountains</em><span>The second highest peak in the UAE. A spectacular winding road climbs 1,240m with panoramic views over Al Ain and the desert beyond.</span></span></a><a class="card" href="/locations/wadi-naqab/"><span class="card-emoji">⛰</span><span class="card-body"><strong>Wadi Naqab</strong><em>Ras Al Khaimah · Mountains</em><span>A dramatic seasonal wadi high in the Hajar Mountains below Jebel Jais — red-rock walls, terraced pools and some of the clearest mountain air and darkest skies in Ras Al Khaimah.</span></span></a></div></section>
+    <p class="back" style="margin-top:26px"><a href="/">&larr; Back to Sahra &amp; Beyond</a></p>
   </main>
   <script>
   (function(){
@@ -219,9 +250,10 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
     },true);
   })();
   </script>
-<footer class="ftr"><div class="soc"><a href="https://instagram.com/sahra_and_beyond" target="_blank" rel="noopener">Instagram</a><a href="https://tiktok.com/@sahra_and_beyond" target="_blank" rel="noopener">Tiktok</a><a href="https://youtube.com/@sahra_and_beyond" target="_blank" rel="noopener">Youtube</a></div>
-  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/">Map &amp; planner</a></div>
-  <div>© 2026 Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner</div>
+<footer class="ftr"><div class="ftr-tagline">Wear the wild side of the UAE</div>
+  <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
+  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
+  <div>© 2026 Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · <a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a></div>
   <div class="disc">As an Amazon Associate, Sahra &amp; Beyond earns from qualifying purchases.</div></footer>
 </body>
 </html>
