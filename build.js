@@ -11,7 +11,7 @@ const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 
 // Clean previously-generated output so deleted locations don't leave orphan pages
-['locations', 'about', 'shop', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
+['locations', 'about', 'shop', 'places', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
 
 const TAGLINE = 'Wear the wild side of the UAE';
 // Pre-launch mode: the site opens on the coming-soon experience.
@@ -254,7 +254,7 @@ function footerHtml() {
 function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'discover' }) {
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Home', 'discover') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About us', 'about');
+  const navHtml = nav('/', 'Home', 'discover') + nav('/places/', 'Places', 'places') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About us', 'about');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -769,21 +769,64 @@ if (LAUNCHED) (function () {
   } catch (e) { console.log('  ! shop page skipped: ' + e.message); }
 })();
 
+
+// ---- Places index (the full directory that replaced the old planner grid) ----
+(function () {
+  const canonical = `${SITE}/places/`;
+  const title = 'All Places — ' + locations.length + ' Deserts, Wadis, Mountains & Beaches in the UAE | Sahra & Beyond';
+  const desc = 'The full Sahra & Beyond map: ' + locations.length + ' real places across the Emirates — dunes, wadis, mountains, lakes and beaches, each with GPS, live weather and a tailored packing list.';
+  const jsonld = [
+    { "@context": "https://schema.org", "@type": "CollectionPage", "name": title, "description": desc, "url": canonical },
+    { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": locations.map((l, i) => ({ "@type": "ListItem", "position": i + 1, "name": l.name, "url": `${SITE}/locations/${l.id}/` })) },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+      { "@type": "ListItem", "position": 2, "name": "Places", "item": canonical }
+    ] }
+  ];
+  const CATS = ['Dunes', 'Camping', 'Wadis', 'Mountains', 'Coast'];
+  const seen = new Set();
+  const secs = CATS.map(c => {
+    const list = locations.filter(l => l.category === c);
+    list.forEach(l => seen.add(l.id));
+    return list.length ? `<section class="guide-sec"><h2>${esc(c)}</h2><div class="cards">${list.map(locCard).join('')}</div></section>` : '';
+  }).join('');
+  const rest = locations.filter(l => !seen.has(l.id));
+  const restHtml = rest.length ? `<section class="guide-sec"><h2>More places</h2><div class="cards">${rest.map(locCard).join('')}</div></section>` : '';
+  const body = `
+  <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
+    <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Places</span></nav>
+      <div class="loc-emoji">\U0001F5FA️</div>
+      <h1>Every place we have explored</h1>
+      <p class="lede">${locations.length} real places across the Emirates &mdash; the landscapes behind every design</p>
+    </div>
+  </section>
+  <main>
+    <div class="content"><p>This is the map behind the brand: every desert, dune field, wadi, mountain trail and beach we have explored across the UAE. Each place has its own guide with GPS coordinates, live weather, honest difficulty ratings and a packing list tailored to the terrain.</p></div>
+    ${secs}
+    ${restHtml}
+    ${shopBlock(null)}
+    <p class="back" style="margin-top:26px"><a href="/">&larr; Back to Sahra &amp; Beyond</a></p>
+  </main>`;
+  write('places/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: 'places' }));
+})();
+
 // ---- sitemap ----
 const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
 const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(LAUNCHED ? [{ u: `${SITE}/shop/`, m: buildDate, p: '0.9' }] : [])
-  .concat([{ u: `${SITE}/about/`, m: buildDate, p: '0.6' }])
+  .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }])
   .concat(LANDINGS.map(L => ({ u: `${SITE}/${L.slug}/`, m: buildDate, p: '0.8' })))
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
   + entries.map(e => `  <url><loc>${e.u}</loc><lastmod>${e.m}</lastmod><priority>${e.p}</priority></url>`).join('\n')
   + `\n</urlset>\n`;
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
-console.log('  ✓ sitemap.xml (' + entries.length + ' urls)');
+console.log('  \u2713 sitemap.xml (' + entries.length + ' urls)');
 
-// ---- content feed for the native Android app (one request → all content) ----
+// ---- content feed for the native Android app (one request \u2192 all content) ----
 const feed = {
   updated: new Date().toISOString(),
   site: SITE,
@@ -794,8 +837,7 @@ const feed = {
   packing: PACKING
 };
 fs.writeFileSync(path.join(ROOT, 'feed.json'), JSON.stringify(feed));
-console.log('  ✓ feed.json (' + locations.length + ' locations)');
+console.log('  \u2713 feed.json (' + locations.length + ' locations)');
 
 console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.length + ' landing pages.');
 // end of build
-
