@@ -1,1 +1,19 @@
-{"id": "shuweihat-island", "name": "Shuweihat Island", "emoji": "🪨", "emirate": "Abu Dhabi", "category": "Coast", "difficulty": "Hard", "season": "Oct–Mar", "distance": "~3.5h from Abu Dhabi", "lat": 24.3, "lng": 52.45, "status": "warn", "desc": "A remote western island famous for surreal mushroom-shaped rock formations sculpted by wind and sea — raw, sculptural and gloriously empty.", "cover": "", "igPosts": [], "body": "Shuweihat Island, off the UAE's far western coast in Abu Dhabi's Al Dhafra region, is famous for surreal mushroom-shaped rock formations sculpted over millennia by wind and sea. Remote and rarely visited, it's a dream for photographers and adventurers chasing raw, sculptural landscapes.\n\nReaching it is a proper expedition — long distances, soft sand and full self-sufficiency required — but the reward is a coastline that feels untouched. Plan carefully, travel in convoy, and time your visit for the cooler months when the desert and coast are at their most forgiving."}
+{
+  "emirate": "Abu Dhabi",
+  "body": "Shuweihat Island, off the UAE's far western coast in Abu Dhabi's Al Dhafra region, is famous for surreal mushroom-shaped rock formations sculpted over millennia by wind and sea. Remote and rarely visited, it's a dream for photographers and adventurers chasing raw, sculptural landscapes.\n\nReaching it is a proper expedition — long distances, soft sand and full self-sufficiency required — but the reward is a coastline that feels untouched. Plan carefully, travel in convoy, and time your visit for the cooler months when the desert and coast are at their most forgiving.",
+  "season": "Oct–Mar",
+  "lng": 52.433308,
+  "emoji": "🪨",
+  "name": "Shuweihat Island",
+  "desc": "A remote western island famous for surreal mushroom-shaped rock formations sculpted by wind and sea — raw, sculptural and gloriously empty.",
+  "status": "warn",
+  "igPosts": [
+    "https://www.instagram.com/p/DZxo15Yo5zo/"
+  ],
+  "distance": "~3.5h from Abu Dhabi",
+  "cover": "/uploads/unsorted-no-geotag_02.webp",
+  "id": "shuweihat-island",
+  "difficulty": "Hard",
+  "category": "Coast",
+  "lat": 24.110069
+}

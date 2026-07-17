@@ -1,1 +1,17 @@
-{"id": "love-lake", "name": "Love Lake", "emoji": "💙", "emirate": "Dubai", "category": "Camping", "difficulty": "Easy", "season": "Oct–Apr", "distance": "~50 min from Dubai", "lat": 24.7186, "lng": 55.336, "status": "safe", "desc": "Two heart-shaped lakes carved into the Al Qudra desert, fringed with greenery and birdlife. A short, easy drive from the city straight into the wilderness.", "cover": "", "igPosts": [], "body": "Love Lake is a pair of giant heart-shaped lakes carved into the Al Qudra desert outside Dubai, fringed with greenery, palm trees and abundant birdlife. It's one of the easiest ways to swap the city for genuine wilderness — a short, paved drive delivers you to flamingos, swans and quiet picnic spots.\n\nThe lakes are a popular sunrise and sunset destination for walking, cycling and casual camping nearby. Facilities are minimal, so bring your own water and supplies, and take everything home to keep this green oasis pristine."}
+{
+  "emirate": "Dubai",
+  "body": "Love Lake is a pair of giant heart-shaped lakes carved into the Al Qudra desert outside Dubai, fringed with greenery, palm trees and abundant birdlife. It's one of the easiest ways to swap the city for genuine wilderness — a short, paved drive delivers you to flamingos, swans and quiet picnic spots.\n\nThe lakes are a popular sunrise and sunset destination for walking, cycling and casual camping nearby. Facilities are minimal, so bring your own water and supplies, and take everything home to keep this green oasis pristine.",
+  "season": "Oct–Apr",
+  "lng": 55.403087,
+  "emoji": "💙",
+  "name": "Love Lake",
+  "desc": "Two heart-shaped lakes carved into the Al Qudra desert, fringed with greenery and birdlife. A short, easy drive from the city straight into the wilderness.",
+  "status": "safe",
+  "igPosts": [],
+  "distance": "~50 min from Dubai",
+  "cover": "",
+  "id": "love-lake",
+  "difficulty": "Easy",
+  "category": "Camping",
+  "lat": 24.835454
+}
