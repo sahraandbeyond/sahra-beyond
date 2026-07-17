@@ -11,7 +11,9 @@ const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 
 // Clean previously-generated output so deleted locations don't leave orphan pages
-['locations', 'about', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
+['locations', 'about', 'shop', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
+
+const TAGLINE = 'Wear the wild side of the UAE';
 
 function readJSON(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return null; } }
 function metaDesc(s) { s = String(s || ''); if (s.length <= 160) return s; const cut = s.slice(0, 157); return cut.slice(0, cut.lastIndexOf(' ')) + '…'; }
@@ -22,7 +24,8 @@ function write(rel, html) { const fp = path.join(ROOT, rel); fs.mkdirSync(path.d
 const locDir = path.join(ROOT, 'content/locations');
 const locations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(locDir, f))).filter(Boolean);
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
-const social = settings.social || {};
+// Instagram only — the single official channel
+const social = { instagram: (settings.social && settings.social.instagram) || 'https://instagram.com/sahraandbeyond.ae' };
 const disclosure = settings.affiliateDisclosure || 'As an Amazon Associate, Sahra & Beyond earns from qualifying purchases.';
 const CAT_HASH = { Camping: 'camping', Wadis: 'wadis', Mountains: 'mountains', Coast: 'coast', Dunes: 'dunes' };
 const AMAZON_TAG = settings.amazonTag || 'sahraandbeyon-21';
@@ -62,6 +65,16 @@ function stayBlock(l) {
   return `<section class="book"><h2>Where to stay near ${esc(l.name)}</h2>
     <p>Turning it into an overnight trip? Find hotels and stays close to ${esc(l.name)}.</p>
     <a class="btn book-btn alt" href="${esc(url)}" target="_blank" rel="noopener sponsored">Find places to stay &rarr;</a></section>`;
+}
+function shopBlock(l) {
+  const line = (l && l.name)
+    ? `Original tees inspired by real places like ${esc(l.name)} — every design carries a place.`
+    : 'Original tees inspired by the real deserts, wadis and dark-sky nights of the Emirates — every design carries a place.';
+  return `<section class="shopcta"><div class="stars"></div><div class="stars2"></div><div class="shoot"></div>
+    <div class="shopcta-eyebrow">Sahra &amp; Beyond · Original Tees</div>
+    <h2>Wear the <em>wild side</em> of the UAE</h2>
+    <p>${line}</p>
+    <a class="btn" href="/shop/">Shop the collection &rarr;</a></section>`;
 }
 function faqBlock(l) {
   const faqs = faqsFor(l);
@@ -199,20 +212,41 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .ftr .links{margin:12px 0}
 .ftr .links a{margin:0 8px;color:#7C7264;text-decoration:none;font-size:12px}
 .ftr .disc{margin-top:12px;font-size:11px;opacity:.85}
+/* premium brand layer */
+.ftr-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:#9C521B;margin-bottom:14px}
+.loc-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 46%,transparent 62%);background-size:240% 100%;animation:heroSweep 9s ease-in-out infinite;pointer-events:none}
+@keyframes heroSweep{0%,100%{background-position:110% 0}50%{background-position:-10% 0}}
+.loc-hero h1::after{content:"";display:block;width:52px;height:3px;margin-top:12px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
+.hdr-nav a.shopnav{color:#9C521B;font-weight:700}
+/* shop CTA band — living night sky */
+.shopcta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;padding:34px 26px;text-align:center;color:#fff;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 90%)}
+.shopcta .stars,.shopcta .stars2{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 12% 28%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 14%,#fff,transparent),radial-gradient(1.6px 1.6px at 54% 34%,#fff,transparent),radial-gradient(1.2px 1.2px at 71% 18%,#fff,transparent),radial-gradient(1.6px 1.6px at 88% 30%,#fff,transparent),radial-gradient(1px 1px at 44% 52%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite}
+.shopcta .stars2{background-image:radial-gradient(1.2px 1.2px at 22% 44%,#FFE9C4,transparent),radial-gradient(1.5px 1.5px at 62% 12%,#FFE9C4,transparent),radial-gradient(1px 1px at 80% 48%,#fff,transparent),radial-gradient(1.4px 1.4px at 8% 12%,#fff,transparent);animation-delay:2.2s}
+@keyframes ctaTwinkle{0%,100%{opacity:.9}50%{opacity:.3}}
+.shopcta .shoot{position:absolute;top:16%;left:-12%;width:110px;height:1.5px;background:linear-gradient(90deg,transparent,#FFF6DF);border-radius:2px;transform:rotate(9deg);animation:ctaShoot 7.5s ease-in infinite;pointer-events:none}
+@keyframes ctaShoot{0%,64%{left:-12%;opacity:0}68%{opacity:1}78%,100%{left:104%;opacity:0}}
+.shopcta-eyebrow{position:relative;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#E9B978;margin-bottom:10px}
+.shopcta h2{position:relative;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,4.4vw,36px);color:#fff;margin:0 0 8px;line-height:1.12}
+.shopcta h2 em{font-style:italic;color:#E9B978}
+.shopcta p{position:relative;color:rgba(255,255,255,.85);font-size:14.5px;max-width:460px;margin:0 auto 18px}
+.shopcta .btn{position:relative;background:#fff;color:#2A2016;border-radius:999px;padding:12px 26px}
+.shopcta .btn:hover{background:#E9B978}
+@media(prefers-reduced-motion:reduce){.loc-hero::before,.shopcta .stars,.shopcta .stars2,.shopcta .shoot{animation:none}}
 `;
 
 function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
-  return `<div class="soc">${soc}</div>
+  return `<div class="ftr-tagline">${esc(TAGLINE)}</div>
+  <div class="soc">${soc}</div>
   <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
-  <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner</div>
+  <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · <a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a></div>
   <div class="disc">${esc(disclosure)}</div>`;
 }
 
 function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'discover' }) {
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Discover', 'discover') + nav('/#map', 'Map', 'map') + nav('/#weather', 'Weather', 'weather') + nav('/about/', 'About us', 'about');
+  const navHtml = nav('/', 'Home', 'discover') + nav('/shop/', 'Shop', 'shop') + nav('/about/', 'About us', 'about');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -341,6 +375,7 @@ locations.forEach(l => {
     </aside>
     ${toursBlock(l)}
     ${stayBlock(l)}
+    ${shopBlock(l)}
     ${igSection(l.igPosts)}
     <section class="pack">
       <h2>What to pack for ${esc(l.name)}</h2>
@@ -362,7 +397,7 @@ locations.forEach(l => {
     ${faqBlock(l)}
     ${newsletterBlock()}
     ${related.length ? `<section class="related"><h2>More ${esc(l.category)} spots in the UAE</h2><div class="cards">${related.map(locCard).join('')}</div></section>` : ''}
-    <p class="back" style="margin-top:26px"><a href="/">&larr; Back to the map &amp; all spots</a></p>
+    <p class="back" style="margin-top:26px"><a href="/">&larr; Back to Sahra &amp; Beyond</a></p>
   </main>
   <script>
   (function(){
@@ -637,8 +672,9 @@ LANDINGS.forEach(L => {
     ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
     ${sectionsHtml}
     ${faqHtml}
+    ${shopBlock(null)}
     ${newsletterBlock()}
-    <p class="back"><a href="/">Explore all spots on the interactive map &rarr;</a></p>
+    <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
   </main>`;
   write(`${L.slug}/index.html`, shell({ title: L.title, desc: L.desc, canonical, jsonld, bodyHtml: body }));
 });
@@ -651,19 +687,20 @@ LANDINGS.forEach(L => {
   const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
   const jsonld = [
     { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical },
-    { "@context": "https://schema.org", "@type": "Organization", "name": "Sahra & Beyond", "url": SITE + "/", "logo": SITE + "/icon-512.png", "sameAs": sameAs },
+    { "@context": "https://schema.org", "@type": "Organization", "name": "Sahra & Beyond", "url": SITE + "/", "logo": SITE + "/icon-512.png", "slogan": TAGLINE, "sameAs": sameAs },
     { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
       { "@type": "ListItem", "position": 2, "name": "About", "item": canonical }
     ] }
   ];
   const body = `
-  <section class="loc-hero" style="background:linear-gradient(140deg,#3A2F66 0%,#7A4F63 45%,#C0702E 100%)">
+  <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
+    <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
     <div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>About</span></nav>
-      <div class="loc-emoji">🌅</div>
+      <div class="loc-emoji">🌌</div>
       <h1>Discover the wild side of the UAE</h1>
-      <p class="lede">Inspired by the unique landscapes of the Emirates</p>
+      <p class="lede">Inspired by the unique landscapes of the Emirates &mdash; and worn on our backs: <em style="font-family:'Playfair Display',serif">${esc(TAGLINE)}</em></p>
     </div>
   </section>
   <main>
@@ -684,15 +721,49 @@ LANDINGS.forEach(L => {
     <section class="guide-sec"><h2>The name</h2><div class="content">
       <p>&ldquo;Sahra&rdquo; means desert in Arabic &mdash; and &ldquo;beyond&rdquo; is everything else the Emirates hold once you leave the tarmac behind: the wadis, the mountains, the coast and the quiet. That is the invitation &mdash; come explore it with us.</p>
     </div></section>
-    <p class="back" style="margin-top:26px"><a href="/">Explore the map &amp; all spots &rarr;</a></p>
+    <section class="guide-sec"><h2>Wear it</h2><div class="content">
+      <p>The places we explore now live on original tees &mdash; the Milky Way over Al Quaa, the dune ridges of Liwa, the peaks of the Hajar Mountains. Every design carries a place, drawn from the real landscapes on this site.</p>
+    </div></section>
+    ${shopBlock(null)}
+    <p class="back" style="margin-top:26px"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
   </main>`;
   write('about/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, image: SITE + '/icon-512.png', activeNav: 'about' }));
+})();
+
+// ---- Shop page (generated from shop-preview.html — single source of truth) ----
+(function () {
+  try {
+    let html = fs.readFileSync(path.join(ROOT, 'shop-preview.html'), 'utf8');
+    const canonical = `${SITE}/shop/`;
+    const title = 'Shop UAE-Inspired Tees — Wear the Wild Side of the UAE | Sahra & Beyond';
+    const desc = 'Original heavyweight organic-cotton tees inspired by real UAE places — the Milky Way over Al Quaa, the dunes of Liwa and the Hajar Mountains. Wear the wild side of the UAE.';
+    const prod = (name, img, d) => ({ "@type": "Product", "name": name, "image": SITE + img, "description": d, "brand": { "@type": "Brand", "name": "Sahra & Beyond" }, "offers": { "@type": "Offer", "priceCurrency": "AED", "price": "149", "availability": "https://schema.org/InStock", "url": canonical } });
+    const jsonld = [
+      { "@context": "https://schema.org", "@type": "WebPage", "name": title, "description": desc, "url": canonical },
+      { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+        { "@type": "ListItem", "position": 2, "name": "Shop", "item": canonical }
+      ] },
+      { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "item": prod('Al Quaa Galaxy Tee', '/shirts/design-black-front.jpg', 'The Milky Way over Al Quaa — the darkest sky in the Emirates. Heavyweight organic cotton.') },
+        { "@type": "ListItem", "position": 2, "item": prod('Liwa Dune Tee', '/shirts/design-beige-front.jpg', 'A tonal embroidered sun setting over the dune ridges of Liwa. Heavyweight organic cotton.') },
+        { "@type": "ListItem", "position": 3, "item": prod('Hajar Mountains Tee', '/shirts/design-taupe-front.jpg', 'A topographic line drawing of the Hajar peaks. Organic cotton, made to layer.') }
+      ] }
+    ];
+    const meta = `\n<meta name="description" content="${esc(desc)}">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/design-black-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/design-black-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
+    html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>` + meta);
+    html = html.replace(/(['"])shirts\//g, '$1/shirts/');
+    html = html.replace('<a class="logo" href="#">', '<a class="logo" href="/">');
+    html = html.replace('<div class="nav-links"><a href="#">Shop</a><a href="#">Places</a><a href="#">About</a>', '<div class="nav-links"><a href="/shop/">Shop</a><a href="/">Places</a><a href="/about/">About</a>');
+    html = html.replace(/<footer>© \d{4} Sahra &amp; Beyond · Made in the UAE<\/footer>/, `<footer>${esc(TAGLINE)} · © ${new Date().getFullYear()} Sahra &amp; Beyond · Made in the UAE</footer>`);
+    write('shop/index.html', html);
+  } catch (e) { console.log('  ! shop page skipped: ' + e.message); }
 })();
 
 // ---- sitemap ----
 const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
-const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }]
+const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }, { u: `${SITE}/shop/`, m: buildDate, p: '0.9' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }]
   .concat(LANDINGS.map(L => ({ u: `${SITE}/${L.slug}/`, m: buildDate, p: '0.8' })))
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
