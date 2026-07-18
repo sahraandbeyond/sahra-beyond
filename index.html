@@ -170,6 +170,22 @@ footer .fine{margin-top:12px;opacity:.7}
 #preload .pt{font-family:'Playfair Display',serif;letter-spacing:5px;color:#fff;text-transform:uppercase;font-size:13px}
 html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
 
+/* tap-to-enlarge shirt photos */
+.panel-img{cursor:zoom-in}
+.panel-zoom{position:absolute;right:12px;bottom:12px;z-index:4;min-width:34px;height:34px;padding:0 12px;border-radius:999px;background:rgba(20,16,42,.72);backdrop-filter:blur(4px);display:flex;align-items:center;gap:6px;color:#E9B978;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;pointer-events:none}
+.panel-zoom .z-ic{font-size:14px}
+#lightbox{position:fixed;inset:0;z-index:200;background:rgba(6,4,13,.95);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;opacity:0;visibility:hidden;transition:opacity .35s;padding:24px}
+#lightbox.open{opacity:1;visibility:visible}
+#lightbox img{max-width:92vw;max-height:80vh;object-fit:contain;border-radius:6px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+#lightbox .lb-cap{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:#E9B978;text-align:center}
+#lightbox .lb-close{position:absolute;top:16px;right:20px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+/* persistent journey cue — tells users more tees await below */
+.journey-cue{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:7;display:flex;align-items:center;gap:10px;padding:10px 20px;border-radius:999px;background:rgba(20,16,42,.55);backdrop-filter:blur(8px);border:1px solid rgba(233,185,120,.32);color:rgba(255,255,255,.92);font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .5s;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+html.imm .journey-cue.show{opacity:1}
+html:not(.imm) .journey-cue{display:none}
+.journey-cue .jc-dot{width:6px;height:6px;border-radius:50%;background:#E9B978;animation:jcPulse 1.5s ease-in-out infinite}
+@keyframes jcPulse{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
+.journey-cue .jc-arrow{display:inline-block;animation:bob 1.8s ease-in-out infinite}
 @media(max-width:820px){
   .place-row{grid-template-columns:1fr 1fr}
   .places{padding:70px 22px}.join{padding:80px 22px}
@@ -183,16 +199,19 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
   .panel-num{font-size:32px;top:8px;right:12px}
   html.imm .cap{left:18px;top:74px;bottom:auto;max-width:72vw}
   html.imm .cap b{font-size:18px}
+  /* bigger, thumb-friendly waitlist box across all phones & small tablets */
+  .hero-c .eyebrow{font-size:10px}
+  .hero-c h1{font-size:clamp(32px,7.8vw,56px);max-width:15ch}
+  .hero-c p{font-size:14.5px;margin-top:14px}
+  .wl{max-width:420px;width:100%;margin-top:22px}
+  .wl-form{flex-direction:column;gap:10px}
+  .wl-form input{width:100%;height:62px;font-size:17px;padding:0 22px;border-radius:16px}
+  .wl-form button{width:100%;height:60px;font-size:16px;border-radius:16px}
+  .journey-cue{font-size:9.5px;padding:9px 16px;bottom:calc(72svh + 8px)}
 }
 @media(max-width:560px){
   nav{padding:14px 18px}nav.solid{padding:11px 18px}
-  .hero-c h1{font-size:clamp(34px,9vw,80px);max-width:14ch}
-  .hero-c p{font-size:15px}
-  .wl{max-width:100%;width:100%}
-  .wl-form{flex-direction:column}
-  .wl-form input,.wl-form button{width:100%;min-width:0}
-  .wl-form input{height:58px;font-size:16px;padding:0 22px}
-  .wl-form button{height:56px;font-size:15px}
+  .hero-c h1{font-size:clamp(30px,8.4vw,50px);max-width:16ch}
   .place-row{grid-template-columns:1fr 1fr;gap:12px}
   .places h2{font-size:28px}
 }
@@ -232,6 +251,8 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
       </div>
       <span class="scroll-cue">Scroll — from night to day<span class="chev">&#8964;</span></span>
     </div>
+
+    <div class="journey-cue" id="journeyCue"><span class="jc-dot"></span>Keep scrolling · 3 tees below<span class="jc-arrow">&#8595;</span></div>
 
     <div class="cap cap-1"><b>Al Quaa, Abu Dhabi</b>Bortle 1 &middot; the darkest sky in the Emirates</div>
     <div class="cap cap-2"><b>First light, Liwa</b>The dunes wake up golden</div>
@@ -315,6 +336,8 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="fine">© 2026 Sahra &amp; Beyond · Made in the UAE · Wear the wild side of the UAE</div>
 </footer>
+
+<div id="lightbox" aria-hidden="true"><button class="lb-close" aria-label="Close photo">&#10005;</button><img alt=""><div class="lb-cap"></div></div>
 
 <script>
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches,TOUCH=matchMedia('(hover:none),(pointer:coarse)').matches,HASG=(typeof gsap!=='undefined');
@@ -749,6 +772,12 @@ var IMM=false;
     var fin=document.querySelector('.finale');gsap.set(fin,{autoAlpha:0,y:24});
     ovToggle(.93,function(){gsap.to(fin,{autoAlpha:1,y:0,duration:.9,ease:'power3.out',overwrite:'auto'});},
                  function(){gsap.to(fin,{autoAlpha:0,duration:.5,overwrite:'auto'});});
+    // persistent "keep scrolling" cue — visible through the journey, gone at the finale
+    var jc=document.getElementById('journeyCue');
+    if(jc){
+      ovToggle(.05,function(){jc.classList.add('show');},function(){jc.classList.remove('show');});
+      ovToggle(.9,function(){jc.classList.remove('show');},function(){jc.classList.add('show');});
+    }
   }
   if(!TOUCH){document.querySelectorAll('.panel-media').forEach(function(media){
     var img=media.querySelector('.panel-img');if(!img)return;
@@ -759,6 +788,22 @@ var IMM=false;
       glare.style.background='radial-gradient(300px circle at '+(px*100)+'% '+(py*100)+'%,rgba(255,255,255,.22),transparent 62%)';});
     media.addEventListener('mouseleave',function(){rx(0);ry(0);});
   });}
+})();
+
+/* TAP / CLICK A SHIRT → full-size lightbox */
+(function(){
+  var lb=document.getElementById('lightbox');if(!lb)return;
+  var lbImg=lb.querySelector('img'),lbCap=lb.querySelector('.lb-cap');
+  function open(src,cap){lbImg.src=src;lbImg.alt=cap||'';lbCap.textContent=cap||'';lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function close(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  document.querySelectorAll('.panel-img').forEach(function(box){
+    var badge=document.createElement('span');badge.className='panel-zoom';badge.innerHTML='<span class="z-ic">&#9906;</span> Tap to view';box.appendChild(badge);
+    box.addEventListener('click',function(){var im=box.querySelector('img');if(!im)return;
+      var art=box.closest('.panel'),h=art&&art.querySelector('h3');open(im.currentSrc||im.src,h?h.textContent:'');});
+  });
+  lb.querySelector('.lb-close').addEventListener('click',close);
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target===lbImg)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb.classList.contains('open'))close();});
 })();
 
 /* WAITLIST — Kit v3 API (public key) with graceful fallback to the form post. */
