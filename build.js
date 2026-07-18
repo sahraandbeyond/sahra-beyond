@@ -91,22 +91,26 @@ function faqBlock(l) {
 }
 function newsletterBlock() {
   if (!MON.newsletterAction) return '';
-  const blurb = MON.newsletterBlurb || 'Get the best new UAE spots and seasonal tips in your inbox.';
-  return `<section class="news"><h2>Never miss a new spot</h2><p>${esc(blurb)}</p>
+  const blurb = 'The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.';
+  return `<section class="news"><div class="news-stars"></div><div class="news-in">
+    <span class="news-eyebrow">Sahra &amp; Beyond · First drop coming</span>
+    <h2>Wear the <em>wild side</em> of the UAE</h2><p>${esc(blurb)}</p>
     <form class="news-form" action="${esc(MON.newsletterAction)}" method="post">
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
-      <button type="submit">Subscribe</button>
+      <button type="submit">Join the waitlist</button>
     </form>
-    <p class="news-ok" style="display:none;margin-top:12px;font-weight:700;color:#0c905c">Thanks! Check your email to confirm your subscription.</p>
+    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:#E9B978">You&rsquo;re on the list. See you at the drop. &#10022;</p>
+    </div>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>`;
 }
-// Category hero gradients (echo the app's scene palettes)
+// Category hero gradients — all within the brand's desert-night palette
+// (deep indigo Milky-Way sky melting to a category-tinted horizon)
 const CAT_BG = {
-  Camping: 'linear-gradient(140deg,#3A2F66 0%,#7A4F63 45%,#C0702E 100%)',
-  Wadis: 'linear-gradient(140deg,#1F8A74 0%,#3FA98E 50%,#7FCBB0 100%)',
-  Coast: 'linear-gradient(140deg,#1C7AA2 0%,#3AA0C8 50%,#7EC8E6 100%)',
-  Mountains: 'linear-gradient(140deg,#333E5C 0%,#5E6E92 50%,#90A4C8 100%)',
-  Dunes: 'linear-gradient(140deg,#9A591A 0%,#C9842F 45%,#EBB36B 100%)'
+  Camping:   'linear-gradient(160deg,#14102A 0%,#39295A 42%,#7A4F63 74%,#C0702E 100%)',
+  Wadis:     'linear-gradient(160deg,#14102A 0%,#2E3A50 44%,#4E6B63 76%,#A98A54 100%)',
+  Coast:     'linear-gradient(160deg,#14102A 0%,#26324E 44%,#3E6172 76%,#C08A54 100%)',
+  Mountains: 'linear-gradient(160deg,#14102A 0%,#332C4A 44%,#5C4A5E 76%,#B07A44 100%)',
+  Dunes:     'linear-gradient(160deg,#14102A 0%,#3A2A44 42%,#8B4E63 72%,#C0702E 100%)'
 };
 // Packing items that apply to a location's category (always + this category + overnight-only)
 function packItemsFor(l) {
@@ -141,12 +145,19 @@ a{color:#9C521B}
 .faq summary::before{content:'+ ';color:#C0702E;font-weight:800}
 .faq details[open] summary::before{content:'– '}
 .faq details p{margin:9px 0 2px;color:#5C5346;font-size:14px}
-.news{margin:30px 0;padding:22px;border-radius:16px;background:linear-gradient(135deg,#FBEAD2,#F4C98E);text-align:center}
-.news h2{margin:0 0 6px}
-.news p{margin:0 0 14px;color:#5A4326;font-size:14px}
-.news-form{display:flex;gap:8px;max-width:420px;margin:0 auto;flex-wrap:wrap;justify-content:center}
-.news-form input{flex:1;min-width:200px;padding:12px 14px;border-radius:10px;border:1px solid rgba(43,37,32,.2);font-size:14px}
-.news-form button{padding:12px 20px;border-radius:10px;border:none;background:#33271B;color:#fff;font-weight:700;cursor:pointer}
+.news{position:relative;overflow:hidden;margin:34px 0;padding:44px 26px;border-radius:18px;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 92%);text-align:center;color:#fff}
+.news-stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 12% 26%,#fff,transparent),radial-gradient(1.2px 1.2px at 34% 14%,#fff,transparent),radial-gradient(1.5px 1.5px at 56% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 74% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 32%,#fff,transparent),radial-gradient(1px 1px at 44% 52%,#fff,transparent);animation:nStar 4.5s ease-in-out infinite}
+@keyframes nStar{0%,100%{opacity:.9}50%{opacity:.35}}
+.news-in{position:relative;z-index:1;max-width:520px;margin:0 auto}
+.news-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#E9B978}
+.news h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,4vw,36px);line-height:1.1;color:#fff;margin:10px 0 8px}
+.news h2 em{font-style:italic;color:#E9B978}
+.news p{margin:0 0 18px;color:rgba(255,255,255,.82);font-size:14.5px}
+.news-form{display:flex;gap:8px;max-width:430px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.news-form input{flex:1;min-width:200px;padding:13px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.96);color:#2B2620;font-size:14px}
+.news-form input:focus{outline:none;border-color:#E9B978}
+.news-form button{padding:13px 24px;border-radius:999px;border:none;background:#E9B978;color:#2A2016;font-weight:700;letter-spacing:.4px;cursor:pointer;transition:background .25s}
+.news-form button:hover{background:#fff}
 .guide-sec{margin:24px 0}
 .guide-sec h2{font-size:20px;margin:0 0 8px}
 .ig{margin:30px 0}
@@ -169,8 +180,11 @@ h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(28px,5vw
 h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33271B;margin:30px 0 12px}
 .content p{margin-bottom:16px;font-size:16.5px;color:#4A4136}
 /* location hero */
-.loc-hero{position:relative;color:#fff;padding:clamp(36px,7vw,76px) clamp(16px,5vw,32px) clamp(30px,5vw,54px);overflow:hidden}
-.loc-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 80% 0%,rgba(255,255,255,.18),transparent 55%),linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.26));pointer-events:none}
+.loc-hero{position:relative;color:#fff;padding:clamp(44px,8vw,88px) clamp(16px,5vw,32px) clamp(34px,5vw,58px);overflow:hidden}
+.loc-hero::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 80% 0%,rgba(255,255,255,.14),transparent 55%),linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.3));pointer-events:none}
+/* Milky-Way star layer on every location hero — the brand signature */
+.loc-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(1.5px 1.5px at 14% 22%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 52% 26%,#fff,transparent),radial-gradient(1.2px 1.2px at 72% 14%,#FFE9C4,transparent),radial-gradient(1.5px 1.5px at 88% 28%,#fff,transparent),radial-gradient(1px 1px at 24% 34%,#fff,transparent),radial-gradient(1px 1px at 63% 36%,#fff,transparent);opacity:.85;animation:nStar 5s ease-in-out infinite}
+.loc-hero h1::after{content:"";display:block;width:54px;height:3px;margin-top:14px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
 .loc-hero-inner{position:relative;z-index:1;max-width:820px;margin:0 auto}
 .loc-hero .crumbs,.loc-hero .crumbs a{color:rgba(255,255,255,.85)}
 .loc-emoji{font-size:56px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.3))}
@@ -677,10 +691,26 @@ LANDINGS.forEach(L => {
   const faqHtml = (Array.isArray(L.faqs) && L.faqs.length)
     ? `<section class="faq"><h2>Frequently asked questions</h2>${L.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>`
     : '';
+  // derive brand hero styling from the guide's topic
+  const HUB = {
+    camping:{c:'Camping',e:'⛺'}, 'secluded-camping':{c:'Camping',e:'🌙'}, 'camping-near-dubai':{c:'Camping',e:'⛺'},
+    'desert-camping-beginners':{c:'Dunes',e:'🏜️'}, 'desert-safari':{c:'Dunes',e:'🏜️'},
+    snorkeling:{c:'Coast',e:'🐠'}, 'best-beaches':{c:'Coast',e:'🏖️'},
+    stargazing:{c:'Camping',e:'🌌'}, wadis:{c:'Wadis',e:'🏞️'},
+    'mountain-escapes':{c:'Mountains',e:'⛰️'}, 'hatta-guide':{c:'Mountains',e:'🏕️'},
+    'family-friendly-outdoors':{c:'Camping',e:'🌅'}, 'outdoor-things-to-do':{c:'Dunes',e:'🧭'}
+  };
+  const hub = HUB[L.slug] || { c: 'Dunes', e: '🗺️' };
   const body = `
+  <section class="loc-hero" style="background:${CAT_BG[hub.c]}">
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(L.h1)}</span></nav>
+      <div class="loc-emoji">${hub.e}</div>
+      <h1>${esc(L.h1)}</h1>
+      <p class="lede">Inspired by the landscapes of the UAE &mdash; wear the wild side of it</p>
+    </div>
+  </section>
   <main>
-    <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(L.h1)}</span></nav>
-    <h1>${esc(L.h1)}</h1>
     <div class="content">${paras(L.intro)}</div>
     ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
     ${sectionsHtml}
@@ -845,4 +875,4 @@ fs.writeFileSync(path.join(ROOT, 'feed.json'), JSON.stringify(feed));
 console.log('  \u2713 feed.json (' + locations.length + ' locations)');
 
 console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.length + ' landing pages.');
-// end of build
+// end of build — brand-consistency pass v2
