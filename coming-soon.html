@@ -164,10 +164,10 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
   .place-row{grid-template-columns:1fr 1fr}
   .places{padding:70px 22px}.join{padding:80px 22px}
   /* immersive mode on phones: panels become bottom sheets so the world stays visible */
-  html.imm .panel{top:auto;bottom:12px;left:50%;width:92vw;max-height:50vh;max-height:52svh}
-  .panel-img{height:min(160px,20vh);height:min(160px,20svh)}
-  .panel-body{padding:15px 18px 18px}
-  .panel-body h3{font-size:21px;margin:6px 0 8px}
+  html.imm .panel{top:auto;bottom:10px;left:50%;width:94vw;max-height:64vh;max-height:68svh}
+  .panel-img{height:min(300px,34vh);height:min(300px,36svh)}
+  .panel-body{padding:16px 18px 18px}
+  .panel-body h3{font-size:22px;margin:6px 0 8px}
   .panel-body .story{font-size:13.5px;line-height:1.65;margin-bottom:10px}
   .panel-body .meta{margin-bottom:12px}
   .panel-num{font-size:32px;top:8px;right:12px}
@@ -178,8 +178,11 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
   nav{padding:14px 18px}nav.solid{padding:11px 18px}
   .hero-c h1{font-size:clamp(34px,9vw,80px);max-width:14ch}
   .hero-c p{font-size:15px}
+  .wl{max-width:100%;width:100%}
   .wl-form{flex-direction:column}
   .wl-form input,.wl-form button{width:100%;min-width:0}
+  .wl-form input{height:58px;font-size:16px;padding:0 22px}
+  .wl-form button{height:56px;font-size:15px}
   .place-row{grid-template-columns:1fr 1fr;gap:12px}
   .places h2{font-size:28px}
 }
@@ -726,11 +729,11 @@ var IMM=false;
       ovToggle(fOut,function(){gsap.to(el,{opacity:0,duration:.5,overwrite:'auto'});},
                     function(){gsap.to(el,{opacity:1,y:0,duration:.6,overwrite:'auto'});});}
     function panel(sel,fIn,fOut){var el=document.querySelector(sel);
-      gsap.set(el,{yPercent:SMALL?0:-50,xPercent:-50,x:'72vw',autoAlpha:0});
-      ovToggle(fIn,function(){gsap.to(el,{x:'0vw',autoAlpha:1,duration:1,ease:'power3.out',overwrite:'auto'});},
-                   function(){gsap.to(el,{x:'72vw',autoAlpha:0,duration:.7,ease:'power2.in',overwrite:'auto'});});
-      ovToggle(fOut,function(){gsap.to(el,{x:'-72vw',autoAlpha:0,duration:.8,ease:'power2.in',overwrite:'auto'});},
-                    function(){gsap.to(el,{x:'0vw',autoAlpha:1,duration:1,ease:'power3.out',overwrite:'auto'});});}
+      gsap.set(el,{yPercent:SMALL?0:-50,xPercent:-50,y:70,autoAlpha:0});
+      ovToggle(fIn,function(){gsap.to(el,{y:0,autoAlpha:1,duration:1,ease:'power3.out',overwrite:'auto'});},
+                   function(){gsap.to(el,{y:70,autoAlpha:0,duration:.7,ease:'power2.in',overwrite:'auto'});});
+      ovToggle(fOut,function(){gsap.to(el,{y:-70,autoAlpha:0,duration:.8,ease:'power2.in',overwrite:'auto'});},
+                    function(){gsap.to(el,{y:0,autoAlpha:1,duration:1,ease:'power3.out',overwrite:'auto'});});}
     cap('.cap-1',.10,.27);cap('.cap-2',.37,.53);cap('.cap-3',.63,.85);
     panel('#panel-1',.13,.30);panel('#panel-2',.40,.57);panel('#panel-3',.66,.88);
     var fin=document.querySelector('.finale');gsap.set(fin,{autoAlpha:0,y:24});

@@ -210,6 +210,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .card{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid rgba(43,37,32,.1);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;box-shadow:0 2px 12px rgba(58,42,28,.05);transition:transform .2s,box-shadow .2s}
 .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(58,42,28,.14)}
 .card-emoji{font-size:26px;line-height:1.2}
+.card-thumb{width:62px;height:62px;border-radius:12px;background-size:cover;background-position:center;flex:0 0 auto;box-shadow:0 3px 10px rgba(58,42,28,.18)}
 .card-body{display:flex;flex-direction:column;min-width:0}
 .card-body strong{font-family:'Playfair Display',serif;font-size:17px;color:#33271B}
 .card-body em{font-style:normal;font-size:11.5px;color:#9C521B;font-weight:600;margin:2px 0 5px}
@@ -306,7 +307,11 @@ function igSection(posts) {
   return `<section class="ig"><h2>On the &rsquo;gram</h2>${hint}<div class="ig-strip">${items}</div><script async src="https://www.instagram.com/embed.js"></script></section>`;
 }
 function locCard(l) {
-  return `<a class="card" href="/locations/${l.id}/"><span class="card-emoji">${l.emoji || '📍'}</span><span class="card-body"><strong>${esc(l.name)}</strong><em>${esc(l.emirate)} · ${esc(l.category)}</em><span>${esc(l.desc)}</span></span></a>`;
+  // cover photo thumbnail when one has been uploaded via the CMS; emoji fallback otherwise
+  const thumb = l.cover
+    ? `<span class="card-thumb" style="background-image:url('${esc(l.cover)}')" role="img" aria-label="${esc(l.name)}"></span>`
+    : `<span class="card-emoji">${l.emoji || '📍'}</span>`;
+  return `<a class="card" href="/locations/${l.id}/">${thumb}<span class="card-body"><strong>${esc(l.name)}</strong><em>${esc(l.emirate)} · ${esc(l.category)}</em><span>${esc(l.desc)}</span></span></a>`;
 }
 
 // ---- per-location pages ----
@@ -797,7 +802,7 @@ if (LAUNCHED) (function () {
     <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
     <div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Places</span></nav>
-      <div class="loc-emoji">\U0001F5FA️</div>
+      <div class="loc-emoji">🗺️</div>
       <h1>Every place we have explored</h1>
       <p class="lede">${locations.length} real places across the Emirates &mdash; the landscapes behind every design</p>
     </div>
