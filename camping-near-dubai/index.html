@@ -53,12 +53,19 @@ a{color:#9C521B}
 .faq summary::before{content:'+ ';color:#C0702E;font-weight:800}
 .faq details[open] summary::before{content:'– '}
 .faq details p{margin:9px 0 2px;color:#5C5346;font-size:14px}
-.news{margin:30px 0;padding:22px;border-radius:16px;background:linear-gradient(135deg,#FBEAD2,#F4C98E);text-align:center}
-.news h2{margin:0 0 6px}
-.news p{margin:0 0 14px;color:#5A4326;font-size:14px}
-.news-form{display:flex;gap:8px;max-width:420px;margin:0 auto;flex-wrap:wrap;justify-content:center}
-.news-form input{flex:1;min-width:200px;padding:12px 14px;border-radius:10px;border:1px solid rgba(43,37,32,.2);font-size:14px}
-.news-form button{padding:12px 20px;border-radius:10px;border:none;background:#33271B;color:#fff;font-weight:700;cursor:pointer}
+.news{position:relative;overflow:hidden;margin:34px 0;padding:44px 26px;border-radius:18px;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 92%);text-align:center;color:#fff}
+.news-stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 12% 26%,#fff,transparent),radial-gradient(1.2px 1.2px at 34% 14%,#fff,transparent),radial-gradient(1.5px 1.5px at 56% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 74% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 32%,#fff,transparent),radial-gradient(1px 1px at 44% 52%,#fff,transparent);animation:nStar 4.5s ease-in-out infinite}
+@keyframes nStar{0%,100%{opacity:.9}50%{opacity:.35}}
+.news-in{position:relative;z-index:1;max-width:520px;margin:0 auto}
+.news-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#E9B978}
+.news h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,4vw,36px);line-height:1.1;color:#fff;margin:10px 0 8px}
+.news h2 em{font-style:italic;color:#E9B978}
+.news p{margin:0 0 18px;color:rgba(255,255,255,.82);font-size:14.5px}
+.news-form{display:flex;gap:8px;max-width:430px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.news-form input{flex:1;min-width:200px;padding:13px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.96);color:#2B2620;font-size:14px}
+.news-form input:focus{outline:none;border-color:#E9B978}
+.news-form button{padding:13px 24px;border-radius:999px;border:none;background:#E9B978;color:#2A2016;font-weight:700;letter-spacing:.4px;cursor:pointer;transition:background .25s}
+.news-form button:hover{background:#fff}
 .guide-sec{margin:24px 0}
 .guide-sec h2{font-size:20px;margin:0 0 8px}
 .ig{margin:30px 0}
@@ -81,8 +88,11 @@ h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(28px,5vw
 h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33271B;margin:30px 0 12px}
 .content p{margin-bottom:16px;font-size:16.5px;color:#4A4136}
 /* location hero */
-.loc-hero{position:relative;color:#fff;padding:clamp(36px,7vw,76px) clamp(16px,5vw,32px) clamp(30px,5vw,54px);overflow:hidden}
-.loc-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 80% 0%,rgba(255,255,255,.18),transparent 55%),linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.26));pointer-events:none}
+.loc-hero{position:relative;color:#fff;padding:clamp(44px,8vw,88px) clamp(16px,5vw,32px) clamp(34px,5vw,58px);overflow:hidden}
+.loc-hero::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 80% 0%,rgba(255,255,255,.14),transparent 55%),linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.3));pointer-events:none}
+/* Milky-Way star layer on every location hero — the brand signature */
+.loc-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(1.5px 1.5px at 14% 22%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 52% 26%,#fff,transparent),radial-gradient(1.2px 1.2px at 72% 14%,#FFE9C4,transparent),radial-gradient(1.5px 1.5px at 88% 28%,#fff,transparent),radial-gradient(1px 1px at 24% 34%,#fff,transparent),radial-gradient(1px 1px at 63% 36%,#fff,transparent);opacity:.85;animation:nStar 5s ease-in-out infinite}
+.loc-hero h1::after{content:"";display:block;width:54px;height:3px;margin-top:14px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
 .loc-hero-inner{position:relative;z-index:1;max-width:820px;margin:0 auto}
 .loc-hero .crumbs,.loc-hero .crumbs a{color:rgba(255,255,255,.85)}
 .loc-emoji{font-size:56px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.3))}
@@ -122,6 +132,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .card{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid rgba(43,37,32,.1);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;box-shadow:0 2px 12px rgba(58,42,28,.05);transition:transform .2s,box-shadow .2s}
 .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(58,42,28,.14)}
 .card-emoji{font-size:26px;line-height:1.2}
+.card-thumb{width:62px;height:62px;border-radius:12px;background-size:cover;background-position:center;flex:0 0 auto;box-shadow:0 3px 10px rgba(58,42,28,.18)}
 .card-body{display:flex;flex-direction:column;min-width:0}
 .card-body strong{font-family:'Playfair Display',serif;font-size:17px;color:#33271B}
 .card-body em{font-style:normal;font-size:11.5px;color:#9C521B;font-weight:600;margin:2px 0 5px}
@@ -157,11 +168,17 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 <body>
 <header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra &amp; Beyond" width="34" height="34"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/" class="active">Home</a><a href="/places/">Places</a><a href="/about/">About us</a></nav></header>
 
+  <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#39295A 42%,#7A4F63 74%,#C0702E 100%)">
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Camping Near Dubai: Best Spots for a Weekend Escape</span></nav>
+      <div class="loc-emoji">⛺</div>
+      <h1>Camping Near Dubai: Best Spots for a Weekend Escape</h1>
+      <p class="lede">Inspired by the landscapes of the UAE &mdash; wear the wild side of it</p>
+    </div>
+  </section>
   <main>
-    <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Camping Near Dubai: Best Spots for a Weekend Escape</span></nav>
-    <h1>Camping Near Dubai: Best Spots for a Weekend Escape</h1>
     <div class="content"><p>You don't have to drive for hours to camp under a sky full of stars. Some of the best camping near Dubai is less than an hour from the city — quiet desert lakes, rolling dunes and wide-open sand where you can pitch a tent, light a fire and watch the sun go down.</p><p>This guide rounds up our favourite weekend camping spots within easy reach of Dubai, each with accurate GPS, the best season to go and a difficulty rating. Most are free, facility-free desert sites, so the trade-off for that solitude is coming fully self-sufficient.</p></div>
-    <h2>Our top picks</h2><div class="cards"><a class="card" href="/locations/love-lake/"><span class="card-emoji">💙</span><span class="card-body"><strong>Love Lake</strong><em>Dubai · Camping</em><span>Two heart-shaped lakes carved into the Al Qudra desert, fringed with greenery and birdlife. A short, easy drive from the city straight into the wilderness.</span></span></a><a class="card" href="/locations/crescent-moon-lake/"><span class="card-emoji">🦌</span><span class="card-body"><strong>Crescent Moon Lake</strong><em>Dubai · Camping</em><span>A quiet desert lake where Arabian oryx, gazelle and deer come to drink at dawn and dusk. One of the best spots near the city for wildlife and birdlife.</span></span></a><a class="card" href="/locations/desert-camping-lake-view/"><span class="card-emoji">⛺</span><span class="card-body"><strong>Desert Camping (Lake View)</strong><em>Dubai · Camping</em><span>A hidden, little-known camping spot tucked beside a desert lake — calm water, soft dunes and almost no crowds. A local secret for a peaceful overnight.</span></span></a><a class="card" href="/locations/big-red/"><span class="card-emoji">🏜</span><span class="card-body"><strong>Big Red</strong><em>Dubai · Dunes</em><span>The most iconic dune in the UAE. Towering red sand dunes perfect for sandboarding and 4x4 adventures. Best visited at sunrise for dramatic golden light.</span></span></a><a class="card" href="/locations/half-desert/"><span class="card-emoji">🏜</span><span class="card-body"><strong>Half Desert</strong><em>Dubai · Dunes</em><span>Gentle, rolling dunes close to the city — the perfect place to air down and learn desert driving before tackling the bigger stuff.</span></span></a></div>
+    <h2>Our top picks</h2><div class="cards"><a class="card" href="/locations/love-lake/"><span class="card-emoji">💙</span><span class="card-body"><strong>Love Lake</strong><em>Dubai · Camping</em><span>Two heart-shaped lakes carved into the Al Qudra desert, fringed with greenery and birdlife. A short, easy drive from the city straight into the wilderness.</span></span></a><a class="card" href="/locations/crescent-moon-lake/"><span class="card-thumb" style="background-image:url('/uploads/17865510819668242.webp')" role="img" aria-label="Crescent Moon Lake"></span><span class="card-body"><strong>Crescent Moon Lake</strong><em>Dubai · Camping</em><span>A quiet desert lake where Arabian oryx, gazelle and deer come to drink at dawn and dusk. One of the best spots near the city for wildlife and birdlife.</span></span></a><a class="card" href="/locations/desert-camping-lake-view/"><span class="card-thumb" style="background-image:url('/uploads/img_20260206_175829.jpg')" role="img" aria-label="Desert Camping (Lake View)"></span><span class="card-body"><strong>Desert Camping (Lake View)</strong><em>Dubai · Camping</em><span>A hidden, little-known camping spot tucked beside a desert lake — calm water, soft dunes and almost no crowds. A local secret for a peaceful overnight.</span></span></a><a class="card" href="/locations/big-red/"><span class="card-emoji">🏜</span><span class="card-body"><strong>Big Red</strong><em>Dubai · Dunes</em><span>The most iconic dune in the UAE. Towering red sand dunes perfect for sandboarding and 4x4 adventures. Best visited at sunrise for dramatic golden light.</span></span></a><a class="card" href="/locations/half-desert/"><span class="card-thumb" style="background-image:url('/uploads/vlcsnap-2026-07-07-19h40m38s767.png')" role="img" aria-label="Half Desert"></span><span class="card-body"><strong>Half Desert</strong><em>Dubai · Dunes</em><span>Gentle, rolling dunes close to the city — the perfect place to air down and learn desert driving before tackling the bigger stuff.</span></span></a></div>
     <section class="guide-sec"><h2>How far is each spot from the city?</h2><div class="content"><p>All of the picks above sit within roughly a 40–75 minute drive of central Dubai, which makes them ideal for a Friday-night-out, Saturday-morning-back weekend. The desert-lake sites are the gentlest introduction; the dune spots reward a bit more confidence behind the wheel. Always check the access notes on each location page, because the last stretch is often soft sand.</p></div></section><section class="guide-sec"><h2>Do you need a 4x4?</h2><div class="content"><p>For the lake and lake-view sites you can usually park on firm ground near the edge and walk in. For the dune spots, a 4x4 with lowered tyre pressures is strongly recommended, and you should never head into soft sand alone — go in a convoy of at least two vehicles, carry a tow rope and recovery boards, and know how to air your tyres back up before you hit tarmac.</p></div></section><section class="guide-sec"><h2>What to bring</h2><div class="content"><p>These are wild sites with no toilets, bins, water or shops. Bring more water than you think you need (around four litres per person per day), shade, warm layers for the night, a power bank, a first-aid kit and rubbish bags. Each location page on this site has a packing checklist you can tailor to your group size and whether you're staying overnight.</p></div></section><section class="guide-sec"><h2>Rules and etiquette</h2><div class="content"><p>Camping in the desert is a privilege, not a right. Pack out everything you bring in, keep fires small and contained, give wildlife and other campers space, and avoid driving over vegetation. Leaving these places exactly as you found them is what keeps them open and beautiful for the next group.</p></div></section>
     <section class="faq"><h2>Frequently asked questions</h2><details><summary>Where can I camp near Dubai for free?</summary><p>Several desert sites near Dubai — including the lakes and dune areas in this guide — are free, wild camping spots with no booking required. They have no facilities, so you must be fully self-sufficient and pack out all your rubbish.</p></details><details><summary>Is it safe to camp in the desert near Dubai?</summary><p>Yes, with preparation. Tell someone your plans, carry plenty of water, avoid driving into soft sand alone, bring a first-aid kit and check the weather. The cooler months (October to April) are far safer and more comfortable than the summer heat.</p></details><details><summary>When is the best time to camp near Dubai?</summary><p>October to April. Daytime temperatures are pleasant and nights are cool, sometimes cold, so bring warm layers. Summer desert camping is not recommended due to extreme heat.</p></details><details><summary>Do I need a permit to camp in the desert?</summary><p>Most wild desert sites near Dubai do not require a permit, but rules vary by emirate and some protected or private areas do. Always respect signage and local regulations, and never camp in clearly restricted zones.</p></details></section>
     <section class="shopcta"><div class="stars"></div><div class="stars2"></div><div class="shoot"></div>
@@ -169,12 +186,15 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
     <h2>Wear the <em>wild side</em> of the UAE</h2>
     <p>The first drop is coming. Original tees inspired by the real deserts, wadis and dark-sky nights of the Emirates — every design carries a place.</p>
     <a class="btn" href="/#join">Join the waitlist &rarr;</a></section>
-    <section class="news"><h2>Never miss a new spot</h2><p>Get the best new UAE spots, seasonal tips and weekend ideas — straight to your inbox. No spam.</p>
+    <section class="news"><div class="news-stars"></div><div class="news-in">
+    <span class="news-eyebrow">Sahra &amp; Beyond · First drop coming</span>
+    <h2>Wear the <em>wild side</em> of the UAE</h2><p>The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.</p>
     <form class="news-form" action="https://app.kit.com/forms/9627814/subscriptions" method="post">
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
-      <button type="submit">Subscribe</button>
+      <button type="submit">Join the waitlist</button>
     </form>
-    <p class="news-ok" style="display:none;margin-top:12px;font-weight:700;color:#0c905c">Thanks! Check your email to confirm your subscription.</p>
+    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:#E9B978">You&rsquo;re on the list. See you at the drop. &#10022;</p>
+    </div>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
   </main>
