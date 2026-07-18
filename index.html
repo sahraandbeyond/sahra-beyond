@@ -90,10 +90,10 @@ html.imm .fb-sky,html.imm .fb-stars{display:none}
 /* waitlist */
 .wl{max-width:480px;margin:30px auto 0}
 .wl-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.wl-form input{flex:1;min-width:220px;height:54px;padding:0 20px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.96);color:#2A2016;font-size:15px;font-family:inherit;border-radius:999px}
+.wl-form input{flex:1 1 240px;min-width:220px;height:58px;padding:0 22px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.97);color:#2A2016;font-size:16px;font-family:inherit;border-radius:999px}
 .wl-form input:focus{outline:none;border-color:var(--gold)}
 .wl.err .wl-form input{border-color:#ff8a6a}
-.wl-form button{height:54px;padding:0 30px;border:none;border-radius:999px;background:var(--gold);color:var(--ink);font-weight:600;font-size:14px;letter-spacing:.5px;cursor:pointer;white-space:nowrap;transition:background .25s,transform .2s;will-change:transform}
+.wl-form button{flex:0 0 auto;height:48px;padding:0 24px;border:none;border-radius:999px;background:var(--gold);color:var(--ink);font-weight:600;font-size:13px;letter-spacing:.5px;cursor:pointer;white-space:nowrap;transition:background .25s,transform .2s;will-change:transform}
 .wl-form button:hover{background:#fff}
 .wl-form button:disabled{opacity:.6;cursor:default}
 .wl-msg{font-size:12px;color:rgba(255,255,255,.62);margin-top:14px;font-family:'Space Mono',monospace;letter-spacing:.5px}
@@ -205,8 +205,9 @@ html:not(.imm) .journey-cue{display:none}
   .hero-c p{font-size:14.5px;margin-top:14px}
   .wl{max-width:420px;width:100%;margin-top:22px}
   .wl-form{flex-direction:column;gap:10px}
-  .wl-form input{width:100%;height:62px;font-size:17px;padding:0 22px;border-radius:16px}
-  .wl-form button{width:100%;height:60px;font-size:16px;border-radius:16px}
+  /* email box is the hero of the form — big & tall; button stays compact below it */
+  .wl-form input{width:100%;height:66px;font-size:17px;padding:0 24px;border-radius:16px}
+  .wl-form button{width:auto;min-width:200px;align-self:center;height:50px;font-size:14px;padding:0 30px;border-radius:14px;margin-top:2px}
   .journey-cue{font-size:9.5px;padding:9px 16px;bottom:calc(72svh + 8px)}
 }
 @media(max-width:560px){
@@ -252,7 +253,7 @@ html:not(.imm) .journey-cue{display:none}
       <span class="scroll-cue">Scroll — from night to day<span class="chev">&#8964;</span></span>
     </div>
 
-    <div class="journey-cue" id="journeyCue"><span class="jc-dot"></span>Keep scrolling · 3 tees below<span class="jc-arrow">&#8595;</span></div>
+    <div class="journey-cue" id="journeyCue"><span class="jc-dot"></span>Keep scrolling · more tees below<span class="jc-arrow">&#8595;</span></div>
 
     <div class="cap cap-1"><b>Al Quaa, Abu Dhabi</b>Bortle 1 &middot; the darkest sky in the Emirates</div>
     <div class="cap cap-2"><b>First light, Liwa</b>The dunes wake up golden</div>
