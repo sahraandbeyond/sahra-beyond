@@ -193,8 +193,14 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
 .panel-zoom .z-ic{font-size:14px}
 #lightbox{position:fixed;inset:0;z-index:200;background:rgba(6,4,13,.95);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;opacity:0;visibility:hidden;transition:opacity .35s;padding:24px}
 #lightbox.open{opacity:1;visibility:visible}
-#lightbox img{max-width:92vw;max-height:80vh;object-fit:contain;border-radius:6px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
-#lightbox .lb-cap{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:#E9B978;text-align:center}
+#lightbox img{max-width:92vw;max-height:58vh;object-fit:contain;border-radius:6px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+#lightbox .lb-info{max-width:540px;text-align:center;padding:0 20px}
+#lightbox .lb-cap{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;color:#E9B978;margin-bottom:10px}
+#lightbox .lb-story{font-size:14px;font-weight:300;line-height:1.7;color:rgba(255,255,255,.86);margin-bottom:14px}
+#lightbox .lb-spec{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+#lightbox .lb-spec span{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.72);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:5px 10px;border-radius:999px}
+/* panel stays minimal — full story & specs live in the zoom view */
+.panel-body .story,.panel-body .spec{display:none}
 #lightbox .lb-close{position:absolute;top:16px;right:20px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-size:22px;line-height:1;cursor:pointer}
 /* persistent journey cue — tells users more tees await below */
 .journey-cue{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:7;display:flex;align-items:center;gap:10px;padding:10px 20px;border-radius:999px;background:rgba(20,16,42,.55);backdrop-filter:blur(8px);border:1px solid rgba(233,185,120,.32);color:rgba(255,255,255,.92);font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .5s;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.5)}
@@ -216,7 +222,7 @@ html:not(.imm) .journey-cue{display:none}
   .place-row{grid-template-columns:1fr 1fr}
   .places{padding:70px 22px}.join{padding:80px 22px}
   /* immersive panels = bottom sheets; overflow hidden + pan-y so a swipe scrolls the PAGE, not the card */
-  html.imm .panel{top:auto;bottom:12px;left:50%;width:90vw;max-height:80svh;overflow:hidden;touch-action:pan-y;-webkit-overflow-scrolling:auto}
+  html.imm .panel{top:auto;bottom:12px;left:50%;width:90vw;max-height:62svh;overflow:hidden;touch-action:pan-y;-webkit-overflow-scrolling:auto}
   /* photo dominates the card — full tee visible, text compressed below */
   .panel-img{height:min(44svh,400px)}
   .panel-img img{padding:6px 10px}
@@ -236,7 +242,7 @@ html:not(.imm) .journey-cue{display:none}
   .wl-form input{flex:0 0 auto;width:100%;height:46px;min-height:46px;font-size:16px;padding:0 16px;border-radius:10px}
   .wl-form button{width:auto;min-width:150px;align-self:center;height:40px;font-size:13px;padding:0 22px;border-radius:10px;margin-top:2px}
   .wl-msg{font-size:11px;margin-top:10px}
-  .journey-cue{font-size:9.5px;padding:9px 16px;bottom:calc(72svh + 6px)}
+  .journey-cue{font-size:9px;padding:8px 14px;bottom:calc(64svh + 10px)}
 }
 @media(max-width:560px){
   nav{padding:14px 18px}nav.solid{padding:11px 18px}
@@ -370,7 +376,7 @@ html:not(.imm) .journey-cue{display:none}
 
 <a class="sticky-cta" id="stickyCta" href="#join">Join the waitlist <b>· 15% off</b></a>
 
-<div id="lightbox" aria-hidden="true"><button class="lb-close" aria-label="Close photo">&#10005;</button><img alt=""><div class="lb-cap"></div></div>
+<div id="lightbox" aria-hidden="true"><button class="lb-close" aria-label="Close photo">&#10005;</button><img alt=""><div class="lb-info"><div class="lb-cap"></div><div class="lb-story"></div><div class="lb-spec"></div></div></div>
 
 <script>
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches,TOUCH=matchMedia('(hover:none),(pointer:coarse)').matches,HASG=(typeof gsap!=='undefined');
@@ -826,14 +832,15 @@ var IMM=false;
 /* TAP / CLICK A SHIRT → full-size lightbox */
 (function(){
   var lb=document.getElementById('lightbox');if(!lb)return;
-  var lbImg=lb.querySelector('img'),lbCap=lb.querySelector('.lb-cap');
-  function open(src,cap){lbImg.src=src;lbImg.alt=cap||'';lbCap.textContent=cap||'';lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  var lbImg=lb.querySelector('img'),lbCap=lb.querySelector('.lb-cap'),lbStory=lb.querySelector('.lb-story'),lbSpec=lb.querySelector('.lb-spec');
+  function open(src,cap,story,spec){lbImg.src=src;lbImg.alt=cap||'';lbCap.textContent=cap||'';if(lbStory)lbStory.innerHTML=story||'';if(lbSpec)lbSpec.innerHTML=spec||'';lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
   function close(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';}
   document.querySelectorAll('.panel-img').forEach(function(box){
     var badge=document.createElement('span');badge.className='panel-zoom';badge.innerHTML='<span class="z-ic">&#9906;</span> Tap to view';box.appendChild(badge);
     box.addEventListener('click',function(e){if(e.target.closest('.tee-toggle'))return;
       var im=box.querySelector('.tee-view.on')||box.querySelector('img');if(!im)return;
-      var art=box.closest('.panel'),h=art&&art.querySelector('h3');open(im.currentSrc||im.src,h?h.textContent:'');});
+      var art=box.closest('.panel'),h=art&&art.querySelector('h3'),st=art&&art.querySelector('.story'),sp=art&&art.querySelector('.spec');
+      open(im.currentSrc||im.src,h?h.textContent:'',st?st.innerHTML:'',sp?sp.innerHTML:'');});
   });
   // front / back view toggle
   document.querySelectorAll('.tee-toggle').forEach(function(tog){
