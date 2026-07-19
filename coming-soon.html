@@ -387,11 +387,11 @@ var IMM=false;
   if(REDUCED||!HASG||typeof THREE==='undefined')return;
   var canvas=document.getElementById('world'),stage=document.getElementById('stage');
   if(!canvas||!stage)return;
-  var R;try{R=new THREE.WebGLRenderer({canvas:canvas,antialias:true});}catch(e){return;}
+  var R;try{R=new THREE.WebGLRenderer({canvas:canvas,antialias:false,powerPreference:'high-performance'});}catch(e){return;}
   IMM=true;document.documentElement.classList.add('imm');
   try{
-  var DPR=Math.min(devicePixelRatio||1,TOUCH?1.2:1.6); // per-pixel terrain shading is heavy — cap fill rate
-  R.setPixelRatio(DPR);R.setClearColor(0x05040d,1);
+  var DPR=Math.min(devicePixelRatio||1,1.0); // smoothness first — hard-cap fill rate (no MSAA, capped buffer)
+  R.setClearColor(0x05040d,1);
 
   var scene=new THREE.Scene();
   var cam=new THREE.PerspectiveCamera(58,1,.1,900);
@@ -590,11 +590,11 @@ var IMM=false;
       ' float sh=1.;float ao=1.;\n'+
       '#ifdef HQ\n'+
       ' if(L.z>.03&&vDist<260.){\n'+
-      '  for(int i=1;i<=4;i++){float ts=6.5*float(i);\n'+
+      '  for(int i=1;i<=2;i++){float ts=8.5*float(i);\n'+
       '   float hh=hbase(vW+L.xy*ts);\n'+
       '   sh=min(sh,clamp(1.-(hh-(h+L.z*ts))*.26,0.,1.));}}\n'+
       /* ambient occlusion — hollows and dune bellies sit in soft shade */
-      ' if(vDist<300.){float havg=(hbase(vW+vec2(5.,0.))+hbase(vW-vec2(5.,0.))+hbase(vW+vec2(0.,5.))+hbase(vW-vec2(0.,5.)))*.25;\n'+
+      ' if(vDist<300.){float havg=(hbase(vW+vec2(6.,0.))+hbase(vW-vec2(0.,6.)))*.5;\n'+
       '  ao=clamp(1.-(havg-h)*.22,.4,1.);}\n'+
       '#endif\n'+
       ' float dif=clamp(dot(N,L),0.,1.)*sh;\n'+
@@ -681,7 +681,11 @@ var IMM=false;
     pin:'.stage-sticky',pinSpacing:false,anticipatePin:1,
     onUpdate:function(st){Praw=st.progress;},
     onToggle:function(st){stActive=st.isActive;}});
-  function size(){var w=innerWidth,h=innerHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  var QSCALE=[1,.8,.62,.48],qLvl=0; // progressive resolution scale if frames run long
+  function applyRes(){var w=innerWidth,h=innerHeight,cap=Math.min(1,1440/w); // never shade a buffer wider than ~1440px
+    R.setPixelRatio(Math.min(DPR,cap)*QSCALE[qLvl]);
+    R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  function size(){applyRes();}
   size();
   var lastW=innerWidth,lastH=innerHeight;
   addEventListener('resize',function(){ // ignore tiny mobile URL-bar height changes
@@ -690,7 +694,7 @@ var IMM=false;
   if(!TOUCH)addEventListener('mousemove',function(e){mx=(e.clientX/innerWidth)*2-1;my=(e.clientY/innerHeight)*2-1;},{passive:true});
 
   var tmpSun=new THREE.Vector3(),cc=new THREE.Color(),tmpC=new THREE.Color(),dead=false;
-  var QLV=[1,.82,.66],qi=0,fA=0,fN=0; // auto quality: drop render resolution before dropping frames
+  var fA=0,fN=0; // adaptive-quality frame timing
   /* rendered from GSAP's ticker (same clock as Lenis + ScrollTrigger — no competing rAF loops),
      and the journey progress itself is inertially smoothed so wheel detents can't step the world */
   function frame(){
@@ -700,8 +704,9 @@ var IMM=false;
     P+=(Praw-P)*Math.min(1,dt*5);
     if(!stActive&&Praw>=1&&P>.999)return;
     fA+=dt;fN++;
-    if(fN>=50){var avg=fA/fN;fA=0;fN=0;
-      if(avg>.023&&qi<QLV.length-1){qi++;R.setPixelRatio(DPR*QLV[qi]);size();}}
+    if(fN>=24){var avg=fA/fN;fA=0;fN=0;
+      if(avg>.019&&qLvl<QSCALE.length-1){qLvl++;applyRes();}
+      else if(avg<.0125&&qLvl>0){qLvl--;applyRes();}}
     var pitch=seg(P,.06,.2,.92,-.07,true)+seg(P,.5,.72,0,-.24,true);
     var camY=4.6+seg(P,.5,.76,0,13.6,true)+seg(P,.86,1,0,2,true);
     var day=seg(P,.34,.54,0,1,true);
