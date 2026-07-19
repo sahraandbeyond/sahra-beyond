@@ -555,77 +555,33 @@ var IMM=false;
   var terr=new THREE.Mesh(new THREE.PlaneGeometry(640,420,TOUCH?120:260,TOUCH?90:176),new THREE.ShaderMaterial({
     uniforms:terrU,
     vertexShader:TER+
-      'varying vec2 vW;varying float vDist;\n'+
-      'void main(){vec2 w=position.xy;\n'+
-      ' float h=hbase(w);vW=w;\n'+
+      'varying vec3 vNrm;varying float vH;varying float vDist;varying vec2 vW;\n'+
+      'void main(){vec2 w=position.xy;float e=1.5;\n'+
+      ' float h=hbase(w),hx=hbase(w+vec2(e,0.)),hy=hbase(w+vec2(0.,e));\n'+
+      ' vNrm=normalize(vec3(h-hx,h-hy,e));vH=h;vW=w;\n'+
       ' vec3 p=vec3(position.x,position.y,h);\n'+
       ' vec4 mv=modelViewMatrix*vec4(p,1.);vDist=-mv.z;\n'+
       ' gl_Position=projectionMatrix*mv;}',
-    fragmentShader:DEFS+TER+
+    fragmentShader:TER+
       'uniform float uDay,uDawn,uHaze,uFogDen,uTime;\n'+
       'uniform vec3 uLightL,uCamL,uSunCol,uSkyAmb,uBounce,uFogCol,uSunHaze;\n'+
-      'varying vec2 vW;varying float vDist;\n'+
-      'float hdet(vec2 w,float lod){float h=hbase(w);\n'+
-      ' vec2 q=qof(w);\n'+
-      ' float rocky=uMorph*smoothstep(4.,16.,h);\n'+
-      ' float rip=abs(fract(q.x*13.+fbm(q*3.2)*1.7+q.y*2.1)-.5)*2.;\n'+
-      ' h+=rip*.16*(1.-rocky)*lod;\n'+
-      '#ifdef HQ\n'+
-      ' h+=((rid(q*6.2)-.5)*2.4+(fbm(q*13.)-.5)*.6)*rocky*lod;\n'+
-      ' h+=(fbm(q*24.)-.5)*.14*(1.-rocky)*lod;\n'+
-      ' h+=(nse(vec2(q.x*46.,q.y*9.))-.5)*.05*(1.-rocky)*lod;\n'+
-      '#else\n'+
-      ' h+=(nse(q*7.1)-.5)*1.3*rocky*lod;\n'+
-      '#endif\n'+
-      ' return h;}\n'+
-      'void main(){\n'+
-      ' float lod=exp(-vDist*.004);\n'+
-      ' float e=max(.32,vDist*.0035);\n'+
-      ' float h=hdet(vW,lod);\n'+
-      ' float hx=hdet(vW+vec2(e,0.),lod);\n'+
-      ' float hy=hdet(vW+vec2(0.,e),lod);\n'+
-      ' vec3 N=normalize(vec3(h-hx,h-hy,e));\n'+
-      ' vec3 L=normalize(uLightL);\n'+
-      ' float rocky=uMorph*smoothstep(4.,16.,h);\n'+
-      ' float sh=1.;float ao=1.;\n'+
-      '#ifdef HQ\n'+
-      ' if(L.z>.03&&vDist<260.){\n'+
-      '  for(int i=1;i<=2;i++){float ts=8.5*float(i);\n'+
-      '   float hh=hbase(vW+L.xy*ts);\n'+
-      '   sh=min(sh,clamp(1.-(hh-(h+L.z*ts))*.26,0.,1.));}}\n'+
-      /* ambient occlusion — hollows and dune bellies sit in soft shade */
-      ' if(vDist<300.){float havg=(hbase(vW+vec2(6.,0.))+hbase(vW-vec2(0.,6.)))*.5;\n'+
-      '  ao=clamp(1.-(havg-h)*.22,.4,1.);}\n'+
-      '#endif\n'+
-      ' float dif=clamp(dot(N,L),0.,1.)*sh;\n'+
-      ' vec2 q0=qof(vW);\n'+
-      ' vec3 sand=vec3(.93,.74,.5)*(.88+.24*fbm(vW*.05));\n'+
-      ' float strata=.75+.25*sin(h*1.3+fbm(vW*.25)*4.5);\n'+
-      ' vec3 rock=mix(vec3(.42,.3,.26),vec3(.66,.5,.4),smoothstep(6.,44.,h))*strata;\n'+
-      /* wadi bed → scree → bare peaks */
-      ' float wadi=smoothstep(4.5,1.2,h);\n'+
-      ' vec3 gravel=vec3(.8,.74,.62)*(.9+.2*nse(vW*1.7));\n'+
-      ' float chan=1.-smoothstep(0.,.3,abs(nse(vec2(q0.x*3.,q0.y*14.))-.5));\n'+
-      ' gravel*=1.-chan*.16;\n'+
-      ' float veg=smoothstep(.78,.95,nse(vW*1.1))*wadi;\n'+
-      ' gravel=mix(gravel,vec3(.3,.42,.24),veg*.8);\n'+
-      ' rock=mix(rock,gravel,wadi);\n'+
-      ' rock=mix(rock,sand,smoothstep(7.,2.5,h)*.35);\n'+
+      'varying vec3 vNrm;varying float vH;varying float vDist;varying vec2 vW;\n'+
+      'void main(){vec3 N=normalize(vNrm);vec3 L=normalize(uLightL);\n'+
+      ' float dif=clamp(dot(N,L),0.,1.);\n'+
+      ' float rocky=uMorph*smoothstep(4.,16.,vH);\n'+
+      ' float tex=nse(vW*.6);\n'+
+      ' vec3 sand=vec3(.93,.74,.5)*(.84+.3*tex);\n'+
+      ' vec3 rock=mix(vec3(.44,.31,.26),vec3(.66,.5,.4),smoothstep(6.,44.,vH))*(.82+.18*tex);\n'+
       ' vec3 alb=mix(sand,rock,rocky);\n'+
-      ' vec3 col=alb*(uSunCol*dif+uSkyAmb*(N.z*.5+.5)*ao+uBounce*(1.-N.z*.5)*ao);\n'+
-      ' vec3 V=normalize(uCamL-vec3(vW,h));\n'+
+      ' vec3 col=alb*(uSunCol*dif+uSkyAmb*(N.z*.5+.5)+uBounce*(1.-N.z*.5));\n'+
+      ' vec3 V=normalize(uCamL-vec3(vW,vH));\n'+
       ' vec3 HV=normalize(L+V);\n'+
-      ' col+=uSunCol*pow(clamp(dot(N,HV),0.,1.),60.)*.15*uDay*(1.-rocky);\n'+
-      /* sand blowing off the dune crests */
-      ' float crest=pow(1.-abs(nse(vec2(q0.x*2.7,q0.y*.95))*2.-1.),3.);\n'+
-      ' float streak=nse(vec2(q0.x*30.-uTime*1.8,q0.y*60.))*nse(vec2(q0.x*11.-uTime*2.6,q0.y*22.+3.7));\n'+
-      ' col+=uSunCol*crest*streak*(1.-rocky)*.55*uHaze;\n'+
-      ' float fogF=1.-exp(-vDist*uFogDen*(1.+exp(-h*.12)*.5));\n'+
+      ' col+=uSunCol*pow(clamp(dot(N,HV),0.,1.),50.)*.12*uDay*(1.-rocky);\n'+
+      ' float fogF=1.-exp(-vDist*uFogDen*(1.+exp(-vH*.12)*.5));\n'+
       ' float sunAmt=pow(clamp(dot(-V,L),0.,1.),5.);\n'+
       ' vec3 fcol=mix(uFogCol,uSunHaze,sunAmt*uHaze*.85);\n'+
       ' col=mix(col,fcol,clamp(fogF,0.,1.));\n'+
-      /* ACES filmic tonemap — the photographic response curve */
-      ' col*=1.25;col=max(col,0.);\n'+
+      ' col*=1.2;col=max(col,0.);\n'+
       ' col=(col*(2.51*col+.03))/(col*(2.43*col+.59)+.14);\n'+
       ' gl_FragColor=vec4(col,1.);}'}));
   terr.rotation.x=-Math.PI/2;terr.position.set(0,0,-150);
