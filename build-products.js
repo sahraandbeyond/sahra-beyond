@@ -57,6 +57,13 @@ function page(p, all, SITE, SHOP_URL){
 <meta name="twitter:title" content="${esc(p.name)} | Sahra &amp; Beyond">
 <meta name="twitter:description" content="${esc(p.shareDesc)}">
 <meta name="twitter:image" content="${SITE}${p.imgMain}">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-5NVFDWT29F');
+  window.track=function(n,p){try{gtag('event',n,p||{});}catch(e){}};
+</script>
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -174,6 +181,21 @@ body.dark-bg .btn.ghost:hover{background:rgba(255,255,255,.1);color:#fff}
 .buy-ghaf{display:inline-block;margin-top:2px;font-family:'Space Mono',monospace;font-size:11.5px;color:#5C7F53;border-bottom:1px solid currentColor;padding-bottom:2px}
 body.dark-bg .buy-ghaf{color:#A9C99A}
 .buy-trust{display:flex;flex-wrap:wrap;gap:9px 18px;margin-top:18px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--txt-soft)}
+/* --- pre-launch waitlist (shown until the shop opens) --- */
+.wl-band{border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px);border-radius:16px;padding:26px 28px;margin-top:26px}
+.wl-band h3{font-family:'Playfair Display',serif;font-size:21px;font-weight:800;margin:0 0 6px}
+.wl-band p.wl-lead{font-size:14.5px;color:var(--txt-soft);margin:0 0 16px;max-width:44ch}
+.wl-form{display:flex;gap:10px;flex-wrap:wrap}
+.wl-form input{flex:1;min-width:200px;height:50px;padding:0 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .2s}
+.wl-form input:focus{outline:none;border-color:var(--clay)}
+.wl-form button{height:50px;padding:0 26px;flex:none}
+.wl-msg{font-size:12px;color:var(--txt-soft);margin-top:11px;font-family:'Space Mono',monospace;letter-spacing:.4px}
+.wl-ok{display:none;font-size:13.5px;margin-top:11px;color:#4C6E46;font-family:'Space Mono',monospace}
+body.dark-bg .wl-ok{color:#A9C99A}
+[data-waitlist-wrap].done .wl-form,[data-waitlist-wrap].done .wl-msg{display:none}
+[data-waitlist-wrap].done .wl-ok{display:block}
+[data-waitlist-wrap].err .wl-form input{border-color:#b5462f}
+[data-waitlist-wrap].err .wl-msg{color:#b5462f}
 
 /* ---------- sticky buy bar ---------- */
 #buybar{position:fixed;left:0;right:0;bottom:0;z-index:120;transform:translateY(110%);transition:transform .45s cubic-bezier(.4,0,.2,1);
@@ -328,6 +350,19 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
       </div>
       <a class="buy-ghaf" href="/commitment.html">🌱 A share of every tee plants ghaf trees in the UAE &rarr;</a>
       <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ Organic cotton</span></div>
+
+      <!-- Pre-launch capture: the shop isn't open yet, so give high-intent visitors a way to convert.
+           Remove (or leave — it still works as a restock list) once LAUNCHED. -->
+      <div class="wl-band" data-waitlist-wrap>
+        <h3>Be first to get this one</h3>
+        <p class="wl-lead">This tee is a limited first run. Join the list and we'll email you the moment it drops — before it goes public.</p>
+        <form class="wl-form" data-waitlist data-source="pdp-${p.id}" data-endpoint="https://app.kit.com/forms/9627814/subscriptions" novalidate>
+          <input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required>
+          <button type="submit" class="btn">Notify me</button>
+        </form>
+        <p class="wl-msg">No spam — just the drop.</p>
+        <p class="wl-ok">You&rsquo;re on the list. We&rsquo;ll email you before it drops. &#10022;</p>
+      </div>
     </div>
   </section>
 </div>
@@ -441,6 +476,65 @@ ${related(p, all)}
 var SCENE='${p.scene}';
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
+
+/* ---------- analytics: product view + intent events ---------- */
+(function(){
+  if(!window.track)return;
+  track('view_item',{item_id:'${p.id}',item_name:${J(p.name)},price:${J(String(p.price))},currency:'AED'});
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a');
+    if(!a)return;
+    if(a.classList.contains('shoplink'))track('select_item',{item_id:'${p.id}',from:'pdp'});
+    else if(a.classList.contains('buy-ghaf'))track('commitment_click',{from:'pdp-${p.id}'});
+    else if(a.href&&a.href.indexOf('/locations/')>=0)track('place_click',{item_id:'${p.id}'});
+    else if(a.classList.contains('rel'))track('related_click',{from:'${p.id}'});
+  },true);
+  /* how far people actually read — the whole point of the long-form page */
+  var marks=[25,50,75,100],hit={};
+  addEventListener('scroll',function(){
+    var d=document.documentElement,max=d.scrollHeight-innerHeight;
+    if(max<=0)return;
+    var pct=Math.round(scrollY/max*100);
+    marks.forEach(function(m){if(pct>=m&&!hit[m]){hit[m]=1;track('scroll_depth',{percent:m,item_id:'${p.id}'});}});
+  },{passive:true});
+})();
+
+/* ---------- pre-launch waitlist (same Kit flow as the rest of the site) ---------- */
+(function(){
+  var reEmail=/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/;
+  document.querySelectorAll('form[data-waitlist]').forEach(function(f){
+    f.addEventListener('submit',function(e){
+      e.preventDefault();
+      var wrap=f.closest('[data-waitlist-wrap]')||f.parentNode;
+      var input=f.querySelector('input[type=email]');
+      var email=((input&&input.value)||'').trim();
+      if(!reEmail.test(email)){wrap.classList.add('err');if(input)input.focus();return;}
+      wrap.classList.remove('err');
+      var endpoint=f.getAttribute('data-endpoint')||'';
+      var btn=f.querySelector('button'),btnTxt=btn?btn.textContent:'';
+      var done=function(){wrap.classList.remove('loading','err');wrap.classList.add('done');
+        try{if(window.track)track('waitlist_signup',{source:f.getAttribute('data-source')||'pdp'});}catch(_){}};
+      var fail=function(msg){wrap.classList.remove('loading');wrap.classList.add('err');
+        if(btn){btn.disabled=false;btn.textContent=btnTxt;}
+        var mm=wrap.querySelector('.wl-msg');if(mm)mm.textContent=msg;};
+      var post=function(){var fd=new FormData();fd.append('email_address',email);
+        fetch(endpoint,{method:'POST',mode:'no-cors',body:fd}).then(done,done);};
+      if(!endpoint||endpoint.indexOf('TODO')>=0){done();return;}
+      wrap.classList.add('loading');if(btn){btn.disabled=true;btn.textContent='Adding…';}
+      var KIT_PUBLIC='Tq9c-4sFdUS0B5GgJmkPBQ',fm=endpoint.match(/forms\\/(\\d+)/);
+      if(!fm){post();return;}
+      fetch('https://api.convertkit.com/v3/forms/'+fm[1]+'/subscribe',{method:'POST',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify({api_key:KIT_PUBLIC,email:email})})
+        .then(function(r){return r.text().then(function(t){var j={};try{j=JSON.parse(t);}catch(e){}return {ok:r.ok,j:j};});})
+        .then(function(res){
+          if(res.ok&&res.j&&res.j.subscription){done();}
+          else if(res.j&&(res.j.message||res.j.error)){fail(res.j.message||res.j.error);}
+          else{post();}
+        })
+        .catch(function(){post();}); // CORS/network blocked the read — fall back so the email is still captured
+    });
+  });
+})();
 
 /* ---------- gallery ---------- */
 (function(){

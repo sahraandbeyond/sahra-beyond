@@ -4,6 +4,25 @@
 
 ---
 
+## Analytics + pre-launch capture on product pages (2026-07-22)
+
+Two gaps found by auditing rather than assuming — both on the newest, most important pages.
+
+**1. No analytics on the new pages.** GA4 (`G-5NVFDWT29F`) was on the homepage, locations, places and about, but **absent from all three product pages and `commitment.html`**. The pages built over two sessions, and the page carrying the brand mission, were invisible in reporting.
+
+Added the standard GA4 snippet to the PDP template and to `commitment.html`, plus meaningful events (not just pageviews):
+- `view_item` on load, with item id / name / price / currency
+- `select_item` when "Shop this tee" is clicked · `commitment_click` on the ghaf link · `place_click` on the location link · `related_click` on cross-sell
+- `scroll_depth` at 25/50/75/100% — the long-form PDP only pays off if people actually read, so this measures whether it does
+
+**2. No email capture on product pages — a pre-launch leak.** Every page captured waitlist signups *except* the three most likely to create desire. A visitor arriving from a location page could read the whole story, want the tee, and find only "Shop this tee" pointing at a shop that isn't open.
+
+Added a `.wl-band` waitlist block under the trust row on each PDP, reusing the site's existing Kit flow (v3 API with the public key, graceful `no-cors` fallback, real success/error states). `data-source` is per product (`pdp-al-quaa-galaxy-tee` etc.) so signups are attributable to the tee that drove them. It stays useful post-launch as a restock/next-drop list.
+
+**Bug caught during validation:** the generator embeds the page as a JS template literal, which silently collapsed regex escapes — `\s`→`s`, `\d`→`d`, `\/`→`/` — leaving `/^[^@s]+@[^@s]+.[^@s]+$/` and a broken form-id match in the emitted HTML. Node's `--check` caught it. Fixed by double-escaping in the generator; verified the emitted regexes are correct and the email validator now scores 8/8 on a test set (valid/invalid), with the Kit form id extracting correctly.
+
+**Validated:** tag balance, JSON-LD, comment balance, inline JS `node --check` on all three PDPs + commitment page, all serving 200.
+
 ## Launch cutover script + places→products loop (2026-07-22)
 
 ### Deploy state at time of audit
