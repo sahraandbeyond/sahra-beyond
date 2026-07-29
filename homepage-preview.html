@@ -50,6 +50,9 @@
 <style>
 :root{--sand:#FAF6EF;--paper:#FFFFFF;--ink:#33271B;--mist:#7C7264;--clay:#C0702E;--clay-deep:#9C521B;--gold:#F2C98C;--line:rgba(43,37,32,.12)}
 *{margin:0;padding:0;box-sizing:border-box}
+.skip-link{position:absolute;left:8px;top:-60px;z-index:500;background:var(--ink);color:#FFF;padding:11px 18px;border-radius:0 0 8px 8px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.5px;text-decoration:none;transition:top .18s}
+.skip-link:focus{top:0}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
 html{scroll-behavior:smooth}
 html{overflow-x:hidden;width:100%}
 body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--sand);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;width:100%;max-width:100%}
@@ -78,8 +81,8 @@ nav.on-hero .nav-links a,nav.on-hero .logo-a{color:#fff}nav.on-hero .logo-b{colo
 
 .hero{position:relative;height:100vh;min-height:620px;display:flex;align-items:center;overflow:hidden;color:#fff}
 .layer{position:absolute;inset:0;will-change:transform}
-.sky{z-index:1;background:linear-gradient(180deg,#171232 0%,#3A2A5C 32%,#8B4E63 60%,#C0702E 84%,#EDC079 100%);background-size:100% 220%;animation:sky 16s ease-in-out infinite alternate}
-@keyframes sky{from{background-position:50% 0}to{background-position:50% 46%}}
+.sky{z-index:1;background:linear-gradient(180deg,#14102A 0%,#39295A 34%,#8B4E63 64%,#B96A2C 88%,#E3B274 100%);background-size:100% 200%;animation:sky 18s ease-in-out infinite alternate}
+@keyframes sky{from{background-position:50% 0}to{background-position:50% 42%}}
 .stars{z-index:1;background-image:radial-gradient(1.6px 1.6px at 15% 22%,#fff,transparent),radial-gradient(1.4px 1.4px at 68% 12%,#fff,transparent),radial-gradient(1px 1px at 42% 30%,#fff,transparent),radial-gradient(1.6px 1.6px at 82% 26%,#fff,transparent),radial-gradient(1px 1px at 30% 14%,#fff,transparent),radial-gradient(1.3px 1.3px at 55% 20%,#fff,transparent),radial-gradient(1px 1px at 90% 10%,#fff,transparent);animation:twinkle 4s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.9}50%{opacity:.35}}
 #hero-canvas{position:absolute;inset:0;z-index:2;pointer-events:none}
@@ -130,7 +133,26 @@ section{position:relative;padding:100px 0 84px}
 .card-place{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--clay-deep)}
 .card-name{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;margin:6px 0 4px}
 .card-price{font-size:14px;color:var(--mist)}
+.qual-band{margin:44px auto 6px;text-align:center;max-width:960px}
+.qual-band .eyebrow{display:block;margin-bottom:28px}
+.qual{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.qual-item{padding:0 4px;border-top:1px solid var(--line);padding-top:20px}
+.qual-item b{display:block;font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.qual-item span{display:block;font-size:13px;line-height:1.6;color:var(--mist)}
+@media(max-width:760px){.qual{grid-template-columns:1fr 1fr;gap:20px}}
+.tag-invite{text-align:center;margin:22px auto 0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.4px;color:var(--mist)}
+.tag-invite a{color:var(--clay-deep);border-bottom:1px solid currentColor;padding-bottom:1px}
 .center{text-align:center;margin-top:46px}
+.mission{background:#2C3626;color:#fff;text-align:center}
+.mission .eyebrow{color:var(--gold)}
+.mission h2{font-family:'Playfair Display',serif;font-size:clamp(30px,4.6vw,52px);font-weight:900;line-height:1.05;margin:12px 0 18px;color:#fff}
+.mission p{max-width:600px;margin:0 auto;color:rgba(255,255,255,.82);font-size:16.5px;font-weight:300}
+.mission .ghaf-em{color:var(--gold);font-style:italic}
+.ghaf-facts{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 34px;margin:32px 0 8px}
+.ghaf-facts div{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.ghaf-facts b{display:block;font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:0;text-transform:none;margin-bottom:5px}
+.mission .btn.ghost{margin-top:30px;color:#fff;border-color:rgba(255,255,255,.5)}
+.mission .btn.ghost:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
 
 .stats{background:linear-gradient(180deg,#F7DCB0,#F0C079)}
 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center}
@@ -142,7 +164,9 @@ section{position:relative;padding:100px 0 84px}
 .place-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .place{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px;color:#fff;transition:transform .4s;will-change:transform}
 .place:hover{transform:translateY(-10px)}
-.place-bg{position:absolute;inset:0;transition:transform .6s}.place:hover .place-bg{transform:scale(1.14)}
+/* .place-bg takes a real cover photo via an inline background-image (see the cards below).
+   The per-card gradients underneath stay as a graceful fallback for places that have no photo yet. */
+.place-bg{position:absolute;inset:0;transition:transform .6s;background-size:cover;background-position:center}.place:hover .place-bg{transform:scale(1.14)}
 .place.p1 .place-bg{background:linear-gradient(160deg,#3A2F66,#C0702E)}.place.p2 .place-bg{background:linear-gradient(160deg,#1F8A74,#7FCBB0)}
 .place.p3 .place-bg{background:linear-gradient(160deg,#333E5C,#90A4C8)}.place.p4 .place-bg{background:linear-gradient(160deg,#9A591A,#EBB36B)}
 .place::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 55%)}
@@ -209,7 +233,7 @@ html.anim-ready .hero-in{opacity:0}
 #grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:89;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 7s steps(8) infinite}
 @keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,2%)}40%{transform:translate(2%,-1%)}60%{transform:translate(-1%,-2%)}80%{transform:translate(1%,2%)}}
 html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:none}
-.hero::after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 52%,rgba(10,6,16,.4) 100%)}
+.hero::after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 52%,rgba(10,6,16,.42) 100%)}
 .hero h1 em{text-shadow:0 0 34px rgba(242,201,140,.5)}
 .card{transform-style:preserve-3d}
 .grid{perspective:1000px}
@@ -222,6 +246,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
 </head>
 <body>
+<a class="skip-link" href="#shop">Skip to the collection</a>
 <div id="preload"><div class="pm"></div><div class="pt">Sahra &amp; Beyond</div></div>
 <div id="cursor"></div>
 <button id="ambient" class="ambient-btn" aria-label="Toggle ambient desert sound" aria-pressed="false" title="Ambient desert sound"><span class="amb-ic">♪</span></button>
@@ -240,13 +265,11 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   <div class="sun" data-depth="0.25"></div>
   <div class="dune" data-depth="0.5"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg></div>
   <div class="dune" data-depth="0.9"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg></div>
-  <!-- TODO(lifestyle hero): drop shirts/hero-lifestyle.jpg (golden-hour or Milky Way frame — Shot List D1) to use a real photo backdrop. Auto-hides until the file exists. -->
-  <img class="hero-ls" src="shirts/hero-lifestyle.jpg" alt="" onerror="this.remove()">
   <div class="hero-inner">
     <div>
       <span class="eyebrow hero-in">Inspired by the landscapes of the UAE</span>
       <h1 id="headline"></h1>
-      <p class="hero-in">Original tees and prints drawn from the real deserts, wadis and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
+      <p class="hero-in">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
       <div class="hero-actions hero-in"><a href="shop-preview.html" class="btn magnetic shoplink" onclick="try{track('shop_cta_click',{source:'hero'})}catch(e){}">Shop the collection</a><a href="#places" class="btn ghost magnetic">The places behind them</a></div>
     </div>
     <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/design-black-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/design-beige-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/design-taupe-front.jpg');background-size:cover;background-position:center"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
@@ -254,26 +277,36 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   <div class="scroll-cue">⌄</div>
 </header>
 
-<div class="marquee"><div><span>★ Inspired by the UAE</span><span>★ Every design has a place</span><span>★ Made for explorers</span><span>★ Original artwork</span><span>★ Inspired by the UAE</span><span>★ Every design has a place</span><span>★ Made for explorers</span><span>★ Original artwork</span></div></div>
+<div class="marquee"><div><span>★ Inspired by the UAE</span><span>★ Free returns within the UAE</span><span>★ Every design has a place</span><span>★ Designed in the UAE</span><span>★ Limited first drop</span><span>★ Original artwork</span><span>★ Inspired by the UAE</span><span>★ Free returns within the UAE</span><span>★ Every design has a place</span><span>★ Designed in the UAE</span><span>★ Limited first drop</span><span>★ Original artwork</span></div></div>
 
 <section class="shop" id="shop">
   <div class="melt"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,52 C240,12 480,86 720,50 C960,14 1200,80 1440,42 L1440,100 Z" fill="#FAF6EF"/></svg></div>
   <div class="wrap inner">
-    <div class="sec-head reveal"><span class="eyebrow">The collection</span><h2>Designs with a place</h2><p>A small, considered range — each piece tied to a real spot on the map.</p></div>
+    <div class="sec-head reveal"><span class="eyebrow">The collection</span><h2>Designs with a place</h2><p>A small, considered range — each a limited first run, tied to a real spot on the map.</p></div>
     <div class="grid" id="grid">
-      <div class="card reveal tilt"><div class="card-img"><span class="card-tag">New</span><img src="shirts/design-black-front.jpg" alt="Al Quaa Galaxy Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price">AED 149</div></div></div>
-      <div class="card reveal tilt"><div class="card-img"><img src="shirts/design-beige-front.jpg" alt="Liwa Dune Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Liwa Dune Tee</div><div class="card-price">AED 149</div></div></div>
-      <div class="card reveal tilt"><div class="card-img"><img src="shirts/design-taupe-front.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price">AED 149</div></div></div>
+      <a class="card reveal tilt" href="/products/al-quaa-galaxy-tee/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-black-front.jpg" alt="Al Quaa Galaxy Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price">AED 149</div></div></a>
+      <a class="card reveal tilt" href="/products/liwa-dune-tee/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-beige-front.jpg" alt="Liwa Dune Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Liwa Dune Tee</div><div class="card-price">AED 149</div></div></a>
+      <a class="card reveal tilt" href="/products/hajar-mountains-tee/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-taupe-front.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price">AED 149</div></div></a>
+    </div>
+    <div class="qual-band reveal">
+      <span class="eyebrow">Made to last</span>
+      <div class="qual">
+        <div class="qual-item"><b>230gsm</b><span>Heavyweight 100% organic cotton, pre-washed for minimal shrinkage.</span></div>
+        <div class="qual-item"><b>Built to last</b><span>Ribbed crew-neck collar, with taped collar &amp; shoulder seams.</span></div>
+        <div class="qual-item"><b>Soft to wear</b><span>DTG prints &amp; tonal embroidery, chosen for a smooth, breathable feel.</span></div>
+        <div class="qual-item"><b>Limited runs</b><span>Small first batches — once a design sells out, it&rsquo;s gone.</span></div>
+      </div>
     </div>
     <div class="center reveal"><a href="shop-preview.html" class="btn ghost magnetic shoplink">View all designs</a></div>
+    <p class="tag-invite reveal">Wear yours out there — tag <a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">@sahraandbeyond.ae</a> to be featured.</p>
   </div>
 </section>
 
 <section class="stats">
   <div class="melt"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,50 C260,90 520,20 760,54 C1000,86 1220,26 1440,56 L1440,100 Z" fill="#F7DCB0"/></svg></div>
   <div class="wrap inner"><div class="stat-row">
-    <div class="stat reveal"><b class="count" data-to="40">0</b><span>Places explored</span></div>
-    <div class="stat reveal"><b class="count" data-to="7">0</b><span>Emirates</span></div>
+    <div class="stat reveal"><b class="count" data-to="3">0</b><span>Designs in the first drop</span></div>
+    <div class="stat reveal"><b class="count" data-to="7">0</b><span>Emirates to explore</span></div>
     <div class="stat reveal"><b class="count" data-to="100" data-suffix="%">0</b><span>Original artwork</span></div>
   </div></div>
 </section>
@@ -282,10 +315,14 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   <div class="melt"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,54 C240,14 480,88 720,50 C960,12 1200,82 1440,46 L1440,100 Z" fill="#241B12"/></svg></div>
   <div class="wrap inner">
     <div class="sec-head reveal"><span class="eyebrow">Places that inspire us</span><h2>Every design starts somewhere real</h2><p>The deserts, wadis, mountains and coasts behind the collection — with the stories that shaped each piece.</p></div>
+    <!-- Cover photos come from the same /uploads/ assets the /locations/ pages use.
+         TODO: Wadi Naqab (p2) and Liwa (p4) have no cover image in content/locations/*.json yet —
+         they fall back to their gradient. Add a photo via the CMS (or drop one in /uploads/) and set
+         background-image on their .place-bg the same way as p1/p3. -->
     <div class="place-row">
-      <a class="place p1 reveal" href="/locations/al-quaa-desert/"><div class="place-bg"></div><div><b>Al Quaa Desert</b><small>Abu Dhabi · Dark sky</small></div></a>
+      <a class="place p1 reveal" href="/locations/al-quaa-desert/"><div class="place-bg" style="background-image:url('/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg')" role="img" aria-label="Al Quaa Desert"></div><div><b>Al Quaa Desert</b><small>Abu Dhabi · Dark sky</small></div></a>
       <a class="place p2 reveal" href="/locations/wadi-naqab/"><div class="place-bg"></div><div><b>Wadi Naqab</b><small>RAK · Hajar Mountains</small></div></a>
-      <a class="place p3 reveal" href="/locations/jebel-jais/"><div class="place-bg"></div><div><b>Jebel Jais</b><small>RAK · Mountains</small></div></a>
+      <a class="place p3 reveal" href="/locations/wadi-showka/"><div class="place-bg" style="background-image:url('/uploads/17951464709964948.webp')" role="img" aria-label="Wadi Showka"></div><div><b>Wadi Showka</b><small>RAK · Hajar foothills</small></div></a>
       <a class="place p4 reveal" href="/locations/liwa/"><div class="place-bg"></div><div><b>Liwa Dunes</b><small>Abu Dhabi · Desert</small></div></a>
     </div>
     <div class="center reveal"><a href="/about/" class="btn ghost magnetic" style="color:#fff;border-color:rgba(255,255,255,.5)">Explore the places</a></div>
@@ -294,8 +331,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
 
 <section class="story-sec" id="story">
   <div class="melt"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,50 C260,90 520,20 760,54 C1000,86 1220,26 1440,56 L1440,100 Z" fill="#FAF6EF"/></svg></div>
-  <div class="wrap inner"><div class="story">
-    <div class="story-img reveal" id="storyimg"></div>
+  <div class="wrap inner"><div class="story" style="grid-template-columns:1fr;max-width:640px;margin:0 auto;text-align:center">
     <div class="reveal">
       <span class="eyebrow">Our story</span>
       <h2>It started with a camping trip in the desert</h2>
@@ -304,6 +340,24 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
       <a href="/about/" class="btn ghost magnetic">Read our story</a>
     </div>
   </div></div>
+</section>
+
+<!-- MISSION: confirm the Give a Ghaf (Goumbook) partnership is in place before this goes live; do NOT add a "trees planted" counter until it reflects real, verified plantings. -->
+<section class="mission" id="mission">
+  <div class="melt"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,52 C240,12 480,86 720,50 C960,14 1200,80 1440,42 L1440,100 Z" fill="#2C3626"/></svg></div>
+  <div class="wrap inner">
+    <div class="sec-head reveal" style="margin-bottom:0;max-width:none">
+      <span class="eyebrow">Our commitment</span>
+      <h2>A share of every sale plants <span class="ghaf-em">ghaf trees</span></h2>
+      <p>The ghaf is the UAE&rsquo;s national tree — indigenous, drought-hardy, and vital to the desert every one of our designs is drawn from. So a share of every sale goes to planting more of them, through <strong>Give a Ghaf</strong> — Goumbook&rsquo;s UAE native-tree program. Wear a place; help it grow back.</p>
+      <div class="ghaf-facts reveal">
+        <div><b>A share</b>of every sale, to planting</div>
+        <div><b>Native ghaf</b>the UAE&rsquo;s national tree</div>
+        <div><b>~35kg</b>CO&#8322; a tree can absorb a year</div>
+      </div>
+      <a href="/commitment.html" class="btn ghost magnetic">Our commitment &rarr;</a>
+    </div>
+  </div>
 </section>
 
 <section class="news">
@@ -323,9 +377,9 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
 <footer>
   <div class="foot-brand">Sahra &amp; Beyond</div>
   <div class="foot-tag">Wear the wild side of the UAE</div>
-  <div class="foot-links"><a href="#shop">Shop</a><a href="#places">Places</a><a href="/about/">About</a><a href="#">Shipping &amp; returns</a><a href="#">Contact</a></div>
+  <div class="foot-links"><a href="shop-preview.html">Shop</a><a href="#places">Places</a><a href="/about/">About</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a></div>
   <div class="foot-soc" style="font-size:13px;font-family:'Space Mono',monospace;letter-spacing:1px"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener" aria-label="Instagram">Instagram — @sahraandbeyond.ae</a></div>
-  <div class="foot-copy">© 2026 Sahra &amp; Beyond · Made in the UAE</div>
+  <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE · Prices in AED incl. 5% VAT</div>
 </footer>
 
 <script>
@@ -624,6 +678,17 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   if(location.protocol!=='file:')document.querySelectorAll('a.shoplink').forEach(function(a){a.setAttribute('href','/shop/');});
   function tagVal(t,k){var x=(t||[]).find(function(y){return y.toLowerCase().indexOf(k+':')===0;});return x?x.split(':').slice(1).join(':'):'';}
   function money(a,c){return (c||'AED')+' '+Math.round(parseFloat(a));}
+  /* Product pages that exist under /products/<slug>/. Add a slug here when a new product page ships. */
+  var PDP_SLUGS=['al-quaa-galaxy-tee','liwa-dune-tee','hajar-mountains-tee'];
+  function productPageFor(p){
+    var h=String((p&&p.handle)||'').toLowerCase();
+    if(PDP_SLUGS.indexOf(h)>=0)return '/products/'+h+'/';
+    var t=((p&&p.title)||'')+' '+((p&&p.place)||'');t=t.toLowerCase();
+    if(/qua+|galaxy|milky/.test(t))return '/products/al-quaa-galaxy-tee/';
+    if(/liwa|dune|empty.?quarter/.test(t))return '/products/liwa-dune-tee/';
+    if(/hajar|naqab|mountain|topograph/.test(t))return '/products/hajar-mountains-tee/';
+    return '';
+  }
   function fill(products){
     if(!products||!products.length)return;
     // Pin the black Al Quaa Galaxy Tee as the hero/first product, whatever the raw Shopify order is.
@@ -638,7 +703,11 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
       var pl=card.querySelector('.card-place');if(pl&&p.place)pl.textContent='Inspired by '+p.place;
       var nm=card.querySelector('.card-name');if(nm)nm.textContent=p.title;
       var pr=card.querySelector('.card-price');if(pr)pr.textContent=money(p.price,p.cur);
-      card.style.cursor='pointer';card.addEventListener('click',function(){location.href=SHOP_URL;});
+      // Point the card at its product page. Resolve from the Shopify handle, else from the title;
+      // fall back to the shop if we don't have a page for it yet (e.g. a brand-new product).
+      var pdp=productPageFor(p);
+      if(card.tagName==='A'){card.setAttribute('href',pdp||SHOP_URL);}
+      else{card.style.cursor='pointer';card.addEventListener('click',function(){location.href=pdp||SHOP_URL;});}
     });
     var frames=[].slice.call(document.querySelectorAll('#spot .frame'));
     frames.forEach(function(fr,i){var p=products[i];if(p&&p.img){fr.style.backgroundImage='url("'+p.img+'")';fr.style.backgroundSize='cover';fr.style.backgroundPosition='center';fr.textContent='';}});

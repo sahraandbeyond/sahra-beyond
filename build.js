@@ -6,6 +6,7 @@
    Runs at deploy time on Vercel (build command), so pages stay in sync with the CMS. */
 const fs = require('fs');
 const path = require('path');
+const buildProducts = require('./build-products');
 
 const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
@@ -27,6 +28,8 @@ function write(rel, html) { const fp = path.join(ROOT, rel); fs.mkdirSync(path.d
 const locDir = path.join(ROOT, 'content/locations');
 const locations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(locDir, f))).filter(Boolean);
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
+const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
+const PRODUCT_BY_PLACE = {}; PRODUCTS_ALL.forEach(p => { if (p.placeSlug) PRODUCT_BY_PLACE[p.placeSlug] = p; });
 // Instagram only — the single official channel
 const social = { instagram: (settings.social && settings.social.instagram) || 'https://instagram.com/sahraandbeyond.ae' };
 const disclosure = settings.affiliateDisclosure || 'As an Amazon Associate, Sahra & Beyond earns from qualifying purchases.';
@@ -68,6 +71,26 @@ function stayBlock(l) {
   return `<section class="book"><h2>Where to stay near ${esc(l.name)}</h2>
     <p>Turning it into an overnight trip? Find hotels and stays close to ${esc(l.name)}.</p>
     <a class="btn book-btn alt" href="${esc(url)}" target="_blank" rel="noopener sponsored">Find places to stay &rarr;</a></section>`;
+}
+/* ---- The tee inspired by THIS place -------------------------------------
+   Closes the loop: location pages are the highest-traffic SEO surface, so when a
+   place has a tee, show it here instead of the generic shop CTA. ---------- */
+function teeBlock(l) {
+  const p = l && l.id ? PRODUCT_BY_PLACE[l.id] : null;
+  if (!p) return '';
+  const href = `/products/${p.id}/`;
+  return `<section class="teecta" style="--tee:${p.theme || '#181109'}">
+    <div class="teecta-inner">
+      <a class="teecta-img" href="${href}" aria-label="${esc(p.name)}"><img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy"></a>
+      <div class="teecta-txt">
+        <span class="teecta-eyebrow">The tee inspired by this place</span>
+        <h2>${esc(p.name)}</h2>
+        <p>${esc(p.shareDesc || p.lede || '')}</p>
+        <div class="teecta-meta"><span>AED ${esc(String(p.price))}</span><span>${p.printChip || ''}</span><span>&#10022; Limited first run</span></div>
+        <a class="btn" href="${href}">See the tee &rarr;</a>
+      </div>
+    </div>
+  </section>`;
 }
 function shopBlock(l) {
   const place = (l && l.name)
@@ -242,6 +265,20 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .loc-hero h1::after{content:"";display:block;width:52px;height:3px;margin-top:12px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
 .hdr-nav a.shopnav{color:#9C521B;font-weight:700}
 /* shop CTA band — living night sky */
+/* --- the tee inspired by this place (product cross-link) --- */
+.teecta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;background:var(--tee,#181109);color:#fff;box-shadow:0 24px 60px rgba(0,0,0,.18)}
+.teecta-inner{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:0;align-items:stretch}
+.teecta-img{display:block;position:relative;overflow:hidden;min-height:100%}
+.teecta-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+.teecta-img:hover img{transform:scale(1.06)}
+.teecta-txt{padding:34px 32px;display:flex;flex-direction:column;justify-content:center;background:rgba(0,0,0,.28);backdrop-filter:blur(2px)}
+.teecta-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#E9B978;margin-bottom:10px}
+.teecta h2{font-family:'Playfair Display',serif;font-size:clamp(24px,3.4vw,34px);font-weight:800;line-height:1.08;color:#fff;margin:0 0 10px}
+.teecta p{color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;margin:0 0 16px;max-width:46ch}
+.teecta-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:20px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;color:rgba(255,255,255,.72)}
+.teecta .btn{align-self:flex-start;background:#E9B978;color:#181109;border:none}
+.teecta .btn:hover{background:#fff}
+@media(max-width:760px){.teecta-inner{grid-template-columns:1fr}.teecta-img{aspect-ratio:4/3}.teecta-txt{padding:26px 22px}}
 .shopcta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;padding:34px 26px;text-align:center;color:#fff;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 90%)}
 .shopcta .stars,.shopcta .stars2{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 12% 28%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 14%,#fff,transparent),radial-gradient(1.6px 1.6px at 54% 34%,#fff,transparent),radial-gradient(1.2px 1.2px at 71% 18%,#fff,transparent),radial-gradient(1.6px 1.6px at 88% 30%,#fff,transparent),radial-gradient(1px 1px at 44% 52%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite}
 .shopcta .stars2{background-image:radial-gradient(1.2px 1.2px at 22% 44%,#FFE9C4,transparent),radial-gradient(1.5px 1.5px at 62% 12%,#FFE9C4,transparent),radial-gradient(1px 1px at 80% 48%,#fff,transparent),radial-gradient(1.4px 1.4px at 8% 12%,#fff,transparent);animation-delay:2.2s}
@@ -402,7 +439,7 @@ locations.forEach(l => {
     </aside>
     ${toursBlock(l)}
     ${stayBlock(l)}
-    ${shopBlock(l)}
+    ${teeBlock(l) || shopBlock(l)}
     ${igSection(l.igPosts)}
     <section class="pack">
       <h2>What to pack for ${esc(l.name)}</h2>
@@ -847,6 +884,10 @@ if (LAUNCHED) (function () {
   write('places/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: 'places' }));
 })();
 
+// ---- product detail pages (content/products/*.json) ----
+const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, shopUrl: LAUNCHED ? '/shop/' : '/shop-preview.html' });
+console.log('  \u2713 ' + PRODUCT_URLS.length + ' product pages');
+
 // ---- sitemap ----
 const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
@@ -854,7 +895,8 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(LAUNCHED ? [{ u: `${SITE}/shop/`, m: buildDate, p: '0.9' }] : [])
   .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }])
   .concat(LANDINGS.map(L => ({ u: `${SITE}/${L.slug}/`, m: buildDate, p: '0.8' })))
-  .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })));
+  .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
+  .concat(PRODUCT_URLS.map(x => ({ u: x.url, m: buildDate, p: '0.9' })));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
   + entries.map(e => `  <url><loc>${e.u}</loc><lastmod>${e.m}</lastmod><priority>${e.p}</priority></url>`).join('\n')
   + `\n</urlset>\n`;

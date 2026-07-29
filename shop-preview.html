@@ -10,12 +10,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Leaflet is loaded lazily (only when the map scrolls into view) — see loadLeaflet() below -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{--sand:#FAF6EF;--paper:#FFF;--ink:#2A2016;--mist:#8A8073;--clay:#C0702E;--clay-deep:#9C521B;--gold:#E9B978;--line:rgba(42,32,22,.12)}
 *{margin:0;padding:0;box-sizing:border-box}
+.skip-link{position:absolute;left:8px;top:-60px;z-index:500;background:var(--ink);color:#FFF;padding:11px 18px;border-radius:0 0 8px 8px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.5px;text-decoration:none;transition:top .18s}
+.skip-link:focus{top:0}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible,.size:focus-visible,.fit:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
 html{overflow-x:hidden;width:100%}
 body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--sand);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;width:100%;max-width:100%;transition:color .6s}
 a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
@@ -127,6 +129,38 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .prod h2{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,54px);font-weight:800;line-height:1.04;margin-bottom:16px}
 .prod .story{font-size:16px;font-weight:300;line-height:1.85;margin-bottom:20px;max-width:440px;opacity:.96}
 .prod .price{font-family:'Space Mono',monospace;font-size:15px;letter-spacing:1px;margin-bottom:24px}
+.prod-acc{margin:2px 0 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:440px}
+.prod-acc summary{list-style:none;cursor:pointer;padding:13px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.82;display:flex;justify-content:space-between;align-items:center}
+.prod-acc summary::-webkit-details-marker{display:none}
+.prod-acc summary::after{content:'+';font-size:15px;opacity:.55}
+.prod-acc[open] summary::after{content:'–'}
+.prod-specs{list-style:none;margin:0;padding:0 0 14px}
+.prod-specs li{font-size:13.5px;font-weight:300;line-height:1.6;margin-bottom:8px;opacity:.86}
+.prod-specs strong{font-weight:600;opacity:1}
+.buy-trust{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;opacity:.62}
+.prod.dark .prod-acc{border-color:rgba(255,255,255,.18)}
+.prod-spec-strip{list-style:none;display:flex;flex-wrap:wrap;gap:7px 8px;margin:0 0 22px;padding:0;max-width:460px}
+.prod-spec-strip li{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2px;line-height:1.25;padding:6px 11px;border:1px solid var(--line);border-radius:999px;opacity:.92}
+.prod.dark .prod-spec-strip li{border-color:rgba(255,255,255,.24)}
+.prod-limited{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--clay-deep);border:1px solid currentColor;border-radius:999px;padding:4px 11px;margin-bottom:13px}
+.prod.dark .prod-limited{color:var(--gold)}
+.buy-limited{margin:11px 0 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.3px;color:var(--clay-deep);opacity:.92}
+.prod.dark .buy-limited{color:var(--gold)}
+.shop-jump{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:1000px;margin:0 auto 44px;padding:0 24px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.shop-jump span{opacity:.6}
+.shop-jump a{padding:6px 13px;border:1px solid var(--line);border-radius:999px;color:inherit;opacity:.9;transition:border-color .3s,color .3s,opacity .3s}
+.shop-jump a:hover{border-color:var(--clay);color:var(--clay-deep);opacity:1}
+.read-place{display:inline-block;margin:0 0 18px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--clay-deep);border-bottom:1px solid currentColor;padding-bottom:2px;opacity:.9;transition:opacity .3s}
+.read-place:hover{opacity:1}
+.prod.dark .read-place{color:var(--gold)}
+.prod-occasion{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.3px;line-height:1.5;margin:-4px 0 20px;max-width:440px;opacity:.78}
+.buy-ghaf{display:inline-block;margin-top:14px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:#4C6E46;border-bottom:1px solid currentColor;padding-bottom:2px;transition:opacity .3s}
+.buy-ghaf:hover{opacity:.75}
+.prod.dark .buy-ghaf{color:#A9C99A}
+.pdp-link{display:block;margin-top:16px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.5px;border-bottom:1px solid var(--line);padding-bottom:12px;opacity:.85;transition:opacity .3s}
+.pdp-link:hover{opacity:1;color:var(--clay-deep)}
+.prod.dark .pdp-link{border-color:rgba(255,255,255,.18)}
+.prod.dark .pdp-link:hover{color:var(--gold)}
 .opt-lab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:.75;margin:0 0 9px}
 .sizes{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
 .size{border:1px solid rgba(42,32,22,.32);background:rgba(255,255,255,.55);min-width:48px;height:48px;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;color:inherit}
@@ -243,7 +277,12 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .soon h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(34px,5vw,64px);line-height:1.05;letter-spacing:-.5px}
 .soon h2 em{font-style:italic;color:var(--clay-deep)}
 .soon p{font-weight:300;font-size:16px;opacity:.82;max-width:460px;margin:20px auto 30px}
-footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:44px 0;font-size:12px;position:relative;z-index:2}
+footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:44px 24px;font-size:12px;position:relative;z-index:2}
+footer .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-bottom:16px}
+footer .foot-links a{color:rgba(255,255,255,.72);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;transition:color .3s}
+footer .foot-links a:hover{color:var(--gold)}
+footer .foot-soc a{color:var(--gold);font-family:'Space Mono',monospace;letter-spacing:1px}
+footer .foot-copy{margin-top:14px;opacity:.75}
 
 .ambient-btn{position:fixed;left:18px;bottom:18px;z-index:120;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(250,246,239,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:transform .2s,background .3s,color .3s}
 .ambient-btn:hover{transform:scale(1.08)}
@@ -305,6 +344,7 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
 </head>
 <body>
+<a class="skip-link" href="#products">Skip to the collection</a>
 <div id="preload"><div class="pm"></div><div class="pt">Sahra &amp; Beyond</div></div>
 <div id="cursor"></div>
 <button id="ambient" class="ambient-btn" aria-label="Toggle ambient desert sound" aria-pressed="false" title="Ambient desert sound"><span class="amb-ic">♪</span></button>
@@ -362,7 +402,7 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
         <thead><tr><th>Size</th><th>Chest (cm)</th><th>Length (cm)</th><th>Sleeve (cm)</th></tr></thead>
         <tbody id="size-tbody"></tbody>
       </table>
-      <p class="tl-note">Garment measured flat, laid down. <strong>TODO:</strong> placeholder measurements — Faheem to confirm against real samples before launch. To convert to body size, add ~4–6 cm ease.</p>
+      <p class="tl-note">Measurements are taken with the garment laid flat. Add roughly 4–6&nbsp;cm for body ease. Sizes run relaxed — size down in Oversized for a trimmer look.</p>
     </div>
 
     <div class="returns">
@@ -372,28 +412,15 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
   </div>
 </section>
 
-<section class="reviews" id="reviews">
-  <div class="tl-inner">
-    <span class="eyebrow">Reviews</span>
-    <h2>Worn by explorers</h2>
-    <!-- REVIEWS SCAFFOLD ---------------------------------------------------------------
-         Ready for a review app to populate. Recommended: Judge.me, Loox, Okendo or the
-         free Shopify Product Reviews app. Drop the app's embed/widget into #reviews-list
-         (most apps auto-inject via a div like <div class="jdgm-widget"> or a script).
-         Until then this shows a clearly-marked placeholder. The aggregate + cards below
-         mirror the structure a review app fills, so styling carries over. TODO: connect app.
-    -------------------------------------------------------------------------------------- -->
-    <div class="rv-aggregate" data-todo="aggregate">
-      <span class="rv-stars" aria-hidden="true">★★★★★</span>
-      <span class="rv-score">—</span>
-      <span class="rv-count">Reviews will appear here once your review app is connected</span>
-    </div>
-    <div id="reviews-list" class="rv-list" data-reviews-app="TODO: connect Judge.me / Loox / Okendo / Shopify Product Reviews">
-      <article class="rv-card is-placeholder"><div class="rv-stars">★★★★★</div><p class="rv-text">"Placeholder review — real customer reviews will render here once the review app is connected."</p><div class="rv-meta">— Verified buyer · <em>placeholder</em></div></article>
-      <article class="rv-card is-placeholder"><div class="rv-stars">★★★★★</div><p class="rv-text">"Placeholder review card #2 — shows how reviews will look in the collection's style."</p><div class="rv-meta">— Verified buyer · <em>placeholder</em></div></article>
-    </div>
-  </div>
-</section>
+<!--
+     Reviews section intentionally omitted until there are REAL customer reviews.
+     To enable at/after launch: connect a review app (Judge.me / Loox / Okendo / the free
+     Shopify Product Reviews app) and re-add a section like:
+       section.reviews#reviews > .tl-inner
+         span.eyebrow "Reviews"  +  h2 "Worn by explorers"
+         div#reviews-list  (app widget/embed goes here)
+     Do NOT ship placeholder/fake reviews here — trust + UAE consumer-protection risk.
+-->
 
 <section class="soon" id="soon" data-bg="#FAF6EF">
   <div class="soon-inner">
@@ -411,7 +438,7 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
   </div>
 </section>
 
-<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% organic cotton</div><div>Free returns within the UAE</div></div></div>
+<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% organic cotton</div><div>A share of every sale plants ghaf</div><div>Free returns within the UAE</div></div></div>
 
 <div class="lb" id="lightbox" aria-label="Photo viewer"><button class="lb-close" id="lbClose" aria-label="Close">✕</button><button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button><img class="lb-img" id="lbImg" alt=""><button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button></div>
 
@@ -422,14 +449,18 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
   <div class="drawer-foot" id="drawerFoot" style="display:none"><div class="subtotal"><span>Subtotal</span><span id="subtotal">AED 0</span></div><div class="tax-note">Shipping &amp; taxes calculated at checkout.</div><button class="btn checkout magnetic" id="checkout">Checkout</button></div>
 </aside>
 
-<footer>© 2026 Sahra &amp; Beyond · Made in the UAE</footer>
+<footer>
+  <div class="foot-links"><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a></div>
+  <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
+  <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE · Prices in AED incl. 5% VAT</div>
+</footer>
 
 <script>
 // ========= CONFIG — paste your Shopify details to go live =========
 var SHOPIFY = { domain:'sahra-beyond.myshopify.com', token:'cc42ba8e74eb27c4f3c062d93f893fa0', collection:'', apiVersion:'2024-10' };
 // ==================================================================
 var DEMO=(SHOPIFY.domain.indexOf('YOUR-STORE')>=0||SHOPIFY.token.indexOf('YOUR_')>=0);
-if(!DEMO)document.getElementById('mode-note').style.display='none';
+if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='&#8635; Free UAE returns &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop';}
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches,TOUCH=matchMedia('(hover:none),(pointer:coarse)').matches,HASG=(typeof gsap!=='undefined');
 function track(n,p){try{if(window.gtag)gtag('event',n,p||{});}catch(e){}}
 // theme palette used when a product has no explicit theme (black, beige, rose-blue, sage, indigo, soft-blue)
@@ -439,10 +470,34 @@ var THEMES=[{bg:'#181109',dark:1},{bg:'#E7D6B8',dark:0},{bg:'#C6BFD3',dark:0},{b
 var LIFESTYLE={'al-quaa-desert':'shirts/lifestyle-alquaa-hero.jpg','liwa':'shirts/lifestyle-liwa-hero.jpg','wadi-naqab':'shirts/lifestyle-hajar-hero.jpg'};
 // Place data pulled from content/locations/*.json — lets each product lead with its location's story, GPS and night-sky detail.
 var PLACES={
- 'al-quaa-desert':{lat:23.6,lng:55.48,sky:'Bortle 1 · darkest sky in the Emirates',blurb:'One of the darkest skies in the Emirates — deep in the southern desert, far from any city glow, a magnet for stargazers chasing the Milky Way.'},
+ /* Coordinates are the authoritative ones from the /locations/ pages + content/locations/*.json — keep them in sync. */
+ 'al-quaa-desert':{lat:23.52924,lng:54.75339,sky:'Bortle 1 · darkest sky in the Emirates',blurb:'One of the darkest skies in the Emirates — deep in the southern desert, far from any city glow, a magnet for stargazers chasing the Milky Way.'},
  'liwa':{lat:23.1339,lng:53.7785,sky:'Bortle 2 · deep-desert dark sky',blurb:'Home to some of the largest sand dunes on earth, where the Empty Quarter begins — an otherworldly landscape of mega-dunes and silence.'},
  'wadi-naqab':{lat:25.6988,lng:56.0054,sky:'~Bortle 3 · dark mountain sky',blurb:'A dramatic seasonal wadi high in the Hajar Mountains below Jebel Jais — red-rock walls, terraced pools and clear mountain air.'}
 };
+
+/* Tolerant place lookup. A Shopify `place:` tag like "Al Quaa" slugifies to `al-quaa`, which does NOT
+   exact-match the PLACES key `al-quaa-desert` — that silently dropped the tee from the map (and lost its
+   GPS/Bortle meta). Resolve via exact key → alias → keyword, and return the CANONICAL slug so
+   /locations/ links and #prod- anchors stay correct regardless of how the product is tagged in Shopify. */
+var PLACE_ALIASES={'al-quaa':'al-quaa-desert','alquaa':'al-quaa-desert','al-qua':'al-quaa-desert','quaa':'al-quaa-desert','al-quaa-abu-dhabi':'al-quaa-desert',
+ 'liwa-desert':'liwa','liwa-dunes':'liwa','liwa-oasis':'liwa','empty-quarter':'liwa',
+ 'naqab':'wadi-naqab','hajar':'wadi-naqab','hajar-mountains':'wadi-naqab','wadi-naqab-rak':'wadi-naqab'};
+function resolvePlace(slug,title){
+  var s=String(slug||'').toLowerCase();
+  if(PLACES[s])return s;
+  if(PLACE_ALIASES[s]&&PLACES[PLACE_ALIASES[s]])return PLACE_ALIASES[s];
+  var hay=(s+' '+String(title||'')).toLowerCase();
+  if(/qua+|galaxy|milky/.test(hay))return 'al-quaa-desert';
+  if(/liwa|dune|empty.?quarter/.test(hay))return 'liwa';
+  if(/naqab|hajar|mountain|wadi|showka/.test(hay))return 'wadi-naqab';
+  return null;
+}
+/* Returns {slug, data} or null — use everywhere instead of a bare PLACES[...] lookup. */
+function placeInfo(p){
+  var k=resolvePlace(p&&p.placeSlug,p&&p.title);
+  return k?{slug:k,data:PLACES[k]}:null;
+}
 
 /* ENGINE */
 (function(){
@@ -816,12 +871,21 @@ var DEMODATA=[
    oversized:{front:'shirts/design-taupe-front.jpg',back:'shirts/design-taupe-back.jpg'}}}
 ];
 
+/* Canonicalise placeSlug once, right after products load, so every downstream use — PLACES lookup,
+   map pin, section id/#anchor, /locations/ link — agrees no matter how the product is tagged in Shopify. */
+function normalizePlaces(){
+  (PRODUCTS||[]).forEach(function(p){
+    var k=resolvePlace(p.placeSlug,p.title);
+    if(k&&k!==p.placeSlug)p.placeSlug=k;
+  });
+}
 async function load(){
-  if(DEMO){PRODUCTS=DEMODATA.map(function(d,di){var fits=['Regular','Oversized'],variants=[];d.v.forEach(function(sv,si){fits.forEach(function(fit){variants.push({id:'d'+di+'-'+si+'-'+fit.toLowerCase(),size:sv[0],fit:fit,avail:!!sv[1]});});});var toList=function(o){return [o.front,o.back].filter(Boolean);};var fitImgs={regular:toList(d.fitImgs.regular),oversized:toList(d.fitImgs.oversized)};return{id:'d'+di,title:d.t,place:d.pl,placeSlug:d.slug||slugify(d.pl),story:d.st,price:d.p,cur:'AED',theme:{bg:d.bg,dark:d.dark},fitImgs:fitImgs,fits:fits,sizes:d.v.map(function(sv){return sv[0];}),images:fitImgs.oversized,img:fitImgs.oversized[0]||'',variants:variants};});draw();return;}
+  if(DEMO){PRODUCTS=DEMODATA.map(function(d,di){var fits=['Regular','Oversized'],variants=[];d.v.forEach(function(sv,si){fits.forEach(function(fit){variants.push({id:'d'+di+'-'+si+'-'+fit.toLowerCase(),size:sv[0],fit:fit,avail:!!sv[1]});});});var toList=function(o){return [o.front,o.back].filter(Boolean);};var fitImgs={regular:toList(d.fitImgs.regular),oversized:toList(d.fitImgs.oversized)};return{id:'d'+di,title:d.t,place:d.pl,placeSlug:d.slug||slugify(d.pl),story:d.st,price:d.p,cur:'AED',theme:{bg:d.bg,dark:d.dark},fitImgs:fitImgs,fits:fits,sizes:d.v.map(function(sv){return sv[0];}),images:fitImgs.oversized,img:fitImgs.oversized[0]||'',variants:variants};});normalizePlaces();draw();return;}
   try{
     var data=SHOPIFY.collection?await sf('query($h:String!){collectionByHandle(handle:$h){products(first:24){edges{node{'+PFRAG+'}}}}}',{h:SHOPIFY.collection}):await sf('{products(first:24){edges{node{'+PFRAG+'}}}}');
     var edges=SHOPIFY.collection?(data.collectionByHandle?data.collectionByHandle.products.edges:[]):data.products.edges;
-    PRODUCTS=edges.map(function(e,i){var n=e.node,place=tagVal(n.tags,'place'),bg=tagVal(n.tags,'theme'),dark=(n.tags||[]).some(function(t){return t.toLowerCase()==='dark';}),imgs=(n.images&&n.images.edges||[]).map(function(x){return x.node.url;});var variants=n.variants.edges.map(function(v){var opts=v.node.selectedOptions||[],size=(opts.find(function(s){return s.name.toLowerCase()==='size';})||{}).value||v.node.title,fit=(opts.find(function(s){return s.name.toLowerCase()==='fit';})||{}).value||'';return{id:v.node.id,size:size,fit:fit,avail:v.node.availableForSale};});var fits=variants.map(function(v){return v.fit;}).filter(function(f,idx,a){return f&&a.indexOf(f)===idx;});if(!fits.length)fits=['Regular','Oversized'];var sizes=variants.map(function(v){return v.size;}).filter(function(s,idx,a){return s&&a.indexOf(s)===idx;});var list=imgs.length?imgs:(n.featuredImage?[n.featuredImage.url]:[]);return{id:n.id,title:n.title,place:place,placeSlug:tagVal(n.tags,'placeurl')||slugify(place),story:n.description||'',price:n.priceRange.minVariantPrice.amount,cur:n.priceRange.minVariantPrice.currencyCode,theme:{bg:bg||THEMES[i%THEMES.length].bg,dark:bg?dark:THEMES[i%THEMES.length].dark},fitImgs:{regular:list,oversized:list},fits:fits,sizes:sizes,images:list,img:list[0]||'',variants:variants};});
+    PRODUCTS=edges.map(function(e,i){var n=e.node,place=tagVal(n.tags,'place'),bg=tagVal(n.tags,'theme'),dark=(n.tags||[]).some(function(t){return t.toLowerCase()==='dark';}),imgs=(n.images&&n.images.edges||[]).map(function(x){return x.node.url;});var variants=n.variants.edges.map(function(v){var opts=v.node.selectedOptions||[],size=(opts.find(function(s){return s.name.toLowerCase()==='size';})||{}).value||v.node.title,fit=(opts.find(function(s){return s.name.toLowerCase()==='fit';})||{}).value||'';return{id:v.node.id,size:size,fit:fit,avail:v.node.availableForSale};});var fits=variants.map(function(v){return v.fit;}).filter(function(f,idx,a){return f&&a.indexOf(f)===idx;});if(!fits.length)fits=['Regular','Oversized'];var sizes=variants.map(function(v){return v.size;}).filter(function(s,idx,a){return s&&a.indexOf(s)===idx;});var list=imgs.length?imgs:(n.featuredImage?[n.featuredImage.url]:[]);return{id:n.id,handle:n.handle,title:n.title,place:place,placeSlug:tagVal(n.tags,'placeurl')||slugify(place),story:n.description||'',print:tagVal(n.tags,'print'),price:n.priceRange.minVariantPrice.amount,cur:n.priceRange.minVariantPrice.currencyCode,theme:{bg:bg||THEMES[i%THEMES.length].bg,dark:bg?dark:THEMES[i%THEMES.length].dark},fitImgs:{regular:list,oversized:list},fits:fits,sizes:sizes,images:list,img:list[0]||'',variants:variants};});
+    normalizePlaces();
     draw();
   }catch(err){document.getElementById('products').innerHTML='<div class="loading">Couldn’t reach the store — check the domain and token.<br><small>'+String(err.message).slice(0,120)+'</small></div>';}
 }
@@ -832,10 +896,39 @@ function sceneKindFor(p,i){var t=((p.title||'')+' '+(p.place||'')).toLowerCase()
   if(/dune|liwa|desert|sand/.test(t))return 'dunes';
   if(/mountain|hajar|wadi|peak|rock|showka/.test(t))return 'mountains';
   return ['galaxy','dunes','mountains'][i%3];}
+/* Per-product print method. Prefers a Shopify `print:` tag (e.g. print:DTG / print:Embroidered);
+   otherwise defaults by design — Liwa/dune tees are embroidered, everything else is DTG. */
+function printFor(p){
+  var v=(p.print||'').toLowerCase();
+  var t=((p.title||'')+' '+(p.place||'')).toLowerCase();
+  var emb=v?/embroid|thread|stitch/.test(v):/liwa|dune/.test(t);
+  if(emb)return {short:'Tonal embroidery',long:'Tonal thread embroidery — stitched, not printed, for a subtle raised texture.'};
+  return {short:'DTG print &middot; soft &amp; breathable',long:'Direct-to-garment (DTG) print for a smooth hand-feel that keeps the cotton soft and breathable.'};
+}
+/* Product detail pages that exist under /products/<slug>/. Add a slug when a new product page ships. */
+var PDP_SLUGS=['al-quaa-galaxy-tee','liwa-dune-tee','hajar-mountains-tee'];
+function productPageFor(p){
+  var h=String((p&&p.handle)||'').toLowerCase();
+  if(PDP_SLUGS.indexOf(h)>=0)return '/products/'+h+'/';
+  var t=(((p&&p.title)||'')+' '+((p&&p.place)||'')).toLowerCase();
+  if(/qua+|galaxy|milky/.test(t))return '/products/al-quaa-galaxy-tee/';
+  if(/liwa|dune|empty.?quarter/.test(t))return '/products/liwa-dune-tee/';
+  if(/hajar|naqab|mountain|topograph/.test(t))return '/products/hajar-mountains-tee/';
+  return '';
+}
+/* Lifestyle framing — where you'd actually wear it, by place. */
+function occasionFor(p){
+  var t=((p.title||'')+' '+(p.place||'')+' '+(p.placeSlug||'')).toLowerCase();
+  if(/quaa|galaxy|star|sky/.test(t))return 'stargazing nights &amp; desert camps under a Bortle&nbsp;1 sky';
+  if(/liwa|dune/.test(t))return 'dune drives &amp; long evenings in the Empty Quarter';
+  if(/naqab|hajar|mountain|wadi|showka/.test(t))return 'mountain mornings &amp; wadi hikes in the Hajar';
+  return 'days out exploring the Emirates';
+}
 function draw(){
   var host=document.getElementById('products');
   if(!PRODUCTS.length){host.innerHTML='<div class="loading">No products yet. Add some in Shopify.</div>';return;}
-  host.innerHTML=PRODUCTS.map(function(p,i){
+  var jump=PRODUCTS.length>1?'<nav class="shop-jump" aria-label="Shop by place"><span>Shop by place:</span>'+PRODUCTS.map(function(p){return '<a href="#prod-'+p.placeSlug+'">'+(p.place||p.title)+'</a>';}).join('')+'</nav>':'';
+  host.innerHTML=jump+PRODUCTS.map(function(p,i){
     var sizes=p.sizes.map(function(sz){var av=p.variants.some(function(v){return v.size===sz&&v.avail;});return '<button class="size" data-size="'+sz+'" '+(av?'':'disabled')+'><span>'+sz+'</span></button>';}).join('');
     var fitBtns=p.fits.map(function(f){return '<button class="fit" data-fit="'+f+'"><span>'+f+' Fit</span></button>';}).join('');
     var plink=p.place?'<a class="eyebrow plink" href="/locations/'+p.placeSlug+'/">Inspired by '+p.place+' &rarr;</a>':'';
@@ -844,15 +937,21 @@ function draw(){
     var arrows=gal.length>1?'<button class="nav-arrow prev" aria-label="Previous">&#8249;</button><button class="nav-arrow next" aria-label="Next">&#8250;</button>':'';
     var thumbs=gal.length>1?('<div class="pthumbs">'+gal.map(function(u,k){return '<button class="pthumb'+(k===0?' on':'')+'" data-i="'+k+'" aria-label="View '+(k+1)+'"><img src="'+u+'" alt=""></button>';}).join('')+'</div>'):'';
     var media='<div class="prod-media"><div class="prod-img">'+(gal.length?('<div class="slides">'+slides+'</div>'+arrows):'[ Design photo ]')+'</div>'+thumbs+'</div>';
-    var pd=PLACES[p.placeSlug]||null;
+    var _pi=placeInfo(p);var pd=_pi?_pi.data:null;
     var placeMeta=pd?'<div class="place-meta"><a class="pm-gps" href="https://www.google.com/maps/search/?api=1&query='+pd.lat+','+pd.lng+'" target="_blank" rel="noopener">&#128205; '+pd.lat+', '+pd.lng+'</a><span class="pm-sky">&#10022; '+pd.sky+'</span></div>':'';
     var placeLead=pd?'<p class="place-lead">'+pd.blurb+'</p>':'';
-    // Lifestyle band: use the real lifestyle photo if present; otherwise fall back to the product's
-    // own mockup image (back, then front) so the band always shows the actual shirt — never an empty box.
-    var ls=LIFESTYLE[p.placeSlug]||('shirts/lifestyle-'+p.placeSlug+'-hero.jpg');
-    var lsFallback=(p.images&&p.images[1])||p.img||(p.images&&p.images[0])||'';
-    var lsBand=lsFallback?('<div class="lifestyle-slot"><img class="ls-img" src="'+ls+'" alt="'+p.title+' — '+p.place+'" onerror="this.onerror=null;this.src=\''+lsFallback+'\'"><div class="ls-cap">'+p.title+' &middot; '+p.place+'</div></div>'):'';
-    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+p.placeSlug+'" data-bg="'+p.theme.bg+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+'<h2>'+p.title+'</h2>'+placeLead+(p.story?'<p class="story">'+p.story+'</p>':'')+'<div class="price">'+money(p.price,p.cur)+'</div><div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><div class="fitwrap" style="display:none"><div class="opt-lab">Fit</div><div class="fits">'+fitBtns+'</div></div><button class="btn add magnetic" disabled>Select a size</button></div></div>'+lsBand+'</section>';
+    var readPlace=p.place?'<a class="read-place" href="/locations/'+p.placeSlug+'/">Read the place story &rarr;</a>':'';
+    var _pdp=productPageFor(p);
+    var pdpLink=_pdp?'<a class="pdp-link" href="'+_pdp+'">Full details: fabric, design &amp; care &rarr;</a>':'';
+    var occasion='<p class="prod-occasion">&#10022; Made for '+occasionFor(p)+'</p>';
+    var pr=printFor(p);
+    var limited='<span class="prod-limited">&#10022; Limited first run</span>';
+    var specStrip='<ul class="prod-spec-strip"><li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>'+pr.short+'</li></ul>';
+    var buyLimited='<p class="buy-limited">Limited first run — once it&rsquo;s gone, it&rsquo;s gone.</p>';
+    var buyGhaf='<a class="buy-ghaf" href="/commitment.html">&#127793; A share of every tee plants ghaf trees in the UAE &rarr;</a>';
+    var details='<details class="prod-acc"><summary>Details &amp; care</summary><ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% organic cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Fit.</strong> Unisex — Regular (true to size) or Oversized (relaxed drop-shoulder). See the size guide.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul></details>';
+    var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; Organic cotton</span></div>';
+    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+p.placeSlug+'" data-bg="'+p.theme.bg+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price">'+money(p.price,p.cur)+'</div>'+specStrip+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><div class="fitwrap" style="display:none"><div class="opt-lab">Fit</div><div class="fits">'+fitBtns+'</div></div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
   }).join('');
   var secs=[].slice.call(host.querySelectorAll('.prod'));
   secs.forEach(function(sec,i){
@@ -903,6 +1002,39 @@ function draw(){
   }
   startBgJourney(secs);
   buildMap(PRODUCTS);
+  injectProductJsonLd(PRODUCTS);
+}
+
+/* Per-product Product+Offer JSON-LD (SEO). Built from the live Shopify data after products render.
+   Homepage carries the ItemList summary; the shop carries the full per-product graph. */
+var SITE_BASE='https://www.sahraandbeyond.ae';
+function absUrl(u){if(!u)return '';if(/^https?:\/\//i.test(u))return u;return SITE_BASE+'/'+String(u).replace(/^\/+/,'');}
+function injectProductJsonLd(products){
+  try{
+    var old=document.getElementById('ld-products');if(old)old.remove();
+    if(!products||!products.length)return;
+    var nodes=products.map(function(p){
+      var anyAvail=(p.variants||[]).some(function(v){return v.avail;});
+      var imgs=(p.images||[]).map(absUrl).filter(Boolean);
+      var _pi=placeInfo(p);var pd=_pi?_pi.data:null;
+      var desc=(p.story||'').replace(/\s+/g,' ').trim();
+      if(!desc&&pd)desc=pd.blurb;
+      var node={"@type":"Product","name":p.title,"brand":{"@type":"Brand","name":"Sahra & Beyond"},
+        "url":SITE_BASE+'/shop/#prod-'+p.placeSlug,
+        "offers":{"@type":"Offer","priceCurrency":p.cur||'AED',"price":String(Math.round(parseFloat(p.price))),
+          "availability":anyAvail?"https://schema.org/InStock":"https://schema.org/OutOfStock",
+          "url":SITE_BASE+'/shop/#prod-'+p.placeSlug,
+          "itemCondition":"https://schema.org/NewCondition"}};
+      if(imgs.length)node.image=imgs;
+      if(desc)node.description=desc;
+      if(p.place)node.material="Organic cotton";
+      return node;
+    });
+    var graph={"@context":"https://schema.org","@graph":nodes};
+    var s=document.createElement('script');s.type='application/ld+json';s.id='ld-products';
+    s.textContent=JSON.stringify(graph);
+    document.head.appendChild(s);
+  }catch(e){/* non-fatal — SEO enhancement only */}
 }
 
 /* CONTINUOUS scroll-linked background — eases/interpolates between each section's theme colour
@@ -932,11 +1064,23 @@ function startBgJourney(secs){
 }
 
 /* THE MAP AS THE STORE — data-driven pins (place + tee). Extends automatically as PLACES/products grow. */
+function loadLeaflet(cb){
+  if(window.L){cb();return;}
+  if(window.__lfl){window.__lfl.push(cb);return;}
+  window.__lfl=[cb];
+  var css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(css);
+  var s=document.createElement('script');s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';s.async=true;s.onload=function(){var q=window.__lfl||[];window.__lfl=null;q.forEach(function(f){try{f();}catch(e){}});};document.head.appendChild(s);
+}
 function buildMap(products){
-  if(typeof L==='undefined')return;
   var el=document.getElementById('uae-map');if(!el||el._built)return;
-  var pts=(products||[]).map(function(p){var d=PLACES[p.placeSlug];return d?{p:p,lat:d.lat,lng:d.lng}:null;}).filter(Boolean);
+  var pts=(products||[]).map(function(p){var pi=placeInfo(p);return pi?{p:p,slug:pi.slug,lat:pi.data.lat,lng:pi.data.lng}:null;}).filter(Boolean);
   if(!pts.length){el.style.display='none';return;}
+  var start=function(){if(el._built)return;loadLeaflet(function(){renderMap(el,pts);});};
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.disconnect();start();}});},{rootMargin:'400px'});io.observe(el);}
+  else{start();}
+}
+function renderMap(el,pts){
+  if(typeof L==='undefined'||el._built)return;
   el._built=1;
   var map=L.map(el,{scrollWheelZoom:false,zoomControl:true,attributionControl:true}).setView([24.4,54.6],7);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{maxZoom:12,minZoom:6,attribution:'&copy; OpenStreetMap &copy; CARTO'}).addTo(map);
@@ -962,7 +1106,7 @@ function saveCid(id){try{localStorage.setItem('sb_cart',id||'');}catch(e){}}func
 async function addToCart(vid,meta){
   track('add_to_cart',{item_name:meta.name,size:meta.size,fit:meta.fit});
   var vtext=[meta.size,meta.fit].filter(Boolean).join(' · ');
-  if(DEMO){var ex=CART.lines.find(function(l){return l.vid===vid;});if(ex)ex.qty++;else CART.lines.push({id:'l'+Date.now()+Math.random(),vid:vid,qty:1,name:meta.name,variant:vtext,price:(PRODUCTS.find(function(x){return x.title===meta.name;})||{price:'129'}).price,cur:'AED',img:''});drawCart();openCart();return;}
+  if(DEMO){var ex=CART.lines.find(function(l){return l.vid===vid;});if(ex)ex.qty++;else CART.lines.push({id:'l'+Date.now()+Math.random(),vid:vid,qty:1,name:meta.name,variant:vtext,price:(PRODUCTS.find(function(x){return x.title===meta.name;})||{price:'149'}).price,cur:'AED',img:''});drawCart();openCart();return;}
   try{var d;if(!CART.id){d=await sf('mutation($l:[CartLineInput!]!){cartCreate(input:{lines:$l}){cart{'+CFRAG+'}}}',{l:[{merchandiseId:vid,quantity:1}]});CART.id=d.cartCreate.cart.id;saveCid(CART.id);setCart(d.cartCreate.cart);}else{d=await sf('mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{'+CFRAG+'}}}',{id:CART.id,l:[{merchandiseId:vid,quantity:1}]});setCart(d.cartLinesAdd.cart);}openCart();}catch(e){alert('Could not add to cart. '+e.message);}
 }
 async function removeLine(id){if(DEMO){CART.lines=CART.lines.filter(function(l){return l.id!==id;});drawCart();return;}try{var d=await sf('mutation($id:ID!,$l:[ID!]!){cartLinesRemove(cartId:$id,lineIds:$l){cart{'+CFRAG+'}}}',{id:CART.id,l:[id]});setCart(d.cartLinesRemove.cart);}catch(e){}}

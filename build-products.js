@@ -1,0 +1,627 @@
+/* ==========================================================================
+   build-products.js — generates /products/<slug>/index.html
+   Source of truth: content/products/*.json  (editable in Decap CMS → Products)
+   Keep the product's --theme equal to its section colour on the shop page
+   (shop THEMES[]): Al Quaa #181109 · Liwa #E7D6B8 · Hajar #C6BFD3.
+   ========================================================================== */
+const fs = require('fs');
+const path = require('path');
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function J(s){return JSON.stringify(String(s==null?'':s));}
+
+/* Rich-text fields (lede, headings, card bodies) may contain intentional inline
+   HTML such as <em> or <span lang="ar">. Those are passed through unescaped;
+   plain-text fields go through esc(). */
+function pips(n){var out='';for(var i=1;i<=9;i++)out+='<i'+(i<=n?' class="on"':'')+'></i>';return out;}
+function cards(list){
+  return (list||[]).map(function(c){
+    return '      <div class="item"><b>'+c.title+'</b><span>'+c.body+'</span></div>';
+  }).join('\n');
+}
+function careList(list){
+  return (list||[]).map(function(c){return '      <li>'+c+'</li>';}).join('\n');
+}
+function faqList(list){
+  return (list||[]).map(function(f){
+    return '      <details><summary>'+esc(f.q)+'</summary><p>'+esc(f.a)+'</p></details>';
+  }).join('\n');
+}
+function related(p, all){
+  var others=(all||[]).filter(function(x){return x.id!==p.id;}).slice(0,2);
+  return others.map(function(o){
+    return '      <a class="rel" href="/products/'+o.id+'/">\n'
+      + '        <div class="rel-img"><img src="../..'+o.imgMain+'" alt="'+esc(o.name)+'" loading="lazy"></div>\n'
+      + '        <div class="rel-body"><div class="rel-place">Inspired by '+esc(o.placeName)+'</div><div class="rel-name">'+esc(o.name)+'</div><div class="rel-price">AED '+esc(String(o.price))+'</div></div>\n'
+      + '      </a>';
+  }).join('\n');
+}
+
+function page(p, all, SITE, SHOP_URL){
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${esc(p.seoTitle)} | Sahra &amp; Beyond</title>
+<meta name="description" content="${esc(p.seoDesc)}">
+<link rel="canonical" href="${SITE}/products/${p.id}/">
+<meta name="theme-color" content="${p.theme}">
+<meta property="og:type" content="product">
+<meta property="og:title" content="${esc(p.name)} | Sahra &amp; Beyond">
+<meta property="og:description" content="${esc(p.shareDesc)}">
+<meta property="og:url" content="${SITE}/products/${p.id}/">
+<meta property="og:image" content="${SITE}${p.imgMain}">
+<meta property="og:site_name" content="Sahra &amp; Beyond">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(p.name)} | Sahra &amp; Beyond">
+<meta name="twitter:description" content="${esc(p.shareDesc)}">
+<meta name="twitter:image" content="${SITE}${p.imgMain}">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Product JSON-LD. NOTE: no aggregateRating until there are REAL reviews — never fabricate ratings. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Product","name":${J(p.name)},"sku":${J(p.sku)},
+"image":[${J(SITE+p.imgMain)},${J(SITE+p.imgFront)},${J(SITE+p.imgBack)}],
+"description":${J(p.ldDesc)},
+"brand":{"@type":"Brand","name":"Sahra & Beyond"},
+"material":"100% organic cotton",
+"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},
+{"@type":"ListItem","position":2,"name":"Shop","item":"https://www.sahraandbeyond.ae/shop-preview.html"},
+{"@type":"ListItem","position":3,"name":${J(p.name)},"item":"${SITE}/products/${p.id}/"}]}
+</script>
+<style>
+/* ==================================================================
+   PRODUCT PAGE TEMPLATE — Sahra & Beyond
+   PALETTE MUST MATCH the product's section colour on the shop page
+   (shop THEMES[]): Al Quaa #181109 · Liwa #E7D6B8 · Hajar #C6BFD3.
+   GENERATED FILE — do not edit directly. Edit content/products/<id>.json
+   (Decap CMS -> Products) and re-run: node build.js
+   ================================================================== */
+:root{
+  --sand:#FAF6EF;--paper:#FFF;--ink:#2A2016;--mist:#8A8073;
+  --clay:#C0702E;--clay-deep:#9C521B;--gold:#E9B978;
+  /* PRODUCT PALETTE — generated from content/products/${p.id}.json (must match the shop section colour) */
+  --theme:${p.theme};--theme-2:${p.theme2};--accent:${p.accent};
+  /* contrast-aware tokens, swapped by .dark-bg */
+  --txt:#2A2016;--txt-soft:#7C7365;--line:rgba(42,32,22,.13);--card:rgba(255,255,255,.66);--chip:rgba(42,32,22,.05);
+}
+body.dark-bg{--txt:#F4EFE6;--txt-soft:rgba(244,239,230,.62);--line:rgba(255,255,255,.16);--card:rgba(255,255,255,.05);--chip:rgba(255,255,255,.06)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:hidden;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--txt);background:var(--sand);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:color .5s ease}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 26px;position:relative;z-index:2}
+.eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--clay-deep);transition:color .5s}
+body.dark-bg .eyebrow{color:var(--gold)}
+.skip-link{position:absolute;left:8px;top:-60px;z-index:500;background:var(--ink);color:#FFF;padding:11px 18px;border-radius:0 0 8px 8px;font-family:'Space Mono',monospace;font-size:12px;transition:top .18s}
+.skip-link:focus{top:0}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+
+/* ---------- living layers ---------- */
+#fx{position:fixed;inset:0;z-index:0;pointer-events:none}
+#grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:1;pointer-events:none;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 7s steps(8) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,2%)}40%{transform:translate(2%,-1%)}60%{transform:translate(-1%,-2%)}80%{transform:translate(1%,2%)}}
+#progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:140;pointer-events:none}
+#progress i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--clay),var(--gold));transform:scaleX(0);transform-origin:0 50%}
+
+/* ---------- chrome ---------- */
+.note{background:#181109;color:var(--gold);text-align:center;font-size:11px;padding:8px;font-family:'Space Mono',monospace;position:relative;z-index:3}
+nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;
+  background:color-mix(in srgb,var(--nav-bg,#FAF6EF) 82%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);transition:background .5s}
+.logo{display:flex;align-items:center;gap:11px}
+.logo-mark{width:30px;height:30px;border-radius:50%;background:conic-gradient(from 210deg,#2E2450,#7A4F63,#C0702E,#E7AC5F,#2E2450);animation:spin 22s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.logo-a{font-family:'Playfair Display',serif;font-size:14px;font-weight:900;letter-spacing:4px;text-transform:uppercase}
+.logo-b{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--clay);text-transform:uppercase}
+body.dark-bg .logo-b{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:26px;font-size:13px;font-weight:500}
+.nav-links a{position:relative}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:100% 50%;transition:transform .35s}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:0 50%}
+
+.crumb{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--txt-soft);padding:24px 0 0}
+.crumb a:hover{color:var(--clay-deep)}
+body.dark-bg .crumb a:hover{color:var(--gold)}
+.crumb span{opacity:.5;margin:0 7px}
+
+/* ---------- hero ---------- */
+.pdp{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:start;padding:22px 0 90px}
+.media{position:sticky;top:88px}
+.gal-main{position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:var(--theme);
+  box-shadow:0 30px 80px rgba(0,0,0,.28)}
+.gal-main img{width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .6s ease,transform .9s ease}
+.gal-main img.on{opacity:1;transform:scale(1)}
+.gal-tag{position:absolute;top:15px;left:15px;z-index:2;background:rgba(0,0,0,.45);color:var(--gold);backdrop-filter:blur(6px);font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+.gal-thumbs{display:flex;gap:10px;margin-top:13px}
+.gal-thumbs button{width:74px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:none;cursor:pointer;padding:0;opacity:.5;transition:opacity .3s,border-color .3s,transform .3s}
+.gal-thumbs button:hover{transform:translateY(-3px)}
+.gal-thumbs button.on{opacity:1;border-color:var(--accent)}
+.gal-thumbs img{width:100%;height:100%;object-fit:cover}
+
+.limited{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--clay-deep);border:1px solid currentColor;border-radius:999px;padding:4px 12px;margin-bottom:14px}
+body.dark-bg .limited{color:var(--gold)}
+.buy h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5.2vw,64px);font-weight:900;line-height:1;letter-spacing:-1px;margin:4px 0 14px}
+.buy h1 em{font-style:italic;color:var(--clay-deep)}
+body.dark-bg .buy h1 em{color:var(--gold)}
+.plink{display:inline-block;margin-bottom:14px}
+.plink:hover{opacity:.6}
+.price{font-family:'Space Mono',monospace;font-size:19px;letter-spacing:1px;margin:6px 0 5px}
+.vat{font-size:12px;color:var(--txt-soft);margin-bottom:22px}
+.lede{font-size:17px;font-weight:300;line-height:1.85;margin-bottom:22px;max-width:46ch}
+.spec-strip{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0}
+.spec-strip li{font-family:'Space Mono',monospace;font-size:11px;padding:7px 12px;border:1px solid var(--line);background:var(--chip);border-radius:999px;backdrop-filter:blur(4px)}
+.occasion{font-family:'Space Mono',monospace;font-size:12px;line-height:1.55;margin:0 0 24px;color:var(--txt-soft)}
+.btn{display:inline-block;background:var(--ink);color:#fff;font-weight:500;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:17px 36px;border:none;cursor:pointer;position:relative;overflow:hidden;transition:background .4s,transform .3s}
+.btn::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent);transform:skewX(-20deg);transition:left .6s}
+.btn:hover::after{left:130%}
+.btn:hover{background:var(--clay-deep);transform:translateY(-2px)}
+body.dark-bg .btn{background:var(--gold);color:#181109}
+body.dark-bg .btn:hover{background:#fff}
+.btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--txt);color:var(--sand)}
+body.dark-bg .btn.ghost{background:transparent;color:var(--txt);border-color:var(--line)}
+body.dark-bg .btn.ghost:hover{background:rgba(255,255,255,.1);color:#fff}
+.cta-row{display:flex;flex-wrap:wrap;gap:11px;margin-bottom:18px}
+.buy-ghaf{display:inline-block;margin-top:2px;font-family:'Space Mono',monospace;font-size:11.5px;color:#5C7F53;border-bottom:1px solid currentColor;padding-bottom:2px}
+body.dark-bg .buy-ghaf{color:#A9C99A}
+.buy-trust{display:flex;flex-wrap:wrap;gap:9px 18px;margin-top:18px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--txt-soft)}
+
+/* ---------- sticky buy bar ---------- */
+#buybar{position:fixed;left:0;right:0;bottom:0;z-index:120;transform:translateY(110%);transition:transform .45s cubic-bezier(.4,0,.2,1);
+  background:rgba(24,17,9,.93);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.12);color:#F4EFE6}
+#buybar.on{transform:none}
+.bb-inner{max-width:1200px;margin:0 auto;padding:12px 26px;display:flex;align-items:center;gap:18px}
+.bb-thumb{width:44px;height:52px;border-radius:7px;object-fit:cover;flex:none}
+.bb-txt{flex:1;min-width:0}
+.bb-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bb-sub{font-family:'Space Mono',monospace;font-size:10.5px;color:rgba(244,239,230,.6)}
+#buybar .btn{background:var(--gold);color:#181109;padding:13px 26px;flex:none}
+#buybar .btn:hover{background:#fff}
+@media(max-width:620px){.bb-thumb,.bb-sub{display:none}.bb-inner{padding:10px 16px;gap:12px}#buybar .btn{padding:12px 18px;font-size:12px}}
+
+/* ---------- sections ---------- */
+.sec{padding:96px 0;position:relative}
+.sec+.sec{border-top:1px solid var(--line)}
+.snum{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:3px;color:var(--txt-soft);display:block;margin-bottom:10px}
+.sec h2{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,50px);font-weight:900;line-height:1.06;letter-spacing:-.6px;margin:10px 0 20px;max-width:18ch}
+.sec h2 em{font-style:italic;color:var(--clay-deep)}
+body.dark-bg .sec h2 em{color:var(--gold)}
+.sec p{max-width:60ch;font-weight:300;font-size:16.5px;margin-bottom:15px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:40px}
+.item{border:1px solid var(--line);background:var(--card);backdrop-filter:blur(6px);border-radius:14px;padding:24px;transition:transform .4s,border-color .4s}
+.item:hover{transform:translateY(-5px);border-color:var(--accent)}
+.item b{display:block;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:9px}
+.item span{display:block;font-size:14px;color:var(--txt-soft);line-height:1.7}
+
+/* place band — full-bleed, canvas shows through */
+.place-band{position:relative;padding:110px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.place-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.place-band h2{max-width:none}
+.pmeta{display:flex;flex-wrap:wrap;gap:11px 20px;margin:24px 0 30px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:1px}
+.pmeta a{border-bottom:1px solid currentColor;padding-bottom:1px}
+.pmeta a:hover{color:var(--accent)}
+.pmeta span{color:var(--txt-soft)}
+.sky-card{border:1px solid var(--line);border-radius:18px;padding:34px 36px;background:var(--card);backdrop-filter:blur(10px)}
+.sky-card b{display:block;font-family:'Playfair Display',serif;font-size:44px;font-weight:900;line-height:1;margin-bottom:6px}
+.sky-card small{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-soft);margin-bottom:22px}
+.sky-card p{font-size:14.5px;margin:0}
+.sky-scale{display:flex;gap:4px;margin-top:22px}
+.sky-scale i{flex:1;height:5px;border-radius:3px;background:var(--line)}
+.sky-scale i.on{background:var(--accent)}
+
+.care{list-style:none;margin-top:30px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px 34px;max-width:860px}
+.care li{font-size:15.5px;font-weight:300;padding-left:28px;position:relative}
+.care li::before{content:'✦';position:absolute;left:0;top:1px;color:var(--clay);font-size:12px}
+body.dark-bg .care li::before{color:var(--gold)}
+.faq{max-width:780px;margin-top:30px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:500;font-size:16px;display:flex;justify-content:space-between;gap:20px;transition:color .3s}
+.faq summary:hover{color:var(--clay-deep)}
+body.dark-bg .faq summary:hover{color:var(--gold)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';color:var(--clay);font-size:18px}
+body.dark-bg .faq summary::after{color:var(--gold)}
+.faq details[open] summary::after{content:'–'}
+.faq p{padding-bottom:20px;font-size:15.5px;margin:0;color:var(--txt-soft)}
+.note-box{border:1px solid var(--line);border-left:3px solid var(--clay);background:var(--card);backdrop-filter:blur(6px);border-radius:12px;padding:18px 22px;margin-top:26px;font-size:14.5px;max-width:720px}
+.note-box a{border-bottom:1px solid currentColor}
+
+.rel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:36px}
+.rel{display:block;border-radius:16px;overflow:hidden;background:var(--card);border:1px solid var(--line);backdrop-filter:blur(6px);transition:transform .45s,border-color .45s}
+.rel:hover{transform:translateY(-8px);border-color:var(--accent)}
+.rel-img{aspect-ratio:4/5;overflow:hidden}
+.rel-img img{width:100%;height:100%;object-fit:cover;object-position:center 35%;transition:transform .7s}
+.rel:hover .rel-img img{transform:scale(1.07)}
+.rel-body{padding:18px 20px 22px}
+.rel-place{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--clay-deep)}
+body.dark-bg .rel-place{color:var(--gold)}
+.rel-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin:7px 0 4px}
+.rel-price{font-size:14px;color:var(--txt-soft)}
+
+footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:52px 24px 90px;font-size:12px;position:relative;z-index:2}
+.foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-bottom:16px}
+.foot-links a{color:rgba(255,255,255,.72);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;transition:color .3s}
+.foot-links a:hover{color:var(--gold)}
+.foot-soc a{color:var(--gold);font-family:'Space Mono',monospace;letter-spacing:1px}
+.foot-copy{margin-top:14px;opacity:.75}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
+.stagger.in>*{opacity:1;transform:none}
+.stagger.in>*:nth-child(2){transition-delay:.09s}
+.stagger.in>*:nth-child(3){transition-delay:.18s}
+@media(prefers-reduced-motion:reduce){
+  .reveal,.stagger>*{opacity:1!important;transform:none!important;transition:none!important}
+  #grain,.logo-mark{animation:none}
+  html{scroll-behavior:auto}
+}
+@media(max-width:900px){
+  .pdp{grid-template-columns:1fr;gap:32px;padding:14px 0 60px}
+  .media{position:static}
+  .place-inner{grid-template-columns:1fr;gap:30px}
+  .cols{grid-template-columns:1fr;gap:18px}
+  .care{grid-template-columns:1fr}
+  .rel-grid{grid-template-columns:1fr}
+  .sec{padding:66px 0}
+  .place-band{padding:74px 0}
+  nav{padding:12px 18px}.nav-links{gap:15px;font-size:12px}
+  .wrap{padding:0 20px}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<canvas id="fx"></canvas>
+<div id="grain"></div>
+<div id="progress"><i></i></div>
+
+<div class="note">↺ Free UAE returns &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
+<nav>
+  <a class="logo" href="/"><div class="logo-mark"></div><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
+  <div class="nav-links"><a href="/shop-preview.html" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/commitment.html">Commitment</a><a href="/about/">About</a></div>
+</nav>
+
+<main id="main">
+<!-- data-bg drives the scroll-linked background journey (same technique as the shop page) -->
+<div class="wrap" data-bg="#FAF6EF">
+  <div class="crumb"><a href="/">Home</a><span>/</span><a href="/shop-preview.html" class="shoplink">Shop</a><span>/</span>${esc(p.name)}</div>
+
+  <section class="pdp">
+    <div class="media">
+      <div class="gal-main">
+        <span class="gal-tag">${esc(p.drop)}</span>
+        <img class="on" src="../..${p.imgMain}" alt="${esc(p.altMain)}">
+        <img src="../..${p.imgFront}" alt="${esc(p.altFront)}">
+        <img src="../..${p.imgBack}" alt="${esc(p.altBack)}">
+      </div>
+      <div class="gal-thumbs" id="thumbs">
+        <button class="on" data-i="0" aria-label="View flat lay"><img src="../..${p.imgMain}" alt=""></button>
+        <button data-i="1" aria-label="View front"><img src="../..${p.imgFront}" alt=""></button>
+        <button data-i="2" aria-label="View back"><img src="../..${p.imgBack}" alt=""></button>
+      </div>
+    </div>
+
+    <div class="buy">
+      <a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate)} &rarr;</a>
+      <span class="limited">✦ Limited first run</span>
+      <h1>${p.nameHtml}</h1>
+      <div class="price">AED ${esc(String(p.price))}</div>
+      <div class="vat">Incl. 5% VAT · Free returns within the UAE</div>
+      <p class="lede">${p.lede}</p>
+      <ul class="spec-strip">
+        <li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>${p.printChip}</li>
+      </ul>
+      <p class="occasion">✦ ${p.occasion}</p>
+      <div class="cta-row">
+        <a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this tee</a>
+        <a class="btn ghost" href="#fabric">Fabric &amp; fit</a>
+      </div>
+      <a class="buy-ghaf" href="/commitment.html">🌱 A share of every tee plants ghaf trees in the UAE &rarr;</a>
+      <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ Organic cotton</span></div>
+    </div>
+  </section>
+</div>
+
+<section class="place-band" data-bg="${p.theme}">
+  <div class="wrap place-inner">
+    <div class="reveal">
+      <span class="snum">01 — The place behind it</span>
+      <h2>${p.placeHeading}</h2>
+      <p>${esc(p.placeBlurb)}</p>
+      <div class="pmeta">
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=${p.lat},${p.lng}" target="_blank" rel="noopener">📍 ${p.lat}, ${p.lng}</a>
+        <span>✦ ${esc(p.skyLine)}</span>
+      </div>
+      <a class="btn" href="/locations/${p.placeSlug}/">Read the place story</a>
+    </div>
+    <div class="sky-card reveal">
+      <b>${esc(p.bortleLabel)}</b>
+      <small>Sky darkness scale · 1 is darkest</small>
+      <p>${p.bortleCopy}</p>
+      <div class="sky-scale" aria-hidden="true">${pips(p.bortleLit)}</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" data-bg="${p.theme2}">
+  <section class="sec reveal" id="design">
+    <span class="snum">02 — The design</span>
+    <h2>${p.designHeading}</h2>
+    <p>${esc(p.designIntro)}</p>
+    <div class="cols stagger">
+${cards(p.designCards)}
+    </div>
+  </section>
+
+  <section class="sec reveal" id="fabric">
+    <span class="snum">03 — Fabric &amp; construction</span>
+    <h2>Built to be worn, washed and <em>worn again</em></h2>
+    <p>A tee earns its place by surviving. Heavyweight organic cotton, finished with the construction details that decide whether a shirt still looks right after a year.</p>
+    <div class="cols stagger">
+      <div class="item"><b>230gsm organic cotton</b><span>Heavyweight 100% organic cotton, pre-washed for minimal shrinkage. Substantial enough to hold its shape, breathable enough for UAE heat.</span></div>
+      <div class="item"><b>Ribbed crew neck</b><span>A ribbed collar keeps its shape instead of stretching out and going wavy after a few washes.</span></div>
+      <div class="item"><b>Taped collar &amp; shoulders</b><span>Seam tape across the collar and shoulders reinforces the points that carry the most stress — the difference between one season and several.</span></div>
+    </div>
+    <div class="cols stagger">
+      <div class="item"><b>${esc(p.printCardTitle)}</b><span>${esc(p.printCardBody)}</span></div>
+      <div class="item"><b>Unisex, two fits</b><span>Regular (true to size) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.</span></div>
+      <div class="item"><b>Limited first run</b><span>Small first batch. When a size sells out in this run, it's gone rather than quietly restocked.</span></div>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="fit">
+    <span class="snum">04 — Size &amp; fit</span>
+    <h2>Regular or <em>Oversized</em></h2>
+    <p><strong>Regular</strong> is true to size — take your normal tee size. It sits on the shoulder and skims the body.</p>
+    <p><strong>Oversized</strong> is a deliberate drop-shoulder cut with a wider body and longer sleeve. Take your normal size for the intended relaxed look; size down if you want it only slightly loose.</p>
+    <p>Available in S, M, L and XL.${esc(p.fitExtra||"")}</p>
+    <div class="note-box"><strong>Measurements.</strong> Full garment measurements are listed in the size guide on the shop page. If you're between sizes or unsure, email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> — we'd rather answer first than have you return it.</div>
+  </section>
+
+  <section class="sec reveal" id="care">
+    <span class="snum">05 — Care</span>
+    <h2>${p.careHeading}</h2>
+    <p>${esc(p.careIntro)}</p>
+    <ul class="care">
+${careList(p.care)}
+    </ul>
+  </section>
+
+  <section class="sec reveal" id="delivery">
+    <span class="snum">06 — Delivery &amp; returns</span>
+    <h2>Getting it <em>to you</em></h2>
+    <p>Orders usually ship within 1–2 working days. You'll get tracking by email as soon as it's on its way.</p>
+    <p>Returns are free within the UAE — you have 14 days from delivery to send something back unworn, unwashed and with tags on, and exchanges for a different size or fit are free too, subject to stock. Full detail is on the <a href="/policies.html#returns" style="border-bottom:1px solid currentColor">policies page</a>.</p>
+  </section>
+
+  <section class="sec reveal" id="faq">
+    <span class="snum">07 — Questions</span>
+    <h2>Before you <em>order</em></h2>
+    <div class="faq">
+${faqList(p.faq)}
+    </div>
+  </section>
+
+  <section class="sec reveal" id="more">
+    <span class="snum">08 — The collection</span>
+    <h2>Other places, <em>other tees</em></h2>
+    <div class="rel-grid">
+${related(p, all)}
+    </div>
+  </section>
+</div>
+</main>
+
+<div id="buybar">
+  <div class="bb-inner">
+    <img class="bb-thumb" src="../..${p.imgMain}" alt="">
+    <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub">AED ${esc(String(p.price))} · Limited first run</div></div>
+    <a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this tee</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-links"><a href="/">Home</a><a href="/shop-preview.html" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a></div>
+  <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
+  <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE · Prices in AED incl. 5% VAT</div>
+</footer>
+
+<script>
+/* ===== PRODUCT SCENE: 'galaxy' | 'dunes' | 'mountains' ===== */
+var SCENE='${p.scene}';
+var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
+
+/* ---------- gallery ---------- */
+(function(){
+  var main=document.querySelector('.gal-main'),thumbs=document.getElementById('thumbs');
+  if(!main||!thumbs)return;
+  var imgs=main.querySelectorAll('img');
+  thumbs.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;var i=+b.dataset.i;
+    imgs.forEach(function(im,k){im.classList.toggle('on',k===i);});
+    thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===i);});
+  });
+})();
+
+/* ---------- reveals ---------- */
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.reveal,.stagger'));
+  if(!els.length)return;
+  if(!('IntersectionObserver' in window)||REDUCED){els.forEach(function(el){el.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px'});
+  els.forEach(function(el){io.observe(el);});
+})();
+
+/* ---------- scroll progress ---------- */
+(function(){
+  var bar=document.querySelector('#progress i');if(!bar)return;var raf=0;
+  function up(){raf=0;var d=document.documentElement,max=d.scrollHeight-innerHeight;
+    bar.style.transform='scaleX('+(max>0?Math.min(1,scrollY/max):0)+')';}
+  addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(up);},{passive:true});up();
+})();
+
+/* ---------- sticky buy bar ---------- */
+(function(){
+  var bar=document.getElementById('buybar'),hero=document.querySelector('.pdp'),foot=document.querySelector('footer');
+  if(!bar||!hero)return;
+  if(!('IntersectionObserver' in window)){return;}
+  var pastHero=false,atFoot=false;
+  function sync(){bar.classList.toggle('on',pastHero&&!atFoot);}
+  new IntersectionObserver(function(en){pastHero=!en[0].isIntersecting;sync();},{rootMargin:'-120px 0px 0px 0px'}).observe(hero);
+  if(foot)new IntersectionObserver(function(en){atFoot=en[0].isIntersecting;sync();}).observe(foot);
+})();
+
+/* ---------- scroll-linked background journey + auto contrast ----------
+   Same lerp technique as the shop page, so the product page moves through
+   the SAME colour its section uses in the shop. */
+(function(){
+  function hexToRgb(h){h=String(h||'').replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h||'FAF6EF',16);if(isNaN(n))n=0xFAF6EF;return [(n>>16)&255,(n>>8)&255,n&255];}
+  var stops=[].slice.call(document.querySelectorAll('[data-bg]')).map(function(el){return {el:el,c:hexToRgb(el.dataset.bg)};});
+  if(!stops.length)return;
+  var sand=hexToRgb('#FAF6EF'),body=document.body,nav=document.querySelector('nav'),raf=0,cur=sand;
+  function lum(c){return (0.2126*c[0]+0.7152*c[1]+0.0722*c[2])/255;}
+  function mixArr(a,b,t){t=t<0?0:t>1?1:t;return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+  function css(c){return 'rgb('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+')';}
+  function update(){
+    raf=0;
+    var vh=innerHeight,mid=pageYOffset+vh/2;
+    var pts=stops.map(function(s){var r=s.el.getBoundingClientRect();return {y:pageYOffset+r.top+r.height/2,c:s.c};});
+    var col=pts[0].c;
+    if(mid<=pts[0].y){var s0=pts[0].y-vh;col=mixArr(sand,pts[0].c,(mid-s0)/((pts[0].y-s0)||1));}
+    else if(mid>=pts[pts.length-1].y){col=pts[pts.length-1].c;}
+    else{for(var i=0;i<pts.length-1;i++){if(mid>=pts[i].y&&mid<pts[i+1].y){col=mixArr(pts[i].c,pts[i+1].c,(mid-pts[i].y)/((pts[i+1].y-pts[i].y)||1));break;}}}
+    cur=col;
+    body.style.backgroundColor=css(col);
+    if(nav)nav.style.setProperty('--nav-bg',css(col));
+    body.classList.toggle('dark-bg',lum(col)<0.42);
+  }
+  addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(update);},{passive:true});
+  addEventListener('resize',function(){if(!raf)raf=requestAnimationFrame(update);},{passive:true});
+  update();
+  window.__bgNow=function(){return cur;};
+})();
+
+/* ---------- living canvas backdrop ---------- */
+(function(){
+  var cv=document.getElementById('fx');if(!cv||REDUCED)return;
+  var ctx=cv.getContext('2d',{alpha:true});if(!ctx)return;
+  var DPR=Math.min(devicePixelRatio||1,TOUCH?1.2:1.5),W=0,H=0,t=0,vis=true;
+  function size(){W=cv.width=Math.floor(innerWidth*DPR);H=cv.height=Math.floor(innerHeight*DPR);
+    cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';build();}
+  document.addEventListener('visibilitychange',function(){vis=!document.hidden;});
+
+  var stars=[],shooter=null,shootIn=3,ridges=[],motes=[];
+  function rnd(a,b){return a+Math.random()*(b-a);}
+  function build(){
+    stars=[];ridges=[];motes=[];
+    var n=TOUCH?90:190;
+    for(var i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H*0.85,r:rnd(0.4,1.5)*DPR,p:Math.random()*6.28,s:rnd(.4,1.6)});
+    for(var L=0;L<4;L++){
+      var pts=[],seg=TOUCH?10:16;
+      for(var k=0;k<=seg;k++)pts.push(Math.random());
+      ridges.push({pts:pts,amp:(0.05+L*0.035),base:0.62+L*0.10,sp:0.012+L*0.008,op:0.10+L*0.05});
+    }
+    var m=TOUCH?18:38;
+    for(var j=0;j<m;j++)motes.push({x:Math.random()*W,y:Math.random()*H,r:rnd(.4,1.2)*DPR,vx:rnd(.05,.3),vy:rnd(-.06,.06),o:rnd(.06,.2)});
+  }
+  function noiseLine(pts,x){ // smooth interp across ridge control points
+    var n=pts.length-1,f=x*n,i=Math.floor(f),tt=f-i;
+    var a=pts[Math.max(0,Math.min(n,i))],b=pts[Math.max(0,Math.min(n,i+1))];
+    var s=tt*tt*(3-2*tt);return a+(b-a)*s;
+  }
+  function draw(dt){
+    ctx.clearRect(0,0,W,H);
+    var dark=document.body.classList.contains('dark-bg');
+    var sy=Math.min(pageYOffset,2400);
+
+    if(SCENE==='galaxy'){
+      // nebula band
+      var g=ctx.createLinearGradient(0,H*0.1,W,H*0.55);
+      g.addColorStop(0,'rgba(120,90,180,0)');g.addColorStop(.5,'rgba(150,120,200,'+(dark?0.10:0.05)+')');g.addColorStop(1,'rgba(120,90,180,0)');
+      ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+      for(var i=0;i<stars.length;i++){var s=stars[i];
+        var y=s.y-sy*0.05*s.s;y=((y%H)+H)%H;
+        var a=(0.35+0.65*(0.5+0.5*Math.sin(t*s.s+s.p)))*(dark?0.95:0.30);
+        ctx.beginPath();ctx.fillStyle='rgba(255,248,232,'+a+')';ctx.arc(s.x,y,s.r,0,6.2832);ctx.fill();}
+      shootIn-=dt;
+      if(!shooter&&shootIn<=0){shooter={x:rnd(W*.5,W),y:rnd(H*.05,H*.4),vx:-rnd(340,520)*DPR,vy:rnd(120,220)*DPR,life:0,max:.9};shootIn=rnd(5,11);}
+      if(shooter){shooter.life+=dt;var f=shooter.life/shooter.max;
+        if(f>=1){shooter=null;}
+        else{var hx=shooter.x+shooter.vx*shooter.life,hy=shooter.y+shooter.vy*shooter.life,op=Math.sin(f*Math.PI)*(dark?.9:.35);
+          var lg=ctx.createLinearGradient(hx,hy,hx-shooter.vx*.12,hy-shooter.vy*.12);
+          lg.addColorStop(0,'rgba(255,246,223,'+op+')');lg.addColorStop(1,'rgba(255,246,223,0)');
+          ctx.strokeStyle=lg;ctx.lineWidth=1.6*DPR;ctx.beginPath();ctx.moveTo(hx,hy);ctx.lineTo(hx-shooter.vx*.12,hy-shooter.vy*.12);ctx.stroke();}}
+    } else {
+      // dunes / mountains — layered ridges
+      for(var L=0;L<ridges.length;L++){var R=ridges[L];
+        var yOff=sy*(0.04+L*0.03);
+        ctx.beginPath();ctx.moveTo(0,H);
+        var steps=TOUCH?40:80;
+        for(var k=0;k<=steps;k++){
+          var x=k/steps, px=x*W;
+          var shift=(t*R.sp)%1;
+          var v=noiseLine(R.pts,(x+shift)%1);
+          var jag=SCENE==='mountains'?(Math.abs(Math.sin((x+shift)*Math.PI*3.1))*0.5+v*0.5):v;
+          var py=H*R.base - jag*H*R.amp - yOff;
+          ctx.lineTo(px,py);
+        }
+        ctx.lineTo(W,H);ctx.closePath();
+        ctx.fillStyle=(dark?'rgba(255,255,255,':'rgba(60,45,30,')+(R.op*(dark?.5:1))+')';
+        ctx.fill();
+      }
+      for(var j=0;j<motes.length;j++){var mo=motes[j];
+        mo.x+=mo.vx*DPR;mo.y+=mo.vy*DPR;
+        if(mo.x>W+4)mo.x=-4;if(mo.y<-4)mo.y=H+4;if(mo.y>H+4)mo.y=-4;
+        ctx.beginPath();ctx.fillStyle=(dark?'rgba(255,246,225,':'rgba(120,90,50,')+mo.o+')';
+        ctx.arc(mo.x,mo.y,mo.r,0,6.2832);ctx.fill();}
+    }
+  }
+  var last=performance.now();
+  function frame(now){
+    requestAnimationFrame(frame);
+    var dt=Math.min((now-last)/1000,.05);last=now;
+    if(!vis)return;
+    t+=dt;draw(dt);
+  }
+  size();addEventListener('resize',size,{passive:true});
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
+`;
+}
+
+/* Load the product JSON without generating anything — used by build.js so location
+   pages can cross-link to the tee they inspired. */
+function loadProducts(ROOT){
+  const dir = path.join(ROOT, 'content/products');
+  if(!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter(f=>f.endsWith('.json'))
+    .map(f=>{ try{ return JSON.parse(fs.readFileSync(path.join(dir,f),'utf8')); }catch(e){ console.log('  ! bad product json: '+f); return null; } })
+    .filter(Boolean)
+    .sort((a,b)=>(a.order||99)-(b.order||99));
+}
+
+function buildProducts(opts){
+  const ROOT = opts.ROOT, SITE = opts.SITE, write = opts.write;
+  const SHOP_URL = opts.shopUrl || '/shop-preview.html';
+  const all = loadProducts(ROOT);
+  all.forEach(p=>{ write(`products/${p.id}/index.html`, page(p, all, SITE, SHOP_URL)); });
+  return all.map(p=>({ id:p.id, url:`${SITE}/products/${p.id}/` }));
+}
+
+module.exports = buildProducts;
+module.exports.loadProducts = loadProducts;
