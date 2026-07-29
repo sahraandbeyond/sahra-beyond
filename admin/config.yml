@@ -12,6 +12,91 @@ site_url: https://www.sahraandbeyond.ae
 
 collections:
 
+  - name: "products"
+    label: "Products (Tees)"
+    label_singular: "Product"
+    folder: "content/products"
+    create: true
+    format: json
+    slug: "{{id}}"
+    identifier_field: name
+    summary: "{{drop}} — {{name}}"
+    description: "Each entry generates its own product page at /products/<id>/. The photos here are used on the product page and as the share image. Note: the SHOP page pulls its product photos from Shopify, not from here."
+    fields:
+      - { label: "URL slug (id)", name: "id", widget: "string", hint: "Lowercase, dashes only — becomes /products/<id>/. Don't change after launch or the link breaks." }
+      - { label: "Product name", name: "name", widget: "string" }
+      - { label: "Name with styling", name: "nameHtml", widget: "string", hint: "Same name, but wrap ONE word in <em>…</em> to italicise it in the big heading. e.g. Al Quaa <em>Galaxy</em> Tee" }
+      - { label: "SKU", name: "sku", widget: "string", required: false }
+      - { label: "Drop label", name: "drop", widget: "string", default: "Drop 01", hint: "Badge shown on the photo." }
+      - { label: "Sort order", name: "order", widget: "number", default: 1, value_type: "int", hint: "1 shows first." }
+      - { label: "Price (AED)", name: "price", widget: "string", default: "149" }
+      - { label: "Shop anchor", name: "shopAnchor", widget: "string", hint: "Place slug of this product's section on the shop page, so 'Shop this tee' jumps to the right one. e.g. al-quaa-desert" }
+
+      - { label: "PHOTO — Main (flat lay / share image)", name: "imgMain", widget: "image", hint: "Also used as the WhatsApp/Instagram preview image." }
+      - { label: "PHOTO — Front", name: "imgFront", widget: "image" }
+      - { label: "PHOTO — Back", name: "imgBack", widget: "image" }
+      - { label: "Alt text — main photo", name: "altMain", widget: "string", hint: "Describe the photo for screen readers and Google." }
+      - { label: "Alt text — front", name: "altFront", widget: "string" }
+      - { label: "Alt text — back", name: "altBack", widget: "string" }
+
+      - { label: "Theme colour", name: "theme", widget: "color", default: "#181109", hint: "MUST match this product's section colour on the shop page. Al Quaa #181109 · Liwa #E7D6B8 · Hajar #C6BFD3" }
+      - { label: "Second colour (scroll fades to this)", name: "theme2", widget: "color", default: "#1B1430" }
+      - { label: "Accent colour", name: "accent", widget: "color", default: "#E9B978", hint: "Hover states. Gold on dark products, clay (#9C521B) on light ones." }
+      - label: "Background animation"
+        name: "scene"
+        widget: "select"
+        default: "galaxy"
+        options: ["galaxy", "dunes", "mountains"]
+        hint: "The living backdrop: starfield, drifting dunes, or mountain ridges."
+
+      - { label: "Short intro (under the price)", name: "lede", widget: "text", hint: "One or two sentences. Basic HTML like <em> is allowed." }
+      - { label: "Print/finish chip", name: "printChip", widget: "string", default: "DTG print · soft &amp; breathable", hint: "Small pill beside the fabric specs." }
+      - { label: "Made for… (occasion)", name: "occasion", widget: "string", hint: "Where you'd actually wear it." }
+
+      - { label: "Place — name", name: "placeName", widget: "string" }
+      - { label: "Place — emirate", name: "placeEmirate", widget: "string" }
+      - { label: "Place — location page slug", name: "placeSlug", widget: "string", hint: "Links to /locations/<slug>/ — must match an existing Location entry." }
+      - { label: "Place — latitude", name: "lat", widget: "number", value_type: "float", step: 0.00001 }
+      - { label: "Place — longitude", name: "lng", widget: "number", value_type: "float", step: 0.00001 }
+      - { label: "Place — Bortle label", name: "bortleLabel", widget: "string", default: "Bortle 1" }
+      - { label: "Place — Bortle number (1–9)", name: "bortleLit", widget: "number", value_type: "int", default: 1, min: 1, max: 9, hint: "How many pips light up on the darkness scale." }
+      - { label: "Place — sky line", name: "skyLine", widget: "string", hint: "e.g. Bortle 1 · darkest sky in the Emirates" }
+      - { label: "Place — heading", name: "placeHeading", widget: "string", hint: "<em>…</em> allowed for the italic word." }
+      - { label: "Place — blurb", name: "placeBlurb", widget: "text" }
+      - { label: "Place — Bortle explainer", name: "bortleCopy", widget: "text" }
+
+      - { label: "Design — heading", name: "designHeading", widget: "string", hint: "<em>…</em> allowed." }
+      - { label: "Design — intro", name: "designIntro", widget: "text" }
+      - label: "Design — three points"
+        name: "designCards"
+        widget: "list"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Text", name: "body", widget: "text", hint: "Basic HTML allowed." }
+      - { label: "Print method — card title", name: "printCardTitle", widget: "string", default: "DTG print" }
+      - { label: "Print method — card text", name: "printCardBody", widget: "text" }
+
+      - { label: "Fit — extra note", name: "fitExtra", widget: "string", required: false, hint: "Optional sentence appended after the sizes line." }
+      - { label: "Care — heading", name: "careHeading", widget: "string", hint: "<em>…</em> allowed." }
+      - { label: "Care — intro", name: "careIntro", widget: "text" }
+      - label: "Care — instructions"
+        name: "care"
+        widget: "list"
+        field: { label: "Instruction", name: "item", widget: "string" }
+
+      - label: "FAQ"
+        name: "faq"
+        widget: "list"
+        hint: "Answers the real objections. Keep them honest — never promise a restock."
+        fields:
+          - { label: "Question", name: "q", widget: "string" }
+          - { label: "Answer", name: "a", widget: "text" }
+
+      - { label: "SEO — page title", name: "seoTitle", widget: "string", hint: "'| Sahra & Beyond' is added automatically." }
+      - { label: "SEO — description", name: "seoDesc", widget: "text", hint: "Aim for under 160 characters." }
+      - { label: "Share description", name: "shareDesc", widget: "text", hint: "Used on WhatsApp/Instagram/X previews." }
+      - { label: "Structured-data description", name: "ldDesc", widget: "text", hint: "Plain text for Google. No HTML." }
+
   - name: "locations"
     label: "Locations"
     label_singular: "Location"
@@ -86,9 +171,9 @@ collections:
             widget: "object"
             hint: "Links used by the footer social icons. Leave a field blank to hide that icon."
             fields:
-              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, default: "https://instagram.com/sahra_and_beyond" }
-              - { label: "TikTok URL", name: "tiktok", widget: "string", required: false, default: "https://tiktok.com/@sahra_and_beyond" }
-              - { label: "YouTube URL", name: "youtube", widget: "string", required: false, default: "https://youtube.com/@sahra_and_beyond" }
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, default: "https://instagram.com/sahraandbeyond.ae" }
+              - { label: "TikTok URL", name: "tiktok", widget: "string", required: false, default: "https://tiktok.com/@sahraandbeyond.ae" }
+              - { label: "YouTube URL", name: "youtube", widget: "string", required: false, default: "https://youtube.com/@sahraandbeyond.ae" }
           - label: "Monetization (fill in when ready)"
             name: "monetization"
             widget: "object"
