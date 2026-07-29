@@ -27,6 +27,11 @@ function faqList(list){
     return '      <details><summary>'+esc(f.q)+'</summary><p>'+esc(f.a)+'</p></details>';
   }).join('\n');
 }
+function sizeRows(list){
+  return (list||[]).map(function(r){
+    return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';
+  }).join('');
+}
 function related(p, all){
   var others=(all||[]).filter(function(x){return x.id!==p.id;}).slice(0,2);
   return others.map(function(o){
@@ -37,7 +42,7 @@ function related(p, all){
   }).join('\n');
 }
 
-function page(p, all, SITE, SHOP_URL){
+function page(p, all, SITE, SHOP_URL, LAUNCHED){
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -182,6 +187,37 @@ body.dark-bg .btn.ghost:hover{background:rgba(255,255,255,.1);color:#fff}
 body.dark-bg .buy-ghaf{color:#A9C99A}
 .buy-trust{display:flex;flex-wrap:wrap;gap:9px 18px;margin-top:18px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--txt-soft)}
 /* --- pre-launch waitlist (shown until the shop opens) --- */
+/* --- size chart --- */
+.sz-tabs{display:flex;gap:8px;margin:26px 0 14px}
+.sz-tab{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:9px 18px;border:1px solid var(--line);background:var(--chip);color:var(--txt);cursor:pointer;border-radius:999px;transition:background .3s,border-color .3s}
+.sz-tab.on{background:var(--txt);color:var(--sand);border-color:var(--txt)}
+.sz-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card);backdrop-filter:blur(6px)}
+table.sz{width:100%;border-collapse:collapse;min-width:420px}
+table.sz th,table.sz td{padding:13px 16px;text-align:left;font-size:14.5px;border-bottom:1px solid var(--line)}
+table.sz th{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-soft)}
+table.sz tr:last-child td{border-bottom:none}
+table.sz td:first-child{font-weight:600}
+.sz-note{font-size:13.5px;color:var(--txt-soft);margin-top:14px;max-width:60ch}
+.sz-prov{border:1px solid var(--clay);border-left:3px solid var(--clay);background:var(--card);backdrop-filter:blur(6px);border-radius:12px;padding:14px 18px;margin-top:16px;font-size:14px;max-width:62ch}
+
+/* --- lightbox (matches the shop's photo viewer) --- */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(12,8,4,.94);display:none;align-items:center;justify-content:center;padding:32px}
+.lb.open{display:flex}
+.lb img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:8px}
+.lb-btn{position:absolute;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);color:#fff;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s}
+.lb-btn:hover{background:rgba(255,255,255,.22)}
+.lb-close{top:24px;right:24px}.lb-prev{left:24px;top:50%;transform:translateY(-50%)}.lb-next{right:24px;top:50%;transform:translateY(-50%)}
+.gal-main{cursor:zoom-in}
+.gal-hint{position:absolute;bottom:14px;right:14px;z-index:2;background:rgba(0,0,0,.45);color:#fff;backdrop-filter:blur(6px);font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 11px;border-radius:999px;pointer-events:none}
+
+/* --- live per-size availability --- */
+.stock{margin:22px 0 4px}
+.stock-lab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--txt-soft);margin-bottom:9px}
+.stock-row{display:flex;flex-wrap:wrap;gap:8px}
+.sz-chip{font-family:'Space Mono',monospace;font-size:12px;padding:9px 15px;border:1px solid var(--line);border-radius:999px;background:var(--chip)}
+.sz-chip.out{opacity:.42;text-decoration:line-through}
+.stock-note{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--txt-soft);margin-top:9px}
+
 .wl-band{border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px);border-radius:16px;padding:26px 28px;margin-top:26px}
 .wl-band h3{font-family:'Playfair Display',serif;font-size:21px;font-weight:800;margin:0 0 6px}
 .wl-band p.wl-lead{font-size:14.5px;color:var(--txt-soft);margin:0 0 16px;max-width:44ch}
@@ -322,6 +358,7 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
     <div class="media">
       <div class="gal-main">
         <span class="gal-tag">${esc(p.drop)}</span>
+        <span class="gal-hint">Click to zoom</span>
         <img class="on" src="../..${p.imgMain}" alt="${esc(p.altMain)}">
         <img src="../..${p.imgFront}" alt="${esc(p.altFront)}">
         <img src="../..${p.imgBack}" alt="${esc(p.altBack)}">
@@ -344,16 +381,24 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
         <li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>${p.printChip}</li>
       </ul>
       <p class="occasion">✦ ${p.occasion}</p>
+      <!-- Live size availability, fetched from Shopify. Hidden until data arrives so we never
+           show stock we can't verify. -->
+      <div class="stock" id="stock" hidden>
+        <div class="stock-lab">Available sizes</div>
+        <div class="stock-row" id="stock-row"></div>
+        <div class="stock-note" id="stock-note"></div>
+      </div>
       <div class="cta-row">
-        <a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this tee</a>
-        <a class="btn ghost" href="#fabric">Fabric &amp; fit</a>
+        ${LAUNCHED
+          ? `<a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this tee</a><a class="btn ghost" href="#fit">Size &amp; fit</a>`
+          : `<a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>`}
       </div>
       <a class="buy-ghaf" href="/commitment.html">🌱 A share of every tee plants ghaf trees in the UAE &rarr;</a>
       <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ Organic cotton</span></div>
 
       <!-- Pre-launch capture: the shop isn't open yet, so give high-intent visitors a way to convert.
            Remove (or leave — it still works as a restock list) once LAUNCHED. -->
-      <div class="wl-band" data-waitlist-wrap>
+      <div class="wl-band" id="notify" data-waitlist-wrap>
         <h3>Be first to get this one</h3>
         <p class="wl-lead">This tee is a limited first run. Join the list and we'll email you the moment it drops — before it goes public.</p>
         <form class="wl-form" data-waitlist data-source="pdp-${p.id}" data-endpoint="https://app.kit.com/forms/9627814/subscriptions" novalidate>
@@ -420,7 +465,20 @@ ${cards(p.designCards)}
     <p><strong>Regular</strong> is true to size — take your normal tee size. It sits on the shoulder and skims the body.</p>
     <p><strong>Oversized</strong> is a deliberate drop-shoulder cut with a wider body and longer sleeve. Take your normal size for the intended relaxed look; size down if you want it only slightly loose.</p>
     <p>Available in S, M, L and XL.${esc(p.fitExtra||"")}</p>
-    <div class="note-box"><strong>Measurements.</strong> Full garment measurements are listed in the size guide on the shop page. If you're between sizes or unsure, email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> — we'd rather answer first than have you return it.</div>
+    <div class="sz-tabs" role="tablist">
+      <button class="sz-tab on" data-fit="regular" role="tab" aria-selected="true">Regular</button>
+      <button class="sz-tab" data-fit="oversized" role="tab" aria-selected="false">Oversized</button>
+    </div>
+    <div class="sz-wrap">
+      <table class="sz">
+        <thead><tr><th>Size</th><th>Chest (cm)</th><th>Length (cm)</th><th>Sleeve (cm)</th></tr></thead>
+        <tbody id="sz-body">${sizeRows(p.sizes && p.sizes.regular)}</tbody>
+      </table>
+    </div>
+    <p class="sz-note">Measured flat, garment laid out — not body measurements. Add roughly 4–6&nbsp;cm for comfortable ease. Between sizes? Size up in Regular, or down in Oversized for a trimmer look.</p>
+    ${p.sizesConfirmed === false
+      ? `<div class="sz-prov"><strong>Provisional measurements.</strong> These are our production spec and we are re-checking them against the finished samples before the drop. If an exact figure matters to you, email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> and we will measure the actual garment for you.</div>`
+      : `<div class="note-box">Between sizes or unsure? Email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> — we would rather answer first than have you return it.</div>`}
   </section>
 
   <section class="sec reveal" id="care">
@@ -457,11 +515,18 @@ ${related(p, all)}
 </div>
 </main>
 
+<div class="lb" id="lightbox" aria-label="Photo viewer" role="dialog">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">&#8249;</button>
+  <img id="lbImg" alt="">
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">&#8250;</button>
+</div>
+
 <div id="buybar">
   <div class="bb-inner">
     <img class="bb-thumb" src="../..${p.imgMain}" alt="">
     <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub">AED ${esc(String(p.price))} · Limited first run</div></div>
-    <a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this tee</a>
+    ${LAUNCHED ? `<a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this tee</a>` : `<a class="btn" href="#notify">Notify me</a>`}
   </div>
 </div>
 
@@ -546,6 +611,84 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     imgs.forEach(function(im,k){im.classList.toggle('on',k===i);});
     thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===i);});
   });
+})();
+
+/* ---------- lightbox zoom (same behaviour as the shop's viewer) ---------- */
+(function(){
+  var main=document.querySelector('.gal-main'),lb=document.getElementById('lightbox');
+  if(!main||!lb)return;
+  var imgs=[].slice.call(main.querySelectorAll('img')),srcs=imgs.map(function(i){return i.src;}),cur=0;
+  var el=document.getElementById('lbImg');
+  function show(i){cur=(i%srcs.length+srcs.length)%srcs.length;el.src=srcs[cur];el.alt=imgs[cur].alt||'';}
+  function open(){var on=main.querySelector('img.on');show(Math.max(0,imgs.indexOf(on)));lb.classList.add('open');
+    document.body.style.overflow='hidden';if(window.track)track('image_zoom',{item_id:'${p.id}'});}
+  function close(){lb.classList.remove('open');document.body.style.overflow='';}
+  main.addEventListener('click',function(){open();});
+  document.getElementById('lbClose').addEventListener('click',close);
+  document.getElementById('lbPrev').addEventListener('click',function(e){e.stopPropagation();show(cur-1);});
+  document.getElementById('lbNext').addEventListener('click',function(e){e.stopPropagation();show(cur+1);});
+  lb.addEventListener('click',function(e){if(e.target===lb)close();});
+  addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')close(); else if(e.key==='ArrowLeft')show(cur-1); else if(e.key==='ArrowRight')show(cur+1);
+  });
+})();
+
+/* ---------- size chart tabs ---------- */
+(function(){
+  var DATA=${JSON.stringify((p.sizes)||{})};
+  var body=document.getElementById('sz-body');if(!body)return;
+  function rows(list){return (list||[]).map(function(r){
+    return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';}).join('');}
+  document.querySelectorAll('.sz-tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('.sz-tab').forEach(function(x){x.classList.remove('on');x.setAttribute('aria-selected','false');});
+      t.classList.add('on');t.setAttribute('aria-selected','true');
+      body.innerHTML=rows(DATA[t.dataset.fit]);
+      if(window.track)track('size_guide_view',{fit:t.dataset.fit,item_id:'${p.id}'});
+    });
+  });
+})();
+
+/* ---------- live per-size availability, straight from Shopify ----------
+   Keeps the product page honest: only renders once real variant data arrives,
+   so we never display stock we cannot verify. */
+(function(){
+  var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
+  var HANDLE='${p.id}', NAME=${J(p.name)};
+  var box=document.getElementById('stock'),row=document.getElementById('stock-row'),note=document.getElementById('stock-note');
+  if(!box||!row)return;
+  var q='{products(first:24){edges{node{handle title variants(first:40){edges{node{availableForSale selectedOptions{name value}}}}}}}}';
+  fetch('https://'+SHOPIFY.domain+'/api/'+SHOPIFY.apiVersion+'/graphql.json',{
+    method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':SHOPIFY.token},
+    body:JSON.stringify({query:q})
+  }).then(function(r){return r.json();}).then(function(d){
+    var edges=(((d||{}).data||{}).products||{}).edges||[];
+    var node=null;
+    for(var i=0;i<edges.length;i++){
+      var n=edges[i].node;
+      if((n.handle||'').toLowerCase()===HANDLE||(n.title||'').toLowerCase()===NAME.toLowerCase()){node=n;break;}
+    }
+    if(!node)return;                      // product not published yet — stay hidden
+    var seen={},order=['S','M','L','XL','XXL'];
+    (node.variants.edges||[]).forEach(function(v){
+      var opts=v.node.selectedOptions||[];
+      var sz=(opts.filter(function(o){return o.name.toLowerCase()==='size';})[0]||{}).value;
+      if(!sz)return;
+      if(!(sz in seen))seen[sz]=false;
+      if(v.node.availableForSale)seen[sz]=true;
+    });
+    var sizes=Object.keys(seen);
+    if(!sizes.length)return;
+    sizes.sort(function(a,b){var ia=order.indexOf(a),ib=order.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib);});
+    row.innerHTML=sizes.map(function(sz){
+      return '<span class="sz-chip'+(seen[sz]?'':' out')+'">'+sz+(seen[sz]?'':' · sold out')+'</span>';
+    }).join('');
+    var left=sizes.filter(function(sz){return seen[sz];}).length;
+    note.textContent = left===0 ? 'Fully sold out in this run.'
+      : (left<=2 ? 'Only '+left+' size'+(left>1?'s':'')+' left in this run.' : 'Live from our store.');
+    box.hidden=false;
+  }).catch(function(){/* offline or store not live — leave hidden */});
 })();
 
 /* ---------- reveals ---------- */
@@ -713,7 +856,7 @@ function buildProducts(opts){
   const ROOT = opts.ROOT, SITE = opts.SITE, write = opts.write;
   const SHOP_URL = opts.shopUrl || '/shop-preview.html';
   const all = loadProducts(ROOT);
-  all.forEach(p=>{ write(`products/${p.id}/index.html`, page(p, all, SITE, SHOP_URL)); });
+  all.forEach(p=>{ write(`products/${p.id}/index.html`, page(p, all, SITE, SHOP_URL, !!opts.launched)); });
   return all.map(p=>({ id:p.id, url:`${SITE}/products/${p.id}/` }));
 }
 

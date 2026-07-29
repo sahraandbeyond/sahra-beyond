@@ -59,6 +59,18 @@ function checks() {
   const demo = /YOUR-STORE|YOUR_/.test((shop.match(/var SHOPIFY\s*=\s*\{[^}]*\}/) || [''])[0]);
   push(true, !demo, 'Shopify domain + Storefront token are set', demo ? 'shop would run in DEMO mode' : '');
 
+  // 3b. Size measurements confirmed against real samples — fatal, it drives returns.
+  let unconf = [];
+  try{
+    const pdir2 = path.join(ROOT,'content/products');
+    if (fs.existsSync(pdir2)) fs.readdirSync(pdir2).filter(f=>f.endsWith('.json')).forEach(f=>{
+      const d = JSON.parse(fs.readFileSync(path.join(pdir2,f),'utf8'));
+      if (d.sizesConfirmed === false) unconf.push(d.id||f);
+    });
+  }catch(e){}
+  push(true, unconf.length === 0, 'size measurements confirmed against samples',
+    unconf.length ? `still provisional: ${unconf.join(', ')} — set sizesConfirmed:true once measured` : '');
+
   // 4. Products exist
   const pdir = path.join(ROOT, 'content/products');
   const n = fs.existsSync(pdir) ? fs.readdirSync(pdir).filter(f => f.endsWith('.json')).length : 0;

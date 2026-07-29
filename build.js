@@ -885,7 +885,7 @@ if (LAUNCHED) (function () {
 })();
 
 // ---- product detail pages (content/products/*.json) ----
-const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, shopUrl: LAUNCHED ? '/shop/' : '/shop-preview.html' });
+const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: LAUNCHED ? '/shop/' : '/shop-preview.html' });
 console.log('  \u2713 ' + PRODUCT_URLS.length + ' product pages');
 
 // ---- sitemap ----

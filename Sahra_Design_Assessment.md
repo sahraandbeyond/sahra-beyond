@@ -4,6 +4,30 @@
 
 ---
 
+## PDP retail basics — size chart, zoom, live stock, CTA fix (2026-07-22)
+
+Acting on the UI/UX/completeness audit. The site was strong on story, thin on the practical information that actually decides a purchase.
+
+**1. Size chart on the product page.** Full flat-lay table (Size / Chest / Length / Sleeve) with Regular ↔ Oversized tabs, in the fit section — no longer a link to another page. Driven from `sizes` in the product JSON, editable in the CMS.
+> **Honesty guardrail:** the numbers carried over from the shop guide are explicitly marked `TODO: confirm real numbers against samples`, so they are **not** presented as fact. Each product has `sizesConfirmed: false`, which renders a visible *"Provisional measurements"* notice offering to measure the actual garment on request — and **`launch.js` now blocks go-live** while any product is unconfirmed. Wrong measurements drive returns, so this is a fatal check, not a warning.
+
+**2. Image zoom.** Full lightbox on the PDP gallery (click to open, arrows, Esc, backdrop click, keyboard nav, scroll lock) matching the shop's viewer, plus a "Click to zoom" affordance. Fires an `image_zoom` event. Previously the page selling the garment had a *weaker* image experience than the shop.
+
+**3. Live per-size availability.** Fetches variants from the Shopify Storefront API, matches by handle → title, and renders size chips with sold-out state plus scarcity copy ("Only 2 sizes left in this run"). **Hidden by default** and only revealed once real data arrives, so the page never displays stock it cannot verify.
+
+**4. CTA fixed (launch-aware).** Pre-launch, "Shop this tee" pointed at a noindex preview of a shop that isn't open — the loudest element promised something undeliverable. Now the generator takes `LAUNCHED`: before launch the primary CTA is **"Notify me when it drops"** (anchoring to the waitlist) with a secondary "Size & fit"; after launch it reverts to "Shop this tee". The sticky buy bar follows the same rule.
+
+**5. Palettes deepened so all three pages travel.** Liwa and Hajar were near-monochrome — the scroll journey barely moved. `theme` still matches the shop section exactly (that constraint is unchanged); `theme2` is now a genuine destination:
+| Product | Journey | Start → end luminance |
+|---|---|---|
+| Al Quaa | `#181109 → #1B1430` | 0.07 → 0.09 (stays night) |
+| Liwa | `#E7D6B8 → #6B4A18` | 0.84 → 0.30 (pale sand → golden-hour dusk) |
+| Hajar | `#C6BFD3 → #5C3A2E` | 0.76 → 0.25 (cold haze → **warm red rock**) |
+
+All three now cross the 0.42 auto-contrast threshold, so the light products get the same drama as Al Quaa — and Hajar's palette finally matches the red rock its design is about.
+
+**Validated:** tag balance (incl. table elements), JSON-LD, comment balance, inline JS `node --check` on all three, template-literal regex escaping re-verified, all pages serving 200. `launch.js` correctly reports 2 blockers (policies + provisional sizes).
+
 ## Analytics + pre-launch capture on product pages (2026-07-22)
 
 Two gaps found by auditing rather than assuming — both on the newest, most important pages.
