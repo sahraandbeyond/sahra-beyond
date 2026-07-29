@@ -1,0 +1,67 @@
+{
+  "id": "hajar-mountains-tee",
+  "name": "Hajar Mountains Tee",
+  "nameHtml": "Hajar <em>Mountains</em> Tee",
+  "sku": "SB-HAJAR-TEE",
+  "drop": "Drop 03",
+  "order": 3,
+  "price": "149",
+  "shopAnchor": "wadi-naqab",
+  "theme": "#C6BFD3",
+  "theme2": "#B4AEC6",
+  "accent": "#9C521B",
+  "scene": "mountains",
+  "imgMain": "/shirts/final-hajar.jpg",
+  "imgFront": "/shirts/design-taupe-front.jpg",
+  "imgBack": "/shirts/design-taupe-back.jpg",
+  "altMain": "Hajar Mountains Tee — topographic peaks, laid flat",
+  "altFront": "Hajar Mountains Tee, front — topographic line drawing",
+  "altBack": "Hajar Mountains Tee, back — red rock of the Hajar",
+  "seoTitle": "Hajar Mountains Tee — Topographic Peaks of Wadi Naqab",
+  "seoDesc": "The Hajar Mountains Tee — a topographic line drawing of the peaks on the front, the red rock of the Hajar across the back. 230gsm organic cotton, ribbed crew neck, taped seams. Limited first run.",
+  "shareDesc": "A topographic line drawing of the Hajar peaks. 230gsm organic cotton, made to layer. Limited first run.",
+  "lede": "A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. Organic cotton, made to layer.",
+  "ldDesc": "A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. 230gsm organic cotton, made to layer.",
+  "printChip": "DTG print · soft &amp; breathable",
+  "occasion": "Made for mountain mornings &amp; wadi hikes in the Hajar",
+
+  "placeName": "Wadi Naqab",
+  "placeEmirate": "RAK",
+  "placeSlug": "wadi-naqab",
+  "lat": 25.6988,
+  "lng": 56.0054,
+  "bortleLabel": "~Bortle 3",
+  "bortleLit": 3,
+  "skyLine": "~Bortle 3 · dark mountain sky",
+  "placeHeading": "Wadi Naqab, <em>red rock</em> and terraced pools",
+  "placeBlurb": "A dramatic seasonal wadi high in the Hajar Mountains below Jebel Jais — red-rock walls, terraced pools and clear mountain air. The range that gives the northern Emirates their skyline.",
+  "bortleCopy": "The scale runs 1–9, where 1 is the darkest sky on earth and 9 is an inner city. Around Bortle&nbsp;3 the sky opens up properly at night — and the mountain air gets cool enough that a heavyweight tee earns its keep.",
+
+  "designHeading": "The mountains, drawn as <em>contours</em>",
+  "designIntro": "A topographic map is just a mountain described in lines. This design takes that language literally — the peaks on the front reduced to contour lines, the rock itself carried across the back.",
+  "designCards": [
+    { "title": "On the front", "body": "The Hajar peaks as a topographic line drawing — quiet enough to wear anywhere, specific enough to mean something if you know the range." },
+    { "title": "Across the back", "body": "The red rock of the Hajar, the colour that gives Wadi Naqab its walls." },
+    { "title": "Made to layer", "body": "The most neutral piece in the collection by design — it sits under a shacket or jacket without fighting it, which is how you actually dress for a mountain morning." }
+  ],
+  "printCardTitle": "DTG print",
+  "printCardBody": "Direct-to-garment printing sits in the fabric rather than on top of it, so the graphic stays soft and the cotton stays breathable — no plastic panel on your back.",
+
+  "fitExtra": " If you plan to layer this one, the Regular fit sits better under a jacket.",
+  "careHeading": "Keeping the print <em>sharp</em>",
+  "careIntro": "Nothing unusual — but these five habits are what keep a DTG print crisp and the cotton soft.",
+  "care": [
+    "Machine wash cold, inside out — heat is what fades a print fastest.",
+    "Wash with similar colours, on a gentle cycle.",
+    "Hang to dry. Tumble drying is the main cause of shrinkage and cracking.",
+    "Do not iron directly on the print — iron inside out if you need to.",
+    "Skip bleach and fabric softener; softener coats the fibres and dulls the finish."
+  ],
+  "faq": [
+    { "q": "Is the print going to crack?", "a": "DTG ink bonds into the cotton rather than sitting on top as a thick layer, so it flexes with the fabric instead of cracking. Washing cold and hanging to dry — rather than tumble drying — is what makes the difference long term." },
+    { "q": "Will it shrink?", "a": "The fabric is pre-washed to minimise shrinkage. Wash cold and hang dry and you should see very little movement. Hot washes and tumble dryers are what cause shrinkage." },
+    { "q": "Does this one work for layering?", "a": "That is what it was designed for. The topographic front is the most neutral graphic in the collection, so it sits under an overshirt or jacket without competing. In the Regular fit it layers cleanly; the Oversized is better worn on its own." },
+    { "q": "What if I order the wrong size?", "a": "Exchanges within the UAE are free, subject to stock, within 14 days of delivery — as long as it's unworn, unwashed and still has tags. Email hello@sahraandbeyond.ae with your order number and we'll arrange it." },
+    { "q": "Will this design be restocked?", "a": "This is a limited first run. We may make more of a design later, but we don't promise it — when a size sells out in this run, treat it as gone." }
+  ]
+}
