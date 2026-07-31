@@ -71,6 +71,14 @@ function checks() {
   push(true, unconf.length === 0, 'size measurements confirmed against samples',
     unconf.length ? `still provisional: ${unconf.join(', ')} — set sizesConfirmed:true once measured` : '');
 
+  // 3c. VAT claim must match VAT registration. Saying "incl. 5% VAT" without a TRN
+  //     is a misrepresentation, not a rounding detail — so this is fatal.
+  const claimsVat = ['homepage-preview.html','shop-preview.html','build-products.js']
+    .filter(has).some(f => /incl\.? 5% VAT/i.test(rd(f)));
+  const trnUnset  = /Not VAT-registered|\[TRN/i.test(pol);
+  push(true, !(claimsVat && trnUnset), 'VAT claim matches VAT registration',
+    (claimsVat && trnUnset) ? 'site says "incl. 5% VAT" but policies.html shows no TRN — register for VAT or remove every VAT mention' : '');
+
   // 4. Products exist
   const pdir = path.join(ROOT, 'content/products');
   const n = fs.existsSync(pdir) ? fs.readdirSync(pdir).filter(f => f.endsWith('.json')).length : 0;

@@ -4,6 +4,41 @@
 
 ---
 
+## Payments — policies rewritten against the Telr merchant checklist (2026-07-31)
+
+**Shopify Payments is not an option.** Per Shopify's own docs, UAE is early access and requires the **Plus** plan; the store is on Basic. So: third-party gateway (Telr) plus Shopify's **2% third-party transaction fee** on Basic. At AED 149 that's ~AED 7.19 all-in per order (~4.8%). Not worth upgrading the Shopify plan — Basic → Shopify saves only 1%, which doesn't cover the plan gap until roughly AED 20–25k/month.
+
+**Why policies became urgent:** Telr underwrites the application **against the live website**. The placeholders were already a legal and `launch.js` blocker; they were also blocking payment approval.
+
+`policies.html` rewritten from Telr's published website checklist — **26/26 required clauses now present**, verified programmatically. New sections: *Who we are*, *Payment*, *Cancellations*, *Cookies*. Clauses added that were entirely absent: country of domicile, OFAC-sanctioned countries, under-18 restriction, cardholders retain transaction records, account confidentiality, licensee owns/operates the site, displayed price = receipt = card currency, card data never stored/sold/shared/rented/leased, card details not passed to third parties, security-without-guarantee, third-party privacy disclaimer, policy-change notice, payment-confirmation method and timing, refunds to the **original mode of payment** within **10–45 days** depending on issuing bank, the four mandatory refund scenarios (wrong / defective / damaged in shipping / tampered), and a full cancellation + replacement policy.
+
+**Card acceptance marks** added to the footer of every page — Telr requires them on the home page specifically, which means the *live* `index.html`, not just the unreleased homepage.
+
+**VAT caught as a live compliance risk.** The site asserts "Prices in AED incl. 5% VAT" in five places while `policies.html` carries no TRN. If Faheem is below the AED 375,000 registration threshold and not registered, that claim is a misrepresentation. Rather than silently rewrite the copy, added a **fatal `launch.js` check** that blocks launch whenever the site claims VAT but policies show no TRN — it now correctly reports the conflict. Decision is Faheem's; either register and fill the TRN, or strip every VAT mention.
+
+`launch.js` now reports **three** blockers: policies placeholders (18), provisional sizes, VAT/TRN mismatch.
+
+## Business details filled — VAT removed site-wide (2026-07-31)
+
+Real company details in: **SAHRA AND BEYOND FZE LLC**, licence **4430808.01**, issued by **Sharjah Publishing City Free Zone**, Business Centre, SPC Free Zone, Sharjah, UAE. All 18 placeholders gone; **29/29 Telr clauses** verified present.
+
+**VAT stripped from the entire site.** The company is not VAT-registered, so "Prices in AED incl. 5% VAT" was removed from the homepage footer, shop footer, and both PDP locations in `build-products.js`. Zero VAT references remain anywhere except the guardrail itself, which now passes. This mattered — charging or advertising VAT without a TRN is a misrepresentation.
+
+**Shipping copy** now names no courier, states the delivery fee is calculated at checkout, and declares UAE-only shipping. Dispatch 1–2 / delivery 2–4 working days is stated because Telr requires a delivery time — **these are assumptions and need confirming against the actual courier contract.**
+
+**Internal note removed from the public page.** The "before you go live" block was scaffolding for Faheem; leaving it on a page that goes `index,follow` at launch would have published internal instructions to customers.
+
+**P.O. Box 73111** added on Faheem's instruction. Flagged first that SPC's own contact page publishes no P.O. Box and that 73111 came from a third-party directory — a wrong box number is a sharper Telr rejection than an absent one, since they cross-check against the licence. Faheem confirmed the number, so it's in. **Still worth verifying against the trade licence.**
+
+**Two open risks, both accepted deliberately by Faheem:**
+
+1. **No phone number.** Telr's checklist lists it as a mandatory contact field. This is now the single most likely cause of a first-pass rejection — company name, email, P.O. Box, office address and country are all present.
+2. **Courts clause says Dubai; the entity is licensed in Sharjah.** Instructed as such, but a Sharjah free-zone entity naming Dubai courts is unusual and worth checking with whoever set up the licence.
+
+Also open: the registered address reads "Business Centre, Sharjah Publishing City Free Zone, Sharjah" while SPC publishes **E311, Sheikh Mohammed Bin Zayed Road, Al Zahia, Sharjah**. Matching the licence exactly is what Telr underwrites against.
+
+`launch.js` now reports **one** blocker (provisional sizes) plus the mockup-photo warning. Policies and VAT both pass.
+
 ## Al Quaa photography swap — model shots + flat mockups (2026-07-22)
 
 New Al Quaa assets replaced the old design mockups across the site.

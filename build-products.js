@@ -375,7 +375,7 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
       <span class="limited">✦ Limited first run</span>
       <h1>${p.nameHtml}</h1>
       <div class="price">AED ${esc(String(p.price))}</div>
-      <div class="vat">Incl. 5% VAT · Free returns within the UAE</div>
+      <div class="vat">Free returns within the UAE</div>
       <p class="lede">${p.lede}</p>
       <ul class="spec-strip">
         <li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>${p.printChip}</li>
@@ -533,7 +533,7 @@ ${related(p, all)}
 <footer>
   <div class="foot-links"><a href="/">Home</a><a href="/shop-preview.html" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
-  <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE · Prices in AED incl. 5% VAT</div>
+  <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
 
 <script>
