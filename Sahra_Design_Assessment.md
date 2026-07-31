@@ -4,6 +4,17 @@
 
 ---
 
+## Live check — halo bug fixed, two images still unpushed (2026-07-31)
+
+Checked the deployed site in a real browser rather than by reading source. Findings:
+
+**1. Al Quaa IS live and correct.** `alquaa-mock-front.png` and `alquaa-mock-back.png` both return 200 and render. `og:image` is `alquaa-model-back.jpg`. Card marks are in the footer. If Faheem still sees old artwork, it's his local browser cache — the new filenames mean the CDN can't be at fault.
+
+**2. My bug — white halo on the mockups.** I built the background removal preserving the soft drop shadow as semi-transparent grey, on the assumption the panel was the light sand tone in the page's `:root`. It isn't — the coming-soon panels sit on the dark night-sky journey, so that shadow rendered as a pale fringe around the hem and sleeves. Caught only by looking at the rendered page; every earlier check composited over sand, which hid it.
+Rebuilt with a background rule of `luminance > 150 AND saturation < 28`, high enough to swallow the shadow entirely. Low saturation protects the warm gold print; border-connected components plus any enclosed light region over 2,500px are treated as background, which correctly removes the **neck opening** (previously a white patch waiting to happen on dark) while preserving the small white "AL QUAA" wordmark. Feather tightened to ~1px with no light fringe. Verified by compositing over the actual panel colour `#0D0B20` **and** over sand — clean on both. 102KB / 123KB.
+
+**3. Two images 404 on live: `final-liwa-front.jpg` and `design-taupe-front.jpg`.** Both exist locally. This is the same failure as the previous round — files added on disk but never committed. The Liwa panel on the live homepage currently shows **alt text instead of a photo**. Confirmed via the network log, not inference.
+
 ## Payments — policies rewritten against the Telr merchant checklist (2026-07-31)
 
 **Shopify Payments is not an option.** Per Shopify's own docs, UAE is early access and requires the **Plus** plan; the store is on Basic. So: third-party gateway (Telr) plus Shopify's **2% third-party transaction fee** on Basic. At AED 149 that's ~AED 7.19 all-in per order (~4.8%). Not worth upgrading the Shopify plan — Basic → Shopify saves only 1%, which doesn't cover the plan gap until roughly AED 20–25k/month.
