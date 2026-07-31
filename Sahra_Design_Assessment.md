@@ -4,6 +4,26 @@
 
 ---
 
+## Al Quaa photography swap — model shots + flat mockups (2026-07-22)
+
+New Al Quaa assets replaced the old design mockups across the site.
+
+**Caught before it shipped:** the first back-print graphic read **"AL RUAA"**, not "AL QUAA" — the place name misspelled in the only piece of type on the garment. Flagged and regenerated; the replacement was verified at pixel level before use. Both the model shot and the flat mockup now read AL QUAA.
+
+**Two asset sets, split by intent:**
+
+| Where | Asset | Why |
+|---|---|---|
+| Coming-soon page (`index.html`, `coming-soon.html`) | `alquaa-mock-front.png` / `alquaa-mock-back.png` | Flat product mockups, front and back as separate photos on the existing Front/Back toggle |
+| Homepage, shop, PDP, location page | `alquaa-model-front.jpg` / `alquaa-model-back.jpg` | On-body shots — stronger once someone is actually shopping |
+| Share previews everywhere | `alquaa-model-back.jpg` | The model back shot is the best social asset; a flat mockup makes a weak thumbnail |
+
+**Mockup extraction.** The mockups arrived as a single sheet with both tees side by side and their **sleeves physically overlapping**, so no clean vertical cut existed. First attempt left a sliver of each neighbouring tee inside the other's frame — caught by compositing the output over the page background and looking at it, not by trusting the crop maths. Rebuilt by measuring each garment's own symmetry axis (front x=401, back x=1136), masking each to its own side of the sheet, then cropping a square about its axis. Backgrounds removed via border-connected flood fill — critical, since a naive luminance threshold would have punched holes through the near-white stars in the galaxy print. The soft drop shadow is preserved as a genuine semi-transparent shadow rather than a grey halo. Quantised to 200 colours: 108KB / 127KB with no visible banding in the gradient.
+
+**Cache safety.** Filenames are new and self-describing (`-model-` / `-mock-`) rather than overwritten in place, so Vercel's edge cache cannot serve the old artwork — the failure mode that bit us on the last image push.
+
+**Orphaned and safe to delete:** `final-alquaa.jpg`, `design-black-front.jpg`, `design-black-back.jpg`, and intermediate `alquaa-mock-*.jpg/.webp`. All unreferenced.
+
 ## PDP retail basics — size chart, zoom, live stock, CTA fix (2026-07-22)
 
 Acting on the UI/UX/completeness audit. The site was strong on story, thin on the practical information that actually decides a purchase.

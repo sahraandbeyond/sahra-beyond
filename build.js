@@ -825,12 +825,12 @@ if (LAUNCHED) (function () {
         { "@type": "ListItem", "position": 2, "name": "Shop", "item": canonical }
       ] },
       { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
-        { "@type": "ListItem", "position": 1, "item": prod('Al Quaa Galaxy Tee', '/shirts/design-black-front.jpg', 'The Milky Way over Al Quaa — the darkest sky in the Emirates. Heavyweight organic cotton.') },
+        { "@type": "ListItem", "position": 1, "item": prod('Al Quaa Galaxy Tee', '/shirts/alquaa-model-back.jpg', 'The Milky Way over Al Quaa — the darkest sky in the Emirates. Heavyweight organic cotton.') },
         { "@type": "ListItem", "position": 2, "item": prod('Liwa Dune Tee', '/shirts/design-beige-front.jpg', 'A tonal embroidered sun setting over the dune ridges of Liwa. Heavyweight organic cotton.') },
         { "@type": "ListItem", "position": 3, "item": prod('Hajar Mountains Tee', '/shirts/design-taupe-front.jpg', 'A topographic line drawing of the Hajar peaks. Organic cotton, made to layer.') }
       ] }
     ];
-    const meta = `\n<meta name="description" content="${esc(desc)}">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/design-black-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/design-black-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
+    const meta = `\n<meta name="description" content="${esc(desc)}">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-model-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-model-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
     html = html.replace(/<meta name="robots"[^>]*><!--[^>]*-->\n?/, '');
     html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>` + meta);
     html = html.replace(/(['"])shirts\//g, '$1/shirts/');
