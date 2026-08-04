@@ -76,6 +76,22 @@ collections:
       - { label: "Print method — card title", name: "printCardTitle", widget: "string", default: "DTG print" }
       - { label: "Print method — card text", name: "printCardBody", widget: "text" }
 
+      - { label: "Measurements CONFIRMED against real samples?", name: "sizesConfirmed", widget: "boolean", default: false, hint: "Leave OFF until you have measured the finished garments. While OFF the page shows a 'provisional measurements' notice and launch.js will block go-live." }
+      - label: "Size chart — Regular fit"
+        name: "sizes"
+        widget: "object"
+        hint: "Flat-lay measurements in cm."
+        fields:
+          - label: "Regular"
+            name: "regular"
+            widget: "list"
+            hint: "One row per size: Size, Chest, Length, Sleeve."
+            field: { label: "Row (Size, Chest, Length, Sleeve)", name: "row", widget: "list" }
+          - label: "Oversized"
+            name: "oversized"
+            widget: "list"
+            hint: "One row per size: Size, Chest, Length, Sleeve."
+            field: { label: "Row (Size, Chest, Length, Sleeve)", name: "row", widget: "list" }
       - { label: "Fit — extra note", name: "fitExtra", widget: "string", required: false, hint: "Optional sentence appended after the sizes line." }
       - { label: "Care — heading", name: "careHeading", widget: "string", hint: "<em>…</em> allowed." }
       - { label: "Care — intro", name: "careIntro", widget: "text" }
