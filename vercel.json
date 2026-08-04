@@ -5,14 +5,32 @@
     {
       "source": "/sw.js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/.well-known/assetlinks.json",
       "headers": [
-        { "key": "Content-Type", "value": "application/json" }
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/products/liwa-dune-tee",
+      "destination": "/products/empty-quarter-tee",
+      "permanent": true
+    },
+    {
+      "source": "/products/liwa-dune-tee/",
+      "destination": "/products/empty-quarter-tee/",
+      "permanent": true
     }
   ]
 }

@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /*.md$
+Disallow: /prepush.js
+Disallow: /launch.js
+Disallow: /build.js
 
 Sitemap: https://www.sahraandbeyond.ae/sitemap.xml

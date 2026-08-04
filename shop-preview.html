@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow"><!-- preview only — stripped when /shop/ is generated at launch -->
-<title>Shop · Sahra & Beyond — Preview</title>
+<title>Shop UAE T-Shirts — Limited Drops | Sahra &amp; Beyond</title>
+<meta name="description" content="Shop original UAE t-shirts inspired by real places — Al Quaa’s dark sky, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs, delivered across the UAE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -860,8 +861,8 @@ var DEMODATA=[
    regular:{front:'shirts/alquaa-model-front.jpg',back:'shirts/alquaa-model-back.jpg'},
    // OVERSIZED-fit = the finished oversized mockup. TODO: swap for a dedicated oversized shoot if/when available.
    oversized:{front:'shirts/alquaa-model-front.jpg',back:'shirts/alquaa-model-back.jpg'}}},
- {t:'Liwa Dune Tee',pl:'Liwa',slug:'liwa',p:'149',st:'A tonal embroidered sun setting over the dune ridges of Liwa, with صحراء beneath. Soft, heavyweight organic cotton.',v:[['S',1],['M',1],['L',0],['XL',1]],bg:'#E7D6B8',dark:0,fitImgs:{
-   // TODO: drop the real REGULAR-fit photos for the Liwa Dune Tee here (front + back). Currently placeholder = the oversized mockup.
+ {t:'Empty Quarter Tee',pl:'Liwa',slug:'liwa',p:'149',st:'A tonal embroidered sun setting over the dune ridges of Liwa, with صحراء beneath. Soft, heavyweight organic cotton.',v:[['S',1],['M',1],['L',0],['XL',1]],bg:'#E7D6B8',dark:0,fitImgs:{
+   // TODO: drop the real REGULAR-fit photos for the Empty Quarter Tee here (front + back). Currently placeholder = the oversized mockup.
    regular:{front:'shirts/design-beige-front.jpg',back:'shirts/design-beige-back.jpg'},
    // OVERSIZED-fit = the finished oversized (model) mockup. TODO: swap for a dedicated oversized shoot if/when available.
    oversized:{front:'shirts/design-beige-front.jpg',back:'shirts/design-beige-back.jpg'}}},
@@ -907,13 +908,13 @@ function printFor(p){
   return {short:'DTG print &middot; soft &amp; breathable',long:'Direct-to-garment (DTG) print for a smooth hand-feel that keeps the cotton soft and breathable.'};
 }
 /* Product detail pages that exist under /products/<slug>/. Add a slug when a new product page ships. */
-var PDP_SLUGS=['al-quaa-galaxy-tee','liwa-dune-tee','hajar-mountains-tee'];
+var PDP_SLUGS=['al-quaa-galaxy-tee','empty-quarter-tee','hajar-mountains-tee'];
 function productPageFor(p){
   var h=String((p&&p.handle)||'').toLowerCase();
   if(PDP_SLUGS.indexOf(h)>=0)return '/products/'+h+'/';
   var t=(((p&&p.title)||'')+' '+((p&&p.place)||'')).toLowerCase();
   if(/qua+|galaxy|milky/.test(t))return '/products/al-quaa-galaxy-tee/';
-  if(/liwa|dune|empty.?quarter/.test(t))return '/products/liwa-dune-tee/';
+  if(/liwa|dune|empty.?quarter/.test(t))return '/products/empty-quarter-tee/';
   if(/hajar|naqab|mountain|topograph/.test(t))return '/products/hajar-mountains-tee/';
   return '';
 }

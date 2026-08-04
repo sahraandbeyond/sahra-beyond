@@ -4,6 +4,28 @@
 
 ---
 
+## Liwa Dune Tee → Empty Quarter Tee (2026-07-31)
+
+**Why:** *Liwa Trading Enterprises LLC* is a major Abu Dhabi fashion retail group (Al Nasser Holdings, 250+ GCC stores). Not confirmed to hold a Class 25 mark, but a same-sector, same-territory incumbent of that size makes "Liwa Dune Tee" the one name with realistic complaint exposure. Renamed pre-launch, when the cost is near zero.
+
+**Scope decision — product name only; editorial "Liwa" preserved.** The exposure is in using the word as a *commercial identifier for clothing*; describing the place in editorial copy is descriptive use and far safer. `/locations/liwa/` (27 mentions), the place cards, map pins, `placeName`, `placeSlug` and `shopAnchor: liwa` all stay — protecting the SEO and the factual design→place link the brand rests on.
+
+| | Before | After |
+|---|---|---|
+| Product name | Liwa Dune Tee | **Empty Quarter Tee** |
+| Site slug / URL | `/products/liwa-dune-tee/` | `/products/empty-quarter-tee/` |
+| Shopify title | Liwa Dune Tee | Empty Quarter Tee |
+| Shopify handle | liwa-dune-tee | empty-quarter-tee |
+| SKUs | SB-LIW-* (8) | SB-EQ-* (8) |
+
+**Traps handled:**
+- **301 redirects** added to `vercel.json` for the old product URL (both with and without trailing slash) — it was already in the submitted sitemap.
+- **Duplicate product.** Renaming the JSON id left the old `liwa-dune-tee.json` on disk, so the build emitted **four** products and put both in the sitemap — duplicate content pointing at the same garment. Caught by diffing the sitemap; required requesting delete permission, since the mounted folder blocks `rm` by default.
+- **Three variants missed on the first pass.** `search_products` returned only the first 5 of 8 variants, so L/Oversized and both XL SKUs kept `SB-LIW-*`. Caught by reading the full mutation response rather than assuming the write covered everything.
+- Shopify **tags left as `place:Liwa` / `placeurl:liwa`** deliberately — the shop page groups by place, and the place is still Liwa.
+
+Zero stale references to the old name or slug remain outside the intentional redirects.
+
 ## Live check — halo bug fixed, two images still unpushed (2026-07-31)
 
 Checked the deployed site in a real browser rather than by reading source. Findings:

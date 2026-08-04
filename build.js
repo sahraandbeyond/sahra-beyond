@@ -107,6 +107,33 @@ function shopBlock(l) {
     <p>${line}</p>
     ${cta}</section>`;
 }
+function collectionBlock(ctxName) {
+  if (!PRODUCTS_ALL.length) return shopBlock(null);
+  const lead = ctxName
+    ? `Heading to ${esc(ctxName)}? Every t-shirt we make is drawn from a real place in the Emirates.`
+    : 'Every t-shirt we make is drawn from a real place in the Emirates \u2014 heavyweight organic cotton, limited runs.';
+  const cards = PRODUCTS_ALL.slice().sort((a,b)=>(a.order||0)-(b.order||0)).map(p => `
+    <a class="pcard" href="/products/${p.id}/">
+      <span class="pcard-img" style="background:${p.theme || '#181109'}"><img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy"></span>
+      <span class="pcard-b">
+        <span class="pcard-t">${esc(p.name)}</span>
+        <span class="pcard-p">${esc(p.placeName || '')} &middot; AED ${esc(String(p.price))}</span>
+      </span>
+    </a>`).join('');
+  return `<section class="pcta">
+    <div class="pcta-head">
+      <span class="pcta-eyebrow">Sahra &amp; Beyond &middot; UAE t-shirts</span>
+      <h2>Wear the <em>wild side</em> of the UAE</h2>
+      <p>${lead}</p>
+    </div>
+    <div class="pcards">${cards}</div>
+    <a class="btn" href="/t-shirts/">See all t-shirts &rarr;</a>
+  </section>`;
+}
+function teeFor(placeSlug, ctxName) {
+  const p = PRODUCT_BY_PLACE[placeSlug];
+  return p ? teeBlock({ id: placeSlug }) : collectionBlock(ctxName);
+}
 function faqBlock(l) {
   const faqs = faqsFor(l);
   if (!faqs.length) return '';
@@ -294,6 +321,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 @media(prefers-reduced-motion:reduce){.loc-hero::before,.shopcta .stars,.shopcta .stars2,.shopcta .shoot{animation:none}}
 `;
 
+// injected: product-card CSS for the collection module
 function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
   return `<div class="ftr-tagline">${esc(TAGLINE)}</div>
@@ -304,9 +332,12 @@ function footerHtml() {
 }
 
 function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'discover' }) {
+  // SERPs truncate around 60 chars; the brand suffix is the first thing to go.
+  if (title.length > 60 && / \| Sahra & Beyond$/.test(title)) title = title.replace(/ \| Sahra & Beyond$/, '');
+
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Home', 'discover') + nav('/places/', 'Places', 'places') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About us', 'about');
+  const navHtml = nav('/', 'Home', 'discover') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About us', 'about');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -439,7 +470,7 @@ locations.forEach(l => {
     </aside>
     ${toursBlock(l)}
     ${stayBlock(l)}
-    ${teeBlock(l) || shopBlock(l)}
+    ${teeBlock(l) || collectionBlock(l && l.name)}
     ${igSection(l.igPosts)}
     <section class="pack">
       <h2>What to pack for ${esc(l.name)}</h2>
@@ -698,6 +729,11 @@ const LANDINGS = [
   }
 ];
 
+const GUIDE_TEE = {
+  stargazing: 'al-quaa-desert', camping: 'al-quaa-desert', 'camping-near-dubai': 'al-quaa-desert',
+  'secluded-camping': 'al-quaa-desert', 'desert-camping-beginners': 'liwa', 'desert-safari': 'liwa',
+  wadis: 'wadi-naqab', 'mountain-escapes': 'wadi-naqab', 'hatta-guide': 'wadi-naqab'
+};
 LANDINGS.forEach(L => {
   const canonical = `${SITE}/${L.slug}/`;
   const jsonld = [
@@ -752,7 +788,7 @@ LANDINGS.forEach(L => {
     ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
     ${sectionsHtml}
     ${faqHtml}
-    ${shopBlock(null)}
+    ${GUIDE_TEE[L.slug] ? teeFor(GUIDE_TEE[L.slug], L.h1) : collectionBlock(null)}
     ${newsletterBlock()}
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
   </main>`;
@@ -826,7 +862,7 @@ if (LAUNCHED) (function () {
       ] },
       { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
         { "@type": "ListItem", "position": 1, "item": prod('Al Quaa Galaxy Tee', '/shirts/alquaa-model-back.jpg', 'The Milky Way over Al Quaa — the darkest sky in the Emirates. Heavyweight organic cotton.') },
-        { "@type": "ListItem", "position": 2, "item": prod('Liwa Dune Tee', '/shirts/design-beige-front.jpg', 'A tonal embroidered sun setting over the dune ridges of Liwa. Heavyweight organic cotton.') },
+        { "@type": "ListItem", "position": 2, "item": prod('Empty Quarter Tee', '/shirts/design-beige-front.jpg', 'A tonal embroidered sun setting over the dune ridges of Liwa. Heavyweight organic cotton.') },
         { "@type": "ListItem", "position": 3, "item": prod('Hajar Mountains Tee', '/shirts/design-taupe-front.jpg', 'A topographic line drawing of the Hajar peaks. Organic cotton, made to layer.') }
       ] }
     ];
@@ -885,6 +921,146 @@ if (LAUNCHED) (function () {
 })();
 
 // ---- product detail pages (content/products/*.json) ----
+
+/* ============================================================================
+   COMMERCE PAGES — the buy-intent surfaces the site was missing entirely.
+   /t-shirts/  hub for "UAE t-shirt brand" style queries
+   /gifts/     the uncontested lane: meaningful UAE gifts vs. tacky souvenirs
+   /fabric/    spec + trust page ("230gsm t shirt", "organic cotton tee UAE")
+   /size-guide/ standalone; was only an anchor buried in the shop page
+   ========================================================================== */
+function sizeTableHtml() {
+  const p = PRODUCTS_ALL.find(x => x.sizes && x.sizes.regular) || null;
+  if (!p) return '';
+  const rows = fit => (p.sizes[fit] || []).map(r =>
+    `<tr><td>${esc(String(r[0]))}</td><td>${esc(String(r[1]))} cm</td><td>${esc(String(r[2]))} cm</td><td>${esc(String(r[3]))} cm</td></tr>`).join('');
+  const tbl = (label, fit) => `<h3>${label}</h3><div class="sgwrap"><table class="sg">
+    <thead><tr><th>Size</th><th>Chest (flat)</th><th>Length</th><th>Sleeve</th></tr></thead>
+    <tbody>${rows(fit)}</tbody></table></div>`;
+  const prov = (p.sizesConfirmed === false)
+    ? `<p class="sgnote"><strong>Provisional measurements.</strong> These are our production targets. We are measuring finished garments from the first run and will publish confirmed figures before the drop — email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> and we will measure the exact piece for you.</p>`
+    : '';
+  return tbl('Regular fit', 'regular') + tbl('Oversized fit', 'oversized') + prov;
+}
+
+const COMMERCE = [
+  {
+    slug: 't-shirts', emoji: '◈', cat: 'Dunes',
+    h1: 'UAE T-Shirts',
+    title: 'UAE T-Shirts — Original Designs from Real Places',
+    desc: 'Original UAE t-shirts inspired by real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs, delivered across the UAE.',
+    intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: the darkest sky in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm organic cotton, and made in limited runs.",
+    sections: [
+      { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over the darkest sky in the Emirates — Bortle 1, the lowest reading on the scale that measures light pollution. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
+      { h2: 'The fabric, plainly', body: "All our t-shirts are 230gsm 100% organic cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.\n\nEvery piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Graphics are printed direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Empty Quarter design is embroidered rather than printed." },
+      { h2: 'Regular and oversized fits', body: "Every design comes in both a Regular and an Oversized fit, in sizes S to XL. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
+      { h2: 'Limited runs', body: "Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything." }
+    ],
+    faqs: [
+      ['Where do you ship?', 'We currently ship within the United Arab Emirates only. Delivery cost is calculated and shown at checkout before you pay.'],
+      ['What size should I order?', 'Every design comes in Regular and Oversized fits, S to XL. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.'],
+      ['Are these really organic cotton?', 'Yes — 230gsm 100% organic cotton for every piece in the collection.'],
+      ['Will designs be restocked?', 'Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone.']
+    ]
+  },
+  {
+    slug: 'gifts', emoji: '✦', cat: 'Camping',
+    h1: 'Gifts from the UAE',
+    title: 'Gifts from the UAE That Are Not Touristy',
+    desc: 'Looking for a gift from the UAE that is not a fridge magnet? Original t-shirts tied to real Emirati places — for someone leaving the country, visiting, or who misses the desert.',
+    intro: "Buying a gift from the UAE usually means choosing between a fridge magnet, a camel keyring, or a t-shirt with the Dubai skyline printed across the front. All of them say the same thing: I went to a shop at the airport.\n\nA Sahra & Beyond t-shirt says something more specific. Each one is tied to a real place in the Emirates — somewhere the person you are buying for has probably actually been. That is a very different gift from a souvenir.",
+    sections: [
+      { h2: 'A leaving gift for someone moving away', body: "This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?\n\nA skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately." },
+      { h2: 'For someone who loves the outdoors here', body: "If the person you are buying for spends their weekends camping, dune driving, stargazing or hiking, the design will land. Each of our t-shirts comes from a place they can drive to, and every product page tells the story of that place — including the coordinates.\n\nHeavyweight 230gsm organic cotton means it is a shirt they will actually keep wearing, not a novelty they wear once." },
+      { h2: 'For a visitor who wants something real', body: "Visitors often want something from the UAE that is not obviously made for visitors. A limited-run t-shirt from a small local brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat." },
+      { h2: 'Practical things', body: "All our t-shirts are AED 149 and come in Regular and Oversized fits, S to XL. We ship across the UAE, and delivery cost is shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
+    ],
+    faqs: [
+      ['What is a good leaving gift for an expat in the UAE?', 'Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.'],
+      ['Can I exchange it if the size is wrong?', 'Yes. Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the item is unworn, unwashed and still has its tags.'],
+      ['How much do they cost?', 'Every t-shirt in the collection is AED 149. Delivery is calculated at checkout.'],
+      ['Do you ship outside the UAE?', 'Not yet — we currently ship within the United Arab Emirates only.']
+    ]
+  },
+  {
+    slug: 'fabric', emoji: '▦', cat: 'Mountains',
+    h1: 'Our fabric and construction',
+    title: '230gsm Organic Cotton — Fabric & Construction',
+    desc: 'What 230gsm actually means, why we use ribbed collars and taped seams, and how DTG printing differs from embroidery — the construction behind every Sahra & Beyond t-shirt.',
+    intro: "Most t-shirt brands describe fabric in adjectives. Premium. Buttery. Luxe. None of those words mean anything you can check. Here are the actual specifications of what we make, and why each choice was made.",
+    sections: [
+      { h2: 'What 230gsm means', body: "GSM is grams per square metre — the weight of the fabric. A typical high-street t-shirt runs 150–180gsm. Ours is 230gsm.\n\nThe practical difference is structure. A lightweight shirt drapes onto the body and shows everything underneath; a heavyweight one holds its own shape and hangs away from you. It also survives washing far better, because there is simply more cotton there to begin with. The trade-off is honest: 230gsm is a more substantial shirt, so in peak UAE summer the Regular fit breathes better than the Oversized." },
+      { h2: 'Why 100% organic cotton', body: "Organic cotton is grown without synthetic pesticides or fertilisers. It matters here for two reasons beyond the environmental one: it is fully breathable, which is not optional in this climate, and it takes direct-to-garment ink better than a cotton-polyester blend, giving a sharper print.\n\nWe do not blend in polyester. A poly-cotton shirt is cheaper to make and holds a print slightly longer, but it traps heat — which is the wrong trade in the Gulf." },
+      { h2: 'Ribbed collar, taped seams', body: "The collar is a ribbed crew neck. Ribbing is knitted with more elasticity than the body fabric, so the neckline returns to shape instead of stretching out and going wavy — which is how most t-shirts visibly die.\n\nThe collar and shoulder seams are taped: a strip of fabric bound over the seam on the inside. It stops the shoulders from twisting over time and takes the strain off the stitching. It is a small manufacturing cost that shows up years later." },
+      { h2: 'DTG printing versus embroidery', body: "Two of our designs are printed direct-to-garment. DTG sprays ink into the fibres rather than laying a film on top, so the graphic stays soft, the fabric keeps breathing, and there is no plastic panel across your back. It flexes with the cotton instead of cracking.\n\nThe Empty Quarter design is embroidered instead — thread stitched into the cloth, tonal against the fabric. Embroidery has a raised texture you can feel, catches light differently through the day, and will not fade the way a print eventually can." },
+      { h2: 'How to make it last', body: "Wash cold and inside out. Heat is what fades a print fastest, and washing inside out protects both print and embroidery from abrasion.\n\nHang to dry rather than tumble drying — tumble drying is the main cause of both shrinkage and cracking. Skip fabric softener; it coats the fibres and dulls the finish. Do not iron directly onto a print." },
+      { h2: 'Where it is made', body: "Our fabric is sourced from Pakistan, one of the world's major cotton-producing countries. The designs are created here in the UAE. We say designed in the UAE rather than made in the UAE, because that is the accurate description." }
+    ],
+    faqs: [
+      ['Is 230gsm too heavy for UAE weather?', 'It is a heavyweight tee, so it is more substantial than a thin fast-fashion shirt — that is what gives it structure and longevity. It is 100% breathable cotton with no polyester. For peak summer, the Regular fit breathes more than the Oversized.'],
+      ['Will the print crack?', 'DTG ink bonds into the cotton rather than sitting on top as a thick layer, so it flexes with the fabric instead of cracking. Washing cold and hanging to dry rather than tumble drying is what makes the difference long term.'],
+      ['Will it shrink?', 'The fabric is pre-washed to minimise shrinkage. Wash cold, hang dry, and you should see very little movement. Hot washes and tumble dryers cause shrinkage.'],
+      ['Is the cotton certified organic?', 'The fabric is 100% organic cotton sourced through our supplier. We are working on publishing certification details and will add them here once confirmed.']
+    ]
+  },
+  {
+    slug: 'size-guide', emoji: '▱', cat: 'Coast',
+    h1: 'T-shirt size and fit guide',
+    title: 'T-Shirt Size Guide — Regular & Oversized Fit',
+    desc: 'Flat-lay measurements for every Sahra & Beyond t-shirt in Regular and Oversized fits, plus how to measure a t-shirt you already own to find your size.',
+    intro: "Every design comes in two fits — Regular and Oversized — in sizes S to XL. The measurements below are flat-lay: the garment laid flat on a table, not measured around the body.",
+    sizeTable: true,
+    sections: [
+      { h2: 'Regular or oversized?', body: "Regular is a classic straight cut. It sits close to the body without being tight, and layers cleanly under a shacket or jacket. If you normally wear a medium in a high-street t-shirt, take a medium here.\n\nOversized is a deliberately wider cut with a dropped shoulder and more room through the body. It is designed to be worn on its own rather than layered. If you are between sizes and want the relaxed look, size down rather than up — the oversized cut already adds width." },
+      { h2: 'How to find your size without guessing', body: "The most reliable method is to measure a t-shirt you already own and like the fit of.\n\nLay it flat on a table and smooth out the wrinkles. Measure the chest straight across, from one armpit seam to the other — that is the flat chest measurement, and it is the number to compare against the tables above. Then measure the length from the highest point of the shoulder straight down to the hem.\n\nMatch those two numbers to the closest size in the table. If you fall between two sizes, go up for the Regular fit and down for the Oversized." },
+      { h2: 'If you order the wrong size', body: "Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the piece is unworn, unwashed and still has its tags. Email hello@sahraandbeyond.ae with your order number and we will arrange it.\n\nIf you would rather get it right first time, email us before you order and we will talk you through it." }
+    ],
+    faqs: [
+      ['How do I measure my t-shirt size?', 'Lay a t-shirt you already own flat, measure straight across from armpit seam to armpit seam for the flat chest measurement, then from the top of the shoulder down to the hem for length. Compare both to the tables above.'],
+      ['Should I size up for the oversized fit?', 'No — the oversized cut already adds width and a dropped shoulder. If you are between sizes, size down for oversized and up for regular.'],
+      ['Are exchanges free?', 'Yes, within the UAE, within 14 days of delivery and subject to stock, as long as the item is unworn, unwashed and still has tags.']
+    ]
+  }
+];
+
+COMMERCE.forEach(P => {
+  const canonical = `${SITE}/${P.slug}/`;
+  const jsonld = [
+    { "@context": "https://schema.org", "@type": "WebPage", "name": P.h1, "description": P.desc, "url": canonical },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+      { "@type": "ListItem", "position": 2, "name": P.h1, "item": canonical }
+    ] }
+  ];
+  if (P.faqs && P.faqs.length) {
+    jsonld.push({ "@context": "https://schema.org", "@type": "FAQPage",
+      "mainEntity": P.faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } })) });
+  }
+  const sectionsHtml = (P.sections || []).map(x =>
+    `<section class="guide-sec"><h2>${esc(x.h2)}</h2><div class="content">${paras(x.body)}</div></section>`).join('');
+  const faqHtml = (P.faqs && P.faqs.length)
+    ? `<section class="faq"><h2>Frequently asked questions</h2>${P.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
+  const body = `
+  <section class="loc-hero" style="background:${CAT_BG[P.cat]}">
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(P.h1)}</span></nav>
+      <div class="loc-emoji">${P.emoji}</div>
+      <h1>${esc(P.h1)}</h1>
+      <p class="lede">Inspired by the landscapes of the UAE &mdash; wear the wild side of it</p>
+    </div>
+  </section>
+  <main>
+    <div class="content">${paras(P.intro)}</div>
+    ${collectionBlock(null)}
+    ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
+    ${sectionsHtml}
+    ${faqHtml}
+    ${newsletterBlock()}
+    <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
+  </main>`;
+  write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body }));
+});
+
 const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: LAUNCHED ? '/shop/' : '/shop-preview.html' });
 console.log('  \u2713 ' + PRODUCT_URLS.length + ' product pages');
 
@@ -895,6 +1071,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(LAUNCHED ? [{ u: `${SITE}/shop/`, m: buildDate, p: '0.9' }] : [])
   .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }])
   .concat(LANDINGS.map(L => ({ u: `${SITE}/${L.slug}/`, m: buildDate, p: '0.8' })))
+  .concat(COMMERCE.map(P => ({ u: `${SITE}/${P.slug}/`, m: buildDate, p: '0.9' })))
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
   .concat(PRODUCT_URLS.map(x => ({ u: x.url, m: buildDate, p: '0.9' })));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`

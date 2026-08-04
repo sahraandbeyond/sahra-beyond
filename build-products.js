@@ -48,7 +48,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(p.seoTitle)} | Sahra &amp; Beyond</title>
+<title>${esc(p.seoTitle.length > 44 ? p.seoTitle : p.seoTitle + ' | Sahra & Beyond')}</title>
 <meta name="description" content="${esc(p.seoDesc)}">
 <link rel="canonical" href="${SITE}/products/${p.id}/">
 <meta name="theme-color" content="${p.theme}">
