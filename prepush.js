@@ -68,6 +68,26 @@ if (ghostDirs.size) {
   console.log(`           (b) download /${[...ghostDirs][0]}/ from GitHub into this folder first.\n`);
 }
 
+// ---- 2b. DELETIONS don't propagate when you upload files ----
+// Uploading a folder adds and overwrites; it never removes. A content file you
+// deleted locally still sits in the repo, and the Vercel build regenerates the
+// page from it. This is how a renamed product came back from the dead.
+const prodDir = path.join(ROOT, 'content/products');
+const localIds = fs.existsSync(prodDir)
+  ? fs.readdirSync(prodDir).filter(f => f.endsWith('.json')).map(f => f.replace('.json', '')).sort() : [];
+const builtDirs = fs.existsSync(path.join(ROOT, 'products'))
+  ? fs.readdirSync(path.join(ROOT, 'products'), { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name).sort() : [];
+const orphans = builtDirs.filter(d => !localIds.includes(d));
+console.log(`\n  ${C.b}Products defined here:${C.off} ${localIds.join(', ') || '(none)'}`);
+if (orphans.length) {
+  console.log(`  ${C.bad}✗ stale build output with no source JSON: ${orphans.join(', ')}${C.off}`);
+  console.log(`    delete products/<id>/ locally, then delete it on GitHub too.`);
+} else {
+  console.log(`  ${C.ok}✓${C.off} no stale product folders locally`);
+}
+console.log(`  ${C.warn}!${C.off} ${C.dim}Uploading files never deletes. After a rename, check the live sitemap`);
+console.log(`    ${C.dim}for product URLs not in the list above and remove them on GitHub by hand.${C.off}`);
+
 // ---- 3. what actually changed recently (the safe push manifest) ----
 const HOURS = Number(process.argv[2] || 24);
 const cutoff = Date.now() - HOURS * 3600e3;
