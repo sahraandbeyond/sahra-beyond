@@ -150,6 +150,20 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .loc-hero h1::after{content:"";display:block;width:52px;height:3px;margin-top:12px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
 .hdr-nav a.shopnav{color:#9C521B;font-weight:700}
 /* shop CTA band — living night sky */
+/* --- the tee inspired by this place (product cross-link) --- */
+.teecta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;background:var(--tee,#181109);color:#fff;box-shadow:0 24px 60px rgba(0,0,0,.18)}
+.teecta-inner{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:0;align-items:stretch}
+.teecta-img{display:block;position:relative;overflow:hidden;min-height:100%}
+.teecta-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+.teecta-img:hover img{transform:scale(1.06)}
+.teecta-txt{padding:34px 32px;display:flex;flex-direction:column;justify-content:center;background:rgba(0,0,0,.28);backdrop-filter:blur(2px)}
+.teecta-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#E9B978;margin-bottom:10px}
+.teecta h2{font-family:'Playfair Display',serif;font-size:clamp(24px,3.4vw,34px);font-weight:800;line-height:1.08;color:#fff;margin:0 0 10px}
+.teecta p{color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;margin:0 0 16px;max-width:46ch}
+.teecta-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:20px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;color:rgba(255,255,255,.72)}
+.teecta .btn{align-self:flex-start;background:#E9B978;color:#181109;border:none}
+.teecta .btn:hover{background:#fff}
+@media(max-width:760px){.teecta-inner{grid-template-columns:1fr}.teecta-img{aspect-ratio:4/3}.teecta-txt{padding:26px 22px}}
 .shopcta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;padding:34px 26px;text-align:center;color:#fff;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 90%)}
 .shopcta .stars,.shopcta .stars2{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 12% 28%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 14%,#fff,transparent),radial-gradient(1.6px 1.6px at 54% 34%,#fff,transparent),radial-gradient(1.2px 1.2px at 71% 18%,#fff,transparent),radial-gradient(1.6px 1.6px at 88% 30%,#fff,transparent),radial-gradient(1px 1px at 44% 52%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite}
 .shopcta .stars2{background-image:radial-gradient(1.2px 1.2px at 22% 44%,#FFE9C4,transparent),radial-gradient(1.5px 1.5px at 62% 12%,#FFE9C4,transparent),radial-gradient(1px 1px at 80% 48%,#fff,transparent),radial-gradient(1.4px 1.4px at 8% 12%,#fff,transparent);animation-delay:2.2s}
@@ -166,7 +180,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 </style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra &amp; Beyond" width="34" height="34"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/" class="active">Home</a><a href="/places/">Places</a><a href="/about/">About us</a></nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra &amp; Beyond" width="34" height="34"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/" class="active">Home</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/about/">About us</a></nav></header>
 
   <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#332C4A 44%,#5C4A5E 76%,#B07A44 100%)">
     <div class="loc-hero-inner">
@@ -199,11 +213,36 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
     </aside>
     
     
-    <section class="shopcta"><div class="stars"></div><div class="stars2"></div><div class="shoot"></div>
-    <div class="shopcta-eyebrow">Sahra &amp; Beyond · First drop coming</div>
-    <h2>Wear the <em>wild side</em> of the UAE</h2>
-    <p>The first drop is coming. Original tees inspired by real places like Al Rafisah Dam — every design carries a place.</p>
-    <a class="btn" href="/#join">Join the waitlist &rarr;</a></section>
+    <section class="pcta">
+    <div class="pcta-head">
+      <span class="pcta-eyebrow">Sahra &amp; Beyond &middot; UAE t-shirts</span>
+      <h2>Wear the <em>wild side</em> of the UAE</h2>
+      <p>Heading to Al Rafisah Dam? Every t-shirt we make is drawn from a real place in the Emirates.</p>
+    </div>
+    <div class="pcards">
+    <a class="pcard" href="/products/al-quaa-galaxy-tee/">
+      <span class="pcard-img" style="background:#181109"><img src="/shirts/alquaa-model-back.jpg" alt="Al Quaa Galaxy Tee worn — the Milky Way arcing over the dunes across the back" loading="lazy"></span>
+      <span class="pcard-b">
+        <span class="pcard-t">Al Quaa Galaxy Tee</span>
+        <span class="pcard-p">Al Quaa &middot; AED 149</span>
+      </span>
+    </a>
+    <a class="pcard" href="/products/empty-quarter-tee/">
+      <span class="pcard-img" style="background:#E7D6B8"><img src="/shirts/final-liwa-front.jpg" alt="Empty Quarter Tee — embroidered sun over the dunes, laid flat" loading="lazy"></span>
+      <span class="pcard-b">
+        <span class="pcard-t">Empty Quarter Tee</span>
+        <span class="pcard-p">Liwa &middot; AED 149</span>
+      </span>
+    </a>
+    <a class="pcard" href="/products/hajar-mountains-tee/">
+      <span class="pcard-img" style="background:#C6BFD3"><img src="/shirts/final-hajar.jpg" alt="Hajar Mountains Tee — topographic peaks, laid flat" loading="lazy"></span>
+      <span class="pcard-b">
+        <span class="pcard-t">Hajar Mountains Tee</span>
+        <span class="pcard-p">Wadi Naqab &middot; AED 149</span>
+      </span>
+    </a></div>
+    <a class="btn" href="/t-shirts/">See all t-shirts &rarr;</a>
+  </section>
     
     <section class="pack">
       <h2>What to pack for Al Rafisah Dam</h2>
