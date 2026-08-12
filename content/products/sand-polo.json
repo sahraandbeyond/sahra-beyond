@@ -1,0 +1,83 @@
+{
+  "id": "sand-polo",
+  "name": "The Sahra Polo",
+  "nameHtml": "The Sahra <em>Polo</em>",
+  "sku": "SB-POLO-SAND",
+  "drop": "Drop 01",
+  "order": 0,
+  "price": "TBC",
+  "garment": "polo",
+  "eyebrow": "Sahra &amp; Beyond · Founding Edition",
+  "shopAnchor": "",
+  "theme": "#EFE6D6",
+  "theme2": "#AE9C91",
+  "accent": "#9C521B",
+  "scene": "dunes",
+  "imgMain": "/shirts/polo-sand-main.jpg",
+  "imgFront": "/shirts/polo-sand-front.jpg",
+  "imgBack": "/shirts/polo-sand-back.jpg",
+  "altMain": "The Sahra Polo in sand — photography to come",
+  "altFront": "The Sahra Polo, front — photography to come",
+  "altBack": "The Sahra Polo, back — photography to come",
+  "seoTitle": "The Sahra Polo — Embroidered 240gsm Cotton Polo",
+  "seoDesc": "The Sahra Polo — 240gsm cotton, embroidered rather than printed, in sand. Forty pieces only, numbered 1/40. The scarcest piece in the first drop.",
+  "shareDesc": "240gsm embroidered cotton polo in sand. Forty pieces, numbered 1/40.",
+  "lede": "A 240gsm cotton polo in sand, embroidered rather than printed. Forty pieces exist. It is the quietest thing we make and the hardest to get hold of.",
+  "ldDesc": "The Sahra Polo — 240gsm cotton polo in sand, embroidered. Limited to 40 numbered pieces.",
+  "printChip": "Embroidered &middot; 240gsm",
+  "occasion": "Made for evenings that start outdoors and end somewhere better",
+  "edition": "Founding Edition · numbered 1/40",
+  "sizingApplies": false,
+  "placeName": "",
+  "placeEmirate": "",
+  "placeSlug": "",
+  "designHeading": "Quiet by <em>design</em>",
+  "designIntro": "The tees carry a place across the back. The polo does the opposite — it says almost nothing, and says it in thread. It is the piece for the days you want the brand on you without announcing it.",
+  "designCards": [
+    {
+      "title": "Embroidered, not printed",
+      "body": "The mark is stitched into the cloth rather than printed onto it. Tonal, raised, and something you notice by touch before you notice it by sight."
+    },
+    {
+      "title": "240gsm, not 230",
+      "body": "Ten grams heavier than the tees. On a polo that difference shows — the collar stands properly instead of curling after a season."
+    },
+    {
+      "title": "Forty pieces",
+      "body": "Numbered 1/40. The tees run to 120; this does not. When it is gone it is gone, and we would rather say that plainly than pretend otherwise."
+    }
+  ],
+  "printCardTitle": "Embroidery",
+  "printCardBody": "Thread stitched into the cloth gives a subtle raised texture you can feel. It will not fade or crack the way a print eventually can — embroidery ages differently, and better.",
+  "fitExtra": "",
+  "careHeading": "Looking after <em>embroidery</em>",
+  "careIntro": "Embroidery is hardier than print, but the thread still appreciates a gentle wash.",
+  "care": [
+    "Machine wash cold, inside out — this protects the stitching from abrasion.",
+    "Wash with similar colours, on a gentle cycle.",
+    "Hang to dry. Tumble drying is the main cause of shrinkage and puckering around stitching.",
+    "Iron inside out, avoiding the embroidery directly — never press a hot iron onto thread.",
+    "Skip bleach and fabric softener; softener coats the fibres and dulls the finish.",
+    "Watch for snags — embroidery can catch on velcro and rough surfaces."
+  ],
+  "faq": [
+    {
+      "q": "How is the polo different from the tees?",
+      "a": "Three ways. It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape. It is embroidered rather than printed. And it is limited to 40 pieces rather than 120, numbered separately as its own edition."
+    },
+    {
+      "q": "What size should I order?",
+      "a": "The polo is cut differently to the tees — narrower through the body, a set-in sleeve and no drop shoulder — so our tee size chart does not apply to it. Its own graded measurements will be published before it ships. Email hello@sahraandbeyond.ae and we will send them as soon as they are signed off."
+    },
+    {
+      "q": "Why only forty?",
+      "a": "It is the first polo we have made and we would rather make a small number properly than guess at demand. There is no plan to restock this run."
+    },
+    {
+      "q": "Will it be restocked?",
+      "a": "This is a limited first run of 40. We may make polos again, but not this one, and we will not promise otherwise."
+    }
+  ],
+  "category": "polos",
+  "fit": ""
+}
