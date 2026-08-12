@@ -29,7 +29,12 @@ const locDir = path.join(ROOT, 'content/locations');
 const locations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(locDir, f))).filter(Boolean);
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
-const PRODUCT_BY_PLACE = {}; PRODUCTS_ALL.forEach(p => { if (p.placeSlug) PRODUCT_BY_PLACE[p.placeSlug] = p; });
+const PRODUCT_BY_PLACE = {};
+PRODUCTS_ALL.forEach(p => { if (p.placeSlug && p.fit === 'regular') PRODUCT_BY_PLACE[p.placeSlug] = p; });
+PRODUCTS_ALL.forEach(p => { if (p.placeSlug && !PRODUCT_BY_PLACE[p.placeSlug]) PRODUCT_BY_PLACE[p.placeSlug] = p; });
+// one entry per DESIGN for inline modules, so content pages don't show seven near-identical cards
+const DESIGNS = PRODUCTS_ALL.filter(p => p.fit !== 'oversized').sort((a,b)=>(a.order||0)-(b.order||0));
+const BY_CATEGORY = cat => PRODUCTS_ALL.filter(p => p.category === cat).sort((a,b)=>(a.order||0)-(b.order||0));
 // Instagram only — the single official channel
 const social = { instagram: (settings.social && settings.social.instagram) || 'https://instagram.com/sahraandbeyond.ae' };
 const disclosure = settings.affiliateDisclosure || 'As an Amazon Associate, Sahra & Beyond earns from qualifying purchases.';
@@ -88,6 +93,7 @@ function teeBlock(l) {
         <p>${esc(p.shareDesc || p.lede || '')}</p>
         <div class="teecta-meta"><span>AED ${esc(String(p.price))}</span><span>${p.printChip || ''}</span><span>&#10022; Limited first run</span></div>
         <a class="btn" href="${href}">See the tee &rarr;</a>
+        ${p.siblingOf ? `<p class="teecta-alt">Also in <a href="/products/${p.siblingOf}-oversized/">Oversized</a></p>` : ''}
       </div>
     </div>
   </section>`;
@@ -112,7 +118,7 @@ function collectionBlock(ctxName) {
   const lead = ctxName
     ? `Heading to ${esc(ctxName)}? Every t-shirt we make is drawn from a real place in the Emirates.`
     : 'Every t-shirt we make is drawn from a real place in the Emirates \u2014 heavyweight organic cotton, limited runs.';
-  const cards = PRODUCTS_ALL.slice().sort((a,b)=>(a.order||0)-(b.order||0)).map(p => `
+  const cards = DESIGNS.map(p => `
     <a class="pcard" href="/products/${p.id}/">
       <span class="pcard-img" style="background:${p.theme || '#181109'}"><img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy"></span>
       <span class="pcard-b">
@@ -337,7 +343,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'd
 
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Home', 'discover') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About us', 'about');
+  const navHtml = nav('/', 'Home', 'discover') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About us', 'about');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -929,18 +935,19 @@ if (LAUNCHED) (function () {
    /fabric/    spec + trust page ("230gsm t shirt", "organic cotton tee UAE")
    /size-guide/ standalone; was only an anchor buried in the shop page
    ========================================================================== */
+const SIZING = readJSON(path.join(ROOT,'content/sizing.json')) || { regular:[], oversized:[], method:[] };
 function sizeTableHtml() {
-  const p = PRODUCTS_ALL.find(x => x.sizes && x.sizes.regular) || null;
-  if (!p) return '';
-  const rows = fit => (p.sizes[fit] || []).map(r =>
-    `<tr><td>${esc(String(r[0]))}</td><td>${esc(String(r[1]))} cm</td><td>${esc(String(r[2]))} cm</td><td>${esc(String(r[3]))} cm</td></tr>`).join('');
-  const tbl = (label, fit) => `<h3>${label}</h3><div class="sgwrap"><table class="sg">
-    <thead><tr><th>Size</th><th>Chest (flat)</th><th>Length</th><th>Sleeve</th></tr></thead>
+  if (!SIZING.regular || !SIZING.regular.length) return '';
+  const cell = (i,c) => `<span class="sz-in">${i}&Prime;</span><span class="sz-cm">${c}&nbsp;cm</span>`;
+  const rows = fit => (SIZING[fit] || []).map(r =>
+    `<tr><th scope="row">${esc(String(r[0]))}</th><td>${cell(r[1],r[2])}</td><td>${cell(r[3],r[4])}</td><td>${cell(r[5],r[6])}</td><td>${cell(r[7],r[8])}</td></tr>`).join('');
+  const tbl = (label, fit, intent) => `<h3>${label}</h3><p class="sgintent">${intent}</p><div class="sgwrap"><table class="sg">
+    <thead><tr><th>Size</th><th>Chest</th><th>Length</th><th>Shoulder</th><th>Sleeve</th></tr></thead>
     <tbody>${rows(fit)}</tbody></table></div>`;
-  const prov = (p.sizesConfirmed === false)
-    ? `<p class="sgnote"><strong>Provisional measurements.</strong> These are our production targets. We are measuring finished garments from the first run and will publish confirmed figures before the drop — email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> and we will measure the exact piece for you.</p>`
-    : '';
-  return tbl('Regular fit', 'regular') + tbl('Oversized fit', 'oversized') + prov;
+  const method = `<h3>How these are measured</h3><ul class="sgmethod">${(SIZING.method||[]).map(m=>`<li>${m}</li>`).join('')}</ul><p class="sgnote">${SIZING.tolerance||''}</p>`;
+  const polo = (SIZING.polo && SIZING.polo.available === false)
+    ? `<h3>The polo</h3><p class="sgnote">${SIZING.polo.note}</p>` : '';
+  return tbl('Regular fit','regular',SIZING.regularIntent||'') + tbl('Oversized fit','oversized',SIZING.oversizedIntent||'') + method + polo;
 }
 
 const COMMERCE = [
@@ -949,16 +956,17 @@ const COMMERCE = [
     h1: 'UAE T-Shirts',
     title: 'UAE T-Shirts — Original Designs from Real Places',
     desc: 'Original UAE t-shirts inspired by real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs, delivered across the UAE.',
+    catNav: true,
     intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: the darkest sky in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm organic cotton, and made in limited runs.",
     sections: [
       { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over the darkest sky in the Emirates — Bortle 1, the lowest reading on the scale that measures light pollution. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
       { h2: 'The fabric, plainly', body: "All our t-shirts are 230gsm 100% organic cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.\n\nEvery piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Graphics are printed direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Empty Quarter design is embroidered rather than printed." },
-      { h2: 'Regular and oversized fits', body: "Every design comes in both a Regular and an Oversized fit, in sizes S to XL. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
+      { h2: 'Regular and oversized fits', body: "Every design comes in both a Regular and an Oversized fit, in sizes S to XXL. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
       { h2: 'Limited runs', body: "Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything." }
     ],
     faqs: [
       ['Where do you ship?', 'We currently ship within the United Arab Emirates only. Delivery cost is calculated and shown at checkout before you pay.'],
-      ['What size should I order?', 'Every design comes in Regular and Oversized fits, S to XL. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.'],
+      ['What size should I order?', 'Every design comes in Regular and Oversized fits, S to XXL. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.'],
       ['Are these really organic cotton?', 'Yes — 230gsm 100% organic cotton for every piece in the collection.'],
       ['Will designs be restocked?', 'Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone.']
     ]
@@ -973,7 +981,7 @@ const COMMERCE = [
       { h2: 'A leaving gift for someone moving away', body: "This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?\n\nA skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately." },
       { h2: 'For someone who loves the outdoors here', body: "If the person you are buying for spends their weekends camping, dune driving, stargazing or hiking, the design will land. Each of our t-shirts comes from a place they can drive to, and every product page tells the story of that place — including the coordinates.\n\nHeavyweight 230gsm organic cotton means it is a shirt they will actually keep wearing, not a novelty they wear once." },
       { h2: 'For a visitor who wants something real', body: "Visitors often want something from the UAE that is not obviously made for visitors. A limited-run t-shirt from a small local brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat." },
-      { h2: 'Practical things', body: "All our t-shirts are AED 149 and come in Regular and Oversized fits, S to XL. We ship across the UAE, and delivery cost is shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
+      { h2: 'Practical things', body: "All our t-shirts are AED 149 and come in Regular and Oversized fits, S to XXL. We ship across the UAE, and delivery cost is shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
     ],
     faqs: [
       ['What is a good leaving gift for an expat in the UAE?', 'Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.'],
@@ -1008,7 +1016,7 @@ const COMMERCE = [
     h1: 'T-shirt size and fit guide',
     title: 'T-Shirt Size Guide — Regular & Oversized Fit',
     desc: 'Flat-lay measurements for every Sahra & Beyond t-shirt in Regular and Oversized fits, plus how to measure a t-shirt you already own to find your size.',
-    intro: "Every design comes in two fits — Regular and Oversized — in sizes S to XL. The measurements below are flat-lay: the garment laid flat on a table, not measured around the body.",
+    intro: "Every design comes in two fits — Regular and Oversized — in sizes S to XXL. Every figure below is a garment measurement taken flat, not a body measurement, and comes straight from the graded specification our manufacturer produced against. Both inches and centimetres are shown.",
     sizeTable: true,
     sections: [
       { h2: 'Regular or oversized?', body: "Regular is a classic straight cut. It sits close to the body without being tight, and layers cleanly under a shacket or jacket. If you normally wear a medium in a high-street t-shirt, take a medium here.\n\nOversized is a deliberately wider cut with a dropped shoulder and more room through the body. It is designed to be worn on its own rather than layered. If you are between sizes and want the relaxed look, size down rather than up — the oversized cut already adds width." },
@@ -1022,6 +1030,67 @@ const COMMERCE = [
     ]
   }
 ];
+
+
+const CATEGORIES = [
+  { slug:'t-shirts/regular', cat:'regular-tees', emoji:'▭', catBg:'Dunes',
+    h1:'Regular Fit T-Shirts',
+    title:'Regular Fit T-Shirts — UAE Designs | Sahra & Beyond',
+    desc:'Our regular fit t-shirts — true to size, cut to layer. 230gsm organic cotton, original UAE designs, S–XXL. Limited runs, delivered across the UAE.',
+    intro:"Regular is the fit to take if you layer. It sits on the shoulder and skims the body rather than hanging off it — a classic straight cut graded to the US/international standard, with a 2&Prime; chest step per size above M.\n\nEvery design in the collection comes in this fit, in sizes S to XXL. Same 230gsm organic cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette." },
+  { slug:'t-shirts/oversized', cat:'oversized-tees', emoji:'▯', catBg:'Camping',
+    h1:'Oversized Fit T-Shirts',
+    title:'Oversized T-Shirts UAE — Drop Shoulder | Sahra & Beyond',
+    desc:'Oversized drop-shoulder t-shirts. The shoulder seam sits 2–3 inches below your natural shoulder — width, not length, makes the silhouette. 230gsm organic cotton, S–XXL.',
+    intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2&ndash;3&Prime; below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nTake your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XXL." },
+  { slug:'polos', cat:'polos', emoji:'✦', catBg:'Coast',
+    h1:'Polo Shirts',
+    title:'Embroidered Cotton Polo — 240gsm | Sahra & Beyond',
+    desc:'The Sahra Polo — 240gsm cotton, embroidered rather than printed. Forty pieces only, numbered 1/40. The scarcest piece in the first drop.',
+    intro:"One polo, forty pieces. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. Numbered 1/40 as its own edition, separate from the tees." }
+];
+
+function catCards(list) {
+  if (!list.length) return '<p>Nothing in this category yet.</p>';
+  return `<div class="pcards">${list.map(p => `
+    <a class="pcard" href="/products/${p.id}/">
+      <span class="pcard-img" style="background:${p.theme || '#181109'}"><img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy"></span>
+      <span class="pcard-b">
+        <span class="pcard-t">${esc(p.name)}</span>
+        <span class="pcard-p">${esc(p.placeName || 'Sahra & Beyond')} &middot; AED ${esc(String(p.price))}</span>
+      </span>
+    </a>`).join('')}</div>`;
+}
+
+CATEGORIES.forEach(C => {
+  const items = BY_CATEGORY(C.cat);
+  const canonical = `${SITE}/${C.slug}/`;
+  const jsonld = [
+    { "@context":"https://schema.org","@type":"CollectionPage","name":C.h1,"description":C.desc,"url":canonical },
+    { "@context":"https://schema.org","@type":"ItemList","itemListElement": items.map((p,i)=>({ "@type":"ListItem","position":i+1,"name":p.name,"url":`${SITE}/products/${p.id}/` })) },
+    { "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+      { "@type":"ListItem","position":1,"name":"Home","item":SITE+"/" },
+      { "@type":"ListItem","position":2,"name":"T-Shirts","item":SITE+"/t-shirts/" },
+      { "@type":"ListItem","position":3,"name":C.h1,"item":canonical } ] }
+  ];
+  const body = `
+  <section class="loc-hero" style="background:${CAT_BG[C.catBg]}">
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <a href="/t-shirts/">T-Shirts</a> &rsaquo; <span>${esc(C.h1)}</span></nav>
+      <div class="loc-emoji">${C.emoji}</div>
+      <h1>${esc(C.h1)}</h1>
+      <p class="lede">Inspired by the landscapes of the UAE &mdash; wear the wild side of it</p>
+    </div>
+  </section>
+  <main>
+    <div class="content">${paras(C.intro)}</div>
+    <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${items.length} piece${items.length===1?'':'s'}</span></div>${catCards(items)}
+      <a class="btn" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+    ${newsletterBlock()}
+    <p class="back"><a href="/t-shirts/">All t-shirts &rarr;</a></p>
+  </main>`;
+  write(`${C.slug}/index.html`, shell({ title: C.title, desc: C.desc, canonical, jsonld, bodyHtml: body, activeNav:'tshirts' }));
+});
 
 COMMERCE.forEach(P => {
   const canonical = `${SITE}/${P.slug}/`;
@@ -1051,6 +1120,11 @@ COMMERCE.forEach(P => {
   </section>
   <main>
     <div class="content">${paras(P.intro)}</div>
+    ${P.catNav ? `<nav class="catnav" aria-label="Shop by category">
+      <a href="/t-shirts/regular/"><b>Regular fit</b><span>True to size, cut to layer</span></a>
+      <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
+      <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; 1/40</span></a>
+    </nav>` : ''}
     ${collectionBlock(null)}
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
     ${sectionsHtml}
@@ -1072,6 +1146,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }])
   .concat(LANDINGS.map(L => ({ u: `${SITE}/${L.slug}/`, m: buildDate, p: '0.8' })))
   .concat(COMMERCE.map(P => ({ u: `${SITE}/${P.slug}/`, m: buildDate, p: '0.9' })))
+  .concat(CATEGORIES.map(C => ({ u: `${SITE}/${C.slug}/`, m: buildDate, p: '0.9' })))
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
   .concat(PRODUCT_URLS.map(x => ({ u: x.url, m: buildDate, p: '0.9' })));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`

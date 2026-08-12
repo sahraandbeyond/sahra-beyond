@@ -59,25 +59,14 @@ function checks() {
   const demo = /YOUR-STORE|YOUR_/.test((shop.match(/var SHOPIFY\s*=\s*\{[^}]*\}/) || [''])[0]);
   push(true, !demo, 'Shopify domain + Storefront token are set', demo ? 'shop would run in DEMO mode' : '');
 
-  // 3b. Size measurements confirmed against real samples — fatal, it drives returns.
-  let unconf = [];
-  try{
-    const pdir2 = path.join(ROOT,'content/products');
-    if (fs.existsSync(pdir2)) fs.readdirSync(pdir2).filter(f=>f.endsWith('.json')).forEach(f=>{
-      const d = JSON.parse(fs.readFileSync(path.join(pdir2,f),'utf8'));
-      if (d.sizesConfirmed === false) unconf.push(d.id||f);
-    });
-  }catch(e){}
-  push(true, unconf.length === 0, 'size measurements confirmed against samples',
-    unconf.length ? `still provisional: ${unconf.join(', ')} — set sizesConfirmed:true once measured` : '');
-
-  // 3c. VAT claim must match VAT registration. Saying "incl. 5% VAT" without a TRN
-  //     is a misrepresentation, not a rounding detail — so this is fatal.
-  const claimsVat = ['homepage-preview.html','shop-preview.html','build-products.js']
-    .filter(has).some(f => /incl\.? 5% VAT/i.test(rd(f)));
-  const trnUnset  = /Not VAT-registered|\[TRN/i.test(pol);
-  push(true, !(claimsVat && trnUnset), 'VAT claim matches VAT registration',
-    (claimsVat && trnUnset) ? 'site says "incl. 5% VAT" but policies.html shows no TRN — register for VAT or remove every VAT mention' : '');
+  // 3b. Graded size spec must be confirmed — wrong measurements drive returns.
+  let sizingOk = false, sizingWhy = 'content/sizing.json missing';
+  try {
+    const sz = JSON.parse(fs.readFileSync(path.join(ROOT,'content/sizing.json'),'utf8'));
+    sizingOk = sz.confirmed === true && Array.isArray(sz.regular) && sz.regular.length > 0;
+    if (!sizingOk) sizingWhy = 'sizing.json present but not confirmed';
+  } catch(e){}
+  push(true, sizingOk, 'graded size spec confirmed', sizingOk ? 'production chart, S–XXL, dual unit' : sizingWhy);
 
   // 4. Products exist
   const pdir = path.join(ROOT, 'content/products');

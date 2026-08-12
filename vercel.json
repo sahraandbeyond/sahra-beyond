@@ -24,12 +24,42 @@
   "redirects": [
     {
       "source": "/products/liwa-dune-tee",
-      "destination": "/products/empty-quarter-tee",
+      "destination": "/products/empty-quarter-regular",
       "permanent": true
     },
     {
       "source": "/products/liwa-dune-tee/",
-      "destination": "/products/empty-quarter-tee/",
+      "destination": "/products/empty-quarter-regular/",
+      "permanent": true
+    },
+    {
+      "source": "/products/al-quaa-galaxy-tee",
+      "destination": "/products/al-quaa-galaxy-regular",
+      "permanent": true
+    },
+    {
+      "source": "/products/al-quaa-galaxy-tee/",
+      "destination": "/products/al-quaa-galaxy-regular/",
+      "permanent": true
+    },
+    {
+      "source": "/products/empty-quarter-tee",
+      "destination": "/products/empty-quarter-regular",
+      "permanent": true
+    },
+    {
+      "source": "/products/empty-quarter-tee/",
+      "destination": "/products/empty-quarter-regular/",
+      "permanent": true
+    },
+    {
+      "source": "/products/hajar-mountains-tee",
+      "destination": "/products/hajar-mountains-regular",
+      "permanent": true
+    },
+    {
+      "source": "/products/hajar-mountains-tee/",
+      "destination": "/products/hajar-mountains-regular/",
       "permanent": true
     }
   ]
