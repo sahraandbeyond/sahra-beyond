@@ -30,7 +30,7 @@ function faqList(list){
 function sizeRows(list){
   // Row shape: [size, chest_in, chest_cm, length_in, length_cm, shldr_in, shldr_cm, slv_in, slv_cm]
   if(!Array.isArray(list)||!list.length) return '';
-  var cell=function(i,c){return '<span class="sz-in">'+i+'&Prime;</span><span class="sz-cm">'+c+'&nbsp;cm</span>';};
+  var cell=function(i,c){return '<span class="sz-in">'+i+'&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">'+c+'&nbsp;cm</span>';};
   return list.map(function(r){
     return '<tr><th scope="row">'+esc(String(r[0]))+'</th>'
       +'<td>'+cell(r[1],r[2])+'</td>'
@@ -202,6 +202,7 @@ body.dark-bg .buy-ghaf{color:#A9C99A}
 /* --- pre-launch waitlist (shown until the shop opens) --- */
 /* --- size chart --- */
 .sz-in{display:block;font-weight:600}
+.sz-sep{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .sz-cm{display:block;font-size:11.5px;opacity:.62;font-family:'Space Mono',monospace}
 table.sz th[scope=row]{font-weight:700}
 .sz-method{margin:14px 0 6px;font-size:14px}
@@ -862,7 +863,20 @@ function loadProducts(ROOT){
     .sort((a,b)=>(a.order||99)-(b.order||99));
 }
 
-const SIZING = (function(){ try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname,'content/sizing.json'),'utf8')); } catch(e){ return {regular:[],oversized:[],method:[]}; } })();
+const SIZING = (function(){
+  // Hard fail. A missing spec silently rendered empty tables and the literal
+  // string "undefined" onto every live product page — the build must stop instead.
+  const p = require('path').join(__dirname,'content/sizing.json');
+  let raw;
+  try { raw = require('fs').readFileSync(p,'utf8'); }
+  catch(e){ throw new Error('FATAL: content/sizing.json is missing. Every size table depends on it. Path tried: '+p); }
+  const d = JSON.parse(raw);
+  ['regular','oversized','method','regularIntent','oversizedIntent','tolerance'].forEach(function(k){
+    if (d[k] === undefined) throw new Error('FATAL: content/sizing.json is missing required key "'+k+'".');
+  });
+  if (!d.regular.length || !d.oversized.length) throw new Error('FATAL: content/sizing.json has no size rows.');
+  return d;
+})();
 
 function buildProducts(opts){
   const ROOT = opts.ROOT, SITE = opts.SITE, write = opts.write;

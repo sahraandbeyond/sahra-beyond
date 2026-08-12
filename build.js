@@ -935,10 +935,16 @@ if (LAUNCHED) (function () {
    /fabric/    spec + trust page ("230gsm t shirt", "organic cotton tee UAE")
    /size-guide/ standalone; was only an anchor buried in the shop page
    ========================================================================== */
-const SIZING = readJSON(path.join(ROOT,'content/sizing.json')) || { regular:[], oversized:[], method:[] };
+const SIZING = (function(){
+  const d = readJSON(path.join(ROOT,'content/sizing.json'));
+  if (!d || !Array.isArray(d.regular) || !d.regular.length) {
+    throw new Error('FATAL: content/sizing.json missing or empty — /size-guide/ and every product size table depend on it.');
+  }
+  return d;
+})();
 function sizeTableHtml() {
   if (!SIZING.regular || !SIZING.regular.length) return '';
-  const cell = (i,c) => `<span class="sz-in">${i}&Prime;</span><span class="sz-cm">${c}&nbsp;cm</span>`;
+  const cell = (i,c) => `<span class="sz-in">${i}&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">${c}&nbsp;cm</span>`;
   const rows = fit => (SIZING[fit] || []).map(r =>
     `<tr><th scope="row">${esc(String(r[0]))}</th><td>${cell(r[1],r[2])}</td><td>${cell(r[3],r[4])}</td><td>${cell(r[5],r[6])}</td><td>${cell(r[7],r[8])}</td></tr>`).join('');
   const tbl = (label, fit, intent) => `<h3>${label}</h3><p class="sgintent">${intent}</p><div class="sgwrap"><table class="sg">
@@ -1037,12 +1043,12 @@ const CATEGORIES = [
     h1:'Regular Fit T-Shirts',
     title:'Regular Fit T-Shirts — UAE Designs | Sahra & Beyond',
     desc:'Our regular fit t-shirts — true to size, cut to layer. 230gsm organic cotton, original UAE designs, S–XXL. Limited runs, delivered across the UAE.',
-    intro:"Regular is the fit to take if you layer. It sits on the shoulder and skims the body rather than hanging off it — a classic straight cut graded to the US/international standard, with a 2&Prime; chest step per size above M.\n\nEvery design in the collection comes in this fit, in sizes S to XXL. Same 230gsm organic cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette." },
+    intro:"Regular is the fit to take if you layer. It sits on the shoulder and skims the body rather than hanging off it — a classic straight cut graded to the US/international standard, with a 2″ chest step per size above M.\n\nEvery design in the collection comes in this fit, in sizes S to XXL. Same 230gsm organic cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette." },
   { slug:'t-shirts/oversized', cat:'oversized-tees', emoji:'▯', catBg:'Camping',
     h1:'Oversized Fit T-Shirts',
     title:'Oversized T-Shirts UAE — Drop Shoulder | Sahra & Beyond',
     desc:'Oversized drop-shoulder t-shirts. The shoulder seam sits 2–3 inches below your natural shoulder — width, not length, makes the silhouette. 230gsm organic cotton, S–XXL.',
-    intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2&ndash;3&Prime; below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nTake your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XXL." },
+    intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nTake your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XXL." },
   { slug:'polos', cat:'polos', emoji:'✦', catBg:'Coast',
     h1:'Polo Shirts',
     title:'Embroidered Cotton Polo — 240gsm | Sahra & Beyond',
