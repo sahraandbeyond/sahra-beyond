@@ -1,22 +1,110 @@
 {
-  "_comment": "GRADED SIZE SPECIFICATION — the chart issued to the manufacturer and produced against. Single source of truth for every size table on the site. Rows: [size, chest_in, chest_cm, length_in, length_cm, shoulder_in, shoulder_cm, sleeve_in, sleeve_cm].",
+  "_comment": "GRADED SIZE SPECIFICATION — the chart issued to the manufacturer and produced against. Single source of truth for every size table on the site. Sizes S–XL only — we do not produce XXL. Rows: [size, chest_in, chest_cm, length_in, length_cm, shoulder_in, shoulder_cm, sleeve_in, sleeve_cm].",
   "confirmed": true,
   "confirmedNote": "Production spec issued to InkMASH on the purchase order. Supersedes any supplier standard chart.",
-  "sizes": ["S", "M", "L", "XL", "XXL"],
-  "columns": ["Chest", "Length", "Shoulder", "Sleeve"],
+  "sizes": [
+    "S",
+    "M",
+    "L",
+    "XL"
+  ],
+  "columns": [
+    "Chest",
+    "Length",
+    "Shoulder",
+    "Sleeve"
+  ],
   "regular": [
-    ["S", 19, 48.3, 27.5, 69.8, 17, 43.2, 7.5, 19.1],
-    ["M", 20, 50.8, 28.5, 72.4, 18, 45.7, 8, 20.3],
-    ["L", 22, 55.9, 29.5, 74.9, 19, 48.3, 8.5, 21.6],
-    ["XL", 24, 61.0, 30.5, 77.5, 20, 50.8, 9, 22.9],
-    ["XXL", 26, 66.0, 31.5, 80.0, 21, 53.3, 9.5, 24.1]
+    [
+      "S",
+      19,
+      48.3,
+      27.5,
+      69.8,
+      17,
+      43.2,
+      7.5,
+      19.1
+    ],
+    [
+      "M",
+      20,
+      50.8,
+      28.5,
+      72.4,
+      18,
+      45.7,
+      8,
+      20.3
+    ],
+    [
+      "L",
+      22,
+      55.9,
+      29.5,
+      74.9,
+      19,
+      48.3,
+      8.5,
+      21.6
+    ],
+    [
+      "XL",
+      24,
+      61.0,
+      30.5,
+      77.5,
+      20,
+      50.8,
+      9,
+      22.9
+    ]
   ],
   "oversized": [
-    ["S", 22.5, 57.1, 27.5, 69.8, 21, 53.3, 9, 22.9],
-    ["M", 23.5, 59.7, 28.5, 72.4, 22, 55.9, 9.5, 24.1],
-    ["L", 25, 63.5, 29.5, 74.9, 23.5, 59.7, 10, 25.4],
-    ["XL", 26.5, 67.3, 30.5, 77.5, 25, 63.5, 10.5, 26.7],
-    ["XXL", 28, 71.1, 31.5, 80.0, 26, 66.0, 11, 27.9]
+    [
+      "S",
+      22.5,
+      57.1,
+      27.5,
+      69.8,
+      21,
+      53.3,
+      9,
+      22.9
+    ],
+    [
+      "M",
+      23.5,
+      59.7,
+      28.5,
+      72.4,
+      22,
+      55.9,
+      9.5,
+      24.1
+    ],
+    [
+      "L",
+      25,
+      63.5,
+      29.5,
+      74.9,
+      23.5,
+      59.7,
+      10,
+      25.4
+    ],
+    [
+      "XL",
+      26.5,
+      67.3,
+      30.5,
+      77.5,
+      25,
+      63.5,
+      10.5,
+      26.7
+    ]
   ],
   "regularIntent": "Classic regular fit to the US/international standard, with a 2&Prime; chest step per size above M. The shoulder seam sits at your natural shoulder point.",
   "oversizedIntent": "A true drop-shoulder oversized cut &mdash; the shoulder seam sits 2&ndash;3&Prime; below the natural shoulder point. Width, not length, is what creates the silhouette, so it does not simply wear like a size up.",
@@ -28,7 +116,7 @@
   ],
   "tolerance": "Tolerance is &plusmn;0.5&Prime; (&plusmn;1.3&nbsp;cm) on every measurement. Garments outside that are rejected at QC.",
   "polo": {
-    "available": false,
-    "note": "The polo is cut differently to the tees &mdash; narrower through the body, a set&#8209;in sleeve and no drop shoulder &mdash; so the tee chart does not apply to it. Its own graded measurements will be published here before the polo ships."
+    "available": true,
+    "note": "The polo is graded to the same specification as the tees. Take the Regular fit measurements above &mdash; the polo has a set&#8209;in sleeve and no drop shoulder, so the oversized chart does not apply to it."
   }
 }

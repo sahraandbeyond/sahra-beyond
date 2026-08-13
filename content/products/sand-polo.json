@@ -5,9 +5,9 @@
   "sku": "SB-POLO-SAND",
   "drop": "Drop 01",
   "order": 0,
-  "price": "TBC",
+  "price": "249",
   "garment": "polo",
-  "eyebrow": "Sahra &amp; Beyond · Founding Edition",
+  "eyebrow": "Sahra & Beyond · Founding Edition",
   "shopAnchor": "",
   "theme": "#EFE6D6",
   "theme2": "#AE9C91",
@@ -23,11 +23,11 @@
   "seoDesc": "The Sahra Polo — 240gsm cotton, embroidered rather than printed, in sand. Forty pieces only, numbered 1/40. The scarcest piece in the first drop.",
   "shareDesc": "240gsm embroidered cotton polo in sand. Forty pieces, numbered 1/40.",
   "lede": "A 240gsm cotton polo in sand, embroidered rather than printed. Forty pieces exist. It is the quietest thing we make and the hardest to get hold of.",
-  "ldDesc": "The Sahra Polo — 240gsm cotton polo in sand, embroidered. Limited to 40 numbered pieces.",
+  "ldDesc": "The Sahra Polo — 240gsm cotton polo in sand, embroidered. Limited to 40 numbered pieces. AED 249.",
   "printChip": "Embroidered &middot; 240gsm",
   "occasion": "Made for evenings that start outdoors and end somewhere better",
   "edition": "Founding Edition · numbered 1/40",
-  "sizingApplies": false,
+  "sizingApplies": true,
   "placeName": "",
   "placeEmirate": "",
   "placeSlug": "",
@@ -63,11 +63,15 @@
   "faq": [
     {
       "q": "How is the polo different from the tees?",
-      "a": "Three ways. It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape. It is embroidered rather than printed. And it is limited to 40 pieces rather than 120, numbered separately as its own edition."
+      "a": "Three ways. It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape. It is embroidered rather than printed. And it is limited to 40 pieces rather than 120, numbered separately as its own edition. Sizing is the same as the Regular fit tees."
+    },
+    {
+      "q": "Are these unisex? Will they fit women?",
+      "a": "Yes — every piece we make is cut unisex, in one run of sizes from S to XL. There is no separate men's or women's version and no difference in the cut. Because the size chart lists the garment measured flat rather than a body size, the reliable way to choose is to measure a t-shirt you already like the fit of and match the numbers. Plenty of people size down for a closer fit or up for a relaxed one — both are the same garment."
     },
     {
       "q": "What size should I order?",
-      "a": "The polo is cut differently to the tees — narrower through the body, a set-in sleeve and no drop shoulder — so our tee size chart does not apply to it. Its own graded measurements will be published before it ships. Email hello@sahraandbeyond.ae and we will send them as soon as they are signed off."
+      "a": "The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL. If you know your size in one of the tees, take the same here. Full measurements are in the size chart on this page and on our size guide."
     },
     {
       "q": "Why only forty?",
@@ -79,5 +83,7 @@
     }
   ],
   "category": "polos",
-  "fit": ""
+  "fit": "regular",
+  "fitHeading": "Sized like the <em>tees</em>",
+  "fitWho": "The polo is graded to the same specification as our Regular fit t-shirts, so if you already know your size in one of the tees, take the same here. It has a set-in sleeve and sits at the natural shoulder — there is no oversized cut of the polo."
 }
