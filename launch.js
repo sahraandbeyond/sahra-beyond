@@ -66,7 +66,15 @@ function checks() {
     sizingOk = sz.confirmed === true && Array.isArray(sz.regular) && sz.regular.length > 0;
     if (!sizingOk) sizingWhy = 'sizing.json present but not confirmed';
   } catch(e){}
-  push(true, sizingOk, 'graded size spec confirmed', sizingOk ? 'production chart, S–XXL, dual unit' : sizingWhy);
+  // We do not produce XXL. Guard against it creeping back in from a spec sheet.
+  let hasXXL = false;
+  try {
+    const sz = JSON.parse(fs.readFileSync(path.join(ROOT,'content/sizing.json'),'utf8'));
+    hasXXL = (sz.sizes||[]).includes('XXL') || (sz.regular||[]).some(r=>r[0]==='XXL') || (sz.oversized||[]).some(r=>r[0]==='XXL');
+  } catch(e){}
+  push(true, !hasXXL, 'no XXL in the size spec', hasXXL ? 'XXL found — we produce S–XL only' : 'S–XL as produced');
+
+  push(true, sizingOk, 'graded size spec confirmed', sizingOk ? 'production chart, S–XL, dual unit' : sizingWhy);
 
   // 4. Products exist
   const pdir = path.join(ROOT, 'content/products');

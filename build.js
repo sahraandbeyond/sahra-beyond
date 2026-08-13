@@ -967,12 +967,12 @@ const COMMERCE = [
     sections: [
       { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over the darkest sky in the Emirates — Bortle 1, the lowest reading on the scale that measures light pollution. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
       { h2: 'The fabric, plainly', body: "All our t-shirts are 230gsm 100% organic cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.\n\nEvery piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Graphics are printed direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Empty Quarter design is embroidered rather than printed." },
-      { h2: 'Regular and oversized fits', body: "Every design comes in both a Regular and an Oversized fit, in sizes S to XXL. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
+      { h2: 'Regular and oversized fits', body: "Every design is cut unisex — one cut worn by everyone, no separate men's and women's versions — and comes in both a Regular and an Oversized fit, in sizes S to XL. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
       { h2: 'Limited runs', body: "Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything." }
     ],
     faqs: [
       ['Where do you ship?', 'We currently ship within the United Arab Emirates only. Delivery cost is calculated and shown at checkout before you pay.'],
-      ['What size should I order?', 'Every design comes in Regular and Oversized fits, S to XXL. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.'],
+      ['What size should I order?', 'Every design comes in Regular and Oversized fits, S to XL. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.'],
       ['Are these really organic cotton?', 'Yes — 230gsm 100% organic cotton for every piece in the collection.'],
       ['Will designs be restocked?', 'Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone.']
     ]
@@ -987,7 +987,7 @@ const COMMERCE = [
       { h2: 'A leaving gift for someone moving away', body: "This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?\n\nA skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately." },
       { h2: 'For someone who loves the outdoors here', body: "If the person you are buying for spends their weekends camping, dune driving, stargazing or hiking, the design will land. Each of our t-shirts comes from a place they can drive to, and every product page tells the story of that place — including the coordinates.\n\nHeavyweight 230gsm organic cotton means it is a shirt they will actually keep wearing, not a novelty they wear once." },
       { h2: 'For a visitor who wants something real', body: "Visitors often want something from the UAE that is not obviously made for visitors. A limited-run t-shirt from a small local brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat." },
-      { h2: 'Practical things', body: "All our t-shirts are AED 149 and come in Regular and Oversized fits, S to XXL. We ship across the UAE, and delivery cost is shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
+      { h2: 'Practical things', body: "All our t-shirts are AED 149 and come in Regular and Oversized fits, S to XL. We ship across the UAE, and delivery cost is shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
     ],
     faqs: [
       ['What is a good leaving gift for an expat in the UAE?', 'Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.'],
@@ -1022,7 +1022,7 @@ const COMMERCE = [
     h1: 'T-shirt size and fit guide',
     title: 'T-Shirt Size Guide — Regular & Oversized Fit',
     desc: 'Flat-lay measurements for every Sahra & Beyond t-shirt in Regular and Oversized fits, plus how to measure a t-shirt you already own to find your size.',
-    intro: "Every design comes in two fits — Regular and Oversized — in sizes S to XXL. Every figure below is a garment measurement taken flat, not a body measurement, and comes straight from the graded specification our manufacturer produced against. Both inches and centimetres are shown.",
+    intro: "Everything we make is cut unisex — one cut worn by everyone, in sizes S to XL, with no separate men's or women's version. Every design comes in two fits, Regular and Oversized. Every figure below is a garment measurement taken flat, not a body measurement, and comes straight from the graded specification our manufacturer produced against. Both inches and centimetres are shown.",
     sizeTable: true,
     sections: [
       { h2: 'Regular or oversized?', body: "Regular is a classic straight cut. It sits close to the body without being tight, and layers cleanly under a shacket or jacket. If you normally wear a medium in a high-street t-shirt, take a medium here.\n\nOversized is a deliberately wider cut with a dropped shoulder and more room through the body. It is designed to be worn on its own rather than layered. If you are between sizes and want the relaxed look, size down rather than up — the oversized cut already adds width." },
@@ -1030,6 +1030,7 @@ const COMMERCE = [
       { h2: 'If you order the wrong size', body: "Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the piece is unworn, unwashed and still has its tags. Email hello@sahraandbeyond.ae with your order number and we will arrange it.\n\nIf you would rather get it right first time, email us before you order and we will talk you through it." }
     ],
     faqs: [
+      ['Are these unisex?', 'Yes — every piece is cut unisex, S to XL, with no separate men\'s or women\'s version. Because the tables above give the garment measured flat rather than a body size, measure a t-shirt you already like the fit of and match the numbers. Sizing down gives a closer fit, sizing up a more relaxed one — same garment either way.'],
       ['How do I measure my t-shirt size?', 'Lay a t-shirt you already own flat, measure straight across from armpit seam to armpit seam for the flat chest measurement, then from the top of the shoulder down to the hem for length. Compare both to the tables above.'],
       ['Should I size up for the oversized fit?', 'No — the oversized cut already adds width and a dropped shoulder. If you are between sizes, size down for oversized and up for regular.'],
       ['Are exchanges free?', 'Yes, within the UAE, within 14 days of delivery and subject to stock, as long as the item is unworn, unwashed and still has tags.']
@@ -1042,18 +1043,18 @@ const CATEGORIES = [
   { slug:'t-shirts/regular', cat:'regular-tees', emoji:'▭', catBg:'Dunes',
     h1:'Regular Fit T-Shirts',
     title:'Regular Fit T-Shirts — UAE Designs | Sahra & Beyond',
-    desc:'Our regular fit t-shirts — true to size, cut to layer. 230gsm organic cotton, original UAE designs, S–XXL. Limited runs, delivered across the UAE.',
-    intro:"Regular is the fit to take if you layer. It sits on the shoulder and skims the body rather than hanging off it — a classic straight cut graded to the US/international standard, with a 2″ chest step per size above M.\n\nEvery design in the collection comes in this fit, in sizes S to XXL. Same 230gsm organic cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette." },
+    desc:'Our regular fit t-shirts — true to size, cut to layer. 230gsm organic cotton, original UAE designs, S–XL. Limited runs, delivered across the UAE.',
+    intro:"Regular is the fit to take if you layer. It sits on the shoulder and skims the body rather than hanging off it — a classic straight cut graded to the US/international standard, with a 2″ chest step per size above M.\n\nEvery design in the collection comes in this fit, cut unisex, in sizes S to XL. Same 230gsm organic cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette." },
   { slug:'t-shirts/oversized', cat:'oversized-tees', emoji:'▯', catBg:'Camping',
     h1:'Oversized Fit T-Shirts',
     title:'Oversized T-Shirts UAE — Drop Shoulder | Sahra & Beyond',
-    desc:'Oversized drop-shoulder t-shirts. The shoulder seam sits 2–3 inches below your natural shoulder — width, not length, makes the silhouette. 230gsm organic cotton, S–XXL.',
-    intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nTake your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XXL." },
+    desc:'Oversized drop-shoulder t-shirts. The shoulder seam sits 2–3 inches below your natural shoulder — width, not length, makes the silhouette. 230gsm organic cotton, S–XL.',
+    intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nCut unisex, S to XL. Take your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XL." },
   { slug:'polos', cat:'polos', emoji:'✦', catBg:'Coast',
     h1:'Polo Shirts',
     title:'Embroidered Cotton Polo — 240gsm | Sahra & Beyond',
     desc:'The Sahra Polo — 240gsm cotton, embroidered rather than printed. Forty pieces only, numbered 1/40. The scarcest piece in the first drop.',
-    intro:"One polo, forty pieces. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. Numbered 1/40 as its own edition, separate from the tees." }
+    intro:"One polo, forty pieces. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. Cut unisex, S to XL, and sized to the same specification as the Regular fit tees. Numbered 1/40 as its own edition, separate from the tees." }
 ];
 
 function catCards(list) {

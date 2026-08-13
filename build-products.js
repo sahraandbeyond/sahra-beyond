@@ -397,7 +397,7 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
       <div class="vat">Free returns within the UAE</div>
       <p class="lede">${p.lede}</p>
       <ul class="spec-strip">
-        <li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>${p.printChip}</li>
+        <li><strong>Unisex</strong> &middot; S&ndash;XL</li><li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>${p.printChip}</li>
       </ul>
       <p class="occasion">✦ ${p.occasion}</p>
       <!-- Live size availability, fetched from Shopify. Hidden until data arrives so we never
@@ -482,7 +482,7 @@ ${cards(p.designCards)}
     <span class="snum">04 — Size &amp; fit</span>
     <h2>${p.fitHeading || 'Size &amp; <em>fit</em>'}</h2>
     <p>${p.fitWho || ''}</p>
-    <p>Available in S, M, L, XL and XXL.${esc(p.fitExtra||"")}</p>
+    <p><strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.${esc(p.fitExtra||"")}</p>
     <div class="sz-wrap">
       <table class="sz">
         <caption class="sz-cap">${p.fit === 'oversized' ? 'Oversized fit' : 'Regular fit'} &middot; garment measured flat</caption>
@@ -681,7 +681,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       if((n.handle||'').toLowerCase()===HANDLE||(n.title||'').toLowerCase()===NAME.toLowerCase()){node=n;break;}
     }
     if(!node)return;                      // product not published yet — stay hidden
-    var seen={},order=['S','M','L','XL','XXL'];
+    var seen={},order=['S','M','L','XL'];
     (node.variants.edges||[]).forEach(function(v){
       var opts=v.node.selectedOptions||[];
       var sz=(opts.filter(function(o){return o.name.toLowerCase()==='size';})[0]||{}).value;
