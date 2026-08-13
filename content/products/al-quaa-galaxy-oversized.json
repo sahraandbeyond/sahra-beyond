@@ -6,7 +6,7 @@
   "drop": "Drop 01",
   "order": 12,
   "price": "199",
-  "shopAnchor": "al-quaa-desert",
+  "shopAnchor": "al-quaa-galaxy-oversized",
   "theme": "#181109",
   "theme2": "#1B1430",
   "accent": "#E9B978",
@@ -18,7 +18,7 @@
   "altFront": "Al Quaa Galaxy Tee worn, front — small صحراء mark on the chest",
   "altBack": "Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes",
   "seoTitle": "Al Quaa Galaxy T-Shirt — Oversized Fit",
-  "seoDesc": "Oversized fit. The Al Quaa Galaxy T-Shirt — the Milky Way as it rises over Al Quaa, the only Bortle 1 sky in the Emirates. 230gsm organic cotton, ribbed crew neck, taped seams. Limited first run.",
+  "seoDesc": "The Al Quaa Galaxy tee in a true drop-shoulder oversized cut. The Milky Way over the darkest sky in the UAE. 230gsm cotton, unisex S–XL. AED 199.",
   "shareDesc": "Oversized fit. The Milky Way over Al Quaa — the darkest sky in the Emirates. 230gsm organic cotton. Limited first run.",
   "lede": "A true drop-shoulder cut — the seam sits 2–3&Prime; below your natural shoulder. Width, not length, is what makes the silhouette. The Milky Way as it rises over Al Quaa — the only Bortle&nbsp;1, darkest sky in the Emirates. A subtle <span lang=\"ar\">صحراء</span> mark on the chest, the galaxy across the back.",
   "ldDesc": "The Milky Way as it rises over Al Quaa — the only Bortle 1, darkest sky in the Emirates. A subtle صحراء mark on the chest, the galaxy across the back. Heavyweight 230gsm organic cotton.",
@@ -89,7 +89,7 @@
       "a": "This is a limited first run. We may make more of a design later, but we don't promise it — when a size sells out in this run, treat it as gone."
     }
   ],
-  "edition": "Founding Edition · numbered 1/120",
+  "edition": "Founding Edition · limited first run",
   "fit": "oversized",
   "category": "oversized-tees",
   "garment": "tee",

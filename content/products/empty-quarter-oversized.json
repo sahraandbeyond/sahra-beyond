@@ -6,7 +6,7 @@
   "drop": "Drop 02",
   "order": 22,
   "price": "199",
-  "shopAnchor": "liwa",
+  "shopAnchor": "empty-quarter-oversized",
   "theme": "#E7D6B8",
   "theme2": "#6B4A18",
   "accent": "#C0702E",
@@ -18,7 +18,7 @@
   "altFront": "Empty Quarter Tee, front — tonal embroidered sun",
   "altBack": "Empty Quarter Tee, back",
   "seoTitle": "Empty Quarter T-Shirt — Oversized Fit",
-  "seoDesc": "Oversized fit. The Empty Quarter T-Shirt — a tonal embroidered sun setting over the dune ridges of Liwa, where the Empty Quarter begins. 230gsm organic cotton, ribbed crew neck, taped seams. Limited first run.",
+  "seoDesc": "The Empty Quarter tee, oversized drop-shoulder cut. A tonal sun over the dunes of Liwa — stitched, not printed. 230gsm cotton, unisex S–XL. AED 199.",
   "shareDesc": "Oversized fit. A tonal embroidered sun setting over the dune ridges of Liwa. 230gsm organic cotton. Limited first run.",
   "lede": "A true drop-shoulder cut — the seam sits 2–3&Prime; below your natural shoulder. Width, not length, is what makes the silhouette. A tonal embroidered sun setting over the dune ridges of Liwa, with <span lang=\"ar\">صحراء</span> beneath — where the Empty Quarter begins and the dunes turn to mountains of sand.",
   "ldDesc": "A tonal embroidered sun setting over the dune ridges of Liwa, with صحراء beneath. Soft, heavyweight 230gsm organic cotton.",
@@ -90,7 +90,7 @@
       "a": "This is a limited first run. We may make more of a design later, but we don't promise it — when a size sells out in this run, treat it as gone."
     }
   ],
-  "edition": "Founding Edition · numbered 1/120",
+  "edition": "Founding Edition · limited first run",
   "fit": "oversized",
   "category": "oversized-tees",
   "garment": "tee",

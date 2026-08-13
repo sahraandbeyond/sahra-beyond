@@ -6,7 +6,7 @@
   "drop": "Drop 03",
   "order": 32,
   "price": "199",
-  "shopAnchor": "wadi-naqab",
+  "shopAnchor": "hajar-mountains-oversized",
   "theme": "#C6BFD3",
   "theme2": "#5C3A2E",
   "accent": "#C0702E",
@@ -18,7 +18,7 @@
   "altFront": "Hajar Mountains Tee, front — topographic line drawing",
   "altBack": "Hajar Mountains Tee, back — red rock of the Hajar",
   "seoTitle": "Hajar Mountains T-Shirt — Oversized Fit",
-  "seoDesc": "Oversized fit. The Hajar Mountains T-Shirt — a topographic line drawing of the peaks on the front, the red rock of the Hajar across the back. 230gsm organic cotton, ribbed crew neck, taped seams. Limited first run.",
+  "seoDesc": "The Hajar Mountains tee in an oversized drop-shoulder cut. Topographic peaks front, red rock across the back. 230gsm cotton, unisex S–XL. AED 199.",
   "shareDesc": "Oversized fit. A topographic line drawing of the Hajar peaks. 230gsm organic cotton, made to layer. Limited first run.",
   "lede": "A true drop-shoulder cut — the seam sits 2–3&Prime; below your natural shoulder. Width, not length, is what makes the silhouette. A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. Organic cotton, made to layer.",
   "ldDesc": "A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. 230gsm organic cotton, made to layer.",
@@ -89,7 +89,7 @@
       "a": "This is a limited first run. We may make more of a design later, but we don't promise it — when a size sells out in this run, treat it as gone."
     }
   ],
-  "edition": "Founding Edition · numbered 1/120",
+  "edition": "Founding Edition · limited first run",
   "fit": "oversized",
   "category": "oversized-tees",
   "garment": "tee",
