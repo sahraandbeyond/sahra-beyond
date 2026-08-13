@@ -328,6 +328,10 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .facts strong{color:#33271B}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .btn{display:inline-block;padding:11px 18px;border-radius:12px;background:#C0702E;color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+.btn.ghost{background:none;color:#C0702E;border:1px solid #C0702E}
+.btn.ghost:hover{background:rgba(192,112,46,.08)}
+.pcta .btn+.btn{margin-left:10px}
+@media(max-width:520px){.pcta .btn{display:block;text-align:center}.pcta .btn+.btn{margin:10px 0 0}}
 .btn.alt{background:transparent;color:#9C521B;border:1px solid rgba(192,112,46,.4)}
 .related{margin-top:34px}
 .cards{display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px}
@@ -1157,6 +1161,11 @@ function catCards(list) {
 
 CATEGORIES.forEach(C => {
   const items = BY_CATEGORY(C.cat);
+  // Deep-link into the shop with this category preselected. The shop reads these
+  // params on load, so /shop/?fit=oversized opens already filtered.
+  const SHOP = LAUNCHED ? '/shop/' : '/shop-preview.html';
+  const CAT_FILTER = { 'regular-tees':'regular', 'oversized-tees':'oversized', 'polos':'polo' }[C.cat] || '';
+  const shopHref = CAT_FILTER ? `${SHOP}?fit=${CAT_FILTER}` : SHOP;
   const canonical = `${SITE}/${C.slug}/`;
   const jsonld = [
     { "@context":"https://schema.org","@type":"CollectionPage","name":C.h1,"description":C.desc,"url":canonical },
@@ -1178,7 +1187,7 @@ CATEGORIES.forEach(C => {
   <main>
     <div class="content">${paras(C.intro)}</div>
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${items.length} piece${items.length===1?'':'s'}</span></div>${catCards(items)}
-      <a class="btn" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+      <a class="btn shoplink" href="${shopHref}">Shop ${esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
     ${newsletterBlock()}
     <p class="back"><a href="/t-shirts/">All t-shirts &rarr;</a></p>
   </main>`;

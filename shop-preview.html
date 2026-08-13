@@ -162,6 +162,26 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .prod.dark .prod-limited{color:var(--gold)}
 .buy-limited{margin:11px 0 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.3px;color:var(--clay-deep);opacity:.92}
 .prod.dark .buy-limited{color:var(--gold)}
+/* .prod sets display:flex, which beats the `hidden` attribute's default display:none.
+   Without this the filters would toggle `hidden` and nothing would visibly change. */
+.prod[hidden]{display:none}
+.shop-filters{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 18px;max-width:1060px;margin:0 auto 14px;padding:0 24px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.filt-grp{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.filt-lab{opacity:.5;margin-right:2px}
+.filt{padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:none;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;opacity:.85;transition:border-color .25s,color .25s,background .25s,opacity .25s;min-height:34px}
+.filt:hover{border-color:var(--clay);color:var(--clay-deep);opacity:1}
+.filt:focus-visible{outline:2px solid var(--clay);outline-offset:2px}
+.filt.on{background:var(--clay-deep,#9C521B);border-color:var(--clay-deep,#9C521B);color:#fff;opacity:1}
+.filt-meta{display:flex;align-items:center;gap:12px;margin-left:auto}
+#filtCount{opacity:.55;letter-spacing:1px}
+.filt-clear,.filt-linkish{background:none;border:0;padding:0;color:var(--clay-deep,#9C521B);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.filt-empty{text-align:center;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;opacity:.7;margin:6px auto 34px;padding:0 24px}
+.shop-filters+.prod,.filt-empty+.prod{margin-top:8px}
+@media(max-width:760px){
+  .shop-filters{justify-content:flex-start;gap:8px 12px;font-size:10px}
+  .filt-meta{margin-left:0;width:100%;justify-content:space-between}
+  .filt{padding:8px 12px;min-height:38px}
+}
 .shop-jump{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:1000px;margin:0 auto 44px;padding:0 24px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase}
 .shop-jump span{opacity:.6}
 .shop-jump a{padding:6px 13px;border:1px solid var(--line);border-radius:999px;color:inherit;opacity:.9;transition:border-color .3s,color .3s,opacity .3s}
@@ -958,14 +978,58 @@ function occasionFor(p){
 function draw(){
   var host=document.getElementById('products');
   if(!PRODUCTS.length){host.innerHTML='<div class="loading">No products yet. Add some in Shopify.</div>';return;}
-  var _seenPl={},_jumpItems=PRODUCTS.filter(function(p){var k=p.placeSlug||p.title;if(_seenPl[k])return false;_seenPl[k]=1;return true;});
-  var jump=_jumpItems.length>1?'<nav class="shop-jump" aria-label="Shop by place"><span>Shop by place:</span>'+_jumpItems.map(function(p){return '<a href="#prod-'+(p.handle||p.placeSlug)+'">'+(p.place||p.title)+'</a>';}).join('')+'</nav>':'';
+  /* ---------- filter bar ----------
+     Filters hide sections rather than re-rendering them: the cart wiring below
+     maps section index -> PRODUCTS index, so removing nodes would desync it. */
+  var _has=function(fn){return PRODUCTS.some(fn);};
+  var _grp=function(key,label,opts){
+    var live=opts.filter(function(o){return _has(function(p){return o.test(p);});});
+    if(live.length<2)return '';
+    return '<div class="filt-grp" role="group" aria-label="'+label+'"><span class="filt-lab">'+label+'</span>'+
+      live.map(function(o){
+        return '<button type="button" class="filt" data-k="'+key+'" data-v="'+o.v+'" aria-pressed="false">'+o.n+'</button>';
+      }).join('')+'</div>';
+  };
+  var tv=function(p,k){return tagVal(p.tags||[],k);};
+  var fitOf=function(p){return tv(p,'category')==='polos'?'polo':(tv(p,'fit')||'');};
+  var printOf=function(p){return (tv(p,'print')||'').toLowerCase().indexOf('embroider')===0?'embroidered':'dtg';};
+
+  var fitOpts=[{v:'regular',n:'Regular',test:function(p){return fitOf(p)==='regular';}},
+               {v:'oversized',n:'Oversized',test:function(p){return fitOf(p)==='oversized';}},
+               {v:'polo',n:'Polo',test:function(p){return fitOf(p)==='polo';}}];
+  var _sp={},placeOpts=[];
+  PRODUCTS.forEach(function(p){
+    if(!p.placeSlug||_sp[p.placeSlug])return;_sp[p.placeSlug]=1;
+    placeOpts.push({v:p.placeSlug,n:p.place||p.placeSlug,test:function(q){return q.placeSlug===p.placeSlug;}});
+  });
+  var printOpts=[{v:'dtg',n:'DTG print',test:function(p){return printOf(p)==='dtg';}},
+                 {v:'embroidered',n:'Embroidered',test:function(p){return printOf(p)==='embroidered';}}];
+  var sizeOpts=['S','M','L','XL'].map(function(sz){
+    return {v:sz,n:sz,test:function(p){return (p.variants||[]).some(function(v){return v.size===sz&&v.avail;});}};
+  });
+
+  var bar='<div class="shop-filters" id="shopFilters">'
+    + _grp('fit','Fit',fitOpts)
+    + _grp('place','Place',placeOpts)
+    + _grp('print','Made by',printOpts)
+    + _grp('size','Available in',sizeOpts)
+    + '<div class="filt-meta"><span id="filtCount" role="status" aria-live="polite"></span>'
+    + '<button type="button" class="filt-clear" id="filtClear" hidden>Clear all</button></div></div>'
+    + '<p class="filt-empty" id="filtEmpty" hidden>Nothing matches that combination yet. <button type="button" class="filt-linkish" id="filtReset">Show everything</button></p>';
+  var jump=bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
     var sizes=p.sizes.map(function(sz){var av=p.variants.some(function(v){return v.size===sz&&v.avail;});return '<button class="size" data-size="'+sz+'" '+(av?'':'disabled')+'><span>'+sz+'</span></button>';}).join('');
     var fitLabel=(tagVal(p.tags||[],'fit')||'');
     if(!fitLabel&&/oversized/i.test(p.title))fitLabel='oversized';
     if(!fitLabel&&/regular/i.test(p.title))fitLabel='regular';
     var fitNice=fitLabel?fitLabel.charAt(0).toUpperCase()+fitLabel.slice(1):'';
+    /* ---- facets used by the filter bar ---- */
+    var _cat=tagVal(p.tags||[],'category');
+    var _fFit=(_cat==='polos')?'polo':(fitLabel||'');            /* the polo is its own silhouette, not a tee fit */
+    var _fPrint=(tagVal(p.tags||[],'print')||'').toLowerCase().indexOf('embroider')===0?'embroidered':'dtg';
+    var _fSizes=(p.sizes||[]).filter(function(sz){                /* only sizes actually buyable right now */
+      return p.variants.some(function(v){return v.size===sz&&v.avail;});
+    }).join(' ');
     var fitChip=fitNice?'<span class="fitchip">'+fitNice+' fit</span>':'';
     var otherFit=fitLabel==='oversized'?'regular':(fitLabel==='regular'?'oversized':'');
     var _sib=(otherFit&&p.handle)?PRODUCTS.filter(function(q){return q.handle===p.handle.replace(/-(regular|oversized)$/,'-'+otherFit);})[0]:null;
@@ -990,7 +1054,7 @@ function draw(){
     var buyGhaf='<a class="buy-ghaf" href="/commitment.html">&#127793; A share of every tee plants ghaf trees in the UAE &rarr;</a>';
     var details='<details class="prod-acc"><summary>Details &amp; care</summary><ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% organic cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Fit.</strong> Unisex — Regular (true to size) or Oversized (relaxed drop-shoulder). See the size guide.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul></details>';
     var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; Organic cotton</span></div>';
-    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+fitChip+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price">'+money(p.price,p.cur)+'</div>'+specStrip+fitSwap+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
+    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'" data-fit="'+_fFit+'" data-place="'+(p.placeSlug||'')+'" data-print="'+_fPrint+'" data-sizes="'+_fSizes+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+fitChip+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price">'+money(p.price,p.cur)+'</div>'+specStrip+fitSwap+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
   }).join('');
   var secs=[].slice.call(host.querySelectorAll('.prod'));
   secs.forEach(function(sec,i){
@@ -1037,9 +1101,83 @@ function draw(){
     }
     ScrollTrigger.refresh();
   }
+  initFilters(secs);
   startBgJourney(secs);
   buildMap(PRODUCTS);
   injectProductJsonLd(PRODUCTS);
+}
+
+/* ---------- shop filters ----------
+   State lives in the URL (?fit=oversized&size=M) so a filtered view can be linked
+   from Instagram, an email or a category page. Sections are hidden, never removed,
+   so cart wiring and the scroll palette keep working. */
+function initFilters(secs){
+  var bar=document.getElementById('shopFilters');
+  if(!bar)return;
+  var countEl=document.getElementById('filtCount'),
+      clearEl=document.getElementById('filtClear'),
+      emptyEl=document.getElementById('filtEmpty'),
+      resetEl=document.getElementById('filtReset'),
+      btns=[].slice.call(bar.querySelectorAll('.filt')),
+      KEYS=['fit','place','print','size'],
+      state={};
+  KEYS.forEach(function(k){state[k]=null;});
+
+  function matches(sec){
+    if(state.fit&&sec.getAttribute('data-fit')!==state.fit)return false;
+    if(state.place&&sec.getAttribute('data-place')!==state.place)return false;
+    if(state.print&&sec.getAttribute('data-print')!==state.print)return false;
+    if(state.size){
+      var av=(sec.getAttribute('data-sizes')||'').split(' ');
+      if(av.indexOf(state.size)<0)return false;
+    }
+    return true;
+  }
+  function apply(push){
+    var shown=0;
+    secs.forEach(function(sec){
+      var ok=matches(sec);
+      sec.hidden=!ok;
+      if(ok){
+        /* keep the alternating layout even after filtering */
+        sec.classList.toggle('rev',shown%2===1);
+        shown++;
+      }
+    });
+    var active=KEYS.filter(function(k){return state[k];});
+    btns.forEach(function(b){
+      var on=state[b.dataset.k]===b.dataset.v;
+      b.classList.toggle('on',on);
+      b.setAttribute('aria-pressed',on?'true':'false');
+    });
+    countEl.textContent = active.length
+      ? 'Showing '+shown+' of '+secs.length
+      : secs.length+' pieces';
+    clearEl.hidden=!active.length;
+    emptyEl.hidden=shown>0;
+    if(push!==false){
+      var q=active.map(function(k){return k+'='+encodeURIComponent(state[k]);}).join('&');
+      var url=location.pathname+(q?'?'+q:'')+location.hash;
+      history.replaceState(null,'',url);
+    }
+    if(window.track&&active.length)track('filter_shop',{filters:active.map(function(k){return k+':'+state[k];}).join(',')});
+  }
+  bar.addEventListener('click',function(e){
+    var b=e.target.closest('.filt');
+    if(!b)return;
+    var k=b.dataset.k,v=b.dataset.v;
+    state[k]=(state[k]===v)?null:v;   /* second click clears that group */
+    apply();
+  });
+  function clearAll(){KEYS.forEach(function(k){state[k]=null;});apply();}
+  clearEl.addEventListener('click',clearAll);
+  if(resetEl)resetEl.addEventListener('click',clearAll);
+
+  /* seed from the URL, and never filter away a product someone deep-linked to */
+  var qs=new URLSearchParams(location.search);
+  KEYS.forEach(function(k){ if(qs.get(k))state[k]=qs.get(k); });
+  if(location.hash.indexOf('#prod-')===0)KEYS.forEach(function(k){state[k]=null;});
+  apply(false);
 }
 
 /* Per-product Product+Offer JSON-LD (SEO). Built from the live Shopify data after products render.
@@ -1057,10 +1195,10 @@ function injectProductJsonLd(products){
       var desc=(p.story||'').replace(/\s+/g,' ').trim();
       if(!desc&&pd)desc=pd.blurb;
       var node={"@type":"Product","name":p.title,"brand":{"@type":"Brand","name":"Sahra & Beyond"},
-        "url":SITE_BASE+'/shop/#prod-'+p.placeSlug,
+        "url":SITE_BASE+'/products/'+(p.handle||p.placeSlug)+'/',
         "offers":{"@type":"Offer","priceCurrency":p.cur||'AED',"price":String(Math.round(parseFloat(p.price))),
           "availability":anyAvail?"https://schema.org/InStock":"https://schema.org/OutOfStock",
-          "url":SITE_BASE+'/shop/#prod-'+p.placeSlug,
+          "url":SITE_BASE+'/products/'+(p.handle||p.placeSlug)+'/',
           "itemCondition":"https://schema.org/NewCondition"}};
       if(imgs.length)node.image=imgs;
       if(desc)node.description=desc;
