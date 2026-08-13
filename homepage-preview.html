@@ -284,9 +284,9 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   <div class="wrap inner">
     <div class="sec-head reveal"><span class="eyebrow">The collection</span><h2>Designs with a place</h2><p>A small, considered range — each a limited first run, tied to a real spot on the map.</p></div>
     <div class="grid" id="grid">
-      <a class="card reveal tilt" href="/products/al-quaa-galaxy-tee/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/alquaa-model-back.jpg" alt="Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price">AED 149</div></div></a>
-      <a class="card reveal tilt" href="/products/empty-quarter-tee/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-beige-front.jpg" alt="Empty Quarter Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter Tee</div><div class="card-price">AED 149</div></div></a>
-      <a class="card reveal tilt" href="/products/hajar-mountains-tee/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-taupe-front.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price">AED 149</div></div></a>
+      <a class="card reveal tilt" href="/products/al-quaa-galaxy-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/alquaa-model-back.jpg" alt="Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price">AED 199</div></div></a>
+      <a class="card reveal tilt" href="/products/empty-quarter-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-beige-front.jpg" alt="Empty Quarter Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter Tee</div><div class="card-price">AED 199</div></div></a>
+      <a class="card reveal tilt" href="/products/hajar-mountains-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-taupe-front.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price">AED 199</div></div></a>
     </div>
     <div class="qual-band reveal">
       <span class="eyebrow">Made to last</span>
@@ -680,14 +680,14 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   function tagVal(t,k){var x=(t||[]).find(function(y){return y.toLowerCase().indexOf(k+':')===0;});return x?x.split(':').slice(1).join(':'):'';}
   function money(a,c){return (c||'AED')+' '+Math.round(parseFloat(a));}
   /* Product pages that exist under /products/<slug>/. Add a slug here when a new product page ships. */
-  var PDP_SLUGS=['al-quaa-galaxy-tee','empty-quarter-tee','hajar-mountains-tee'];
+  var PDP_SLUGS=['al-quaa-galaxy-regular','empty-quarter-regular','hajar-mountains-regular','al-quaa-galaxy-oversized','empty-quarter-oversized','hajar-mountains-oversized','sand-polo'];
   function productPageFor(p){
     var h=String((p&&p.handle)||'').toLowerCase();
     if(PDP_SLUGS.indexOf(h)>=0)return '/products/'+h+'/';
     var t=((p&&p.title)||'')+' '+((p&&p.place)||'');t=t.toLowerCase();
-    if(/qua+|galaxy|milky/.test(t))return '/products/al-quaa-galaxy-tee/';
-    if(/liwa|dune|empty.?quarter/.test(t))return '/products/empty-quarter-tee/';
-    if(/hajar|naqab|mountain|topograph/.test(t))return '/products/hajar-mountains-tee/';
+    if(/qua+|galaxy|milky/.test(t))return '/products/al-quaa-galaxy-regular/';
+    if(/liwa|dune|empty.?quarter/.test(t))return '/products/empty-quarter-regular/';
+    if(/hajar|naqab|mountain|topograph/.test(t))return '/products/hajar-mountains-regular/';
     return '';
   }
   function fill(products){

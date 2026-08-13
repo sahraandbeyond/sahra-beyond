@@ -940,6 +940,12 @@ const SIZING = (function(){
   if (!d || !Array.isArray(d.regular) || !d.regular.length) {
     throw new Error('FATAL: content/sizing.json missing or empty — /size-guide/ and every product size table depend on it.');
   }
+  // We produce S–XL only. If XXL is present, content/ is stale or a spec sheet
+  // has been transcribed as an order. Fail the deploy rather than publish it.
+  const xxl = (d.sizes||[]).includes('XXL')
+    || (d.regular||[]).some(r => r[0] === 'XXL')
+    || (d.oversized||[]).some(r => r[0] === 'XXL');
+  if (xxl) throw new Error('FATAL: content/sizing.json contains XXL. We produce S–XL only. This usually means content/ did not reach the repo — check it is actually updated before deploying.');
   return d;
 })();
 function sizeTableHtml() {
@@ -987,12 +993,12 @@ const COMMERCE = [
       { h2: 'A leaving gift for someone moving away', body: "This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?\n\nA skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately." },
       { h2: 'For someone who loves the outdoors here', body: "If the person you are buying for spends their weekends camping, dune driving, stargazing or hiking, the design will land. Each of our t-shirts comes from a place they can drive to, and every product page tells the story of that place — including the coordinates.\n\nHeavyweight 230gsm organic cotton means it is a shirt they will actually keep wearing, not a novelty they wear once." },
       { h2: 'For a visitor who wants something real', body: "Visitors often want something from the UAE that is not obviously made for visitors. A limited-run t-shirt from a small local brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat." },
-      { h2: 'Practical things', body: "All our t-shirts are AED 149 and come in Regular and Oversized fits, S to XL. We ship across the UAE, and delivery cost is shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
+      { h2: 'Practical things', body: "All our t-shirts are AED 199, the polo is AED 229, and every piece comes in Regular and Oversized fits, S to XL. We ship across the UAE, and delivery cost is shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
     ],
     faqs: [
       ['What is a good leaving gift for an expat in the UAE?', 'Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.'],
       ['Can I exchange it if the size is wrong?', 'Yes. Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the item is unworn, unwashed and still has its tags.'],
-      ['How much do they cost?', 'Every t-shirt in the collection is AED 149. Delivery is calculated at checkout.'],
+      ['How much do they cost?', 'Every t-shirt in the collection is AED 199. The Sahra Polo is AED 229. Delivery is calculated at checkout.'],
       ['Do you ship outside the UAE?', 'Not yet — we currently ship within the United Arab Emirates only.']
     ]
   },

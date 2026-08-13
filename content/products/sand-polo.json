@@ -5,7 +5,7 @@
   "sku": "SB-POLO-SAND",
   "drop": "Drop 01",
   "order": 0,
-  "price": "249",
+  "price": "229",
   "garment": "polo",
   "eyebrow": "Sahra & Beyond · Founding Edition",
   "shopAnchor": "",
@@ -23,7 +23,7 @@
   "seoDesc": "The Sahra Polo — 240gsm cotton, embroidered rather than printed, in sand. Forty pieces only, numbered 1/40. The scarcest piece in the first drop.",
   "shareDesc": "240gsm embroidered cotton polo in sand. Forty pieces, numbered 1/40.",
   "lede": "A 240gsm cotton polo in sand, embroidered rather than printed. Forty pieces exist. It is the quietest thing we make and the hardest to get hold of.",
-  "ldDesc": "The Sahra Polo — 240gsm cotton polo in sand, embroidered. Limited to 40 numbered pieces. AED 249.",
+  "ldDesc": "The Sahra Polo — 240gsm cotton polo in sand, embroidered. Limited to 40 numbered pieces. AED 229.",
   "printChip": "Embroidered",
   "occasion": "Made for evenings that start outdoors and end somewhere better",
   "edition": "Founding Edition · numbered 1/40",
@@ -90,5 +90,22 @@
     "240gsm organic cotton",
     "Ribbed collar &amp; placket",
     "Taped shoulder seams"
-  ]
+  ],
+  "constructionIntro": "A polo earns its place by surviving. Heavyweight organic cotton, finished with the construction details that decide whether a collar still stands after a year.",
+  "constructionCards": [
+    {
+      "t": "240gsm organic cotton",
+      "b": "Heavyweight 100% organic cotton, pre-washed for minimal shrinkage. Ten grams heavier than the tees — enough that the collar holds instead of curling."
+    },
+    {
+      "t": "Ribbed collar &amp; placket",
+      "b": "A ribbed collar keeps its shape wash after wash, and the placket is stitched to sit flat rather than gape."
+    },
+    {
+      "t": "Taped shoulder seams",
+      "b": "Seam tape across the shoulders reinforces the points that carry the most stress — the difference between one season and several."
+    }
+  ],
+  "fitsCardTitle": "Unisex, one fit",
+  "fitsCardBody": "Cut unisex, S to XL, sized to the same specification as the Regular fit tees. Set-in sleeve at the natural shoulder — there is no oversized polo."
 }

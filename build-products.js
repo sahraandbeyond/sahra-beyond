@@ -412,14 +412,14 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
           ? `<a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this ${p.garment || "tee"}</a><a class="btn ghost" href="#fit">Size &amp; fit</a>`
           : `<a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>`}
       </div>
-      <a class="buy-ghaf" href="/commitment.html">🌱 A share of every tee plants ghaf trees in the UAE &rarr;</a>
+      <a class="buy-ghaf" href="/commitment.html">🌱 A share of every sale plants ghaf trees in the UAE &rarr;</a>
       <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ Organic cotton</span></div>
 
       <!-- Pre-launch capture: the shop isn't open yet, so give high-intent visitors a way to convert.
            Remove (or leave — it still works as a restock list) once LAUNCHED. -->
       <div class="wl-band" id="notify" data-waitlist-wrap>
         <h3>Be first to get this one</h3>
-        <p class="wl-lead">This tee is a limited first run. Join the list and we'll email you the moment it drops — before it goes public.</p>
+        <p class="wl-lead">This ${p.garment || 'tee'} is a limited first run. Join the list and we'll email you the moment it drops — before it goes public.</p>
         <form class="wl-form" data-waitlist data-source="pdp-${p.id}" data-endpoint="https://app.kit.com/forms/9627814/subscriptions" novalidate>
           <input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required>
           <button type="submit" class="btn">Notify me</button>
@@ -465,15 +465,17 @@ ${cards(p.designCards)}
   <section class="sec reveal" id="fabric">
     <span class="snum">03 — Fabric &amp; construction</span>
     <h2>Built to be worn, washed and <em>worn again</em></h2>
-    <p>A tee earns its place by surviving. Heavyweight organic cotton, finished with the construction details that decide whether a shirt still looks right after a year.</p>
+    <p>${p.constructionIntro || 'A tee earns its place by surviving. Heavyweight organic cotton, finished with the construction details that decide whether a shirt still looks right after a year.'}</p>
     <div class="cols stagger">
-      <div class="item"><b>230gsm organic cotton</b><span>Heavyweight 100% organic cotton, pre-washed for minimal shrinkage. Substantial enough to hold its shape, breathable enough for UAE heat.</span></div>
-      <div class="item"><b>Ribbed crew neck</b><span>A ribbed collar keeps its shape instead of stretching out and going wavy after a few washes.</span></div>
-      <div class="item"><b>Taped collar &amp; shoulders</b><span>Seam tape across the collar and shoulders reinforces the points that carry the most stress — the difference between one season and several.</span></div>
+      ${(p.constructionCards || [
+        {t:'230gsm organic cotton', b:'Heavyweight 100% organic cotton, pre-washed for minimal shrinkage. Substantial enough to hold its shape, breathable enough for UAE heat.'},
+        {t:'Ribbed crew neck', b:'A ribbed collar keeps its shape instead of stretching out and going wavy after a few washes.'},
+        {t:'Taped collar &amp; shoulders', b:'Seam tape across the collar and shoulders reinforces the points that carry the most stress — the difference between one season and several.'}
+      ]).map(function(c){return '<div class="item"><b>'+c.t+'</b><span>'+c.b+'</span></div>';}).join('')}
     </div>
     <div class="cols stagger">
       <div class="item"><b>${esc(p.printCardTitle)}</b><span>${esc(p.printCardBody)}</span></div>
-      <div class="item"><b>Unisex, two fits</b><span>Regular (true to size) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.</span></div>
+      <div class="item"><b>${p.fitsCardTitle || 'Unisex, two fits'}</b><span>${p.fitsCardBody || 'Regular (true to size) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.'}</span></div>
       <div class="item"><b>Limited first run</b><span>Small first batch. When a size sells out in this run, it's gone rather than quietly restocked.</span></div>
     </div>
   </section>
@@ -495,7 +497,7 @@ ${cards(p.designCards)}
       <ul>${(SIZING.method||[]).map(function(m){return '<li>'+m+'</li>';}).join('')}</ul>
       <p>${SIZING.tolerance}</p>
     </details>
-    <div class="note-box">Prefer the ${p.fit === 'oversized' ? 'regular' : 'oversized'} cut? <a href="/products/${(p.siblingOf||'')}-${p.fit === 'oversized' ? 'regular' : 'oversized'}/">See the same design in ${p.fit === 'oversized' ? 'Regular' : 'Oversized'} &rarr;</a> &nbsp;·&nbsp; Full chart for both fits on the <a href="/size-guide/">size guide</a>.</div>
+    ${p.siblingOf ? `<div class="note-box">Prefer the ${p.fit === 'oversized' ? 'regular' : 'oversized'} cut? <a href="/products/${p.siblingOf}-${p.fit === 'oversized' ? 'regular' : 'oversized'}/">See the same design in ${p.fit === 'oversized' ? 'Regular' : 'Oversized'} &rarr;</a> &nbsp;&middot;&nbsp; Full chart for both fits on the <a href="/size-guide/">size guide</a>.</div>` : `<div class="note-box">Full measurements for both t-shirt fits are on the <a href="/size-guide/">size guide</a>.</div>`}
   </section>`}
 
   <section class="sec reveal" id="care">
@@ -524,7 +526,7 @@ ${faqList(p.faq)}
 
   <section class="sec reveal" id="more">
     <span class="snum">08 — The collection</span>
-    <h2>Other places, <em>other tees</em></h2>
+    <h2>More from <em>the drop</em></h2>
     <div class="rel-grid">
 ${related(p, all)}
     </div>
