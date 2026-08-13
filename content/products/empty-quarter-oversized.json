@@ -96,5 +96,10 @@
   "garment": "tee",
   "fitHeading": "Drop shoulder, <em>worn on its own</em>",
   "fitWho": "Take your normal size for the intended relaxed fit; size down only if you want it just slightly loose. This is not simply a size up — the shoulder is deliberately dropped and the body cut wider, so it reads as a silhouette rather than a big t-shirt. Designed to be worn on its own; the drop shoulder fights a fitted jacket.",
-  "siblingOf": "empty-quarter"
+  "siblingOf": "empty-quarter",
+  "specChips": [
+    "230gsm organic cotton",
+    "Ribbed crew neck",
+    "Taped collar &amp; shoulder seams"
+  ]
 }

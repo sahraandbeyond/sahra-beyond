@@ -95,5 +95,10 @@
   "garment": "tee",
   "fitHeading": "True to size, <em>built to layer</em>",
   "fitWho": "Take your normal t-shirt size. Regular is the one to choose if you layer under a shacket or jacket, if you run warm, or if you want the design to sit flat across the chest and back rather than drape. The shoulder seam lands where your shoulder actually ends.",
-  "siblingOf": "al-quaa-galaxy"
+  "siblingOf": "al-quaa-galaxy",
+  "specChips": [
+    "230gsm organic cotton",
+    "Ribbed crew neck",
+    "Taped collar &amp; shoulder seams"
+  ]
 }

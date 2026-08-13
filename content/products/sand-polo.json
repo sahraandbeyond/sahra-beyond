@@ -24,7 +24,7 @@
   "shareDesc": "240gsm embroidered cotton polo in sand. Forty pieces, numbered 1/40.",
   "lede": "A 240gsm cotton polo in sand, embroidered rather than printed. Forty pieces exist. It is the quietest thing we make and the hardest to get hold of.",
   "ldDesc": "The Sahra Polo — 240gsm cotton polo in sand, embroidered. Limited to 40 numbered pieces. AED 249.",
-  "printChip": "Embroidered &middot; 240gsm",
+  "printChip": "Embroidered",
   "occasion": "Made for evenings that start outdoors and end somewhere better",
   "edition": "Founding Edition · numbered 1/40",
   "sizingApplies": true,
@@ -85,5 +85,10 @@
   "category": "polos",
   "fit": "regular",
   "fitHeading": "Sized like the <em>tees</em>",
-  "fitWho": "The polo is graded to the same specification as our Regular fit t-shirts, so if you already know your size in one of the tees, take the same here. It has a set-in sleeve and sits at the natural shoulder — there is no oversized cut of the polo."
+  "fitWho": "The polo is graded to the same specification as our Regular fit t-shirts, so if you already know your size in one of the tees, take the same here. It has a set-in sleeve and sits at the natural shoulder — there is no oversized cut of the polo.",
+  "specChips": [
+    "240gsm organic cotton",
+    "Ribbed collar &amp; placket",
+    "Taped shoulder seams"
+  ]
 }
