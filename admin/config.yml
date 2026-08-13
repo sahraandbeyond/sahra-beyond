@@ -21,7 +21,7 @@ collections:
     slug: "{{id}}"
     identifier_field: name
     summary: "{{drop}} — {{name}}"
-    description: "Each entry generates its own product page at /products/<id>/. The photos here are used on the product page and as the share image. Note: the SHOP page pulls its product photos from Shopify, not from here."
+    description: "Each entry generates its own product page at /products/<id>/. Regular and Oversized are SEPARATE products sharing a design — link them with 'Same design, other fit'. Size measurements are NOT here: they live once in content/sizing.json and drive every table on the site. The photos here are used on the product page and as the share image. Note: the SHOP page pulls its product photos from Shopify, not from here."
     fields:
       - { label: "URL slug (id)", name: "id", widget: "string", hint: "Lowercase, dashes only — becomes /products/<id>/. Don't change after launch or the link breaks." }
       - { label: "Product name", name: "name", widget: "string" }
@@ -31,6 +31,26 @@ collections:
       - { label: "Sort order", name: "order", widget: "number", default: 1, value_type: "int", hint: "1 shows first." }
       - { label: "Price (AED)", name: "price", widget: "string", default: "149" }
       - { label: "Shop anchor", name: "shopAnchor", widget: "string", hint: "Place slug of this product's section on the shop page, so 'Shop this tee' jumps to the right one. e.g. al-quaa-desert" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["regular-tees", "oversized-tees", "polos"]
+        default: "regular-tees"
+        hint: "Drives which category page this appears on: /t-shirts/regular/, /t-shirts/oversized/ or /polos/."
+      - label: "Fit"
+        name: "fit"
+        widget: "select"
+        options: ["regular", "oversized", ""]
+        default: "regular"
+        required: false
+        hint: "Decides WHICH size table this page shows. Leave blank for the polo (it has no tee chart)."
+      - { label: "Garment type", name: "garment", widget: "string", default: "tee", required: false, hint: "tee or polo. Used in button copy." }
+      - { label: "Same design, other fit", name: "siblingOf", widget: "string", required: false, hint: "Shared stem for the two fits of one design, e.g. al-quaa-galaxy. Links the pages to each other. Blank for the polo." }
+      - { label: "Edition line", name: "edition", widget: "string", required: false, hint: "e.g. Founding Edition · numbered 1/120. Polo is 1/40 — separate edition, never 1/160." }
+      - { label: "Fit — section heading", name: "fitHeading", widget: "string", required: false, hint: "<em>…</em> allowed. e.g. True to size, <em>built to layer</em>" }
+      - { label: "Fit — who it is for", name: "fitWho", widget: "text", required: false, hint: "The fit-specific paragraph. Keep the two fits genuinely different — near-identical pages get treated as duplicate content." }
+      - { label: "Tee size chart applies?", name: "sizingApplies", widget: "boolean", default: true, required: false, hint: "OFF for the polo — it is cut narrower with a set-in sleeve, so the tee chart does not apply." }
+      - { label: "Eyebrow (products with no place)", name: "eyebrow", widget: "string", required: false, hint: "Shown above the title when the product is not tied to a location, e.g. the polo." }
 
       - { label: "PHOTO — Main (flat lay / share image)", name: "imgMain", widget: "image", hint: "Also used as the WhatsApp/Instagram preview image." }
       - { label: "PHOTO — Front", name: "imgFront", widget: "image" }
@@ -50,6 +70,12 @@ collections:
         hint: "The living backdrop: starfield, drifting dunes, or mountain ridges."
 
       - { label: "Short intro (under the price)", name: "lede", widget: "text", hint: "One or two sentences. Basic HTML like <em> is allowed." }
+      - label: "Spec chips (under the price)"
+        name: "specChips"
+        widget: "list"
+        required: false
+        field: { label: "Chip", name: "chip", widget: "string" }
+        hint: "Tees: 230gsm organic cotton / Ribbed crew neck / Taped collar &amp; shoulder seams. Polo differs — 240gsm, ribbed collar & placket, taped shoulder seams. 'Unisex · S–XL' is added automatically."
       - { label: "Print/finish chip", name: "printChip", widget: "string", default: "DTG print · soft &amp; breathable", hint: "Small pill beside the fabric specs." }
       - { label: "Made for… (occasion)", name: "occasion", widget: "string", hint: "Where you'd actually wear it." }
 
@@ -76,22 +102,6 @@ collections:
       - { label: "Print method — card title", name: "printCardTitle", widget: "string", default: "DTG print" }
       - { label: "Print method — card text", name: "printCardBody", widget: "text" }
 
-      - { label: "Measurements CONFIRMED against real samples?", name: "sizesConfirmed", widget: "boolean", default: false, hint: "Leave OFF until you have measured the finished garments. While OFF the page shows a 'provisional measurements' notice and launch.js will block go-live." }
-      - label: "Size chart — Regular fit"
-        name: "sizes"
-        widget: "object"
-        hint: "Flat-lay measurements in cm."
-        fields:
-          - label: "Regular"
-            name: "regular"
-            widget: "list"
-            hint: "One row per size: Size, Chest, Length, Sleeve."
-            field: { label: "Row (Size, Chest, Length, Sleeve)", name: "row", widget: "list" }
-          - label: "Oversized"
-            name: "oversized"
-            widget: "list"
-            hint: "One row per size: Size, Chest, Length, Sleeve."
-            field: { label: "Row (Size, Chest, Length, Sleeve)", name: "row", widget: "list" }
       - { label: "Fit — extra note", name: "fitExtra", widget: "string", required: false, hint: "Optional sentence appended after the sizes line." }
       - { label: "Care — heading", name: "careHeading", widget: "string", hint: "<em>…</em> allowed." }
       - { label: "Care — intro", name: "careIntro", widget: "text" }
