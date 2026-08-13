@@ -397,7 +397,7 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
       <div class="vat">Free returns within the UAE</div>
       <p class="lede">${p.lede}</p>
       <ul class="spec-strip">
-        <li><strong>Unisex</strong> &middot; S&ndash;XL</li><li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>${p.printChip}</li>
+        <li><strong>Unisex</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm organic cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
       </ul>
       <p class="occasion">✦ ${p.occasion}</p>
       <!-- Live size availability, fetched from Shopify. Hidden until data arrives so we never
