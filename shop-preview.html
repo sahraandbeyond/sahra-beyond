@@ -140,6 +140,9 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .prod-specs strong{font-weight:600;opacity:1}
 .buy-trust{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;opacity:.62}
 .prod.dark .prod-acc{border-color:rgba(255,255,255,.18)}
+.fitchip{display:inline-block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:4px 11px;margin-bottom:10px;opacity:.75}
+.fitswap{display:inline-block;font-size:12.5px;margin:0 0 16px;border-bottom:1px solid currentColor;opacity:.8}
+.fitswap:hover{opacity:1}
 .prod-spec-strip{list-style:none;display:flex;flex-wrap:wrap;gap:7px 8px;margin:0 0 22px;padding:0;max-width:460px}
 .prod-spec-strip li{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2px;line-height:1.25;padding:6px 11px;border:1px solid var(--line);border-radius:999px;opacity:.92}
 .prod.dark .prod-spec-strip li{border-color:rgba(255,255,255,.24)}
@@ -886,7 +889,19 @@ async function load(){
   try{
     var data=SHOPIFY.collection?await sf('query($h:String!){collectionByHandle(handle:$h){products(first:24){edges{node{'+PFRAG+'}}}}}',{h:SHOPIFY.collection}):await sf('{products(first:24){edges{node{'+PFRAG+'}}}}');
     var edges=SHOPIFY.collection?(data.collectionByHandle?data.collectionByHandle.products.edges:[]):data.products.edges;
-    PRODUCTS=edges.map(function(e,i){var n=e.node,place=tagVal(n.tags,'place'),bg=tagVal(n.tags,'theme'),dark=(n.tags||[]).some(function(t){return t.toLowerCase()==='dark';}),imgs=(n.images&&n.images.edges||[]).map(function(x){return x.node.url;});var variants=n.variants.edges.map(function(v){var opts=v.node.selectedOptions||[],size=(opts.find(function(s){return s.name.toLowerCase()==='size';})||{}).value||v.node.title,fit=(opts.find(function(s){return s.name.toLowerCase()==='fit';})||{}).value||'';return{id:v.node.id,size:size,fit:fit,avail:v.node.availableForSale};});var fits=variants.map(function(v){return v.fit;}).filter(function(f,idx,a){return f&&a.indexOf(f)===idx;});if(!fits.length)fits=['Regular','Oversized'];var sizes=variants.map(function(v){return v.size;}).filter(function(s,idx,a){return s&&a.indexOf(s)===idx;});var list=imgs.length?imgs:(n.featuredImage?[n.featuredImage.url]:[]);return{id:n.id,handle:n.handle,title:n.title,place:place,placeSlug:tagVal(n.tags,'placeurl')||slugify(place),story:n.description||'',print:tagVal(n.tags,'print'),price:n.priceRange.minVariantPrice.amount,cur:n.priceRange.minVariantPrice.currencyCode,theme:{bg:bg||THEMES[i%THEMES.length].bg,dark:bg?dark:THEMES[i%THEMES.length].dark},fitImgs:{regular:list,oversized:list},fits:fits,sizes:sizes,images:list,img:list[0]||'',variants:variants};});
+    PRODUCTS=edges.map(function(e,i){var n=e.node,place=tagVal(n.tags,'place'),bg=tagVal(n.tags,'theme'),dark=(n.tags||[]).some(function(t){return t.toLowerCase()==='dark';}),imgs=(n.images&&n.images.edges||[]).map(function(x){return x.node.url;});var variants=n.variants.edges.map(function(v){var opts=v.node.selectedOptions||[],size=(opts.find(function(s){return s.name.toLowerCase()==='size';})||{}).value||v.node.title,fit=(opts.find(function(s){return s.name.toLowerCase()==='fit';})||{}).value||'';return{id:v.node.id,size:size,fit:fit,avail:v.node.availableForSale};});var fits=variants.map(function(v){return v.fit;}).filter(function(f,idx,a){return f&&a.indexOf(f)===idx;});if(!fits.length)fits=['Regular','Oversized'];var sizes=variants.map(function(v){return v.size;}).filter(function(s,idx,a){return s&&a.indexOf(s)===idx;});var list=imgs.length?imgs:(n.featuredImage?[n.featuredImage.url]:[]);return{id:n.id,handle:n.handle,tags:n.tags||[],title:n.title,place:place,placeSlug:tagVal(n.tags,'placeurl')||slugify(place),story:n.description||'',print:tagVal(n.tags,'print'),price:n.priceRange.minVariantPrice.amount,cur:n.priceRange.minVariantPrice.currencyCode,theme:{bg:bg||THEMES[i%THEMES.length].bg,dark:bg?dark:THEMES[i%THEMES.length].dark},fitImgs:{regular:list,oversized:list},fits:fits,sizes:sizes,images:list,img:list[0]||'',variants:variants};});
+    // Deterministic running order: group each place together, Regular before Oversized,
+    // polos last. Shopify returns no guaranteed order, and the alternating layout
+    // (and the fit-swap link) only read well when the pair sits side by side.
+    var PLACE_ORDER=['Al Quaa','Liwa','Wadi Naqab'];
+    PRODUCTS.sort(function(a,b){
+      var ap=PLACE_ORDER.indexOf(a.place),bp=PLACE_ORDER.indexOf(b.place);
+      if(ap<0)ap=98; if(bp<0)bp=98;
+      var ac=(tagVal(a.tags||[],'category')==='polos')?99:ap, bc=(tagVal(b.tags||[],'category')==='polos')?99:bp;
+      if(ac!==bc)return ac-bc;
+      var rank=function(x){return tagVal(x.tags||[],'fit')==='oversized'?1:0;};
+      return rank(a)-rank(b);
+    });
     normalizePlaces();
     draw();
   }catch(err){document.getElementById('products').innerHTML='<div class="loading">Couldn’t reach the store — check the domain and token.<br><small>'+String(err.message).slice(0,120)+'</small></div>';}
@@ -929,10 +944,18 @@ function occasionFor(p){
 function draw(){
   var host=document.getElementById('products');
   if(!PRODUCTS.length){host.innerHTML='<div class="loading">No products yet. Add some in Shopify.</div>';return;}
-  var jump=PRODUCTS.length>1?'<nav class="shop-jump" aria-label="Shop by place"><span>Shop by place:</span>'+PRODUCTS.map(function(p){return '<a href="#prod-'+p.placeSlug+'">'+(p.place||p.title)+'</a>';}).join('')+'</nav>':'';
+  var _seenPl={},_jumpItems=PRODUCTS.filter(function(p){var k=p.placeSlug||p.title;if(_seenPl[k])return false;_seenPl[k]=1;return true;});
+  var jump=_jumpItems.length>1?'<nav class="shop-jump" aria-label="Shop by place"><span>Shop by place:</span>'+_jumpItems.map(function(p){return '<a href="#prod-'+(p.handle||p.placeSlug)+'">'+(p.place||p.title)+'</a>';}).join('')+'</nav>':'';
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
     var sizes=p.sizes.map(function(sz){var av=p.variants.some(function(v){return v.size===sz&&v.avail;});return '<button class="size" data-size="'+sz+'" '+(av?'':'disabled')+'><span>'+sz+'</span></button>';}).join('');
-    var fitBtns=p.fits.map(function(f){return '<button class="fit" data-fit="'+f+'"><span>'+f+' Fit</span></button>';}).join('');
+    var fitLabel=(tagVal(p.tags||[],'fit')||'');
+    if(!fitLabel&&/oversized/i.test(p.title))fitLabel='oversized';
+    if(!fitLabel&&/regular/i.test(p.title))fitLabel='regular';
+    var fitNice=fitLabel?fitLabel.charAt(0).toUpperCase()+fitLabel.slice(1):'';
+    var fitChip=fitNice?'<span class="fitchip">'+fitNice+' fit</span>':'';
+    var otherFit=fitLabel==='oversized'?'regular':(fitLabel==='regular'?'oversized':'');
+    var _sib=(otherFit&&p.handle)?PRODUCTS.filter(function(q){return q.handle===p.handle.replace(/-(regular|oversized)$/,'-'+otherFit);})[0]:null;
+    var fitSwap=_sib?'<a class="fitswap" href="#prod-'+_sib.handle+'">See this design in '+otherFit+' fit &rarr;</a>':'';
     var plink=p.place?'<a class="eyebrow plink" href="/locations/'+p.placeSlug+'/">Inspired by '+p.place+' &rarr;</a>':'';
     var gal=(p.images&&p.images.length)?p.images:[];
     var slides=gal.map(function(u,k){return '<img class="slide'+(k===0?' on':'')+'" src="'+u+'" alt="'+p.title+'">';}).join('');
@@ -953,11 +976,11 @@ function draw(){
     var buyGhaf='<a class="buy-ghaf" href="/commitment.html">&#127793; A share of every tee plants ghaf trees in the UAE &rarr;</a>';
     var details='<details class="prod-acc"><summary>Details &amp; care</summary><ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% organic cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Fit.</strong> Unisex — Regular (true to size) or Oversized (relaxed drop-shoulder). See the size guide.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul></details>';
     var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; Organic cotton</span></div>';
-    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+p.placeSlug+'" data-bg="'+p.theme.bg+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price">'+money(p.price,p.cur)+'</div>'+specStrip+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><div class="fitwrap" style="display:none"><div class="opt-lab">Fit</div><div class="fits">'+fitBtns+'</div></div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
+    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+fitChip+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price">'+money(p.price,p.cur)+'</div>'+specStrip+fitSwap+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
   }).join('');
   var secs=[].slice.call(host.querySelectorAll('.prod'));
   secs.forEach(function(sec,i){
-    var addBtn=sec.querySelector('.add'),p=PRODUCTS[i],selSize=null,selFit=null,fitWrap=sec.querySelector('.fitwrap'),red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var addBtn=sec.querySelector('.add'),p=PRODUCTS[i],selSize=null,red=matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(window.__tilt&&!red)window.__tilt(sec.querySelector('.prod-media'));
     // ---- image slideshow (auto-advancing, arrows + thumbnails) ----
     var galList=(p.images||[]).slice(),curi=0,timer=null;
@@ -979,11 +1002,9 @@ function draw(){
     }
     if(imgBox)imgBox.addEventListener('click',function(e){if(e.target.closest('.nav-arrow'))return;openLightbox(galList,curi);});
     // ---- size / fit / cart ----
-    function updateBtn(){if(selSize&&selFit){addBtn.disabled=false;addBtn.textContent='Add to cart';}else if(selSize){addBtn.disabled=true;addBtn.textContent='Choose a fit';}else{addBtn.disabled=true;addBtn.textContent='Select a size';}}
-    function setFitImages(fit){var list=p.fitImgs[(fit||'').toLowerCase()];if(!list||!list.length)return;galList=list.slice();var sh=sec.querySelector('.slides');if(sh)sh.innerHTML=list.map(function(u,k){return '<img class="slide'+(k===0?' on':'')+'" src="'+u+'" alt="">';}).join('');if(thumbBox)thumbBox.innerHTML=list.map(function(u,k){return '<button class="pthumb'+(k===0?' on':'')+'" data-i="'+k+'" aria-label="View '+(k+1)+'"><img src="'+u+'" alt=""></button>';}).join('');curi=0;showSlide(0);startAuto();}
-    sec.querySelectorAll('.size').forEach(function(s){if(s.disabled)return;s.addEventListener('click',function(){sec.querySelectorAll('.size').forEach(function(x){x.classList.remove('sel');});s.classList.add('sel');selSize=s.dataset.size;if(fitWrap&&fitWrap.style.display==='none'){fitWrap.style.display='block';if(typeof gsap!=='undefined'&&!red){gsap.from(fitWrap,{opacity:0,y:-8,duration:.4,ease:'power2.out'});}}updateBtn();});});
-    sec.querySelectorAll('.fit').forEach(function(f){f.addEventListener('click',function(){sec.querySelectorAll('.fit').forEach(function(x){x.classList.remove('sel');});f.classList.add('sel');selFit=f.dataset.fit;setFitImages(selFit);updateBtn();});});
-    addBtn.addEventListener('click',function(){if(!(selSize&&selFit))return;var vv=p.variants.find(function(v){return v.size===selSize&&v.fit===selFit;})||p.variants.find(function(v){return v.size===selSize;});if(!vv)return;addToCart(vv.id,{name:p.title,size:selSize,fit:selFit});});
+    function updateBtn(){if(selSize){addBtn.disabled=false;addBtn.textContent='Add to cart';}else{addBtn.disabled=true;addBtn.textContent='Select a size';}}
+    sec.querySelectorAll('.size').forEach(function(s){if(s.disabled)return;s.addEventListener('click',function(){sec.querySelectorAll('.size').forEach(function(x){x.classList.remove('sel');});s.classList.add('sel');selSize=s.dataset.size;updateBtn();});});
+    addBtn.addEventListener('click',function(){if(!selSize)return;var vv=p.variants.find(function(v){return v.size===selSize;});if(!vv)return;addToCart(vv.id,{name:p.title,size:selSize,fit:(tagVal(p.tags||[],'fit')||'')});});
     if(window.__mag)window.__mag(addBtn);
   });
   if(window.__cur)window.__cur(host);
@@ -1075,7 +1096,7 @@ function loadLeaflet(cb){
 }
 function buildMap(products){
   var el=document.getElementById('uae-map');if(!el||el._built)return;
-  var pts=(products||[]).map(function(p){var pi=placeInfo(p);return pi?{p:p,slug:pi.slug,lat:pi.data.lat,lng:pi.data.lng}:null;}).filter(Boolean);
+  var _seenMap={};var pts=(products||[]).map(function(p){var pi=placeInfo(p);return pi?{p:p,slug:pi.slug,lat:pi.data.lat,lng:pi.data.lng}:null;}).filter(Boolean).filter(function(x){if(_seenMap[x.slug])return false;_seenMap[x.slug]=1;return true;});
   if(!pts.length){el.style.display='none';return;}
   var start=function(){if(el._built)return;loadLeaflet(function(){renderMap(el,pts);});};
   if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.disconnect();start();}});},{rootMargin:'400px'});io.observe(el);}
