@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow"><!-- preview only — remove when this becomes the live homepage -->
 <title>Sahra &amp; Beyond — Original UAE T-Shirts</title>
-<meta name="description" content="Original heavyweight organic-cotton tees drawn from the real deserts, wadis and dark-sky nights of the Emirates. Every design carries a place. Wear the wild side of the UAE.">
+<meta name="description" content="Original UAE t-shirts drawn from real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs.">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/">
 <meta name="theme-color" content="#171232">
 <link rel="manifest" href="/manifest.json">
@@ -268,7 +268,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   <div class="hero-inner">
     <div>
       <span class="eyebrow hero-in">Inspired by the landscapes of the UAE</span>
-      <h1 id="headline"></h1>
+      <h1 id="headline"><span class="w">Wear</span> <span class="w">the</span> <em><span class="w">wild side</span></em> <span class="w">of</span> <span class="w">the</span> <span class="w">UAE.</span></h1>
       <p class="hero-in">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
       <div class="hero-actions hero-in"><a href="shop-preview.html" class="btn magnetic shoplink" onclick="try{track('shop_cta_click',{source:'hero'})}catch(e){}">Shop the collection</a><a href="#places" class="btn ghost magnetic">The places behind them</a></div>
     </div>
@@ -284,9 +284,9 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   <div class="wrap inner">
     <div class="sec-head reveal"><span class="eyebrow">The collection</span><h2>Designs with a place</h2><p>A small, considered range — each a limited first run, tied to a real spot on the map.</p></div>
     <div class="grid" id="grid">
-      <a class="card reveal tilt" href="/products/al-quaa-galaxy-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/alquaa-model-back.jpg" alt="Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price">AED 199</div></div></a>
-      <a class="card reveal tilt" href="/products/empty-quarter-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-beige-front.jpg" alt="Empty Quarter Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter Tee</div><div class="card-price">AED 199</div></div></a>
-      <a class="card reveal tilt" href="/products/hajar-mountains-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-taupe-front.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price">AED 199</div></div></a>
+      <a class="card reveal tilt" href="/products/al-quaa-galaxy-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/alquaa-model-back.jpg" alt="Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="1400" height="1400"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price">AED 199</div></div></a>
+      <a class="card reveal tilt" href="/products/empty-quarter-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-beige-front.jpg" alt="Empty Quarter Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="1000" height="1219"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter Tee</div><div class="card-price">AED 199</div></div></a>
+      <a class="card reveal tilt" href="/products/hajar-mountains-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-taupe-front.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="578" height="663"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price">AED 199</div></div></a>
     </div>
     <div class="qual-band reveal">
       <span class="eyebrow">Made to last</span>
@@ -573,7 +573,8 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
     var html=parts[0].split(' ').map(function(w){return '<span class="w">'+w+'</span>';}).join(' ')
       +' <em><span class="w">'+parts[1]+'</span></em> '
       +parts[2].split(' ').map(function(w){return '<span class="w">'+w+'</span>';}).join(' ');
-    document.getElementById('headline').innerHTML=html;
+    var _h=document.getElementById('headline');
+      if(!(_h&&_h.querySelector('.w')))_h.innerHTML=html;   /* keep the server-rendered H1 if present */
   })();
 
   // nav colour state

@@ -389,7 +389,7 @@ function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
   return `<div class="ftr-tagline">${esc(TAGLINE)}</div>
   <div class="soc">${soc}</div>
-  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>
   <div class="disc">${esc(disclosure)}</div>`;
@@ -863,7 +863,7 @@ LANDINGS.forEach(L => {
 (function () {
   const canonical = `${SITE}/about/`;
   const title = 'About Sahra & Beyond — Discover the Wild Side of the UAE';
-  const desc = 'The story behind Sahra & Beyond — a UAE outdoor adventure guide inspired by the unique landscapes of the Emirates, built to help you discover the wild side of the UAE.';
+  const desc = 'The story behind Sahra & Beyond — a UAE outdoor guide inspired by the landscapes of the Emirates, built to help you find the wild side of the country.';
   const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
   const jsonld = [
     { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical },
@@ -916,7 +916,7 @@ if (LAUNCHED) (function () {
     let html = fs.readFileSync(path.join(ROOT, 'shop-preview.html'), 'utf8');
     const canonical = `${SITE}/shop/`;
     const title = 'Shop UAE-Inspired Tees — Wear the Wild Side of the UAE | Sahra & Beyond';
-    const desc = 'Original heavyweight organic-cotton tees inspired by real UAE places — the Milky Way over Al Quaa, the dunes of Liwa and the Hajar Mountains. Wear the wild side of the UAE.';
+    const desc = 'Original heavyweight organic-cotton tees inspired by real UAE places — the Milky Way over Al Quaa, the dunes of Liwa and the Hajar Mountains.';
     // Driven off content/products/*.json — a hardcoded list here silently went stale
     // once the catalogue was restructured, and shipped the old AED 149 price to Google.
     const prod = p => ({
@@ -968,7 +968,7 @@ if (LAUNCHED) (function () {
 (function () {
   const canonical = `${SITE}/places/`;
   const title = 'All Places — ' + locations.length + ' Deserts, Wadis, Mountains & Beaches in the UAE | Sahra & Beyond';
-  const desc = 'The full Sahra & Beyond map: ' + locations.length + ' real places across the Emirates — dunes, wadis, mountains, lakes and beaches, each with GPS, live weather and a tailored packing list.';
+  const desc = 'The full Sahra & Beyond map: ' + locations.length + ' real places across the Emirates — dunes, wadis, mountains and beaches, each with GPS, live weather and a packing list.';
   const jsonld = [
     { "@context": "https://schema.org", "@type": "CollectionPage", "name": title, "description": desc, "url": canonical },
     { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": locations.map((l, i) => ({ "@type": "ListItem", "position": i + 1, "name": l.name, "url": `${SITE}/locations/${l.id}/` })) },
@@ -1047,7 +1047,7 @@ const COMMERCE = [
     slug: 't-shirts', emoji: '◈', cat: 'Dunes',
     h1: 'UAE T-Shirts',
     title: 'UAE T-Shirts — Original Designs from Real Places',
-    desc: 'Original UAE t-shirts inspired by real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs, delivered across the UAE.',
+    desc: 'Original UAE t-shirts inspired by real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs.',
     catNav: true,
     intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: the darkest sky in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm organic cotton, and made in limited runs.",
     sections: [
@@ -1067,7 +1067,7 @@ const COMMERCE = [
     slug: 'gifts', emoji: '✦', cat: 'Camping',
     h1: 'Gifts from the UAE',
     title: 'Gifts from the UAE That Are Not Touristy',
-    desc: 'Looking for a gift from the UAE that is not a fridge magnet? Original t-shirts tied to real Emirati places — for someone leaving the country, visiting, or who misses the desert.',
+    desc: 'A gift from the UAE that is not a fridge magnet. Original t-shirts tied to real Emirati places — for someone leaving, visiting, or missing the desert.',
     intro: "Buying a gift from the UAE usually means choosing between a fridge magnet, a camel keyring, or a t-shirt with the Dubai skyline printed across the front. All of them say the same thing: I went to a shop at the airport.\n\nA Sahra & Beyond t-shirt says something more specific. Each one is tied to a real place in the Emirates — somewhere the person you are buying for has probably actually been. That is a very different gift from a souvenir.",
     sections: [
       { h2: 'A leaving gift for someone moving away', body: "This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?\n\nA skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately." },
@@ -1086,7 +1086,7 @@ const COMMERCE = [
     slug: 'fabric', emoji: '▦', cat: 'Mountains',
     h1: 'Our fabric and construction',
     title: '230gsm Organic Cotton — Fabric & Construction',
-    desc: 'What 230gsm actually means, why we use ribbed collars and taped seams, and how DTG printing differs from embroidery — the construction behind every Sahra & Beyond t-shirt.',
+    desc: 'What 230gsm actually means, why we use ribbed collars and taped seams, and how DTG printing differs from embroidery — the construction behind every piece.',
     intro: "Most t-shirt brands describe fabric in adjectives. Premium. Buttery. Luxe. None of those words mean anything you can check. Here are the actual specifications of what we make, and why each choice was made.",
     sections: [
       { h2: 'What 230gsm means', body: "GSM is grams per square metre — the weight of the fabric. A typical high-street t-shirt runs 150–180gsm. Ours is 230gsm.\n\nThe practical difference is structure. A lightweight shirt drapes onto the body and shows everything underneath; a heavyweight one holds its own shape and hangs away from you. It also survives washing far better, because there is simply more cotton there to begin with. The trade-off is honest: 230gsm is a more substantial shirt, so in peak UAE summer the Regular fit breathes better than the Oversized." },
@@ -1134,7 +1134,7 @@ const CATEGORIES = [
   { slug:'t-shirts/oversized', cat:'oversized-tees', emoji:'▯', catBg:'Camping',
     h1:'Oversized Fit T-Shirts',
     title:'Oversized T-Shirts UAE — Drop Shoulder | Sahra & Beyond',
-    desc:'Oversized drop-shoulder t-shirts. The shoulder seam sits 2–3 inches below your natural shoulder — width, not length, makes the silhouette. 230gsm organic cotton, S–XL.',
+    desc:'Oversized drop-shoulder t-shirts. The seam sits 2–3 inches below your natural shoulder — width, not length, makes the silhouette. 230gsm cotton, S–XL.',
     intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nCut unisex, S to XL. Take your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XL." },
   { slug:'polos', cat:'polos', emoji:'✦', catBg:'Coast',
     h1:'Polo Shirts',
@@ -1236,7 +1236,11 @@ const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
 const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(LAUNCHED ? [{ u: `${SITE}/shop/`, m: buildDate, p: '0.9' }] : [])
-  .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }])
+  .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' },
+            { u: `${SITE}/commitment.html`, m: buildDate, p: '0.6' }])
+  // policies.html is noindex until launch — listing it earlier would put a
+  // noindexed URL in the sitemap, which is the contradiction Ahrefs flags
+  .concat(LAUNCHED ? [{ u: `${SITE}/policies.html`, m: buildDate, p: '0.4' }] : [])
   .concat(LANDINGS.map(L => ({ u: `${SITE}/${L.slug}/`, m: buildDate, p: '0.8' })))
   .concat(COMMERCE.map(P => ({ u: `${SITE}/${P.slug}/`, m: buildDate, p: '0.9' })))
   .concat(CATEGORIES.map(C => ({ u: `${SITE}/${C.slug}/`, m: buildDate, p: '0.9' })))

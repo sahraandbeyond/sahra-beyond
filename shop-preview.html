@@ -5,10 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow"><!-- preview only — stripped when /shop/ is generated at launch -->
 <title>Shop UAE T-Shirts — Limited Drops | Sahra &amp; Beyond</title>
+<meta property="og:title" content="Shop UAE-Inspired Tees | Sahra &amp; Beyond">
+<meta property="og:description" content="Original heavyweight organic-cotton tees inspired by real UAE places.">
+<meta property="og:url" content="https://www.sahraandbeyond.ae/shop/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sahra &amp; Beyond">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shop UAE-Inspired Tees | Sahra &amp; Beyond">
+<meta name="twitter:description" content="Original heavyweight organic-cotton tees inspired by real UAE places.">
+<meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-model-back.jpg">
 <meta property="og:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-model-back.jpg">
 <meta property="og:image:alt" content="Sahra &amp; Beyond — the first drop">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/shop/">
-<meta name="description" content="Shop original UAE t-shirts inspired by real places — Al Quaa’s dark sky, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs, delivered across the UAE.">
+<meta name="description" content="Shop original UAE t-shirts inspired by real places — Al Quaa’s dark sky, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -369,7 +378,7 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
   <div class="layer sky"></div><div class="layer stars" data-depth="0.15"></div><canvas id="hero-canvas"></canvas>
   <div class="dune" data-depth="0.5"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#8B4E63" d="M0,230 C300,160 560,255 820,210 C1080,165 1300,225 1440,200 L1440,320 L0,320 Z"/></svg></div>
   <div class="dune" data-depth="0.85"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#33221A" d="M0,275 C320,220 620,292 940,255 C1180,228 1330,272 1440,258 L1440,320 L0,320 Z"/></svg></div>
-  <div class="hero-c"><span class="eyebrow hero-in">Inspired by the landscapes of the UAE</span><h1 id="headline"></h1><p class="hero-in">Original tees drawn from the real deserts, wadis and dark-sky nights of the Emirates. Every design carries a place.</p></div>
+  <div class="hero-c"><span class="eyebrow hero-in">Inspired by the landscapes of the UAE</span><h1 id="headline"><span class="w">Wear</span> <span class="w">a</span> <em><span class="w">place,</span></em> <span class="w">not</span> <span class="w">a</span> <span class="w">logo.</span></h1><p class="hero-in">Original tees drawn from the real deserts, wadis and dark-sky nights of the Emirates. Every design carries a place.</p></div>
   <a class="scroll-cue" href="#products">Scroll to explore the collection<span class="chev">⌄</span></a>
 </header>
 
@@ -509,8 +518,10 @@ function placeInfo(p){
 
 /* ENGINE */
 (function(){
-  (function(){var parts=['Wear the','wild side','of the UAE.'];
-    document.getElementById('headline').innerHTML=parts[0].split(' ').map(function(w){return '<span class="w">'+w+'</span>';}).join(' ')+' <em><span class="w">'+parts[1]+'</span></em> '+parts[2].split(' ').map(function(w){return '<span class="w">'+w+'</span>';}).join(' ');})();
+  (function(){var parts=['Wear a','place,','not a logo.'];
+    var _h=document.getElementById('headline');
+        if(_h&&_h.querySelector('.w'))return;   /* already server-rendered */
+        _h.innerHTML=parts[0].split(' ').map(function(w){return '<span class="w">'+w+'</span>';}).join(' ')+' <em><span class="w">'+parts[1]+'</span></em> '+parts[2].split(' ').map(function(w){return '<span class="w">'+w+'</span>';}).join(' ');})();
   var nav=document.getElementById('nav'),hero=document.getElementById('hero');
   function ns(){nav.classList.toggle('solid',scrollY>30);nav.classList.toggle('on-hero',scrollY<=hero.offsetHeight-80);
     var d=document.documentElement,max=d.scrollHeight-innerHeight,bar=document.querySelector('#progress i');if(bar)bar.style.transform='scaleX('+(max>0?Math.min(1,scrollY/max):0)+')';}
