@@ -125,6 +125,10 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .facts strong{color:#33271B}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .btn{display:inline-block;padding:11px 18px;border-radius:12px;background:#C0702E;color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+.btn.ghost{background:none;color:#C0702E;border:1px solid #C0702E}
+.btn.ghost:hover{background:rgba(192,112,46,.08)}
+.pcta .btn+.btn{margin-left:10px}
+@media(max-width:520px){.pcta .btn{display:block;text-align:center}.pcta .btn+.btn{margin:10px 0 0}}
 .btn.alt{background:transparent;color:#9C521B;border:1px solid rgba(192,112,46,.4)}
 .related{margin-top:34px}
 .cards{display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px}
@@ -202,7 +206,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
         <span class="pcard-p">Sahra &amp; Beyond &middot; AED 229</span>
       </span>
     </a></div>
-      <a class="btn" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+      <a class="btn shoplink" href="/shop-preview.html?fit=polo">Shop the polo &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
     <section class="news"><div class="news-stars"></div><div class="news-in">
     <span class="news-eyebrow">Sahra &amp; Beyond · First drop coming</span>
     <h2>Wear the <em>wild side</em> of the UAE</h2><p>The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.</p>
