@@ -99,6 +99,17 @@ collections:
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Text", name: "body", widget: "text", hint: "Basic HTML allowed." }
+      - { label: "Construction — intro", name: "constructionIntro", widget: "text", required: false, hint: "Section 03 opener. Defaults to the tee wording; the polo overrides it." }
+      - label: "Construction — three cards"
+        name: "constructionCards"
+        widget: "list"
+        required: false
+        hint: "Leave empty to use the tee defaults (230gsm / ribbed crew neck / taped collar & shoulders). The polo overrides all three."
+        fields:
+          - { label: "Title", name: "t", widget: "string" }
+          - { label: "Body", name: "b", widget: "text" }
+      - { label: "Fits card — title", name: "fitsCardTitle", widget: "string", required: false, hint: "Default: Unisex, two fits" }
+      - { label: "Fits card — body", name: "fitsCardBody", widget: "text", required: false }
       - { label: "Print method — card title", name: "printCardTitle", widget: "string", default: "DTG print" }
       - { label: "Print method — card text", name: "printCardBody", widget: "text" }
 
