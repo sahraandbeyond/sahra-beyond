@@ -23,7 +23,62 @@ function readJSON(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } ca
 function metaDesc(s) { s = String(s || ''); if (s.length <= 160) return s; const cut = s.slice(0, 157); return cut.slice(0, cut.lastIndexOf(' ')) + '…'; }
 function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 function paras(text) { return String(text || '').split(/\n\n+/).filter(Boolean).map(p => '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>').join(''); }
-function write(rel, html) { const fp = path.join(ROOT, rel); fs.mkdirSync(path.dirname(fp), { recursive: true }); fs.writeFileSync(fp, html); console.log('  ✓ ' + rel); }
+/* Intrinsic image dimensions.
+   Without width/height the browser cannot reserve space before the image loads,
+   so every image on the page shoves the text below it downwards as it arrives.
+   Read the real pixel size straight off the file and stamp it on the tag; CSS
+   still controls the displayed size, these attributes only supply the ratio. */
+const _dimCache = new Map();
+function imgDims(src, baseDir) {
+  const clean = String(src).split('?')[0].split('#')[0];
+  if (!clean || /^(https?:)?\/\//.test(clean) || clean.startsWith('data:')) return null;
+  const key = (clean.startsWith('/') ? '' : (baseDir || '') + '|') + clean;
+  if (_dimCache.has(key)) return _dimCache.get(key);
+  let out = null;
+  try {
+    const fp = clean.startsWith('/')
+      ? path.join(ROOT, clean.slice(1))
+      : path.resolve(ROOT, baseDir || '.', clean);
+    if (fs.existsSync(fp)) {
+      const b = fs.readFileSync(fp);
+      if (b.slice(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+        out = { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };                    // PNG
+      } else if (b[0] === 0xff && b[1] === 0xd8) {                                  // JPEG
+        let i = 2;
+        while (i < b.length - 9) {
+          if (b[i] !== 0xff) { i++; continue; }
+          const m = b[i + 1];
+          if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+            out = { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) }; break;
+          }
+          i += 2 + b.readUInt16BE(i + 2);
+        }
+      } else if (b.slice(0, 4).toString('ascii') === 'RIFF' && b.slice(8, 12).toString('ascii') === 'WEBP') {
+        const t = b.slice(12, 16).toString('ascii');
+        if (t === 'VP8X') out = { w: 1 + b.readUIntLE(24, 3), h: 1 + b.readUIntLE(27, 3) };
+        else if (t === 'VP8 ') out = { w: b.readUInt16LE(26) & 0x3fff, h: b.readUInt16LE(28) & 0x3fff };
+        else if (t === 'VP8L') {
+          const n = b.readUInt32LE(21);
+          out = { w: (n & 0x3fff) + 1, h: ((n >> 14) & 0x3fff) + 1 };
+        }
+      }
+    }
+  } catch (e) { out = null; }
+  _dimCache.set(key, out);
+  return out;
+}
+function addImgDims(html, baseDir) {
+  return html.replace(/<img\b([^>]*)>/g, (tag, attrs) => {
+    if (/\bwidth=/.test(attrs) || /\bheight=/.test(attrs)) return tag;
+    const m = attrs.match(/\bsrc="([^"]+)"/);
+    if (!m) return tag;
+    const d = imgDims(m[1], baseDir);
+    if (!d || !d.w || !d.h) return tag;
+    return `<img${attrs} width="${d.w}" height="${d.h}">`;
+  });
+}
+
+function write(rel, html) { html = addImgDims(html, path.dirname(rel)); const fp = path.join(ROOT, rel); fs.mkdirSync(path.dirname(fp), { recursive: true }); fs.writeFileSync(fp, html); console.log('  ✓ ' + rel); }
 
 const locDir = path.join(ROOT, 'content/locations');
 const locations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(locDir, f))).filter(Boolean);
@@ -293,6 +348,8 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .ftr .disc{margin-top:12px;font-size:11px;opacity:.85}
 /* premium brand layer */
 .ftr-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:#9C521B;margin-bottom:14px}
+.ftr .legal{margin-top:10px;font-weight:600}
+.ftr .legal a{text-decoration:underline;text-underline-offset:3px}
 .loc-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 46%,transparent 62%);background-size:240% 100%;animation:heroSweep 9s ease-in-out infinite;pointer-events:none}
 @keyframes heroSweep{0%,100%{background-position:110% 0}50%{background-position:-10% 0}}
 .loc-hero h1::after{content:"";display:block;width:52px;height:3px;margin-top:12px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
@@ -333,6 +390,7 @@ function footerHtml() {
   return `<div class="ftr-tagline">${esc(TAGLINE)}</div>
   <div class="soc">${soc}</div>
   <div class="links"><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>
   <div class="disc">${esc(disclosure)}</div>`;
 }
@@ -859,21 +917,43 @@ if (LAUNCHED) (function () {
     const canonical = `${SITE}/shop/`;
     const title = 'Shop UAE-Inspired Tees — Wear the Wild Side of the UAE | Sahra & Beyond';
     const desc = 'Original heavyweight organic-cotton tees inspired by real UAE places — the Milky Way over Al Quaa, the dunes of Liwa and the Hajar Mountains. Wear the wild side of the UAE.';
-    const prod = (name, img, d) => ({ "@type": "Product", "name": name, "image": SITE + img, "description": d, "brand": { "@type": "Brand", "name": "Sahra & Beyond" }, "offers": { "@type": "Offer", "priceCurrency": "AED", "price": "149", "availability": "https://schema.org/InStock", "url": canonical } });
+    // Driven off content/products/*.json — a hardcoded list here silently went stale
+    // once the catalogue was restructured, and shipped the old AED 149 price to Google.
+    const prod = p => ({
+      "@type": "Product",
+      "name": p.name,
+      "image": SITE + (p.imgMain || p.imgFront || '/shirts/alquaa-model-back.jpg'),
+      "description": p.shareDesc || p.ldDesc || p.seoDesc || '',
+      "sku": p.sku || undefined,
+      "brand": { "@type": "Brand", "name": "Sahra & Beyond" },
+      "url": `${SITE}/products/${p.id}/`,
+      "offers": {
+        "@type": "Offer", "priceCurrency": "AED", "price": String(p.price),
+        "availability": "https://schema.org/InStock", "url": `${SITE}/products/${p.id}/`
+      }
+    });
+    if (!PRODUCTS_ALL.length) throw new Error('FATAL: no products loaded — shop JSON-LD would ship empty');
+    const badPrice = PRODUCTS_ALL.filter(p => !/^\d+$/.test(String(p.price || '')));
+    if (badPrice.length) throw new Error('FATAL: product(s) without a numeric price: ' + badPrice.map(p => p.id).join(', '));
     const jsonld = [
       { "@context": "https://schema.org", "@type": "WebPage", "name": title, "description": desc, "url": canonical },
       { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
         { "@type": "ListItem", "position": 2, "name": "Shop", "item": canonical }
       ] },
-      { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
-        { "@type": "ListItem", "position": 1, "item": prod('Al Quaa Galaxy Tee', '/shirts/alquaa-model-back.jpg', 'The Milky Way over Al Quaa — the darkest sky in the Emirates. Heavyweight organic cotton.') },
-        { "@type": "ListItem", "position": 2, "item": prod('Empty Quarter Tee', '/shirts/design-beige-front.jpg', 'A tonal embroidered sun setting over the dune ridges of Liwa. Heavyweight organic cotton.') },
-        { "@type": "ListItem", "position": 3, "item": prod('Hajar Mountains Tee', '/shirts/design-taupe-front.jpg', 'A topographic line drawing of the Hajar peaks. Organic cotton, made to layer.') }
-      ] }
+      { "@context": "https://schema.org", "@type": "ItemList",
+        "numberOfItems": PRODUCTS_ALL.length,
+        "itemListElement": PRODUCTS_ALL
+          .slice().sort((a, b) => (a.order || 0) - (b.order || 0))
+          .map((p, i) => ({ "@type": "ListItem", "position": i + 1, "item": prod(p) }))
+      }
     ];
     const meta = `\n<meta name="description" content="${esc(desc)}">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-model-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-model-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
     html = html.replace(/<meta name="robots"[^>]*><!--[^>]*-->\n?/, '');
+    // shop-preview.html carries its own canonical/og:image so the preview page is
+    // correct on its own; strip them here or /shop/ ends up with two of each.
+    html = html.replace(/\n?<link rel="canonical"[^>]*>/g, '');
+    html = html.replace(/\n?<meta property="og:image(:alt)?"[^>]*>/g, '');
     html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>` + meta);
     html = html.replace(/(['"])shirts\//g, '$1/shirts/');
     html = html.replace('<a class="logo" href="#">', '<a class="logo" href="/">');
@@ -1059,8 +1139,8 @@ const CATEGORIES = [
   { slug:'polos', cat:'polos', emoji:'✦', catBg:'Coast',
     h1:'Polo Shirts',
     title:'Embroidered Cotton Polo — 240gsm | Sahra & Beyond',
-    desc:'The Sahra Polo — 240gsm cotton, embroidered rather than printed. Forty pieces only, numbered 1/40. The scarcest piece in the first drop.',
-    intro:"One polo, forty pieces. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. Cut unisex, S to XL, and sized to the same specification as the Regular fit tees. Numbered 1/40 as its own edition, separate from the tees." }
+    desc:'The Sahra Polo — 240gsm cotton, embroidered rather than printed. A limited first run of forty pieces. The scarcest piece in the first drop.',
+    intro:"One polo, forty pieces. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. Cut unisex, S to XL, and sized to the same specification as the Regular fit tees. A run of forty, counted on its own rather than as part of the tee run." }
 ];
 
 function catCards(list) {
@@ -1136,7 +1216,7 @@ COMMERCE.forEach(P => {
     ${P.catNav ? `<nav class="catnav" aria-label="Shop by category">
       <a href="/t-shirts/regular/"><b>Regular fit</b><span>True to size, cut to layer</span></a>
       <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
-      <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; 1/40</span></a>
+      <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; 40 pieces</span></a>
     </nav>` : ''}
     ${collectionBlock(null)}
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
