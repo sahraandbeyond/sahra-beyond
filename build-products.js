@@ -143,7 +143,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid cur
 nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;
   background:color-mix(in srgb,var(--nav-bg,#FAF6EF) 82%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);transition:background .5s}
 .logo{display:flex;align-items:center;gap:11px}
-.logo-img{height:34px;width:auto;display:block}
+.logo-img{height:26px;width:auto;display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 .logo-a{font-family:'Playfair Display',serif;font-size:14px;font-weight:900;letter-spacing:4px;text-transform:uppercase}
 .logo-b{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--clay);text-transform:uppercase}
@@ -369,7 +369,7 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
 
 <div class="note">↺ Free UAE returns &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
 <nav>
-  <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="120" height="37"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
+  <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <div class="nav-links"><a href="/">Home</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div>
 </nav>
 

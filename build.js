@@ -444,7 +444,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'd
 <style>${CSS}</style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="120" height="37"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
 </body>
