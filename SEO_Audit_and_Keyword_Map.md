@@ -207,3 +207,27 @@ All new pages: tag balance, JSON-LD parse, comment balance clean; all serve 200.
 - **`/blog/` bridge posts** ("What to wear camping in the UAE desert"). Phase 3; lower value until DR rises.
 - **Chasing head terms** — `graphic tees Dubai`, `buy t-shirts online UAE`. Unwinnable at DR 0 against H&M, Namshi, Amazon and Teeser.
 - **Backlink outreach** — the actual constraint, and not something that can be done from the codebase.
+
+---
+
+# Catalogue restructure — 12 August 2026
+
+**3 products → 7.** Regular and Oversized are now separate products rather than a variant dropdown, across three categories.
+
+| Category | URL | Items |
+|---|---|---|
+| Regular Tees | `/t-shirts/regular/` | 3 |
+| Oversized Tees | `/t-shirts/oversized/` | 3 |
+| Polo | `/polos/` | 1 |
+
+**Place stayed the product identity; fit became the browse route.** Products read `Al Quaa Galaxy — Oversized`, not `Oversized — Al Quaa`. Making fit the primary navigation would have swapped a distinctive place-led structure for the same taxonomy every t-shirt store has, and the place-led IA is the entire brand thesis.
+
+**Duplicate-content mitigation.** Two pages per design is thin-content territory at DR 0, so the fits are genuinely different documents: different lede, a fit-specific "who this is for" section, a **single-fit size table** (the tab toggle is gone — fit is now the product), differentiated titles and meta, and a cross-link to the sibling fit. The shared place story stays on the location page and is linked, not duplicated.
+
+**Also done:** `/t-shirts/` became a hub routing into the three categories · 301s from all old product URLs including the earlier Liwa rename · inline collection modules on the 37 content pages dedupe to one card per *design* rather than showing seven near-identical cards · CMS gained category, fit, sibling, edition and fit-copy fields, verified zero drift against the JSON · sitemap 51 → 54.
+
+**New SEO surface:** `/t-shirts/oversized/` directly targets "oversized t-shirt UAE", which the audit flagged as a real term with nothing on the site addressing it.
+
+## ⚠️ Shopify is now out of sync
+
+The site has 7 products. **Shopify still has 3, each with 8 variants** (size × fit), and 200 units of inventory attached. The two no longer describe the same catalogue. Splitting a live catalogue with stock against it is consequential, so it was left alone deliberately — it needs a decision before launch.
