@@ -13,12 +13,12 @@
   "theme2": "#AE9C91",
   "accent": "#9C521B",
   "scene": "dunes",
-  "imgMain": "/shirts/polo-sand-main.jpg",
-  "imgFront": "/shirts/polo-sand-front.jpg",
-  "imgBack": "/shirts/polo-sand-back.jpg",
-  "altMain": "The Sahra Polo in sand — photography to come",
-  "altFront": "The Sahra Polo, front — photography to come",
-  "altBack": "The Sahra Polo, back — photography to come",
+  "imgMain": "/shirts/polo-front.jpg",
+  "imgFront": "/shirts/polo-front.jpg",
+  "imgBack": "/shirts/polo-back.jpg",
+  "altMain": "The Sahra Polo in sand — 240gsm piqué cotton with an embroidered chest logo",
+  "altFront": "The Sahra Polo, front — embroidered logo on the chest, ribbed collar and placket",
+  "altBack": "The Sahra Polo, back — plain",
   "seoTitle": "The Sahra Polo — Embroidered 240gsm Cotton Polo",
   "seoDesc": "The Sahra Polo — 240gsm cotton, embroidered rather than printed, in sand. Forty pieces only. The scarcest piece in the first drop. AED 229.",
   "shareDesc": "240gsm embroidered cotton polo in sand. A first run of forty pieces.",
@@ -32,7 +32,7 @@
   "placeEmirate": "",
   "placeSlug": "",
   "designHeading": "Quiet by <em>design</em>",
-  "designIntro": "The tees carry a place across the back. The polo does the opposite — it says almost nothing, and says it in thread. It is the piece for the days you want the brand on you without announcing it.",
+  "designIntro": "Most of the tees carry a place across the back. The polo does the opposite — it says almost nothing, and says it in thread. It is the piece for the days you want the brand on you without announcing it.",
   "designCards": [
     {
       "title": "Embroidered, not printed",
@@ -107,5 +107,9 @@
     }
   ],
   "fitsCardTitle": "Unisex, one fit",
-  "fitsCardBody": "Cut unisex, S to XL, sized to the same specification as the Regular fit tees. Set-in sleeve at the natural shoulder — there is no oversized polo."
+  "fitsCardBody": "Cut unisex, S to XL, sized to the same specification as the Regular fit tees. Set-in sleeve at the natural shoulder — there is no oversized polo.",
+  "colourName": "Sand",
+  "colourPantone": "4675 C",
+  "colourHex": "#DCBFA6",
+  "decoration": "Embroidered"
 }

@@ -11,18 +11,18 @@
   "theme2": "#5C3A2E",
   "accent": "#C0702E",
   "scene": "mountains",
-  "imgMain": "/shirts/final-hajar.jpg",
-  "imgFront": "/shirts/design-taupe-front.jpg",
-  "imgBack": "/shirts/design-taupe-back.jpg",
-  "altMain": "Hajar Mountains Tee — topographic peaks, laid flat",
-  "altFront": "Hajar Mountains Tee, front — topographic line drawing",
-  "altBack": "Hajar Mountains Tee, back — red rock of the Hajar",
+  "imgMain": "/shirts/hajar-oversized-back.jpg",
+  "imgFront": "/shirts/hajar-oversized-front.jpg",
+  "imgBack": "/shirts/hajar-oversized-back.jpg",
+  "altMain": "Hajar Mountains Tee, oversized fit — red rock of the Hajar range printed across the back",
+  "altFront": "Hajar Mountains Tee, oversized fit, front — embroidered topographic logo on the chest",
+  "altBack": "Hajar Mountains Tee, oversized fit, back — the red rock of the Hajar Mountains",
   "seoTitle": "Hajar Mountains T-Shirt — Oversized Fit",
   "seoDesc": "The Hajar Mountains tee in an oversized drop-shoulder cut. Topographic peaks front, red rock across the back. 230gsm cotton, unisex S–XL. AED 199.",
   "shareDesc": "Oversized fit. A topographic line drawing of the Hajar peaks. 230gsm organic cotton, made to layer. Limited first run.",
   "lede": "A true drop-shoulder cut — the seam sits 2–3&Prime; below your natural shoulder. Width, not length, is what makes the silhouette. A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. Organic cotton, made to layer.",
   "ldDesc": "A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. 230gsm organic cotton, made to layer.",
-  "printChip": "DTG print &middot; soft &amp; breathable",
+  "printChip": "DTG print &middot; embroidered logo",
   "occasion": "Made for mountain mornings &amp; wadi hikes in the Hajar",
   "placeName": "Wadi Naqab",
   "placeEmirate": "RAK",
@@ -100,5 +100,15 @@
     "230gsm organic cotton",
     "Ribbed crew neck",
     "Taped collar &amp; shoulder seams"
+  ],
+  "colourName": "Flint Gray",
+  "colourPantone": "16-5803 TCX",
+  "colourHex": "#A09C98",
+  "decoration": "DTG graphic, with the logo above it embroidered",
+  "constructionCards": [
+    {
+      "t": "Embroidered logo",
+      "b": "The mountain graphic is printed direct-to-garment; the logo sitting above it is embroidered. Thread against ink, deliberately."
+    }
   ]
 }
