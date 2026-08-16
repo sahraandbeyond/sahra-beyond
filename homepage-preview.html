@@ -15,12 +15,12 @@
 <meta property="og:title" content="Sahra & Beyond — Wear the Wild Side of the UAE">
 <meta property="og:description" content="Original tees drawn from the real deserts, wadis and dark-sky nights of the Emirates. Every design carries a place.">
 <meta property="og:url" content="https://www.sahraandbeyond.ae/">
-<meta property="og:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-model-back.jpg">
+<meta property="og:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
 <meta property="og:site_name" content="Sahra & Beyond">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sahra & Beyond — Wear the Wild Side of the UAE">
 <meta name="twitter:description" content="Original tees inspired by real UAE places. Every design carries a place.">
-<meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-model-back.jpg">
+<meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Sahra & Beyond","alternateName":"Wear the Wild Side of the UAE","url":"https://www.sahraandbeyond.ae/","description":"Original tees inspired by the real deserts, wadis and dark-sky nights of the UAE."}
 </script>
@@ -29,9 +29,9 @@
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ItemList","itemListElement":[
- {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Al Quaa Galaxy Tee","image":"https://www.sahraandbeyond.ae/shirts/alquaa-model-back.jpg","description":"The Milky Way over Al Quaa — the darkest sky in the Emirates. Heavyweight organic cotton.","brand":{"@type":"Brand","name":"Sahra & Beyond"},"offers":{"@type":"Offer","priceCurrency":"AED","price":"149","availability":"https://schema.org/InStock","url":"https://www.sahraandbeyond.ae/shop/"}}},
- {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Empty Quarter Tee","image":"https://www.sahraandbeyond.ae/shirts/design-beige-front.jpg","description":"A tonal embroidered sun setting over the dune ridges of Liwa. Heavyweight organic cotton.","brand":{"@type":"Brand","name":"Sahra & Beyond"},"offers":{"@type":"Offer","priceCurrency":"AED","price":"149","availability":"https://schema.org/InStock","url":"https://www.sahraandbeyond.ae/shop/"}}},
- {"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Hajar Mountains Tee","image":"https://www.sahraandbeyond.ae/shirts/design-taupe-front.jpg","description":"A topographic line drawing of the Hajar peaks. Organic cotton, made to layer.","brand":{"@type":"Brand","name":"Sahra & Beyond"},"offers":{"@type":"Offer","priceCurrency":"AED","price":"149","availability":"https://schema.org/InStock","url":"https://www.sahraandbeyond.ae/shop/"}}}
+ {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Al Quaa Galaxy Tee","image":"https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg","description":"The Milky Way over Al Quaa — the darkest sky in the Emirates. Heavyweight organic cotton.","brand":{"@type":"Brand","name":"Sahra & Beyond"},"offers":{"@type":"Offer","priceCurrency":"AED","price":"149","availability":"https://schema.org/InStock","url":"https://www.sahraandbeyond.ae/shop/"}}},
+ {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Empty Quarter Tee","image":"https://www.sahraandbeyond.ae/shirts/emptyquarter-regular-front.jpg","description":"A tonal embroidered sun setting over the dune ridges of Liwa. Heavyweight organic cotton.","brand":{"@type":"Brand","name":"Sahra & Beyond"},"offers":{"@type":"Offer","priceCurrency":"AED","price":"149","availability":"https://schema.org/InStock","url":"https://www.sahraandbeyond.ae/shop/"}}},
+ {"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Hajar Mountains Tee","image":"https://www.sahraandbeyond.ae/shirts/hajar-regular-back.jpg","description":"A topographic line drawing of the Hajar peaks. Organic cotton, made to layer.","brand":{"@type":"Brand","name":"Sahra & Beyond"},"offers":{"@type":"Offer","priceCurrency":"AED","price":"149","availability":"https://schema.org/InStock","url":"https://www.sahraandbeyond.ae/shop/"}}}
 ]}
 </script>
 <!-- Google Analytics 4 -->
@@ -68,7 +68,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:cent
 nav.solid{background:rgba(250,246,239,.92);backdrop-filter:blur(16px);padding:11px 28px;box-shadow:0 4px 20px rgba(43,37,32,.08)}
 nav.on-hero .nav-links a,nav.on-hero .logo-a{color:#fff}nav.on-hero .logo-b{color:var(--gold)}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-mark{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 210deg,#2E2450,#7A4F63,#C0702E,#E7AC5F,#2E2450);animation:spin 20s linear infinite}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}.logo .mark{height:36px;width:auto;display:block}.logo .mark-d{display:none}nav:not(.on-hero) .logo .mark-l{display:none}nav:not(.on-hero) .logo .mark-d{display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 .logo-text{display:flex;flex-direction:column;line-height:1}
 .logo-a{font-family:'Playfair Display',serif;font-size:16px;font-weight:900;letter-spacing:3px;text-transform:uppercase;transition:color .3s}
@@ -168,7 +168,7 @@ section{position:relative;padding:100px 0 84px}
    The per-card gradients underneath stay as a graceful fallback for places that have no photo yet. */
 .place-bg{position:absolute;inset:0;transition:transform .6s;background-size:cover;background-position:center}.place:hover .place-bg{transform:scale(1.14)}
 .place.p1 .place-bg{background:linear-gradient(160deg,#3A2F66,#C0702E)}.place.p2 .place-bg{background:linear-gradient(160deg,#1F8A74,#7FCBB0)}
-.place.p3 .place-bg{background:linear-gradient(160deg,#333E5C,#90A4C8)}.place.p4 .place-bg{background:linear-gradient(160deg,#9A591A,#EBB36B)}
+.place.p3 .place-bg{background:linear-gradient(160deg,#333E5C,#90A4C8)}.place.p4 .place-bg{background:linear-gradient(160deg,#9A591A,#EBB36B)}.place.p4 .place-bg::after{content:"";position:absolute;inset:0;background:url(/logo/mark-light.png) center 38% / 58% auto no-repeat;opacity:.30}
 .place::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 55%)}
 .place b{position:relative;z-index:2;font-family:'Playfair Display',serif;font-size:17px;font-weight:700}
 .place small{position:relative;z-index:2;display:block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;opacity:.8;margin-top:3px}
@@ -240,7 +240,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
 .card .glare{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .4s}
 .card:hover .glare{opacity:1}
 .card-img{transform:translateZ(0)}
-.logo-mark{box-shadow:0 0 18px rgba(242,201,140,.35)}
+
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#grain{display:none}}
 .paymarks{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:14px 0 4px}.paymarks svg{height:24px;width:auto;border:1px solid rgba(0,0,0,.12);border-radius:5px;background:#fff}.paymarks-t{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;opacity:.65}</style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
@@ -254,8 +254,8 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
 <div id="grain"></div>
 
 <nav id="nav" class="on-hero">
-  <div class="logo"><div class="logo-mark"></div><div class="logo-text"><span class="logo-a">Sahra</span><span class="logo-b">&amp; Beyond</span></div></div>
-  <div class="nav-links"><a href="#shop">Shop</a><a href="#places">Places</a><a href="/about/">About</a><a href="shop-preview.html" class="nav-cart shoplink" aria-label="Cart">🛒</a></div>
+  <a class="logo" href="/" aria-label="Sahra &amp; Beyond — home"><img class="mark mark-l" src="/logo/mark-light.png" alt="" width="120" height="37"><img class="mark mark-d" src="/logo/mark-dark.png" alt="" width="120" height="37"><div class="logo-text"><span class="logo-a">Sahra</span><span class="logo-b">&amp; Beyond</span></div></a>
+  <div class="nav-links"><a href="/">Home</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="shop-preview.html" class="nav-cart shoplink" aria-label="Cart">🛒</a></div>
 </nav>
 
 <header class="hero" id="hero">
@@ -272,7 +272,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
       <p class="hero-in">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
       <div class="hero-actions hero-in"><a href="shop-preview.html" class="btn magnetic shoplink" onclick="try{track('shop_cta_click',{source:'hero'})}catch(e){}">Shop the collection</a><a href="#places" class="btn ghost magnetic">The places behind them</a></div>
     </div>
-    <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-model-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/design-beige-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/design-taupe-front.jpg');background-size:cover;background-position:center"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
+    <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/emptyquarter-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/hajar-regular-front.jpg');background-size:cover;background-position:center"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
   </div>
   <div class="scroll-cue">⌄</div>
 </header>
@@ -284,9 +284,9 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
   <div class="wrap inner">
     <div class="sec-head reveal"><span class="eyebrow">The collection</span><h2>Designs with a place</h2><p>A small, considered range — each a limited first run, tied to a real spot on the map.</p></div>
     <div class="grid" id="grid">
-      <a class="card reveal tilt" href="/products/al-quaa-galaxy-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/alquaa-model-back.jpg" alt="Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="1400" height="1400"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price">AED 199</div></div></a>
-      <a class="card reveal tilt" href="/products/empty-quarter-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-beige-front.jpg" alt="Empty Quarter Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="1000" height="1219"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter Tee</div><div class="card-price">AED 199</div></div></a>
-      <a class="card reveal tilt" href="/products/hajar-mountains-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/design-taupe-front.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="578" height="663"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price">AED 199</div></div></a>
+      <a class="card reveal tilt" href="/products/al-quaa-galaxy-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="1400" height="1400"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price">AED 199</div></div></a>
+      <a class="card reveal tilt" href="/products/empty-quarter-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="1000" height="1219"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter Tee</div><div class="card-price">AED 199</div></div></a>
+      <a class="card reveal tilt" href="/products/hajar-mountains-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="shirts/hajar-regular-front.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="578" height="663"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price">AED 199</div></div></a>
     </div>
     <div class="qual-band reveal">
       <span class="eyebrow">Made to last</span>
@@ -305,7 +305,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
 <section class="stats">
   <div class="melt"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,50 C260,90 520,20 760,54 C1000,86 1220,26 1440,56 L1440,100 Z" fill="#F7DCB0"/></svg></div>
   <div class="wrap inner"><div class="stat-row">
-    <div class="stat reveal"><b class="count" data-to="3">0</b><span>Designs in the first drop</span></div>
+    <div class="stat reveal"><b class="count" data-to="4">0</b><span>Designs in the first drop</span></div>
     <div class="stat reveal"><b class="count" data-to="7">0</b><span>Emirates to explore</span></div>
     <div class="stat reveal"><b class="count" data-to="100" data-suffix="%">0</b><span>Original artwork</span></div>
   </div></div>
@@ -321,7 +321,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
          background-image on their .place-bg the same way as p1/p3. -->
     <div class="place-row">
       <a class="place p1 reveal" href="/locations/al-quaa-desert/"><div class="place-bg" style="background-image:url('/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg')" role="img" aria-label="Al Quaa Desert"></div><div><b>Al Quaa Desert</b><small>Abu Dhabi · Dark sky</small></div></a>
-      <a class="place p2 reveal" href="/locations/wadi-naqab/"><div class="place-bg"></div><div><b>Wadi Naqab</b><small>RAK · Hajar Mountains</small></div></a>
+      <a class="place p2 reveal" href="/locations/wadi-naqab/"><div class="place-bg" style="background-image:url('/uploads/wadi-naqab-hajar-wadi.jpg')"></div><div><b>Wadi Naqab</b><small>RAK · Hajar Mountains</small></div></a>
       <a class="place p3 reveal" href="/locations/wadi-showka/"><div class="place-bg" style="background-image:url('/uploads/17951464709964948.webp')" role="img" aria-label="Wadi Showka"></div><div><b>Wadi Showka</b><small>RAK · Hajar foothills</small></div></a>
       <a class="place p4 reveal" href="/locations/liwa/"><div class="place-bg"></div><div><b>Liwa Dunes</b><small>Abu Dhabi · Desert</small></div></a>
     </div>

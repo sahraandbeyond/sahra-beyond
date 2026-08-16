@@ -408,7 +408,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'd
 
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Home', 'discover') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About us', 'about');
+  const navHtml = nav('/', 'Home', 'discover') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About', 'about');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -444,7 +444,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'd
 <style>${CSS}</style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/Sahra_and_Beyond_Emblem.svg" alt="Sahra &amp; Beyond" width="34" height="34"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="120" height="37"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
 </body>
@@ -929,7 +929,7 @@ if (LAUNCHED) (function () {
     const prod = p => ({
       "@type": "Product",
       "name": p.name,
-      "image": SITE + (p.imgMain || p.imgFront || '/shirts/alquaa-model-back.jpg'),
+      "image": SITE + (p.imgMain || p.imgFront || '/shirts/alquaa-regular-back.jpg'),
       "description": p.shareDesc || p.ldDesc || p.seoDesc || '',
       "sku": p.sku || undefined,
       "brand": { "@type": "Brand", "name": "Sahra & Beyond" },
@@ -955,7 +955,7 @@ if (LAUNCHED) (function () {
           .map((p, i) => ({ "@type": "ListItem", "position": i + 1, "item": prod(p) }))
       }
     ];
-    const meta = `\n<meta name="description" content="${esc(desc)}">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-model-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-model-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
+    const meta = `\n<meta name="description" content="${esc(desc)}">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-regular-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-regular-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
     html = html.replace(/<meta name="robots"[^>]*><!--[^>]*-->\n?/, '');
     // shop-preview.html carries its own canonical/og:image so the preview page is
     // correct on its own; strip them here or /shop/ ends up with two of each.

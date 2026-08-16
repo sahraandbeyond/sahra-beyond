@@ -13,8 +13,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shop UAE-Inspired Tees | Sahra &amp; Beyond">
 <meta name="twitter:description" content="Original heavyweight organic-cotton tees inspired by real UAE places.">
-<meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-model-back.jpg">
-<meta property="og:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-model-back.jpg">
+<meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
+<meta property="og:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
 <meta property="og:image:alt" content="Sahra &amp; Beyond — the first drop">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/shop/">
 <meta name="description" content="Shop original UAE t-shirts inspired by real places — Al Quaa’s dark sky, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs.">
@@ -51,7 +51,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:cent
 nav.solid{background:rgba(250,246,239,.86);backdrop-filter:blur(16px);padding:13px 32px}
 nav.on-hero .nav-links a,nav.on-hero .logo-a,nav.on-hero .cart-btn{color:#fff}nav.on-hero .logo-b{color:var(--gold)}
 .logo{display:flex;align-items:center;gap:11px}
-.logo-mark{width:32px;height:32px;border-radius:50%;background:conic-gradient(from 210deg,#2E2450,#7A4F63,#C0702E,#E7AC5F,#2E2450);animation:spin 22s linear infinite;box-shadow:0 0 18px rgba(233,185,120,.35)}
+.logo-img{height:34px;width:auto;display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 .logo-a{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;letter-spacing:4px;text-transform:uppercase;transition:color .4s}
 .logo-b{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--clay);text-transform:uppercase;transition:color .4s}
@@ -393,8 +393,8 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
 <div class="note" id="mode-note">PREVIEW — demo products · add your Shopify domain + token in the code to go live</div>
 
 <nav id="nav" class="on-hero">
-  <a class="logo" href="#"><div class="logo-mark"></div><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
-  <div class="nav-links"><a href="#">Shop</a><a href="#">Places</a><a href="#">About</a><button class="cart-btn magnetic" id="cartBtn" aria-label="Cart">🛒<span class="cart-count" id="cartCount" style="display:none">0</span></button></div>
+  <a class="logo" href="#"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="120" height="37"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
+  <div class="nav-links"><a href="/">Home</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div>
 </nav>
 
 <header class="shophero" id="hero">
@@ -898,19 +898,19 @@ var PRODUCTS=[];
 var DEMODATA=[
  {t:'Al Quaa Galaxy Tee',pl:'Al Quaa',slug:'al-quaa-desert',p:'199',st:'The Milky Way as it rises over Al Quaa — the only Bortle 1, darkest sky in the Emirates. A subtle صحراء mark on the chest, the galaxy across the back. Heavyweight organic cotton.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#181109',dark:1,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Al Quaa Galaxy Tee here (front + back). Currently placeholder = the oversized mockup.
-   regular:{front:'shirts/alquaa-model-front.jpg',back:'shirts/alquaa-model-back.jpg'},
+   regular:{front:'shirts/alquaa-regular-front.jpg',back:'shirts/alquaa-regular-back.jpg'},
    // OVERSIZED-fit = the finished oversized mockup. TODO: swap for a dedicated oversized shoot if/when available.
-   oversized:{front:'shirts/alquaa-model-front.jpg',back:'shirts/alquaa-model-back.jpg'}}},
+   oversized:{front:'shirts/alquaa-regular-front.jpg',back:'shirts/alquaa-regular-back.jpg'}}},
  {t:'Empty Quarter Tee',pl:'Liwa',slug:'liwa',p:'199',st:'A tonal embroidered sun setting over the dune ridges of Liwa, with صحراء beneath. Soft, heavyweight organic cotton.',v:[['S',1],['M',1],['L',0],['XL',1]],bg:'#E7D6B8',dark:0,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Empty Quarter Tee here (front + back). Currently placeholder = the oversized mockup.
-   regular:{front:'shirts/design-beige-front.jpg',back:'shirts/design-beige-back.jpg'},
+   regular:{front:'shirts/emptyquarter-regular-front.jpg',back:'shirts/emptyquarter-regular-back.jpg'},
    // OVERSIZED-fit = the finished oversized (model) mockup. TODO: swap for a dedicated oversized shoot if/when available.
-   oversized:{front:'shirts/design-beige-front.jpg',back:'shirts/design-beige-back.jpg'}}},
+   oversized:{front:'shirts/emptyquarter-regular-front.jpg',back:'shirts/emptyquarter-regular-back.jpg'}}},
  {t:'Hajar Mountains Tee',pl:'Wadi Naqab',slug:'wadi-naqab',p:'199',st:'A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. Organic cotton, made to layer.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#C6BFD3',dark:0,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Hajar Mountains Tee here (front + back). Currently placeholder = the oversized mockup.
-   regular:{front:'shirts/design-taupe-front.jpg',back:'shirts/design-taupe-back.jpg'},
+   regular:{front:'shirts/hajar-regular-front.jpg',back:'shirts/hajar-regular-back.jpg'},
    // OVERSIZED-fit = the finished oversized mockup. TODO: swap for a dedicated oversized shoot if/when available.
-   oversized:{front:'shirts/design-taupe-front.jpg',back:'shirts/design-taupe-back.jpg'}}}
+   oversized:{front:'shirts/hajar-regular-front.jpg',back:'shirts/hajar-regular-back.jpg'}}}
 ];
 
 /* Canonicalise placeSlug once, right after products load, so every downstream use — PLACES lookup,
