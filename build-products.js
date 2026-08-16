@@ -92,7 +92,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
 "description":${J(p.ldDesc)},
 "brand":{"@type":"Brand","name":"Sahra & Beyond"},
 "material":"100% organic cotton",
-"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/"}}
+"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -181,6 +181,11 @@ body.dark-bg .buy h1 em{color:var(--gold)}
 .plink:hover{opacity:.6}
 .price{font-family:'Space Mono',monospace;font-size:19px;letter-spacing:1px;margin:6px 0 5px}
 .vat{font-size:12px;color:var(--txt-soft);margin-bottom:22px}
+.colourway{display:flex;align-items:flex-start;gap:11px;margin:0 0 16px;padding:11px 13px;border:1px solid var(--line);border-radius:3px;background:rgba(0,0,0,.015)}
+.colourway .sw{flex:0 0 auto;width:34px;height:34px;border-radius:2px;border:1px solid rgba(0,0,0,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+.cw-txt{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;line-height:1.5;text-transform:uppercase;color:var(--txt-soft)}
+.cw-txt strong{color:var(--txt)}
+.cw-txt em{display:block;margin-top:4px;font-style:normal;text-transform:none;letter-spacing:0;font-size:10.5px;opacity:.72}
 .lede{font-size:17px;font-weight:300;line-height:1.85;margin-bottom:22px;max-width:46ch}
 .spec-strip{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0}
 .spec-strip li{font-family:'Space Mono',monospace;font-size:11px;padding:7px 12px;border:1px solid var(--line);background:var(--chip);border-radius:999px;backdrop-filter:blur(4px)}
@@ -399,6 +404,11 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
       <ul class="spec-strip">
         <li><strong>Unisex</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm organic cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
       </ul>
+      ${p.colourHex ? `<div class="colourway">
+        <span class="sw" style="background:${p.colourHex}" role="img" aria-label="Colour swatch: ${esc(p.colourName)}, Pantone ${esc(p.colourPantone)}"></span>
+        <span class="cw-txt"><strong>${esc(p.colourName)}</strong> &middot; Pantone ${esc(p.colourPantone)}
+        <em>Screens vary &mdash; the Pantone reference is the exact specification.</em></span>
+      </div>` : ''}
       <p class="occasion">✦ ${p.occasion}</p>
       <!-- Live size availability, fetched from Shopify. Hidden until data arrives so we never
            show stock we can't verify. -->

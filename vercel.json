@@ -61,6 +61,21 @@
       "source": "/products/hajar-mountains-tee/",
       "destination": "/products/hajar-mountains-regular/",
       "permanent": true
+    },
+    {
+      "source": "/coming-soon.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/homepage-preview.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/shop-preview.html",
+      "destination": "/t-shirts/",
+      "permanent": true
     }
   ]
 }

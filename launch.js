@@ -10,7 +10,8 @@
 
    USAGE
      node launch.js --check      Report readiness. Changes nothing. (default)
-     node launch.js --go         Perform the cutover, then rebuild.
+     node launch.js --reveal     Make the site public, WITHOUT the cart (no payments yet).
+     node launch.js --go         Full launch: shop + cart live. Needs a working payment method.
      node launch.js --rollback   Put the coming-soon page back.
 
    WHAT --go DOES
@@ -121,6 +122,107 @@ function promoteHomepage() {
   return h.length;
 }
 
+/* ---------------- reveal: site public, but no commerce ----------------
+   Between "coming soon" and "open for business" there is a third state: the whole
+   site visible and indexable, products fully browsable, but nothing purchasable
+   because payments are not live yet. Running the full launch here would put a
+   working Add to Cart in front of a checkout with no payment method — worse than
+   staying hidden. So this promotes the homepage and leaves LAUNCHED = false. */
+function stripCommerceFromHomepage(h) {
+  const before = h;
+  const notes = [];
+  // 1. the cart icon — there is no cart yet
+  const cart = /<a href="[^"]*shop-preview\.html"[^>]*class="nav-cart shoplink"[^>]*>[^<]*<\/a>/;
+  if (cart.test(h)) { h = h.replace(cart, ''); notes.push('cart icon removed'); }
+  // 2. shop CTAs point at the browsable category hub, not a shop that does not exist
+  h = h.replace(/href="\/?shop-preview\.html"/g, 'href="/t-shirts/"');
+  // 3. "Shop the collection" promises a transaction we cannot complete
+  if (h.includes('>Shop the collection')) {
+    h = h.replace(/>Shop the collection/g, '>See the collection');
+    notes.push('"Shop the collection" -> "See the collection"');
+  }
+  // 4. card marks + "Secure checkout" imply you can pay. You cannot, yet.
+  const pay = /<div class="paymarks"[\s\S]*?<\/div>\s*/;
+  if (pay.test(h)) { h = h.replace(pay, ''); notes.push('payment marks removed'); }
+  else {
+    const sc = /<span class="paymarks-t">[^<]*<\/span>/;
+    if (sc.test(h)) { h = h.replace(sc, ''); notes.push('"Secure checkout" removed'); }
+  }
+  if (h === before) notes.push('nothing matched — CHECK THE HOMEPAGE BY HAND');
+  return { html: h, notes };
+}
+
+function reveal() {
+  const list = checks();
+  if (!report(list)) { console.log(`\n  Fix the blockers, then run ${C.b}node launch.js --reveal${C.off} again.\n`); process.exit(1); }
+  console.log(`\n${C.b}Revealing the site${C.off} ${C.dim}(browsable, not purchasable)${C.off}\n`);
+
+  if (has('index.html')) {
+    fs.mkdirSync(BACKUP, { recursive: true });
+    fs.copyFileSync(path.join(ROOT, 'index.html'), path.join(BACKUP, 'index.coming-soon.html'));
+    ok('backed up coming-soon page -> _backup/index.coming-soon.html');
+  }
+
+  let h = rd('homepage-preview.html');
+  h = h.replace(/<meta name="robots"[^>]*>(<!--[^>]*-->)?\n?/, '');
+  h = h.replace(/(src|href)="(shirts\/)/g, '$1="/$2');
+  const res = stripCommerceFromHomepage(h);
+  wr('index.html', res.html);
+  ok(`promoted homepage-preview.html -> index.html (${res.html.length.toLocaleString()} chars)`);
+  res.notes.forEach(n => ok(`  ${n}`));
+
+  // flip the build into revealed mode so every generated 'shop' link goes to a
+  // browsable page instead of the cart page
+  let b0 = rd('build.js').replace(/const REVEALED = false;/, 'const REVEALED = true;');
+  wr('build.js', b0);
+  ok('build.js: REVEALED = true  (shop links -> /t-shirts/, no cart anywhere)');
+
+  // the hand-written pages are not generated, so fix them directly
+  let fixed = 0;
+  for (const f of ['commitment.html', 'policies.html']) {
+    if (!has(f)) continue;
+    let c = rd(f), before = c;
+    c = c.replace(/href="\/?shop-preview\.html[^"]*"/g, 'href="/t-shirts/"');
+    c = c.replace(/>Shop the collection/g, '>See the collection');
+    if (c !== before) { wr(f, c); fixed++; }
+  }
+  if (fixed) ok(`repointed shop links in ${fixed} static page(s) -> /t-shirts/`);
+
+  // policies must be public the moment the site is
+  if (has('policies.html')) {
+    let p = rd('policies.html');
+    p = p.replace(/<!-- noindex while legal placeholders[\s\S]*?-->\n?/, '');
+    p = p.replace(/<meta name="robots" content="noindex,follow">/, '<meta name="robots" content="index,follow">');
+    wr('policies.html', p);
+    ok('policies.html -> index,follow');
+  }
+  // the coming-soon page is now stale content on a live site
+  if (has('coming-soon.html')) {
+    let c = rd('coming-soon.html');
+    if (!/name="robots"/.test(c)) {
+      c = c.replace(/<head>/i, '<head>\n<meta name="robots" content="noindex,follow">');
+      wr('coming-soon.html', c); ok('coming-soon.html -> noindex,follow');
+    }
+  }
+  // retire the two pre-launch URLs. NOT shop-preview.html — /shop/ does not exist yet.
+  if (has('vercel.json')) {
+    try {
+      const v = JSON.parse(rd('vercel.json'));
+      v.redirects = v.redirects || [];
+      let added = 0;
+      for (const [source, destination] of [['/coming-soon.html', '/'], ['/homepage-preview.html', '/'], ['/shop-preview.html', '/t-shirts/']]) {
+        if (!v.redirects.some(r => r.source === source)) { v.redirects.push({ source, destination, permanent: true }); added++; }
+      }
+      if (added) { wr('vercel.json', JSON.stringify(v, null, 2) + '\n'); ok(`vercel.json: ${added} pre-launch URL(s) now 301 to /`); }
+    } catch (e) { bad(`vercel.json not updated (${e.message})`); }
+  }
+
+  console.log('');
+  execFileSync(process.execPath, [path.join(ROOT, 'build.js')], { stdio: 'inherit' });
+  console.log(`\n  ${C.ok}${C.b}Site is live.${C.off} Products are browsable; nothing is purchasable.`);
+  console.log(`  ${C.dim}When Telr clears, run ${C.off}${C.b}node launch.js --go${C.dim} to turn on the shop and cart.${C.off}\n`);
+}
+
 function go() {
   const list = checks();
   if (!report(list)) { console.log(`\n  Fix the blockers, then run ${C.b}node launch.js --go${C.off} again.\n`); process.exit(1); }
@@ -141,6 +243,7 @@ function go() {
   // 3. flip the build flag
   let b = rd('build.js');
   b = b.replace(/const LAUNCHED = false;/, 'const LAUNCHED = true;');
+  b = b.replace(/const REVEALED = true;/, 'const REVEALED = false;');
   wr('build.js', b);
   ok('build.js: LAUNCHED = true  (generates /shop/, adds Shop to nav + sitemap)');
 
@@ -153,7 +256,63 @@ function go() {
     ok('policies.html -> index,follow');
   }
 
-  // 5. rebuild
+  // 5. repoint shop links in the remaining hand-written pages.
+  //    The generated pages get this from SHOP_URL at build time and the homepage
+  //    is handled by promoteHomepage(), but these two are static files that would
+  //    otherwise keep pointing at /shop-preview.html — which we noindex below.
+  let repointed = 0;
+  for (const f of ['commitment.html', 'policies.html', 'coming-soon.html']) {
+    if (!has(f)) continue;
+    let c = rd(f);
+    const before = c;
+    c = c.replace(/href="\/?shop-preview\.html/g, 'href="/shop/');
+    if (c !== before) { wr(f, c); repointed++; }
+  }
+  if (repointed) ok(`repointed shop links in ${repointed} static page(s) -> /shop/`);
+
+  // 6. the coming-soon page is now stale content on a live store. Keep the file
+  //    (old emails and social posts link to it) but take it out of the index and
+  //    point it at the homepage.
+  if (has('coming-soon.html')) {
+    let c = rd('coming-soon.html');
+    if (!/name="robots"/.test(c)) {
+      c = c.replace(/<head>/i, '<head>\n<meta name="robots" content="noindex,follow">');
+      wr('coming-soon.html', c);
+      ok('coming-soon.html -> noindex,follow (superseded by the live homepage)');
+    }
+  }
+
+  // 7. retire the pre-launch URLs. These cannot live in vercel.json before launch
+  //    (they would 404 anyone using the preview links while we are still building),
+  //    so they are added here, at the cutover, and removed again on rollback.
+  if (has('vercel.json')) {
+    try {
+      const v = JSON.parse(rd('vercel.json'));
+      v.redirects = v.redirects || [];
+      // if --reveal already pointed this at /t-shirts/, retarget it at the real shop
+      v.redirects = v.redirects.filter(r => r.source !== '/shop-preview.html');
+      const retire = [
+        ['/shop-preview.html', '/shop/'],
+        ['/homepage-preview.html', '/'],
+        ['/coming-soon.html', '/'],
+      ];
+      let added = 0;
+      for (const [source, destination] of retire) {
+        if (!v.redirects.some(r => r.source === source)) {
+          v.redirects.push({ source, destination, permanent: true });
+          added++;
+        }
+      }
+      if (added) {
+        wr('vercel.json', JSON.stringify(v, null, 2) + '\n');
+        ok(`vercel.json: ${added} pre-launch URL(s) now 301 to their live equivalent`);
+      }
+    } catch (e) {
+      bad(`vercel.json could not be updated automatically (${e.message}) — add the 301s by hand`);
+    }
+  }
+
+  // 8. rebuild
   console.log('');
   execFileSync(process.execPath, [path.join(ROOT, 'build.js')], { stdio: 'inherit' });
 
@@ -165,9 +324,30 @@ function rollback() {
   if (!fs.existsSync(bk)) { bad('no backup found at _backup/index.coming-soon.html'); process.exit(1); }
   fs.copyFileSync(bk, path.join(ROOT, 'index.html'));
   ok('restored coming-soon page');
-  let b = rd('build.js').replace(/const LAUNCHED = true;/, 'const LAUNCHED = false;');
+  let b = rd('build.js').replace(/const LAUNCHED = true;/, 'const LAUNCHED = false;').replace(/const REVEALED = true;/, 'const REVEALED = false;');
   wr('build.js', b);
   ok('build.js: LAUNCHED = false');
+
+  // undo the URL retirements — leaving them would 301 the preview pages to a
+  // /shop/ that no longer exists, which is worse than the state we started in
+  if (has('vercel.json')) {
+    try {
+      const v = JSON.parse(rd('vercel.json'));
+      const retired = new Set(['/shop-preview.html', '/homepage-preview.html', '/coming-soon.html']);
+      const before = (v.redirects || []).length;
+      v.redirects = (v.redirects || []).filter(r => !retired.has(r.source));
+      if (v.redirects.length !== before) {
+        wr('vercel.json', JSON.stringify(v, null, 2) + '\n');
+        ok(`vercel.json: removed ${before - v.redirects.length} pre-launch 301(s)`);
+      }
+    } catch (e) { bad(`vercel.json not reverted (${e.message}) — remove the 301s by hand`); }
+  }
+
+  // put the coming-soon page back in the index
+  if (has('coming-soon.html')) {
+    let c = rd('coming-soon.html').replace(/<meta name="robots" content="noindex,follow">\n?/, '');
+    wr('coming-soon.html', c);
+  }
   console.log('');
   execFileSync(process.execPath, [path.join(ROOT, 'build.js')], { stdio: 'inherit' });
   console.log(`\n  ${C.warn}Rolled back.${C.off} /shop/ is no longer generated. Commit + push.\n`);
@@ -176,6 +356,7 @@ function rollback() {
 /* ---------------- entry ---------------- */
 const arg = process.argv[2] || '--check';
 if (arg === '--go') go();
+else if (arg === '--reveal') reveal();
 else if (arg === '--rollback') rollback();
 else {
   const passed = report(checks());

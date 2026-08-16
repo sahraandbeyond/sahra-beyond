@@ -18,6 +18,9 @@ const TAGLINE = 'Wear the wild side of the UAE';
 // Pre-launch mode: the site opens on the coming-soon experience.
 // Flip to true on drop day — enables /shop/, the Shop nav link and shop CTAs everywhere.
 const LAUNCHED = false;
+// REVEALED: the site is public and browsable but payments are not live, so every
+// 'shop' link must lead somewhere browsable rather than to a working cart.
+const REVEALED = true;
 
 function readJSON(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return null; } }
 function metaDesc(s) { s = String(s || ''); if (s.length <= 160) return s; const cut = s.slice(0, 157); return cut.slice(0, cut.lastIndexOf(' ')) + '…'; }
@@ -1096,7 +1099,7 @@ const COMMERCE = [
       { h2: 'What 230gsm means', body: "GSM is grams per square metre — the weight of the fabric. A typical high-street t-shirt runs 150–180gsm. Ours is 230gsm.\n\nThe practical difference is structure. A lightweight shirt drapes onto the body and shows everything underneath; a heavyweight one holds its own shape and hangs away from you. It also survives washing far better, because there is simply more cotton there to begin with. The trade-off is honest: 230gsm is a more substantial shirt, so in peak UAE summer the Regular fit breathes better than the Oversized." },
       { h2: 'Why 100% organic cotton', body: "Organic cotton is grown without synthetic pesticides or fertilisers. It matters here for two reasons beyond the environmental one: it is fully breathable, which is not optional in this climate, and it takes direct-to-garment ink better than a cotton-polyester blend, giving a sharper print.\n\nWe do not blend in polyester. A poly-cotton shirt is cheaper to make and holds a print slightly longer, but it traps heat — which is the wrong trade in the Gulf." },
       { h2: 'Ribbed collar, taped seams', body: "The collar is a ribbed crew neck. Ribbing is knitted with more elasticity than the body fabric, so the neckline returns to shape instead of stretching out and going wavy — which is how most t-shirts visibly die.\n\nThe collar and shoulder seams are taped: a strip of fabric bound over the seam on the inside. It stops the shoulders from twisting over time and takes the strain off the stitching. It is a small manufacturing cost that shows up years later." },
-      { h2: 'DTG printing versus embroidery', body: "Two of our designs are printed direct-to-garment. DTG sprays ink into the fibres rather than laying a film on top, so the graphic stays soft, the fabric keeps breathing, and there is no plastic panel across your back. It flexes with the cotton instead of cracking.\n\nThe Empty Quarter design is embroidered instead — thread stitched into the cloth, tonal against the fabric. Embroidery has a raised texture you can feel, catches light differently through the day, and will not fade the way a print eventually can." },
+      { h2: 'DTG printing versus embroidery', body: "Two of our designs carry a printed graphic. DTG sprays ink into the fibres rather than laying a film on top, so the graphic stays soft, the fabric keeps breathing, and there is no plastic panel across your back. It flexes with the cotton instead of cracking. On both of those designs the logo itself is embroidered — so a single shirt carries two techniques, ink and thread.\n\nThe Empty Quarter design goes further and is embroidered throughout, with no print at all — thread stitched into the cloth, tonal against the fabric. Embroidery has a raised texture you can feel, catches light differently through the day, and will not fade the way a print eventually can. The polo is embroidered too." },
       { h2: 'How to make it last', body: "Wash cold and inside out. Heat is what fades a print fastest, and washing inside out protects both print and embroidery from abrasion.\n\nHang to dry rather than tumble drying — tumble drying is the main cause of both shrinkage and cracking. Skip fabric softener; it coats the fibres and dulls the finish. Do not iron directly onto a print." },
       { h2: 'Where it is made', body: "Our fabric is sourced from Pakistan, one of the world's major cotton-producing countries. The designs are created here in the UAE. We say designed in the UAE rather than made in the UAE, because that is the accurate description." }
     ],
@@ -1163,9 +1166,9 @@ CATEGORIES.forEach(C => {
   const items = BY_CATEGORY(C.cat);
   // Deep-link into the shop with this category preselected. The shop reads these
   // params on load, so /shop/?fit=oversized opens already filtered.
-  const SHOP = LAUNCHED ? '/shop/' : '/shop-preview.html';
+  const SHOP = LAUNCHED ? '/shop/' : (REVEALED ? '/t-shirts/' : '/shop-preview.html');
   const CAT_FILTER = { 'regular-tees':'regular', 'oversized-tees':'oversized', 'polos':'polo' }[C.cat] || '';
-  const shopHref = CAT_FILTER ? `${SHOP}?fit=${CAT_FILTER}` : SHOP;
+  const shopHref = (CAT_FILTER && !REVEALED) ? `${SHOP}?fit=${CAT_FILTER}` : SHOP;
   const canonical = `${SITE}/${C.slug}/`;
   const jsonld = [
     { "@context":"https://schema.org","@type":"CollectionPage","name":C.h1,"description":C.desc,"url":canonical },
@@ -1237,7 +1240,7 @@ COMMERCE.forEach(P => {
   write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body }));
 });
 
-const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: LAUNCHED ? '/shop/' : '/shop-preview.html' });
+const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: LAUNCHED ? '/shop/' : (REVEALED ? '/t-shirts/' : '/shop-preview.html') });
 console.log('  \u2713 ' + PRODUCT_URLS.length + ' product pages');
 
 // ---- sitemap ----

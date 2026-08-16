@@ -164,6 +164,9 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .prod.dark .buy-limited{color:var(--gold)}
 /* .prod sets display:flex, which beats the `hidden` attribute's default display:none.
    Without this the filters would toggle `hidden` and nothing would visibly change. */
+.sw-row{display:flex;align-items:center;gap:9px;margin:10px 0 2px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;opacity:.85}
+.sw-dot{width:19px;height:19px;border-radius:2px;border:1px solid rgba(0,0,0,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);flex:0 0 auto}
+.prod.dark .sw-dot{border-color:rgba(255,255,255,.35)}
 .prod[hidden]{display:none}
 .shop-filters{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 18px;max-width:1060px;margin:0 auto 14px;padding:0 24px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
 .filt-grp{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
@@ -1027,6 +1030,13 @@ function draw(){
     var _cat=tagVal(p.tags||[],'category');
     var _fFit=(_cat==='polos')?'polo':(fitLabel||'');            /* the polo is its own silhouette, not a tee fit */
     var _fPrint=(tagVal(p.tags||[],'print')||'').toLowerCase().indexOf('embroider')===0?'embroidered':'dtg';
+    var _colHex=tagVal(p.tags||[],'hex'), _colName=tagVal(p.tags||[],'colour'), _colPan=tagVal(p.tags||[],'pantone');
+    if(!_colHex){                                   /* fallback so the shop still shows colour if tags lag behind */
+      var _cm={'al-quaa':['Salute','19-4011 TCX','#282B34'],'empty-quarter':['Beige','14-1118 TCX','#D5BA98'],
+               'hajar':['Flint Gray','16-5803 TCX','#A09C98'],'sand-polo':['Sand','4675 C','#DCBFA6']};
+      for(var k in _cm){ if((p.handle||'').indexOf(k)===0){ _colName=_cm[k][0];_colPan=_cm[k][1];_colHex=_cm[k][2]; break; } }
+    }
+    var colourway=_colHex?'<div class="sw-row"><span class="sw-dot" style="background:'+_colHex+'" role="img" aria-label="Colour: '+_colName+', Pantone '+_colPan+'"></span><span>'+_colName+' &middot; Pantone '+_colPan+'</span></div>':'';
     var _fSizes=(p.sizes||[]).filter(function(sz){                /* only sizes actually buyable right now */
       return p.variants.some(function(v){return v.size===sz&&v.avail;});
     }).join(' ');
@@ -1054,7 +1064,7 @@ function draw(){
     var buyGhaf='<a class="buy-ghaf" href="/commitment.html">&#127793; A share of every tee plants ghaf trees in the UAE &rarr;</a>';
     var details='<details class="prod-acc"><summary>Details &amp; care</summary><ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% organic cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Fit.</strong> Unisex — Regular (true to size) or Oversized (relaxed drop-shoulder). See the size guide.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul></details>';
     var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; Organic cotton</span></div>';
-    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'" data-fit="'+_fFit+'" data-place="'+(p.placeSlug||'')+'" data-print="'+_fPrint+'" data-sizes="'+_fSizes+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+fitChip+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price">'+money(p.price,p.cur)+'</div>'+specStrip+fitSwap+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
+    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'" data-fit="'+_fFit+'" data-place="'+(p.placeSlug||'')+'" data-print="'+_fPrint+'" data-sizes="'+_fSizes+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+fitChip+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price">'+money(p.price,p.cur)+'</div>'+specStrip+colourway+fitSwap+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
   }).join('');
   var secs=[].slice.call(host.querySelectorAll('.prod'));
   secs.forEach(function(sec,i){
