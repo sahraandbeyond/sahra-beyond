@@ -15,5 +15,6 @@
   "id": "shuweihat-island",
   "difficulty": "Hard",
   "category": "Coast",
-  "lat": 24.110069
+  "lat": 24.110069,
+  "coverFocus": "50% 45%"
 }

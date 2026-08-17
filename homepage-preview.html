@@ -162,7 +162,9 @@ section{position:relative;padding:100px 0 84px}
 .places{background:#241B12;color:#fff}
 .places .sec-head h2{color:#fff}.places .sec-head p{color:rgba(255,255,255,.7)}.places .eyebrow{color:var(--gold)}
 .place-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.place{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px;color:#fff;transition:transform .4s;will-change:transform}
+/* was 3/4: a 1600x900 cover showed only 42% of the photo. 4/5 is less
+   severe and suits the mixed portrait/landscape library better. */
+.place{aspect-ratio:4/5;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px;color:#fff;transition:transform .4s;will-change:transform}
 .place:hover{transform:translateY(-10px)}
 /* .place-bg takes a real cover photo via an inline background-image (see the cards below).
    The per-card gradients underneath stay as a graceful fallback for places that have no photo yet. */
@@ -224,7 +226,9 @@ footer{background:#1C140D;color:rgba(255,255,255,.72);padding:64px 0 30px;text-a
 html:not(.anim-ready) #preload{display:none}
 html.anim-ready .reveal{opacity:0}
 html.anim-ready .hero-in{opacity:0}
-@media(max-width:760px){.hero{height:100svh}.hero-inner{grid-template-columns:1fr}.spot{max-width:280px;margin:24px auto 0}.grid{grid-template-columns:1fr 1fr;gap:16px}.place-row{grid-template-columns:1fr 1fr}.story{grid-template-columns:1fr}.story-img{order:-1}.nav-links a:not(.nav-cart){display:none}}
+@media(max-width:760px){.hero{height:100svh}.hero-inner{grid-template-columns:1fr}.spot{max-width:280px;margin:24px auto 0}.grid{grid-template-columns:1fr 1fr;gap:16px}/* one column on phones: two made each tile ~170px wide and the cover crop
+   became an unreadable sliver. Full width shows the place properly. */
+.place-row{grid-template-columns:1fr}.story{grid-template-columns:1fr}.story-img{order:-1}.nav-links a:not(.nav-cart){display:none}}
 @media(max-width:560px){.hero{min-height:560px}.hero h1{font-size:clamp(34px,9vw,80px)}.hero p{font-size:15px}.wrap{padding:0 18px}.grid{gap:14px}.place-row{gap:12px}.hero-actions{flex-wrap:wrap;gap:10px}.hero-actions .btn{flex:1 1 auto;text-align:center}.wl-form{flex-direction:column}.wl-form input,.wl-form button{width:100%;min-width:0}}
 .note{background:#1C140D;color:var(--gold);text-align:center;font-size:11px;padding:7px;font-family:'Space Mono',monospace;position:relative;z-index:70}
 /* premium layer */
@@ -615,7 +619,16 @@ img,svg,video{max-width:100%;height:auto}
   function resetShooter(sh){sh.t=0;sh.life=.9+Math.random()*.7;sh.p.set(10+Math.random()*45,26+Math.random()*16,-48);
     var ang=Math.PI+(-.25+Math.random()*.4);sh.d.set(Math.cos(ang),Math.sin(ang)*.55-.42,0).normalize().multiplyScalar(34);}
   var shootTimer=2.5;
-  function size(){var w=hero.offsetWidth,h=hero.offsetHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  function size(){var w=Math.round(hero.getBoundingClientRect().width),h=Math.round(hero.getBoundingClientRect().height);
+    if(!w||!h)return; R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  // Self-heal: if the drawing buffer ever stops matching the displayed box
+  // (URL-bar collapse on scroll, a missed ResizeObserver beat, the tab being
+  // throttled while the hero is off-screen), resize on the next frame. This is
+  // why the hero came back wrong after scrolling down and back up.
+  function sizeIfStale(){var r=hero.getBoundingClientRect();
+    if(!r.width||!r.height)return;
+    var w=Math.round(r.width*DPR),h=Math.round(r.height*DPR);
+    if(Math.abs(cvs.width-w)>1||Math.abs(cvs.height-h)>1) size();}
   size();addEventListener('resize',size,{passive:true});
   // A phone sizes the hero before the URL bar settles and before fonts land,
   // so a single init measurement can leave the canvas short — it renders across
@@ -625,11 +638,12 @@ img,svg,video{max-width:100%;height:auto}
   addEventListener('orientationchange',function(){setTimeout(size,120)});
   if(window.ResizeObserver){try{new ResizeObserver(size).observe(hero);}catch(e){}}
   if(!TOUCH)addEventListener('mousemove',function(e){mx=(e.clientX/innerWidth)*2-1;my=(e.clientY/innerHeight)*2-1;},{passive:true});
-  if('IntersectionObserver' in window)new IntersectionObserver(function(en){vis=en[0].isIntersecting;},{threshold:0}).observe(hero);
+  if('IntersectionObserver' in window)new IntersectionObserver(function(en){vis=en[0].isIntersecting;if(vis)sizeIfStale();},{threshold:0}).observe(hero);
   (function frame(){
     requestAnimationFrame(frame);
     var dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
     if(!vis)return;
+    sizeIfStale();
     starMat.uniforms.uTime.value=t;bandMat.uniforms.uTime.value=t;
     terrU.uTime.value=t;terrU.uScroll.value=t*.0035; // dunes slowly march — the ground is alive
     terrU.uCamL.value.set(cam.position.x,-166,cam.position.y);
