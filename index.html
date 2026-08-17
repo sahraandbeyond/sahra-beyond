@@ -172,9 +172,9 @@ section{position:relative;padding:100px 0 84px}
 .place:hover{transform:translateY(-10px)}
 /* .place-bg takes a real cover photo via an inline background-image (see the cards below).
    The per-card gradients underneath stay as a graceful fallback for places that have no photo yet. */
-.place-bg{position:absolute;inset:0;transition:transform .6s;background-size:cover;background-position:center}.place:hover .place-bg{transform:scale(1.14)}
-.place.p1 .place-bg{background:linear-gradient(160deg,#3A2F66,#C0702E)}.place.p2 .place-bg{background:linear-gradient(160deg,#1F8A74,#7FCBB0)}
-.place.p3 .place-bg{background:linear-gradient(160deg,#333E5C,#90A4C8)}.place.p4 .place-bg{background:linear-gradient(160deg,#9A591A,#EBB36B)}.place.p4 .place-bg::after{content:"";position:absolute;inset:0;background:url(/logo/mark-light.png) center 38% / 58% auto no-repeat;opacity:.30}
+.place-bg{position:absolute;inset:0;transition:transform .6s;background-size:cover!important;background-position:center!important;background-repeat:no-repeat}.place:hover .place-bg{transform:scale(1.14)}
+.place.p1 .place-bg{background-image:linear-gradient(160deg,#3A2F66,#C0702E)}.place.p2 .place-bg{background-image:linear-gradient(160deg,#1F8A74,#7FCBB0)}
+.place.p3 .place-bg{background-image:linear-gradient(160deg,#333E5C,#90A4C8)}.place.p4 .place-bg{background-image:linear-gradient(160deg,#9A591A,#EBB36B)}.place.p4 .place-bg::after{content:"";position:absolute;inset:0;background:url(/logo/mark-light.png) center 38% / 58% auto no-repeat;opacity:.30}
 .place::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 55%)}
 .place b{position:relative;z-index:2;font-family:'Playfair Display',serif;font-size:17px;font-weight:700}
 .place small{position:relative;z-index:2;display:block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;opacity:.8;margin-top:3px}
