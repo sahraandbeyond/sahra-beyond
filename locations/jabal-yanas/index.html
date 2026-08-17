@@ -233,6 +233,9 @@ main,.ftr{position:relative;z-index:1}
    These classes were emitted but never styled, so 1536px mockups rendered at
    full size and blew past the viewport, with no product information at all.  */
 .pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:22px;margin:26px 0 30px}
+/* A single product (the polo) was landing in the first cell of a multi-column
+   grid, so it covered half the screen and sat off to one side. */
+.pcards>.pcard:only-child{grid-column:1/-1;max-width:420px;margin-inline:auto}
 .pcard{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line,rgba(43,37,32,.12));border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(43,37,32,.04);transition:box-shadow .3s,transform .3s}
 .pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
 .pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}

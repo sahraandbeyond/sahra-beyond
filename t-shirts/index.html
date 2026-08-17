@@ -233,6 +233,9 @@ main,.ftr{position:relative;z-index:1}
    These classes were emitted but never styled, so 1536px mockups rendered at
    full size and blew past the viewport, with no product information at all.  */
 .pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:22px;margin:26px 0 30px}
+/* A single product (the polo) was landing in the first cell of a multi-column
+   grid, so it covered half the screen and sat off to one side. */
+.pcards>.pcard:only-child{grid-column:1/-1;max-width:420px;margin-inline:auto}
 .pcard{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line,rgba(43,37,32,.12));border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(43,37,32,.04);transition:box-shadow .3s,transform .3s}
 .pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
 .pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
@@ -350,6 +353,19 @@ img,svg,video,canvas{max-width:100%;height:auto}
       </span>
     </article>
     <article class="pcard">
+      <span class="pcard-img" style="background:#181109">
+        <img src="/shirts/alquaa-oversized-back.jpg" alt="Al Quaa Galaxy Tee, oversized fit — the Milky Way over the dunes printed across the back" loading="lazy" width="1536" height="1536">
+        <button type="button" class="pcard-zoom" data-zoom="/shirts/alquaa-oversized-back.jpg" aria-label="Zoom Al Quaa Galaxy — Oversized">&#9906;</button>
+      </span>
+      <span class="pcard-b">
+        <a class="pcard-t" href="/products/al-quaa-galaxy-oversized/">Al Quaa Galaxy — Oversized</a>
+        <span class="pcard-place">Inspired by Al Quaa</span>
+        <span class="pcard-spec"><span>230gsm cotton</span><span>Oversized fit</span><span>DTG + embroidery</span><span>Unisex S&ndash;XL</span></span>
+        <span class="pcard-col"><span class="pcard-sw" style="background:#282B34"></span>Salute &middot; Pantone 19-4011 TCX</span>
+        <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/al-quaa-galaxy-oversized/">Full details &rarr;</a></span>
+      </span>
+    </article>
+    <article class="pcard">
       <span class="pcard-img" style="background:#E7D6B8">
         <img src="/shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter Tee, regular fit — tonal embroidered sun over the dune ridges of Liwa" loading="lazy" width="1536" height="1536">
         <button type="button" class="pcard-zoom" data-zoom="/shirts/emptyquarter-regular-front.jpg" aria-label="Zoom Empty Quarter — Regular">&#9906;</button>
@@ -363,6 +379,19 @@ img,svg,video,canvas{max-width:100%;height:auto}
       </span>
     </article>
     <article class="pcard">
+      <span class="pcard-img" style="background:#E7D6B8">
+        <img src="/shirts/emptyquarter-oversized-front.jpg" alt="Empty Quarter Tee, oversized fit — tonal embroidered sun over the dune ridges of Liwa" loading="lazy" width="1536" height="1536">
+        <button type="button" class="pcard-zoom" data-zoom="/shirts/emptyquarter-oversized-front.jpg" aria-label="Zoom Empty Quarter — Oversized">&#9906;</button>
+      </span>
+      <span class="pcard-b">
+        <a class="pcard-t" href="/products/empty-quarter-oversized/">Empty Quarter — Oversized</a>
+        <span class="pcard-place">Inspired by Liwa</span>
+        <span class="pcard-spec"><span>230gsm cotton</span><span>Oversized fit</span><span>Embroidered</span><span>Unisex S&ndash;XL</span></span>
+        <span class="pcard-col"><span class="pcard-sw" style="background:#D5BA98"></span>Beige &middot; Pantone 14-1118 TCX</span>
+        <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/empty-quarter-oversized/">Full details &rarr;</a></span>
+      </span>
+    </article>
+    <article class="pcard">
       <span class="pcard-img" style="background:#C6BFD3">
         <img src="/shirts/hajar-regular-back.jpg" alt="Hajar Mountains Tee, regular fit — red rock of the Hajar range printed across the back" loading="lazy" width="1536" height="1536">
         <button type="button" class="pcard-zoom" data-zoom="/shirts/hajar-regular-back.jpg" aria-label="Zoom Hajar Mountains — Regular">&#9906;</button>
@@ -373,6 +402,19 @@ img,svg,video,canvas{max-width:100%;height:auto}
         <span class="pcard-spec"><span>230gsm cotton</span><span>Regular fit</span><span>DTG + embroidery</span><span>Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#A09C98"></span>Flint Gray &middot; Pantone 16-5803 TCX</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/hajar-mountains-regular/">Full details &rarr;</a></span>
+      </span>
+    </article>
+    <article class="pcard">
+      <span class="pcard-img" style="background:#C6BFD3">
+        <img src="/shirts/hajar-oversized-back.jpg" alt="Hajar Mountains Tee, oversized fit — red rock of the Hajar range printed across the back" loading="lazy" width="1536" height="1536">
+        <button type="button" class="pcard-zoom" data-zoom="/shirts/hajar-oversized-back.jpg" aria-label="Zoom Hajar Mountains — Oversized">&#9906;</button>
+      </span>
+      <span class="pcard-b">
+        <a class="pcard-t" href="/products/hajar-mountains-oversized/">Hajar Mountains — Oversized</a>
+        <span class="pcard-place">Inspired by Wadi Naqab</span>
+        <span class="pcard-spec"><span>230gsm cotton</span><span>Oversized fit</span><span>DTG + embroidery</span><span>Unisex S&ndash;XL</span></span>
+        <span class="pcard-col"><span class="pcard-sw" style="background:#A09C98"></span>Flint Gray &middot; Pantone 16-5803 TCX</span>
+        <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/hajar-mountains-oversized/">Full details &rarr;</a></span>
       </span>
     </article></div>
     <a class="btn shoplink" href="/shop/">Shop the collection &rarr;</a><a class="btn ghost" href="/t-shirts/">See all t-shirts &rarr;</a>

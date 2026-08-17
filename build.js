@@ -171,14 +171,17 @@ function shopBlock(l) {
     <p>${line}</p>
     ${cta}</section>`;
 }
-function collectionBlock(ctxName) {
+function collectionBlock(ctxName, allFits) {
   if (!PRODUCTS_ALL.length) return shopBlock(null);
   const lead = ctxName
     ? `Heading to ${esc(ctxName)}? Every t-shirt we make is drawn from a real place in the Emirates.`
     : 'Every t-shirt we make is drawn from a real place in the Emirates \u2014 heavyweight organic cotton, limited runs.';
   // Tees only. The polo is a different garment and this block's copy says
   // "every t-shirt we make" — listing it here was simply wrong.
-  const TEES = DESIGNS.filter(p => p.garment !== 'polo').sort((a,b)=>(a.order||0)-(b.order||0));
+  // allFits: the t-shirts page lists Regular AND Oversized (6 cards). Content
+  // pages keep the deduped one-per-design list so they don't repeat themselves.
+  const SRC = allFits ? PRODUCTS_ALL : DESIGNS;
+  const TEES = SRC.filter(p => p.garment !== 'polo').sort((a,b)=>(a.order||0)-(b.order||0));
   const cards = TEES.map(productCard).join('');
   return `<section class="pcta">
     <div class="pcta-head">
@@ -435,6 +438,9 @@ main,.ftr{position:relative;z-index:1}
    These classes were emitted but never styled, so 1536px mockups rendered at
    full size and blew past the viewport, with no product information at all.  */
 .pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:22px;margin:26px 0 30px}
+/* A single product (the polo) was landing in the first cell of a multi-column
+   grid, so it covered half the screen and sat off to one side. */
+.pcards>.pcard:only-child{grid-column:1/-1;max-width:420px;margin-inline:auto}
 .pcard{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line,rgba(43,37,32,.12));border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(43,37,32,.04);transition:box-shadow .3s,transform .3s}
 .pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
 .pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
@@ -1445,7 +1451,7 @@ COMMERCE.forEach(P => {
       <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
       <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; limited run</span></a>
     </nav>` : ''}
-    ${collectionBlock(null)}
+    ${collectionBlock(null, P.slug === 't-shirts')}
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
     ${sectionsHtml}
     ${faqHtml}
