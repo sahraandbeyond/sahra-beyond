@@ -163,7 +163,12 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
 .media{position:sticky;top:88px}
 .gal-main{position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:var(--theme);
   box-shadow:0 30px 80px rgba(0,0,0,.28)}
-.gal-main img{width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .6s ease,transform .9s ease}
+/* The three views are cross-faded, so they must be stacked on top of each other.
+   Without position:absolute they sat in normal flow: view 1 filled the 4:5 box
+   and views 2 and 3 were pushed below it and clipped by overflow:hidden, so
+   clicking a thumbnail faded view 1 out and lit view 2 up off-screen — a blank
+   viewer. Matches the .frame pattern on the homepage. */
+.gal-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .6s ease,transform .9s ease}
 .gal-main img.on{opacity:1;transform:scale(1)}
 .gal-tag{position:absolute;top:15px;left:15px;z-index:2;background:rgba(0,0,0,.45);color:var(--gold);backdrop-filter:blur(6px);font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px}
 .gal-thumbs{display:flex;gap:10px;margin-top:13px}

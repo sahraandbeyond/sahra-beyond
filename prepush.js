@@ -88,6 +88,39 @@ if (orphans.length) {
 console.log(`  ${C.warn}!${C.off} ${C.dim}Uploading files never deletes. After a rename, check the live sitemap`);
 console.log(`    ${C.dim}for product URLs not in the list above and remove them on GitHub by hand.${C.off}`);
 
+// ---- 2c. cross-faded image stacks must be absolutely positioned ----
+// A real customer reported the PDP gallery going blank on views 2 and 3. The
+// files all existed and the JS was right; the images simply had no
+// position:absolute, so they sat in normal flow — view 1 filled the box and
+// views 2 and 3 were pushed below it and clipped by overflow:hidden. Toggling
+// the .on class then faded view 1 out and lit an off-screen image. A static
+// href/src audit cannot see this, so assert the CSS contract instead: if a
+// container cross-fades children via an .on class, those children must be
+// absolutely positioned.
+const stackIssues = [];
+for (const f of html) {
+  const src = fs.readFileSync(f, 'utf8');
+  const css = (src.match(/<style[\s\S]*?<\/style>/gi) || []).join('\n');
+  // find "SEL img{...opacity:0...}" that also has a matching "SEL img.on{...opacity:1...}"
+  const re = /([.#][\w-]+)\s+img\{([^}]*)\}/g;
+  let m;
+  while ((m = re.exec(css))) {
+    const sel = m[1], body = m[2];
+    if (!/opacity\s*:\s*0/.test(body)) continue;
+    const hasOn = new RegExp(sel.replace(/[.#]/, '\\$&') + '\\s+img\\.on\\{[^}]*opacity\\s*:\\s*1').test(css);
+    if (!hasOn) continue;
+    if (!/position\s*:\s*(absolute|fixed)/.test(body)) {
+      stackIssues.push(`${path.relative(ROOT, f)}  ${sel} img — cross-faded but not positioned`);
+    }
+  }
+}
+if (stackIssues.length) {
+  console.log(`\n  ${C.bad}✗ cross-faded image stacks that will render blank:${C.off}`);
+  [...new Set(stackIssues)].forEach(i => console.log(`     ${C.bad}${i}${C.off}`));
+} else {
+  console.log(`  ${C.ok}✓${C.off} cross-faded image stacks are absolutely positioned`);
+}
+
 // ---- 3. what actually changed recently (the safe push manifest) ----
 const HOURS = Number(process.argv[2] || 24);
 const cutoff = Date.now() - HOURS * 3600e3;
@@ -96,4 +129,4 @@ console.log(`  ${C.b}Files changed in the last ${HOURS}h — push exactly these:
 changed.forEach(f => console.log(`     ${f}`));
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit(ghostDirs.size ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length) ? 1 : 0);
