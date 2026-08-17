@@ -390,7 +390,13 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
    chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
    ask for ~44px. Everything below is scoped to phones only. */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-img,svg,video,canvas{max-width:100%;height:auto}
+img,svg,video{max-width:100%;height:auto}
+/* NOT canvas: a WebGL canvas's intrinsic size is its DPR-scaled drawing
+   buffer (setPixelRatio x3 on phones), and Three.js setSize(w,h,false)
+   deliberately leaves styling to CSS. Clamping it with max-width/height:auto
+   rendered the hero ~60% wide on high-DPR phones. Full-bleed canvases are
+   sized explicitly instead. */
+#hero-canvas,.hero canvas,.shophero canvas,canvas.fill{width:100%!important;height:100%!important;max-width:none}
 @media(max-width:820px){
   html,body{overflow-x:hidden}
   /* comfortable, thumb-sized targets */

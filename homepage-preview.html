@@ -273,7 +273,13 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
    chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
    ask for ~44px. Everything below is scoped to phones only. */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-img,svg,video,canvas{max-width:100%;height:auto}
+img,svg,video{max-width:100%;height:auto}
+/* NOT canvas: a WebGL canvas's intrinsic size is its DPR-scaled drawing
+   buffer (setPixelRatio x3 on phones), and Three.js setSize(w,h,false)
+   deliberately leaves styling to CSS. Clamping it with max-width/height:auto
+   rendered the hero ~60% wide on high-DPR phones. Full-bleed canvases are
+   sized explicitly instead. */
+#hero-canvas,.hero canvas,.shophero canvas,canvas.fill{width:100%!important;height:100%!important;max-width:none}
 @media(max-width:820px){
   html,body{overflow-x:hidden}
   /* comfortable, thumb-sized targets */
@@ -592,6 +598,13 @@ img,svg,video,canvas{max-width:100%;height:auto}
   var shootTimer=2.5;
   function size(){var w=hero.offsetWidth,h=hero.offsetHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
   size();addEventListener('resize',size,{passive:true});
+  // A phone sizes the hero before the URL bar settles and before fonts land,
+  // so a single init measurement can leave the canvas short — it renders across
+  // part of the width and the CSS sky shows through the rest. Re-measure whenever
+  // the hero box actually changes, not just on window resize.
+  addEventListener('load',size);
+  addEventListener('orientationchange',function(){setTimeout(size,120)});
+  if(window.ResizeObserver){try{new ResizeObserver(size).observe(hero);}catch(e){}}
   if(!TOUCH)addEventListener('mousemove',function(e){mx=(e.clientX/innerWidth)*2-1;my=(e.clientY/innerHeight)*2-1;},{passive:true});
   if('IntersectionObserver' in window)new IntersectionObserver(function(en){vis=en[0].isIntersecting;},{threshold:0}).observe(hero);
   (function frame(){
