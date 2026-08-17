@@ -46,7 +46,7 @@ collections:
         hint: "Decides WHICH size table this page shows. Leave blank for the polo (it has no tee chart)."
       - { label: "Garment type", name: "garment", widget: "string", default: "tee", required: false, hint: "tee or polo. Used in button copy." }
       - { label: "Same design, other fit", name: "siblingOf", widget: "string", required: false, hint: "Shared stem for the two fits of one design, e.g. al-quaa-galaxy. Links the pages to each other. Blank for the polo." }
-      - { label: "Edition line", name: "edition", widget: "string", required: false, hint: "e.g. Founding Edition · numbered 1/120. Polo is 1/40 — separate edition, never 1/160." }
+      - { label: "Edition line", name: "edition", widget: "string", required: false, hint: "e.g. Founding Edition — a limited first run. Never publish piece counts or numbering." }
       - { label: "Fit — section heading", name: "fitHeading", widget: "string", required: false, hint: "<em>…</em> allowed. e.g. True to size, <em>built to layer</em>" }
       - { label: "Fit — who it is for", name: "fitWho", widget: "text", required: false, hint: "The fit-specific paragraph. Keep the two fits genuinely different — near-identical pages get treated as duplicate content." }
       - { label: "Tee size chart applies?", name: "sizingApplies", widget: "boolean", default: true, required: false, hint: "OFF for the polo — it is cut narrower with a set-in sleeve, so the tee chart does not apply." }
