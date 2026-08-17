@@ -217,7 +217,7 @@ main,.ftr{position:relative;z-index:1}
 @media(max-width:820px){
   .mnav{display:block}
   .nav-links,.hdr-nav{display:none!important}
-  .m-panel{position:fixed;left:0;right:0;top:0;z-index:110;padding:76px 22px 26px;
+  .m-panel{display:block;position:fixed;left:0;right:0;top:0;z-index:110;padding:78px 22px 26px;
     background:rgba(24,17,9,.97);backdrop-filter:blur(14px);
     transform:translateY(-102%);transition:transform .38s cubic-bezier(.4,0,.2,1);
     box-shadow:0 18px 50px rgba(0,0,0,.4);max-height:100dvh;overflow:auto}
@@ -225,7 +225,8 @@ main,.ftr{position:relative;z-index:1}
   .m-panel a{display:block;padding:15px 4px;color:#F7EFE2;text-decoration:none;font-size:19px;
     border-bottom:1px solid rgba(247,239,226,.12)}
   .m-panel a:last-child{border-bottom:0}
-  .m-panel a.active{color:#E9B978}
+  .m-panel a.active,.m-panel a[aria-current="page"]{color:#E9B978}
+  .m-panel a::after{display:none!important}
 }
 @media(min-width:821px){.m-panel{display:none}}
 /* ---- Product cards (category + collection blocks) -------------------------
