@@ -32,7 +32,7 @@
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"TouristAttraction","name":"Al Rams Beach","description":"A calm, mangrove-fringed beach on the Saraya Islands near Al Rams, RAK — great for kayaking, paddleboarding and relaxed beach camping with mountain views.","url":"https://www.sahraandbeyond.ae/locations/al-rams-beach/","address":{"@type":"PostalAddress","addressRegion":"Ras Al Khaimah","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":25.87,"longitude":56.05},"isAccessibleForFree":true,"touristType":"UAE residents, outdoor & adventure"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"Al Rams Beach","item":"https://www.sahraandbeyond.ae/locations/al-rams-beach/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"When is the best time to visit Al Rams Beach?","acceptedAnswer":{"@type":"Answer","text":"The best season for Al Rams Beach is Oct–Apr, when conditions in Ras Al Khaimah are most comfortable for camping."}},{"@type":"Question","name":"How difficult is Al Rams Beach?","acceptedAnswer":{"@type":"Answer","text":"Al Rams Beach is rated easy. Most fitness levels and families can manage it with basic preparation."}},{"@type":"Question","name":"How far is Al Rams Beach?","acceptedAnswer":{"@type":"Answer","text":"Al Rams Beach is around ~1h30 from Dubai. Exact GPS coordinates and map links are on this page."}},{"@type":"Question","name":"What should I bring to Al Rams Beach?","acceptedAnswer":{"@type":"Answer","text":"Pack for camping conditions in Ras Al Khaimah — water, sun protection, navigation and the essentials. See the tailored packing checklist on this page."}}]}]</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;background:#FAF6EF;line-height:1.65}
+body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:fixed}
 a{color:#9C521B}
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
@@ -88,12 +88,21 @@ h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(28px,5vw
 h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33271B;margin:30px 0 12px}
 .content p{margin-bottom:16px;font-size:16.5px;color:#4A4136}
 /* location hero */
-.loc-hero{position:relative;color:#fff;padding:clamp(44px,8vw,88px) clamp(16px,5vw,32px) clamp(34px,5vw,58px);overflow:hidden}
+.loc-hero{position:relative;color:#fff;padding:clamp(44px,8vw,88px) clamp(16px,5vw,32px) clamp(96px,14vw,164px);overflow:hidden}  /* bottom padding clears the dune silhouettes so the lede is never covered */
 .loc-hero::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 80% 0%,rgba(255,255,255,.14),transparent 55%),linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.3));pointer-events:none}
 /* Milky-Way star layer on every location hero — the brand signature */
 .loc-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(1.5px 1.5px at 14% 22%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 52% 26%,#fff,transparent),radial-gradient(1.2px 1.2px at 72% 14%,#FFE9C4,transparent),radial-gradient(1.5px 1.5px at 88% 28%,#fff,transparent),radial-gradient(1px 1px at 24% 34%,#fff,transparent),radial-gradient(1px 1px at 63% 36%,#fff,transparent);opacity:.85;animation:nStar 5s ease-in-out infinite}
 .loc-hero h1::after{content:"";display:block;width:54px;height:3px;margin-top:14px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
-.loc-hero-inner{position:relative;z-index:1;max-width:820px;margin:0 auto}
+.loc-hero-inner{position:relative;z-index:3;max-width:820px;margin:0 auto}
+/* Shared premium hero treatment — the same visual language as the homepage:
+   layered dune silhouettes, a warm horizon glow and a fine grain over the top. */
+.loc-hero{isolation:isolate}
+.loc-hero .dune-far,.loc-hero .dune-near{position:absolute;left:0;right:0;bottom:0;width:100%;height:clamp(70px,11vw,130px);z-index:2;pointer-events:none;display:block}
+.loc-hero .dune-far{opacity:.55;transform:translateY(14%)}
+.loc-hero .glow{position:absolute;inset:auto 0 0 0;height:60%;z-index:1;pointer-events:none;background:radial-gradient(80% 120% at 50% 118%,rgba(240,178,106,.34),rgba(240,178,106,0) 62%)}
+.loc-hero .grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+@media(prefers-reduced-motion:reduce){.loc-hero::before{animation:none}}
+
 .loc-hero .crumbs,.loc-hero .crumbs a{color:rgba(255,255,255,.85)}
 .loc-emoji{font-size:56px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.3))}
 .loc-hero h1{color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.35);margin-bottom:8px}
@@ -186,10 +195,10 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 </style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/" class="active">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/" class="active">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></nav></header>
 
   <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#39295A 42%,#7A4F63 74%,#C0702E 100%)">
-    <div class="loc-hero-inner">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; Camping &rsaquo; <span>Al Rams Beach</span></nav>
       <div class="loc-emoji">🏝</div>
       <h1>Al Rams Beach</h1>

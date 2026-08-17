@@ -238,7 +238,7 @@ function packItemsFor(l) {
 
 const CSS = `
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;background:#FAF6EF;line-height:1.65}
+body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:fixed}
 a{color:#9C521B}
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
@@ -294,12 +294,21 @@ h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(28px,5vw
 h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33271B;margin:30px 0 12px}
 .content p{margin-bottom:16px;font-size:16.5px;color:#4A4136}
 /* location hero */
-.loc-hero{position:relative;color:#fff;padding:clamp(44px,8vw,88px) clamp(16px,5vw,32px) clamp(34px,5vw,58px);overflow:hidden}
+.loc-hero{position:relative;color:#fff;padding:clamp(44px,8vw,88px) clamp(16px,5vw,32px) clamp(96px,14vw,164px);overflow:hidden}  /* bottom padding clears the dune silhouettes so the lede is never covered */
 .loc-hero::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 80% 0%,rgba(255,255,255,.14),transparent 55%),linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.3));pointer-events:none}
 /* Milky-Way star layer on every location hero — the brand signature */
 .loc-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(1.5px 1.5px at 14% 22%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 52% 26%,#fff,transparent),radial-gradient(1.2px 1.2px at 72% 14%,#FFE9C4,transparent),radial-gradient(1.5px 1.5px at 88% 28%,#fff,transparent),radial-gradient(1px 1px at 24% 34%,#fff,transparent),radial-gradient(1px 1px at 63% 36%,#fff,transparent);opacity:.85;animation:nStar 5s ease-in-out infinite}
 .loc-hero h1::after{content:"";display:block;width:54px;height:3px;margin-top:14px;background:linear-gradient(90deg,#E9B978,rgba(233,185,120,0))}
-.loc-hero-inner{position:relative;z-index:1;max-width:820px;margin:0 auto}
+.loc-hero-inner{position:relative;z-index:3;max-width:820px;margin:0 auto}
+/* Shared premium hero treatment — the same visual language as the homepage:
+   layered dune silhouettes, a warm horizon glow and a fine grain over the top. */
+.loc-hero{isolation:isolate}
+.loc-hero .dune-far,.loc-hero .dune-near{position:absolute;left:0;right:0;bottom:0;width:100%;height:clamp(70px,11vw,130px);z-index:2;pointer-events:none;display:block}
+.loc-hero .dune-far{opacity:.55;transform:translateY(14%)}
+.loc-hero .glow{position:absolute;inset:auto 0 0 0;height:60%;z-index:1;pointer-events:none;background:radial-gradient(80% 120% at 50% 118%,rgba(240,178,106,.34),rgba(240,178,106,0) 62%)}
+.loc-hero .grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+@media(prefers-reduced-motion:reduce){.loc-hero::before{animation:none}}
+
 .loc-hero .crumbs,.loc-hero .crumbs a{color:rgba(255,255,255,.85)}
 .loc-emoji{font-size:56px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.3))}
 .loc-hero h1{color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.35);margin-bottom:8px}
@@ -402,13 +411,25 @@ function footerHtml() {
   <div class="disc">${esc(disclosure)}</div>`;
 }
 
-function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'discover' }) {
+// Which top-nav item should read as current, derived from the page slug.
+// Previously every category page claimed 'tshirts' (so /polos/ highlighted T-Shirts)
+// and the commerce pages passed nothing (so they fell back to Home).
+function navKeyFor(slug) {
+  const s = String(slug || '').replace(/\/index\.html$/, '').replace(/^\/|\/$/g, '');
+  if (s === 'polos') return 'polos';
+  if (s === 't-shirts' || s.startsWith('t-shirts/')) return 'tshirts';
+  if (s === 'places' || s.startsWith('locations/')) return 'places';
+  if (s === 'about') return 'about';
+  if (s === 'shop') return 'shop';
+  return 'none';   // guides, gifts, fabric, size guide: nothing highlighted
+}
+function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'none' }) {
   // SERPs truncate around 60 chars; the brand suffix is the first thing to go.
   if (title.length > 60 && / \| Sahra & Beyond$/.test(title)) title = title.replace(/ \| Sahra & Beyond$/, '');
 
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Home', 'discover') + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about');
+  const navHtml = nav('/', 'Home', 'home') + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -511,7 +532,7 @@ locations.forEach(l => {
     : '';
   const body = `
   <section class="loc-hero" style="background:${CAT_BG[l.category] || CAT_BG.Dunes}">
-    <div class="loc-hero-inner">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; ${esc(l.category)} &rsaquo; <span>${esc(l.name)}</span></nav>
       <div class="loc-emoji">${l.emoji || '📍'}</div>
       <h1>${esc(l.name)}</h1>
@@ -593,7 +614,7 @@ locations.forEach(l => {
     },true);
   })();
   </script>`;
-  write(`locations/${l.id}/index.html`, shell({ title, desc, canonical, jsonld, bodyHtml: body, image: ogImage }));
+  write(`locations/${l.id}/index.html`, shell({ activeNav: 'places', title, desc, canonical, jsonld, bodyHtml: body, image: ogImage }));
 });
 
 // ---- keyword landing pages ----
@@ -847,7 +868,7 @@ LANDINGS.forEach(L => {
   const hub = HUB[L.slug] || { c: 'Dunes', e: '🗺️' };
   const body = `
   <section class="loc-hero" style="background:${CAT_BG[hub.c]}">
-    <div class="loc-hero-inner">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(L.h1)}</span></nav>
       <div class="loc-emoji">${hub.e}</div>
       <h1>${esc(L.h1)}</h1>
@@ -883,7 +904,7 @@ LANDINGS.forEach(L => {
   const body = `
   <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
     <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
-    <div class="loc-hero-inner">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>About</span></nav>
       <div class="loc-emoji">🌌</div>
       <h1>Discover the wild side of the UAE</h1>
@@ -998,7 +1019,7 @@ if (LAUNCHED || REVEALED) (function () {
   const body = `
   <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
     <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
-    <div class="loc-hero-inner">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Places</span></nav>
       <div class="loc-emoji">🗺️</div>
       <h1>Every place we have explored</h1>
@@ -1182,7 +1203,7 @@ CATEGORIES.forEach(C => {
   ];
   const body = `
   <section class="loc-hero" style="background:${CAT_BG[C.catBg]}">
-    <div class="loc-hero-inner">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <a href="/t-shirts/">T-Shirts</a> &rsaquo; <span>${esc(C.h1)}</span></nav>
       <div class="loc-emoji">${C.emoji}</div>
       <h1>${esc(C.h1)}</h1>
@@ -1196,7 +1217,7 @@ CATEGORIES.forEach(C => {
     ${newsletterBlock()}
     <p class="back"><a href="/t-shirts/">All t-shirts &rarr;</a></p>
   </main>`;
-  write(`${C.slug}/index.html`, shell({ title: C.title, desc: C.desc, canonical, jsonld, bodyHtml: body, activeNav:'tshirts' }));
+  write(`${C.slug}/index.html`, shell({ title: C.title, desc: C.desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor(C.slug) }));
 });
 
 COMMERCE.forEach(P => {
@@ -1218,7 +1239,7 @@ COMMERCE.forEach(P => {
     ? `<section class="faq"><h2>Frequently asked questions</h2>${P.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
   const body = `
   <section class="loc-hero" style="background:${CAT_BG[P.cat]}">
-    <div class="loc-hero-inner">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(P.h1)}</span></nav>
       <div class="loc-emoji">${P.emoji}</div>
       <h1>${esc(P.h1)}</h1>
@@ -1239,7 +1260,7 @@ COMMERCE.forEach(P => {
     ${newsletterBlock()}
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
   </main>`;
-  write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body }));
+  write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor(P.slug) }));
 });
 
 const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });
