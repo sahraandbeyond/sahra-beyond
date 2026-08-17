@@ -368,7 +368,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
    gradient, so it read as a stripe across the page. It is now fully
    transparent — the numbers sit straight on the desert and the sky supplies
    the warmth. */
-.stats{background:transparent!important}
+.stats{background:transparent!important;position:relative;isolation:isolate}
 /* (3) Light panes are lifted to near-opaque so the moon and stars cannot
    ghost through them as smudges, while the sky still warms the edges. */
 .shop,.story-sec{background:rgba(250,246,239,.955)!important}
@@ -418,6 +418,39 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
   #shootingstar{display:none}
   #skyfield .stars{animation:none}
 }
+
+
+/* ============================================================
+   LEGIBILITY + THE HERO SEAM  (measured, not guessed)
+   ============================================================
+   Making .stats transparent put its dark sand-panel text straight onto the
+   sky: the numbers measured 2.28:1 and the labels 1.10:1 against the sky
+   behind them, where large text needs 3:1 and body 4.5:1. The band keeps its
+   transparency (no stripe) but the type is re-cut for a dark sky.        */
+.stats .stat b{color:#F7EFE2;text-shadow:0 2px 18px rgba(20,16,42,.55),0 1px 3px rgba(20,16,42,.7)}
+.stats .stat span{color:#EBD3AE;text-shadow:0 1px 10px rgba(20,16,42,.75)}
+.stats .sec-head h2,.stats .sec-head p,.stats h2,.stats p{color:#F7EFE2;
+  text-shadow:0 2px 16px rgba(20,16,42,.6)}
+/* a wide, edgeless pool of shade so the type always has something to sit on,
+   without ever reading as a band */
+.stats::before{content:"";position:absolute;inset:-8% -10%;z-index:-1;pointer-events:none;
+  background:radial-gradient(58% 62% at 50% 50%,rgba(20,16,42,.62),rgba(20,16,42,0) 74%)}
+
+/* ---- the hero no longer meets a wall ----------------------------------
+   .shop is the first section after the hero. It was a near-opaque cream
+   pane starting at a hard line, which is the abrupt edge. It now
+   materialises out of the sky over 260px instead of beginning at an edge. */
+.shop{background:linear-gradient(180deg,
+  rgba(250,246,239,0) 0,
+  rgba(250,246,239,.55) 120px,
+  rgba(250,246,239,.955) 260px)!important}
+/* the same feather for the other opaque panes, so no boundary is ever a line */
+.story-sec{background:linear-gradient(180deg,rgba(250,246,239,0) 0,rgba(250,246,239,.955) 200px)!important}
+.places{background:linear-gradient(180deg,rgba(36,27,18,0) 0,rgba(36,27,18,.86) 200px)!important}
+.mission{background:linear-gradient(180deg,rgba(44,54,38,0) 0,rgba(44,54,38,.90) 200px)!important}
+/* the hero's own bottom edge dissolves downward into whatever follows */
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34vh;z-index:2;
+  pointer-events:none;background:linear-gradient(180deg,rgba(20,16,42,0),rgba(20,16,42,.28) 55%,rgba(20,16,42,.5))}
 
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
