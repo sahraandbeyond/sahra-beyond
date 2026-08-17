@@ -381,6 +381,32 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .teecta .btn{align-self:flex-start;background:#E9B978;color:#181109;border:none}
 .teecta .btn:hover{background:#fff}
 
+
+/* ---- Living background ----------------------------------------------------
+   The main pages blend colour as you scroll; these pages were flat by comparison.
+   Hero: the category gradient, oversized and slowly drifting.
+   Page: fixed aurora washes that shift, plus a scroll-linked tint on <body>.   */
+.loc-hero{background-image:var(--hero-grad,linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%));
+  background-size:220% 220%;background-position:0% 30%;animation:heroDrift 26s ease-in-out infinite alternate}
+@keyframes heroDrift{0%{background-position:0% 28%}50%{background-position:60% 62%}100%{background-position:100% 38%}}
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+   radial-gradient(52% 42% at 12% 8%,rgba(122,79,99,.20),transparent 62%),
+   radial-gradient(48% 40% at 88% 16%,rgba(192,112,46,.17),transparent 64%),
+   radial-gradient(60% 44% at 50% 104%,rgba(20,16,42,.16),transparent 66%);
+  background-size:180% 180%,170% 170%,200% 200%;
+  animation:auroraDrift 34s ease-in-out infinite alternate}
+@keyframes auroraDrift{
+  0%{background-position:0% 0%,100% 0%,50% 100%}
+  50%{background-position:40% 30%,60% 40%,40% 70%}
+  100%{background-position:100% 40%,0% 60%,60% 100%}}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background:radial-gradient(120% 90% at 50% -20%,var(--scroll-tint,rgba(192,112,46,0)),transparent 58%);
+  transition:background .6s linear}
+main,.ftr{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){
+  .loc-hero,body::before{animation:none}
+  body::after{transition:none}}
 /* ---- Product cards (category + collection blocks) -------------------------
    These classes were emitted but never styled, so 1536px mockups rendered at
    full size and blew past the viewport, with no product information at all.  */
@@ -496,6 +522,30 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
 <header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
+
+<script>
+/* Scroll-linked tint. The main pages blend section colours as you scroll; this is
+   the lightweight equivalent for generated pages — one rAF-throttled listener that
+   walks a warm palette from night to sand as the reader moves down the page. */
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var STOPS=[[20,16,42],[58,41,90],[122,79,99],[192,112,46],[233,185,120]];
+  var raf=0;
+  function mix(a,b,t){return [0,1,2].map(function(i){return Math.round(a[i]+(b[i]-a[i])*t);});}
+  function update(){
+    raf=0;
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    var p=h>0?Math.min(1,Math.max(0,window.pageYOffset/h)):0;
+    var x=p*(STOPS.length-1), i=Math.min(STOPS.length-2,Math.floor(x));
+    var c=mix(STOPS[i],STOPS[i+1],x-i);
+    document.documentElement.style.setProperty('--scroll-tint','rgba('+c[0]+','+c[1]+','+c[2]+',.16)');
+  }
+  function onScroll(){ if(!raf) raf=requestAnimationFrame(update); }
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',onScroll,{passive:true});
+  update();
+})();
+</script>
 <div id="pzoom" role="dialog" aria-modal="true" aria-label="Product image"><button type="button" aria-label="Close">&times;</button><img alt=""></div>
 <script>(function(){var z=document.getElementById('pzoom');if(!z)return;var im=z.querySelector('img'),cl=z.querySelector('button');
   function close(){z.classList.remove('on');document.body.style.overflow='';}
@@ -566,7 +616,7 @@ locations.forEach(l => {
        </div></section>`
     : '';
   const body = `
-  <section class="loc-hero" style="background:${CAT_BG[l.category] || CAT_BG.Dunes}">
+  <section class="loc-hero" style="--hero-grad:${CAT_BG[l.category] || CAT_BG.Dunes}">
     <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; ${esc(l.category)} &rsaquo; <span>${esc(l.name)}</span></nav>
       <div class="loc-emoji">${l.emoji || '📍'}</div>
@@ -902,7 +952,7 @@ LANDINGS.forEach(L => {
   };
   const hub = HUB[L.slug] || { c: 'Dunes', e: '🗺️' };
   const body = `
-  <section class="loc-hero" style="background:${CAT_BG[hub.c]}">
+  <section class="loc-hero" style="--hero-grad:${CAT_BG[hub.c]}">
     <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(L.h1)}</span></nav>
       <div class="loc-emoji">${hub.e}</div>
@@ -937,7 +987,7 @@ LANDINGS.forEach(L => {
     ] }
   ];
   const body = `
-  <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
+  <section class="loc-hero" style="--hero-grad:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
     <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
     <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>About</span></nav>
@@ -1052,7 +1102,7 @@ if (LAUNCHED || REVEALED) (function () {
   const rest = locations.filter(l => !seen.has(l.id));
   const restHtml = rest.length ? `<section class="guide-sec"><h2>More places</h2><div class="cards">${rest.map(locCard).join('')}</div></section>` : '';
   const body = `
-  <section class="loc-hero" style="background:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
+  <section class="loc-hero" style="--hero-grad:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
     <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
     <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Places</span></nav>
@@ -1201,11 +1251,11 @@ const CATEGORIES = [
     title:'Oversized T-Shirts UAE — Drop Shoulder | Sahra & Beyond',
     desc:'Oversized drop-shoulder t-shirts. The seam sits 2–3 inches below your natural shoulder — width, not length, makes the silhouette. 230gsm cotton, S–XL.',
     intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nCut unisex, S to XL. Take your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XL." },
-  { slug:'polos', cat:'polos', emoji:'✦', catBg:'Coast',
+  { slug:'polos', cat:'polos', emoji:'✦', catBg:'Dunes',
     h1:'Polo Shirts',
     title:'Embroidered Cotton Polo — 240gsm | Sahra & Beyond',
-    desc:'The Sahra Polo — 240gsm cotton, embroidered rather than printed. A limited first run of forty pieces. The scarcest piece in the first drop.',
-    intro:"One polo, forty pieces. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. Cut unisex, S to XL, and sized to the same specification as the Regular fit tees. A run of forty, counted on its own rather than as part of the tee run." }
+    desc:'The Sahra Polo — 240gsm cotton, embroidered rather than printed. A limited first run. The scarcest piece in the first drop.',
+    intro:"One polo, made in a limited run. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. Cut unisex, S to XL, and sized to the same specification as the Regular fit tees. Made in a smaller run than the tees, counted on its own." }
 ];
 
 
@@ -1259,7 +1309,7 @@ CATEGORIES.forEach(C => {
       { "@type":"ListItem","position":3,"name":C.h1,"item":canonical } ] }
   ];
   const body = `
-  <section class="loc-hero" style="background:${CAT_BG[C.catBg]}">
+  <section class="loc-hero" style="--hero-grad:${CAT_BG[C.catBg]}">
     <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <a href="/t-shirts/">T-Shirts</a> &rsaquo; <span>${esc(C.h1)}</span></nav>
       <div class="loc-emoji">${C.emoji}</div>
@@ -1295,7 +1345,7 @@ COMMERCE.forEach(P => {
   const faqHtml = (P.faqs && P.faqs.length)
     ? `<section class="faq"><h2>Frequently asked questions</h2>${P.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
   const body = `
-  <section class="loc-hero" style="background:${CAT_BG[P.cat]}">
+  <section class="loc-hero" style="--hero-grad:${CAT_BG[P.cat]}">
     <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(P.h1)}</span></nav>
       <div class="loc-emoji">${P.emoji}</div>
@@ -1308,7 +1358,7 @@ COMMERCE.forEach(P => {
     ${P.catNav ? `<nav class="catnav" aria-label="Shop by category">
       <a href="/t-shirts/regular/"><b>Regular fit</b><span>True to size, cut to layer</span></a>
       <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
-      <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; 40 pieces</span></a>
+      <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; limited run</span></a>
     </nav>` : ''}
     ${collectionBlock(null)}
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
