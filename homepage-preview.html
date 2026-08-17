@@ -166,10 +166,11 @@ section{position:relative;padding:100px 0 84px}
 .place-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
 /* was 3/4: a 1600x900 cover showed only 42% of the photo. 4/5 is less
    severe and suits the mixed portrait/landscape library better. */
-/* Each card takes its photograph's own aspect ratio (--ar, stamped per
-   card) at EVERY width, so background-size:cover crops nothing and the
-   whole photo is visible. Cards without a photo fall back to 4/5. */
-.place{aspect-ratio:var(--ar,4/5);border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px;color:#fff;transition:transform .4s;will-change:transform}
+/* One consistent card size. background-size:cover + centred position keeps
+   each photograph's subject in frame: the landscape cover crops at the sides
+   and keeps full height, the two portrait covers crop top and bottom and
+   still show 83% and 70% of the frame, which contains all their detail. */
+.place{aspect-ratio:4/5;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px;color:#fff;transition:transform .4s;will-change:transform}
 .place:hover{transform:translateY(-10px)}
 /* .place-bg takes a real cover photo via an inline background-image (see the cards below).
    The per-card gradients underneath stay as a graceful fallback for places that have no photo yet. */
@@ -414,9 +415,9 @@ img,svg,video{max-width:100%;height:auto}
          they fall back to their gradient. Add a photo via the CMS (or drop one in /uploads/) and set
          background-image on their .place-bg the same way as p1/p3. -->
     <div class="place-row">
-      <a class="place p1 reveal" style="--ar:1600/900" href="/locations/al-quaa-desert/"><div class="place-bg" style="background-image:url('/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg')" role="img" aria-label="Al Quaa Desert"></div><div><b>Al Quaa Desert</b><small>Abu Dhabi · Dark sky</small></div></a>
-      <a class="place p2 reveal" style="--ar:1067/1600" href="/locations/wadi-naqab/"><div class="place-bg" style="background-image:url('/uploads/wadi-naqab-hajar-wadi.jpg')"></div><div><b>Wadi Naqab</b><small>RAK · Hajar Mountains</small></div></a>
-      <a class="place p3 reveal" style="--ar:1008/1792" href="/locations/wadi-showka/"><div class="place-bg" style="background-image:url('/uploads/17951464709964948.webp')" role="img" aria-label="Wadi Showka"></div><div><b>Wadi Showka</b><small>RAK · Hajar foothills</small></div></a>
+      <a class="place p1 reveal" href="/locations/al-quaa-desert/"><div class="place-bg" style="background-image:url('/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg')" role="img" aria-label="Al Quaa Desert"></div><div><b>Al Quaa Desert</b><small>Abu Dhabi · Dark sky</small></div></a>
+      <a class="place p2 reveal" href="/locations/wadi-naqab/"><div class="place-bg" style="background-image:url('/uploads/wadi-naqab-hajar-wadi.jpg')"></div><div><b>Wadi Naqab</b><small>RAK · Hajar Mountains</small></div></a>
+      <a class="place p3 reveal" href="/locations/wadi-showka/"><div class="place-bg" style="background-image:url('/uploads/wadi-showka-cover.jpg')" role="img" aria-label="Wadi Showka"></div><div><b>Wadi Showka</b><small>RAK · Hajar foothills</small></div></a>
       <a class="place p4 reveal" href="/locations/liwa/"><div class="place-bg"></div><div><b>Liwa Dunes</b><small>Abu Dhabi · Desert</small></div></a>
     </div>
     <div class="center reveal"><a href="/about/" class="btn ghost magnetic" style="color:#fff;border-color:rgba(255,255,255,.5)">Explore the places</a></div>
