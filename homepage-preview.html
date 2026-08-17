@@ -364,17 +364,26 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 /* ---- sections become translucent panes over the sky --------------------
    Each keeps its own tint for contrast, but at ~86% so the sky bleeds
    through and adjacent sections no longer read as separate blocks. */
-.stats{background:linear-gradient(180deg,rgba(247,220,176,.90),rgba(240,192,121,.86))!important;
-  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
-.shop,.story-sec{background:rgba(250,246,239,.88)!important;
-  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
-.places{background:rgba(36,27,18,.80)!important;
-  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
-.mission{background:rgba(44,54,38,.84)!important;
-  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
-.news{background:linear-gradient(180deg,rgba(46,36,80,.86),rgba(122,79,99,.80) 58%,rgba(192,112,46,.78))!important}
-/* the melt dividers inherit the pane tint so the seam is a fade, not a cut */
-.melt svg path{opacity:.92}
+/* (1) The stats band was the last section still carrying its own saturated
+   gradient, so it read as a stripe across the page. It is now fully
+   transparent — the numbers sit straight on the desert and the sky supplies
+   the warmth. */
+.stats{background:transparent!important}
+/* (3) Light panes are lifted to near-opaque so the moon and stars cannot
+   ghost through them as smudges, while the sky still warms the edges. */
+.shop,.story-sec{background:rgba(250,246,239,.955)!important}
+.places{background:rgba(36,27,18,.86)!important}
+.mission{background:rgba(44,54,38,.90)!important}
+.news{background:linear-gradient(180deg,rgba(46,36,80,.90),rgba(122,79,99,.86) 58%,rgba(192,112,46,.84))!important}
+/* (4) backdrop-filter across full-width sections is expensive, and this
+   audience is mostly phones. Blur only above the mobile breakpoint. */
+@media(min-width:821px){
+  .shop,.story-sec,.places,.mission{-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+}
+/* (2) With one continuous sky the melt waves added a second, competing edge
+   at every boundary. Softened to a feather rather than a drawn shape. */
+.melt{opacity:.55;filter:blur(.5px)}
+.melt svg path{opacity:.7}
 
 /* ---- hero exit: content lifts and dissolves instead of stopping dead ---- */
 .hero-inner{will-change:transform,opacity}
@@ -388,6 +397,26 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 @media(prefers-reduced-motion:reduce){
   #skyfield .dune,.hero-inner{transform:none!important}
   #dust{display:none}
+}
+
+
+/* a single hairline of light, travelling once and fading out */
+#shootingstar{position:absolute;z-index:2;width:var(--len,180px);height:1.5px;opacity:0;
+  background:linear-gradient(90deg,rgba(255,240,214,0),rgba(255,240,214,.95),rgba(255,240,214,0));
+  transform:rotate(18deg) translate3d(-30%,0,0);pointer-events:none;filter:blur(.3px)}
+#shootingstar.go{animation:shootAcross 1100ms cubic-bezier(.2,.6,.3,1) 1}
+@keyframes shootAcross{
+  0%{opacity:0;transform:rotate(18deg) translate3d(-40%,-30%,0) scaleX(.3)}
+  12%{opacity:1}
+  70%{opacity:.9}
+  100%{opacity:0;transform:rotate(18deg) translate3d(190%,120%,0) scaleX(1)}
+}
+/* stars breathe very slowly even before the reader scrolls */
+#skyfield .stars{animation:starDrift 42s ease-in-out infinite alternate}
+@keyframes starDrift{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-1.2%,1%,0) scale(1.03)}}
+@media(prefers-reduced-motion:reduce){
+  #shootingstar{display:none}
+  #skyfield .stars{animation:none}
 }
 
 </style>
@@ -1175,6 +1204,36 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
       el.addEventListener('mouseleave',function(){el.style.transform='';});
     });
   }
+})();
+</script>
+
+
+<script>
+/* (5) ARRIVAL — the first impression used to be a static night, because the
+   sun only appears once you scroll. A slow star drift plus an occasional
+   shooting star sells the "this is alive" idea in the first few seconds,
+   before the reader has done anything. */
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var field=document.getElementById('skyfield'); if(!field) return;
+
+  var shoot=document.createElement('div');
+  shoot.id='shootingstar'; shoot.setAttribute('aria-hidden','true');
+  field.appendChild(shoot);
+
+  function fire(){
+    if(document.hidden || (window.__skyProgress||0) > 0.30) return schedule(); // only while it is still night
+    var top=6+Math.random()*26, left=8+Math.random()*46, len=140+Math.random()*160;
+    shoot.style.setProperty('--len', len.toFixed(0)+'px');
+    shoot.style.top=top.toFixed(1)+'vh';
+    shoot.style.left=left.toFixed(1)+'vw';
+    shoot.classList.remove('go');
+    void shoot.offsetWidth;              // restart the animation
+    shoot.classList.add('go');
+    schedule();
+  }
+  function schedule(){ setTimeout(fire, 5200+Math.random()*9000); }
+  setTimeout(fire, 2200);                // one soon after arrival
 })();
 </script>
 
