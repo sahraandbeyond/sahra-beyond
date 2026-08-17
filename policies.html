@@ -79,6 +79,18 @@ section.policy li{margin-bottom:8px;font-size:16px;color:#4A4136}
   .m-panel a:last-child{border-bottom:0}
   .m-panel a.active{color:#E9B978}
   .m-panel a::after{display:none!important}
+  .m-close{position:absolute;top:12px;right:14px;width:44px;height:44px;display:flex;
+    align-items:center;justify-content:center;background:none;border:0;cursor:pointer;
+    color:#F7EFE2;font-size:34px;line-height:1;padding:0;border-radius:50%}
+  .m-close:active{background:rgba(247,239,226,.12)}
+
+  /* The mark is 300x40, so at 26px tall it renders ~195px wide and left the
+     hamburger no room — the two collided on a 360px screen. */
+  .logo .mark,.brand img{height:18px}
+  .logo,.brand{min-width:0;flex:0 1 auto;overflow:hidden}
+  nav,.hdr{padding-left:16px;padding-right:16px;gap:10px}
+  .mnav{flex:0 0 auto}
+
   a,button{min-height:auto}
 }
 @media(min-width:821px){.m-panel{display:none}}
@@ -262,6 +274,14 @@ section.policy li{margin-bottom:8px;font-size:16px;color:#4A4136}
   var src=document.querySelector('.nav-links')||document.querySelector('.hdr-nav'); if(!src) return;
   var panel=document.createElement('nav');
   panel.className='m-panel'; panel.id='mobileNav'; panel.setAttribute('aria-label','Menu');
+  /* Explicit close control. The header is position:fixed/sticky with a z-index
+     and a backdrop-filter, each of which creates a stacking context, so the
+     hamburger's own z-index is trapped below the panel and its X was being
+     painted over. This button lives inside the panel, so it always shows. */
+  var mclose=document.createElement('button');
+  mclose.type='button'; mclose.className='m-close';
+  mclose.setAttribute('aria-label','Close menu'); mclose.innerHTML='&times;';
+  panel.appendChild(mclose);
   [].slice.call(src.querySelectorAll('a')).forEach(function(a){
     var c=a.cloneNode(true); c.removeAttribute('style'); panel.appendChild(c);
   });
@@ -269,7 +289,7 @@ section.policy li{margin-bottom:8px;font-size:16px;color:#4A4136}
   btn.setAttribute('aria-controls','mobileNav');
   function set(o){btn.setAttribute('aria-expanded',o?'true':'false');panel.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';}
   btn.addEventListener('click',function(){set(btn.getAttribute('aria-expanded')!=='true');});
-  panel.addEventListener('click',function(e){if(e.target.tagName==='A')set(false);});
+  panel.addEventListener('click',function(e){if(e.target.tagName==='A'||e.target.closest('.m-close'))set(false);});
   addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
   addEventListener('resize',function(){if(innerWidth>820)set(false);});
 })();

@@ -227,6 +227,18 @@ main,.ftr{position:relative;z-index:1}
   .m-panel a:last-child{border-bottom:0}
   .m-panel a.active,.m-panel a[aria-current="page"]{color:#E9B978}
   .m-panel a::after{display:none!important}
+  .m-close{position:absolute;top:12px;right:14px;width:44px;height:44px;display:flex;
+    align-items:center;justify-content:center;background:none;border:0;cursor:pointer;
+    color:#F7EFE2;font-size:34px;line-height:1;padding:0;border-radius:50%}
+  .m-close:active{background:rgba(247,239,226,.12)}
+
+  /* The mark is 300x40, so at 26px tall it renders ~195px wide and left the
+     hamburger no room — the two collided on a 360px screen. */
+  .logo .mark,.brand img{height:18px}
+  .logo,.brand{min-width:0;flex:0 1 auto;overflow:hidden}
+  nav,.hdr{padding-left:16px;padding-right:16px;gap:10px}
+  .mnav{flex:0 0 auto}
+
 }
 @media(min-width:821px){.m-panel{display:none}}
 /* ---- Product cards (category + collection blocks) -------------------------
@@ -301,7 +313,11 @@ img,svg,video{max-width:100%;height:auto}
   .pdp-link,.buy-ghaf,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
     min-height:44px}
   /* dismiss controls need to be easy to hit, not just tall */
-  .lb-close,.drawer-close,.mnav{min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+  /* Close buttons hold text, so inline-flex centres them correctly. The
+     hamburger holds three <span> bars — inline-flex laid them out in a ROW and
+     rendered the icon as one wide line across the wordmark. It stays a block. */
+  .lb-close,.drawer-close{min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+  .mnav{display:block;min-width:44px;min-height:44px;padding:11px;margin:-11px -11px -11px 0}
   .nav-arrow{min-width:44px}
   /* 16px minimum stops iOS zooming the page when a field is focused */
   /* 16px on FIELDS ONLY - buttons don't trigger iOS zoom and blowing up
@@ -439,6 +455,14 @@ img,svg,video{max-width:100%;height:auto}
   var panel=document.createElement('nav');
   panel.className='m-panel'; panel.id='mobileNav';
   panel.setAttribute('aria-label','Menu');
+  /* Explicit close control. The header is position:fixed/sticky with a z-index
+     and a backdrop-filter, each of which creates a stacking context, so the
+     hamburger's own z-index is trapped below the panel and its X was being
+     painted over. This button lives inside the panel, so it always shows. */
+  var mclose=document.createElement('button');
+  mclose.type='button'; mclose.className='m-close';
+  mclose.setAttribute('aria-label','Close menu'); mclose.innerHTML='&times;';
+  panel.appendChild(mclose);
   [].slice.call(src.querySelectorAll('a')).forEach(function(a){
     if(a.classList.contains('nav-cart')) return;
     var c=a.cloneNode(true); c.removeAttribute('style'); panel.appendChild(c);
@@ -451,7 +475,7 @@ img,svg,video{max-width:100%;height:auto}
     document.body.style.overflow=open?'hidden':'';
   }
   btn.addEventListener('click',function(){ set(btn.getAttribute('aria-expanded')!=='true'); });
-  panel.addEventListener('click',function(e){ if(e.target.tagName==='A') set(false); });
+  panel.addEventListener('click',function(e){ if(e.target.tagName==='A'||e.target.closest('.m-close')) set(false); });
   addEventListener('keydown',function(e){ if(e.key==='Escape') set(false); });
   addEventListener('resize',function(){ if(innerWidth>820) set(false); });
 })();
