@@ -566,8 +566,11 @@ img,svg,video{max-width:100%;height:auto}
   .eyebrow.plink,.pm-gps,.read-place,.fitswap,.size-guide-link,.tag-invite a{
     display:inline-flex;align-items:center;min-height:44px;padding-top:2px;padding-bottom:2px}
   .foot-links a,.links a{width:100%}
-  button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.chip,.btn,button.cta,.cta{
+  button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.chip,.btn,button.cta,.cta,
+  .pdp-link,.buy-ghaf,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
     min-height:44px}
+  /* dismiss controls need to be easy to hit, not just tall */
+  .lb-close,.drawer-close,.mnav{min-width:44px;display:inline-flex;align-items:center;justify-content:center}
   .nav-arrow{min-width:44px}
   /* 16px minimum stops iOS zooming the page when a field is focused */
   /* 16px on FIELDS ONLY - buttons don't trigger iOS zoom and blowing up
@@ -1127,7 +1130,8 @@ if (LAUNCHED || REVEALED) (function () {
     // Revealed but not launched: the shop is browsable, nothing is purchasable.
     if (!LAUNCHED) html = html.replace('<head>', '<head>\n<script>window.__COMMERCE_OFF=true;</script>');
     const canonical = `${SITE}/shop/`;
-    const title = 'Shop UAE-Inspired Tees — Wear the Wild Side of the UAE | Sahra & Beyond';
+    // 71 chars truncated in SERPs; 57 keeps the brand visible.
+    const title = 'Shop UAE T-Shirts & Polos — Limited Runs | Sahra & Beyond';
     const desc = 'Original heavyweight organic-cotton tees inspired by real UAE places — the Milky Way over Al Quaa, the dunes of Liwa and the Hajar Mountains.';
     // Driven off content/products/*.json — a hardcoded list here silently went stale
     // once the catalogue was restructured, and shipped the old AED 149 price to Google.

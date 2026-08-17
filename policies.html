@@ -59,12 +59,36 @@ section.policy li{margin-bottom:8px;font-size:16px;color:#4A4136}
 .back{display:inline-block;margin-top:40px;font-weight:700}
 .ftr{max-width:820px;margin:0 auto;padding:30px clamp(18px,5vw,32px) 48px;border-top:1px solid rgba(42,32,22,.1);text-align:center;color:#7C7264;font-size:12.5px}
 .ftr a{color:#9C521B;text-decoration:none;margin:0 7px}
+
+/* ---- Mobile navigation (shared pattern, see build.js) ---- */
+.mnav{display:none;position:relative;z-index:120;background:none;border:0;padding:8px;margin:-8px -6px -8px 0;cursor:pointer;line-height:0;color:inherit}
+.mnav span{display:block;width:22px;height:2px;margin:4px 0;border-radius:2px;background:currentColor;transition:transform .3s,opacity .3s}
+.mnav[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.mnav[aria-expanded="true"] span:nth-child(2){opacity:0}
+.mnav[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@media(max-width:820px){
+  .mnav{display:block}
+  .nav-links,.hdr-nav{display:none!important}
+  .m-panel{display:block;position:fixed;left:0;right:0;top:0;z-index:110;padding:78px 22px 26px;
+    background:rgba(24,17,9,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    transform:translateY(-102%);transition:transform .38s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 18px 50px rgba(0,0,0,.4);max-height:100dvh;overflow:auto}
+  .m-panel.open{transform:translateY(0)}
+  .m-panel a{display:block;padding:15px 4px;color:#F7EFE2;text-decoration:none;font-size:19px;
+    letter-spacing:.3px;border-bottom:1px solid rgba(247,239,226,.12)}
+  .m-panel a:last-child{border-bottom:0}
+  .m-panel a.active{color:#E9B978}
+  .m-panel a::after{display:none!important}
+  a,button{min-height:auto}
+}
+@media(min-width:821px){.m-panel{display:none}}
+
 </style>
 </head>
 <body>
 <header class="hdr">
   <a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40" style="height:26px;width:auto;display:block;margin-right:9px"><span>Sahra &amp; Beyond</span></a>
-  <nav class="hdr-nav"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></nav>
+  <nav class="hdr-nav"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 <main>
   <span class="eyebrow">Legal &amp; support</span>
@@ -232,5 +256,23 @@ section.policy li{margin-bottom:8px;font-size:16px;color:#4A4136}
   <div><a href="#payments">Payment</a>·<a href="#shipping">Shipping</a>·<a href="#returns">Returns</a>·<a href="#cancellations">Cancellations</a>·<a href="#privacy">Privacy</a>·<a href="#cookies">Cookies</a>·<a href="#terms">Terms</a>·<a href="#contact">Contact</a></div>
   <div style="margin-top:10px">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
+<script>
+(function(){
+  var btn=document.querySelector('.mnav'); if(!btn) return;
+  var src=document.querySelector('.nav-links')||document.querySelector('.hdr-nav'); if(!src) return;
+  var panel=document.createElement('nav');
+  panel.className='m-panel'; panel.id='mobileNav'; panel.setAttribute('aria-label','Menu');
+  [].slice.call(src.querySelectorAll('a')).forEach(function(a){
+    var c=a.cloneNode(true); c.removeAttribute('style'); panel.appendChild(c);
+  });
+  document.body.appendChild(panel);
+  btn.setAttribute('aria-controls','mobileNav');
+  function set(o){btn.setAttribute('aria-expanded',o?'true':'false');panel.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';}
+  btn.addEventListener('click',function(){set(btn.getAttribute('aria-expanded')!=='true');});
+  panel.addEventListener('click',function(e){if(e.target.tagName==='A')set(false);});
+  addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  addEventListener('resize',function(){if(innerWidth>820)set(false);});
+})();
+</script>
 </body>
 </html>
