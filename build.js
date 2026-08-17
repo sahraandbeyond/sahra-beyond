@@ -242,7 +242,7 @@ body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;background:#FAF6EF;l
 a{color:#9C521B}
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
-.brand img{display:block;width:34px;height:34px}
+.brand img{display:block;height:26px;width:auto}
 .brand-text{display:flex;flex-direction:column;line-height:1}
 .brand-sahra{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;letter-spacing:3px;color:#33271B;text-transform:uppercase}
 .brand-beyond{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;color:#C0702E;text-transform:uppercase;margin-top:2px}
@@ -408,7 +408,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'd
 
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Home', 'discover') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + (LAUNCHED ? nav('/shop/', 'Shop', 'shop') : '') + nav('/about/', 'About', 'about');
+  const navHtml = nav('/', 'Home', 'discover') + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -918,9 +918,11 @@ LANDINGS.forEach(L => {
 })();
 
 // ---- Shop page (generated from shop-preview.html — single source of truth; pre-launch it stays hidden) ----
-if (LAUNCHED) (function () {
+if (LAUNCHED || REVEALED) (function () {
   try {
     let html = fs.readFileSync(path.join(ROOT, 'shop-preview.html'), 'utf8');
+    // Revealed but not launched: the shop is browsable, nothing is purchasable.
+    if (!LAUNCHED) html = html.replace('<head>', '<head>\n<script>window.__COMMERCE_OFF=true;</script>');
     const canonical = `${SITE}/shop/`;
     const title = 'Shop UAE-Inspired Tees — Wear the Wild Side of the UAE | Sahra & Beyond';
     const desc = 'Original heavyweight organic-cotton tees inspired by real UAE places — the Milky Way over Al Quaa, the dunes of Liwa and the Hajar Mountains.';
@@ -1166,9 +1168,9 @@ CATEGORIES.forEach(C => {
   const items = BY_CATEGORY(C.cat);
   // Deep-link into the shop with this category preselected. The shop reads these
   // params on load, so /shop/?fit=oversized opens already filtered.
-  const SHOP = LAUNCHED ? '/shop/' : (REVEALED ? '/t-shirts/' : '/shop-preview.html');
+  const SHOP = (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html';
   const CAT_FILTER = { 'regular-tees':'regular', 'oversized-tees':'oversized', 'polos':'polo' }[C.cat] || '';
-  const shopHref = (CAT_FILTER && !REVEALED) ? `${SHOP}?fit=${CAT_FILTER}` : SHOP;
+  const shopHref = CAT_FILTER ? `${SHOP}?fit=${CAT_FILTER}` : SHOP;
   const canonical = `${SITE}/${C.slug}/`;
   const jsonld = [
     { "@context":"https://schema.org","@type":"CollectionPage","name":C.h1,"description":C.desc,"url":canonical },
@@ -1240,14 +1242,14 @@ COMMERCE.forEach(P => {
   write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body }));
 });
 
-const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: LAUNCHED ? '/shop/' : (REVEALED ? '/t-shirts/' : '/shop-preview.html') });
+const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });
 console.log('  \u2713 ' + PRODUCT_URLS.length + ' product pages');
 
 // ---- sitemap ----
 const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
 const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
-  .concat(LAUNCHED ? [{ u: `${SITE}/shop/`, m: buildDate, p: '0.9' }] : [])
+  .concat((LAUNCHED || REVEALED) ? [{ u: `${SITE}/shop/`, m: buildDate, p: '0.9' }] : [])
   .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' },
             { u: `${SITE}/commitment.html`, m: buildDate, p: '0.6' }])
   // policies.html is noindex until launch — listing it earlier would put a

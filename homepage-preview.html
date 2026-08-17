@@ -255,7 +255,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
 
 <nav id="nav" class="on-hero">
   <a class="logo" href="/" aria-label="Sahra &amp; Beyond — home"><img class="mark mark-l" src="/logo/mark-light.png" alt="" width="300" height="40"><img class="mark mark-d" src="/logo/mark-dark.png" alt="" width="300" height="40"><div class="logo-text"><span class="logo-a">Sahra</span><span class="logo-b">&amp; Beyond</span></div></a>
-  <div class="nav-links"><a href="/">Home</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="shop-preview.html" class="nav-cart shoplink" aria-label="Cart">🛒</a></div>
+  <div class="nav-links"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="shop-preview.html" class="nav-cart shoplink" aria-label="Cart">🛒</a></div>
 </nav>
 
 <header class="hero" id="hero">
@@ -697,7 +697,21 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
     products=products.slice();
     var gi=-1;for(var gk=0;gk<products.length;gk++){var pp=products[gk];if((pp.handle||'').toLowerCase()==='al-quaa-galaxy-tee'||/galaxy/i.test(pp.title||'')||/al\s*quaa/i.test(pp.place||'')){gi=gk;break;}}
     if(gi>0)products.unshift(products.splice(gi,1)[0]);
+    var grid=document.getElementById('grid');
     var cards=[].slice.call(document.querySelectorAll('#grid .card'));
+    /* The grid ships with 3 static cards as an offline fallback. When Shopify
+       returns more, clone the first card so every product gets a slot. Clones
+       must drop .reveal (which sets opacity:0 until an observer fires) or they
+       would mount invisible. */
+    if(grid&&cards.length&&products.length>cards.length){
+      var tpl=cards[0];
+      for(var ci2=cards.length; ci2<products.length; ci2++){
+        var cl=tpl.cloneNode(true);
+        cl.classList.remove('reveal','tilt','in');
+        cl.style.opacity='1';
+        grid.appendChild(cl); cards.push(cl);
+      }
+    }
     cards.forEach(function(card,i){var p=products[i];if(!p)return;
       var ci=card.querySelector('.card-img');
       if(ci&&p.img){[].slice.call(ci.childNodes).forEach(function(n){if(n.nodeType===3)ci.removeChild(n);});var old=ci.querySelector('img');if(old)old.remove();
@@ -716,7 +730,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
     window.__spotcaps=products.slice(0,frames.length).map(function(p){return p.title+(p.place?' · Inspired by '+p.place:'');});
     var cap=document.getElementById('spotcap');if(cap&&window.__spotcaps[0])cap.textContent=window.__spotcaps[0];
   }
-  var q='{products(first:6){edges{node{title handle featuredImage{url} images(first:1){edges{node{url}}} priceRange{minVariantPrice{amount currencyCode}} tags}}}}';
+  var q='{products(first:12){edges{node{title handle featuredImage{url} images(first:1){edges{node{url}}} priceRange{minVariantPrice{amount currencyCode}} tags}}}}';
   fetch('https://'+SHOPIFY.domain+'/api/'+SHOPIFY.apiVersion+'/graphql.json',{method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':SHOPIFY.token},body:JSON.stringify({query:q})})
     .then(function(r){return r.json();})
     .then(function(j){if(!j||!j.data||!j.data.products)return;var products=j.data.products.edges.map(function(e){var n=e.node,imgs=(n.images&&n.images.edges||[]).map(function(x){return x.node.url;});return{title:n.title,handle:n.handle,place:tagVal(n.tags,'place'),img:(n.featuredImage&&n.featuredImage.url)||imgs[0]||'',price:n.priceRange.minVariantPrice.amount,cur:n.priceRange.minVariantPrice.currencyCode};});fill(products);})

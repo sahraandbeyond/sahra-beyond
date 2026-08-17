@@ -370,7 +370,7 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
 <div class="note">↺ Free UAE returns &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
-  <div class="nav-links"><a href="/">Home</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div>
+  <div class="nav-links"><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div>
 </nav>
 
 <main id="main">

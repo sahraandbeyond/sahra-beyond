@@ -74,7 +74,7 @@
     },
     {
       "source": "/shop-preview.html",
-      "destination": "/t-shirts/",
+      "destination": "/shop/",
       "permanent": true
     }
   ]
