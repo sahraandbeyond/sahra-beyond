@@ -234,7 +234,7 @@ function packItemsFor(l) {
 
 const CSS = `
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:fixed}
+body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:scroll}
 a{color:#9C521B}
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
@@ -407,6 +407,29 @@ main,.ftr{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){
   .loc-hero,body::before{animation:none}
   body::after{transition:none}}
+
+/* ---- Mobile navigation ----------------------------------------------------
+   The links used to be display:none below the breakpoint with nothing to
+   replace them, so phones had no menu at all. Hamburger + slide-down panel. */
+.mnav{display:none;position:relative;z-index:120;background:none;border:0;padding:8px;margin:-8px -8px -8px 0;cursor:pointer;line-height:0}
+.mnav span{display:block;width:22px;height:2px;margin:4px 0;border-radius:2px;background:currentColor;transition:transform .3s,opacity .3s}
+.mnav[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.mnav[aria-expanded="true"] span:nth-child(2){opacity:0}
+.mnav[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@media(max-width:820px){
+  .mnav{display:block}
+  .nav-links,.hdr-nav{display:none!important}
+  .m-panel{position:fixed;left:0;right:0;top:0;z-index:110;padding:76px 22px 26px;
+    background:rgba(24,17,9,.97);backdrop-filter:blur(14px);
+    transform:translateY(-102%);transition:transform .38s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 18px 50px rgba(0,0,0,.4);max-height:100dvh;overflow:auto}
+  .m-panel.open{transform:translateY(0)}
+  .m-panel a{display:block;padding:15px 4px;color:#F7EFE2;text-decoration:none;font-size:19px;
+    border-bottom:1px solid rgba(247,239,226,.12)}
+  .m-panel a:last-child{border-bottom:0}
+  .m-panel a.active{color:#E9B978}
+}
+@media(min-width:821px){.m-panel{display:none}}
 /* ---- Product cards (category + collection blocks) -------------------------
    These classes were emitted but never styled, so 1536px mockups rendered at
    full size and blew past the viewport, with no product information at all.  */
@@ -516,10 +539,45 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
   gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
-<style>${CSS}</style>
+<style>${CSS}
+/* ---- Mobile polish --------------------------------------------------------
+   Measured at 390px on the live site: footer links were 15-21px tall, filter
+   chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
+   ask for ~44px. Everything below is scoped to phones only. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+img,svg,video,canvas{max-width:100%;height:auto}
+@media(max-width:820px){
+  html,body{overflow-x:hidden}
+  /* comfortable, thumb-sized targets */
+  .foot-links a,.links a,.foot-soc a,.soc a,.crumbs a,.back a,.catnav a,
+  .eyebrow.plink,.pm-gps,.read-place,.fitswap,.size-guide-link,.tag-invite a{
+    display:inline-flex;align-items:center;min-height:44px;padding-top:2px;padding-bottom:2px}
+  .foot-links a,.links a{width:100%}
+  button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.chip,.btn,button.cta,.cta{
+    min-height:44px}
+  .nav-arrow{min-width:44px}
+  /* 16px minimum stops iOS zooming the page when a field is focused */
+  /* 16px on FIELDS ONLY - buttons don't trigger iOS zoom and blowing up
+     their label wraps the filter chips */
+  input,select,textarea{font-size:max(16px,1em);min-height:48px;padding:12px 14px}
+  .wl-form input{min-height:48px}
+  /* respect the notch / home indicator */
+  body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+  footer{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+  /* stop long words and URLs forcing a sideways scroll */
+  h1,h2,h3,p,li,a{overflow-wrap:break-word}
+  /* iOS renders background-attachment:fixed badly; keep gradients in flow */
+  body,.loc-hero,.hero{background-attachment:scroll!important}
+  /* keep the drift alive on phones, just a gentler zoom so it reads as
+     movement rather than a cut-off wash */
+  .loc-hero{background-size:150% 150%}
+}
+@media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
+
+</style>
 </head>
 <body>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
 
@@ -544,6 +602,32 @@ ${bodyHtml}
   addEventListener('scroll',onScroll,{passive:true});
   addEventListener('resize',onScroll,{passive:true});
   update();
+})();
+</script>
+
+<script>
+/* Mobile menu: builds its links from the desktop nav so the two can never drift. */
+(function(){
+  var btn=document.querySelector('.mnav'); if(!btn) return;
+  var src=document.querySelector('.nav-links')||document.querySelector('.hdr-nav'); if(!src) return;
+  var panel=document.createElement('nav');
+  panel.className='m-panel'; panel.id='mobileNav';
+  panel.setAttribute('aria-label','Menu');
+  [].slice.call(src.querySelectorAll('a')).forEach(function(a){
+    if(a.classList.contains('nav-cart')) return;
+    var c=a.cloneNode(true); c.removeAttribute('style'); panel.appendChild(c);
+  });
+  document.body.appendChild(panel);
+  btn.setAttribute('aria-controls','mobileNav');
+  function set(open){
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    panel.classList.toggle('open',open);
+    document.body.style.overflow=open?'hidden':'';
+  }
+  btn.addEventListener('click',function(){ set(btn.getAttribute('aria-expanded')!=='true'); });
+  panel.addEventListener('click',function(e){ if(e.target.tagName==='A') set(false); });
+  addEventListener('keydown',function(e){ if(e.key==='Escape') set(false); });
+  addEventListener('resize',function(){ if(innerWidth>820) set(false); });
 })();
 </script>
 <div id="pzoom" role="dialog" aria-modal="true" aria-label="Product image"><button type="button" aria-label="Close">&times;</button><img alt=""></div>
