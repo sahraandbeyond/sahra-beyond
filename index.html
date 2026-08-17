@@ -336,6 +336,59 @@ img,svg,video{max-width:100%;height:auto}
 }
 @media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
 
+
+/* ============================================================
+   PREMIUM BACKDROP — one sky for the whole page
+   ============================================================ */
+#skyfield{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:#14102A;contain:layout paint}
+#skyfield .layer,#skyfield canvas,#skyfield .sun,#skyfield .dune{position:absolute;inset:0}
+#hero-canvas{position:absolute;inset:0;z-index:2;width:100%!important;height:100%!important}
+/* the dune horizon now lives in the fixed backdrop, so it travels with the
+   reader instead of stopping at the hero's bottom edge */
+#skyfield .dune{top:auto;bottom:0;left:-6%;right:-6%;width:112%;height:auto;z-index:3;
+  will-change:transform}
+#skyfield .dune svg{display:block;width:100%}
+/* a soft vertical dissolve so nothing ever meets the sky on a hard edge */
+.sky-scrim{position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:linear-gradient(180deg,rgba(20,16,42,.34) 0%,rgba(20,16,42,0) 26%,
+    rgba(20,16,42,0) 62%,rgba(20,16,42,.30) 100%)}
+/* everything the reader actually reads sits above the sky */
+/* #skyfield is position:fixed, so it is a POSITIONED element and paints above
+   non-positioned block backgrounds. Every content section therefore needs its
+   own stacking position, or the sky covers the page. */
+section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-index:1}
+.hero{background:transparent!important}
+
+/* ---- sections become translucent panes over the sky --------------------
+   Each keeps its own tint for contrast, but at ~86% so the sky bleeds
+   through and adjacent sections no longer read as separate blocks. */
+.stats{background:linear-gradient(180deg,rgba(247,220,176,.90),rgba(240,192,121,.86))!important;
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.shop,.story-sec{background:rgba(250,246,239,.88)!important;
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.places{background:rgba(36,27,18,.80)!important;
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.mission{background:rgba(44,54,38,.84)!important;
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.news{background:linear-gradient(180deg,rgba(46,36,80,.86),rgba(122,79,99,.80) 58%,rgba(192,112,46,.78))!important}
+/* the melt dividers inherit the pane tint so the seam is a fade, not a cut */
+.melt svg path{opacity:.92}
+
+/* ---- hero exit: content lifts and dissolves instead of stopping dead ---- */
+.hero-inner{will-change:transform,opacity}
+
+/* ---- dust motes drifting through the warm hours ---- */
+#dust{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.2s ease}
+
+/* ---- cards get real depth on hover ---- */
+.card.tilt,.place{transform-style:preserve-3d;will-change:transform}
+
+@media(prefers-reduced-motion:reduce){
+  #skyfield .dune,.hero-inner{transform:none!important}
+  #dust{display:none}
+}
+
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
 </head>
@@ -352,13 +405,27 @@ img,svg,video{max-width:100%;height:auto}
   <div class="nav-links"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
-<header class="hero" id="hero">
+<!-- ============================================================
+     THE SKY — one continuous backdrop for the entire page.
+     The homepage used to be six stacked colour blocks, so every section
+     boundary was a hard tonal cut (night hero -> #F7DCB0 sand = a ~70%
+     lightness jump in one edge). Instead there is now a single fixed sky
+     behind everything, and scrolling moves you through time of day:
+     astronomical night at the hero, dawn, golden hour, then dusk.
+     Sections are translucent panes over it, so there is nothing left to
+     collide. Content sits above via .page-content{z-index:1}.
+     ============================================================ -->
+<div id="skyfield" aria-hidden="true">
   <div class="layer sky" data-depth="0"></div>
   <div class="layer stars" data-depth="0.15"></div>
   <canvas id="hero-canvas"></canvas>
   <div class="sun" data-depth="0.25"></div>
-  <div class="dune" data-depth="0.5"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg></div>
+<div class="dune" data-depth="0.5"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg></div>
   <div class="dune" data-depth="0.9"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg></div>
+  <div class="sky-scrim"></div>
+</div>
+
+<header class="hero" id="hero">
   <div class="hero-inner">
     <div>
       <span class="eyebrow hero-in">Inspired by the landscapes of the UAE</span>
@@ -650,6 +717,19 @@ img,svg,video{max-width:100%;height:auto}
     sizeIfStale();
     starMat.uniforms.uTime.value=t;bandMat.uniforms.uTime.value=t;
     terrU.uTime.value=t;terrU.uScroll.value=t*.0035; // dunes slowly march — the ground is alive
+    // Scroll is the clock. The shader already models sun colour, haze and fog,
+    // so driving uDay/uDawn from scroll progress lights the real 3D desert
+    // through night -> dawn -> golden hour -> dusk as the reader descends.
+    var sp=window.__skyProgress||0, arc=Math.sin(sp*Math.PI);
+    terrU.uDay.value  = .15 + arc*.72;                 // sun elevation
+    terrU.uDawn.value = .55 + Math.sin(sp*Math.PI*2)*.35;
+    terrU.uHaze.value = .55 + arc*.30;                 // air thickens at golden hour
+    terrU.uSunCol.value.setRGB(1.10+arc*.25, .50+arc*.42, .28+arc*.30);
+    terrU.uFogCol.value.setRGB(.24+arc*.46, .15+arc*.38, .17+arc*.22);
+    terrU.uSkyAmb.value.setRGB(.12+arc*.32, .13+arc*.30, .22+arc*.16);
+    // camera eases back and lifts as you travel — parallax depth
+    cam.position.y = 3.2 + sp*2.6;
+    cam.position.z = 16  + sp*3.4;
     terrU.uCamL.value.set(cam.position.x,-166,cam.position.y);
     shootTimer-=dt;
     for(var s2=0;s2<shooters.length;s2++){var sh=shooters[s2];
@@ -947,5 +1027,155 @@ img,svg,video{max-width:100%;height:auto}
   addEventListener('resize',function(){if(innerWidth>820)set(false);});
 })();
 </script>
+
+<script>
+/* ============================================================
+   TIME OF DAY — scroll is the clock.
+   The terrain shader already carries a day/night model (uDay, uDawn,
+   uSunCol, uFogCol), so rather than fading CSS panels we simply move the
+   sun. Scrolling the page walks the desert from astronomical night at the
+   hero through dawn, golden hour and back to dusk at the footer. Because
+   there is one sky behind every section, no boundary can be abrupt.
+   ============================================================ */
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var sky   = document.querySelector('#skyfield .sky');
+  var stars = document.querySelector('#skyfield .stars');
+  var sunEl = document.querySelector('#skyfield .sun');
+  var dunes = [].slice.call(document.querySelectorAll('#skyfield .dune'));
+  var heroInner = document.querySelector('.hero-inner');
+  var hero = document.getElementById('hero');
+  if(!sky) return;
+
+  // palette stops the page travels through, night -> dawn -> gold -> dusk
+  var STOPS = [
+    [ 20, 16, 42],   // astronomical night
+    [ 58, 41, 90],   // nautical twilight
+    [122, 79, 99],   // first light
+    [192,112, 46],   // golden hour
+    [233,185,120],   // full day, warm sand
+    [ 92, 64, 92]    // dusk at the footer
+  ];
+  function ramp(p){
+    var x=Math.max(0,Math.min(1,p))*(STOPS.length-1), i=Math.floor(x), t=x-i;
+    var a=STOPS[i], b=STOPS[Math.min(i+1,STOPS.length-1)];
+    return [Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)];
+  }
+
+  var prog=0, target=0, mx=0, my=0, tmx=0, tmy=0;
+  function measure(){
+    var h=document.documentElement.scrollHeight-innerHeight;
+    target = h>0 ? Math.max(0,Math.min(1,scrollY/h)) : 0;
+  }
+  addEventListener('scroll',measure,{passive:true});
+  addEventListener('resize',measure,{passive:true});
+  measure(); prog=target;
+
+  // pointer on desktop, device tilt on phones — the sky answers you
+  if(!matchMedia('(hover:none)').matches){
+    addEventListener('mousemove',function(e){
+      tmx=(e.clientX/innerWidth)*2-1; tmy=(e.clientY/innerHeight)*2-1;
+    },{passive:true});
+  } else if(window.DeviceOrientationEvent){
+    addEventListener('deviceorientation',function(e){
+      if(e.gamma==null) return;
+      tmx=Math.max(-1,Math.min(1,e.gamma/35)); tmy=Math.max(-1,Math.min(1,((e.beta||45)-45)/35));
+    },{passive:true});
+  }
+
+  window.__skyProgress=0;
+  (function tick(){
+    requestAnimationFrame(tick);
+    if(document.hidden) return;
+    prog += (target-prog)*(reduce?1:0.06);      // eased, so the sky lags the scroll a little
+    mx   += (tmx-mx)*0.05;  my += (tmy-my)*0.05;
+    window.__skyProgress=prog;
+
+    var c=ramp(prog);
+    sky.style.background='linear-gradient(180deg,rgb('+c[0]+','+c[1]+','+c[2]+') 0%,'
+      +'rgb('+Math.round(c[0]*1.25+18)+','+Math.round(c[1]*1.2+14)+','+Math.round(c[2]*1.05+8)+') 62%,'
+      +'rgb('+Math.min(255,Math.round(c[0]*1.6+40))+','+Math.min(255,Math.round(c[1]*1.5+30))+','+Math.min(255,Math.round(c[2]*1.15+10))+') 100%)';
+
+    if(stars) stars.style.opacity = String(Math.max(0,1-prog*2.6));   // stars wash out as it brightens
+
+    // the sun climbs, crosses and sets as you read
+    if(sunEl){
+      var arc=Math.sin(prog*Math.PI);
+      sunEl.style.opacity=String(Math.min(1,arc*1.6));
+      sunEl.style.transform='translate3d('+((prog-0.5)*46+mx*10).toFixed(1)+'vw,'
+        +((1-arc)*34-8+my*4).toFixed(1)+'vh,0)';
+    }
+    if(!reduce){
+      // layered dunes drift at different rates — parallax depth
+      for(var i=0;i<dunes.length;i++){
+        var d=parseFloat(dunes[i].dataset.depth||'0.5');
+        dunes[i].style.transform='translate3d('+(mx*d*-16).toFixed(1)+'px,'
+          +(prog*d*70+my*d*6).toFixed(1)+'px,0) scale('+(1+d*0.04).toFixed(3)+')';
+      }
+      // hero content lifts away rather than stopping dead at the seam
+      if(heroInner && hero){
+        var hp=Math.max(0,Math.min(1,scrollY/Math.max(1,hero.offsetHeight)));
+        heroInner.style.transform='translate3d(0,'+(hp*-90).toFixed(1)+'px,0)';
+        heroInner.style.opacity=String(Math.max(0,1-hp*1.35));
+      }
+    }
+  })();
+})();
+</script>
+
+
+<script>
+/* ---- dust in the warm hours, and cards with real depth ---------------- */
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  /* Dust motes: invisible at night, drifting through golden hour, and they
+     scatter away from the pointer. One canvas, capped DPR, paused when the
+     tab is hidden — the whole thing costs a few hundred particles. */
+  var c=document.createElement('canvas'); c.id='dust';
+  document.body.appendChild(c);
+  var x=c.getContext('2d'), dpr=Math.min(devicePixelRatio||1,1.5);
+  var TOUCH=matchMedia('(hover:none)').matches;
+  var N=TOUCH?70:170, P=[], W=0,H=0, px=-1e4, py=-1e4;
+  function size(){W=c.width=innerWidth*dpr;H=c.height=innerHeight*dpr;c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';}
+  size(); addEventListener('resize',size,{passive:true});
+  for(var i=0;i<N;i++)P.push({x:Math.random(),y:Math.random(),
+    r:(Math.random()*1.5+.4)*dpr, vx:(Math.random()*.4+.1)*.0006, vy:(Math.random()-.5)*.0004,
+    a:Math.random()*.5+.2, ph:Math.random()*6.28});
+  addEventListener('mousemove',function(e){px=e.clientX*dpr;py=e.clientY*dpr;},{passive:true});
+  (function loop(){
+    requestAnimationFrame(loop);
+    if(document.hidden) return;
+    var sp=window.__skyProgress||0, warm=Math.max(0,Math.sin(sp*Math.PI));
+    c.style.opacity=String(warm*.85);
+    if(warm<0.02){x.clearRect(0,0,W,H);return;}
+    x.clearRect(0,0,W,H);
+    var t=performance.now()*.001;
+    for(var i=0;i<P.length;i++){
+      var p=P[i];
+      p.x+=p.vx; p.y+=p.vy+Math.sin(t*.5+p.ph)*.00008;
+      if(p.x>1.02)p.x=-.02; if(p.y>1.02)p.y=-.02; if(p.y<-.02)p.y=1.02;
+      var sx=p.x*W, sy=p.y*H;
+      var dx=sx-px, dy=sy-py, d2=dx*dx+dy*dy, R=150*dpr*150*dpr;
+      if(d2<R){var fq=1-d2/R, m=Math.sqrt(d2)+1; sx+=dx/m*26*fq*dpr; sy+=dy/m*26*fq*dpr;}
+      x.beginPath(); x.arc(sx,sy,p.r,0,6.2832);
+      x.fillStyle='rgba(255,226,178,'+(p.a*warm).toFixed(3)+')'; x.fill();
+    }
+  })();
+
+  /* Cards lift toward the pointer — subtle, 6deg max, GPU only */
+  if(!TOUCH){
+    document.querySelectorAll('.card.tilt,.place').forEach(function(el){
+      el.addEventListener('mousemove',function(e){
+        var r=el.getBoundingClientRect();
+        var rx=((e.clientY-r.top)/r.height-.5)*-6, ry=((e.clientX-r.left)/r.width-.5)*6;
+        el.style.transform='perspective(900px) rotateX('+rx.toFixed(2)+'deg) rotateY('+ry.toFixed(2)+'deg) translateZ(6px)';
+      });
+      el.addEventListener('mouseleave',function(){el.style.transform='';});
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
