@@ -178,6 +178,38 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .teecta-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:20px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;color:rgba(255,255,255,.72)}
 .teecta .btn{align-self:flex-start;background:#E9B978;color:#181109;border:none}
 .teecta .btn:hover{background:#fff}
+
+/* ---- Product cards (category + collection blocks) -------------------------
+   These classes were emitted but never styled, so 1536px mockups rendered at
+   full size and blew past the viewport, with no product information at all.  */
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:22px;margin:26px 0 30px}
+.pcard{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line,rgba(43,37,32,.12));border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(43,37,32,.04);transition:box-shadow .3s,transform .3s}
+.pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
+.pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
+.pcard-img img{width:100%;height:100%;object-fit:contain;display:block;padding:6%;transition:transform .6s ease}
+.pcard:hover .pcard-img img{transform:scale(1.04)}
+.pcard-zoom{position:absolute;right:10px;bottom:10px;z-index:2;border:0;border-radius:999px;width:34px;height:34px;cursor:pointer;
+  background:rgba(255,255,255,.92);color:#2B2620;font-size:15px;line-height:34px;text-align:center;padding:0;
+  box-shadow:0 2px 8px rgba(43,37,32,.18);opacity:0;transition:opacity .25s}
+.pcard:hover .pcard-zoom,.pcard-zoom:focus-visible{opacity:1}
+.pcard-b{display:flex;flex-direction:column;gap:7px;padding:15px 16px 17px}
+.pcard-t{font-family:'Playfair Display',serif;font-size:18px;line-height:1.25;color:#2B2620;text-decoration:none}
+.pcard-t:hover{color:var(--clay,#9C521B)}
+.pcard-place{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;opacity:.62}
+.pcard-spec{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.pcard-spec span{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;
+  border:1px solid var(--line,rgba(43,37,32,.14));border-radius:999px;padding:3px 8px;opacity:.85}
+.pcard-col{display:flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;opacity:.78}
+.pcard-sw{width:15px;height:15px;border-radius:3px;border:1px solid rgba(0,0,0,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);flex:0 0 auto}
+.pcard-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;padding-top:11px;border-top:1px solid var(--line,rgba(43,37,32,.1))}
+.pcard-p{font-weight:700;font-size:15px}
+.pcard-cta{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--clay,#9C521B);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+/* zoom overlay */
+#pzoom{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(20,16,12,.92);padding:24px}
+#pzoom.on{display:flex}
+#pzoom img{max-width:92vw;max-height:88vh;width:auto;height:auto;object-fit:contain;border-radius:4px}
+#pzoom button{position:absolute;top:18px;right:22px;background:none;border:0;color:#fff;font-size:30px;line-height:1;cursor:pointer}
+@media(max-width:560px){.pcards{grid-template-columns:1fr 1fr;gap:14px}.pcard-b{padding:12px}.pcard-t{font-size:15px}.pcard-zoom{opacity:1}}
 @media(max-width:760px){.teecta-inner{grid-template-columns:1fr}.teecta-img{aspect-ratio:4/3}.teecta-txt{padding:26px 22px}}
 .shopcta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;padding:34px 26px;text-align:center;color:#fff;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 90%)}
 .shopcta .stars,.shopcta .stars2{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 12% 28%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 14%,#fff,transparent),radial-gradient(1.6px 1.6px at 54% 34%,#fff,transparent),radial-gradient(1.2px 1.2px at 71% 18%,#fff,transparent),radial-gradient(1.6px 1.6px at 88% 30%,#fff,transparent),radial-gradient(1px 1px at 44% 52%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite}
@@ -307,5 +339,12 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a></div>
   <div>© 2026 Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · <a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a></div>
   <div class="disc">As an Amazon Associate, Sahra &amp; Beyond earns from qualifying purchases.</div></footer>
+<div id="pzoom" role="dialog" aria-modal="true" aria-label="Product image"><button type="button" aria-label="Close">&times;</button><img alt=""></div>
+<script>(function(){var z=document.getElementById('pzoom');if(!z)return;var im=z.querySelector('img'),cl=z.querySelector('button');
+  function close(){z.classList.remove('on');document.body.style.overflow='';}
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.pcard-zoom');
+    if(b){e.preventDefault();im.src=b.dataset.zoom;im.alt=b.getAttribute('aria-label')||'';z.classList.add('on');document.body.style.overflow='hidden';}});
+  cl.addEventListener('click',close); z.addEventListener('click',function(e){if(e.target===z)close();});
+  addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 </body>
 </html>

@@ -176,14 +176,10 @@ function collectionBlock(ctxName) {
   const lead = ctxName
     ? `Heading to ${esc(ctxName)}? Every t-shirt we make is drawn from a real place in the Emirates.`
     : 'Every t-shirt we make is drawn from a real place in the Emirates \u2014 heavyweight organic cotton, limited runs.';
-  const cards = DESIGNS.map(p => `
-    <a class="pcard" href="/products/${p.id}/">
-      <span class="pcard-img" style="background:${p.theme || '#181109'}"><img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy"></span>
-      <span class="pcard-b">
-        <span class="pcard-t">${esc(p.name)}</span>
-        <span class="pcard-p">${esc(p.placeName || '')} &middot; AED ${esc(String(p.price))}</span>
-      </span>
-    </a>`).join('');
+  // Tees only. The polo is a different garment and this block's copy says
+  // "every t-shirt we make" — listing it here was simply wrong.
+  const TEES = DESIGNS.filter(p => p.garment !== 'polo').sort((a,b)=>(a.order||0)-(b.order||0));
+  const cards = TEES.map(productCard).join('');
   return `<section class="pcta">
     <div class="pcta-head">
       <span class="pcta-eyebrow">Sahra &amp; Beyond &middot; UAE t-shirts</span>
@@ -191,7 +187,7 @@ function collectionBlock(ctxName) {
       <p>${lead}</p>
     </div>
     <div class="pcards">${cards}</div>
-    <a class="btn" href="/t-shirts/">See all t-shirts &rarr;</a>
+    <a class="btn shoplink" href="${(LAUNCHED||REVEALED)?'/shop/':'/t-shirts/'}">Shop the collection &rarr;</a><a class="btn ghost" href="/t-shirts/">See all t-shirts &rarr;</a>
   </section>`;
 }
 function teeFor(placeSlug, ctxName) {
@@ -384,6 +380,38 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .teecta-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:20px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;color:rgba(255,255,255,.72)}
 .teecta .btn{align-self:flex-start;background:#E9B978;color:#181109;border:none}
 .teecta .btn:hover{background:#fff}
+
+/* ---- Product cards (category + collection blocks) -------------------------
+   These classes were emitted but never styled, so 1536px mockups rendered at
+   full size and blew past the viewport, with no product information at all.  */
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:22px;margin:26px 0 30px}
+.pcard{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line,rgba(43,37,32,.12));border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(43,37,32,.04);transition:box-shadow .3s,transform .3s}
+.pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
+.pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
+.pcard-img img{width:100%;height:100%;object-fit:contain;display:block;padding:6%;transition:transform .6s ease}
+.pcard:hover .pcard-img img{transform:scale(1.04)}
+.pcard-zoom{position:absolute;right:10px;bottom:10px;z-index:2;border:0;border-radius:999px;width:34px;height:34px;cursor:pointer;
+  background:rgba(255,255,255,.92);color:#2B2620;font-size:15px;line-height:34px;text-align:center;padding:0;
+  box-shadow:0 2px 8px rgba(43,37,32,.18);opacity:0;transition:opacity .25s}
+.pcard:hover .pcard-zoom,.pcard-zoom:focus-visible{opacity:1}
+.pcard-b{display:flex;flex-direction:column;gap:7px;padding:15px 16px 17px}
+.pcard-t{font-family:'Playfair Display',serif;font-size:18px;line-height:1.25;color:#2B2620;text-decoration:none}
+.pcard-t:hover{color:var(--clay,#9C521B)}
+.pcard-place{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;opacity:.62}
+.pcard-spec{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.pcard-spec span{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;
+  border:1px solid var(--line,rgba(43,37,32,.14));border-radius:999px;padding:3px 8px;opacity:.85}
+.pcard-col{display:flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;opacity:.78}
+.pcard-sw{width:15px;height:15px;border-radius:3px;border:1px solid rgba(0,0,0,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);flex:0 0 auto}
+.pcard-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;padding-top:11px;border-top:1px solid var(--line,rgba(43,37,32,.1))}
+.pcard-p{font-weight:700;font-size:15px}
+.pcard-cta{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--clay,#9C521B);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+/* zoom overlay */
+#pzoom{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(20,16,12,.92);padding:24px}
+#pzoom.on{display:flex}
+#pzoom img{max-width:92vw;max-height:88vh;width:auto;height:auto;object-fit:contain;border-radius:4px}
+#pzoom button{position:absolute;top:18px;right:22px;background:none;border:0;color:#fff;font-size:30px;line-height:1;cursor:pointer}
+@media(max-width:560px){.pcards{grid-template-columns:1fr 1fr;gap:14px}.pcard-b{padding:12px}.pcard-t{font-size:15px}.pcard-zoom{opacity:1}}
 @media(max-width:760px){.teecta-inner{grid-template-columns:1fr}.teecta-img{aspect-ratio:4/3}.teecta-txt{padding:26px 22px}}
 .shopcta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;padding:34px 26px;text-align:center;color:#fff;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 90%)}
 .shopcta .stars,.shopcta .stars2{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 12% 28%,#fff,transparent),radial-gradient(1.2px 1.2px at 32% 14%,#fff,transparent),radial-gradient(1.6px 1.6px at 54% 34%,#fff,transparent),radial-gradient(1.2px 1.2px at 71% 18%,#fff,transparent),radial-gradient(1.6px 1.6px at 88% 30%,#fff,transparent),radial-gradient(1px 1px at 44% 52%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite}
@@ -468,6 +496,13 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
 <header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml()}</footer>
+<div id="pzoom" role="dialog" aria-modal="true" aria-label="Product image"><button type="button" aria-label="Close">&times;</button><img alt=""></div>
+<script>(function(){var z=document.getElementById('pzoom');if(!z)return;var im=z.querySelector('img'),cl=z.querySelector('button');
+  function close(){z.classList.remove('on');document.body.style.overflow='';}
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.pcard-zoom');
+    if(b){e.preventDefault();im.src=b.dataset.zoom;im.alt=b.getAttribute('aria-label')||'';z.classList.add('on');document.body.style.overflow='hidden';}});
+  cl.addEventListener('click',close); z.addEventListener('click',function(e){if(e.target===z)close();});
+  addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 </body>
 </html>`;
 }
@@ -1173,16 +1208,38 @@ const CATEGORIES = [
     intro:"One polo, forty pieces. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. Cut unisex, S to XL, and sized to the same specification as the Regular fit tees. A run of forty, counted on its own rather than as part of the tee run." }
 ];
 
+
+// One product card, with the information a buyer actually needs: fit, colour,
+// decoration, weight and price — not just a photograph.
+function productCard(p) {
+  const chips = [];
+  if (p.garment === 'polo') chips.push('240gsm piqu&eacute;'); else chips.push('230gsm cotton');
+  if (p.fit) chips.push(esc(p.fit === 'oversized' ? 'Oversized' : 'Regular') + ' fit');
+  // Decoration is per placement: two designs carry both techniques on one shirt.
+  if (p.decoration) {
+    const d = String(p.decoration);
+    chips.push(/DTG/i.test(d) && /embroider/i.test(d) ? 'DTG + embroidery' : (/embroider/i.test(d) ? 'Embroidered' : 'DTG print'));
+  }
+  chips.push('Unisex S&ndash;XL');
+  const colour = p.colourHex ? `<span class="pcard-col"><span class="pcard-sw" style="background:${esc(p.colourHex)}"></span>${esc(p.colourName || '')} &middot; Pantone ${esc(p.colourPantone || '')}</span>` : '';
+  return `
+    <article class="pcard">
+      <span class="pcard-img" style="background:${p.theme || '#EFEAE0'}">
+        <img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy">
+        <button type="button" class="pcard-zoom" data-zoom="${esc(p.imgMain)}" aria-label="Zoom ${esc(p.name)}">&#9906;</button>
+      </span>
+      <span class="pcard-b">
+        <a class="pcard-t" href="/products/${p.id}/">${esc(p.name)}</a>
+        ${p.placeName ? `<span class="pcard-place">Inspired by ${esc(p.placeName)}</span>` : '<span class="pcard-place">Sahra &amp; Beyond</span>'}
+        <span class="pcard-spec">${chips.map(c => `<span>${c}</span>`).join('')}</span>
+        ${colour}
+        <span class="pcard-foot"><span class="pcard-p">AED ${esc(String(p.price))}</span><a class="pcard-cta" href="/products/${p.id}/">Full details &rarr;</a></span>
+      </span>
+    </article>`;
+}
 function catCards(list) {
   if (!list.length) return '<p>Nothing in this category yet.</p>';
-  return `<div class="pcards">${list.map(p => `
-    <a class="pcard" href="/products/${p.id}/">
-      <span class="pcard-img" style="background:${p.theme || '#181109'}"><img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy"></span>
-      <span class="pcard-b">
-        <span class="pcard-t">${esc(p.name)}</span>
-        <span class="pcard-p">${esc(p.placeName || 'Sahra & Beyond')} &middot; AED ${esc(String(p.price))}</span>
-      </span>
-    </a>`).join('')}</div>`;
+  return `<div class="pcards">${list.map(productCard).join('')}</div>`;
 }
 
 CATEGORIES.forEach(C => {
