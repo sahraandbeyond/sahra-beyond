@@ -204,15 +204,33 @@ function faqBlock(l) {
 }
 function newsletterBlock() {
   if (!MON.newsletterAction) return '';
-  const blurb = 'The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.';
+  /* This block was hardcoded pre-launch copy — eyebrow, blurb, button and the
+     success message all still said the first drop was "coming" and asked people
+     to join a waitlist, months after the collection went on sale. Unlike
+     shopBlock it never had a LAUNCHED branch. It now sells what is live and
+     captures email for the NEXT drop, with the old wording kept for rollback. */
+  const eyebrow = LAUNCHED
+    ? 'Sahra &amp; Beyond &middot; Drop 01 out now'
+    : 'Sahra &amp; Beyond &middot; First drop coming';
+  const blurb = LAUNCHED
+    ? 'Original tees drawn from real places across the Emirates — the first drop is live now. Join the list and you will hear about the next one first.'
+    : 'The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.';
+  const btn = LAUNCHED ? 'Notify me about Drop 02' : 'Join the waitlist';
+  const ok = LAUNCHED
+    ? 'You&rsquo;re on the list. We&rsquo;ll email you before the next drop. &#10022;'
+    : 'You&rsquo;re on the list. See you at the drop. &#10022;';
+  const shopCta = LAUNCHED
+    ? `<a class="btn news-shop" href="/shop/">Shop the collection &rarr;</a>`
+    : '';
   return `<section class="news"><div class="news-stars"></div><div class="news-in">
-    <span class="news-eyebrow">Sahra &amp; Beyond · First drop coming</span>
+    <span class="news-eyebrow">${eyebrow}</span>
     <h2>Wear the <em>wild side</em> of the UAE</h2><p>${esc(blurb)}</p>
+    ${shopCta}
     <form class="news-form" action="${esc(MON.newsletterAction)}" method="post">
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
-      <button type="submit">Join the waitlist</button>
+      <button type="submit">${btn}</button>
     </form>
-    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:#E9B978">You&rsquo;re on the list. See you at the drop. &#10022;</p>
+    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:#E9B978">${ok}</p>
     </div>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>`;
 }
@@ -266,6 +284,7 @@ a{color:#9C521B}
 .news h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,4vw,36px);line-height:1.1;color:#fff;margin:10px 0 8px}
 .news h2 em{font-style:italic;color:#E9B978}
 .news p{margin:0 0 18px;color:rgba(255,255,255,.82);font-size:14.5px}
+.news-shop{display:inline-block;margin:4px 0 18px}
 .news-form{display:flex;gap:8px;max-width:430px;margin:0 auto;flex-wrap:wrap;justify-content:center}
 .news-form input{flex:1;min-width:200px;padding:13px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.96);color:#2B2620;font-size:14px}
 .news-form input:focus{outline:none;border-color:#E9B978}
