@@ -928,7 +928,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 (function(){
   var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
   // Local preview uses the flat file; the live site uses the generated /shop/ page.
-  var SHOP_URL=(location.protocol==='file:')?'shop-preview.html':'/shop/';
+  var SHOP_URL=(location.protocol==='file:')?'/shop/':'/shop/';
   if(location.protocol!=='file:')document.querySelectorAll('a.shoplink').forEach(function(a){a.setAttribute('href','/shop/');});
   function tagVal(t,k){var x=(t||[]).find(function(y){return y.toLowerCase().indexOf(k+':')===0;});return x?x.split(':').slice(1).join(':'):'';}
   function money(a,c){return (c||'AED')+' '+Math.round(parseFloat(a));}

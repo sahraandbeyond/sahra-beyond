@@ -17,10 +17,10 @@ const SITE = 'https://www.sahraandbeyond.ae';
 const TAGLINE = 'Wear the wild side of the UAE';
 // Pre-launch mode: the site opens on the coming-soon experience.
 // Flip to true on drop day — enables /shop/, the Shop nav link and shop CTAs everywhere.
-const LAUNCHED = false;
+const LAUNCHED = true;
 // REVEALED: the site is public and browsable but payments are not live, so every
 // 'shop' link must lead somewhere browsable rather than to a working cart.
-const REVEALED = true;
+const REVEALED = false;
 
 function readJSON(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return null; } }
 function metaDesc(s) { s = String(s || ''); if (s.length <= 160) return s; const cut = s.slice(0, 157); return cut.slice(0, cut.lastIndexOf(' ')) + '…'; }
