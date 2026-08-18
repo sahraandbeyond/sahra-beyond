@@ -10,7 +10,12 @@
    being remembered.
    ========================================================================== */
 #sb-sky{position:fixed;inset:0;z-index:0;pointer-events:none}
-body>*:not(#sb-sky){position:relative;z-index:1}
+/* Was `body>*:not(#sb-sky)`. `:not(#id)` carries id-level specificity, so that
+   selector scored (1,0,1) and overrode `.sb-drawer{position:fixed}` — the cart
+   drawer and overlay became position:relative and rendered as a plain block at
+   the bottom of every page, with a close button that did nothing. Target the
+   actual layout blocks at low specificity instead, and never the cart. */
+header,.hdr,main,.ftr,footer,section,.loc-hero,nav,.wrap{position:relative;z-index:1}
 
 /* the hero is the window onto the sky */
 .loc-hero{background-color:transparent!important}
