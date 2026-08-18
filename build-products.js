@@ -449,6 +449,41 @@ img,svg,video{max-width:100%;height:auto}
 }
 @media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
 
+
+/* ---- PDP buy box -------------------------------------------------------
+   Product pages are where search and social traffic lands. They used to
+   offer only "Shop this tee", which sent the buyer to /shop/ to find the
+   same product and start again. They now sell directly. */
+.pdp-buy{margin:6px 0 20px}
+.pdp-sizes-label{display:flex;align-items:center;justify-content:space-between;
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:9px}
+.pdp-sizes{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px;min-height:48px}
+.pdp-loading{font-size:13px;opacity:.6;align-self:center}
+.pdp-size{min-width:52px;height:48px;padding:0 12px;border:1px solid var(--line,rgba(42,32,22,.32));
+  background:rgba(255,255,255,.55);border-radius:10px;font-size:14px;font-weight:500;
+  cursor:pointer;transition:transform .18s,background .18s,border-color .18s,box-shadow .18s;color:inherit}
+.pdp-size:hover:not(:disabled){transform:translateY(-3px)}
+.pdp-size:disabled{opacity:.32;cursor:not-allowed;text-decoration:line-through}
+/* selection has to be unmistakable — a filled gold chip with dark type */
+.pdp-size.sel{background:#E9B978;border-color:#E9B978;color:#2B2520;font-weight:700;
+  box-shadow:0 0 0 3px rgba(233,185,120,.30)}
+.pdp-size:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
+.pdp-add{width:100%;min-height:52px;font-size:15px}
+.pdp-add:disabled{opacity:.45;cursor:not-allowed}
+.pdp-msg{min-height:20px;margin:9px 0 4px;font-size:13.5px}
+.pdp-msg a{text-decoration:underline}
+.pdp-msg.ok{color:#2F7A55}
+.pdp-msg.err{color:#B4462F}
+.dark-bg .pdp-size{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.28)}
+.dark-bg .pdp-size.sel{background:#E9B978;border-color:#E9B978;color:#2B2520}
+/* cart badge in the header */
+.hdr-cart{position:relative;background:none;border:0;cursor:pointer;font-size:19px;
+  padding:8px;line-height:1;color:inherit;min-width:44px;min-height:44px}
+.hdr-cart .cart-count{position:absolute;top:2px;right:0;min-width:18px;height:18px;border-radius:9px;
+  background:#E9B978;color:#2B2520;font-family:Inter,sans-serif;font-size:11px;font-weight:700;
+  display:none;align-items:center;justify-content:center;padding:0 4px}
+
 </style>
 </head>
 <body>
@@ -460,7 +495,7 @@ img,svg,video{max-width:100%;height:auto}
 <div class="note">↺ Free UAE delivery over AED 150 &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
-  <div class="nav-links"><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links"><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a>${LAUNCHED ? `<button class="hdr-cart" type="button" onclick="location.href='/shop/'" aria-label="Cart"><span aria-hidden="true">&#128722;</span><span class="cart-count">0</span></button>` : ``}</div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <main id="main">
@@ -507,11 +542,21 @@ img,svg,video{max-width:100%;height:auto}
         <div class="stock-row" id="stock-row"></div>
         <div class="stock-note" id="stock-note"></div>
       </div>
+      ${LAUNCHED ? `
+      <!-- Buy box. Product pages are where search and social traffic lands, so
+           they must sell directly instead of bouncing to /shop/ to start again. -->
+      <div class="pdp-buy" id="pdpBuy" data-handle="${p.id}">
+        <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
+        <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
+          <span class="pdp-loading">Loading sizes&hellip;</span>
+        </div>
+        <button class="btn pdp-add" id="pdpAdd" type="button" disabled>Select a size</button>
+        <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
+        <a class="btn ghost" href="#fit">Size &amp; fit</a>
+      </div>` : `
       <div class="cta-row">
-        ${LAUNCHED
-          ? `<a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this ${p.garment || "tee"}</a><a class="btn ghost" href="#fit">Size &amp; fit</a>`
-          : `<a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>`}
-      </div>
+        <a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>
+      </div>`}
       <a class="buy-ghaf" href="/commitment.html">🌱 A share of every sale plants ghaf trees in the UAE &rarr;</a>
       <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ Organic cotton</span></div>
 
@@ -981,6 +1026,91 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   addEventListener('resize',function(){if(innerWidth>820)set(false);});
 })();
 </script>
+
+<script>
+/* ============================================================
+   PDP → cart. Uses the same Storefront cart and the same
+   localStorage key ('sb_cart') as /shop/, so a cart started on a
+   product page is the same cart on the shop page and at checkout.
+   ============================================================ */
+(function(){
+  var box=document.getElementById('pdpBuy'); if(!box) return;
+  var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
+  var handle=box.dataset.handle;
+  var sizesEl=document.getElementById('pdpSizes'),addEl=document.getElementById('pdpAdd'),msgEl=document.getElementById('pdpMsg');
+  var variants=[],sel=null;
+
+  function sf(q,v){
+    return fetch('https://'+SHOPIFY.domain+'/api/'+SHOPIFY.apiVersion+'/graphql.json',{
+      method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':SHOPIFY.token},
+      body:JSON.stringify({query:q,variables:v||{}})
+    }).then(function(r){return r.json();}).then(function(j){
+      if(j.errors) throw new Error(j.errors[0]&&j.errors[0].message||'Storefront error');
+      return j.data;
+    });
+  }
+  function msg(t,cls){ if(msgEl){msgEl.textContent=t||''; msgEl.className='pdp-msg'+(cls?' '+cls:'');} }
+  function badge(n){
+    var c=document.querySelector('.hdr-cart .cart-count');
+    if(c){c.textContent=n; c.style.display=n?'flex':'none';}
+  }
+
+  sf('query($h:String!){product(handle:$h){title variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}',{h:handle})
+  .then(function(d){
+    if(!d.product){ sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
+    variants=d.product.variants.edges.map(function(e){return e.node;});
+    sizesEl.innerHTML='';
+    variants.forEach(function(v){
+      var b=document.createElement('button');
+      b.type='button'; b.className='pdp-size'; b.textContent=v.title;
+      b.setAttribute('aria-pressed','false');
+      if(!v.availableForSale){ b.disabled=true; b.title='Sold out'; }
+      b.addEventListener('click',function(){
+        sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
+        b.classList.add('sel'); b.setAttribute('aria-pressed','true');
+        sel=v; addEl.disabled=false; addEl.textContent='Add to cart'; msg('');
+      });
+      sizesEl.appendChild(b);
+    });
+    if(!variants.some(function(v){return v.availableForSale;})){ addEl.textContent='Sold out'; }
+  })
+  .catch(function(){ sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
+
+  var CFRAG='id checkoutUrl totalQuantity';
+  addEl.addEventListener('click',function(){
+    if(!sel) return;
+    addEl.disabled=true; addEl.textContent='Adding…'; msg('');
+    var cid=null; try{ cid=localStorage.getItem('sb_cart'); }catch(e){}
+    var run = cid
+      ? sf('mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{'+CFRAG+'} userErrors{message}}}',{id:cid,l:[{merchandiseId:sel.id,quantity:1}]})
+          .then(function(d){ var c=d.cartLinesAdd&&d.cartLinesAdd.cart; if(!c) throw new Error('cart'); return c; })
+      : Promise.reject(new Error('no cart'));
+    run.catch(function(){
+      return sf('mutation($l:[CartLineInput!]!){cartCreate(input:{lines:$l}){cart{'+CFRAG+'}}}',{l:[{merchandiseId:sel.id,quantity:1}]})
+        .then(function(d){ return d.cartCreate.cart; });
+    }).then(function(cart){
+      try{ localStorage.setItem('sb_cart',cart.id); }catch(e){}
+      badge(cart.totalQuantity||1);
+      addEl.disabled=false; addEl.textContent='Add another';
+      msgEl.innerHTML='Added — <a href="'+cart.checkoutUrl+'">check out now</a> or <a href="/shop/">keep shopping</a>.';
+      msgEl.className='pdp-msg ok';
+      if(window.track) track('add_to_cart',{item_id:handle,size:sel.title});
+    }).catch(function(){
+      addEl.disabled=false; addEl.textContent='Add to cart';
+      msg('Could not add to cart. Please try again, or open the shop.','err');
+    });
+  });
+
+  /* keep the header badge accurate on arrival */
+  (function(){
+    var cid=null; try{ cid=localStorage.getItem('sb_cart'); }catch(e){}
+    if(!cid) return;
+    sf('query($id:ID!){cart(id:$id){totalQuantity}}',{id:cid})
+      .then(function(d){ if(d.cart) badge(d.cart.totalQuantity); }).catch(function(){});
+  })();
+})();
+</script>
+
 </body>
 </html>
 `;

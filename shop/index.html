@@ -214,7 +214,14 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .sizes{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
 .size{border:1px solid rgba(42,32,22,.32);background:rgba(255,255,255,.55);min-width:48px;height:48px;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;color:inherit}
 .size:hover:not(:disabled){transform:translateY(-3px)}
-.size.sel{background:currentColor;border-color:currentColor}
+/* was background:currentColor, which filled the chip with the same colour as
+   its own label — the letter vanished into the fill and nothing looked selected */
+.size.sel{background:#E9B978;border-color:#E9B978;box-shadow:0 0 0 3px rgba(233,185,120,.30)}
+.size.sel span{color:#2B2520;font-weight:700}
+.size:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
+.cart-count{position:absolute;top:-6px;right:-8px;min-width:18px;height:18px;border-radius:9px;
+  background:#E9B978;color:#2B2520;font-family:Inter,sans-serif;font-size:11px;font-weight:700;
+  display:none;align-items:center;justify-content:center;padding:0 4px;line-height:1}
 .size.sel span{mix-blend-mode:difference;color:#fff}
 .size:disabled{opacity:.3;text-decoration:line-through;cursor:not-allowed}
 .fitwrap{margin-bottom:4px}
@@ -489,7 +496,7 @@ img,svg,video{max-width:100%;height:auto}
 
 <nav id="nav" class="on-hero">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
-  <div class="nav-links"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><button class="cart-btn" id="cartBtn" type="button" aria-label="Open cart"><span aria-hidden="true">&#128722;</span><span id="cartCount" class="cart-count">0</span></button></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="shophero" id="hero">
@@ -1400,9 +1407,14 @@ async function addToCart(vid,meta){
 async function removeLine(id){if(DEMO){CART.lines=CART.lines.filter(function(l){return l.id!==id;});drawCart();return;}try{var d=await sf('mutation($id:ID!,$l:[ID!]!){cartLinesRemove(cartId:$id,lineIds:$l){cart{'+CFRAG+'}}}',{id:CART.id,l:[id]});setCart(d.cartLinesRemove.cart);}catch(e){}}
 function setCart(c){CART.checkoutUrl=c.checkoutUrl;CART.subtotal=c.cost.subtotalAmount;CART.lines=c.lines.edges.map(function(e){var n=e.node,m=n.merchandise;return{id:n.id,qty:n.quantity,name:m.product.title,variant:m.title,price:m.price.amount,cur:m.price.currencyCode,img:m.product.featuredImage?m.product.featuredImage.url:''};});drawCart();}
 function drawCart(){
-  var body=document.getElementById('drawerBody'),foot=document.getElementById('drawerFoot'),cnt=document.getElementById('cartCount');
-  var total=CART.lines.reduce(function(a,l){return a+l.qty;},0);cnt.textContent=total;cnt.style.display=total?'flex':'none';
-  if(!CART.lines.length){body.innerHTML='<div class="empty">Your cart is empty.</div>';foot.style.display='none';return;}
+      var body=document.getElementById('drawerBody'),foot=document.getElementById('drawerFoot'),cnt=document.getElementById('cartCount');
+      var total=CART.lines.reduce(function(a,l){return a+l.qty;},0);
+      /* Guarded: the cart badge was removed from the nav during the reveal and
+         this threw "Cannot set properties of null" on every add to cart once
+         commerce was switched back on. A missing badge must never block a sale. */
+      if(cnt){cnt.textContent=total;cnt.style.display=total?'flex':'none';}
+  if(!body||!foot)return;
+      if(!CART.lines.length){body.innerHTML='<div class="empty">Your cart is empty.</div>';foot.style.display='none';return;}
   body.innerHTML=CART.lines.map(function(l){return '<div class="line"><div class="line-img" '+(l.img?'style="background-image:url('+l.img+')"':'')+'></div><div class="line-info"><div class="line-name">'+l.name+'</div><div class="line-var">'+l.variant+' · Qty '+l.qty+'</div><button class="line-rm" data-id="'+l.id+'">Remove</button></div><div class="line-price">'+money(parseFloat(l.price)*l.qty,l.cur)+'</div></div>';}).join('');
   body.querySelectorAll('.line-rm').forEach(function(b){b.addEventListener('click',function(){removeLine(b.dataset.id);});});
   var sub=DEMO?CART.lines.reduce(function(a,l){return a+parseFloat(l.price)*l.qty;},0):(CART.subtotal?CART.subtotal.amount:0);
