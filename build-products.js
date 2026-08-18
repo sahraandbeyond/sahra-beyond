@@ -457,7 +457,7 @@ img,svg,video{max-width:100%;height:auto}
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note">↺ Free UAE returns &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
+<div class="note">↺ Free UAE delivery over AED 150 &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <div class="nav-links"><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
