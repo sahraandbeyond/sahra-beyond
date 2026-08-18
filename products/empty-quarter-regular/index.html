@@ -427,6 +427,8 @@ img,svg,video{max-width:100%;height:auto}
   display:none;align-items:center;justify-content:center;padding:0 4px}
 
 </style>
+<link rel="stylesheet" href="/assets/sahra-sky.css">
+<link rel="stylesheet" href="/assets/sahra-cart.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -437,7 +439,7 @@ img,svg,video{max-width:100%;height:auto}
 <div class="note">↺ Free UAE delivery over AED 150 &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
-  <div class="nav-links"><a href="/">Home</a><a href="/shop/" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><button class="hdr-cart" type="button" onclick="location.href='/shop/'" aria-label="Cart"><span aria-hidden="true">&#128722;</span><span class="cart-count">0</span></button></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links"><a href="/">Home</a><a href="/shop/" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <main id="main">
@@ -1034,6 +1036,15 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   addEl.addEventListener('click',function(){
     if(!sel) return;
     addEl.disabled=true; addEl.textContent='Adding…'; msg('');
+    if(window.SahraCart){
+      window.SahraCart.add(sel.id).then(function(cart){
+        addEl.disabled=false; addEl.textContent='Add another';
+        msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
+        if(window.track) track('add_to_cart',{item_id:handle,size:sel.title});
+      }).catch(function(){ addEl.disabled=false; addEl.textContent='Add to cart';
+        msg('Could not add to cart. Please try again.','err'); });
+      return;
+    }
     var cid=null; try{ cid=localStorage.getItem('sb_cart'); }catch(e){}
     var run = cid
       ? sf('mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{'+CFRAG+'} userErrors{message}}}',{id:cid,l:[{merchandiseId:sel.id,quantity:1}]})
@@ -1065,5 +1076,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 
+<script src="/assets/sahra-sky.js" defer></script>
+<script src="/assets/sahra-cart.js" defer></script>
 </body>
 </html>

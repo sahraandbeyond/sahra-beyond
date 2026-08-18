@@ -1,0 +1,9 @@
+/* the shared sky sits behind everything; content panes float over it */
+#sb-sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+body>*:not(#sb-sky){position:relative;z-index:1}
+/* sections become translucent so the sky reads through, matching the homepage */
+.loc-hero{background-color:transparent!important}
+main,.content,.ftr,footer,section{background-color:transparent}
+.wrap>.content,.guide-sec,.faq,.pcta,.newsletter{
+  background:rgba(250,246,239,.94);border-radius:14px;padding:clamp(18px,3vw,28px);margin-bottom:18px}
+@media(prefers-reduced-motion:reduce){#sb-sky{display:none}}

@@ -607,6 +607,8 @@ img,svg,video{max-width:100%;height:auto}
 @media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
 
 </style>
+<link rel="stylesheet" href="/assets/sahra-sky.css">
+<link rel="stylesheet" href="/assets/sahra-cart.css">
 </head>
 <body>
 <header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
@@ -677,6 +679,9 @@ ${bodyHtml}
     if(b){e.preventDefault();im.src=b.dataset.zoom;im.alt=b.getAttribute('aria-label')||'';z.classList.add('on');document.body.style.overflow='hidden';}});
   cl.addEventListener('click',close); z.addEventListener('click',function(e){if(e.target===z)close();});
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
+<!-- one cart and one sky for the whole site, so pages cannot drift apart -->
+<script src="/assets/sahra-sky.js" defer></script>
+<script src="/assets/sahra-cart.js" defer></script>
 </body>
 </html>`;
 }
@@ -1398,7 +1403,7 @@ function productCard(p) {
   chips.push('Unisex S&ndash;XL');
   const colour = p.colourHex ? `<span class="pcard-col"><span class="pcard-sw" style="background:${esc(p.colourHex)}"></span>${esc(p.colourName || '')} &middot; Pantone ${esc(p.colourPantone || '')}</span>` : '';
   return `
-    <article class="pcard">
+    <article class="pcard" data-handle="${esc(p.id)}">
       <span class="pcard-img" style="background:${p.theme || '#EFEAE0'}">
         <img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy">
         <button type="button" class="pcard-zoom" data-zoom="${esc(p.imgMain)}" aria-label="Zoom ${esc(p.name)}">&#9906;</button>

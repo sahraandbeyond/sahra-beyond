@@ -338,6 +338,8 @@ img,svg,video{max-width:100%;height:auto}
 @media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
 
 </style>
+<link rel="stylesheet" href="/assets/sahra-sky.css">
+<link rel="stylesheet" href="/assets/sahra-cart.css">
 </head>
 <body>
 <header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/" class="active">Polo</a><a href="/about/">About</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
@@ -353,7 +355,7 @@ img,svg,video{max-width:100%;height:auto}
   <main>
     <div class="content"><p>One polo, made in a limited run. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.</p><p>Embroidered instead of printed, and deliberately quiet. Cut unisex, S to XL, and sized to the same specification as the Regular fit tees. Made in a smaller run than the tees, counted on its own.</p></div>
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">Polo Shirts</span></div><div class="pcards">
-    <article class="pcard">
+    <article class="pcard" data-handle="sand-polo">
       <span class="pcard-img" style="background:#EFE6D6">
         <img src="/shirts/polo-front.jpg" alt="The Sahra Polo in sand — 240gsm piqué cotton with an embroidered chest logo" loading="lazy" width="1536" height="1536">
         <button type="button" class="pcard-zoom" data-zoom="/shirts/polo-front.jpg" aria-label="Zoom The Sahra Polo">&#9906;</button>
@@ -450,5 +452,8 @@ img,svg,video{max-width:100%;height:auto}
     if(b){e.preventDefault();im.src=b.dataset.zoom;im.alt=b.getAttribute('aria-label')||'';z.classList.add('on');document.body.style.overflow='hidden';}});
   cl.addEventListener('click',close); z.addEventListener('click',function(e){if(e.target===z)close();});
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
+<!-- one cart and one sky for the whole site, so pages cannot drift apart -->
+<script src="/assets/sahra-sky.js" defer></script>
+<script src="/assets/sahra-cart.js" defer></script>
 </body>
 </html>
