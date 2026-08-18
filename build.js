@@ -356,7 +356,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .card-body em{font-style:normal;font-size:11.5px;color:#9C521B;font-weight:600;margin:2px 0 5px}
 .card-body span{font-size:13px;color:#7C7264}
 .back{margin-top:26px;font-weight:700}
-.ftr{max-width:820px;margin:0 auto;padding:30px clamp(16px,5vw,32px) 48px;border-top:1px solid rgba(43,37,32,.1);text-align:center;color:#7C7264;font-size:12.5px}
+.ftr{max-width:820px;margin:0 auto;padding:30px clamp(16px,5vw,32px) 48px;border-top:1px solid rgba(43,37,32,.1);text-align:center;color:#645B4F;font-size:12.5px}
 .ftr .soc a{margin:0 7px;font-weight:700;color:#9C521B;text-decoration:none}
 .ftr .links{margin:12px 0}
 .ftr .links a{margin:0 8px;color:#7C7264;text-decoration:none;font-size:12px}
