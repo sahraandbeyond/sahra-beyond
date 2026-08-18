@@ -45,7 +45,7 @@ a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
 #progress i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--clay),var(--gold));transform-origin:0 50%;transform:scaleX(0)}
 #grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:89;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 7s steps(8) infinite}
 @keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,2%)}40%{transform:translate(2%,-1%)}60%{transform:translate(-1%,-2%)}80%{transform:translate(1%,2%)}}
-#ambient{position:fixed;inset:0;z-index:1;pointer-events:none}
+#ambient-canvas{position:fixed;inset:0;z-index:1;pointer-events:none}
 
 nav{position:fixed;top:var(--note-h,32px);left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 32px;transition:background .4s,padding .4s;background:transparent}
 nav.solid{background:rgba(250,246,239,.86);backdrop-filter:blur(16px);padding:13px 32px}
@@ -481,7 +481,7 @@ img,svg,video{max-width:100%;height:auto}
 <button id="ambient" class="ambient-btn" aria-label="Toggle ambient desert sound" aria-pressed="false" title="Ambient desert sound"><span class="amb-ic">♪</span></button>
 <div id="progress"><i></i></div>
 <div id="grain"></div>
-<canvas id="ambient"></canvas>
+<canvas id="ambient-canvas"></canvas>
 <div class="note" id="mode-note">PREVIEW — demo products · add your Shopify domain + token in the code to go live</div>
 
 <nav id="nav" class="on-hero">
@@ -671,13 +671,18 @@ function placeInfo(p){
 /* ============ LIVE 3D — desert night engine (Three.js) ============ */
 (function(){
   if(REDUCED||typeof THREE==='undefined')return;
-  var hero=document.getElementById('hero'),heroCanvas=document.getElementById('hero-canvas'),ambCanvas=document.getElementById('ambient');
+  var hero=document.getElementById('hero'),heroCanvas=document.getElementById('hero-canvas'),ambCanvas=document.getElementById('ambient-canvas');
   var DPR=Math.min(devicePixelRatio||1,TOUCH?1.2:1.6);
   var heroR,ambR;
-  try{
-    heroR=new THREE.WebGLRenderer({canvas:heroCanvas,alpha:true,antialias:true});
-    ambR=new THREE.WebGLRenderer({canvas:ambCanvas,alpha:true,antialias:false});
-  }catch(e){return;}
+  /* Both canvases must actually BE canvases. A duplicate id once made
+   getElementById('ambient') return a <button>, which threw inside the
+   renderer and killed the whole hero scene silently. */
+    if(!heroCanvas||typeof heroCanvas.getContext!=='function'){return;}
+    if(!ambCanvas||typeof ambCanvas.getContext!=='function'){ambCanvas=null;}
+    try{
+      heroR=new THREE.WebGLRenderer({canvas:heroCanvas,alpha:true,antialias:true});
+      if(ambCanvas) ambR=new THREE.WebGLRenderer({canvas:ambCanvas,alpha:true,antialias:false});
+    }catch(e){return;}
   document.documentElement.classList.add('webgl');
   heroR.setClearColor(0x000000,0);ambR.setClearColor(0x000000,0);
   heroR.setPixelRatio(DPR);ambR.setPixelRatio(Math.min(DPR,1.5));
