@@ -602,7 +602,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 <footer>
   <div class="foot-brand">Sahra &amp; Beyond</div>
   <div class="foot-tag">Wear the wild side of the UAE</div>
-  <div class="foot-links"><a href="/t-shirts/">Shop</a><a href="#places">Places</a><a href="/about/">About</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#places">Places</a><a href="/about/">About</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a></div>
   <div class="foot-soc" style="font-size:13px;font-family:'Space Mono',monospace;letter-spacing:1px"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener" aria-label="Instagram">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
@@ -930,7 +930,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 (function(){
   var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
   // Local preview uses the flat file; the live site uses the generated /shop/ page.
-  var SHOP_URL=(location.protocol==='file:')?'shop-preview.html':'/shop/';
+  var SHOP_URL=(location.protocol==='file:')?'/shop/':'/shop/';
   if(location.protocol!=='file:')document.querySelectorAll('a.shoplink').forEach(function(a){a.setAttribute('href','/shop/');});
   function tagVal(t,k){var x=(t||[]).find(function(y){return y.toLowerCase().indexOf(k+':')===0;});return x?x.split(':').slice(1).join(':'):'';}
   function money(a,c){return (c||'AED')+' '+Math.round(parseFloat(a));}
