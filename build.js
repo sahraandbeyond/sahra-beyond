@@ -623,8 +623,8 @@ img,svg,video{max-width:100%;height:auto}
 @media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
 
 </style>
-<link rel="stylesheet" href="/assets/sahra-sky.css">
-<link rel="stylesheet" href="/assets/sahra-cart.css">
+<link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=01062542">
 </head>
 <body>
 <header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
@@ -696,8 +696,8 @@ ${bodyHtml}
   cl.addEventListener('click',close); z.addEventListener('click',function(e){if(e.target===z)close();});
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
-<script src="/assets/sahra-sky.js" defer></script>
-<script src="/assets/sahra-cart.js" defer></script>
+<script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
+<script src="/assets/sahra-cart.js?v=124ea926" defer></script>
 </body>
 </html>`;
 }

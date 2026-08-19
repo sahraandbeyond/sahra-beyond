@@ -121,6 +121,36 @@ if (stackIssues.length) {
   console.log(`  ${C.ok}✓${C.off} cross-faded image stacks are absolutely positioned`);
 }
 
+// ---- 2d. shared assets must be cache-busted with their content hash ----
+// The cart-drawer and legibility fixes shipped correctly but nobody received
+// them: /assets/*.css never changes name, so browsers kept serving the previous
+// version for a day. A fix that cannot reach the user is not a fix. Every
+// reference must carry ?v=<hash of that file's current contents>.
+const crypto = require('crypto');
+const assetVer = {};
+for (const a of ['sahra-sky.css', 'sahra-cart.css', 'sahra-sky.js', 'sahra-cart.js']) {
+  const p = path.join(ROOT, 'assets', a);
+  if (fs.existsSync(p)) assetVer[a] = crypto.createHash('sha1').update(fs.readFileSync(p)).digest('hex').slice(0, 8);
+}
+const staleRefs = [];
+for (const f of html) {
+  const src = fs.readFileSync(f, 'utf8');
+  for (const [name, h] of Object.entries(assetVer)) {
+    const re = new RegExp('/assets/' + name.replace('.', '\\.') + '(\\?v=([0-9a-f]+))?', 'g');
+    let m;
+    while ((m = re.exec(src))) {
+      if (m[2] !== h) staleRefs.push(`${path.relative(ROOT, f)}  ${name} -> ${m[2] || 'no ?v='} (should be ${h})`);
+    }
+  }
+}
+if (staleRefs.length) {
+  console.log(`\n  ${C.bad}✗ stale asset references — users will keep the cached old file:${C.off}`);
+  [...new Set(staleRefs)].slice(0, 8).forEach(i => console.log(`     ${C.bad}${i}${C.off}`));
+  console.log(`    ${C.dim}re-run the build so every ?v= matches the file's content hash.${C.off}`);
+} else {
+  console.log(`  ${C.ok}✓${C.off} shared assets cache-busted with current content hashes`);
+}
+
 // ---- 3. what actually changed recently (the safe push manifest) ----
 const HOURS = Number(process.argv[2] || 24);
 const cutoff = Date.now() - HOURS * 3600e3;
@@ -129,4 +159,4 @@ console.log(`  ${C.b}Files changed in the last ${HOURS}h — push exactly these:
 changed.forEach(f => console.log(`     ${f}`));
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit((ghostDirs.size || stackIssues.length) ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length || staleRefs.length) ? 1 : 0);
