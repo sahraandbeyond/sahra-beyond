@@ -95,9 +95,7 @@ const DESIGNS = PRODUCTS_ALL.filter(p => p.fit !== 'oversized').sort((a,b)=>(a.o
 const BY_CATEGORY = cat => PRODUCTS_ALL.filter(p => p.category === cat).sort((a,b)=>(a.order||0)-(b.order||0));
 // Instagram only — the single official channel
 const social = { instagram: (settings.social && settings.social.instagram) || 'https://instagram.com/sahraandbeyond.ae' };
-const disclosure = settings.affiliateDisclosure || 'As an Amazon Associate, Sahra & Beyond earns from qualifying purchases.';
 const CAT_HASH = { Camping: 'camping', Wadis: 'wadis', Mountains: 'mountains', Coast: 'coast', Dunes: 'dunes' };
-const AMAZON_TAG = settings.amazonTag || 'sahraandbeyon-21';
 const WEATHER_KEY = settings.weatherKey || '';
 const packingData = readJSON(path.join(ROOT, 'content/packing.json'));
 const PACKING = (packingData && Array.isArray(packingData.items)) ? packingData.items : [];
@@ -250,7 +248,7 @@ function packItemsFor(l) {
     if (!s.length) return true;
     if (s.indexOf('Overnight') !== -1) return true;
     return s.indexOf(l.category) !== -1;
-  }).map(it => ({ group: it.group, name: it.name, qty: it.qty || '', note: it.note || '', query: it.query || '', amazon: it.amazon || '', overnight: (it.show || []).indexOf('Overnight') !== -1 }));
+  }).map(it => ({ group: it.group, name: it.name, qty: it.qty || '', note: it.note || '', query: it.query || '', overnight: (it.show || []).indexOf('Overnight') !== -1 }));
 }
 
 const CSS = `
@@ -347,9 +345,9 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .pack-row .pk-name{font-size:14.5px;color:#2B2620;font-weight:500}
 .pack-row .pk-note{font-size:11.5px;color:#7C7264;margin-top:2px}
 .pack-row .pk-qty{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#9C521B;background:rgba(192,112,46,.12);padding:3px 9px;border-radius:999px;white-space:nowrap}
-.pk-amz{padding:6px 12px;border-radius:9px;background:rgba(255,153,0,.14);border:1px solid rgba(255,153,0,.4);color:#C56A00;font-size:11.5px;font-weight:700;text-decoration:none;white-space:nowrap}
-.pk-amz:hover{background:rgba(255,153,0,.26)}
-.disc-note{font-size:11px;color:#7C7264;margin-top:10px}
+
+
+
 .facts{background:#fff;border:1px solid rgba(43,37,32,.1);border-radius:16px;padding:20px 22px;margin:26px 0;box-shadow:0 2px 12px rgba(58,42,28,.06)}
 .facts h2{margin-top:0;font-size:18px}
 .facts ul{list-style:none}
@@ -379,7 +377,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .ftr .soc a{margin:0 7px;font-weight:700;color:#9C521B;text-decoration:none}
 .ftr .links{margin:12px 0}
 .ftr .links a{margin:0 8px;color:#7C7264;text-decoration:none;font-size:12px}
-.ftr .disc{margin-top:12px;font-size:11px;opacity:.85}
+.ftr 
 /* premium brand layer */
 .ftr-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:#9C521B;margin-bottom:14px}
 .ftr .legal{margin-top:10px;font-weight:600}
@@ -522,8 +520,7 @@ function footerHtml() {
   <div class="soc">${soc}</div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a></div>
-  <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>
-  <div class="disc">${esc(disclosure)}</div>`;
+  <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
 }
 
 // Which top-nav item should read as current, derived from the page slug.
@@ -812,7 +809,6 @@ locations.forEach(l => {
         </div>
       </div>
       <div id="pack-list"></div>
-      <p class="disc-note">${esc(disclosure)}</p>
     </section>
     ${faqBlock(l)}
     ${newsletterBlock()}
@@ -824,11 +820,10 @@ locations.forEach(l => {
     var wx=document.getElementById('wx');
     if(wx){var lat=wx.getAttribute('data-lat'),lng=wx.getAttribute('data-lng'),k=${JSON.stringify(WEATHER_KEY)};
       if(lat&&lng&&k){fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+'&appid='+k+'&units=metric').then(function(r){return r.json();}).then(function(d){if(d&&d.main){var c=(d.weather&&d.weather[0]&&d.weather[0].icon||'').slice(0,2);var ic={'01':'☀️','02':'🌤','03':'⛅','04':'☁️','09':'🌧','10':'🌦','11':'⛈','13':'❄️','50':'🌫'}[c]||'🌡';wx.innerHTML='<span class="wx-ic">'+ic+'</span><span class="wx-temp">'+Math.round(d.main.temp)+'°C</span><span class="wx-desc">'+(d.weather&&d.weather[0]?d.weather[0].description:'')+'</span>';}else{wx.style.display='none';}}).catch(function(){wx.style.display='none';});}else{wx.style.display='none';}}
-    var PACK=${JSON.stringify(packItems)},TAG=${JSON.stringify(AMAZON_TAG)},state={p:4,ov:false};
+    var PACK=${JSON.stringify(packItems)},state={p:4,ov:false};
     function qy(t){if(!t)return '';return String(t).replace(/\\{water\\}/g,4*state.p).replace(/\\{half\\}/g,Math.max(1,Math.ceil(state.p/2))).replace(/\\{p\\}/g,state.p);}
-    function amzLink(it){var u=it.amazon;if(u){return u+(u.indexOf('tag=')!==-1?'':(u.indexOf('?')!==-1?'&':'?')+'tag='+TAG);}return it.query?'https://www.amazon.ae/s?k='+encodeURIComponent(it.query)+'&tag='+TAG:'';}
     function he(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-    function render(){var el=document.getElementById('pack-list');if(!el)return;var items=PACK.filter(function(it){return !it.overnight||state.ov;});var groups=[],idx={};items.forEach(function(it){if(!(it.group in idx)){idx[it.group]=groups.length;groups.push({h:it.group,items:[]});}groups[idx[it.group]].items.push(it);});el.innerHTML=groups.map(function(g){return '<div class="pack-grp-title">'+he(g.h)+'</div>'+g.items.map(function(it){var q=qy(it.qty);return '<div class="pack-row"><div class="pk-main"><div class="pk-name">'+he(it.name)+'</div>'+(it.note?'<div class="pk-note">'+he(it.note)+'</div>':'')+'</div>'+(q?'<span class="pk-qty">'+he(q)+'</span>':'')+((it.amazon||it.query)?'<a class="pk-amz" href="'+amzLink(it)+'" target="_blank" rel="noopener sponsored">'+(it.amazon?'Buy on Amazon':'Amazon')+'</a>':'')+'</div>';}).join('');}).join('');}
+    function render(){var el=document.getElementById('pack-list');if(!el)return;var items=PACK.filter(function(it){return !it.overnight||state.ov;});var groups=[],idx={};items.forEach(function(it){if(!(it.group in idx)){idx[it.group]=groups.length;groups.push({h:it.group,items:[]});}groups[idx[it.group]].items.push(it);});el.innerHTML=groups.map(function(g){return '<div class="pack-grp-title">'+he(g.h)+'</div>'+g.items.map(function(it){var q=qy(it.qty);return '<div class="pack-row"><div class="pk-main"><div class="pk-name">'+he(it.name)+'</div>'+(it.note?'<div class="pk-note">'+he(it.note)+'</div>':'')+'</div>'+(q?'<span class="pk-qty">'+he(q)+'</span>':'')+'</div>';}).join('');}).join('');}
     document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
     document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
     render();
@@ -840,11 +835,6 @@ locations.forEach(l => {
       if(navigator.share){navigator.share(data).catch(function(){});}
       else if(navigator.clipboard){navigator.clipboard.writeText(location.href).then(function(){var t=sb.textContent;sb.textContent='✓ Link copied';setTimeout(function(){sb.textContent=t;},1800);});}
     });}
-    // Affiliate click tracking → GA4.
-    document.addEventListener('click',function(e){
-      var a=e.target.closest&&e.target.closest('a.pk-amz, a[rel~="sponsored"]');
-      if(a&&window.gtag){gtag('event','affiliate_click',{link_url:a.href,store:/amazon/i.test(a.href)?'amazon':'other',location:${JSON.stringify(l.name)}});}
-    },true);
   })();
   </script>`;
   write(`locations/${l.id}/index.html`, shell({ activeNav: 'places', title, desc, canonical, jsonld, bodyHtml: body, image: ogImage }));
@@ -1547,7 +1537,6 @@ console.log('  \u2713 sitemap.xml (' + entries.length + ' urls)');
 const feed = {
   updated: new Date().toISOString(),
   site: SITE,
-  amazonTag: AMAZON_TAG,
   weatherKey: WEATHER_KEY,
   social: settings.social || {},
   locations: locations.map(l => Object.assign({}, l, { url: SITE + '/locations/' + l.id + '/' })),
