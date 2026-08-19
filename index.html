@@ -496,7 +496,11 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
       <p class="hero-in">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
       <div class="hero-actions hero-in"><a href="/shop/" class="btn magnetic shoplink" onclick="try{track('shop_cta_click',{source:'hero'})}catch(e){}">Shop the collection</a><a href="#places" class="btn ghost magnetic">The places behind them</a></div>
     </div>
-    <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/emptyquarter-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/hajar-regular-front.jpg');background-size:cover;background-position:center"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
+    <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/emptyquarter-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/hajar-regular-front.jpg');background-size:cover;background-position:center"></div>
+      <!-- Concept piece, display only: not a Shopify product, deliberately unlinked
+           and excluded from /shop/. data-static keeps the product loop from
+           overwriting its image. -->
+      <div class="frame f4" data-static data-caption="Falcon Emblem Tee &middot; 230gsm 100% cotton" style="background-image:url('shirts/hero-falcon-back.jpg');background-size:cover;background-position:center"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
   </div>
   <div class="scroll-cue">⌄</div>
 </header>
@@ -979,8 +983,15 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
       else{card.style.cursor='pointer';card.addEventListener('click',function(){location.href=pdp||SHOP_URL;});}
     });
     var frames=[].slice.call(document.querySelectorAll('#spot .frame'));
-    frames.forEach(function(fr,i){var p=products[i];if(p&&p.img){fr.style.backgroundImage='url("'+p.img+'")';fr.style.backgroundSize='cover';fr.style.backgroundPosition='center';fr.textContent='';}});
-    window.__spotcaps=products.slice(0,frames.length).map(function(p){return p.title+(p.place?' · Inspired by '+p.place:'');});
+      /* Static slides (concept pieces with no Shopify product) keep their own
+         image and caption; only the rest are filled from the catalogue. */
+      var prodFrames=frames.filter(function(fr){return !fr.hasAttribute('data-static');});
+      prodFrames.forEach(function(fr,i){var p=products[i];if(p&&p.img){fr.style.backgroundImage='url("'+p.img+'")';fr.style.backgroundSize='cover';fr.style.backgroundPosition='center';fr.textContent='';}});
+      var pi=0;
+      window.__spotcaps=frames.map(function(fr){
+        if(fr.hasAttribute('data-static')) return fr.getAttribute('data-caption')||'';
+        var p=products[pi++]; return p? p.title+(p.place?' · Inspired by '+p.place:'') : '';
+      });
     var cap=document.getElementById('spotcap');if(cap&&window.__spotcaps[0])cap.textContent=window.__spotcaps[0];
   }
   var q='{products(first:12){edges{node{title handle featuredImage{url} images(first:1){edges{node{url}}} priceRange{minVariantPrice{amount currencyCode}} tags}}}}';
