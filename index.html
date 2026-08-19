@@ -451,6 +451,31 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34vh;z-index:2;
   pointer-events:none;background:linear-gradient(180deg,rgba(20,16,42,0),rgba(20,16,42,.28) 55%,rgba(20,16,42,.5))}
 
+
+/* ---- hero carousel: navigable and clickable ---------------------------
+   This is the first thing a visitor sees. It used to auto-advance with no
+   way to steer it and nothing to click, so interest in a design had nowhere
+   to go. Whole image is now a link to that product, with arrows and dots. */
+.spot-link{position:absolute;inset:0;z-index:3;display:block;cursor:pointer;
+  border-radius:inherit;-webkit-tap-highlight-color:transparent}
+.spot-link:focus-visible{outline:3px solid #E9B978;outline-offset:3px}
+.spot-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:4;
+  width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(20,14,10,.45);color:#fff;font-size:22px;line-height:1;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;transition:opacity .3s,background .3s}
+.spot:hover .spot-nav,.spot:focus-within .spot-nav{opacity:1}
+@media(hover:none){.spot-nav{opacity:.85}}
+.spot-nav:hover{background:rgba(20,14,10,.72)}
+.spot-nav.prev{left:10px}
+.spot-nav.next{right:10px}
+.spot-dots{position:absolute;left:0;right:0;bottom:52px;z-index:4;display:flex;
+  gap:7px;justify-content:center;pointer-events:auto}
+.spot-dots button{width:8px;height:8px;padding:0;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(255,255,255,.45);transition:background .3s,transform .3s}
+.spot-dots button.on{background:#E9B978;transform:scale(1.35)}
+.spot-cap{pointer-events:none}
+
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=01062542">
@@ -496,7 +521,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
       <p class="hero-in">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
       <div class="hero-actions hero-in"><a href="/shop/" class="btn magnetic shoplink" onclick="try{track('shop_cta_click',{source:'hero'})}catch(e){}">Shop the collection</a><a href="#places" class="btn ghost magnetic">The places behind them</a></div>
     </div>
-    <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/emptyquarter-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/hajar-regular-front.jpg');background-size:cover;background-position:center"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
+    <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/emptyquarter-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/hajar-regular-front.jpg');background-size:cover;background-position:center"></div><a class="spot-link" id="spotlink" href="/shop/" aria-label="View this design"></a><button class="spot-nav prev" id="spotPrev" type="button" aria-label="Previous design">&#8249;</button><button class="spot-nav next" id="spotNext" type="button" aria-label="Next design">&#8250;</button><div class="spot-dots" id="spotDots" role="tablist" aria-label="Choose a design"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
   </div>
   <div class="scroll-cue">⌄</div>
 </header>
@@ -837,7 +862,66 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
   navState();addEventListener('scroll',navState,{passive:true});
 
   // rotating spotlight (CSS-driven, fine everywhere)
-  (function(){var f=[].slice.call(document.querySelectorAll('#spot .frame')),caps=['Al Quaa Galaxy Tee · Inspired by Al Quaa','Empty Quarter Tee · Inspired by Liwa','Hajar Mountains Tee · Inspired by Wadi Naqab'],i=0,c=document.getElementById('spotcap');setInterval(function(){f[i].classList.remove('on');i=(i+1)%f.length;f[i].classList.add('on');var cc=(window.__spotcaps&&window.__spotcaps.length)?window.__spotcaps:caps;c.textContent=cc[i%cc.length];},3000);})();
+  (function(){
+  var spot=document.getElementById('spot'); if(!spot) return;
+  var f=[].slice.call(spot.querySelectorAll('.frame')),
+      cap=document.getElementById('spotcap'),
+      link=document.getElementById('spotlink'),
+      dots=document.getElementById('spotDots'),
+      fallback=['Al Quaa Galaxy Tee · Inspired by Al Quaa','Empty Quarter Tee · Inspired by Liwa','Hajar Mountains Tee · Inspired by Wadi Naqab'],
+      i=0, timer=null, paused=false,
+      reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* one dot per slide, each jumps straight to it */
+  f.forEach(function(_,n){
+    var b=document.createElement('button');
+    b.type='button'; b.setAttribute('role','tab');
+    b.setAttribute('aria-label','Design '+(n+1));
+    b.addEventListener('click',function(e){e.preventDefault();go(n,true);});
+    dots.appendChild(b);
+  });
+
+  function caps(){ return (window.__spotcaps && window.__spotcaps.length) ? window.__spotcaps : fallback; }
+  function sync(){
+    f.forEach(function(fr,n){fr.classList.toggle('on',n===i);});
+    [].slice.call(dots.children).forEach(function(d,n){
+      d.classList.toggle('on',n===i); d.setAttribute('aria-selected',n===i?'true':'false');
+    });
+    var c=caps(); if(cap && c[i%c.length]) cap.textContent=c[i%c.length];
+    /* the whole image links to whichever design is showing */
+    var href=f[i] && f[i].getAttribute('data-href');
+    if(link){ link.setAttribute('href', href || '/shop/');
+      link.setAttribute('aria-label','View '+((cap&&cap.textContent)||'this design')); }
+  }
+  window.__spotSync=sync;                 /* called again once Shopify data lands */
+
+  function go(n,manual){
+    i=(n+f.length)%f.length; sync();
+    if(manual){ stop(); setTimeout(start,9000); }   /* let them look before it moves on */
+  }
+  function start(){ if(reduce||paused||timer) return; timer=setInterval(function(){go(i+1);},4200); }
+  function stop(){ clearInterval(timer); timer=null; }
+
+  document.getElementById('spotPrev').addEventListener('click',function(e){e.preventDefault();go(i-1,true);});
+  document.getElementById('spotNext').addEventListener('click',function(e){e.preventDefault();go(i+1,true);});
+  spot.addEventListener('mouseenter',function(){paused=true;stop();});
+  spot.addEventListener('mouseleave',function(){paused=false;start();});
+  spot.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft'){e.preventDefault();go(i-1,true);}
+    if(e.key==='ArrowRight'){e.preventDefault();go(i+1,true);}
+  });
+  /* swipe on touch */
+  var x0=null;
+  spot.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  spot.addEventListener('touchend',function(e){
+    if(x0===null) return; var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40) go(i+(dx<0?1:-1),true);
+    x0=null;
+  },{passive:true});
+  document.addEventListener('visibilitychange',function(){document.hidden?stop():start();});
+
+  sync(); start();
+})();
 
   // Canvas particle field
   (function(){
@@ -979,7 +1063,10 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
       else{card.style.cursor='pointer';card.addEventListener('click',function(){location.href=pdp||SHOP_URL;});}
     });
     var frames=[].slice.call(document.querySelectorAll('#spot .frame'));
-    frames.forEach(function(fr,i){var p=products[i];if(p&&p.img){fr.style.backgroundImage='url("'+p.img+'")';fr.style.backgroundSize='cover';fr.style.backgroundPosition='center';fr.textContent='';}});
+    frames.forEach(function(fr,i){var p=products[i];if(p&&p.img){fr.style.backgroundImage='url("'+p.img+'")';fr.style.backgroundSize='cover';fr.style.backgroundPosition='center';fr.textContent='';}
+        /* stash where this slide should lead, so the overlay link can follow it */
+        if(p){fr.setAttribute('data-href', productPageFor(p) || SHOP_URL);}});
+      if(window.__spotSync) window.__spotSync();
     window.__spotcaps=products.slice(0,frames.length).map(function(p){return p.title+(p.place?' · Inspired by '+p.place:'');});
     var cap=document.getElementById('spotcap');if(cap&&window.__spotcaps[0])cap.textContent=window.__spotcaps[0];
   }
