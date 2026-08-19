@@ -873,14 +873,19 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
       i=0, timer=null, paused=false,
       reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-  /* one dot per slide, each jumps straight to it */
-  f.forEach(function(_,n){
-    var b=document.createElement('button');
-    b.type='button'; b.setAttribute('role','tab');
-    b.setAttribute('aria-label','Design '+(n+1));
-    b.addEventListener('click',function(e){e.preventDefault();go(n,true);});
-    dots.appendChild(b);
-  });
+  /* one dot per slide, each jumps straight to it. Rebuilt whenever the
+     catalogue adds slides, so the dots always match what is on screen. */
+  function buildDots(){
+    dots.innerHTML='';
+    f.forEach(function(_,n){
+      var b=document.createElement('button');
+      b.type='button'; b.setAttribute('role','tab');
+      b.setAttribute('aria-label','Design '+(n+1));
+      b.addEventListener('click',function(e){e.preventDefault();go(n,true);});
+      dots.appendChild(b);
+    });
+  }
+  buildDots();
 
   function caps(){ return (window.__spotcaps && window.__spotcaps.length) ? window.__spotcaps : fallback; }
   function sync(){
@@ -894,7 +899,14 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
     if(link){ link.setAttribute('href', href || '/shop/');
       link.setAttribute('aria-label','View '+((cap&&cap.textContent)||'this design')); }
   }
-  window.__spotSync=sync;                 /* called again once Shopify data lands */
+  /* Called once the catalogue lands. Re-reads the DOM because slides are
+     added at that point — without this the controller would keep steering
+     only the three slides that existed at init. */
+  window.__spotSync=function(){
+    var now=[].slice.call(spot.querySelectorAll('.frame'));
+    if(now.length!==f.length){ f=now; if(i>=f.length) i=0; buildDots(); }
+    sync();
+  };
 
   function go(n,manual){
     i=(n+f.length)%f.length; sync();
@@ -1063,12 +1075,25 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
       if(card.tagName==='A'){card.setAttribute('href',pdp||SHOP_URL);}
       else{card.style.cursor='pointer';card.addEventListener('click',function(){location.href=pdp||SHOP_URL;});}
     });
-    var frames=[].slice.call(document.querySelectorAll('#spot .frame'));
-    frames.forEach(function(fr,i){var p=products[i];if(p&&p.img){fr.style.backgroundImage='url("'+p.img+'")';fr.style.backgroundSize='cover';fr.style.backgroundPosition='center';fr.textContent='';}
-        /* stash where this slide should lead, so the overlay link can follow it */
+    var spotEl=document.getElementById('spot');
+      var frames=[].slice.call(spotEl.querySelectorAll('.frame'));
+      /* The markup ships 3 slides as a no-JS fallback. Once the catalogue
+         arrives, grow or trim to one slide per product so the whole range is
+         represented, not just the first three. */
+      while(frames.length < products.length){
+        var clone=frames[0].cloneNode(false);
+        clone.className='frame';
+        clone.removeAttribute('style');
+        spotEl.insertBefore(clone, spotEl.querySelector('.spot-link'));
+        frames.push(clone);
+      }
+      while(frames.length > products.length && frames.length > 1){
+        var extra=frames.pop(); if(extra.parentNode) extra.parentNode.removeChild(extra);
+      }
+      frames.forEach(function(fr,i){var p=products[i];if(p&&p.img){fr.style.backgroundImage='url("'+p.img+'")';fr.style.backgroundSize='cover';fr.style.backgroundPosition='center';fr.textContent='';}
         if(p){fr.setAttribute('data-href', productPageFor(p) || SHOP_URL);}});
+      window.__spotcaps=products.slice(0,frames.length).map(function(p){return p.title+(p.place?' · Inspired by '+p.place:'');});
       if(window.__spotSync) window.__spotSync();
-    window.__spotcaps=products.slice(0,frames.length).map(function(p){return p.title+(p.place?' · Inspired by '+p.place:'');});
     var cap=document.getElementById('spotcap');if(cap&&window.__spotcaps[0])cap.textContent=window.__spotcaps[0];
   }
   var q='{products(first:12){edges{node{title handle featuredImage{url} images(first:1){edges{node{url}}} priceRange{minVariantPrice{amount currencyCode}} tags}}}}';
