@@ -36,7 +36,7 @@
  *    cannot be measured from the DOM and need an eye, rather than being
  *    silently passed or falsely failed.
  */
-const PROBE_SRC = `(function(){
+const PROBE_SRC = `(async function(){
  var px=v=>parseFloat(v)||0;
  function P(c){ if(!c)return null; c=String(c);
   var s=/^color\\(\\s*srgb\\s+([^)]+)\\)/i.exec(c);
@@ -110,6 +110,7 @@ const PROBE_SRC = `(function(){
   return {cands:cands,op:o};}
 
  var out=[],unk=[],ck=0,skipped={};
+ function measure(themeLabel){
  ALL.forEach(function(el){
   if(/^(script|style|noscript|template|svg|canvas|title)$/i.test(el.tagName))return;
   var own=[].slice.call(el.childNodes).filter(n=>n.nodeType===3)
@@ -133,9 +134,38 @@ const PROBE_SRC = `(function(){
   var need=(sz>=24||(sz>=18.66&&wt>=700))?3:4.5;
   if(rr>=need-.005)return;
   (overPainted(rc)?unk:out).push({t:own.slice(0,40),p:PT(el),r:+rr.toFixed(2),n:need,
-   s:+sz.toFixed(1),c:cs.color,o:+k.op.toFixed(2),
+   s:+sz.toFixed(1),c:cs.color,o:+k.op.toFixed(2),th:themeLabel,
    b:'rgb('+Math.round(worst.r)+','+Math.round(worst.g)+','+Math.round(worst.b)+')'});
  });
+ }
+
+ /* The page has more than one visual state. A scroll-linked colour journey
+    adds body.dark-bg partway down and swaps the whole palette to light text.
+    Measuring only the state at scrollY=0 is how a PDP that rendered light
+    text on a cream pane at 1.01:1 passed a clean audit. Measure every theme
+    the page can put itself in, not just the one it loads in. */
+ measure('light');
+
+ /* Toggling the theme class is not enough. body.dark-bg only changes the
+    custom property --txt; the computed colour that inherits from it does not
+    re-resolve until the page actually paints a frame. Read it synchronously
+    and you get the OLD colour and a clean bill of health for text that is
+    in fact invisible. Wait for a real frame. */
+ function frame(){return new Promise(function(res){
+   var done=false, fin=function(){if(!done){done=true;res();}};
+   requestAnimationFrame(function(){requestAnimationFrame(fin);});
+   setTimeout(fin,150);   /* background tabs never fire rAF */
+ });}
+
+ var hadDark=document.body.classList.contains('dark-bg');
+ var canDark=/dark-bg/.test(document.documentElement.innerHTML.slice(0,400000));
+ if(canDark && !hadDark){
+  document.body.classList.add('dark-bg');
+  await frame();
+  if(getComputedStyle(document.body).getPropertyValue('--txt').trim()){ measure('dark-bg'); }
+  document.body.classList.remove('dark-bg');
+  await frame();
+ }
 
  if(revealStyle)revealStyle.remove();
  motionOff.remove();
@@ -143,10 +173,10 @@ const PROBE_SRC = `(function(){
  out.sort(function(a,b){return a.r-b.r;}); unk.sort(function(a,b){return a.r-b.r;});
  window.__cfails=out; window.__cphoto=unk;
  function fmt(list){var seen={},d=[];
-  list.forEach(function(f){var k=f.p.split('>').pop()+'|'+f.c+'|'+f.b+'|'+f.o;
+  list.forEach(function(f){var k=f.th+'|'+f.p.split('>').pop()+'|'+f.c+'|'+f.b+'|'+f.o;
    if(!seen[k]){seen[k]=1;d.push(f);}else seen[k]++;});
-  return d.map(function(f){var k=f.p.split('>').pop()+'|'+f.c+'|'+f.b+'|'+f.o;
-   return ' '+String(f.r).padStart(5)+'/'+f.n+' '+String(f.s).padStart(4)+'px op'+f.o+' x'+seen[k]+' '+
+  return d.map(function(f){var k=f.th+'|'+f.p.split('>').pop()+'|'+f.c+'|'+f.b+'|'+f.o;
+   return ' ['+(f.th||'light').padEnd(7)+'] '+String(f.r).padStart(5)+'/'+f.n+' '+String(f.s).padStart(4)+'px op'+f.o+' x'+seen[k]+' '+
     f.p.split('>').pop().slice(0,26).padEnd(26)+' '+f.c.replace(/rgba?|[ ()]/g,'')+' on '+
     f.b.replace(/rgb|[ ()]/g,'')+' "'+f.t.slice(0,22)+'"';}).join('\\n');}
  return location.pathname+' ['+innerWidth+'] measured '+ck+' | FAIL '+out.length+

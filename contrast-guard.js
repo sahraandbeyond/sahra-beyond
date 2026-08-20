@@ -52,9 +52,31 @@ function pages() {
 
 const problems = [];
 
+/* ---- the dark-theme invariant ----
+   A page that switches to light text when its scroll journey goes dark MUST
+   also repaint the reading column, or the light text lands on whatever opaque
+   pane is sitting above the body. That is precisely what shipped: the journey
+   drove body to #181109, body.dark-bg set --txt:#F4EFE6, and sahra-sky.css
+   kept main at rgba(250,246,239,.972) — so two thirds of every product page
+   rendered at 1.01:1. Background and text colour must move together. */
+function darkThemeInvariant(rel, src) {
+  const togglesDark = src.includes("classList.toggle('dark-bg'");
+  if (!togglesDark) return;
+  const paintsPane = /pane\s*\.\s*style\s*\.\s*backgroundColor/.test(src);
+  const hasOpaquePane = src.includes('sahra-sky.css');
+  if (hasOpaquePane && !paintsPane) {
+    problems.push({ file: rel, severity: 'block',
+      msg: 'toggles body.dark-bg (light text) and loads sahra-sky.css (opaque cream ' +
+           'pane over the body) but never repaints the pane — light text on a light ' +
+           'pane, measured 1.01:1' });
+  }
+}
+
 for (const file of pages()) {
   const rel = path.relative(ROOT, file).split(path.sep).join('/');
   const src = fs.readFileSync(file, 'utf8');
+
+  darkThemeInvariant(rel, src);
 
   for (const [hex, [repl, why]] of Object.entries(RETIRED)) {
     /* Match the colour wherever it is DECLARED as a text colour: `color:#X`

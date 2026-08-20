@@ -888,6 +888,15 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var stops=[].slice.call(document.querySelectorAll('[data-bg]')).map(function(el){return {el:el,c:hexToRgb(el.dataset.bg)};});
   if(!stops.length)return;
   var sand=hexToRgb('#FAF6EF'),body=document.body,nav=document.querySelector('nav'),raf=0,cur=sand;
+  /* sahra-sky.css paints main with an almost-opaque cream pane so text on the
+     46 content pages always has something solid under it. On a product page
+     that pane sat ON TOP of this colour journey: the body went to #181109 and
+     #1B1430, body.dark-bg switched the text to #F4EFE6 — and the reader still
+     saw cream, so two thirds of every PDP rendered light text on a light pane
+     at 1.06:1. The background and the text colour must be driven together or
+     they drift apart exactly like this. /shop/ never had the bug because it
+     does not load sahra-sky.css. */
+  var pane=document.querySelector('main');
   function lum(c){return (0.2126*c[0]+0.7152*c[1]+0.0722*c[2])/255;}
   function mixArr(a,b,t){t=t<0?0:t>1?1:t;return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
   function css(c){return 'rgb('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+')';}
@@ -901,6 +910,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     else{for(var i=0;i<pts.length-1;i++){if(mid>=pts[i].y&&mid<pts[i+1].y){col=mixArr(pts[i].c,pts[i+1].c,(mid-pts[i].y)/((pts[i+1].y-pts[i].y)||1));break;}}}
     cur=col;
     body.style.backgroundColor=css(col);
+    if(pane)pane.style.backgroundColor=css(col);
     if(nav)nav.style.setProperty('--nav-bg',css(col));
     body.classList.toggle('dark-bg',lum(col)<0.42);
   }
