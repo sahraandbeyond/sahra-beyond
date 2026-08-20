@@ -96,7 +96,7 @@ function productSection(handle, productName) {
   return `
     <section class="sec reveal reviews" id="reviews" aria-labelledby="rv-h">
       <div class="wrap">
-        <span class="snum">05 &mdash; What buyers say</span>
+        <span class="snum">08 &mdash; What buyers say</span>
         <h2 id="rv-h">Reviews</h2>
         <div class="rv-aggregate">
           ${stars(d.average)}

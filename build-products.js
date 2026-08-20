@@ -675,7 +675,7 @@ ${faqList(p.faq)}
 
 ${RV.productSection(p.id, p.name)}
   <section class="sec reveal" id="more">
-    <span class="snum">08 — The collection</span>
+    <span class="snum">09 — The collection</span>
     <h2>More from <em>the drop</em></h2>
     <div class="rel-grid">
 ${related(p, all)}
