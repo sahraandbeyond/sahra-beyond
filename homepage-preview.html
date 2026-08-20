@@ -48,7 +48,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-:root{--sand:#FAF6EF;--paper:#FFFFFF;--ink:#33271B;--mist:#7C7264;--clay:#C0702E;--clay-deep:#9C521B;--gold:#F2C98C;--line:rgba(43,37,32,.12)}
+:root{--sand:#FAF6EF;--paper:#FFFFFF;--ink:#33271B;--mist:#6B6256;--clay:#A95A21;--clay-deep:#7E4114;--gold:#F2C98C;--line:rgba(43,37,32,.12)}
 *{margin:0;padding:0;box-sizing:border-box}
 .skip-link{position:absolute;left:8px;top:-60px;z-index:500;background:var(--ink);color:#FFF;padding:11px 18px;border-radius:0 0 8px 8px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.5px;text-decoration:none;transition:top .18s}
 .skip-link:focus{top:0}
@@ -179,7 +179,7 @@ section{position:relative;padding:100px 0 84px}
 .place.p3 .place-bg{background-image:linear-gradient(160deg,#333E5C,#90A4C8)}.place.p4 .place-bg{background-image:linear-gradient(160deg,#9A591A,#EBB36B)}.place.p4 .place-bg::after{content:"";position:absolute;inset:0;background:url(/logo/mark-light.png) center 38% / 58% auto no-repeat;opacity:.30}
 .place::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 55%)}
 .place b{position:relative;z-index:2;font-family:'Playfair Display',serif;font-size:17px;font-weight:700}
-.place small{position:relative;z-index:2;display:block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;opacity:.8;margin-top:3px}
+.place small{position:relative;z-index:2;display:block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;opacity:1;margin-top:3px}
 
 .story-sec{background:var(--sand)}
 .story{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
@@ -215,7 +215,7 @@ footer{background:#1C140D;color:rgba(255,255,255,.72);padding:64px 0 30px;text-a
 .foot-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--gold);margin-top:6px;text-transform:uppercase}
 .foot-links{margin:24px 0;font-size:13px;display:flex;gap:22px;justify-content:center;flex-wrap:wrap}.foot-links a:hover{color:var(--gold)}
 .foot-soc{display:flex;gap:16px;justify-content:center;font-size:18px;margin-bottom:20px}
-.foot-copy{font-size:11px;color:rgba(255,255,255,.4)}
+.foot-copy{font-size:11px;color:rgba(255,255,255,.82)}
 
 /* cursor + preloader + reveal gating */
 #cursor{position:fixed;top:0;left:0;width:34px;height:34px;border:1.5px solid rgba(192,112,46,.7);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:120;transition:width .25s,height .25s,background .25s,opacity .25s;opacity:0;mix-blend-mode:normal}
@@ -252,7 +252,7 @@ html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:non
 .card-img{transform:translateZ(0)}
 
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#grain{display:none}}
-.paymarks{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:14px 0 4px}.paymarks svg{height:24px;width:auto;border:1px solid rgba(0,0,0,.12);border-radius:5px;background:#fff}.paymarks-t{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;opacity:.65}
+.paymarks{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:14px 0 4px}.paymarks svg{height:24px;width:auto;border:1px solid rgba(0,0,0,.12);border-radius:5px;background:#fff}.paymarks-t{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;opacity:1}
 /* ---- Mobile navigation ----------------------------------------------------
    Links were display:none below the breakpoint with nothing replacing them,
    so phones had no menu at all. Hamburger + slide-down panel. */
@@ -368,7 +368,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
    gradient, so it read as a stripe across the page. It is now fully
    transparent — the numbers sit straight on the desert and the sky supplies
    the warmth. */
-.stats{background:transparent!important;position:relative;isolation:isolate}
+.stats{background:linear-gradient(180deg,#F7DCB0,#F0C079);position:relative;isolation:isolate}
 /* (3) Light panes are lifted to near-opaque so the moon and stars cannot
    ghost through them as smudges, while the sky still warms the edges. */
 .shop,.story-sec{background:rgba(250,246,239,.955)!important}
@@ -383,7 +383,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 /* (2) With one continuous sky the melt waves added a second, competing edge
    at every boundary. Softened to a feather rather than a drawn shape. */
 .melt{opacity:.55;filter:blur(.5px)}
-.melt svg path{opacity:.7}
+.melt svg path{opacity:1;color:var(--mist)}
 
 /* ---- hero exit: content lifts and dissolves instead of stopping dead ---- */
 .hero-inner{will-change:transform,opacity}
@@ -427,8 +427,8 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
    sky: the numbers measured 2.28:1 and the labels 1.10:1 against the sky
    behind them, where large text needs 3:1 and body 4.5:1. The band keeps its
    transparency (no stripe) but the type is re-cut for a dark sky.        */
-.stats .stat b{color:#F7EFE2;text-shadow:0 2px 18px rgba(20,16,42,.55),0 1px 3px rgba(20,16,42,.7)}
-.stats .stat span{color:#EBD3AE;text-shadow:0 1px 10px rgba(20,16,42,.75)}
+.stats .stat b{color:#3A2917;text-shadow:none}
+.stats .stat span{color:#6B3710;text-shadow:none}
 .stats .sec-head h2,.stats .sec-head p,.stats h2,.stats p{color:#F7EFE2;
   text-shadow:0 2px 16px rgba(20,16,42,.6)}
 /* a wide, edgeless pool of shade so the type always has something to sit on,
@@ -479,7 +479,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=01062542">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
 </head>
 <body>
 <a class="skip-link" href="#shop">Skip to the collection</a>

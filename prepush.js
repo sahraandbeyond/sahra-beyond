@@ -151,6 +151,27 @@ if (staleRefs.length) {
   console.log(`  ${C.ok}✓${C.off} shared assets cache-busted with current content hashes`);
 }
 
+// ---- 2b. legibility ----
+// Faheem reported the same illegible-text bug four separate times, most
+// recently the PDP size chart. The old contrast-check.py tested six hardcoded
+// selectors and so never saw any of them. This runs the static half of the
+// real check on every built page; the full measurement lives in
+// contrast-probe.js and runs against the deployed site.
+let contrastOk = true;
+try {
+  const out = require('child_process')
+    .execSync('node contrast-guard.js', { cwd: ROOT, encoding: 'utf8' });
+  const adv = /(\d+) advisory/.exec(out);
+  console.log(`  ${C.ok}✓${C.off} legibility: no retired colours, no severely muted text` +
+              (adv ? ` ${C.dim}(${adv[1]} advisory)${C.off}` : ''));
+} catch (e) {
+  contrastOk = false;
+  console.log(`\n  ${C.bad}✗ legibility defects — text below WCAG AA will ship:${C.off}`);
+  String(e.stdout || '').split('\n').filter(l => l.trim().startsWith('!'))
+    .slice(0, 8).forEach(l => console.log(`     ${C.bad}${l.trim()}${C.off}`));
+  console.log(`    ${C.dim}run: node contrast-guard.js${C.off}`);
+}
+
 // ---- 3. what actually changed recently (the safe push manifest) ----
 const HOURS = Number(process.argv[2] || 24);
 const cutoff = Date.now() - HOURS * 3600e3;
@@ -159,4 +180,4 @@ console.log(`  ${C.b}Files changed in the last ${HOURS}h — push exactly these:
 changed.forEach(f => console.log(`     ${f}`));
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit((ghostDirs.size || stackIssues.length || staleRefs.length) ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk) ? 1 : 0);

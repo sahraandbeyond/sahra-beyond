@@ -16,17 +16,17 @@
 .sb-dh h3{margin:0;font-family:'Playfair Display',serif;font-size:21px}
 .sb-x{background:none;border:0;font-size:19px;cursor:pointer;color:inherit;min-width:44px;min-height:44px}
 .sb-db{flex:1;overflow:auto;padding:14px 20px}
-.sb-empty{opacity:.6;font-size:14px;padding:28px 0;text-align:center}
+.sb-empty{color:#4A3E31;font-size:14px;padding:28px 0;text-align:center}
 .sb-line{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(43,37,32,.08)}
 .sb-line img,.sb-noimg{width:60px;height:75px;object-fit:cover;border-radius:8px;background:#EFEAE0;flex:none}
 .sb-lt{flex:1;display:flex;flex-direction:column;gap:3px;font-size:13.5px}
 .sb-lt a{font-weight:600;text-decoration:none;color:inherit}
-.sb-lt span{opacity:.7;font-size:12.5px}
-.sb-rm{background:none;border:0;cursor:pointer;opacity:.5;font-size:14px;min-width:44px;min-height:44px}
+.sb-lt span{opacity:1;font-size:12.5px}
+.sb-rm{background:none;border:0;cursor:pointer;opacity:1;font-size:14px;min-width:44px;min-height:44px}
 .sb-rm:hover{opacity:1}
 .sb-df{padding:16px 20px calc(20px + env(safe-area-inset-bottom));border-top:1px solid rgba(43,37,32,.12)}
 .sb-sub{display:flex;justify-content:space-between;font-weight:600;margin-bottom:6px}
-.sb-note{font-size:12px;opacity:.65;margin:0 0 12px}
+.sb-note{font-size:12px;opacity:1;margin:0 0 12px}
 .sb-go{display:block;text-align:center;background:#33271B;color:#fff;text-decoration:none;
   padding:15px;border-radius:10px;font-weight:600;min-height:52px;line-height:22px}
 /* quick add on cards */
