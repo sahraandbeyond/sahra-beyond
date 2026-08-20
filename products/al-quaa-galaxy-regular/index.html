@@ -426,6 +426,27 @@ img,svg,video{max-width:100%;height:auto}
   background:#E9B978;color:#2B2520;font-family:Inter,sans-serif;font-size:11px;font-weight:700;
   display:none;align-items:center;justify-content:center;padding:0 4px}
 
+
+.reviews{border-top:1px solid var(--line,rgba(43,37,32,.12))}
+.rv-aggregate{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.rv-stars{color:#A9761A;letter-spacing:2px;font-size:17px}
+body.dark-bg .rv-stars{color:#E9B978}
+.rv-score{font-family:'Space Mono',monospace;font-size:18px;font-weight:700}
+.rv-count{font-size:13px;color:var(--txt-soft,#6B6256)}
+.rv-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;list-style:none;padding:0;margin:0}
+.rv-card{border:1px solid var(--line,rgba(43,37,32,.12));border-radius:2px;padding:20px}
+.rv-card .rv-stars{font-size:14px;margin-bottom:8px;display:block}
+.rv-title{display:block;font-size:15px;margin-bottom:6px}
+.rv-text{font-size:14.5px;font-style:italic;line-height:1.65;margin:0 0 10px}
+.rv-photos{display:flex;gap:8px;margin-bottom:10px}
+.rv-photo{width:72px;height:72px;object-fit:cover;border-radius:2px}
+.rv-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--txt-soft,#6B6256)}
+.rv-reply{font-size:13.5px;line-height:1.6;margin:12px 0 0;padding-left:12px;
+  border-left:2px solid var(--line,rgba(43,37,32,.12))}
+.pcard-rv{display:flex;align-items:center;gap:7px;margin:2px 0 8px}
+.pcard-rv .rv-stars{font-size:13px;letter-spacing:1px}
+.pcard-rv-n{font-family:'Space Mono',monospace;font-size:11px;color:var(--txt-soft,#6B6256)}
+@media(max-width:760px){.rv-list{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
@@ -616,6 +637,7 @@ img,svg,video{max-width:100%;height:auto}
       <details><summary>Will this design be restocked?</summary><p>This is a limited first run. We may make more of a design later, but we don't promise it — when a size sells out in this run, treat it as gone.</p></details>
     </div>
   </section>
+
 
   <section class="sec reveal" id="more">
     <span class="snum">08 — The collection</span>

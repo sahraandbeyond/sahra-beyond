@@ -5,6 +5,7 @@
    - sitemap.xml
    Runs at deploy time on Vercel (build command), so pages stay in sync with the CMS. */
 const fs = require('fs');
+const RV = require('./reviews-render.js');
 const path = require('path');
 const buildProducts = require('./build-products');
 
@@ -628,6 +629,7 @@ img,svg,video{max-width:100%;height:auto}
 }
 @media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
 
+${RV.CSS}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
@@ -1427,6 +1429,7 @@ function productCard(p) {
       </span>
       <span class="pcard-b">
         <a class="pcard-t" href="/products/${p.id}/">${esc(p.name)}</a>
+        ${RV.cardRating(p.id)}
         ${p.placeName ? `<span class="pcard-place">Inspired by ${esc(p.placeName)}</span>` : '<span class="pcard-place">Sahra &amp; Beyond</span>'}
         <span class="pcard-spec">${chips.map(c => `<span>${c}</span>`).join('')}</span>
         ${colour}
@@ -1555,3 +1558,64 @@ console.log('  \u2713 feed.json (' + locations.length + ' locations)');
 
 console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.length + ' landing pages.');
 // end of build — brand-consistency pass v2
+
+/* ---------- homepage review band ----------------------------------------
+   index.html is hand-maintained rather than generated, so the band is injected
+   between markers instead of the whole page being rewritten. Renders to an
+   empty string until there are enough real reviews, which leaves the markers
+   sitting harmlessly next to each other. */
+(function () {
+  const MARK = /<!--REVIEWS:START-->[\s\S]*?<!--REVIEWS:END-->/;
+  for (const f of ['index.html', 'homepage-preview.html']) {
+    const file = path.join(ROOT, f);
+    if (!fs.existsSync(file)) continue;
+    let html = fs.readFileSync(file, 'utf8');
+    if (!MARK.test(html)) continue;
+    const band = RV.homepageBand();
+    const next = html.replace(MARK, '<!--REVIEWS:START-->' + band + '<!--REVIEWS:END-->');
+    if (next !== html) {
+      fs.writeFileSync(file, next);
+      console.log(band ? `  \u2713 homepage review band (${f})` : `  \u00b7 homepage review band empty - not enough reviews yet (${f})`);
+    }
+  }
+})();
+
+/* ---------- shop page star ratings --------------------------------------
+   The shop builds its product blocks client-side from a template string, so
+   rather than edit that template (it has broken the whole page before) the
+   ratings are attached after render: each block carries id="prod-<handle>",
+   which is enough to find it. Emits nothing at all when no product has
+   reviews, so the shop is byte-identical to today until reviews exist. */
+(function () {
+  const MARK = /<!--RV_SHOP:START-->[\s\S]*?<!--RV_SHOP:END-->/;
+  const data = {};
+  for (const d of RV.loadAll()) data[d.handle] = { a: d.average, n: d.count };
+
+  const payload = Object.keys(data).length ? `<script>
+(function(){var RV=${JSON.stringify(data)};
+function stars(v){var n=Math.max(0,Math.min(5,Math.floor(v||0)));
+ return '<span class="rv-stars" aria-hidden="true">'+'★'.repeat(n)+'☆'.repeat(5-n)+'</span>';}
+function paint(){var done=0;
+ Object.keys(RV).forEach(function(h){
+  var el=document.getElementById('prod-'+h); if(!el||el.querySelector('.pcard-rv'))return;
+  var t=el.querySelector('h2'); if(!t)return;
+  var d=RV[h],s=document.createElement('span'); s.className='pcard-rv';
+  s.innerHTML=stars(d.a)+'<span class="pcard-rv-n">'+d.a.toFixed(1)+' · '+d.n+' review'+(d.n===1?'':'s')+'</span>';
+  t.insertAdjacentElement('afterend',s); done++;});
+ return done;}
+if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(iv);},250);}
+})();
+<\/script>` : '';
+
+  for (const f of ['shop-preview.html', 'shop/index.html']) {
+    const file = path.join(ROOT, f);
+    if (!fs.existsSync(file)) continue;
+    let html = fs.readFileSync(file, 'utf8');
+    if (!MARK.test(html)) continue;
+    const next = html.replace(MARK, '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
+    if (next !== html) {
+      fs.writeFileSync(file, next);
+      console.log(payload ? `  ✓ shop star ratings (${f})` : `  · shop star ratings: no reviews yet (${f})`);
+    }
+  }
+})();

@@ -5,6 +5,7 @@
    (shop THEMES[]): Al Quaa #181109 · Liwa #E7D6B8 · Hajar #C6BFD3.
    ========================================================================== */
 const fs = require('fs');
+const RV = require('./reviews-render.js');
 const path = require('path');
 
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -484,6 +485,7 @@ img,svg,video{max-width:100%;height:auto}
   background:#E9B978;color:#2B2520;font-family:Inter,sans-serif;font-size:11px;font-weight:700;
   display:none;align-items:center;justify-content:center;padding:0 4px}
 
+${RV.CSS}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
@@ -671,6 +673,7 @@ ${faqList(p.faq)}
     </div>
   </section>
 
+${RV.productSection(p.id, p.name)}
   <section class="sec reveal" id="more">
     <span class="snum">08 — The collection</span>
     <h2>More from <em>the drop</em></h2>
