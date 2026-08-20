@@ -474,6 +474,12 @@ main,.ftr{position:relative;z-index:1}
 .pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
 .pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
 .pcard-img img{width:100%;height:100%;object-fit:contain;display:block;padding:6%;transition:transform .6s ease}
+/* The photo links to the product, same as the title. The anchor wraps only the
+   image and sits BESIDE the zoom button rather than around it: a <button>
+   inside an <a> is invalid, and the zoom control needs its own click. It is
+   tabindex=-1 so keyboard users get one stop per card (the title) instead of
+   two links to the same page. */
+.pcard-imglink{display:block;width:100%;height:100%;position:relative;z-index:1}
 .pcard:hover .pcard-img img{transform:scale(1.04)}
 .pcard-zoom{position:absolute;right:10px;bottom:10px;z-index:2;border:0;border-radius:999px;width:34px;height:34px;cursor:pointer;
   background:rgba(255,255,255,.92);color:#2B2620;font-size:15px;line-height:34px;text-align:center;padding:0;
@@ -1414,7 +1420,9 @@ function productCard(p) {
   return `
     <article class="pcard" data-handle="${esc(p.id)}">
       <span class="pcard-img" style="background:${p.theme || '#EFEAE0'}">
-        <img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy">
+        <a class="pcard-imglink" href="/products/${p.id}/" tabindex="-1">
+          <img src="${esc(p.imgMain)}" alt="${esc(p.altMain || p.name)}" loading="lazy">
+        </a>
         <button type="button" class="pcard-zoom" data-zoom="${esc(p.imgMain)}" aria-label="Zoom ${esc(p.name)}">&#9906;</button>
       </span>
       <span class="pcard-b">
