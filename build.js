@@ -1554,7 +1554,20 @@ const feed = {
   locations: locations.map(l => Object.assign({}, l, { url: SITE + '/locations/' + l.id + '/' })),
   packing: PACKING
 };
-fs.writeFileSync(path.join(ROOT, 'feed.json'), JSON.stringify(feed));
+/* Keep the previous `updated` stamp when nothing else in the feed changed.
+   Otherwise every single build produces a one-field diff and feed.json shows
+   up as modified forever, which is pure noise in the commit list and trains
+   you to ignore it. The app only cares that the stamp moves when the CONTENT
+   moves. */
+{
+  const feedPath = path.join(ROOT, 'feed.json');
+  const withoutStamp = o => { const c = Object.assign({}, o); delete c.updated; return JSON.stringify(c); };
+  try {
+    const prev = JSON.parse(fs.readFileSync(feedPath, 'utf8'));
+    if (withoutStamp(prev) === withoutStamp(feed) && prev.updated) feed.updated = prev.updated;
+  } catch (e) { /* no previous feed, or unreadable - write a fresh stamp */ }
+  fs.writeFileSync(feedPath, JSON.stringify(feed));
+}
 console.log('  \u2713 feed.json (' + locations.length + ' locations)');
 
 console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.length + ' landing pages.');

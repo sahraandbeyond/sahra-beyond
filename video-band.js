@@ -9,14 +9,12 @@
  *  - Muted + playsinline + loop. Browsers only allow autoplay without a gesture
  *    when muted, and iOS needs playsinline or it goes fullscreen.
  *
- *  - A TOP SCRIM sits over the video. The site header is white text and it now
- *    overlays this banner. Several frames are near-white (the fabric macro) or
- *    bright pink and yellow (the sunset), so unscrimmed white nav text would
- *    disappear over them - measured 1.00:1 against the brightest nav-strip
- *    pixel in the loop, which is (255,255,250). The scrim is held at .62 for
- *    the full height of the header before falling away, which measures 5.2:1
- *    there. .55 was tried first and gave only 4.15:1; the threshold solves to
- *    .605, so .62 is the value with headroom. Re-measure if the cut changes.
+ *  - NO TOP SCRIM. An earlier version darkened the top of the film to protect
+ *    the nav, on the assumption that the fixed header overlaid it. Measured on
+ *    the live page, the nav is position:relative, sits in the flow in its own
+ *    66px band above the video, and scrolls away - it never covers the film at
+ *    all. The scrim was protecting nothing and read as a dark band across the
+ *    top third. Check where the header actually sits before darkening footage.
  *
  *  - The video is the first thing on the page, so it is no longer lazy in the
  *    "wait until scrolled near" sense. The poster still paints first and is what
@@ -82,11 +80,11 @@ const CSS = `
 .vband-frame{position:relative;width:100%;height:clamp(320px,58vh,660px);overflow:hidden}
 .vband-v{width:100%;height:100%;object-fit:cover;display:block}
 .vband-scrim{position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:linear-gradient(to bottom,rgba(24,17,9,.62) 0,rgba(24,17,9,.62) 120px,rgba(24,17,9,.12) 30%,rgba(24,17,9,0) 48%,rgba(24,17,9,.42) 100%)}
+  background:linear-gradient(to bottom,rgba(24,17,9,0) 62%,rgba(24,17,9,.34) 100%)}
 .vband-link{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;
   justify-content:flex-start;padding:0 0 22px 24px;text-decoration:none}
 .vband-cta{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.4px;
-  text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.62);
+  text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.74);
   padding:11px 16px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .vband-link:hover .vband-cta{background:rgba(24,17,9,.86)}
 .vband-toggle{position:absolute;right:20px;bottom:22px;z-index:3;border:0;border-radius:999px;

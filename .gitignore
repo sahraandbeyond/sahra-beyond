@@ -1,0 +1,8 @@
+# JetBrains IDE settings. Editor config is per-machine, not part of the site.
+.idea/
+
+# Installed only for contrast-audit.js; never deployed.
+node_modules/
+
+# Vercel local state.
+.vercel/

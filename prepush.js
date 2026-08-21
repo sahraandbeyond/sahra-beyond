@@ -172,12 +172,45 @@ try {
   console.log(`    ${C.dim}run: node contrast-guard.js${C.off}`);
 }
 
-// ---- 3. what actually changed recently (the safe push manifest) ----
-const HOURS = Number(process.argv[2] || 24);
-const cutoff = Date.now() - HOURS * 3600e3;
-const changed = files.filter(f => fs.statSync(f).mtimeMs > cutoff).map(f => path.relative(ROOT, f)).sort();
-console.log(`  ${C.b}Files changed in the last ${HOURS}h — push exactly these:${C.off}\n`);
-changed.forEach(f => console.log(`     ${f}`));
+// ---- 3. what will actually be committed --------------------------------
+// This used to list files by MTIME, which was actively misleading: `node
+// build.js` rewrites ~124 files with byte-identical content, so every build
+// bumped their timestamps and this reported "76 files to push" when git had
+// only 7 real changes. Ask git, which is the thing that decides what ships.
+// Fall back to mtime only when git is unavailable, and say so plainly.
+const { execFileSync } = require('child_process');
+let usedGit = false, changed = [];
+
+try {
+  const out = execFileSync('git', ['status', '--porcelain'],
+    { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  changed = out.split('\n').filter(Boolean).map(l => ({
+    status: l.slice(0, 2).trim(),
+    file: l.slice(3).replace(/^"|"$/g, '')
+  }));
+  usedGit = true;
+} catch (e) {
+  const HOURS = Number(process.argv[2] || 24);
+  const cutoff = Date.now() - HOURS * 3600e3;
+  changed = files.filter(f => fs.statSync(f).mtimeMs > cutoff)
+    .map(f => ({ status: '?', file: path.relative(ROOT, f) })).sort();
+}
+
+if (usedGit) {
+  const label = { M: 'modified', A: 'added', D: 'deleted', R: 'renamed', '??': 'new' };
+  console.log(`  ${C.b}Git will commit these ${changed.length} file(s):${C.off}\n`);
+  changed.forEach(c => console.log(`     ${C.dim}${(label[c.status] || c.status).padEnd(8)}${C.off} ${c.file}`));
+  if (!changed.length) console.log(`     ${C.dim}(nothing to commit - working tree is clean)${C.off}`);
+  const noise = changed.filter(c => /^\.idea\//.test(c.file));
+  if (noise.length) {
+    console.log(`\n  ${C.dim}${noise.length} of these are .idea/ IDE config. Add a .gitignore if you`);
+    console.log(`  do not want editor settings in the repo.${C.off}`);
+  }
+} else {
+  console.log(`  ${C.bad}git unavailable - falling back to modification times.${C.off}`);
+  console.log(`  ${C.dim}This OVER-reports: the build rewrites many files unchanged.${C.off}\n`);
+  changed.forEach(c => console.log(`     ${c.file}`));
+}
 console.log(`\n  ${changed.length} file(s).\n`);
 
 process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk) ? 1 : 0);

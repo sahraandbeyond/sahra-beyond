@@ -78,7 +78,7 @@ nav.on-hero .nav-links a,nav.on-hero .logo-a{color:#fff}nav.on-hero .logo-b{colo
 .nav-links a:hover::after{width:100%}
 .nav-cart{font-size:19px}
 
-.hero{position:relative;height:100vh;min-height:620px;display:flex;align-items:center;overflow:hidden;color:#fff}
+.hero{position:relative;height:auto;min-height:0;padding:44px 0 52px;display:flex;align-items:center;overflow:hidden;color:#fff}
 .layer{position:absolute;inset:0;will-change:transform}
 .sky{z-index:1;background:linear-gradient(180deg,#14102A 0%,#39295A 34%,#8B4E63 64%,#B96A2C 88%,#E3B274 100%);background-size:100% 200%;animation:sky 18s ease-in-out infinite alternate}
 @keyframes sky{from{background-position:50% 0}to{background-position:50% 42%}}
@@ -120,7 +120,7 @@ section{position:relative;padding:100px 0 84px}
 .sec-head p{color:var(--mist);font-size:15.5px}
 .inner{position:relative;z-index:2}
 
-.shop{background:var(--sand)}
+.shop{background:var(--sand);padding-top:56px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .card{background:var(--paper);border-radius:16px;overflow:hidden;border:1px solid var(--line);transition:box-shadow .3s;will-change:transform}
 .card:hover{box-shadow:0 30px 56px rgba(43,37,32,.2)}
@@ -231,10 +231,10 @@ footer{background:#1C140D;color:rgba(255,255,255,.72);padding:64px 0 30px;text-a
 html:not(.anim-ready) #preload{display:none}
 html.anim-ready .reveal{opacity:0}
 html.anim-ready .hero-in{opacity:0}
-@media(max-width:760px){.hero{height:100svh}.hero-inner{grid-template-columns:1fr}.spot{max-width:280px;margin:24px auto 0}.grid{grid-template-columns:1fr 1fr;gap:16px}/* one column on phones: two made each tile ~170px wide and the cover crop
+@media(max-width:760px){.hero{height:auto}.hero-inner{grid-template-columns:1fr}.spot{max-width:280px;margin:24px auto 0}.grid{grid-template-columns:1fr 1fr;gap:16px}/* one column on phones: two made each tile ~170px wide and the cover crop
    became an unreadable sliver. Full width shows the place properly. */
 .place-row{grid-template-columns:1fr}.story{grid-template-columns:1fr}.story-img{order:-1}.nav-links a:not(.nav-cart){display:none}}
-@media(max-width:560px){.hero{min-height:560px}.hero h1{font-size:clamp(34px,9vw,80px)}.hero p{font-size:15px}.wrap{padding:0 18px}.grid{gap:14px}.place-row{gap:12px}.hero-actions{flex-wrap:wrap;gap:10px}.hero-actions .btn{flex:1 1 auto;text-align:center}.wl-form{flex-direction:column}.wl-form input,.wl-form button{width:100%;min-width:0}}
+@media(max-width:560px){.hero{min-height:0}.hero h1{font-size:clamp(34px,9vw,80px)}.hero p{font-size:15px}.wrap{padding:0 18px}.grid{gap:14px}.place-row{gap:12px}.hero-actions{flex-wrap:wrap;gap:10px}.hero-actions .btn{flex:1 1 auto;text-align:center}.wl-form{flex-direction:column}.wl-form input,.wl-form button{width:100%;min-width:0}}
 .note{background:#1C140D;color:var(--gold);text-align:center;font-size:11px;padding:7px;font-family:'Space Mono',monospace;position:relative;z-index:70}
 /* premium layer */
 #progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:140;pointer-events:none}
@@ -488,11 +488,11 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 .vband-frame{position:relative;width:100%;height:clamp(320px,58vh,660px);overflow:hidden}
 .vband-v{width:100%;height:100%;object-fit:cover;display:block}
 .vband-scrim{position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:linear-gradient(to bottom,rgba(24,17,9,.62) 0,rgba(24,17,9,.62) 120px,rgba(24,17,9,.12) 30%,rgba(24,17,9,0) 48%,rgba(24,17,9,.42) 100%)}
+  background:linear-gradient(to bottom,rgba(24,17,9,0) 62%,rgba(24,17,9,.34) 100%)}
 .vband-link{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;
   justify-content:flex-start;padding:0 0 22px 24px;text-decoration:none}
 .vband-cta{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.4px;
-  text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.62);
+  text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.74);
   padding:11px 16px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .vband-link:hover .vband-cta{background:rgba(24,17,9,.86)}
 .vband-toggle{position:absolute;right:20px;bottom:22px;z-index:3;border:0;border-radius:999px;
