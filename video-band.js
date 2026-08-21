@@ -1,31 +1,34 @@
 /**
- * video-band.js — the brand video band that sits under the homepage hero.
+ * video-band.js — the full-bleed brand film banner at the top of the homepage.
  *
  * Renders nothing at all unless video/brand.mp4 exists, so the homepage is
- * unchanged until a cut is actually prepared (node prep-video.js <file>).
+ * unchanged until a cut has been prepared (node prep-video.js ...).
  *
- * The behaviour that matters, and why:
+ * The decisions that matter, and why:
  *
- *  - Muted + playsinline + loop. Browsers only permit autoplay without a
- *    gesture when the video is muted, and iOS additionally needs playsinline
- *    or it takes over the screen in fullscreen.
+ *  - Muted + playsinline + loop. Browsers only allow autoplay without a gesture
+ *    when muted, and iOS needs playsinline or it goes fullscreen.
  *
- *  - The <video> gets preload="none" and its source is attached by script,
- *    NOT in the markup. That is deliberate: the band is below the fold, and a
- *    <video src> in the markup starts fetching during page load and competes
- *    with the hero for bandwidth on exactly the mobile connections we care
- *    most about. The poster shows immediately; the video is fetched only when
- *    the band is near the viewport.
+ *  - A TOP SCRIM sits over the video. The site header is white text and it now
+ *    overlays this banner. Several frames are near-white (the fabric macro) or
+ *    bright pink and yellow (the sunset), so unscrimmed white nav text would
+ *    disappear over them - measured 1.00:1 against the brightest nav-strip
+ *    pixel in the loop, which is (255,255,250). The scrim is held at .62 for
+ *    the full height of the header before falling away, which measures 5.2:1
+ *    there. .55 was tried first and gave only 4.15:1; the threshold solves to
+ *    .605, so .62 is the value with headroom. Re-measure if the cut changes.
  *
- *  - Playback pauses when the band scrolls out of view. A looping video that
- *    keeps decoding off-screen drains battery for nothing.
+ *  - The video is the first thing on the page, so it is no longer lazy in the
+ *    "wait until scrolled near" sense. The poster still paints first and is what
+ *    LCP sees; the source is attached by script immediately. Playback still
+ *    pauses when the banner scrolls away, which is what actually saves battery.
  *
- *  - prefers-reduced-motion and Save-Data both fall back to the poster and
- *    never fetch the video. Autoplaying motion is a genuine accessibility
- *    problem for some people, and this is a brand film, not functionality.
+ *  - prefers-reduced-motion and Save-Data show the poster and never fetch the
+ *    video at all. This is a brand film, not functionality.
  *
- *  - There is a visible play/pause control. Autoplaying motion that cannot be
- *    stopped fails WCAG 2.2.2 when it runs more than five seconds.
+ *  - A visible pause control, because autoplaying motion that cannot be stopped
+ *    fails WCAG 2.2.2 past five seconds. It is a sibling of the link, not inside
+ *    it: a <button> inside an <a> is invalid and the click would navigate.
  */
 const fs = require('fs');
 const path = require('path');
@@ -33,6 +36,8 @@ const path = require('path');
 const ROOT = __dirname;
 const MP4 = path.join(ROOT, 'video', 'brand.mp4');
 const POSTER = path.join(ROOT, 'video', 'brand-poster.jpg');
+
+const REEL_URL = 'https://www.instagram.com/p/DcRvwOCI_FR/';
 
 function hash(file) {
   try {
@@ -45,58 +50,59 @@ function band(opts = {}) {
   if (!fs.existsSync(MP4)) return '';
   const v = hash(MP4);
   const p = fs.existsSync(POSTER) ? `/video/brand-poster.jpg?v=${hash(POSTER)}` : '';
-  const heading = opts.heading || 'The film';
-  const line = opts.line || 'Shot across the Emirates — the places the designs come from.';
+  const reel = opts.reel || REEL_URL;
 
   return `
-  <section class="vband" aria-labelledby="vb-h">
-    <div class="wrap vband-in">
-      <div class="vband-txt">
-        <span class="eyebrow" id="vb-h">${heading}</span>
-        <p class="vband-line">${line}</p>
-      </div>
-      <div class="vband-frame">
-        <video class="vband-v" id="brandVideo"
-               ${p ? `poster="${p}"` : ''}
-               muted loop playsinline preload="none"
-               disablepictureinpicture
-               data-src="/video/brand.mp4?v=${v}"
-               aria-label="Sahra &amp; Beyond brand film, no sound"></video>
-        <button type="button" class="vband-toggle" id="brandVideoToggle"
-                aria-controls="brandVideo" aria-pressed="false" hidden>Pause</button>
-      </div>
-      <a class="btn ghost vband-cta" href="/shop/">Shop the collection &rarr;</a>
+  <section class="vband" aria-label="Sahra &amp; Beyond brand film">
+    <div class="vband-frame">
+      <video class="vband-v" id="brandVideo"
+             ${p ? `poster="${p}"` : ''}
+             muted loop playsinline preload="none"
+             disablepictureinpicture
+             data-src="/video/brand.mp4?v=${v}"
+             aria-hidden="true" tabindex="-1"></video>
+      <span class="vband-scrim" aria-hidden="true"></span>
+      <a class="vband-link" href="${reel}" target="_blank" rel="noopener noreferrer">
+        <span class="vband-cta">Watch the film on Instagram &#8599;</span>
+      </a>
+      <button type="button" class="vband-toggle" id="brandVideoToggle"
+              aria-controls="brandVideo" aria-pressed="false" hidden>Pause</button>
     </div>
   </section>`;
 }
 
-/* The panel is capped at 1120px because the crop is 1080px wide at source.
-   Stretching it edge-to-edge on a 1920px display is a 1.78x upscale and looks
-   soft; held near native it stays sharp. aspect-ratio matches the 2.39:1 crop
-   exactly, so the box never letterboxes or shifts layout while loading. */
+/* Full-bleed by design. The crop is 1080px wide, so on a 1920px display this is
+   a 1.78x upscale and will be a little soft - accepted deliberately in exchange
+   for an edge-to-edge banner, and the grain reads as filmic on this footage.
+   Height is viewport-relative with object-fit:cover so the banner works on a
+   phone in portrait as well as a wide desktop. */
 const CSS = `
 /*VBAND-CSS-START*/
-.vband{position:relative;z-index:2;padding:64px 20px 72px;border-top:1px solid var(--line,rgba(43,37,32,.12))}
-.vband-in{max-width:1120px;margin:0 auto;text-align:center}
-.vband-line{font-size:17px;line-height:1.7;margin:10px auto 22px;max-width:52ch}
-.vband-frame{position:relative;width:100%;aspect-ratio:2.39/1;overflow:hidden;
-  border-radius:10px;background:#181109;box-shadow:0 26px 64px rgba(20,16,42,.24)}
+.vband{position:relative;z-index:2;width:100%;margin:0;padding:0;background:#181109}
+.vband-frame{position:relative;width:100%;height:clamp(320px,58vh,660px);overflow:hidden}
 .vband-v{width:100%;height:100%;object-fit:cover;display:block}
-.vband-toggle{position:absolute;right:12px;bottom:12px;z-index:2;border:0;border-radius:999px;
+.vband-scrim{position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:linear-gradient(to bottom,rgba(24,17,9,.62) 0,rgba(24,17,9,.62) 120px,rgba(24,17,9,.12) 30%,rgba(24,17,9,0) 48%,rgba(24,17,9,.42) 100%)}
+.vband-link{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;
+  justify-content:flex-start;padding:0 0 22px 24px;text-decoration:none}
+.vband-cta{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.4px;
+  text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.62);
+  padding:11px 16px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.vband-link:hover .vband-cta{background:rgba(24,17,9,.86)}
+.vband-toggle{position:absolute;right:20px;bottom:22px;z-index:3;border:0;border-radius:999px;
   min-width:44px;min-height:44px;padding:0 16px;cursor:pointer;
   font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;
-  background:rgba(24,17,9,.82);color:#FFF6E8;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.vband-toggle:hover{background:rgba(24,17,9,.94)}
-.vband-cta{display:inline-block;margin-top:26px}
+  background:rgba(24,17,9,.72);color:#FFF6E8;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.vband-toggle:hover{background:rgba(24,17,9,.92)}
 @media(max-width:700px){
-  .vband{padding:48px 16px 56px}
-  .vband-line{font-size:15.5px}
-  .vband-frame{border-radius:8px}
+  .vband-frame{height:clamp(260px,46vh,420px)}
+  .vband-link{padding:0 0 18px 16px}
+  .vband-cta{font-size:11px;padding:10px 13px}
+  .vband-toggle{right:14px;bottom:18px}
 }
 @media(prefers-reduced-motion:reduce){.vband-toggle{display:none}}
 /*VBAND-CSS-END*/`;
 
-/* Attached by script so the file is not fetched during page load. */
 const JS = `
 <script>
 (function(){
@@ -105,15 +111,13 @@ const JS = `
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var conn = navigator.connection||{};
   var thrifty = conn.saveData===true || /(^|-)2g$/.test(conn.effectiveType||'');
-  /* poster only: never fetch the video at all */
-  if(reduced || thrifty){ return; }
+  if(reduced || thrifty){ return; }          /* poster only; never fetch the video */
 
-  var loaded=false;
+  var loaded=false, manual=false;
   function load(){
     if(loaded) return; loaded=true;
     v.src = v.dataset.src;
     v.play().then(function(){ if(btn) btn.hidden=false; }).catch(function(){
-      /* autoplay refused: leave the poster up and offer the control */
       if(btn){ btn.hidden=false; btn.textContent='Play'; btn.setAttribute('aria-pressed','true'); }
     });
   }
@@ -122,21 +126,22 @@ const JS = `
     btn.textContent = paused ? 'Play' : 'Pause';
     btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
   }
-  if(btn) btn.addEventListener('click', function(){
+  if(btn) btn.addEventListener('click', function(e){
+    e.preventDefault(); e.stopPropagation(); manual=true;
     if(v.paused){ v.play(); set(false); } else { v.pause(); set(true); }
   });
 
-  var manual=false;
-  if(btn) btn.addEventListener('click', function(){ manual=true; });
+  /* it is the first thing on the page, so start straight away */
+  load();
 
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(en){
       en.forEach(function(e){
-        if(e.isIntersecting){ load(); if(!manual && v.paused && loaded) { v.play().catch(function(){}); } }
-        else if(!v.paused){ v.pause(); }   /* stop decoding off-screen */
+        if(e.isIntersecting){ if(!manual && v.paused) v.play().catch(function(){}); }
+        else if(!v.paused){ v.pause(); }      /* stop decoding off-screen */
       });
-    },{rootMargin:'200px 0px'}).observe(v);
-  } else { load(); }
+    },{rootMargin:'100px 0px'}).observe(v);
+  }
 
   document.addEventListener('visibilitychange', function(){
     if(document.hidden && !v.paused) v.pause();
@@ -144,4 +149,4 @@ const JS = `
 })();
 <\/script>`;
 
-module.exports = { band, CSS, JS, exists: () => fs.existsSync(MP4) };
+module.exports = { band, CSS, JS, REEL_URL, exists: () => fs.existsSync(MP4) };

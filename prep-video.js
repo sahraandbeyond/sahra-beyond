@@ -79,6 +79,62 @@ const end = parseFloat(opt('end', String(info.duration)));
 const dur = Math.max(0.5, end - start);
 const ratio = parseFloat(opt('ratio', '2.39'));
 
+/* --segments "start:end:y,..." builds a montage where EACH shot gets its own
+   vertical framing. This exists because a single fixed crop cannot serve this
+   footage: the hero car sits low in frame (y~830), the tee shots sit mid
+   (y~656), the printed-back tee sits lower still (y~1150) and the Milky Way
+   wants the top of the frame (y~480). One compromise crop loses at least one
+   of them, and every one of them was specifically asked for. */
+const segSpec = opt('segments', '');
+if (segSpec) {
+  const { execFileSync: run } = require('child_process');
+  const os = require('os');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'segs-'));
+  const outW = info.width;
+  const outH = Math.round(info.width / ratio / 2) * 2;
+  const parts = [];
+
+  segSpec.split(',').map(x => x.trim()).filter(Boolean).forEach((spec, i) => {
+    const [a, b, y0] = spec.split(':').map(Number);
+    const maxY = Math.max(0, info.height - outH);
+    const y = Math.max(0, Math.min(maxY, Math.round(isNaN(y0) ? (info.height - outH) / 2 : y0)));
+    const out = path.join(tmp, `p${String(i).padStart(2, '0')}.mp4`);
+    run('ffmpeg', ['-y', '-v', 'error', '-ss', String(a), '-t', String((b - a).toFixed(3)),
+      '-i', src, '-vf', `crop=${outW}:${outH}:0:${y}`, '-an',
+      '-c:v', 'libx264', '-preset', 'slow', '-crf', '21',
+      '-pix_fmt', 'yuv420p', '-r', '24', out]);
+    parts.push(out);
+    console.log(`  segment ${i + 1}  ${a}s-${b}s  y=${y}  (${(b - a).toFixed(2)}s)`);
+  });
+
+  const list = path.join(tmp, 'list.txt');
+  fs.writeFileSync(list, parts.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n'));
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  run('ffmpeg', ['-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', list,
+    '-c', 'copy', '-movflags', '+faststart', OUT_MP4]);
+
+  /* poster from the strongest single frame rather than the first, which is
+     mid-motion on the opening car shot */
+  const pAt = parseFloat(opt('poster-at', '0'));
+  if (pAt > 0) {
+    run('ffmpeg', ['-y', '-v', 'error', '-ss', String(pAt), '-i', src,
+      '-frames:v', '1', '-vf', `crop=${outW}:${outH}:0:${Math.round(parseFloat(opt('poster-y', '656')))}`,
+      '-q:v', '3', OUT_POSTER]);
+  } else {
+    run('ffmpeg', ['-y', '-v', 'error', '-ss', '0.5', '-i', OUT_MP4, '-frames:v', '1', '-q:v', '3', OUT_POSTER]);
+  }
+
+  const oi = probe(OUT_MP4);
+  const kb2 = n => (n / 1024).toFixed(0) + ' KB';
+  console.log(`\nprep-video (montage)`);
+  console.log(`  source                  ${info.width}x${info.height}, ${info.duration.toFixed(1)}s`);
+  console.log(`  video/brand.mp4         ${oi.width}x${oi.height}, ${oi.duration.toFixed(2)}s, ${kb2(fs.statSync(OUT_MP4).size)}`);
+  console.log(`  video/brand-poster.jpg  ${kb2(fs.statSync(OUT_POSTER).size)}`);
+  console.log(`\n  Now run: node build.js\n`);
+  try { parts.forEach(f => fs.unlinkSync(f)); fs.unlinkSync(list); fs.rmdirSync(tmp); } catch (e) {}
+  process.exit(0);
+}
+
 let vf = [];
 let outW = info.width, outH = info.height;
 if (!flag('no-crop')) {
