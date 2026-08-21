@@ -477,6 +477,33 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 .spot-dots button.on{background:#E9B978;transform:scale(1.35)}
 .spot-cap{pointer-events:none}
 
+
+@media(min-width:900px){
+  
+  
+  
+}
+@media(prefers-reduced-motion:reduce){}
+/*VBAND-CSS-START*/
+.vband{position:relative;z-index:2;padding:64px 20px 72px;border-top:1px solid var(--line,rgba(43,37,32,.12))}
+.vband-in{max-width:1120px;margin:0 auto;text-align:center}
+.vband-line{font-size:17px;line-height:1.7;margin:10px auto 22px;max-width:52ch}
+.vband-frame{position:relative;width:100%;aspect-ratio:2.39/1;overflow:hidden;
+  border-radius:10px;background:#181109;box-shadow:0 26px 64px rgba(20,16,42,.24)}
+.vband-v{width:100%;height:100%;object-fit:cover;display:block}
+.vband-toggle{position:absolute;right:12px;bottom:12px;z-index:2;border:0;border-radius:999px;
+  min-width:44px;min-height:44px;padding:0 16px;cursor:pointer;
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  background:rgba(24,17,9,.82);color:#FFF6E8;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.vband-toggle:hover{background:rgba(24,17,9,.94)}
+.vband-cta{display:inline-block;margin-top:26px}
+@media(max-width:700px){
+  .vband{padding:48px 16px 56px}
+  .vband-line{font-size:15.5px}
+  .vband-frame{border-radius:8px}
+}
+@media(prefers-reduced-motion:reduce){.vband-toggle{display:none}}
+/*VBAND-CSS-END*/
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
@@ -529,6 +556,71 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 
 <div class="marquee"><div><span>★ Inspired by the UAE</span><span>★ Free UAE delivery over AED 150</span><span>★ Free returns within the UAE</span><span>★ Every design has a place</span><span>★ Designed in the UAE</span><span>★ Limited first drop</span><span>★ Original artwork</span><span>★ Inspired by the UAE</span><span>★ Free UAE delivery over AED 150</span><span>★ Free returns within the UAE</span><span>★ Every design has a place</span><span>★ Designed in the UAE</span><span>★ Limited first drop</span><span>★ Original artwork</span></div></div>
 
+<!--VIDEO:START-->
+  <section class="vband" aria-labelledby="vb-h">
+    <div class="wrap vband-in">
+      <div class="vband-txt">
+        <span class="eyebrow" id="vb-h">The film</span>
+        <p class="vband-line">Shot across the Emirates — the places the designs come from.</p>
+      </div>
+      <div class="vband-frame">
+        <video class="vband-v" id="brandVideo"
+               poster="/video/brand-poster.jpg?v=0d9e51f6"
+               muted loop playsinline preload="none"
+               disablepictureinpicture
+               data-src="/video/brand.mp4?v=f9ed672e"
+               aria-label="Sahra &amp; Beyond brand film, no sound"></video>
+        <button type="button" class="vband-toggle" id="brandVideoToggle"
+                aria-controls="brandVideo" aria-pressed="false" hidden>Pause</button>
+      </div>
+      <a class="btn ghost vband-cta" href="/shop/">Shop the collection &rarr;</a>
+    </div>
+  </section>
+<script>
+(function(){
+  var v=document.getElementById('brandVideo'), btn=document.getElementById('brandVideoToggle');
+  if(!v) return;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var conn = navigator.connection||{};
+  var thrifty = conn.saveData===true || /(^|-)2g$/.test(conn.effectiveType||'');
+  /* poster only: never fetch the video at all */
+  if(reduced || thrifty){ return; }
+
+  var loaded=false;
+  function load(){
+    if(loaded) return; loaded=true;
+    v.src = v.dataset.src;
+    v.play().then(function(){ if(btn) btn.hidden=false; }).catch(function(){
+      /* autoplay refused: leave the poster up and offer the control */
+      if(btn){ btn.hidden=false; btn.textContent='Play'; btn.setAttribute('aria-pressed','true'); }
+    });
+  }
+  function set(paused){
+    if(!btn) return;
+    btn.textContent = paused ? 'Play' : 'Pause';
+    btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+  }
+  if(btn) btn.addEventListener('click', function(){
+    if(v.paused){ v.play(); set(false); } else { v.pause(); set(true); }
+  });
+
+  var manual=false;
+  if(btn) btn.addEventListener('click', function(){ manual=true; });
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){
+      en.forEach(function(e){
+        if(e.isIntersecting){ load(); if(!manual && v.paused && loaded) { v.play().catch(function(){}); } }
+        else if(!v.paused){ v.pause(); }   /* stop decoding off-screen */
+      });
+    },{rootMargin:'200px 0px'}).observe(v);
+  } else { load(); }
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden && !v.paused) v.pause();
+  });
+})();
+</script><!--VIDEO:END-->
 <section class="shop" id="shop">
   <div class="melt"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,52 C240,12 480,86 720,50 C960,14 1200,80 1440,42 L1440,100 Z" fill="#FAF6EF"/></svg></div>
   <div class="wrap inner">

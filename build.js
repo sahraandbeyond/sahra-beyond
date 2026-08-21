@@ -5,6 +5,7 @@
    - sitemap.xml
    Runs at deploy time on Vercel (build command), so pages stay in sync with the CMS. */
 const fs = require('fs');
+const VB = require('./video-band.js');
 const RV = require('./reviews-render.js');
 const path = require('path');
 const buildProducts = require('./build-products');
@@ -1616,6 +1617,114 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
     if (next !== html) {
       fs.writeFileSync(file, next);
       console.log(payload ? `  ✓ shop star ratings (${f})` : `  · shop star ratings: no reviews yet (${f})`);
+    }
+  }
+})();
+
+/* ---------- homepage brand video band -----------------------------------
+   Injected between markers because index.html is hand-maintained. Renders to
+   an empty string until video/brand.mp4 exists, so the homepage is untouched
+   until a cut has actually been prepared. */
+(function () {
+  const MARK = /<!--VIDEO:START-->[\s\S]*?<!--VIDEO:END-->/;
+  /* The CSS lives in its own marked block so it can be REPLACED every build.
+     The first version appended it once and skipped thereafter, so restyling
+     the band from portrait to widescreen left the original CSS live in
+     index.html and the change silently never shipped. */
+  const CSSMARK = /\/\*VBAND-CSS-START\*\/[\s\S]*?\/\*VBAND-CSS-END\*\//;
+  const payload = VB.exists() ? (VB.band() + VB.JS) : '';
+
+  for (const f of ['index.html', 'homepage-preview.html']) {
+    const file = path.join(ROOT, f);
+    if (!fs.existsSync(file)) continue;
+    const before = fs.readFileSync(file, 'utf8');
+    let html = before;
+    if (!MARK.test(html)) continue;
+
+    if (payload) {
+      if (CSSMARK.test(html)) html = html.replace(CSSMARK, VB.CSS.trim());
+      else html = html.replace('</style>', VB.CSS.trim() + '\n</style>');
+    } else if (CSSMARK.test(html)) {
+      html = html.replace(CSSMARK, '');
+    }
+    html = html.replace(MARK, '<!--VIDEO:START-->' + payload + '<!--VIDEO:END-->');
+
+    /* compare against the ORIGINAL file, not against the post-CSS string -
+       comparing the wrong pair is what threw the restyle away */
+    if (html !== before) {
+      fs.writeFileSync(file, html);
+      console.log(payload ? `  \u2713 brand video band (${f})` : `  \u00b7 no brand video yet (${f})`);
+    }
+  }
+})();
+
+/* ---------- shop page star ratings --------------------------------------
+   The shop builds its product blocks client-side from a template string, so
+   rather than edit that template (it has broken the whole page before) the
+   ratings are attached after render: each block carries id="prod-<handle>",
+   which is enough to find it. Emits nothing at all when no product has
+   reviews, so the shop is byte-identical to today until reviews exist. */
+(function () {
+  const MARK = /<!--RV_SHOP:START-->[\s\S]*?<!--RV_SHOP:END-->/;
+  const data = {};
+  for (const d of RV.loadAll()) data[d.handle] = { a: d.average, n: d.count };
+
+  const payload = Object.keys(data).length ? `<script>
+(function(){var RV=${JSON.stringify(data)};
+function stars(v){var n=Math.max(0,Math.min(5,Math.floor(v||0)));
+ return '<span class="rv-stars" aria-hidden="true">'+'★'.repeat(n)+'☆'.repeat(5-n)+'</span>';}
+function paint(){var done=0;
+ Object.keys(RV).forEach(function(h){
+  var el=document.getElementById('prod-'+h); if(!el||el.querySelector('.pcard-rv'))return;
+  var t=el.querySelector('h2'); if(!t)return;
+  var d=RV[h],s=document.createElement('span'); s.className='pcard-rv';
+  s.innerHTML=stars(d.a)+'<span class="pcard-rv-n">'+d.a.toFixed(1)+' · '+d.n+' review'+(d.n===1?'':'s')+'</span>';
+  t.insertAdjacentElement('afterend',s); done++;});
+ return done;}
+if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(iv);},250);}
+})();
+<\/script>` : '';
+
+  for (const f of ['shop-preview.html', 'shop/index.html']) {
+    const file = path.join(ROOT, f);
+    if (!fs.existsSync(file)) continue;
+    let html = fs.readFileSync(file, 'utf8');
+    if (!MARK.test(html)) continue;
+    const next = html.replace(MARK, '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
+    if (next !== html) {
+      fs.writeFileSync(file, next);
+      console.log(payload ? `  ✓ shop star ratings (${f})` : `  · shop star ratings: no reviews yet (${f})`);
+    }
+  }
+})();
+
+/* ---------- homepage brand video band -----------------------------------
+   Injected between markers because index.html is hand-maintained. Renders to
+   an empty string until video/brand.mp4 exists, so the homepage is untouched
+   until a cut has actually been prepared. */
+(function () {
+  const MARK = /<!--VIDEO:START-->[\s\S]*?<!--VIDEO:END-->/;
+  const payload = VB.exists() ? (VB.band() + VB.JS) : '';
+  for (const f of ['index.html', 'homepage-preview.html']) {
+    const file = path.join(ROOT, f);
+    if (!fs.existsSync(file)) continue;
+    let html = fs.readFileSync(file, 'utf8');
+    if (!MARK.test(html)) continue;
+    /* Replace the marked CSS block rather than only adding it when absent.
+       The first version appended once and skipped thereafter, so restyling the
+       band left the ORIGINAL portrait CSS live in index.html and the change
+       silently never shipped. */
+    const CSSMARK = /\/\*VBAND-CSS-START\*\/[\s\S]*?\/\*VBAND-CSS-END\*\//;
+    if (payload) {
+      if (CSSMARK.test(html)) html = html.replace(CSSMARK, VB.CSS.trim());
+      else html = html.replace('</style>', VB.CSS + '\n</style>');
+    } else {
+      html = html.replace(CSSMARK, '');
+    }
+    const next = html.replace(MARK, '<!--VIDEO:START-->' + payload + '<!--VIDEO:END-->');
+    if (next !== html) {
+      fs.writeFileSync(file, next);
+      console.log(payload ? `  \u2713 brand video band (${f})` : `  \u00b7 no brand video yet (${f})`);
     }
   }
 })();
