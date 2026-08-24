@@ -24,7 +24,7 @@
 {"@context":"https://schema.org","@type":"WebSite","name":"Sahra & Beyond","alternateName":"Wear the Wild Side of the UAE","url":"https://www.sahraandbeyond.ae/","description":"Original tees inspired by the real deserts, wadis and dark-sky nights of the UAE."}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Sahra & Beyond","slogan":"Wear the wild side of the UAE","url":"https://www.sahraandbeyond.ae/","logo":"https://www.sahraandbeyond.ae/icon-512.png","sameAs":["https://instagram.com/sahraandbeyond.ae"]}
+{"@context":"https://schema.org","@type":"Organization","name":"Sahra & Beyond","slogan":"Wear the wild side of the UAE","url":"https://www.sahraandbeyond.ae/","logo":"https://www.sahraandbeyond.ae/icon-512.png","telephone":"+971585623155","contactPoint":{"@type":"ContactPoint","telephone":"+971585623155","contactType":"customer support","areaServed":"AE","availableLanguage":["en"]},"sameAs":["https://instagram.com/sahraandbeyond.ae"]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ItemList","itemListElement":[
@@ -47,7 +47,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-:root{--sand:#FAF6EF;--paper:#FFFFFF;--ink:#33271B;--mist:#6B6256;--clay:#A95A21;--clay-deep:#7E4114;--gold:#F2C98C;--line:rgba(43,37,32,.12)}
+:root{--sand:#FAF6EF;--paper:#FFFFFF;--ink:#33271B;--mist:#6B6256;--clay:#A95A21;--clay-deep:#7E4114;--gold:#F2C98C;--line:rgba(43,37,32,.12);--edge:rgba(42,32,22,.58)}
 *{margin:0;padding:0;box-sizing:border-box}
 .skip-link{position:absolute;left:8px;top:-60px;z-index:500;background:var(--ink);color:#FFF;padding:11px 18px;border-radius:0 0 8px 8px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.5px;text-decoration:none;transition:top .18s}
 .skip-link:focus{top:0}
@@ -218,7 +218,7 @@ footer{background:#1C140D;color:rgba(255,255,255,.72);padding:64px 0 30px;text-a
 
 /* cursor + preloader + reveal gating */
 #cursor{position:fixed;top:0;left:0;width:34px;height:34px;border:1.5px solid rgba(192,112,46,.7);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:120;transition:width .25s,height .25s,background .25s,opacity .25s;opacity:0;mix-blend-mode:normal}
-.ambient-btn{position:fixed;left:18px;bottom:18px;z-index:110;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(250,246,239,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:transform .2s,background .3s,color .3s}
+.ambient-btn{position:fixed;left:18px;bottom:18px;z-index:110;width:44px;height:44px;border-radius:50%;border:1px solid var(--edge,rgba(42,32,22,.58));background:rgba(250,246,239,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:transform .2s,background .3s,color .3s}
 .ambient-btn:hover{transform:scale(1.08)}
 .ambient-btn.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
 .amb-ic{position:relative;line-height:1}
@@ -721,7 +721,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 <footer>
   <div class="foot-brand">Sahra &amp; Beyond</div>
   <div class="foot-tag">Wear the wild side of the UAE</div>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#places">Places</a><a href="/about/">About</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#places">Places</a><a href="/about/">About</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585623155" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc" style="font-size:13px;font-family:'Space Mono',monospace;letter-spacing:1px"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener" aria-label="Instagram">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
@@ -952,7 +952,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 
   // nav colour state
   var nav=document.getElementById('nav'),hero=document.getElementById('hero');
-  function navState(){var past=window.scrollY>hero.offsetHeight-90;nav.classList.toggle('solid',window.scrollY>40);nav.classList.toggle('on-hero',!past);
+  function navState(){/* hero-relative, for the same reason as the fade above */var past=hero.getBoundingClientRect().bottom<90;nav.classList.toggle('solid',window.scrollY>40);nav.classList.toggle('on-hero',!past);
     var d=document.documentElement,max=d.scrollHeight-innerHeight,bar=document.querySelector('#progress i');if(bar)bar.style.transform='scaleX('+(max>0?Math.min(1,window.scrollY/max):0)+')';}
   navState();addEventListener('scroll',navState,{passive:true});
 
@@ -1382,11 +1382,21 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
         dunes[i].style.transform='translate3d('+(mx*d*-16).toFixed(1)+'px,'
           +(prog*d*70+my*d*6).toFixed(1)+'px,0) scale('+(1+d*0.04).toFixed(3)+')';
       }
-      // hero content lifts away rather than stopping dead at the seam
+      // Hero content lifts away rather than stopping dead at the seam.
+      // Progress is measured from the hero's OWN position, not absolute scrollY.
+      // The original divided scrollY by the hero height, which was only correct
+      // while the hero was the first thing on the page. Once the film band went
+      // above it, scrollY was already ~500 before the hero reached the viewport,
+      // so hp started near 1 and the tagline and carousel were faded to nothing
+      // before the reader ever got to them.
       if(heroInner && hero){
-        var hp=Math.max(0,Math.min(1,scrollY/Math.max(1,hero.offsetHeight)));
-        heroInner.style.transform='translate3d(0,'+(hp*-90).toFixed(1)+'px,0)';
-        heroInner.style.opacity=String(Math.max(0,1-hp*1.35));
+        var hTop=hero.getBoundingClientRect().top;
+        var hp=Math.max(0,Math.min(1,(-hTop)/Math.max(1,hero.offsetHeight)));
+        // hold it fully readable for the first third, then fade over the rest,
+        // so the carousel is solid and clickable while it is actually on screen
+        var fade=Math.max(0,Math.min(1,(hp-0.34)/0.5));
+        heroInner.style.transform='translate3d(0,'+(fade*-70).toFixed(1)+'px,0)';
+        heroInner.style.opacity=String(1-fade);
       }
     }
   })();

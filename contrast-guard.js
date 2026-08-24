@@ -72,11 +72,38 @@ function darkThemeInvariant(rel, src) {
   }
 }
 
+/* ---- interactive controls need a VISIBLE boundary ----
+   Text contrast was never the problem with the shop filters: unselected chip
+   text measured 14.8:1 and selected 7.9:1. The chips were bordered with
+   var(--line) — rgba(42,32,22,.12), which is 1.26:1. Fine for a decorative
+   hairline, invisible as the edge of a button, so nobody could tell what was
+   a control or which one was active. Boundaries of interactive components need
+   3:1, which is what --edge exists for. Keep the two tokens distinct. */
+const DECORATIVE_LINE = /border(?:-[a-z]+)?\s*:\s*[^;}]*var\(--line\)/;
+const INTERACTIVE = /cursor\s*:\s*pointer/;
+function controlBoundary(rel, src) {
+  const ruleRe = /([^{}]+)\{([^}]*)\}/g;
+  let m;
+  while ((m = ruleRe.exec(src))) {
+    const sel = m[1].split('\n').pop().trim();
+    const body = m[2];
+    if (!DECORATIVE_LINE.test(body)) continue;
+    /* only flag things a user is meant to click */
+    const looksInteractive = INTERACTIVE.test(body) ||
+      /^(button\b|\.btn\b|\.filt\b|\.chip\b|\.sz-chip\b|\.size-tab\b|\.pthumb\b|\.opt\b|\.ambient-btn\b|\.gal-thumbs\s+button\b)/.test(sel);
+    if (!looksInteractive) continue;
+    problems.push({ file: rel, severity: 'block',
+      msg: `${sel} is interactive but bordered with var(--line) (1.26:1). ` +
+           `Use var(--edge) — a control boundary needs 3:1.` });
+  }
+}
+
 for (const file of pages()) {
   const rel = path.relative(ROOT, file).split(path.sep).join('/');
   const src = fs.readFileSync(file, 'utf8');
 
   darkThemeInvariant(rel, src);
+  controlBoundary(rel, src);
 
   for (const [hex, [repl, why]] of Object.entries(RETIRED)) {
     /* Match the colour wherever it is DECLARED as a text colour: `color:#X`

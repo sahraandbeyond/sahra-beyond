@@ -56,9 +56,9 @@
   /* PRODUCT PALETTE — generated from content/products/hajar-mountains-regular.json (must match the shop section colour) */
   --theme:#C6BFD3;--theme-2:#5C3A2E;--accent:#C0702E;
   /* contrast-aware tokens, swapped by .dark-bg */
-  --txt:#2A2016;--txt-soft:#6B6256;--line:rgba(42,32,22,.13);--card:rgba(255,255,255,.66);--chip:rgba(42,32,22,.05);
+  --txt:#2A2016;--txt-soft:#6B6256;--line:rgba(42,32,22,.13);--edge:rgba(42,32,22,.58);--card:rgba(255,255,255,.66);--chip:rgba(42,32,22,.05);
 }
-body.dark-bg{--txt:#F4EFE6;--txt-soft:rgba(244,239,230,.62);--line:rgba(255,255,255,.16);--card:rgba(255,255,255,.05);--chip:rgba(255,255,255,.06)}
+body.dark-bg{--txt:#F4EFE6;--txt-soft:rgba(244,239,230,.62);--line:rgba(255,255,255,.16);--edge:rgba(255,255,255,.5);--card:rgba(255,255,255,.05);--chip:rgba(255,255,255,.06)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{overflow-x:hidden;scroll-behavior:smooth}
 body{font-family:'Inter',system-ui,sans-serif;color:var(--txt);background:var(--sand);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
@@ -114,7 +114,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
 .gal-main img.on{opacity:1;transform:scale(1)}
 .gal-tag{position:absolute;top:15px;left:15px;z-index:2;background:rgba(0,0,0,.78);color:var(--gold);backdrop-filter:blur(6px);font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px}
 .gal-thumbs{display:flex;gap:10px;margin-top:13px}
-.gal-thumbs button{width:74px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:none;cursor:pointer;padding:0;opacity:.5;transition:opacity .3s,border-color .3s,transform .3s}
+.gal-thumbs button{width:74px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--edge,rgba(42,32,22,.58));background:none;cursor:pointer;padding:0;opacity:.78;transition:opacity .3s,border-color .3s,transform .3s}
 .gal-thumbs button:hover{transform:translateY(-3px)}
 .gal-thumbs button.on{opacity:1;border-color:var(--accent)}
 .gal-thumbs img{width:100%;height:100%;object-fit:cover}
@@ -143,7 +143,7 @@ body.dark-bg .buy h1 em{color:var(--gold)}
 .btn:hover{background:var(--clay-deep);transform:translateY(-2px)}
 body.dark-bg .btn{background:var(--gold);color:#181109}
 body.dark-bg .btn:hover{background:#fff}
-.btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+.btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--edge,rgba(42,32,22,.58))}
 .btn.ghost:hover{background:var(--txt);color:var(--sand)}
 body.dark-bg .btn.ghost{background:transparent;color:var(--txt);border-color:var(--line)}
 body.dark-bg .btn.ghost:hover{background:rgba(255,255,255,.1);color:#fff}
@@ -185,7 +185,7 @@ table.sz td:first-child{font-weight:600}
 .stock{margin:22px 0 4px}
 .stock-lab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--txt-soft);margin-bottom:9px}
 .stock-row{display:flex;flex-wrap:wrap;gap:8px}
-.sz-chip{font-family:'Space Mono',monospace;font-size:12px;padding:9px 15px;border:1px solid var(--line);border-radius:999px;background:var(--chip)}
+.sz-chip{font-family:'Space Mono',monospace;font-size:12px;padding:9px 15px;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;background:var(--chip)}
 .sz-chip.out{opacity:.42;text-decoration:line-through}
 .stock-note{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--txt-soft);margin-top:9px}
 
@@ -672,7 +672,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 </div>
 
 <footer>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="/shop/" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="/shop/" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585623155" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
