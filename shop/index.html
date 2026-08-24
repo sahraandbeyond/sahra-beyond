@@ -594,7 +594,7 @@ img,svg,video{max-width:100%;height:auto}
 </aside>
 
 <footer>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585623155" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="paymarks" aria-label="We accept Visa and Mastercard"><svg viewBox="0 0 48 30" role="img" aria-label="Visa"><rect width="48" height="30" rx="4" fill="#fff"/><text x="24" y="20" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" font-style="italic" fill="#1A1F71">VISA</text></svg><svg viewBox="0 0 48 30" role="img" aria-label="Mastercard"><rect width="48" height="30" rx="4" fill="#fff"/><circle cx="20" cy="15" r="8" fill="#EB001B"/><circle cx="28" cy="15" r="8" fill="#F79E1B" fill-opacity=".85"/></svg><span class="paymarks-t">Secure checkout &middot; AED</span></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
@@ -1248,6 +1248,7 @@ function initFilters(secs){
       resetEl=document.getElementById('filtReset'),
       btns=[].slice.call(bar.querySelectorAll('.filt')),
       KEYS=['fit','place','print','size'],
+      touched=false,          /* true once the user works the filters */
       state={};
   KEYS.forEach(function(k){state[k]=null;});
 
@@ -1288,6 +1289,23 @@ function initFilters(secs){
       var url=location.pathname+(q?'?'+q:'')+location.hash;
       history.replaceState(null,'',url);
     }
+    /* A gsap.from() tween parks its targets at opacity:0 until its
+       ScrollTrigger fires, and ScrollTrigger caches trigger positions from the
+       document height at refresh time. Filtering sets sec.hidden, which
+       collapses sections and moves every survivor UP the page - so the cached
+       start positions are wrong and the trigger for the visible product never
+       fires. It stayed at opacity:0: "Showing 1 of 7" above an empty panel.
+       Once the user is filtering they are searching, not being told a story,
+       so paint the results outright and re-measure the triggers. */
+    if(touched||active.length){
+      if(window.gsap){
+        secs.forEach(function(sec){
+          if(sec.hidden)return;
+          gsap.set(sec.querySelectorAll('.prod-img,.prod-txt>*'),{clearProps:'all'});
+        });
+      }
+      if(window.ScrollTrigger)ScrollTrigger.refresh();
+    }
     if(window.track&&active.length)track('filter_shop',{filters:active.map(function(k){return k+':'+state[k];}).join(',')});
   }
   bar.addEventListener('click',function(e){
@@ -1295,9 +1313,10 @@ function initFilters(secs){
     if(!b)return;
     var k=b.dataset.k,v=b.dataset.v;
     state[k]=(state[k]===v)?null:v;   /* second click clears that group */
+    touched=true;
     apply();
   });
-  function clearAll(){KEYS.forEach(function(k){state[k]=null;});apply();}
+  function clearAll(){touched=true;KEYS.forEach(function(k){state[k]=null;});apply();}
   clearEl.addEventListener('click',clearAll);
   if(resetEl)resetEl.addEventListener('click',clearAll);
 

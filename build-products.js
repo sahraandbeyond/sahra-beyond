@@ -700,7 +700,7 @@ ${related(p, all)}
 </div>
 
 <footer>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585623155" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
