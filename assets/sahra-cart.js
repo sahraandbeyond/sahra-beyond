@@ -78,6 +78,9 @@
 
   var CART = null;
   var lastError = null;
+  /* line id -> quantity the customer has asked for but the server has not
+     confirmed yet. Keeps rapid +/- taps accumulating correctly. */
+  var pending = {};
 
   /* ---- serialised mutation queue -------------------------------------
      Every cart write goes through here. Two adds fired a few milliseconds
@@ -136,13 +139,20 @@
     /* One delegated listener on the drawer body. The old code re-bound a
        listener per button on every draw, which leaked handlers each redraw. */
     document.getElementById('sbBody').addEventListener('click', function (e) {
-      var el = e.target.closest('[data-act]');
+      var el = e.target.closest && e.target.closest('[data-act]');
       if (!el) return;
       var line = el.getAttribute('data-line');
       var act = el.getAttribute('data-act');
-      if (act === 'rm') setQty(line, 0);
-      else if (act === 'inc') setQty(line, +el.getAttribute('data-qty') + 1);
-      else if (act === 'dec') setQty(line, +el.getAttribute('data-qty') - 1);
+      if (act === 'rm') { pending[line] = 0; setQty(line, 0); return; }
+      /* Read from `pending`, not from the DOM. data-qty is only refreshed when
+         draw() re-renders after a mutation resolves, so three quick taps on +
+         all read the same stale 1 and each asked the server for 2 — the
+         customer tapped three times and got two. Intent accumulates here. */
+      var base = (pending[line] != null) ? pending[line] : +el.getAttribute('data-qty');
+      var next = act === 'inc' ? base + 1 : base - 1;
+      if (next < 0) next = 0;
+      pending[line] = next;
+      setQty(line, next);
     });
   }
 
@@ -254,6 +264,11 @@
         if (r && r.userErrors && r.userErrors.length) throw new Error(r.userErrors[0].message);
         if (!r || !r.cart) throw new Error('That cart is no longer available.');
         CART = r.cart;
+        /* server has spoken - drop any pending intent it has now satisfied */
+        (CART.lines && CART.lines.edges || []).forEach(function (e) {
+          if (pending[e.node.id] === e.node.quantity) delete pending[e.node.id];
+        });
+        if (q === 0) delete pending[lineId];
         draw();
         return CART;
       }).catch(function (e) {
@@ -269,25 +284,42 @@
     var want = Math.max(1, (qty | 0) || 1);
     return queue(function () {
       lastError = null;
-      var id = cid();
+      /* In-memory id wins over storage. If localStorage is unavailable —
+         Safari private mode throws on setItem, and the throw is swallowed —
+         the id never persists, so reading storage alone made every subsequent
+         add believe there was no cart and start a fresh one, discarding
+         everything already in it. */
+      var id = (CART && CART.id) || cid();
       var addToExisting = id
         ? sf('mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{' + CFRAG + '}userErrors{message}}}',
              { id: id, l: [{ merchandiseId: variantId, quantity: want }] })
             .then(function (d) {
               var r = d.cartLinesAdd;
-              if (r && r.userErrors && r.userErrors.length) throw new Error(r.userErrors[0].message);
+              /* A userError is Shopify refusing this line — sold out, or more
+                 than stock allows. It is NOT a dead cart, and must never be
+                 treated as one. */
+              if (r && r.userErrors && r.userErrors.length) {
+                var ue = new Error(r.userErrors[0].message); ue.userError = true; throw ue;
+              }
               if (!r || !r.cart) throw new Error('STALE');
               return r.cart;
             })
         : Promise.reject(new Error('NOCART'));
 
       return addToExisting.catch(function (e) {
-        /* Bug 5: only start a fresh cart when there genuinely isn't one, or
-           the old id is dead. Say so if we had to abandon a cart, rather than
-           silently losing the customer's items. */
+        /* ONLY start a new cart when there genuinely is none, or the server
+           says the old one is gone.
+
+           This previously ran for EVERY failure. A sold-out variant, a 429, or
+           a dropped connection would clear sb_cart and create a fresh cart
+           holding just the item being added — silently destroying a basket the
+           customer had been filling, and resolving successfully so nothing was
+           shown. Preserve the cart on any other error. */
+        if (e.message !== 'STALE' && e.message !== 'NOCART') throw e;
         if (e.message === 'STALE' && CART && CART.totalQuantity) {
           lastError = 'Your previous cart expired, so we started a new one. Please check the items below.';
         }
+        CART = null;
         setCid(null);
         return sf('mutation($l:[CartLineInput!]!){cartCreate(input:{lines:$l}){cart{' + CFRAG + '}userErrors{message}}}',
                   { l: [{ merchandiseId: variantId, quantity: want }] })
@@ -298,10 +330,14 @@
             return r.cart;
           });
       }).then(function (c) {
-        CART = c; setCid(c.id); draw(); open();
+        CART = c; setCid(c.id); pending = {}; draw(); open();
         return c;
       }).catch(function (e) {
-        lastError = 'We could not add that to your cart. Please try again, or message us on WhatsApp.';
+        /* Shopify's own wording is more useful than ours when it is telling
+           the customer something specific, like "only 2 left". */
+        lastError = e && e.userError
+          ? e.message
+          : 'We could not add that to your cart. Please try again, or message us on WhatsApp.';
         draw(); open();
         throw e;
       });

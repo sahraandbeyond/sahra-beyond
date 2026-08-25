@@ -36,7 +36,10 @@ function mkEl(tag) {
     addEventListener(t, fn) { (this.listeners[t] = this.listeners[t] || []).push(fn); },
     appendChild(c) { this.children.push(c); return c; },
     querySelector() { return null; }, querySelectorAll() { return []; },
-    focus() {}, closest() { return null; },
+    focus() {},
+    /* the real delegated handler calls closest('[data-act]'); returning
+       null made the entire button-click path structurally untestable */
+    closest(sel) { return this.attrs && this.attrs['data-act'] ? this : null; },
     get firstChild() { return this.children.length ? this.children.shift() : null; }
   };
   return el;
@@ -72,7 +75,7 @@ function freshDom() {
 
 /* ---- fake Shopify ----------------------------------------------------- */
 function makeServer() {
-  const s = { carts: {}, seq: 0, calls: [], failNext: null };
+  const s = { carts: {}, seq: 0, calls: [], failNext: null, userErrorNext: null };
   s.handle = (query, vars) => {
     const op = /cartCreate/.test(query) ? 'cartCreate'
              : /cartLinesAdd/.test(query) ? 'cartLinesAdd'
@@ -80,6 +83,8 @@ function makeServer() {
              : /cartLinesRemove/.test(query) ? 'cartLinesRemove' : 'query';
     s.calls.push(op);
     if (s.failNext === op) { s.failNext = null; return Promise.reject(new Error('boom')); }
+    if (s.userErrorNext === op) { s.userErrorNext = null;
+      return Promise.resolve({ [op]: { cart: null, userErrors: [{ message: 'Only 2 left in stock.' }] } }); }
     const shape = c => ({
       id: c.id, checkoutUrl: 'https://checkout/' + c.id,
       totalQuantity: c.lines.reduce((n, l) => n + l.quantity, 0),
@@ -121,13 +126,15 @@ function makeServer() {
 
 function boot(opts = {}) {
   const { doc, byId } = freshDom();
-  const server = makeServer();
+  const server = opts.server || makeServer();
   const store = Object.assign({}, opts.storage || {});
   const g = {
     document: doc,
     localStorage: {
       getItem: k => (k in store ? store[k] : null),
-      setItem: (k, v) => { store[k] = String(v); },
+      /* Safari private mode throws here. The module swallows it, which is what
+         made every add fork a new cart. */
+      setItem: (k, v) => { if (opts.storageThrows) throw new Error('QuotaExceeded'); store[k] = String(v); },
       removeItem: k => { delete store[k]; }
     },
     fetch: (url, init) => {
@@ -154,9 +161,13 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     await env.api.add('gid://variant/1');
     await env.api.add('gid://variant/1');
     const body = env.byId.sbBody;
-    check('quantity is rendered in the drawer (was fetched but never shown)',
-      /class="sb-qn"[^>]*>2</.test(body.innerHTML) || /sb-qn/.test(body.innerHTML) && /"2"|>2</.test(body.innerHTML),
-      'drawer HTML: ' + String(body.innerHTML).slice(0, 160));
+    /* STRICT: the visible span must contain the number. The previous
+       assertion was an OR that data-qty="2" alone satisfied, so it would have
+       passed with an empty quantity span - i.e. it would NOT have caught a
+       reintroduction of the very bug it names. */
+    check('quantity is rendered in the visible span (strict)',
+      /<span class="sb-qn"[^>]*>2<\/span>/.test(String(body.innerHTML)),
+      'drawer HTML: ' + String(body.innerHTML).slice(0, 200));
     check('badge matches server totalQuantity',
       env.byId.sbCartCount && env.byId.sbCartCount.textContent === '2',
       'badge=' + (env.byId.sbCartCount && env.byId.sbCartCount.textContent));
@@ -164,17 +175,23 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
 
   /* 2 — drawer is painted on load, not only after an add ---------------- */
   {
-    const env = boot();
-    await env.api.add('gid://variant/9');           // creates cart1
-    const cartId = env.store.sb_cart;
-    const env2 = boot({ storage: { sb_cart: cartId } });
-    // env2 has its own server, so seed it by adding through it instead
-    const env3 = boot();
-    await env3.api.add('gid://variant/9');
-    await env3.api.refresh();
-    check('refresh() paints the drawer (the empty-drawer-with-full-badge bug)',
-      /sb-line/.test(String(env3.byId.sbBody.innerHTML)),
-      'body after refresh: ' + String(env3.byId.sbBody.innerHTML).slice(0, 120));
+    /* COLD BOOT: a cart that already exists on the server, a page loaded
+       fresh, and no add() in this session. That is the exact situation the
+       customer was in - and the old version of this test never created it,
+       because it called add() first. */
+    const seed = boot();
+    await seed.api.add('gid://variant/9');
+    const cold = boot({ storage: { sb_cart: seed.store.sb_cart }, server: seed.server });
+    /* boot() kicks off refresh() itself; let that settle. We deliberately do
+       NOT call refresh() by hand here - the whole point is that a plain page
+       load paints the drawer with no further action. */
+    await new Promise(r => setTimeout(r, 30));
+    check('cold load of an existing cart paints the drawer, not just the badge',
+      /sb-line/.test(String(cold.byId.sbBody.innerHTML)),
+      'body after cold refresh: ' + String(cold.byId.sbBody.innerHTML).slice(0, 140));
+    check('cold load badge matches the server',
+      cold.byId.sbCartCount && cold.byId.sbCartCount.textContent === '1',
+      'badge=' + (cold.byId.sbCartCount && cold.byId.sbCartCount.textContent));
   }
 
   /* 3 — quantity stepper actually mutates ------------------------------- */
@@ -220,6 +237,70 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     check('unknown cart id is cleared from storage', env.store.sb_cart === undefined,
       'sb_cart=' + env.store.sb_cart);
     check('badge reads 0 after a dead cart', env.byId.sbCartCount.textContent === '0');
+  }
+
+
+  /* 7 — a refused line must NOT destroy the basket (found in review) ----- */
+  {
+    const env = boot();
+    await env.api.add('gid://variant/keep');
+    await env.api.add('gid://variant/keep');          // 2 items safely in the cart
+    const before = env.api.state().id;
+    env.server.userErrorNext = 'cartLinesAdd';        // next add is refused: sold out
+    let threw = false;
+    try { await env.api.add('gid://variant/soldout'); } catch (e) { threw = true; }
+    check('a refused add reports an error rather than resolving silently', threw);
+    check('a refused add does NOT replace the existing cart',
+      env.api.state() && env.api.state().id === before,
+      'cart id before=' + before + ' after=' + (env.api.state() && env.api.state().id));
+    check('the basket survives a refused add',
+      env.api.state().totalQuantity === 2, 'totalQuantity=' + env.api.state().totalQuantity);
+    check("Shopify's own message is shown to the customer",
+      /Only 2 left in stock\./.test(String(env.byId.sbBody.innerHTML)),
+      'drawer: ' + String(env.byId.sbBody.innerHTML).slice(0, 160));
+  }
+
+  /* 8 — a network failure must not destroy the basket either ------------- */
+  {
+    const env = boot();
+    await env.api.add('gid://variant/a');
+    const before = env.api.state().id;
+    env.server.failNext = 'cartLinesAdd';
+    try { await env.api.add('gid://variant/b'); } catch (e) {}
+    check('a network failure does NOT replace the existing cart',
+      env.api.state() && env.api.state().id === before,
+      'id before=' + before + ' after=' + (env.api.state() && env.api.state().id));
+  }
+
+  /* 9 — localStorage refusing writes must not fork the cart -------------- */
+  {
+    const env = boot({ storageThrows: true });
+    await env.api.add('gid://variant/x');
+    await env.api.add('gid://variant/y');
+    const creates = env.server.calls.filter(c => c === 'cartCreate').length;
+    check('storage failure (Safari private mode) still keeps ONE cart',
+      creates === 1, 'cartCreate calls: ' + creates);
+    check('both items survive when storage is unavailable',
+      env.api.state().totalQuantity === 2, 'totalQuantity=' + env.api.state().totalQuantity);
+  }
+
+  /* 10 — rapid + taps must accumulate, through the REAL click path ------- */
+  {
+    const env = boot();
+    const cart = await env.api.add('gid://variant/q');
+    const lineId = cart.lines.edges[0].node.id;
+    const body = env.byId.sbBody;
+    const handler = body.listeners.click[0];
+    const btn = { attrs: { 'data-act': 'inc', 'data-line': lineId, 'data-qty': '1' },
+                  getAttribute(k) { return this.attrs[k]; },
+                  closest() { return this; } };
+    handler({ target: btn });   /* three taps before any response lands */
+    handler({ target: btn });
+    handler({ target: btn });
+    await new Promise(r => setTimeout(r, 30));
+    check('three rapid + taps reach quantity 4, not 2',
+      env.api.state().totalQuantity === 4,
+      'totalQuantity=' + env.api.state().totalQuantity);
   }
 
   console.log('\n  ' + pass + ' passed, ' + fail + ' failed\n');
