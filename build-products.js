@@ -1104,25 +1104,14 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
         msg('Could not add to cart. Please try again.','err'); });
       return;
     }
-    var cid=null; try{ cid=localStorage.getItem('sb_cart'); }catch(e){}
-    var run = cid
-      ? sf('mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{'+CFRAG+'} userErrors{message}}}',{id:cid,l:[{merchandiseId:sel.id,quantity:1}]})
-          .then(function(d){ var c=d.cartLinesAdd&&d.cartLinesAdd.cart; if(!c) throw new Error('cart'); return c; })
-      : Promise.reject(new Error('no cart'));
-    run.catch(function(){
-      return sf('mutation($l:[CartLineInput!]!){cartCreate(input:{lines:$l}){cart{'+CFRAG+'}}}',{l:[{merchandiseId:sel.id,quantity:1}]})
-        .then(function(d){ return d.cartCreate.cart; });
-    }).then(function(cart){
-      try{ localStorage.setItem('sb_cart',cart.id); }catch(e){}
-      badge(cart.totalQuantity||1);
-      addEl.disabled=false; addEl.textContent='Add another';
-      msgEl.innerHTML='Added — <a href="'+cart.checkoutUrl+'">check out now</a> or <a href="/shop/">keep shopping</a>.';
-      msgEl.className='pdp-msg ok';
-      if(window.track) track('add_to_cart',{item_id:handle,size:sel.title});
-    }).catch(function(){
-      addEl.disabled=false; addEl.textContent='Add to cart';
-      msg('Could not add to cart. Please try again, or open the shop.','err');
-    });
+    /* No local fallback by design. This block used to run a SECOND, independent
+       Shopify cart whenever SahraCart was missing - creating its own cart, its
+       own storage write and its own badge. Two engines over one storage key is
+       what made the badge and the drawer disagree. assets/sahra-cart.js loads
+       on every page, so its absence is a real fault: report it, never paper
+       over it with a duplicate implementation. */
+    addEl.disabled=false; addEl.textContent='Add to cart';
+    msg('Cart is unavailable right now. Please refresh, or message us on WhatsApp.','err');
   });
 
   /* keep the header badge accurate on arrival */

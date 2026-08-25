@@ -576,13 +576,6 @@ img,svg,video{max-width:100%;height:auto}
 
 <div class="lb" id="lightbox" aria-label="Photo viewer"><button class="lb-close" id="lbClose" aria-label="Close">✕</button><button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button><img class="lb-img" id="lbImg" alt=""><button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button></div>
 
-<div class="overlay" id="overlay"></div>
-<aside class="drawer" id="drawer" aria-label="Cart">
-  <div class="drawer-head"><h3>Your cart</h3><button class="drawer-close" id="drawerClose" aria-label="Close">✕</button></div>
-  <div class="drawer-body" id="drawerBody"><div class="empty">Your cart is empty.</div></div>
-  <div class="drawer-foot" id="drawerFoot" style="display:none"><div class="subtotal"><span>Subtotal</span><span id="subtotal">AED 0</span></div><div class="tax-note">Shipping &amp; taxes calculated at checkout.</div><button class="btn checkout magnetic" id="checkout">Checkout</button></div>
-</aside>
-
 <footer>
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
@@ -1414,37 +1407,25 @@ function renderMap(el,pts){
 
 /* CART */
 var CART={id:null,lines:[]};
-function saveCid(id){try{localStorage.setItem('sb_cart',id||'');}catch(e){}}function loadCid(){try{return localStorage.getItem('sb_cart');}catch(e){return null;}}
+function saveCid(v){ /* shared engine owns the sb_cart key */ }function loadCid(){try{return localStorage.getItem('sb_cart');}catch(e){return null;}}
 async function addToCart(vid,meta){
-  track('add_to_cart',{item_name:meta.name,size:meta.size,fit:meta.fit});
-  var vtext=[meta.size,meta.fit].filter(Boolean).join(' · ');
-  if(DEMO){var ex=CART.lines.find(function(l){return l.vid===vid;});if(ex)ex.qty++;else CART.lines.push({id:'l'+Date.now()+Math.random(),vid:vid,qty:1,name:meta.name,variant:vtext,price:(PRODUCTS.find(function(x){return x.title===meta.name;})||{price:'149'}).price,cur:'AED',img:''});drawCart();openCart();return;}
-  try{var d;if(!CART.id){d=await sf('mutation($l:[CartLineInput!]!){cartCreate(input:{lines:$l}){cart{'+CFRAG+'}}}',{l:[{merchandiseId:vid,quantity:1}]});CART.id=d.cartCreate.cart.id;saveCid(CART.id);setCart(d.cartCreate.cart);}else{d=await sf('mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{'+CFRAG+'}}}',{id:CART.id,l:[{merchandiseId:vid,quantity:1}]});setCart(d.cartLinesAdd.cart);}openCart();}catch(e){alert('Could not add to cart. '+e.message);}
+  /* Delegates to the ONE cart engine in assets/sahra-cart.js. This function
+     used to run a second, independent Shopify cart on this page. */
+  meta=meta||{};
+  try{track('add_to_cart',{item_name:meta.name,size:meta.size,fit:meta.fit});}catch(e){}
+  if(window.SahraCart) return window.SahraCart.add(vid);
+  return Promise.reject(new Error('cart unavailable'));
 }
-async function removeLine(id){if(DEMO){CART.lines=CART.lines.filter(function(l){return l.id!==id;});drawCart();return;}try{var d=await sf('mutation($id:ID!,$l:[ID!]!){cartLinesRemove(cartId:$id,lineIds:$l){cart{'+CFRAG+'}}}',{id:CART.id,l:[id]});setCart(d.cartLinesRemove.cart);}catch(e){}}
-function setCart(c){CART.checkoutUrl=c.checkoutUrl;CART.subtotal=c.cost.subtotalAmount;CART.lines=c.lines.edges.map(function(e){var n=e.node,m=n.merchandise;return{id:n.id,qty:n.quantity,name:m.product.title,variant:m.title,price:m.price.amount,cur:m.price.currencyCode,img:m.product.featuredImage?m.product.featuredImage.url:''};});drawCart();}
-function drawCart(){
-      var body=document.getElementById('drawerBody'),foot=document.getElementById('drawerFoot'),cnt=document.getElementById('cartCount');
-      var total=CART.lines.reduce(function(a,l){return a+l.qty;},0);
-      /* Guarded: the cart badge was removed from the nav during the reveal and
-         this threw "Cannot set properties of null" on every add to cart once
-         commerce was switched back on. A missing badge must never block a sale. */
-      if(cnt){cnt.textContent=total;cnt.style.display=total?'flex':'none';}
-  if(!body||!foot)return;
-      if(!CART.lines.length){body.innerHTML='<div class="empty">Your cart is empty.</div>';foot.style.display='none';return;}
-  body.innerHTML=CART.lines.map(function(l){return '<div class="line"><div class="line-img" '+(l.img?'style="background-image:url('+l.img+')"':'')+'></div><div class="line-info"><div class="line-name">'+l.name+'</div><div class="line-var">'+l.variant+' · Qty '+l.qty+'</div><button class="line-rm" data-id="'+l.id+'">Remove</button></div><div class="line-price">'+money(parseFloat(l.price)*l.qty,l.cur)+'</div></div>';}).join('');
-  body.querySelectorAll('.line-rm').forEach(function(b){b.addEventListener('click',function(){removeLine(b.dataset.id);});});
-  var sub=DEMO?CART.lines.reduce(function(a,l){return a+parseFloat(l.price)*l.qty;},0):(CART.subtotal?CART.subtotal.amount:0);
-  (document.getElementById('subtotal')||{}).textContent=money(sub,CART.lines[0].cur);foot.style.display='block';
-  if(typeof gsap!=='undefined'&&!REDUCED)gsap.from(body.querySelectorAll('.line'),{opacity:0,x:24,stagger:.06,duration:.5,ease:'power2'});
-}
+async function removeLine(id){ /* the shared cart owns line removal; this page's own drawer was removed */ if(window.SahraCart) return window.SahraCart.remove(id); }
+function setCart(c){ /* shared engine owns cart state */ }
+function drawCart(){ /* the shared drawer paints itself */ }
 /* Null-safe binding. Cart UI is absent when commerce is off, and a hard
    getElementById(...).addEventListener on a missing node throws, which kills
    every script after it — including the product render and the map. */
 function onEl(id,ev,fn){var el=document.getElementById(id); if(el) el.addEventListener(ev,fn); return !!el;}
 
-function openCart(){var d=document.getElementById('drawer'),o=document.getElementById('overlay');if(d)d.classList.add('open');if(o)o.classList.add('open');}
-function closeCart(){var d=document.getElementById('drawer'),o=document.getElementById('overlay');if(d)d.classList.remove('open');if(o)o.classList.remove('open');}
+function openCart(){ if(window.SahraCart) window.SahraCart.open(); }
+function closeCart(){ if(window.SahraCart) window.SahraCart.close(); }
 onEl('cartBtn','click',openCart);
 onEl('drawerClose','click',closeCart);
 onEl('overlay','click',closeCart);

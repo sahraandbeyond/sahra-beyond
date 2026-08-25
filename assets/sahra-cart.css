@@ -39,3 +39,19 @@
 .qa-sz:disabled{opacity:.33;text-decoration:line-through;cursor:not-allowed}
 .qa-sz:hover:not(:disabled){background:#E9B978;border-color:#E9B978;color:#2B2520}
 .qa-sizes a{font-size:13px;text-decoration:underline}
+
+/* --- quantity stepper + error state (added with the cart rewrite) ---------
+   Controls are 34px so they clear the 24px minimum comfortably on a phone,
+   and the boundary uses a visible tone: a 1.26:1 hairline on a control the
+   customer must hit is the same defect the shop filters had. */
+.sb-qty{display:inline-flex;align-items:center;gap:2px;margin-top:8px}
+.sb-q{width:34px;height:34px;min-width:34px;padding:0;cursor:pointer;
+  border:1px solid rgba(42,32,22,.58);background:#fff;color:#2A2016;
+  font-family:'Space Mono',monospace;font-size:15px;line-height:1;border-radius:2px}
+.sb-q:hover{background:#F4EEE3;border-color:#7E4114}
+.sb-q:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.sb-qn{min-width:34px;text-align:center;font-family:'Space Mono',monospace;
+  font-size:14px;color:#2A2016}
+.sb-err{margin:0 0 14px;padding:11px 13px;border-radius:2px;
+  background:#F6E8DF;border:1px solid #7E4114;color:#5C2F0E;
+  font-size:14px;line-height:1.5}

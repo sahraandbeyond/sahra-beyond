@@ -1741,3 +1741,44 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
     }
   }
 })();
+
+/* ==========================================================================
+   Asset cache-busting — computed, never hand-written.
+   ==========================================================================
+   The ?v= hashes used to be hardcoded literals in this file and in the
+   hand-maintained pages. Change assets/sahra-cart.js and every page kept
+   pointing at the old hash, so browsers served the previous file for a day and
+   the fix reached nobody. The cart rewrite would have shipped exactly that way.
+
+   This runs LAST and rewrites every /assets/<file>?v=... reference across all
+   built HTML to the current content hash. Nothing to remember, nothing to
+   forget. prepush.js independently verifies the result.
+   ========================================================================== */
+(function stampAssets() {
+  const crypto = require('crypto');
+  const ver = {};
+  const adir = path.join(__dirname, 'assets');
+  if (!fs.existsSync(adir)) return;
+  for (const a of fs.readdirSync(adir)) {
+    if (!/\.(css|js)$/.test(a)) continue;
+    ver[a] = crypto.createHash('sha1').update(fs.readFileSync(path.join(adir, a))).digest('hex').slice(0, 8);
+  }
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html')) pages.push(p);
+    }
+  })(__dirname);
+
+  let touched = 0;
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    const out = src.replace(/\/assets\/([A-Za-z0-9._-]+\.(?:css|js))(\?v=[0-9a-f]*)?/g,
+      (m, name) => ver[name] ? `/assets/${name}?v=${ver[name]}` : m);
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  ✓ asset hashes stamped on ${touched} page(s)`);
+})();

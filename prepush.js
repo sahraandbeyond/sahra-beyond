@@ -172,6 +172,44 @@ try {
   console.log(`    ${C.dim}run: node contrast-guard.js${C.off}`);
 }
 
+// ---- 2e. ONE cart engine, and it must still work ------------------------
+// The checkout shipped three independent cart implementations: the shared
+// module, an inline one on /shop/ with its own drawer and badge, and a
+// fallback on every product page. All three wrote the same `sb_cart` key with
+// separate in-memory state, so the badge and the drawer routinely disagreed —
+// customers saw items in the badge and an empty cart. Only assets/sahra-cart.js
+// may touch a Shopify cart mutation.
+// Built from parts so this checker does not match its own source.
+const CART_MUTATION = new RegExp('cart' + ['Create', 'LinesAdd', 'LinesUpdate', 'LinesRemove'].join('|cart'));
+const CART_TOOLING = ['prepush.js', 'cart-test.js'];   // allowed to name the mutations
+const cartOwners = files.filter(f => /\.(html|js)$/.test(f))
+  .filter(f => !/[\\/](_backup|node_modules)[\\/]/.test(f))
+  .filter(f => CART_MUTATION.test(fs.readFileSync(f, 'utf8')))
+  .map(f => path.relative(ROOT, f).split(path.sep).join('/'))
+  .filter(f => !CART_TOOLING.includes(f));
+let cartOk = true;
+if (cartOwners.length === 1 && cartOwners[0] === 'assets/sahra-cart.js') {
+  console.log(`  ${C.ok}✓${C.off} one cart engine (assets/sahra-cart.js)`);
+} else {
+  cartOk = false;
+  console.log(`\n  ${C.bad}✗ ${cartOwners.length} file(s) contain cart mutations — there must be exactly one:${C.off}`);
+  cartOwners.forEach(f => console.log(`     ${C.bad}${f}${C.off}`));
+  console.log(`    ${C.dim}a second cart engine is what made the badge and drawer disagree.${C.off}`);
+}
+
+let cartTestOk = true;
+try {
+  const out = require('child_process').execSync('node cart-test.js', { cwd: ROOT, encoding: 'utf8' });
+  const m = /(\d+) passed, (\d+) failed/.exec(out);
+  console.log(`  ${C.ok}✓${C.off} cart behaviour: ${m ? m[1] : '?'} test(s) passed`);
+} catch (e) {
+  cartTestOk = false;
+  console.log(`\n  ${C.bad}✗ cart regression tests FAILED — do not push:${C.off}`);
+  String(e.stdout || '').split('\n').filter(l => l.includes('✗')).slice(0, 8)
+    .forEach(l => console.log(`     ${C.bad}${l.trim()}${C.off}`));
+  console.log(`    ${C.dim}run: node cart-test.js${C.off}`);
+}
+
 // ---- 3. what will actually be committed --------------------------------
 // This used to list files by MTIME, which was actively misleading: `node
 // build.js` rewrites ~124 files with byte-identical content, so every build
@@ -213,4 +251,4 @@ if (usedGit) {
 }
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk) ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk) ? 1 : 0);
