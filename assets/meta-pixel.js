@@ -107,35 +107,47 @@
   sbMeta('PageView');
 
   /* ---- ViewContent, read from Product JSON-LD -------------------------- */
-  /* Every product page already carries a schema.org Product block. Reading it
-     means new products need no pixel changes at all. */
-  try {
-    var nodes = document.querySelectorAll('script[type="application/ld+json"]');
-    for (var i = 0; i < nodes.length; i++) {
-      var data;
-      try { data = JSON.parse(nodes[i].textContent); } catch (e) { continue; }
-      var list = Array.isArray(data) ? data : [data];
-      for (var j = 0; j < list.length; j++) {
-        var d = list[j];
-        if (!d || d['@type'] !== 'Product') continue;
+  /* Every product page already carries a schema.org Product block, so reading
+     it means new products need no pixel changes at all.
 
-        var offer = d.offers || {};
-        var price = offer.price;
-        var currency = offer.priceCurrency || 'AED';
-        var sku = d.sku || d.name;
+     This MUST wait for DOMContentLoaded. This script sits in <head>, above the
+     JSON-LD, so at execution time those blocks are not in the DOM yet and a
+     direct read finds nothing — which silently cost us every ViewContent. */
+  function fireViewContent() {
+    try {
+      var nodes = document.querySelectorAll('script[type="application/ld+json"]');
+      for (var i = 0; i < nodes.length; i++) {
+        var data;
+        try { data = JSON.parse(nodes[i].textContent); } catch (e) { continue; }
+        var list = Array.isArray(data) ? data : [data];
+        for (var j = 0; j < list.length; j++) {
+          var d = list[j];
+          if (!d || d['@type'] !== 'Product') continue;
 
-        /* Stash it so the cart can attach real value to AddToCart. */
-        window.__SB_PRODUCT = { sku: sku, price: price, currency: currency, name: d.name };
+          var offer = d.offers || {};
+          var price = offer.price;
+          var currency = offer.priceCurrency || 'AED';
+          var sku = d.sku || d.name;
 
-        sbMeta('ViewContent', {
-          content_type: 'product',
-          content_ids: [sku],
-          content_name: d.name,
-          value: price ? Number(price) : undefined,
-          currency: currency
-        });
-        return;
+          /* Stash it so the cart can attach real value to AddToCart. */
+          window.__SB_PRODUCT = { sku: sku, price: price, currency: currency, name: d.name };
+
+          sbMeta('ViewContent', {
+            content_type: 'product',
+            content_ids: [sku],
+            content_name: d.name,
+            value: price ? Number(price) : undefined,
+            currency: currency
+          });
+          return;
+        }
       }
-    }
-  } catch (e) {}
+    } catch (e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fireViewContent);
+  } else {
+    fireViewContent();
+  }
 })();
