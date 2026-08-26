@@ -243,6 +243,30 @@
     document.getElementById('sbSub').textContent =
       money(CART.cost.subtotalAmount.amount, CART.cost.subtotalAmount.currencyCode);
     document.getElementById('sbGo').href = CART.checkoutUrl;
+
+    /* Meta InitiateCheckout — fires on the click through to Shopify checkout.
+       Purchase itself is tracked on the Shopify side by the Meta sales channel,
+       because this site never sees the thank-you page. */
+    var _go = document.getElementById('sbGo');
+    if (_go && !_go.__sbMetaBound) {
+      _go.__sbMetaBound = 1;
+      _go.addEventListener('click', function () {
+        try {
+          if (!window.sbMeta || !CART || !CART.cost) return;
+          var nodes = (CART.lines && CART.lines.edges || []).map(function (e) { return e.node; });
+          var ids = nodes.map(function (l) {
+            return (l && l.merchandise && l.merchandise.id) || '';
+          }).filter(Boolean);
+          window.sbMeta('InitiateCheckout', {
+            value: Number(CART.cost.subtotalAmount.amount) || 0,
+            currency: CART.cost.subtotalAmount.currencyCode || 'AED',
+            num_items: CART.totalQuantity || nodes.length,
+            content_type: 'product',
+            content_ids: ids
+          });
+        } catch (e) {}
+      });
+    }
     foot.hidden = false;
   }
 
@@ -282,6 +306,25 @@
   function add(variantId, qty) {
     ensureUI();
     var want = Math.max(1, (qty | 0) || 1);
+
+    /* Meta AddToCart. On a product page __SB_PRODUCT carries the real sku and
+       price, read from the page's Product JSON-LD by /assets/meta-pixel.js.
+       Elsewhere (the shop grid) we still send the variant id so the event is
+       never lost, just without a value. */
+    try {
+      if (window.sbMeta) {
+        var _p = window.__SB_PRODUCT || {};
+        var _id = _p.sku || variantId;
+        window.sbMeta('AddToCart', {
+          content_type: 'product',
+          content_ids: [_id],
+          content_name: _p.name,
+          contents: [{ id: _id, quantity: want }],
+          value: _p.price ? Number(_p.price) * want : undefined,
+          currency: _p.currency || 'AED'
+        });
+      }
+    } catch (e) {}
     return queue(function () {
       lastError = null;
       /* In-memory id wins over storage. If localStorage is unavailable —

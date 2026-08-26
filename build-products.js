@@ -83,6 +83,9 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
   gtag('js',new Date());gtag('config','G-5NVFDWT29F');
   window.track=function(n,p){try{gtag('event',n,p||{});}catch(e){}};
 </script>
+<!-- Meta Pixel + Conversions API -->
+<script src="/assets/meta-pixel.js"></script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">

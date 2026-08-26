@@ -581,6 +581,9 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>
+<!-- Meta Pixel + Conversions API -->
+<script src="/assets/meta-pixel.js"></script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <style>${CSS}
 /* ---- Mobile polish --------------------------------------------------------
