@@ -487,3 +487,58 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
+/* ==========================================================================
+   Floating WhatsApp contact — every page, without getting in the way.
+   ==========================================================================
+   No third-party widget script (they cost 100kb+ and phone home), no auto-
+   opening bubble, nothing for the visitor to dismiss. It moves out of the way
+   of the two things that share the bottom of the screen: the PDP buy bar and
+   the cart drawer.
+
+   The prefilled message carries the page title, so a question about a product
+   arrives with the product already named instead of "hi".
+   ========================================================================== */
+(function () {
+  var NUM = '971585449946';
+  if (document.getElementById('sbWa')) return;
+
+  function build() {
+    if (document.getElementById('sbWa')) return;
+    var a = document.createElement('a');
+    a.id = 'sbWa'; a.className = 'sb-wa';
+    a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.setAttribute('aria-label', 'Message Sahra & Beyond on WhatsApp');
+    a.title = 'Message us on WhatsApp';
+
+    var where = (document.title || '').split('|')[0].split('—')[0].trim();
+    var msg = where ? 'Hi Sahra & Beyond — a question about ' + where + ':'
+                    : 'Hi Sahra & Beyond —';
+    a.href = 'https://wa.me/' + NUM + '?text=' + encodeURIComponent(msg);
+
+    a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+      '<path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15s-.77.96-.94 1.16c-.17.2-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.13-.28-.2-.58-.35z"/>' +
+      '<path d="M12.04 2A9.9 9.9 0 0 0 2.1 11.9c0 1.75.46 3.46 1.33 4.97L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01A9.9 9.9 0 0 0 22 11.94 9.9 9.9 0 0 0 12.04 2zm0 18.1a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.38 8.24 8.24 0 0 1 14.07-5.83 8.2 8.2 0 0 1 2.42 5.84 8.24 8.24 0 0 1-8.25 8.24z"/>' +
+      '</svg>';
+    document.body.appendChild(a);
+
+    /* Lift clear of the PDP sticky buy bar rather than covering its CTA. */
+    var bar = document.getElementById('buybar');
+    if (bar && window.MutationObserver) {
+      var syncBar = function () { a.classList.toggle('lift', bar.classList.contains('on')); };
+      new MutationObserver(syncBar).observe(bar, { attributes: true, attributeFilter: ['class'] });
+      syncBar();
+    }
+
+    /* Step aside while the cart drawer is open - it is a modal. */
+    var drawer = document.getElementById('sbDrawer');
+    if (drawer && window.MutationObserver) {
+      var syncDrawer = function () { a.classList.toggle('away', drawer.classList.contains('on')); };
+      new MutationObserver(syncDrawer).observe(drawer, { attributes: true, attributeFilter: ['class'] });
+      syncDrawer();
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
+  else build();
+})();

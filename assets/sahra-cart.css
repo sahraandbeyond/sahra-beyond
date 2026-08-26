@@ -55,3 +55,40 @@
 .sb-err{margin:0 0 14px;padding:11px 13px;border-radius:2px;
   background:#F6E8DF;border:1px solid #7E4114;color:#5C2F0E;
   font-size:14px;line-height:1.5}
+
+/* --- floating WhatsApp contact -------------------------------------------
+   Deliberately restrained. The usual widget is a bright green blob with an
+   auto-popping "Hi! How can we help?" bubble; that is noise on a quiet-luxury
+   page and it covers content on a phone. This is:
+     - brand clay, not WhatsApp green
+     - icon only, no bubble, no auto-open, nothing to dismiss
+     - bottom RIGHT, because .ambient-btn already owns bottom left
+     - lifted clear of the PDP #buybar when that bar is showing
+     - hidden entirely while the cart drawer is open
+   Lives in the cart stylesheet only because that file is already on every page
+   and already cache-busted; a separate file would cost a request on 57 pages. */
+.sb-wa{position:fixed;right:18px;z-index:115;
+  bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  width:52px;height:52px;min-width:52px;min-height:52px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;border:0;cursor:pointer;text-decoration:none;
+  background:#7E4114;color:#FFF6E8;
+  box-shadow:0 6px 20px rgba(24,17,9,.28);
+  transition:transform .25s ease,bottom .35s cubic-bezier(.4,0,.2,1),opacity .2s}
+.sb-wa:hover{background:#8E4A17;transform:translateY(-2px)}
+.sb-wa:focus-visible{outline:2px solid #7E4114;outline-offset:3px}
+.sb-wa svg{width:26px;height:26px;display:block;fill:currentColor}
+/* clear the sticky buy bar on product pages instead of sitting on top of it */
+.sb-wa.lift{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+/* the drawer is a modal; a floating button over it is just clutter */
+.sb-wa.away{opacity:0;pointer-events:none;transform:scale(.85);visibility:hidden}
+/* visibility:hidden, not opacity alone - a transparent link is still in the
+   tab order, so a keyboard user could focus an invisible button behind the
+   open drawer. */
+@media(max-width:700px){
+  .sb-wa{right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));
+    width:50px;height:50px;min-width:50px;min-height:50px}
+  .sb-wa.lift{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+}
+@media(prefers-reduced-motion:reduce){.sb-wa{transition:none}}
+@media print{.sb-wa{display:none}}
