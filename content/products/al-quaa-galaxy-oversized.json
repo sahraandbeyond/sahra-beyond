@@ -11,12 +11,12 @@
   "theme2": "#1B1430",
   "accent": "#E9B978",
   "scene": "galaxy",
-  "imgMain": "/shirts/alquaa-oversized-back.jpg",
-  "imgFront": "/shirts/alquaa-oversized-front.jpg",
-  "imgBack": "/shirts/alquaa-oversized-back.jpg",
-  "altMain": "Al Quaa Galaxy Tee, oversized fit — the Milky Way over the dunes printed across the back",
-  "altFront": "Al Quaa Galaxy Tee, oversized fit, front — small embroidered logo on the chest",
-  "altBack": "Al Quaa Galaxy Tee, oversized fit, back — the Milky Way rising over Al Quaa",
+  "imgMain": "/shirts/alquaa-oversized-back-fit.jpg",
+  "imgFront": "/shirts/alquaa-oversized-front-fit.jpg",
+  "imgBack": "/shirts/alquaa-oversized-back-fit.jpg",
+  "altMain": "Al Quaa Galaxy — Oversized, oversized fit — design across the back",
+  "altFront": "Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
+  "altBack": "Al Quaa Galaxy — Oversized, oversized fit, back view",
   "seoTitle": "Al Quaa Galaxy T-Shirt — Oversized Fit",
   "seoDesc": "The Al Quaa Galaxy tee in a true drop-shoulder oversized cut. The Milky Way over the darkest sky in the UAE. 230gsm cotton, unisex S–XL. AED 199.",
   "shareDesc": "Oversized fit. The Milky Way over Al Quaa — the darkest sky in the Emirates. 230gsm organic cotton. Limited first run.",
@@ -110,5 +110,7 @@
       "t": "Embroidered logo",
       "b": "The graphic on the back is printed direct-to-garment, but the logo on the front is stitched — raised thread you notice by touch. Two techniques on one shirt."
     }
-  ]
+  ],
+  "imgCompare": "/shirts/alquaa-fit-comparison.jpg",
+  "altCompare": "Al Quaa Galaxy — Oversized — regular fit and oversized fit shown side by side"
 }

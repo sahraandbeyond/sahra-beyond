@@ -11,12 +11,12 @@
   "theme2": "#1B1430",
   "accent": "#E9B978",
   "scene": "galaxy",
-  "imgMain": "/shirts/alquaa-regular-back.jpg",
-  "imgFront": "/shirts/alquaa-regular-front.jpg",
-  "imgBack": "/shirts/alquaa-regular-back.jpg",
-  "altMain": "Al Quaa Galaxy Tee, regular fit — the Milky Way over the dunes printed across the back",
-  "altFront": "Al Quaa Galaxy Tee, regular fit, front — small embroidered logo on the chest",
-  "altBack": "Al Quaa Galaxy Tee, regular fit, back — the Milky Way rising over Al Quaa",
+  "imgMain": "/shirts/alquaa-regular-back-fit.jpg",
+  "imgFront": "/shirts/alquaa-regular-front-fit.jpg",
+  "imgBack": "/shirts/alquaa-regular-back-fit.jpg",
+  "altMain": "Al Quaa Galaxy — Regular, regular fit — design across the back",
+  "altFront": "Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut",
+  "altBack": "Al Quaa Galaxy — Regular, regular fit, back view",
   "seoTitle": "Al Quaa Galaxy T-Shirt — Regular Fit",
   "seoDesc": "The Al Quaa Galaxy tee — the Milky Way over the only Bortle 1 sky in the Emirates. 230gsm organic cotton, regular fit, unisex S–XL. AED 199.",
   "shareDesc": "Regular fit. The Milky Way over Al Quaa — the darkest sky in the Emirates. 230gsm organic cotton. Limited first run.",
@@ -110,5 +110,7 @@
       "t": "Embroidered logo",
       "b": "The graphic on the back is printed direct-to-garment, but the logo on the front is stitched — raised thread you notice by touch. Two techniques on one shirt."
     }
-  ]
+  ],
+  "imgCompare": "/shirts/alquaa-fit-comparison.jpg",
+  "altCompare": "Al Quaa Galaxy — Regular — regular fit and oversized fit shown side by side"
 }

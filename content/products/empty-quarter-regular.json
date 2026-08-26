@@ -11,12 +11,12 @@
   "theme2": "#6B4A18",
   "accent": "#C0702E",
   "scene": "dunes",
-  "imgMain": "/shirts/emptyquarter-regular-front.jpg",
-  "imgFront": "/shirts/emptyquarter-regular-front.jpg",
-  "imgBack": "/shirts/emptyquarter-regular-back.jpg",
-  "altMain": "Empty Quarter Tee, regular fit — tonal embroidered sun over the dune ridges of Liwa",
-  "altFront": "Empty Quarter Tee, regular fit, front — tonal embroidered sun over the dunes",
-  "altBack": "Empty Quarter Tee, regular fit, back — plain, no print",
+  "imgMain": "/shirts/emptyquarter-regular-front-fit.jpg",
+  "imgFront": "/shirts/emptyquarter-regular-front-fit.jpg",
+  "imgBack": "/shirts/emptyquarter-regular-back-fit.jpg",
+  "altMain": "Empty Quarter — Regular, regular fit — embroidered design on the front",
+  "altFront": "Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut",
+  "altBack": "Empty Quarter — Regular, regular fit, back view",
   "seoTitle": "Empty Quarter T-Shirt — Regular Fit",
   "seoDesc": "The Empty Quarter tee — a tonal sun over the dunes of Liwa, embroidered rather than printed. 230gsm organic cotton, regular fit, unisex S–XL. AED 199.",
   "shareDesc": "Regular fit. A tonal embroidered sun setting over the dune ridges of Liwa. 230gsm organic cotton. Limited first run.",
@@ -105,5 +105,7 @@
   "colourName": "Beige",
   "colourPantone": "14-1118 TCX",
   "colourHex": "#D5BA98",
-  "decoration": "Embroidered throughout — no print"
+  "decoration": "Embroidered throughout — no print",
+  "imgCompare": "/shirts/emptyquarter-fit-comparison.jpg",
+  "altCompare": "Empty Quarter — Regular — regular fit and oversized fit shown side by side"
 }

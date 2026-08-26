@@ -11,12 +11,12 @@
   "theme2": "#6B4A18",
   "accent": "#C0702E",
   "scene": "dunes",
-  "imgMain": "/shirts/emptyquarter-oversized-front.jpg",
-  "imgFront": "/shirts/emptyquarter-oversized-front.jpg",
-  "imgBack": "/shirts/emptyquarter-oversized-back.jpg",
-  "altMain": "Empty Quarter Tee, oversized fit — tonal embroidered sun over the dune ridges of Liwa",
-  "altFront": "Empty Quarter Tee, oversized fit, front — tonal embroidered sun over the dunes",
-  "altBack": "Empty Quarter Tee, oversized fit, back — plain, no print",
+  "imgMain": "/shirts/emptyquarter-oversized-front-fit.jpg",
+  "imgFront": "/shirts/emptyquarter-oversized-front-fit.jpg",
+  "imgBack": "/shirts/emptyquarter-oversized-back-fit.jpg",
+  "altMain": "Empty Quarter — Oversized, oversized fit — embroidered design on the front",
+  "altFront": "Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
+  "altBack": "Empty Quarter — Oversized, oversized fit, back view",
   "seoTitle": "Empty Quarter T-Shirt — Oversized Fit",
   "seoDesc": "The Empty Quarter tee, oversized drop-shoulder cut. A tonal sun over the dunes of Liwa — stitched, not printed. 230gsm cotton, unisex S–XL. AED 199.",
   "shareDesc": "Oversized fit. A tonal embroidered sun setting over the dune ridges of Liwa. 230gsm organic cotton. Limited first run.",
@@ -105,5 +105,7 @@
   "colourName": "Beige",
   "colourPantone": "14-1118 TCX",
   "colourHex": "#D5BA98",
-  "decoration": "Embroidered throughout — no print"
+  "decoration": "Embroidered throughout — no print",
+  "imgCompare": "/shirts/emptyquarter-fit-comparison.jpg",
+  "altCompare": "Empty Quarter — Oversized — regular fit and oversized fit shown side by side"
 }

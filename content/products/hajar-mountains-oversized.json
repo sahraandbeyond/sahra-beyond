@@ -11,12 +11,12 @@
   "theme2": "#5C3A2E",
   "accent": "#C0702E",
   "scene": "mountains",
-  "imgMain": "/shirts/hajar-oversized-back.jpg",
-  "imgFront": "/shirts/hajar-oversized-front.jpg",
-  "imgBack": "/shirts/hajar-oversized-back.jpg",
-  "altMain": "Hajar Mountains Tee, oversized fit — red rock of the Hajar range printed across the back",
-  "altFront": "Hajar Mountains Tee, oversized fit, front — embroidered topographic logo on the chest",
-  "altBack": "Hajar Mountains Tee, oversized fit, back — the red rock of the Hajar Mountains",
+  "imgMain": "/shirts/hajar-oversized-back-fit.jpg",
+  "imgFront": "/shirts/hajar-oversized-front-fit.jpg",
+  "imgBack": "/shirts/hajar-oversized-back-fit.jpg",
+  "altMain": "Hajar Mountains — Oversized, oversized fit — design across the back",
+  "altFront": "Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
+  "altBack": "Hajar Mountains — Oversized, oversized fit, back view",
   "seoTitle": "Hajar Mountains T-Shirt — Oversized Fit",
   "seoDesc": "The Hajar Mountains tee in an oversized drop-shoulder cut. Topographic peaks front, red rock across the back. 230gsm cotton, unisex S–XL. AED 199.",
   "shareDesc": "Oversized fit. A topographic line drawing of the Hajar peaks. 230gsm organic cotton, made to layer. Limited first run.",
@@ -110,5 +110,7 @@
       "t": "Embroidered logo",
       "b": "The mountain graphic is printed direct-to-garment; the logo sitting above it is embroidered. Thread against ink, deliberately."
     }
-  ]
+  ],
+  "imgCompare": "/shirts/hajar-fit-comparison.jpg",
+  "altCompare": "Hajar Mountains — Oversized — regular fit and oversized fit shown side by side"
 }

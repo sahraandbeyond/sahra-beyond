@@ -11,12 +11,12 @@
   "theme2": "#5C3A2E",
   "accent": "#C0702E",
   "scene": "mountains",
-  "imgMain": "/shirts/hajar-regular-back.jpg",
-  "imgFront": "/shirts/hajar-regular-front.jpg",
-  "imgBack": "/shirts/hajar-regular-back.jpg",
-  "altMain": "Hajar Mountains Tee, regular fit — red rock of the Hajar range printed across the back",
-  "altFront": "Hajar Mountains Tee, regular fit, front — embroidered topographic logo on the chest",
-  "altBack": "Hajar Mountains Tee, regular fit, back — the red rock of the Hajar Mountains",
+  "imgMain": "/shirts/hajar-regular-back-fit.jpg",
+  "imgFront": "/shirts/hajar-regular-front-fit.jpg",
+  "imgBack": "/shirts/hajar-regular-back-fit.jpg",
+  "altMain": "Hajar Mountains — Regular, regular fit — design across the back",
+  "altFront": "Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut",
+  "altBack": "Hajar Mountains — Regular, regular fit, back view",
   "seoTitle": "Hajar Mountains T-Shirt — Regular Fit",
   "seoDesc": "The Hajar Mountains tee — a topographic drawing of the peaks, red rock across the back. 230gsm organic cotton, regular fit, unisex S–XL. AED 199.",
   "shareDesc": "Regular fit. A topographic line drawing of the Hajar peaks. 230gsm organic cotton, made to layer. Limited first run.",
@@ -110,5 +110,7 @@
       "t": "Embroidered logo",
       "b": "The mountain graphic is printed direct-to-garment; the logo sitting above it is embroidered. Thread against ink, deliberately."
     }
-  ]
+  ],
+  "imgCompare": "/shirts/hajar-fit-comparison.jpg",
+  "altCompare": "Hajar Mountains — Regular — regular fit and oversized fit shown side by side"
 }

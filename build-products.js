@@ -92,7 +92,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
 <!-- Product JSON-LD. NOTE: no aggregateRating until there are REAL reviews — never fabricate ratings. -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":${J(p.name)},"sku":${J(p.sku)},
-"image":[${J(SITE+p.imgMain)},${J(SITE+p.imgFront)},${J(SITE+p.imgBack)}],
+"image":[${[p.imgMain,p.imgFront,p.imgBack,p.imgCompare].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).map(v=>J(SITE+v)).join(',')}],
 "description":${J(p.ldDesc)},
 "brand":{"@type":"Brand","name":"Sahra & Beyond"},
 "material":"100% organic cotton",
@@ -517,12 +517,14 @@ ${RV.CSS}
         <span class="gal-hint">Click to zoom</span>
         <img class="on" src="../..${p.imgMain}" alt="${esc(p.altMain)}">
         <img src="../..${p.imgFront}" alt="${esc(p.altFront)}">
-        <img src="../..${p.imgBack}" alt="${esc(p.altBack)}">
+        <img src="../..${p.imgBack}" alt="${esc(p.altBack)}">${p.imgCompare ? `
+        <img src="../..${p.imgCompare}" alt="${esc(p.altCompare || 'Regular and oversized fit compared')}">` : ''}
       </div>
       <div class="gal-thumbs" id="thumbs">
         <button class="on" data-i="0" aria-label="View flat lay"><img src="../..${p.imgMain}" alt=""></button>
         <button data-i="1" aria-label="View front"><img src="../..${p.imgFront}" alt=""></button>
-        <button data-i="2" aria-label="View back"><img src="../..${p.imgBack}" alt=""></button>
+        <button data-i="2" aria-label="View back"><img src="../..${p.imgBack}" alt=""></button>${p.imgCompare ? `
+        <button data-i="3" aria-label="Compare regular and oversized fit"><img src="../..${p.imgCompare}" alt=""></button>` : ''}
       </div>
     </div>
 
