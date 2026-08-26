@@ -197,6 +197,8 @@ table.sz td:first-child{font-weight:600}
 .stock{margin:22px 0 4px}
 .stock-lab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--txt-soft);margin-bottom:9px}
 .stock-row{display:flex;flex-wrap:wrap;gap:8px}
+.pdp-stock{margin:0 0 10px;font-family:'Space Mono',monospace;font-size:12px;
+  letter-spacing:.6px;color:#7E4114}
 .sz-chip{font-family:'Space Mono',monospace;font-size:12px;padding:9px 15px;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;background:var(--chip)}
 .sz-chip.out{opacity:.42;text-decoration:line-through}
 .stock-note{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--txt-soft);margin-top:9px}
@@ -517,11 +519,11 @@ body.dark-bg .rv-stars{color:#E9B978}
       <p class="occasion">✦ Made for stargazing nights &amp; desert camps under a Bortle&nbsp;1 sky</p>
       <!-- Live size availability, fetched from Shopify. Hidden until data arrives so we never
            show stock we can't verify. -->
-      <div class="stock" id="stock" hidden>
-        <div class="stock-lab">Available sizes</div>
-        <div class="stock-row" id="stock-row"></div>
-        <div class="stock-note" id="stock-note"></div>
-      </div>
+      <!-- Pre-launch only. When the buy box is live it owns size selection, and a
+           second, non-clickable row of the same sizes above it read as a broken
+           control: a customer clicked it, nothing happened, and he assumed the
+           store was not open. The scarcity line survives inside the buy box. -->
+      
       
       <!-- Buy box. Product pages are where search and social traffic lands, so
            they must sell directly instead of bouncing to /shop/ to start again. -->
@@ -530,6 +532,7 @@ body.dark-bg .rv-stars{color:#E9B978}
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
           <span class="pdp-loading">Loading sizes&hellip;</span>
         </div>
+        <p class="pdp-stock" id="pdpStock" hidden></p>
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled>Select a size</button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <a class="btn ghost" href="#fit">Size &amp; fit</a>
@@ -807,7 +810,12 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
   var HANDLE='al-quaa-galaxy-oversized', NAME="Al Quaa Galaxy — Oversized";
   var box=document.getElementById('stock'),row=document.getElementById('stock-row'),note=document.getElementById('stock-note');
-  if(!box||!row)return;
+  var pdpStock=document.getElementById('pdpStock');
+  /* Pre-launch the #stock block exists; live it does not, and the scarcity
+     line goes in the buy box instead. Bail only if BOTH destinations are
+     absent - the old guard returned on !box and would have killed the
+     availability fetch the moment that block was removed. */
+  if(!box && !pdpStock) return;
   var q='{products(first:24){edges{node{handle title variants(first:40){edges{node{availableForSale selectedOptions{name value}}}}}}}}';
   fetch('https://'+SHOPIFY.domain+'/api/'+SHOPIFY.apiVersion+'/graphql.json',{
     method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':SHOPIFY.token},
@@ -831,13 +839,18 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     var sizes=Object.keys(seen);
     if(!sizes.length)return;
     sizes.sort(function(a,b){var ia=order.indexOf(a),ib=order.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib);});
-    row.innerHTML=sizes.map(function(sz){
+    if(row) row.innerHTML=sizes.map(function(sz){
       return '<span class="sz-chip'+(seen[sz]?'':' out')+'">'+sz+(seen[sz]?'':' · sold out')+'</span>';
     }).join('');
     var left=sizes.filter(function(sz){return seen[sz];}).length;
-    note.textContent = left===0 ? 'Fully sold out in this run.'
-      : (left<=2 ? 'Only '+left+' size'+(left>1?'s':'')+' left in this run.' : 'Live from our store.');
-    box.hidden=false;
+    /* Scarcity is worth saying; "Live from our store" is not - it tells the
+       customer nothing and only appears where they expect a control. */
+    var msg = left===0 ? 'Fully sold out in this run.'
+      : (left<=2 ? 'Only '+left+' size'+(left>1?'s':'')+' left in this run.' : '');
+    if(note) note.textContent = msg || 'Live from our store.';
+    if(box) box.hidden=false;
+    var ps=document.getElementById('pdpStock');
+    if(ps && msg){ ps.textContent=msg; ps.hidden=false; }
   }).catch(function(){/* offline or store not live — leave hidden */});
 })();
 
