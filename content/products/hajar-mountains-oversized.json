@@ -11,9 +11,9 @@
   "theme2": "#5C3A2E",
   "accent": "#C0702E",
   "scene": "mountains",
-  "imgMain": "/shirts/hajar-oversized-back-fit.jpg",
-  "imgFront": "/shirts/hajar-oversized-front-fit.jpg",
-  "imgBack": "/shirts/hajar-oversized-back-fit.jpg",
+  "imgMain": "/shirts/hajar-oversized-back.jpg",
+  "imgFront": "/shirts/hajar-oversized-front.jpg",
+  "imgBack": "/shirts/hajar-oversized-back.jpg",
   "altMain": "Hajar Mountains — Oversized, oversized fit — design across the back",
   "altFront": "Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
   "altBack": "Hajar Mountains — Oversized, oversized fit, back view",
@@ -112,5 +112,6 @@
     }
   ],
   "imgCompare": "/shirts/hajar-fit-comparison.jpg",
-  "altCompare": "Hajar Mountains — Oversized — regular fit and oversized fit shown side by side"
+  "altCompare": "Hajar Mountains — Oversized — regular fit and oversized fit shown side by side",
+  "fitLabel": "Oversized fit"
 }

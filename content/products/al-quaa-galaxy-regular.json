@@ -11,9 +11,9 @@
   "theme2": "#1B1430",
   "accent": "#E9B978",
   "scene": "galaxy",
-  "imgMain": "/shirts/alquaa-regular-back-fit.jpg",
-  "imgFront": "/shirts/alquaa-regular-front-fit.jpg",
-  "imgBack": "/shirts/alquaa-regular-back-fit.jpg",
+  "imgMain": "/shirts/alquaa-regular-back.jpg",
+  "imgFront": "/shirts/alquaa-regular-front.jpg",
+  "imgBack": "/shirts/alquaa-regular-back.jpg",
   "altMain": "Al Quaa Galaxy — Regular, regular fit — design across the back",
   "altFront": "Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut",
   "altBack": "Al Quaa Galaxy — Regular, regular fit, back view",
@@ -112,5 +112,6 @@
     }
   ],
   "imgCompare": "/shirts/alquaa-fit-comparison.jpg",
-  "altCompare": "Al Quaa Galaxy — Regular — regular fit and oversized fit shown side by side"
+  "altCompare": "Al Quaa Galaxy — Regular — regular fit and oversized fit shown side by side",
+  "fitLabel": "Regular fit"
 }

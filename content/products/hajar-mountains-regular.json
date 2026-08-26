@@ -11,9 +11,9 @@
   "theme2": "#5C3A2E",
   "accent": "#C0702E",
   "scene": "mountains",
-  "imgMain": "/shirts/hajar-regular-back-fit.jpg",
-  "imgFront": "/shirts/hajar-regular-front-fit.jpg",
-  "imgBack": "/shirts/hajar-regular-back-fit.jpg",
+  "imgMain": "/shirts/hajar-regular-back.jpg",
+  "imgFront": "/shirts/hajar-regular-front.jpg",
+  "imgBack": "/shirts/hajar-regular-back.jpg",
   "altMain": "Hajar Mountains — Regular, regular fit — design across the back",
   "altFront": "Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut",
   "altBack": "Hajar Mountains — Regular, regular fit, back view",
@@ -112,5 +112,6 @@
     }
   ],
   "imgCompare": "/shirts/hajar-fit-comparison.jpg",
-  "altCompare": "Hajar Mountains — Regular — regular fit and oversized fit shown side by side"
+  "altCompare": "Hajar Mountains — Regular — regular fit and oversized fit shown side by side",
+  "fitLabel": "Regular fit"
 }

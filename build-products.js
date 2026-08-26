@@ -56,6 +56,20 @@ function related(p, all){
   }).join('\n');
 }
 
+/* Gallery slides, deduped. imgMain is the same file as imgFront on the products
+   whose design sits on the front, which rendered slide 1 and slide 2 identically. */
+function galShots(p) {
+  const raw = [
+    [p.imgMain, p.altMain, 'View'],
+    [p.imgFront, p.altFront, 'View front'],
+    [p.imgBack, p.altBack, 'View back'],
+    [p.imgCompare, p.altCompare, 'Compare regular and oversized fit']
+  ].filter(x => x[0]);
+  const seen = new Set(), out = [];
+  for (const s of raw) { if (seen.has(s[0])) continue; seen.add(s[0]); out.push(s); }
+  return out;
+}
+
 function page(p, all, SITE, SHOP_URL, LAUNCHED){
   return `<!doctype html>
 <html lang="en">
@@ -175,6 +189,15 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
 .gal-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .6s ease,transform .9s ease}
 .gal-main img.on{opacity:1;transform:scale(1)}
 .gal-tag{position:absolute;top:15px;left:15px;z-index:2;background:rgba(0,0,0,.78);color:var(--gold);backdrop-filter:blur(6px);font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+/* Fit badge is HTML, deliberately. A label baked into the image is cut by
+   every crop this site applies - 4/5 takes 10% off each side, 4/3 takes 12.5%
+   off top and bottom - which is exactly how "REGULAR FIT" shipped as
+   "GULAR FIT". Markup cannot be cropped. */
+.gal-fit{position:absolute;left:14px;bottom:14px;z-index:3;
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
+  text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.82);
+  padding:8px 12px;border-radius:2px;pointer-events:none}
+@media(max-width:700px){.gal-fit{left:10px;bottom:10px;font-size:10px;padding:7px 10px}}
 .gal-thumbs{display:flex;gap:10px;margin-top:13px}
 .gal-thumbs button{width:74px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--edge,rgba(42,32,22,.58));background:none;cursor:pointer;padding:0;opacity:.78;transition:opacity .3s,border-color .3s,transform .3s}
 .gal-thumbs button:hover{transform:translateY(-3px)}
@@ -515,16 +538,13 @@ ${RV.CSS}
       <div class="gal-main">
         <span class="gal-tag">${esc(p.drop)}</span>
         <span class="gal-hint">Click to zoom</span>
-        <img class="on" src="../..${p.imgMain}" alt="${esc(p.altMain)}">
-        <img src="../..${p.imgFront}" alt="${esc(p.altFront)}">
-        <img src="../..${p.imgBack}" alt="${esc(p.altBack)}">${p.imgCompare ? `
-        <img src="../..${p.imgCompare}" alt="${esc(p.altCompare || 'Regular and oversized fit compared')}">` : ''}
+${galShots(p).map((s,i)=>`
+        <img${i===0?' class="on"':''} src="../..${s[0]}" alt="${esc(s[1]||'')}">`).join('')}
+        ${p.fitLabel ? `<span class="gal-fit" aria-hidden="true">${esc(p.fitLabel)}</span>` : ''}
       </div>
       <div class="gal-thumbs" id="thumbs">
-        <button class="on" data-i="0" aria-label="View flat lay"><img src="../..${p.imgMain}" alt=""></button>
-        <button data-i="1" aria-label="View front"><img src="../..${p.imgFront}" alt=""></button>
-        <button data-i="2" aria-label="View back"><img src="../..${p.imgBack}" alt=""></button>${p.imgCompare ? `
-        <button data-i="3" aria-label="Compare regular and oversized fit"><img src="../..${p.imgCompare}" alt=""></button>` : ''}
+${galShots(p).map((s,i)=>`
+        <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img src="../..${s[0]}" alt=""></button>`).join('')}
       </div>
     </div>
 

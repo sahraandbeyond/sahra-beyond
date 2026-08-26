@@ -11,9 +11,9 @@
   "theme2": "#6B4A18",
   "accent": "#C0702E",
   "scene": "dunes",
-  "imgMain": "/shirts/emptyquarter-regular-front-fit.jpg",
-  "imgFront": "/shirts/emptyquarter-regular-front-fit.jpg",
-  "imgBack": "/shirts/emptyquarter-regular-back-fit.jpg",
+  "imgMain": "/shirts/emptyquarter-regular-front.jpg",
+  "imgFront": "/shirts/emptyquarter-regular-front.jpg",
+  "imgBack": "/shirts/emptyquarter-regular-back.jpg",
   "altMain": "Empty Quarter — Regular, regular fit — embroidered design on the front",
   "altFront": "Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut",
   "altBack": "Empty Quarter — Regular, regular fit, back view",
@@ -107,5 +107,6 @@
   "colourHex": "#D5BA98",
   "decoration": "Embroidered throughout — no print",
   "imgCompare": "/shirts/emptyquarter-fit-comparison.jpg",
-  "altCompare": "Empty Quarter — Regular — regular fit and oversized fit shown side by side"
+  "altCompare": "Empty Quarter — Regular — regular fit and oversized fit shown side by side",
+  "fitLabel": "Regular fit"
 }

@@ -11,9 +11,9 @@
   "theme2": "#6B4A18",
   "accent": "#C0702E",
   "scene": "dunes",
-  "imgMain": "/shirts/emptyquarter-oversized-front-fit.jpg",
-  "imgFront": "/shirts/emptyquarter-oversized-front-fit.jpg",
-  "imgBack": "/shirts/emptyquarter-oversized-back-fit.jpg",
+  "imgMain": "/shirts/emptyquarter-oversized-front.jpg",
+  "imgFront": "/shirts/emptyquarter-oversized-front.jpg",
+  "imgBack": "/shirts/emptyquarter-oversized-back.jpg",
   "altMain": "Empty Quarter — Oversized, oversized fit — embroidered design on the front",
   "altFront": "Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
   "altBack": "Empty Quarter — Oversized, oversized fit, back view",
@@ -107,5 +107,6 @@
   "colourHex": "#D5BA98",
   "decoration": "Embroidered throughout — no print",
   "imgCompare": "/shirts/emptyquarter-fit-comparison.jpg",
-  "altCompare": "Empty Quarter — Oversized — regular fit and oversized fit shown side by side"
+  "altCompare": "Empty Quarter — Oversized — regular fit and oversized fit shown side by side",
+  "fitLabel": "Oversized fit"
 }
