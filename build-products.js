@@ -598,6 +598,7 @@ ${galShots(p).map((s,i)=>`
 
       <!-- Pre-launch capture: the shop isn't open yet, so give high-intent visitors a way to convert.
            Remove (or leave — it still works as a restock list) once LAUNCHED. -->
+      ${LAUNCHED ? '' : `
       <div class="wl-band" id="notify" data-waitlist-wrap>
         <h3>Be first to get this one</h3>
         <p class="wl-lead">This ${p.garment || 'tee'} is a limited first run. Join the list and we'll email you the moment it drops — before it goes public.</p>
@@ -608,6 +609,8 @@ ${galShots(p).map((s,i)=>`
         <p class="wl-msg">No spam — just the drop.</p>
         <p class="wl-ok">You&rsquo;re on the list. We&rsquo;ll email you before it drops. &#10022;</p>
       </div>
+`}
+
     </div>
   </section>
 </div>

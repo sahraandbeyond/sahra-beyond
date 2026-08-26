@@ -499,11 +499,15 @@ img,svg,video{max-width:100%;height:auto}
 <div id="progress"><i></i></div>
 <div id="grain"></div>
 <canvas id="ambient-canvas"></canvas>
-<div class="note" id="mode-note">PREVIEW — demo products · add your Shopify domain + token in the code to go live</div>
+<div class="note" id="mode-note">Free UAE delivery over AED 150 · Limited first run</div>
 
 <nav id="nav" class="on-hero">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
-  <div class="nav-links"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><button class="cart-btn" id="cartBtn" type="button" aria-label="Open cart"><span aria-hidden="true">&#128722;</span><span id="cartCount" class="cart-count">0</span></button></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div>
+  <!-- Sibling of .nav-links on purpose: that container is display:none
+       below 820px and the hamburger builder skips .cart-btn, so a cart
+       button nested inside it vanished entirely on every phone. -->
+  <button class="cart-btn" id="cartBtn" type="button" aria-label="Open cart"><span aria-hidden="true">&#128722;</span><span id="cartCount" class="cart-count">0</span></button><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="shophero" id="hero">
@@ -1051,7 +1055,7 @@ async function load(){
     });
     normalizePlaces();
     draw();
-  }catch(err){document.getElementById('products').innerHTML='<div class="loading">Couldn’t reach the store — check the domain and token.<br><small>'+String(err.message).slice(0,120)+'</small></div>';}
+  }catch(err){document.getElementById('products').innerHTML='<div class="loading">We could not load the collection just now. <button type="button" class="filt-linkish" onclick="location.reload()">Try again</button> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us on WhatsApp</a>.</div>';}
 }
 
 function imgHTML(src,alt){return src?'<img src="'+src+'" alt="'+(alt||'')+'">':'[ Design photo ]';}
@@ -1070,14 +1074,14 @@ function printFor(p){
   return {short:'DTG print &middot; soft &amp; breathable',long:'Direct-to-garment (DTG) print for a smooth hand-feel that keeps the cotton soft and breathable.'};
 }
 /* Product detail pages that exist under /products/<slug>/. Add a slug when a new product page ships. */
-var PDP_SLUGS=['al-quaa-galaxy-tee','empty-quarter-tee','hajar-mountains-tee'];
+var PDP_SLUGS=['al-quaa-galaxy-regular','al-quaa-galaxy-oversized','empty-quarter-regular','empty-quarter-oversized','hajar-mountains-regular','hajar-mountains-oversized','sand-polo'];
 function productPageFor(p){
   var h=String((p&&p.handle)||'').toLowerCase();
   if(PDP_SLUGS.indexOf(h)>=0)return '/products/'+h+'/';
   var t=(((p&&p.title)||'')+' '+((p&&p.place)||'')).toLowerCase();
-  if(/qua+|galaxy|milky/.test(t))return '/products/al-quaa-galaxy-tee/';
-  if(/liwa|dune|empty.?quarter/.test(t))return '/products/empty-quarter-tee/';
-  if(/hajar|naqab|mountain|topograph/.test(t))return '/products/hajar-mountains-tee/';
+  if(/qua+|galaxy|milky/.test(t))return '/products/al-quaa-galaxy-regular/';
+  if(/liwa|dune|empty.?quarter/.test(t))return '/products/empty-quarter-regular/';
+  if(/hajar|naqab|mountain|topograph/.test(t))return '/products/hajar-mountains-regular/';
   return '';
 }
 /* Lifestyle framing — where you'd actually wear it, by place. */
