@@ -45,7 +45,7 @@
    and the boundary uses a visible tone: a 1.26:1 hairline on a control the
    customer must hit is the same defect the shop filters had. */
 .sb-qty{display:inline-flex;align-items:center;gap:2px;margin-top:8px}
-.sb-q{width:34px;height:34px;min-width:34px;padding:0;cursor:pointer;
+.sb-q{width:44px;height:44px;min-width:44px;min-height:44px;padding:0;cursor:pointer;
   border:1px solid rgba(42,32,22,.58);background:#fff;color:#2A2016;
   font-family:'Space Mono',monospace;font-size:15px;line-height:1;border-radius:2px}
 .sb-q:hover{background:#F4EEE3;border-color:#7E4114}

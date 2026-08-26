@@ -134,7 +134,20 @@
 
     document.getElementById('sbX').addEventListener('click', close);
     document.getElementById('sbOv').addEventListener('click', close);
-    addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key !== 'Tab') return;
+      var d = document.getElementById('sbDrawer');
+      if (!d || !d.classList.contains('on')) return;
+      /* Real focus trap. aria-modal="true" was already on the element, which
+         tells a screen reader the rest of the page is inert - it was not, so
+         Tab landed the user on invisible content behind the overlay. */
+      var f = d.querySelectorAll('a[href],button:not([disabled]),input,[tabindex]:not([tabindex="-1"])');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
 
     /* One delegated listener on the drawer body. The old code re-bound a
        listener per button on every draw, which leaked handlers each redraw. */
@@ -164,6 +177,7 @@
     document.getElementById('sbOv').classList.add('on');
     document.getElementById('sbDrawer').setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    var mainEl = document.querySelector('main'); if (mainEl) mainEl.setAttribute('aria-hidden','true');
     /* Bug 1: the drawer must be painted from current state every time it is
        opened, not only after an add. */
     draw();
@@ -176,6 +190,7 @@
     d.setAttribute('aria-hidden', 'true');
     document.getElementById('sbOv').classList.remove('on');
     document.body.style.overflow = '';
+    var mEl = document.querySelector('main'); if (mEl) mEl.removeAttribute('aria-hidden');
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 

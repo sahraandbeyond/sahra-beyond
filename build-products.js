@@ -272,6 +272,8 @@ table.sz td:first-child{font-weight:600}
 .stock-row{display:flex;flex-wrap:wrap;gap:8px}
 .pdp-stock{margin:0 0 10px;font-family:'Space Mono',monospace;font-size:12px;
   letter-spacing:.6px;color:#7E4114}
+.sz-out{display:block;font-size:9px;letter-spacing:.6px;margin-top:2px;color:#6B6256}
+.gal-main:focus-visible{outline:2px solid #7E4114;outline-offset:3px}
 .sz-chip{font-family:'Space Mono',monospace;font-size:12px;padding:9px 15px;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;background:var(--chip)}
 .sz-chip.out{opacity:.42;text-decoration:line-through}
 .stock-note{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--txt-soft);margin-top:9px}
@@ -537,7 +539,7 @@ ${RV.CSS}
 
   <section class="pdp">
     <div class="media">
-      <div class="gal-main">
+      <div class="gal-main" tabindex="0" role="button" aria-label="Zoom product image">
         <span class="gal-tag">${esc(p.drop)}</span>
         <span class="gal-hint">Click to zoom</span>
 ${galShots(p).map((s,i)=>`
@@ -730,7 +732,7 @@ ${related(p, all)}
   <div class="bb-inner">
     <img class="bb-thumb" src="../..${p.imgMain}" alt="">
     <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub">AED ${esc(String(p.price))} · Limited first run</div></div>
-    ${LAUNCHED ? `<a class="btn shoplink" href="${SHOP_URL}#prod-${p.shopAnchor}">Shop this ${p.garment || "tee"}</a>` : `<a class="btn" href="#notify">Notify me</a>`}
+    ${LAUNCHED ? `<button class="btn" id="bbAdd" type="button">Add to cart</button>` : `<a class="btn" href="${SHOP_URL}#prod-${p.shopAnchor}">View in shop</a>`}
   </div>
 </div>
 
@@ -828,6 +830,33 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     document.body.style.overflow='hidden';if(window.track)track('image_zoom',{item_id:'${p.id}'});}
   function close(){lb.classList.remove('open');document.body.style.overflow='';}
   main.addEventListener('click',function(){open();});
+  main.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+
+/* ---------- sticky bar: buy, do not navigate away ----------
+   It used to be a link to /shop/. It carries the photo, name, price and one
+   bold button, so it reads as a buy control - but tapping it threw away the
+   size the shopper had just chosen and dumped them on another page. It now
+   drives the real Add button, or sends them to the size picker if none is
+   chosen yet. */
+(function(){
+  var bb=document.getElementById('bbAdd'); if(!bb) return;
+  bb.addEventListener('click',function(){
+    var add=document.getElementById('pdpAdd'), buy=document.getElementById('pdpBuy');
+    if(add && !add.disabled){ add.click(); return; }
+    if(buy){
+      buy.scrollIntoView({behavior:'smooth',block:'center'});
+      var first=document.querySelector('#pdpSizes button:not([disabled])');
+      if(first) setTimeout(function(){ first.focus(); },420);
+    }
+  });
+  /* mirror the real button's state so it never promises what it cannot do */
+  var add=document.getElementById('pdpAdd');
+  if(add && window.MutationObserver){
+    var sync=function(){ bb.textContent = add.disabled ? 'Choose a size' : 'Add to cart'; };
+    new MutationObserver(sync).observe(add,{attributes:true,attributeFilter:['disabled']});
+    sync();
+  }
+})();
   document.getElementById('lbClose').addEventListener('click',close);
   document.getElementById('lbPrev').addEventListener('click',function(e){e.stopPropagation();show(cur-1);});
   document.getElementById('lbNext').addEventListener('click',function(e){e.stopPropagation();show(cur+1);});
@@ -1115,6 +1144,13 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     if(c){c.textContent=n; c.style.display=n?'flex':'none';}
   }
 
+  /* A fetch that hangs never resolves or rejects, so the buy box sat on
+     "Loading sizes…" indefinitely on a poor connection. */
+  var sizeTimer=setTimeout(function(){
+    if(sizesEl && /Loading sizes/.test(sizesEl.textContent||'')){
+      sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a>.</span>';
+    }
+  },9000);
   sf('query($h:String!){product(handle:$h){title variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}',{h:handle})
   .then(function(d){
     if(!d.product){ sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
@@ -1124,7 +1160,11 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       var b=document.createElement('button');
       b.type='button'; b.className='pdp-size'; b.textContent=v.title;
       b.setAttribute('aria-pressed','false');
-      if(!v.availableForSale){ b.disabled=true; b.title='Sold out'; }
+      if(!v.availableForSale){ b.disabled=true; b.title='Sold out';
+        /* title= is a hover tooltip and phones have no hover: the shopper saw a
+           greyed chip, tapped it, and nothing explained why. */
+        b.setAttribute('aria-label', v.title+' — sold out');
+        b.innerHTML = v.title+'<span class="sz-out">Sold out</span>'; }
       b.addEventListener('click',function(){
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');

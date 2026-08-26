@@ -605,7 +605,7 @@ img,svg,video{max-width:100%;height:auto}
   .eyebrow.plink,.pm-gps,.read-place,.fitswap,.size-guide-link,.tag-invite a{
     display:inline-flex;align-items:center;min-height:44px;padding-top:2px;padding-bottom:2px}
   .foot-links a,.links a{width:100%}
-  button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.chip,.btn,button.cta,.cta,
+  button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.filt-clear,.filt-linkish,.chip,.btn,button.cta,.cta,
   .pdp-link,.buy-ghaf,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
     min-height:44px}
   /* dismiss controls need to be easy to hit, not just tall */
@@ -614,7 +614,7 @@ img,svg,video{max-width:100%;height:auto}
      rendered the icon as one wide line across the wordmark. It stays a block. */
   .lb-close,.drawer-close{min-width:44px;display:inline-flex;align-items:center;justify-content:center}
   .mnav{display:block;min-width:44px;min-height:44px;padding:11px;margin:-11px -11px -11px 0}
-  .nav-arrow{min-width:44px}
+  .nav-arrow{min-width:44px;min-height:44px}
   /* 16px minimum stops iOS zooming the page when a field is focused */
   /* 16px on FIELDS ONLY - buttons don't trigger iOS zoom and blowing up
      their label wraps the filter chips */
