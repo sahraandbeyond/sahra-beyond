@@ -1257,6 +1257,49 @@ if (LAUNCHED || REVEALED) (function () {
     html = html.replace('<a class="logo" href="#">', '<a class="logo" href="/">');
     html = html.replace('<div class="nav-links"><a href="#">Shop</a><a href="#">Places</a><a href="#">About</a>', '<div class="nav-links"><a href="/shop/">Shop</a><a href="/">Places</a><a href="/about/">About</a>');
     html = html.replace(/<footer>© \d{4} Sahra &amp; Beyond · Made in the UAE<\/footer>/, `<footer>${esc(TAGLINE)} · © ${new Date().getFullYear()} Sahra &amp; Beyond · Made in the UAE</footer>`);
+    /* ---- static product grid, so /shop/ is not empty before JS runs ----
+       The served HTML shipped `<main id="products"><div class="loading">Loading
+       the collection…</div></main>` and nothing else: no product names, no
+       prices, no links. The ItemList JSON-LD did carry all seven products, so
+       Google was not blind — but the *visible* commercial page had no product
+       text at all, which is why /shop/ is the thinnest commercial page on the
+       site, and why a visitor with JS blocked saw a permanent spinner.
+
+       This renders the same seven products from content/products/*.json at
+       build time. The Shopify fetch still replaces it on load with live stock
+       and availability, so nothing about the shopping experience changes — it
+       simply is not the only way to see the catalogue. */
+    const staticGrid = PRODUCTS_ALL.slice().sort((a, b) => (a.order || 99) - (b.order || 99)).map(p => `
+      <article class="sp-card">
+        <a class="sp-img" href="/products/${esc(p.id)}/">
+          <img src="${esc(p.imgMain || p.imgFront)}" alt="${esc(p.altMain || p.name)}" width="1536" height="1536" loading="lazy">
+        </a>
+        <h2 class="sp-name"><a href="/products/${esc(p.id)}/">${esc(p.name)}</a></h2>
+        <p class="sp-meta">AED ${esc(String(p.price))} &middot; ${esc(p.garment === 'polo' ? '240 GSM piqué' : '230 GSM cotton')} &middot; unisex S&ndash;XL</p>
+        <p class="sp-desc">${esc(p.shareDesc || p.ldDesc || p.seoDesc || '')}</p>
+        <a class="sp-cta" href="/products/${esc(p.id)}/">View ${esc(p.name)}</a>
+      </article>`).join('');
+
+    const gridCss = `<style>
+      .sp-grid{display:grid;gap:34px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:0 0 8px}
+      .sp-card{margin:0}
+      .sp-img{display:block;aspect-ratio:4/5;overflow:hidden;border-radius:2px;background:#EFEAE0}
+      .sp-img img{width:100%;height:100%;object-fit:contain;padding:6%;display:block}
+      .sp-name{font-size:19px;margin:14px 0 4px;font-weight:400}
+      .sp-name a{color:inherit;text-decoration:none}
+      .sp-meta{margin:0 0 8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.8px;color:#6B6256}
+      .sp-desc{margin:0 0 10px;font-size:14.5px;line-height:1.6}
+      .sp-cta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#7E4114}
+    </style>`;
+
+    html = html.replace(
+      '<main id="products"><div class="loading">Loading the collection&hellip;</div></main>',
+      gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>'
+    ).replace(
+      '<main id="products"><div class="loading">Loading the collection…</div></main>',
+      gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>'
+    );
+
     write('shop/index.html', html);
   } catch (e) { console.log('  ! shop page skipped: ' + e.message); }
 })();
