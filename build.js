@@ -134,6 +134,10 @@ function diffText(d) {
   return 'It suits reasonably active visitors who come prepared with water, sun protection and a plan.';
 }
 function faqsFor(l) {
+  /* A location may supply its own questions. The generated four below are a
+     floor, not a ceiling: they are the same on every page, so they answer
+     nothing a searcher actually typed. */
+  if (Array.isArray(l.faqs) && l.faqs.length) return l.faqs.map(q => [q.q, q.a]);
   const f = [];
   f.push(['When is the best time to visit ' + l.name + '?',
     'The best season for ' + l.name + ' is ' + (l.season || 'the cooler months (roughly October to April)') + ', when conditions in ' + l.emirate + ' are most comfortable for ' + String(l.category).toLowerCase() + '.']);
@@ -817,6 +821,7 @@ locations.forEach(l => {
     ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}" style="object-position:${esc(l.coverFocus || '50% 50%')}">` : ''}
     ${galleryHtml}
     <div class="content">${withProductLink(paras(l.body || l.desc), l.productLink)}</div>
+    ${Array.isArray(l.sections) ? l.sections.map(x => `<section class="guide-sec"><h2>${esc(x.h2)}</h2><div class="content">${paras(x.body)}</div></section>`).join('') : ''}
     <aside class="facts">
       <h2>Quick facts</h2>
       <ul>
