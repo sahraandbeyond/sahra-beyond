@@ -27,6 +27,29 @@ const REVEALED = false;
 function readJSON(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return null; } }
 function metaDesc(s) { s = String(s || ''); if (s.length <= 160) return s; const cut = s.slice(0, 157); return cut.slice(0, cut.lastIndexOf(' ')) + '…'; }
 function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+/* One contextual product link, mid-article, inside a real sentence.
+   Every location page already carries the three product cards in its footer
+   grid — 65 boilerplate links per page. Search engines discount sitewide
+   boilerplate almost entirely; a single editorial link inside body copy is the
+   one that counts, and it is also the only one a reader actually follows.
+   Placed after the second paragraph so it sits in the middle of the read, not
+   bolted to the end. Only rendered where the connection is honest — see
+   productLink in the location JSON. There is deliberately no link on the coast
+   pages, because there is no coast design. */
+function withProductLink(bodyHtml, pl) {
+  if (!pl || !pl.slug || !pl.sentence) return bodyHtml;
+  const link = `<p class="place-buy">${pl.sentence.replace('{{link}}',
+    `<a href="/products/${pl.slug}/">${esc(pl.anchor || 'see the tee')}</a>`)}</p>`;
+  const parts = bodyHtml.split('</p>');
+  const n = parts.length - 1;              /* number of paragraphs */
+  if (n < 1) return bodyHtml + link;
+  /* After para 2 normally; after para 1 on a two-paragraph body, which is what
+     "mid-article" means there. Appending to the end would make it a sign-off,
+     which is the banner behaviour we are avoiding. */
+  const at = Math.max(1, Math.min(2, n - 1));
+  return parts.slice(0, at).join('</p>') + '</p>' + link + parts.slice(at).join('</p>');
+}
+
 function paras(text) { return String(text || '').split(/\n\n+/).filter(Boolean).map(p => '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>').join(''); }
 /* Intrinsic image dimensions.
    Without width/height the browser cannot reserve space before the image loads,
@@ -310,6 +333,8 @@ main{max-width:820px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(16px,5vw,3
 h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(28px,5vw,44px);color:#33271B;line-height:1.1;margin-bottom:10px}
 .lede{font-size:14px;color:#9C521B;font-weight:600;margin-bottom:22px}
 h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33271B;margin:30px 0 12px}
+.place-buy{margin:22px 0}
+.place-buy a{color:var(--clay-deep,#7E4114);text-decoration:underline;text-underline-offset:3px}
 .content p{margin-bottom:16px;font-size:16.5px;color:#4A4136}
 /* location hero */
 .loc-hero{position:relative;color:#fff;padding:clamp(44px,8vw,88px) clamp(16px,5vw,32px) clamp(96px,14vw,164px);overflow:hidden}  /* bottom padding clears the dune silhouettes so the lede is never covered */
@@ -791,7 +816,7 @@ locations.forEach(l => {
   <main>
     ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}" style="object-position:${esc(l.coverFocus || '50% 50%')}">` : ''}
     ${galleryHtml}
-    <div class="content">${paras(l.body || l.desc)}</div>
+    <div class="content">${withProductLink(paras(l.body || l.desc), l.productLink)}</div>
     <aside class="facts">
       <h2>Quick facts</h2>
       <ul>
@@ -882,6 +907,8 @@ const LANDINGS = [
   },
   {
     slug: 'stargazing', h1: 'Best Places to See the Milky Way Galaxy in the UAE',
+    productLink: { slug: 'al-quaa-galaxy-regular', anchor: 'the Al Quaa Galaxy tee',
+      sentence: 'That view is the one printed on {{link}} — the core as it rises over Al Quaa, mapped rather than illustrated.' },
     title: 'Best Place to View the Milky Way Galaxy in the UAE | Sahra & Beyond',
     desc: 'The Milky Way core is visible over Al Quaa from May to October, not in winter. Moon phases, the drive from Dubai, and what you can see with no telescope.',
     pick: ['al-quaa-desert', 'crescent-moon-lake', 'desert-camping-lake-view', 'mleiha-desert'].map(id => locations.find(l => l.id === id)).filter(Boolean),
@@ -1116,7 +1143,7 @@ LANDINGS.forEach(L => {
     </div>
   </section>
   <main>
-    <div class="content">${paras(L.intro)}</div>
+    <div class="content">${withProductLink(paras(L.intro), L.productLink)}</div>
     ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
     ${sectionsHtml}
     ${faqHtml}

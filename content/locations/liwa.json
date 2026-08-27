@@ -12,5 +12,10 @@
   "status": "hot",
   "desc": "Home to some of the largest sand dunes on earth. The Empty Quarter starts here. An otherworldly landscape of mega-dunes and silence.",
   "cover": "",
-  "igPosts": []
+  "igPosts": [],
+  "productLink": {
+    "slug": "empty-quarter-regular",
+    "anchor": "the Empty Quarter tee",
+    "sentence": "These are the dunes behind {{link}} — a tonal sun embroidered over the ridge line, in a beige matched to the sand rather than printed on top of it."
+  }
 }

@@ -17,5 +17,10 @@
   "id": "desert-camping-lake-view",
   "difficulty": "Moderate",
   "category": "Camping",
-  "lat": 24.855626
+  "lat": 24.855626,
+  "productLink": {
+    "slug": "al-quaa-galaxy-regular",
+    "anchor": "the Al Quaa Galaxy tee",
+    "sentence": "Al Quaa's night sky, the one printed on {{link}}, is properly dark in a way this lake, closer to the city, rarely gets."
+  }
 }

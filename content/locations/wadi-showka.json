@@ -13,5 +13,10 @@
   "id": "wadi-showka",
   "difficulty": "Moderate",
   "category": "Wadis",
-  "lat": 25.02
+  "lat": 25.02,
+  "productLink": {
+    "slug": "hajar-mountains-regular",
+    "anchor": "the Hajar Mountains tee",
+    "sentence": "The peaks printed on {{link}} rise above Wadi Naqab, a neighbouring valley in these same Hajar foothills."
+  }
 }

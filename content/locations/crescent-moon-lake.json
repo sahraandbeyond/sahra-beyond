@@ -14,5 +14,10 @@
   "id": "crescent-moon-lake",
   "difficulty": "Easy",
   "category": "Camping",
-  "lat": 24.786829
+  "lat": 24.786829,
+  "productLink": {
+    "slug": "al-quaa-galaxy-regular",
+    "anchor": "the Al Quaa Galaxy tee",
+    "sentence": "The Milky Way on {{link}} was drawn rising over Al Quaa, a darker desert well south of this lake."
+  }
 }

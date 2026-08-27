@@ -14,5 +14,10 @@
   "id": "jabal-yanas",
   "difficulty": "Moderate",
   "category": "Mountains",
-  "lat": 25.726756
+  "lat": 25.726756,
+  "productLink": {
+    "slug": "hajar-mountains-regular",
+    "anchor": "the Hajar Mountains tee",
+    "sentence": "Same mountains, different summit: the ridge on {{link}} is drawn from Wadi Naqab, further north along the Hajar."
+  }
 }

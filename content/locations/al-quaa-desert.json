@@ -20,5 +20,10 @@
   "category": "Camping",
   "lat": 23.52924,
   "seoTitle": "Al Quaa Stargazing: One of the Darkest Skies in the UAE",
-  "seoDesc": "Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the Milky Way is only visible May to October."
+  "seoDesc": "Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the Milky Way is only visible May to October.",
+  "productLink": {
+    "slug": "al-quaa-galaxy-regular",
+    "anchor": "the Al Quaa Galaxy tee",
+    "sentence": "We mapped this sky onto a shirt — {{link}} prints the Milky Way exactly as it rises here, on 230gsm cotton dark enough to read it against."
+  }
 }

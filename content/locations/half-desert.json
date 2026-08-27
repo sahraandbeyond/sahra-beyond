@@ -14,5 +14,10 @@
   "id": "half-desert",
   "difficulty": "Easy",
   "category": "Dunes",
-  "lat": 25.1125467
+  "lat": 25.1125467,
+  "productLink": {
+    "slug": "empty-quarter-regular",
+    "anchor": "the Empty Quarter tee",
+    "sentence": "These are the dunes for learning on; the embroidered ridge on {{link}} belongs to Liwa, a much larger desert further south."
+  }
 }
