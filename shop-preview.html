@@ -610,14 +610,14 @@ var LIFESTYLE={'al-quaa-desert':'shirts/lifestyle-alquaa-hero.jpg','liwa':'shirt
 // Place data pulled from content/locations/*.json — lets each product lead with its location's story, GPS and night-sky detail.
 var PLACES={
  /* Coordinates are the authoritative ones from the /locations/ pages + content/locations/*.json — keep them in sync. */
- 'al-quaa-desert':{lat:23.52924,lng:54.75339,sky:'Bortle 1 · darkest sky in the Emirates',blurb:'One of the darkest skies in the Emirates — deep in the southern desert, far from any city glow, a magnet for stargazers chasing the Milky Way.'},
- 'liwa':{lat:23.1339,lng:53.7785,sky:'Bortle 2 · deep-desert dark sky',blurb:'Home to some of the largest sand dunes on earth, where the Empty Quarter begins — an otherworldly landscape of mega-dunes and silence.'},
- 'wadi-naqab':{lat:25.6988,lng:56.0054,sky:'~Bortle 3 · dark mountain sky',blurb:'A dramatic seasonal wadi high in the Hajar Mountains below Jebel Jais — red-rock walls, terraced pools and clear mountain air.'}
+ 'al-quaa-desert':{lat:23.52924,lng:54.75339,sky:'One of the darkest skies in the Emirates',blurb:'One of the darkest skies in the Emirates — deep in the southern desert, far from any city glow, a magnet for stargazers chasing the Milky Way.'},
+ 'liwa':{lat:23.1339,lng:53.7785,sky:'Deep-desert dark sky',blurb:'Home to some of the largest sand dunes on earth, where the Empty Quarter begins — an otherworldly landscape of mega-dunes and silence.'},
+ 'wadi-naqab':{lat:25.6988,lng:56.0054,sky:'Dark mountain sky',blurb:'A dramatic seasonal wadi high in the Hajar Mountains below Jebel Jais — red-rock walls, terraced pools and clear mountain air.'}
 };
 
 /* Tolerant place lookup. A Shopify `place:` tag like "Al Quaa" slugifies to `al-quaa`, which does NOT
    exact-match the PLACES key `al-quaa-desert` — that silently dropped the tee from the map (and lost its
-   GPS/Bortle meta). Resolve via exact key → alias → keyword, and return the CANONICAL slug so
+   GPS/sky meta). Resolve via exact key → alias → keyword, and return the CANONICAL slug so
    /locations/ links and #prod- anchors stay correct regardless of how the product is tagged in Shopify. */
 var PLACE_ALIASES={'al-quaa':'al-quaa-desert','alquaa':'al-quaa-desert','al-qua':'al-quaa-desert','quaa':'al-quaa-desert','al-quaa-abu-dhabi':'al-quaa-desert',
  'liwa-desert':'liwa','liwa-dunes':'liwa','liwa-oasis':'liwa','empty-quarter':'liwa',
@@ -1000,7 +1000,7 @@ function tagVal(t,k){var x=(t||[]).find(function(y){return y.toLowerCase().index
 function slugify(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
 var PRODUCTS=[];
 var DEMODATA=[
- {t:'Al Quaa Galaxy Tee',pl:'Al Quaa',slug:'al-quaa-desert',p:'199',st:'The Milky Way as it rises over Al Quaa — the only Bortle 1, darkest sky in the Emirates. A subtle صحراء mark on the chest, the galaxy across the back. Heavyweight organic cotton.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#181109',dark:1,fitImgs:{
+ {t:'Al Quaa Galaxy Tee',pl:'Al Quaa',slug:'al-quaa-desert',p:'199',st:'The Milky Way as it rises over Al Quaa — one of the darkest skies in the Emirates. A subtle صحراء mark on the chest, the galaxy across the back. Heavyweight organic cotton.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#181109',dark:1,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Al Quaa Galaxy Tee here (front + back). Currently placeholder = the oversized mockup.
    regular:{front:'shirts/alquaa-regular-front.jpg',back:'shirts/alquaa-regular-back.jpg'},
    // OVERSIZED-fit = the finished oversized mockup. TODO: swap for a dedicated oversized shoot if/when available.
@@ -1077,7 +1077,7 @@ function productPageFor(p){
 /* Lifestyle framing — where you'd actually wear it, by place. */
 function occasionFor(p){
   var t=((p.title||'')+' '+(p.place||'')+' '+(p.placeSlug||'')).toLowerCase();
-  if(/quaa|galaxy|star|sky/.test(t))return 'stargazing nights &amp; desert camps under a Bortle&nbsp;1 sky';
+  if(/quaa|galaxy|star|sky/.test(t))return 'stargazing nights &amp; desert camps under a dark-sky sky';
   if(/liwa|dune/.test(t))return 'dune drives &amp; long evenings in the Empty Quarter';
   if(/naqab|hajar|mountain|wadi|showka/.test(t))return 'mountain mornings &amp; wadi hikes in the Hajar';
   return 'days out exploring the Emirates';

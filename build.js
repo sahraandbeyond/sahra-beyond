@@ -733,8 +733,13 @@ function locCard(l) {
 // ---- per-location pages ----
 locations.forEach(l => {
   const canonical = `${SITE}/locations/${l.id}/`;
-  const title = `${l.name}: ${l.category} in ${l.emirate}, UAE | Sahra & Beyond`;
-  const desc = metaDesc(l.desc);
+  /* Per-location SEO override. The generic "<name>: <category> in <emirate>"
+     pattern is fine for most places, but it loses to search intent where the
+     query is not about the category: "al quaa" is 42% of all site impressions
+     and converts at 0.28% because searchers want the dark sky, not a camping
+     listing. seoTitle/seoDesc in the location JSON win when present. */
+  const title = l.seoTitle || `${l.name}: ${l.category} in ${l.emirate}, UAE | Sahra & Beyond`;
+  const desc = l.seoDesc || metaDesc(l.desc);
   const related = locations.filter(x => x.category === l.category && x.id !== l.id).slice(0, 4);
   const hash = CAT_HASH[l.category] || '';
   // Photos: cover + gallery. Absolute URLs for OG/schema; used for the on-page gallery too.
@@ -878,9 +883,9 @@ const LANDINGS = [
   {
     slug: 'stargazing', h1: 'Best Places to See the Milky Way Galaxy in the UAE',
     title: 'Best Place to View the Milky Way Galaxy in the UAE | Sahra & Beyond',
-    desc: 'Where to see the Milky Way in the UAE — the darkest desert skies for stargazing and astrophotography, with GPS and the best months to go.',
+    desc: 'The Milky Way core is visible over Al Quaa from May to October, not in winter. Moon phases, the drive from Dubai, and what you can see with no telescope.',
     pick: ['al-quaa-desert', 'crescent-moon-lake', 'desert-camping-lake-view', 'mleiha-desert'].map(id => locations.find(l => l.id === id)).filter(Boolean),
-    intro: "Want to know the best place to view the Milky Way galaxy in the UAE? It comes down to one thing: darkness. Escape the city glow and the desert delivers some of the clearest night skies in the region, where the Milky Way's core is bright enough to photograph — and on the darkest nights, to cast a faint shadow.\n\nThese are the spots we recommend for stargazing and astrophotography, ranked by how dark and accessible they are. Aim for clear, moonless nights between October and March, bring warm layers and a red-light torch, and give your eyes 20 minutes to adjust."
+    intro: "Want to know the best place to view the Milky Way galaxy in the UAE? It comes down to one thing: darkness. Escape the city glow and the desert delivers some of the clearest night skies in the region, where the Milky Way's core is bright enough to photograph — and on the darkest nights, to cast a faint shadow.\n\nThese are the spots we recommend for stargazing and astrophotography, ranked by how dark and accessible they are. Timing matters more than kit. The Milky Way's bright core is only above the horizon from roughly May to October — in midwinter it is below the horizon at night, so a December trip gives you a beautifully dark sky with no core in it. Winter nights are clearer, cooler and better for constellations; May to October is the window for the galaxy itself. Either way, go on a moonless night, bring a red-light torch, and give your eyes twenty minutes to adjust."
   },
   {
     slug: 'camping-near-dubai', h1: 'Camping Near Dubai: Best Spots for a Weekend Escape',
@@ -1317,7 +1322,7 @@ const COMMERCE = [
     catNav: true,
     intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: the darkest sky in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm organic cotton, and made in limited runs.",
     sections: [
-      { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over the darkest sky in the Emirates — Bortle 1, the lowest reading on the scale that measures light pollution. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
+      { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over one of the darkest skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
       { h2: 'The fabric, plainly', body: "All our t-shirts are 230gsm 100% organic cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.\n\nEvery piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere." },
       { h2: 'Regular and oversized fits', body: "Everything is cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL. Each t-shirt design comes in both a Regular and an Oversized fit; the polo comes in one. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
       { h2: 'Limited runs', body: "Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything." }

@@ -630,10 +630,10 @@ ${p.placeSlug ? `<section class="place-band" data-bg="${p.theme}">
       <a class="btn" href="/locations/${p.placeSlug}/">Read the place story</a>
     </div>
     <div class="sky-card reveal">
-      <b>${esc(p.bortleLabel)}</b>
+      <b>${esc(p.skyLabel)}</b>
       <small>Sky darkness scale · 1 is darkest</small>
-      <p>${p.bortleCopy}</p>
-      <div class="sky-scale" aria-hidden="true">${pips(p.bortleLit)}</div>
+      <p>${p.skyCopy}</p>
+      <div class="sky-scale" aria-hidden="true">${pips(p.skyLit)}</div>
     </div>
   </div>
 </section>` : ``}

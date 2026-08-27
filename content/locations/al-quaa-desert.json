@@ -1,7 +1,7 @@
 {
   "emirate": "Abu Dhabi",
   "coverFocus": "50% 100%",
-  "body": "Al Quaa is the darkest accessible desert in the UAE and arguably the best place to view the Milky Way galaxy in the country. Set deep in the southern sands of Abu Dhabi, far from any city light, it's a pilgrimage spot for stargazers and astrophotographers — especially on clear, moonless nights between October and March.\n\nThe bright core of the Milky Way rises over an empty horizon here, with almost zero light pollution to wash it out. Come prepared for a remote, self-sufficient overnight: a capable 4x4, plenty of water, warm layers for cold desert nights and a red-light torch to protect your night vision. There are no facilities — which is exactly why the skies are so spectacular.",
+  "body": "Al Quaa is the darkest accessible desert in the UAE and arguably the best place to view the Milky Way galaxy in the country. Set deep in the southern sands of Abu Dhabi, far from any city light, it's a pilgrimage spot for stargazers and astrophotographers — especially on clear, moonless nights between May and October, when the galaxy's bright core is above the horizon.\n\nThe bright core of the Milky Way rises over an empty horizon here, with almost zero light pollution to wash it out. Come prepared for a remote, self-sufficient overnight: a capable 4x4, plenty of water, warm layers for cold desert nights and a red-light torch to protect your night vision. There are no facilities — which is exactly why the skies are so spectacular.",
   "season": "Oct–Mar",
   "lng": 54.75339,
   "emoji": "🌌",
@@ -18,5 +18,7 @@
   "id": "al-quaa-desert",
   "difficulty": "Moderate",
   "category": "Camping",
-  "lat": 23.52924
+  "lat": 23.52924,
+  "seoTitle": "Al Quaa Stargazing: One of the Darkest Skies in the UAE",
+  "seoDesc": "Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the Milky Way is only visible May to October."
 }
