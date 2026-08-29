@@ -3,13 +3,13 @@
  "average": 5.0,
  "count": 1,
  "synced": "2026-08-29",
- "source": "storefront JSON-LD (manual pull; run sync-reviews.js with JUDGEME_TOKEN for the authoritative sync)",
+ "source": "judge.me private API (5 total: 4 published written here, 1 unpublished shop review left to Judge.me moderation)",
  "reviews": [
   {
    "rating": 5,
    "title": "",
    "name": "Anonymous",
-   "verified": false,
+   "verified": true,
    "date": "2026-08-24",
    "photos": [],
    "reply": "",

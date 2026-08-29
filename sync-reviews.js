@@ -28,7 +28,12 @@ const path = require('path');
 const ROOT = __dirname;
 const OUT_DIR = path.join(ROOT, 'content', 'reviews');
 const PRODUCT_DIR = path.join(ROOT, 'content', 'products');
-const SHOP_DOMAIN = 'sahra-beyond.myshopify.com';
+// tqcc1v-w4, NOT sahra-beyond. Both myshopify domains resolve to this store,
+// but Judge.me authenticates against the store's REAL myshopify domain and
+// rejects the alias with 'Shop domain or Api Token is wrong' — verified
+// against the live API on 29 Aug 2026. The alias here would have made every
+// sync fail even with a perfect token.
+const SHOP_DOMAIN = 'tqcc1v-w4.myshopify.com';
 const API = 'https://api.judge.me/api/v1/reviews';
 
 const argv = process.argv.slice(2);
@@ -43,8 +48,11 @@ sync-reviews needs your Judge.me API token.
   Windows:  setx JUDGEME_TOKEN "your-token-here"     (then reopen the terminal)
   one-off:  JUDGEME_TOKEN=... node sync-reviews.js
 
-Find it in the Judge.me admin under Settings. Treat it as a password: it does
-not belong in the repo, and it is never needed to build or deploy the site.
+Find it in the Judge.me admin under Settings — use the PRIVATE token, not the
+public one. The public token authenticates but the reviews API refuses it with
+"not enough permissions" (verified 29 Aug 2026). Treat the private token as a
+password: it does not belong in the repo, and it is never needed to build or
+deploy the site.
 `);
   process.exit(2);
 }
@@ -53,6 +61,15 @@ not belong in the repo, and it is never needed to build or deploy the site.
 const HANDLES = fs.existsSync(PRODUCT_DIR)
   ? fs.readdirSync(PRODUCT_DIR).filter(f => f.endsWith('.json')).map(f => f.replace(/\.json$/, ''))
   : [];
+
+/* The Judge.me PUBLIC widget displays these reviews as "Anonymous" even though
+   the private API returns the buyers' real names. Whatever a platform chooses
+   to withhold publicly, this site withholds too — a resync must never out a
+   reviewer. Keyed handle|date; extend if future reviews display anonymously. */
+const DISPLAY_OVERRIDES = {
+  'al-quaa-galaxy-regular|2026-08-24': 'Anonymous',
+  'al-quaa-galaxy-oversized|2026-08-29': 'Anonymous'
+};
 
 const pick = (obj, names, fallback = null) => {
   for (const n of names) {
@@ -88,8 +105,10 @@ function normalise(r) {
     body: String(pick(r, ['body', 'content', 'review'], '') || '').trim(),
     name: reviewerName(r),
     date: String(pick(r, ['created_at', 'reviewed_at', 'date'], '') || '').slice(0, 10),
-    verified: Boolean(pick(r, ['verified_buyer', 'verified'], false)) ||
-              /buyer/i.test(String(pick(r, ['source'], ''))),
+    /* 'verified-purchase' is order-linked; plain 'buyer' is only an email
+       match and does not justify a public "Verified buyer" claim. */
+    verified: (function (v) { return v === true || /verified/i.test(String(v || '')); })(
+      pick(r, ['verified_buyer', 'verified'], false)),
     photos: (pick(r, ['picture_urls', 'pictures', 'photos'], []) || [])
       .map(p => (typeof p === 'string' ? p : pick(p, ['urls', 'url', 'huge', 'original'], null)))
       .map(p => (p && typeof p === 'object' ? pick(p, ['huge', 'original', 'compact'], null) : p))
@@ -149,7 +168,15 @@ async function fetchPage(page) {
       h = HANDLES.find(x => x.replace(/-/g, ' ').toLowerCase() ===
                             String(r.productTitle).toLowerCase().replace(/[^a-z0-9]+/gi, ' ').trim()) || null;
     }
+    /* Store-level reviews (checkout, delivery, service) arrive with the
+       pseudo-handle 'judgeme-shop-reviews'. They belong in the all-reviews
+       bands, never on a product page — the '_shop' bucket does exactly that:
+       loadAll() feeds the bands, and nothing ever calls productSection or
+       cardRating with '_shop'. */
+    if (!h && String(r.handle) === 'judgeme-shop-reviews') h = '_shop';
     if (!h) { orphans.push(r); continue; }
+    const ov = DISPLAY_OVERRIDES[h + '|' + r.date];
+    if (ov) r.name = ov;
     (byHandle[h] = byHandle[h] || []).push(r);
   }
 
@@ -182,7 +209,7 @@ async function fetchPage(page) {
      removed in the Judge.me admin. Without this, deleting a review there would
      leave it live on the site forever. */
   let written = 0;
-  for (const h of HANDLES) {
+  for (const h of [...HANDLES, '_shop']) {
     const list = byHandle[h] || [];
     const file = path.join(OUT_DIR, `${h}.json`);
     if (!list.length) {

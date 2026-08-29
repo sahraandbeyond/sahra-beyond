@@ -3,16 +3,18 @@
  "average": 5.0,
  "count": 1,
  "synced": "2026-08-29",
- "source": "storefront JSON-LD (manual pull; run sync-reviews.js with JUDGEME_TOKEN for the authoritative sync)",
+ "source": "judge.me private API (5 total: 4 published written here, 1 unpublished shop review left to Judge.me moderation)",
  "reviews": [
   {
    "rating": 5,
    "title": "",
    "name": "Mirza Aqib Baig",
-   "verified": false,
+   "verified": true,
    "date": "2026-08-28",
-   "photos": [],
    "reply": "",
+   "photos": [
+    "https://review-images.judgeme.com/sahra-beyond/1787914243__1787914237008-img_3247__original.jpeg?quality=80&width=160"
+   ],
    "body": "The fabric is pure and breathable, stitching is flawless, and the fit is so comfortable. Packaging is premium too. This product beautifully represents UAE heritage and shara culture. Highly recommend!"
   }
  ]

@@ -3,16 +3,18 @@
  "average": 5.0,
  "count": 1,
  "synced": "2026-08-29",
- "source": "storefront JSON-LD (manual pull; run sync-reviews.js with JUDGEME_TOKEN for the authoritative sync)",
+ "source": "judge.me private API (5 total: 4 published written here, 1 unpublished shop review left to Judge.me moderation)",
  "reviews": [
   {
    "rating": 5,
    "title": "",
    "name": "Anonymous",
-   "verified": false,
+   "verified": true,
    "date": "2026-08-29",
-   "photos": [],
    "reply": "",
+   "photos": [
+    "https://review-images.judgeme.com/sahra-beyond/1788003745__1788003673863-cac60218-4f2d-47d9-8145-8a__original.png?quality=80&width=160"
+   ],
    "body": "Got the oversized version and the fit is true to size. Oversized done properly! The fabric feels amazing and very comfortable. The design looks even better in person and feels very seamlessly embedded into the t."
   }
  ]

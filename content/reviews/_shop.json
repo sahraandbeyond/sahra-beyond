@@ -1,0 +1,19 @@
+{
+ "handle": "_shop",
+ "average": 5.0,
+ "count": 1,
+ "synced": "2026-08-29",
+ "source": "judge.me private API (5 total: 4 published written here, 1 unpublished shop review left to Judge.me moderation)",
+ "reviews": [
+  {
+   "rating": 5,
+   "title": "",
+   "name": "Mohamed Torky",
+   "verified": false,
+   "date": "2026-08-29",
+   "photos": [],
+   "reply": "",
+   "body": "Delivery came way faster than expected and checkout was very easy"
+  }
+ ]
+}
