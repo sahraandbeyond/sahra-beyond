@@ -89,6 +89,7 @@ function makeServer() {
       return Promise.resolve({ [op]: { cart: null, userErrors: [{ message: 'Only 2 left in stock.' }] } }); }
     const shape = c => ({
       id: c.id, checkoutUrl: 'https://checkout/' + c.id,
+      buyerIdentity: { countryCode: c.cc || 'AE' },
       totalQuantity: c.lines.reduce((n, l) => n + l.quantity, 0),
       cost: { subtotalAmount: { amount: String(c.lines.reduce((n, l) => n + l.quantity * (c.cur === 'KWD' ? 16.55 : 149.5), 0)), currencyCode: c.cur || 'AED' } },
       lines: { edges: c.lines.map(l => ({ node: {
@@ -152,6 +153,7 @@ function boot(opts = {}) {
     addEventListener() {}, setTimeout, clearTimeout, console
   };
   g.window = g;
+  if (opts.market) g.SahraMarket = opts.market;
   const fn = new Function('window', 'document', 'localStorage', 'fetch', 'addEventListener', 'console', 'setTimeout',
     SRC + '\n;return window.SahraCart;');
   const api = fn(g, doc, g.localStorage, g.fetch, g.addEventListener, console, setTimeout);
@@ -364,6 +366,40 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     await env.api.setCountry('SA');
     check('repeat setCountry to same country makes no extra call',
       env.server.calls.filter(c => c === 'cartBuyerIdentityUpdate').length === n,
+      'calls: ' + env.server.calls.join(','));
+  }
+
+  /* 26 — BUG 8: a persisted cart remembers a country the fresh page does not.
+     Homepage said AED, checkout said GBP: the cart on Shopify still carried
+     buyerIdentity GB from an earlier currency experiment, while each new page
+     booted BUYER_CC='AE' — so the dedupe guard refused to re-point it, and
+     refresh() never read the cart's country to notice. The fetched cart is
+     the truth; refresh must sync from it and reconcile with the market. */
+  {
+    const server = makeServer();
+    server.carts.cartGB = { id: 'cartGB', cc: 'GB', cur: 'GBP',
+      lines: [{ id: 'lineg', vid: 'gid://x/1', quantity: 1 }] };
+    const env = boot({ server, storage: { sb_cart: 'cartGB' },
+      market: { buyerCountry: () => 'AE', country: () => 'AE', currency: () => 'AED' } });
+    await new Promise(r => setTimeout(r, 30));
+    check('stale GB cart is re-pointed to AE on refresh',
+      env.server.calls.includes('cartBuyerIdentityUpdate'),
+      'calls: ' + env.server.calls.join(','));
+    check('checkout currency is AED again after reconciliation',
+      env.api.state() && env.api.state().cost.subtotalAmount.currencyCode === 'AED',
+      'currency=' + (env.api.state() && env.api.state().cost.subtotalAmount.currencyCode));
+  }
+
+  /* 27 — and the reconciliation must NOT fire when nothing is stale ------- */
+  {
+    const server = makeServer();
+    server.carts.cartAE = { id: 'cartAE', cc: 'AE',
+      lines: [{ id: 'linea', vid: 'gid://x/1', quantity: 1 }] };
+    const env = boot({ server, storage: { sb_cart: 'cartAE' },
+      market: { buyerCountry: () => 'AE', country: () => 'AE', currency: () => 'AED' } });
+    await new Promise(r => setTimeout(r, 30));
+    check('matching cart triggers no buyerIdentity mutation',
+      !env.server.calls.includes('cartBuyerIdentityUpdate'),
       'calls: ' + env.server.calls.join(','));
   }
 

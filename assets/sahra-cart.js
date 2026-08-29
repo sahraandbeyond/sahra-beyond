@@ -45,7 +45,7 @@
   var S = { domain: 'sahra-beyond.myshopify.com', token: 'cc42ba8e74eb27c4f3c062d93f893fa0', v: '2024-10' };
 
   /* quantity is part of this fragment and MUST stay rendered - see bug 2 */
-  var CFRAG = 'id checkoutUrl totalQuantity cost{subtotalAmount{amount currencyCode}}' +
+  var CFRAG = 'id checkoutUrl totalQuantity buyerIdentity{countryCode} cost{subtotalAmount{amount currencyCode}}' +
     'lines(first:100){edges{node{id quantity merchandise{... on ProductVariant{id title availableForSale ' +
     'price{amount currencyCode} product{title handle featuredImage{url}}}}}}}';
 
@@ -426,6 +426,24 @@
         /* Shopify returns null once a cart is completed or expired. Clearing
            the id here is what stops a phantom badge after checkout. */
         if (!CART) setCid(null);
+        /* BUG 8 — THE GBP CHECKOUT IN DUBAI. The cart Shopify holds is days
+           old and remembers its buyerIdentity (say GB, from a currency
+           experiment). Every fresh page boots BUYER_CC='AE', so when the
+           market layer says "AE" the dedupe guard answered "already AE" and
+           never re-pointed the cart — homepage in AED, checkout in GBP,
+           permanently. The in-memory default is an assumption; the fetched
+           cart is the truth. Sync from it, then reconcile with whatever the
+           market layer currently wants. Both boot orders are covered: if the
+           market spoke first (and was wrongly deduped), this reconciles; if
+           it speaks later, BUYER_CC is now truthful so its event passes the
+           guard. */
+        if (CART && CART.buyerIdentity && /^[A-Z]{2}$/.test(CART.buyerIdentity.countryCode || '')) {
+          BUYER_CC = CART.buyerIdentity.countryCode;
+        }
+        if (window.SahraMarket && window.SahraMarket.buyerCountry) {
+          var want = window.SahraMarket.buyerCountry();
+          if (/^[A-Z]{2}$/.test(want || '') && want !== BUYER_CC) setCountry(want);
+        }
         badge(CART ? CART.totalQuantity : 0);
         draw();                      /* bug 1 */
         return CART;

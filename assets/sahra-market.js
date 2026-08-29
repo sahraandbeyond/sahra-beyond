@@ -186,6 +186,7 @@
     var entry = null;
     for (var i = 0; i < CURRENCIES.length; i++) if (CURRENCIES[i].c === c) entry = CURRENCIES[i];
     var country = entry ? entry.country : (geo || 'AE');
+    buyerCC = country;
     document.dispatchEvent(new CustomEvent('sb:market', {
       detail: { currency: c, country: country, market: market(geo || 'AE') }
     }));
@@ -250,8 +251,12 @@
     }
   }
 
+  var buyerCC = 'AE';   // country implied by the active currency choice
   window.SahraMarket = {
     country: function () { return geo || 'AE'; },
+    /* What the CART should be pointed at — the currency choice's country,
+       not raw geo (a UAE visitor who chose USD wants a US-context cart). */
+    buyerCountry: function () { return buyerCC; },
     market: function () { return market(geo || 'AE'); },
     currency: function () { return cur || 'AED'; },
     fmt: fmt,
