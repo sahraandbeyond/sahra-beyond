@@ -23,6 +23,39 @@ const esc = s => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
+/* ---- photo viewing ------------------------------------------------------
+   A 72px thumbnail nobody can open is decoration; the photo is the single
+   most persuasive thing a review carries (Faheem: "this would massively
+   impact UX"). Every thumbnail is therefore an <a> to the full-size image —
+   which ALSO works with JavaScript disabled and for crawlers — and a tiny
+   delegated script upgrades the click into an in-page lightbox: dark scrim,
+   Escape or any click closes, focus moves to the dialog and returns to the
+   thumbnail on close. Judge.me's CDN resizes by query param, so full size is
+   the same URL at width=1024 (the widest their own widget requests). */
+function fullSize(u) {
+  return /width=\d+/.test(u) ? u.replace(/width=\d+/, 'width=1024') : u;
+}
+function photoLink(u, alt) {
+  return `<a class="rv-photo-a" href="${esc(fullSize(u))}" target="_blank" rel="noopener"` +
+         ` aria-label="Open customer photo full size"><img class="rv-photo" src="${esc(u)}" alt="${esc(alt)}" loading="lazy"></a>`;
+}
+/* One per page is enough; the guard makes any duplicate a no-op. Kept
+   dependency-free and delegated so photos injected after load still work. */
+const LIGHTBOX = `<script>(function(){if(window.__sbRvLB)return;window.__sbRvLB=1;
+var last=null;
+function close(){var d=document.getElementById('sbRvLB');if(d)d.remove();document.documentElement.style.overflow='';if(last&&last.focus)last.focus();last=null;}
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest&&e.target.closest('.rv-photo-a');
+  if(a){e.preventDefault();last=a;
+    var d=document.createElement('div');d.id='sbRvLB';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','Customer photo');
+    d.innerHTML='<img src="'+a.href+'" alt="Customer photo, full size"><button type="button" aria-label="Close photo">&times;</button>';
+    d.addEventListener('click',close);
+    document.body.appendChild(d);document.documentElement.style.overflow='hidden';
+    d.querySelector('button').focus();return;}
+  if(e.target&&e.target.id==='sbRvLB')close();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();<\/script>`;
+
 /** Reviews for one product handle, or null. */
 function load(handle) {
   const f = path.join(DIR, `${handle}.json`);
@@ -80,7 +113,7 @@ function productSection(handle, productName) {
 
   const cards = d.reviews.map(r => {
     const photos = (r.photos || []).slice(0, 2).map(u =>
-      `<img class="rv-photo" src="${esc(u)}" alt="Customer photo of ${esc(productName)}" loading="lazy">`).join('');
+      photoLink(u, `Customer photo of ${productName}`)).join('');
     const when = fmtDate(r.date);
     return `
         <li class="rv-card">
@@ -105,6 +138,7 @@ function productSection(handle, productName) {
         </div>
         <ul class="rv-list">${cards}
         </ul>
+        ${LIGHTBOX}
         <p class="rv-src">Collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> &middot; <a href="https://checkout.sahraandbeyond.ae/products/${esc(handle)}" target="_blank" rel="noopener nofollow">Write a review &#8599;</a></p>
       </div>
     </section>`;
@@ -150,10 +184,11 @@ function homepageBand() {
         <li class="rv-card">
           ${stars(r.rating)}
           <p class="rv-text">${esc(r.body.length > 190 ? r.body.slice(0, 187).trim() + '…' : r.body)}</p>
-          ${(r.photos || []).length ? `<span class="rv-photos">${r.photos.slice(0, 2).map(u => `<img class="rv-photo" src="${esc(u)}" alt="Customer photo" loading="lazy">`).join('')}</span>` : ''}
+          ${(r.photos || []).length ? `<span class="rv-photos">${r.photos.slice(0, 2).map(u => photoLink(u, 'Customer photo')).join('')}</span>` : ''}
           <span class="rv-meta">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}</span>
         </li>`).join('')}
       </ul>
+      ${LIGHTBOX}
       <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
     </div>
   </section>`;
@@ -215,6 +250,15 @@ body.dark-bg .rv-stars{color:#E9B978}
 .rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
 .rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .rv-band .rv-src{color:#6B6256}
+.rv-photo-a{display:inline-block;line-height:0;border-radius:2px;cursor:zoom-in;transition:transform .2s}
+.rv-photo-a:hover{transform:scale(1.04)}
+.rv-photo-a:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.rv-photo{width:84px;height:84px;object-fit:cover;border-radius:2px;border:1px solid rgba(42,32,22,.18)}
+#sbRvLB{position:fixed;inset:0;z-index:9999;background:rgba(20,14,8,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out}
+#sbRvLB img{max-width:92vw;max-height:86vh;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#sbRvLB button{position:absolute;top:16px;right:16px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:30px;line-height:1;cursor:pointer}
+#sbRvLB button:hover{background:rgba(255,255,255,.28)}
+#sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}`;
 
 module.exports = { load, loadAll, stars, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN };

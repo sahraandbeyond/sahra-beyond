@@ -456,6 +456,15 @@ body.dark-bg .rv-stars{color:#E9B978}
 .rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
 .rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .rv-band .rv-src{color:#6B6256}
+.rv-photo-a{display:inline-block;line-height:0;border-radius:2px;cursor:zoom-in;transition:transform .2s}
+.rv-photo-a:hover{transform:scale(1.04)}
+.rv-photo-a:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.rv-photo{width:84px;height:84px;object-fit:cover;border-radius:2px;border:1px solid rgba(42,32,22,.18)}
+#sbRvLB{position:fixed;inset:0;z-index:9999;background:rgba(20,14,8,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out}
+#sbRvLB img{max-width:92vw;max-height:86vh;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#sbRvLB button{position:absolute;top:16px;right:16px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:30px;line-height:1;cursor:pointer}
+#sbRvLB button:hover{background:rgba(255,255,255,.28)}
+#sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
@@ -546,22 +555,36 @@ body.dark-bg .rv-stars{color:#E9B978}
         <li class="rv-card">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
           <p class="rv-text">Got the oversized version and the fit is true to size. Oversized done properly! The fabric feels amazing and very comfortable. The design looks even better in person and feels very seamle…</p>
-          <span class="rv-photos"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788003745__1788003673863-cac60218-4f2d-47d9-8145-8a__original.png?quality=80&amp;width=160" alt="Customer photo" loading="lazy"></span>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788003745__1788003673863-cac60218-4f2d-47d9-8145-8a__original.png?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788003745__1788003673863-cac60218-4f2d-47d9-8145-8a__original.png?quality=80&amp;width=160" alt="Customer photo" loading="lazy"></a></span>
           <span class="rv-meta">Anonymous · Verified buyer</span>
         </li>
         <li class="rv-card">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
           <p class="rv-text">The fabric is pure and breathable, stitching is flawless, and the fit is so comfortable. Packaging is premium too. This product beautifully represents UAE heritage and shara culture. High…</p>
-          <span class="rv-photos"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1787914243__1787914237008-img_3247__original.jpeg?quality=80&amp;width=160" alt="Customer photo" loading="lazy"></span>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1787914243__1787914237008-img_3247__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1787914243__1787914237008-img_3247__original.jpeg?quality=80&amp;width=160" alt="Customer photo" loading="lazy"></a></span>
           <span class="rv-meta">Mirza Aqib Baig · Verified buyer</span>
         </li>
         <li class="rv-card">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
           <p class="rv-text">Really happy with this T-shirt showing Al Quaa UAE! The print is beautifully done, and the quality of the T-shirt is excellent. Comfortable, stylish, and a great way to show love for the…</p>
-          <span class="rv-photos"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1787601663__1787601619740-20260824_214201__original.jpg?quality=80&amp;width=160" alt="Customer photo" loading="lazy"></span>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1787601663__1787601619740-20260824_214201__original.jpg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1787601663__1787601619740-20260824_214201__original.jpg?quality=80&amp;width=160" alt="Customer photo" loading="lazy"></a></span>
           <span class="rv-meta">Anonymous · Verified buyer</span>
         </li>
       </ul>
+      <script>(function(){if(window.__sbRvLB)return;window.__sbRvLB=1;
+var last=null;
+function close(){var d=document.getElementById('sbRvLB');if(d)d.remove();document.documentElement.style.overflow='';if(last&&last.focus)last.focus();last=null;}
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest&&e.target.closest('.rv-photo-a');
+  if(a){e.preventDefault();last=a;
+    var d=document.createElement('div');d.id='sbRvLB';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','Customer photo');
+    d.innerHTML='<img src="'+a.href+'" alt="Customer photo, full size"><button type="button" aria-label="Close photo">&times;</button>';
+    d.addEventListener('click',close);
+    document.body.appendChild(d);document.documentElement.style.overflow='hidden';
+    d.querySelector('button').focus();return;}
+  if(e.target&&e.target.id==='sbRvLB')close();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();</script>
       <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
     </div>
   </section>
