@@ -72,6 +72,40 @@ a{color:#9C521B}
 .news-form button:hover{background:#fff}
 .guide-sec{margin:24px 0}
 .guide-sec h2{font-size:20px;margin:0 0 8px}
+/* ---- spec tables (size guide + fabric GSM) ------------------------------
+   These had NO rules at all until 29 Aug 2026 — the size guide shipped a raw
+   browser-default table on an otherwise designed page, and overflowed at 390px.
+   Both tables share this block; style one, style both. Muting is done with a
+   COLOUR (#6B6256, 5.6:1) and never with opacity. */
+.guide-sec h3{font-size:15px;letter-spacing:.4px;text-transform:uppercase;font-family:'Space Mono',monospace;color:#33271B;margin:22px 0 4px}
+.sgintent{margin:0 0 12px;font-size:14px;color:#5C5346;line-height:1.6}
+.sgwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid rgba(43,37,32,.14);border-radius:10px;background:#fff}
+.sgwrap::-webkit-scrollbar{height:6px}
+.sgwrap::-webkit-scrollbar-thumb{background:rgba(43,37,32,.2);border-radius:3px}
+table.sg{width:100%;border-collapse:collapse;font-size:13.5px;min-width:460px}
+table.sg thead th{background:#F3EADC;color:#33271B;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;text-align:left;padding:11px 12px;white-space:nowrap;border-bottom:1px solid rgba(43,37,32,.16)}
+table.sg tbody th{text-align:left;font-family:'Space Mono',monospace;font-weight:700;color:#33271B;background:#FBF7F0;white-space:nowrap}
+table.sg th,table.sg td{padding:11px 12px;border-bottom:1px solid rgba(43,37,32,.10);vertical-align:top;line-height:1.5}
+table.sg tbody tr:last-child th,table.sg tbody tr:last-child td{border-bottom:0}
+table.sg td{color:#3F382F}
+.sz-in{font-family:'Space Mono',monospace;font-weight:700;color:#33271B}
+.sz-sep,.sz-cm{color:#6B6256}
+.sgmethod{margin:8px 0 0;padding-left:18px;font-size:14px;color:#5C5346;line-height:1.65}
+.sgmethod li{margin:4px 0}
+.sgnote{margin:10px 0 0;font-size:13px;color:#6B6256;line-height:1.6}
+/* The GSM table carries prose, not numbers, so it needs room to breathe and a
+   highlight on the two weights we actually sell. */
+table.sg.gsm{min-width:540px}
+table.sg.gsm td{font-size:13.5px}
+table.sg.gsm tr.is-ours th,table.sg.gsm tr.is-ours td{background:#F6EFE2}
+table.sg.gsm tr.is-ours th{color:#7E4114}
+.gsm-key{display:inline-block;margin:10px 0 0;font-size:12.5px;color:#6B6256;font-family:'Space Mono',monospace;letter-spacing:.3px}
+.gsm-key b{color:#7E4114;font-weight:700}
+@media(max-width:520px){
+  table.sg{font-size:13px}
+  table.sg th,table.sg td{padding:10px 10px}
+  .sgwrap{border-radius:8px}
+}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#6B6256;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -497,6 +531,7 @@ body.dark-bg .rv-stars{color:#E9B978}
     </article></div>
     <a class="btn shoplink" href="/shop/">Shop the collection &rarr;</a><a class="btn ghost" href="/t-shirts/">See all t-shirts &rarr;</a>
   </section>
+    
     
     <section class="guide-sec"><h2>What makes these different from a souvenir t-shirt</h2><div class="content"><p>A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.</p><p>The Al Quaa design maps the Milky Way as it actually rises over one of the darkest skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic.</p></div></section><section class="guide-sec"><h2>The fabric, plainly</h2><div class="content"><p>All our t-shirts are 230gsm 100% organic cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.</p><p>Every piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere.</p></div></section><section class="guide-sec"><h2>Regular and oversized fits</h2><div class="content"><p>Everything is cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL. Each t-shirt design comes in both a Regular and an Oversized fit; the polo comes in one. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.</p><p>Full flat-lay measurements for both fits are on our size guide.</p></div></section><section class="guide-sec"><h2>Limited runs</h2><div class="content"><p>Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything.</p></div></section>
     <section class="faq"><h2>Frequently asked questions</h2><details><summary>Where do you ship?</summary><p>We currently ship within the United Arab Emirates only. Delivery cost is calculated and shown at checkout before you pay.</p></details><details><summary>What size should I order?</summary><p>Every t-shirt design comes in Regular and Oversized fits, S to XL; the polo comes in one fit. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.</p></details><details><summary>Are these really organic cotton?</summary><p>Yes — 230gsm 100% organic cotton for every piece in the collection.</p></details><details><summary>Will designs be restocked?</summary><p>Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone.</p></details></section>

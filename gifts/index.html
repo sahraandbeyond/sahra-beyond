@@ -72,6 +72,40 @@ a{color:#9C521B}
 .news-form button:hover{background:#fff}
 .guide-sec{margin:24px 0}
 .guide-sec h2{font-size:20px;margin:0 0 8px}
+/* ---- spec tables (size guide + fabric GSM) ------------------------------
+   These had NO rules at all until 29 Aug 2026 — the size guide shipped a raw
+   browser-default table on an otherwise designed page, and overflowed at 390px.
+   Both tables share this block; style one, style both. Muting is done with a
+   COLOUR (#6B6256, 5.6:1) and never with opacity. */
+.guide-sec h3{font-size:15px;letter-spacing:.4px;text-transform:uppercase;font-family:'Space Mono',monospace;color:#33271B;margin:22px 0 4px}
+.sgintent{margin:0 0 12px;font-size:14px;color:#5C5346;line-height:1.6}
+.sgwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid rgba(43,37,32,.14);border-radius:10px;background:#fff}
+.sgwrap::-webkit-scrollbar{height:6px}
+.sgwrap::-webkit-scrollbar-thumb{background:rgba(43,37,32,.2);border-radius:3px}
+table.sg{width:100%;border-collapse:collapse;font-size:13.5px;min-width:460px}
+table.sg thead th{background:#F3EADC;color:#33271B;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;text-align:left;padding:11px 12px;white-space:nowrap;border-bottom:1px solid rgba(43,37,32,.16)}
+table.sg tbody th{text-align:left;font-family:'Space Mono',monospace;font-weight:700;color:#33271B;background:#FBF7F0;white-space:nowrap}
+table.sg th,table.sg td{padding:11px 12px;border-bottom:1px solid rgba(43,37,32,.10);vertical-align:top;line-height:1.5}
+table.sg tbody tr:last-child th,table.sg tbody tr:last-child td{border-bottom:0}
+table.sg td{color:#3F382F}
+.sz-in{font-family:'Space Mono',monospace;font-weight:700;color:#33271B}
+.sz-sep,.sz-cm{color:#6B6256}
+.sgmethod{margin:8px 0 0;padding-left:18px;font-size:14px;color:#5C5346;line-height:1.65}
+.sgmethod li{margin:4px 0}
+.sgnote{margin:10px 0 0;font-size:13px;color:#6B6256;line-height:1.6}
+/* The GSM table carries prose, not numbers, so it needs room to breathe and a
+   highlight on the two weights we actually sell. */
+table.sg.gsm{min-width:540px}
+table.sg.gsm td{font-size:13.5px}
+table.sg.gsm tr.is-ours th,table.sg.gsm tr.is-ours td{background:#F6EFE2}
+table.sg.gsm tr.is-ours th{color:#7E4114}
+.gsm-key{display:inline-block;margin:10px 0 0;font-size:12.5px;color:#6B6256;font-family:'Space Mono',monospace;letter-spacing:.3px}
+.gsm-key b{color:#7E4114;font-weight:700}
+@media(max-width:520px){
+  table.sg{font-size:13px}
+  table.sg th,table.sg td{padding:10px 10px}
+  .sgwrap{border-radius:8px}
+}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#6B6256;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -445,6 +479,7 @@ body.dark-bg .rv-stars{color:#E9B978}
     </article></div>
     <a class="btn shoplink" href="/shop/">Shop the collection &rarr;</a><a class="btn ghost" href="/t-shirts/">See all t-shirts &rarr;</a>
   </section>
+    
     
     <section class="guide-sec"><h2>A leaving gift for someone moving away</h2><div class="content"><p>This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?</p><p>A skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately.</p></div></section><section class="guide-sec"><h2>For someone who loves the outdoors here</h2><div class="content"><p>If the person you are buying for spends their weekends camping, dune driving, stargazing or hiking, the design will land. Each of our t-shirts comes from a place they can drive to, and every product page tells the story of that place — including the coordinates.</p><p>Heavyweight 230gsm organic cotton means it is a shirt they will actually keep wearing, not a novelty they wear once.</p></div></section><section class="guide-sec"><h2>For a visitor who wants something real</h2><div class="content"><p>Visitors often want something from the UAE that is not obviously made for visitors. A limited-run t-shirt from a small local brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat.</p></div></section><section class="guide-sec"><h2>Practical things</h2><div class="content"><p>All our t-shirts are AED 199 and come in Regular and Oversized fits. The Sahra Polo is AED 229 and comes in one fit. Everything is cut unisex, S to XL. We ship across the UAE, and delivery cost is shown at checkout before you pay.</p><p>If you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose.</p></div></section>
     <section class="faq"><h2>Frequently asked questions</h2><details><summary>What is a good leaving gift for an expat in the UAE?</summary><p>Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.</p></details><details><summary>Can I exchange it if the size is wrong?</summary><p>Yes. Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the item is unworn, unwashed and still has its tags.</p></details><details><summary>How much do they cost?</summary><p>Every t-shirt in the collection is AED 199. The Sahra Polo is AED 229. Delivery is calculated at checkout.</p></details><details><summary>Do you ship outside the UAE?</summary><p>Not yet — we currently ship within the United Arab Emirates only.</p></details></section>

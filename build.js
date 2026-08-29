@@ -1497,7 +1497,7 @@ const COMMERCE = [
     slug: 'fabric', emoji: '▦', cat: 'Mountains',
     h1: 'Our fabric and construction',
     title: 'T-Shirt GSM Explained: What 230gsm Means in UAE Heat',
-    desc: 'GSM is the most useful number on a t-shirt spec and almost nobody selling in the UAE explains it. The full 150–280gsm scale, which weight suits a Gulf summer, and the construction behind every piece.',
+    desc: 'GSM explained properly: the full 150–280gsm scale, what 230gsm feels like next to the 180gsm you already own, and which weight actually suits a Gulf summer.',
     gsmTable: true,
     intro: "Most t-shirt brands describe fabric in adjectives. Premium. Buttery. Luxe. None of those words mean anything you can check.\n\nThere is one number that does, and it is usually buried in a bullet list with no explanation: GSM. This page explains what it measures, what each point on the scale actually feels like to wear, which weight makes sense in this climate, and the specifications of what we make. If you only read one section, read the one on UAE summers.",
     sections: [
