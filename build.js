@@ -353,6 +353,26 @@ table.sg.gsm tr.is-ours th{color:#7E4114}
   table.sg th,table.sg td{padding:10px 10px}
   .sgwrap{border-radius:8px}
 }
+/* ---- journal cards -------------------------------------------------------
+   One card style for both the hub and the related strip. Auto-fill rather
+   than a fixed column count, so it degrades to a single column on a phone
+   without a breakpoint. Muted text is a COLOUR, never opacity. */
+.jgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:14px 0 4px}
+/* The border is at the CONTROL tone (.58), not the hairline tone (.14).
+   A white card on the sand background is only 1.08:1 — invisible — so the
+   border is the sole thing showing where the tap target is, which makes it a
+   control boundary needing 3:1, not a decorative divider. At .14 it measured
+   1.32:1. This is the identical mistake that made the shop filter chips
+   disappear; the rule is in MASTER_BRIEF and it applies here too. */
+.jcard{display:flex;flex-direction:column;gap:7px;padding:18px 18px 20px;border:1px solid rgba(42,32,22,.58);border-radius:12px;background:#fff;text-decoration:none;color:inherit;transition:border-color .25s,transform .25s,box-shadow .25s}
+.jcard:hover{border-color:rgba(42,32,22,.85);box-shadow:0 6px 18px rgba(42,32,22,.10);transform:translateY(-2px)}
+.jcard:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.jkick{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#7E4114}
+.jcard b{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;line-height:1.25;color:#33271B}
+.jblurb{font-size:13.5px;line-height:1.6;color:#5C5346}
+.jmeta{margin-top:auto;padding-top:6px;font-family:'Space Mono',monospace;font-size:11px;color:#6B6256}
+.jdot{padding:0 6px;color:#6B6256}
+.jbyline{margin:0 0 14px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.4px;color:#6B6256}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#6B6256;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -589,7 +609,7 @@ function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
   return `<div class="ftr-tagline">${esc(TAGLINE)}</div>
   <div class="soc">${soc}</div>
-  <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
 }
@@ -1696,6 +1716,184 @@ COMMERCE.forEach(P => {
 const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });
 console.log('  \u2713 ' + PRODUCT_URLS.length + ' product pages');
 
+/* ==========================================================================
+   THE JOURNAL  —  /journal/  and  /journal/<slug>/
+   ==========================================================================
+   Built before any article is written, deliberately. The SEO work order is
+   explicit that the hub has to exist first or every article published into it
+   orphans itself, and an orphaned page on a domain this size is close to
+   invisible.
+
+   TWO RULES ENCODED HERE, both load-bearing:
+
+   1. The author is ALWAYS the Organization, never a Person. The brand is
+      faceless and stays that way, so there is no `author.name` to leak. If a
+      future article needs a byline, it is "Sahra & Beyond", full stop.
+
+   2. The hub is never allowed to be thin. With no articles it would be an
+      empty grid, which is precisely the kind of page the work order warns
+      about — so it also carries the guides the site already has. Articles
+      slot in above them as they publish; the page is never empty.
+   ========================================================================== */
+const journalDir = path.join(ROOT, 'content', 'journal');
+const JOURNAL = (fs.existsSync(journalDir)
+  ? fs.readdirSync(journalDir).filter(f => f.endsWith('.json'))
+      .map(f => { try { return JSON.parse(fs.readFileSync(path.join(journalDir, f), 'utf8')); }
+                  catch (e) { console.log('  ! skipped content/journal/' + f + ' — ' + e.message); return null; } })
+      .filter(Boolean)
+      .filter(a => a.slug && a.title && a.draft !== true)
+      // The CMS writes FAQs as {q,a} objects; hand-written JSON elsewhere in
+      // this repo uses [q,a] pairs. Normalise once here so the renderer only
+      // ever sees pairs — otherwise a Faheem-authored article silently loses
+      // its FAQ schema, which is the whole reason for asking the questions.
+      .map(a => Object.assign({}, a, {
+        faqs: (Array.isArray(a.faqs) ? a.faqs : [])
+          .map(q => Array.isArray(q) ? q : [q && q.q, q && q.a])
+          .filter(q => q[0] && q[1])
+      }))
+  : []
+).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+
+// The hub's back catalogue: real editorial that already exists on the site.
+const JOURNAL_GUIDES = [
+  { href: '/fabric/',     kicker: 'Fabric',    name: 'T-shirt GSM explained',
+    blurb: 'The full 150–280gsm scale, what 230gsm feels like next to the 180gsm you already own, and which weight actually suits a Gulf summer.' },
+  { href: '/size-guide/', kicker: 'Fit',       name: 'Size and fit guide',
+    blurb: 'Flat garment measurements for both t-shirt fits, and how to find your size by measuring a shirt you already like rather than yourself.' },
+  { href: '/stargazing/', kicker: 'Places',    name: 'Stargazing in the UAE',
+    blurb: 'When the Milky Way core is actually visible, where to go for it, and what you can see without a telescope.' },
+  { href: '/camping/',    kicker: 'Places',    name: 'Best camping spots in the UAE',
+    blurb: 'Desert lakes, mountain wadis and quiet coast, with GPS, season and difficulty for each.' },
+  { href: '/wadis/',      kicker: 'Places',    name: 'The best wadis in the Emirates',
+    blurb: 'Where the water actually is, when it runs, and which ones are worth the drive.' },
+  { href: '/places/',     kicker: 'Places',    name: 'Every place we have mapped',
+    blurb: 'The full index — twenty-four locations across the Emirates, each with coordinates and an honest note on what it is like.' }
+];
+
+function journalCardHtml(a) {
+  const d = a.date ? `<time datetime="${esc(a.date)}">${esc(fmtDate(a.date))}</time>` : '';
+  return `<a class="jcard" href="/journal/${esc(a.slug)}/">
+    <span class="jkick">${esc(a.tag || 'Journal')}</span>
+    <b>${esc(a.h1 || a.title)}</b>
+    <span class="jblurb">${esc(a.dek || a.desc || '')}</span>
+    <span class="jmeta">${d}${a.readMins ? `<span class="jdot">&middot;</span>${a.readMins} min read` : ''}</span>
+  </a>`;
+}
+function fmtDate(s) {
+  const d = new Date(s + 'T00:00:00Z');
+  if (isNaN(d)) return s;
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
+// ---- the hub ----
+{
+  const canonical = `${SITE}/journal/`;
+  const h1 = 'The Journal';
+  const title = 'The Journal — Fabric, Fit and Places | Sahra & Beyond';
+  const desc = 'How we make what we make, and the places it comes from. Fabric weight, fit, construction and the corners of the Emirates behind each design.';
+  const jsonld = [
+    { "@context": "https://schema.org", "@type": "CollectionPage", "name": h1, "description": desc, "url": canonical },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+      { "@type": "ListItem", "position": 2, "name": h1, "item": canonical }
+    ] }
+  ];
+  if (JOURNAL.length) {
+    jsonld.push({ "@context": "https://schema.org", "@type": "ItemList",
+      "itemListElement": JOURNAL.map((a, i) => ({ "@type": "ListItem", "position": i + 1,
+        "name": a.h1 || a.title, "url": `${SITE}/journal/${a.slug}/` })) });
+  }
+  const latest = JOURNAL.length
+    ? `<section class="guide-sec"><h2>Latest</h2><div class="jgrid">${JOURNAL.map(journalCardHtml).join('')}</div></section>`
+    : '';
+  const guides = `<section class="guide-sec"><h2>${JOURNAL.length ? 'Guides' : 'Start here'}</h2>
+    <p class="sgintent">The longer reference pieces, kept up to date rather than dated.</p>
+    <div class="jgrid">${JOURNAL_GUIDES.map(g => `<a class="jcard" href="${g.href}">
+      <span class="jkick">${esc(g.kicker)}</span><b>${esc(g.name)}</b>
+      <span class="jblurb">${esc(g.blurb)}</span></a>`).join('')}</div></section>`;
+  const body = `
+  <section class="loc-hero" style="--hero-grad:${CAT_BG.Mountains}">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(h1)}</span></nav>
+      <div class="loc-emoji">✍</div>
+      <h1>${esc(h1)}</h1>
+      <p class="lede">How we make what we make, and the places it comes from</p>
+    </div>
+  </section>
+  <main>
+    <div class="content">${paras("We would rather explain something properly once than repeat an adjective. Most of what gets written about t-shirts in this region is either a spec sheet with no explanation or a page of words like premium and buttery that you cannot check.\n\nSo this is the other thing: what the numbers on a label actually mean, how a garment is put together and why those choices were made, and the places in the Emirates each design comes from. Written to be useful whether or not you buy anything.")}</div>
+    ${latest}
+    ${guides}
+    ${newsletterBlock()}
+    <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
+  </main>`;
+  write('journal/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: 'none' }));
+}
+
+// ---- the articles ----
+JOURNAL.forEach(a => {
+  const canonical = `${SITE}/journal/${a.slug}/`;
+  const h1 = a.h1 || a.title;
+  const img = a.cover ? (a.cover.startsWith('http') ? a.cover : SITE + (a.cover.startsWith('/') ? '' : '/') + a.cover) : undefined;
+  const jsonld = [
+    { "@context": "https://schema.org", "@type": "BlogPosting",
+      "headline": h1,
+      "description": a.desc || a.dek || '',
+      "mainEntityOfPage": { "@type": "WebPage", "@id": canonical },
+      "url": canonical,
+      "datePublished": a.date || undefined,
+      "dateModified": a.updated || a.date || undefined,
+      // Organization, never Person — the brand does not carry a face or a name.
+      "author":    { "@type": "Organization", "name": "Sahra & Beyond", "url": SITE + '/' },
+      "publisher": { "@type": "Organization", "name": "Sahra & Beyond", "url": SITE + '/',
+                     "logo": { "@type": "ImageObject", "url": SITE + '/icon-512.png' } },
+      "image": img || (SITE + '/icon-512.png'),
+      "inLanguage": "en"
+    },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+      { "@type": "ListItem", "position": 2, "name": "The Journal", "item": SITE + "/journal/" },
+      { "@type": "ListItem", "position": 3, "name": h1, "item": canonical }
+    ] }
+  ];
+  if (Array.isArray(a.faqs) && a.faqs.length) {
+    jsonld.push({ "@context": "https://schema.org", "@type": "FAQPage",
+      "mainEntity": a.faqs.map(q => ({ "@type": "Question", "name": q[0],
+        "acceptedAnswer": { "@type": "Answer", "text": q[1] } })) });
+  }
+  const sectionsHtml = (a.sections || []).map(s =>
+    `<section class="guide-sec"><h2>${esc(s.h2)}</h2><div class="content">${paras(s.body)}</div></section>`).join('');
+  const faqHtml = (Array.isArray(a.faqs) && a.faqs.length)
+    ? `<section class="faq"><h2>Frequently asked questions</h2>${a.faqs.map(q =>
+        `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
+  const others = JOURNAL.filter(x => x.slug !== a.slug).slice(0, 3);
+  const moreHtml = others.length
+    ? `<section class="guide-sec"><h2>More from the journal</h2><div class="jgrid">${others.map(journalCardHtml).join('')}</div></section>`
+    : `<section class="guide-sec"><h2>More from the journal</h2><div class="jgrid">${JOURNAL_GUIDES.slice(0, 3).map(g =>
+        `<a class="jcard" href="${g.href}"><span class="jkick">${esc(g.kicker)}</span><b>${esc(g.name)}</b><span class="jblurb">${esc(g.blurb)}</span></a>`).join('')}</div></section>`;
+  const body = `
+  <section class="loc-hero" style="--hero-grad:${CAT_BG[a.cat] || CAT_BG.Mountains}">
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <a href="/journal/">Journal</a> &rsaquo; <span>${esc(h1)}</span></nav>
+      <div class="loc-emoji">${esc(a.emoji || '✍')}</div>
+      <h1>${esc(h1)}</h1>
+      ${a.dek ? `<p class="lede">${esc(a.dek)}</p>` : ''}
+    </div>
+  </section>
+  <main>
+    <p class="jbyline">${a.date ? `<time datetime="${esc(a.date)}">${esc(fmtDate(a.date))}</time>` : ''}${a.updated && a.updated !== a.date ? ` <span class="jdot">&middot;</span> updated ${esc(fmtDate(a.updated))}` : ''}${a.readMins ? ` <span class="jdot">&middot;</span> ${a.readMins} min read` : ''}</p>
+    <div class="content">${paras(a.intro || '')}</div>
+    ${sectionsHtml}
+    ${a.productLink ? `<div class="note-box">${esc(a.productLink.before || '')} <a href="${esc(a.productLink.href)}">${esc(a.productLink.label)}</a>${esc(a.productLink.after || '')}</div>` : ''}
+    ${faqHtml}
+    ${moreHtml}
+    ${newsletterBlock()}
+    <p class="back"><a href="/journal/">Back to the Journal &rarr;</a></p>
+  </main>`;
+  write(`journal/${a.slug}/index.html`, shell({ title: a.title, desc: a.desc || a.dek || '', canonical, jsonld, bodyHtml: body, image: img, activeNav: 'none' }));
+});
+console.log('  ✓ journal hub + ' + JOURNAL.length + ' article(s)');
+
 // ---- sitemap ----
 const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
@@ -1710,6 +1908,11 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(COMMERCE.map(P => ({ u: `${SITE}/${P.slug}/`, m: buildDate, p: '0.9' })))
   .concat(CATEGORIES.map(C => ({ u: `${SITE}/${C.slug}/`, m: buildDate, p: '0.9' })))
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
+  .concat([{ u: `${SITE}/journal/`, m: buildDate, p: '0.7' }])
+  // Articles carry their own lastmod: an article's updated date is real
+  // information, unlike the build date, and re-stamping every URL on every
+  // build teaches Google to ignore the field.
+  .concat(JOURNAL.map(a => ({ u: `${SITE}/journal/${a.slug}/`, m: a.updated || a.date || buildDate, p: '0.7' })))
   .concat(PRODUCT_URLS.map(x => ({ u: x.url, m: buildDate, p: '0.9' })));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
   + entries.map(e => `  <url><loc>${e.u}</loc><lastmod>${e.m}</lastmod><priority>${e.p}</priority></url>`).join('\n')

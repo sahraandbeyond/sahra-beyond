@@ -88,6 +88,32 @@ if (orphans.length) {
 console.log(`  ${C.warn}!${C.off} ${C.dim}Uploading files never deletes. After a rename, check the live sitemap`);
 console.log(`    ${C.dim}for product URLs not in the list above and remove them on GitHub by hand.${C.off}`);
 
+// ---- 2b-ii. the same trap, for journal articles ----
+// Setting draft:true on an article removes it from the build and the sitemap,
+// but the already-generated journal/<slug>/index.html stays on disk — and once
+// pushed, stays live. The result is an unlisted page with no inbound links,
+// which is the exact orphan the journal hub exists to prevent. Caught by
+// smoke-testing the draft flag rather than assuming it cleaned up after itself.
+const jDir = path.join(ROOT, 'content', 'journal');
+const liveSlugs = fs.existsSync(jDir)
+  ? fs.readdirSync(jDir).filter(f => f.endsWith('.json')).map(f => {
+      try { const a = JSON.parse(fs.readFileSync(path.join(jDir, f), 'utf8')); return a.draft === true ? null : a.slug; }
+      catch (e) { return null; }
+    }).filter(Boolean).sort()
+  : [];
+const jBuilt = fs.existsSync(path.join(ROOT, 'journal'))
+  ? fs.readdirSync(path.join(ROOT, 'journal'), { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name).sort() : [];
+const jOrphans = jBuilt.filter(d => !liveSlugs.includes(d));
+let journalOk = true;
+if (jOrphans.length) {
+  journalOk = false;
+  console.log(`  ${C.bad}✗ journal pages with no published source: ${jOrphans.join(', ')}${C.off}`);
+  console.log(`    an article set back to draft leaves its folder behind and it stays live,`);
+  console.log(`    unlisted and unlinked. delete journal/<slug>/ locally and on GitHub.`);
+} else {
+  console.log(`  ${C.ok}✓${C.off} no orphaned journal pages (${liveSlugs.length} published)`);
+}
+
 // ---- 2c. cross-faded image stacks must be absolutely positioned ----
 // A real customer reported the PDP gallery going blank on views 2 and 3. The
 // files all existed and the JS was right; the images simply had no
@@ -251,4 +277,4 @@ if (usedGit) {
 }
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk) ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk || !journalOk) ? 1 : 0);

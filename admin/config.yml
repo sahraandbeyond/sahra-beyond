@@ -188,6 +188,65 @@ collections:
         hint: "Paste full Instagram post/reel URLs (e.g. https://www.instagram.com/p/XXXXXXXXX/). Each one is embedded in the location's 'On the gram' section. Leave empty if none."
         field: { label: "Instagram Post URL", name: "url", widget: "string" }
 
+  - name: "journal"
+    label: "Journal"
+    label_singular: "Article"
+    folder: "content/journal"
+    create: true
+    format: json
+    slug: "{{slug}}"
+    identifier_field: slug
+    summary: "{{date}} — {{title}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "URL slug", name: "slug", widget: "string", hint: "Lowercase, dashes only — becomes /journal/<slug>/. Don't change it after publishing or the link breaks and any ranking resets." }
+      - { label: "Draft (not published)", name: "draft", widget: "boolean", default: true, required: false, hint: "ON keeps it out of the build entirely — no page, no sitemap entry. Turn OFF when it is ready to go live." }
+      - { label: "Headline (on the page)", name: "h1", widget: "string", hint: "What readers see. Say the thing plainly." }
+      - { label: "Title tag (Google)", name: "title", widget: "string", hint: "KEEP UNDER 60 CHARACTERS or Google truncates it. This is the blue link in search results and can differ from the headline." }
+      - { label: "Meta description", name: "desc", widget: "text", hint: "Aim for 150–160 characters. This is the grey text under the blue link — write it to earn the click, not to stuff keywords." }
+      - { label: "Standfirst", name: "dek", widget: "text", required: false, hint: "One sentence under the headline. Shown on the card in the Journal index too." }
+      - { label: "Publish date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, hint: "Newest sorts to the top of the Journal." }
+      - { label: "Last updated", name: "updated", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false, hint: "Set this when you materially revise a published piece. It feeds the sitemap and tells Google the page is maintained." }
+      - { label: "Tag", name: "tag", widget: "select", options: ["Fabric", "Fit", "Craft", "Places", "Brand"], default: "Fabric", hint: "Shown as the kicker on the card." }
+      - { label: "Reading time (minutes)", name: "readMins", widget: "number", value_type: "int", required: false, hint: "Optional. Roughly words divided by 220." }
+      - { label: "Emoji", name: "emoji", widget: "string", default: "✍", required: false }
+      - label: "Hero colour theme"
+        name: "cat"
+        widget: "select"
+        options: ["Mountains", "Dunes", "Camping", "Wadis", "Coast"]
+        default: "Mountains"
+        required: false
+        hint: "Only changes the gradient behind the headline."
+      - { label: "Cover image", name: "cover", widget: "image", required: false, hint: "Used as the social share image. NEVER a photo showing a face — the brand stays faceless." }
+      - { label: "Intro", name: "intro", widget: "text", hint: "The opening, before the first subheading. Blank line between paragraphs." }
+      - label: "Sections"
+        name: "sections"
+        widget: "list"
+        required: false
+        hint: "Each one becomes an H2. Two or three long sections beat eight thin ones — one strong page ranks for dozens of long-tail phrases, while thin pages get judged at site level."
+        fields:
+          - { label: "Subheading (H2)", name: "h2", widget: "string" }
+          - { label: "Body", name: "body", widget: "text", hint: "Blank line between paragraphs." }
+      - label: "Link to a product"
+        name: "productLink"
+        widget: "object"
+        required: false
+        collapsed: true
+        hint: "One contextual link in a sentence, not a banner. Leave blank if the connection would be a stretch — a forced link reads as an advert and is worth less than none."
+        fields:
+          - { label: "Text before the link", name: "before", widget: "string", required: false }
+          - { label: "Link URL", name: "href", widget: "string", required: false, hint: "e.g. /products/al-quaa-galaxy-regular/" }
+          - { label: "Link text", name: "label", widget: "string", required: false }
+          - { label: "Text after the link", name: "after", widget: "string", required: false }
+      - label: "FAQs"
+        name: "faqs"
+        widget: "list"
+        required: false
+        hint: "These become FAQPage schema and can win their own result in Google. Answer the question in the first sentence. Only ask questions a real customer would."
+        fields:
+          - { label: "Question", name: "q", widget: "string" }
+          - { label: "Answer", name: "a", widget: "text" }
+
   - name: "settings"
     label: "Settings"
     files:

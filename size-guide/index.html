@@ -106,6 +106,26 @@ table.sg.gsm tr.is-ours th{color:#7E4114}
   table.sg th,table.sg td{padding:10px 10px}
   .sgwrap{border-radius:8px}
 }
+/* ---- journal cards -------------------------------------------------------
+   One card style for both the hub and the related strip. Auto-fill rather
+   than a fixed column count, so it degrades to a single column on a phone
+   without a breakpoint. Muted text is a COLOUR, never opacity. */
+.jgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:14px 0 4px}
+/* The border is at the CONTROL tone (.58), not the hairline tone (.14).
+   A white card on the sand background is only 1.08:1 — invisible — so the
+   border is the sole thing showing where the tap target is, which makes it a
+   control boundary needing 3:1, not a decorative divider. At .14 it measured
+   1.32:1. This is the identical mistake that made the shop filter chips
+   disappear; the rule is in MASTER_BRIEF and it applies here too. */
+.jcard{display:flex;flex-direction:column;gap:7px;padding:18px 18px 20px;border:1px solid rgba(42,32,22,.58);border-radius:12px;background:#fff;text-decoration:none;color:inherit;transition:border-color .25s,transform .25s,box-shadow .25s}
+.jcard:hover{border-color:rgba(42,32,22,.85);box-shadow:0 6px 18px rgba(42,32,22,.10);transform:translateY(-2px)}
+.jcard:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.jkick{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#7E4114}
+.jcard b{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;line-height:1.25;color:#33271B}
+.jblurb{font-size:13.5px;line-height:1.6;color:#5C5346}
+.jmeta{margin-top:auto;padding-top:6px;font-family:'Space Mono',monospace;font-size:11px;color:#6B6256}
+.jdot{padding:0 6px;color:#6B6256}
+.jbyline{margin:0 0 14px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.4px;color:#6B6256}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#6B6256;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -502,7 +522,7 @@ body.dark-bg .rv-stars{color:#E9B978}
   </main>
 <footer class="ftr"><div class="ftr-tagline">Wear the wild side of the UAE</div>
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
-  <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© 2026 Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · <a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a></div></footer>
 
