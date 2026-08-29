@@ -319,6 +319,40 @@ a{color:#9C521B}
 .news-form button:hover{background:#fff}
 .guide-sec{margin:24px 0}
 .guide-sec h2{font-size:20px;margin:0 0 8px}
+/* ---- spec tables (size guide + fabric GSM) ------------------------------
+   These had NO rules at all until 29 Aug 2026 — the size guide shipped a raw
+   browser-default table on an otherwise designed page, and overflowed at 390px.
+   Both tables share this block; style one, style both. Muting is done with a
+   COLOUR (#6B6256, 5.6:1) and never with opacity. */
+.guide-sec h3{font-size:15px;letter-spacing:.4px;text-transform:uppercase;font-family:'Space Mono',monospace;color:#33271B;margin:22px 0 4px}
+.sgintent{margin:0 0 12px;font-size:14px;color:#5C5346;line-height:1.6}
+.sgwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid rgba(43,37,32,.14);border-radius:10px;background:#fff}
+.sgwrap::-webkit-scrollbar{height:6px}
+.sgwrap::-webkit-scrollbar-thumb{background:rgba(43,37,32,.2);border-radius:3px}
+table.sg{width:100%;border-collapse:collapse;font-size:13.5px;min-width:460px}
+table.sg thead th{background:#F3EADC;color:#33271B;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;text-align:left;padding:11px 12px;white-space:nowrap;border-bottom:1px solid rgba(43,37,32,.16)}
+table.sg tbody th{text-align:left;font-family:'Space Mono',monospace;font-weight:700;color:#33271B;background:#FBF7F0;white-space:nowrap}
+table.sg th,table.sg td{padding:11px 12px;border-bottom:1px solid rgba(43,37,32,.10);vertical-align:top;line-height:1.5}
+table.sg tbody tr:last-child th,table.sg tbody tr:last-child td{border-bottom:0}
+table.sg td{color:#3F382F}
+.sz-in{font-family:'Space Mono',monospace;font-weight:700;color:#33271B}
+.sz-sep,.sz-cm{color:#6B6256}
+.sgmethod{margin:8px 0 0;padding-left:18px;font-size:14px;color:#5C5346;line-height:1.65}
+.sgmethod li{margin:4px 0}
+.sgnote{margin:10px 0 0;font-size:13px;color:#6B6256;line-height:1.6}
+/* The GSM table carries prose, not numbers, so it needs room to breathe and a
+   highlight on the two weights we actually sell. */
+table.sg.gsm{min-width:540px}
+table.sg.gsm td{font-size:13.5px}
+table.sg.gsm tr.is-ours th,table.sg.gsm tr.is-ours td{background:#F6EFE2}
+table.sg.gsm tr.is-ours th{color:#7E4114}
+.gsm-key{display:inline-block;margin:10px 0 0;font-size:12.5px;color:#6B6256;font-family:'Space Mono',monospace;letter-spacing:.3px}
+.gsm-key b{color:#7E4114;font-weight:700}
+@media(max-width:520px){
+  table.sg{font-size:13px}
+  table.sg th,table.sg td{padding:10px 10px}
+  .sgwrap{border-radius:8px}
+}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#6B6256;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -1388,6 +1422,37 @@ function sizeTableHtml() {
   return tbl('Regular fit','regular',SIZING.regularIntent||'') + tbl('Oversized fit','oversized',SIZING.oversizedIntent||'') + method + polo;
 }
 
+/* The GSM comparison table.
+   No UAE apparel retailer explains fabric weight — the large ones list a GSM
+   figure as a bullet and never say what it means. This table is the reason
+   /fabric/ can rank for "what is gsm" and "230 gsm t shirt", so it is data,
+   not decoration, and it lives here rather than being pasted into prose.
+   `ours` marks the two weights we actually sell: 230 (tees) and 240 (polo). */
+const GSM_ROWS = [
+  ['150 gsm', 'Lightweight', 'Promotional and fast-fashion tees. Thin enough that the light comes through it and the shoulder seams show under the fabric.',
+   'Cheap to produce and cheap to replace. Loses its shape within a season.'],
+  ['180 gsm', 'Standard', 'The default for most high-street t-shirts, and what people usually picture when they think "t-shirt".',
+   'Fine on the body, but drapes onto it rather than holding its own shape. Collars go wavy first.'],
+  ['200 gsm', 'Mid-heavy', 'The step where a shirt starts to feel considered rather than disposable. Common in mid-market basics.',
+   'Holds shape reasonably. Still thin enough to show what is underneath in strong light.'],
+  ['230 gsm', 'Heavyweight', 'Our t-shirts, in both Regular and Oversized fits. Combed, ring-spun cotton.',
+   'Enough weight to hang away from the body instead of clinging, and enough cotton to survive repeated washing.', true],
+  ['240 gsm', 'Heavyweight piqué', 'The Sahra Polo. Not a heavier version of the tee fabric — piqué is a different knit structure.',
+   'The extra ten grams are what let a collar hold its shape rather than curling after a season.', true],
+  ['280 gsm', 'Ultra-heavy', 'Boxy streetwear and premium blanks. Approaching sweatshirt territory.',
+   'Structured to the point of stiffness, and genuinely warm. Hard to justify in a Gulf summer.']
+];
+
+function gsmTableHtml() {
+  const rows = GSM_ROWS.map(r =>
+    `<tr${r[4] ? ' class="is-ours"' : ''}><th scope="row">${esc(r[0])}</th><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`
+  ).join('');
+  return `<div class="sgwrap"><table class="sg gsm">
+    <thead><tr><th>Weight</th><th>Class</th><th>Where you find it</th><th>How it wears</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>
+    <p class="gsm-key"><b>Highlighted rows</b> are the two weights we make.</p>`;
+}
+
 const COMMERCE = [
   {
     slug: 't-shirts', emoji: '◈', cat: 'Dunes',
@@ -1431,11 +1496,15 @@ const COMMERCE = [
   {
     slug: 'fabric', emoji: '▦', cat: 'Mountains',
     h1: 'Our fabric and construction',
-    title: '230gsm Organic Cotton — Fabric & Construction',
-    desc: 'What 230gsm actually means, why we use ribbed collars and taped seams, and how DTG printing differs from embroidery — the construction behind every piece.',
-    intro: "Most t-shirt brands describe fabric in adjectives. Premium. Buttery. Luxe. None of those words mean anything you can check. Here are the actual specifications of what we make, and why each choice was made.",
+    title: 'T-Shirt GSM Explained: What 230gsm Means in UAE Heat',
+    desc: 'GSM is the most useful number on a t-shirt spec and almost nobody selling in the UAE explains it. The full 150–280gsm scale, which weight suits a Gulf summer, and the construction behind every piece.',
+    gsmTable: true,
+    intro: "Most t-shirt brands describe fabric in adjectives. Premium. Buttery. Luxe. None of those words mean anything you can check.\n\nThere is one number that does, and it is usually buried in a bullet list with no explanation: GSM. This page explains what it measures, what each point on the scale actually feels like to wear, which weight makes sense in this climate, and the specifications of what we make. If you only read one section, read the one on UAE summers.",
     sections: [
-      { h2: 'What 230gsm means', body: "GSM is grams per square metre — the weight of the fabric. A typical high-street t-shirt runs 150–180gsm. Ours is 230gsm.\n\nThe practical difference is structure. A lightweight shirt drapes onto the body and shows everything underneath; a heavyweight one holds its own shape and hangs away from you. It also survives washing far better, because there is simply more cotton there to begin with. The trade-off is honest: 230gsm is a more substantial shirt, so in peak UAE summer the Regular fit breathes better than the Oversized." },
+      { h2: 'What the number actually changes', body: "GSM is grams per square metre — literally, what a square metre of the cloth weighs. It is not a quality score. A 280gsm shirt is not better than a 180gsm one; it is a different garment for a different purpose, and the number tells you which.\n\nWhat it changes is structure. A lightweight cloth drapes onto the body, follows every line underneath it and shows what you are wearing beneath. A heavyweight one holds its own shape and hangs away from you. That is the whole difference, and it is why weight determines how a shirt looks far more than the cut does.\n\nIt also predicts lifespan. There is simply more cotton in a heavier shirt, so there is more to lose before it goes thin, and the collar has more to hold on to before it stretches out — which is how most t-shirts visibly die, long before they wear through.\n\nOurs are 230gsm. That is heavyweight, two full steps above the high-street default." },
+      { h2: 'Which weight for a UAE summer', body: "The honest answer is that no cotton t-shirt is a hot-weather technical garment, and any brand telling you their heavyweight tee is cooling is selling you something.\n\nWhat actually governs how a cotton shirt wears in 45°C is not the weight on the label but how much of it is touching you. Cotton moves heat away from skin by absorbing moisture; it does that whatever it weighs. What changes is airflow. Cloth held slightly off the skin lets air move underneath it. Cloth pulled taut against the skin does not.\n\nSo the useful guidance is the opposite of what people assume. If you are choosing for peak summer, the looser cut matters more than the lighter cloth. Our Oversized fit is the same 230gsm cotton as the Regular, cut 3.5″ wider through the chest at M with the shoulder seam dropped below the natural shoulder point — which means the fabric sits away from you rather than against you. That gap is doing more work than fifty grams either way would.\n\nThe rest is ordinary sense: light colours reflect more than dark ones, and a shirt you wear in the evening at Al Quaa is a different problem from one you wear at noon in August. We would rather say that plainly than claim a fabric property we cannot demonstrate." },
+      { h2: '180 versus 230: what fifty grams buys', body: "This is the comparison worth understanding, because 180gsm is what you are almost certainly wearing now and 230gsm is what most people mean when they say a shirt feels expensive.\n\nAt 180gsm the cloth is thin enough to follow the body. In strong light you can often see the outline of what is underneath, and the shoulder seams show through. It is comfortable immediately and it stays that way, but it has little structure — the shape you get is your shape, not the garment's.\n\nAt 230gsm the cloth has enough body to stand slightly away from you. The hem hangs straight instead of clinging, the sleeve holds a line rather than collapsing, and nothing reads through it. It is a more substantial thing to put on, which some people love and some people do not, and that is a preference rather than a fact.\n\nThe durability difference is not a preference. Fifty grams per square metre is roughly a third more cotton, and it shows up in how long the shirt keeps its shape rather than in how it feels on day one. That is the trade you are making, and it is the reason we made it." },
+      { h2: 'Weight is only half the story', body: "Two shirts at the same GSM can feel completely different, which is why weight alone is not enough to judge a garment by.\n\nHow the yarn is made matters. Ours is combed, ring-spun cotton. Combing strips the shorter fibres out before spinning and ring-spinning twists what remains into a finer, smoother yarn — so the same weight of cloth comes out denser and smoother rather than fuzzy. It is the difference between a heavyweight shirt that feels considered and one that just feels thick.\n\nHow it is knitted matters too. The tees are a jersey knit. The Sahra Polo is 240gsm piqué, and those ten grams are not the real difference between them — piqué is a different structure entirely, a fine waffle formed by how the yarn interlocks, which is what gives a polo its particular hand and lets a collar hold its shape instead of curling.\n\nAnd whether the cotton was pre-shrunk before cutting matters, because otherwise the number on the label describes a shirt you will not own after the first wash. Ours is." },
       { h2: 'Why 100% organic cotton', body: "Organic cotton is grown without synthetic pesticides or fertilisers. It matters here for two reasons beyond the environmental one: it is fully breathable, which is not optional in this climate, and it takes direct-to-garment ink better than a cotton-polyester blend, giving a sharper print.\n\nWe do not blend in polyester. A poly-cotton shirt is cheaper to make and holds a print slightly longer, but it traps heat — which is the wrong trade in the Gulf." },
       { h2: 'Ribbed collar, taped seams', body: "The collar is a ribbed crew neck. Ribbing is knitted with more elasticity than the body fabric, so the neckline returns to shape instead of stretching out and going wavy — which is how most t-shirts visibly die.\n\nThe collar and shoulder seams are taped: a strip of fabric bound over the seam on the inside. It stops the shoulders from twisting over time and takes the strain off the stitching. It is a small manufacturing cost that shows up years later." },
       { h2: 'DTG printing versus embroidery', body: "Two of our designs carry a printed graphic. DTG sprays ink into the fibres rather than laying a film on top, so the graphic stays soft, the fabric keeps breathing, and there is no plastic panel across your back. It flexes with the cotton instead of cracking. On both of those designs the logo itself is embroidered — so a single shirt carries two techniques, ink and thread.\n\nThe Empty Quarter design goes further and is embroidered throughout, with no print at all — thread stitched into the cloth, tonal against the fabric. Embroidery has a raised texture you can feel, catches light differently through the day, and will not fade the way a print eventually can. The polo is embroidered too." },
@@ -1443,7 +1512,10 @@ const COMMERCE = [
       { h2: 'Where it is made', body: "Our fabric is sourced from Pakistan, one of the world's major cotton-producing countries. The designs are created here in the UAE. We say designed in the UAE rather than made in the UAE, because that is the accurate description." }
     ],
     faqs: [
-      ['Is 230gsm too heavy for UAE weather?', 'It is a heavyweight tee, so it is more substantial than a thin fast-fashion shirt — that is what gives it structure and longevity. It is 100% breathable cotton with no polyester. For peak summer, the Regular fit breathes more than the Oversized.'],
+      ['What is GSM on a t-shirt?', 'GSM is grams per square metre — what a square metre of the fabric weighs. It is a measure of weight, not of quality. Roughly: 150gsm is promotional and fast-fashion weight, 180gsm is the high-street standard, 230gsm is heavyweight, and 280gsm is approaching sweatshirt territory. The number tells you how much structure a shirt has and how long it will hold its shape. Our t-shirts are 230gsm and the polo is 240gsm piqué.'],
+      ['Is 230gsm too hot for the UAE?', 'It is a heavyweight tee, so it is more substantial than a thin fast-fashion shirt. But weight is not what governs how a cotton shirt wears in the heat — airflow is. Cloth held slightly off the skin lets air move underneath it; cloth pulled taut against the skin does not. So for peak summer the looser cut matters more than the lighter cloth, and our Oversized fit sits further off the body than the Regular. It is 100% cotton with no polyester in it, because a poly blend traps heat. No cotton t-shirt is a technical hot-weather garment, and we would rather say that than claim otherwise.'],
+      ['What is the difference between 180gsm and 240gsm?', 'About a third more cotton, and it shows up in structure and lifespan rather than on day one. At 180gsm — the high-street default — the cloth follows the body, and in strong light you can often see what is underneath. At the 230–240gsm end it stands slightly away from you, the hem hangs straight instead of clinging, and the collar has enough material to keep its shape rather than going wavy. Neither is better in the abstract; 180gsm is lighter to wear and 240gsm lasts considerably longer.'],
+      ['Does a higher GSM shrink more?', 'Not by itself. Shrinkage is determined by whether the cotton was pre-shrunk before cutting and by how you wash it, not by how much the fabric weighs. Our cotton is pre-shrunk before cutting, so you should see very little movement. What does cause shrinkage, at any weight, is a hot wash and a tumble dryer — heat is what makes untreated cotton fibres contract. Wash cold and hang dry and weight becomes irrelevant to the question.'],
       ['Will the print crack?', 'DTG ink bonds into the cotton rather than sitting on top as a thick layer, so it flexes with the fabric instead of cracking. Washing cold and hanging to dry rather than tumble drying is what makes the difference long term.'],
       ['Will it shrink?', 'The fabric is pre-washed to minimise shrinkage. Wash cold, hang dry, and you should see very little movement. Hot washes and tumble dryers cause shrinkage.'],
       ['Is the cotton certified organic?', 'The fabric is 100% organic cotton sourced through our supplier. We are working on publishing certification details and will add them here once confirmed.']
@@ -1612,6 +1684,7 @@ COMMERCE.forEach(P => {
     </nav>` : ''}
     ${collectionBlock(null, P.slug === 't-shirts')}
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
+    ${P.gsmTable ? `<section class="guide-sec" id="gsm-table"><h2>Every t-shirt weight, compared</h2><p class="sgintent">GSM is grams per square metre &mdash; how much a square metre of the cloth weighs. It is the single most useful number on a t-shirt spec, and almost nobody selling t-shirts in the UAE explains it. Here is the whole scale.</p>${gsmTableHtml()}</section>` : ''}
     ${sectionsHtml}
     ${faqHtml}
     ${newsletterBlock()}

@@ -664,6 +664,11 @@ ${cards(p.designCards)}
       <div class="item"><b>${p.fitsCardTitle || 'Unisex, two fits'}</b><span>${p.fitsCardBody || 'Regular (true to size) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.'}</span></div>
       <div class="item"><b>Limited first run</b><span>Small first batch. When a size sells out in this run, it's gone rather than quietly restocked.</span></div>
     </div>
+    <div class="note-box">${(function(){
+      var w = String((p.specChips && p.specChips[0]) || '230gsm organic cotton').match(/\d{3}\s*gsm/i);
+      w = w ? w[0].toLowerCase().replace(/\s+/g,'') : '230gsm';
+      return 'Not sure what ' + w + ' means next to the 180gsm shirt you already own? We wrote the comparison out in full &mdash; the whole 150&ndash;280gsm scale, and which weight actually makes sense in a Gulf summer &mdash; on our <a href="/fabric/">fabric and GSM guide</a>.';
+    })()}</div>
   </section>
 
   ${p.sizingApplies === false ? `<section class="sec reveal" id="fit"><span class="snum">04 — Size &amp; fit</span><h2>Sizing</h2><p>${SIZING.polo && SIZING.polo.note ? SIZING.polo.note : ""}</p><div class="note-box">Want the measurements before it drops? Email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> and we will send them the moment they are signed off.</div></section>` : `<section class="sec reveal" id="fit">
