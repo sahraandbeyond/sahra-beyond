@@ -105,6 +105,7 @@ function productSection(handle, productName) {
         </div>
         <ul class="rv-list">${cards}
         </ul>
+        <p class="rv-src">Collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> &middot; <a href="https://checkout.sahraandbeyond.ae/products/${esc(handle)}" target="_blank" rel="noopener nofollow">Write a review &#8599;</a></p>
       </div>
     </section>`;
 }
@@ -121,11 +122,15 @@ function homepageBand() {
   for (const d of all) for (const r of d.reviews) flat.push({ ...r, product: d.handle });
   if (flat.length < HOMEPAGE_MIN) return '';
 
-  /* strongest first: rated 5, has a body worth reading, most recent */
+  /* ALL reviews, newest first, capped at 6. The band used to show the top 3
+     while counting 4 — Faheem read that as a bug, and he was right: "from 4
+     reviews" next to 3 cards looks like something is being hidden, which is
+     the opposite of what a review band is for. Show everything until the
+     count outgrows the cap. */
   const picked = flat
-    .filter(r => r.rating >= 4 && r.body && r.body.length > 40)
-    .sort((a, b) => (b.rating - a.rating) || String(b.date).localeCompare(String(a.date)))
-    .slice(0, 3);
+    .filter(r => r.body)
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)) || (b.rating - a.rating))
+    .slice(0, 6);
   if (picked.length < HOMEPAGE_MIN) return '';
 
   const count = flat.length;
@@ -145,9 +150,11 @@ function homepageBand() {
         <li class="rv-card">
           ${stars(r.rating)}
           <p class="rv-text">${esc(r.body.length > 190 ? r.body.slice(0, 187).trim() + '…' : r.body)}</p>
+          ${(r.photos || []).length ? `<span class="rv-photos">${r.photos.slice(0, 2).map(u => `<img class="rv-photo" src="${esc(u)}" alt="Customer photo" loading="lazy">`).join('')}</span>` : ''}
           <span class="rv-meta">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}</span>
         </li>`).join('')}
       </ul>
+      <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
     </div>
   </section>`;
 }
@@ -205,6 +212,9 @@ body.dark-bg .rv-stars{color:#E9B978}
 .rv-band .rv-score{color:#33271B}
 .rv-band .rv-count,.rv-band .rv-meta{color:#6B6256}
 .rv-band .rv-text{color:#33271B;font-style:italic}
+.rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
+.rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.rv-band .rv-src{color:#6B6256}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}`;
 
 module.exports = { load, loadAll, stars, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN };

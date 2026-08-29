@@ -156,6 +156,21 @@ async function fetchPage(page) {
     console.log('  ' + Object.keys(rawSample).join(', ') + '\n');
   }
 
+  /* v1 LIST endpoint bug, hit in production: a review can carry
+     has_published_pictures:true while its pictures array arrives EMPTY —
+     the single-review endpoint returns them fine. Refetch those few. Videos:
+     has_published_videos exists but NO v1 shape exposes video URLs at all;
+     if a review claims one, say so in the log so a human can chase it. */
+  for (const r of all) {
+    if (r.has_published_pictures && !(r.pictures || []).length && r.id) {
+      try {
+        const one = await (await fetch(`${API}/${r.id}?api_token=${encodeURIComponent(TOKEN)}&shop_domain=${encodeURIComponent(SHOP_DOMAIN)}`)).json();
+        if (one && one.review && (one.review.pictures || []).length) r.pictures = one.review.pictures;
+      } catch (e) { console.log(`  ! could not refetch pictures for review ${r.id}`); }
+    }
+    if (r.has_published_videos) console.log(`  ! review ${r.id} claims a published VIDEO — no Judge.me API shape exposes its URL; check the Judge.me admin.`);
+  }
+
   const publishable = all.filter(isPublished).map(normalise)
     .filter(r => r.rating && (r.body || r.title));
 
