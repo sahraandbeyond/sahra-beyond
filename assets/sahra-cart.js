@@ -485,6 +485,17 @@
     if (e.detail && e.detail.country) setCountry(e.detail.country);
   });
 
+  /* The WA bubble already steps aside for the cart drawer and the sticky buy
+     bar; the mobile nav overlay was the third floating layer nobody told it
+     about, so it sat on top of the open menu. Watch the panel's class. */
+  try {
+    new MutationObserver(function () {
+      var open = document.querySelector('.m-panel.open');
+      var wa = document.querySelector('.sb-wa');
+      if (wa) wa.classList.toggle('away', !!open);
+    }).observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ['class'] });
+  } catch (e) {}
+
   window.SahraCart = {
     add: add, open: open, close: close, refresh: refresh, variants: variants,
     setQty: setQty, remove: function (l) { return setQty(l, 0); },

@@ -88,7 +88,7 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
 .marquee{background:#181109;color:var(--gold);overflow:hidden;white-space:nowrap;padding:13px 0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:4px;text-transform:uppercase;position:relative;z-index:2}
-.marquee div{display:inline-block;animation:scroll 28s linear infinite}.marquee span{margin:0 30px;opacity:.85}
+.marquee div{display:inline-block;animation:scroll 28s linear infinite}.marquee span{margin:0 30px}
 @keyframes scroll{to{transform:translateX(-50%)}}
 
 /* PRODUCT SECTIONS — MOBILE-FIRST: single centered full-width column by default.
@@ -142,9 +142,9 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .pm-sky{opacity:1;color:var(--mist)}
 .place-lead{font-size:15px;font-style:italic;line-height:1.7;margin-bottom:14px;opacity:1;max-width:440px}
 .prod .plink{display:inline-block;margin-bottom:12px;transition:opacity .3s}
-.prod .plink:hover{opacity:.6}
+.prod .plink:hover{text-decoration:underline;text-underline-offset:3px}
 .prod h2{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,54px);font-weight:800;line-height:1.04;margin-bottom:16px}
-.prod .story{font-size:16px;font-weight:300;line-height:1.85;margin-bottom:20px;max-width:440px;opacity:.96}
+.prod .story{font-size:16px;font-weight:300;line-height:1.85;margin-bottom:20px;max-width:440px}
 .prod .price{font-family:'Space Mono',monospace;font-size:15px;letter-spacing:1px;margin-bottom:24px}
 .prod-acc{margin:2px 0 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:440px}
 .prod-acc summary{list-style:none;cursor:pointer;padding:13px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:1;display:flex;justify-content:space-between;align-items:center}
@@ -160,11 +160,11 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .fitswap{display:inline-block;font-size:12.5px;margin:0 0 16px;border-bottom:1px solid currentColor;opacity:1}
 .fitswap:hover{opacity:1}
 .prod-spec-strip{list-style:none;display:flex;flex-wrap:wrap;gap:7px 8px;margin:0 0 22px;padding:0;max-width:460px}
-.prod-spec-strip li{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2px;line-height:1.25;padding:6px 11px;border:1px solid var(--line);border-radius:999px;opacity:.92}
+.prod-spec-strip li{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2px;line-height:1.25;padding:6px 11px;border:1px solid var(--line);border-radius:999px}
 .prod.dark .prod-spec-strip li{border-color:rgba(255,255,255,.24)}
 .prod-limited{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--clay-deep);border:1px solid currentColor;border-radius:999px;padding:4px 11px;margin-bottom:13px}
 .prod.dark .prod-limited{color:var(--gold)}
-.buy-limited{margin:11px 0 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.3px;color:var(--clay-deep);opacity:.92}
+.buy-limited{margin:11px 0 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.3px;color:var(--clay-deep)}
 .prod.dark .buy-limited{color:var(--gold)}
 /* .prod sets display:flex, which beats the `hidden` attribute's default display:none.
    Without this the filters would toggle `hidden` and nothing would visibly change. */
@@ -193,7 +193,7 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
   .filt{padding:8px 12px;min-height:38px}
 }
 .shop-jump{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:1000px;margin:0 auto 44px;padding:0 24px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase}
-.shop-jump span{opacity:.6}
+.shop-jump span{color:#6B6256}
 .shop-jump a{padding:6px 13px;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;color:inherit;opacity:1;transition:border-color .3s,color .3s,opacity .3s}
 .shop-jump a:hover{border-color:var(--clay);color:var(--clay-deep);opacity:1}
 .read-place{display:inline-block;margin:0 0 18px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--clay-deep);border-bottom:1px solid currentColor;padding-bottom:2px;opacity:1;transition:opacity .3s}
@@ -482,6 +482,8 @@ img,svg,video{max-width:100%;height:auto}
 }
 @media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
 
+.shophero h1{text-shadow:0 3px 26px rgba(0,0,0,.35)}
+.shophero p,.shophero .lede{text-shadow:0 1px 14px rgba(0,0,0,.3)}
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
 <style>
@@ -498,7 +500,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=4fb71f19">
-<script src="/assets/sahra-cart.js?v=f422f089" defer></script>
+<script src="/assets/sahra-cart.js?v=fa1a0f55" defer></script>
 <script src="/assets/sahra-market.js?v=d4399363" defer></script>
 </head>
 <body>
@@ -583,26 +585,6 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
          div#reviews-list  (app widget/embed goes here)
      Do NOT ship placeholder/fake reviews here — trust + UAE consumer-protection risk.
 -->
-
-<section class="soon" id="soon" data-bg="#FAF6EF">
-  <div class="soon-inner">
-    <span class="eyebrow reveal-soon">The collection grows</span>
-    <h2 class="reveal-soon">More designs<br><em>coming soon</em></h2>
-    <p class="reveal-soon">New places, new stories, new tees — we are out exploring the next corners of the Emirates. Be first to see the next drop.</p>
-    <div class="wl reveal-soon" data-waitlist-wrap>
-      <form class="wl-form" data-waitlist data-source="shop-drop" data-endpoint="https://app.kit.com/forms/9627814/subscriptions" novalidate>
-        <input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required>
-        <button type="submit" class="btn magnetic">Notify me</button>
-      </form>
-      <p class="wl-msg">Get notified about the next drop. No spam — just the drop.</p>
-      <p class="wl-ok">You&rsquo;re on the list. We&rsquo;ll be in touch before the next drop. &#10022;</p>
-    </div>
-  </div>
-</section>
-
-<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% organic cotton</div><div>A share of every sale plants ghaf</div><div>Free returns within the UAE</div></div></div>
-
-<div class="lb" id="lightbox" aria-label="Photo viewer"><button class="lb-close" id="lbClose" aria-label="Close">✕</button><button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button><img class="lb-img" id="lbImg" alt=""><button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button></div>
 
 <!--RV_BAND:START--><style>
 .reviews{border-top:1px solid var(--line,rgba(43,37,32,.12))}
@@ -703,6 +685,26 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
       <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
     </div>
   </section><!--RV_BAND:END-->
+<section class="soon" id="soon" data-bg="#FAF6EF">
+  <div class="soon-inner">
+    <span class="eyebrow reveal-soon">The collection grows</span>
+    <h2 class="reveal-soon">More designs<br><em>coming soon</em></h2>
+    <p class="reveal-soon">New places, new stories, new tees — we are out exploring the next corners of the Emirates. Be first to see the next drop.</p>
+    <div class="wl reveal-soon" data-waitlist-wrap>
+      <form class="wl-form" data-waitlist data-source="shop-drop" data-endpoint="https://app.kit.com/forms/9627814/subscriptions" novalidate>
+        <input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required>
+        <button type="submit" class="btn magnetic">Notify me</button>
+      </form>
+      <p class="wl-msg">Get notified about the next drop. No spam — just the drop.</p>
+      <p class="wl-ok">You&rsquo;re on the list. We&rsquo;ll be in touch before the next drop. &#10022;</p>
+    </div>
+  </div>
+</section>
+
+<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% organic cotton</div><div>A share of every sale plants ghaf</div><div>Free returns within the UAE</div></div></div>
+
+<div class="lb" id="lightbox" aria-label="Photo viewer"><button class="lb-close" id="lbClose" aria-label="Close">✕</button><button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button><img class="lb-img" id="lbImg" alt=""><button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button></div>
+
 <footer>
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>

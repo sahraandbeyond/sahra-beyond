@@ -134,7 +134,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
   /* contrast-aware tokens, swapped by .dark-bg */
   --txt:#2A2016;--txt-soft:#6B6256;--line:rgba(42,32,22,.13);--edge:rgba(42,32,22,.58);--card:rgba(255,255,255,.66);--chip:rgba(42,32,22,.05);
 }
-body.dark-bg{--txt:#F4EFE6;--txt-soft:rgba(244,239,230,.62);--line:rgba(255,255,255,.16);--edge:rgba(255,255,255,.5);--card:rgba(255,255,255,.05);--chip:rgba(255,255,255,.06)}
+body.dark-bg{--txt:#F4EFE6;--txt-soft:rgba(244,239,230,.62);--line:rgba(255,255,255,.16);--edge:rgba(255,255,255,.5);--card:rgba(15,11,6,.55);--chip:rgba(255,255,255,.06)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{overflow-x:hidden;scroll-behavior:smooth}
 body{font-family:'Inter',system-ui,sans-serif;color:var(--txt);background:var(--sand);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;

@@ -431,6 +431,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .loc-hero .crumbs,.loc-hero .crumbs a{color:rgba(255,255,255,.85)}
 .loc-emoji{font-size:56px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.3))}
 .loc-hero h1{color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.35);margin-bottom:8px}
+.loc-hero .lede,.loc-hero .crumbs{text-shadow:0 1px 12px rgba(0,0,0,.35)}
 .loc-hero .lede{color:rgba(255,255,255,.96);margin-bottom:16px}
 .wx{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:14px;padding:9px 15px;font-size:13.5px;font-weight:600;color:#fff;min-height:42px}
 .wx .wx-ic{font-size:20px}
@@ -458,7 +459,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .facts li:last-child{border:0}
 .facts strong{color:#33271B}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-.btn{display:inline-block;padding:11px 18px;border-radius:12px;background:#A95A21;color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+.btn{display:inline-block;padding:13px 26px;border-radius:2px;background:#A95A21;color:#fff;text-decoration:none;font-weight:500;font-size:13px;letter-spacing:1px;text-transform:uppercase}
 .btn.ghost{background:none;color:#A25A20;border:1px solid #C0702E}
 .btn.ghost:hover{background:rgba(192,112,46,.08)}
 .pcta .btn+.btn{margin-left:10px}
@@ -1391,7 +1392,7 @@ if (LAUNCHED || REVEALED) (function () {
 // ---- Places index (the full directory that replaced the old planner grid) ----
 (function () {
   const canonical = `${SITE}/places/`;
-  const title = 'All Places — ' + locations.length + ' Deserts, Wadis, Mountains & Beaches in the UAE | Sahra & Beyond';
+  const title = 'All Places — Deserts, Wadis, Mountains & Beaches, UAE';
   const desc = 'The full Sahra & Beyond map: ' + locations.length + ' real places across the Emirates — dunes, wadis, mountains and beaches, each with GPS, live weather and a packing list.';
   const jsonld = [
     { "@context": "https://schema.org", "@type": "CollectionPage", "name": title, "description": desc, "url": canonical },
@@ -1562,7 +1563,7 @@ const COMMERCE = [
       ['Does a higher GSM shrink more?', 'Not by itself. Shrinkage is determined by whether the cotton was pre-shrunk before cutting and by how you wash it, not by how much the fabric weighs. Our cotton is pre-shrunk before cutting, so you should see very little movement. What does cause shrinkage, at any weight, is a hot wash and a tumble dryer — heat is what makes untreated cotton fibres contract. Wash cold and hang dry and weight becomes irrelevant to the question.'],
       ['Will the print crack?', 'DTG ink bonds into the cotton rather than sitting on top as a thick layer, so it flexes with the fabric instead of cracking. Washing cold and hanging to dry rather than tumble drying is what makes the difference long term.'],
       ['Will it shrink?', 'The fabric is pre-washed to minimise shrinkage. Wash cold, hang dry, and you should see very little movement. Hot washes and tumble dryers cause shrinkage.'],
-      ['Is the cotton certified organic?', 'The fabric is 100% organic cotton sourced through our supplier. We are working on publishing certification details and will add them here once confirmed.']
+      ['Is the cotton certified organic?', 'Our supplier sources 100% organic cotton. We do not currently hold a formal certification such as GOTS, and we would rather say that plainly than imply one. If that changes, it will be stated here with the certificate number.']
     ]
   },
   {

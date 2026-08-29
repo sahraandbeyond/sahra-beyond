@@ -1,85 +1,85 @@
 {
-  "emirate": "Abu Dhabi",
-  "coverFocus": "50% 100%",
-  "body": "Al Quaa is one of the darkest accessible deserts in the UAE and arguably the best place to view the Milky Way galaxy in the country. Set deep in the southern sands of Abu Dhabi, far from any city light, it's a pilgrimage spot for stargazers and astrophotographers — especially on clear, moonless nights between May and October, when the galaxy's bright core is above the horizon.\n\nThe bright core of the Milky Way rises over an empty horizon here, with almost zero light pollution to wash it out. Come prepared for a remote, self-sufficient overnight: a capable 4x4, plenty of water, warm layers for cold desert nights and a red-light torch to protect your night vision. There are no facilities — which is exactly why the skies are so spectacular.",
-  "season": "Oct–Mar",
-  "lng": 54.75339,
-  "emoji": "🌌",
-  "name": "Al Quaa Desert",
-  "desc": "One of the darkest skies in the Emirates. Deep in the southern desert, far from any city glow, it's a magnet for stargazers and astrophotographers chasing the Milky Way.",
-  "status": "warn",
-  "igPosts": [
-    "https://www.instagram.com/p/DZxmVymITKR/",
-    "https://www.instagram.com/p/DZogyHToe6k/",
-    "https://www.instagram.com/p/DZ0fc5eiBbg/?img_index=5"
-  ],
-  "distance": "~2.5h from Dubai",
-  "cover": "/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg",
-  "id": "al-quaa-desert",
-  "difficulty": "Moderate",
-  "category": "Camping",
-  "lat": 23.52924,
-  "seoTitle": "Al Quaa Stargazing: One of the Darkest Skies in the UAE",
-  "seoDesc": "Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the Milky Way is only visible May to October.",
-  "productLink": {
-    "slug": "al-quaa-galaxy-regular",
-    "anchor": "the Al Quaa Galaxy tee",
-    "sentence": "We mapped this sky onto a shirt — {{link}} prints the Milky Way exactly as it rises here, on 230gsm cotton dark enough to read it against."
+ "emirate": "Abu Dhabi",
+ "coverFocus": "50% 100%",
+ "body": "Al Quaa is one of the darkest accessible deserts in the UAE and arguably the best place to view the Milky Way galaxy in the country. Set deep in the southern sands of Abu Dhabi, far from any city light, it's a pilgrimage spot for stargazers and astrophotographers — especially on clear, moonless nights between May and October, when the galaxy's bright core is above the horizon.\n\nThe bright core of the Milky Way rises over an empty horizon here, with almost zero light pollution to wash it out. Come prepared for a remote, self-sufficient overnight: a capable 4x4, plenty of water, warm layers for cold desert nights and a red-light torch to protect your night vision. There are no facilities — which is exactly why the skies are so spectacular.",
+ "season": "Oct–Mar",
+ "lng": 54.75339,
+ "emoji": "🌌",
+ "name": "Al Quaa Desert",
+ "desc": "One of the darkest skies in the Emirates. Deep in the southern desert, far from any city glow, it's a magnet for stargazers and astrophotographers chasing the Milky Way.",
+ "status": "warn",
+ "igPosts": [
+  "https://www.instagram.com/p/DZxmVymITKR/",
+  "https://www.instagram.com/p/DZogyHToe6k/",
+  "https://www.instagram.com/p/DZ0fc5eiBbg/?img_index=5"
+ ],
+ "distance": "~2.5h from Dubai",
+ "cover": "/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg",
+ "id": "al-quaa-desert",
+ "difficulty": "Moderate",
+ "category": "Camping",
+ "lat": 23.52924,
+ "seoTitle": "Al Quaa Stargazing: One of the Darkest Skies in the UAE",
+ "seoDesc": "Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the core shows May to October.",
+ "productLink": {
+  "slug": "al-quaa-galaxy-regular",
+  "anchor": "the Al Quaa Galaxy tee",
+  "sentence": "We mapped this sky onto a shirt — {{link}} prints the Milky Way exactly as it rises here, on 230gsm cotton dark enough to read it against."
+ },
+ "sections": [
+  {
+   "h2": "When the Milky Way's core is actually visible",
+   "body": "The bright core of the galaxy — the dense, luminous band that makes a stargazing trip worth the drive — only clears the horizon for part of the year. From around February it starts rising in the hours before dawn, climbing earlier and higher through spring until it is visible at a sociable hour by summer. By early autumn it is back to a brief, low appearance in the evening sky before sinking below the horizon until the following spring.\n\nThat matters because the cooler months that make camping most comfortable in the UAE do not line up with core season. From roughly November to January the core sits below the horizon through the night regardless of how dark the sky is. Chase the core and you are going in summer heat; come for comfort and constellations and you are going in winter, when the core is not there. It is a genuine trade-off, and worth deciding which trip you are making before you set off."
   },
-  "sections": [
-    {
-      "h2": "When the Milky Way's core is actually visible",
-      "body": "The bright core of the galaxy — the dense, luminous band that makes a stargazing trip worth the drive — only clears the horizon for part of the year. From around February it starts rising in the hours before dawn, climbing earlier and higher through spring until it is visible at a sociable hour by summer. By early autumn it is back to a brief, low appearance in the evening sky before sinking below the horizon until the following spring.\n\nThat matters because the cooler months that make camping most comfortable in the UAE do not line up with core season. From roughly November to January the core sits below the horizon through the night regardless of how dark the sky is. Chase the core and you are going in summer heat; come for comfort and constellations and you are going in winter, when the core is not there. It is a genuine trade-off, and worth deciding which trip you are making before you set off."
-    },
-    {
-      "h2": "The moon decides more than the date",
-      "body": "A bright moon can wash out the fainter stretches of the Milky Way almost as thoroughly as a nearby city would. Core season tells you which months to consider; the moon phase tells you which nights within them actually work.\n\nNew moon nights, and the few either side of one, give the sky room to show its faintest detail. A full moon rising mid-evening can flood even a genuinely dark site with enough scattered light to flatten the galaxy's band into a faint smear. Before settling on a date, check the moon's phase and what time it rises or sets — a late-rising moon can still leave several hours of proper darkness earlier in the night."
-    },
-    {
-      "h2": "What you will see with nothing but your eyes",
-      "body": "Give your eyes twenty to thirty minutes away from any white light — headlights, phone screens, torches — and they adapt properly to the dark. Once adapted, a genuinely dark sky shows thousands of individual stars, the pale arch of the Milky Way overhead, and on a clear night the odd meteor streaking through it.\n\nBinoculars add real depth without the bulk of a telescope. Point them at the core and individual star fields resolve out of what looked like haze to the naked eye. They will also pull in the moons of Jupiter as pinpricks of light, texture on the lunar surface, and star clusters that are just smudges without them. A red-light torch, never white, keeps your night vision intact between looks."
-    },
-    {
-      "h2": "Being honest about the hard parts",
-      "body": "This is not a casual detour. Al Quaa is around two and a half hours from Dubai, deep in southern Abu Dhabi, and reaching it needs a capable 4x4. Fuel up, eat and carry plenty of water before you leave the city, because there are no facilities of any kind at the site itself.\n\nCore season is also the hottest half of the year here, and the heat does not fully switch off after dark. Humidity near dawn can soften contrast even on a clear night. And if you are hoping to capture what you see, a phone camera on its own will mostly show black — night skies need a long exposure on a steady tripod, or a night mode pushed well past what it does automatically. The sensor cannot gather enough light in the split second it is built for."
-    },
-    {
-      "h2": "Preparing for a night out there",
-      "body": "Treat it as the overnight desert trip it is. Check the moon phase and the core's position for your dates before committing to a night. Tell someone your plan and your rough return time. Fill the tank before leaving, bring more water than you think you need, and pack for the season you are actually travelling in — summer nights stay warm, winter nights drop sharply.\n\nA red-light torch protects your night vision far better than the white light on a phone. Download offline maps and save the coordinates — 23.52924, 54.75339 — in advance rather than relying on a live connection once you are off the highway. Build in slack, too: a moderate 4x4 route in low light takes longer than the same drive by day."
-    }
-  ],
-  "faqs": [
-    {
-      "q": "Is Al Quaa the darkest place in the UAE?",
-      "a": "It is one of the darkest accessible skies in the country, deep in southern Abu Dhabi and far from any city glow. We do not publish a numeric rating for it, but the absence of nearby light is what makes the Milky Way read so clearly from here."
-    },
-    {
-      "q": "How far is Al Quaa from Dubai?",
-      "a": "Around two and a half hours by road. Plan a full evening or an overnight trip rather than an after-work detour."
-    },
-    {
-      "q": "Do I need a 4x4 to get to Al Quaa?",
-      "a": "Yes. A capable 4x4 is needed and the route is rated moderate rather than beginner-friendly. It is not a drive for a standard saloon car."
-    },
-    {
-      "q": "Are there any facilities at Al Quaa?",
-      "a": "None at all — no fuel, food, water or toilets. Everything you need has to come with you, and that is precisely why the sky is as dark as it is."
-    },
-    {
-      "q": "When is the Milky Way visible at Al Quaa?",
-      "a": "The bright core is above the horizon roughly from May to October, highest in the middle of that window. Outside it the core is below the horizon at night and will not appear however dark the sky is."
-    },
-    {
-      "q": "Do I need a telescope to see the Milky Way?",
-      "a": "No. On a clear, moonless night the band is visible to the naked eye once your eyes have adapted for twenty minutes or so. Binoculars add noticeable detail without the setup a telescope needs."
-    },
-    {
-      "q": "Why will my phone camera not pick up the stars?",
-      "a": "Phone cameras default to very short exposures built for daylight, which cannot gather enough light from faint stars. A proper night shot needs a long exposure on a steady tripod, or a night mode pushed manually well beyond its automatic setting."
-    },
-    {
-      "q": "What should I pack for a night at Al Quaa?",
-      "a": "More water than you expect to drink, layers suited to the season you are travelling in, and a red-light torch to protect your night vision. Fill the tank before you leave the city, since there is nothing to buy once you arrive."
-    }
-  ]
+  {
+   "h2": "The moon decides more than the date",
+   "body": "A bright moon can wash out the fainter stretches of the Milky Way almost as thoroughly as a nearby city would. Core season tells you which months to consider; the moon phase tells you which nights within them actually work.\n\nNew moon nights, and the few either side of one, give the sky room to show its faintest detail. A full moon rising mid-evening can flood even a genuinely dark site with enough scattered light to flatten the galaxy's band into a faint smear. Before settling on a date, check the moon's phase and what time it rises or sets — a late-rising moon can still leave several hours of proper darkness earlier in the night."
+  },
+  {
+   "h2": "What you will see with nothing but your eyes",
+   "body": "Give your eyes twenty to thirty minutes away from any white light — headlights, phone screens, torches — and they adapt properly to the dark. Once adapted, a genuinely dark sky shows thousands of individual stars, the pale arch of the Milky Way overhead, and on a clear night the odd meteor streaking through it.\n\nBinoculars add real depth without the bulk of a telescope. Point them at the core and individual star fields resolve out of what looked like haze to the naked eye. They will also pull in the moons of Jupiter as pinpricks of light, texture on the lunar surface, and star clusters that are just smudges without them. A red-light torch, never white, keeps your night vision intact between looks."
+  },
+  {
+   "h2": "Being honest about the hard parts",
+   "body": "This is not a casual detour. Al Quaa is around two and a half hours from Dubai, deep in southern Abu Dhabi, and reaching it needs a capable 4x4. Fuel up, eat and carry plenty of water before you leave the city, because there are no facilities of any kind at the site itself.\n\nCore season is also the hottest half of the year here, and the heat does not fully switch off after dark. Humidity near dawn can soften contrast even on a clear night. And if you are hoping to capture what you see, a phone camera on its own will mostly show black — night skies need a long exposure on a steady tripod, or a night mode pushed well past what it does automatically. The sensor cannot gather enough light in the split second it is built for."
+  },
+  {
+   "h2": "Preparing for a night out there",
+   "body": "Treat it as the overnight desert trip it is. Check the moon phase and the core's position for your dates before committing to a night. Tell someone your plan and your rough return time. Fill the tank before leaving, bring more water than you think you need, and pack for the season you are actually travelling in — summer nights stay warm, winter nights drop sharply.\n\nA red-light torch protects your night vision far better than the white light on a phone. Download offline maps and save the coordinates — 23.52924, 54.75339 — in advance rather than relying on a live connection once you are off the highway. Build in slack, too: a moderate 4x4 route in low light takes longer than the same drive by day."
+  }
+ ],
+ "faqs": [
+  {
+   "q": "Is Al Quaa the darkest place in the UAE?",
+   "a": "It is one of the darkest accessible skies in the country, deep in southern Abu Dhabi and far from any city glow. We do not publish a numeric rating for it, but the absence of nearby light is what makes the Milky Way read so clearly from here."
+  },
+  {
+   "q": "How far is Al Quaa from Dubai?",
+   "a": "Around two and a half hours by road. Plan a full evening or an overnight trip rather than an after-work detour."
+  },
+  {
+   "q": "Do I need a 4x4 to get to Al Quaa?",
+   "a": "Yes. A capable 4x4 is needed and the route is rated moderate rather than beginner-friendly. It is not a drive for a standard saloon car."
+  },
+  {
+   "q": "Are there any facilities at Al Quaa?",
+   "a": "None at all — no fuel, food, water or toilets. Everything you need has to come with you, and that is precisely why the sky is as dark as it is."
+  },
+  {
+   "q": "When is the Milky Way visible at Al Quaa?",
+   "a": "The bright core is above the horizon roughly from May to October, highest in the middle of that window. Outside it the core is below the horizon at night and will not appear however dark the sky is."
+  },
+  {
+   "q": "Do I need a telescope to see the Milky Way?",
+   "a": "No. On a clear, moonless night the band is visible to the naked eye once your eyes have adapted for twenty minutes or so. Binoculars add noticeable detail without the setup a telescope needs."
+  },
+  {
+   "q": "Why will my phone camera not pick up the stars?",
+   "a": "Phone cameras default to very short exposures built for daylight, which cannot gather enough light from faint stars. A proper night shot needs a long exposure on a steady tripod, or a night mode pushed manually well beyond its automatic setting."
+  },
+  {
+   "q": "What should I pack for a night at Al Quaa?",
+   "a": "More water than you expect to drink, layers suited to the season you are travelling in, and a red-light torch to protect your night vision. Fill the tank before you leave the city, since there is nothing to buy once you arrive."
+  }
+ ]
 }

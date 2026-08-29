@@ -8,18 +8,18 @@ copy never flashes UAE-then-swaps. First visits paint the UAE default (which
 is also what crawlers index) and sahra-market.js corrects after /api/geo. */
 try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <title>Al Quaa Stargazing: One of the Darkest Skies in the UAE</title>
-<meta name="description" content="Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the Milky Way is only visible May to October.">
+<meta name="description" content="Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the core shows May to October.">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/locations/al-quaa-desert/">
 <meta name="theme-color" content="#C0702E">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Al Quaa Stargazing: One of the Darkest Skies in the UAE">
-<meta property="og:description" content="Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the Milky Way is only visible May to October.">
+<meta property="og:description" content="Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the core shows May to October.">
 <meta property="og:url" content="https://www.sahraandbeyond.ae/locations/al-quaa-desert/">
 <meta property="og:image" content="https://www.sahraandbeyond.ae/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg">
 <meta property="og:site_name" content="Sahra & Beyond">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Al Quaa Stargazing: One of the Darkest Skies in the UAE">
-<meta name="twitter:description" content="Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the Milky Way is only visible May to October.">
+<meta name="twitter:description" content="Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the core shows May to October.">
 <meta name="twitter:image" content="https://www.sahraandbeyond.ae/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -188,6 +188,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .loc-hero .crumbs,.loc-hero .crumbs a{color:rgba(255,255,255,.85)}
 .loc-emoji{font-size:56px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.3))}
 .loc-hero h1{color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.35);margin-bottom:8px}
+.loc-hero .lede,.loc-hero .crumbs{text-shadow:0 1px 12px rgba(0,0,0,.35)}
 .loc-hero .lede{color:rgba(255,255,255,.96);margin-bottom:16px}
 .wx{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:14px;padding:9px 15px;font-size:13.5px;font-weight:600;color:#fff;min-height:42px}
 .wx .wx-ic{font-size:20px}
@@ -215,7 +216,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .facts li:last-child{border:0}
 .facts strong{color:#33271B}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-.btn{display:inline-block;padding:11px 18px;border-radius:12px;background:#A95A21;color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+.btn{display:inline-block;padding:13px 26px;border-radius:2px;background:#A95A21;color:#fff;text-decoration:none;font-weight:500;font-size:13px;letter-spacing:1px;text-transform:uppercase}
 .btn.ghost{background:none;color:#A25A20;border:1px solid #C0702E}
 .btn.ghost:hover{background:rgba(192,112,46,.08)}
 .pcta .btn+.btn{margin-left:10px}
@@ -647,7 +648,7 @@ body.dark-bg .rv-stars{color:#E9B978}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=f422f089" defer></script>
+<script src="/assets/sahra-cart.js?v=fa1a0f55" defer></script>
 <script src="/assets/sahra-market.js?v=d4399363" defer></script>
 </body>
 </html>
