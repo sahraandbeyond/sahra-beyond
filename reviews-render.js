@@ -23,6 +23,17 @@ const esc = s => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
+/* Product display names for the band's per-review links. */
+const PRODUCT_DIR = path.join(__dirname, 'content', 'products');
+const _names = {};
+function productName(handle) {
+  if (handle in _names) return _names[handle];
+  try {
+    const d = JSON.parse(fs.readFileSync(path.join(PRODUCT_DIR, handle + '.json'), 'utf8'));
+    return (_names[handle] = d.name || null);
+  } catch (e) { return (_names[handle] = null); }
+}
+
 /* ---- photo viewing ------------------------------------------------------
    A 72px thumbnail nobody can open is decoration; the photo is the single
    most persuasive thing a review carries (Faheem: "this would massively
@@ -180,13 +191,28 @@ function homepageBand() {
         <span class="rv-count">from ${count} review${count === 1 ? '' : 's'}</span>
       </div>
       <ul class="rv-list">
-        ${picked.map(r => `
+        ${picked.map(r => {
+          /* Truncation rule, rewritten after Faheem's screenshot: the 190-char
+             cut chopped every review mid-sentence with no way to read the rest —
+             a dead end dressed as a teaser. Full text now shows up to 420 chars
+             (every current review fits whole); only a genuinely long review is
+             shortened, and ONLY when it has a fuller home to link to. The shop
+             review has no product page, so it is never cut. */
+          const isProduct = r.product && r.product !== '_shop';
+          const cut = isProduct && r.body.length > 420;
+          const body = cut ? r.body.slice(0, 417).trim() + '…' : r.body;
+          const pname = isProduct ? productName(r.product) : null;
+          const link = isProduct
+            ? `<a class="rv-more" href="/products/${esc(r.product)}/#reviews">${cut ? 'Read the full review' : ('See it on ' + esc(pname || 'the product page'))} &rarr;</a>`
+            : '';
+          return `
         <li class="rv-card">
           ${stars(r.rating)}
-          <p class="rv-text">${esc(r.body.length > 190 ? r.body.slice(0, 187).trim() + '…' : r.body)}</p>
+          <p class="rv-text">${esc(body)}</p>
           ${(r.photos || []).length ? `<span class="rv-photos">${r.photos.slice(0, 2).map(u => photoLink(u, 'Customer photo')).join('')}</span>` : ''}
           <span class="rv-meta">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}</span>
-        </li>`).join('')}
+          ${link}
+        </li>`; }).join('')}
       </ul>
       ${LIGHTBOX}
       <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
@@ -250,6 +276,8 @@ body.dark-bg .rv-stars{color:#E9B978}
 .rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
 .rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .rv-band .rv-src{color:#6B6256}
+.rv-more{display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
+.rv-more:hover{color:#33271B}
 .rv-photo-a{display:inline-block;line-height:0;border-radius:2px;cursor:zoom-in;transition:transform .2s}
 .rv-photo-a:hover{transform:scale(1.04)}
 .rv-photo-a:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
