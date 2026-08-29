@@ -69,12 +69,24 @@
   }
 
   /* Show fils when they exist. Rounding to whole dirhams misrepresents a
-     subtotal sitting either side of the AED 150 free-delivery threshold. */
+     subtotal sitting either side of the AED 150 free-delivery threshold.
+     KWD, BHD and OMR genuinely have three decimals — two would misprice
+     every line by up to 9 fils, so the map is load-bearing, not pedantry. */
+  var DECIMALS = { BHD: 3, KWD: 3, OMR: 3 };
   function money(a, c) {
     var n = parseFloat(a || 0);
     var cur = c || 'AED';
-    return cur + ' ' + (n % 1 === 0 ? n.toFixed(0) : n.toFixed(2));
+    var d = DECIMALS[cur] != null ? DECIMALS[cur] : 2;
+    if (d === 2 && n % 1 === 0) return cur + ' ' + n.toFixed(0);
+    return cur + ' ' + n.toFixed(d);
   }
+
+  /* Which country the cart belongs to. Presentment currency, checkout
+     language and available shipping all hang off this. Default AE preserves
+     the site's whole pre-international behaviour; sahra-market.js retunes it
+     through the sb:market event once geo (or the customer's own currency
+     choice) is known. */
+  var BUYER_CC = 'AE';
 
   var CART = null;
   var lastError = null;
@@ -379,8 +391,11 @@
         }
         CART = null;
         setCid(null);
-        return sf('mutation($l:[CartLineInput!]!){cartCreate(input:{lines:$l}){cart{' + CFRAG + '}userErrors{message}}}',
-                  { l: [{ merchandiseId: variantId, quantity: want }] })
+        return sf('mutation($l:[CartLineInput!]!,$cc:CountryCode!){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc}}){cart{' + CFRAG + '}userErrors{message}}}',
+                  /* read at send time, inside the queue — a country change
+                     that already happened should win, and one still queued
+                     behind us will re-point the cart when its turn comes */
+                  { l: [{ merchandiseId: variantId, quantity: want }], cc: BUYER_CC })
           .then(function (d) {
             var r = d.cartCreate;
             if (r && r.userErrors && r.userErrors.length) throw new Error(r.userErrors[0].message);
@@ -427,9 +442,53 @@
       .then(function (d) { return d.product ? d.product.variants.edges.map(function (e) { return e.node; }) : []; });
   }
 
+  /* ---- market / currency bridge --------------------------------------
+     sahra-market.js announces the customer's market on load and whenever
+     they pick a currency. Re-pointing an EXISTING cart's buyerIdentity makes
+     Shopify re-price every line in the new presentment currency, so the
+     drawer, the page prices and checkout can never tell three stories.
+     Queued like every other mutation — a currency flip racing an add was
+     exactly the class of bug the queue exists to prevent. */
+  function setCountry(cc) {
+    if (!/^[A-Z]{2}$/.test(cc || '') || cc === BUYER_CC) return Promise.resolve();
+    BUYER_CC = cc;
+    /* `cc` (the parameter), not BUYER_CC, inside the queued closure. The
+       closure runs at DEQUEUE time, and by then a later setCountry may have
+       overwritten the shared variable — review traced SA→US→SA flips all
+       shipping the final value. Capturing the argument keeps each queued
+       mutation meaning what it meant when the customer asked for it. */
+    return queue(function () {
+      if (BUYER_CC !== cc) return CART; // superseded while queued — skip the round trip
+      var id = (CART && CART.id) || cid();
+      if (!id) return null; // no cart yet — cartCreate will carry the country
+      return sf('mutation($id:ID!,$b:CartBuyerIdentityInput!){cartBuyerIdentityUpdate(cartId:$id,buyerIdentity:$b){cart{' + CFRAG + '}userErrors{message}}}',
+                { id: id, b: { countryCode: cc } })
+        .then(function (d) {
+          var r = d.cartBuyerIdentityUpdate;
+          if (r && r.cart) { CART = r.cart; draw(); }
+          /* userErrors here mean the market is not enabled for that country —
+             the cart simply stays in its current currency. Not an error the
+             customer can act on, so nothing is shown. */
+          return CART;
+        }).catch(function (e) {
+          /* A NETWORK failure is different from a userError: the selector has
+             visibly changed and the page repainted, so a silently unswitched
+             cart would contradict everything around it. Say so. (This file
+             already paid once for swallowing errors — bug 7.) */
+          lastError = 'We could not switch your cart’s currency. Your cart is unchanged — please try again.';
+          draw();
+          return CART;
+        });
+    });
+  }
+  document.addEventListener('sb:market', function (e) {
+    if (e.detail && e.detail.country) setCountry(e.detail.country);
+  });
+
   window.SahraCart = {
     add: add, open: open, close: close, refresh: refresh, variants: variants,
     setQty: setQty, remove: function (l) { return setQty(l, 0); },
+    setCountry: setCountry,
     state: function () { return CART; }
   };
 

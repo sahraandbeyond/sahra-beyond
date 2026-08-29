@@ -51,7 +51,7 @@ function related(p, all){
     var eyebrow = o.placeName ? 'Inspired by '+esc(o.placeName) : esc(o.eyebrow||'Sahra &amp; Beyond');
     return '      <a class="rel" href="/products/'+o.id+'/">\n'
       + '        <div class="rel-img"><img src="../..'+o.imgMain+'" alt="'+esc(o.name)+'" loading="lazy"></div>\n'
-      + '        <div class="rel-body"><div class="rel-place">'+eyebrow+'</div><div class="rel-name">'+esc(o.name)+'</div><div class="rel-price">AED '+esc(String(o.price))+'</div></div>\n'
+      + '        <div class="rel-body"><div class="rel-place">'+eyebrow+'</div><div class="rel-name">'+esc(o.name)+'</div><div class="rel-price"><span class="sb-price" data-handle="'+o.id+'" data-aed="'+esc(String(o.price))+'">AED '+esc(String(o.price))+'</span></div></div>\n'
       + '      </a>';
   }).join('\n');
 }
@@ -72,7 +72,7 @@ function galShots(p) {
 
 function page(p, all, SITE, SHOP_URL, LAUNCHED){
   return `<!doctype html>
-<html lang="en">
+<html lang="en" data-market="uae">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -219,6 +219,17 @@ body.dark-bg .buy h1 em{color:var(--gold)}
 .cw-txt strong{color:var(--txt)}
 .cw-txt em{display:block;margin-top:4px;font-style:normal;text-transform:none;letter-spacing:0;font-size:10.5px;color:var(--txt-soft)}
 .lede{font-size:17px;font-weight:300;line-height:1.85;margin-bottom:22px;max-width:46ch}
+/* market-aware shipping copy + currency selector (mirrors build.js shell) */
+.sb-ship-gcc,.sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-uae,html[data-market="gcc"] .sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-gcc{display:inline}
+html[data-market="intl"] .sb-ship-uae,html[data-market="intl"] .sb-ship-gcc{display:none}
+html[data-market="intl"] .sb-ship-intl{display:inline}
+.sb-curwrap{display:inline-flex;align-items:center;gap:8px}
+.sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mist,#6B6256)}
+.sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:inherit;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
+.sb-curpick option{color:#33271B;background:#fff}
+.sb-curpick:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 .spec-strip{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0}
 .spec-strip li{font-family:'Space Mono',monospace;font-size:11px;padding:7px 12px;border:1px solid var(--line);background:var(--chip);border-radius:999px;backdrop-filter:blur(4px)}
 .occasion{font-family:'Space Mono',monospace;font-size:12px;line-height:1.55;margin:0 0 24px;color:var(--txt-soft)}
@@ -519,6 +530,7 @@ ${RV.CSS}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
+<script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -526,7 +538,7 @@ ${RV.CSS}
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note">↺ Free UAE delivery over AED 150 &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
+<div class="note"><span class="sb-ship-uae">↺ Free UAE delivery over AED 150 &nbsp;·&nbsp; ⚡ Same-day Dubai, order by 2pm &nbsp;·&nbsp; Next-day UAE-wide</span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 400</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span> &nbsp;·&nbsp; ⚐ Designed in the UAE &nbsp;·&nbsp; ✦ Limited first drop</div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <div class="nav-links"><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -556,8 +568,9 @@ ${galShots(p).map((s,i)=>`
       ${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}
       <span class="limited">✦ Limited first run</span>
       <h1>${p.nameHtml}</h1>
-      <div class="price">AED ${esc(String(p.price))}</div>
-      <div class="vat">Free returns within the UAE</div>
+      <div class="price"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div>
+      <div class="vat"><span class="sb-ship-uae">Free returns within the UAE</span><span class="sb-ship-gcc">14-day returns &middot; duties, if any, are paid on arrival</span><span class="sb-ship-intl">14-day returns &middot; duties, if any, are paid on arrival</span></div>
+      <div style="margin:6px 0 2px"><span data-sb-curslot></span></div>
       <p class="lede">${p.lede}</p>
       <ul class="spec-strip">
         <li><strong>Unisex</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm organic cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
@@ -736,7 +749,7 @@ ${related(p, all)}
 <div id="buybar">
   <div class="bb-inner">
     <img class="bb-thumb" src="../..${p.imgMain}" alt="">
-    <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub">AED ${esc(String(p.price))} · Limited first run</div></div>
+    <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> · Limited first run</div></div>
     ${LAUNCHED ? `<button class="btn" id="bbAdd" type="button">Add to cart</button>` : `<a class="btn" href="${SHOP_URL}#prod-${p.shopAnchor}">View in shop</a>`}
   </div>
 </div>
@@ -1216,6 +1229,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=124ea926" defer></script>
+<script src="/assets/sahra-market.js" defer></script>
 </body>
 </html>
 `;

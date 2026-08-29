@@ -78,17 +78,19 @@ function makeServer() {
   const s = { carts: {}, seq: 0, calls: [], failNext: null, userErrorNext: null };
   s.handle = (query, vars) => {
     const op = /cartCreate/.test(query) ? 'cartCreate'
+             : /cartBuyerIdentityUpdate/.test(query) ? 'cartBuyerIdentityUpdate'
              : /cartLinesAdd/.test(query) ? 'cartLinesAdd'
              : /cartLinesUpdate/.test(query) ? 'cartLinesUpdate'
              : /cartLinesRemove/.test(query) ? 'cartLinesRemove' : 'query';
     s.calls.push(op);
+    if (op === 'cartCreate') { s.lastCreateQuery = query; s.lastCreateVars = vars; }
     if (s.failNext === op) { s.failNext = null; return Promise.reject(new Error('boom')); }
     if (s.userErrorNext === op) { s.userErrorNext = null;
       return Promise.resolve({ [op]: { cart: null, userErrors: [{ message: 'Only 2 left in stock.' }] } }); }
     const shape = c => ({
       id: c.id, checkoutUrl: 'https://checkout/' + c.id,
       totalQuantity: c.lines.reduce((n, l) => n + l.quantity, 0),
-      cost: { subtotalAmount: { amount: String(c.lines.reduce((n, l) => n + l.quantity * 149.5, 0)), currencyCode: 'AED' } },
+      cost: { subtotalAmount: { amount: String(c.lines.reduce((n, l) => n + l.quantity * (c.cur === 'KWD' ? 16.55 : 149.5), 0)), currencyCode: c.cur || 'AED' } },
       lines: { edges: c.lines.map(l => ({ node: {
         id: l.id, quantity: l.quantity,
         merchandise: { id: l.vid, title: 'M', availableForSale: true,
@@ -118,6 +120,11 @@ function makeServer() {
     if (op === 'cartLinesRemove') {
       c.lines = c.lines.filter(l => !vars.l.includes(l.id));
       return Promise.resolve({ cartLinesRemove: { cart: shape(c), userErrors: [] } });
+    }
+    if (op === 'cartBuyerIdentityUpdate') {
+      c.cc = vars.b.countryCode;
+      c.cur = ({ SA: 'SAR', KW: 'KWD', GB: 'GBP', US: 'USD' })[c.cc] || 'AED';
+      return Promise.resolve({ cartBuyerIdentityUpdate: { cart: shape(c), userErrors: [] } });
     }
     return Promise.resolve({ cart: shape(c) });
   };
@@ -301,6 +308,63 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     check('three rapid + taps reach quantity 4, not 2',
       env.api.state().totalQuantity === 4,
       'totalQuantity=' + env.api.state().totalQuantity);
+  }
+
+  /* 22 — international: cartCreate must carry buyerIdentity ------------- */
+  {
+    const env = boot();
+    await env.api.add('gid://x/1', 1);
+    check('cartCreate sends buyerIdentity with a country',
+      /buyerIdentity/.test(env.server.lastCreateQuery || ''),
+      'mutation lacked buyerIdentity');
+    check('default buyer country is AE (site behaves as its UAE self)',
+      env.server.lastCreateVars && env.server.lastCreateVars.cc === 'AE',
+      'cc=' + (env.server.lastCreateVars && env.server.lastCreateVars.cc));
+  }
+
+  /* 23 — setCountry BEFORE any cart exists: no wasted mutation, but the
+     next cartCreate must inherit the country. A GCC visitor whose first act
+     is adding to cart should never get an AED cart re-priced afterwards. */
+  {
+    const env = boot();
+    await env.api.setCountry('SA');
+    check('setCountry with no cart makes no API call',
+      env.server.calls.length === 0,
+      'calls: ' + env.server.calls.join(','));
+    await env.api.add('gid://x/1', 1);
+    check('cartCreate after setCountry carries the new country',
+      env.server.lastCreateVars && env.server.lastCreateVars.cc === 'SA',
+      'cc=' + (env.server.lastCreateVars && env.server.lastCreateVars.cc));
+  }
+
+  /* 24 — setCountry WITH a cart re-points it and re-prices the drawer.
+     The page, the drawer and checkout must never tell different stories. */
+  {
+    const env = boot();
+    await env.api.add('gid://x/1', 1);
+    await env.api.setCountry('KW');
+    check('existing cart gets cartBuyerIdentityUpdate',
+      env.server.calls.includes('cartBuyerIdentityUpdate'),
+      'calls: ' + env.server.calls.join(','));
+    check('cart state now carries the new currency',
+      env.api.state() && env.api.state().cost.subtotalAmount.currencyCode === 'KWD',
+      'currency=' + (env.api.state() && env.api.state().cost.subtotalAmount.currencyCode));
+    const sub = env.byId.sbSub && env.byId.sbSub.textContent;
+    check('three-decimal currency renders 3dp (KWD 16.550, not 16.55)',
+      sub === 'KWD 16.550',
+      'subtotal rendered: ' + sub);
+  }
+
+  /* 25 — a second setCountry to the same country is a no-op ------------- */
+  {
+    const env = boot();
+    await env.api.add('gid://x/1', 1);
+    await env.api.setCountry('SA');
+    const n = env.server.calls.filter(c => c === 'cartBuyerIdentityUpdate').length;
+    await env.api.setCountry('SA');
+    check('repeat setCountry to same country makes no extra call',
+      env.server.calls.filter(c => c === 'cartBuyerIdentityUpdate').length === n,
+      'calls: ' + env.server.calls.join(','));
   }
 
   console.log('\n  ' + pass + ' passed, ' + fail + ' failed\n');

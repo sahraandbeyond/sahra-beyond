@@ -1,8 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-market="uae">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Repeat visits: set the market before first paint so the shipping
+copy never flashes UAE-then-swaps. First visits paint the UAE default (which
+is also what crawlers index) and sahra-market.js corrects after /api/geo. */
+try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <title>Al Quaa Stargazing: One of the Darkest Skies in the UAE</title>
 <meta name="description" content="Al Quaa has some of the darkest skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the Milky Way is only visible May to October.">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/locations/al-quaa-desert/">
@@ -126,6 +130,24 @@ table.sg.gsm tr.is-ours th{color:#7E4114}
 .jmeta{margin-top:auto;padding-top:6px;font-family:'Space Mono',monospace;font-size:11px;color:#6B6256}
 .jdot{padding:0 6px;color:#6B6256}
 .jbyline{margin:0 0 14px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.4px;color:#6B6256}
+/* ---- market-aware shipping copy ------------------------------------------
+   All three variants ship in the HTML; CSS shows exactly one, driven by
+   data-market on <html>. The UAE variant is the no-JS/crawler default, so
+   Google keeps seeing precisely the content it already ranks. JS only ever
+   flips an attribute — if it never runs, the site is simply its UAE self. */
+.sb-ship-gcc,.sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-uae,html[data-market="gcc"] .sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-gcc{display:inline}
+html[data-market="intl"] .sb-ship-uae,html[data-market="intl"] .sb-ship-gcc{display:none}
+html[data-market="intl"] .sb-ship-intl{display:inline}
+/* ---- currency selector ---------------------------------------------------
+   Injected by sahra-market.js into [data-sb-curslot] ONLY when the store
+   offers more than one real currency. Border is the control tone, not the
+   hairline — a select the customer cannot find is the filter-chip bug again. */
+.sb-curwrap{display:inline-flex;align-items:center;gap:8px}
+.sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
+.sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
+.sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#6B6256;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -470,7 +492,7 @@ body.dark-bg .rv-stars{color:#E9B978}
         <span class="teecta-eyebrow">The tee inspired by this place</span>
         <h2>Al Quaa Galaxy — Regular</h2>
         <p>Regular fit. The Milky Way over Al Quaa — one of the darkest skies in the Emirates. 230gsm organic cotton. Limited first run.</p>
-        <div class="teecta-meta"><span>AED 199</span><span>DTG print &middot; embroidered logo</span><span>&#10022; Limited first run</span></div>
+        <div class="teecta-meta"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span><span>DTG print &middot; embroidered logo</span><span>&#10022; Limited first run</span></div>
         <a class="btn" href="/products/al-quaa-galaxy-regular/">See the tee &rarr;</a>
         <p class="teecta-alt">Also in <a href="/products/al-quaa-galaxy-oversized/">Oversized</a></p>
       </div>
@@ -533,6 +555,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 <footer class="ftr"><div class="ftr-tagline">Wear the wild side of the UAE</div>
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© 2026 Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · <a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a></div></footer>
 
@@ -602,6 +625,7 @@ body.dark-bg .rv-stars{color:#E9B978}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=49b99f81" defer></script>
+<script src="/assets/sahra-cart.js?v=f422f089" defer></script>
+<script src="/assets/sahra-market.js?v=d4399363" defer></script>
 </body>
 </html>

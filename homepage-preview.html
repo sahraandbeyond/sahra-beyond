@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-market="uae">
 <head>
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=ddbe0c80"></script>
@@ -516,6 +516,19 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=4fb71f19">
+<style>
+/* market-aware shipping copy + currency selector (mirrors build.js shell) */
+.sb-ship-gcc,.sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-uae,html[data-market="gcc"] .sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-gcc{display:inline}
+html[data-market="intl"] .sb-ship-uae,html[data-market="intl"] .sb-ship-gcc{display:none}
+html[data-market="intl"] .sb-ship-intl{display:inline}
+.sb-curwrap{display:inline-flex;align-items:center;gap:8px}
+.sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
+.sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
+.sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+</style>
+<script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 </head>
 <body>
 <a class="skip-link" href="#shop">Skip to the collection</a>
@@ -624,7 +637,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
   <div class="scroll-cue">⌄</div>
 </header>
 
-<div class="marquee"><div><span>★ Inspired by the UAE</span><span>★ Free UAE delivery over AED 150</span><span>★ Free returns within the UAE</span><span>★ Every design has a place</span><span>★ Designed in the UAE</span><span>★ Limited first drop</span><span>★ Original artwork</span><span>★ Inspired by the UAE</span><span>★ Free UAE delivery over AED 150</span><span>★ Free returns within the UAE</span><span>★ Every design has a place</span><span>★ Designed in the UAE</span><span>★ Limited first drop</span><span>★ Original artwork</span></div></div>
+<div class="marquee"><div><span>★ Inspired by the UAE</span><span><span class="sb-ship-uae">★ Free UAE delivery over AED 150</span><span class="sb-ship-gcc">★ GCC delivery 3–5 days · free over AED 400</span><span class="sb-ship-intl">★ Worldwide delivery 7–14 days</span></span><span><span class="sb-ship-uae">★ Free returns within the UAE</span><span class="sb-ship-gcc">★ 14-day returns</span><span class="sb-ship-intl">★ 14-day returns</span></span><span>★ Every design has a place</span><span>★ Designed in the UAE</span><span>★ Limited first drop</span><span>★ Original artwork</span><span>★ Inspired by the UAE</span><span><span class="sb-ship-uae">★ Free UAE delivery over AED 150</span><span class="sb-ship-gcc">★ GCC delivery 3–5 days · free over AED 400</span><span class="sb-ship-intl">★ Worldwide delivery 7–14 days</span></span><span><span class="sb-ship-uae">★ Free returns within the UAE</span><span class="sb-ship-gcc">★ 14-day returns</span><span class="sb-ship-intl">★ 14-day returns</span></span><span>★ Every design has a place</span><span>★ Designed in the UAE</span><span>★ Limited first drop</span><span>★ Original artwork</span></div></div>
 
 
 <section class="shop" id="shop">
@@ -729,7 +742,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#places">Places</a><a href="/about/">About</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc" style="font-size:13px;font-family:'Space Mono',monospace;letter-spacing:1px"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener" aria-label="Instagram">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
-</footer>
+<div style="margin:12px 0 4px"><span data-sb-curslot></span></div></footer>
 
 <script>
 /* LIVE 3D — desert night hero (Three.js). Falls back to CSS sky + 2D particles if unavailable. */
@@ -1492,6 +1505,7 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 })();
 </script>
 
-<script src="/assets/sahra-cart.js?v=49b99f81" defer></script>
+<script src="/assets/sahra-cart.js?v=f422f089" defer></script>
+<script src="/assets/sahra-market.js?v=d4399363" defer></script>
 </body>
 </html>

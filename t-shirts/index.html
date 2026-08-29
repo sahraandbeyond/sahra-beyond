@@ -1,8 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-market="uae">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Repeat visits: set the market before first paint so the shipping
+copy never flashes UAE-then-swaps. First visits paint the UAE default (which
+is also what crawlers index) and sahra-market.js corrects after /api/geo. */
+try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <title>UAE T-Shirts — Original Designs from Real Places</title>
 <meta name="description" content="Original UAE t-shirts inspired by real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs.">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/t-shirts/">
@@ -32,7 +36,7 @@
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=ddbe0c80"></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"UAE T-Shirts","description":"Original UAE t-shirts inspired by real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs.","url":"https://www.sahraandbeyond.ae/t-shirts/"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"UAE T-Shirts","item":"https://www.sahraandbeyond.ae/t-shirts/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Where do you ship?","acceptedAnswer":{"@type":"Answer","text":"We currently ship within the United Arab Emirates only. Delivery cost is calculated and shown at checkout before you pay."}},{"@type":"Question","name":"What size should I order?","acceptedAnswer":{"@type":"Answer","text":"Every t-shirt design comes in Regular and Oversized fits, S to XL; the polo comes in one fit. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match."}},{"@type":"Question","name":"Are these really organic cotton?","acceptedAnswer":{"@type":"Answer","text":"Yes — 230gsm 100% organic cotton for every piece in the collection."}},{"@type":"Question","name":"Will designs be restocked?","acceptedAnswer":{"@type":"Answer","text":"Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone."}}]}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"UAE T-Shirts","description":"Original UAE t-shirts inspired by real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs.","url":"https://www.sahraandbeyond.ae/t-shirts/"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"UAE T-Shirts","item":"https://www.sahraandbeyond.ae/t-shirts/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Where do you ship?","acceptedAnswer":{"@type":"Answer","text":"We ship worldwide from Dubai. In the UAE: same-day in Dubai when you order by 2pm, next-day everywhere else, free over AED 150. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 400. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay."}},{"@type":"Question","name":"What size should I order?","acceptedAnswer":{"@type":"Answer","text":"Every t-shirt design comes in Regular and Oversized fits, S to XL; the polo comes in one fit. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match."}},{"@type":"Question","name":"Are these really organic cotton?","acceptedAnswer":{"@type":"Answer","text":"Yes — 230gsm 100% organic cotton for every piece in the collection."}},{"@type":"Question","name":"Will designs be restocked?","acceptedAnswer":{"@type":"Answer","text":"Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone."}}]}]</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:scroll}
@@ -126,6 +130,24 @@ table.sg.gsm tr.is-ours th{color:#7E4114}
 .jmeta{margin-top:auto;padding-top:6px;font-family:'Space Mono',monospace;font-size:11px;color:#6B6256}
 .jdot{padding:0 6px;color:#6B6256}
 .jbyline{margin:0 0 14px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.4px;color:#6B6256}
+/* ---- market-aware shipping copy ------------------------------------------
+   All three variants ship in the HTML; CSS shows exactly one, driven by
+   data-market on <html>. The UAE variant is the no-JS/crawler default, so
+   Google keeps seeing precisely the content it already ranks. JS only ever
+   flips an attribute — if it never runs, the site is simply its UAE self. */
+.sb-ship-gcc,.sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-uae,html[data-market="gcc"] .sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-gcc{display:inline}
+html[data-market="intl"] .sb-ship-uae,html[data-market="intl"] .sb-ship-gcc{display:none}
+html[data-market="intl"] .sb-ship-intl{display:inline}
+/* ---- currency selector ---------------------------------------------------
+   Injected by sahra-market.js into [data-sb-curslot] ONLY when the store
+   offers more than one real currency. Border is the control tone, not the
+   hairline — a select the customer cannot find is the filter-chip bug again. */
+.sb-curwrap{display:inline-flex;align-items:center;gap:8px}
+.sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
+.sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
+.sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#6B6256;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -554,7 +576,7 @@ body.dark-bg .rv-stars{color:#E9B978}
     
     
     <section class="guide-sec"><h2>What makes these different from a souvenir t-shirt</h2><div class="content"><p>A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.</p><p>The Al Quaa design maps the Milky Way as it actually rises over one of the darkest skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic.</p></div></section><section class="guide-sec"><h2>The fabric, plainly</h2><div class="content"><p>All our t-shirts are 230gsm 100% organic cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.</p><p>Every piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere.</p></div></section><section class="guide-sec"><h2>Regular and oversized fits</h2><div class="content"><p>Everything is cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL. Each t-shirt design comes in both a Regular and an Oversized fit; the polo comes in one. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.</p><p>Full flat-lay measurements for both fits are on our size guide.</p></div></section><section class="guide-sec"><h2>Limited runs</h2><div class="content"><p>Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything.</p></div></section>
-    <section class="faq"><h2>Frequently asked questions</h2><details><summary>Where do you ship?</summary><p>We currently ship within the United Arab Emirates only. Delivery cost is calculated and shown at checkout before you pay.</p></details><details><summary>What size should I order?</summary><p>Every t-shirt design comes in Regular and Oversized fits, S to XL; the polo comes in one fit. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.</p></details><details><summary>Are these really organic cotton?</summary><p>Yes — 230gsm 100% organic cotton for every piece in the collection.</p></details><details><summary>Will designs be restocked?</summary><p>Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone.</p></details></section>
+    <section class="faq"><h2>Frequently asked questions</h2><details><summary>Where do you ship?</summary><p>We ship worldwide from Dubai. In the UAE: same-day in Dubai when you order by 2pm, next-day everywhere else, free over AED 150. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 400. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.</p></details><details><summary>What size should I order?</summary><p>Every t-shirt design comes in Regular and Oversized fits, S to XL; the polo comes in one fit. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.</p></details><details><summary>Are these really organic cotton?</summary><p>Yes — 230gsm 100% organic cotton for every piece in the collection.</p></details><details><summary>Will designs be restocked?</summary><p>Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone.</p></details></section>
     <section class="news"><div class="news-stars"></div><div class="news-in">
     <span class="news-eyebrow">Sahra &amp; Beyond &middot; Drop 01 out now</span>
     <h2>Wear the <em>wild side</em> of the UAE</h2><p>Original tees drawn from real places across the Emirates — the first drop is live now. Join the list and you will hear about the next one first.</p>
@@ -571,6 +593,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 <footer class="ftr"><div class="ftr-tagline">Wear the wild side of the UAE</div>
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© 2026 Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · <a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a></div></footer>
 
@@ -640,6 +663,7 @@ body.dark-bg .rv-stars{color:#E9B978}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=49b99f81" defer></script>
+<script src="/assets/sahra-cart.js?v=f422f089" defer></script>
+<script src="/assets/sahra-market.js?v=d4399363" defer></script>
 </body>
 </html>

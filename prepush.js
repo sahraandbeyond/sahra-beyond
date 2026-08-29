@@ -236,6 +236,25 @@ try {
   console.log(`    ${C.dim}run: node cart-test.js${C.off}`);
 }
 
+// ---- 2f. market/currency behaviour ------------------------------------
+// The market layer decides what every visitor is told about delivery and
+// what number sits next to each product. Its gate — never paint a currency
+// Shopify did not honour — is exactly the kind of contract a refactor breaks
+// silently, so it is exercised on every push like the cart is.
+let marketTestOk = true;
+try {
+  const out = require('child_process').execSync('node market-test.js', { cwd: __dirname, encoding: 'utf8' });
+  const m = out.match(/(\d+) passed, (\d+) failed/);
+  if (!m || m[2] !== '0') throw Object.assign(new Error('fail'), { stdout: out });
+  console.log(`  ${C.ok}✓${C.off} market behaviour: ${m ? m[1] : '?'} test(s) passed`);
+} catch (e) {
+  marketTestOk = false;
+  console.log(`\n  ${C.bad}✗ market regression tests FAILED — do not push:${C.off}`);
+  String(e.stdout || '').split('\n').filter(l => l.includes('✗')).slice(0, 8)
+    .forEach(l => console.log(`     ${C.bad}${l.trim()}${C.off}`));
+  console.log(`    ${C.dim}run: node market-test.js${C.off}`);
+}
+
 // ---- 3. what will actually be committed --------------------------------
 // This used to list files by MTIME, which was actively misleading: `node
 // build.js` rewrites ~124 files with byte-identical content, so every build
@@ -277,4 +296,4 @@ if (usedGit) {
 }
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk || !journalOk) ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk || !journalOk || !marketTestOk) ? 1 : 0);

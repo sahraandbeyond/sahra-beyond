@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-market="uae">
 <head>
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=ddbe0c80"></script>
@@ -490,6 +490,21 @@ img,svg,video{max-width:100%;height:auto}
 
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
+<style>
+/* market-aware shipping copy + currency selector (mirrors build.js shell) */
+.sb-ship-gcc,.sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-uae,html[data-market="gcc"] .sb-ship-intl{display:none}
+html[data-market="gcc"] .sb-ship-gcc{display:inline}
+html[data-market="intl"] .sb-ship-uae,html[data-market="intl"] .sb-ship-gcc{display:none}
+html[data-market="intl"] .sb-ship-intl{display:inline}
+.sb-curwrap{display:inline-flex;align-items:center;gap:8px}
+.sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
+.sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
+.sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+</style>
+<script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
+<script src="/assets/sahra-cart.js?v=f422f089" defer></script>
+<script src="/assets/sahra-market.js?v=d4399363" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#products">Skip to the collection</a>
@@ -499,7 +514,7 @@ img,svg,video{max-width:100%;height:auto}
 <div id="progress"><i></i></div>
 <div id="grain"></div>
 <canvas id="ambient-canvas"></canvas>
-<div class="note" id="mode-note">Free UAE delivery over AED 150 · Limited first run</div>
+<div class="note" id="mode-note"><span class="sb-ship-uae">Free UAE delivery over AED 150 &middot; Same-day Dubai (order by 2pm) &middot; Next-day UAE</span><span class="sb-ship-gcc">GCC delivery 3&ndash;5 working days &middot; Free over AED 400</span><span class="sb-ship-intl">Worldwide delivery 7&ndash;14 working days</span> · Limited first run</div>
 
 <nav id="nav" class="on-hero">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
@@ -536,7 +551,7 @@ img,svg,video{max-width:100%;height:auto}
           <img src="/shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/al-quaa-galaxy-regular/">Al Quaa Galaxy — Regular</a></h2>
-        <p class="sp-meta">AED 199 &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
+        <p class="sp-meta"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
         <p class="sp-desc">Regular fit. The Milky Way over Al Quaa — one of the darkest skies in the Emirates. 230gsm organic cotton. Limited first run.</p>
         <a class="sp-cta" href="/products/al-quaa-galaxy-regular/">View Al Quaa Galaxy — Regular</a>
       </article>
@@ -545,7 +560,7 @@ img,svg,video{max-width:100%;height:auto}
           <img src="/shirts/alquaa-oversized-back.jpg" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/al-quaa-galaxy-oversized/">Al Quaa Galaxy — Oversized</a></h2>
-        <p class="sp-meta">AED 199 &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
+        <p class="sp-meta"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
         <p class="sp-desc">Oversized fit. The Milky Way over Al Quaa — one of the darkest skies in the Emirates. 230gsm organic cotton. Limited first run.</p>
         <a class="sp-cta" href="/products/al-quaa-galaxy-oversized/">View Al Quaa Galaxy — Oversized</a>
       </article>
@@ -554,7 +569,7 @@ img,svg,video{max-width:100%;height:auto}
           <img src="/shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/empty-quarter-regular/">Empty Quarter — Regular</a></h2>
-        <p class="sp-meta">AED 199 &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
+        <p class="sp-meta"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
         <p class="sp-desc">Regular fit. A tonal embroidered sun setting over the dune ridges of Liwa. 230gsm organic cotton. Limited first run.</p>
         <a class="sp-cta" href="/products/empty-quarter-regular/">View Empty Quarter — Regular</a>
       </article>
@@ -563,7 +578,7 @@ img,svg,video{max-width:100%;height:auto}
           <img src="/shirts/emptyquarter-oversized-front.jpg" alt="Empty Quarter — Oversized, oversized fit — embroidered design on the front" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/empty-quarter-oversized/">Empty Quarter — Oversized</a></h2>
-        <p class="sp-meta">AED 199 &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
+        <p class="sp-meta"><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
         <p class="sp-desc">Oversized fit. A tonal embroidered sun setting over the dune ridges of Liwa. 230gsm organic cotton. Limited first run.</p>
         <a class="sp-cta" href="/products/empty-quarter-oversized/">View Empty Quarter — Oversized</a>
       </article>
@@ -572,7 +587,7 @@ img,svg,video{max-width:100%;height:auto}
           <img src="/shirts/hajar-regular-back.jpg" alt="Hajar Mountains — Regular, regular fit — design across the back" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/hajar-mountains-regular/">Hajar Mountains — Regular</a></h2>
-        <p class="sp-meta">AED 199 &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
+        <p class="sp-meta"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
         <p class="sp-desc">Regular fit. A topographic line drawing of the Hajar peaks. 230gsm organic cotton, made to layer. Limited first run.</p>
         <a class="sp-cta" href="/products/hajar-mountains-regular/">View Hajar Mountains — Regular</a>
       </article>
@@ -581,7 +596,7 @@ img,svg,video{max-width:100%;height:auto}
           <img src="/shirts/hajar-oversized-back.jpg" alt="Hajar Mountains — Oversized, oversized fit — design across the back" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/hajar-mountains-oversized/">Hajar Mountains — Oversized</a></h2>
-        <p class="sp-meta">AED 199 &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
+        <p class="sp-meta"><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
         <p class="sp-desc">Oversized fit. A topographic line drawing of the Hajar peaks. 230gsm organic cotton, made to layer. Limited first run.</p>
         <a class="sp-cta" href="/products/hajar-mountains-oversized/">View Hajar Mountains — Oversized</a>
       </article>
@@ -590,7 +605,7 @@ img,svg,video{max-width:100%;height:auto}
           <img src="/shirts/polo-front.jpg" alt="The Sahra Polo in sand — 240gsm piqué cotton with an embroidered chest logo" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/sand-polo/">The Sahra Polo</a></h2>
-        <p class="sp-meta">AED 229 &middot; 240 GSM piqué &middot; unisex S&ndash;XL</p>
+        <p class="sp-meta"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span> &middot; 240 GSM piqué &middot; unisex S&ndash;XL</p>
         <p class="sp-desc">240gsm embroidered piqué polo in sand. A limited first run.</p>
         <a class="sp-cta" href="/products/sand-polo/">View The Sahra Polo</a>
       </article></div></main>
@@ -670,9 +685,9 @@ img,svg,video{max-width:100%;height:auto}
 <footer>
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
-  <div class="paymarks" aria-label="We accept Visa and Mastercard"><svg viewBox="0 0 48 30" role="img" aria-label="Visa"><rect width="48" height="30" rx="4" fill="#fff"/><text x="24" y="20" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" font-style="italic" fill="#1A1F71">VISA</text></svg><svg viewBox="0 0 48 30" role="img" aria-label="Mastercard"><rect width="48" height="30" rx="4" fill="#fff"/><circle cx="20" cy="15" r="8" fill="#EB001B"/><circle cx="28" cy="15" r="8" fill="#F79E1B" fill-opacity=".85"/></svg><span class="paymarks-t">Secure checkout &middot; AED</span></div>
+  <div class="paymarks" aria-label="We accept Visa and Mastercard"><svg viewBox="0 0 48 30" role="img" aria-label="Visa"><rect width="48" height="30" rx="4" fill="#fff"/><text x="24" y="20" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" font-style="italic" fill="#1A1F71">VISA</text></svg><svg viewBox="0 0 48 30" role="img" aria-label="Mastercard"><rect width="48" height="30" rx="4" fill="#fff"/><circle cx="20" cy="15" r="8" fill="#EB001B"/><circle cx="28" cy="15" r="8" fill="#F79E1B" fill-opacity=".85"/></svg><span class="paymarks-t">Secure checkout</span></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
-</footer>
+<div style="margin:12px 0 4px"><span data-sb-curslot></span></div></footer>
 
 <script>
 // ========= CONFIG — paste your Shopify details to go live =========
@@ -682,7 +697,7 @@ img,svg,video{max-width:100%;height:auto}
   var SHOPIFY = { domain:'sahra-beyond.myshopify.com', token:'cc42ba8e74eb27c4f3c062d93f893fa0', collection:'', apiVersion:'2024-10' };
 // ==================================================================
 var DEMO=(SHOPIFY.domain.indexOf('YOUR-STORE')>=0||SHOPIFY.token.indexOf('YOUR_')>=0);
-if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='&#8635; Free UAE delivery over AED 150 &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop';}
+if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='<span class=\'sb-ship-uae\'>&#8635; Free UAE delivery over AED 150 &nbsp;&middot;&nbsp; &#9889; Same-day Dubai, order by 2pm</span><span class=\'sb-ship-gcc\'>&#9992; GCC delivery 3&ndash;5 working days &nbsp;&middot;&nbsp; Free over AED 400</span><span class=\'sb-ship-intl\'>&#9992; Worldwide delivery 7&ndash;14 working days</span> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop';}
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches,TOUCH=matchMedia('(hover:none),(pointer:coarse)').matches,HASG=(typeof gsap!=='undefined');
 function track(n,p){try{if(window.gtag)gtag('event',n,p||{});}catch(e){}}
 // theme palette used when a product has no explicit theme (black, beige, rose-blue, sage, indigo, soft-blue)
@@ -1251,7 +1266,7 @@ function draw(){
     var buyGhaf='<a class="buy-ghaf" href="/commitment.html">&#127793; A share of every tee plants ghaf trees in the UAE &rarr;</a>';
     var details='<details class="prod-acc"><summary>Details &amp; care</summary><ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% organic cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Fit.</strong> Unisex — Regular (true to size) or Oversized (relaxed drop-shoulder). See the size guide.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul></details>';
     var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; Organic cotton</span></div>';
-    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'" data-fit="'+_fFit+'" data-place="'+(p.placeSlug||'')+'" data-print="'+_fPrint+'" data-sizes="'+_fSizes+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+fitChip+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price">'+money(p.price,p.cur)+'</div>'+specStrip+colourway+fitSwap+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
+    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'" data-fit="'+_fFit+'" data-place="'+(p.placeSlug||'')+'" data-print="'+_fPrint+'" data-sizes="'+_fSizes+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+fitChip+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price"><span class="sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span></div>'+specStrip+colourway+fitSwap+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
   }).join('');
   var secs=[].slice.call(host.querySelectorAll('.prod'));
   secs.forEach(function(sec,i){
