@@ -661,7 +661,55 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
   </div>
 </section>
 
-<!--REVIEWS:START--><!--REVIEWS:END-->
+<!--REVIEWS:START--><style>
+.reviews{border-top:1px solid var(--line,rgba(43,37,32,.12))}
+.rv-aggregate{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.rv-stars{color:#A9761A;letter-spacing:2px;font-size:17px}
+body.dark-bg .rv-stars{color:#E9B978}
+.rv-score{font-family:'Space Mono',monospace;font-size:18px;font-weight:700}
+.rv-count{font-size:13px;color:var(--txt-soft,#6B6256)}
+.rv-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;list-style:none;padding:0;margin:0}
+.rv-card{border:1px solid var(--line,rgba(43,37,32,.12));border-radius:2px;padding:20px}
+.rv-card .rv-stars{font-size:14px;margin-bottom:8px;display:block}
+.rv-title{display:block;font-size:15px;margin-bottom:6px}
+.rv-text{font-size:14.5px;font-style:italic;line-height:1.65;margin:0 0 10px}
+.rv-photos{display:flex;gap:8px;margin-bottom:10px}
+.rv-photo{width:72px;height:72px;object-fit:cover;border-radius:2px}
+.rv-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--txt-soft,#6B6256)}
+.rv-reply{font-size:13.5px;line-height:1.6;margin:12px 0 0;padding-left:12px;
+  border-left:2px solid var(--line,rgba(43,37,32,.12))}
+.pcard-rv{display:flex;align-items:center;gap:7px;margin:2px 0 8px}
+.pcard-rv .rv-stars{font-size:13px;letter-spacing:1px}
+.pcard-rv-n{font-family:'Space Mono',monospace;font-size:11px;color:var(--txt-soft,#6B6256)}
+@media(max-width:760px){.rv-list{grid-template-columns:1fr}}</style>
+  <section class="reviews rv-band" aria-labelledby="rvb-h">
+    <div class="wrap">
+      <span class="eyebrow" id="rvb-h">Worn and reviewed</span>
+      <div class="rv-aggregate">
+        <span class="rv-stars" aria-hidden="true">★★★★★</span>
+        <span class="rv-score">5.0 / 5</span>
+        <span class="rv-count">from 3 reviews</span>
+      </div>
+      <ul class="rv-list">
+        
+        <li class="rv-card">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Got the oversized version and the fit is true to size. Oversized done properly! The fabric feels amazing and very comfortable. The design looks even better in person and feels very seamle…</p>
+          <span class="rv-meta">Anonymous</span>
+        </li>
+        <li class="rv-card">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">The fabric is pure and breathable, stitching is flawless, and the fit is so comfortable. Packaging is premium too. This product beautifully represents UAE heritage and shara culture. High…</p>
+          <span class="rv-meta">Mirza Aqib Baig</span>
+        </li>
+        <li class="rv-card">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Really happy with this T-shirt showing Al Quaa UAE! The print is beautifully done, and the quality of the T-shirt is excellent. Comfortable, stylish, and a great way to show love for the…</p>
+          <span class="rv-meta">Anonymous</span>
+        </li>
+      </ul>
+    </div>
+  </section><!--REVIEWS:END-->
 <section class="stats">
   <div class="melt"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,100 L0,50 C260,90 520,20 760,54 C1000,86 1220,26 1440,56 L1440,100 Z" fill="#F7DCB0"/></svg></div>
   <div class="wrap inner"><div class="stat-row">

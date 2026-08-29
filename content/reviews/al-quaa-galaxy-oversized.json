@@ -1,0 +1,19 @@
+{
+ "handle": "al-quaa-galaxy-oversized",
+ "average": 5.0,
+ "count": 1,
+ "synced": "2026-08-29",
+ "source": "storefront JSON-LD (manual pull; run sync-reviews.js with JUDGEME_TOKEN for the authoritative sync)",
+ "reviews": [
+  {
+   "rating": 5,
+   "title": "",
+   "name": "Anonymous",
+   "verified": false,
+   "date": "2026-08-29",
+   "photos": [],
+   "reply": "",
+   "body": "Got the oversized version and the fit is true to size. Oversized done properly! The fabric feels amazing and very comfortable. The design looks even better in person and feels very seamlessly embedded into the t."
+  }
+ ]
+}

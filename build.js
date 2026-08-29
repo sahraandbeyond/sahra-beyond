@@ -1679,6 +1679,7 @@ CATEGORIES.forEach(C => {
     ${Array.isArray(C.faqs) && C.faqs.length ? `<section class="faq"><h2>Frequently asked questions</h2>${C.faqs.map(q => `<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''}
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${C.h1}</span></div>${catCards(items)}
       <a class="btn shoplink" href="${shopHref}">Shop ${esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+    ${RV.homepageBand()}
     ${newsletterBlock()}
     <p class="back"><a href="/t-shirts/">All t-shirts &rarr;</a></p>
   </main>`;
@@ -1727,6 +1728,7 @@ COMMERCE.forEach(P => {
       <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; limited run</span></a>
     </nav>` : ''}
     ${collectionBlock(null, P.slug === 't-shirts')}
+    ${P.slug === 't-shirts' ? RV.homepageBand() : ''}
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
     ${P.gsmTable ? `<section class="guide-sec" id="gsm-table"><h2>Every t-shirt weight, compared</h2><p class="sgintent">GSM is grams per square metre &mdash; how much a square metre of the cloth weighs. It is the single most useful number on a t-shirt spec, and almost nobody selling t-shirts in the UAE explains it. Here is the whole scale.</p>${gsmTableHtml()}</section>` : ''}
     ${sectionsHtml}
@@ -1984,7 +1986,8 @@ console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.le
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
     if (!MARK.test(html)) continue;
-    const band = RV.homepageBand();
+    const raw = RV.homepageBand();
+    const band = raw ? '<style>' + RV.CSS + '</style>' + raw : '';
     const next = html.replace(MARK, '<!--REVIEWS:START-->' + band + '<!--REVIEWS:END-->');
     if (next !== html) {
       fs.writeFileSync(file, next);
@@ -2020,12 +2023,15 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
 })();
 <\/script>` : '';
 
+  const BANDMARK = /<!--RV_BAND:START-->[\s\S]*?<!--RV_BAND:END-->/;
+  const bandHtml = RV.homepageBand();
   for (const f of ['shop-preview.html', 'shop/index.html']) {
     const file = path.join(ROOT, f);
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
     if (!MARK.test(html)) continue;
-    const next = html.replace(MARK, '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
+    let next = html.replace(MARK, '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
+    if (BANDMARK.test(next)) next = next.replace(BANDMARK, '<!--RV_BAND:START-->' + bandHtml + '<!--RV_BAND:END-->');
     if (next !== html) {
       fs.writeFileSync(file, next);
       console.log(payload ? `  ✓ shop star ratings (${f})` : `  · shop star ratings: no reviews yet (${f})`);

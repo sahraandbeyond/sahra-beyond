@@ -1,0 +1,19 @@
+{
+ "handle": "al-quaa-galaxy-regular",
+ "average": 5.0,
+ "count": 1,
+ "synced": "2026-08-29",
+ "source": "storefront JSON-LD (manual pull; run sync-reviews.js with JUDGEME_TOKEN for the authoritative sync)",
+ "reviews": [
+  {
+   "rating": 5,
+   "title": "",
+   "name": "Anonymous",
+   "verified": false,
+   "date": "2026-08-24",
+   "photos": [],
+   "reply": "",
+   "body": "Really happy with this T-shirt showing Al Quaa UAE! The print is beautifully done, and the quality of the T-shirt is excellent. Comfortable, stylish, and a great way to show love for the UAE. 🇦🇪 Highly recommended! Great product and great quality. 👌"
+  }
+ ]
+}
