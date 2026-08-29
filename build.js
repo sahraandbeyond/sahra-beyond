@@ -2031,7 +2031,7 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
     let html = fs.readFileSync(file, 'utf8');
     if (!MARK.test(html)) continue;
     let next = html.replace(MARK, '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
-    if (BANDMARK.test(next)) next = next.replace(BANDMARK, '<!--RV_BAND:START-->' + bandHtml + '<!--RV_BAND:END-->');
+    if (BANDMARK.test(next)) next = next.replace(BANDMARK, '<!--RV_BAND:START-->' + (bandHtml ? '<style>' + RV.CSS + '</style>' + bandHtml : '') + '<!--RV_BAND:END-->');
     if (next !== html) {
       fs.writeFileSync(file, next);
       console.log(payload ? `  ✓ shop star ratings (${f})` : `  · shop star ratings: no reviews yet (${f})`);

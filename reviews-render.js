@@ -163,6 +163,14 @@ function homepageBand() {
    dark stretch of a product page - the exact failure that made the size chart
    unreadable. On the category pages --txt-soft is undefined and the fallback
    applies, which is correct because those pages are always light. */
+/* The .rv-band block exists because Faheem sent a screenshot: the homepage
+   injected the band over the animated desert-sky canvas, and transparent
+   cards left ink text floating on mid-orange — meta lines were unreadable.
+   The band therefore carries its OWN sand surface, white cards and explicit
+   ink/mist colours, so it is legible over any background it lands on. Same
+   lesson as the filter chips: never style against a background you do not
+   control. Measured: ink 13.0:1 on the sand band, mist 5.99:1 on white,
+   stars 3.68:1 (decorative, figure always beside them). */
 /* Star colour is set here rather than from var(--gold): --gold is tuned per
    page for other uses and is not defined at all on the category pages, and the
    brand gold measures 1.67:1 on cream - a star rating nobody can see. Stars are
@@ -189,6 +197,14 @@ body.dark-bg .rv-stars{color:#E9B978}
 .pcard-rv{display:flex;align-items:center;gap:7px;margin:2px 0 8px}
 .pcard-rv .rv-stars{font-size:13px;letter-spacing:1px}
 .pcard-rv-n{font-family:'Space Mono',monospace;font-size:11px;color:var(--txt-soft,#6B6256)}
+.rv-band{background:#FAF6EF;color:#33271B;padding:60px 24px;border-top:1px solid rgba(42,32,22,.10)}
+.rv-band .wrap{max-width:1100px;margin:0 auto}
+.rv-band .eyebrow{display:block;margin-bottom:14px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9C521B}
+.rv-band .rv-card{background:#fff;border:1px solid rgba(42,32,22,.14)}
+.rv-band .rv-stars{color:#A9761A}
+.rv-band .rv-score{color:#33271B}
+.rv-band .rv-count,.rv-band .rv-meta{color:#6B6256}
+.rv-band .rv-text{color:#33271B;font-style:italic}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}`;
 
 module.exports = { load, loadAll, stars, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN };
