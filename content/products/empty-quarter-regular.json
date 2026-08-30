@@ -108,5 +108,19 @@
   "decoration": "Embroidered throughout — no print",
   "imgCompare": "/shirts/emptyquarter-fit-comparison.jpg",
   "altCompare": "Empty Quarter — Regular — regular fit and oversized fit shown side by side",
-  "fitLabel": "Regular fit"
+  "fitLabel": "Regular fit",
+  "modelShots": [
+    {
+      "src": "/shirts/emptyquarter-model-front.jpg",
+      "alt": "The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest"
+    },
+    {
+      "src": "/shirts/emptyquarter-model-stand.jpg",
+      "alt": "The Empty Quarter tee worn standing on a dune at golden hour"
+    },
+    {
+      "src": "/shirts/emptyquarter-model-sunset.jpg",
+      "alt": "The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes"
+    }
+  ]
 }

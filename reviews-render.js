@@ -52,6 +52,36 @@ function photoLink(u, alt) {
 }
 /* One per page is enough; the guard makes any duplicate a no-op. Kept
    dependency-free and delegated so photos injected after load still work. */
+/* Filter/sort behaviour for the band. Pure DOM reordering and hiding — the
+   counts and every date are baked at build time, so with JS off the full
+   newest-first list simply shows, which is the correct fallback. */
+const FILTERS = `<script>(function(){if(window.__sbRvF)return;window.__sbRvF=1;
+document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
+  var list=bar.parentNode.querySelector('.rv-list');if(!list)return;
+  var cards=[].slice.call(list.querySelectorAll('.rv-card'));
+  function apply(){
+    var chip=bar.querySelector('.rv-chip.on');var star=chip?chip.dataset.star:'all';
+    var sel=bar.querySelector('[data-rv-sort]');var mode=sel?sel.value:'new';
+    var vis=cards.filter(function(c){return star==='all'||c.dataset.rating===star;});
+    cards.forEach(function(c){c.style.display=vis.indexOf(c)>-1?'':'none';});
+    vis.sort(function(a,b){
+      if(mode==='new')return (b.dataset.date||'').localeCompare(a.dataset.date||'');
+      if(mode==='old')return (a.dataset.date||'').localeCompare(b.dataset.date||'');
+      if(mode==='high')return (+b.dataset.rating||0)-(+a.dataset.rating||0)||(b.dataset.date||'').localeCompare(a.dataset.date||'');
+      return (+a.dataset.rating||0)-(+b.dataset.rating||0)||(b.dataset.date||'').localeCompare(a.dataset.date||'');
+    });
+    vis.forEach(function(c){list.appendChild(c);});
+  }
+  bar.addEventListener('click',function(e){
+    var c=e.target.closest('.rv-chip');if(!c)return;
+    bar.querySelectorAll('.rv-chip').forEach(function(x){x.classList.remove('on');});
+    c.classList.add('on');apply();
+  });
+  var sel=bar.querySelector('[data-rv-sort]');
+  if(sel)sel.addEventListener('change',apply);
+});
+})();<\/script>`;
+
 const LIGHTBOX = `<script>(function(){if(window.__sbRvLB)return;window.__sbRvLB=1;
 var last=null;
 function close(){var d=document.getElementById('sbRvLB');if(d)d.remove();document.documentElement.style.overflow='';if(last&&last.focus)last.focus();last=null;}
@@ -190,6 +220,23 @@ function homepageBand() {
         <span class="rv-score">${avg.toFixed(1)} / 5</span>
         <span class="rv-count">from ${count} review${count === 1 ? '' : 's'}</span>
       </div>
+      <div class="rv-filters" data-rv-filters>
+        <div class="rv-chips" role="group" aria-label="Filter reviews by rating">
+          <button type="button" class="rv-chip on" data-star="all">All (${picked.length})</button>
+          ${[5,4,3,2,1].map(st => {
+            const n = picked.filter(r => Math.round(r.rating) === st).length;
+            return n ? `<button type="button" class="rv-chip" data-star="${st}">${st}★ (${n})</button>` : '';
+          }).join('')}
+        </div>
+        <label class="rv-sort"><span>Sort</span>
+          <select data-rv-sort aria-label="Sort reviews">
+            <option value="new">Newest first</option>
+            <option value="old">Oldest first</option>
+            <option value="high">Highest rated</option>
+            <option value="low">Lowest rated</option>
+          </select>
+        </label>
+      </div>
       <ul class="rv-list">
         ${picked.map(r => {
           /* Truncation rule, rewritten after Faheem's screenshot: the 190-char
@@ -206,15 +253,16 @@ function homepageBand() {
             ? `<a class="rv-more" href="/products/${esc(r.product)}/#reviews">${cut ? 'Read the full review' : ('See it on ' + esc(pname || 'the product page'))} &rarr;</a>`
             : '';
           return `
-        <li class="rv-card">
+        <li class="rv-card" data-rating="${Number(r.rating) || 0}" data-date="${esc(r.date || '')}">
           ${stars(r.rating)}
           <p class="rv-text">${esc(body)}</p>
           ${(r.photos || []).length ? `<span class="rv-photos">${r.photos.slice(0, 2).map(u => photoLink(u, 'Customer photo')).join('')}</span>` : ''}
-          <span class="rv-meta">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}</span>
+          <span class="rv-meta">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}${fmtDate(r.date) ? ' · ' + fmtDate(r.date) : ''}</span>
           ${link}
         </li>`; }).join('')}
       </ul>
       ${LIGHTBOX}
+      ${FILTERS}
       <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
     </div>
   </section>`;
@@ -276,6 +324,13 @@ body.dark-bg .rv-stars{color:#E9B978}
 .rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
 .rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .rv-band .rv-src{color:#6B6256}
+.rv-filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0 0 16px}
+.rv-chips{display:flex;flex-wrap:wrap;gap:8px}
+.rv-chip{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;padding:9px 14px;min-height:40px;border:1px solid rgba(42,32,22,.58);border-radius:999px;background:#fff;color:#33271B;cursor:pointer}
+.rv-chip.on{background:#33271B;color:#fff;border-color:#33271B}
+.rv-chip:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.rv-sort{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#6B6256}
+.rv-sort select{font-family:'Space Mono',monospace;font-size:12px;padding:8px 12px;min-height:40px;border:1px solid rgba(42,32,22,.58);border-radius:999px;background:#fff;color:#33271B;cursor:pointer}
 .rv-more{display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
 .rv-more:hover{color:#33271B}
 .rv-photo-a{display:inline-block;line-height:0;border-radius:2px;cursor:zoom-in;transition:transform .2s}

@@ -58,6 +58,14 @@ collections:
       - { label: "Alt text — main photo", name: "altMain", widget: "string", hint: "Describe the photo for screen readers and Google." }
       - { label: "Alt text — front", name: "altFront", widget: "string" }
       - { label: "Alt text — back", name: "altBack", widget: "string" }
+      - label: "Model / worn photos"
+        name: "modelShots"
+        widget: "list"
+        required: false
+        hint: "Real photos of the tee being worn. They join the product gallery after the front/back shots. Never a photo that reveals the founder."
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string", hint: "Describe what the photo shows for screen readers and Google." }
 
       - { label: "Theme colour", name: "theme", widget: "color", default: "#181109", hint: "MUST match this product's section colour on the shop page. Al Quaa #181109 · Liwa #E7D6B8 · Hajar #C6BFD3" }
       - { label: "Second colour (scroll fades to this)", name: "theme2", widget: "color", default: "#1B1430" }

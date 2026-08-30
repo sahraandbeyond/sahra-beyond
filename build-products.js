@@ -63,6 +63,7 @@ function galShots(p) {
     [p.imgMain, p.altMain, 'View'],
     [p.imgFront, p.altFront, 'View front'],
     [p.imgBack, p.altBack, 'View back'],
+    ...((p.modelShots || []).map(function (m, i) { return [m.src, m.alt, 'View worn photo ' + (i + 1)]; })),
     [p.imgCompare, p.altCompare, 'Compare regular and oversized fit']
   ].filter(x => x[0]);
   const seen = new Set(), out = [];
@@ -904,11 +905,32 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var main=document.querySelector('.gal-main'),thumbs=document.getElementById('thumbs');
   if(!main||!thumbs)return;
   var imgs=main.querySelectorAll('img');
+  var cur=0,timer=null,red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function show(i){
+    cur=(i%imgs.length+imgs.length)%imgs.length;
+    imgs.forEach(function(im,k){im.classList.toggle('on',k===cur);});
+    thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===cur);});
+  }
+  /* Continuous 1s loop (Faheem, 29 Aug), same manners as the shop's slideshow:
+     pauses while the pointer is over the image or a finger is on it, pauses
+     while the zoom lightbox is open, restarts after any thumbnail choice, and
+     never runs for reduced-motion users. The cross-fade comes from the
+     existing .on transition - the same stack the prepush guard protects. */
+  function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
+  function startAuto(){stopAuto();if(red||imgs.length<2)return;
+    timer=setInterval(function(){
+      var lb=document.getElementById('lightbox');
+      if(lb&&lb.classList.contains('open'))return;
+      show(cur+1);
+    },1000);}
   thumbs.addEventListener('click',function(e){
-    var b=e.target.closest('button');if(!b)return;var i=+b.dataset.i;
-    imgs.forEach(function(im,k){im.classList.toggle('on',k===i);});
-    thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===i);});
+    var b=e.target.closest('button');if(!b)return;show(+b.dataset.i);startAuto();
   });
+  main.addEventListener('mouseenter',stopAuto);
+  main.addEventListener('mouseleave',startAuto);
+  main.addEventListener('touchstart',stopAuto,{passive:true});
+  main.addEventListener('touchend',startAuto,{passive:true});
+  startAuto();
 })();
 
 /* ---------- lightbox zoom (same behaviour as the shop's viewer) ---------- */
