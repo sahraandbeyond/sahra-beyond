@@ -294,6 +294,34 @@
         } catch (e) {}
       });
     }
+    /* Free-delivery progress (Rastah benchmark, 29 Aug 2026). Honest maths
+       only: thresholds are defined in AED (150 UAE next-day / 400 GCC), so the
+       meter renders ONLY when the cart itself is priced in AED — converting a
+       threshold into SAR client-side would drift from what checkout actually
+       charges. Non-AED and worldwide carts see no meter rather than a wrong one. */
+    (function () {
+      var el = document.getElementById('sbFree');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'sbFree'; el.className = 'sb-free';
+        var sub = document.querySelector('#sbFoot .sb-sub');
+        if (sub && sub.parentNode) sub.parentNode.insertBefore(el, sub.nextSibling);
+      }
+      var mkt = (window.SahraMarket && window.SahraMarket.market) ? window.SahraMarket.market() : 'uae';
+      var cost = CART.cost.subtotalAmount;
+      if (cost.currencyCode !== 'AED' || mkt === 'intl') { el.hidden = true; return; }
+      var th = mkt === 'gcc' ? 400 : 150;
+      var n = parseFloat(cost.amount || 0);
+      el.hidden = false;
+      if (n >= th) {
+        el.innerHTML = '<span class="sb-free-t sb-free-ok">\u2713 Free delivery unlocked</span><span class="sb-free-bar"><span style="width:100%"></span></span>';
+      } else {
+        var left = th - n;
+        var leftTxt = (left % 1 === 0) ? left.toFixed(0) : left.toFixed(2);
+        el.innerHTML = '<span class="sb-free-t">AED ' + leftTxt + ' away from free delivery</span>' +
+          '<span class="sb-free-bar"><span style="width:' + Math.max(6, Math.round(n / th * 100)) + '%"></span></span>';
+      }
+    })();
     foot.hidden = false;
   }
 

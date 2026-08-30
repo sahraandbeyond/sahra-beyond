@@ -227,6 +227,49 @@
     });
   }
 
+  /* Rotating announcement notes: any [data-sb-rotate] whose children carry
+     .sb-rot cycles them every 4.5s. First span starts .on (crawler/no-JS see
+     only that one, which is the shipping line — the content Google already
+     ranks). Skipped for reduced-motion users. */
+  function rotator() {
+    try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
+    var hosts = document.querySelectorAll('[data-sb-rotate]');
+    if (!hosts.length) return;
+    setInterval(function () {
+      hosts.forEach(function (h) {
+        var items = h.querySelectorAll('.sb-rot');
+        if (items.length < 2) return;
+        var i = 0; items.forEach(function (el, k) { if (el.classList.contains('on')) i = k; });
+        items[i].classList.remove('on');
+        items[(i + 1) % items.length].classList.add('on');
+      });
+    }, 4500);
+  }
+
+  /* Header currency chip: the footer slot has near-zero discoverability
+     (audit + Rastah both surface currency in the header). Injected only when
+     more than one currency is live, desktop only — mobile keeps the footer
+     and PDP slots. */
+  function headerChip() {
+    if (offered().length < 2 || !document.querySelector) return;
+    var hdr = document.querySelector('.hdr');
+    if (!hdr || hdr.querySelector('.sb-curwrap--hdr')) return;
+    var wrap = document.createElement('span');
+    wrap.className = 'sb-curwrap sb-curwrap--hdr';
+    var sel = document.createElement('select');
+    sel.className = 'sb-curpick sb-curpick--hdr';
+    sel.setAttribute('aria-label', 'Display currency');
+    offered().forEach(function (x) {
+      var o = document.createElement('option');
+      o.value = x.c; o.textContent = x.c;
+      sel.appendChild(o);
+    });
+    sel.value = cur;
+    sel.addEventListener('change', function () { setCurrency(sel.value); });
+    wrap.appendChild(sel);
+    hdr.appendChild(wrap);
+  }
+
   function boot() {
     var known = read('sb_geo', true);
     var start = function () {
@@ -240,7 +283,12 @@
           pick = live.set[d] ? d : 'AED';
         }
         buildSelectors();
+        /* Cosmetic extras must NEVER be able to kill the boot path — a throw
+           here would silently disable pricing and the cart bridge (it did,
+           in the test harness, before these guards). */
+        try { headerChip(); } catch (e) {}
         setCurrency(pick, false);
+        try { rotator(); } catch (e) {}
       });
     };
     if (known && /^[A-Z]{2}$/.test(known)) { geo = known; start(); }

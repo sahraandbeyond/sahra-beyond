@@ -148,6 +148,11 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
 .sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.sb-rot{display:none}
+.sb-rot.on{display:inline}
+.sb-curwrap--hdr{margin-left:4px}
+.sb-curpick--hdr{min-height:34px;padding:6px 24px 6px 10px;font-size:11px;background-position:right 8px center}
+@media(max-width:820px){.sb-curwrap--hdr{display:none}}
 .ig{margin:30px 0}
 .ig-hint{font-size:12px;color:#6B6256;margin:-4px 0 10px}
 .ig-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -471,7 +476,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=4fb71f19">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=18bf6c97">
 </head>
 <body>
 <header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/" class="active">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
@@ -695,7 +700,7 @@ body.dark-bg .rv-stars{color:#E9B978}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=41b575d9" defer></script>
-<script src="/assets/sahra-market.js?v=5c76deeb" defer></script>
+<script src="/assets/sahra-cart.js?v=45868934" defer></script>
+<script src="/assets/sahra-market.js?v=da8a7e1a" defer></script>
 </body>
 </html>

@@ -27,6 +27,11 @@
 .sb-df{padding:16px 20px calc(20px + env(safe-area-inset-bottom));border-top:1px solid rgba(43,37,32,.12)}
 .sb-sub{display:flex;justify-content:space-between;font-weight:600;margin-bottom:6px}
 .sb-note{font-size:12px;opacity:1;margin:0 0 12px}
+.sb-free{margin:2px 0 10px}
+.sb-free-t{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.3px;color:#6B6256;margin-bottom:6px}
+.sb-free-ok{color:#3E6B4A}
+.sb-free-bar{display:block;height:4px;border-radius:2px;background:rgba(42,32,22,.12);overflow:hidden}
+.sb-free-bar span{display:block;height:100%;border-radius:2px;background:#A95A21;transition:width .4s ease}
 .sb-go{display:block;text-align:center;background:#33271B;color:#fff;text-decoration:none;
   padding:15px;border-radius:10px;font-weight:600;min-height:52px;line-height:22px}
 /* quick add on cards */
