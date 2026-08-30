@@ -228,6 +228,7 @@ table.sz td:first-child{font-weight:600}
 html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html[data-market="intl"] .shipcard-intl{order:-1;border-color:var(--edge)}
 .pdp-ans-foot{margin:0 0 12px;font-size:13px;line-height:1.65;color:var(--txt-soft)}
 .pdp-ans-foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.gal-fit.warnfit{background:#7E4114;color:#fff;letter-spacing:.6px}
 .gal-model{margin:10px 2px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.4px;color:var(--txt-soft)}
 .shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}
 .shipsub{font-weight:400;font-size:11px;letter-spacing:.2px;color:var(--txt-soft);margin-left:4px}
@@ -855,11 +856,36 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   if(!main||!thumbs)return;
   var imgs=main.querySelectorAll('img');
   var cur=0,timer=null,red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* THE FIT BADGE MUST NEVER LIE (Faheem, 30 Aug). The model photos show the
+     OVERSIZED cut; on a Regular (or polo) page the standing "REGULAR FIT"
+     badge over an oversized-worn photo would visually promise the roomy drape
+     the slim chart cannot deliver - the exact wrong-size path the runs-slim
+     work exists to close. While a data-worn image is active, the badge flips
+     to "PHOTO: OVERSIZED FIT" in the warning tone, then flips back. */
+  var isOver=false;
+  var fitBadge=document.querySelector('.gal-fit');
+  if(!fitBadge && !isOver && main.querySelector('img[data-worn]')){
+    fitBadge=document.createElement('span'); fitBadge.className='gal-fit'; fitBadge.setAttribute('aria-hidden','true');
+    fitBadge.textContent='REGULAR FIT';
+    main.appendChild(fitBadge);
+  }
+  function syncBadge(){
+    if(!fitBadge)return;
+    var im=imgs[cur];
+    if(!isOver && im && im.hasAttribute('data-worn')){
+      if(!fitBadge.dataset.orig) fitBadge.dataset.orig=fitBadge.textContent;
+      fitBadge.textContent='PHOTO: OVERSIZED FIT'; fitBadge.classList.add('warnfit');
+    } else if(fitBadge.dataset.orig){
+      fitBadge.textContent=fitBadge.dataset.orig; fitBadge.classList.remove('warnfit');
+    }
+  }
   function show(i){
     cur=(i%imgs.length+imgs.length)%imgs.length;
     imgs.forEach(function(im,k){im.classList.toggle('on',k===cur);});
     thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===cur);});
+    syncBadge();
   }
+  syncBadge();
   /* Continuous 1s loop (Faheem, 29 Aug), same manners as the shop's slideshow:
      pauses while the pointer is over the image or a finger is on it, pauses
      while the zoom lightbox is open, restarts after any thumbnail choice, and
