@@ -50,7 +50,7 @@ function related(p, all){
   return others.map(function(o){
     var eyebrow = o.placeName ? 'Inspired by '+esc(o.placeName) : esc(o.eyebrow||'Sahra &amp; Beyond');
     return '      <a class="rel" href="/products/'+o.id+'/">\n'
-      + '        <div class="rel-img"><img src="../..'+o.imgMain+'" alt="'+esc(o.name)+'" loading="lazy"></div>\n'
+      + '        <div class="rel-img" data-cycle>'+[[o.imgMain,o.altMain||o.name],[o.imgFront,o.altFront||('Front of '+o.name)],[o.imgBack,o.altBack||('Back of '+o.name)]].concat((o.modelShots||[]).map(function(m){return [m.src,m.alt||o.name];})).filter(function(x,i,a){return x[0]&&a.findIndex(function(y){return y[0]===x[0];})===i;}).map(function(x,i){return '<img'+(i===0?' class="on"':'')+' src="../..'+x[0]+'" alt="'+esc(x[1])+'" loading="lazy">';}).join('')+'</div>\n'
       + '        <div class="rel-body"><div class="rel-place">'+eyebrow+'</div><div class="rel-name">'+esc(o.name)+'</div><div class="rel-price"><span class="sb-price" data-handle="'+o.id+'" data-aed="'+esc(String(o.price))+'">AED '+esc(String(o.price))+'</span></div></div>\n'
       + '      </a>';
   }).join('\n');
@@ -231,6 +231,11 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:inherit;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
 .sb-curpick option{color:#33271B;background:#fff}
 .sb-curpick:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+/* ---- product image auto-cycle (Faheem, 31 Aug: every shirt, everywhere,
+   shows ALL its photos). Stacked absolutely per the cross-fade guard. ---- */
+[data-cycle]{position:relative}
+[data-cycle] img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .45s ease}
+[data-cycle] img.on{opacity:1}
 .sb-rot{display:none}
 .sb-rot.on{display:inline}
 .sb-curwrap--hdr{margin-left:4px}

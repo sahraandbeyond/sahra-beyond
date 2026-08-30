@@ -529,6 +529,11 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
 .sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+/* ---- product image auto-cycle (Faheem, 31 Aug: every shirt, everywhere,
+   shows ALL its photos). Stacked absolutely per the cross-fade guard. ---- */
+[data-cycle]{position:relative}
+[data-cycle] img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .45s ease}
+[data-cycle] img.on{opacity:1}
 .sb-rot{display:none}
 .sb-rot.on{display:inline}
 .sb-curwrap--hdr{margin-left:4px}
@@ -652,9 +657,9 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
   <div class="wrap inner">
     <div class="sec-head reveal"><span class="eyebrow">The collection</span><h2>Designs with a place</h2><p>A small, considered range — each a limited first run, tied to a real spot on the map.</p></div>
     <div class="grid" id="grid">
-      <a class="card reveal tilt" href="/products/al-quaa-galaxy-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="/shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="1400" height="1400"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></div></div></a>
-      <a class="card reveal tilt" href="/products/empty-quarter-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="/shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="1000" height="1219"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter Tee</div><div class="card-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></div></div></a>
-      <a class="card reveal tilt" href="/products/hajar-mountains-regular/"><div class="card-img"><span class="card-tag">Limited</span><img src="/shirts/hajar-regular-back.jpg" alt="Hajar Mountains Tee" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 35%" width="578" height="663"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></div></div></a>
+      <a class="card reveal tilt" href="/products/al-quaa-galaxy-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy Tee worn, back — the Milky Way arcing over the dunes" loading="lazy"><img src="/shirts/alquaa-regular-front.jpg" alt="Front of the Al Quaa Galaxy Tee" loading="lazy"><img src="/shirts/alquaa-model-back.jpg" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back" loading="lazy"><img src="/shirts/alquaa-model-front.jpg" alt="The Al Quaa Galaxy tee worn in the dunes" loading="lazy"><img src="/shirts/alquaa-model-dusk.jpg" alt="The Al Quaa Galaxy tee worn at dusk" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy Tee</div><div class="card-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></div></div></a>
+      <a class="card reveal tilt" href="/products/empty-quarter-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter Tee" loading="lazy"><img src="/shirts/emptyquarter-regular-back.jpg" alt="Back of the Empty Quarter Tee" loading="lazy"><img src="/shirts/emptyquarter-model-front.jpg" alt="The Empty Quarter tee worn in the dunes" loading="lazy"><img src="/shirts/emptyquarter-model-stand.jpg" alt="The Empty Quarter tee worn at golden hour" loading="lazy"><img src="/shirts/emptyquarter-model-sunset.jpg" alt="The back of the Empty Quarter tee at sunset" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter Tee</div><div class="card-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></div></div></a>
+      <a class="card reveal tilt" href="/products/hajar-mountains-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/hajar-regular-back.jpg" alt="Hajar Mountains Tee" loading="lazy"><img src="/shirts/hajar-regular-front.jpg" alt="Front of the Hajar Mountains Tee" loading="lazy"><img src="/shirts/hajar-model-back.jpg" alt="The Hajar Mountains tee worn at sunset — mountains print across the back" loading="lazy"><img src="/shirts/hajar-model-front.jpg" alt="The Hajar Mountains tee worn in the dunes" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains Tee</div><div class="card-price"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></div></div></a>
     </div>
     <div class="qual-band reveal">
       <span class="eyebrow">Made to last</span>
@@ -1667,6 +1672,6 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 </script>
 
 <script src="/assets/sahra-cart.js?v=158d271a" defer></script>
-<script src="/assets/sahra-market.js?v=da8a7e1a" defer></script>
+<script src="/assets/sahra-market.js?v=85d1692e" defer></script>
 </body>
 </html>

@@ -148,6 +148,11 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
 .sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+/* ---- product image auto-cycle (Faheem, 31 Aug: every shirt, everywhere,
+   shows ALL its photos). Stacked absolutely per the cross-fade guard. ---- */
+[data-cycle]{position:relative}
+[data-cycle] img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .45s ease}
+[data-cycle] img.on{opacity:1}
 .sb-rot{display:none}
 .sb-rot.on{display:inline}
 .sb-curwrap--hdr{margin-left:4px}
@@ -339,6 +344,7 @@ main,.ftr{position:relative;z-index:1}
 .pcard{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line,rgba(43,37,32,.12));border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(43,37,32,.04);transition:box-shadow .3s,transform .3s}
 .pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
 .pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
+.pcard-imglink{position:absolute;inset:0;display:block}
 .pcard-img img{width:100%;height:100%;object-fit:contain;display:block;padding:6%;transition:transform .6s ease}
 /* The photo links to the product, same as the title. The anchor wraps only the
    image and sits BESIDE the zoom button rather than around it: a <button>
@@ -532,8 +538,8 @@ body.dark-bg .rv-stars{color:#E9B978}
     <div class="pcards">
     <article class="pcard" data-handle="al-quaa-galaxy-regular">
       <span class="pcard-img" style="background:#181109">
-        <a class="pcard-imglink" href="/products/al-quaa-galaxy-regular/" tabindex="-1">
-          <img src="/shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy" width="1536" height="1536">
+        <a class="pcard-imglink" href="/products/al-quaa-galaxy-regular/" tabindex="-1" data-cycle>
+          <img class="on" src="/shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-regular-front.jpg" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-model-back.jpg" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy" width="1076" height="1600"><img src="/shirts/alquaa-model-front.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy" width="1067" height="1600"><img src="/shirts/alquaa-model-dusk.jpg" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy" width="1227" height="1600">
         </a>
         <button type="button" class="pcard-zoom" data-zoom="/shirts/alquaa-regular-back.jpg" aria-label="Zoom Al Quaa Galaxy — Regular">&#9906;</button>
       </span>
@@ -548,8 +554,8 @@ body.dark-bg .rv-stars{color:#E9B978}
     </article>
     <article class="pcard" data-handle="empty-quarter-regular">
       <span class="pcard-img" style="background:#E7D6B8">
-        <a class="pcard-imglink" href="/products/empty-quarter-regular/" tabindex="-1">
-          <img src="/shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy" width="1536" height="1536">
+        <a class="pcard-imglink" href="/products/empty-quarter-regular/" tabindex="-1" data-cycle>
+          <img class="on" src="/shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-regular-back.jpg" alt="Empty Quarter — Regular, regular fit, back view" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-model-front.jpg" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy" width="1075" height="1600"><img src="/shirts/emptyquarter-model-stand.jpg" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy" width="1067" height="1600"><img src="/shirts/emptyquarter-model-sunset.jpg" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy" width="1234" height="1275">
         </a>
         <button type="button" class="pcard-zoom" data-zoom="/shirts/emptyquarter-regular-front.jpg" aria-label="Zoom Empty Quarter — Regular">&#9906;</button>
       </span>
@@ -564,8 +570,8 @@ body.dark-bg .rv-stars{color:#E9B978}
     </article>
     <article class="pcard" data-handle="hajar-mountains-regular">
       <span class="pcard-img" style="background:#C6BFD3">
-        <a class="pcard-imglink" href="/products/hajar-mountains-regular/" tabindex="-1">
-          <img src="/shirts/hajar-regular-back.jpg" alt="Hajar Mountains — Regular, regular fit — design across the back" loading="lazy" width="1536" height="1536">
+        <a class="pcard-imglink" href="/products/hajar-mountains-regular/" tabindex="-1" data-cycle>
+          <img class="on" src="/shirts/hajar-regular-back.jpg" alt="Hajar Mountains — Regular, regular fit — design across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-regular-front.jpg" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-model-back.jpg" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back" loading="lazy" width="1078" height="1459"><img src="/shirts/hajar-model-front.jpg" alt="The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest" loading="lazy" width="1157" height="1600">
         </a>
         <button type="button" class="pcard-zoom" data-zoom="/shirts/hajar-regular-back.jpg" aria-label="Zoom Hajar Mountains — Regular">&#9906;</button>
       </span>
@@ -708,6 +714,6 @@ body.dark-bg .rv-stars{color:#E9B978}
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=158d271a" defer></script>
-<script src="/assets/sahra-market.js?v=da8a7e1a" defer></script>
+<script src="/assets/sahra-market.js?v=85d1692e" defer></script>
 </body>
 </html>

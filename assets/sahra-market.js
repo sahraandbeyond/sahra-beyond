@@ -270,6 +270,40 @@
     hdr.appendChild(wrap);
   }
 
+  /* Card auto-cycle: any [data-cycle] with 2+ images cross-fades them at the
+     site's 1s rhythm. ONE shared interval for all cards (dozens of timers is
+     jank); IntersectionObserver keeps off-screen cards frozen; hover or a
+     resting finger holds the current frame; reduced-motion disables it all. */
+  function cycles() {
+    try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
+    var hosts = [].slice.call(document.querySelectorAll('[data-cycle]'))
+      .filter(function (h) { return h.querySelectorAll('img').length > 1; });
+    if (!hosts.length) return;
+    var seen = new Set();
+    try {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { e.isIntersecting ? seen.add(e.target) : seen.delete(e.target); });
+      });
+      hosts.forEach(function (h) { io.observe(h); });
+    } catch (e) { hosts.forEach(function (h) { seen.add(h); }); }
+    hosts.forEach(function (h) {
+      h.addEventListener('mouseenter', function () { h.setAttribute('data-hold', '1'); });
+      h.addEventListener('mouseleave', function () { h.removeAttribute('data-hold'); });
+      h.addEventListener('touchstart', function () { h.setAttribute('data-hold', '1'); }, { passive: true });
+      h.addEventListener('touchend', function () { h.removeAttribute('data-hold'); }, { passive: true });
+    });
+    setInterval(function () {
+      if (document.hidden) return;
+      hosts.forEach(function (h) {
+        if (h.hasAttribute('data-hold') || !seen.has(h)) return;
+        var im = h.querySelectorAll('img');
+        var i = 0; im.forEach(function (x, k) { if (x.classList.contains('on')) i = k; });
+        im[i].classList.remove('on');
+        im[(i + 1) % im.length].classList.add('on');
+      });
+    }, 1000);
+  }
+
   function boot() {
     var known = read('sb_geo', true);
     var start = function () {
@@ -289,6 +323,7 @@
         try { headerChip(); } catch (e) {}
         setCurrency(pick, false);
         try { rotator(); } catch (e) {}
+        try { cycles(); } catch (e) {}
       });
     };
     if (known && /^[A-Z]{2}$/.test(known)) { geo = known; start(); }

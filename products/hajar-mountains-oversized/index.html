@@ -157,6 +157,11 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:inherit;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
 .sb-curpick option{color:#33271B;background:#fff}
 .sb-curpick:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+/* ---- product image auto-cycle (Faheem, 31 Aug: every shirt, everywhere,
+   shows ALL its photos). Stacked absolutely per the cross-fade guard. ---- */
+[data-cycle]{position:relative}
+[data-cycle] img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .45s ease}
+[data-cycle] img.on{opacity:1}
 .sb-rot{display:none}
 .sb-rot.on{display:inline}
 .sb-curwrap--hdr{margin-left:4px}
@@ -783,11 +788,11 @@ body.dark-bg .rv-stars{color:#E9B978}
     <h2>More from <em>the drop</em></h2>
     <div class="rel-grid">
       <a class="rel" href="/products/hajar-mountains-regular/">
-        <div class="rel-img"><img src="../../shirts/hajar-regular-back.jpg" alt="Hajar Mountains — Regular" loading="lazy" width="1536" height="1536"></div>
+        <div class="rel-img" data-cycle><img class="on" src="../../shirts/hajar-regular-back.jpg" alt="Hajar Mountains — Regular, regular fit — design across the back" loading="lazy" width="1536" height="1536"><img src="../../shirts/hajar-regular-front.jpg" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="../../shirts/hajar-model-back.jpg" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back" loading="lazy" width="1078" height="1459"><img src="../../shirts/hajar-model-front.jpg" alt="The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest" loading="lazy" width="1157" height="1600"></div>
         <div class="rel-body"><div class="rel-place">Inspired by Wadi Naqab</div><div class="rel-name">Hajar Mountains — Regular</div><div class="rel-price"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></div></div>
       </a>
       <a class="rel" href="/products/al-quaa-galaxy-regular/">
-        <div class="rel-img"><img src="../../shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy — Regular" loading="lazy" width="1536" height="1536"></div>
+        <div class="rel-img" data-cycle><img class="on" src="../../shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-regular-front.jpg" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-model-back.jpg" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy" width="1076" height="1600"><img src="../../shirts/alquaa-model-front.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy" width="1067" height="1600"><img src="../../shirts/alquaa-model-dusk.jpg" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy" width="1227" height="1600"></div>
         <div class="rel-body"><div class="rel-place">Inspired by Al Quaa</div><div class="rel-name">Al Quaa Galaxy — Regular</div><div class="rel-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></div></div>
       </a>
     </div>
@@ -1385,6 +1390,6 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=158d271a" defer></script>
-<script src="/assets/sahra-market.js?v=da8a7e1a" defer></script>
+<script src="/assets/sahra-market.js?v=85d1692e" defer></script>
 </body>
 </html>
