@@ -128,6 +128,8 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .nav-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:36px;height:36px;border:none;background:rgba(255,255,255,.66);color:#2A2016;font-size:18px;line-height:1;cursor:pointer;border-radius:50%;opacity:1;transition:opacity .3s,background .3s;display:flex;align-items:center;justify-content:center}
 .nav-arrow:hover{background:#fff}
 .nav-arrow.prev{left:6px}.nav-arrow.next{right:6px}
+.slide-pause{position:absolute;top:10px;right:10px;z-index:4;width:38px;height:38px;border:none;border-radius:50%;background:rgba(255,255,255,.66);color:#2A2016;font-size:13px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s}
+.slide-pause:hover{background:#fff}
 .pthumbs{display:flex;gap:9px;margin-top:14px;justify-content:center;flex-wrap:wrap}
 .pthumb{width:50px;height:62px;border:1px solid var(--edge,rgba(42,32,22,.58));background:#EFEAE0;cursor:pointer;padding:0;overflow:hidden;opacity:.78;transition:opacity .25s,border-color .25s}
 .pthumb.on{opacity:1;border-color:currentColor}
@@ -1324,7 +1326,7 @@ function draw(){
     var plink=p.place?'<a class="eyebrow plink" href="/locations/'+p.placeSlug+'/">Inspired by '+p.place+' &rarr;</a>':'';
     var gal=(p.images&&p.images.length)?p.images:[];
     var slides=gal.map(function(u,k){return '<img class="slide'+(k===0?' on':'')+'" src="'+u+'" alt="'+p.title+'">';}).join('');
-    var arrows=gal.length>1?'<button class="nav-arrow prev" aria-label="Previous">&#8249;</button><button class="nav-arrow next" aria-label="Next">&#8250;</button>':'';
+    var arrows=gal.length>1?'<button class="nav-arrow prev" aria-label="Previous">&#8249;</button><button class="nav-arrow next" aria-label="Next">&#8250;</button><button class="slide-pause" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>':'';
     var thumbs=gal.length>1?('<div class="pthumbs">'+gal.map(function(u,k){return '<button class="pthumb'+(k===0?' on':'')+'" data-i="'+k+'" aria-label="View '+(k+1)+'"><img src="'+u+'" alt=""></button>';}).join('')+'</div>'):'';
     var media='<div class="prod-media"><div class="prod-img">'+(gal.length?('<div class="slides">'+slides+'</div>'+arrows):'[ Design photo ]')+'</div>'+thumbs+'</div>';
     var _pi=placeInfo(p);var pd=_pi?_pi.data:null;
@@ -1351,8 +1353,17 @@ function draw(){
     var galList=(p.images||[]).slice(),curi=0,timer=null;
     var imgBox=sec.querySelector('.prod-img'),thumbBox=sec.querySelector('.pthumbs');
     function showSlide(k){var sl=sec.querySelectorAll('.slide');if(!sl.length)return;curi=(k%sl.length+sl.length)%sl.length;sl.forEach(function(s,j){s.classList.toggle('on',j===curi);});sec.querySelectorAll('.pthumb').forEach(function(t,j){t.classList.toggle('on',j===curi);});}
+    var userPaused=false;
     function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
-    function startAuto(){stopAuto();if(red||galList.length<2)return;timer=setInterval(function(){showSlide(curi+1);},1000);/* 1s per Faheem, 29 Aug */}
+    function startAuto(){stopAuto();if(red||userPaused||galList.length<2)return;timer=setInterval(function(){showSlide(curi+1);},1000);/* 1s per Faheem, 29 Aug */}
+    var pauseBtn=sec.querySelector('.slide-pause');
+    if(pauseBtn)pauseBtn.addEventListener('click',function(e){e.stopPropagation();
+      userPaused=!userPaused;
+      pauseBtn.setAttribute('aria-pressed',userPaused?'true':'false');
+      pauseBtn.setAttribute('aria-label',userPaused?'Play slideshow':'Pause slideshow');
+      pauseBtn.innerHTML=userPaused?'&#9654;':'&#10073;&#10073;';
+      if(userPaused)stopAuto();else startAuto();
+    });
     var pv=sec.querySelector('.nav-arrow.prev'),nx=sec.querySelector('.nav-arrow.next');
     if(pv)pv.addEventListener('click',function(){showSlide(curi-1);startAuto();});
     if(nx)nx.addEventListener('click',function(){showSlide(curi+1);startAuto();});
@@ -1365,7 +1376,7 @@ function draw(){
       imgBox.addEventListener('touchend',function(e){if(swX===null)return;var dx=e.changedTouches[0].clientX-swX,dy=e.changedTouches[0].clientY-swY;swX=null;
         if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.2){showSlide(curi+(dx<0?1:-1));}startAuto();},{passive:true});
     }
-    if(imgBox)imgBox.addEventListener('click',function(e){if(e.target.closest('.nav-arrow'))return;openLightbox(galList,curi);});
+    if(imgBox)imgBox.addEventListener('click',function(e){if(e.target.closest('.nav-arrow')||e.target.closest('.slide-pause'))return;openLightbox(galList,curi);});
     // ---- size / fit / cart ----
     function updateBtn(){
       if(COMMERCE_OFF){addBtn.disabled=false;addBtn.textContent='Notify me when it drops';return;}

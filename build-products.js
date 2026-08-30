@@ -64,7 +64,7 @@ function galShots(p) {
     [p.imgFront, p.altFront, 'View front'],
     [p.imgBack, p.altBack, 'View back'],
     ...((p.modelShots || []).map(function (m, i) { return [m.src, m.alt, 'View worn photo ' + (i + 1), 'worn']; })),
-    [p.imgCompare, p.altCompare, 'Compare regular and oversized fit']
+    [p.imgCompare, p.altCompare, 'Compare regular and oversized fit', 'compare']
   ].filter(x => x[0]);
   const seen = new Set(), out = [];
   for (const s of raw) { if (seen.has(s[0])) continue; seen.add(s[0]); out.push(s); }
@@ -303,6 +303,11 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 .pdp-ans-foot{margin:0 0 12px;font-size:13px;line-height:1.65;color:var(--txt-soft)}
 .pdp-ans-foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .gal-fit.warnfit{background:#7E4114;color:#fff;letter-spacing:.6px}
+.gal-main img.fit-contain{object-fit:contain;background:var(--chip)}
+.gal-thumbs img.fit-contain{object-fit:contain;background:var(--chip)}
+.gal-pause{position:absolute;top:14px;right:14px;z-index:4;width:40px;height:40px;border:none;border-radius:50%;background:rgba(20,14,10,.45);color:#fff;font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gal-pause:hover{background:rgba(20,14,10,.7)}
+.gal-pause:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 .gal-model{margin:10px 2px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.4px;color:var(--txt-soft)}
 .shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}
 .shipsub{font-weight:400;font-size:11px;letter-spacing:.2px;color:var(--txt-soft);margin-left:4px}
@@ -587,13 +592,14 @@ ${RV.CSS}
       <div class="gal-main" tabindex="0" role="button" aria-label="Zoom product image">
         <span class="gal-tag">${esc(p.drop)}</span>
         <span class="gal-hint">Click to zoom</span>
+        <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
 ${galShots(p).map((s,i)=>`
-        <img${i===0?' class="on"':''}${s[3]?' data-worn="1"':''} src="../..${s[0]}" alt="${esc(s[1]||'')}">`).join('')}
+        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''} src="../..${s[0]}" alt="${esc(s[1]||'')}">`).join('')}
         ${p.fitLabel ? `<span class="gal-fit" aria-hidden="true">${esc(p.fitLabel)}</span>` : ''}
       </div>
       <div class="gal-thumbs" id="thumbs">
 ${galShots(p).map((s,i)=>`
-        <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img src="../..${s[0]}" alt=""></button>`).join('')}
+        <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img${s[3]==='compare'?' class="fit-contain"':''} src="../..${s[0]}" alt=""></button>`).join('')}
       </div>
       ${p.modelInfo ? `<p class="gal-model">${esc(p.modelInfo)}</p>` : ''}
     </div>
@@ -945,8 +951,9 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
      while the zoom lightbox is open, restarts after any thumbnail choice, and
      never runs for reduced-motion users. The cross-fade comes from the
      existing .on transition - the same stack the prepush guard protects. */
+  var userPaused=false;
   function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
-  function startAuto(){stopAuto();if(red||imgs.length<2)return;
+  function startAuto(){stopAuto();if(red||userPaused||imgs.length<2)return;
     timer=setInterval(function(){
       var lb=document.getElementById('lightbox');
       if(lb&&lb.classList.contains('open'))return;
@@ -954,6 +961,14 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     },1000);}
   thumbs.addEventListener('click',function(e){
     var b=e.target.closest('button');if(!b)return;show(+b.dataset.i);startAuto();
+  });
+  var pauseBtn=document.getElementById('galPause');
+  if(pauseBtn)pauseBtn.addEventListener('click',function(e){e.stopPropagation();
+    userPaused=!userPaused;
+    pauseBtn.setAttribute('aria-pressed',userPaused?'true':'false');
+    pauseBtn.setAttribute('aria-label',userPaused?'Play slideshow':'Pause slideshow');
+    pauseBtn.innerHTML=userPaused?'&#9654;':'&#10073;&#10073;';
+    if(userPaused)stopAuto();else startAuto();
   });
   main.addEventListener('mouseenter',stopAuto);
   main.addEventListener('mouseleave',startAuto);
@@ -965,6 +980,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 /* ---------- lightbox zoom (same behaviour as the shop's viewer) ---------- */
 (function(){
   var main=document.querySelector('.gal-main'),lb=document.getElementById('lightbox');
+  /* pause taps must not open the zoom */
   if(!main||!lb)return;
   var imgs=[].slice.call(main.querySelectorAll('img')),srcs=imgs.map(function(i){return i.src;}),cur=0;
   var el=document.getElementById('lbImg');

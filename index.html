@@ -472,6 +472,9 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 .spot-nav:hover{background:rgba(20,14,10,.72)}
 .spot-nav.prev{left:10px}
 .spot-nav.next{right:10px}
+.spot-pause{position:absolute;top:10px;right:10px;z-index:5;width:40px;height:40px;border:none;border-radius:50%;background:rgba(20,14,10,.5);color:#fff;font-size:15px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.spot-pause:hover{background:rgba(20,14,10,.75)}
+.spot-pause:focus-visible{outline:3px solid #E9B978;outline-offset:2px}
 .spot-dots{position:absolute;left:0;right:0;bottom:52px;z-index:4;display:flex;
   gap:7px;justify-content:center;pointer-events:auto}
 .spot-dots button{width:8px;height:8px;padding:0;border-radius:50%;border:0;cursor:pointer;
@@ -636,7 +639,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
       <p class="hero-in">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
       <div class="hero-actions hero-in"><a href="/shop/" class="btn magnetic shoplink" onclick="try{track('shop_cta_click',{source:'hero'})}catch(e){}">Shop the collection</a><a href="#places" class="btn ghost magnetic">The places behind them</a></div>
     </div>
-    <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/emptyquarter-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/hajar-regular-front.jpg');background-size:cover;background-position:center"></div><a class="spot-link" id="spotlink" href="/shop/" aria-label="View this design"></a><button class="spot-nav prev" id="spotPrev" type="button" aria-label="Previous design">&#8249;</button><button class="spot-nav next" id="spotNext" type="button" aria-label="Next design">&#8250;</button><div class="spot-dots" id="spotDots" role="tablist" aria-label="Choose a design"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
+    <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/emptyquarter-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/hajar-regular-front.jpg');background-size:cover;background-position:center"></div><a class="spot-link" id="spotlink" href="/shop/" aria-label="View this design"></a><button class="spot-nav prev" id="spotPrev" type="button" aria-label="Previous design">&#8249;</button><button class="spot-nav next" id="spotNext" type="button" aria-label="Next design">&#8250;</button><button class="spot-pause" id="spotPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button><div class="spot-dots" id="spotDots" role="tablist" aria-label="Choose a design"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
   </div>
   <div class="scroll-cue">⌄</div>
 </header>
@@ -1173,9 +1176,18 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     i=(n+f.length)%f.length; sync();
     if(manual){ stop(); setTimeout(start,9000); }   /* let them look before it moves on */
   }
-  function start(){ if(reduce||paused||timer) return; timer=setInterval(function(){go(i+1);},4200); }
+  var userPaused=false;
+  function start(){ if(reduce||paused||userPaused||timer) return; timer=setInterval(function(){go(i+1);},1000);/* 1s per Faheem, 30 Aug */ }
   function stop(){ clearInterval(timer); timer=null; }
 
+  var pauseBtn=document.getElementById('spotPause');
+  if(pauseBtn)pauseBtn.addEventListener('click',function(e){e.preventDefault();
+    userPaused=!userPaused;
+    pauseBtn.setAttribute('aria-pressed',userPaused?'true':'false');
+    pauseBtn.setAttribute('aria-label',userPaused?'Play slideshow':'Pause slideshow');
+    pauseBtn.innerHTML=userPaused?'&#9654;':'&#10073;&#10073;';
+    if(userPaused)stop();else start();
+  });
   document.getElementById('spotPrev').addEventListener('click',function(e){e.preventDefault();go(i-1,true);});
   document.getElementById('spotNext').addEventListener('click',function(e){e.preventDefault();go(i+1,true);});
   spot.addEventListener('mouseenter',function(){paused=true;stop();});
