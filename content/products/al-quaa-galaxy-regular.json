@@ -113,5 +113,20 @@
   ],
   "imgCompare": "/shirts/alquaa-fit-comparison.jpg",
   "altCompare": "Al Quaa Galaxy — Regular — regular fit and oversized fit shown side by side",
-  "fitLabel": "Regular fit"
+  "fitLabel": "Regular fit",
+  "modelShots": [
+    {
+      "src": "/shirts/alquaa-model-back.jpg",
+      "alt": "The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes"
+    },
+    {
+      "src": "/shirts/alquaa-model-front.jpg",
+      "alt": "The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest"
+    },
+    {
+      "src": "/shirts/alquaa-model-dusk.jpg",
+      "alt": "The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold"
+    }
+  ],
+  "modelInfo": "Model is 182 cm, wearing L in the Oversized fit"
 }

@@ -113,5 +113,16 @@
   ],
   "imgCompare": "/shirts/hajar-fit-comparison.jpg",
   "altCompare": "Hajar Mountains — Regular — regular fit and oversized fit shown side by side",
-  "fitLabel": "Regular fit"
+  "fitLabel": "Regular fit",
+  "modelShots": [
+    {
+      "src": "/shirts/hajar-model-back.jpg",
+      "alt": "The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back"
+    },
+    {
+      "src": "/shirts/hajar-model-front.jpg",
+      "alt": "The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest"
+    }
+  ],
+  "modelInfo": "Model is 182 cm, wearing L in the Oversized fit"
 }
