@@ -58,6 +58,7 @@ collections:
       - { label: "Alt text — main photo", name: "altMain", widget: "string", hint: "Describe the photo for screen readers and Google." }
       - { label: "Alt text — front", name: "altFront", widget: "string" }
       - { label: "Alt text — back", name: "altBack", widget: "string" }
+      - { label: "Model info line", name: "modelInfo", widget: "string", required: false, hint: "e.g. Model is 182 cm, wearing L in the Oversized fit. Shown under the gallery and in the fit accordion. Only state what you actually know." }
       - label: "Model / worn photos"
         name: "modelShots"
         widget: "list"

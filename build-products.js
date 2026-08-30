@@ -302,6 +302,7 @@ table.sz td:first-child{font-weight:600}
 html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html[data-market="intl"] .shipcard-intl{order:-1;border-color:var(--edge)}
 .pdp-ans-foot{margin:0 0 12px;font-size:13px;line-height:1.65;color:var(--txt-soft)}
 .pdp-ans-foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.gal-model{margin:10px 2px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.4px;color:var(--txt-soft)}
 .shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}
 .shipsub{font-weight:400;font-size:11px;letter-spacing:.2px;color:var(--txt-soft);margin-left:4px}
 .fit-warn{margin:0 0 10px;font-size:12.5px;line-height:1.55;color:var(--clay-deep,#7E4114)}
@@ -593,6 +594,7 @@ ${galShots(p).map((s,i)=>`
 ${galShots(p).map((s,i)=>`
         <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img src="../..${s[0]}" alt=""></button>`).join('')}
       </div>
+      ${p.modelInfo ? `<p class="gal-model">${esc(p.modelInfo)}</p>` : ''}
     </div>
 
     <div class="buy">
@@ -678,6 +680,7 @@ ${galShots(p).map((s,i)=>`
               ? 'Measured flat, pit to pit: S 22.5&Prime; · M 23.5&Prime; · L 25&Prime; · XL 26.5&Prime;. A true drop shoulder — do not assume your Regular letter carries over.'
               : 'Runs slim — most people take one size up from their usual letter. Measured flat, pit to pit: S 19&Prime; · M 20&Prime; · L 22&Prime; · XL 24&Prime;. Measure a shirt you like and match the number, not the letter.')}
             <a href="#fit">Full chart &darr;</a></p>
+          ${p.modelInfo ? `<p class="pdp-ans-foot">${esc(p.modelInfo)}${p.fit === 'oversized' ? '' : ' — the worn photos show the Oversized cut, not this one'}.</p>` : ''}
         </details>
         ${(p.faq && p.faq.length) ? `<details class="pdp-ans">
           <summary>Top questions</summary>
