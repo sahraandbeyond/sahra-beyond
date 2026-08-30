@@ -138,7 +138,7 @@
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
-          '<p class="sb-note">Free UAE delivery over AED 150. Taxes and shipping shown at checkout.</p>' +
+          '<p class="sb-note">Free UAE delivery over AED 150. Our fits run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
           '<a class="sb-go" id="sbGo" href="#">Checkout</a>' +
         '</div>' +
       '</aside>';

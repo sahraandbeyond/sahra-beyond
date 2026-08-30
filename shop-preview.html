@@ -505,7 +505,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=18bf6c97">
-<script src="/assets/sahra-cart.js?v=45868934" defer></script>
+<script src="/assets/sahra-cart.js?v=158d271a" defer></script>
 <script src="/assets/sahra-market.js?v=da8a7e1a" defer></script>
 </head>
 <body>
@@ -555,7 +555,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
   <div class="tl-inner">
     <span class="eyebrow">Size &amp; fit</span>
     <h2>Find your fit</h2>
-    <p class="tl-sub">Every tee comes in two fits. <strong>Regular</strong> sits true to size and clean on the shoulder. <strong>Oversized</strong> is a relaxed, dropped-shoulder cut — size down if you want it less roomy. Heavyweight 100% organic cotton, pre-washed for minimal shrinkage.</p>
+    <p class="tl-sub">Every tee comes in two fits. <strong>Regular</strong> is a slim cut — size up for your usual feel. <strong>Oversized</strong> is a relaxed, dropped-shoulder cut — size down if you want it less roomy. Heavyweight 100% organic cotton, pre-washed for minimal shrinkage.</p>
 
     <div class="fit-explain">
       <div class="fe-card"><h3>Regular Fit</h3><p>Classic, true-to-size cut. Straight body, set shoulder seam. Pick your usual size.</p></div>
@@ -1292,7 +1292,7 @@ function draw(){
     var specStrip='<ul class="prod-spec-strip"><li><strong>Unisex</strong> &middot; S&ndash;XL</li><li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>'+pr.short+'</li></ul>';
     var buyLimited='<p class="buy-limited">Limited first run &mdash; once it&rsquo;s gone, it&rsquo;s gone.</p>';
     var buyGhaf='<a class="buy-ghaf" href="/commitment.html">&#127793; A share of every tee plants ghaf trees in the UAE &rarr;</a>';
-    var details='<details class="prod-acc"><summary>Details &amp; care</summary><ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% organic cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Fit.</strong> Unisex — Regular (true to size) or Oversized (relaxed drop-shoulder). See the size guide.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul></details>';
+    var details='<details class="prod-acc"><summary>Details &amp; care</summary><ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% organic cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Fit.</strong> Unisex — Regular (slim — size up if in doubt) or Oversized (relaxed drop-shoulder). See the size guide.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul></details>';
     var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; Organic cotton</span></div>';
     return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'" data-fit="'+_fFit+'" data-place="'+(p.placeSlug||'')+'" data-print="'+_fPrint+'" data-sizes="'+_fSizes+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+placeMeta+limited+fitChip+'<h2>'+p.title+'</h2>'+placeLead+readPlace+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+details+'<div class="price"><span class="sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span></div>'+specStrip+colourway+fitSwap+'<div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyLimited+buyTrust+buyGhaf+pdpLink+'</div></div></section>';
   }).join('');

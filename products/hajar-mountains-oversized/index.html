@@ -230,6 +230,14 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 .pdp-ans-foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}
 .shipsub{font-weight:400;font-size:11px;letter-spacing:.2px;color:var(--txt-soft);margin-left:4px}
+.fit-warn{margin:0 0 10px;font-size:12.5px;line-height:1.55;color:var(--clay-deep,#7E4114)}
+body.dark-bg .fit-warn{color:var(--gold,#E9B978)}
+.fit-warn a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.pdp-echo{margin:8px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft)}
+.fitc{display:grid;gap:8px;padding:12px 14px;border:1px solid var(--edge);border-radius:3px;background:var(--card)}
+.fitc-t{font-size:13px;line-height:1.55;color:var(--txt)}
+.fitc-btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:11px 14px;min-height:44px;border-radius:2px;border:1px solid var(--edge);background:transparent;color:var(--txt);cursor:pointer}
+.fitc-btn.fitc-up{background:var(--txt);color:var(--bg,#FAF6EF);border-color:var(--txt)}
 .pdp-stock{margin:0 0 10px;font-family:'Space Mono',monospace;font-size:12px;
   letter-spacing:.6px;color:#7E4114}
 .sz-out{display:block;font-size:9px;letter-spacing:.6px;margin-top:2px;color:#6B6256}
@@ -588,6 +596,7 @@ body.dark-bg .rv-stars{color:#E9B978}
            they must sell directly instead of bouncing to /shop/ to start again. -->
       <div class="pdp-buy" id="pdpBuy" data-handle="hajar-mountains-oversized">
         <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
+        
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
           <span class="pdp-loading">Loading sizes&hellip;</span>
         </div>
@@ -688,7 +697,7 @@ body.dark-bg .rv-stars{color:#E9B978}
     </div>
     <div class="cols stagger">
       <div class="item"><b>DTG print</b><span>Direct-to-garment printing sits in the fabric rather than on top of it, so the graphic stays soft and the cotton stays breathable — no plastic panel on your back.</span></div>
-      <div class="item"><b>Unisex, two fits</b><span>Regular (true to size) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.</span></div>
+      <div class="item"><b>Unisex, two fits</b><span>Regular (slim — size up if in doubt) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.</span></div>
       <div class="item"><b>Limited first run</b><span>Small first batch. When a size sells out in this run, it's gone rather than quietly restocked.</span></div>
     </div>
     <div class="note-box">Not sure what 230gsm means next to the 180gsm shirt you already own? We wrote the comparison out in full &mdash; the whole 150&ndash;280gsm scale, and which weight actually makes sense in a Gulf summer &mdash; on our <a href="/fabric/">fabric and GSM guide</a>.</div>
@@ -1171,6 +1180,11 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
   var handle=box.dataset.handle;
   var sizesEl=document.getElementById('pdpSizes'),addEl=document.getElementById('pdpAdd'),msgEl=document.getElementById('pdpMsg');
+  /* Fit-check data, baked at build time from content/sizing.json. SLIM is true
+     for the Regular tees and the polo (graded to the same chart); the
+     Oversized fit is the roomy one and gets no warning. */
+  var SLIM=false;
+  var MEAS={"S":"22.5″ / 57.1 cm","M":"23.5″ / 59.7 cm","L":"25″ / 63.5 cm","XL":"26.5″ / 67.3 cm"};
   var variants=[],sel=null;
 
   function sf(q,v){
@@ -1220,6 +1234,11 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
         if(st){ var q=v.quantityAvailable;
           if(typeof q==='number'&&q>0&&q<=3){ st.textContent='Only '+q+' left in '+v.title; st.hidden=false; }
           else st.hidden=true; }
+        /* the number at the moment of choice - the whole fit-check idea */
+        var ec=document.getElementById('pdpEcho');
+        if(!ec){ ec=document.createElement('p'); ec.id='pdpEcho'; ec.className='pdp-echo';
+          sizesEl.insertAdjacentElement('afterend', ec); }
+        ec.textContent=MEAS[v.title]? v.title+' — '+MEAS[v.title]+' flat across the chest' : '';
       });
       sizesEl.appendChild(b);
     });
@@ -1228,14 +1247,15 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   .catch(function(){ sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
 
   var CFRAG='id checkoutUrl totalQuantity';
-  addEl.addEventListener('click',function(){
-    if(!sel) return;
+  function fitOk(){ try{ return sessionStorage.getItem('sb_fitok')==='1'; }catch(e){ return true; } }
+  function setFitOk(){ try{ sessionStorage.setItem('sb_fitok','1'); }catch(e){} }
+  function doAdd(v){
     addEl.disabled=true; addEl.textContent='Adding…'; msg('');
     if(window.SahraCart){
-      window.SahraCart.add(sel.id).then(function(cart){
+      window.SahraCart.add(v.id).then(function(cart){
         addEl.disabled=false; addEl.textContent='Add another';
         msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
-        if(window.track) track('add_to_cart',{item_id:handle,size:sel.title});
+        if(window.track) track('add_to_cart',{item_id:handle,size:v.title});
       }).catch(function(){ addEl.disabled=false; addEl.textContent='Add to cart';
         msg('Could not add to cart. Please try again.','err'); });
       return;
@@ -1248,6 +1268,32 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
        over it with a duplicate implementation. */
     addEl.disabled=false; addEl.textContent='Add to cart';
     msg('Cart is unavailable right now. Please refresh, or message us on WhatsApp.','err');
+  }
+  addEl.addEventListener('click',function(){
+    if(!sel) return;
+    /* THE FIT CHECK (Faheem, 29 Aug): the Regular cut runs slim vs UAE
+       expectations - an XL wears like many brands' M/L - and people were
+       ordering their habitual letter. First add per session pauses for one
+       inline confirm showing the REAL measurement, with a one-tap size-up.
+       Once per session only: friction where it changes an order, never after. */
+    if(SLIM && !fitOk()){
+      var meas=MEAS[sel.title]||'';
+      var next=null, seen=false;
+      variants.forEach(function(v){ if(seen && !next && v.availableForSale) next=v; if(v===sel) seen=true; });
+      msgEl.className='pdp-msg';
+      msgEl.innerHTML='<span class="fitc"><span class="fitc-t"><strong>'+sel.title+'</strong> measures '+meas+' pit-to-pit — this cut runs slim.</span>'
+        +'<button type="button" class="fitc-btn" id="fitcYes">Add '+sel.title+' anyway</button>'
+        +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+'</button>':'')
+        +'</span>';
+      document.getElementById('fitcYes').onclick=function(){ setFitOk(); msg(''); doAdd(sel); };
+      var up=document.getElementById('fitcUp');
+      if(up) up.onclick=function(){ setFitOk();
+        sizesEl.querySelectorAll('.pdp-size').forEach(function(x){ x.classList.remove('sel'); x.setAttribute('aria-pressed','false');
+          if(x.textContent.indexOf(next.title)===0){ x.classList.add('sel'); x.setAttribute('aria-pressed','true'); } });
+        sel=next; msg(''); doAdd(next); };
+      return;
+    }
+    doAdd(sel);
   });
 
   /* keep the header badge accurate on arrival */
@@ -1261,7 +1307,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 </script>
 
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=45868934" defer></script>
+<script src="/assets/sahra-cart.js?v=158d271a" defer></script>
 <script src="/assets/sahra-market.js?v=da8a7e1a" defer></script>
 </body>
 </html>

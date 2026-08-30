@@ -303,6 +303,14 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 .pdp-ans-foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}
 .shipsub{font-weight:400;font-size:11px;letter-spacing:.2px;color:var(--txt-soft);margin-left:4px}
+.fit-warn{margin:0 0 10px;font-size:12.5px;line-height:1.55;color:var(--clay-deep,#7E4114)}
+body.dark-bg .fit-warn{color:var(--gold,#E9B978)}
+.fit-warn a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.pdp-echo{margin:8px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft)}
+.fitc{display:grid;gap:8px;padding:12px 14px;border:1px solid var(--edge);border-radius:3px;background:var(--card)}
+.fitc-t{font-size:13px;line-height:1.55;color:var(--txt)}
+.fitc-btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:11px 14px;min-height:44px;border-radius:2px;border:1px solid var(--edge);background:transparent;color:var(--txt);cursor:pointer}
+.fitc-btn.fitc-up{background:var(--txt);color:var(--bg,#FAF6EF);border-color:var(--txt)}
 .pdp-stock{margin:0 0 10px;font-family:'Space Mono',monospace;font-size:12px;
   letter-spacing:.6px;color:#7E4114}
 .sz-out{display:block;font-size:9px;letter-spacing:.6px;margin-top:2px;color:#6B6256}
@@ -619,6 +627,7 @@ ${galShots(p).map((s,i)=>`
            they must sell directly instead of bouncing to /shop/ to start again. -->
       <div class="pdp-buy" id="pdpBuy" data-handle="${p.id}">
         <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
+        ${p.fit !== 'oversized' ? `<p class="fit-warn">Runs slim &mdash; most people take one size up from their usual letter.${p.siblingOf ? ` Prefer the standard relaxed feel? <a href="/products/${p.siblingOf}-oversized/">Take your usual letter in Oversized &rarr;</a>` : ''}</p>` : ''}
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
           <span class="pdp-loading">Loading sizes&hellip;</span>
         </div>
@@ -663,10 +672,10 @@ ${galShots(p).map((s,i)=>`
         <details class="pdp-ans">
           <summary>Fit at a glance</summary>
           <p class="pdp-ans-foot">${p.sizingApplies === false
-            ? 'The polo is graded to the Regular tee chart — S 19&Prime;, M 20&Prime;, L 22&Prime;, XL 24&Prime; across the chest, measured flat, pit to pit.'
+            ? 'The polo is graded to the Regular tee chart, which runs slim — size up from your usual letter if in doubt. S 19&Prime;, M 20&Prime;, L 22&Prime;, XL 24&Prime; across the chest, measured flat, pit to pit.'
             : (p.fit === 'oversized'
               ? 'Measured flat, pit to pit: S 22.5&Prime; · M 23.5&Prime; · L 25&Prime; · XL 26.5&Prime;. A true drop shoulder — do not assume your Regular letter carries over.'
-              : 'Measured flat, pit to pit: S 19&Prime; · M 20&Prime; · L 22&Prime; · XL 24&Prime;. True to size — measure a shirt you like and compare directly.')}
+              : 'Runs slim — most people take one size up from their usual letter. Measured flat, pit to pit: S 19&Prime; · M 20&Prime; · L 22&Prime; · XL 24&Prime;. Measure a shirt you like and match the number, not the letter.')}
             <a href="#fit">Full chart &darr;</a></p>
         </details>
         ${(p.faq && p.faq.length) ? `<details class="pdp-ans">
@@ -739,7 +748,7 @@ ${cards(p.designCards)}
     </div>
     <div class="cols stagger">
       <div class="item"><b>${esc(p.printCardTitle)}</b><span>${esc(p.printCardBody)}</span></div>
-      <div class="item"><b>${p.fitsCardTitle || 'Unisex, two fits'}</b><span>${p.fitsCardBody || 'Regular (true to size) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.'}</span></div>
+      <div class="item"><b>${p.fitsCardTitle || 'Unisex, two fits'}</b><span>${p.fitsCardBody || 'Regular (slim — size up if in doubt) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.'}</span></div>
       <div class="item"><b>Limited first run</b><span>Small first batch. When a size sells out in this run, it's gone rather than quietly restocked.</span></div>
     </div>
     <div class="note-box">${(function(){
@@ -1210,6 +1219,11 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
   var handle=box.dataset.handle;
   var sizesEl=document.getElementById('pdpSizes'),addEl=document.getElementById('pdpAdd'),msgEl=document.getElementById('pdpMsg');
+  /* Fit-check data, baked at build time from content/sizing.json. SLIM is true
+     for the Regular tees and the polo (graded to the same chart); the
+     Oversized fit is the roomy one and gets no warning. */
+  var SLIM=${p.fit !== 'oversized'};
+  var MEAS=${JSON.stringify(Object.fromEntries(((p.fit === 'oversized' ? SIZING.oversized : SIZING.regular) || []).map(function (r) { return [String(r[0]), r[1] + '\u2033 / ' + r[2] + ' cm']; })))};
   var variants=[],sel=null;
 
   function sf(q,v){
@@ -1259,6 +1273,11 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
         if(st){ var q=v.quantityAvailable;
           if(typeof q==='number'&&q>0&&q<=3){ st.textContent='Only '+q+' left in '+v.title; st.hidden=false; }
           else st.hidden=true; }
+        /* the number at the moment of choice - the whole fit-check idea */
+        var ec=document.getElementById('pdpEcho');
+        if(!ec){ ec=document.createElement('p'); ec.id='pdpEcho'; ec.className='pdp-echo';
+          sizesEl.insertAdjacentElement('afterend', ec); }
+        ec.textContent=MEAS[v.title]? v.title+' \u2014 '+MEAS[v.title]+' flat across the chest' : '';
       });
       sizesEl.appendChild(b);
     });
@@ -1267,14 +1286,15 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   .catch(function(){ sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
 
   var CFRAG='id checkoutUrl totalQuantity';
-  addEl.addEventListener('click',function(){
-    if(!sel) return;
+  function fitOk(){ try{ return sessionStorage.getItem('sb_fitok')==='1'; }catch(e){ return true; } }
+  function setFitOk(){ try{ sessionStorage.setItem('sb_fitok','1'); }catch(e){} }
+  function doAdd(v){
     addEl.disabled=true; addEl.textContent='Adding…'; msg('');
     if(window.SahraCart){
-      window.SahraCart.add(sel.id).then(function(cart){
+      window.SahraCart.add(v.id).then(function(cart){
         addEl.disabled=false; addEl.textContent='Add another';
         msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
-        if(window.track) track('add_to_cart',{item_id:handle,size:sel.title});
+        if(window.track) track('add_to_cart',{item_id:handle,size:v.title});
       }).catch(function(){ addEl.disabled=false; addEl.textContent='Add to cart';
         msg('Could not add to cart. Please try again.','err'); });
       return;
@@ -1287,6 +1307,32 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
        over it with a duplicate implementation. */
     addEl.disabled=false; addEl.textContent='Add to cart';
     msg('Cart is unavailable right now. Please refresh, or message us on WhatsApp.','err');
+  }
+  addEl.addEventListener('click',function(){
+    if(!sel) return;
+    /* THE FIT CHECK (Faheem, 29 Aug): the Regular cut runs slim vs UAE
+       expectations - an XL wears like many brands' M/L - and people were
+       ordering their habitual letter. First add per session pauses for one
+       inline confirm showing the REAL measurement, with a one-tap size-up.
+       Once per session only: friction where it changes an order, never after. */
+    if(SLIM && !fitOk()){
+      var meas=MEAS[sel.title]||'';
+      var next=null, seen=false;
+      variants.forEach(function(v){ if(seen && !next && v.availableForSale) next=v; if(v===sel) seen=true; });
+      msgEl.className='pdp-msg';
+      msgEl.innerHTML='<span class="fitc"><span class="fitc-t"><strong>'+sel.title+'</strong> measures '+meas+' pit-to-pit \u2014 this cut runs slim.</span>'
+        +'<button type="button" class="fitc-btn" id="fitcYes">Add '+sel.title+' anyway</button>'
+        +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+'</button>':'')
+        +'</span>';
+      document.getElementById('fitcYes').onclick=function(){ setFitOk(); msg(''); doAdd(sel); };
+      var up=document.getElementById('fitcUp');
+      if(up) up.onclick=function(){ setFitOk();
+        sizesEl.querySelectorAll('.pdp-size').forEach(function(x){ x.classList.remove('sel'); x.setAttribute('aria-pressed','false');
+          if(x.textContent.indexOf(next.title)===0){ x.classList.add('sel'); x.setAttribute('aria-pressed','true'); } });
+        sel=next; msg(''); doAdd(next); };
+      return;
+    }
+    doAdd(sel);
   });
 
   /* keep the header badge accurate on arrival */
