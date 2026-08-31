@@ -14,6 +14,10 @@
   "imgMain": "/shirts/emptyquarter-regular-front.jpg",
   "imgFront": "/shirts/emptyquarter-regular-front.jpg",
   "imgBack": "/shirts/emptyquarter-regular-back.jpg",
+  "imgCard": [
+    "/shirts/emptyquarter-regular-front-fit.jpg",
+    "/shirts/emptyquarter-regular-back-fit.jpg"
+  ],
   "altMain": "Empty Quarter — Regular, regular fit — embroidered design on the front",
   "altFront": "Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut",
   "altBack": "Empty Quarter — Regular, regular fit, back view",

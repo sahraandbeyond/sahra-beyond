@@ -14,6 +14,10 @@
   "imgMain": "/shirts/emptyquarter-oversized-front.jpg",
   "imgFront": "/shirts/emptyquarter-oversized-front.jpg",
   "imgBack": "/shirts/emptyquarter-oversized-back.jpg",
+  "imgCard": [
+    "/shirts/emptyquarter-oversized-front-fit.jpg",
+    "/shirts/emptyquarter-oversized-back-fit.jpg"
+  ],
   "altMain": "Empty Quarter — Oversized, oversized fit — embroidered design on the front",
   "altFront": "Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
   "altBack": "Empty Quarter — Oversized, oversized fit, back view",

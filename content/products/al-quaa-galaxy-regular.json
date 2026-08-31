@@ -14,6 +14,10 @@
   "imgMain": "/shirts/alquaa-regular-back.jpg",
   "imgFront": "/shirts/alquaa-regular-front.jpg",
   "imgBack": "/shirts/alquaa-regular-back.jpg",
+  "imgCard": [
+    "/shirts/alquaa-regular-back-fit.jpg",
+    "/shirts/alquaa-regular-front-fit.jpg"
+  ],
   "altMain": "Al Quaa Galaxy — Regular, regular fit — design across the back",
   "altFront": "Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut",
   "altBack": "Al Quaa Galaxy — Regular, regular fit, back view",

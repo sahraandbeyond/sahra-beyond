@@ -22,7 +22,10 @@
  *   2. PHOTOGRAPHS ARE NEVER HYDRATED — the static stack is authoritative.
  *   3. NO CARD IS EVER BLANK — exactly one .on frame per stack, always.
  *   4. CLONES CARRY THEIR OWN PHOTO — never the template's.
- *   5. ONE CARD PER DESIGN — the two fits never open duplicate cards.
+ *   5. ONE CARD PER PRODUCT — Regular and Oversized are separate products
+ *      and each keeps its own card; no product is missing and none duplicates.
+ *   6. IDENTITY IS NEVER INHERITED — a clone clears any field it cannot fill,
+ *      so a product with no place shows no place line.
  *
  * The product list below is deliberately in an order that does NOT match the
  * grid, which is what made the old code fail.
@@ -142,15 +145,37 @@ function mkCard(href, place, name, handle, aed, shots) {
   return a;
 }
 
-function scene() {
+/* The fixture is DERIVED FROM THE CATALOGUE, never hand-typed. Twelve
+   fit-labelled images sat unreferenced for five days because a hand-maintained
+   list and the CMS drifted apart (Faheem, 31 Aug); a fixture copied by hand is
+   the same trap. Rules encoded here:
+     - one static card per PRODUCT (Regular and Oversized are separate products)
+     - model photos show the OVERSIZED cut, so they appear only on oversized
+       cards - a regular card has no disclosure badge to carry the difference
+     - a product with no placeName gets no place line at all
+   Pass handles to `omit` to model a product that has a PDP but no static card. */
+const CMS = fs.readdirSync(path.join(__dirname, 'content', 'products'))
+  .filter(n => n.endsWith('.json'))
+  .map(n => JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'products', n), 'utf8')))
+  .sort((a, b) => (a.order || 9999) - (b.order || 9999) || String(a.id).localeCompare(String(b.id)));
+
+function shotsFor(p) {
+  /* imgCard holds the fit-labelled photos. They are used ONLY on the square
+     homepage cards: a 4:5 or 4:3 frame crops 153+ px off each side and cuts the
+     label to "ULAR FIT", so shop cards, PDP galleries and category blocks keep
+     the plain images. */
+  const out = (p.imgCard && p.imgCard.length) ? p.imgCard.slice() : [p.imgMain, p.imgFront, p.imgBack];
+  if (String(p.fit || '').toLowerCase() === 'oversized') (p.modelShots || []).forEach(m => out.push(m.src));
+  return out.filter((v, i, a) => v && a.indexOf(v) === i);
+}
+const GRID = CMS.map(p => [p.id, p.placeName || '', p.name, Number(p.price), shotsFor(p)]);
+
+function scene(omit) {
+  omit = omit || [];
   const doc = mkDoc();
   const grid = new El('div'); grid.classList.add('grid'); grid.setAttribute('id', 'grid');
-  grid.appendChild(mkCard('/products/al-quaa-galaxy-regular/', 'Al Quaa', 'Al Quaa Galaxy Tee', 'al-quaa-galaxy-regular', 199,
-    ['/shirts/alquaa-regular-back.jpg', '/shirts/alquaa-regular-front.jpg', '/shirts/alquaa-model-back.jpg', '/shirts/alquaa-model-front.jpg', '/shirts/alquaa-model-dusk.jpg']));
-  grid.appendChild(mkCard('/products/empty-quarter-regular/', 'Liwa', 'Empty Quarter Tee', 'empty-quarter-regular', 199,
-    ['/shirts/emptyquarter-regular-front.jpg', '/shirts/emptyquarter-regular-back.jpg', '/shirts/emptyquarter-model-front.jpg', '/shirts/emptyquarter-model-stand.jpg', '/shirts/emptyquarter-model-sunset.jpg']));
-  grid.appendChild(mkCard('/products/hajar-mountains-regular/', 'Wadi Naqab', 'Hajar Mountains Tee', 'hajar-mountains-regular', 199,
-    ['/shirts/hajar-regular-back.jpg', '/shirts/hajar-regular-front.jpg', '/shirts/hajar-model-back.jpg', '/shirts/hajar-model-front.jpg']));
+  GRID.filter(r => omit.indexOf(r[0]) < 0)
+      .forEach(r => grid.appendChild(mkCard('/products/' + r[0] + '/', r[1], r[2], r[0], r[3], r[4])));
   doc.appendChild(grid);
 
   const spot = new El('div'); spot.setAttribute('id', 'spot');
@@ -170,7 +195,13 @@ const PRODUCTS = [
   { title: 'Hajar Mountains Tee — Regular', handle: 'hajar-mountains-regular', place: 'Wadi Naqab', img: CDN + 'hajar-regular-back.jpg', price: '199.00', cur: 'AED' },
   { title: 'Al Quaa Galaxy Tee — Regular', handle: 'al-quaa-galaxy-regular', place: 'Al Quaa', img: CDN + 'alquaa-regular-back.jpg', price: '199.00', cur: 'AED' },
   { title: 'Empty Quarter Tee — Oversized', handle: 'empty-quarter-oversized', place: 'Liwa', img: CDN + 'emptyquarter-oversized-front.jpg', price: '209.00', cur: 'AED' },
-  { title: 'Sand Polo', handle: 'sand-polo', place: 'Dubai', img: CDN + 'polo-front.jpg', price: '249.00', cur: 'AED' }
+  /* The polo genuinely carries NO place: tag in Shopify (checked against the
+     Admin API) and none in the CMS - it is not a location piece. Modelled as
+     undefined so the "Inspired by Al Quaa" inheritance bug stays covered. */
+  { title: 'Sand Polo', handle: 'sand-polo', img: CDN + 'polo-front.jpg', price: '249.00', cur: 'AED' },
+  /* A brand-new Shopify product with no page on the site yet. It must NOT get
+     a card - a card would link to a URL that 404s. */
+  { title: 'Jebel Jais — Regular', handle: 'jebel-jais-regular', place: 'Jebel Jais', img: CDN + 'jebeljais-regular-front.jpg', price: '199.00', cur: 'AED' }
 ];
 
 /* ---- load the REAL fill() out of index.html ----------------------------- */
@@ -186,6 +217,9 @@ function loadFill(file) {
 }
 
 const DESIGN = s => String(s || '').toLowerCase().replace(/^.*\/products\//, '').replace(/\/+$/, '').replace(/-(regular|oversized)$/, '');
+const PROD   = s => String(s || '').toLowerCase().replace(/^.*\/products\//, '').replace(/\/+$/, '');
+/* Every product that must own a card in the static grid. */
+const CURATED = ['al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'empty-quarter-regular', 'empty-quarter-oversized', 'hajar-mountains-regular', 'hajar-mountains-oversized', 'sand-polo'];
 
 for (const file of ['index.html', 'homepage-preview.html']) {
   console.log('\n\x1b[1m' + file + '\x1b[0m');
@@ -199,7 +233,7 @@ for (const file of ['index.html', 'homepage-preview.html']) {
   let crossed = [];
   cards.forEach(c => {
     const key = DESIGN(c.getAttribute('href'));
-    const stem = { 'al-quaa-galaxy': 'alquaa', 'empty-quarter': 'emptyquarter', 'hajar-mountains': 'hajar', 'sand-polo': 'polo' }[key] || key;
+    const stem = { 'al-quaa-galaxy': 'alquaa', 'empty-quarter': 'emptyquarter', 'hajar-mountains': 'hajar', 'sand-polo': 'polo', 'jebel-jais': 'jebeljais' }[key] || key;
     c.querySelectorAll('img').forEach(i => {
       const src = i.getAttribute('src') || '';
       if (src.indexOf(stem) < 0) crossed.push(key + ' <- ' + src);
@@ -208,7 +242,7 @@ for (const file of ['index.html', 'homepage-preview.html']) {
   check('no card shows another product\'s photograph', crossed.length === 0, crossed.slice(0, 4).join('\n      '));
 
   // 2. The static stacks were not rewritten from Shopify.
-  const cdnInStacks = cards.reduce((n, c) => n + c.querySelectorAll('img').filter(i => (i.getAttribute('src') || '').indexOf('cdn.shopify') > -1 && c.getAttribute('href').indexOf('sand-polo') < 0).length, 0);
+  const cdnInStacks = cards.reduce((n, c) => n + c.querySelectorAll('img').filter(i => (i.getAttribute('src') || '').indexOf('cdn.shopify') > -1).length, 0);
   check('photographs are never hydrated from Shopify', cdnInStacks === 0, cdnInStacks + ' CDN image(s) pushed into a static stack');
 
   // 3. Nothing is blank: exactly one visible frame per card.
@@ -226,21 +260,83 @@ for (const file of ['index.html', 'homepage-preview.html']) {
   });
   check('titles hydrate onto the matching card, not by position', wrong.length === 0, wrong.join('\n      '));
 
-  // 5. One card per design — fits must not duplicate the grid.
-  const keys = cards.map(c => DESIGN(c.getAttribute('href')));
+  // 5. One card per PRODUCT — every product present, none duplicated.
+  //    Regular and Oversized are separate products (Faheem, 31 Aug): collapsing
+  //    them to one card per design hid half the catalogue.
+  const keys = cards.map(c => PROD(c.getAttribute('href')));
   const dupes = keys.filter((k, i) => keys.indexOf(k) !== i);
-  check('one card per design (fits never duplicate)', dupes.length === 0, 'duplicated: ' + dupes.join(', '));
+  check('one card per product (no duplicates)', dupes.length === 0, 'duplicated: ' + dupes.join(', '));
+  const missing = CURATED.filter(h => keys.indexOf(h) < 0);
+  check('every catalogue product has its own card', missing.length === 0, 'missing: ' + missing.join(', '));
+  ['al-quaa-galaxy', 'empty-quarter', 'hajar-mountains'].forEach(d => {
+    const fits = keys.filter(k => DESIGN(k) === d);
+    check('both fits of ' + d + ' keep separate cards', fits.length === 2, 'got ' + fits.length + ': ' + fits.join(', '));
+  });
 
-  // 6. A design with no static card gets a clone carrying ITS OWN photo.
-  const polo = cards.find(c => DESIGN(c.getAttribute('href')) === 'sand-polo');
-  check('a new design gets a card', !!polo, 'polo never appeared');
-  if (polo) {
-    const srcs = polo.querySelectorAll('img').map(i => i.getAttribute('src'));
-    check('the clone carries its own photo, not the template\'s',
-      srcs.length === 1 && srcs[0].indexOf('polo') > -1, JSON.stringify(srcs));
-    check('the clone is visible', polo.querySelectorAll('img.on').length === 1);
-    check('the clone prices itself', (polo.querySelector('.sb-price') || {}).getAttribute('data-handle') === 'sand-polo');
+  // 6. A product with a page but no static card is cloned in, carrying ITS OWN
+  //    photo. A product with no page at all is skipped - never linked to a 404.
+  check('a product with no page on the site gets no card',
+    keys.indexOf('jebel-jais-regular') < 0, 'jebel-jais was given a card');
+  {
+    const d2 = scene(['hajar-mountains-oversized']);
+    loadFill(file)(d2).fill(PRODUCTS.slice());
+    const c2 = d2.querySelectorAll('#grid .card');
+    const cl = c2.find(c => PROD(c.getAttribute('href')) === 'hajar-mountains-oversized');
+    check('a product with no static card gets a clone', !!cl, 'no clone appeared');
+    if (cl) {
+      const srcs = cl.querySelectorAll('img').map(i => i.getAttribute('src'));
+      check('the clone carries its own photo, not the template\'s',
+        srcs.length === 1 && srcs[0].indexOf('hajar-oversized') > -1, JSON.stringify(srcs));
+      check('the clone is visible', cl.querySelectorAll('img.on').length === 1);
+      check('the clone prices itself', (cl.querySelector('.sb-price') || {}).getAttribute('data-handle') === 'hajar-mountains-oversized');
+      const pl2 = cl.querySelector('.card-place');
+      check('the clone carries its own place, not the template\'s',
+        !pl2 || (pl2.textContent || '').trim() === 'Inspired by Wadi Naqab', 'clone says "' + ((pl2 || {}).textContent || '') + '"');
+    }
   }
+
+  // 6b. The hand-maintained grid must not drift from the catalogue. This is the
+  //     check that would have caught 12 fit-labelled images sitting unused.
+  {
+    const raw = fs.readFileSync(path.join(__dirname, file), 'utf8');
+    const m = raw.match(/<div class="grid" id="grid">([\s\S]*?)\n    <\/div>/);
+    check('the static grid block is findable in ' + file, !!m);
+    if (m) {
+      const got = m[1].split('<a class="card')
+        .slice(1)
+        .map(chunk => ({
+          handle: (chunk.match(/href="\/products\/([^\/]+)\//) || [])[1],
+          srcs: (chunk.match(/src="([^"]+)"/g) || []).map(x => x.slice(5, -1))
+        }));
+      const wantH = GRID.map(r => r[0]).join(',');
+      check('the grid lists exactly the catalogue, in order',
+        got.map(g => g.handle).join(',') === wantH,
+        'html: ' + got.map(g => g.handle).join(',') + '\n      cms:  ' + wantH);
+      const drift = [];
+      GRID.forEach((r, i) => {
+        const want = r[4].join(','), have = (got[i] || {}).srcs ? got[i].srcs.join(',') : '(missing)';
+        if (want !== have) drift.push(r[0] + '\n        html: ' + have + '\n        cms:  ' + want);
+      });
+      check('every card\'s photos match the catalogue exactly', drift.length === 0, drift.join('\n      '));
+    }
+  }
+
+  // 7. Identity is never inherited: no place tag means no place line.
+  //    The polo rendered "Inspired by Al Quaa" because `if(x) set(x)` left the
+  //    template's text in place (Faheem, 31 Aug).
+  const poloCard = cards.find(c => PROD(c.getAttribute('href')) === 'sand-polo');
+  if (poloCard) {
+    const pl = poloCard.querySelector('.card-place');
+    const txt = pl ? (pl.textContent || '').trim() : '';
+    check('a product with no place shows no place line', txt === '', 'polo says "' + txt + '"');
+  }
+  const strays = cards.filter(c => {
+    const p = PRODUCTS.find(x => x.handle === PROD(c.getAttribute('href')));
+    const pl = c.querySelector('.card-place');
+    const txt = pl ? (pl.textContent || '').trim() : '';
+    return p && p.place && txt !== ('Inspired by ' + p.place);
+  }).map(c => PROD(c.getAttribute('href')));
+  check('every place line matches its own product', strays.length === 0, 'wrong: ' + strays.join(', '));
 }
 
 /* ---- the engine-level guard in sahra-market.js -------------------------- */

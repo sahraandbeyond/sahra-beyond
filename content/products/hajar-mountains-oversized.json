@@ -14,6 +14,10 @@
   "imgMain": "/shirts/hajar-oversized-back.jpg",
   "imgFront": "/shirts/hajar-oversized-front.jpg",
   "imgBack": "/shirts/hajar-oversized-back.jpg",
+  "imgCard": [
+    "/shirts/hajar-oversized-back-fit.jpg",
+    "/shirts/hajar-oversized-front-fit.jpg"
+  ],
   "altMain": "Hajar Mountains — Oversized, oversized fit — design across the back",
   "altFront": "Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
   "altBack": "Hajar Mountains — Oversized, oversized fit, back view",
