@@ -274,10 +274,36 @@
      site's 1s rhythm. ONE shared interval for all cards (dozens of timers is
      jank); IntersectionObserver keeps off-screen cards frozen; hover or a
      resting finger holds the current frame; reduced-motion disables it all. */
+  /* Exactly one visible frame per stack. This is CORRECTNESS, not animation, so
+     it runs even under reduced-motion and re-runs whenever a stack's children
+     change: a late hydrator that removes the frame carrying .on leaves every
+     image at opacity 0, i.e. a BLANK card. That is precisely how the homepage
+     lost its photos (Faheem, 31 Aug). Cheap, idempotent, and it makes the whole
+     mechanism robust against any future script that touches these stacks. */
+  function normCycle(h) {
+    var im = h.querySelectorAll('img');
+    if (!im.length) return im;
+    if (h.querySelectorAll('img.on').length === 1) return im;
+    for (var k = 0; k < im.length; k++) im[k].classList.remove('on');
+    im[0].classList.add('on');
+    return im;
+  }
+
   function cycles() {
+    var all = [].slice.call(document.querySelectorAll('[data-cycle]'));
+    if (!all.length) return;
+    all.forEach(normCycle);
+    try {
+      var mo = new MutationObserver(function (recs) {
+        recs.forEach(function (r) { normCycle(r.target); });
+      });
+      all.forEach(function (h) { mo.observe(h, { childList: true }); });
+    } catch (e) {
+      setTimeout(function () { all.forEach(normCycle); }, 1200);
+      setTimeout(function () { all.forEach(normCycle); }, 3000);
+    }
     try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
-    var hosts = [].slice.call(document.querySelectorAll('[data-cycle]'))
-      .filter(function (h) { return h.querySelectorAll('img').length > 1; });
+    var hosts = all.filter(function (h) { return h.querySelectorAll('img').length > 1; });
     if (!hosts.length) return;
     var seen = new Set();
     try {
@@ -296,7 +322,8 @@
       if (document.hidden) return;
       hosts.forEach(function (h) {
         if (h.hasAttribute('data-hold') || !seen.has(h)) return;
-        var im = h.querySelectorAll('img');
+        var im = normCycle(h);
+        if (im.length < 2) return;
         var i = 0; im.forEach(function (x, k) { if (x.classList.contains('on')) i = k; });
         im[i].classList.remove('on');
         im[(i + 1) % im.length].classList.add('on');

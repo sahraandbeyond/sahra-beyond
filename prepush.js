@@ -255,6 +255,26 @@ try {
   console.log(`    ${C.dim}run: node market-test.js${C.off}`);
 }
 
+// The homepage hydrates live prices over curated static cards. When those two
+// lists are paired by POSITION instead of identity, one tee's name and price
+// land on another tee's photographs — and when the hydrator rewrites the photo
+// stack it deletes the only visible frame and the card renders blank. Both
+// shipped (Faheem, 31 Aug). Neither failure throws, and neither is visible in a
+// diff, so the only way to keep them dead is to run the contract every push.
+let homeTestOk = true;
+try {
+  const out = require('child_process').execSync('node homepage-test.js', { cwd: __dirname, encoding: 'utf8' });
+  const m = out.match(/(\d+) passed, (\d+) failed/);
+  if (!m || m[2] !== '0') throw Object.assign(new Error('fail'), { stdout: out });
+  console.log(`  ${C.ok}✓${C.off} homepage hydration: ${m ? m[1] : '?'} test(s) passed`);
+} catch (e) {
+  homeTestOk = false;
+  console.log(`\n  ${C.bad}✗ homepage regression tests FAILED — do not push:${C.off}`);
+  String(e.stdout || '').split('\n').filter(l => l.includes('✗')).slice(0, 8)
+    .forEach(l => console.log(`     ${C.bad}${l.trim()}${C.off}`));
+  console.log(`    ${C.dim}run: node homepage-test.js${C.off}`);
+}
+
 // ---- 3. what will actually be committed --------------------------------
 // This used to list files by MTIME, which was actively misleading: `node
 // build.js` rewrites ~124 files with byte-identical content, so every build
@@ -296,4 +316,4 @@ if (usedGit) {
 }
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk || !journalOk || !marketTestOk) ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk || !journalOk || !marketTestOk || !homeTestOk) ? 1 : 0);
