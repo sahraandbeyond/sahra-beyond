@@ -114,6 +114,10 @@ nav.on-hero .nav-links a,nav.on-hero .logo-a{color:#fff}nav.on-hero .logo-b{colo
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
 
 .melt{position:absolute;left:0;top:-98px;width:100%;height:100px;line-height:0;z-index:1;pointer-events:none}.melt svg{width:100%;height:100%;display:block}
+.sb-topbar{background:#241B12;color:var(--gold);text-align:center;padding:9px 16px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:2.6px;text-transform:uppercase;line-height:1.5;position:relative;z-index:60}
+.sb-topbar b{font-weight:400}
+.hero-ship{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);margin-top:20px;display:block}
+@media(max-width:560px){.sb-topbar{font-size:10px;letter-spacing:1.8px;padding:8px 12px}.hero-ship{font-size:10px;letter-spacing:1.6px;margin-top:16px}}
 .marquee{background:#241B12;color:var(--gold);overflow:hidden;white-space:nowrap;padding:12px 0;font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:3px;text-transform:uppercase}
 .marquee div{display:inline-block;animation:scroll 20s linear infinite}
 .marquee span{margin:0 26px}
@@ -552,6 +556,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 </head>
 <body>
 <a class="skip-link" href="#shop">Skip to the collection</a>
+<div class="sb-topbar"><span class="sb-ship-uae">Free next-day delivery across the UAE</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 working days &nbsp;&middot;&nbsp; free over AED 400</span><span class="sb-ship-intl">Worldwide delivery in 7&ndash;14 working days</span></div>
 <div id="preload"><div class="pm"></div><div class="pt">Sahra &amp; Beyond</div></div>
 <div id="cursor"></div>
 <button id="ambient" class="ambient-btn" aria-label="Toggle ambient desert sound" aria-pressed="false" title="Ambient desert sound"><span class="amb-ic">♪</span></button>
@@ -650,7 +655,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
       <span class="eyebrow hero-in">Inspired by the landscapes of the UAE</span>
       <h1 id="headline"><span class="w">Wear</span> <span class="w">the</span> <em><span class="w">wild side</span></em> <span class="w">of</span> <span class="w">the</span> <span class="w">UAE.</span></h1>
       <p class="hero-in">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
-      <div class="hero-actions hero-in"><a href="/shop/" class="btn magnetic shoplink" onclick="try{track('shop_cta_click',{source:'hero'})}catch(e){}">Shop the collection</a><a href="#places" class="btn ghost magnetic">The places behind them</a></div>
+      <div class="hero-actions hero-in"><a href="/shop/" class="btn magnetic shoplink" onclick="try{track('shop_cta_click',{source:'hero'})}catch(e){}">Shop the collection</a><a href="#places" class="btn ghost magnetic">The places behind them</a></div><span class="hero-ship hero-in"><span class="sb-ship-uae">Free next-day delivery across the UAE</span><span class="sb-ship-gcc">GCC delivery &middot; free over AED 400</span><span class="sb-ship-intl">Worldwide delivery in 7&ndash;14 days</span></span>
     </div>
     <div class="spot hero-in" id="spot"><div class="frame f1 on" style="background-image:url('shirts/alquaa-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f2" style="background-image:url('shirts/emptyquarter-regular-front.jpg');background-size:cover;background-position:center"></div><div class="frame f3" style="background-image:url('shirts/hajar-regular-front.jpg');background-size:cover;background-position:center"></div><a class="spot-link" id="spotlink" href="/shop/" aria-label="View this design"></a><button class="spot-nav prev" id="spotPrev" type="button" aria-label="Previous design">&#8249;</button><button class="spot-nav next" id="spotNext" type="button" aria-label="Next design">&#8250;</button><button class="spot-pause" id="spotPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button><div class="spot-dots" id="spotDots" role="tablist" aria-label="Choose a design"></div><div class="spot-cap" id="spotcap">Al Quaa Galaxy Tee · Inspired by Al Quaa</div></div>
   </div>
