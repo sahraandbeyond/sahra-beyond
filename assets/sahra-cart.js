@@ -107,6 +107,23 @@
   }
 
   /* ---- UI ------------------------------------------------------------ */
+  /* Reconciliation wraps the INTERNAL functions, not the public API. The
+     drawer's own delegated click handler calls setQty directly for the x and
+     the -/+ buttons, so wrapping window.SahraCart alone left the commonest
+     path - a customer emptying their cart - with no reconcile at all, and the
+     tote sat there on its own with checkout live (Faheem, 1 Sep). Wrap where
+     the work happens, not where the callers happen to be.
+     syncGift() is chained OUTSIDE the queued closure: calling queue() from
+     inside a queued function and awaiting it would deadlock the chain. */
+  function afterMutation(c) {
+    return syncGift().then(function () { return CART || c; });
+  }
+  function add(variantId, qty) { return addRaw(variantId, qty).then(afterMutation); }
+  function setQty(lineId, qty) {
+    var r = setQtyRaw(lineId, qty);
+    return (r && r.then) ? r.then(afterMutation) : r;
+  }
+
   /* ---- the Founding Edition tote, free with every order ---------------
      A gift line is added whenever the cart holds at least one real item, and
      removed when the last one goes. Three rules this must never break:
@@ -300,7 +317,13 @@
     var err = lastError
       ? '<p class="sb-err" role="alert">' + esc(lastError) + '</p>' : '';
 
-    if (!lines.length) {
+    /* A cart holding nothing but the gift is empty as far as the customer is
+       concerned. Never render a checkout button for it: the tote is free and
+       UAE delivery is free, so an AED 0 order would otherwise look orderable.
+       Shopify also refuses it (the UAE rate needs TOTAL_PRICE >= 1), but the
+       UI must not offer what the server will reject. */
+    var realLines = lines.filter(function (l) { return !isGift(l); });
+    if (!realLines.length) {
       body.innerHTML = err + '<p class="sb-empty">Your cart is empty.</p>';
       foot.hidden = true;
       return;
@@ -411,7 +434,7 @@
   /* ---- mutations ------------------------------------------------------ */
 
   /* qty 0 removes the line. One code path for -, + and x. */
-  function setQty(lineId, qty) {
+  function setQtyRaw(lineId, qty) {
     if (!CART || !lineId) return Promise.resolve(null);
     return queue(function () {
       lastError = null;
@@ -441,7 +464,7 @@
     });
   }
 
-  function add(variantId, qty) {
+  function addRaw(variantId, qty) {
     ensureUI();
     var want = Math.max(1, (qty | 0) || 1);
 
@@ -625,29 +648,10 @@
     }).observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ['class'] });
   } catch (e) {}
 
-  /* Gift reconciliation hangs off the PUBLIC entry points, not off add() and
-     setQty() internally: those two have several success paths each, and
-     wrapping once here means there is exactly one place where the gift can be
-     forgotten. On failure the gift is not touched at all - a rejected add must
-     stay rejected and unchanged. */
-  function withGift(fn) {
-    return function () {
-      return fn.apply(null, arguments).then(function (c) {
-        return syncGift().then(function () { return CART || c; });
-      });
-    };
-  }
-  var addWithGift = withGift(add);
-  var setQtyWithGift = withGift(setQty);
-
   window.SahraCart = {
-    add: addWithGift, open: open, close: close, variants: variants,
-    refresh: function () { return refresh().then(function (c) {
-      /* a cart built before the gift existed, or one whose gift was dropped
-         server-side, is reconciled on the next page load */
-      return syncGift().then(function () { return CART || c; });
-    }); },
-    setQty: setQtyWithGift, remove: function (l) { return setQtyWithGift(l, 0); },
+    add: add, open: open, close: close, variants: variants,
+    refresh: function () { return refresh().then(afterMutation); },
+    setQty: setQty, remove: function (l) { return setQty(l, 0); },
     setCountry: setCountry,
     state: function () { return CART; }
   };

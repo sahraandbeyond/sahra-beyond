@@ -87,7 +87,7 @@ const realQty = env => (env.api.state()?.lines?.edges || [])
 
 /* ---- fake Shopify ----------------------------------------------------- */
 function makeServer() {
-  const s = { carts: {}, seq: 0, calls: [], failNext: null, userErrorNext: null, refuseGift: false };
+  const s = { carts: {}, seq: 0, calls: [], failNext: null, userErrorNext: null, refuseGift: false, refuseGiftRemove: false };
   s.handle = (query, vars) => {
     const op = /cartCreate/.test(query) ? 'cartCreate'
              : /cartBuyerIdentityUpdate/.test(query) ? 'cartBuyerIdentityUpdate'
@@ -140,6 +140,11 @@ function makeServer() {
       return Promise.resolve({ cartLinesUpdate: { cart: shape(c), userErrors: [] } });
     }
     if (op === 'cartLinesRemove') {
+      /* a removal that fails leaves the tote stranded - the drawer must still
+         refuse to offer checkout on a gift-only cart */
+      if (s.refuseGiftRemove && vars.l.some(id => (c.lines.find(l => l.id === id) || {}).vid === GIFT)) {
+        return Promise.resolve({ cartLinesRemove: { cart: null, userErrors: [{ message: 'nope' }] } });
+      }
       c.lines = c.lines.filter(l => !vars.l.includes(l.id));
       return Promise.resolve({ cartLinesRemove: { cart: shape(c), userErrors: [] } });
     }
@@ -511,6 +516,59 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     check('only ever one tote in the cart',
       (env.api.state().lines.edges || []).filter(e => isGiftNode(e.node)).length === 1,
       'gift lines: ' + (env.api.state().lines.edges || []).filter(e => isGiftNode(e.node)).length);
+  }
+
+  /* 35 — THE REPORTED BUG (Faheem, 1 Sep): removing the last item with the
+         drawer's own x button left the tote behind with checkout live. The
+         handler calls the INTERNAL setQty, so wrapping only window.SahraCart
+         missed the commonest path of all. Drive the real click handler. */
+  {
+    const env = boot();
+    const cart = await env.api.add('gid://variant/1');
+    const real = cart.lines.edges.find(e => !isGiftNode(e.node));
+    const handler = env.byId.sbBody.listeners.click[0];
+    const x = { attrs: { 'data-act': 'rm', 'data-line': real.node.id },
+                getAttribute(k) { return this.attrs[k]; }, closest() { return this; } };
+    handler({ target: x });
+    await new Promise(r => setTimeout(r, 60));
+    const left = (env.api.state().lines.edges || []).map(e => e.node.merchandise.id);
+    check('the x button removes the tote along with the last item',
+      left.length === 0, 'lines left: ' + JSON.stringify(left));
+    check('no checkout is offered once the cart is empty',
+      env.byId.sbFoot.hidden === true, 'foot hidden=' + env.byId.sbFoot.hidden);
+  }
+
+  /* 36 — and the - button, same internal path ---------------------------- */
+  {
+    const env = boot();
+    const cart = await env.api.add('gid://variant/1');
+    const real = cart.lines.edges.find(e => !isGiftNode(e.node));
+    const handler = env.byId.sbBody.listeners.click[0];
+    const minus = { attrs: { 'data-act': 'dec', 'data-line': real.node.id, 'data-qty': '1' },
+                    getAttribute(k) { return this.attrs[k]; }, closest() { return this; } };
+    handler({ target: minus });
+    await new Promise(r => setTimeout(r, 60));
+    check('decrementing to zero also takes the tote',
+      (env.api.state().lines.edges || []).length === 0,
+      'lines left: ' + JSON.stringify((env.api.state().lines.edges || []).map(e => e.node.merchandise.id)));
+  }
+
+  /* 37 — belt and braces: if the tote CANNOT be removed, the drawer must
+         still refuse to present an AED 0 cart as orderable ---------------- */
+  {
+    const server = makeServer();
+    const env = boot({ server });
+    const cart = await env.api.add('gid://variant/1');
+    const real = cart.lines.edges.find(e => !isGiftNode(e.node));
+    server.refuseGiftRemove = true;
+    await env.api.remove(real.node.id);
+    const left = (env.api.state().lines.edges || []).map(e => e.node.merchandise.id);
+    check('a stranded tote is still in the cart for this test', left.length === 1 && left[0] === GIFT,
+      'lines: ' + JSON.stringify(left));
+    check('a gift-only cart renders as empty',
+      /sb-empty/.test(String(env.byId.sbBody.innerHTML)), String(env.byId.sbBody.innerHTML).slice(0, 160));
+    check('a gift-only cart offers no checkout', env.byId.sbFoot.hidden === true,
+      'foot hidden=' + env.byId.sbFoot.hidden);
   }
 
   console.log('\n  ' + pass + ' passed, ' + fail + ' failed\n');
