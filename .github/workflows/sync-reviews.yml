@@ -1,0 +1,89 @@
+# Judge.me reviews -> the live site, without anyone pushing.
+#
+# WHY THIS EXISTS (Faheem, 1 Sep 2026): reviews on the site are rendered from
+# content/reviews/*.json, which is committed. Vercel runs `node build.js` on
+# every deploy but NEVER syncs, so a new Judge.me review stayed invisible until
+# somebody ran sync-reviews.js by hand and pushed. The site was showing a
+# snapshot from 29 August.
+#
+# This keeps the original design intact - the repo still reproduces the live
+# site, and a deploy still never depends on a live third-party API - by moving
+# the manual step onto a schedule instead of into the build.
+#
+# SETUP (one time, by Faheem):
+#   GitHub -> Settings -> Secrets and variables -> Actions -> New secret
+#   Name: JUDGEME_TOKEN     Value: the Judge.me private API token
+# Without it the job fails loudly (sync-reviews.js exits 2) rather than
+# silently publishing nothing.
+
+name: Sync Judge.me reviews
+
+on:
+  schedule:
+    - cron: '0 3,15 * * *'   # 07:00 and 19:00 Dubai (UTC+4)
+  workflow_dispatch:          # and a manual "Run workflow" button
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-reviews
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Pull approved reviews from Judge.me
+        env:
+          JUDGEME_TOKEN: ${{ secrets.JUDGEME_TOKEN }}
+        run: node sync-reviews.js
+
+      - name: Decide whether anything actually changed
+        id: check
+        run: |
+          if git diff --quiet -- content/reviews; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No review changes."
+            exit 0
+          fi
+          # sync-reviews.js stamps syncedAt with today's date, so the files
+          # differ every day even when no review did. Committing that would
+          # mean a pointless commit and a pointless deploy daily, forever.
+          SUBSTANTIVE=$(git diff -U0 -- content/reviews \
+            | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' \
+            | grep -v '"syncedAt"' | wc -l)
+          if [ "$SUBSTANTIVE" -eq 0 ]; then
+            git checkout -- content/reviews
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Only syncedAt moved - nothing worth publishing."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "$SUBSTANTIVE changed line(s) in content/reviews."
+          fi
+
+      - name: Rebuild the site from the new reviews
+        if: steps.check.outputs.changed == 'true'
+        run: node build.js
+
+      - name: Run the repo's own gate before publishing
+        if: steps.check.outputs.changed == 'true'
+        run: node prepush.js
+
+      - name: Commit and push
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name  "sahra-reviews-bot"
+          git config user.email "noreply@sahraandbeyond.ae"
+          git add -A
+          git commit -m "Reviews: sync from Judge.me
+
+          Automated by .github/workflows/sync-reviews.yml. Only runs when a
+          review actually changed - syncedAt-only churn is discarded."
+          git push
