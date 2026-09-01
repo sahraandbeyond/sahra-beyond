@@ -1,19 +1,36 @@
 {
  "handle": "_shop",
- "average": 5.0,
- "count": 1,
- "synced": "2026-08-29",
- "source": "judge.me private API (5 total: 4 published written here, 1 unpublished shop review left to Judge.me moderation)",
+ "count": 2,
+ "average": 5,
+ "syncedAt": "2026-09-01",
  "reviews": [
   {
+   "id": 1314155164,
    "rating": 5,
    "title": "",
+   "body": "Delivery came way faster than expected and checkout was very easy",
    "name": "Mohamed Torky",
-   "verified": false,
    "date": "2026-08-29",
+   "verified": false,
    "photos": [],
-   "reply": "",
-   "body": "Delivery came way faster than expected and checkout was very easy"
+   "handle": "judgeme-shop-reviews",
+   "externalId": 0,
+   "productTitle": "Judge.me Shop Reviews",
+   "reply": ""
+  },
+  {
+   "id": 1313149204,
+   "rating": 5,
+   "title": "",
+   "body": "The fabric is pure and breathable, stitching is flawless, and the fit is so comfortable. Packaging is premium too. This product beautifully represents UAE heritage and shara culture. Highly recommend!",
+   "name": "Mirza Aqib Baig",
+   "date": "2026-08-28",
+   "verified": false,
+   "photos": [],
+   "handle": "judgeme-shop-reviews",
+   "externalId": 0,
+   "productTitle": "Judge.me Shop Reviews",
+   "reply": ""
   }
  ]
 }
