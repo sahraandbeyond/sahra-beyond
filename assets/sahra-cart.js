@@ -37,7 +37,7 @@
       `Math.round` displayed AED 149.50 as "AED 150" — directly misleading next
       to the old "Free UAE delivery over AED 150" copy, because Shopify would
       still charge delivery. That UAE threshold was retired on 1 Sep 2026 (UAE
-      is free with no minimum); the GCC AED 400 threshold still makes this
+      is free with no minimum); the GCC AED 390 threshold still makes this
       load-bearing. Fils are shown whenever they are non-zero.
 
    7. EVERY ERROR WAS SWALLOWED by empty catch blocks, so a failed add looked
@@ -71,7 +71,7 @@
   }
 
   /* Show fils when they exist. Rounding to whole dirhams misrepresents a
-     subtotal sitting either side of the AED 400 GCC free-delivery threshold.
+     subtotal sitting either side of the AED 390 GCC free-delivery threshold.
      KWD, BHD and OMR genuinely have three decimals — two would misprice
      every line by up to 9 fils, so the map is load-bearing, not pedantry. */
   var DECIMALS = { BHD: 3, KWD: 3, OMR: 3 };
@@ -107,6 +107,63 @@
   }
 
   /* ---- UI ------------------------------------------------------------ */
+  /* ---- the Founding Edition tote, free with every order ---------------
+     A gift line is added whenever the cart holds at least one real item, and
+     removed when the last one goes. Three rules this must never break:
+
+       1. IT CANNOT BREAK A REAL ADD. Stock is finite by design, so Shopify
+          WILL eventually refuse the gift. Every failure here is swallowed:
+          lastError is left alone, the cart the customer built is returned
+          untouched, and the gift simply stops appearing. A gift that can empty
+          a basket would be worse than no gift.
+       2. IT GOES THROUGH THE QUEUE. A bare extra mutation races the one that
+          triggered it and destroys carts - that is bug 3 in the header above,
+          and the reason this file has a queue at all.
+       3. IT NEVER RECURSES. syncGift performs at most one mutation and never
+          calls itself; add/setQty/refresh call it exactly once, after theirs.
+
+     The variant is published ONLY to the headless channel, so it has no
+     product page - the drawer renders it without a link. */
+  var GIFT_VARIANT = 'gid://shopify/ProductVariant/47389880615100';
+  var GIFT_ADD = 'mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{' + CFRAG + '}userErrors{message}}}';
+  var GIFT_RM  = 'mutation($id:ID!,$l:[ID!]!){cartLinesRemove(cartId:$id,lineIds:$l){cart{' + CFRAG + '}userErrors{message}}}';
+
+  function isGift(node) {
+    return !!(node && node.merchandise && node.merchandise.id === GIFT_VARIANT);
+  }
+  function cartNodes() {
+    return (CART && CART.lines && CART.lines.edges) ? CART.lines.edges.map(function (e) { return e.node; }) : [];
+  }
+  function giftLine() {
+    var hit = null;
+    cartNodes().forEach(function (n) { if (isGift(n)) hit = n; });
+    return hit;
+  }
+  function realQty() {
+    var n = 0;
+    cartNodes().forEach(function (l) { if (!isGift(l)) n += (l.quantity || 0); });
+    return n;
+  }
+
+  function syncGift() {
+    return queue(function () {
+      if (!CART || !CART.id) return CART;
+      var g = giftLine(), real = realQty();
+      var op = null;
+      if (real > 0 && !g) op = { m: GIFT_ADD, v: { id: CART.id, l: [{ merchandiseId: GIFT_VARIANT, quantity: 1 }] }, k: 'cartLinesAdd' };
+      else if (real === 0 && g) op = { m: GIFT_RM, v: { id: CART.id, l: [g.id] }, k: 'cartLinesRemove' };
+      else if (g && g.quantity > 1) op = { m: GIFT_RM, v: { id: CART.id, l: [g.id] }, k: 'cartLinesRemove' };
+      if (!op) return CART;
+      return sf(op.m, op.v).then(function (d) {
+        var r = d && d[op.k];
+        /* userErrors here mean "sold out" far more often than anything else.
+           Not an error the customer caused, and not one they should see. */
+        if (r && r.cart && !(r.userErrors && r.userErrors.length)) { CART = r.cart; draw(); }
+        return CART;
+      }).catch(function () { return CART; });
+    });
+  }
+
   function ensureUI() {
     if (document.getElementById('sbDrawer')) return;
 
@@ -236,7 +293,9 @@
     var lines = (CART && CART.lines && CART.lines.edges)
       ? CART.lines.edges.map(function (e) { return e.node; }) : [];
 
-    badge(CART ? CART.totalQuantity : 0);
+    /* the gift is not something the customer chose - it must not inflate
+       the badge, or "2" shirts would read as 3 */
+    badge(CART ? realQty() : 0);
 
     var err = lastError
       ? '<p class="sb-err" role="alert">' + esc(lastError) + '</p>' : '';
@@ -251,6 +310,18 @@
       var m = l.merchandise;
       var img = (m.product && m.product.featuredImage) ? m.product.featuredImage.url : '';
       var q = l.quantity;
+      /* The gift has no product page (headless-only), so no link; and no
+         quantity or remove controls - it is not the customer's to manage. */
+      if (isGift(l)) {
+        return '<div class="sb-line sb-gift">' +
+          (img ? '<img src="' + esc(img) + '" alt="" width="60" height="75" loading="lazy">'
+               : '<span class="sb-noimg"></span>') +
+          '<div class="sb-lt">' +
+            '<span class="sb-gift-t">Sahra tote &mdash; yours free</span>' +
+            '<span>' + money(0, (CART && CART.cost && CART.cost.subtotalAmount && CART.cost.subtotalAmount.currencyCode) || 'AED') + '</span>' +
+          '</div>' +
+        '</div>';
+      }
       return '<div class="sb-line">' +
         (img ? '<img src="' + esc(img) + '" alt="" width="60" height="75" loading="lazy">'
              : '<span class="sb-noimg"></span>') +
@@ -297,7 +368,7 @@
       });
     }
     /* Free-delivery progress (Rastah benchmark, 29 Aug 2026). Honest maths
-       only: the one remaining threshold is defined in AED (400 GCC — UAE is now
+       only: the one remaining threshold is defined in AED (390 GCC — UAE is now
        free with no minimum), so the meter renders ONLY when the cart itself is
        priced in AED; converting a threshold into SAR client-side would drift
        from what checkout actually charges. Non-AED and worldwide carts see no
@@ -315,14 +386,14 @@
       if (cost.currencyCode !== 'AED' || mkt === 'intl') { el.hidden = true; return; }
       /* UAE next-day delivery is free on every order with no minimum (1 Sep 2026).
          There is no threshold left to progress toward, so state the fact instead
-         of rendering a meter that is always full. GCC keeps its AED 400 meter. */
+         of rendering a meter that is always full. GCC keeps its AED 390 meter. */
       if (mkt !== 'gcc') {
         el.hidden = false;
         el.innerHTML = '<span class="sb-free-t sb-free-ok">\u2713 Free next-day delivery</span>' +
           '<span class="sb-free-bar"><span style="width:100%"></span></span>';
         return;
       }
-      var th = 400;
+      var th = 390;
       var n = parseFloat(cost.amount || 0);
       el.hidden = false;
       if (n >= th) {
@@ -554,9 +625,29 @@
     }).observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ['class'] });
   } catch (e) {}
 
+  /* Gift reconciliation hangs off the PUBLIC entry points, not off add() and
+     setQty() internally: those two have several success paths each, and
+     wrapping once here means there is exactly one place where the gift can be
+     forgotten. On failure the gift is not touched at all - a rejected add must
+     stay rejected and unchanged. */
+  function withGift(fn) {
+    return function () {
+      return fn.apply(null, arguments).then(function (c) {
+        return syncGift().then(function () { return CART || c; });
+      });
+    };
+  }
+  var addWithGift = withGift(add);
+  var setQtyWithGift = withGift(setQty);
+
   window.SahraCart = {
-    add: add, open: open, close: close, refresh: refresh, variants: variants,
-    setQty: setQty, remove: function (l) { return setQty(l, 0); },
+    add: addWithGift, open: open, close: close, variants: variants,
+    refresh: function () { return refresh().then(function (c) {
+      /* a cart built before the gift existed, or one whose gift was dropped
+         server-side, is reconciled on the next page load */
+      return syncGift().then(function () { return CART || c; });
+    }); },
+    setQty: setQtyWithGift, remove: function (l) { return setQtyWithGift(l, 0); },
     setCountry: setCountry,
     state: function () { return CART; }
   };

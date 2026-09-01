@@ -587,7 +587,7 @@ ${RV.CSS}
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE &nbsp;·&nbsp; all seven emirates &nbsp;·&nbsp; no minimum order</span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 400</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; a limited first run &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE &nbsp;·&nbsp; all seven emirates &nbsp;·&nbsp; no minimum order</span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; a limited first run &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <div class="nav-links"><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -670,7 +670,7 @@ ${galShots(p).map((s,i)=>`
            highlighted and ordered first via data-market on <html>. -->
       <div class="pdp-answers">
         <details class="pdp-ans">
-          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">free next-day, no minimum</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 400</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
+          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">free next-day, no minimum</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 390</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
           <div class="shipcards">
             <!-- No regional-indicator (flag) emoji anywhere in these cards:
                  Windows renders them as bare letter codes, so the six-flag GCC string became
@@ -682,7 +682,7 @@ ${galShots(p).map((s,i)=>`
               <span>Next-day, all seven emirates — <strong>free, no minimum order</strong></span>
               <span>Free returns and exchanges within 14 days</span></div>
             <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
-              <span>3–5 working days — AED 50, <strong>free over AED 400</strong></span>
+              <span>3–5 working days — AED 50, <strong>free over AED 390</strong></span>
               <span>Duties, if any, are payable on arrival</span></div>
             <div class="shipcard shipcard-intl"><b>🌍 Worldwide</b>
               <span>7–14 working days — AED 80</span>

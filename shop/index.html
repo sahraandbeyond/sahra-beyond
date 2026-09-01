@@ -516,8 +516,8 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 @media(max-width:820px){.sb-curwrap--hdr{display:none}}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=18bf6c97">
-<script src="/assets/sahra-cart.js?v=7725b3c0" defer></script>
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=895845e8">
+<script src="/assets/sahra-cart.js?v=d6b23042" defer></script>
 <script src="/assets/sahra-market.js?v=477f1ad7" defer></script>
 </head>
 <body>
@@ -528,7 +528,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 <div id="progress"><i></i></div>
 <div id="grain"></div>
 <canvas id="ambient-canvas"></canvas>
-<div class="note" id="mode-note" data-sb-rotate><span class="sb-ship-uae">Free next-day delivery across the UAE &middot; all seven emirates &middot; no minimum order</span><span class="sb-ship-gcc">GCC delivery 3&ndash;5 working days &middot; Free over AED 400</span><span class="sb-ship-intl">Worldwide delivery 7&ndash;14 working days</span> · Limited first run</div>
+<div class="note" id="mode-note" data-sb-rotate><span class="sb-ship-uae">Free next-day delivery across the UAE &middot; all seven emirates &middot; no minimum order</span><span class="sb-ship-gcc">GCC delivery 3&ndash;5 working days &middot; Free over AED 390</span><span class="sb-ship-intl">Worldwide delivery 7&ndash;14 working days</span> · Limited first run</div>
 
 <nav id="nav" class="on-hero">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
@@ -857,7 +857,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   var SHOPIFY = { domain:'sahra-beyond.myshopify.com', token:'cc42ba8e74eb27c4f3c062d93f893fa0', collection:'', apiVersion:'2024-10' };
 // ==================================================================
 var DEMO=(SHOPIFY.domain.indexOf('YOUR-STORE')>=0||SHOPIFY.token.indexOf('YOUR_')>=0);
-if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='<span class=\'sb-rot on\'><span class=\'sb-ship-uae\'>&#8635; Free next-day delivery across the UAE &nbsp;&middot;&nbsp; no minimum order</span><span class=\'sb-ship-gcc\'>&#9992; GCC delivery 3&ndash;5 working days &nbsp;&middot;&nbsp; Free over AED 400</span><span class=\'sb-ship-intl\'>&#9992; Worldwide delivery 7&ndash;14 working days</span> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop</span><span class=\'sb-rot\'>&#10022; Founding Edition &nbsp;&middot;&nbsp; a limited first run &nbsp;&middot;&nbsp; &#9873; Designed in the UAE</span><span class=\'sb-rot\'>&#8635; 14-day returns &nbsp;&middot;&nbsp; free within the UAE</span>';}
+if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='<span class=\'sb-rot on\'><span class=\'sb-ship-uae\'>&#8635; Free next-day delivery across the UAE &nbsp;&middot;&nbsp; no minimum order</span><span class=\'sb-ship-gcc\'>&#9992; GCC delivery 3&ndash;5 working days &nbsp;&middot;&nbsp; Free over AED 390</span><span class=\'sb-ship-intl\'>&#9992; Worldwide delivery 7&ndash;14 working days</span> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop</span><span class=\'sb-rot\'>&#10022; Founding Edition &nbsp;&middot;&nbsp; a limited first run &nbsp;&middot;&nbsp; &#9873; Designed in the UAE</span><span class=\'sb-rot\'>&#8635; 14-day returns &nbsp;&middot;&nbsp; free within the UAE</span>';}
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches,TOUCH=matchMedia('(hover:none),(pointer:coarse)').matches,HASG=(typeof gsap!=='undefined');
 function track(n,p){try{if(window.gtag)gtag('event',n,p||{});}catch(e){}}
 // theme palette used when a product has no explicit theme (black, beige, rose-blue, sage, indigo, soft-blue)

@@ -97,3 +97,12 @@
 }
 @media(prefers-reduced-motion:reduce){.sb-wa{transition:none}}
 @media print{.sb-wa{display:none}}
+
+/* The Founding Edition tote, added free with any order. It is deliberately
+   quiet: a gift that shouts reads as a discount, and this brand does not
+   discount. No remove or quantity controls are rendered for it at all - see
+   assets/sahra-cart.js. */
+.sb-gift .sb-lt{justify-content:center}
+.sb-gift-t{font-weight:600;display:block}
+.sb-gift-t::after{content:'GIFT';margin-left:8px;font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:1.4px;padding:2px 6px;border-radius:999px;background:var(--gold,#F2C98C);color:#241B12;vertical-align:middle}

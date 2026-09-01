@@ -76,9 +76,18 @@ function freshDom() {
   return { doc, byId };
 }
 
+/* The free tote. It is a genuine cart line with a real variant id, so the fake
+   server must model it as one - priced 0, with its own title - or every count
+   and subtotal assertion in this file silently drifts once auto-add ships. */
+const GIFT = 'gid://shopify/ProductVariant/47389880615100';
+const isGiftNode = n => n && n.merchandise && n.merchandise.id === GIFT;
+/* What the customer thinks is in the basket: the gift is not their doing. */
+const realQty = env => (env.api.state()?.lines?.edges || [])
+  .filter(e => !isGiftNode(e.node)).reduce((n, e) => n + e.node.quantity, 0);
+
 /* ---- fake Shopify ----------------------------------------------------- */
 function makeServer() {
-  const s = { carts: {}, seq: 0, calls: [], failNext: null, userErrorNext: null };
+  const s = { carts: {}, seq: 0, calls: [], failNext: null, userErrorNext: null, refuseGift: false };
   s.handle = (query, vars) => {
     const op = /cartCreate/.test(query) ? 'cartCreate'
              : /cartBuyerIdentityUpdate/.test(query) ? 'cartBuyerIdentityUpdate'
@@ -94,12 +103,17 @@ function makeServer() {
       id: c.id, checkoutUrl: 'https://checkout/' + c.id,
       buyerIdentity: { countryCode: c.cc || 'AE' },
       totalQuantity: c.lines.reduce((n, l) => n + l.quantity, 0),
-      cost: { subtotalAmount: { amount: String(c.lines.reduce((n, l) => n + l.quantity * (c.cur === 'KWD' ? 16.55 : 149.5), 0)), currencyCode: c.cur || 'AED' } },
+      cost: { subtotalAmount: { amount: String(c.lines.reduce((n, l) =>
+        n + (l.vid === GIFT ? 0 : l.quantity * (c.cur === 'KWD' ? 16.55 : 149.5)), 0)), currencyCode: c.cur || 'AED' } },
       lines: { edges: c.lines.map(l => ({ node: {
         id: l.id, quantity: l.quantity,
-        merchandise: { id: l.vid, title: 'M', availableForSale: true,
-          price: { amount: '149.50', currencyCode: 'AED' },
-          product: { title: 'Empty Quarter Tee', handle: 'empty-quarter-regular', featuredImage: null } }
+        merchandise: l.vid === GIFT
+          ? { id: GIFT, title: 'One size', availableForSale: true,
+              price: { amount: '0.00', currencyCode: 'AED' },
+              product: { title: 'Sahra Tote — Founding Edition gift', handle: 'sahra-tote-founding-edition-gift', featuredImage: null } }
+          : { id: l.vid, title: 'M', availableForSale: true,
+              price: { amount: '149.50', currencyCode: 'AED' },
+              product: { title: 'Empty Quarter Tee', handle: 'empty-quarter-regular', featuredImage: null } }
       } })) }
     });
     if (op === 'cartCreate') {
@@ -110,6 +124,10 @@ function makeServer() {
     const c = s.carts[vars.id];
     if (!c) return Promise.resolve({ [op]: { cart: null, userErrors: [] }, cart: null });
     if (op === 'cartLinesAdd') {
+      /* the gift is finite by design - this is what running out looks like */
+      if (s.refuseGift && vars.l.some(n => n.merchandiseId === GIFT)) {
+        return Promise.resolve({ cartLinesAdd: { cart: null, userErrors: [{ message: 'Sold out.' }] } });
+      }
       vars.l.forEach(n => {
         const ex = c.lines.find(l => l.vid === n.merchandiseId);
         if (ex) ex.quantity += n.quantity;
@@ -230,7 +248,7 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     check('two simultaneous adds create ONE cart, not two',
       creates === 1, 'cartCreate calls: ' + creates + ' (' + env.server.calls.join(',') + ')');
     check('both items survive the race',
-      env.api.state().totalQuantity === 2, 'totalQuantity=' + env.api.state().totalQuantity);
+      realQty(env) === 2, 'real qty=' + realQty(env) + ' totalQuantity=' + env.api.state().totalQuantity);
   }
 
   /* 5 — money must not round away fils at the AED 150 threshold --------- */
@@ -266,7 +284,7 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
       env.api.state() && env.api.state().id === before,
       'cart id before=' + before + ' after=' + (env.api.state() && env.api.state().id));
     check('the basket survives a refused add',
-      env.api.state().totalQuantity === 2, 'totalQuantity=' + env.api.state().totalQuantity);
+      realQty(env) === 2, 'real qty=' + realQty(env));
     check("Shopify's own message is shown to the customer",
       /Only 2 left in stock\./.test(String(env.byId.sbBody.innerHTML)),
       'drawer: ' + String(env.byId.sbBody.innerHTML).slice(0, 160));
@@ -293,7 +311,7 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     check('storage failure (Safari private mode) still keeps ONE cart',
       creates === 1, 'cartCreate calls: ' + creates);
     check('both items survive when storage is unavailable',
-      env.api.state().totalQuantity === 2, 'totalQuantity=' + env.api.state().totalQuantity);
+      realQty(env) === 2, 'real qty=' + realQty(env));
   }
 
   /* 10 — rapid + taps must accumulate, through the REAL click path ------- */
@@ -311,8 +329,8 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     handler({ target: btn });
     await new Promise(r => setTimeout(r, 30));
     check('three rapid + taps reach quantity 4, not 2',
-      env.api.state().totalQuantity === 4,
-      'totalQuantity=' + env.api.state().totalQuantity);
+      realQty(env) === 4,
+      'real qty=' + realQty(env) + ' totalQuantity=' + env.api.state().totalQuantity);
   }
 
   /* 22 — international: cartCreate must carry buyerIdentity ------------- */
@@ -418,13 +436,81 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
       'meter: ' + html.slice(0, 160));
   }
 
-  /* 29 — the GCC AED 400 threshold is untouched and still counts down ---- */
+  /* 29 — the GCC AED 390 threshold is untouched and still counts down ---- */
   {
     const env = boot({ market: { market: () => 'gcc', currency: () => 'AED' } });
-    await env.api.add('gid://variant/Z');            // 149.50 of 400
+    await env.api.add('gid://variant/Z');            // 149.50 of 390
     const html = String(env.byId.sbFree.innerHTML);
-    check('GCC cart still counts toward AED 400',
+    check('GCC cart still counts toward AED 390',
       /away from free delivery/.test(html), 'meter: ' + html.slice(0, 160));
+  }
+
+  /* 30 — the free tote rides along with any real item ------------------- */
+  {
+    const env = boot();
+    await env.api.add('gid://variant/1');
+    const gifts = (env.api.state().lines.edges || []).filter(e => isGiftNode(e.node));
+    check('a real item auto-adds the tote', gifts.length === 1, 'gift lines: ' + gifts.length);
+    if (gifts[0]) {
+      check('the tote is free', gifts[0].node.merchandise.price.amount === '0.00');
+      check('the tote is quantity 1', gifts[0].node.quantity === 1);
+    }
+    check('the tote does not inflate the badge',
+      env.byId.sbCartCount.textContent === '1', 'badge=' + env.byId.sbCartCount.textContent);
+    check('the tote adds nothing to the subtotal',
+      env.byId.sbSub.textContent === 'AED 149.50', 'subtotal=' + env.byId.sbSub.textContent);
+  }
+
+  /* 31 — it renders as a gift: no link, no quantity, no remove ---------- */
+  {
+    const env = boot();
+    await env.api.add('gid://variant/1');
+    const html = String(env.byId.sbBody.innerHTML);
+    const giftBlock = html.slice(html.indexOf('sb-gift'));
+    check('the tote is labelled as a gift', /yours free/.test(html), html.slice(0, 200));
+    check('the tote has no remove control', !/sb-gift[\s\S]*?data-act="rm"/.test(html));
+    check('the tote has no quantity control', !/sb-gift[\s\S]*?data-act="inc"/.test(html));
+    check('the tote is not linked to a product page',
+      !/sb-gift[\s\S]*?href="\/products\/sahra-tote/.test(html));
+  }
+
+  /* 32 — removing the last real item takes the tote with it ------------- */
+  {
+    const env = boot();
+    const cart = await env.api.add('gid://variant/1');
+    const real = cart.lines.edges.find(e => !isGiftNode(e.node));
+    await env.api.remove(real.node.id);
+    const after = env.api.state();
+    check('the tote leaves when the last real item does',
+      (after.lines.edges || []).filter(e => isGiftNode(e.node)).length === 0,
+      'lines left: ' + JSON.stringify((after.lines.edges || []).map(e => e.node.merchandise.id)));
+  }
+
+  /* 33 — THE ONE THAT MATTERS. Stock is finite, so the gift WILL be
+         refused one day. That must never cost the customer their basket. */
+  {
+    const server = makeServer(); server.refuseGift = true;
+    const env = boot({ server });
+    const cart = await env.api.add('gid://variant/1');
+    check('a refused tote still leaves the real item in the cart',
+      realQty(env) === 1, 'real qty=' + realQty(env));
+    check('a refused tote adds no gift line',
+      (env.api.state().lines.edges || []).filter(e => isGiftNode(e.node)).length === 0);
+    check('a refused tote shows the customer no error',
+      !/sb-err/.test(String(env.byId.sbBody.innerHTML)),
+      String(env.byId.sbBody.innerHTML).slice(0, 200));
+    check('a refused tote still resolves the add', !!cart);
+  }
+
+  /* 34 — never two totes, however many items are added ------------------ */
+  {
+    const env = boot();
+    await env.api.add('gid://variant/1');
+    await env.api.add('gid://variant/2');
+    await env.api.add('gid://variant/3');
+    check('only ever one tote in the cart',
+      (env.api.state().lines.edges || []).filter(e => isGiftNode(e.node)).length === 1,
+      'gift lines: ' + (env.api.state().lines.edges || []).filter(e => isGiftNode(e.node)).length);
   }
 
   console.log('\n  ' + pass + ' passed, ' + fail + ' failed\n');
