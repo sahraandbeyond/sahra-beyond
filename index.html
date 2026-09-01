@@ -495,12 +495,30 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
 @media(prefers-reduced-motion:reduce){}
 /*VBAND-CSS-START*/
 .vband{position:relative;z-index:2;width:100%;margin:0;padding:0;background:#181109}
-.vband-frame{position:relative;width:100%;height:clamp(320px,58vh,660px);overflow:hidden}
+.vband-frame{position:relative;width:100%;aspect-ratio:1080/608;overflow:hidden}
+/* WHOLE-FILM FRAMING on desktop (Faheem, 1 Sep 2026). The film is 1080x608;
+   the band is full-bleed with object-fit:cover, so the complete frame is only
+   visible when height == width/1.7763. aspect-ratio does exactly that at every
+   width, so nothing is ever cropped on desktop. It replaced clamp(320px,58vh,
+   660px), which showed ~64% of the frame's height on a laptop.
+   Consequence to know: the band is now as tall as the window is wide / 1.78 -
+   721px at 1280, 811px at 1440, 1081px at 1920 - so it fills the first screen
+   and the hero headline sits below it. That is deliberate. If it ever needs
+   reining in, add a max-height in vh here; cropping then resumes top and
+   bottom, which is the crop to prefer because it preserves the width.
+   PHONES ARE DELIBERATELY NOT ON THIS RULE - see the media query below. */
 .vband-v{width:100%;height:100%;object-fit:cover;display:block}
 .vband-scrim{position:absolute;inset:0;pointer-events:none;z-index:1;
   background:linear-gradient(to bottom,rgba(24,17,9,0) 62%,rgba(24,17,9,.34) 100%)}
 .vband-link{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;
-  justify-content:flex-start;padding:0 0 22px 24px;text-decoration:none}
+  justify-content:flex-start;padding:0 0 22px 84px;text-decoration:none}
+/* Left inset is 84px, not 24px: the ambient-sound button is position:fixed at
+   left:18px/bottom:18px (44px wide, so it ends at x=62). Once the band became
+   whole-film it got tall enough that its bottom edge lands right where that
+   button floats on a 1280x800 or 1440x900 window, and the button sat on top of
+   this pill. 84px clears it with 22px of air at every desktop width. Phones
+   keep 16px in the media query below - the band ends far above the fold there,
+   so nothing overlaps. */
 .vband-cta{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.4px;
   text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.74);
   padding:11px 16px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
@@ -511,7 +529,12 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
   background:rgba(24,17,9,.72);color:#FFF6E8;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .vband-toggle:hover{background:rgba(24,17,9,.92)}
 @media(max-width:700px){
-  .vband-frame{height:clamp(260px,46vh,420px)}
+  .vband-frame{aspect-ratio:auto;height:clamp(260px,46vh,420px)}
+  /* Phones keep the taller, side-cropped band by explicit choice (Faheem,
+     1 Sep 2026). At 390px wide the whole frame would be only 220px tall;
+     the extra height costs ~43% of the film's width but keeps presence on
+     the device most visitors arrive on. aspect-ratio:auto makes that
+     override explicit instead of relying on height winning by cascade. */
   .vband-link{padding:0 0 18px 16px}
   .vband-cta{font-size:11px;padding:10px 13px}
   .vband-toggle{right:14px;bottom:18px}
