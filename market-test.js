@@ -6,7 +6,8 @@
  * number appears next to every product. Its two contracts:
  *
  *   1. RESOLUTION — country → market → default currency must be right,
- *      because the wrong band promises same-day Dubai to a shopper in Riyadh.
+ *      because the wrong band promises free UAE next-day delivery to a
+ *      shopper in Riyadh, who is quoted AED 50 and a 3-5 day wait.
  *   2. THE GATE — a price is only ever rewritten if Shopify answered in the
  *      currency we asked for. Pre-Shopify-Payments the store prices AED only,
  *      and showing a "converted" number that checkout then contradicts is a

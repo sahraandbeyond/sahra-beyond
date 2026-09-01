@@ -35,8 +35,10 @@
 
    6. MONEY WAS ROUNDED TO WHOLE DIRHAMS.
       `Math.round` displayed AED 149.50 as "AED 150" — directly misleading next
-      to "Free UAE delivery over AED 150", because Shopify would still charge
-      delivery. Fils are shown whenever they are non-zero.
+      to the old "Free UAE delivery over AED 150" copy, because Shopify would
+      still charge delivery. That UAE threshold was retired on 1 Sep 2026 (UAE
+      is free with no minimum); the GCC AED 400 threshold still makes this
+      load-bearing. Fils are shown whenever they are non-zero.
 
    7. EVERY ERROR WAS SWALLOWED by empty catch blocks, so a failed add looked
       identical to a successful one. Failures now surface in the drawer.
@@ -69,7 +71,7 @@
   }
 
   /* Show fils when they exist. Rounding to whole dirhams misrepresents a
-     subtotal sitting either side of the AED 150 free-delivery threshold.
+     subtotal sitting either side of the AED 400 GCC free-delivery threshold.
      KWD, BHD and OMR genuinely have three decimals — two would misprice
      every line by up to 9 fils, so the map is load-bearing, not pedantry. */
   var DECIMALS = { BHD: 3, KWD: 3, OMR: 3 };
@@ -138,7 +140,7 @@
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
-          '<p class="sb-note">Free UAE delivery over AED 150. Our fits run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
+          '<p class="sb-note">Free next-day UAE delivery, no minimum. Our fits run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
           '<a class="sb-go" id="sbGo" href="#">Checkout</a>' +
         '</div>' +
       '</aside>';
@@ -295,10 +297,11 @@
       });
     }
     /* Free-delivery progress (Rastah benchmark, 29 Aug 2026). Honest maths
-       only: thresholds are defined in AED (150 UAE next-day / 400 GCC), so the
-       meter renders ONLY when the cart itself is priced in AED — converting a
-       threshold into SAR client-side would drift from what checkout actually
-       charges. Non-AED and worldwide carts see no meter rather than a wrong one. */
+       only: the one remaining threshold is defined in AED (400 GCC — UAE is now
+       free with no minimum), so the meter renders ONLY when the cart itself is
+       priced in AED; converting a threshold into SAR client-side would drift
+       from what checkout actually charges. Non-AED and worldwide carts see no
+       meter rather than a wrong one. */
     (function () {
       var el = document.getElementById('sbFree');
       if (!el) {
@@ -310,7 +313,16 @@
       var mkt = (window.SahraMarket && window.SahraMarket.market) ? window.SahraMarket.market() : 'uae';
       var cost = CART.cost.subtotalAmount;
       if (cost.currencyCode !== 'AED' || mkt === 'intl') { el.hidden = true; return; }
-      var th = mkt === 'gcc' ? 400 : 150;
+      /* UAE next-day delivery is free on every order with no minimum (1 Sep 2026).
+         There is no threshold left to progress toward, so state the fact instead
+         of rendering a meter that is always full. GCC keeps its AED 400 meter. */
+      if (mkt !== 'gcc') {
+        el.hidden = false;
+        el.innerHTML = '<span class="sb-free-t sb-free-ok">\u2713 Free next-day delivery</span>' +
+          '<span class="sb-free-bar"><span style="width:100%"></span></span>';
+        return;
+      }
+      var th = 400;
       var n = parseFloat(cost.amount || 0);
       el.hidden = false;
       if (n >= th) {

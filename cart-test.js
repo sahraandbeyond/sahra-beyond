@@ -70,6 +70,9 @@ function freshDom() {
     addEventListener() {}
   };
   byId.__hdr = mkEl('nav');
+  /* the free-delivery meter writes into #sbFree; register it so the module
+     finds it rather than creating a detached node the test cannot see */
+  byId.sbFree = mkEl('div');
   return { doc, byId };
 }
 
@@ -401,6 +404,27 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     check('matching cart triggers no buyerIdentity mutation',
       !env.server.calls.includes('cartBuyerIdentityUpdate'),
       'calls: ' + env.server.calls.join(','));
+  }
+
+  /* 28 — UAE delivery is free with NO minimum (1 Sep 2026). The meter must
+         never tell a UAE shopper they are short of a threshold. ------------ */
+  {
+    const env = boot({ market: { market: () => 'uae', currency: () => 'AED' } });
+    await env.api.add('gid://variant/Z');            // 149.50 - under the OLD 150
+    const html = String(env.byId.sbFree.innerHTML);
+    check('UAE cart never shows a distance to free delivery',
+      !/away from free delivery/.test(html), 'meter: ' + html.slice(0, 160));
+    check('UAE cart states delivery is free', /Free next-day delivery/.test(html),
+      'meter: ' + html.slice(0, 160));
+  }
+
+  /* 29 — the GCC AED 400 threshold is untouched and still counts down ---- */
+  {
+    const env = boot({ market: { market: () => 'gcc', currency: () => 'AED' } });
+    await env.api.add('gid://variant/Z');            // 149.50 of 400
+    const html = String(env.byId.sbFree.innerHTML);
+    check('GCC cart still counts toward AED 400',
+      /away from free delivery/.test(html), 'meter: ' + html.slice(0, 160));
   }
 
   console.log('\n  ' + pass + ' passed, ' + fail + ' failed\n');
