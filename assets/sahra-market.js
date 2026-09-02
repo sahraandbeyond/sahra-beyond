@@ -280,25 +280,6 @@
      image at opacity 0, i.e. a BLANK card. That is precisely how the homepage
      lost its photos (Faheem, 31 Aug). Cheap, idempotent, and it makes the whole
      mechanism robust against any future script that touches these stacks. */
-  /* HOW OFTEN a stack advances, counted in 500ms half-ticks.
-
-     The site's rhythm is 1s (e3e811e) and a RICH stack keeps exactly that.
-     But a TWO-frame stack on a 1s tick is not a slideshow - it is an A/B
-     blink, twice a second of visible change. That went unnoticed while the
-     homepage had three cards holding 4-5 photos each. The 7-card grid (1 Sep)
-     put SEVEN cards on screen at once - all seven fit at 1024x768 - and four
-     of them carry exactly two frames, because Regular cards deliberately drop
-     the model shots. A tablet therefore showed four tiles blinking A/B while
-     every tile turned over on the same tick: reported as the homepage
-     "flickering" when scrolling to the product cards (2 Sep 2026).
-
-     Fewer frames dwell longer. Rich stacks are untouched. */
-  function framePeriod(n) {
-    if (n >= 4) return 2;   /* 1s  - the established rhythm, unchanged */
-    if (n === 3) return 4;  /* 2s */
-    return 6;               /* 3s  - two frames read as a change, not a blink */
-  }
-
   function normCycle(h) {
     var im = h.querySelectorAll('img');
     if (!im.length) return im;
@@ -337,6 +318,9 @@
     try { if (img && img.loading === 'lazy') img.loading = 'eager'; } catch (e) {}
   }
 
+  /* Single-stack advance. The homepage grid no longer calls this (it flips
+     every stack together via beatPlan/decodeAll/flipAll below); it stays as
+     the proven unit for one stack on its own. */
   function advanceStack(im, hold) {
     if (!im || im.length < 2) return null;
     var host = im[0].parentNode;
@@ -365,13 +349,12 @@
       var now = host && host.querySelectorAll ? host.querySelectorAll('img') : im, has = 0;
       for (var q = 0; q < now.length; q++) { if (now[q] === out || now[q] === nxt) has++; }
       if (has !== 2) return;
-      for (q = 0; q < now.length; q++) now[q].classList.remove('was');
+      for (q = 0; q < now.length; q++) { now[q].classList.remove('was'); now[q].classList.remove('on'); }
       out.classList.add('was');
-      out.classList.remove('on');
       nxt.classList.add('on');
-      /* longer than the .45s fade, so the hold is released only once the
+      /* longer than the fade, so the hold is released only once the
          incoming frame is fully opaque and nothing can show through */
-      if (hold !== false) setTimeout(function () { out.classList.remove('was'); }, 480);
+      if (hold !== false) setTimeout(function () { out.classList.remove('was'); }, HOLD);
     };
     /* Loaded is not the same as decoded: Android Chrome drops the decoded
        bitmap of an opacity:0 image to save memory and re-decodes it on demand,
@@ -386,6 +369,181 @@
       go();
     }
     return nxt;
+  }
+
+  /* THE BEAT: every card turns over on the same instant, every 3 seconds.
+
+     The engine used to give each stack its own cadence (1s for rich stacks,
+     3s for two-frame ones) and offset neighbours by a half-tick, so the grid
+     was always changing somewhere. Faheem, 2 Sep 2026: "it feels and looks
+     very chaotic and doesn't give that premium feel". Decision: one shared
+     beat, all visible cards change together, 3s apart.
+
+     Sync is enforced at three levels:
+       1. one timer, one pass, no per-card phase offset;
+       2. EVERYONE WAITS: if any visible card's next photo has no pixels yet,
+          nobody advances this beat - the missing frame is asked for eagerly
+          and the grid tries again on the next beat. A card that lags behind
+          the others is worse than a grid that holds for 3s more. But a photo
+          that never arrives must not freeze the whole grid: after MAX_WAIT
+          beats the cards that are ready go without it;
+       3. every incoming frame is decode()d BEFORE any card switches, and then
+          all the class changes land in one synchronous pass, i.e. in the same
+          paint. Without this, seven decode() promises resolved tens of ms
+          apart and seven fades started tens of ms apart - visibly ragged. */
+  var BEAT = 3000, MAX_WAIT = 3, HOLD = 720, DECODE_CAP = 1500;
+
+  function nextPair(im) {
+    var i = 0, k;
+    for (k = 0; k < im.length; k++) if (im[k].classList.contains('on')) i = k;
+    return { out: im[i], nxt: im[(i + 1) % im.length] };
+  }
+
+  /* Decide what this beat does. `stacks` is the list of img collections that
+     are visible and not held; `state.grace` remembers, per missing frame, how
+     many beats the grid has already held for it. Returns the pairs to flip,
+     or null to wait.
+
+     The grace is PER FRAME, not per grid: a photo that never arrives (a 404,
+     a dead connection) gets its MAX_WAIT beats once and is then skipped
+     without blocking anyone, while a photo that goes missing later (a card
+     that just scrolled in) still earns its own wait. A grid-wide counter
+     would either re-arm for the dead photo every beat - the whole grid
+     flipping once per 4 beats - or stop waiting for anybody. */
+  function beatPlan(stacks, state) {
+    var due = [], stalled = [], block = false, s, p, g, k;
+    if (!state.grace) state.grace = [];
+    for (s = 0; s < stacks.length; s++) {
+      if (!stacks[s] || stacks[s].length < 2) continue;
+      p = nextPair(stacks[s]);
+      if (frameReady(p.nxt)) { due.push(p); continue; }
+      warm(p.nxt);
+      for (g = null, k = 0; k < state.grace.length; k++) if (state.grace[k].im === p.nxt) g = state.grace[k];
+      if (!g) { g = { im: p.nxt, beats: 0 }; state.grace.push(g); }
+      stalled.push(g);
+      if (g.beats < MAX_WAIT) block = true;
+    }
+    /* frames that turned up are forgotten, so a later stall earns a fresh wait */
+    for (k = state.grace.length - 1; k >= 0; k--) {
+      for (g = false, s = 0; s < stalled.length; s++) if (stalled[s] === state.grace[k]) g = true;
+      if (!g) state.grace.splice(k, 1);
+    }
+    if (block) {
+      for (k = 0; k < stalled.length; k++) stalled[k].beats++;
+      return null;
+    }
+    return due.length ? due : null;
+  }
+
+  /* Decode every incoming frame, then call done() exactly once - also when a
+     decode rejects (Chrome does that for evicted images), throws, or never
+     settles (capped at DECODE_CAP so the grid can never freeze). */
+  function decodeAll(imgs, done) {
+    var left = imgs.length, fired = false, timer = null;
+    var fin = function () {
+      if (fired) return; fired = true;
+      if (timer) clearTimeout(timer);
+      done();
+    };
+    var one = function () { if (--left <= 0) fin(); };
+    if (!left) return fin();
+    timer = setTimeout(fin, DECODE_CAP);
+    for (var i = 0; i < imgs.length; i++) {
+      var im = imgs[i];
+      if (typeof im.decode !== 'function') { one(); continue; }
+      try { im.decode().then(one, one); } catch (e) { one(); }
+    }
+  }
+
+  /* One synchronous pass: every stack switches in the same paint. The same
+     stale-reference guard as advanceStack - a stack rebuilt while we were
+     decoding is skipped rather than double-exposed. */
+  function flipAll(pairs, hold) {
+    var flipped = [];
+    for (var i = 0; i < pairs.length; i++) {
+      var out = pairs[i].out, nxt = pairs[i].nxt, host = out.parentNode;
+      var now = host && host.querySelectorAll ? host.querySelectorAll('img') : [out, nxt], has = 0, q;
+      for (q = 0; q < now.length; q++) { if (now[q] === out || now[q] === nxt) has++; }
+      if (has !== 2) continue;
+      /* strip BOTH markers from every frame before re-assigning them: if a
+         repair re-elected a different frame while we were decoding, that
+         frame would otherwise stay .on beside the new one */
+      for (q = 0; q < now.length; q++) { now[q].classList.remove('was'); now[q].classList.remove('on'); }
+      out.classList.add('was');
+      nxt.classList.add('on');
+      flipped.push(out);
+    }
+    /* one timer for the whole grid, longer than the fade, so every hold is
+       released together and only once the incoming frames are fully opaque */
+    if (hold !== false && flipped.length) {
+      setTimeout(function () {
+        for (var k = 0; k < flipped.length; k++) flipped[k].classList.remove('was');
+      }, HOLD);
+    }
+    return flipped.length;
+  }
+
+  /* The beat itself, lifted out of cycles() so it can be driven by tests.
+     `hosts` are the stacks, `isSeen(h)` says whether one is on screen.
+
+     Incoming frames are decoded AHEAD of the beat: right after a flip, the
+     frames due next are decoded and marked primed, so the next tick flips
+     synchronously on the timer instead of "timer + however long decode()
+     took" (measured: 300ms of jitter beat to beat). A card whose next frame
+     is not primed - the first beat, a card that just scrolled in - is
+     decoded first and that beat lands late, once. */
+  function makeBeat(hosts, isSeen) {
+    var state = { grace: [] }, busy = false, primed = [], gen = 0;
+    var isPrimed = function (im) { return primed.indexOf(im) > -1; };
+    var held = function (h) { return !!(h && h.hasAttribute && h.hasAttribute('data-hold')); };
+    var visibleStacks = function () {
+      var out = [];
+      hosts.forEach(function (h) {
+        if (held(h) || !isSeen(h)) return;
+        var im = normCycle(h);
+        if (im.length > 1) out.push(im);
+      });
+      return out;
+    };
+    var prime = function () {
+      var next = [];
+      visibleStacks().forEach(function (im) {
+        var p = nextPair(im);
+        if (frameReady(p.nxt) && !isPrimed(p.nxt)) next.push(p.nxt); else warm(p.nxt);
+      });
+      if (!next.length) return;
+      /* a prime still in flight when the grid flips or resets is stale:
+         `gen` moves on and its result is dropped; two concurrent primes for
+         the same beat (scroll-in + post-flip) merge without duplicates */
+      var g = gen;
+      decodeAll(next, function () {
+        if (g !== gen) return;
+        for (var k = 0; k < next.length; k++) if (!isPrimed(next[k])) primed.push(next[k]);
+      });
+    };
+    var tick = function () {
+      if (busy) return;
+      var pairs = beatPlan(visibleStacks(), state);
+      if (!pairs) return;
+      var land = function () {
+        busy = false;
+        /* a finger that landed on a card while we were decoding wins */
+        var go = [];
+        for (var k = 0; k < pairs.length; k++) if (!held(pairs[k].out.parentNode)) go.push(pairs[k]);
+        flipAll(go);
+        primed = []; gen++;
+        prime();
+      };
+      var i, ready = true;
+      for (i = 0; i < pairs.length; i++) if (!isPrimed(pairs[i].nxt)) { ready = false; break; }
+      if (ready) return land();
+      busy = true;
+      decodeAll(pairs.map(function (p) { return p.nxt; }), land);
+    };
+    /* decoded bitmaps do not survive a long spell in a background tab; forget
+       what was primed and decode again before trusting it */
+    var reset = function () { primed = []; gen++; prime(); };
+    return { tick: tick, prime: prime, reset: reset, primedCount: function () { return primed.length; } };
   }
 
   function cycles() {
@@ -404,7 +562,7 @@
     try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
     var hosts = all.filter(function (h) { return h.querySelectorAll('img').length > 1; });
     if (!hosts.length) return;
-    var seen = new Set();
+    var seen = new Set(), beat = null;
     try {
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) {
@@ -416,6 +574,10 @@
             seen.delete(e.target);
           }
         });
+        /* a card that just scrolled in gets its next frame decoded now, so
+           it can join the next beat on time (beat is assigned below; the
+           observer only fires after cycles() has returned) */
+        if (beat) beat.prime();
       });
       hosts.forEach(function (h) { io.observe(h); });
     } catch (e) { hosts.forEach(function (h) { seen.add(h); }); }
@@ -425,24 +587,18 @@
       h.addEventListener('touchstart', function () { h.setAttribute('data-hold', '1'); }, { passive: true });
       h.addEventListener('touchend', function () { h.removeAttribute('data-hold'); }, { passive: true });
     });
-    /* Still ONE shared timer - dozens of timers is jank (the original note).
-       It now ticks at 500ms so a card's cadence can be expressed in half-ticks:
-       that keeps a rich stack on exactly 1s while letting neighbours sit on
-       opposite half-ticks. Before this, hosts.forEach advanced EVERY visible
-       stack in the same pass, so a tablet showing all seven cards changed as
-       one wall of images once a second. The `+ n` is that phase offset. */
-    var tick = 0;
+    /* Still ONE shared timer, and now one BEAT: every visible stack that is
+       not held under a finger advances in the same pass. */
+    beat = makeBeat(hosts, function (h) { return seen.has(h); });
     setInterval(function () {
       if (document.hidden) return;
-      tick++;
-      hosts.forEach(function (h, n) {
-        if (h.hasAttribute('data-hold') || !seen.has(h)) return;
-        var im = normCycle(h);
-        if (im.length < 2) return;
-        if ((tick + n) % framePeriod(im.length) !== 0) return;
-        advanceStack(im);
-      });
-    }, 500);
+      beat.tick();
+    }, BEAT);
+    /* prime the first beat as soon as the grid is on screen */
+    setTimeout(beat.prime, 600);
+    try {
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) beat.reset(); });
+    } catch (e) {}
   }
 
   function boot() {

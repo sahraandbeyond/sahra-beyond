@@ -380,52 +380,182 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
   check('normCycle exists and runs before cycles()', a > -1 && b > a);
   const norm = new Function(src.slice(a, b) + '\n; return normCycle;')();
 
-  /* ---- cadence: the tablet "flicker" of 2 Sep 2026 --------------------
-     Seven cards fit on screen at 1024x768 and four of them carry exactly two
-     frames (Regular cards drop the model shots on purpose). The old engine
-     advanced EVERY visible stack on the SAME 1s tick, so those four blinked
-     A/B in unison - reported as the homepage flickering. */
+  /* ---- THE BEAT: every card turns over together, every 3s -------------
+     The per-stack cadence + half-tick phase offset (9.50) stopped the A/B
+     blink but made the grid change somewhere all the time: "very chaotic,
+     doesn't give that premium feel" (Faheem, 2 Sep 2026). Decision: one
+     shared beat every 3 seconds; if any visible card's next photo is not
+     loaded, everyone waits (up to 3 beats), and all switches land in ONE
+     synchronous pass so they share a paint. */
   {
-    const fp0 = src.indexOf('  function framePeriod(n)');
-    check('framePeriod exists', fp0 > -1 && fp0 < a);
-    /* If it is missing, FAIL the cadence contract and move on. A regression
-       test that throws takes the rest of the suite with it, which is how a
-       gate stops being a gate. */
-    let framePeriod = null;
-    if (fp0 > -1 && fp0 < a) {
-      try { framePeriod = new Function(src.slice(fp0, a) + '\n; return framePeriod;')(); } catch (e) {}
-    }
-    if (typeof framePeriod !== 'function') {
-      check('the cycle engine defines a per-stack cadence', false,
-        'framePeriod not found - every visible stack still advances on the same tick');
+    check('the per-stack cadence is gone', src.indexOf('function framePeriod') < 0 && src.indexOf('(tick + n)') < 0,
+      'framePeriod / phase offset still present - cards will not change together');
+    check('the beat is 3 seconds', /var BEAT = 3000\b/.test(src));
+    check('the grid waits at most 3 beats for a missing photo', /MAX_WAIT = 3\b/.test(src));
+    const fr0 = src.indexOf('  function frameReady(img)');
+    let eng = null;
+    try {
+      /* from normCycle: the driver's visibleStacks() repairs each stack first */
+      eng = new Function(src.slice(a, b) + '\n; return { beatPlan: beatPlan, flipAll: flipAll, decodeAll: decodeAll, makeBeat: makeBeat, HOLD: HOLD, MAX_WAIT: MAX_WAIT };')();
+    } catch (e) {}
+    if (!eng) {
+      check('the beat engine (beatPlan / decodeAll / flipAll / makeBeat) exists', false, 'could not evaluate it');
     } else {
-
-    check('a rich stack keeps the 1s rhythm', framePeriod(5) === 2 && framePeriod(4) === 2);
-    check('a three-frame stack slows to 2s', framePeriod(3) === 4);
-    check('a two-frame stack dwells 3s, so it cannot blink', framePeriod(2) === 6);
-
-    /* the real homepage shape, in half-ticks, over 24 ticks (12 seconds) */
-    const FRAMES = [2, 5, 2, 5, 2, 4, 2];
-    let worst = 0, twoFrameAdvances = 0, richAdvances = 0;
-    for (let tick = 1; tick <= 24; tick++) {
-      let together = 0;
-      FRAMES.forEach((f, n) => {
-        if ((tick + n) % framePeriod(f) === 0) {
-          together++;
-          if (f === 2) twoFrameAdvances++; else richAdvances++;
+      const mk = (n, unloadedAt) => {
+        const h = new El('div'); h.setAttribute('data-cycle', '');
+        for (let i = 0; i < n; i++) {
+          const im = img('/shirts/s' + i + '.jpg', '', i === 0, i !== unloadedAt);
+          im.parentNode = h; h.appendChild(im);
         }
+        return h;
+      };
+      const onIdx = h => h.querySelectorAll('img').findIndex(i => i.classList.contains('on'));
+      /* the real homepage shape: 7 cards, four of them two-frame */
+      const FRAMES = [2, 5, 2, 5, 2, 4, 2];
+      const grid = FRAMES.map(n => mk(n));
+      const stacks = () => grid.map(h => h.querySelectorAll('img'));
+      const state = { grace: [] };
+
+      const plan = eng.beatPlan(stacks(), state);
+      check('with every photo loaded, all seven cards are due on the beat', !!plan && plan.length === 7, 'due: ' + (plan && plan.length));
+      const n = eng.flipAll(plan, false);
+      check('all seven switch in one synchronous pass', n === 7 && grid.every(h => onIdx(h) === 1),
+        'on-index per card: ' + grid.map(onIdx).join(','));
+      check('every card still shows exactly one frame', grid.every(h => h.querySelectorAll('img.on').length === 1));
+      check('every outgoing frame is held opaque', grid.every(h => h.querySelectorAll('img.was').length === 1));
+      eng.flipAll(eng.beatPlan(stacks(), state), false);
+      check('two-frame cards wrap while rich ones move on - still on the same beat',
+        grid.map(onIdx).join(',') === '0,2,0,2,0,2,0', 'got ' + grid.map(onIdx).join(','));
+      check('the previous hold is released grid-wide on the next flip', grid.every(h => h.querySelectorAll('img.was').length === 1));
+
+      /* EVERYONE WAITS: one card's next photo has no pixels */
+      const grid2 = FRAMES.map((n, i) => mk(n, i === 3 ? 1 : -1));
+      const st2 = { grace: [] };
+      const s2 = () => grid2.map(h => h.querySelectorAll('img'));
+      check('one unloaded photo holds the whole grid', eng.beatPlan(s2(), st2) === null && st2.grace.length === 1 && st2.grace[0].beats === 1);
+      check('the missing photo is asked for eagerly', grid2[3].querySelectorAll('img')[1].loading === 'eager');
+      check('the grid keeps waiting on beats 2 and 3', eng.beatPlan(s2(), st2) === null && eng.beatPlan(s2(), st2) === null && st2.grace[0].beats === 3);
+      const esc = eng.beatPlan(s2(), st2);
+      check('after 3 beats the ready cards go without it (never a frozen grid)', !!esc && esc.length === 6,
+        'due: ' + (esc && esc.length));
+      check('the lagging card is left showing its current photo', !esc.some(p => p.out.parentNode === grid2[3]));
+      eng.flipAll(esc, false);
+      /* the reviewer's catch: a grid-wide counter re-armed the 3-beat wait
+         after every escape, so one dead photo throttled everyone to one
+         change per 12s. The grace is per frame - a dead photo is skipped
+         from then on and the rest keep their 3s beat. */
+      const again = eng.beatPlan(s2(), st2);
+      check('a photo that never arrives does not hold the grid a second time', !!again && again.length === 6,
+        'due on the beat after the escape: ' + (again && again.length));
+      const again2 = eng.beatPlan(s2(), st2);
+      check('...nor on any later beat', !!again2 && again2.length === 6);
+      /* a DIFFERENT photo goes missing later (a card scrolled in): it earns its own wait */
+      const lateMiss = grid2[0].querySelectorAll('img');
+      const cur0 = lateMiss.findIndex(i => i.classList.contains('on'));
+      const nxt0 = lateMiss[(cur0 + 1) % lateMiss.length]; nxt0.complete = false; nxt0.naturalWidth = 0;
+      check('a photo that goes missing later gets its own 3-beat wait', eng.beatPlan(s2(), st2) === null && st2.grace.length === 2);
+      nxt0.complete = true; nxt0.naturalWidth = 10;
+      const back = eng.beatPlan(s2(), st2);
+      check('once it lands the grid goes together and its grace is forgotten', !!back && back.length === 6 && st2.grace.length === 1);
+
+      /* the photo arrives mid-wait: nobody waits any longer */
+      const grid3 = FRAMES.map((n, i) => mk(n, i === 0 ? 1 : -1));
+      const st3 = { grace: [] };
+      const s3 = () => grid3.map(h => h.querySelectorAll('img'));
+      eng.beatPlan(s3(), st3);
+      const late = grid3[0].querySelectorAll('img')[1]; late.complete = true; late.naturalWidth = 10;
+      const p3 = eng.beatPlan(s3(), st3);
+      check('once the photo lands the whole grid goes together on the next beat', !!p3 && p3.length === 7 && st3.grace.length === 0);
+
+      /* a repair re-elected a different frame while we were decoding: the
+         flip must not leave two frames .on (reviewer finding) */
+      {
+        const h = mk(3); const f = h.querySelectorAll('img');
+        const pair = { out: f[0], nxt: f[1] };
+        f[0].classList.remove('on'); f[2].classList.add('on');   // normCycle-style re-election
+        eng.flipAll([pair], false);
+        check('a flip after a re-election still leaves exactly one visible frame',
+          h.querySelectorAll('img.on').length === 1 && f[1].classList.contains('on'),
+          'on: ' + f.map(i => i.classList.contains('on')).join(','));
+      }
+
+      /* ---- the beat driver itself (makeBeat): what the interval runs ---- */
+      try {
+        const gridB = FRAMES.map(n => mk(n));
+        const seenB = new Set(gridB.slice(0, 6));            // the 7th is below the fold
+        let decodes = 0;
+        gridB.forEach(h => h.querySelectorAll('img').forEach(i => { i.decode = () => { decodes++; return Promise.resolve(); }; }));
+        const bt = eng.makeBeat(gridB, h => seenB.has(h));
+        const flush = async () => { for (let i = 0; i < 6; i++) await Promise.resolve(); };
+        bt.prime(); await flush();
+        check('priming decodes the next frame of every visible card ahead of the beat', bt.primedCount() === 6 && decodes === 6, 'primed=' + bt.primedCount() + ' decodes=' + decodes);
+        bt.tick();
+        check('a primed beat flips synchronously, on the timer', gridB.slice(0, 6).every(h => onIdx(h) === 1) && onIdx(gridB[6]) === 0,
+          'on-index: ' + gridB.map(onIdx).join(','));
+        await flush();
+        check('after a flip the following frames are primed again', bt.primedCount() === 6, 'primed=' + bt.primedCount());
+        /* the 7th card scrolls in: it joins the next beat */
+        seenB.add(gridB[6]); bt.prime(); await flush();
+        bt.tick();
+        check('a card that scrolls in joins the very next beat', gridB.every(h => h.querySelectorAll('img.on').length === 1) && onIdx(gridB[6]) === 1);
+        /* a finger on a card: it sits out, the others go on */
+        gridB[1].setAttribute('data-hold', '1');
+        const before1 = onIdx(gridB[1]);
+        await flush(); bt.tick();
+        check('a held card sits the beat out while the others advance', onIdx(gridB[1]) === before1 && onIdx(gridB[0]) !== 0);
+        gridB[1].removeAttribute('data-hold');
+        /* an unprimed beat (e.g. after reset) decodes first, then lands once */
+        bt.reset(); await flush();
+        check('a return from a background tab re-primes from scratch', bt.primedCount() === 7, 'primed=' + bt.primedCount());
+        /* two primes in flight at once (scroll-in + post-flip) must not double up */
+        bt.prime(); bt.prime(); await flush();
+        check('overlapping primes never duplicate a frame', bt.primedCount() === 7, 'primed=' + bt.primedCount());
+        /* a prime that was in flight when the grid flipped is stale and dropped */
+        let relP; const slow = new Promise(r => { relP = r; });
+        gridB.forEach(h => h.querySelectorAll('img').forEach(i => { i.decode = () => slow; }));
+        bt.reset();                       // starts a slow prime
+        gridB.forEach(h => h.querySelectorAll('img').forEach(i => { i.decode = () => Promise.resolve(); }));
+        bt.tick(); await flush();         // unprimed: decodes, lands, primes again (fast)
+        relP(); await flush();
+        check('a stale prime from before the flip is dropped, not merged',
+          bt.primedCount() === 7 && gridB.every(h => h.querySelectorAll('img.on').length === 1), 'primed=' + bt.primedCount());
+        /* every flip still exactly one .on per card */
+        check('the driver never double-exposes or blanks a card', gridB.every(h => h.querySelectorAll('img.on').length === 1));
+        /* hold released after 'HOLD' ms is a real timer: make sure flipAll(hold=true) schedules it */
+        const hh = mk(2); const ff = hh.querySelectorAll('img');
+        eng.flipAll([{ out: ff[0], nxt: ff[1] }]);
+        check('the hold frame is scheduled to release after HOLD ms', ff[0].classList.contains('was'));
+        await new Promise(r => setTimeout(r, eng.HOLD + 60));
+        check('...and it is released', !ff[0].classList.contains('was') && ff[1].classList.contains('on'));
+      } catch (e) { check('the beat driver runs without throwing', false, String(e && e.stack || e)); }
+
+      /* decodeAll: done() exactly once, whatever decode() does */
+      {
+        let calls = 0; let rel; const pend = new Promise(r => { rel = r; });
+        const a1 = img('/shirts/a.jpg'), a2 = img('/shirts/b.jpg'); a1.decode = () => pend; a2.decode = () => Promise.resolve();
+        eng.decodeAll([a1, a2], () => calls++);
+        await Promise.resolve(); await Promise.resolve();
+        check('no card switches until EVERY incoming frame is decoded', calls === 0);
+        rel(); await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
+        check('all decoded: the flip fires exactly once', calls === 1, 'calls=' + calls);
+        let c2 = 0; const r1 = img('/shirts/r.jpg'); r1.decode = () => Promise.reject(new Error('EncodingError'));
+        const r2 = img('/shirts/t.jpg'); r2.decode = () => { throw new Error('boom'); };
+        eng.decodeAll([r1, r2, img('/shirts/nodecode.jpg')], () => c2++);
+        await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
+        check('a rejected, a throwing and a decode-less frame still let the beat land once', c2 === 1, 'calls=' + c2);
+        let c3 = 0; eng.decodeAll([], () => c3++);
+        check('an empty beat completes immediately', c3 === 1);
+        check('a decode that never settles is capped so the grid cannot freeze', /DECODE_CAP = 1500\b/.test(src) && /setTimeout\(fin, DECODE_CAP\)/.test(src));
+      }
+
+      /* the hold must outlast the CSS fade on every page that renders a stack */
+      const fadeMs = pg => {
+        const m = fs.readFileSync(path.join(__dirname, pg), 'utf8').match(/\[data-cycle\] img\{[^}]*transition:opacity ([\d.]+)s/);
+        return m ? Math.round(parseFloat(m[1]) * 1000) : NaN;
+      };
+      ['index.html', 'homepage-preview.html', 'build.js', 'build-products.js'].forEach(pg => {
+        check(pg + ': the engine holds the outgoing frame longer than the fade (' + fadeMs(pg) + 'ms)', eng.HOLD > fadeMs(pg), 'HOLD=' + eng.HOLD);
       });
-      worst = Math.max(worst, together);
-    }
-    check('the seven cards never all turn over at once', worst < FRAMES.length,
-      'worst simultaneous: ' + worst + ' of ' + FRAMES.length);
-    check('at most half the grid changes on any tick', worst <= 3, 'worst: ' + worst);
-    check('two-frame cards change far less often than rich ones',
-      twoFrameAdvances < richAdvances,
-      'two-frame: ' + twoFrameAdvances + ' vs rich: ' + richAdvances);
-    /* 4 two-frame cards over 12s: 3s dwell => 4 changes each = 16 */
-    check('a two-frame card changes every 3s, not twice a second',
-      twoFrameAdvances === 16, 'got ' + twoFrameAdvances);
     }
   }
 
@@ -561,7 +691,7 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
     /* The CSS and the engine live in different files and must agree - and the
        rule is duplicated across every page that renders a stack, so check them
        all rather than trusting one. */
-    ['index.html', 'homepage-preview.html'].forEach(pg => {
+    ['index.html', 'homepage-preview.html', 'build.js', 'build-products.js'].forEach(pg => {
       const page = fs.readFileSync(path.join(__dirname, pg), 'utf8');
       const wasRule = (page.match(/\[data-cycle\] img\.was\{([^}]*)\}/) || [])[1] || '';
       const onRule = (page.match(/\[data-cycle\] img\.on\{([^}]*)\}/) || [])[1] || '';
@@ -569,6 +699,11 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
         /opacity:1/.test(wasRule) && /transition:none/.test(wasRule), 'was rule: "' + wasRule + '"');
       check(pg + ': the incoming frame stacks above the held one',
         /z-index:3/.test(onRule) && /z-index:2/.test(wasRule), 'on: "' + onRule + '" was: "' + wasRule + '"');
+      /* the "sudden flashes" (2 Sep 2026): a frame promoted only while its
+         opacity animates is re-rasterised when the fade ends. Both active
+         frames stay on their own compositor layer for the whole switch. */
+      check(pg + ': both active frames stay composited through the switch',
+        /will-change:opacity/.test(onRule) && /will-change:opacity/.test(wasRule), 'on: "' + onRule + '" was: "' + wasRule + '"');
     });
   }
 
