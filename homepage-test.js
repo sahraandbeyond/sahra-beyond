@@ -348,6 +348,55 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
   check('normCycle exists and runs before cycles()', a > -1 && b > a);
   const norm = new Function(src.slice(a, b) + '\n; return normCycle;')();
 
+  /* ---- cadence: the tablet "flicker" of 2 Sep 2026 --------------------
+     Seven cards fit on screen at 1024x768 and four of them carry exactly two
+     frames (Regular cards drop the model shots on purpose). The old engine
+     advanced EVERY visible stack on the SAME 1s tick, so those four blinked
+     A/B in unison - reported as the homepage flickering. */
+  {
+    const fp0 = src.indexOf('  function framePeriod(n)');
+    check('framePeriod exists', fp0 > -1 && fp0 < a);
+    /* If it is missing, FAIL the cadence contract and move on. A regression
+       test that throws takes the rest of the suite with it, which is how a
+       gate stops being a gate. */
+    let framePeriod = null;
+    if (fp0 > -1 && fp0 < a) {
+      try { framePeriod = new Function(src.slice(fp0, a) + '\n; return framePeriod;')(); } catch (e) {}
+    }
+    if (typeof framePeriod !== 'function') {
+      check('the cycle engine defines a per-stack cadence', false,
+        'framePeriod not found - every visible stack still advances on the same tick');
+    } else {
+
+    check('a rich stack keeps the 1s rhythm', framePeriod(5) === 2 && framePeriod(4) === 2);
+    check('a three-frame stack slows to 2s', framePeriod(3) === 4);
+    check('a two-frame stack dwells 3s, so it cannot blink', framePeriod(2) === 6);
+
+    /* the real homepage shape, in half-ticks, over 24 ticks (12 seconds) */
+    const FRAMES = [2, 5, 2, 5, 2, 4, 2];
+    let worst = 0, twoFrameAdvances = 0, richAdvances = 0;
+    for (let tick = 1; tick <= 24; tick++) {
+      let together = 0;
+      FRAMES.forEach((f, n) => {
+        if ((tick + n) % framePeriod(f) === 0) {
+          together++;
+          if (f === 2) twoFrameAdvances++; else richAdvances++;
+        }
+      });
+      worst = Math.max(worst, together);
+    }
+    check('the seven cards never all turn over at once', worst < FRAMES.length,
+      'worst simultaneous: ' + worst + ' of ' + FRAMES.length);
+    check('at most half the grid changes on any tick', worst <= 3, 'worst: ' + worst);
+    check('two-frame cards change far less often than rich ones',
+      twoFrameAdvances < richAdvances,
+      'two-frame: ' + twoFrameAdvances + ' vs rich: ' + richAdvances);
+    /* 4 two-frame cards over 12s: 3s dwell => 4 changes each = 16 */
+    check('a two-frame card changes every 3s, not twice a second',
+      twoFrameAdvances === 16, 'got ' + twoFrameAdvances);
+    }
+  }
+
   const host = new El('div'); host.setAttribute('data-cycle', '');
   ['a.jpg', 'b.jpg', 'c.jpg'].forEach((s, i) => host.appendChild(img('/shirts/' + s, '', i === 0)));
 

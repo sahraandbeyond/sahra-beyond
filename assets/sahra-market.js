@@ -280,6 +280,25 @@
      image at opacity 0, i.e. a BLANK card. That is precisely how the homepage
      lost its photos (Faheem, 31 Aug). Cheap, idempotent, and it makes the whole
      mechanism robust against any future script that touches these stacks. */
+  /* HOW OFTEN a stack advances, counted in 500ms half-ticks.
+
+     The site's rhythm is 1s (e3e811e) and a RICH stack keeps exactly that.
+     But a TWO-frame stack on a 1s tick is not a slideshow - it is an A/B
+     blink, twice a second of visible change. That went unnoticed while the
+     homepage had three cards holding 4-5 photos each. The 7-card grid (1 Sep)
+     put SEVEN cards on screen at once - all seven fit at 1024x768 - and four
+     of them carry exactly two frames, because Regular cards deliberately drop
+     the model shots. A tablet therefore showed four tiles blinking A/B while
+     every tile turned over on the same tick: reported as the homepage
+     "flickering" when scrolling to the product cards (2 Sep 2026).
+
+     Fewer frames dwell longer. Rich stacks are untouched. */
+  function framePeriod(n) {
+    if (n >= 4) return 2;   /* 1s  - the established rhythm, unchanged */
+    if (n === 3) return 4;  /* 2s */
+    return 6;               /* 3s  - two frames read as a change, not a blink */
+  }
+
   function normCycle(h) {
     var im = h.querySelectorAll('img');
     if (!im.length) return im;
@@ -318,17 +337,26 @@
       h.addEventListener('touchstart', function () { h.setAttribute('data-hold', '1'); }, { passive: true });
       h.addEventListener('touchend', function () { h.removeAttribute('data-hold'); }, { passive: true });
     });
+    /* Still ONE shared timer - dozens of timers is jank (the original note).
+       It now ticks at 500ms so a card's cadence can be expressed in half-ticks:
+       that keeps a rich stack on exactly 1s while letting neighbours sit on
+       opposite half-ticks. Before this, hosts.forEach advanced EVERY visible
+       stack in the same pass, so a tablet showing all seven cards changed as
+       one wall of images once a second. The `+ n` is that phase offset. */
+    var tick = 0;
     setInterval(function () {
       if (document.hidden) return;
-      hosts.forEach(function (h) {
+      tick++;
+      hosts.forEach(function (h, n) {
         if (h.hasAttribute('data-hold') || !seen.has(h)) return;
         var im = normCycle(h);
         if (im.length < 2) return;
+        if ((tick + n) % framePeriod(im.length) !== 0) return;
         var i = 0; im.forEach(function (x, k) { if (x.classList.contains('on')) i = k; });
         im[i].classList.remove('on');
         im[(i + 1) % im.length].classList.add('on');
       });
-    }, 1000);
+    }, 500);
   }
 
   function boot() {
