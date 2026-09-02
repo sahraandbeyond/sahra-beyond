@@ -67,7 +67,8 @@ nav.on-hero .logo-a,nav.on-hero .nav-cta{text-shadow:0 1px 10px rgba(0,0,0,.45)}
 
 #progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:140;pointer-events:none}
 #progress i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--clay),var(--gold));transform-origin:0 50%;transform:scaleX(0)}
-#grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:88;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 7s steps(8) infinite}
+#grain{position:fixed;inset:-6%;width:112%;height:112%;z-index:88;pointer-events:none;opacity:.05;will-change:transform;backface-visibility:hidden;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 7s steps(8) infinite}
+@media(pointer:coarse),(hover:none){#grain{display:none}}
 @keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,2%)}40%{transform:translate(2%,-1%)}60%{transform:translate(-1%,-2%)}80%{transform:translate(1%,2%)}}
 
 /* ============ THE JOURNEY (pinned world + horizontal panels) ============ */

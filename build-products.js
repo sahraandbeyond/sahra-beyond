@@ -150,9 +150,19 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid cur
 
 /* ---------- living layers ---------- */
 #fx{position:fixed;inset:0;z-index:0;pointer-events:none}
-#grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:1;pointer-events:none;opacity:.045;
+#grain{position:fixed;inset:-6%;width:112%;height:112%;z-index:1;pointer-events:none;opacity:.045;will-change:transform;backface-visibility:hidden;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation:grain 7s steps(8) infinite}
+/* THE TABLET FLASH (Faheem's recording, 2 Sep 2026). This overlay was a 200%x200%
+   fixed layer of SVG feTurbulence noise - on a 1024x768 tablet at 2x that is a
+   4096x3072 texture - stepped 8 times per 7s. Each step evicted and
+   re-rasterised it on the tablet GPU and the whole page painted one frame
+   without it: sky +15 luminance, cards too, browser chrome untouched, every
+   ~0.85s. Measured frame by frame. Two fixes: (1) touch devices do not get it
+   at all - 4.5% noise is invisible on those screens and the cost is not;
+   (2) on desktop it is 112% (the keyframes only move +-2%), promoted with
+   will-change so it is rasterised once and only transformed thereafter. */
+@media(pointer:coarse),(hover:none){#grain{display:none}}
 @keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,2%)}40%{transform:translate(2%,-1%)}60%{transform:translate(-1%,-2%)}80%{transform:translate(1%,2%)}}
 #progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:140;pointer-events:none}
 #progress i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--clay),var(--gold));transform:scaleX(0);transform-origin:0 50%}

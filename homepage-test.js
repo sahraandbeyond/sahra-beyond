@@ -343,6 +343,26 @@ for (const file of ['index.html', 'homepage-preview.html']) {
 }
 
 /* ---- the engine-level guard in sahra-market.js -------------------------- */
+/* ---- the film-grain overlay must never be the tablet's problem again ------
+   A 200%x200% fixed feTurbulence layer stepped 8x per 7s evicted and
+   re-rasterised on tablet GPUs, painting one frame without it every ~0.85s:
+   the whole page flashed (Faheem's recording, 2 Sep 2026). Every page that
+   carries #grain must hide it on touch devices and keep it small on desktop. */
+console.log('\n\x1b[1mfilm grain — every page that carries it\x1b[0m');
+{
+  const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => {
+    const p = path.join(d, e.name);
+    if (e.isDirectory()) return (e.name === 'node_modules' || e.name === '_backup' || e.name.startsWith('.')) ? [] : walk(p);
+    return e.name.endsWith('.html') ? [p] : [];
+  });
+  const pages = walk(__dirname).filter(p => fs.readFileSync(p, 'utf8').includes('id="grain"'));
+  const oversized = pages.filter(p => /inset:-50%;width:200%;height:200%/.test(fs.readFileSync(p, 'utf8')));
+  const unguarded = pages.filter(p => !/pointer:coarse\),\(hover:none\)\{#grain\{display:none\}/.test(fs.readFileSync(p, 'utf8')));
+  check('pages carrying the grain overlay were found', pages.length > 0, 'none found');
+  check('no page still uses the 200% grain layer', oversized.length === 0, oversized.map(p => path.relative(__dirname, p)).join(', '));
+  check('every grain page hides it on touch devices', unguarded.length === 0, unguarded.map(p => path.relative(__dirname, p)).join(', '));
+}
+
 console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
 {
   const src = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-market.js'), 'utf8');
