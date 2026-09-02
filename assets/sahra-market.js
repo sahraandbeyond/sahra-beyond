@@ -303,9 +303,39 @@
     var im = h.querySelectorAll('img');
     if (!im.length) return im;
     if (h.querySelectorAll('img.on').length === 1) return im;
-    for (var k = 0; k < im.length; k++) im[k].classList.remove('on');
+    for (var k = 0; k < im.length; k++) { im[k].classList.remove('on'); im[k].classList.remove('was'); }
     im[0].classList.add('on');
     return im;
+  }
+
+  /* ONE FRAME FADES; THE OTHER HOLDS.
+
+     The stack used to fade both at once - the outgoing image 1 -> 0 while the
+     incoming went 0 -> 1 over the same .45s. Two half-transparent layers do not
+     add up to one opaque one: at the midpoint the stack is only
+     1 - (.5 * .5) = 75% covered, so 25% of the card's sand gradient
+     (#EFE7D8 -> #D6C4A9) bled through on EVERY transition. On the near-black Al
+     Quaa tee that is a bright pulse, which is what "the slideshow looks
+     flickery, not smooth" was (Faheem, 2 Sep 2026).
+
+     So the outgoing frame is pinned fully opaque BENEATH the incoming one for
+     the length of the fade (.was: opacity 1, no transition, z-index between the
+     resting frames and .on). Coverage stays 100% throughout. It also makes a
+     not-yet-decoded incoming frame harmless: the previous photo simply stays
+     up until the new one has something to paint. */
+  function advanceStack(im, hold) {
+    if (!im || im.length < 2) return null;
+    var i = 0, k;
+    for (k = 0; k < im.length; k++) if (im[k].classList.contains('on')) i = k;
+    var out = im[i], nxt = im[(i + 1) % im.length];
+    for (k = 0; k < im.length; k++) im[k].classList.remove('was');
+    out.classList.add('was');
+    out.classList.remove('on');
+    nxt.classList.add('on');
+    /* longer than the .45s fade, so the hold is released only once the incoming
+       frame is fully opaque and nothing can show through underneath */
+    if (hold !== false) setTimeout(function () { out.classList.remove('was'); }, 480);
+    return nxt;
   }
 
   function cycles() {
@@ -352,9 +382,7 @@
         var im = normCycle(h);
         if (im.length < 2) return;
         if ((tick + n) % framePeriod(im.length) !== 0) return;
-        var i = 0; im.forEach(function (x, k) { if (x.classList.contains('on')) i = k; });
-        im[i].classList.remove('on');
-        im[(i + 1) % im.length].classList.add('on');
+        advanceStack(im);
       });
     }, 500);
   }

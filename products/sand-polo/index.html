@@ -160,14 +160,21 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 /* ---- product image auto-cycle (Faheem, 31 Aug: every shirt, everywhere,
    shows ALL its photos). Stacked absolutely per the cross-fade guard. ---- */
 [data-cycle]{position:relative}
-[data-cycle] img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .45s ease;
+[data-cycle] img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .45s ease;z-index:1;
   /* cover, never fill: the stack replaced per-image inline styles, and without
      an explicit object-fit these rules stretched photos to the frame (Faheem's
      mobile report). cover crops to fit; 30% keeps heads/design in frame.
      padding:0 defeats .pcard-img's 6% inset, which fought cover on real-world
      photos. */
   object-fit:cover;object-position:center 30%;padding:0}
-[data-cycle] img.on{opacity:1}
+[data-cycle] img.on{opacity:1;z-index:3}
+[data-cycle] img.was{opacity:1;transition:none;z-index:2}
+/* .was is the OUTGOING frame, pinned fully opaque beneath the incoming one
+   for the length of the fade. Fading both at once left the stack only 75%
+   covered at the midpoint (1 - .5*.5), so the card's sand gradient pulsed
+   through on every transition - read as flicker on the dark tees
+   (Faheem, 2 Sep 2026). One layer fades, the other holds. */
+
 .sb-rot{display:none}
 .sb-rot.on{display:inline}
 .sb-curwrap--hdr{margin-left:4px}
@@ -1371,6 +1378,6 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=e445a34b" defer></script>
-<script src="/assets/sahra-market.js?v=6fd5e5da" defer></script>
+<script src="/assets/sahra-market.js?v=283b2473" defer></script>
 </body>
 </html>

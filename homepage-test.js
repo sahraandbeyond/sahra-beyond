@@ -410,6 +410,61 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
   norm(host);
   check('normCycle rescues a blank stack', host.querySelectorAll('img.on').length === 1);
 
+  /* ---- the cross-fade must never uncover the card background ----------
+     Both frames used to fade at once, leaving the stack 1 - (.5*.5) = 75%
+     covered at the midpoint, so the sand gradient pulsed through on every
+     transition. Reported as "the slideshow looks flickery, not smooth"
+     (Faheem, 2 Sep 2026). The outgoing frame must be HELD opaque underneath. */
+  {
+    const as0 = src.indexOf('  function advanceStack(im');
+    check('advanceStack exists', as0 > -1);
+    let advance = null;
+    if (as0 > -1) {
+      try { advance = new Function(src.slice(as0, b) + '\n; return advanceStack;')(); } catch (e) {}
+    }
+    if (typeof advance !== 'function') {
+      check('the engine holds the outgoing frame opaque', false, 'advanceStack not found');
+    } else {
+      const st = new El('div');
+      ['a.jpg', 'b.jpg', 'c.jpg'].forEach((x, i) => st.appendChild(img('/shirts/' + x, '', i === 0)));
+      const frames = st.querySelectorAll('img');
+
+      advance(frames, false);
+      check('the incoming frame becomes the visible one',
+        frames[1].classList.contains('on') && !frames[0].classList.contains('on'));
+      check('the OUTGOING frame is held opaque beneath it',
+        frames[0].classList.contains('was'), 'no hold frame - the background will pulse through');
+      check('exactly one visible and one held frame',
+        st.querySelectorAll('img.on').length === 1 && st.querySelectorAll('img.was').length === 1);
+
+      advance(frames, false);
+      check('the previous hold is released on the next advance',
+        !frames[0].classList.contains('was') && frames[1].classList.contains('was'));
+      check('still never two held frames', st.querySelectorAll('img.was').length === 1);
+
+      advance(frames, false);
+      check('the stack wraps back to the first frame', frames[0].classList.contains('on'));
+
+      /* a repaired stack must not leave a stranded hold frame visible */
+      frames.forEach(i => { i.classList.add('on'); i.classList.add('was'); });
+      norm(st);
+      check('normCycle clears a stranded hold frame', st.querySelectorAll('img.was').length === 0);
+    }
+
+    /* The CSS and the engine live in different files and must agree - and the
+       rule is duplicated across every page that renders a stack, so check them
+       all rather than trusting one. */
+    ['index.html', 'homepage-preview.html'].forEach(pg => {
+      const page = fs.readFileSync(path.join(__dirname, pg), 'utf8');
+      const wasRule = (page.match(/\[data-cycle\] img\.was\{([^}]*)\}/) || [])[1] || '';
+      const onRule = (page.match(/\[data-cycle\] img\.on\{([^}]*)\}/) || [])[1] || '';
+      check(pg + ': the held frame is fully opaque and does not animate',
+        /opacity:1/.test(wasRule) && /transition:none/.test(wasRule), 'was rule: "' + wasRule + '"');
+      check(pg + ': the incoming frame stacks above the held one',
+        /z-index:3/.test(onRule) && /z-index:2/.test(wasRule), 'on: "' + onRule + '" was: "' + wasRule + '"');
+    });
+  }
+
   // and the other direction: two frames marked visible
   host.querySelectorAll('img').forEach(i => i.classList.add('on'));
   norm(host);

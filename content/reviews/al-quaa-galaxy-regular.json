@@ -1,21 +1,24 @@
 {
  "handle": "al-quaa-galaxy-regular",
- "average": 5.0,
  "count": 1,
- "synced": "2026-08-29",
- "source": "judge.me private API (5 total: 4 published written here, 1 unpublished shop review left to Judge.me moderation) | photo recovered via single-review endpoint (v1 list omits it)",
+ "average": 5,
+ "syncedAt": "2026-09-01",
  "reviews": [
   {
+   "id": 1307867750,
    "rating": 5,
    "title": "",
+   "body": "Really happy with this T-shirt showing Al Quaa UAE! The print is beautifully done, and the quality of the T-shirt is excellent. Comfortable, stylish, and a great way to show love for the UAE. 🇦🇪\nHighly recommended! Great product and great quality. 👌",
    "name": "Anonymous",
-   "verified": true,
    "date": "2026-08-24",
+   "verified": true,
    "photos": [
-    "https://review-images.judgeme.com/sahra-beyond/1787601663__1787601619740-20260824_214201__original.jpg?quality=80&width=160"
+    "https://review-images.judgeme.com/sahra-beyond/1787601663__1787601619740-20260824_214201__original.jpg?quality=80&width=1024"
    ],
-   "reply": "",
-   "body": "Really happy with this T-shirt showing Al Quaa UAE! The print is beautifully done, and the quality of the T-shirt is excellent. Comfortable, stylish, and a great way to show love for the UAE. 🇦🇪 Highly recommended! Great product and great quality. 👌"
+   "handle": "al-quaa-galaxy-regular",
+   "externalId": 9498369491132,
+   "productTitle": "Al Quaa Galaxy — Regular",
+   "reply": ""
   }
  ]
 }
