@@ -259,6 +259,10 @@ html.anim-ready .hero-in{opacity:0}
    (2) on desktop it is 112% (the keyframes only move +-2%), promoted with
    will-change so it is rasterised once and only transformed thereafter. */
 @media(pointer:coarse),(hover:none){#grain{display:none}}
+/* JS owns the sky colour (the tick loop writes an inline background). The
+   CSS animation below it kept repainting a full-viewport layer for nothing
+   visible; touch devices stop paying for it. */
+@media(pointer:coarse),(hover:none){.sky{animation:none}}
 @keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,2%)}40%{transform:translate(2%,-1%)}60%{transform:translate(-1%,-2%)}80%{transform:translate(1%,2%)}}
 html.webgl .hero .stars,html.webgl .hero .sun,html.webgl .hero .dune{display:none}
 .hero::after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 52%,rgba(10,6,16,.42) 100%)}
@@ -397,6 +401,16 @@ section,header,main,footer,nav,.page-content,.hero,.wrap{position:relative;z-ind
    audience is mostly phones. Blur only above the mobile breakpoint. */
 @media(min-width:821px){
   .shop,.story-sec,.places,.mission{-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+/* THE AT-REST FLICKER (Faheem, 2 Sep 2026): "while scrolling the flickering
+   stops; as soon as I stop scrolling it resumes in the product-card section -
+   both the cards and the background." That is backdrop-filter on Android
+   Chrome, precisely: it is suspended during touch scroll and resumes at rest.
+   These four sections blur what sits behind them, and what sits behind them
+   is .sky - an 18s animated gradient - so the sample never settles, and every
+   card cross-fade inside forces the whole section to re-composite. The
+   sections carry their own opaque backgrounds; the blur only softens the
+   melt edge. Touch devices go without it. */
+@media(pointer:coarse),(hover:none){.shop,.story-sec,.places,.mission{-webkit-backdrop-filter:none;backdrop-filter:none}}
 }
 /* (2) With one continuous sky the melt waves added a second, competing edge
    at every boundary. Softened to a feather rather than a drawn shape. */
@@ -1639,7 +1653,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     return [Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)];
   }
 
-  var prog=0, target=0, mx=0, my=0, tmx=0, tmy=0;
+  var prog=0, target=0, mx=0, my=0, tmx=0, tmy=0, lastKey='';
   function measure(){
     var h=document.documentElement.scrollHeight-innerHeight;
     target = h>0 ? Math.max(0,Math.min(1,scrollY/h)) : 0;
@@ -1667,6 +1681,18 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     prog += (target-prog)*(reduce?1:0.06);      // eased, so the sky lags the scroll a little
     mx   += (tmx-mx)*0.05;  my += (tmy-my)*0.05;
     window.__skyProgress=prog;
+
+    /* THE AT-REST FLICKER (Faheem, 2 Sep 2026). This loop wrote the full-page
+       gradient, the star opacity and the sun transform on EVERY frame, forever:
+       the easing never reaches its target exactly, and on a tablet the
+       deviceorientation feed adds gyroscope noise even with the device lying
+       still. Android throttles main-thread animation during touch scrolling
+       and flushes it at rest - "it stops while I scroll and starts again when I
+       stop." Quantise the inputs and touch the DOM only when the eye could
+       tell the difference. At rest this now does nothing at all. */
+    var key=Math.round(prog*500)+'|'+Math.round(mx*50)+'|'+Math.round(my*50);
+    if(key===lastKey) return;
+    lastKey=key;
 
     var c=ramp(prog);
     sky.style.background='linear-gradient(180deg,rgb('+c[0]+','+c[1]+','+c[2]+') 0%,'
@@ -1719,6 +1745,11 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   /* Dust motes: invisible at night, drifting through golden hour, and they
      scatter away from the pointer. One canvas, capped DPR, paused when the
      tab is hidden — the whole thing costs a few hundred particles. */
+  /* Not on touch devices. This full-window canvas is brightest at mid-page -
+     exactly the product-card section - and redraws every frame. On a tablet
+     that was a large share of the at-rest repaint that read as flicker
+     (Faheem, 2 Sep 2026). Desktop keeps it. */
+  if(matchMedia('(hover:none), (pointer:coarse)').matches) return;
   var c=document.createElement('canvas'); c.id='dust';
   document.body.appendChild(c);
   var x=c.getContext('2d'), dpr=Math.min(devicePixelRatio||1,1.5);
@@ -1795,6 +1826,6 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 </script>
 
 <script src="/assets/sahra-cart.js?v=e445a34b" defer></script>
-<script src="/assets/sahra-market.js?v=081db135" defer></script>
+<script src="/assets/sahra-market.js?v=b9cd88dc" defer></script>
 </body>
 </html>

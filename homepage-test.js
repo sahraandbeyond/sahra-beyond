@@ -361,10 +361,19 @@ console.log('\n\x1b[1mfilm grain — every page that carries it\x1b[0m');
   check('pages carrying the grain overlay were found', pages.length > 0, 'none found');
   check('no page still uses the 200% grain layer', oversized.length === 0, oversized.map(p => path.relative(__dirname, p)).join(', '));
   check('every grain page hides it on touch devices', unguarded.length === 0, unguarded.map(p => path.relative(__dirname, p)).join(', '));
+
+  /* Section-level backdrop-filter over the animated sky: suspended by Android
+     during touch scroll, resumed at rest, re-sampled on every card fade -
+     "stops while scrolling, resumes when I stop" (Faheem, 2 Sep 2026). Any page
+     that blurs a whole section must switch it off for touch devices. */
+  const sectionBlur = pages.filter(p => /\.shop,\.story-sec,\.places,\.mission\{[^}]*backdrop-filter:blur/.test(fs.readFileSync(p, 'utf8')));
+  const blurUnguarded = sectionBlur.filter(p => !/hover:none\)\{\.shop,\.story-sec,\.places,\.mission\{[^}]*backdrop-filter:none/.test(fs.readFileSync(p, 'utf8')));
+  check('section-wide backdrop blur is switched off for touch devices', blurUnguarded.length === 0,
+    blurUnguarded.map(p => path.relative(__dirname, p)).join(', '));
 }
 
 console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
-{
+(async () => {
   const src = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-market.js'), 'utf8');
   const a = src.indexOf('  function normCycle(h)');
   const b = src.indexOf('  function cycles()');
@@ -497,6 +506,52 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
           fr[1].classList.contains('on') && fr[0].classList.contains('was'));
       }
 
+      /* ---- the decode path: the Android-specific half of the fix ---------
+         Every test above passes hold=false, which skips decode() entirely -
+         the reviewer was right that the busy-flag guard had no coverage. */
+      {
+        const mkStack = (decodeImpl) => {
+          const h = new El('div'); h.setAttribute('data-cycle', '');
+          ['d1.jpg', 'd2.jpg', 'd3.jpg'].forEach((x, i) => {
+            const im = img('/shirts/' + x, '', i === 0);
+            im.decode = decodeImpl; im.parentNode = h; h.appendChild(im);
+          });
+          return h;
+        };
+        /* decode resolves later: the switch must wait, then land exactly once */
+        let release; const pending = new Promise(r => { release = r; });
+        const h1 = mkStack(() => pending); const f1 = h1.querySelectorAll('img');
+        const first = advance(f1);
+        check('a decode in flight marks the stack busy', h1.getAttribute('data-busy') === '1');
+        check('no switch happens before decode resolves', f1[0].classList.contains('on') && !f1[1].classList.contains('on'));
+        check('a second advance while busy is refused', advance(f1) === null);
+        release();
+        await Promise.resolve(); await Promise.resolve();
+        check('after decode the switch lands once', f1[1].classList.contains('on') && h1.querySelectorAll('img.on').length === 1);
+        check('the busy flag is cleared afterwards', !h1.getAttribute('data-busy'));
+
+        /* decode REJECTS (Chrome does this for evicted images): still advance, never freeze */
+        const h2 = mkStack(() => Promise.reject(new Error('EncodingError'))); const f2 = h2.querySelectorAll('img');
+        advance(f2); await Promise.resolve(); await Promise.resolve();
+        check('a rejected decode still advances rather than freezing the card', f2[1].classList.contains('on'));
+        check('a rejected decode clears the busy flag', !h2.getAttribute('data-busy'));
+
+        /* decode THROWS synchronously: also never freeze */
+        const h3 = mkStack(() => { throw new Error('boom'); }); const f3 = h3.querySelectorAll('img');
+        advance(f3);
+        check('a throwing decode still advances', f3[1].classList.contains('on') && !h3.getAttribute('data-busy'));
+
+        /* the stack is rebuilt while a decode is pending: the stale switch must not fire */
+        let rel2; const p2 = new Promise(r => { rel2 = r; });
+        const h4 = mkStack(() => p2); const f4 = h4.querySelectorAll('img');
+        advance(f4);
+        h4.removeChild(f4[1]);                 // the frame we were switching TO is gone
+        norm(h4);                              // MutationObserver path repairs the stack
+        rel2(); await Promise.resolve(); await Promise.resolve();
+        check('a switch whose target vanished does nothing', h4.querySelectorAll('img.on').length === 1 && f4[0].classList.contains('on'));
+        check('normCycle clears a busy flag left by a dead switch', !h4.getAttribute('data-busy'));
+      }
+
       /* a repaired stack must not leave a stranded hold frame visible */
       frames.forEach(i => { i.classList.add('on'); i.classList.add('was'); });
       norm(st);
@@ -525,7 +580,8 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
   const empty = new El('div'); empty.setAttribute('data-cycle', '');
   norm(empty);
   check('an empty stack does not throw', true);
-}
+})().then(() => {
 
 console.log('\n' + (fail ? '\x1b[31m' : '\x1b[32m') + pass + ' passed, ' + fail + ' failed\x1b[0m');
 process.exit(fail ? 1 : 0);
+}).catch(e => { console.error(e); process.exit(1); });

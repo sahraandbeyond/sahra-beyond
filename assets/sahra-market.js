@@ -305,6 +305,9 @@
     if (h.querySelectorAll('img.on').length === 1) return im;
     for (var k = 0; k < im.length; k++) { im[k].classList.remove('on'); im[k].classList.remove('was'); }
     im[0].classList.add('on');
+    /* a repair means the stack changed under an in-flight switch; whatever
+       that switch was waiting on must not keep the card frozen */
+    if (h.removeAttribute) h.removeAttribute('data-busy');
     return im;
   }
 
@@ -355,7 +358,14 @@
 
     var go = function () {
       if (host && host.removeAttribute) host.removeAttribute('data-busy');
-      for (var q = 0; q < im.length; q++) im[q].classList.remove('was');
+      /* decode() is async: by the time it resolves the stack may have been
+         repaired or rebuilt (the MutationObserver path). Re-read it, and if
+         the two frames we captured are no longer both in it, do nothing -
+         acting on stale references is how a second .on frame appears. */
+      var now = host && host.querySelectorAll ? host.querySelectorAll('img') : im, has = 0;
+      for (var q = 0; q < now.length; q++) { if (now[q] === out || now[q] === nxt) has++; }
+      if (has !== 2) return;
+      for (q = 0; q < now.length; q++) now[q].classList.remove('was');
       out.classList.add('was');
       out.classList.remove('on');
       nxt.classList.add('on');
@@ -369,7 +379,9 @@
        its callback means the incoming frame is never a blank for a paint. */
     if (hold !== false && typeof nxt.decode === 'function' && host && host.setAttribute) {
       host.setAttribute('data-busy', '1');
-      nxt.decode().then(go, go);
+      /* decode() should always return a promise; if an implementation throws
+         instead, the card must not stay frozen behind a busy flag forever */
+      try { nxt.decode().then(go, go); } catch (e) { go(); }
     } else {
       go();
     }
