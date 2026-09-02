@@ -564,15 +564,29 @@
     if (!hosts.length) return;
     var seen = new Set(), beat = null;
     try {
+      /* WARM-UP runs 600px ahead of the viewport so the photos are fetched
+         and decoded while the visitor is still in the hero, not in the same
+         frames the grid scrolls in - that burst (22 requests + 7 decodes) is
+         what the main thread was busy with when the scroll froze at the
+         hero->cards boundary on a tablet (2 Sep 2026). The BEAT still waits
+         for the real viewport: `seen` is a second observer with no margin. */
+      var ahead = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          /* start fetching the whole stack now, not when the cycle gets there */
+          if (!e.isIntersecting) return;
+          [].forEach.call(e.target.querySelectorAll('img'), warm);
+          /* and have the visible frame's pixels ready before it is on screen:
+             decode() waits for the load, then decodes off the main thread */
+          var lead = e.target.querySelector('img.on');
+          if (lead && typeof lead.decode === 'function') {
+            try { lead.decode().then(null, function () {}); } catch (x) {}
+          }
+        });
+      }, { rootMargin: '600px 0px' });
+      hosts.forEach(function (h) { ahead.observe(h); });
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) {
-          if (e.isIntersecting) {
-            seen.add(e.target);
-            /* start fetching the whole stack now, not when the cycle gets there */
-            [].forEach.call(e.target.querySelectorAll('img'), warm);
-          } else {
-            seen.delete(e.target);
-          }
+          if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target);
         });
         /* a card that just scrolled in gets its next frame decoded now, so
            it can join the next beat on time (beat is assigned below; the

@@ -372,6 +372,71 @@ console.log('\n\x1b[1mfilm grain — every page that carries it\x1b[0m');
     blurUnguarded.map(p => path.relative(__dirname, p)).join(', '));
 }
 
+/* ---- the hero->cards scroll freeze on a tablet (Faheem, 2 Sep 2026) -------
+   Lenis registers a NON-passive touchmove listener, so on Android every
+   scroll frame waits for the main thread - which was decoding seven 1536px
+   photos for 230px card slots and firing 22 downloads the moment the grid
+   appeared. Touch must scroll natively, the cards must ship a card-sized
+   photo, and the warm-up must run ahead of the viewport. */
+console.log('\n\x1b[1mhero -> cards on touch\x1b[0m');
+['index.html', 'homepage-preview.html'].forEach(pg => {
+  const page = fs.readFileSync(path.join(__dirname, pg), 'utf8');
+  check(pg + ': Lenis smooth scroll is not started on touch devices',
+    /if\(window\.Lenis&&!reduced&&!isTouch\)/.test(page), 'a non-passive touchmove listener will stall native scrolling');
+  check(pg + ': the marquee bar is hidden on touch, so hero flows into the collection',
+    /hover:none\)\{\.marquee\{display:none\}\}/.test(page));
+  /* an earlier .hero::after rule sets inset:0; without top:auto the bottom
+     dissolve is positioned at the TOP of the hero and never seen */
+  /* an earlier .hero::after rule sets inset:0; with top and bottom both 0
+     plus a height, top wins and the bottom dissolve sits invisibly at the top.
+     top:auto fixes that - on TOUCH only, where the marquee is gone. Desktop
+     is left exactly as it was. */
+  const touchBlock = (page.match(/@media\(pointer:coarse\),\(hover:none\)\{\s*\.hero::after\{top:auto\}[\s\S]*?\n\}/) || [''])[0];
+  check(pg + ': the hero\'s bottom dissolve is placed at the bottom on touch (top:auto)', touchBlock.length > 0);
+  check(pg + ': ...and only on touch - the desktop rule is untouched',
+    /\.hero::after\{content:"";position:absolute;left:0;right:0;bottom:0;height:34vh/.test(page) && !/\.hero::after\{content:"";position:absolute;left:0;right:0;top:auto/.test(page));
+  check(pg + ': on touch the hero\'s dusk carries on into the collection (no edge)',
+    /\.melt\{display:none\}\s*\.shop\{background:linear-gradient\(180deg,rgba\(20,16,42,\.5\) 0,rgba\(20,16,42,0\) 180px\)/.test(touchBlock));
+  check(pg + ': touch gets a quick fade reveal, no slide, no stagger',
+    /if\(isTouch\)\{[\s\S]{0,400}gsap\.set\('\.reveal',\{y:0,scale:1\}\);[\s\S]{0,300}duration:\.35/.test(page) && !/stagger:/.test(page.slice(page.indexOf('if(isTouch){'), page.indexOf('}else{', page.indexOf('if(isTouch){')))));
+  const a = page.indexOf('<div class="grid" id="grid">'), b = page.indexOf('<div class="qual-band', a);
+  const imgs = page.slice(a, b).match(/<img [^>]*>/g) || [];
+  const noSet = imgs.filter(t => !/srcset="\/shirts\/card\/[^"]+ 800w, \/shirts\/[^"]+ \d+w"/.test(t));
+  const noAsync = imgs.filter(t => !/decoding="async"/.test(t));
+  /* derive the card width from the page's own CSS rather than trusting a
+     constant: wrap max-width and padding, grid columns and gap */
+  const wrapMax = +((page.match(/\.wrap\{max-width:(\d+)px;margin:0 auto;padding:0 (\d+)px\}/) || [])[1] || 0);
+  const wrapPad = +((page.match(/\.wrap\{max-width:(\d+)px;margin:0 auto;padding:0 (\d+)px\}/) || [])[2] || 0);
+  const cols = +((page.match(/\n\.grid\{display:grid;grid-template-columns:repeat\((\d+),1fr\);gap:(\d+)px\}/) || [])[1] || 0);
+  const gap = +((page.match(/\n\.grid\{display:grid;grid-template-columns:repeat\((\d+),1fr\);gap:(\d+)px\}/) || [])[2] || 0);
+  const chrome = 2 * wrapPad + (cols - 1) * gap;                       // 48 + 52 = 100
+  const cardAtMax = Math.round((wrapMax - chrome) / cols);              // 367 at 1200
+  const expectSizes = 'sizes="(max-width:760px) 46vw, (max-width:' + wrapMax + 'px) calc((100vw - ' + chrome + 'px)/' + cols + '), ' + (cardAtMax + 3) + 'px"';
+  check(pg + ': the grid CSS was read (3 columns inside a 1200px wrap)', cols === 3 && wrapMax === 1200 && chrome === 100, 'cols=' + cols + ' wrap=' + wrapMax + ' chrome=' + chrome);
+  const noSizes = imgs.filter(t => t.indexOf(expectSizes) < 0);
+  check(pg + ': every card photo offers an 800px card-sized candidate', imgs.length === 22 && noSet.length === 0, imgs.length + ' imgs, ' + noSet.length + ' without srcset');
+  check(pg + ': every card photo decodes off the main thread', noAsync.length === 0, noAsync.length + ' without decoding=async');
+  check(pg + ': sizes follows the grid at every width (2 columns on tablets, 3 up to the wrap, then fixed)', noSizes.length === 0, noSizes.length + ' wrong sizes; expected ' + expectSizes);
+  /* the w descriptor must be the file's real width - 1536w on a 1076px model
+     shot lets the browser believe it picked a sharper file than it did */
+  const jpegW = f => { const d = fs.readFileSync(path.join(__dirname, f)); let i = 2; while (i < d.length && d[i] === 0xFF) { const m = d[i + 1]; if (m === 0xC0 || m === 0xC1 || m === 0xC2) return d.readUInt16BE(i + 7); i += 2 + d.readUInt16BE(i + 2); } return 0; };
+  const wrongW = imgs.filter(t => { const m = t.match(/srcset="\/shirts\/card\/[^ ]+ 800w, (\/shirts\/[^ ]+) (\d+)w"/); return !m || jpegW(m[1]) !== +m[2]; });
+  check(pg + ': every full-size candidate declares its true pixel width', wrongW.length === 0, wrongW.length + ' wrong: ' + wrongW.map(t => (t.match(/srcset="[^"]*"/) || [''])[0]).slice(0, 2).join(' '));
+  const cardFiles = imgs.map(t => (t.match(/srcset="(\/shirts\/card\/[^ ]+) 800w/) || [])[1]).filter(Boolean);
+  const absent = cardFiles.filter(f => !fs.existsSync(path.join(__dirname, f)));
+  check(pg + ': every 800px candidate exists on disk', absent.length === 0, absent.join(', '));
+  const mismatch = imgs.filter(t => { const m = t.match(/src="\/shirts\/([^"]+)"[^>]*srcset="\/shirts\/card\/([^ ]+) 800w/); return m && m[1] !== m[2]; });
+  check(pg + ': the card-sized file is the same photograph as src', mismatch.length === 0, mismatch.length + ' mismatched');
+});
+{
+  const eng = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-market.js'), 'utf8');
+  const aheadSrc = (eng.match(/var ahead = new IntersectionObserver\([\s\S]*?\}, \{ rootMargin: '600px 0px' \}\);/) || [''])[0];
+  check('the warm-up observer runs 600px ahead of the viewport', aheadSrc.length > 0);
+  check('...and it is the one that warms every frame and decodes the lead', /warm\)/.test(aheadSrc) && /lead\.decode\(\)/.test(aheadSrc));
+  check('the beat observer has no margin (cards only beat when actually on screen)',
+    /var io = new IntersectionObserver\(function \(es\) \{[\s\S]{0,400}\}\);\n\s+hosts\.forEach\(function \(h\) \{ io\.observe\(h\); \}\);/.test(eng) && !/io = new IntersectionObserver\([\s\S]{0,500}rootMargin/.test(eng));
+}
+
 console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
 (async () => {
   const src = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-market.js'), 'utf8');
