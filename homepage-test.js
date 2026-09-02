@@ -121,9 +121,12 @@ function mkDoc() {
   return doc;
 }
 
-function img(src, alt, on) {
+function img(src, alt, on, loaded) {
   const i = new El('img');
   i.setAttribute('src', src); i.setAttribute('alt', alt || ''); i.setAttribute('loading', 'lazy');
+  i.loading = 'lazy';
+  /* the browser's readiness signals - loaded unless a test says otherwise */
+  i.complete = loaded !== false; i.naturalWidth = loaded !== false ? 10 : 0;
   if (on) i.classList.add('on');
   return i;
 }
@@ -417,10 +420,14 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
      (Faheem, 2 Sep 2026). The outgoing frame must be HELD opaque underneath. */
   {
     const as0 = src.indexOf('  function advanceStack(im');
+    /* frameReady() and warm() sit just above advanceStack and it depends on
+       both - slice from the first of them so the evaluated code is complete */
+    const fr0 = src.indexOf('  function frameReady(img)');
     check('advanceStack exists', as0 > -1);
     let advance = null;
     if (as0 > -1) {
-      try { advance = new Function(src.slice(as0, b) + '\n; return advanceStack;')(); } catch (e) {}
+      const from = (fr0 > -1 && fr0 < as0) ? fr0 : as0;
+      try { advance = new Function(src.slice(from, b) + '\n; return advanceStack;')(); } catch (e) {}
     }
     if (typeof advance !== 'function') {
       check('the engine holds the outgoing frame opaque', false, 'advanceStack not found');
@@ -444,6 +451,31 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
 
       advance(frames, false);
       check('the stack wraps back to the first frame', frames[0].classList.contains('on'));
+
+      /* ---- THE TABLET BLANK CARD (Faheem's video, 2 Sep 2026) ----------
+         Seven cards, 26 lazy images on mobile data, and the cycle switched to
+         frames that had no pixels yet. The hold released, and the card went
+         white. The engine must refuse to advance onto an unloaded frame. */
+      {
+        const st2 = new El('div');
+        st2.appendChild(img('/shirts/x1.jpg', '', true));
+        st2.appendChild(img('/shirts/x2.jpg', '', false, false));   // NOT loaded
+        st2.appendChild(img('/shirts/x3.jpg', '', false));
+        const fr = st2.querySelectorAll('img');
+        const r = advance(fr, false);
+        check('the engine refuses to switch onto a frame with no pixels',
+          r === null && fr[0].classList.contains('on') && !fr[1].classList.contains('on'),
+          'on: ' + fr.map(i => i.classList.contains('on')).join(','));
+        check('the current frame is never dropped while waiting',
+          st2.querySelectorAll('img.on').length === 1);
+        check('the missing frame is asked for eagerly instead of lazily',
+          fr[1].loading === 'eager', 'loading=' + fr[1].loading);
+        /* the image arrives */
+        fr[1].complete = true; fr[1].naturalWidth = 10;
+        advance(fr, false);
+        check('once the frame has pixels the stack advances onto it',
+          fr[1].classList.contains('on') && fr[0].classList.contains('was'));
+      }
 
       /* a repaired stack must not leave a stranded hold frame visible */
       frames.forEach(i => { i.classList.add('on'); i.classList.add('was'); });

@@ -323,18 +323,56 @@
      resting frames and .on). Coverage stays 100% throughout. It also makes a
      not-yet-decoded incoming frame harmless: the previous photo simply stays
      up until the new one has something to paint. */
+  /* A frame is only usable once the browser actually has pixels for it. */
+  function frameReady(img) {
+    return !!(img && img.complete && img.naturalWidth > 0);
+  }
+  /* Every frame ships loading="lazy" - right for the page, wrong for a stack
+     that is about to be cycled through. Once a card is on screen, ask for the
+     rest of its photos now rather than when the cycle reaches them. */
+  function warm(img) {
+    try { if (img && img.loading === 'lazy') img.loading = 'eager'; } catch (e) {}
+  }
+
   function advanceStack(im, hold) {
     if (!im || im.length < 2) return null;
+    var host = im[0].parentNode;
+    /* a decode is in flight for this stack - do not stack a second switch on it */
+    if (host && host.getAttribute && host.getAttribute('data-busy')) return null;
     var i = 0, k;
     for (k = 0; k < im.length; k++) if (im[k].classList.contains('on')) i = k;
     var out = im[i], nxt = im[(i + 1) % im.length];
-    for (k = 0; k < im.length; k++) im[k].classList.remove('was');
-    out.classList.add('was');
-    out.classList.remove('on');
-    nxt.classList.add('on');
-    /* longer than the .45s fade, so the hold is released only once the incoming
-       frame is fully opaque and nothing can show through underneath */
-    if (hold !== false) setTimeout(function () { out.classList.remove('was'); }, 480);
+
+    /* NEVER SWITCH TO A FRAME THAT HAS NOT LOADED.
+       This is the tablet blank-card bug (Faheem's video, 2 Sep 2026): seven
+       cards, 26 lazy images competing for mobile bandwidth, and a 1s cycle
+       that ran ahead of them. The hold released after 480ms, the incoming
+       frame still had no pixels, and the card went white. On a desktop the
+       images arrive first and nobody ever sees it. Holding the current frame
+       until the next one exists costs nothing but a slightly later first
+       change; blanking the card costs the sale. */
+    if (!frameReady(nxt)) { warm(nxt); return null; }
+
+    var go = function () {
+      if (host && host.removeAttribute) host.removeAttribute('data-busy');
+      for (var q = 0; q < im.length; q++) im[q].classList.remove('was');
+      out.classList.add('was');
+      out.classList.remove('on');
+      nxt.classList.add('on');
+      /* longer than the .45s fade, so the hold is released only once the
+         incoming frame is fully opaque and nothing can show through */
+      if (hold !== false) setTimeout(function () { out.classList.remove('was'); }, 480);
+    };
+    /* Loaded is not the same as decoded: Android Chrome drops the decoded
+       bitmap of an opacity:0 image to save memory and re-decodes it on demand,
+       which paints late. decode() resolves once pixels are ready; switching in
+       its callback means the incoming frame is never a blank for a paint. */
+    if (hold !== false && typeof nxt.decode === 'function' && host && host.setAttribute) {
+      host.setAttribute('data-busy', '1');
+      nxt.decode().then(go, go);
+    } else {
+      go();
+    }
     return nxt;
   }
 
@@ -357,7 +395,15 @@
     var seen = new Set();
     try {
       var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { e.isIntersecting ? seen.add(e.target) : seen.delete(e.target); });
+        es.forEach(function (e) {
+          if (e.isIntersecting) {
+            seen.add(e.target);
+            /* start fetching the whole stack now, not when the cycle gets there */
+            [].forEach.call(e.target.querySelectorAll('img'), warm);
+          } else {
+            seen.delete(e.target);
+          }
+        });
       });
       hosts.forEach(function (h) { io.observe(h); });
     } catch (e) { hosts.forEach(function (h) { seen.add(h); }); }
