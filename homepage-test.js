@@ -298,6 +298,33 @@ for (const file of ['index.html', 'homepage-preview.html']) {
     }
   }
 
+  /* ---- the free tote must never be listed (Faheem, 2 Sep 2026) ------------
+     It is a real Shopify product, published to the headless channel so the
+     cart can add it - and that is exactly what put it on the shop page with
+     its internal notes and "AED 0.0". Tagged not-for-sale / gift-with-purchase
+     and priced at zero: fill() must drop it, and must never clone a card for
+     it. The same rule guards the shop page (checked below on its source). */
+  {
+    const TOTE = { title: 'Sahra Tote — Founding Edition gift', handle: 'sahra-tote-founding-edition-gift', place: '', img: CDN + 'sahra-tote-founding-edition.jpg', price: '0.0', cur: 'AED', tags: ['founding-edition', 'gift-with-purchase', 'not-for-sale'] };
+    const d3 = scene();
+    const api3 = loadFill(file)(d3);
+    api3.fill(PRODUCTS.concat([TOTE]));
+    const c3 = d3.querySelectorAll('#grid .card');
+    check('the free tote never gets a homepage card', !c3.some(c => /tote/i.test(c.getAttribute('href') || '')) && c3.length === CURATED.length, c3.length + ' cards');
+    check('the free tote never appears in the hero carousel', !(d3.querySelectorAll('#spot .frame').some(f => /tote/.test(f.style.backgroundImage || ''))));
+    /* each signal on its own is enough */
+    const byTag = Object.assign({}, TOTE, { price: '49.00', tags: ['not-for-sale'] });
+    const byGift = Object.assign({}, TOTE, { price: '49.00', tags: ['gift-with-purchase'] });
+    const byPrice = Object.assign({}, TOTE, { price: '0', tags: [] });
+    [['tag not-for-sale', byTag], ['tag gift-with-purchase', byGift], ['price zero', byPrice]].forEach(([why, p]) => {
+      const d = scene(); loadFill(file)(d).fill(PRODUCTS.concat([p]));
+      check('unsellable by ' + why + ' alone is still hidden', !d.querySelectorAll('#grid .card').some(c => /tote/i.test(c.getAttribute('href') || '')));
+    });
+    /* and the guard must sit on the API path too, before fill() */
+    const src3 = fs.readFileSync(path.join(__dirname, file), 'utf8');
+    check(file + ': the Storefront list is filtered before it reaches fill()', /,tags:n\.tags\|\|\[\]\};\}\)\.filter\(forSale\);fill\(products\);/.test(src3));
+  }
+
   // 6b. The hand-maintained grid must not drift from the catalogue. This is the
   //     check that would have caught 12 fit-labelled images sitting unused.
   {
@@ -370,6 +397,21 @@ console.log('\n\x1b[1mfilm grain — every page that carries it\x1b[0m');
   const blurUnguarded = sectionBlur.filter(p => !/hover:none\)\{\.shop,\.story-sec,\.places,\.mission\{[^}]*backdrop-filter:none/.test(fs.readFileSync(p, 'utf8')));
   check('section-wide backdrop blur is switched off for touch devices', blurUnguarded.length === 0,
     blurUnguarded.map(p => path.relative(__dirname, p)).join(', '));
+}
+
+console.log('\n\x1b[1mshop page - the free tote is never listed\x1b[0m');
+{
+  const shop = fs.readFileSync(path.join(__dirname, 'shop-preview.html'), 'utf8');
+  const a = shop.indexOf('edges=edges.filter(function(e){'), b = shop.indexOf('PRODUCTS=edges.map(', a);
+  check('the shop filters the Storefront list before drawing', a > -1 && b > a);
+  if (a > -1) {
+    const fn = new Function('return function(edges){' + shop.slice(a, b) + 'return edges;}')();
+    const mk = (tags, price) => ({ node: { title: 't', handle: 'h', tags, priceRange: { minVariantPrice: { amount: price, currencyCode: 'AED' } } } });
+    const out = fn([mk(['fit:regular'], '199.0'), mk(['founding-edition', 'gift-with-purchase', 'not-for-sale'], '0.0'), mk(['not-for-sale'], '49.0'), mk(['Gift-With-Purchase'], '49.0'), mk([], '0')]);
+    check('a paid product stays', out.length === 1 && out[0].node.tags[0] === 'fit:regular', out.length + ' kept');
+  }
+  const built = path.join(__dirname, 'shop', 'index.html');
+  check('the built shop page carries the same guard', fs.existsSync(built) && /edges=edges\.filter\(function\(e\)\{/.test(fs.readFileSync(built, 'utf8')), 'run node build.js');
 }
 
 /* ---- the hero->cards scroll freeze on a tablet (Faheem, 2 Sep 2026) -------

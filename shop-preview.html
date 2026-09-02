@@ -1235,6 +1235,15 @@ async function load(){
   try{
     var data=SHOPIFY.collection?await sf('query($h:String!){collectionByHandle(handle:$h){products(first:24){edges{node{'+PFRAG+'}}}}}',{h:SHOPIFY.collection}):await sf('{products(first:24){edges{node{'+PFRAG+'}}}}');
     var edges=SHOPIFY.collection?(data.collectionByHandle?data.collectionByHandle.products.edges:[]):data.products.edges;
+    /* NOT FOR SALE: the free tote is published to the headless channel so the
+       cart can add it, which put it on this page with its internal notes and
+       "AED 0.0" (Faheem, 2 Sep 2026). Tagged not-for-sale / gift-with-purchase,
+       or priced at zero => never listed. */
+    edges=edges.filter(function(e){var n=e.node||{},tags=(n.tags||[]).map(function(t){return String(t).toLowerCase();});
+      if(tags.indexOf('not-for-sale')>-1||tags.indexOf('gift-with-purchase')>-1)return false;
+      var pr=n.priceRange&&n.priceRange.minVariantPrice&&n.priceRange.minVariantPrice.amount;
+      if(pr!==undefined&&pr!==null&&!(Number(pr)>0))return false;
+      return true;});
     PRODUCTS=edges.map(function(e,i){var n=e.node,place=tagVal(n.tags,'place'),bg=tagVal(n.tags,'theme'),dark=(n.tags||[]).some(function(t){return t.toLowerCase()==='dark';}),imgs=(n.images&&n.images.edges||[]).map(function(x){return x.node.url;});var variants=n.variants.edges.map(function(v){var opts=v.node.selectedOptions||[],size=(opts.find(function(s){return s.name.toLowerCase()==='size';})||{}).value||v.node.title,fit=(opts.find(function(s){return s.name.toLowerCase()==='fit';})||{}).value||'';return{id:v.node.id,size:size,fit:fit,avail:v.node.availableForSale};});var fits=variants.map(function(v){return v.fit;}).filter(function(f,idx,a){return f&&a.indexOf(f)===idx;});if(!fits.length)fits=['Regular','Oversized'];var sizes=variants.map(function(v){return v.size;}).filter(function(s,idx,a){return s&&a.indexOf(s)===idx;});var list=imgs.length?imgs:(n.featuredImage?[n.featuredImage.url]:[]);return{id:n.id,handle:n.handle,tags:n.tags||[],title:n.title,place:place,placeSlug:tagVal(n.tags,'placeurl')||slugify(place),story:n.description||'',print:tagVal(n.tags,'print'),price:n.priceRange.minVariantPrice.amount,cur:n.priceRange.minVariantPrice.currencyCode,theme:{bg:bg||THEMES[i%THEMES.length].bg,dark:bg?dark:THEMES[i%THEMES.length].dark},fitImgs:{regular:list,oversized:list},fits:fits,sizes:sizes,images:list,img:list[0]||'',variants:variants};});
     // Deterministic running order: group each place together, Regular before Oversized,
     // polos last. Shopify returns no guaranteed order, and the alternating layout

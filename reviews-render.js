@@ -19,7 +19,11 @@ const path = require('path');
 
 const DIR = path.join(__dirname, 'content', 'reviews');
 
+/* Judge.me bodies arrive with Windows line endings (\r\n). Left in, every
+   build on a different OS re-flips the built pages and they show up as
+   modified for nothing. Normalise once, here. */
 const esc = s => String(s == null ? '' : s)
+  .replace(/\r\n?/g, '\n')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 

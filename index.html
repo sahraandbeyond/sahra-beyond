@@ -1443,8 +1443,22 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     if(/hajar|naqab|mountain|topograph/.test(t))return '/products/hajar-mountains-regular/';
     return '';
   }
+  /* NOT FOR SALE. The free tote is a real Shopify product so it can sit on the
+     order and count against stock, and it must be published to the headless
+     channel or the Storefront API cannot add it to a cart - which is exactly
+     why it turned up on the shop page with its internal notes and "AED 0.0"
+     (Faheem, 2 Sep 2026). Anything tagged not-for-sale / gift-with-purchase,
+     or priced at zero, is never listed, cloned or hydrated anywhere. */
+  function forSale(p){
+    if(!p)return false;
+    var tags=(p.tags||[]).map(function(t){return String(t).toLowerCase();});
+    if(tags.indexOf('not-for-sale')>-1||tags.indexOf('gift-with-purchase')>-1)return false;
+    if(p.price!==undefined&&p.price!==null&&p.price!==''&&!(Number(p.price)>0))return false;
+    return true;
+  }
   function fill(products){
-    if(!products||!products.length)return;
+    products=(products||[]).filter(forSale);
+    if(!products.length)return;
     // Pin the black Al Quaa Galaxy Tee as the hero/first product, whatever the raw Shopify order is.
     products=products.slice();
     var gi=-1;for(var gk=0;gk<products.length;gk++){var pp=products[gk];if((pp.handle||'').toLowerCase()==='al-quaa-galaxy-tee'||/galaxy/i.test(pp.title||'')||/al\s*quaa/i.test(pp.place||'')){gi=gk;break;}}
@@ -1547,7 +1561,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   var q='{products(first:12){edges{node{title handle featuredImage{url} images(first:1){edges{node{url}}} priceRange{minVariantPrice{amount currencyCode}} tags}}}}';
   fetch('https://'+SHOPIFY.domain+'/api/'+SHOPIFY.apiVersion+'/graphql.json',{method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':SHOPIFY.token},body:JSON.stringify({query:q})})
     .then(function(r){return r.json();})
-    .then(function(j){if(!j||!j.data||!j.data.products)return;var products=j.data.products.edges.map(function(e){var n=e.node,imgs=(n.images&&n.images.edges||[]).map(function(x){return x.node.url;});return{title:n.title,handle:n.handle,place:tagVal(n.tags,'place'),img:(n.featuredImage&&n.featuredImage.url)||imgs[0]||'',price:n.priceRange.minVariantPrice.amount,cur:n.priceRange.minVariantPrice.currencyCode};});fill(products);})
+    .then(function(j){if(!j||!j.data||!j.data.products)return;var products=j.data.products.edges.map(function(e){var n=e.node,imgs=(n.images&&n.images.edges||[]).map(function(x){return x.node.url;});return{title:n.title,handle:n.handle,place:tagVal(n.tags,'place'),img:(n.featuredImage&&n.featuredImage.url)||imgs[0]||'',price:n.priceRange.minVariantPrice.amount,cur:n.priceRange.minVariantPrice.currencyCode,tags:n.tags||[]};}).filter(forSale);fill(products);})
     .catch(function(){});
 })();
 </script>
