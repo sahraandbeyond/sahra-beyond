@@ -399,6 +399,42 @@ console.log('\n\x1b[1mfilm grain — every page that carries it\x1b[0m');
     blurUnguarded.map(p => path.relative(__dirname, p)).join(', '));
 }
 
+/* ---- the wordmark was cut to "SAH|" on the shop page on a phone ----------
+   (Faheem, 2 Sep 2026). The 18px phone rule for the mark named only the
+   homepage's .mark class; the shop and product pages use .logo-img, so their
+   195px mark pushed the wordmark under the cart and .logo{overflow:hidden}
+   clipped it. Every page that renders a header must carry the phone rules
+   for the mark class it actually uses, and the narrow-phone fallbacks. */
+console.log('\n\x1b[1mheader on phones - every built page\x1b[0m');
+{
+  const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => {
+    const p = path.join(d, e.name);
+    if (e.isDirectory()) return (e.name === 'node_modules' || e.name === '_backup' || e.name.startsWith('.')) ? [] : walk(p);
+    return e.name.endsWith('.html') ? [p] : [];
+  });
+  const pages = walk(__dirname).filter(p => !/preview\.html$|^admin|^coming-soon\.html$/.test(path.relative(__dirname, p)) && /<a class="(logo|brand)"/.test(fs.readFileSync(p, 'utf8')));
+  check('pages with a header were found', pages.length > 20, pages.length + ' found');
+  const bad = [];
+  pages.forEach(p => {
+    const h = fs.readFileSync(p, 'utf8');
+    const usesImg = /<a class="logo"[^>]*><img class="logo-img"/.test(h), usesMark = /<img class="mark mark-l"/.test(h), usesBrand = /<a class="brand"[^>]*><img /.test(h);
+    const small = (h.match(/\.logo \.mark,\.logo-img,\.brand img\{height:18px\}/) || [])[0];
+    const narrow = /@media\(max-width:400px\)\{\.logo-a(,\.brand-sahra)?\{font-size:13px/.test(h);
+    const tiny = usesBrand ? /@media\(max-width:340px\)\{\.logo>div,\.logo-text,\.brand-text\{display:none\}\}/.test(h) : /@media\(max-width:340px\)\{\.logo>div,\.logo-text(,\.brand-text)?\{display:none\}\}/.test(h);
+    if (!(usesImg || usesMark || usesBrand)) bad.push(path.relative(__dirname, p) + ': unknown header markup');
+    else if (!small) bad.push(path.relative(__dirname, p) + ': mark not shrunk to 18px on phones');
+    else if (!narrow || !tiny) bad.push(path.relative(__dirname, p) + ': missing narrow-phone wordmark fallback');
+  });
+  check('every header shrinks its mark on phones and drops the wordmark below 340px', bad.length === 0, bad.slice(0, 5).join('\n      '));
+  /* the shop's announcement bar is one line on phones */
+  const shop = fs.readFileSync(path.join(__dirname, 'shop-preview.html'), 'utf8');
+  check('shop: the announcement extras are wrapped so phones can hide them',
+    /<span class=\\'note-x\\'> &nbsp;&middot;&nbsp; no minimum order<\/span>/.test(shop) && /<span class=\\'note-x\\'> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE/.test(shop) && /<span class="note-x"> &middot; all seven emirates/.test(shop) && /@media\(max-width:560px\)\{\.note-x\{display:none\}/.test(shop));
+  const pdp = fs.readFileSync(path.join(__dirname, 'build-products.js'), 'utf8');
+  check('product pages: the same one-line announcement on phones',
+    /<span class="note-x"> &nbsp;·&nbsp; all seven emirates/.test(pdp) && /@media\(max-width:560px\)\{\.note-x\{display:none\}/.test(pdp));
+}
+
 console.log('\n\x1b[1mshop page - the free tote is never listed\x1b[0m');
 {
   const shop = fs.readFileSync(path.join(__dirname, 'shop-preview.html'), 'utf8');

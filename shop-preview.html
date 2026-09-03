@@ -438,12 +438,21 @@ html:not(.anim-ready) #preload{display:none}html.anim-ready .hero-in{opacity:0}
 
   /* The mark is 300x40, so at 26px tall it renders ~195px wide and left the
      hamburger no room — the two collided on a 360px screen. */
-  .logo .mark,.brand img{height:18px}
+  .logo .mark,.logo-img,.brand img{height:18px}
   .logo,.brand{min-width:0;flex:0 1 auto;overflow:hidden}
+  .logo>div,.logo-text{white-space:nowrap}
   nav,.hdr{padding-left:16px;padding-right:16px;gap:10px}
   .mnav{flex:0 0 auto}
 
 }
+/* Narrow phones: 18px mark (135px) + wordmark + cart + burger is ~356px of
+   chrome. Below 400px the wordmark tightens; below 340px only the mark stays.
+   (The shop and product pages' mark is .logo-img, the homepage's is .mark -
+   the 18px rule above once named only .mark, so on the shop the 195px mark
+   pushed the wordmark under the cart and .logo{overflow:hidden} cut it to
+   "SAH|". Faheem's phone, 2 Sep 2026.) */
+@media(max-width:400px){.logo-a{font-size:13px;letter-spacing:2.5px}.logo-b{font-size:6.5px;letter-spacing:1.5px}.logo{gap:8px}}
+@media(max-width:340px){.logo>div,.logo-text{display:none}}
 @media(min-width:821px){.m-panel{display:none}}
 
 
@@ -511,6 +520,9 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
 .sb-rot{display:none}
 .sb-rot.on{display:inline}
+/* the announcement bar is one line on phones: the extras wrap to three lines
+   at 360px and push the nav down (Faheem's phone, 2 Sep 2026) */
+@media(max-width:560px){.note-x{display:none}.note{font-size:10px;padding:7px 12px}}
 .sb-curwrap--hdr{margin-left:4px}
 .sb-curpick--hdr{min-height:34px;padding:6px 24px 6px 10px;font-size:11px;background-position:right 8px center}
 @media(max-width:820px){.sb-curwrap--hdr{display:none}}
@@ -528,7 +540,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 <div id="progress"><i></i></div>
 <div id="grain"></div>
 <canvas id="ambient-canvas"></canvas>
-<div class="note" id="mode-note" data-sb-rotate><span class="sb-ship-uae">Free next-day delivery across the UAE &middot; all seven emirates &middot; no minimum order</span><span class="sb-ship-gcc">GCC delivery 3&ndash;5 working days &middot; Free over AED 390</span><span class="sb-ship-intl">Worldwide delivery 7&ndash;14 working days</span> · Limited first run</div>
+<div class="note" id="mode-note" data-sb-rotate><span class="sb-ship-uae">Free next-day delivery across the UAE<span class="note-x"> &middot; all seven emirates &middot; no minimum order</span></span><span class="sb-ship-gcc">GCC delivery 3&ndash;5 working days &middot; Free over AED 390</span><span class="sb-ship-intl">Worldwide delivery 7&ndash;14 working days</span><span class="note-x"> · Limited first run</span></div>
 
 <nav id="nav" class="on-hero">
   <a class="logo" href="#"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
@@ -804,7 +816,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   var SHOPIFY = { domain:'sahra-beyond.myshopify.com', token:'cc42ba8e74eb27c4f3c062d93f893fa0', collection:'', apiVersion:'2024-10' };
 // ==================================================================
 var DEMO=(SHOPIFY.domain.indexOf('YOUR-STORE')>=0||SHOPIFY.token.indexOf('YOUR_')>=0);
-if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='<span class=\'sb-rot on\'><span class=\'sb-ship-uae\'>&#8635; Free next-day delivery across the UAE &nbsp;&middot;&nbsp; no minimum order</span><span class=\'sb-ship-gcc\'>&#9992; GCC delivery 3&ndash;5 working days &nbsp;&middot;&nbsp; Free over AED 390</span><span class=\'sb-ship-intl\'>&#9992; Worldwide delivery 7&ndash;14 working days</span> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop</span><span class=\'sb-rot\'>&#10022; Founding Edition &nbsp;&middot;&nbsp; a limited first run &nbsp;&middot;&nbsp; &#9873; Designed in the UAE</span><span class=\'sb-rot\'>&#8635; 14-day returns &nbsp;&middot;&nbsp; free within the UAE</span>';}
+if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='<span class=\'sb-rot on\'><span class=\'sb-ship-uae\'>&#8635; Free next-day delivery across the UAE<span class=\'note-x\'> &nbsp;&middot;&nbsp; no minimum order</span></span><span class=\'sb-ship-gcc\'>&#9992; GCC delivery 3&ndash;5 working days &nbsp;&middot;&nbsp; Free over AED 390</span><span class=\'sb-ship-intl\'>&#9992; Worldwide delivery 7&ndash;14 working days</span><span class=\'note-x\'> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop</span></span><span class=\'sb-rot\'>&#10022; Founding Edition &nbsp;&middot;&nbsp; a limited first run &nbsp;&middot;&nbsp; &#9873; Designed in the UAE</span><span class=\'sb-rot\'>&#8635; 14-day returns &nbsp;&middot;&nbsp; free within the UAE</span>';}
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches,TOUCH=matchMedia('(hover:none),(pointer:coarse)').matches,HASG=(typeof gsap!=='undefined');
 function track(n,p){try{if(window.gtag)gtag('event',n,p||{});}catch(e){}}
 // theme palette used when a product has no explicit theme (black, beige, rose-blue, sage, indigo, soft-blue)

@@ -90,13 +90,23 @@ section.policy li{margin-bottom:8px;font-size:16px;color:#4A4136}
 
   /* The mark is 300x40, so at 26px tall it renders ~195px wide and left the
      hamburger no room — the two collided on a 360px screen. */
-  .logo .mark,.brand img{height:18px}
+  .logo .mark,.logo-img,.brand img{height:18px}
   .logo,.brand{min-width:0;flex:0 1 auto;overflow:hidden}
+  .logo>div,.logo-text,.brand-text{white-space:nowrap}
   nav,.hdr{padding-left:16px;padding-right:16px;gap:10px}
   .mnav{flex:0 0 auto}
 
   a,button{min-height:auto}
 }
+/* the mark's inline height:26px used to beat the phone rule above, so these
+   pages kept the 195px mark and clipped the wordmark on phones (2 Sep 2026) */
+.brand img{height:26px;width:auto;display:block;margin-right:9px}
+.brand-text{display:flex;flex-direction:column;line-height:1}
+.brand-sahra{font-size:15px}
+.brand-beyond{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;color:#A25A20;margin-top:2px}
+@media(max-width:560px){.brand img{height:18px}}
+@media(max-width:400px){.logo-a,.brand-sahra{font-size:13px;letter-spacing:2.5px}.logo-b,.brand-beyond{font-size:6.5px;letter-spacing:1.5px}.logo,.brand{gap:8px}}
+@media(max-width:340px){.logo>div,.logo-text,.brand-text{display:none}}
 @media(min-width:821px){.m-panel{display:none}}
 
 </style>
@@ -105,7 +115,7 @@ section.policy li{margin-bottom:8px;font-size:16px;color:#4A4136}
 </head>
 <body>
 <header class="hdr">
-  <a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40" style="height:26px;width:auto;display:block;margin-right:9px"><span>Sahra &amp; Beyond</span></a>
+  <a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a>
   <nav class="hdr-nav"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 <main>

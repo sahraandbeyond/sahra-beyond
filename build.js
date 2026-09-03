@@ -609,12 +609,21 @@ main,.ftr{position:relative;z-index:1}
 
   /* The mark is 300x40, so at 26px tall it renders ~195px wide and left the
      hamburger no room — the two collided on a 360px screen. */
-  .logo .mark,.brand img{height:18px}
+  .logo .mark,.logo-img,.brand img{height:18px}
   .logo,.brand{min-width:0;flex:0 1 auto;overflow:hidden}
+  .logo>div,.logo-text,.brand-text{white-space:nowrap}
   nav,.hdr{padding-left:16px;padding-right:16px;gap:10px}
   .mnav{flex:0 0 auto}
 
 }
+/* Narrow phones: 18px mark (135px) + wordmark + cart + burger is ~356px of
+   chrome. Below 400px the wordmark tightens; below 340px only the mark stays.
+   (The shop and product pages' mark is .logo-img, the homepage's is .mark -
+   the 18px rule above once named only .mark, so on the shop the 195px mark
+   pushed the wordmark under the cart and .logo{overflow:hidden} cut it to
+   "SAH|". Faheem's phone, 2 Sep 2026.) */
+@media(max-width:400px){.logo-a,.brand-sahra{font-size:13px;letter-spacing:2.5px}.logo-b,.brand-beyond{font-size:6.5px;letter-spacing:1.5px}.logo,.brand{gap:8px}}
+@media(max-width:340px){.logo>div,.logo-text,.brand-text{display:none}}
 @media(min-width:821px){.m-panel{display:none}}
 /* ---- Product cards (category + collection blocks) -------------------------
    These classes were emitted but never styled, so 1536px mockups rendered at

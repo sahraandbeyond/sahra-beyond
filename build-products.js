@@ -268,6 +268,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 
 .sb-rot{display:none}
 .sb-rot.on{display:inline}
+@media(max-width:560px){.note-x{display:none}.note{font-size:10px;padding:7px 12px}}
 .sb-curwrap--hdr{margin-left:4px}
 .sb-curpick--hdr{min-height:34px;padding:6px 24px 6px 10px;font-size:11px;background-position:right 8px center}
 @media(max-width:820px){.sb-curwrap--hdr{display:none}}
@@ -508,12 +509,21 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
 
   /* The mark is 300x40, so at 26px tall it renders ~195px wide and left the
      hamburger no room — the two collided on a 360px screen. */
-  .logo .mark,.brand img{height:18px}
+  .logo .mark,.logo-img,.brand img{height:18px}
   .logo,.brand{min-width:0;flex:0 1 auto;overflow:hidden}
+  .logo>div,.logo-text{white-space:nowrap}
   nav,.hdr{padding-left:16px;padding-right:16px;gap:10px}
   .mnav{flex:0 0 auto}
 
 }
+/* Narrow phones: 18px mark (135px) + wordmark + cart + burger is ~356px of
+   chrome. Below 400px the wordmark tightens; below 340px only the mark stays.
+   (The shop and product pages' mark is .logo-img, the homepage's is .mark -
+   the 18px rule above once named only .mark, so on the shop the 195px mark
+   pushed the wordmark under the cart and .logo{overflow:hidden} cut it to
+   "SAH|". Faheem's phone, 2 Sep 2026.) */
+@media(max-width:400px){.logo-a{font-size:13px;letter-spacing:2.5px}.logo-b{font-size:6.5px;letter-spacing:1.5px}.logo{gap:8px}}
+@media(max-width:340px){.logo>div,.logo-text{display:none}}
 @media(min-width:821px){.m-panel{display:none}}
 
 
@@ -611,7 +621,7 @@ ${RV.CSS}
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE &nbsp;·&nbsp; all seven emirates &nbsp;·&nbsp; no minimum order</span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; a limited first run &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; all seven emirates &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; a limited first run &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <div class="nav-links"><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
