@@ -288,13 +288,12 @@ h1 em,h2 em{font-style:italic;color:var(--gold);font-weight:700}
 
 /* ---- the design under each place: a real product card, not a chip ---- */
 .design-card{margin-top:34px;display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:center;padding:16px;border:1px solid rgba(255,255,255,.22);border-radius:18px;background:rgba(20,16,42,.34);backdrop-filter:blur(8px);max-width:560px;color:#F7EFE2}
-.design-card img{width:200px;height:200px;border-radius:12px;object-fit:cover;display:block;background:#EFE7D8}
 .design-card small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .design-card b{display:block;font-family:var(--serif);font-size:26px;font-weight:700;line-height:1.15;margin-bottom:8px}
 .design-card p{margin:0 0 14px;font-size:14px;line-height:1.5;color:rgba(247,239,226,.78)}
 .design-card .row{display:flex;align-items:center;gap:16px;font-family:var(--mono);font-size:12px;letter-spacing:1.5px}
 .design-card .row .go{border-bottom:1px solid var(--gold);color:var(--gold);padding-bottom:2px;text-transform:uppercase}
-@media(max-width:560px){.design-card{grid-template-columns:132px 1fr;gap:14px;padding:12px}.design-card img{width:132px;height:132px}.design-card b{font-size:20px}}
+@media(max-width:560px){.design-card{grid-template-columns:132px 1fr;gap:14px;padding:12px}.design-card b{font-size:20px}}
 
 /* ---- reviews: the real Judge.me reviews, verbatim ---- */
 .j-reviews{color:var(--ink)}
@@ -378,8 +377,30 @@ body.has-topbar nav{top:var(--topbar-h,34px)}
 .collection .center{text-align:center;margin-top:36px}
 .collection .tag-invite{text-align:center;margin-top:18px;font-size:13px;color:#5c5248}
 .collection .btn.ghost{color:var(--ink)}
-/* the live review band on the paper stop */
+/* the live review band on the paper stop: above the cream scrim, not under it */
+.j-reviews .j-wrap,.collection .j-wrap{position:relative;z-index:1}
+.j-reviews::before{background:linear-gradient(180deg,rgba(250,246,239,.25),rgba(250,246,239,.55) 30%,rgba(250,246,239,.55))}
 .j-reviews .reviews{border-top:0;padding-top:0}
+/* quick add: a row of size chips on every product card */
+.qa{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid rgba(43,37,32,.12)}
+.qa-l{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--clay-deep);margin-right:2px}
+.qa-s{display:flex;gap:6px;flex-wrap:wrap;min-height:32px;align-items:center}
+.qa:empty{display:none}
+.qa-w{font-family:'Space Mono',monospace;font-size:10px;color:var(--mist)}
+.qa-b{min-width:38px;height:32px;padding:0 10px;border:1px solid rgba(43,37,32,.35);border-radius:999px;background:transparent;color:var(--ink);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.qa-b:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qa-b:disabled{opacity:.4;cursor:default;text-decoration:line-through}
+.design-card .qa{border-top-color:rgba(255,255,255,.18)}
+.design-card .qa-l{color:var(--gold)}.design-card .qa-w{color:rgba(247,239,226,.6)}
+.design-card .qa-b{border-color:rgba(255,255,255,.45);color:#F7EFE2}
+.design-card .qa-b:hover{background:#F7EFE2;color:var(--ink);border-color:#F7EFE2}
+/* the design card carries the product's own slideshow */
+.design-card{display:grid;grid-template-columns:200px 1fr;align-items:start}
+.design-card .card-img{width:200px;height:200px;aspect-ratio:auto;border-radius:12px;overflow:hidden;background:#EFE7D8}
+.design-card .card-img::after{display:none}
+.design-card .go{display:inline-block;border-bottom:1px solid var(--gold);color:var(--gold);padding-bottom:2px;text-transform:uppercase;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.5px}
+@media(max-width:560px){.design-card{grid-template-columns:132px 1fr}.design-card .card-img{width:132px;height:132px}.design-card .row{flex-wrap:wrap;gap:8px 14px}}
+.design-card .row .sb-price{white-space:nowrap}
 /* the live waitlist form on the night stop */
 .j-news .wl-form{justify-content:flex-start}
 .j-news .wl-msg,.j-news .wl-ok{font-family:'Space Mono',monospace;font-size:12px;color:rgba(247,239,226,.62);margin-top:14px}
@@ -434,7 +455,7 @@ footer{position:relative;z-index:2}
     <span class="place-tag rv">Al Quaa · Abu Dhabi · dark sky</span>
     <h2 class="rv">The darkest sky <em>in the Emirates</em></h2>
     <p class="lede rv">Two hours south of the city the light pollution ends and the Milky Way rises over the dunes. The galaxy that runs across the back of this tee was photographed here.</p>
-    <a class="design-card rv" href="/products/al-quaa-galaxy-regular/"><img src="/shirts/card/alquaa-regular-back-fit.jpg" alt="Al Quaa Galaxy"><span><small>The design · Al Quaa</small><b>Al Quaa Galaxy</b><p>The Milky Way across the back, a subtle صحراء mark on the chest. DTG print on 230gsm organic cotton, regular and oversized.</p><span class="row"><span>AED 199</span><span class="go">View the tee →</span></span></span></a>
+    <div class="design-card rv" data-handle="al-quaa-galaxy-regular"><div class="card-img" data-cycle><img class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><span><small>The design · Al Quaa</small><b>Al Quaa Galaxy</b><p>The Milky Way across the back, a subtle صحراء mark on the chest. DTG print on 230gsm organic cotton, regular and oversized.</p><span class="row"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span><a class="go" href="/products/al-quaa-galaxy-regular/">View the tee →</a></span><div class="qa" data-qa="al-quaa-galaxy-regular"></div></span></div>
   </div></div>
 </section>
 
@@ -444,7 +465,7 @@ footer{position:relative;z-index:2}
     <span class="place-tag rv">Liwa · Abu Dhabi · Empty Quarter</span>
     <h2 class="rv">Where the <em>Empty Quarter</em> begins</h2>
     <p class="lede rv">Dune ridges taller than buildings, and a sun that sets behind them in gold. Embroidered in tone-on-tone thread, the way the light sits on the sand.</p>
-    <a class="design-card rv" href="/products/empty-quarter-regular/"><img src="/shirts/card/emptyquarter-regular-front-fit.jpg" alt="Empty Quarter"><span><small>The design · Liwa</small><b>Empty Quarter</b><p>A tonal embroidered sun setting over the dune ridges, with صحراء beneath. 230gsm organic cotton, regular and oversized.</p><span class="row"><span>AED 199</span><span class="go">View the tee →</span></span></span></a>
+    <div class="design-card rv" data-handle="empty-quarter-regular"><div class="card-img" data-cycle><img class="on" src="/shirts/emptyquarter-regular-front-fit.jpg" srcset="/shirts/card/emptyquarter-regular-front-fit.jpg 800w, /shirts/emptyquarter-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-regular-back-fit.jpg" srcset="/shirts/card/emptyquarter-regular-back-fit.jpg 800w, /shirts/emptyquarter-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><span><small>The design · Liwa</small><b>Empty Quarter</b><p>A tonal embroidered sun setting over the dune ridges, with صحراء beneath. 230gsm organic cotton, regular and oversized.</p><span class="row"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span><a class="go" href="/products/empty-quarter-regular/">View the tee →</a></span><div class="qa" data-qa="empty-quarter-regular"></div></span></div>
   </div></div>
 </section>
 
@@ -454,7 +475,7 @@ footer{position:relative;z-index:2}
     <span class="place-tag rv">Wadi Naqab · Ras Al Khaimah · Hajar Mountains</span>
     <h2 class="rv">Red rock, <em>drawn in a single line</em></h2>
     <p class="lede rv">A topographic line of the peaks on the front; the rock of the Hajar across the back. The wadi behind it is a day's walk from the road.</p>
-    <a class="design-card rv" href="/products/hajar-mountains-regular/"><img src="/shirts/card/hajar-regular-back-fit.jpg" alt="Hajar Mountains"><span><small>The design · Wadi Naqab</small><b>Hajar Mountains</b><p>A topographic line of the peaks on the front; the red rock of the Hajar across the back. DTG print, 230gsm organic cotton.</p><span class="row"><span>AED 199</span><span class="go">View the tee →</span></span></span></a>
+    <div class="design-card rv" data-handle="hajar-mountains-regular"><div class="card-img" data-cycle><img class="on" src="/shirts/hajar-regular-back-fit.jpg" srcset="/shirts/card/hajar-regular-back-fit.jpg 800w, /shirts/hajar-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/hajar-regular-front-fit.jpg" srcset="/shirts/card/hajar-regular-front-fit.jpg 800w, /shirts/hajar-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><span><small>The design · Wadi Naqab</small><b>Hajar Mountains</b><p>A topographic line of the peaks on the front; the red rock of the Hajar across the back. DTG print, 230gsm organic cotton.</p><span class="row"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span><a class="go" href="/products/hajar-mountains-regular/">View the tee →</a></span><div class="qa" data-qa="hajar-mountains-regular"></div></span></div>
   </div></div>
 </section>
 
@@ -466,13 +487,13 @@ footer{position:relative;z-index:2}
     <p class="lede rv">A small, considered range — each a limited first run, tied to a real spot on the map.</p>
     <div class="j-deck">
     <div class="grid" id="grid">
-      <a class="card href="/products/al-quaa-galaxy-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy — Regular</div><div class="card-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></div></div></a>
-      <a class="card href="/products/al-quaa-galaxy-oversized/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/alquaa-oversized-back-fit.jpg" srcset="/shirts/card/alquaa-oversized-back-fit.jpg 800w, /shirts/alquaa-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/alquaa-oversized-front-fit.jpg" srcset="/shirts/card/alquaa-oversized-front-fit.jpg 800w, /shirts/alquaa-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/alquaa-model-back.jpg" srcset="/shirts/card/alquaa-model-back.jpg 800w, /shirts/alquaa-model-back.jpg 1076w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy"><img src="/shirts/alquaa-model-front.jpg" srcset="/shirts/card/alquaa-model-front.jpg 800w, /shirts/alquaa-model-front.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy"><img src="/shirts/alquaa-model-dusk.jpg" srcset="/shirts/card/alquaa-model-dusk.jpg 800w, /shirts/alquaa-model-dusk.jpg 1227w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy — Oversized</div><div class="card-price"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></div></div></a>
-      <a class="card href="/products/empty-quarter-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/emptyquarter-regular-front-fit.jpg" srcset="/shirts/card/emptyquarter-regular-front-fit.jpg 800w, /shirts/emptyquarter-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-regular-back-fit.jpg" srcset="/shirts/card/emptyquarter-regular-back-fit.jpg 800w, /shirts/emptyquarter-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter — Regular</div><div class="card-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></div></div></a>
-      <a class="card href="/products/empty-quarter-oversized/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/emptyquarter-oversized-front-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-front-fit.jpg 800w, /shirts/emptyquarter-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Oversized, oversized fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-oversized-back-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-back-fit.jpg 800w, /shirts/emptyquarter-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/emptyquarter-model-front.jpg" srcset="/shirts/card/emptyquarter-model-front.jpg 800w, /shirts/emptyquarter-model-front.jpg 1075w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy"><img src="/shirts/emptyquarter-model-stand.jpg" srcset="/shirts/card/emptyquarter-model-stand.jpg 800w, /shirts/emptyquarter-model-stand.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy"><img src="/shirts/emptyquarter-model-sunset.jpg" srcset="/shirts/card/emptyquarter-model-sunset.jpg 800w, /shirts/emptyquarter-model-sunset.jpg 1234w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter — Oversized</div><div class="card-price"><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span></div></div></a>
-      <a class="card href="/products/hajar-mountains-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/hajar-regular-back-fit.jpg" srcset="/shirts/card/hajar-regular-back-fit.jpg 800w, /shirts/hajar-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/hajar-regular-front-fit.jpg" srcset="/shirts/card/hajar-regular-front-fit.jpg 800w, /shirts/hajar-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains — Regular</div><div class="card-price"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></div></div></a>
-      <a class="card href="/products/hajar-mountains-oversized/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/hajar-oversized-back-fit.jpg" srcset="/shirts/card/hajar-oversized-back-fit.jpg 800w, /shirts/hajar-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/hajar-oversized-front-fit.jpg" srcset="/shirts/card/hajar-oversized-front-fit.jpg 800w, /shirts/hajar-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/hajar-model-back.jpg" srcset="/shirts/card/hajar-model-back.jpg 800w, /shirts/hajar-model-back.jpg 1078w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back" loading="lazy"><img src="/shirts/hajar-model-front.jpg" srcset="/shirts/card/hajar-model-front.jpg 800w, /shirts/hajar-model-front.jpg 1157w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains — Oversized</div><div class="card-price"><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></div></div></a>
-      <a class="card href="/products/sand-polo/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/polo-front.jpg" srcset="/shirts/card/polo-front.jpg 800w, /shirts/polo-front.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Sahra Polo in sand — 240gsm piqué cotton with an embroidered chest logo" loading="lazy"><img src="/shirts/polo-back.jpg" srcset="/shirts/card/polo-back.jpg 800w, /shirts/polo-back.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Sahra Polo, back — plain" loading="lazy"></div><div class="card-body"><div class="card-name">The Sahra Polo</div><div class="card-price"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></div></div></a>
+      <a class="card" href="/products/al-quaa-galaxy-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy — Regular</div><div class="card-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></div></div></a>
+      <a class="card" href="/products/al-quaa-galaxy-oversized/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/alquaa-oversized-back-fit.jpg" srcset="/shirts/card/alquaa-oversized-back-fit.jpg 800w, /shirts/alquaa-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/alquaa-oversized-front-fit.jpg" srcset="/shirts/card/alquaa-oversized-front-fit.jpg 800w, /shirts/alquaa-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/alquaa-model-back.jpg" srcset="/shirts/card/alquaa-model-back.jpg 800w, /shirts/alquaa-model-back.jpg 1076w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy"><img src="/shirts/alquaa-model-front.jpg" srcset="/shirts/card/alquaa-model-front.jpg 800w, /shirts/alquaa-model-front.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy"><img src="/shirts/alquaa-model-dusk.jpg" srcset="/shirts/card/alquaa-model-dusk.jpg 800w, /shirts/alquaa-model-dusk.jpg 1227w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Al Quaa</div><div class="card-name">Al Quaa Galaxy — Oversized</div><div class="card-price"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></div></div></a>
+      <a class="card" href="/products/empty-quarter-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/emptyquarter-regular-front-fit.jpg" srcset="/shirts/card/emptyquarter-regular-front-fit.jpg 800w, /shirts/emptyquarter-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-regular-back-fit.jpg" srcset="/shirts/card/emptyquarter-regular-back-fit.jpg 800w, /shirts/emptyquarter-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter — Regular</div><div class="card-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></div></div></a>
+      <a class="card" href="/products/empty-quarter-oversized/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/emptyquarter-oversized-front-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-front-fit.jpg 800w, /shirts/emptyquarter-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Oversized, oversized fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-oversized-back-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-back-fit.jpg 800w, /shirts/emptyquarter-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/emptyquarter-model-front.jpg" srcset="/shirts/card/emptyquarter-model-front.jpg 800w, /shirts/emptyquarter-model-front.jpg 1075w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy"><img src="/shirts/emptyquarter-model-stand.jpg" srcset="/shirts/card/emptyquarter-model-stand.jpg 800w, /shirts/emptyquarter-model-stand.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy"><img src="/shirts/emptyquarter-model-sunset.jpg" srcset="/shirts/card/emptyquarter-model-sunset.jpg 800w, /shirts/emptyquarter-model-sunset.jpg 1234w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Liwa</div><div class="card-name">Empty Quarter — Oversized</div><div class="card-price"><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span></div></div></a>
+      <a class="card" href="/products/hajar-mountains-regular/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/hajar-regular-back-fit.jpg" srcset="/shirts/card/hajar-regular-back-fit.jpg 800w, /shirts/hajar-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/hajar-regular-front-fit.jpg" srcset="/shirts/card/hajar-regular-front-fit.jpg 800w, /shirts/hajar-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains — Regular</div><div class="card-price"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></div></div></a>
+      <a class="card" href="/products/hajar-mountains-oversized/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/hajar-oversized-back-fit.jpg" srcset="/shirts/card/hajar-oversized-back-fit.jpg 800w, /shirts/hajar-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/hajar-oversized-front-fit.jpg" srcset="/shirts/card/hajar-oversized-front-fit.jpg 800w, /shirts/hajar-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/hajar-model-back.jpg" srcset="/shirts/card/hajar-model-back.jpg 800w, /shirts/hajar-model-back.jpg 1078w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back" loading="lazy"><img src="/shirts/hajar-model-front.jpg" srcset="/shirts/card/hajar-model-front.jpg 800w, /shirts/hajar-model-front.jpg 1157w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest" loading="lazy"></div><div class="card-body"><div class="card-place">Inspired by Wadi Naqab</div><div class="card-name">Hajar Mountains — Oversized</div><div class="card-price"><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></div></div></a>
+      <a class="card" href="/products/sand-polo/"><div class="card-img" data-cycle><span class="card-tag">Limited</span><img class="on" src="/shirts/polo-front.jpg" srcset="/shirts/card/polo-front.jpg 800w, /shirts/polo-front.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Sahra Polo in sand — 240gsm piqué cotton with an embroidered chest logo" loading="lazy"><img src="/shirts/polo-back.jpg" srcset="/shirts/card/polo-back.jpg 800w, /shirts/polo-back.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Sahra Polo, back — plain" loading="lazy"></div><div class="card-body"><div class="card-name">The Sahra Polo</div><div class="card-price"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></div></div></a>
     </div>
     </div>
     <div class="qual-band">
@@ -1289,6 +1310,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   /* ------------------------------------------------------------------ */
   function bindScroll(apply) {
     gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ ignoreMobileResize: true });
     /* The camera leaves stop i as stop i scrolls out and arrives at i+1 as
        stop i+1 reaches the top of the viewport: `target` = i + fraction, read
        straight from scrollY against the measured stop offsets (one reader, so
@@ -1339,36 +1361,43 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     var section = document.getElementById('s-collection'), grid = document.getElementById('grid'), cards = [].slice.call(grid.querySelectorAll('.card'));
     var ring = { theta: 0, open: 0 }, slots = [], R = 0, cx = 0, cy = 0;
     function measureRing() {
+      cards = [].slice.call(grid.querySelectorAll('.card'));
       var g = grid.getBoundingClientRect(), sec = section.getBoundingClientRect();
       R = Math.min(560, Math.max(240, innerWidth * 0.36));
       cx = g.width / 2;
       cy = innerHeight * 0.56 - (g.top - sec.top);          /* ring centre, in grid coordinates */
       slots = cards.map(function (el) { return { x: el.offsetLeft + el.offsetWidth / 2, y: el.offsetTop + el.offsetHeight / 2, w: el.offsetWidth }; });
     }
+    var settled = false;
     function placeRing() {
       var n = cards.length, open = ring.open, k;
       /* the photo slideshow (sahra-market.js) runs only once a card has settled in the grid */
       /* hold wins over the engine's own hover/touch un-hold: no pointer reaches a stack until it has settled */
       for (k = 0; k < n; k++) { var st = cards[k].querySelector('[data-cycle]'); if (st) { if (open > 0.999) { st.removeAttribute('data-hold'); st.style.pointerEvents = ''; } else { st.setAttribute('data-hold', '1'); st.style.pointerEvents = 'none'; } } }
+      if (open > 0.999) { if (!settled) { settled = true; gsap.set(cards, { clearProps: 'transform,opacity,zIndex' }); } } else settled = false;
       for (k = 0; k < n; k++) {
         var a = (k / n) * Math.PI * 2 + ring.theta;             /* angle on the ring; 0 = front */
         var rx = Math.sin(a) * R, rz = Math.cos(a) * R - R;      /* ring position, front card at z=0 */
         var depth = (Math.cos(a) + 1) / 2;                       /* 1 front .. 0 back */
         var sc = 0.62 + 0.38 * depth, op = 0.25 + 0.75 * depth;
         var x = (cx + rx - slots[k].x) * (1 - open), y = (cy - slots[k].y) * (1 - open);
+        if (settled) continue;
         gsap.set(cards[k], {
           x: x, y: y, z: rz * (1 - open),
-          rotateY: (a * 180 / Math.PI) * (1 - open),
+          /* the card at the front faces the viewer square-on; the others turn only a little as they recede */
+          rotateY: Math.sin(a) * 22 * (1 - open),
           scale: sc + (1 - sc) * open, opacity: op + (1 - op) * open
         });
       }
     }
     measureRing(); placeRing();
+    if (window.MutationObserver) { var gridRefresh = null; new MutationObserver(function () { clearTimeout(gridRefresh); gridRefresh = setTimeout(function () { ScrollTrigger.refresh(); }, 60); }).observe(grid, { childList: true }); }
     gsap.timeline({
       scrollTrigger: { trigger: section, start: 'top top', end: '+=150%', pin: true, scrub: true, anticipatePin: 1,
         invalidateOnRefresh: true, onRefresh: function () { measureRing(); placeRing(); } }
     })
-      .to(ring, { theta: -Math.PI * 2 * 0.72, ease: 'none', duration: 0.62, onUpdate: placeRing }, 0)
+      /* five cards pass the front, and the fifth is exactly at the front when the ring opens */
+      .to(ring, { theta: function () { return -(Math.PI * 2 / cards.length) * 5; }, ease: 'none', duration: 0.62, onUpdate: placeRing }, 0)
       .to(ring, { open: 1, ease: 'power2.inOut', duration: 0.38, onUpdate: placeRing }, 0.62);
   }
 
@@ -1378,6 +1407,75 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   function webglOK() {
     try { var c = document.createElement('canvas'); return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl'))); } catch (e) { return false; }
   }
+
+  /* QUICK ADD. Every product card - the seven in the grid and the three under
+     the places - gets a row of size chips. Sizes come from the cart engine's
+     own Storefront lookup the first time a card is seen; one tap adds that
+     variant and opens the drawer. Buttons live inside the card link, so their
+     clicks are stopped before the link sees them. */
+  (function quickAdd() {
+    var SHELL = '<span class="qa-l">Quick add</span><span class="qa-s"><span class="qa-w">Sizes…</span></span>';
+    function rowFor(handle) {
+      var row = document.createElement('div'); row.className = 'qa'; row.setAttribute('data-qa', handle);
+      row.innerHTML = SHELL;
+      return row;
+    }
+    function fill(row) {
+      var handle = row.getAttribute('data-qa'); if (!handle || row.getAttribute('data-ready')) return;
+      row.setAttribute('data-ready', '1');
+      if (!window.SahraCart || !SahraCart.variants) { row.hidden = true; return; }
+      if (!lookups[handle]) lookups[handle] = SahraCart.variants(handle);   /* one lookup per product, shared by its cards */
+      lookups[handle].then(function (vs) {
+        var s = row.querySelector('.qa-s'); s.innerHTML = '';
+        if (!vs || !vs.length) { row.hidden = true; return; }
+        vs.forEach(function (v) {
+          var b = document.createElement('button'); b.type = 'button'; b.className = 'qa-b'; b.textContent = v.title;
+          b.setAttribute('aria-label', 'Add ' + v.title + ' to cart');
+          if (!v.availableForSale) { b.disabled = true; b.title = 'Sold out'; }
+          b.addEventListener('click', function (e) {
+            e.preventDefault(); e.stopPropagation();
+            if (b.disabled) return;
+            var was = b.textContent; b.disabled = true; b.textContent = '…';
+            SahraCart.add(v.id).then(function () {
+              b.textContent = '✓'; setTimeout(function () { b.textContent = was; b.disabled = false; }, 1600);
+              if (SahraCart.open) SahraCart.open();
+              if (window.track) track('add_to_cart', { item_id: handle, size: v.title, source: 'journey-quick-add' });
+            }).catch(function () { b.textContent = was; b.disabled = false; });
+          });
+          s.appendChild(b);
+        });
+        /* the ring measured its slots before the chips existed: re-measure once they are in */
+        if (window.ScrollTrigger) { clearTimeout(refresh); refresh = setTimeout(function () { ScrollTrigger.refresh(); }, 120); }
+      }).catch(function () { row.hidden = true; });
+    }
+    var io = null, refresh = null, lookups = {};
+    function watch(row) {
+      if (row.getAttribute('data-wired')) return; row.setAttribute('data-wired', '1');
+      if (!row.querySelector('.qa-s')) row.innerHTML = SHELL; /* the place cards ship an empty slot (hidden by :empty until now) */
+      /* stop every click inside the row reaching the card link */
+      row.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); });
+      if (io) io.observe(row); else fill(row);
+    }
+    /* grid cards arrive from the Storefront after this runs: wire them as they land.
+       Place cards ship their slot in the markup. */
+    function wireGrid() {
+      document.querySelectorAll('#grid .card').forEach(function (c) {
+        var m = (c.getAttribute('href') || '').match(/\/products\/([^\/]+)\//); var body = c.querySelector('.card-body');
+        if (m && body && !body.querySelector('.qa')) body.appendChild(rowFor(m[1]));
+      });
+      document.querySelectorAll('.qa').forEach(watch);
+    }
+    var start = function () {
+      try {
+        io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { fill(e.target); io.unobserve(e.target); } }); }, { rootMargin: '400px 0px' });
+      } catch (e) { io = null; }
+      wireGrid();
+      var g = document.getElementById('grid');
+      if (g && window.MutationObserver) new MutationObserver(wireGrid).observe(g, { childList: true });
+    };
+    /* the cart engine loads deferred: wait for it */
+    var tries = 0, wait = setInterval(function () { if (window.SahraCart || ++tries > 40) { clearInterval(wait); start(); } }, 150);
+  })();
   /* the nav turns cream (dark mark, dark links) while its bar sits over a paper
      stop - a plain scroll listener, so it also works without GSAP */
   (function paperNav() {
