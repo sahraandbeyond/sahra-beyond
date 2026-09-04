@@ -92,6 +92,7 @@ nav.on-hero .nav-links a,nav.on-hero .logo-a{color:#fff}nav.on-hero .logo-b{colo
 .qual-item{padding:0 4px;border-top:1px solid var(--line);padding-top:20px}
 .qual-item b{display:block;font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--ink);margin-bottom:8px}
 .qual-item span{display:block;font-size:13px;line-height:1.6;color:var(--mist)}
+@media(max-width:760px){.qual{grid-template-columns:1fr 1fr;gap:20px}}
 .news{background:linear-gradient(180deg,#2E2450,#7A4F63 58%,#C0702E);color:#fff;text-align:center;overflow:hidden}
 .news .stars{opacity:.4}.news .inner{position:relative;z-index:2}
 .news h2{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,40px);font-weight:800;margin-bottom:10px}
@@ -412,7 +413,7 @@ body.has-topbar nav{top:var(--topbar-h,34px)}
 .fit-b:not(.on):hover{color:#F7EFE2}
 @media(max-width:560px){.fit-b{padding:7px 10px;font-size:10px;letter-spacing:1.2px;flex:1;text-align:center}.design-card>.fit-sw{margin-top:12px;justify-self:stretch;display:flex}}
 /* on phones the ring shows photo, name and price; the size chips join once the cards have settled */
-#grid .qa{max-height:140px;transition:max-height .45s ease,opacity .35s ease,margin-top .45s ease,padding-top .45s ease,border-top-width .45s ease}
+#grid .qa{max-height:140px;transition:opacity .35s ease}
 @media(max-width:760px){.collection.ring-on #grid .qa{max-height:0;opacity:0;margin-top:0;padding-top:0;border-top-width:0;overflow:hidden}}
 /* the live waitlist form on the night stop */
 .j-news .wl-form{justify-content:flex-start}
@@ -1398,7 +1399,8 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       /* hold wins over the engine's own hover/touch un-hold: no pointer reaches a stack until it has settled */
       for (k = 0; k < n; k++) { var st = cards[k].querySelector('[data-cycle]'); if (st) { if (open > 0.999) { st.removeAttribute('data-hold'); st.style.pointerEvents = ''; } else { if (moving) st.setAttribute('data-hold', '1'); st.style.pointerEvents = 'none'; } } }
       if (open > 0.999) { if (!settled) { settled = true; gsap.set(cards, { clearProps: 'transform,opacity,zIndex' }); } } else settled = false;
-      section.classList.toggle('ring-on', open <= 0.999);
+      /* not during a refresh: ScrollTrigger rewinds the scrub to measure, which would collapse the rows and measure the short section */
+      if (!ScrollTrigger.isRefreshing) section.classList.toggle('ring-on', open <= 0.999);
       for (k = 0; k < n; k++) {
         var a = (k / n) * Math.PI * 2 + ring.theta;             /* angle on the ring; 0 = front */
         var rx = Math.sin(a) * R, rz = Math.cos(a) * R - R;      /* ring position, front card at z=0 */
@@ -1418,7 +1420,8 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     if (window.MutationObserver) { var gridRefresh = null; new MutationObserver(function () { clearTimeout(gridRefresh); gridRefresh = setTimeout(function () { ScrollTrigger.refresh(); }, 60); }).observe(grid, { childList: true }); }
     gsap.timeline({
       scrollTrigger: { trigger: section, start: 'top top', end: '+=150%', pin: true, scrub: true, anticipatePin: 1,
-        invalidateOnRefresh: true, onRefresh: function () { measureRing(); placeRing(); } }
+        invalidateOnRefresh: true, onRefresh: function () { measureRing(); placeRing(); },
+        onLeave: function () { if (phone) setTimeout(function () { ScrollTrigger.refresh(); }, 0); } }
     })
       /* five cards pass the front, and the fifth is exactly at the front when the ring opens */
       .to(ring, { theta: function () { return -(Math.PI * 2 / cards.length) * 5; }, ease: 'none', duration: 0.62, onUpdate: placeRing }, 0)

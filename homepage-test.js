@@ -880,6 +880,8 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   check('the ring re-collects its cards and clears them once open', /cards = \[\]\.slice\.call\(grid\.querySelectorAll\('\.card'\)\);/.test(page) && /clearProps: 'transform,opacity,zIndex'/.test(page));
   check('the ring front card faces the viewer', /rotateY: Math\.sin\(a\) \* 22 \* \(1 - open\)/.test(page));
   check('the ring cards run their slideshow when the scroll rests (holds only while moving)', /if \(moving\) st\.setAttribute\('data-hold', '1'\)/.test(page) && /function holdRing\(on\)/.test(page) && /restT = setTimeout\(function \(\) \{ moving = false; if \(!settled\) holdRing\(false\); \}, 350\)/.test(page));
+  check('the collection section is re-measured as the scroll leaves the pin (phone rows grow at settle)', /onLeave: function \(\) \{ if \(phone\) setTimeout\(function \(\) \{ ScrollTrigger\.refresh\(\); \}, 0\); \}/.test(page) && /if \(!ScrollTrigger\.isRefreshing\) section\.classList\.toggle\('ring-on'/.test(page));
+  check('the Made-to-last band is two columns on phones', /@media\(max-width:760px\)\{\.qual\{grid-template-columns:1fr 1fr/.test(page));
   check('the plates are referenced from /journey/plates/', /\/journey\/plates\/[a-z-]+\.jpg/.test(page));
   check('the Storefront list is filtered before fill() (free tote never listed)', /\.filter\(forSale\);fill\(products\);/.test(page));
   check('the review band markers are present', /<!--REVIEWS:START-->/.test(page) && /<!--REVIEWS:END-->/.test(page));
