@@ -224,7 +224,7 @@ const PROD   = s => String(s || '').toLowerCase().replace(/^.*\/products\//, '')
 /* Every product that must own a card in the static grid. */
 const CURATED = ['al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'empty-quarter-regular', 'empty-quarter-oversized', 'hajar-mountains-regular', 'hajar-mountains-oversized', 'sand-polo'];
 
-for (const file of ['index.html', 'homepage-preview.html']) {
+for (const file of ['index.html', 'classic/index.html', 'homepage-preview.html']) {
   console.log('\n\x1b[1m' + file + '\x1b[0m');
   const doc = scene();
   const api = loadFill(file)(doc);
@@ -457,7 +457,7 @@ console.log('\n\x1b[1mshop page - the free tote is never listed\x1b[0m');
    appeared. Touch must scroll natively, the cards must ship a card-sized
    photo, and the warm-up must run ahead of the viewport. */
 console.log('\n\x1b[1mhero -> cards on touch\x1b[0m');
-['index.html', 'homepage-preview.html'].forEach(pg => {
+['classic/index.html', 'homepage-preview.html'].forEach(pg => {
   const page = fs.readFileSync(path.join(__dirname, pg), 'utf8');
   check(pg + ': Lenis smooth scroll is not started on touch devices',
     /if\(window\.Lenis&&!reduced&&!isTouch\)/.test(page), 'a non-passive touchmove listener will stall native scrolling');
@@ -696,7 +696,7 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
         const m = fs.readFileSync(path.join(__dirname, pg), 'utf8').match(/\[data-cycle\] img\{[^}]*transition:opacity ([\d.]+)s/);
         return m ? Math.round(parseFloat(m[1]) * 1000) : NaN;
       };
-      ['index.html', 'homepage-preview.html', 'build.js', 'build-products.js'].forEach(pg => {
+      ['index.html', 'classic/index.html', 'homepage-preview.html', 'build.js', 'build-products.js'].forEach(pg => {
         check(pg + ': the engine holds the outgoing frame longer than the fade (' + fadeMs(pg) + 'ms)', eng.HOLD > fadeMs(pg), 'HOLD=' + eng.HOLD);
       });
     }
@@ -834,7 +834,7 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
     /* The CSS and the engine live in different files and must agree - and the
        rule is duplicated across every page that renders a stack, so check them
        all rather than trusting one. */
-    ['index.html', 'homepage-preview.html', 'build.js', 'build-products.js'].forEach(pg => {
+    ['index.html', 'classic/index.html', 'homepage-preview.html', 'build.js', 'build-products.js'].forEach(pg => {
       const page = fs.readFileSync(path.join(__dirname, pg), 'utf8');
       const wasRule = (page.match(/\[data-cycle\] img\.was\{([^}]*)\}/) || [])[1] || '';
       const onRule = (page.match(/\[data-cycle\] img\.on\{([^}]*)\}/) || [])[1] || '';
@@ -860,6 +860,39 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
   check('an empty stack does not throw', true);
 })().then(() => {
 
+
+/* ---- the scroll-journey homepage (4 Sep 2026) ----------------------------
+   index.html is the journey page; the previous homepage lives at /classic/
+   (noindex). What must hold on the live homepage, in the order it broke. */
+console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
+{
+  const page = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  const head = page.slice(0, page.indexOf('</head>'));
+  check('index.html is indexable (no robots noindex)', !/name="robots"[^>]*noindex/.test(head));
+  check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond — Original UAE T-Shirts<\/title>/.test(page));
+  check('index.html canonical is the root', /<link rel="canonical" href="https:\/\/www\.sahraandbeyond\.ae\/">/.test(head));
+  check('index.html does not load Lenis (native scroll drives the journey)', !/lenis/i.test(head));
+  check('the seven grid cards are real links (the missing-quote bug never returns)',
+    (page.match(/<a class="card" href="\/products\/[^"]+\/">/g) || []).length === 7 && !/class="card href/.test(page));
+  check('the three place cards carry a fit switch', (page.match(/data-fit-pick="regular"/g) || []).length === 3 && (page.match(/data-fit-pick="oversized"/g) || []).length === 3);
+  check('every fit on a place card has its own quick-add slot', (page.match(/<div class="qa" data-qa="/g) || []).length === 6);
+  check('the quick-add engine is on the page', /function quickAdd\(\)/.test(page) && /SahraCart\.variants\(handle\)/.test(page));
+  check('the ring re-collects its cards and clears them once open', /cards = \[\]\.slice\.call\(grid\.querySelectorAll\('\.card'\)\);/.test(page) && /clearProps: 'transform,opacity,zIndex'/.test(page));
+  check('the ring front card faces the viewer', /rotateY: Math\.sin\(a\) \* 22 \* \(1 - open\)/.test(page));
+  check('the plates are referenced from /journey/plates/', /\/journey\/plates\/[a-z-]+\.jpg/.test(page));
+  check('the Storefront list is filtered before fill() (free tote never listed)', /\.filter\(forSale\);fill\(products\);/.test(page));
+  check('the review band markers are present', /<!--REVIEWS:START-->/.test(page) && /<!--REVIEWS:END-->/.test(page));
+  check('the film is the live lazy video', /<video class="vband-v" id="brandVideo"/.test(page) && /data-src="\/video\/brand\.mp4/.test(page));
+  check('the cart and market engines load', /\/assets\/sahra-cart\.js/.test(page) && /\/assets\/sahra-market\.js/.test(page));
+  const classic = fs.readFileSync(path.join(__dirname, 'classic', 'index.html'), 'utf8');
+  const chead = classic.slice(0, classic.indexOf('</head>'));
+  check('classic/index.html is noindex with its own canonical', /noindex/.test(chead) && /href="https:\/\/www\.sahraandbeyond\.ae\/classic\/"/.test(chead));
+  check('journey/index.html is gone (it redirects to /)', !fs.existsSync(path.join(__dirname, 'journey', 'index.html')));
+  const vercel = JSON.parse(fs.readFileSync(path.join(__dirname, 'vercel.json'), 'utf8'));
+  check('vercel.json redirects /journey/ to /', ['/journey', '/journey/'].every(s => vercel.redirects.some(r => r.source === s && r.destination === '/')));
+  const sitemap = fs.existsSync(path.join(__dirname, 'sitemap.xml')) ? fs.readFileSync(path.join(__dirname, 'sitemap.xml'), 'utf8') : '';
+  check('the sitemap lists neither /classic/ nor /journey/', !/\/classic\/|\/journey\//.test(sitemap));
+}
 console.log('\n' + (fail ? '\x1b[31m' : '\x1b[32m') + pass + ' passed, ' + fail + ' failed\x1b[0m');
 process.exit(fail ? 1 : 0);
 }).catch(e => { console.error(e); process.exit(1); });

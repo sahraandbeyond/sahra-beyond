@@ -2041,9 +2041,9 @@ console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.le
    sitting harmlessly next to each other. */
 (function () {
   const MARK = /<!--REVIEWS:START-->[\s\S]*?<!--REVIEWS:END-->/;
-  /* journey/index.html: the scroll-journey homepage preview carries the same
-     band, so the Judge.me sync keeps it current too */
-  for (const f of ['index.html', 'homepage-preview.html', 'journey/index.html']) {
+  /* classic/index.html: the previous homepage, kept reachable (noindex), carries
+     the same band, so the Judge.me sync keeps it current too */
+  for (const f of ['index.html', 'homepage-preview.html', 'classic/index.html']) {
     const file = path.join(ROOT, f);
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
@@ -2114,7 +2114,7 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
   const CSSMARK = /\/\*VBAND-CSS-START\*\/[\s\S]*?\/\*VBAND-CSS-END\*\//;
   const payload = VB.exists() ? (VB.band() + VB.JS) : '';
 
-  for (const f of ['index.html', 'homepage-preview.html']) {
+  for (const f of ['index.html', 'homepage-preview.html', 'classic/index.html']) {
     const file = path.join(ROOT, f);
     if (!fs.existsSync(file)) continue;
     const before = fs.readFileSync(file, 'utf8');
@@ -2185,7 +2185,7 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
 (function () {
   const MARK = /<!--VIDEO:START-->[\s\S]*?<!--VIDEO:END-->/;
   const payload = VB.exists() ? (VB.band() + VB.JS) : '';
-  for (const f of ['index.html', 'homepage-preview.html']) {
+  for (const f of ['index.html', 'homepage-preview.html', 'classic/index.html']) {
     const file = path.join(ROOT, f);
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');

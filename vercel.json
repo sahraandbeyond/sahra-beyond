@@ -196,6 +196,21 @@
       "source": "/products/liwa-dune-tee/",
       "destination": "/products/empty-quarter-regular/",
       "permanent": true
+    },
+    {
+      "source": "/journey",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/journey/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/journey/index.html",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
