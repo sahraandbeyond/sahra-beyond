@@ -1378,7 +1378,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
        links, prices or cards changes. Position is computed per frame from a
        scrubbed proxy: x/y/z/rotateY per card from (its slot, the ring). */
     var section = document.getElementById('s-collection'), grid = document.getElementById('grid'), cards = [].slice.call(grid.querySelectorAll('.card'));
-    var ring = { theta: 0, open: 0 }, slots = [], R = 0, cx = 0, cy = 0, phone = false;
+    var ring = { theta: 0, open: 0, spin: 0 }, slots = [], R = 0, cx = 0, cy = 0, phone = false;
     function measureRing() {
       cards = [].slice.call(grid.querySelectorAll('.card'));
       var g = grid.getBoundingClientRect(), sec = section.getBoundingClientRect();
@@ -1392,11 +1392,12 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     }
     var settled = false, moving = false, restT = null;
     function holdRing(on) { for (var i = 0; i < cards.length; i++) { var st = cards[i].querySelector('[data-cycle]'); if (st) { if (on) st.setAttribute('data-hold', '1'); else st.removeAttribute('data-hold'); } } }
-    window.addEventListener('scroll', function () {
+    function restKick() {
       if (settled) return;
       if (!moving) { moving = true; holdRing(true); }
       clearTimeout(restT); restT = setTimeout(function () { moving = false; if (!settled) holdRing(false); }, 350);
-    }, { passive: true });
+    }
+    window.addEventListener('scroll', restKick, { passive: true });
     function placeRing() {
       var n = cards.length, open = ring.open, k;
       if (open < 0.999) { var gb = grid.getBoundingClientRect(), sb = section.getBoundingClientRect(); cy = innerHeight * (phone ? 0.63 : 0.56) - (gb.top - sb.top); }
@@ -1407,7 +1408,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       /* not during a refresh: ScrollTrigger rewinds the scrub to measure, which would collapse the rows and measure the short section */
       if (!ScrollTrigger.isRefreshing) section.classList.toggle('ring-on', open <= 0.999);
       for (k = 0; k < n; k++) {
-        var a = (k / n) * Math.PI * 2 + ring.theta;             /* angle on the ring; 0 = front */
+        var a = (k / n) * Math.PI * 2 + ring.theta + ring.spin; /* angle on the ring; 0 = front; spin = the swipe */
         var rx = Math.sin(a) * R, rz = Math.cos(a) * R - R;      /* ring position, front card at z=0 */
         var depth = (Math.cos(a) + 1) / 2;                       /* 1 front .. 0 back */
         var sc = (0.62 + 0.38 * depth) * (phone ? 1.04 : 1), op = 0.25 + 0.75 * depth;
@@ -1432,10 +1433,13 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       .to(ring, { theta: function () { return -(Math.PI * 2 / cards.length) * 5; }, ease: 'none', duration: 0.62, onUpdate: placeRing }, 0)
       .to(ring, { open: 1, ease: 'power2.inOut', duration: 0.38, onUpdate: placeRing }, 0.62);
     (function swipe() {
-      var drag = null, swallow = false;
+      /* the swipe spins the ring on its own axis (ring.spin, added to the scroll's
+         theta) and loops in both directions; only the scroll opens the grid */
+      var drag = null, swallow = false, n = cards.length, stepA = Math.PI * 2 / n, snapTw = null;
       grid.addEventListener('pointerdown', function (e) {
         if (settled || (e.pointerType === 'mouse' && e.button !== 0)) return;
-        drag = { id: e.pointerId, x: e.clientX, y: e.clientY, sy: window.pageYOffset, axis: null };
+        if (snapTw) { snapTw.kill(); snapTw = null; }
+        drag = { id: e.pointerId, x: e.clientX, y: e.clientY, spin: ring.spin, axis: null };
       });
       grid.addEventListener('pointermove', function (e) {
         if (!drag || e.pointerId !== drag.id) return;
@@ -1443,12 +1447,20 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
         if (!drag.axis) { if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return; drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; if (drag.axis === 'x' && grid.setPointerCapture) { try { grid.setPointerCapture(e.pointerId); } catch (x) {} } }
         if (drag.axis !== 'x') return;
         swallow = true;
-        var st = ringTl.scrollTrigger, perCard = (st.end - st.start) * 0.62 / 5, step = Math.max(160, (slots[0] && slots[0].w) || 200);
-        window.scrollTo(0, Math.max(st.start, Math.min(st.end, drag.sy - dx * perCard / step)));
+        var step = Math.max(160, (slots[0] && slots[0].w) || 200);      /* one card width of drag = one card of turn */
+        ring.spin = drag.spin + dx / step * stepA;
+        restKick(); placeRing();
       });
       /* a mouse drag over a card link would start native link-dragging and cancel the pointer stream */
       grid.addEventListener('dragstart', function (e) { if (!settled) e.preventDefault(); });
-      var end = function () { drag = null; setTimeout(function () { swallow = false; }, 50); };
+      var end = function () {
+        if (drag && drag.axis === 'x') {
+          /* settle on the nearest card, then let the slideshow run */
+          var total = ring.theta + ring.spin, target = Math.round(total / stepA) * stepA - ring.theta;
+          snapTw = gsap.to(ring, { spin: target, duration: 0.45, ease: 'power2.out', onUpdate: function () { restKick(); placeRing(); }, onComplete: function () { snapTw = null; } });
+        }
+        drag = null; setTimeout(function () { swallow = false; }, 50);
+      };
       grid.addEventListener('pointerup', end); grid.addEventListener('pointercancel', end);
       /* a drag must not end as a click on the card under the finger */
       grid.addEventListener('click', function (e) { if (swallow) { e.preventDefault(); e.stopPropagation(); } }, true);
