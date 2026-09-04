@@ -1,9 +1,26 @@
 {
  "handle": "al-quaa-galaxy-regular",
- "count": 1,
+ "count": 2,
  "average": 5,
- "syncedAt": "2026-09-01",
+ "syncedAt": "2026-09-03",
  "reviews": [
+  {
+   "id": 1319843875,
+   "rating": 5,
+   "title": "",
+   "body": "The quality is amazing - super soft, breathable and perfect for everyday wear. The design is unique and meaningful. You can feel the passion in every piece. \n\nHighly recommended Sahra & Beyond to everyone!",
+   "name": "Mustafa Chulawala",
+   "date": "2026-09-03",
+   "verified": true,
+   "photos": [
+    "https://review-images.judgeme.com/sahra-beyond/1788426503__1788426494814-img_4224__original.jpeg?quality=80&width=1024",
+    "https://review-images.judgeme.com/sahra-beyond/1788426509__1788426494815-img_4225__original.jpeg?quality=80&width=1024"
+   ],
+   "handle": "al-quaa-galaxy-regular",
+   "externalId": 9498369491132,
+   "productTitle": "Al Quaa Galaxy — Regular",
+   "reply": ""
+  },
   {
    "id": 1307867750,
    "rating": 5,
