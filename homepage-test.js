@@ -882,6 +882,8 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   check('the ring cards run their slideshow when the scroll rests (holds only while moving)', /if \(moving\) st\.setAttribute\('data-hold', '1'\)/.test(page) && /function holdRing\(on\)/.test(page) && /restT = setTimeout\(function \(\) \{ moving = false; if \(!settled\) holdRing\(false\); \}, 350\)/.test(page));
   check('the collection section is re-measured as the scroll leaves the pin (phone rows grow at settle)', /onLeave: function \(\) \{ if \(phone\) setTimeout\(function \(\) \{ ScrollTrigger\.refresh\(\); \}, 0\); \}/.test(page) && /if \(!ScrollTrigger\.isRefreshing\) section\.classList\.toggle\('ring-on'/.test(page));
   check('the Made-to-last band is two columns on phones', /@media\(max-width:760px\)\{\.qual\{grid-template-columns:1fr 1fr/.test(page));
+  check('the ring can be swiped: a horizontal drag moves the page inside the pin, vertical stays native', /function swipe\(\)/.test(page) && /touch-action:pan-y/.test(page) && /window\.scrollTo\(0, Math\.max\(st\.start, Math\.min\(st\.end,/.test(page) && /dragstart/.test(page));
+  check('review filter chips carry no counts (the band caps at 6 while the aggregate counts all)', !/rv-chip[^>]*>All \(/.test(page) && !/★ \(\d+\)<\/button>/.test(page) && /data-star="all">All</.test(fs.readFileSync(path.join(__dirname, 'reviews-render.js'), 'utf8')));
   check('the plates are referenced from /journey/plates/', /\/journey\/plates\/[a-z-]+\.jpg/.test(page));
   check('the Storefront list is filtered before fill() (free tote never listed)', /\.filter\(forSale\);fill\(products\);/.test(page));
   check('the review band markers are present', /<!--REVIEWS:START-->/.test(page) && /<!--REVIEWS:END-->/.test(page));

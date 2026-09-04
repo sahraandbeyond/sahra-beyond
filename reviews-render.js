@@ -225,11 +225,13 @@ function homepageBand() {
         <span class="rv-count">from ${count} review${count === 1 ? '' : 's'}</span>
       </div>
       <div class="rv-filters" data-rv-filters>
+        <!-- no counts on the chips: the band shows the newest 6 while the aggregate counts every
+             review, so "All (6)" next to "from 8 reviews" read as a stale number (Faheem, 4 Sep 2026) -->
         <div class="rv-chips" role="group" aria-label="Filter reviews by rating">
-          <button type="button" class="rv-chip on" data-star="all">All (${picked.length})</button>
+          <button type="button" class="rv-chip on" data-star="all">All</button>
           ${[5,4,3,2,1].map(st => {
             const n = picked.filter(r => Math.round(r.rating) === st).length;
-            return n ? `<button type="button" class="rv-chip" data-star="${st}">${st}★ (${n})</button>` : '';
+            return n ? `<button type="button" class="rv-chip" data-star="${st}">${st}★</button>` : '';
           }).join('')}
         </div>
         <label class="rv-sort"><span>Sort</span>

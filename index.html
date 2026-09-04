@@ -406,6 +406,9 @@ body.has-topbar nav{top:var(--topbar-h,34px)}
 @media(max-width:560px){.design-card{grid-template-columns:132px 1fr}.design-card .card-img{width:132px;height:132px}.design-card .row{flex-wrap:wrap;gap:8px 14px}}
 .design-card .row .sb-price{white-space:nowrap}
 .design-card [hidden]{display:none!important}
+/* the ring can be swiped: vertical pans stay native, horizontal ones turn the ring; no text selection mid-drag */
+.collection.ring-on .grid,.collection.ring-on .grid *{touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.collection.ring-on .grid .card{cursor:grab}
 /* the fit switch: Regular / Oversized, swapping photos, link, price and sizes */
 .fit-sw{display:inline-flex;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:3px;margin:2px 0 12px}
 .fit-b{border:0;background:transparent;color:rgba(247,239,226,.72);font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
@@ -589,9 +592,11 @@ body.dark-bg .rv-stars{color:#E9B978}
         <span class="rv-count">from 8 reviews</span>
       </div>
       <div class="rv-filters" data-rv-filters>
+        <!-- no counts on the chips: the band shows the newest 6 while the aggregate counts every
+             review, so "All (6)" next to "from 8 reviews" read as a stale number (Faheem, 4 Sep 2026) -->
         <div class="rv-chips" role="group" aria-label="Filter reviews by rating">
-          <button type="button" class="rv-chip on" data-star="all">All (6)</button>
-          <button type="button" class="rv-chip" data-star="5">5★ (6)</button>
+          <button type="button" class="rv-chip on" data-star="all">All</button>
+          <button type="button" class="rv-chip" data-star="5">5★</button>
         </div>
         <label class="rv-sort"><span>Sort</span>
           <select data-rv-sort aria-label="Sort reviews">
@@ -1418,7 +1423,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     }
     measureRing(); placeRing();
     if (window.MutationObserver) { var gridRefresh = null; new MutationObserver(function () { clearTimeout(gridRefresh); gridRefresh = setTimeout(function () { ScrollTrigger.refresh(); }, 60); }).observe(grid, { childList: true }); }
-    gsap.timeline({
+    var ringTl = gsap.timeline({
       scrollTrigger: { trigger: section, start: 'top top', end: '+=150%', pin: true, scrub: true, anticipatePin: 1,
         invalidateOnRefresh: true, onRefresh: function () { measureRing(); placeRing(); },
         onLeave: function () { if (phone) setTimeout(function () { ScrollTrigger.refresh(); }, 0); } }
@@ -1426,6 +1431,28 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       /* five cards pass the front, and the fifth is exactly at the front when the ring opens */
       .to(ring, { theta: function () { return -(Math.PI * 2 / cards.length) * 5; }, ease: 'none', duration: 0.62, onUpdate: placeRing }, 0)
       .to(ring, { open: 1, ease: 'power2.inOut', duration: 0.38, onUpdate: placeRing }, 0.62);
+    (function swipe() {
+      var drag = null, swallow = false;
+      grid.addEventListener('pointerdown', function (e) {
+        if (settled || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        drag = { id: e.pointerId, x: e.clientX, y: e.clientY, sy: window.pageYOffset, axis: null };
+      });
+      grid.addEventListener('pointermove', function (e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!drag.axis) { if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return; drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; if (drag.axis === 'x' && grid.setPointerCapture) { try { grid.setPointerCapture(e.pointerId); } catch (x) {} } }
+        if (drag.axis !== 'x') return;
+        swallow = true;
+        var st = ringTl.scrollTrigger, perCard = (st.end - st.start) * 0.62 / 5, step = Math.max(160, (slots[0] && slots[0].w) || 200);
+        window.scrollTo(0, Math.max(st.start, Math.min(st.end, drag.sy - dx * perCard / step)));
+      });
+      /* a mouse drag over a card link would start native link-dragging and cancel the pointer stream */
+      grid.addEventListener('dragstart', function (e) { if (!settled) e.preventDefault(); });
+      var end = function () { drag = null; setTimeout(function () { swallow = false; }, 50); };
+      grid.addEventListener('pointerup', end); grid.addEventListener('pointercancel', end);
+      /* a drag must not end as a click on the card under the finger */
+      grid.addEventListener('click', function (e) { if (swallow) { e.preventDefault(); e.stopPropagation(); } }, true);
+    })();
   }
 
   /* ------------------------------------------------------------------ */

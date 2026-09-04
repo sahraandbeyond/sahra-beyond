@@ -653,9 +653,11 @@ body.dark-bg .rv-stars{color:#E9B978}
         <span class="rv-count">from 8 reviews</span>
       </div>
       <div class="rv-filters" data-rv-filters>
+        <!-- no counts on the chips: the band shows the newest 6 while the aggregate counts every
+             review, so "All (6)" next to "from 8 reviews" read as a stale number (Faheem, 4 Sep 2026) -->
         <div class="rv-chips" role="group" aria-label="Filter reviews by rating">
-          <button type="button" class="rv-chip on" data-star="all">All (6)</button>
-          <button type="button" class="rv-chip" data-star="5">5★ (6)</button>
+          <button type="button" class="rv-chip on" data-star="all">All</button>
+          <button type="button" class="rv-chip" data-star="5">5★</button>
         </div>
         <label class="rv-sort"><span>Sort</span>
           <select data-rv-sort aria-label="Sort reviews">
