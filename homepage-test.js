@@ -523,17 +523,17 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
   check('normCycle exists and runs before cycles()', a > -1 && b > a);
   const norm = new Function(src.slice(a, b) + '\n; return normCycle;')();
 
-  /* ---- THE BEAT: every card turns over together, every 3s -------------
+  /* ---- THE BEAT: every card turns over together, every 1.5s (3s until 4 Sep) --
      The per-stack cadence + half-tick phase offset (9.50) stopped the A/B
      blink but made the grid change somewhere all the time: "very chaotic,
      doesn't give that premium feel" (Faheem, 2 Sep 2026). Decision: one
-     shared beat every 3 seconds; if any visible card's next photo is not
+     shared beat (1.5s since 4 Sep 2026); if any visible card's next photo is not
      loaded, everyone waits (up to 3 beats), and all switches land in ONE
      synchronous pass so they share a paint. */
   {
     check('the per-stack cadence is gone', src.indexOf('function framePeriod') < 0 && src.indexOf('(tick + n)') < 0,
       'framePeriod / phase offset still present - cards will not change together');
-    check('the beat is 3 seconds', /var BEAT = 3000\b/.test(src));
+    check('the beat is 1.5 seconds (3s until 4 Sep 2026)', /var BEAT = 1500\b/.test(src));
     check('the grid waits at most 3 beats for a missing photo', /MAX_WAIT = 3\b/.test(src));
     const fr0 = src.indexOf('  function frameReady(img)');
     let eng = null;
@@ -879,6 +879,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   check('the quick-add engine is on the page', /function quickAdd\(\)/.test(page) && /SahraCart\.variants\(handle\)/.test(page));
   check('the ring re-collects its cards and clears them once open', /cards = \[\]\.slice\.call\(grid\.querySelectorAll\('\.card'\)\);/.test(page) && /clearProps: 'transform,opacity,zIndex'/.test(page));
   check('the ring front card faces the viewer', /rotateY: Math\.sin\(a\) \* 22 \* \(1 - open\)/.test(page));
+  check('the ring cards run their slideshow when the scroll rests (holds only while moving)', /if \(moving\) st\.setAttribute\('data-hold', '1'\)/.test(page) && /function holdRing\(on\)/.test(page) && /restT = setTimeout\(function \(\) \{ moving = false; if \(!settled\) holdRing\(false\); \}, 350\)/.test(page));
   check('the plates are referenced from /journey/plates/', /\/journey\/plates\/[a-z-]+\.jpg/.test(page));
   check('the Storefront list is filtered before fill() (free tote never listed)', /\.filter\(forSale\);fill\(products\);/.test(page));
   check('the review band markers are present', /<!--REVIEWS:START-->/.test(page) && /<!--REVIEWS:END-->/.test(page));

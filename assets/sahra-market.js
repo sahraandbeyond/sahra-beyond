@@ -371,13 +371,14 @@
     return nxt;
   }
 
-  /* THE BEAT: every card turns over on the same instant, every 3 seconds.
+  /* THE BEAT: every card turns over on the same instant, every 1.5 seconds
+     (3 seconds until 4 Sep 2026; Faheem asked for a quicker turn).
 
      The engine used to give each stack its own cadence (1s for rich stacks,
      3s for two-frame ones) and offset neighbours by a half-tick, so the grid
      was always changing somewhere. Faheem, 2 Sep 2026: "it feels and looks
      very chaotic and doesn't give that premium feel". Decision: one shared
-     beat, all visible cards change together, 3s apart.
+     beat, all visible cards change together, one BEAT apart.
 
      Sync is enforced at three levels:
        1. one timer, one pass, no per-card phase offset;
@@ -391,7 +392,7 @@
           all the class changes land in one synchronous pass, i.e. in the same
           paint. Without this, seven decode() promises resolved tens of ms
           apart and seven fades started tens of ms apart - visibly ragged. */
-  var BEAT = 3000, MAX_WAIT = 3, HOLD = 720, DECODE_CAP = 1500;
+  var BEAT = 1500, MAX_WAIT = 3, HOLD = 720, DECODE_CAP = 1500;   /* 1.5s since 4 Sep 2026 (was 3s) */
 
   function nextPair(im) {
     var i = 0, k;

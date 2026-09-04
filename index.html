@@ -1384,13 +1384,19 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       var gr = grid.getBoundingClientRect();
       slots = cards.map(function (el) { var r = el.getBoundingClientRect(); return { x: r.left - gr.left + r.width / 2, y: r.top - gr.top + r.height / 2, w: r.width }; });
     }
-    var settled = false;
+    var settled = false, moving = false, restT = null;
+    function holdRing(on) { for (var i = 0; i < cards.length; i++) { var st = cards[i].querySelector('[data-cycle]'); if (st) { if (on) st.setAttribute('data-hold', '1'); else st.removeAttribute('data-hold'); } } }
+    window.addEventListener('scroll', function () {
+      if (settled) return;
+      if (!moving) { moving = true; holdRing(true); }
+      clearTimeout(restT); restT = setTimeout(function () { moving = false; if (!settled) holdRing(false); }, 350);
+    }, { passive: true });
     function placeRing() {
       var n = cards.length, open = ring.open, k;
       if (open < 0.999) { var gb = grid.getBoundingClientRect(), sb = section.getBoundingClientRect(); cy = innerHeight * (phone ? 0.63 : 0.56) - (gb.top - sb.top); }
       /* the photo slideshow (sahra-market.js) runs only once a card has settled in the grid */
       /* hold wins over the engine's own hover/touch un-hold: no pointer reaches a stack until it has settled */
-      for (k = 0; k < n; k++) { var st = cards[k].querySelector('[data-cycle]'); if (st) { if (open > 0.999) { st.removeAttribute('data-hold'); st.style.pointerEvents = ''; } else { st.setAttribute('data-hold', '1'); st.style.pointerEvents = 'none'; } } }
+      for (k = 0; k < n; k++) { var st = cards[k].querySelector('[data-cycle]'); if (st) { if (open > 0.999) { st.removeAttribute('data-hold'); st.style.pointerEvents = ''; } else { if (moving) st.setAttribute('data-hold', '1'); st.style.pointerEvents = 'none'; } } }
       if (open > 0.999) { if (!settled) { settled = true; gsap.set(cards, { clearProps: 'transform,opacity,zIndex' }); } } else settled = false;
       section.classList.toggle('ring-on', open <= 0.999);
       for (k = 0; k < n; k++) {
@@ -1573,6 +1579,6 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 })();
 </script>
 <script src="/assets/sahra-cart.js?v=e445a34b" defer></script>
-<script src="/assets/sahra-market.js?v=a4baffba" defer></script>
+<script src="/assets/sahra-market.js?v=149814cb" defer></script>
 </body>
 </html>
