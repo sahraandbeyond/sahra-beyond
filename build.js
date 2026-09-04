@@ -2041,7 +2041,9 @@ console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.le
    sitting harmlessly next to each other. */
 (function () {
   const MARK = /<!--REVIEWS:START-->[\s\S]*?<!--REVIEWS:END-->/;
-  for (const f of ['index.html', 'homepage-preview.html']) {
+  /* journey/index.html: the scroll-journey homepage preview carries the same
+     band, so the Judge.me sync keeps it current too */
+  for (const f of ['index.html', 'homepage-preview.html', 'journey/index.html']) {
     const file = path.join(ROOT, f);
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
