@@ -532,6 +532,46 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
 @supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
 
+/* ===== homepage and shop: one size up (Faheem, 5 Sep: "still seems small") =====
+   The two selling pages get a larger scale than the guides: copy 18-19px,
+   labels 13px, buttons 14px, card names and prices up a step. */
+.stop .lede,#s-hero .lede{font-size:clamp(18px,1.5vw,21px)!important;line-height:1.6}
+.design-card p{font-size:16.5px;line-height:1.55}
+.design-card b{font-size:28px}
+.design-card small,.j-eyebrow,.place-tag,.meta,.meta span,.meta b,.j-place span,.j-stats span,.card-place,.qa-l,.vband-cap,.vband-cap a,.scroll-cue{font-size:13px!important}
+.j-btn{font-size:14px!important;font-weight:600}
+.design-card .row .sb-price{font-size:15px!important;font-weight:700}
+.design-card .go{font-size:13px!important;font-weight:700}
+.qa-b{font-size:13.5px;min-width:42px;height:36px}
+.fit-b{font-size:13px}
+.collection .card-name,.card-name{font-size:21px}
+.card-price,.card-price .sb-price{font-size:17px!important}
+.qual-item b{font-size:23px}
+.qual-item span{font-size:15.5px}
+.j-place b{font-size:22px}
+.tag-invite{font-size:15px}
+.j-stats b{font-size:28px}
+.wl-form input,.wl-form button{font-size:16px}
+/* shop */
+.hero-c p{font-size:19px!important;line-height:1.6}
+.hero-c .eyebrow{font-size:13px!important}
+.prod .story{font-size:18px!important;line-height:1.7}
+.prod-specs li{font-size:16px!important}
+.place-meta,.place-meta a,.place-meta span,.pm-sky,.pm-gps,.pcard-rv-n,.prod-limited,.buy-limited,.opt-lab,.filt,.filt-lab,.fitchip,.trust-row div,.marquee span,.paymarks-t{font-size:13px!important}
+.prod-occasion{font-size:14.5px!important}
+.size{font-size:15px!important}
+.fit{font-size:14px!important}
+.fitswap,.size-guide-link{font-size:14px!important}
+.sm-sub,.storemap p,.sm-note{font-size:17px!important}
+.prod .btn,.prod button.btn{font-size:15px}
+.shop .card-name{font-size:21px}
+@media(max-width:560px){
+  .stop .lede,#s-hero .lede{font-size:17.5px!important}
+  .hero-c p{font-size:17.5px!important}
+  .prod .story{font-size:17px!important}
+  .design-card p{font-size:16px}
+}
+
 /* ===== bugs the same audit found ===== */
 /* product page on phones: the thumbnail strip (6 x 74px + gaps = 494px) set the
    min-content width of the single grid column, so title, price and copy ran
