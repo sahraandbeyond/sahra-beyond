@@ -196,6 +196,26 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 .design-card p{font-size:15px;color:rgba(247,239,226,.92)}
 .qual-item span{font-size:14px}
 
+/* ===== glass panels behind the text that sits on moving imagery (Faheem, 5 Sep) =====
+   The homepage's landscapes and the shop's hero change under the copy as you
+   scroll; a sheer frosted panel keeps the words on a steady ground. Dark stops
+   only - the cream "paper" stops need none. */
+#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{
+  background:rgba(16,12,30,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
+  border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:30px 32px;box-shadow:0 24px 60px rgba(0,0,0,.28);
+  box-sizing:border-box;max-width:660px}
+#s-hero .col{max-width:720px}
+@media(max-width:760px){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{padding:22px 18px;border-radius:18px}}
+@supports not (backdrop-filter:blur(1px)){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{background:rgba(16,12,30,.72)}}
+/* the design card and waitlist box already carry their own glass: flatten them inside the panel */
+.stop .col .design-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);box-shadow:none}
+/* the shop hero */
+.hero-c{background:rgba(16,12,30,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
+  border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:34px 30px!important;box-shadow:0 24px 60px rgba(0,0,0,.28);
+  width:fit-content;max-width:min(92vw,780px);margin:0 auto;box-sizing:border-box}
+@media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
+@supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
+
 /* ===== bugs the same audit found ===== */
 /* product page on phones: the thumbnail strip (6 x 74px + gaps = 494px) set the
    min-content width of the single grid column, so title, price and copy ran
