@@ -2249,3 +2249,33 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
   }
   console.log(`  ✓ asset hashes stamped on ${touched} page(s)`);
 })();
+
+/* ==========================================================================
+   Legibility layer — one stylesheet, every page (5 Sep 2026)
+   ==========================================================================
+   legibility.js holds the site-wide floors for type size, weight and contrast
+   (a customer: "too light and small"). It is injected as the LAST <style> in
+   every page's <head>, replaced on every build, so there is exactly one place
+   to change it. Hand-maintained pages get it too. */
+(function applyLegibility() {
+  const LEGIB = require('./legibility');
+  const block = '<style data-legib>' + LEGIB.CSS + '</style>';
+  const RE = /<style data-legib>[\s\S]*?<\/style>/;
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html')) pages.push(p);
+    }
+  })(__dirname);
+  let touched = 0, missing = [];
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    if (!/<\/head>/i.test(src)) { missing.push(path.relative(__dirname, f)); continue; }
+    const out = RE.test(src) ? src.replace(RE, block) : src.replace(/<\/head>/i, block + '\n</head>');
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  ✓ legibility layer on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} updated)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
+})();

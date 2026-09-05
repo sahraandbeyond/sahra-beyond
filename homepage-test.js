@@ -898,6 +898,29 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   const sitemap = fs.existsSync(path.join(__dirname, 'sitemap.xml')) ? fs.readFileSync(path.join(__dirname, 'sitemap.xml'), 'utf8') : '';
   check('the sitemap lists neither /classic/ nor /journey/', !/\/classic\/|\/journey\//.test(sitemap));
 }
+
+/* ---- the legibility layer (5 Sep 2026) -----------------------------------
+   A customer: "too light and small". legibility.js is injected by build.js
+   as the last <style> in every page's <head>. */
+console.log('\n\x1b[1mlegibility layer - every page\x1b[0m');
+{
+  const L = require('./legibility');
+  check('legibility.js exports the CSS', typeof L.CSS === 'string' && L.CSS.length > 2000);
+  check('body copy floor: 16px, weight 400', /body\{font-size:16px;font-weight:400\}/.test(L.CSS));
+  check('mono labels floor: 12px', /\.eyebrow,[^{]*\{font-size:12px!important/.test(L.CSS));
+  check('secondary copy darker than #6B6256 (via --txt-soft)', /:root\{--txt-soft:#4A4136/.test(L.CSS) && /body\.dark-bg\{--txt-soft:rgba\(244,239,230,\.86\)/.test(L.CSS));
+  check('product page: grid column may shrink, thumbs wrap (the phone clipping)', /\.pdp>\*\{min-width:0\}/.test(L.CSS) && /\.gal-thumbs\{flex-wrap:wrap\}/.test(L.CSS));
+  check('closed mobile menu is hidden (its shadow dimmed the top bar)', /\.m-panel:not\(\.open\)\{visibility:hidden\}/.test(L.CSS) && /\.m-panel\.open\{visibility:visible/.test(L.CSS));
+  check('no text muted by opacity in the layer', !/opacity:0?\.[0-8]\d*/.test(L.CSS.replace(/\.pdp-add:disabled\{opacity:1/g, '')));
+  const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => ['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin'].includes(e.name) ? [] : e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith('.html') ? [path.join(d, e.name)] : []);
+  const pages = walk(__dirname).filter(p => /<\/head>/i.test(fs.readFileSync(p, 'utf8')));
+  const missing = pages.filter(p => (fs.readFileSync(p, 'utf8').match(/<style data-legib>/g) || []).length !== 1);
+  check('every built page carries the layer exactly once (' + pages.length + ' pages)', missing.length === 0, missing.slice(0, 5).map(p => path.relative(__dirname, p)).join(', '));
+  const stale = pages.filter(p => { const h = fs.readFileSync(p, 'utf8'); const m = h.match(/<style data-legib>([\s\S]*?)<\/style>/); return m && m[1] !== L.CSS; });
+  check('the layer on every page matches legibility.js (run node build.js)', stale.length === 0, stale.slice(0, 5).map(p => path.relative(__dirname, p)).join(', '));
+  const last = pages.filter(p => { const h = fs.readFileSync(p, 'utf8'); const head = h.slice(0, h.search(/<\/head>/i)); const tags = [...head.matchAll(/<style(?=[\s>])[^>]*>/g)]; return !tags.length || !/data-legib/.test(tags[tags.length - 1][0]); });
+  check('the layer is the last <style> in <head> everywhere (it wins by order)', last.length === 0, last.slice(0, 5).map(p => path.relative(__dirname, p)).join(', '));
+}
 console.log('\n' + (fail ? '\x1b[31m' : '\x1b[32m') + pass + ' passed, ' + fail + ' failed\x1b[0m');
 process.exit(fail ? 1 : 0);
 }).catch(e => { console.error(e); process.exit(1); });

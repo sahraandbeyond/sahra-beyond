@@ -426,6 +426,119 @@ body.has-topbar nav{top:var(--topbar-h,34px)}
 footer{position:relative;z-index:2}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
+<style data-legib>
+/* ===== legibility layer: floors for size, weight and contrast (5 Sep 2026) ===== */
+:root{--txt-soft:#4A4136;--mist:#4A4136}
+/* the product pages flip these when the scroll reaches a dark background (body.dark-bg): keep that, brighter */
+body.dark-bg{--txt-soft:rgba(244,239,230,.86);--mist:rgba(244,239,230,.86)}
+html{-webkit-text-size-adjust:100%}
+body{font-size:16px;font-weight:400}
+p,li,dd,td,label,figcaption{font-weight:400}
+.lede,.sec p,.care li,.hero-c p,.prod .story,.prod-specs li,.sm-sub,.tl-sub,.fe-card p,.ret-item span,.soon p,.mission p,.chero p{font-weight:400}
+.prod-specs li{font-size:15px}
+.prod .story,.sec p{font-size:16px}
+
+/* secondary copy: darker, and never under 14px */
+.pdp-ans-foot,.qual-item span,.card-body span,.tag-invite,.rv-count,.pk-note,.sgnote,.sz-cm,.crumb,.gal-model,.pm-sky{color:var(--txt-soft,#4A4136)}
+/* (.crumbs, .hero-ship and .meta sit on dark heroes and keep their cream) */
+.crumbs,.crumbs a{color:rgba(255,255,255,.95)!important}
+.hero-ship,.meta{color:rgba(247,239,226,.95)}
+.pdp-ans-foot,.qual-item span,.tag-invite,.pk-note,.sgnote,.sz-cm,.gal-model{font-size:14px}
+.tag-invite a{color:var(--txt-soft,#4A4136)}
+
+/* Space Mono labels stay a brand element - 12px floor, tracking halved, ink or clay rather than mist */
+.eyebrow,.j-eyebrow,.card-place,.pcard-place,.pcard-col,.pcard-cta,.crumb,.crumbs,.rv-meta,.prod-limited,.fitchip,.opt-lab,.filt,.snum,.gal-tag,.gal-fit,.gal-hint,.pm-sky,.pk-qty,.pack-grp-title,.teecta-eyebrow,.news-eyebrow,.place-tag,.qa-l,.qa-w,.scroll-cue,.vband-cap,.vband-cap a,.design-card small,.buy-trust,.buy-ghaf,.sb-price,.size-table th,.sg th,.rv-chip,.rv-sort span,.card-tag,.pcard-rv-n,.rv-more{font-size:12px!important;letter-spacing:.09em!important}
+.card-tag{font-size:11px!important;font-weight:700}
+.eyebrow,.j-eyebrow,.card-place,.pcard-place,.prod-limited,.design-card small{font-weight:700}
+.pcard-place,.pm-sky,.rv-meta,.crumb,.gal-model,.rv-sort span{color:var(--txt-soft,#4A4136)}
+.buy-ghaf{color:#3F6A36}
+.qa-l{color:#7E4114}
+
+/* the shop's "Details & care" summaries (unclassed) */
+.prod details summary{font-size:13px;letter-spacing:.06em}
+/* the stragglers the audit still found under 12px */
+.sb-ship-uae,.sb-ship-gcc,.sb-ship-intl,.note .sb-rot span,.marquee span,.sm-note,.rv-src,.rv-src a,.trust-row div,.paymarks-t,.pcard-spec span,.limited,.spec-strip li,.spec-strip strong,.cw-txt,.cw-txt strong,.cw-txt em,.pdp-sizes-label,.size-guide-link,.pdp-ans-hint,.shipsub,.pmeta a,.pmeta span,.sky-card small,.sz-cap,table.sz th,.rel-place,.teecta-meta span,.pk-note,.card-body em,.meta span,.meta b,.j-place span,.foot-tag,.buy-limited,.pm-gps,.filt-lab,.buy-trust span{font-size:12px!important}
+.pk-note,.card-body em,.shipsub{font-size:13px!important}
+.sz-out{font-size:11px!important}
+.pcard-spec span{color:var(--ink,#2A2016)}
+
+/* dark panels (shop .prod.dark, the location tee band): secondary text in cream, never ink */
+.prod.dark .pm-sky,.prod.dark .pcard-rv-n,.prod.dark .rv-meta,.prod.dark .crumb,.prod.dark .pm-gps,.prod.dark .place-meta,.prod.dark .prod-specs li,.prod.dark .story,.prod.dark .pcard-place{color:rgba(247,239,226,.92)!important}
+.prod.dark .rv-stars,.prod.dark .pcard-rv .rv-stars{color:#E9B978!important}
+.teecta-txt a:not(.btn),.teecta-meta a:not(.btn),.teecta-meta span{color:#E9B978!important}
+.teecta-txt .sb-price{color:rgba(247,239,226,.95)!important}
+
+/* top bar and hero delivery line: readable on phones */
+.sb-topbar{font-size:12px!important;letter-spacing:.12em!important;padding:9px 12px!important;line-height:1.35}
+@media(max-width:560px){.sb-topbar{font-size:11.5px!important;letter-spacing:.08em!important}}
+
+/* footer links: dark footers (home, shop, product pages) at 88% cream, not 70%; the
+   guides' cream footer (.ftr) in ink */
+.foot-links a,footer:not(.ftr) .links a,footer .foot-links a{color:rgba(247,239,226,.9)!important;font-size:13px!important;letter-spacing:.08em!important}
+.foot-copy,footer .foot-copy{color:rgba(247,239,226,.9)!important;font-size:13px}
+.ftr{font-size:14px;color:#4A4136}
+.ftr .links a{color:#4A4136!important;font-size:13.5px!important}
+.m-panel a{font-size:20px}
+nav .nav-links a,.hdr-nav a,.nav-links a{font-size:15px;font-weight:500}
+
+/* review band */
+/* the review band's own style block sits in the body, after this layer: a body prefix outranks it,
+   and the template's body.dark-bg .rv-stars (gold on dark) still outranks this */
+body .rv-stars,body .rv-band .rv-stars,body .pcard-rv .rv-stars{color:#8F6212}
+body.dark-bg .rv-stars,body.dark-bg .rv-band .rv-stars{color:#E9B978}
+body .rv-text{font-size:16px;line-height:1.6}
+body .rv-count{font-size:14px}
+.rv-meta{font-size:12.5px!important}
+
+/* prices and buttons: the two things a shopper must never squint at */
+.card-price,.card-price .sb-price,.pcard-price,.pcard .sb-price{font-size:16px!important;font-weight:700;letter-spacing:.02em!important;color:var(--ink,#2A2016)}
+.price,.buy .price,.buy .sb-price{font-size:24px!important;font-weight:700;letter-spacing:.01em!important}
+.btn,button.btn,a.btn{font-size:14px;font-weight:600;letter-spacing:.08em}
+.pdp-add{font-size:16px;font-weight:700}
+/* disabled = outlined, not faded: still readable, still clearly not the filled button */
+.pdp-add:disabled{opacity:1;background:transparent;color:#5C5148;border:1.5px dashed #8A7F73;cursor:not-allowed}
+body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
+.qa-b{font-size:12.5px;font-weight:700}
+.fit-b{font-size:12px;font-weight:700}
+.filt{font-weight:700}
+
+/* homepage journey: copy over the plates */
+.lede{font-size:17px}
+.scroll-cue{color:rgba(247,239,226,.85)!important}
+.vband-cap,.vband-cap a{color:rgba(247,239,226,.9)!important}
+.j-stats b{font-size:26px}
+.j-stats span{font-size:13px}
+.design-card p{font-size:15px;color:rgba(247,239,226,.92)}
+.qual-item span{font-size:14px}
+
+/* ===== bugs the same audit found ===== */
+/* product page on phones: the thumbnail strip (6 x 74px + gaps = 494px) set the
+   min-content width of the single grid column, so title, price and copy ran
+   past the screen edge and were clipped; the strip now wraps and the column
+   may shrink */
+.pdp>*{min-width:0}
+.gal-thumbs{flex-wrap:wrap}
+/* the closed mobile menu is translated off-screen but its 50px shadow still fell
+   on the top bar and dimmed it; hidden means hidden */
+.m-panel:not(.open){visibility:hidden}
+.m-panel{transition:transform .38s cubic-bezier(.4,0,.2,1),visibility 0s linear .38s}
+.m-panel.open{visibility:visible;transition:transform .38s cubic-bezier(.4,0,.2,1)}
+/* the category pages' fit links (build.js .catnav) shipped with no CSS at all, so
+   "Regular fit" and "Slim cut" ran together as one line of text */
+.catnav{display:grid;gap:10px;margin:18px 0 26px}
+@media(min-width:640px){.catnav{grid-template-columns:repeat(3,1fr)}}
+.catnav a{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border:1px solid rgba(43,37,32,.16);border-radius:12px;background:#fff;text-decoration:none;color:#2A2016}
+.catnav a b{font-family:'Playfair Display',serif;font-size:19px;font-weight:700}
+.catnav a span{font-size:14px;color:#4A4136}
+/* size tables wider than a phone */
+@media(max-width:480px){
+  table.sg{min-width:0;font-size:12.5px}
+  .size-table,table.sz{min-width:0}
+  .size-table td,.size-table th{padding:9px 6px;font-size:13px}
+  table.sz td,table.sz th,.sz th{padding:9px 5px;font-size:13px}
+  table.sg td,table.sg th{padding:8px 4px}
+}
+</style>
 </head>
 <body class="no-js has-topbar">
 <a class="skip-link" href="#s-collection">Skip to the collection</a>
