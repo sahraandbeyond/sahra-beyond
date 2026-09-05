@@ -76,6 +76,16 @@ a{color:#9C521B}
 .news-form button:hover{background:#fff}
 .guide-sec{margin:24px 0}
 .guide-sec h2{font-size:20px;margin:0 0 8px}
+/* the fabric/cut essays fold under their heading on the buying pages: the products come first, the reading is there for whoever wants it */
+.fold{border-top:1px solid rgba(43,37,32,.14);margin:0}
+.fold summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary h2{margin:0;font-size:19px}
+.fold summary::after{content:'+';font-family:'Space Mono',monospace;font-size:20px;color:#9C521B;flex:none}
+.fold[open] summary::after{content:'\2212'}
+.fold .content{padding:0 0 18px}
+.folds{margin:28px 0;border-bottom:1px solid rgba(43,37,32,.14)}
+.folds-eyebrow{display:block;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:#7E4114;margin-bottom:4px}
 /* ---- spec tables (size guide + fabric GSM) ------------------------------
    These had NO rules at all until 29 Aug 2026 — the size guide shipped a raw
    browser-default table on an otherwise designed page, and overflowed at 390px.
@@ -493,6 +503,9 @@ body.dark-bg .rv-stars{color:#E9B978}
 .rv-band .rv-stars{color:#A9761A}
 .rv-band .rv-score{color:#33271B}
 .rv-band .rv-count,.rv-band .rv-meta{color:#6B6256}
+.rv-compact .rv-card:nth-child(n+4){display:none}
+.rv-showall{display:block;margin:6px auto 0;padding:12px 22px;border:1px solid #33271B;border-radius:999px;background:#fff;color:#33271B;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+.rv-showall:hover{background:#33271B;color:#fff}
 .rv-band .rv-text{color:#33271B;font-style:italic}
 .rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
 .rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
@@ -781,7 +794,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
           </select>
         </label>
       </div>
-      <ul class="rv-list">
+      <ul class="rv-list rv-compact">
         
         <li class="rv-card" data-rating="5" data-date="2026-09-03">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
@@ -833,6 +846,7 @@ The fabric feels amazing and very comfortable. The design looks even better in p
           
         </li>
       </ul>
+      <button type="button" class="rv-showall" onclick="this.previousElementSibling.classList.remove('rv-compact');this.hidden=true">Show all 6 reviews</button>
       <script>(function(){if(window.__sbRvLB)return;window.__sbRvLB=1;
 var last=null;
 function close(){var d=document.getElementById('sbRvLB');if(d)d.remove();document.documentElement.style.overflow='';if(last&&last.focus)last.focus();last=null;}
@@ -852,6 +866,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   var list=bar.parentNode.querySelector('.rv-list');if(!list)return;
   var cards=[].slice.call(list.querySelectorAll('.rv-card'));
   function apply(){
+    list.classList.remove('rv-compact');var sa=list.parentNode.querySelector('.rv-showall');if(sa)sa.hidden=true;
     var chip=bar.querySelector('.rv-chip.on');var star=chip?chip.dataset.star:'all';
     var sel=bar.querySelector('[data-rv-sort]');var mode=sel?sel.value:'new';
     var vis=cards.filter(function(c){return star==='all'||c.dataset.rating===star;});
@@ -878,7 +893,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   </section>
     
     
-    <section class="guide-sec"><h2>What makes these different from a souvenir t-shirt</h2><div class="content"><p>A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.</p><p>The Al Quaa design maps the Milky Way as it actually rises over one of the darkest skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic.</p></div></section><section class="guide-sec"><h2>The fabric, plainly</h2><div class="content"><p>All our t-shirts are 230gsm 100% organic cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.</p><p>Every piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere.</p></div></section><section class="guide-sec"><h2>Regular and oversized fits</h2><div class="content"><p>Everything is cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL. Each t-shirt design comes in both a Regular and an Oversized fit; the polo comes in one. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.</p><p>Full flat-lay measurements for both fits are on our size guide.</p></div></section><section class="guide-sec"><h2>Limited runs</h2><div class="content"><p>Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything.</p></div></section>
+    <section class="folds"><span class="folds-eyebrow">Fabric, cut and make</span><details class="fold guide-sec"><summary><h2>What makes these different from a souvenir t-shirt</h2></summary><div class="content"><p>A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.</p><p>The Al Quaa design maps the Milky Way as it actually rises over one of the darkest skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic.</p></div></details><details class="fold guide-sec"><summary><h2>The fabric, plainly</h2></summary><div class="content"><p>All our t-shirts are 230gsm 100% organic cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.</p><p>Every piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere.</p></div></details><details class="fold guide-sec"><summary><h2>Regular and oversized fits</h2></summary><div class="content"><p>Everything is cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL. Each t-shirt design comes in both a Regular and an Oversized fit; the polo comes in one. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.</p><p>Full flat-lay measurements for both fits are on our size guide.</p></div></details><details class="fold guide-sec"><summary><h2>Limited runs</h2></summary><div class="content"><p>Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything.</p></div></details></section>
     <section class="faq"><h2>Frequently asked questions</h2><details><summary>Where do you ship?</summary><p>We ship worldwide from Dubai. In the UAE: free next-day delivery to all seven emirates, with no minimum order. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 390. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.</p></details><details><summary>What size should I order?</summary><p>Every t-shirt design comes in Regular and Oversized fits, S to XL; the polo comes in one fit. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.</p></details><details><summary>Are these really organic cotton?</summary><p>Yes — 230gsm 100% organic cotton for every piece in the collection.</p></details><details><summary>Will designs be restocked?</summary><p>Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone.</p></details></section>
     <section class="news"><div class="news-stars"></div><div class="news-in">
     <span class="news-eyebrow">Sahra &amp; Beyond &middot; Drop 01 out now</span>

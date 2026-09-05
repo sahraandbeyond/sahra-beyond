@@ -243,6 +243,12 @@ function teeFor(placeSlug, ctxName) {
   const p = PRODUCT_BY_PLACE[placeSlug];
   return p ? teeBlock({ id: placeSlug }) : collectionBlock(ctxName);
 }
+/* essays as folds (5 Sep 2026): products first, reading on request */
+function foldsBlock(sections, eyebrow) {
+  if (!Array.isArray(sections) || !sections.length) return '';
+  return `<section class="folds"><span class="folds-eyebrow">${esc(eyebrow || 'The details')}</span>${sections.map(x =>
+    `<details class="fold guide-sec"><summary><h2>${esc(x.h2)}</h2></summary><div class="content">${paras(x.body)}</div></details>`).join('')}</section>`;
+}
 function faqBlock(l) {
   const faqs = faqsFor(l);
   if (!faqs.length) return '';
@@ -338,6 +344,16 @@ a{color:#9C521B}
 .news-form button:hover{background:#fff}
 .guide-sec{margin:24px 0}
 .guide-sec h2{font-size:20px;margin:0 0 8px}
+/* the fabric/cut essays fold under their heading on the buying pages: the products come first, the reading is there for whoever wants it */
+.fold{border-top:1px solid rgba(43,37,32,.14);margin:0}
+.fold summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary h2{margin:0;font-size:19px}
+.fold summary::after{content:'+';font-family:'Space Mono',monospace;font-size:20px;color:#9C521B;flex:none}
+.fold[open] summary::after{content:'\\2212'}
+.fold .content{padding:0 0 18px}
+.folds{margin:28px 0;border-bottom:1px solid rgba(43,37,32,.14)}
+.folds-eyebrow{display:block;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:#7E4114;margin-bottom:4px}
 /* ---- spec tables (size guide + fabric GSM) ------------------------------
    These had NO rules at all until 29 Aug 2026 — the size guide shipped a raw
    browser-default table on an otherwise designed page, and overflowed at 390px.
@@ -1735,11 +1751,11 @@ CATEGORIES.forEach(C => {
   </section>
   <main>
     <div class="content">${paras(C.intro)}</div>
-    ${Array.isArray(C.sections) ? C.sections.map(x => `<section class="guide-sec"><h2>${esc(x.h2)}</h2><div class="content">${paras(x.body)}</div></section>`).join('') : ''}
-    ${Array.isArray(C.faqs) && C.faqs.length ? `<section class="faq"><h2>Frequently asked questions</h2>${C.faqs.map(q => `<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''}
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${C.h1}</span></div>${catCards(items)}
       <a class="btn shoplink" href="${shopHref}">Shop ${esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
-    ${RV.homepageBand()}
+    ${RV.homepageBand({ compact: true })}
+    ${foldsBlock(C.sections, 'Fabric, cut and make')}
+    ${Array.isArray(C.faqs) && C.faqs.length ? `<section class="faq"><h2>Frequently asked questions</h2>${C.faqs.map(q => `<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''}
     ${newsletterBlock()}
     <p class="back"><a href="/t-shirts/">All t-shirts &rarr;</a></p>
   </main>`;
@@ -1767,8 +1783,11 @@ COMMERCE.forEach(P => {
     jsonld.push({ "@context": "https://schema.org", "@type": "FAQPage",
       "mainEntity": P.faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } })) });
   }
-  const sectionsHtml = (P.sections || []).map(x =>
-    `<section class="guide-sec"><h2>${esc(x.h2)}</h2><div class="content">${paras(x.body)}</div></section>`).join('');
+  /* the size guide keeps its essay open (people come to read it); the buying
+     pages fold theirs under the products */
+  const sectionsHtml = P.slug === 'size-guide'
+    ? (P.sections || []).map(x => `<section class="guide-sec"><h2>${esc(x.h2)}</h2><div class="content">${paras(x.body)}</div></section>`).join('')
+    : foldsBlock(P.sections, 'Fabric, cut and make');
   const faqHtml = (P.faqs && P.faqs.length)
     ? `<section class="faq"><h2>Frequently asked questions</h2>${P.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
   const body = `
@@ -1788,7 +1807,7 @@ COMMERCE.forEach(P => {
       <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; limited run</span></a>
     </nav>` : ''}
     ${collectionBlock(null, P.slug === 't-shirts')}
-    ${P.slug === 't-shirts' ? RV.homepageBand() : ''}
+    ${P.slug === 't-shirts' ? RV.homepageBand({ compact: true }) : ''}
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
     ${P.gsmTable ? `<section class="guide-sec" id="gsm-table"><h2>Every t-shirt weight, compared</h2><p class="sgintent">GSM is grams per square metre &mdash; how much a square metre of the cloth weighs. It is the single most useful number on a t-shirt spec, and almost nobody selling t-shirts in the UAE explains it. Here is the whole scale.</p>${gsmTableHtml()}</section>` : ''}
     ${sectionsHtml}

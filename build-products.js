@@ -347,8 +347,11 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 .gal-model{margin:10px 2px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.4px;color:var(--txt-soft)}
 .shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}
 .shipsub{font-weight:400;font-size:11px;letter-spacing:.2px;color:var(--txt-soft);margin-left:4px}
-.fit-warn{margin:0 0 10px;font-size:12.5px;line-height:1.55;color:var(--clay-deep,#7E4114)}
-body.dark-bg .fit-warn{color:var(--gold,#E9B978)}
+.fit-warn{margin:-4px 0 14px;font-size:14px;line-height:1.55;color:var(--txt,#2A2016);padding:10px 12px;border:1px solid rgba(42,32,22,.14);border-radius:10px;background:rgba(255,255,255,.55)}
+.fit-warn b{font-weight:700}
+.fit-warn a{color:var(--clay-deep,#7E4114);font-weight:600}
+body.dark-bg .fit-warn{color:#F7EFE2;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
+.fit-warn a{color:var(--gold,#E9B978)}
 .fit-warn a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .pdp-echo{margin:8px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft)}
 .fitc{display:grid;gap:8px;padding:12px 14px;border:1px solid var(--edge);border-radius:3px;background:var(--card)}
@@ -682,10 +685,15 @@ ${galShots(p).map((s,i)=>`
            they must sell directly instead of bouncing to /shop/ to start again. -->
       <div class="pdp-buy" id="pdpBuy" data-handle="${p.id}">
         <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
-        ${p.fit !== 'oversized' ? `<p class="fit-warn">Runs slim &mdash; most people take one size up from their usual letter.${p.siblingOf ? ` Prefer the standard relaxed feel? <a href="/products/${p.siblingOf}-oversized/">Take your usual letter in Oversized &rarr;</a>` : ''}</p>` : ''}
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
           <span class="pdp-loading">Loading sizes&hellip;</span>
         </div>
+        ${/* the fit, explained where the decision happens (5 Sep 2026): a cold reader could not tell Regular from Oversized at the size picker */''}
+        ${p.garment === 'polo'
+          ? `<p class="fit-warn"><b>One cut, true to size.</b> Take your usual letter.</p>`
+          : p.fit === 'oversized'
+            ? `<p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut.</b> Take your usual letter.${p.siblingOf ? ` Want it closer to the body? <a href="/products/${p.siblingOf}-regular/">See this design in Regular &rarr;</a>` : ''}</p>`
+            : `<p class="fit-warn"><b>Regular is a slim cut.</b> Most people take one size up from their usual letter.${p.siblingOf ? ` Want the relaxed feel? <a href="/products/${p.siblingOf}-oversized/">Take your usual letter in Oversized &rarr;</a>` : ''}</p>`}
         <p class="pdp-stock" id="pdpStock" hidden></p>
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled>Select a size</button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>

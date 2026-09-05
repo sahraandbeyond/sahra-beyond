@@ -921,6 +921,24 @@ console.log('\n\x1b[1mlegibility layer - every page\x1b[0m');
   const last = pages.filter(p => { const h = fs.readFileSync(p, 'utf8'); const head = h.slice(0, h.search(/<\/head>/i)); const tags = [...head.matchAll(/<style(?=[\s>])[^>]*>/g)]; return !tags.length || !/data-legib/.test(tags[tags.length - 1][0]); });
   check('the layer is the last <style> in <head> everywhere (it wins by order)', last.length === 0, last.slice(0, 5).map(p => path.relative(__dirname, p)).join(', '));
 }
+
+/* ---- buying pages: products first, reading folded (5 Sep 2026) ---------- */
+console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
+{
+  const ts = fs.readFileSync(path.join(__dirname, 't-shirts', 'index.html'), 'utf8');
+  const at = s => ts.indexOf(s);
+  check('t-shirts: cards come before the review band, the band before the folded essays, the essays before the FAQ',
+    at('<section class="pcta"') > 0 && at('<section class="pcta"') < at('class="reviews rv-band"') && at('class="reviews rv-band"') < at('<section class="folds"') && at('<section class="folds"') < at('<section class="faq"'));
+  check('t-shirts: the review band is compact (3 shown, a Show-all button)', /rv-list rv-compact/.test(ts) && /class="rv-showall"/.test(ts));
+  check('t-shirts: four essays folded under their headings', (ts.match(/class="fold guide-sec"/g) || []).length === 4);
+  ['t-shirts/regular', 'polos'].forEach(p => { const h = fs.readFileSync(path.join(__dirname, p, 'index.html'), 'utf8'); check(p + ': products before the folded essays', h.indexOf('<section class="pcta"') > 0 && h.indexOf('<section class="pcta"') < h.indexOf('<section class="folds"')); });
+  const sg = fs.readFileSync(path.join(__dirname, 'size-guide', 'index.html'), 'utf8');
+  check('size guide keeps its essay open (no folds)', !/class="fold guide-sec"/.test(sg));
+  const home = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  check('homepage and shop keep the full band', !/rv-list rv-compact/.test(home) && !/rv-list rv-compact/.test(fs.readFileSync(path.join(__dirname, 'shop', 'index.html'), 'utf8')));
+  const fw = { 'al-quaa-galaxy-regular': /<p class="fit-warn"><b>Regular is a slim cut\.<\/b>[^<]*<a href="\/products\/al-quaa-galaxy-oversized\/">/, 'al-quaa-galaxy-oversized': /<p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut\.<\/b>[^<]*<a href="\/products\/al-quaa-galaxy-regular\/">/, 'sand-polo': /<p class="fit-warn"><b>One cut, true to size\.<\/b>/ };
+  Object.entries(fw).forEach(([h, re]) => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); check('PDP ' + h + ': the fit is explained under the size chips, with the other fit linked', re.test(pg) && pg.indexOf('id="pdpSizes"') < pg.indexOf('<p class="fit-warn">') && pg.indexOf('<p class="fit-warn">') < pg.indexOf('id="pdpAdd"')); });
+}
 console.log('\n' + (fail ? '\x1b[31m' : '\x1b[32m') + pass + ' passed, ' + fail + ' failed\x1b[0m');
 process.exit(fail ? 1 : 0);
 }).catch(e => { console.error(e); process.exit(1); });

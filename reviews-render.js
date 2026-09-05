@@ -64,6 +64,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   var list=bar.parentNode.querySelector('.rv-list');if(!list)return;
   var cards=[].slice.call(list.querySelectorAll('.rv-card'));
   function apply(){
+    list.classList.remove('rv-compact');var sa=list.parentNode.querySelector('.rv-showall');if(sa)sa.hidden=true;
     var chip=bar.querySelector('.rv-chip.on');var star=chip?chip.dataset.star:'all';
     var sel=bar.querySelector('[data-rv-sort]');var mode=sel?sel.value:'new';
     var vis=cards.filter(function(c){return star==='all'||c.dataset.rating===star;});
@@ -195,7 +196,12 @@ function productSection(handle, productName) {
  * thin rather than reassuring.
  */
 const HOMEPAGE_MIN = 3;
-function homepageBand() {
+/* opts.compact: three cards visible, the rest behind "Show all N reviews".
+   Category and guide pages ran six reviews back to back above the fabric
+   essay; two cold readers gave up before the products (5 Sep 2026). The
+   homepage and the shop keep the full band. */
+function homepageBand(opts) {
+  opts = opts || {};
   const all = loadAll();
   const flat = [];
   for (const d of all) for (const r of d.reviews) flat.push({ ...r, product: d.handle });
@@ -243,7 +249,7 @@ function homepageBand() {
           </select>
         </label>
       </div>
-      <ul class="rv-list">
+      <ul class="rv-list${opts.compact && picked.length > 3 ? ' rv-compact' : ''}">
         ${picked.map(r => {
           /* Truncation rule, rewritten after Faheem's screenshot: the 190-char
              cut chopped every review mid-sentence with no way to read the rest —
@@ -267,6 +273,7 @@ function homepageBand() {
           ${link}
         </li>`; }).join('')}
       </ul>
+      ${opts.compact && picked.length > 3 ? `<button type="button" class="rv-showall" onclick="this.previousElementSibling.classList.remove('rv-compact');this.hidden=true">Show all ${picked.length} reviews</button>` : ''}
       ${LIGHTBOX}
       ${FILTERS}
       <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
@@ -326,6 +333,9 @@ body.dark-bg .rv-stars{color:#E9B978}
 .rv-band .rv-stars{color:#A9761A}
 .rv-band .rv-score{color:#33271B}
 .rv-band .rv-count,.rv-band .rv-meta{color:#6B6256}
+.rv-compact .rv-card:nth-child(n+4){display:none}
+.rv-showall{display:block;margin:6px auto 0;padding:12px 22px;border:1px solid #33271B;border-radius:999px;background:#fff;color:#33271B;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+.rv-showall:hover{background:#33271B;color:#fff}
 .rv-band .rv-text{color:#33271B;font-style:italic}
 .rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
 .rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
