@@ -120,20 +120,27 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .prod-media{transform-style:preserve-3d;will-change:transform}
 /* THE RING on the shop (Faheem, 8 Sep): the homepage carousel as the shop's index -
    drag or arrow it round, tap a tee and the page goes to that product's panel */
-.sring{padding:26px 0 6px;--sring-w:220px;--sring-h:540px}
+.sring{padding:26px 0 6px;--sring-w:220px;--sring-h:580px}
 .sring-head{text-align:center;padding:0 20px 4px}
 .sring-head h2{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,40px);font-weight:800;line-height:1.1;margin:6px 0 0}
 .sring-head p{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);margin:10px 0 0}
 .sring-stage{position:relative;height:var(--sring-h);perspective:1300px;overflow:hidden;touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}
 .sring-stage.dragging{cursor:grabbing}
 .sring-ring{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none}
-.sring-card{position:absolute;left:50%;top:50%;width:var(--sring-w);margin-left:calc(var(--sring-w) * -.5);margin-top:calc(var(--sring-w) * -.72);pointer-events:auto;display:block;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.16);text-decoration:none;color:var(--ink);will-change:transform;cursor:pointer}
+.sring-card{position:absolute;left:50%;top:50%;width:var(--sring-w);margin-left:calc(var(--sring-w) * -.5);margin-top:calc(var(--sring-w) * -.8);pointer-events:auto;display:block;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.16);text-decoration:none;color:var(--ink);will-change:transform;cursor:pointer}
 .sring-card .sring-img{display:block;aspect-ratio:4/5;background:#EFE7D8;overflow:hidden}
 .sring-card img{width:100%;height:100%;object-fit:cover;display:block}
 .sring-card .sring-name{display:block;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;line-height:1.2;padding:12px 14px 2px}
 .sring-card .sring-price{display:block;font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.04em;padding:0 14px 14px;color:var(--mist)}
 .sring-card .sring-go{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:0 14px 14px;color:var(--clay-deep);opacity:0;transition:opacity .3s}
 .sring-card.front .sring-go{opacity:1}
+.sring-qa{display:none;align-items:center;flex-wrap:wrap;gap:6px;padding:0 14px 14px}
+.sring-card.front .sring-qa{display:flex}
+.sring-qa-l{flex-basis:100%;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--clay-deep)}
+.sring-qa-b{min-width:36px;height:32px;padding:0 9px;border:1px solid rgba(43,37,32,.35);border-radius:999px;background:transparent;color:var(--ink);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;cursor:pointer;transition:background .2s,color .2s}
+.sring-qa-b:hover{background:var(--ink);color:#fff}
+.sring-qa-b:disabled{opacity:.4;cursor:default;text-decoration:line-through}
+.sring-card.front .sring-go{display:none}
 .sring-bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#0f0b16;pointer-events:none}
 .sring-plate{position:absolute;left:-6%;top:-6%;width:112%;height:112%;object-fit:cover;filter:blur(22px) saturate(1.15);opacity:0;transition:opacity .9s ease;transform:translateZ(0)}
 .sring-plate.on{opacity:1}
@@ -147,7 +154,7 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .sring-arrow:hover{background:var(--ink);color:#fff}
 .sring-cue{position:absolute;left:50%;top:6px;transform:translateX(-50%);z-index:5;padding:8px 14px;border-radius:999px;background:rgba(43,37,32,.82);color:#F7EFE2;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .4s}
 .sring.cue .sring-cue{opacity:1}
-@media(max-width:760px){.sring{--sring-w:150px;--sring-h:400px;padding-top:18px}.sring-card .sring-name{font-size:14px;padding:9px 10px 0}.sring-card .sring-price{font-size:12.5px;padding:0 10px 10px}.sring-card .sring-go{display:none}.sring-cap{font-size:clamp(30px,10vw,56px)}.sring-arrow{width:42px;height:42px;margin-top:-21px;font-size:24px}.sring-arrow.prev{left:6px}.sring-arrow.next{right:6px}.sring-cue{font-size:10.5px;padding:7px 12px}.sring-card{-webkit-box-reflect:below 6px linear-gradient(transparent 64%,rgba(0,0,0,.22))}}
+@media(max-width:760px){.sring{--sring-w:150px;--sring-h:440px;padding-top:18px}.sring-qa{gap:4px;padding:0 8px 10px}.sring-qa-l{display:none}.sring-qa-b{min-width:30px;height:30px;padding:0 6px;font-size:11px}.sring-card .sring-name{font-size:14px;padding:9px 10px 0}.sring-card .sring-price{font-size:12.5px;padding:0 10px 10px}.sring-card .sring-go{display:none}.sring-cap{font-size:clamp(30px,10vw,56px)}.sring-arrow{width:42px;height:42px;margin-top:-21px;font-size:24px}.sring-arrow.prev{left:6px}.sring-arrow.next{right:6px}.sring-cue{font-size:10.5px;padding:7px 12px}.sring-card{-webkit-box-reflect:below 6px linear-gradient(transparent 64%,rgba(0,0,0,.22))}}
 @media(prefers-reduced-motion:reduce){.sring-cue-h{animation:none}}
 /* compact product panel (Faheem, 6 Sep): photos + the buying panel fit one screen;
    the reading lives in three folds — story, details & care, fit & sizing */
@@ -1678,7 +1685,7 @@ function draw(){
     + '<div class="filt-meta"><span id="filtCount" role="status" aria-live="polite"></span>'
     + '<button type="button" class="filt-clear" id="filtClear" hidden>Clear all</button></div></div>'
     + '<p class="filt-empty" id="filtEmpty" hidden>Nothing matches that combination yet. <button type="button" class="filt-linkish" id="filtReset">Show everything</button></p>';
-  var ringCards=PRODUCTS.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+(p.img?'<img src="'+p.img+'" alt="'+(p.title||'').replace(/"/g,'')+'" loading="'+(i<3?'eager':'lazy')+'">':'')+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span></a>';}).join('');
+  var ringCards=PRODUCTS.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+(p.img?'<img src="'+p.img+'" alt="'+(p.title||'').replace(/"/g,'')+'" loading="'+(i<3?'eager':'lazy')+'">':'')+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
   var ringHtml=PRODUCTS.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
   var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
@@ -1866,7 +1873,17 @@ function shopRing(){
     try{track('shop_ring_jump',{item_id:id.replace('#prod-',''),source:'shop-ring'});}catch(e){}
     if(window.__lenis)window.__lenis.scrollTo(t,{offset:-30});else t.scrollIntoView({behavior:'smooth'});
   }
+  /* quick add on the front card: one tap adds that size and opens the drawer */
   stage.addEventListener('click',function(e){
+    var b=e.target.closest('.sring-qa-b'); if(!b)return;
+    e.preventDefault();e.stopImmediatePropagation(); if(swallow||b.disabled)return;
+    var card=b.closest('.sring-card'),k=cards.indexOf(card),p=PRODUCTS[k]||{},was=b.textContent;
+    b.disabled=true;b.textContent='…';
+    addToCart(b.getAttribute('data-vid'),{name:p.title,size:b.getAttribute('data-size'),fit:(tagVal(p.tags||[],'fit')||'')}).then(function(){b.textContent='✓';setTimeout(function(){b.textContent=was;b.disabled=false;},1600);}).catch(function(){b.textContent=was;b.disabled=false;});
+    used('quick_add');
+  },true);
+  stage.addEventListener('click',function(e){
+    if(e.target.closest('.sring-qa'))return;
     var card=e.target.closest('.sring-card'); if(!card)return;
     e.preventDefault(); if(swallow)return;
     var k=cards.indexOf(card); used('tap');
