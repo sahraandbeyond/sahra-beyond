@@ -118,7 +118,12 @@ function makeServer() {
     });
     if (op === 'cartCreate') {
       const id = 'cart' + (++s.seq);
-      s.carts[id] = { id, lines: vars.l.map((l, i) => ({ id: 'line' + (++s.seq), vid: l.merchandiseId, quantity: l.quantity })) };
+      /* Shopify lists lines NEWEST FIRST and reverses a create's array (verified
+         against the live Storefront API, 8 Sep 2026) */
+      s.carts[id] = { id, lines: vars.l.map((l, i) => ({ id: 'line' + (++s.seq), vid: l.merchandiseId, quantity: l.quantity })).reverse() };
+      if (s.refuseGift && vars.l.some(n => n.merchandiseId === GIFT)) {
+        return Promise.resolve({ cartCreate: { cart: null, userErrors: [{ message: 'Sold out.' }] } });
+      }
       return Promise.resolve({ cartCreate: { cart: shape(s.carts[id]), userErrors: [] } });
     }
     const c = s.carts[vars.id];
@@ -131,7 +136,7 @@ function makeServer() {
       vars.l.forEach(n => {
         const ex = c.lines.find(l => l.vid === n.merchandiseId);
         if (ex) ex.quantity += n.quantity;
-        else c.lines.push({ id: 'line' + (++s.seq), vid: n.merchandiseId, quantity: n.quantity });
+        else c.lines.unshift({ id: 'line' + (++s.seq), vid: n.merchandiseId, quantity: n.quantity });   /* newest first, as Shopify */
       });
       return Promise.resolve({ cartLinesAdd: { cart: shape(c), userErrors: [] } });
     }
@@ -551,6 +556,34 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     check('decrementing to zero also takes the tote',
       (env.api.state().lines.edges || []).length === 0,
       'lines left: ' + JSON.stringify((env.api.state().lines.edges || []).map(e => e.node.merchandise.id)));
+  }
+
+  /* 38 — THE TOTE IS NEVER THE FIRST LINE (Faheem, 8 Sep): the order's first
+         line item drives the WhatsApp notification photo, so the product the
+         customer bought must sit above the free tote in every path ------- */
+  {
+    const firstIsGift = env => { const e = env.api.state().lines.edges || []; return e.length && isGiftNode(e[0].node); };
+    const lastIsGift = env => { const e = env.api.state().lines.edges || []; return e.length && isGiftNode(e[e.length - 1].node); };
+    const env = boot();
+    await env.api.add('gid://variant/1');
+    check('first add: the tote is the last line, not the first', !firstIsGift(env) && lastIsGift(env),
+      'lines: ' + JSON.stringify((env.api.state().lines.edges || []).map(e => e.node.merchandise.id)));
+    await env.api.add('gid://variant/2');
+    check('second add: the tote is still last', !firstIsGift(env) && lastIsGift(env));
+    /* empty the cart (tote leaves with the last item), then buy again */
+    const lines = env.api.state().lines.edges.filter(e => !isGiftNode(e.node));
+    for (const l of lines) await env.api.remove(l.node.id);
+    check('emptied: no tote left', (env.api.state().lines.edges || []).length === 0);
+    await env.api.add('gid://variant/3');
+    check('after emptying and re-adding: the tote is last again', !firstIsGift(env) && lastIsGift(env),
+      'lines: ' + JSON.stringify((env.api.state().lines.edges || []).map(e => e.node.merchandise.id)));
+    check('the rebuilt cart kept the real item', realQty(env) === 1, 'real qty=' + realQty(env));
+    /* a refused tote at create time still starts the cart, without it */
+    const server = makeServer(); server.refuseGift = true;
+    const env2 = boot({ server });
+    await env2.api.add('gid://variant/1');
+    check('a refused tote at cart creation still starts the cart with the real item',
+      realQty(env2) === 1 && !(env2.api.state().lines.edges || []).some(e => isGiftNode(e.node)), 'real qty=' + realQty(env2));
   }
 
   /* 37 — belt and braces: if the tote CANNOT be removed, the drawer must

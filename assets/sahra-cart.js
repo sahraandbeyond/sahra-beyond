@@ -151,6 +151,9 @@
   function cartNodes() {
     return (CART && CART.lines && CART.lines.edges) ? CART.lines.edges.map(function (e) { return e.node; }) : [];
   }
+  function giftIn(c) {
+    return !!(c && c.lines && c.lines.edges && c.lines.edges.some(function (e) { return isGift(e.node); }));
+  }
   function giftLine() {
     var hit = null;
     cartNodes().forEach(function (n) { if (isGift(n)) hit = n; });
@@ -171,13 +174,31 @@
       else if (real === 0 && g) op = { m: GIFT_RM, v: { id: CART.id, l: [g.id] }, k: 'cartLinesRemove' };
       else if (g && g.quantity > 1) op = { m: GIFT_RM, v: { id: CART.id, l: [g.id] }, k: 'cartLinesRemove' };
       if (!op) return CART;
-      return sf(op.m, op.v).then(function (d) {
-        var r = d && d[op.k];
-        /* userErrors here mean "sold out" far more often than anything else.
-           Not an error the customer caused, and not one they should see. */
-        if (r && r.cart && !(r.userErrors && r.userErrors.length)) { CART = r.cart; draw(); }
-        return CART;
-      }).catch(function () { return CART; });
+      var run = function () {
+        return sf(op.m, op.v).then(function (d) {
+          var r = d && d[op.k];
+          /* userErrors here mean "sold out" far more often than anything else.
+             Not an error the customer caused, and not one they should see. */
+          if (r && r.cart && !(r.userErrors && r.userErrors.length)) { CART = r.cart; draw(); }
+          return CART;
+        }).catch(function () { return CART; });
+      };
+      if (op.k !== 'cartLinesAdd') return run();
+      /* Adding the gift to a cart that already holds real items would put it on
+         top (newest first). Rebuild the cart instead — gift listed first, so it
+         is the oldest line — and only switch to the new cart if it carries every
+         real item the customer had; otherwise fall back to the plain add. */
+      var reals = cartNodes().filter(function (n) { return !isGift(n); })
+        .map(function (n) { return { merchandiseId: n.merchandise.id, quantity: n.quantity }; });
+      return sf('mutation($l:[CartLineInput!]!,$cc:CountryCode!){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc}}){cart{' + CFRAG + '}userErrors{message}}}',
+                { l: [{ merchandiseId: GIFT_VARIANT, quantity: 1 }].concat(reals), cc: BUYER_CC })
+        .then(function (d) {
+          var r = d && d.cartCreate, c = r && r.cart;
+          var kept = c ? (c.lines.edges || []).reduce(function (n, e) { return n + (isGift(e.node) ? 0 : e.node.quantity); }, 0) : -1;
+          if (!c || (r.userErrors && r.userErrors.length) || kept !== real || !giftIn(c)) return run();
+          CART = c; setCid(c.id); draw();
+          return CART;
+        }, run);
     });
   }
 
@@ -525,11 +546,28 @@
         }
         CART = null;
         setCid(null);
-        return sf('mutation($l:[CartLineInput!]!,$cc:CountryCode!){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc}}){cart{' + CFRAG + '}userErrors{message}}}',
-                  /* read at send time, inside the queue — a country change
-                     that already happened should win, and one still queued
-                     behind us will re-point the cart when its turn comes */
-                  { l: [{ merchandiseId: variantId, quantity: want }], cc: BUYER_CC })
+        /* THE TOTE IS THE OLDEST LINE. Shopify lists cart lines newest first and
+           reverses the array a cartCreate is given, so a gift added AFTER the
+           product sat at the top of the cart, the checkout and the order — and
+           the order notifications (WhatsApp) led with the tote's photo instead
+           of what the customer bought (Faheem, 8 Sep). Creating the cart with
+           the gift listed first makes it the last line; everything added later
+           lands above it. The gift can never break a real add: if Shopify
+           refuses the pair (the tote is finite), the cart starts without it. */
+        var createWith = function (lines) {
+          return sf('mutation($l:[CartLineInput!]!,$cc:CountryCode!){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc}}){cart{' + CFRAG + '}userErrors{message}}}',
+                    /* read at send time, inside the queue — a country change
+                       that already happened should win, and one still queued
+                       behind us will re-point the cart when its turn comes */
+                    { l: lines, cc: BUYER_CC });
+        };
+        var real = [{ merchandiseId: variantId, quantity: want }];
+        return createWith([{ merchandiseId: GIFT_VARIANT, quantity: 1 }].concat(real))
+          .then(function (d) {
+            var r = d && d.cartCreate, ok = r && r.cart && !(r.userErrors && r.userErrors.length) &&
+              (r.cart.lines.edges || []).some(function (e) { return e.node.merchandise && e.node.merchandise.id === variantId; });
+            return ok ? d : createWith(real);
+          }, function () { return createWith(real); })
           .then(function (d) {
             var r = d.cartCreate;
             if (r && r.userErrors && r.userErrors.length) throw new Error(r.userErrors[0].message);
