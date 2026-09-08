@@ -144,13 +144,20 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .sring-card .sring-price{display:block;font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.04em;padding:0 14px 14px;color:var(--mist)}
 .sring-card .sring-go{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:0 14px 14px;color:var(--clay-deep);opacity:0;transition:opacity .3s}
 .sring-card.front .sring-go{opacity:1}
-.sring-cap{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(44px,9vw,132px);line-height:1;color:rgba(43,37,32,.07);white-space:nowrap;pointer-events:none}
+.sring-bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#0f0b16;pointer-events:none}
+.sring-plate{position:absolute;left:-6%;top:-6%;width:112%;height:112%;object-fit:cover;filter:blur(22px) saturate(1.15);opacity:0;transition:opacity .9s ease;transform:translateZ(0)}
+.sring-plate.on{opacity:1}
+.sring-glow{position:absolute;left:50%;top:50%;width:min(96vw,900px);height:min(96vw,900px);transform:translate(-50%,-50%);border-radius:50%;background:#D5BA98;-webkit-mask:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.55) 40%,transparent 72%);mask:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.55) 40%,transparent 72%);opacity:.6;transition:background-color .9s ease}
+.sring-dim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(250,246,239,.62),rgba(250,246,239,.38) 40%,rgba(250,246,239,.55))}
+.sring-card{-webkit-box-reflect:below 10px linear-gradient(transparent 58%,rgba(0,0,0,.28))}
+.sring-cap{position:absolute;left:0;right:0;top:50%;z-index:1;transform:translateY(-50%);text-align:center;font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(44px,9vw,132px);line-height:1;color:rgba(43,37,32,.11);white-space:nowrap;pointer-events:none}
+.sring-ring{z-index:2}
 .sring-arrow{position:absolute;top:50%;z-index:5;width:52px;height:52px;margin-top:-26px;border-radius:50%;border:1px solid rgba(43,37,32,.28);background:rgba(250,246,239,.9);color:var(--ink);font-size:30px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .sring-arrow.prev{left:max(8px,calc(50% - 47vw))}.sring-arrow.next{right:max(8px,calc(50% - 47vw))}
 .sring-arrow:hover{background:var(--ink);color:#fff}
 .sring-cue{position:absolute;left:50%;top:6px;transform:translateX(-50%);z-index:5;padding:8px 14px;border-radius:999px;background:rgba(43,37,32,.82);color:#F7EFE2;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .4s}
 .sring.cue .sring-cue{opacity:1}
-@media(max-width:760px){.sring{--sring-w:150px;--sring-h:400px;padding-top:18px}.sring-card .sring-name{font-size:14px;padding:9px 10px 0}.sring-card .sring-price{font-size:12.5px;padding:0 10px 10px}.sring-card .sring-go{display:none}.sring-cap{font-size:clamp(30px,10vw,56px)}.sring-arrow{width:42px;height:42px;margin-top:-21px;font-size:24px}.sring-arrow.prev{left:6px}.sring-arrow.next{right:6px}.sring-cue{font-size:10.5px;padding:7px 12px}}
+@media(max-width:760px){.sring{--sring-w:150px;--sring-h:400px;padding-top:18px}.sring-card .sring-name{font-size:14px;padding:9px 10px 0}.sring-card .sring-price{font-size:12.5px;padding:0 10px 10px}.sring-card .sring-go{display:none}.sring-cap{font-size:clamp(30px,10vw,56px)}.sring-arrow{width:42px;height:42px;margin-top:-21px;font-size:24px}.sring-arrow.prev{left:6px}.sring-arrow.next{right:6px}.sring-cue{font-size:10.5px;padding:7px 12px}.sring-card{-webkit-box-reflect:below 6px linear-gradient(transparent 64%,rgba(0,0,0,.22))}}
 @media(prefers-reduced-motion:reduce){.sring-cue-h{animation:none}}
 /* compact product panel (Faheem, 6 Sep): photos + the buying panel fit one screen;
    the reading lives in three folds — story, details & care, fit & sizing */
@@ -1755,7 +1762,7 @@ function draw(){
     + '<button type="button" class="filt-clear" id="filtClear" hidden>Clear all</button></div></div>'
     + '<p class="filt-empty" id="filtEmpty" hidden>Nothing matches that combination yet. <button type="button" class="filt-linkish" id="filtReset">Show everything</button></p>';
   var ringCards=PRODUCTS.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+(p.img?'<img src="'+p.img+'" alt="'+(p.title||'').replace(/"/g,'')+'" loading="'+(i<3?'eager':'lazy')+'">':'')+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span></a>';}).join('');
-  var ringHtml=PRODUCTS.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
+  var ringHtml=PRODUCTS.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
   var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
     var sizes=p.sizes.map(function(sz){var av=p.variants.some(function(v){return v.size===sz&&v.avail;});return '<button class="size" data-size="'+sz+'" '+(av?'':'disabled')+'><span>'+sz+'</span></button>';}).join('');
@@ -1903,7 +1910,9 @@ function shopRing(){
       gsap.set(cards[k],{x:Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:Math.sin(a)*22,scale:sc,opacity:0.3+0.7*depth,zIndex:Math.round(depth*100)});
       var na=Math.abs(norm(a)); if(na<bA){bA=na;best=k;}
     }
-    if(best!==front){front=best;cards.forEach(function(c,j){c.classList.toggle('front',j===best);});if(cap)cap.textContent=cards[best].getAttribute('data-place')||'';}
+    if(best!==front){front=best;cards.forEach(function(c,j){c.classList.toggle('front',j===best);});if(cap)cap.textContent=cards[best].getAttribute('data-place')||'';
+      var h=cards[best].getAttribute('href')||'',pl=/al-quaa/.test(h)?'night':/hajar|naqab/.test(h)?'wadi':'liwa',col=/al-quaa/.test(h)?'#282B34':/empty-quarter/.test(h)?'#D5BA98':/hajar/.test(h)?'#A09C98':'#DCBFA6';
+      st.querySelectorAll('.sring-plate').forEach(function(im){im.classList.toggle('on',im.getAttribute('data-place')===pl);}); var gl=st.querySelector('.sring-glow'); if(gl)gl.style.backgroundColor=col;}
   }
   function spinTo(target,dur,done){ if(tw)tw.kill(); tw=gsap.to(S,{a:target,duration:dur||0.55,ease:'power3.out',onUpdate:place,onComplete:function(){tw=null;lastTouch=performance.now();if(done)done();}}); }
   function nearest(a){return Math.round(a/stepA)*stepA;}

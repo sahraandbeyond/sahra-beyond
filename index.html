@@ -418,7 +418,7 @@ body.has-topbar nav{top:var(--topbar-h,34px)}
 @media(max-width:560px){.fit-b{padding:7px 10px;font-size:10px;letter-spacing:1.2px;flex:1;text-align:center}.design-card>.fit-sw{margin-top:12px;justify-self:stretch;display:flex}}
 /* on phones the ring shows photo, name and price; the size chips join once the cards have settled */
 #grid .qa{max-height:140px;transition:opacity .35s ease}
-@media(max-width:760px){.collection.ring-on #grid .qa{max-height:0;opacity:0;margin-top:0;padding-top:0;border-top-width:0;overflow:hidden}}
+@media(max-width:760px){.collection.ring-on #grid .card:not(.front) .qa{max-height:0;opacity:0;margin-top:0;padding-top:0;border-top-width:0;overflow:hidden}}  /* the front card keeps its chips (Faheem, 8 Sep) */
 /* the live waitlist form on the night stop */
 .j-news .wl-form{justify-content:flex-start}
 .j-news .wl-msg,.j-news .wl-ok{font-family:'Space Mono',monospace;font-size:12px;color:rgba(247,239,226,.62);margin-top:14px}
@@ -447,6 +447,19 @@ footer{position:relative;z-index:2}
 .collection.ring-on.cue .ring-cue{opacity:1}
 .collection{position:relative}
 @media(max-width:760px){.ring-cue{top:90vh;font-size:11px;padding:8px 13px}}
+
+/* ---- behind the ring (Faheem, 8 Sep): the front card's place, blurred, a glow in its
+   colourway, and the cards reflected on a floor ---- */
+.ring-bg{position:absolute;inset:0;z-index:0;overflow:hidden;opacity:0;transition:opacity .6s;pointer-events:none;background:#0f0b16}
+.collection.ring-on .ring-bg{opacity:1}
+.ring-plate{position:absolute;left:-6%;top:-6%;width:112%;height:112%;object-fit:cover;filter:blur(22px) saturate(1.15);opacity:0;transition:opacity .9s ease;transform:translateZ(0)}
+.ring-plate.on{opacity:1}
+.ring-glow{position:absolute;left:50%;top:56vh;width:min(96vw,980px);height:min(96vw,980px);transform:translate(-50%,-50%);border-radius:50%;background:#D5BA98;-webkit-mask:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.55) 40%,transparent 72%);mask:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.55) 40%,transparent 72%);opacity:.6;transition:background-color .9s ease}
+.ring-dim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(250,246,239,.62),rgba(250,246,239,.38) 40%,rgba(250,246,239,.55))}
+.ring-cap{z-index:1;color:rgba(43,37,32,.11)}
+.collection.ring-on .grid .card{-webkit-box-reflect:below 10px linear-gradient(transparent 58%,rgba(0,0,0,.28))}
+@media(max-width:760px){.ring-glow{top:63vh}.collection.ring-on .grid .card{-webkit-box-reflect:below 6px linear-gradient(transparent 64%,rgba(0,0,0,.22))}}
+@media(prefers-reduced-motion:reduce){.ring-plate,.ring-glow,.ring-bg{transition:none}}
 /* the front card can be clicked on; the side cards turn to the front first. The grid's own
    plane (z=0) sat in front of the receded cards for hit-testing, so nothing behind it was
    clickable or hoverable: the grid lets pointers through, the cards catch them */
@@ -726,6 +739,7 @@ body.shop-page .foot-links{gap:10px 22px}
 <div id="collection" class="anchor" aria-hidden="true"></div>
 <!-- 5 · COLLECTION · paper light; the designs on a 3D ring that opens into the grid -->
 <section class="stop collection" id="s-collection" data-tod="paper" data-bg="paper">
+<div class="ring-bg" aria-hidden="true"><img class="ring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async"><img class="ring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async"><img class="ring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async"><div class="ring-glow"></div><div class="ring-dim"></div></div>
 <div class="ring-cap" aria-hidden="true"></div>
 <button class="ring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="ring-arrow next" type="button" aria-label="Next design">&#8250;</button>
 <div class="ring-cue" aria-hidden="true"><span class="ring-cue-h">&#8592;</span> drag to spin &middot; scroll to open <span class="ring-cue-h">&#8594;</span></div>
@@ -1772,6 +1786,12 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
           frontK = best;
           for (var j = 0; j < n; j++) cards[j].classList.toggle('front', j === best);
           if (cap && best >= 0) { var nm = cards[best].querySelector('.card-name'); cap.textContent = nm ? nm.textContent.replace(/\s+—.*$/, '') : ''; }
+          if (best >= 0) {
+            var h = (cards[best].getAttribute('href') || ''), pl = /al-quaa/.test(h) ? 'night' : /hajar|naqab/.test(h) ? 'wadi' : 'liwa';
+            var col = /al-quaa/.test(h) ? '#282B34' : /empty-quarter/.test(h) ? '#D5BA98' : /hajar/.test(h) ? '#A09C98' : '#DCBFA6';   /* the locked colourways */
+            section.querySelectorAll('.ring-plate').forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-place') === pl); });
+            var gl = section.querySelector('.ring-glow'); if (gl) gl.style.backgroundColor = col;
+          }
         }
       }
       afterPlace = function () { if (!settled) frontCard(); };
