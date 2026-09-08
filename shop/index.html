@@ -139,7 +139,10 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
 .sring-ring{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none}
 .sring-card{position:absolute;left:50%;top:50%;width:var(--sring-w);margin-left:calc(var(--sring-w) * -.5);margin-top:calc(var(--sring-w) * -.8);pointer-events:auto;display:block;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.16);text-decoration:none;color:var(--ink);will-change:transform;cursor:pointer}
 .sring-card .sring-img{display:block;aspect-ratio:4/5;background:#EFE7D8;overflow:hidden}
-.sring-card img{width:100%;height:100%;object-fit:cover;display:block}
+.sring-card .sring-img{position:relative}
+.sring-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .55s ease-in-out;z-index:1}
+.sring-card img.on{opacity:1;z-index:3}
+.sring-card img.was{opacity:1;z-index:2;transition:none}
 .sring-card .sring-name{display:block;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;line-height:1.2;padding:12px 14px 2px}
 .sring-card .sring-price{display:block;font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.04em;padding:0 14px 14px;color:var(--mist)}
 .sring-card .sring-go{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:0 14px 14px;color:var(--clay-deep);opacity:0;transition:opacity .3s}
@@ -1768,7 +1771,7 @@ function draw(){
     + '<div class="filt-meta"><span id="filtCount" role="status" aria-live="polite"></span>'
     + '<button type="button" class="filt-clear" id="filtClear" hidden>Clear all</button></div></div>'
     + '<p class="filt-empty" id="filtEmpty" hidden>Nothing matches that combination yet. <button type="button" class="filt-linkish" id="filtReset">Show everything</button></p>';
-  var ringCards=PRODUCTS.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+(p.img?'<img src="'+p.img+'" alt="'+(p.title||'').replace(/"/g,'')+'" loading="'+(i<3?'eager':'lazy')+'">':'')+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
+  var ringCards=PRODUCTS.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+((p.images&&p.images.length?p.images:(p.img?[p.img]:[])).slice(0,6).map(function(u,j){return '<img class="'+(j===0?'on':'')+'" src="'+u+'" alt="'+(j===0?(p.title||'').replace(/"/g,''):'')+'" loading="'+(i<3&&j<2?'eager':'lazy')+'" decoding="async">';}).join(''))+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
   var ringHtml=PRODUCTS.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
   var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
@@ -1978,6 +1981,20 @@ function shopRing(){
     gsap.ticker.add(function(t,dt){ if(!inView||drag||tw||document.hidden)return; if(performance.now()-lastTouch<2500)return; S.a-=0.12*Math.min(dt,100)/1000; place(); });   /* 0.12 rad/s: one card every ~7s */
   }
   try{ new IntersectionObserver(function(es){es.forEach(function(x){inView=x.isIntersecting;});},{threshold:0.35}).observe(stage); }catch(e){inView=true;}
+  /* the photos turn over on the site's beat (1.5s, as on the homepage cards): every card
+     at once, only while the ring is on screen and nobody is holding it */
+  if(!reduced){
+    setInterval(function(){
+      if(!inView||drag||document.hidden)return;
+      cards.forEach(function(c){
+        var im=c.querySelectorAll('.sring-img img'); if(im.length<2)return;
+        var k=-1; for(var j=0;j<im.length;j++){ if(im[j].classList.contains('on')){k=j;break;} }
+        var nx=im[(k+1)%im.length]; if(!(nx.complete&&nx.naturalWidth))return;   /* never fade to a photo that is not here yet */
+        if(k>=0){im[k].classList.remove('on');im[k].classList.add('was');(function(o){setTimeout(function(){o.classList.remove('was');},600);})(im[k]);}
+        nx.classList.add('on');
+      });
+    },1500);
+  }
   measure();place();
   window.addEventListener('resize',function(){measure();place();});
 }
