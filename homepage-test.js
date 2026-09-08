@@ -492,7 +492,8 @@ console.log('\n\x1b[1mhero -> cards on touch\x1b[0m');
   const expectSizes = 'sizes="(max-width:760px) 46vw, (max-width:' + wrapMax + 'px) calc((100vw - ' + chrome + 'px)/' + cols + '), ' + (cardAtMax + 3) + 'px"';
   check(pg + ': the grid CSS was read (3 columns inside a 1200px wrap)', cols === 3 && wrapMax === 1200 && chrome === 100, 'cols=' + cols + ' wrap=' + wrapMax + ' chrome=' + chrome);
   const noSizes = imgs.filter(t => t.indexOf(expectSizes) < 0);
-  check(pg + ': every card photo offers an 800px card-sized candidate', imgs.length === 22 && noSet.length === 0, imgs.length + ' imgs, ' + noSet.length + ' without srcset');
+  const expectImgs = GRID.reduce((n, r) => n + r[4].length, 0);   /* 22 before the female shots, 35 after (8 Sep) */
+  check(pg + ': every card photo offers an 800px card-sized candidate', imgs.length === expectImgs && noSet.length === 0, imgs.length + ' imgs (want ' + expectImgs + '), ' + noSet.length + ' without srcset');
   check(pg + ': every card photo decodes off the main thread', noAsync.length === 0, noAsync.length + ' without decoding=async');
   check(pg + ': sizes follows the grid at every width (2 columns on tablets, 3 up to the wrap, then fixed)', noSizes.length === 0, noSizes.length + ' wrong sizes; expected ' + expectSizes);
   /* the w descriptor must be the file's real width - 1536w on a 1076px model

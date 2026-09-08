@@ -134,7 +134,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
   font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
   text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.82);
   padding:8px 12px;border-radius:2px;pointer-events:none}
-@media(max-width:700px){.gal-fit{left:10px;bottom:10px;font-size:10px;padding:7px 10px}}
+@media(max-width:700px){.gal-fit{left:10px;bottom:46px;font-size:10px;padding:7px 10px;max-width:calc(100% - 20px)}}  /* above the zoom hint: the model badge is a full sentence now (8 Sep) */
 .gal-thumbs{display:flex;gap:10px;margin-top:13px}
 .gal-thumbs button{width:74px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--edge,rgba(42,32,22,.58));background:none;cursor:pointer;padding:0;opacity:.78;transition:opacity .3s,border-color .3s,transform .3s}
 .gal-thumbs button:hover{transform:translateY(-3px)}
@@ -851,9 +851,12 @@ body.shop-page .foot-links{gap:10px 22px}
 
         <img class="on" src="../../shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" width="1536" height="1536">
         <img class="" src="../../shirts/alquaa-regular-front.jpg" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" width="1536" height="1536">
-        <img class="" data-worn="1" src="../../shirts/alquaa-model-back.jpg" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" width="1076" height="1600">
-        <img class="" data-worn="1" src="../../shirts/alquaa-model-front.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" width="1067" height="1600">
-        <img class="" data-worn="1" src="../../shirts/alquaa-model-dusk.jpg" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" width="1227" height="1600">
+        <img class="" data-worn="1" data-tag="He wears L · Oversized fit" src="../../shirts/alquaa-model-back.jpg" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" width="1076" height="1600">
+        <img class="" data-worn="1" data-tag="She wears M · Oversized fit" src="../../shirts/alquaa-female-1.jpg" alt="The Al Quaa Galaxy tee worn in the Hajar mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit." width="1453" height="1600">
+        <img class="" data-worn="1" data-tag="He wears L · Oversized fit" src="../../shirts/alquaa-model-front.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" width="1067" height="1600">
+        <img class="" data-worn="1" data-tag="She wears M · Oversized fit" src="../../shirts/alquaa-female-2.jpg" alt="The Al Quaa Galaxy tee from behind, arms out against the mountains — the Milky Way print across the back. Female model wears M in the Oversized fit." width="931" height="1280">
+        <img class="" data-worn="1" data-tag="He wears L · Oversized fit" src="../../shirts/alquaa-model-dusk.jpg" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" width="1227" height="1600">
+        <img class="" data-worn="1" data-tag="She wears M · Oversized fit" src="../../shirts/alquaa-female-3.jpg" alt="The back of the Al Quaa Galaxy tee in the mountains at dusk, the Milky Way print catching the last light. Female model wears M in the Oversized fit." width="1498" height="1600">
         <img class=" fit-contain" src="../../shirts/alquaa-fit-comparison.jpg" alt="Al Quaa Galaxy — Regular — regular fit and oversized fit shown side by side" width="1536" height="1536">
         <span class="gal-fit" aria-hidden="true">Regular fit</span>
       </div>
@@ -862,11 +865,14 @@ body.shop-page .foot-links{gap:10px 22px}
         <button class="on" data-i="0" aria-label="View"><img src="../../shirts/alquaa-regular-back.jpg" alt="" width="1536" height="1536"></button>
         <button data-i="1" aria-label="View front"><img src="../../shirts/alquaa-regular-front.jpg" alt="" width="1536" height="1536"></button>
         <button data-i="2" aria-label="View worn photo 1"><img src="../../shirts/alquaa-model-back.jpg" alt="" width="1076" height="1600"></button>
-        <button data-i="3" aria-label="View worn photo 2"><img src="../../shirts/alquaa-model-front.jpg" alt="" width="1067" height="1600"></button>
-        <button data-i="4" aria-label="View worn photo 3"><img src="../../shirts/alquaa-model-dusk.jpg" alt="" width="1227" height="1600"></button>
-        <button data-i="5" aria-label="Compare regular and oversized fit"><img class="fit-contain" src="../../shirts/alquaa-fit-comparison.jpg" alt="" width="1536" height="1536"></button>
+        <button data-i="3" aria-label="View worn photo 2"><img src="../../shirts/alquaa-female-1.jpg" alt="" width="1453" height="1600"></button>
+        <button data-i="4" aria-label="View worn photo 3"><img src="../../shirts/alquaa-model-front.jpg" alt="" width="1067" height="1600"></button>
+        <button data-i="5" aria-label="View worn photo 4"><img src="../../shirts/alquaa-female-2.jpg" alt="" width="931" height="1280"></button>
+        <button data-i="6" aria-label="View worn photo 5"><img src="../../shirts/alquaa-model-dusk.jpg" alt="" width="1227" height="1600"></button>
+        <button data-i="7" aria-label="View worn photo 6"><img src="../../shirts/alquaa-female-3.jpg" alt="" width="1498" height="1600"></button>
+        <button data-i="8" aria-label="Compare regular and oversized fit"><img class="fit-contain" src="../../shirts/alquaa-fit-comparison.jpg" alt="" width="1536" height="1536"></button>
       </div>
-      <p class="gal-model">Model is 182 cm, wearing L in the Oversized fit</p>
+      <p class="gal-model">Male model is 182 cm, wearing L in the Oversized fit · Female model wears M in the Oversized fit</p>
     </div>
 
     <div class="buy">
@@ -942,7 +948,7 @@ body.shop-page .foot-links{gap:10px 22px}
           <summary>Fit at a glance</summary>
           <p class="pdp-ans-foot">Runs slim — most people take one size up from their usual letter. Measured flat, pit to pit: S 19&Prime; · M 20&Prime; · L 22&Prime; · XL 24&Prime;. Measure a shirt you like and match the number, not the letter.
             <a href="#fit">Full chart &darr;</a></p>
-          <p class="pdp-ans-foot">Model is 182 cm, wearing L in the Oversized fit — the worn photos show the Oversized cut, not this one.</p>
+          <p class="pdp-ans-foot">Male model is 182 cm, wearing L in the Oversized fit · Female model wears M in the Oversized fit — the worn photos show the Oversized cut, not this one.</p>
         </details>
         <details class="pdp-ans">
           <summary>Top questions</summary>
@@ -1113,11 +1119,11 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
     <h2>More from <em>the drop</em></h2>
     <div class="rel-grid">
       <a class="rel" href="/products/al-quaa-galaxy-oversized/">
-        <div class="rel-img" data-cycle><img class="on" src="../../shirts/alquaa-oversized-back.jpg" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-oversized-front.jpg" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-model-back.jpg" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy" width="1076" height="1600"><img src="../../shirts/alquaa-model-front.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy" width="1067" height="1600"><img src="../../shirts/alquaa-model-dusk.jpg" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy" width="1227" height="1600"></div>
+        <div class="rel-img" data-cycle><img class="on" src="../../shirts/alquaa-oversized-back.jpg" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-oversized-front.jpg" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-model-back.jpg" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy" width="1076" height="1600"><img src="../../shirts/alquaa-female-1.jpg" alt="The Al Quaa Galaxy tee worn in the Hajar mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1453" height="1600"><img src="../../shirts/alquaa-model-front.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy" width="1067" height="1600"><img src="../../shirts/alquaa-female-2.jpg" alt="The Al Quaa Galaxy tee from behind, arms out against the mountains — the Milky Way print across the back. Female model wears M in the Oversized fit." loading="lazy" width="931" height="1280"><img src="../../shirts/alquaa-model-dusk.jpg" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy" width="1227" height="1600"><img src="../../shirts/alquaa-female-3.jpg" alt="The back of the Al Quaa Galaxy tee in the mountains at dusk, the Milky Way print catching the last light. Female model wears M in the Oversized fit." loading="lazy" width="1498" height="1600"></div>
         <div class="rel-body"><div class="rel-place">Inspired by Al Quaa</div><div class="rel-name">Al Quaa Galaxy — Oversized</div><div class="rel-price"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></div></div>
       </a>
       <a class="rel" href="/products/empty-quarter-regular/">
-        <div class="rel-img" data-cycle><img class="on" src="../../shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy" width="1536" height="1536"><img src="../../shirts/emptyquarter-regular-back.jpg" alt="Empty Quarter — Regular, regular fit, back view" loading="lazy" width="1536" height="1536"><img src="../../shirts/emptyquarter-model-front.jpg" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy" width="1075" height="1600"><img src="../../shirts/emptyquarter-model-stand.jpg" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy" width="1067" height="1600"><img src="../../shirts/emptyquarter-model-sunset.jpg" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy" width="1234" height="1275"></div>
+        <div class="rel-img" data-cycle><img class="on" src="../../shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy" width="1536" height="1536"><img src="../../shirts/emptyquarter-regular-back.jpg" alt="Empty Quarter — Regular, regular fit, back view" loading="lazy" width="1536" height="1536"><img src="../../shirts/emptyquarter-model-front.jpg" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy" width="1075" height="1600"><img src="../../shirts/emptyquarter-female-1.jpg" alt="The Empty Quarter tee worn in the mountains, in profile — the tonal embroidered sun and dunes on the chest. Female model wears M in the Oversized fit." loading="lazy" width="656" height="1091"><img src="../../shirts/emptyquarter-model-stand.jpg" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy" width="1067" height="1600"><img src="../../shirts/emptyquarter-female-2.jpg" alt="The back of the Empty Quarter tee in the mountains — plain, with the back-neck embroidery. Female model wears M in the Oversized fit." loading="lazy" width="1091" height="1280"><img src="../../shirts/emptyquarter-model-sunset.jpg" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy" width="1234" height="1275"><img src="../../shirts/emptyquarter-female-3.jpg" alt="The Empty Quarter tee worn on a mountain ridge — the tonal embroidered sun over the dunes across the chest. Female model wears M in the Oversized fit." loading="lazy" width="915" height="1280"><img src="../../shirts/emptyquarter-female-4.jpg" alt="The Empty Quarter tee worn in the mountains, arms out — the tonal embroidery across the chest. Female model wears M in the Oversized fit." loading="lazy" width="1035" height="1280"><img src="../../shirts/emptyquarter-female-5.jpg" alt="The Empty Quarter tee worn seated on the rocks in the mountains. Female model wears M in the Oversized fit." loading="lazy" width="1131" height="1280"><img src="../../shirts/emptyquarter-female-6.jpg" alt="The Empty Quarter tee in profile as the light drops over the mountains. Female model wears M in the Oversized fit." loading="lazy" width="656" height="1091"></div>
         <div class="rel-body"><div class="rel-place">Inspired by Liwa</div><div class="rel-name">Empty Quarter — Regular</div><div class="rel-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></div></div>
       </a>
     </div>
@@ -1232,10 +1238,14 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   }
   function syncBadge(){
     if(!fitBadge)return;
-    var im=imgs[cur];
-    if(!isOver && im && im.hasAttribute('data-worn')){
+    var im=imgs[cur], tag=im&&im.getAttribute('data-tag');
+    /* every worn photo names its model and size (Faheem, 8 Sep: "mention on the photos
+       that she's wearing Medium oversized"); on a Regular page it keeps the warning tone,
+       since the photo shows the other cut */
+    if(im && im.hasAttribute('data-worn')){
       if(!fitBadge.dataset.orig) fitBadge.dataset.orig=fitBadge.textContent;
-      fitBadge.textContent='PHOTO: OVERSIZED FIT'; fitBadge.classList.add('warnfit');
+      fitBadge.textContent=tag?(isOver?tag:'Photo: '+tag):(isOver?fitBadge.dataset.orig:'PHOTO: OVERSIZED FIT');
+      fitBadge.classList.toggle('warnfit',!isOver);
     } else if(fitBadge.dataset.orig){
       fitBadge.textContent=fitBadge.dataset.orig; fitBadge.classList.remove('warnfit');
     }

@@ -63,7 +63,7 @@ function galShots(p) {
     [p.imgMain, p.altMain, 'View'],
     [p.imgFront, p.altFront, 'View front'],
     [p.imgBack, p.altBack, 'View back'],
-    ...((p.modelShots || []).map(function (m, i) { return [m.src, m.alt, 'View worn photo ' + (i + 1), 'worn']; })),
+    ...((p.modelShots || []).map(function (m, i) { return [m.src, m.alt, 'View worn photo ' + (i + 1), 'worn', m.tag || '']; })),
     [p.imgCompare, p.altCompare, 'Compare regular and oversized fit', 'compare']
   ].filter(x => x[0]);
   const seen = new Set(), out = [];
@@ -208,7 +208,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
   font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
   text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.82);
   padding:8px 12px;border-radius:2px;pointer-events:none}
-@media(max-width:700px){.gal-fit{left:10px;bottom:10px;font-size:10px;padding:7px 10px}}
+@media(max-width:700px){.gal-fit{left:10px;bottom:46px;font-size:10px;padding:7px 10px;max-width:calc(100% - 20px)}}  /* above the zoom hint: the model badge is a full sentence now (8 Sep) */
 .gal-thumbs{display:flex;gap:10px;margin-top:13px}
 .gal-thumbs button{width:74px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--edge,rgba(42,32,22,.58));background:none;cursor:pointer;padding:0;opacity:.78;transition:opacity .3s,border-color .3s,transform .3s}
 .gal-thumbs button:hover{transform:translateY(-3px)}
@@ -642,7 +642,7 @@ ${RV.CSS}
         <span class="gal-hint">Click to zoom</span>
         <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
 ${galShots(p).map((s,i)=>`
-        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''} src="../..${s[0]}" alt="${esc(s[1]||'')}">`).join('')}
+        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''}${s[4]?` data-tag="${esc(s[4])}"`:''} src="../..${s[0]}" alt="${esc(s[1]||'')}">`).join('')}
         ${p.fitLabel ? `<span class="gal-fit" aria-hidden="true">${esc(p.fitLabel)}</span>` : ''}
       </div>
       <div class="gal-thumbs" id="thumbs">
@@ -984,10 +984,14 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   }
   function syncBadge(){
     if(!fitBadge)return;
-    var im=imgs[cur];
-    if(!isOver && im && im.hasAttribute('data-worn')){
+    var im=imgs[cur], tag=im&&im.getAttribute('data-tag');
+    /* every worn photo names its model and size (Faheem, 8 Sep: "mention on the photos
+       that she's wearing Medium oversized"); on a Regular page it keeps the warning tone,
+       since the photo shows the other cut */
+    if(im && im.hasAttribute('data-worn')){
       if(!fitBadge.dataset.orig) fitBadge.dataset.orig=fitBadge.textContent;
-      fitBadge.textContent='PHOTO: OVERSIZED FIT'; fitBadge.classList.add('warnfit');
+      fitBadge.textContent=tag?(isOver?tag:'Photo: '+tag):(isOver?fitBadge.dataset.orig:'PHOTO: OVERSIZED FIT');
+      fitBadge.classList.toggle('warnfit',!isOver);
     } else if(fitBadge.dataset.orig){
       fitBadge.textContent=fitBadge.dataset.orig; fitBadge.classList.remove('warnfit');
     }

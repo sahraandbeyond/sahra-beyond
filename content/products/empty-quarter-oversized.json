@@ -116,16 +116,55 @@
   "modelShots": [
     {
       "src": "/shirts/emptyquarter-model-front.jpg",
-      "alt": "The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest"
+      "alt": "The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest",
+      "tag": "He wears L · Oversized fit"
+    },
+    {
+      "src": "/shirts/emptyquarter-female-1.jpg",
+      "alt": "The Empty Quarter tee worn in the mountains, in profile — the tonal embroidered sun and dunes on the chest. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
     },
     {
       "src": "/shirts/emptyquarter-model-stand.jpg",
-      "alt": "The Empty Quarter tee worn standing on a dune at golden hour"
+      "alt": "The Empty Quarter tee worn standing on a dune at golden hour",
+      "tag": "He wears L · Oversized fit"
+    },
+    {
+      "src": "/shirts/emptyquarter-female-2.jpg",
+      "alt": "The back of the Empty Quarter tee in the mountains — plain, with the back-neck embroidery. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
     },
     {
       "src": "/shirts/emptyquarter-model-sunset.jpg",
-      "alt": "The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes"
+      "alt": "The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes",
+      "tag": "He wears L · Oversized fit"
+    },
+    {
+      "src": "/shirts/emptyquarter-female-3.jpg",
+      "alt": "The Empty Quarter tee worn on a mountain ridge — the tonal embroidered sun over the dunes across the chest. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
+    },
+    {
+      "src": "/shirts/emptyquarter-female-4.jpg",
+      "alt": "The Empty Quarter tee worn in the mountains, arms out — the tonal embroidery across the chest. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
+    },
+    {
+      "src": "/shirts/emptyquarter-female-5.jpg",
+      "alt": "The Empty Quarter tee worn seated on the rocks in the mountains. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
+    },
+    {
+      "src": "/shirts/emptyquarter-female-6.jpg",
+      "alt": "The Empty Quarter tee in profile as the light drops over the mountains. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
     }
   ],
-  "modelInfo": "Model is 182 cm, wearing L in the Oversized fit"
+  "modelInfo": "Male model is 182 cm, wearing L in the Oversized fit · Female model wears M in the Oversized fit"
 }

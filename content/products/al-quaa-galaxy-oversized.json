@@ -121,16 +121,37 @@
   "modelShots": [
     {
       "src": "/shirts/alquaa-model-back.jpg",
-      "alt": "The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes"
+      "alt": "The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes",
+      "tag": "He wears L · Oversized fit"
+    },
+    {
+      "src": "/shirts/alquaa-female-1.jpg",
+      "alt": "The Al Quaa Galaxy tee worn in the Hajar mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
     },
     {
       "src": "/shirts/alquaa-model-front.jpg",
-      "alt": "The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest"
+      "alt": "The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest",
+      "tag": "He wears L · Oversized fit"
+    },
+    {
+      "src": "/shirts/alquaa-female-2.jpg",
+      "alt": "The Al Quaa Galaxy tee from behind, arms out against the mountains — the Milky Way print across the back. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
     },
     {
       "src": "/shirts/alquaa-model-dusk.jpg",
-      "alt": "The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold"
+      "alt": "The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold",
+      "tag": "He wears L · Oversized fit"
+    },
+    {
+      "src": "/shirts/alquaa-female-3.jpg",
+      "alt": "The back of the Al Quaa Galaxy tee in the mountains at dusk, the Milky Way print catching the last light. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
     }
   ],
-  "modelInfo": "Model is 182 cm, wearing L in the Oversized fit"
+  "modelInfo": "Male model is 182 cm, wearing L in the Oversized fit · Female model wears M in the Oversized fit"
 }
