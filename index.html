@@ -425,6 +425,33 @@ body.has-topbar nav{top:var(--topbar-h,34px)}
 .j-news .wl-ok{display:none;font-family:'Playfair Display',serif;font-size:19px;font-style:italic;color:#F7EFE2}
 /* live footer sits after the last stop */
 footer{position:relative;z-index:2}
+
+/* ---- the ring up front ---- */
+.anchor{position:relative;display:block;height:0}
+/* the name of the card at the front, drawn large behind the ring */
+.ring-cap{position:absolute;left:0;right:0;top:56vh;transform:translateY(-50%);z-index:0;text-align:center;font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(44px,9vw,132px);line-height:1;color:rgba(43,37,32,.07);letter-spacing:-.01em;pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .4s}
+.collection.ring-on .ring-cap{opacity:1}
+/* arrows: mouse and keyboard users turn the ring without dragging */
+.ring-arrow{position:absolute;top:56vh;z-index:5;width:52px;height:52px;margin-top:-26px;border-radius:50%;border:1px solid rgba(43,37,32,.28);background:rgba(250,246,239,.85);backdrop-filter:blur(8px);color:var(--ink);font-size:30px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+.ring-arrow.prev{left:max(8px,calc(50% - 46vw))}.ring-arrow.next{right:max(8px,calc(50% - 46vw))}
+.ring-arrow:hover{background:var(--ink);color:#fff}
+.collection.ring-on .ring-arrow{display:flex}
+@media(max-width:760px){.ring-arrow{top:63vh;width:42px;height:42px;margin-top:-21px;font-size:24px}.ring-arrow.prev{left:6px}.ring-arrow.next{right:6px}.ring-cap{top:63vh;font-size:clamp(34px,11vw,60px)}}
+/* a one-time hint under the ring; gone after the first drag, arrow or key */
+.ring-cue{position:absolute;left:50%;top:91vh;transform:translateX(-50%);z-index:5;padding:9px 16px;border-radius:999px;background:rgba(43,37,32,.82);color:#F7EFE2;font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .4s}
+.ring-cue-h{display:inline-block;animation:ringcue 1.6s ease-in-out infinite}
+.ring-cue-h:last-child{animation-delay:.8s}
+@keyframes ringcue{0%,100%{transform:translateX(0)}50%{transform:translateX(-5px)}}
+.ring-cue-h:last-child{animation-name:ringcue2}
+@keyframes ringcue2{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+.collection.ring-on.cue .ring-cue{opacity:1}
+.collection{position:relative}
+@media(max-width:760px){.ring-cue{top:90vh;font-size:11px;padding:8px 13px}}
+/* the front card can be clicked on; the side cards turn to the front first. The grid's own
+   plane (z=0) sat in front of the receded cards for hit-testing, so nothing behind it was
+   clickable or hoverable: the grid lets pointers through, the cards catch them */
+.collection.ring-on .j-deck,.collection.ring-on .grid{pointer-events:none}.collection.ring-on .grid .card{pointer-events:auto}
+.collection.ring-on .grid .card:not(.front){cursor:pointer}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <style data-legib>
@@ -663,7 +690,7 @@ body.shop-page .foot-links{gap:10px 22px}
 <button id="ambient" class="ambient-btn" aria-label="Toggle ambient desert sound" aria-pressed="false" title="Ambient desert sound"><span class="amb-ic">♪</span></button>
 <nav id="nav" class="on-hero">
   <a class="logo" href="/" aria-label="Sahra &amp; Beyond — home"><img class="mark mark-l" src="/logo/mark-light.png" alt="" width="300" height="40"><img class="mark mark-d" src="/logo/mark-dark.png" alt="" width="300" height="40"><div class="logo-text"><span class="logo-a">Sahra</span><span class="logo-b">&amp; Beyond</span></div></a>
-  <div class="nav-links"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links"><a href="/">Home</a><a href="/#collection" data-ring-jump>Collection</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <canvas id="gl" aria-hidden="true"></canvas>
@@ -690,44 +717,18 @@ body.shop-page .foot-links{gap:10px 22px}
     <span class="j-eyebrow rv">Inspired by the landscapes of the UAE</span>
     <h1><span class="rv">Wear the</span> <em class="rv">wild side</em> <span class="rv">of the UAE.</span></h1>
     <p class="lede rv">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
-    <div class="actions rv"><a class="j-btn solid" href="/shop/">Shop the collection</a><a class="j-btn" href="/places/">The places behind them</a></div>
+    <div class="actions rv"><a class="j-btn solid" href="#collection" data-ring-jump>See the collection &#8964;</a><a class="j-btn" href="/places/">The places behind them</a></div>
     <div class="meta rv"><span class="sb-ship-uae"><b>Free</b> next-day delivery across the UAE</span><span class="sb-ship-gcc">GCC delivery 3&ndash;5 working days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide delivery 7&ndash;14 working days</span><span>Limited first run</span></div>
   </div></div>
   <div class="scroll-cue">Scroll — the journey begins ⌄</div>
 </section>
 
-<!-- 2 · AL QUAA · night -->
-<section class="stop" id="s-alquaa" data-tod="night" data-bg="night">
-  <div class="j-wrap"><div class="col">
-    <span class="place-tag rv">Al Quaa · Abu Dhabi · dark sky</span>
-    <h2 class="rv">The darkest sky <em>in the Emirates</em></h2>
-    <p class="lede rv">Two hours south of the city the light pollution ends and the Milky Way rises over the dunes. The galaxy that runs across the back of this tee was photographed here.</p>
-    <div class="design-card rv" data-handle="al-quaa-galaxy-regular" data-fit-on="regular"><div class="card-img" data-cycle data-fit="regular"><img class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-img" data-cycle data-fit="oversized" hidden><img class="on" src="/shirts/alquaa-oversized-back-fit.jpg" srcset="/shirts/card/alquaa-oversized-back-fit.jpg 800w, /shirts/alquaa-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/alquaa-oversized-front-fit.jpg" srcset="/shirts/card/alquaa-oversized-front-fit.jpg 800w, /shirts/alquaa-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/alquaa-model-back.jpg" srcset="/shirts/card/alquaa-model-back.jpg 800w, /shirts/alquaa-model-back.jpg 1076w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy"><img src="/shirts/alquaa-model-front.jpg" srcset="/shirts/card/alquaa-model-front.jpg 800w, /shirts/alquaa-model-front.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy"><img src="/shirts/alquaa-model-dusk.jpg" srcset="/shirts/card/alquaa-model-dusk.jpg 800w, /shirts/alquaa-model-dusk.jpg 1227w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy"></div><span><small>The design · Al Quaa</small><b>Al Quaa Galaxy</b><p>The Milky Way across the back, a subtle صحراء mark on the chest. DTG print on 230gsm organic cotton, regular and oversized.</p><span class="row" data-fit="regular"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span><a class="go" href="/products/al-quaa-galaxy-regular/">View the tee →</a></span><span class="row" data-fit="oversized" hidden><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span><a class="go" href="/products/al-quaa-galaxy-oversized/">View the tee →</a></span></span><div class="fit-sw" role="group" aria-label="Fit"><button type="button" class="fit-b on" data-fit-pick="regular" aria-pressed="true">Regular</button><button type="button" class="fit-b" data-fit-pick="oversized" aria-pressed="false">Oversized</button></div><div class="qa" data-qa="al-quaa-galaxy-regular" data-fit="regular"></div><div class="qa" data-qa="al-quaa-galaxy-oversized" data-fit="oversized" hidden></div></div>
-  </div></div>
-</section>
-
-<!-- 3 · LIWA · dusk -->
-<section class="stop right" id="s-liwa" data-tod="dusk" data-bg="liwa">
-  <div class="j-wrap"><div class="col">
-    <span class="place-tag rv">Liwa · Abu Dhabi · Empty Quarter</span>
-    <h2 class="rv">Where the <em>Empty Quarter</em> begins</h2>
-    <p class="lede rv">Dune ridges taller than buildings, and a sun that sets behind them in gold. Embroidered in tone-on-tone thread, the way the light sits on the sand.</p>
-    <div class="design-card rv" data-handle="empty-quarter-regular" data-fit-on="regular"><div class="card-img" data-cycle data-fit="regular"><img class="on" src="/shirts/emptyquarter-regular-front-fit.jpg" srcset="/shirts/card/emptyquarter-regular-front-fit.jpg 800w, /shirts/emptyquarter-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-regular-back-fit.jpg" srcset="/shirts/card/emptyquarter-regular-back-fit.jpg 800w, /shirts/emptyquarter-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-img" data-cycle data-fit="oversized" hidden><img class="on" src="/shirts/emptyquarter-oversized-front-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-front-fit.jpg 800w, /shirts/emptyquarter-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Oversized, oversized fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-oversized-back-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-back-fit.jpg 800w, /shirts/emptyquarter-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/emptyquarter-model-front.jpg" srcset="/shirts/card/emptyquarter-model-front.jpg 800w, /shirts/emptyquarter-model-front.jpg 1075w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy"><img src="/shirts/emptyquarter-model-stand.jpg" srcset="/shirts/card/emptyquarter-model-stand.jpg 800w, /shirts/emptyquarter-model-stand.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy"><img src="/shirts/emptyquarter-model-sunset.jpg" srcset="/shirts/card/emptyquarter-model-sunset.jpg 800w, /shirts/emptyquarter-model-sunset.jpg 1234w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy"></div><span><small>The design · Liwa</small><b>Empty Quarter</b><p>A tonal embroidered sun setting over the dune ridges, with صحراء beneath. 230gsm organic cotton, regular and oversized.</p><span class="row" data-fit="regular"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span><a class="go" href="/products/empty-quarter-regular/">View the tee →</a></span><span class="row" data-fit="oversized" hidden><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span><a class="go" href="/products/empty-quarter-oversized/">View the tee →</a></span></span><div class="fit-sw" role="group" aria-label="Fit"><button type="button" class="fit-b on" data-fit-pick="regular" aria-pressed="true">Regular</button><button type="button" class="fit-b" data-fit-pick="oversized" aria-pressed="false">Oversized</button></div><div class="qa" data-qa="empty-quarter-regular" data-fit="regular"></div><div class="qa" data-qa="empty-quarter-oversized" data-fit="oversized" hidden></div></div>
-  </div></div>
-</section>
-
-<!-- 4 · WADI NAQAB · mountains -->
-<section class="stop right" id="s-naqab" data-tod="dusk" data-bg="wadi">
-  <div class="j-wrap"><div class="col">
-    <span class="place-tag rv">Wadi Naqab · Ras Al Khaimah · Hajar Mountains</span>
-    <h2 class="rv">Red rock, <em>drawn in a single line</em></h2>
-    <p class="lede rv">A topographic line of the peaks on the front; the rock of the Hajar across the back. The wadi behind it is a day's walk from the road.</p>
-    <div class="design-card rv" data-handle="hajar-mountains-regular" data-fit-on="regular"><div class="card-img" data-cycle data-fit="regular"><img class="on" src="/shirts/hajar-regular-back-fit.jpg" srcset="/shirts/card/hajar-regular-back-fit.jpg 800w, /shirts/hajar-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/hajar-regular-front-fit.jpg" srcset="/shirts/card/hajar-regular-front-fit.jpg 800w, /shirts/hajar-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-img" data-cycle data-fit="oversized" hidden><img class="on" src="/shirts/hajar-oversized-back-fit.jpg" srcset="/shirts/card/hajar-oversized-back-fit.jpg 800w, /shirts/hajar-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/hajar-oversized-front-fit.jpg" srcset="/shirts/card/hajar-oversized-front-fit.jpg 800w, /shirts/hajar-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/hajar-model-back.jpg" srcset="/shirts/card/hajar-model-back.jpg 800w, /shirts/hajar-model-back.jpg 1078w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back" loading="lazy"><img src="/shirts/hajar-model-front.jpg" srcset="/shirts/card/hajar-model-front.jpg 800w, /shirts/hajar-model-front.jpg 1157w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest" loading="lazy"></div><span><small>The design · Wadi Naqab</small><b>Hajar Mountains</b><p>A topographic line of the peaks on the front; the red rock of the Hajar across the back. DTG print, 230gsm organic cotton.</p><span class="row" data-fit="regular"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span><a class="go" href="/products/hajar-mountains-regular/">View the tee →</a></span><span class="row" data-fit="oversized" hidden><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span><a class="go" href="/products/hajar-mountains-oversized/">View the tee →</a></span></span><div class="fit-sw" role="group" aria-label="Fit"><button type="button" class="fit-b on" data-fit-pick="regular" aria-pressed="true">Regular</button><button type="button" class="fit-b" data-fit-pick="oversized" aria-pressed="false">Oversized</button></div><div class="qa" data-qa="hajar-mountains-regular" data-fit="regular"></div><div class="qa" data-qa="hajar-mountains-oversized" data-fit="oversized" hidden></div></div>
-  </div></div>
-</section>
-
+<div id="collection" class="anchor" aria-hidden="true"></div>
 <!-- 5 · COLLECTION · paper light; the designs on a 3D ring that opens into the grid -->
 <section class="stop collection" id="s-collection" data-tod="paper" data-bg="paper">
+<div class="ring-cap" aria-hidden="true"></div>
+<button class="ring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="ring-arrow next" type="button" aria-label="Next design">&#8250;</button>
+<div class="ring-cue" aria-hidden="true"><span class="ring-cue-h">&#8592;</span> drag to spin &middot; scroll to open <span class="ring-cue-h">&#8594;</span></div>
   <div class="j-wrap">
     <span class="j-eyebrow rv">The collection</span>
     <h2 class="rv">Designs <em>with a place</em></h2>
@@ -938,6 +939,36 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     </div>
   </section><!--REVIEWS:END-->
   </div>
+</section>
+
+<!-- 2 · AL QUAA · night -->
+<section class="stop" id="s-alquaa" data-tod="night" data-bg="night">
+  <div class="j-wrap"><div class="col">
+    <span class="place-tag rv">Al Quaa · Abu Dhabi · dark sky</span>
+    <h2 class="rv">The darkest sky <em>in the Emirates</em></h2>
+    <p class="lede rv">Two hours south of the city the light pollution ends and the Milky Way rises over the dunes. The galaxy that runs across the back of this tee was photographed here.</p>
+    <div class="design-card rv" data-handle="al-quaa-galaxy-regular" data-fit-on="regular"><div class="card-img" data-cycle data-fit="regular"><img class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-img" data-cycle data-fit="oversized" hidden><img class="on" src="/shirts/alquaa-oversized-back-fit.jpg" srcset="/shirts/card/alquaa-oversized-back-fit.jpg 800w, /shirts/alquaa-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/alquaa-oversized-front-fit.jpg" srcset="/shirts/card/alquaa-oversized-front-fit.jpg 800w, /shirts/alquaa-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/alquaa-model-back.jpg" srcset="/shirts/card/alquaa-model-back.jpg 800w, /shirts/alquaa-model-back.jpg 1076w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy"><img src="/shirts/alquaa-model-front.jpg" srcset="/shirts/card/alquaa-model-front.jpg 800w, /shirts/alquaa-model-front.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy"><img src="/shirts/alquaa-model-dusk.jpg" srcset="/shirts/card/alquaa-model-dusk.jpg 800w, /shirts/alquaa-model-dusk.jpg 1227w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy"></div><span><small>The design · Al Quaa</small><b>Al Quaa Galaxy</b><p>The Milky Way across the back, a subtle صحراء mark on the chest. DTG print on 230gsm organic cotton, regular and oversized.</p><span class="row" data-fit="regular"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span><a class="go" href="/products/al-quaa-galaxy-regular/">View the tee →</a></span><span class="row" data-fit="oversized" hidden><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span><a class="go" href="/products/al-quaa-galaxy-oversized/">View the tee →</a></span></span><div class="fit-sw" role="group" aria-label="Fit"><button type="button" class="fit-b on" data-fit-pick="regular" aria-pressed="true">Regular</button><button type="button" class="fit-b" data-fit-pick="oversized" aria-pressed="false">Oversized</button></div><div class="qa" data-qa="al-quaa-galaxy-regular" data-fit="regular"></div><div class="qa" data-qa="al-quaa-galaxy-oversized" data-fit="oversized" hidden></div></div>
+  </div></div>
+</section>
+
+<!-- 3 · LIWA · dusk -->
+<section class="stop right" id="s-liwa" data-tod="dusk" data-bg="liwa">
+  <div class="j-wrap"><div class="col">
+    <span class="place-tag rv">Liwa · Abu Dhabi · Empty Quarter</span>
+    <h2 class="rv">Where the <em>Empty Quarter</em> begins</h2>
+    <p class="lede rv">Dune ridges taller than buildings, and a sun that sets behind them in gold. Embroidered in tone-on-tone thread, the way the light sits on the sand.</p>
+    <div class="design-card rv" data-handle="empty-quarter-regular" data-fit-on="regular"><div class="card-img" data-cycle data-fit="regular"><img class="on" src="/shirts/emptyquarter-regular-front-fit.jpg" srcset="/shirts/card/emptyquarter-regular-front-fit.jpg 800w, /shirts/emptyquarter-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-regular-back-fit.jpg" srcset="/shirts/card/emptyquarter-regular-back-fit.jpg 800w, /shirts/emptyquarter-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-img" data-cycle data-fit="oversized" hidden><img class="on" src="/shirts/emptyquarter-oversized-front-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-front-fit.jpg 800w, /shirts/emptyquarter-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Oversized, oversized fit — embroidered design on the front" loading="lazy"><img src="/shirts/emptyquarter-oversized-back-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-back-fit.jpg 800w, /shirts/emptyquarter-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/emptyquarter-model-front.jpg" srcset="/shirts/card/emptyquarter-model-front.jpg 800w, /shirts/emptyquarter-model-front.jpg 1075w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy"><img src="/shirts/emptyquarter-model-stand.jpg" srcset="/shirts/card/emptyquarter-model-stand.jpg 800w, /shirts/emptyquarter-model-stand.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy"><img src="/shirts/emptyquarter-model-sunset.jpg" srcset="/shirts/card/emptyquarter-model-sunset.jpg 800w, /shirts/emptyquarter-model-sunset.jpg 1234w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy"></div><span><small>The design · Liwa</small><b>Empty Quarter</b><p>A tonal embroidered sun setting over the dune ridges, with صحراء beneath. 230gsm organic cotton, regular and oversized.</p><span class="row" data-fit="regular"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span><a class="go" href="/products/empty-quarter-regular/">View the tee →</a></span><span class="row" data-fit="oversized" hidden><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span><a class="go" href="/products/empty-quarter-oversized/">View the tee →</a></span></span><div class="fit-sw" role="group" aria-label="Fit"><button type="button" class="fit-b on" data-fit-pick="regular" aria-pressed="true">Regular</button><button type="button" class="fit-b" data-fit-pick="oversized" aria-pressed="false">Oversized</button></div><div class="qa" data-qa="empty-quarter-regular" data-fit="regular"></div><div class="qa" data-qa="empty-quarter-oversized" data-fit="oversized" hidden></div></div>
+  </div></div>
+</section>
+
+<!-- 4 · WADI NAQAB · mountains -->
+<section class="stop right" id="s-naqab" data-tod="dusk" data-bg="wadi">
+  <div class="j-wrap"><div class="col">
+    <span class="place-tag rv">Wadi Naqab · Ras Al Khaimah · Hajar Mountains</span>
+    <h2 class="rv">Red rock, <em>drawn in a single line</em></h2>
+    <p class="lede rv">A topographic line of the peaks on the front; the rock of the Hajar across the back. The wadi behind it is a day's walk from the road.</p>
+    <div class="design-card rv" data-handle="hajar-mountains-regular" data-fit-on="regular"><div class="card-img" data-cycle data-fit="regular"><img class="on" src="/shirts/hajar-regular-back-fit.jpg" srcset="/shirts/card/hajar-regular-back-fit.jpg 800w, /shirts/hajar-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/hajar-regular-front-fit.jpg" srcset="/shirts/card/hajar-regular-front-fit.jpg 800w, /shirts/hajar-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-img" data-cycle data-fit="oversized" hidden><img class="on" src="/shirts/hajar-oversized-back-fit.jpg" srcset="/shirts/card/hajar-oversized-back-fit.jpg 800w, /shirts/hajar-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/hajar-oversized-front-fit.jpg" srcset="/shirts/card/hajar-oversized-front-fit.jpg 800w, /shirts/hajar-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/hajar-model-back.jpg" srcset="/shirts/card/hajar-model-back.jpg 800w, /shirts/hajar-model-back.jpg 1078w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back" loading="lazy"><img src="/shirts/hajar-model-front.jpg" srcset="/shirts/card/hajar-model-front.jpg 800w, /shirts/hajar-model-front.jpg 1157w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest" loading="lazy"></div><span><small>The design · Wadi Naqab</small><b>Hajar Mountains</b><p>A topographic line of the peaks on the front; the red rock of the Hajar across the back. DTG print, 230gsm organic cotton.</p><span class="row" data-fit="regular"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span><a class="go" href="/products/hajar-mountains-regular/">View the tee →</a></span><span class="row" data-fit="oversized" hidden><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span><a class="go" href="/products/hajar-mountains-oversized/">View the tee →</a></span></span><div class="fit-sw" role="group" aria-label="Fit"><button type="button" class="fit-b on" data-fit-pick="regular" aria-pressed="true">Regular</button><button type="button" class="fit-b" data-fit-pick="oversized" aria-pressed="false">Oversized</button></div><div class="qa" data-qa="hajar-mountains-regular" data-fit="regular"></div><div class="qa" data-qa="hajar-mountains-oversized" data-fit="oversized" hidden></div></div>
+  </div></div>
 </section>
 
 <!-- 7 · PLACES · high over the land at dusk -->
@@ -1442,11 +1473,11 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   var STOPS = [
     { bg: 'liwa',  z: [1.42, 1.28], pan: [[-0.024, 0.014], [-0.010, 0.010]], par: 0.8, tint: '#ffd6a6', grade: [0.10, 0.96, 0.10, 1.00], haze: '#ffb46a', light: [-0.75, 0.55, 0.35, 0.55] },  /* 0 film */
     { bg: 'liwa',  z: [1.28, 1.12], pan: [[-0.010, 0.010], [ 0.014, 0.000]], par: 0.8, tint: '#ffd6a6', grade: [0.08, 1.00, 0.12, 1.02], haze: '#ffb46a', light: [-0.75, 0.55, 0.35, 0.55] },  /* 1 hero (continues) */
+    { bg: 'paper', z: [1, 1], pan: [[0, 0], [0, 0]], par: 0, tint: '#ffffff', grade: [0, 1, 0, 1], haze: '#ffffff', light: [0, 1, 0, 0] },                                                    /* 5 collection */
+    { bg: 'paper', z: [1, 1], pan: [[0, 0], [0, 0]], par: 0, tint: '#ffffff', grade: [0, 1, 0, 1], haze: '#ffffff', light: [0, 1, 0, 0] },                                                    /* 6 reviews */
     { bg: 'night', z: [1.38, 1.10], pan: [[ 0.012, 0.010], [-0.006, -0.034]], par: 0.7, tint: '#ffffff', grade: [0.00, 1.00, 0.06, 1.00], haze: '#243a6a', light: [ 0.30, 0.90, 0.16, 1.30] },  /* 2 al quaa: rise and tilt to the galaxy */
     { bg: 'liwa',  z: [1.44, 1.14], pan: [[ 0.034, 0.006], [ 0.012, 0.014]], par: 1.0, tint: '#ffb877', grade: [0.16, 1.00, 0.14, 1.04], haze: '#ffa650', light: [-0.75, 0.50, 0.40, 0.70] },  /* 3 liwa */
     { bg: 'wadi',  z: [1.40, 1.12], pan: [[-0.030, 0.020], [-0.008, 0.006]], par: 1.0, tint: '#ffc9a0', grade: [0.08, 1.00, 0.16, 1.00], haze: '#e0a070', light: [ 0.65, 0.60, 0.42, 0.45] },  /* 4 wadi naqab */
-    { bg: 'paper', z: [1, 1], pan: [[0, 0], [0, 0]], par: 0, tint: '#ffffff', grade: [0, 1, 0, 1], haze: '#ffffff', light: [0, 1, 0, 0] },                                                    /* 5 collection */
-    { bg: 'paper', z: [1, 1], pan: [[0, 0], [0, 0]], par: 0, tint: '#ffffff', grade: [0, 1, 0, 1], haze: '#ffffff', light: [0, 1, 0, 0] },                                                    /* 6 reviews */
     { bg: 'wadi',  z: [1.34, 1.10], pan: [[ 0.028, -0.030], [ 0.010, -0.012]], par: 1.1, tint: '#b88cc0', grade: [0.30, 0.62, 0.34, 0.92], haze: '#6a4a6e', light: [ 0.65, 0.55, 0.30, 0.25] }, /* 7 places: dusk violet, far */
     { bg: 'night', z: [1.36, 1.12], pan: [[-0.030, 0.026], [-0.010, 0.006]], par: 0.9, tint: '#ffffff', grade: [0.00, 0.82, 0.08, 0.96], haze: '#1c2a4a', light: [ 0.30, 0.90, 0.14, 1.20] },  /* 8 story */
     { bg: 'wadi',  z: [1.48, 1.16], pan: [[-0.040, 0.034], [-0.018, 0.012]], par: 1.0, tint: '#ffe0b8', grade: [0.18, 0.98, 0.10, 1.04], haze: '#ffcf9a', light: [ 0.65, 0.60, 0.40, 0.50] },  /* 9 mission: from the ghaf, pulling back */
@@ -1625,7 +1656,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       var gr = grid.getBoundingClientRect();
       slots = cards.map(function (el) { var r = el.getBoundingClientRect(); return { x: r.left - gr.left + r.width / 2, y: r.top - gr.top + r.height / 2, w: r.width }; });
     }
-    var settled = false, moving = false, restT = null;
+    var settled = false, moving = false, restT = null, afterPlace = null;
     function holdRing(on) { for (var i = 0; i < cards.length; i++) { var st = cards[i].querySelector('[data-cycle]'); if (st) { if (on) st.setAttribute('data-hold', '1'); else st.removeAttribute('data-hold'); } } }
     function restKick() {
       if (settled) return;
@@ -1656,6 +1687,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
           scale: sc + (1 - sc) * open, opacity: op + (1 - op) * open
         });
       }
+      if (afterPlace) afterPlace();
     }
     measureRing(); placeRing();
     if (window.MutationObserver) { var gridRefresh = null; new MutationObserver(function () { clearTimeout(gridRefresh); gridRefresh = setTimeout(function () { ScrollTrigger.refresh(); }, 60); }).observe(grid, { childList: true }); }
@@ -1697,6 +1729,76 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
         drag = null; setTimeout(function () { swallow = false; }, 50);
       };
       grid.addEventListener('pointerup', end); grid.addEventListener('pointercancel', end);
+      /* --- the extras (8 Sep): arrows, keys, momentum, click-to-front, caption, cue --- */
+      var cue = section.querySelector('.ring-cue'), cap = section.querySelector('.ring-cap');
+      var seen = false; try { seen = !!localStorage.getItem('sb_ring_seen'); } catch (x) {}
+      if (!seen) section.classList.add('cue');
+      function used(how) {
+        if (!seen) { seen = true; section.classList.remove('cue'); try { localStorage.setItem('sb_ring_seen', '1'); } catch (x) {} }
+        if (window.track) track('ring_' + how, { source: 'journey-ring' });
+      }
+      function spinTo(target, dur, ease) {
+        if (snapTw) snapTw.kill();
+        snapTw = gsap.to(ring, { spin: target, duration: dur || 0.55, ease: ease || 'power3.out', onUpdate: function () { restKick(); placeRing(); }, onComplete: function () { snapTw = null; } });
+      }
+      function nearest(total) { return Math.round(total / stepA) * stepA; }
+      function step(dir, how) { if (settled) return; used(how); spinTo(nearest(ring.theta + ring.spin + dir * stepA) - ring.theta); }
+      section.querySelectorAll('.ring-arrow').forEach(function (b) {
+        b.addEventListener('click', function (e) { e.preventDefault(); step(b.classList.contains('prev') ? 1 : -1, 'arrow'); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (settled || section.getBoundingClientRect().top > innerHeight * 0.5 || section.getBoundingClientRect().bottom < innerHeight * 0.5) return;
+        if (e.key === 'ArrowLeft') { e.preventDefault(); step(1, 'key'); } else if (e.key === 'ArrowRight') { e.preventDefault(); step(-1, 'key'); }
+      });
+      /* a flick keeps spinning before it settles: velocity from the last few pointer samples */
+      var vel = 0, lastX = 0, lastT = 0;
+      grid.addEventListener('pointerdown', function (e) { vel = 0; lastX = e.clientX; lastT = performance.now(); }, true);
+      grid.addEventListener('pointermove', function (e) {
+        if (!drag || e.pointerId !== drag.id || drag.axis !== 'x') return;
+        var t = performance.now(), dt = t - lastT; if (dt > 0) { vel = 0.6 * vel + 0.4 * ((e.clientX - lastX) / dt); lastX = e.clientX; lastT = t; }
+      }, true);
+      grid.addEventListener('pointerup', function (e) {
+        if (!drag || drag.axis !== 'x') return;
+        used('drag');
+        var stepPx = Math.max(160, (slots[0] && slots[0].w) || 200), fling = vel * 260 / stepPx * stepA;   /* px/ms -> radians of carry */
+        if (Math.abs(vel) > 0.35) { if (snapTw) { snapTw.kill(); snapTw = null; } setTimeout(function () { spinTo(nearest(ring.theta + ring.spin + fling) - ring.theta, 0.9, 'power3.out'); }, 0); }
+      }, true);
+      /* the card at the front carries .front and names the caption; a click on a side card turns it to the front */
+      var frontK = -1;
+      function frontCard() {
+        var n = cards.length, best = -1, bestA = 9;
+        for (var k = 0; k < n; k++) { var a = (k / n) * Math.PI * 2 + ring.theta + ring.spin; a = Math.atan2(Math.sin(a), Math.cos(a)); if (Math.abs(a) < bestA) { bestA = Math.abs(a); best = k; } }
+        if (best !== frontK) {
+          frontK = best;
+          for (var j = 0; j < n; j++) cards[j].classList.toggle('front', j === best);
+          if (cap && best >= 0) { var nm = cards[best].querySelector('.card-name'); cap.textContent = nm ? nm.textContent.replace(/\s+—.*$/, '') : ''; }
+        }
+      }
+      afterPlace = function () { if (!settled) frontCard(); };
+      grid.addEventListener('click', function (e) {
+        if (settled || swallow) return;
+        var card = e.target.closest('.card'); if (!card || e.target.closest('.qa')) return;
+        var k = cards.indexOf(card); if (k < 0 || k === frontK) { if (window.track) track('ring_open_product', { item_id: (card.getAttribute('href') || ''), source: 'journey-ring' }); return; }
+        e.preventDefault(); e.stopPropagation();
+        var a = (k / cards.length) * Math.PI * 2 + ring.theta + ring.spin; a = Math.atan2(Math.sin(a), Math.cos(a));
+        used('card_front'); spinTo(ring.spin - a);
+      }, true);
+      /* the address: nav "Collection" and the hero button scroll to the ring's start */
+      document.querySelectorAll('[data-ring-jump]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var t = document.getElementById('collection'); if (!t) return;
+          e.preventDefault();
+          var y = t.getBoundingClientRect().top + scrollY;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+          if (window.track) track('ring_jump', { source: a.closest('nav') ? 'nav' : 'hero' });
+          if (history.replaceState) history.replaceState(null, '', '#collection');
+        });
+      });
+      /* a cold /#collection: the browser jumps before the photos have laid out, so land again once they have */
+      if (location.hash === '#collection') {
+        var land = function () { var t = document.getElementById('collection'); if (t && !settled) window.scrollTo(0, Math.round(t.getBoundingClientRect().top + scrollY)); };
+        setTimeout(land, 700); window.addEventListener('load', function () { setTimeout(land, 400); });
+      }
       /* a drag must not end as a click on the card under the finger */
       grid.addEventListener('click', function (e) { if (swallow) { e.preventDefault(); e.stopPropagation(); } }, true);
     })();
@@ -1764,7 +1866,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
             SahraCart.add(v.id).then(function () {
               b.textContent = '✓'; setTimeout(function () { b.textContent = was; b.disabled = false; }, 1600);
               if (SahraCart.open) SahraCart.open();
-              if (window.track) track('add_to_cart', { item_id: handle, size: v.title, source: 'journey-quick-add' });
+              if (window.track) track('add_to_cart', { item_id: handle, size: v.title, source: (row.closest('#grid') && !document.getElementById('s-collection').classList.contains('ring-on')) ? 'journey-grid-quick-add' : (row.closest('#grid') ? 'journey-ring-quick-add' : 'journey-place-quick-add') });
             }).catch(function () { b.textContent = was; b.disabled = false; });
           });
           s.appendChild(b);

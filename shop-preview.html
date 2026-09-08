@@ -118,6 +118,30 @@ html.webgl .shophero .stars,html.webgl .shophero .dune{display:none}
   .prod-img:hover .nav-arrow{opacity:1}
 }
 .prod-media{transform-style:preserve-3d;will-change:transform}
+/* THE RING on the shop (Faheem, 8 Sep): the homepage carousel as the shop's index -
+   drag or arrow it round, tap a tee and the page goes to that product's panel */
+.sring{padding:26px 0 6px;--sring-w:220px;--sring-h:540px}
+.sring-head{text-align:center;padding:0 20px 4px}
+.sring-head h2{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,40px);font-weight:800;line-height:1.1;margin:6px 0 0}
+.sring-head p{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);margin:10px 0 0}
+.sring-stage{position:relative;height:var(--sring-h);perspective:1300px;overflow:hidden;touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}
+.sring-stage.dragging{cursor:grabbing}
+.sring-ring{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none}
+.sring-card{position:absolute;left:50%;top:50%;width:var(--sring-w);margin-left:calc(var(--sring-w) * -.5);margin-top:calc(var(--sring-w) * -.72);pointer-events:auto;display:block;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.16);text-decoration:none;color:var(--ink);will-change:transform;cursor:pointer}
+.sring-card .sring-img{display:block;aspect-ratio:4/5;background:#EFE7D8;overflow:hidden}
+.sring-card img{width:100%;height:100%;object-fit:cover;display:block}
+.sring-card .sring-name{display:block;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;line-height:1.2;padding:12px 14px 2px}
+.sring-card .sring-price{display:block;font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.04em;padding:0 14px 14px;color:var(--mist)}
+.sring-card .sring-go{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:0 14px 14px;color:var(--clay-deep);opacity:0;transition:opacity .3s}
+.sring-card.front .sring-go{opacity:1}
+.sring-cap{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(44px,9vw,132px);line-height:1;color:rgba(43,37,32,.07);white-space:nowrap;pointer-events:none}
+.sring-arrow{position:absolute;top:50%;z-index:5;width:52px;height:52px;margin-top:-26px;border-radius:50%;border:1px solid rgba(43,37,32,.28);background:rgba(250,246,239,.9);color:var(--ink);font-size:30px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.sring-arrow.prev{left:max(8px,calc(50% - 47vw))}.sring-arrow.next{right:max(8px,calc(50% - 47vw))}
+.sring-arrow:hover{background:var(--ink);color:#fff}
+.sring-cue{position:absolute;left:50%;top:6px;transform:translateX(-50%);z-index:5;padding:8px 14px;border-radius:999px;background:rgba(43,37,32,.82);color:#F7EFE2;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .4s}
+.sring.cue .sring-cue{opacity:1}
+@media(max-width:760px){.sring{--sring-w:150px;--sring-h:400px;padding-top:18px}.sring-card .sring-name{font-size:14px;padding:9px 10px 0}.sring-card .sring-price{font-size:12.5px;padding:0 10px 10px}.sring-card .sring-go{display:none}.sring-cap{font-size:clamp(30px,10vw,56px)}.sring-arrow{width:42px;height:42px;margin-top:-21px;font-size:24px}.sring-arrow.prev{left:6px}.sring-arrow.next{right:6px}.sring-cue{font-size:10.5px;padding:7px 12px}}
+@media(prefers-reduced-motion:reduce){.sring-cue-h{animation:none}}
 /* compact product panel (Faheem, 6 Sep): photos + the buying panel fit one screen;
    the reading lives in three folds — story, details & care, fit & sizing */
 body.shop-page .prod{min-height:0;padding:36px 0}
@@ -834,7 +858,7 @@ body.shop-page .foot-links{gap:10px 22px}
 
 <nav id="nav" class="on-hero">
   <a class="logo" href="#"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
-  <div class="nav-links"><a href="/">Home</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div>
+  <div class="nav-links"><a href="/">Home</a><a href="/#collection">Collection</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a></div>
   <!-- Sibling of .nav-links on purpose: that container is display:none
        below 820px and the hamburger builder skips .cart-btn, so a cart
        button nested inside it vanished entirely on every phone. -->
@@ -1165,7 +1189,7 @@ function placeInfo(p){
   ns();addEventListener('scroll',ns,{passive:true});
   if(!HASG){document.documentElement.classList.remove('anim-ready');return;}
   gsap.registerPlugin(ScrollTrigger);
-  if(window.Lenis&&!REDUCED){var l=new Lenis({lerp:.08,smoothWheel:true});l.on('scroll',ScrollTrigger.update);gsap.ticker.add(function(t){l.raf(t*1000);});gsap.ticker.lagSmoothing(0);}
+  if(window.Lenis&&!REDUCED){var l=new Lenis({lerp:.08,smoothWheel:true});window.__lenis=l;l.on('scroll',ScrollTrigger.update);gsap.ticker.add(function(t){l.raf(t*1000);});gsap.ticker.lagSmoothing(0);}
   if(REDUCED){document.documentElement.classList.remove('anim-ready');return;}
   gsap.set('.hero-in',{opacity:0,y:16});gsap.set('.hero-c h1 .w',{yPercent:120,opacity:0});
   var pre=document.getElementById('preload');
@@ -1647,7 +1671,9 @@ function draw(){
     + '<div class="filt-meta"><span id="filtCount" role="status" aria-live="polite"></span>'
     + '<button type="button" class="filt-clear" id="filtClear" hidden>Clear all</button></div></div>'
     + '<p class="filt-empty" id="filtEmpty" hidden>Nothing matches that combination yet. <button type="button" class="filt-linkish" id="filtReset">Show everything</button></p>';
-  var jump=bar;
+  var ringCards=PRODUCTS.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+(p.img?'<img src="'+p.img+'" alt="'+(p.title||'').replace(/"/g,'')+'" loading="'+(i<3?'eager':'lazy')+'">':'')+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span></a>';}).join('');
+  var ringHtml=PRODUCTS.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
+  var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
     var sizes=p.sizes.map(function(sz){var av=p.variants.some(function(v){return v.size===sz&&v.avail;});return '<button class="size" data-size="'+sz+'" '+(av?'':'disabled')+'><span>'+sz+'</span></button>';}).join('');
     var fitLabel=(tagVal(p.tags||[],'fit')||'');
@@ -1766,9 +1792,85 @@ function draw(){
     ScrollTrigger.refresh();
   }
   initFilters(secs);
+  shopRing();
   startBgJourney(secs);
   buildMap(PRODUCTS);
   injectProductJsonLd(PRODUCTS);
+}
+
+/* ---------- the ring: the shop's index ----------
+   Same geometry as the homepage carousel (a card every 2π/n, front card square-on,
+   the rest turned up to 22° and receding). It drifts slowly while nobody touches it,
+   spins on drag / flick / arrows / arrow keys, and a tap turns the card to the front
+   and then scrolls the page to that product's panel. */
+function shopRing(){
+  var st=document.getElementById('shopRing'); if(!st||!window.gsap) return;
+  var stage=st.querySelector('.sring-stage'),cards=[].slice.call(st.querySelectorAll('.sring-card')),n=cards.length; if(n<2) return;
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var S={a:0},R=0,stepA=Math.PI*2/n,cap=st.querySelector('.sring-cap'),tw=null,front=-1,inView=false,lastTouch=performance.now(),seen=false;
+  try{seen=!!localStorage.getItem('sb_ring_seen');}catch(e){}
+  if(!seen)st.classList.add('cue');
+  function used(how){ if(!seen){seen=true;st.classList.remove('cue');try{localStorage.setItem('sb_ring_seen','1');}catch(e){}} lastTouch=performance.now(); try{track('shop_ring_'+how,{source:'shop-ring'});}catch(e){} }
+  function measure(){ var phone=innerWidth<=760; R=phone?innerWidth*0.62:Math.min(520,Math.max(260,innerWidth*0.33)); }
+  function norm(a){return Math.atan2(Math.sin(a),Math.cos(a));}
+  function place(){
+    var best=-1,bA=9;
+    for(var k=0;k<n;k++){
+      var a=k*stepA+S.a,depth=(Math.cos(a)+1)/2,sc=0.6+0.4*depth;
+      gsap.set(cards[k],{x:Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:Math.sin(a)*22,scale:sc,opacity:0.3+0.7*depth,zIndex:Math.round(depth*100)});
+      var na=Math.abs(norm(a)); if(na<bA){bA=na;best=k;}
+    }
+    if(best!==front){front=best;cards.forEach(function(c,j){c.classList.toggle('front',j===best);});if(cap)cap.textContent=cards[best].getAttribute('data-place')||'';}
+  }
+  function spinTo(target,dur,done){ if(tw)tw.kill(); tw=gsap.to(S,{a:target,duration:dur||0.55,ease:'power3.out',onUpdate:place,onComplete:function(){tw=null;lastTouch=performance.now();if(done)done();}}); }
+  function nearest(a){return Math.round(a/stepA)*stepA;}
+  function step(dir,how){used(how);spinTo(nearest(S.a+dir*stepA));}
+  st.querySelectorAll('.sring-arrow').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();step(b.classList.contains('prev')?1:-1,'arrow');});});
+  document.addEventListener('keydown',function(e){ if(!inView)return; if(e.key==='ArrowLeft'){e.preventDefault();step(1,'key');} else if(e.key==='ArrowRight'){e.preventDefault();step(-1,'key');} });
+  /* drag + flick */
+  var drag=null,swallow=false,vel=0,lastX=0,lastT=0;
+  stage.addEventListener('pointerdown',function(e){ if(e.pointerType==='mouse'&&e.button!==0)return; if(tw){tw.kill();tw=null;} drag={id:e.pointerId,x:e.clientX,y:e.clientY,a:S.a,axis:null}; vel=0;lastX=e.clientX;lastT=performance.now(); lastTouch=performance.now(); });
+  stage.addEventListener('pointermove',function(e){
+    if(!drag||e.pointerId!==drag.id)return;
+    var dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+    if(!drag.axis){ if(Math.abs(dx)<8&&Math.abs(dy)<8)return; drag.axis=Math.abs(dx)>Math.abs(dy)?'x':'y'; if(drag.axis==='x'){stage.classList.add('dragging');try{stage.setPointerCapture(e.pointerId);}catch(x){}} }
+    if(drag.axis!=='x')return;
+    swallow=true;
+    var stepPx=Math.max(140,cards[0].getBoundingClientRect().width||200);
+    S.a=drag.a+dx/stepPx*stepA; place();
+    var t=performance.now(),dt=t-lastT; if(dt>0){vel=0.6*vel+0.4*((e.clientX-lastX)/dt);lastX=e.clientX;lastT=t;}
+  });
+  stage.addEventListener('dragstart',function(e){e.preventDefault();});
+  function end(){
+    if(drag&&drag.axis==='x'){
+      used('drag');
+      var stepPx=Math.max(140,cards[0].getBoundingClientRect().width||200),fling=Math.abs(vel)>0.35?vel*260/stepPx*stepA:0;
+      spinTo(nearest(S.a+fling),fling?0.9:0.45);
+    }
+    stage.classList.remove('dragging'); drag=null; setTimeout(function(){swallow=false;},50);
+  }
+  stage.addEventListener('pointerup',end);stage.addEventListener('pointercancel',end);
+  /* a tap: turn the card to the front, then go to its panel */
+  function goTo(card){
+    var id=card.getAttribute('href'),t=id&&document.querySelector(id); if(!t)return;
+    if(t.hidden){var r=document.getElementById('filtReset');if(r)r.click();}
+    try{track('shop_ring_jump',{item_id:id.replace('#prod-',''),source:'shop-ring'});}catch(e){}
+    if(window.__lenis)window.__lenis.scrollTo(t,{offset:-30});else t.scrollIntoView({behavior:'smooth'});
+  }
+  stage.addEventListener('click',function(e){
+    var card=e.target.closest('.sring-card'); if(!card)return;
+    e.preventDefault(); if(swallow)return;
+    var k=cards.indexOf(card); used('tap');
+    if(k===front){goTo(card);return;}
+    spinTo(S.a-norm(k*stepA+S.a),0.55,function(){goTo(card);});
+  },true);
+  /* a slow drift while the ring is on screen and nobody has touched it for a while */
+  if(!reduced){
+    gsap.ticker.add(function(t,dt){ if(!inView||drag||tw||document.hidden)return; if(performance.now()-lastTouch<2500)return; S.a-=0.12*Math.min(dt,100)/1000; place(); });   /* 0.12 rad/s: one card every ~7s */
+  }
+  try{ new IntersectionObserver(function(es){es.forEach(function(x){inView=x.isIntersecting;});},{threshold:0.35}).observe(stage); }catch(e){inView=true;}
+  measure();place();
+  window.addEventListener('resize',function(){measure();place();});
 }
 
 /* ---------- shop filters ----------

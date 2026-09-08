@@ -727,7 +727,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
 
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Home', 'home') + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about');
+  const navHtml = nav('/', 'Home', 'home') + nav('/#collection', 'Collection', 'collection') /* the homepage ring (8 Sep) */ + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about');
   return `<!doctype html>
 <html lang="en" data-market="uae">
 <head>
