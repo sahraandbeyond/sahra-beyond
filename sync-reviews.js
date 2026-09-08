@@ -189,6 +189,9 @@ async function fetchPage(page) {
        loadAll() feeds the bands, and nothing ever calls productSection or
        cardRating with '_shop'. */
     if (!h && String(r.handle) === 'judgeme-shop-reviews') h = '_shop';
+    /* A review left on the free tote is a review of the order, not of a tee it
+       has no page for: it joins the store bucket rather than being dropped. */
+    if (!h && /^sahra-tote/.test(String(r.handle))) h = '_shop';
     if (!h) { orphans.push(r); continue; }
     const ov = DISPLAY_OVERRIDES[h + '|' + r.date];
     if (ov) r.name = ov;
@@ -207,6 +210,11 @@ async function fetchPage(page) {
     orphans.slice(0, 5).forEach(o =>
       console.log(`     "${(o.title || o.body).slice(0, 50)}" — product_handle: ${o.handle || 'none'}`));
     console.log('    These were NOT written. Check the product handles in Judge.me match Shopify.');
+    /* surface it in the Actions run summary too, so a dropped review is never silent */
+    if (process.env.GITHUB_ACTIONS) {
+      console.log(`::warning title=sync-reviews::${orphans.length} review(s) matched no product handle and were not published: ` +
+        orphans.map(o => `[${o.handle || 'no handle'}] ${(o.title || o.body).slice(0, 40)}`).join(' | '));
+    }
   }
 
   if (DRY) {
