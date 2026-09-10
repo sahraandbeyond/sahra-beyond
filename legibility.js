@@ -212,6 +212,8 @@ body.shop-page .eyebrow,body.shop-page .hero-c .eyebrow,body.shop-page .scroll-c
 body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span,body.shop-page .note-x{font-size:14px!important;letter-spacing:.04em!important}
 body.shop-page .foot-copy{font-size:14.5px!important}
 body.shop-page .prod-occasion{font-size:17px!important}
+body.shop-page .fabric-line,body.shop-page .fbar{font-size:15px!important;letter-spacing:.04em!important}
+body.shop-page .fbar-v{letter-spacing:0!important}
 body.shop-page .prod-spec-strip li{padding:7px 13px}
 body.shop-page .prod-spec-strip{gap:8px 9px;max-width:none}
 body.shop-page .buy-trust{gap:10px 18px}
@@ -256,6 +258,86 @@ body.shop-page .foot-links{gap:10px 22px}
   body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span,body.shop-page .note-x{font-size:13.5px!important}
   body.shop-page .size-table th,body.shop-page .size-table td{padding:11px 8px}
   body.shop-page .size-table td{font-size:15.5px!important}
+}
+
+/* ===== buying pages: every word one clear step up (Faheem, 10 Sep: "the text
+   on the site STILL looks small"). Product pages, T-Shirts, Polos, Gifts, the
+   fabric guide and the size guide carry body.buy-page (build-products.js and
+   build.js shell()). Same scale as the shop page: 18px copy, 15px mono labels,
+   16-17px controls. !important because the floors above use it. */
+body.buy-page{font-size:18px}
+body.buy-page .crumb,body.buy-page .crumb a,body.buy-page .crumb span,body.buy-page .crumbs,body.buy-page .crumbs a,body.buy-page .eyebrow,body.buy-page .limited,body.buy-page .fabric-line,body.buy-page .spec-strip li,body.buy-page .spec-strip strong,body.buy-page .cw-txt,body.buy-page .cw-txt strong,body.buy-page .occasion,body.buy-page .pdp-sizes-label,body.buy-page .size-guide-link,body.buy-page .buy-ghaf,body.buy-page .buy-trust,body.buy-page .buy-trust span,body.buy-page .pdp-ans-hint,body.buy-page .snum,body.buy-page .pmeta,body.buy-page .pmeta a,body.buy-page .pmeta span,body.buy-page .sky-card small,body.buy-page .sz-cap,body.buy-page table.sz th,body.buy-page .sz-cm,body.buy-page .rv-meta,body.buy-page .rv-src,body.buy-page .rv-src a,body.buy-page .rv-chip,body.buy-page .rv-more,body.buy-page .rv-sort span,body.buy-page .rv-sort select,body.buy-page .foot-links a,body.buy-page .foot-soc a,body.buy-page .gal-model,body.buy-page .gal-tag,body.buy-page .gal-fit,body.buy-page .gal-hint,body.buy-page .rel-place,body.buy-page .bb-sub,body.buy-page .pcard-place,body.buy-page .pcard-col,body.buy-page .pcard-cta,body.buy-page .pcard-spec span,body.buy-page .pcard-rv-n,body.buy-page .folds-eyebrow,body.buy-page .news-eyebrow,body.buy-page .teecta-eyebrow,body.buy-page .shopcta-eyebrow,body.buy-page .teecta-meta span,body.buy-page .fbar,body.buy-page .stock-lab,body.buy-page .stock-note,body.buy-page .pdp-echo,body.buy-page .wl-msg,body.buy-page table.sg thead th,body.buy-page .gsm-key,body.buy-page .guide-sec h3,body.buy-page .shipsub,body.buy-page .card-tag,body.buy-page .sb-curhint,body.buy-page .jkick,body.buy-page .jmeta,body.buy-page .jbyline{font-size:15px!important;letter-spacing:.06em!important;line-height:1.5}
+body.buy-page .eyebrow{letter-spacing:.12em!important}
+body.buy-page .cw-txt em{font-size:14px!important;letter-spacing:0!important}
+/* the stragglers the audit found: nested spans that carry their own 12px floor above */
+body.buy-page .pdp-ans-hint span,body.buy-page .rel-price .sb-price,body.buy-page .bb-sub .sb-price,body.buy-page table.sg th,body.buy-page table.sg tbody th,body.buy-page .rv-showall,body.buy-page .vat .sb-ship-uae,body.buy-page .vat .sb-ship-gcc,body.buy-page .vat .sb-ship-intl{font-size:15px!important}
+body.buy-page .bb-sub .sb-price{font-size:15px!important}
+body.buy-page .note,body.buy-page .note span,body.buy-page .sb-rot span,body.buy-page .note-x{font-size:14px!important;letter-spacing:.04em!important}
+body.buy-page .sz-out{font-size:11.5px!important}
+body.buy-page .foot-copy,body.buy-page .ftr{font-size:14.5px!important}
+body.buy-page .ftr .links a{font-size:15px!important}
+body.buy-page .spec-strip li{padding:8px 14px}
+body.buy-page .buy-trust{gap:10px 20px}
+body.buy-page .fbar-v{letter-spacing:0!important}
+/* prices and small headings */
+body.buy-page .price,body.buy-page .buy .price,body.buy-page .buy .sb-price{font-size:26px!important}
+body.buy-page .rv-score{font-size:22px!important}
+body.buy-page .rv-count{font-size:17px!important}
+body.buy-page .pcard-p,body.buy-page .pcard-price,body.buy-page .pcard .sb-price{font-size:18px!important}
+body.buy-page .pcard-t{font-size:21px}
+body.buy-page .item b{font-size:22px}
+body.buy-page .rel-name{font-size:22px}
+body.buy-page .bb-name{font-size:17px}
+body.buy-page .sky-card b{font-size:22px}
+body.buy-page .catnav a b{font-size:21px}
+body.buy-page .card-body strong{font-size:19px}
+body.buy-page .fold summary h2,body.buy-page .guide-sec h2{font-size:22px}
+/* reading copy */
+body.buy-page .lede,body.buy-page .buy .lede{font-size:19.5px!important;line-height:1.7;max-width:48ch}
+body.buy-page .content .lede{font-size:18px!important;line-height:1.6}
+body.buy-page .sec p,body.buy-page .place-band p,body.buy-page .sky-card p,body.buy-page .content p,body.buy-page .content li,body.buy-page .guide-sec p,body.buy-page .fold p,body.buy-page .news p,body.buy-page .teecta p,body.buy-page .shopcta p,body.buy-page .book p{font-size:18px!important;line-height:1.7}
+body.buy-page .item span{font-size:16.5px!important;line-height:1.65}
+body.buy-page .care li{font-size:17.5px!important}
+body.buy-page .faq summary{font-size:18px!important}
+body.buy-page .faq p,body.buy-page .faq details p{font-size:17px!important;line-height:1.65}
+body.buy-page .note-box{font-size:16.5px!important;line-height:1.65}
+body.buy-page .sz-note,body.buy-page .sz-method li,body.buy-page .sz-method summary,body.buy-page .sgintent,body.buy-page .sgnote,body.buy-page .sgmethod,body.buy-page .sgmethod li{font-size:16.5px!important;line-height:1.65}
+body.buy-page .pdp-ans summary{font-size:17px!important;padding:15px 2px}
+body.buy-page .pdp-ans-foot,body.buy-page .fit-warn,body.buy-page .shipcard,body.buy-page .shipcard span{font-size:16px!important;line-height:1.65}
+body.buy-page .shipcard b{font-size:16.5px!important}
+body.buy-page .vat,body.buy-page .vat span{font-size:14.5px!important}
+body.buy-page .rv-text{font-size:18px!important;line-height:1.65}
+body.buy-page .rv-title{font-size:17px!important}
+body.buy-page .rv-reply{font-size:15.5px!important}
+body.buy-page table.sz td,body.buy-page table.sg td,body.buy-page table.sg.gsm td{font-size:17px!important}
+body.buy-page table.sz th,body.buy-page table.sz td{padding:13px 12px}
+body.buy-page .rel-price{font-size:16px!important}
+body.buy-page .wl-band p.wl-lead{font-size:17px!important}
+body.buy-page .pdp-msg{font-size:15.5px!important}
+body.buy-page .pdp-loading{font-size:15px!important}
+body.buy-page .card-body span,body.buy-page .catnav a span,body.buy-page .jblurb,body.buy-page .facts li,body.buy-page .pk-note,body.buy-page .ig-hint{font-size:15.5px!important;line-height:1.6}
+body.buy-page .card-body em{font-size:14px!important}
+/* controls */
+body.buy-page .nav-links a,body.buy-page .hdr-nav a{font-size:17px!important}
+body.buy-page .btn,body.buy-page a.btn,body.buy-page button.btn{font-size:16px!important}
+body.buy-page .pdp-add{font-size:17px!important;min-height:56px}
+body.buy-page .pdp-size{font-size:17px!important;min-width:56px;height:52px}
+body.buy-page #buybar .btn{font-size:15px!important}
+body.buy-page .gal-thumbs button{width:80px}
+body.buy-page .qa-open{font-size:15px!important}
+body.buy-page .pack-btn{font-size:15px!important}
+@media(max-width:560px){
+  body.buy-page{font-size:17px}
+  body.buy-page .lede,body.buy-page .buy .lede{font-size:18px!important}
+  body.buy-page .sec p,body.buy-page .place-band p,body.buy-page .sky-card p,body.buy-page .content p,body.buy-page .content li,body.buy-page .guide-sec p,body.buy-page .fold p{font-size:17px!important}
+  body.buy-page .crumb,body.buy-page .crumb a,body.buy-page .crumb span,body.buy-page .crumbs,body.buy-page .crumbs a,body.buy-page .eyebrow,body.buy-page .limited,body.buy-page .fabric-line,body.buy-page .spec-strip li,body.buy-page .spec-strip strong,body.buy-page .cw-txt,body.buy-page .cw-txt strong,body.buy-page .occasion,body.buy-page .pdp-sizes-label,body.buy-page .size-guide-link,body.buy-page .buy-ghaf,body.buy-page .buy-trust span,body.buy-page .pdp-ans-hint,body.buy-page .snum,body.buy-page .pmeta a,body.buy-page .pmeta span,body.buy-page .rv-meta,body.buy-page .gal-model,body.buy-page .gal-tag,body.buy-page .gal-fit,body.buy-page .gal-hint,body.buy-page .rel-place,body.buy-page .pcard-place,body.buy-page .pcard-col,body.buy-page .pcard-cta,body.buy-page .pcard-spec span,body.buy-page .fbar,body.buy-page table.sz th,body.buy-page table.sg thead th{font-size:14px!important;letter-spacing:.05em!important}
+  body.buy-page .price,body.buy-page .buy .price,body.buy-page .buy .sb-price{font-size:24px!important}
+  body.buy-page .pdp-ans summary{font-size:16.5px!important}
+  body.buy-page .pdp-ans-foot,body.buy-page .fit-warn,body.buy-page .shipcard,body.buy-page .shipcard span{font-size:15.5px!important}
+  body.buy-page .item span{font-size:16px!important}
+  body.buy-page table.sz td,body.buy-page table.sg td,body.buy-page table.sg.gsm td{font-size:15.5px!important}
+  body.buy-page table.sz th,body.buy-page table.sz td{padding:11px 8px}
+  body.buy-page .gal-fit{max-width:calc(100% - 20px);white-space:normal}
 }
 `;
 

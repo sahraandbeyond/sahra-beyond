@@ -8,6 +8,29 @@ const fs = require('fs');
 const RV = require('./reviews-render.js');
 const path = require('path');
 
+/* ---- fabric facts shown on every product page (10 Sep 2026) ----------------
+   Faheem: the cotton is combed ring-spun, NOT certified organic — "organic" is
+   gone from every page and from Shopify. Tees 230 gsm jersey, polo 240 gsm piqué.
+   The bars are the four a shopper compares on (weight, softness, stretch,
+   breathability), rated 1–4 and confirmed by Faheem 10 Sep. */
+const FABRIC_LINE = {
+  tee:  '<b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed',
+  polo: '<b>240 gsm</b> heavyweight &middot; <b>100% cotton piqu&eacute;</b> &middot; pre-washed'
+};
+const FABRIC_BARS = {
+  tee:  [['Weight', 4, 'Heavyweight'], ['Softness', 3, 'Soft'], ['Stretch', 1, 'Non-stretch'], ['Breathability', 3, 'Airy']],
+  polo: [['Weight', 4, 'Heavyweight'], ['Softness', 2, 'Textured'], ['Stretch', 1, 'Non-stretch'], ['Breathability', 4, 'Very airy']]
+};
+function fabricBars(garment) {
+  const rows = FABRIC_BARS[garment === 'polo' ? 'polo' : 'tee'];
+  return '<div class="fbars">' + rows.map(function (r) {
+    let pips = '';
+    for (let k = 1; k <= 4; k++) pips += '<i' + (k <= r[1] ? ' class="on"' : '') + '></i>';
+    return '<div class="fbar"><span class="fbar-l">' + r[0] + '</span><span class="fbar-t" role="img" aria-label="' + r[0] + ': ' + r[2] + ', ' + r[1] + ' of 4">' + pips + '</span><span class="fbar-v">' + r[2] + '</span></div>';
+  }).join('') + '</div>';
+}
+function isDTG(p) { return /dtg|direct/i.test(String(p.printChip || '') + ' ' + String(p.printCardTitle || '')); }
+
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function J(s){return JSON.stringify(String(s==null?'':s));}
 
@@ -110,7 +133,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
 "image":[${[p.imgMain,p.imgFront,p.imgBack,p.imgCompare].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).map(v=>J(SITE+v)).join(',')}],
 "description":${J(p.ldDesc)},
 "brand":{"@type":"Brand","name":"Sahra & Beyond"},
-"material":"100% organic cotton",
+"material":"100% combed ring-spun cotton",
 "color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/"}}
 </script>
 <script type="application/ld+json">
@@ -612,13 +635,58 @@ img,svg,video{max-width:100%;height:auto}
   background:#E9B978;color:#2B2520;font-family:Inter,sans-serif;font-size:11px;font-weight:700;
   display:none;align-items:center;justify-content:center;padding:0 4px}
 
+/* ---- fabric line + bars (10 Sep) ---------------------------------------- */
+.fabric-line{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.03em;line-height:1.55;margin:-6px 0 12px;color:var(--txt-soft)}
+.fabric-line b{color:var(--txt);font-weight:700}
+.fbars{display:grid;gap:10px;margin:6px 0 16px}
+.fbar{display:grid;grid-template-columns:136px 1fr 118px;align-items:center;gap:12px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.fbar-l{color:var(--txt-soft)}
+.fbar-t{display:flex;gap:4px}
+.fbar-t i{flex:1;height:7px;border-radius:999px;background:rgba(122,104,84,.22)}
+.fbar-t i.on{background:currentColor}
+.fbar-v{color:var(--txt);text-align:right;text-transform:none;letter-spacing:0;font-weight:700;white-space:nowrap}
+@media(max-width:560px){.fbar{grid-template-columns:1fr auto;grid-template-areas:"l v" "t t";gap:6px 10px}.fbar-l{grid-area:l}.fbar-v{grid-area:v}.fbar-t{grid-area:t}}
+
+/* ---- paper panels (10 Sep) ----------------------------------------------
+   Faheem: "during colour transition on the page, the text becomes illegible
+   for a few moments". The body still fades cream → theme colour as you scroll,
+   but the reading surfaces (buy column, place band, every numbered section)
+   now sit on their own cream panel with the LIGHT tokens pinned, so contrast
+   never depends on where the scroll happens to be. body.dark-bg still drives
+   the nav, crumb, canvas and gallery chrome, which sit on the journey itself.
+   Anything that went gold on the dark stops goes back to clay inside a panel. */
+.buy,.sec,.place-inner{--txt:#2A2016;--txt-soft:#4A4136;--line:rgba(42,32,22,.14);--edge:rgba(42,32,22,.58);--card:rgba(255,255,255,.72);--chip:rgba(42,32,22,.05);
+  color:var(--txt);background:rgba(252,249,242,.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 18px 50px rgba(20,14,8,.12)}
+@supports not (backdrop-filter:blur(1px)){.buy,.sec,.place-inner{background:rgba(252,249,242,.97)}}
+.buy{padding:30px 32px;align-self:start}
+.sec{padding:60px 48px;margin:28px 0}
+.sec+.sec{border-top:1px solid rgba(42,32,22,.1)}
+.sec.reviews>.wrap{padding:0;max-width:none}
+.place-inner{padding:44px 48px;max-width:1148px}   /* 1200 minus the .wrap gutters, so the panel edges line up with the sections below */
+@media(max-width:900px){.buy{padding:24px 20px}.sec{padding:40px 22px;margin:18px 0}.place-inner{padding:30px 22px}}
+body.dark-bg .buy .eyebrow,body.dark-bg .buy .limited,body.dark-bg .buy h1 em,body.dark-bg .sec h2 em,body.dark-bg .sec .rel-place,body.dark-bg .place-inner .eyebrow,body.dark-bg .place-inner h2 em{color:var(--clay-deep)}
+body.dark-bg .buy .btn,body.dark-bg .sec .btn,body.dark-bg .place-inner .btn{background:var(--ink);color:#fff}
+body.dark-bg .buy .btn:hover,body.dark-bg .sec .btn:hover,body.dark-bg .place-inner .btn:hover{background:var(--clay-deep)}
+body.dark-bg .buy .btn.ghost,body.dark-bg .sec .btn.ghost{background:transparent;color:var(--txt);border-color:var(--edge)}
+body.dark-bg .buy .btn.ghost:hover,body.dark-bg .sec .btn.ghost:hover{background:var(--txt);color:var(--sand)}
+body.dark-bg .buy .buy-ghaf{color:#3F6A36}
+body.dark-bg .buy .fit-warn{color:var(--txt);border-color:rgba(42,32,22,.14);background:rgba(255,255,255,.55)}
+body.dark-bg .buy .pdp-add:disabled{color:#5C5148;border-color:#8A7F73;background:transparent}
+body.dark-bg .buy .pdp-size{background:rgba(255,255,255,.55);border-color:rgba(42,32,22,.32);color:var(--txt)}
+body.dark-bg .buy .pdp-size.sel{background:#E9B978;border-color:#E9B978;color:#2B2520}
+body.dark-bg .buy .wl-ok{color:#2F7A55}
+body.dark-bg .sec .care li::before,body.dark-bg .sec .faq summary::after{color:var(--clay)}
+body.dark-bg .sec .faq summary:hover{color:var(--clay-deep)}
+body.dark-bg .sec .rv-stars,body.dark-bg .sec .rv-card .rv-stars{color:#8F6212}
+
 ${RV.CSS}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 </head>
-<body>
+<body class="buy-page">
 <a class="skip-link" href="#main">Skip to content</a>
 <canvas id="fx"></canvas>
 <div id="grain"></div>
@@ -656,12 +724,14 @@ ${galShots(p).map((s,i)=>`
       ${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}
       <span class="limited">✦ Limited first run</span>
       <h1>${p.nameHtml}</h1>
+      ${/* Faheem, 10 Sep: "we're not highlighting that this is 100% 230gsm heavyweight cotton. This info should be right below the title" */''}
+      <p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>
       <div class="price"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div>
       <div class="vat"><span class="sb-ship-uae">Free returns within the UAE</span><span class="sb-ship-gcc">14-day returns &middot; duties, if any, are paid on arrival</span><span class="sb-ship-intl">14-day returns &middot; duties, if any, are paid on arrival</span></div>
       <div style="margin:6px 0 2px"><span data-sb-curslot></span></div>
       <p class="lede">${p.lede}</p>
       <ul class="spec-strip">
-        <li><strong>Unisex</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm organic cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
+        <li><strong>Unisex</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm combed cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
       </ul>
       ${p.colourHex ? `<div class="colourway">
         <span class="sw" style="background:${p.colourHex}" role="img" aria-label="Colour swatch: ${esc(p.colourName)}, Pantone ${esc(p.colourPantone)}"></span>
@@ -703,7 +773,7 @@ ${galShots(p).map((s,i)=>`
         <a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>
       </div>`}
       <a class="buy-ghaf" href="/commitment.html">🌱 A share of every sale plants ghaf trees in the UAE &rarr;</a>
-      <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ Organic cotton</span></div>
+      <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ ${p.garment === 'polo' ? '240gsm piqué cotton' : '230gsm heavyweight cotton'}</span></div>
 
       <!-- The answer cluster (Rastah benchmark, 29 Aug 2026): the questions a
            buyer asks at the moment of hesitation — cost to ship, will it fit,
@@ -741,6 +811,28 @@ ${galShots(p).map((s,i)=>`
               : 'Runs slim — most people take one size up from their usual letter. Measured flat, pit to pit: S 19&Prime; · M 20&Prime; · L 22&Prime; · XL 24&Prime;. Measure a shirt you like and match the number, not the letter.')}
             <a href="#fit">Full chart &darr;</a></p>
           ${p.modelInfo ? `<p class="pdp-ans-foot">${esc(p.modelInfo)}${p.fit === 'oversized' ? '' : ' — the worn photos show the Oversized cut, not this one'}.</p>` : ''}
+        </details>
+        ${/* About the cotton + about the decoration (Faheem, 10 Sep): the fabric
+             bars every heavyweight brand shows (weight / softness / stretch / breathability)
+             and the two explainers he asked for, under the buy button with delivery and fit. */''}
+        <details class="pdp-ans pdp-ans-cotton">
+          <summary>About the cotton <span class="pdp-ans-hint">${p.garment === 'polo' ? '240 gsm · piqué' : '230 gsm · combed ring-spun'}</span></summary>
+          ${fabricBars(p.garment)}
+          <p class="pdp-ans-foot">${p.garment === 'polo'
+            ? '240 gsm piqué — ten grams heavier than the tees, and a different knit. Piqué\'s fine waffle structure is what gives a polo its hand and lets the collar stand after a season instead of curling. 100% cotton, no polyester, pre-washed so it holds its size.'
+            : '230 gsm is a heavyweight — about a third more cotton than the 180 gsm shirt you probably own, which is what lets it hang straight instead of clinging. The yarn is combed and ring-spun: combing strips out the short fibres and ring-spinning twists what is left into a smoother, stronger thread, so the cloth is dense rather than fuzzy and softens with every wash without going thin. 100% cotton, no polyester — a poly blend traps heat, which is the wrong trade in the Gulf. Pre-washed, so it holds its size.'}
+            <a href="/fabric/">The GSM guide &rarr;</a></p>
+        </details>
+        <details class="pdp-ans pdp-ans-print">
+          <summary>${isDTG(p) ? 'About direct-to-garment print' : (p.garment === 'polo' ? 'About the embroidery' : 'About tonal embroidery')}</summary>
+          <p class="pdp-ans-foot">${esc(p.printCardBody || '')}${(function () {
+            var c = (p.constructionCards || []).filter(function (x) { return /mbroider/.test(x.t || ''); })[0];
+            return c ? ' ' + esc(c.b) : '';
+          })()}</p>
+          <p class="pdp-ans-foot">${isDTG(p)
+            ? 'The ink is sprayed into the fibres and heat-cured, so it flexes with the cloth instead of cracking. Wash cold and inside out, hang to dry, and never iron directly on the print.'
+            : 'Thread is stitched through the cloth, not applied to it. Wash cold and inside out to protect the stitching, hang to dry, and do not iron directly over it.'}
+            <a href="#fabric">Fabric &amp; construction &darr;</a></p>
         </details>
         ${(p.faq && p.faq.length) ? `<details class="pdp-ans">
           <summary>Top questions</summary>
@@ -802,10 +894,10 @@ ${cards(p.designCards)}
   <section class="sec reveal" id="fabric">
     <span class="snum">03 — Fabric &amp; construction</span>
     <h2>Built to be worn, washed and <em>worn again</em></h2>
-    <p>${p.constructionIntro || 'A tee earns its place by surviving. Heavyweight organic cotton, finished with the construction details that decide whether a shirt still looks right after a year.'}</p>
+    <p>${p.constructionIntro || 'A tee earns its place by surviving. Heavyweight combed ring-spun cotton, finished with the construction details that decide whether a shirt still looks right after a year.'}</p>
     <div class="cols stagger">
       ${(p.constructionCards || [
-        {t:'230gsm organic cotton', b:'Heavyweight 100% organic cotton, pre-washed for minimal shrinkage. Substantial enough to hold its shape, breathable enough for UAE heat.'},
+        {t:'230gsm combed cotton', b:'Heavyweight 100% combed ring-spun cotton, pre-washed for minimal shrinkage. Substantial enough to hold its shape, breathable enough for UAE heat.'},
         {t:'Ribbed crew neck', b:'A ribbed collar keeps its shape instead of stretching out and going wavy after a few washes.'},
         {t:'Taped collar &amp; shoulders', b:'Seam tape across the collar and shoulders reinforces the points that carry the most stress — the difference between one season and several.'}
       ]).map(function(c){return '<div class="item"><b>'+c.t+'</b><span>'+c.b+'</span></div>';}).join('')}
@@ -816,7 +908,7 @@ ${cards(p.designCards)}
       <div class="item"><b>Limited first run</b><span>Small first batch. When a size sells out in this run, it's gone rather than quietly restocked.</span></div>
     </div>
     <div class="note-box">${(function(){
-      var w = String((p.specChips && p.specChips[0]) || '230gsm organic cotton').match(/\d{3}\s*gsm/i);
+      var w = String((p.specChips && p.specChips[0]) || '230gsm combed cotton').match(/\d{3}\s*gsm/i);
       w = w ? w[0].toLowerCase().replace(/\s+/g,'') : '230gsm';
       return 'Not sure what ' + w + ' means next to the 180gsm shirt you already own? We wrote the comparison out in full &mdash; the whole 150&ndash;280gsm scale, and which weight actually makes sense in a Gulf summer &mdash; on our <a href="/fabric/">fabric and GSM guide</a>.';
     })()}</div>
@@ -1205,7 +1297,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     body.style.backgroundColor=css(col);
     if(pane)pane.style.backgroundColor=css(col);
     if(nav)nav.style.setProperty('--nav-bg',css(col));
-    body.classList.toggle('dark-bg',lum(col)<0.42);
+    body.classList.toggle('dark-bg',lum(col)<0.22);   /* 0.42 flipped to cream text while the ground was still a mid tone (10 Sep) */
   }
   addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(update);},{passive:true});
   addEventListener('resize',function(){if(!raf)raf=requestAnimationFrame(update);},{passive:true});

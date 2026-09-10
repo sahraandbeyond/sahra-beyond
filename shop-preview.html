@@ -10,18 +10,18 @@
 <meta name="robots" content="noindex,nofollow"><!-- preview only — stripped when /shop/ is generated at launch -->
 <title>Shop UAE T-Shirts — Limited Drops | Sahra &amp; Beyond</title>
 <meta property="og:title" content="Shop UAE-Inspired Tees | Sahra &amp; Beyond">
-<meta property="og:description" content="Original heavyweight organic-cotton tees inspired by real UAE places.">
+<meta property="og:description" content="Original heavyweight 230gsm cotton tees inspired by real UAE places.">
 <meta property="og:url" content="https://www.sahraandbeyond.ae/shop/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sahra &amp; Beyond">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shop UAE-Inspired Tees | Sahra &amp; Beyond">
-<meta name="twitter:description" content="Original heavyweight organic-cotton tees inspired by real UAE places.">
+<meta name="twitter:description" content="Original heavyweight 230gsm cotton tees inspired by real UAE places.">
 <meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
 <meta property="og:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
 <meta property="og:image:alt" content="Sahra &amp; Beyond — the first drop">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/shop/">
-<meta name="description" content="Shop original UAE t-shirts inspired by real places — Al Quaa’s dark sky, the dunes of Liwa, the Hajar mountains. 230gsm organic cotton, limited runs.">
+<meta name="description" content="Shop original UAE t-shirts inspired by real places — Al Quaa’s dark sky, the dunes of Liwa, the Hajar mountains. 230gsm combed ring-spun cotton, limited runs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -170,6 +170,14 @@ body.shop-page .prod h2{font-size:clamp(26px,2.7vw,38px);line-height:1.08;margin
 body.shop-page .prod .plink{margin-bottom:8px}
 body.shop-page .pcard-rv{margin:0 0 8px}
 .prod-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px}
+/* fabric line + bars (10 Sep) */
+.fabric-line{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.03em;line-height:1.55;margin:2px 0 10px;color:inherit}
+.fabric-line b{font-weight:700}
+.fbars{display:grid;gap:9px;margin:0 0 14px}
+.fbar{display:grid;grid-template-columns:136px 1fr 118px;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.fbar-t{display:flex;gap:4px}.fbar-t i{flex:1;height:7px;border-radius:999px;background:rgba(127,116,100,.28)}.fbar-t i.on{background:currentColor}
+.fbar-v{text-align:right;text-transform:none;letter-spacing:0;font-weight:700;white-space:nowrap}
+@media(max-width:560px){.fbar{grid-template-columns:1fr auto;grid-template-areas:"l v" "t t";gap:6px 10px}.fbar-l{grid-area:l}.fbar-v{grid-area:v}.fbar-t{grid-area:t}}
 body.shop-page .prod-line .fitchip,body.shop-page .prod-line .prod-limited{margin:0}
 .buy-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 16px;margin:0 0 12px}
 body.shop-page .buy-row .price{margin:0}
@@ -246,9 +254,9 @@ body.shop-page .fold-b .fit-note{margin:0 0 8px;line-height:1.6}
 .pthumb{width:50px;height:62px;border:1px solid var(--edge,rgba(42,32,22,.58));background:#EFEAE0;cursor:pointer;padding:0;overflow:hidden;opacity:.78;transition:opacity .25s,border-color .25s}
 .pthumb.on{opacity:1;border-color:currentColor}
 .pthumb img{width:100%;height:100%;object-fit:cover}
-.prod-txt{position:relative;padding:38px 40px 34px;background:rgba(252,249,242,.8);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border:1px solid rgba(42,32,22,.12);border-radius:3px;box-shadow:0 28px 64px rgba(0,0,0,.12)}
+.prod-txt{position:relative;padding:38px 40px 34px;background:rgba(252,249,242,.92);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border:1px solid rgba(42,32,22,.12);border-radius:3px;box-shadow:0 28px 64px rgba(0,0,0,.12)}
 .prod-txt::before{content:'';position:absolute;top:0;left:0;width:52px;height:3px;background:linear-gradient(90deg,var(--clay),var(--gold))}
-.prod.dark .prod-txt{background:rgba(18,12,7,.66);border-color:rgba(255,255,255,.14);box-shadow:0 28px 64px rgba(0,0,0,.4)}
+.prod.dark .prod-txt{background:rgba(18,12,7,.84);border-color:rgba(255,255,255,.14);box-shadow:0 28px 64px rgba(0,0,0,.4)}
 .prod-txt>*{will-change:transform}
 .place-meta{display:flex;flex-wrap:wrap;gap:8px 16px;margin:2px 0 14px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px}
 .place-meta a{color:inherit;opacity:1;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
@@ -910,7 +918,7 @@ body.shop-page .foot-links{gap:10px 22px}
   <div class="tl-inner">
     <span class="eyebrow">Size &amp; fit</span>
     <h2>Find your fit</h2>
-    <p class="tl-sub">Every tee comes in two fits. <strong>Regular</strong> is a slim cut — size up for your usual feel. <strong>Oversized</strong> is a relaxed, dropped-shoulder cut — size down if you want it less roomy. Heavyweight 100% organic cotton, pre-washed for minimal shrinkage.</p>
+    <p class="tl-sub">Every tee comes in two fits. <strong>Regular</strong> is a slim cut — size up for your usual feel. <strong>Oversized</strong> is a relaxed, dropped-shoulder cut — size down if you want it less roomy. Heavyweight 100% combed ring-spun cotton, pre-washed for minimal shrinkage.</p>
 
     <div class="fit-explain">
       <div class="fe-card"><h3>Regular Fit</h3><p>Classic, true-to-size cut. Straight body, set shoulder seam. Pick your usual size.</p></div>
@@ -931,7 +939,7 @@ body.shop-page .foot-links{gap:10px 22px}
 
     <div class="returns">
       <div class="ret-item"><span class="ret-ic">↺</span><div><strong>Free returns within the UAE</strong><span>14 days, unworn with tags. We cover return shipping inside the UAE.</span></div></div>
-      <div class="ret-item"><span class="ret-ic">⚑</span><div><strong>Designed in the UAE · organic cotton</strong><span>Every design drawn from a real place we have explored.</span></div></div>
+      <div class="ret-item"><span class="ret-ic">⚑</span><div><strong>Designed in the UAE · combed cotton</strong><span>Every design drawn from a real place we have explored.</span></div></div>
     </div>
   </div>
 </section>
@@ -1136,7 +1144,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   </div>
 </section>
 
-<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% organic cotton</div><div>A share of every sale plants ghaf</div><div>Free returns within the UAE</div></div></div>
+<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% combed ring-spun cotton</div><div>A share of every sale plants ghaf</div><div>Free returns within the UAE</div></div></div>
 
 <div class="lb" id="lightbox" aria-label="Photo viewer"><button class="lb-close" id="lbClose" aria-label="Close">✕</button><button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button><img class="lb-img" id="lbImg" alt=""><button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button></div>
 
@@ -1556,17 +1564,17 @@ function tagVal(t,k){var x=(t||[]).find(function(y){return y.toLowerCase().index
 function slugify(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
 var PRODUCTS=[];
 var DEMODATA=[
- {t:'Al Quaa Galaxy Tee',pl:'Al Quaa',slug:'al-quaa-desert',p:'199',st:'The Milky Way as it rises over Al Quaa — one of the darkest skies in the Emirates. A subtle صحراء mark on the chest, the galaxy across the back. Heavyweight organic cotton.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#181109',dark:1,fitImgs:{
+ {t:'Al Quaa Galaxy Tee',pl:'Al Quaa',slug:'al-quaa-desert',p:'199',st:'The Milky Way as it rises over Al Quaa — one of the darkest skies in the Emirates. A subtle صحراء mark on the chest, the galaxy across the back. Heavyweight combed cotton.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#181109',dark:1,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Al Quaa Galaxy Tee here (front + back). Currently placeholder = the oversized mockup.
    regular:{front:'shirts/alquaa-regular-front.jpg',back:'shirts/alquaa-regular-back.jpg'},
    // OVERSIZED-fit = the finished oversized mockup. TODO: swap for a dedicated oversized shoot if/when available.
    oversized:{front:'shirts/alquaa-regular-front.jpg',back:'shirts/alquaa-regular-back.jpg'}}},
- {t:'Empty Quarter Tee',pl:'Liwa',slug:'liwa',p:'199',st:'A tonal embroidered sun setting over the dune ridges of Liwa, with صحراء beneath. Soft, heavyweight organic cotton.',v:[['S',1],['M',1],['L',0],['XL',1]],bg:'#E7D6B8',dark:0,fitImgs:{
+ {t:'Empty Quarter Tee',pl:'Liwa',slug:'liwa',p:'199',st:'A tonal embroidered sun setting over the dune ridges of Liwa, with صحراء beneath. Soft, heavyweight combed cotton.',v:[['S',1],['M',1],['L',0],['XL',1]],bg:'#E7D6B8',dark:0,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Empty Quarter Tee here (front + back). Currently placeholder = the oversized mockup.
    regular:{front:'shirts/emptyquarter-regular-front.jpg',back:'shirts/emptyquarter-regular-back.jpg'},
    // OVERSIZED-fit = the finished oversized (model) mockup. TODO: swap for a dedicated oversized shoot if/when available.
    oversized:{front:'shirts/emptyquarter-regular-front.jpg',back:'shirts/emptyquarter-regular-back.jpg'}}},
- {t:'Hajar Mountains Tee',pl:'Wadi Naqab',slug:'wadi-naqab',p:'199',st:'A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. Organic cotton, made to layer.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#C6BFD3',dark:0,fitImgs:{
+ {t:'Hajar Mountains Tee',pl:'Wadi Naqab',slug:'wadi-naqab',p:'199',st:'A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. Combed cotton, made to layer.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#C6BFD3',dark:0,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Hajar Mountains Tee here (front + back). Currently placeholder = the oversized mockup.
    regular:{front:'shirts/hajar-regular-front.jpg',back:'shirts/hajar-regular-back.jpg'},
    // OVERSIZED-fit = the finished oversized mockup. TODO: swap for a dedicated oversized shoot if/when available.
@@ -1732,21 +1740,23 @@ function draw(){
     var limited='<span class="prod-limited">&#10022; Limited first run</span>';
     var _polo=(_fFit==='polo'); if(_polo)fitChip='';   /* the polo is one cut; no fit chip */
     var specStrip=_polo?'<ul class="prod-spec-strip"><li><strong>Unisex</strong> &middot; S&ndash;XL</li><li>240gsm piqu&eacute; cotton</li><li>Taped shoulder seams</li><li>Embroidered logo</li></ul>'
-      :'<ul class="prod-spec-strip"><li><strong>Unisex</strong> &middot; S&ndash;XL</li><li>230gsm organic cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>'+pr.short+'</li></ul>';
+      :'<ul class="prod-spec-strip"><li><strong>Unisex</strong> &middot; S&ndash;XL</li><li>230gsm combed cotton</li><li>Ribbed crew neck</li><li>Taped collar &amp; shoulder seams</li><li>'+pr.short+'</li></ul>';
+    var fabricLine='<p class="fabric-line">'+(_polo?'<b>240 gsm</b> heavyweight &middot; <b>100% cotton piqu&eacute;</b> &middot; pre-washed':'<b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed')+'</p>';   /* Faheem, 10 Sep: the fabric right under the title */
+    var fabricBars=(function(rows){return '<div class="fbars">'+rows.map(function(r){var pips='';for(var k=1;k<=4;k++)pips+='<i'+(k<=r[1]?' class="on"':'')+'></i>';return '<div class="fbar"><span class="fbar-l">'+r[0]+'</span><span class="fbar-t" role="img" aria-label="'+r[0]+': '+r[2]+', '+r[1]+' of 4">'+pips+'</span><span class="fbar-v">'+r[2]+'</span></div>';}).join('')+'</div>';})(_polo?[['Weight',4,'Heavyweight'],['Softness',2,'Textured'],['Stretch',1,'Non-stretch'],['Breathability',4,'Very airy']]:[['Weight',4,'Heavyweight'],['Softness',3,'Soft'],['Stretch',1,'Non-stretch'],['Breathability',3,'Airy']]);
     var buyLimited='<p class="buy-limited">Limited first run &mdash; once it&rsquo;s gone, it&rsquo;s gone.</p>';
     var buyGhaf='<a class="buy-ghaf" href="/commitment.html">&#127793; A share of every tee plants ghaf trees in the UAE &rarr;</a>';
     var specList=_polo
       ?'<ul class="prod-specs"><li><strong>Fabric.</strong> 240&nbsp;gsm piqu&eacute; cotton, pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Taped shoulder seams, double-stitched and side-seamed for shape retention.</li><li><strong>Embroidery.</strong> Embroidered logo — stitched, not printed.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the embroidery.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul>'
-      :'<ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% organic cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul>';
+      :'<ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% combed ring-spun cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul>';
     var fitNote=_polo?'One unisex cut, S&ndash;XL, worn by everyone. Measurements are in the size guide.'
       :(fitLabel==='oversized'?'Oversized is a relaxed drop-shoulder cut with a longer body — roomy by design. Size down if you want it a little trimmer.'
       :'Regular is a slim, true-to-size cut with a set shoulder seam. If you are between sizes, size up.');
     var storyFold='<details class="prod-fold"><summary>The story behind the '+(_polo?'polo':'tee')+'</summary><div class="fold-b">'+placeMeta+placeLead+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+readPlace+'</div></details>';
-    var detailsFold='<details class="prod-fold"><summary>Details &amp; care</summary><div class="fold-b">'+specStrip+specList+buyGhaf+pdpLink+'</div></details>';
+    var detailsFold='<details class="prod-fold"><summary>Details &amp; care</summary><div class="fold-b">'+fabricBars+specStrip+specList+buyGhaf+pdpLink+'</div></details>';
     var fitFold='<details class="prod-fold"><summary>Fit &amp; sizing</summary><div class="fold-b"><p class="fit-note">'+fitNote+'</p>'+fitSwap+(fitSwap?'<br>':'')+'<a class="size-guide-link" href="#sizeguide">Size guide &amp; measurements</a><br>'+buyLimited+'</div></details>';
     var folds='<div class="folds">'+storyFold+detailsFold+fitFold+'</div>';
-    var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; Organic cotton</span></div>';
-    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'" data-fit="'+_fFit+'" data-place="'+(p.placeSlug||'')+'" data-print="'+_fPrint+'" data-sizes="'+_fSizes+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+'<h2>'+p.title+'</h2><div class="prod-line">'+fitChip+limited+'</div><div class="buy-row"><div class="price"><span class="sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span></div>'+colourway+'</div><div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyTrust+folds+'</div></div></section>';
+    var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; '+(_polo?'240gsm piqué cotton':'230gsm heavyweight cotton')+'</span></div>';
+    return '<section class="prod'+((i%2)?' rev':'')+(p.theme.dark?' dark':'')+'" id="prod-'+(p.handle||p.placeSlug)+'" data-bg="'+p.theme.bg+'" data-fit="'+_fFit+'" data-place="'+(p.placeSlug||'')+'" data-print="'+_fPrint+'" data-sizes="'+_fSizes+'"><div class="prod-inner">'+media+'<div class="prod-txt">'+plink+'<h2>'+p.title+'</h2><div class="prod-line">'+fitChip+limited+'</div>'+fabricLine+'<div class="buy-row"><div class="price"><span class="sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span></div>'+colourway+'</div><div class="opt-lab">Size <a class="size-guide-link" href="#sizeguide">Size guide</a></div><div class="sizes">'+sizes+'</div><button class="btn add magnetic" disabled>Select a size</button>'+buyTrust+folds+'</div></div></section>';
   }).join('');
   var secs=[].slice.call(host.querySelectorAll('.prod'));
   secs.forEach(function(sec,i){
@@ -2030,7 +2040,7 @@ function injectProductJsonLd(products){
           "itemCondition":"https://schema.org/NewCondition"}};
       if(imgs.length)node.image=imgs;
       if(desc)node.description=desc;
-      if(p.place)node.material="Organic cotton";
+      if(p.place)node.material="100% combed ring-spun cotton";
       return node;
     });
     var graph={"@context":"https://schema.org","@graph":nodes};
