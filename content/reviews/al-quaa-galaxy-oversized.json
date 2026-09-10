@@ -1,9 +1,25 @@
 {
  "handle": "al-quaa-galaxy-oversized",
- "count": 1,
+ "count": 2,
  "average": 5,
- "syncedAt": "2026-09-08",
+ "syncedAt": "2026-09-10",
  "reviews": [
+  {
+   "id": 1327126969,
+   "rating": 5,
+   "title": "",
+   "body": "Amazing product and value for money.\nSo much detailing and hard work behind a brilliant concept bringing the Sahara to life!\nThe quality of the fabric is ideal for UK weather and conditions.\nHighly recommended plus the packaging was superb!",
+   "name": "Muhammad Yaseen",
+   "date": "2026-09-10",
+   "verified": true,
+   "photos": [
+    "https://review-images.judgeme.com/sahra-beyond/1789023041__1789023039318-img-20260904-wa0004__original.jpg?quality=80&width=1024"
+   ],
+   "handle": "al-quaa-galaxy-oversized",
+   "externalId": 9498369720508,
+   "productTitle": "Al Quaa Galaxy — Oversized",
+   "reply": ""
+  },
   {
    "id": 1314154644,
    "rating": 5,
