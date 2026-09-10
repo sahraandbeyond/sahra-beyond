@@ -348,6 +348,17 @@ table.sz td:first-child{font-weight:600}
 .stock-row{display:flex;flex-wrap:wrap;gap:8px}
 /* ---- the answer cluster ---- */
 .pdp-answers{margin:20px 0 4px;border-top:1px solid var(--line)}
+.buy-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-bottom:12px}
+.buy-top .plink,.buy-top .limited{margin-bottom:0}
+.buy h1{font-size:clamp(32px,4.4vw,54px);margin:0 0 10px}
+@media(max-width:700px){.gal-thumbs{flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:4px;-webkit-overflow-scrolling:touch}.gal-thumbs button{flex:none;width:60px;scroll-snap-align:start}.gal-model{margin-top:6px}}
+.price-row{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin:6px 0 4px}
+.price-row .price{margin:0}
+.vat{margin-bottom:14px}
+.pdp-ans .lede{font-size:16.5px;line-height:1.7;margin:0 0 12px;max-width:none}
+.pdp-ans .occasion{margin:0 0 14px}
+.pdp-ans .spec-strip{margin:2px 0 14px}
+.pdp-ans .colourway{margin:0 0 14px}
 .pdp-ans{border-bottom:1px solid var(--line)}
 .pdp-ans summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:10px;padding:14px 2px;font-weight:600;font-size:14px;color:var(--txt)}
 .pdp-ans summary::-webkit-details-marker{display:none}
@@ -721,24 +732,15 @@ ${galShots(p).map((s,i)=>`
     </div>
 
     <div class="buy">
-      ${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}
-      <span class="limited">✦ Limited first run</span>
+      <div class="buy-top">${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}<span class="limited">✦ Limited first run</span></div>
       <h1>${p.nameHtml}</h1>
       ${/* Faheem, 10 Sep: "we're not highlighting that this is 100% 230gsm heavyweight cotton. This info should be right below the title" */''}
       <p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>
-      <div class="price"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div>
+      <div class="price-row"><div class="price"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div><span data-sb-curslot></span></div>
       <div class="vat"><span class="sb-ship-uae">Free returns within the UAE</span><span class="sb-ship-gcc">14-day returns &middot; duties, if any, are paid on arrival</span><span class="sb-ship-intl">14-day returns &middot; duties, if any, are paid on arrival</span></div>
-      <div style="margin:6px 0 2px"><span data-sb-curslot></span></div>
-      <p class="lede">${p.lede}</p>
-      <ul class="spec-strip">
-        <li><strong>Unisex</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm combed cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
-      </ul>
-      ${p.colourHex ? `<div class="colourway">
-        <span class="sw" style="background:${p.colourHex}" role="img" aria-label="Colour swatch: ${esc(p.colourName)}, Pantone ${esc(p.colourPantone)}"></span>
-        <span class="cw-txt"><strong>${esc(p.colourName)}</strong> &middot; Pantone ${esc(p.colourPantone)}
-        <em>Screens vary &mdash; the Pantone reference is the exact specification.</em></span>
-      </div>` : ''}
-      <p class="occasion">✦ ${p.occasion}</p>
+      ${/* Faheem, 10 Sep: "move the size selection and add to cart right under the shirt title. Users should
+           be able to see the option and the photos at the same time." The lede, spec chips, colourway and
+           occasion now live in the two folds that open the answer list below the buy box. */''}
       <!-- Live size availability, fetched from Shopify. Hidden until data arrives so we never
            show stock we can't verify. -->
       <!-- Pre-launch only. When the buy box is live it owns size selection, and a
@@ -781,6 +783,22 @@ ${galShots(p).map((s,i)=>`
            One better than the benchmark: the visitor's own shipping card is
            highlighted and ordered first via data-market on <html>. -->
       <div class="pdp-answers">
+        <details class="pdp-ans pdp-ans-story">
+          <summary>The story behind the ${p.garment === 'polo' ? 'polo' : 'tee'}</summary>
+          <p class="lede">${p.lede}</p>
+          <p class="occasion">✦ ${p.occasion}</p>
+        </details>
+        <details class="pdp-ans pdp-ans-details">
+          <summary>Details <span class="pdp-ans-hint">${p.colourName ? esc(p.colourName) + ' · ' : ''}unisex S–XL</span></summary>
+          <ul class="spec-strip">
+            <li><strong>Unisex</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm combed cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
+          </ul>
+          ${p.colourHex ? `<div class="colourway">
+            <span class="sw" style="background:${p.colourHex}" role="img" aria-label="Colour swatch: ${esc(p.colourName)}, Pantone ${esc(p.colourPantone)}"></span>
+            <span class="cw-txt"><strong>${esc(p.colourName)}</strong> &middot; Pantone ${esc(p.colourPantone)}
+            <em>Screens vary &mdash; the Pantone reference is the exact specification.</em></span>
+          </div>` : ''}
+        </details>
         <details class="pdp-ans">
           <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">free next-day, no minimum</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 390</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
           <div class="shipcards">
