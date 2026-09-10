@@ -549,7 +549,181 @@ footer{position:relative;z-index:2}
   <div class="j-wrap">
     <span class="j-eyebrow rv">What customers say</span>
     <h2 class="rv">Worn, washed, <em>and reviewed</em></h2>
-    <!--REVIEWS:START--><!--REVIEWS:END-->
+    <!--REVIEWS:START--><style>
+.reviews{border-top:1px solid var(--line,rgba(43,37,32,.12))}
+.rv-aggregate{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.rv-stars{color:#A9761A;letter-spacing:2px;font-size:17px}
+body.dark-bg .rv-stars{color:#E9B978}
+.rv-score{font-family:'Space Mono',monospace;font-size:18px;font-weight:700}
+.rv-count{font-size:13px;color:var(--txt-soft,#6B6256)}
+.rv-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;list-style:none;padding:0;margin:0}
+.rv-card{border:1px solid var(--line,rgba(43,37,32,.12));border-radius:2px;padding:20px}
+.rv-card .rv-stars{font-size:14px;margin-bottom:8px;display:block}
+.rv-title{display:block;font-size:15px;margin-bottom:6px}
+.rv-text{font-size:14.5px;font-style:italic;line-height:1.65;margin:0 0 10px}
+.rv-photos{display:flex;gap:8px;margin-bottom:10px}
+.rv-photo{width:72px;height:72px;object-fit:cover;border-radius:2px}
+.rv-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--txt-soft,#6B6256)}
+.rv-reply{font-size:13.5px;line-height:1.6;margin:12px 0 0;padding-left:12px;
+  border-left:2px solid var(--line,rgba(43,37,32,.12))}
+.pcard-rv{display:flex;align-items:center;gap:7px;margin:2px 0 8px}
+.pcard-rv .rv-stars{font-size:13px;letter-spacing:1px}
+.pcard-rv-n{font-family:'Space Mono',monospace;font-size:11px;color:var(--txt-soft,#6B6256)}
+.rv-band{background:#FAF6EF;color:#33271B;padding:60px 24px;border-top:1px solid rgba(42,32,22,.10)}
+.rv-band .wrap{max-width:1100px;margin:0 auto}
+.rv-band .eyebrow{display:block;margin-bottom:14px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9C521B}
+.rv-band .rv-card{background:#fff;border:1px solid rgba(42,32,22,.14)}
+.rv-band .rv-stars{color:#A9761A}
+.rv-band .rv-score{color:#33271B}
+.rv-band .rv-count,.rv-band .rv-meta{color:#6B6256}
+.rv-compact .rv-card:nth-child(n+4){display:none}
+.rv-showall{display:block;margin:6px auto 0;padding:12px 22px;border:1px solid #33271B;border-radius:999px;background:#fff;color:#33271B;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+.rv-showall:hover{background:#33271B;color:#fff}
+.rv-band .rv-text{color:#33271B;font-style:italic}
+.rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
+.rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.rv-band .rv-src{color:#6B6256}
+.rv-filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0 0 16px}
+.rv-chips{display:flex;flex-wrap:wrap;gap:8px}
+.rv-chip{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;padding:9px 14px;min-height:40px;border:1px solid rgba(42,32,22,.58);border-radius:999px;background:#fff;color:#33271B;cursor:pointer}
+.rv-chip.on{background:#33271B;color:#fff;border-color:#33271B}
+.rv-chip:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.rv-sort{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#6B6256}
+.rv-sort select{font-family:'Space Mono',monospace;font-size:12px;padding:8px 12px;min-height:40px;border:1px solid rgba(42,32,22,.58);border-radius:999px;background:#fff;color:#33271B;cursor:pointer}
+.rv-more{display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
+.rv-more:hover{color:#33271B}
+.rv-photo-a{display:inline-block;line-height:0;border-radius:2px;cursor:zoom-in;transition:transform .2s}
+.rv-photo-a:hover{transform:scale(1.04)}
+.rv-photo-a:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.rv-photo{width:84px;height:84px;object-fit:cover;border-radius:2px;border:1px solid rgba(42,32,22,.18)}
+#sbRvLB{position:fixed;inset:0;z-index:9999;background:rgba(20,14,8,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out}
+#sbRvLB img{max-width:92vw;max-height:86vh;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#sbRvLB button{position:absolute;top:16px;right:16px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:30px;line-height:1;cursor:pointer}
+#sbRvLB button:hover{background:rgba(255,255,255,.28)}
+#sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
+@media(max-width:760px){.rv-list{grid-template-columns:1fr}}</style>
+  <section class="reviews rv-band" aria-labelledby="rvb-h">
+    <div class="wrap">
+      <span class="eyebrow" id="rvb-h">Worn and reviewed</span>
+      <div class="rv-aggregate">
+        <span class="rv-stars" aria-hidden="true">★★★★★</span>
+        <span class="rv-score">5.0 / 5</span>
+        <span class="rv-count">from 11 reviews</span>
+      </div>
+      <div class="rv-filters" data-rv-filters>
+        <!-- no counts on the chips: the band shows the newest 6 while the aggregate counts every
+             review, so "All (6)" next to "from 8 reviews" read as a stale number (Faheem, 4 Sep 2026) -->
+        <div class="rv-chips" role="group" aria-label="Filter reviews by rating">
+          <button type="button" class="rv-chip on" data-star="all">All</button>
+          <button type="button" class="rv-chip" data-star="5">5★</button>
+        </div>
+        <label class="rv-sort"><span>Sort</span>
+          <select data-rv-sort aria-label="Sort reviews">
+            <option value="new">Newest first</option>
+            <option value="old">Oldest first</option>
+            <option value="high">Highest rated</option>
+            <option value="low">Lowest rated</option>
+          </select>
+        </label>
+      </div>
+      <ul class="rv-list">
+        
+        <li class="rv-card" data-rating="5" data-date="2026-09-10">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Amazing product and value for money.
+So much detailing and hard work behind a brilliant concept bringing the Sahara to life!
+The quality of the fabric is ideal for UK weather and conditions.
+Highly recommended plus the packaging was superb!</p>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1789023041__1789023039318-img-20260904-wa0004__original.jpg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1789023041__1789023039318-img-20260904-wa0004__original.jpg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
+          <span class="rv-meta">Muhammad Yaseen · Verified buyer · September 2026</span>
+          <a class="rv-more" href="/products/al-quaa-galaxy-oversized/#reviews">See it on Al Quaa Galaxy — Oversized &rarr;</a>
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-09-06">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Fast next day delivery. Items come in a great little box convenient for gifting. Free tote bag is a big plus ⭐️</p>
+          
+          <span class="rv-meta">Kainat Abbasi · September 2026</span>
+          
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-09-06">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Bought this as a birthday present for the husband. Super soft. Excellent fit, comparable to any premium brand. And the nicest sandstone/dunes of Al Ain sand color. Hope there’ll be more polos in the future!</p>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788691900__1788691740649-img_2265__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788691900__1788691740649-img_2265__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788691905__1788691740650-img_2173__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788691905__1788691740650-img_2173__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
+          <span class="rv-meta">Kainat Abbasi · Verified buyer · September 2026</span>
+          <a class="rv-more" href="/products/sand-polo/#reviews">See it on The Sahra Polo &rarr;</a>
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-09-03">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">It was smooth and timely.</p>
+          
+          <span class="rv-meta">Mustafa Chulawala · September 2026</span>
+          
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-09-03">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">The quality is amazing - super soft, breathable and perfect for everyday wear. The design is unique and meaningful. You can feel the passion in every piece. 
+
+Highly recommended Sahra &amp; Beyond to everyone!</p>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788426503__1788426494814-img_4224__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788426503__1788426494814-img_4224__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788426509__1788426494815-img_4225__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788426509__1788426494815-img_4225__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
+          <span class="rv-meta">Mustafa Chulawala · Verified buyer · September 2026</span>
+          <a class="rv-more" href="/products/al-quaa-galaxy-regular/#reviews">See it on Al Quaa Galaxy — Regular &rarr;</a>
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-09-01">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Safe to say Sahra &amp; Beyond nailed it.
+
+The attention to detail is remarkable. The branded cardboard box, the premium canvas tote, and the drawstring pouch create a fantastic first impression. The standard thank-you card and the detailed product card with coordinates shows a deep connection to the brand's story. It feels like a premium, thoughtfully curated gift.
+I ordered beige colored t-shirt which looked incr…</p>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788281268__111999__original.jpg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788281268__111999__original.jpg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
+          <span class="rv-meta">nabeel shahid · Verified buyer · September 2026</span>
+          <a class="rv-more" href="/products/empty-quarter-regular/#reviews">Read the full review &rarr;</a>
+        </li>
+      </ul>
+      
+      <script>(function(){if(window.__sbRvLB)return;window.__sbRvLB=1;
+var last=null;
+function close(){var d=document.getElementById('sbRvLB');if(d)d.remove();document.documentElement.style.overflow='';if(last&&last.focus)last.focus();last=null;}
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest&&e.target.closest('.rv-photo-a');
+  if(a){e.preventDefault();last=a;
+    var d=document.createElement('div');d.id='sbRvLB';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','Customer photo');
+    d.innerHTML='<img src="'+a.href+'" alt="Customer photo, full size"><button type="button" aria-label="Close photo">&times;</button>';
+    d.addEventListener('click',close);
+    document.body.appendChild(d);document.documentElement.style.overflow='hidden';
+    d.querySelector('button').focus();return;}
+  if(e.target&&e.target.id==='sbRvLB')close();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();</script>
+      <script>(function(){if(window.__sbRvF)return;window.__sbRvF=1;
+document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
+  var list=bar.parentNode.querySelector('.rv-list');if(!list)return;
+  var cards=[].slice.call(list.querySelectorAll('.rv-card'));
+  function apply(){
+    list.classList.remove('rv-compact');var sa=list.parentNode.querySelector('.rv-showall');if(sa)sa.hidden=true;
+    var chip=bar.querySelector('.rv-chip.on');var star=chip?chip.dataset.star:'all';
+    var sel=bar.querySelector('[data-rv-sort]');var mode=sel?sel.value:'new';
+    var vis=cards.filter(function(c){return star==='all'||c.dataset.rating===star;});
+    cards.forEach(function(c){c.style.display=vis.indexOf(c)>-1?'':'none';});
+    vis.sort(function(a,b){
+      if(mode==='new')return (b.dataset.date||'').localeCompare(a.dataset.date||'');
+      if(mode==='old')return (a.dataset.date||'').localeCompare(b.dataset.date||'');
+      if(mode==='high')return (+b.dataset.rating||0)-(+a.dataset.rating||0)||(b.dataset.date||'').localeCompare(a.dataset.date||'');
+      return (+a.dataset.rating||0)-(+b.dataset.rating||0)||(b.dataset.date||'').localeCompare(a.dataset.date||'');
+    });
+    vis.forEach(function(c){list.appendChild(c);});
+  }
+  bar.addEventListener('click',function(e){
+    var c=e.target.closest('.rv-chip');if(!c)return;
+    bar.querySelectorAll('.rv-chip').forEach(function(x){x.classList.remove('on');});
+    c.classList.add('on');apply();
+  });
+  var sel=bar.querySelector('[data-rv-sort]');
+  if(sel)sel.addEventListener('change',apply);
+});
+})();</script>
+      <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
+    </div>
+  </section><!--REVIEWS:END-->
   </div>
 </section>
 
