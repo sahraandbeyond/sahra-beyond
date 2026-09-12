@@ -2229,6 +2229,40 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
 })();
 
 /* ==========================================================================
+   TikTok pixel — one script tag, every page (12 Sep 2026)
+   ==========================================================================
+   /assets/tiktok-pixel.js (Pixel ID DAIGE43C77U9J87RH2BG) is inserted right
+   after the Meta pixel tag on every built and hand-maintained page, so the
+   two pixels always load in that order (tiktok-pixel.js wraps window.sbMeta
+   to mirror AddToCart / InitiateCheckout). Idempotent: a page that already
+   carries the tag is left alone. Runs BEFORE stampAssets so the tag gets its
+   ?v= hash like every other asset. */
+(function applyTikTokPixel() {
+  const TAG = '<script src="/assets/tiktok-pixel.js" data-ttq></script>';
+  const META = /<script src="\/assets\/meta-pixel\.js(?:\?v=[0-9a-f]*)?"><\/script>/i;
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html')) pages.push(p);
+    }
+  })(__dirname);
+  let touched = 0, missing = [];
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    if (src.indexOf('/assets/tiktok-pixel.js') !== -1) continue;
+    if (!/<\/head>/i.test(src)) { missing.push(path.relative(__dirname, f)); continue; }
+    const out = META.test(src)
+      ? src.replace(META, (m) => m + '\n' + TAG)
+      : src.replace(/<\/head>/i, TAG + '\n</head>');
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  ✓ TikTok pixel on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} added)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
+})();
+
+/* ==========================================================================
    Asset cache-busting — computed, never hand-written.
    ==========================================================================
    The ?v= hashes used to be hardcoded literals in this file and in the
