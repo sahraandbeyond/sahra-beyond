@@ -220,7 +220,11 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
   --serif:'Playfair Display',Georgia,serif;--sans:Inter,system-ui,-apple-system,Segoe UI,sans-serif;--mono:'Space Mono',ui-monospace,Menlo,monospace;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:auto}
+/* the full-bleed ring stage puts cards past the screen edge, and a 3D subtree
+   is not reliably clipped by an ancestor's overflow:hidden. body{overflow-x:hidden}
+   alone does not help: it propagates to the viewport and the body itself reverts
+   to visible, so the page widened to 463px and the phone zoomed out. */
+html{scroll-behavior:auto;overflow-x:hidden}
 body{margin:0;background:var(--night);color:#F7EFE2;font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
@@ -398,14 +402,15 @@ footer .fine{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:2
    scroll-driven - it drifts, and a flick or an arrow works at any moment. */
 .hring{position:relative;--hc-w:190px}
 /* no panel of its own: the ring stands on the hero's own sky (Faheem, 12 Sep) */
-.hring-stage{position:relative;height:430px;perspective:1200px;overflow:hidden;background:none;
+.hring-stage{position:relative;height:400px;perspective:1900px;overflow:hidden;background:none;
   touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}
 .hring-stage.dragging{cursor:grabbing}
 .hring-cap{position:absolute;left:0;right:0;top:50%;z-index:1;transform:translateY(-50%);text-align:center;
   font-family:var(--serif,'Playfair Display',serif);font-weight:800;font-size:clamp(34px,5.4vw,74px);line-height:1;
   color:rgba(255,255,255,.17);text-shadow:0 2px 30px rgba(40,26,14,.25);white-space:nowrap;pointer-events:none}
 .hring-ring{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none;z-index:2}
-.hring-card{position:absolute;left:50%;top:50%;width:var(--hc-w);margin-left:calc(var(--hc-w) * -.5);margin-top:calc(var(--hc-w) * -.86);
+.hring-card{position:absolute;left:50%;top:50%;width:var(--hc-w);margin-left:calc(var(--hc-w) * -.5);
+  margin-top:calc(var(--hc-w) * -.9);   /* replaced per card from JS with -height/2 */
   pointer-events:auto;display:block;background:#FFF;border-radius:14px;overflow:hidden;box-shadow:0 22px 54px rgba(0,0,0,.34);
   text-decoration:none;color:var(--ink);will-change:transform;cursor:pointer}
 .hring-img{display:block;position:relative;aspect-ratio:4/5;background:#EFE7D8;overflow:hidden}
@@ -413,18 +418,14 @@ footer .fine{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:2
 .hring-img img.on{opacity:1;z-index:3}
 .hring-img img.was{opacity:1;z-index:2;transition:none}
 .hring-body{display:block;padding:10px 12px 12px}
-.hring-place{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--clay-deep)}
-.hring-name{display:block;font-family:var(--serif,'Playfair Display',serif);font-size:15.5px;font-weight:700;line-height:1.2;margin:3px 0 2px}
+.hring-place{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--clay-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:calc(10px * 1.5)}
+.hring-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--serif,'Playfair Display',serif);font-size:15.5px;font-weight:700;line-height:1.2;margin:3px 0 2px;min-height:calc(15.5px * 1.2 * 2);-webkit-line-clamp:2}
+.hring-fit{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#6B6256;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
 .hring-price{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:#5C5346}
 .hring-price .sb-price{color:#5C5346!important}
 .hring-price .sb-price{font-size:13px!important;color:#5C5346!important}
-.hring-go{display:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-deep);margin-top:6px}
-.hring-card.front .hring-go{display:block}
-/* quick add rides on whichever design is facing you (the page's own .qa module fills it) */
-.hring-card .qa{display:none}
-.hring-card.front .qa{display:flex;margin-top:9px;padding-top:9px}
-.hring-card .qa-l{display:none}
-.hring-card .qa-b{min-width:32px;height:30px;padding:0 8px;font-size:11px}
+.hring-go{display:block;visibility:hidden;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-deep);margin-top:6px}
+.hring-card.front .hring-go{visibility:visible}
 .hring-arrow{position:absolute;top:50%;z-index:5;width:44px;height:44px;margin-top:-22px;border-radius:50%;
   border:1px solid rgba(255,255,255,.34);background:rgba(20,15,34,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   color:#F7EFE2;font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
@@ -451,10 +452,10 @@ footer .fine{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:2
 /* desktop: the ring takes the empty half of the hero, the copy keeps the right */
 @media(min-width:961px){
   #s-hero .j-wrap,#s-hero .j-wrap{justify-content:space-between;align-items:center;gap:40px}
-  #s-hero .hring{flex:0 0 clamp(340px,44vw,620px)}
-  #s-hero .col{flex:0 1 560px}
-  .hring{--hc-w:176px}
-  .hring-stage{height:492px}
+  #s-hero .hring{flex:0 0 clamp(340px,44vw,600px)}
+  #s-hero .col{flex:0 1 570px}
+  .hring{--hc-w:150px}
+  .hring-stage{height:430px}
 }
 @media(max-width:960px){
   /* the hero stage is a row on desktop and a column below it: without this the
@@ -465,12 +466,25 @@ footer .fine{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:2
   .hring-stage{height:400px}
 }
 @media(max-width:760px){
-  .hring{--hc-w:146px}
-  .hring-stage{height:332px}
-  .hring-name{font-size:14px}
+  .hring{--hc-w:138px}
+  /* full-bleed: the ring is wider than the reading column, and a card that runs
+     off the screen edge reads as "there is more of this", where a card sliced at
+     the column edge just looks broken */
+  .hring-stage{height:330px;width:100vw;margin-left:calc(50% - 50vw)}
+  .hring-place{display:none}
+  .hring-body{padding:9px 10px 11px}
+  .hring-name{font-size:14px;min-height:calc(14px * 1.2 * 2)}
   .hring-arrow{width:38px;height:38px;margin-top:-19px;font-size:22px}
   .hring-meter{margin-top:11px;gap:9px}
   .hring-seen{font-size:10.5px}
+}
+/* short phones (a 740px-tall screen at 360 wide) were left with only 237px of
+   ring above the fold: the headline and the top padding each give up a little */
+@media(max-width:760px) and (max-height:780px){
+  #s-hero{padding-top:calc(var(--nav-h,62px) + 6px)}
+  #s-hero h1{font-size:clamp(29px,8.4vw,40px);margin-bottom:10px}
+  #s-hero .lede{margin-bottom:14px}
+  .hring{margin-top:12px}
 }
 .scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(247,239,226,.6)}
 .fps{position:fixed;left:14px;bottom:12px;z-index:30;font-family:var(--mono);font-size:10px;letter-spacing:1px;color:rgba(247,239,226,.55);background:rgba(0,0,0,.25);padding:6px 8px;border-radius:6px}
@@ -946,7 +960,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <div class="hring" id="heroRing" aria-label="The collection">
   <div class="hring-stage">
     <div class="hring-cap" aria-hidden="true"></div>
-    <div class="hring-ring"><a class="hring-card" href="/products/al-quaa-galaxy-regular/" data-handle="al-quaa-galaxy-regular" data-place="Al Quaa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back"><img loading="lazy" src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Inspired by Al Quaa</span><span class="hring-name">Al Quaa Galaxy — Regular</span><span class="hring-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="al-quaa-galaxy-regular"></span></span></a><a class="hring-card" href="/products/al-quaa-galaxy-oversized/" data-handle="al-quaa-galaxy-oversized" data-place="Al Quaa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/alquaa-oversized-back-fit.jpg" srcset="/shirts/card/alquaa-oversized-back-fit.jpg 800w, /shirts/alquaa-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back"><img loading="lazy" src="/shirts/alquaa-oversized-front-fit.jpg" srcset="/shirts/card/alquaa-oversized-front-fit.jpg 800w, /shirts/alquaa-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/alquaa-model-back.jpg" srcset="/shirts/card/alquaa-model-back.jpg 800w, /shirts/alquaa-model-back.jpg 1076w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes"></span><span class="hring-body"><span class="hring-place">Inspired by Al Quaa</span><span class="hring-name">Al Quaa Galaxy — Oversized</span><span class="hring-price"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="al-quaa-galaxy-oversized"></span></span></a><a class="hring-card" href="/products/empty-quarter-regular/" data-handle="empty-quarter-regular" data-place="Liwa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/emptyquarter-regular-front-fit.jpg" srcset="/shirts/card/emptyquarter-regular-front-fit.jpg 800w, /shirts/emptyquarter-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Regular, regular fit — embroidered design on the front"><img loading="lazy" src="/shirts/emptyquarter-regular-back-fit.jpg" srcset="/shirts/card/emptyquarter-regular-back-fit.jpg 800w, /shirts/emptyquarter-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Inspired by Liwa</span><span class="hring-name">Empty Quarter — Regular</span><span class="hring-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="empty-quarter-regular"></span></span></a><a class="hring-card" href="/products/empty-quarter-oversized/" data-handle="empty-quarter-oversized" data-place="Liwa"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/emptyquarter-oversized-front-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-front-fit.jpg 800w, /shirts/emptyquarter-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Oversized, oversized fit — embroidered design on the front"><img loading="lazy" src="/shirts/emptyquarter-oversized-back-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-back-fit.jpg 800w, /shirts/emptyquarter-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/emptyquarter-model-front.jpg" srcset="/shirts/card/emptyquarter-model-front.jpg 800w, /shirts/emptyquarter-model-front.jpg 1075w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest"></span><span class="hring-body"><span class="hring-place">Inspired by Liwa</span><span class="hring-name">Empty Quarter — Oversized</span><span class="hring-price"><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="empty-quarter-oversized"></span></span></a><a class="hring-card" href="/products/hajar-mountains-regular/" data-handle="hajar-mountains-regular" data-place="Wadi Naqab"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/hajar-regular-back-fit.jpg" srcset="/shirts/card/hajar-regular-back-fit.jpg 800w, /shirts/hajar-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Regular, regular fit — design across the back"><img loading="lazy" src="/shirts/hajar-regular-front-fit.jpg" srcset="/shirts/card/hajar-regular-front-fit.jpg 800w, /shirts/hajar-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Inspired by Wadi Naqab</span><span class="hring-name">Hajar Mountains — Regular</span><span class="hring-price"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="hajar-mountains-regular"></span></span></a><a class="hring-card" href="/products/hajar-mountains-oversized/" data-handle="hajar-mountains-oversized" data-place="Wadi Naqab"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/hajar-oversized-back-fit.jpg" srcset="/shirts/card/hajar-oversized-back-fit.jpg 800w, /shirts/hajar-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit — design across the back"><img loading="lazy" src="/shirts/hajar-oversized-front-fit.jpg" srcset="/shirts/card/hajar-oversized-front-fit.jpg 800w, /shirts/hajar-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/hajar-model-back.jpg" srcset="/shirts/card/hajar-model-back.jpg 800w, /shirts/hajar-model-back.jpg 1078w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back"></span><span class="hring-body"><span class="hring-place">Inspired by Wadi Naqab</span><span class="hring-name">Hajar Mountains — Oversized</span><span class="hring-price"><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="hajar-mountains-oversized"></span></span></a><a class="hring-card" href="/products/sand-polo/" data-handle="sand-polo" data-place=""><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/polo-front.jpg" srcset="/shirts/card/polo-front.jpg 800w, /shirts/polo-front.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Sahra Polo in sand — 240gsm piqué cotton with an embroidered chest logo"><img loading="lazy" src="/shirts/polo-back.jpg" srcset="/shirts/card/polo-back.jpg 800w, /shirts/polo-back.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Sahra Polo, back — plain"></span><span class="hring-body"><span class="hring-place"></span><span class="hring-name">The Sahra Polo</span><span class="hring-price"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="sand-polo"></span></span></a></div>
+    <div class="hring-ring"><a class="hring-card" href="/products/al-quaa-galaxy-regular/" data-handle="al-quaa-galaxy-regular" data-place="Al Quaa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back"><img loading="lazy" src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Al Quaa</span><span class="hring-name">Al Quaa Galaxy</span><span class="hring-fit">Regular</span><span class="hring-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span></span></a><a class="hring-card" href="/products/al-quaa-galaxy-oversized/" data-handle="al-quaa-galaxy-oversized" data-place="Al Quaa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/alquaa-oversized-back-fit.jpg" srcset="/shirts/card/alquaa-oversized-back-fit.jpg 800w, /shirts/alquaa-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back"><img loading="lazy" src="/shirts/alquaa-oversized-front-fit.jpg" srcset="/shirts/card/alquaa-oversized-front-fit.jpg 800w, /shirts/alquaa-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/alquaa-model-back.jpg" srcset="/shirts/card/alquaa-model-back.jpg 800w, /shirts/alquaa-model-back.jpg 1076w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes"></span><span class="hring-body"><span class="hring-place">Al Quaa</span><span class="hring-name">Al Quaa Galaxy</span><span class="hring-fit">Oversized</span><span class="hring-price"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span></span></a><a class="hring-card" href="/products/empty-quarter-regular/" data-handle="empty-quarter-regular" data-place="Liwa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/emptyquarter-regular-front-fit.jpg" srcset="/shirts/card/emptyquarter-regular-front-fit.jpg 800w, /shirts/emptyquarter-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Regular, regular fit — embroidered design on the front"><img loading="lazy" src="/shirts/emptyquarter-regular-back-fit.jpg" srcset="/shirts/card/emptyquarter-regular-back-fit.jpg 800w, /shirts/emptyquarter-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Liwa</span><span class="hring-name">Empty Quarter</span><span class="hring-fit">Regular</span><span class="hring-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span></span></a><a class="hring-card" href="/products/empty-quarter-oversized/" data-handle="empty-quarter-oversized" data-place="Liwa"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/emptyquarter-oversized-front-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-front-fit.jpg 800w, /shirts/emptyquarter-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Oversized, oversized fit — embroidered design on the front"><img loading="lazy" src="/shirts/emptyquarter-oversized-back-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-back-fit.jpg 800w, /shirts/emptyquarter-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/emptyquarter-model-front.jpg" srcset="/shirts/card/emptyquarter-model-front.jpg 800w, /shirts/emptyquarter-model-front.jpg 1075w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest"></span><span class="hring-body"><span class="hring-place">Liwa</span><span class="hring-name">Empty Quarter</span><span class="hring-fit">Oversized</span><span class="hring-price"><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span></span></a><a class="hring-card" href="/products/hajar-mountains-regular/" data-handle="hajar-mountains-regular" data-place="Wadi Naqab"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/hajar-regular-back-fit.jpg" srcset="/shirts/card/hajar-regular-back-fit.jpg 800w, /shirts/hajar-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Regular, regular fit — design across the back"><img loading="lazy" src="/shirts/hajar-regular-front-fit.jpg" srcset="/shirts/card/hajar-regular-front-fit.jpg 800w, /shirts/hajar-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Wadi Naqab</span><span class="hring-name">Hajar Mountains</span><span class="hring-fit">Regular</span><span class="hring-price"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span></span></a><a class="hring-card" href="/products/hajar-mountains-oversized/" data-handle="hajar-mountains-oversized" data-place="Wadi Naqab"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/hajar-oversized-back-fit.jpg" srcset="/shirts/card/hajar-oversized-back-fit.jpg 800w, /shirts/hajar-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit — design across the back"><img loading="lazy" src="/shirts/hajar-oversized-front-fit.jpg" srcset="/shirts/card/hajar-oversized-front-fit.jpg 800w, /shirts/hajar-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/hajar-model-back.jpg" srcset="/shirts/card/hajar-model-back.jpg 800w, /shirts/hajar-model-back.jpg 1078w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back"></span><span class="hring-body"><span class="hring-place">Wadi Naqab</span><span class="hring-name">Hajar Mountains</span><span class="hring-fit">Oversized</span><span class="hring-price"><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span></span></a><a class="hring-card" href="/products/sand-polo/" data-handle="sand-polo" data-place=""><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/polo-front.jpg" srcset="/shirts/card/polo-front.jpg 800w, /shirts/polo-front.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Sahra Polo in sand — 240gsm piqué cotton with an embroidered chest logo"><img loading="lazy" src="/shirts/polo-back.jpg" srcset="/shirts/card/polo-back.jpg 800w, /shirts/polo-back.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Sahra Polo, back — plain"></span><span class="hring-body"><span class="hring-place"></span><span class="hring-name">The Sahra Polo</span><span class="hring-fit">&nbsp;</span><span class="hring-price"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></span><span class="hring-go">View the tee &rarr;</span></span></a></div>
     <button class="hring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="hring-arrow next" type="button" aria-label="Next design">&#8250;</button>
     <div class="hring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div>
   </div>
@@ -2219,10 +2233,28 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
      radius is measured from the stage itself and the cards always land inside it.
      On a phone they are meant to run off the screen edge - that is the cue that
      there is more of the ring than you can see. */
+  /* Every card is centred on its OWN height: the front card is taller than the
+     rest once its size chips arrive, and a shared offset sent that extra height
+     downwards until the stage clipped it (measured 362px of card in a 332px
+     stage on a 390px phone). The stage is also held taller than the tallest
+     card, so nothing can be cut off whatever the content does. */
+  function measureCards(){
+    var tall=0;
+    for(var k=0;k<n;k++){
+      var h=cards[k].offsetHeight; if(!h)continue;
+      cards[k].style.marginTop=(-h/2)+'px';
+      if(h>tall)tall=h;
+    }
+    if(tall){ var need=tall+28;
+      if(stage.clientHeight<need)stage.style.height=need+'px'; }
+  }
   function measure(){ var phone=innerWidth<=760;
-    if(phone){ R=Math.max(150,innerWidth*0.46); return; }
-    var sw=stage.getBoundingClientRect().width||440, cw=cards[0].getBoundingClientRect().width||190;
-    R=Math.max(140,Math.min(330,sw/2-cw/2-10)); }
+    if(phone){ R=innerWidth*0.62; }                 /* the shop ring's radius: room between the cards */
+    else { var sw=stage.getBoundingClientRect().width||440;
+      var cw=Math.max(104,Math.min(178,sw*0.235));
+      st.style.setProperty('--hc-w',Math.round(cw)+'px');
+      R=Math.max(140,Math.min(330,sw/2-cw/2-10)); }
+    measureCards(); }
   function norm(a){return Math.atan2(Math.sin(a),Math.cos(a));}
   function markSeen(k){ if(seen[k])return; seen[k]=1; seenCount++;
     if(pips[k])pips[k].classList.add('on'); if(seenN)seenN.textContent=seenCount;
@@ -2283,6 +2315,13 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     if(performance.now()-lastTouch<2600)return; S.a-=0.11*Math.min(dt,100)/1000; place(); }); }
   try{ new IntersectionObserver(function(es){es.forEach(function(x){inView=x.isIntersecting;});},{threshold:0.2}).observe(stage); }catch(e){inView=true;}
   addEventListener('resize',function(){measure();place();},{passive:true});
+  /* the size chips are fetched from Shopify and injected later, which changes the
+     front card's height: re-centre when they arrive */
+  try{ var reT=null;
+    new MutationObserver(function(){ clearTimeout(reT); reT=setTimeout(function(){ measureCards(); place(); },60); })
+      .observe(st,{childList:true,subtree:true});
+  }catch(e){}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){measureCards();place();});
   measure(); place(); markSeen(front);
 })();
 </script>
