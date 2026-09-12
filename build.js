@@ -788,7 +788,7 @@ img,svg,video{max-width:100%;height:auto}
     display:inline-flex;align-items:center;min-height:44px;padding-top:2px;padding-bottom:2px}
   .foot-links a,.links a{width:100%}
   button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.filt-clear,.filt-linkish,.chip,.btn,button.cta,.cta,
-  .pdp-link,.buy-ghaf,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
+  .pdp-link,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
     min-height:44px}
   /* dismiss controls need to be easy to hit, not just tall */
   /* Close buttons hold text, so inline-flex centres them correctly. The
@@ -2004,8 +2004,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
 const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat((LAUNCHED || REVEALED) ? [{ u: `${SITE}/shop/`, m: buildDate, p: '0.9' }] : [])
-  .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' },
-            { u: `${SITE}/commitment.html`, m: buildDate, p: '0.6' }])
+  .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }])
   // policies.html is noindex until launch — listing it earlier would put a
   // noindexed URL in the sitemap, which is the contradiction Ahrefs flags
   .concat(LAUNCHED ? [{ u: `${SITE}/policies.html`, m: buildDate, p: '0.4' }] : [])

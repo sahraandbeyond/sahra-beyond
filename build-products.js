@@ -309,8 +309,6 @@ body.dark-bg .btn:hover{background:#fff}
 body.dark-bg .btn.ghost{background:transparent;color:var(--txt);border-color:var(--line)}
 body.dark-bg .btn.ghost:hover{background:rgba(255,255,255,.1);color:#fff}
 .cta-row{display:flex;flex-wrap:wrap;gap:11px;margin-bottom:18px}
-.buy-ghaf{display:inline-block;margin-top:2px;font-family:'Space Mono',monospace;font-size:11.5px;color:#5C7F53;border-bottom:1px solid currentColor;padding-bottom:2px}
-body.dark-bg .buy-ghaf{color:#C3DBB6}
 .buy-trust{display:flex;flex-wrap:wrap;gap:9px 18px;margin-top:18px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--txt-soft)}
 /* --- pre-launch waitlist (shown until the shop opens) --- */
 /* --- size chart --- */
@@ -584,7 +582,7 @@ img,svg,video{max-width:100%;height:auto}
     display:inline-flex;align-items:center;min-height:44px;padding-top:2px;padding-bottom:2px}
   .foot-links a,.links a{width:100%}
   button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.chip,.btn,button.cta,.cta,
-  .pdp-link,.buy-ghaf,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
+  .pdp-link,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
     min-height:44px}
   /* dismiss controls need to be easy to hit, not just tall */
   /* Close buttons hold text, so inline-flex centres them correctly. The
@@ -681,7 +679,6 @@ body.dark-bg .buy .btn,body.dark-bg .sec .btn,body.dark-bg .place-inner .btn{bac
 body.dark-bg .buy .btn:hover,body.dark-bg .sec .btn:hover,body.dark-bg .place-inner .btn:hover{background:var(--clay-deep)}
 body.dark-bg .buy .btn.ghost,body.dark-bg .sec .btn.ghost{background:transparent;color:var(--txt);border-color:var(--edge)}
 body.dark-bg .buy .btn.ghost:hover,body.dark-bg .sec .btn.ghost:hover{background:var(--txt);color:var(--sand)}
-body.dark-bg .buy .buy-ghaf{color:#3F6A36}
 body.dark-bg .buy .fit-warn{color:var(--txt);border-color:rgba(42,32,22,.14);background:rgba(255,255,255,.55)}
 body.dark-bg .buy .pdp-add:disabled{color:#5C5148;border-color:#8A7F73;background:transparent}
 body.dark-bg .buy .pdp-size{background:rgba(255,255,255,.55);border-color:rgba(42,32,22,.32);color:var(--txt)}
@@ -774,7 +771,6 @@ ${galShots(p).map((s,i)=>`
       <div class="cta-row">
         <a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>
       </div>`}
-      <a class="buy-ghaf" href="/commitment.html">🌱 A share of every sale plants ghaf trees in the UAE &rarr;</a>
       <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ ${p.garment === 'polo' ? '240gsm piqué cotton' : '230gsm heavyweight cotton'}</span></div>
 
       <!-- The answer cluster (Rastah benchmark, 29 Aug 2026): the questions a
@@ -1003,7 +999,7 @@ ${related(p, all)}
 </div>
 
 <footer>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
@@ -1022,7 +1018,6 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     var a=e.target.closest&&e.target.closest('a');
     if(!a)return;
     if(a.classList.contains('shoplink'))track('select_item',{item_id:'${p.id}',from:'pdp'});
-    else if(a.classList.contains('buy-ghaf'))track('commitment_click',{from:'pdp-${p.id}'});
     else if(a.href&&a.href.indexOf('/locations/')>=0)track('place_click',{item_id:'${p.id}'});
     else if(a.classList.contains('rel'))track('related_click',{from:'${p.id}'});
   },true);

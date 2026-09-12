@@ -193,7 +193,7 @@ body.shop-page .prod .buy-trust{margin-top:12px;gap:6px 14px}
 .prod-fold[open] summary::after{content:'\2212'}
 .fold-b{padding:2px 0 16px}
 body.shop-page .fold-b .place-lead,body.shop-page .fold-b .story,body.shop-page .fold-b .prod-occasion{margin:0 0 12px;max-width:none}
-body.shop-page .fold-b .read-place,body.shop-page .fold-b .fitswap,body.shop-page .fold-b .buy-limited,body.shop-page .fold-b .buy-ghaf,body.shop-page .fold-b .pdp-link{margin:6px 0 0;display:inline-block;border-bottom-width:1px;padding-bottom:1px}
+body.shop-page .fold-b .read-place,body.shop-page .fold-b .fitswap,body.shop-page .fold-b .buy-limited,body.shop-page .fold-b body.shop-page .fold-b .pdp-link{margin:6px 0 0;display:inline-block;border-bottom-width:1px;padding-bottom:1px}
 body.shop-page .fold-b .pdp-link{display:block;margin-top:12px}
 body.shop-page .fold-b .prod-spec-strip{margin:0 0 12px}
 body.shop-page .fold-b .sw-row{margin:0 0 12px}
@@ -322,10 +322,7 @@ body.shop-page .fold-b .fit-note{margin:0 0 8px;line-height:1.6}
 .read-place:hover{opacity:1}
 .prod.dark .read-place{color:var(--gold)}
 .prod-occasion{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.3px;line-height:1.5;margin:-4px 0 20px;max-width:440px;opacity:1}
-.buy-ghaf{display:inline-block;margin-top:14px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:#4C6E46;border-bottom:1px solid currentColor;padding-bottom:2px;transition:opacity .3s}
-.buy-ghaf:hover{opacity:.75}
-.prod.dark .buy-ghaf{color:#C3DBB6}
-.pdp-link{display:block;margin-top:16px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.5px;border-bottom:1px solid var(--line);padding-bottom:12px;opacity:1;transition:opacity .3s}
+.prod.dark .pdp-link{display:block;margin-top:16px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.5px;border-bottom:1px solid var(--line);padding-bottom:12px;opacity:1;transition:opacity .3s}
 .pdp-link:hover{opacity:1;color:var(--clay-deep)}
 .prod.dark .pdp-link{border-color:rgba(255,255,255,.18)}
 .prod.dark .pdp-link:hover{color:var(--gold)}
@@ -586,7 +583,7 @@ img,svg,video{max-width:100%;height:auto}
     display:inline-flex;align-items:center;min-height:44px;padding-top:2px;padding-bottom:2px}
   .foot-links a,.links a{width:100%}
   button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.filt-clear,.filt-linkish,.chip,.btn,button.cta,.cta,
-  .pdp-link,.buy-ghaf,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
+  .pdp-link,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
     min-height:44px}
   /* dismiss controls need to be easy to hit, not just tall */
   /* Close buttons hold text, so inline-flex centres them correctly. The
@@ -662,11 +659,10 @@ p,li,dd,td,label,figcaption{font-weight:400}
 .tag-invite a{color:var(--txt-soft,#4A4136)}
 
 /* Space Mono labels stay a brand element - 12px floor, tracking halved, ink or clay rather than mist */
-.eyebrow,.j-eyebrow,.card-place,.pcard-place,.pcard-col,.pcard-cta,.crumb,.crumbs,.rv-meta,.prod-limited,.fitchip,.opt-lab,.filt,.snum,.gal-tag,.gal-fit,.gal-hint,.pm-sky,.pk-qty,.pack-grp-title,.teecta-eyebrow,.news-eyebrow,.place-tag,.qa-l,.qa-w,.scroll-cue,.vband-cap,.vband-cap a,.design-card small,.buy-trust,.buy-ghaf,.sb-price,.size-table th,.sg th,.rv-chip,.rv-sort span,.card-tag,.pcard-rv-n,.rv-more{font-size:12px!important;letter-spacing:.09em!important}
+.eyebrow,.j-eyebrow,.card-place,.pcard-place,.pcard-col,.pcard-cta,.crumb,.crumbs,.rv-meta,.prod-limited,.fitchip,.opt-lab,.filt,.snum,.gal-tag,.gal-fit,.gal-hint,.pm-sky,.pk-qty,.pack-grp-title,.teecta-eyebrow,.news-eyebrow,.place-tag,.qa-l,.qa-w,.scroll-cue,.vband-cap,.vband-cap a,.design-card small,.buy-trust,.sb-price,.size-table th,.sg th,.rv-chip,.rv-sort span,.card-tag,.pcard-rv-n,.rv-more{font-size:12px!important;letter-spacing:.09em!important}
 .card-tag{font-size:11px!important;font-weight:700}
 .eyebrow,.j-eyebrow,.card-place,.pcard-place,.prod-limited,.design-card small{font-weight:700}
 .pcard-place,.pm-sky,.rv-meta,.crumb,.gal-model,.rv-sort span{color:var(--txt-soft,#4A4136)}
-.buy-ghaf{color:#3F6A36}
 .qa-l{color:#7E4114}
 
 /* the shop's "Details & care" summaries (unclassed) */
@@ -820,7 +816,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
    scale moves together. !important because the earlier floors above use it. */
 body.shop-page{font-size:18px}
 /* mono labels: 15px, a little less tracking so they still fit */
-body.shop-page .eyebrow,body.shop-page .hero-c .eyebrow,body.shop-page .scroll-cue,body.shop-page .marquee span,body.shop-page .filt-lab,body.shop-page .filt,body.shop-page #filtCount,body.shop-page .filt-meta,body.shop-page .filt-clear,body.shop-page .place-meta,body.shop-page .place-meta a,body.shop-page .place-meta span,body.shop-page .pm-gps,body.shop-page .pm-sky,body.shop-page .prod-limited,body.shop-page .fitchip,body.shop-page .pcard-rv-n,body.shop-page .prod-acc summary,body.shop-page .opt-lab,body.shop-page .buy-limited,body.shop-page .buy-trust,body.shop-page .buy-trust span,body.shop-page .buy-ghaf,body.shop-page .read-place,body.shop-page .pdp-link,body.shop-page .prod-spec-strip li,body.shop-page .prod-spec-strip strong,body.shop-page .sw-row span,body.shop-page .sw-row,body.shop-page .qbuy-lab,body.shop-page .size-guide-link,body.shop-page .trust-row div,body.shop-page .paymarks-t,body.shop-page .foot-links a,body.shop-page .foot-soc a,body.shop-page .rv-meta,body.shop-page .rv-chip,body.shop-page .rv-sort span,body.shop-page .rv-sort select,body.shop-page .rv-more,body.shop-page .rv-src,body.shop-page .rv-src a,body.shop-page .size-table th,body.shop-page .wl-msg,body.shop-page .skip-link,body.shop-page .sm-note{font-size:15px!important;letter-spacing:.06em!important;line-height:1.5}
+body.shop-page .eyebrow,body.shop-page .hero-c .eyebrow,body.shop-page .scroll-cue,body.shop-page .marquee span,body.shop-page .filt-lab,body.shop-page .filt,body.shop-page #filtCount,body.shop-page .filt-meta,body.shop-page .filt-clear,body.shop-page .place-meta,body.shop-page .place-meta a,body.shop-page .place-meta span,body.shop-page .pm-gps,body.shop-page .pm-sky,body.shop-page .prod-limited,body.shop-page .fitchip,body.shop-page .pcard-rv-n,body.shop-page .prod-acc summary,body.shop-page .opt-lab,body.shop-page .buy-limited,body.shop-page .buy-trust,body.shop-page .buy-trust span,body.shop-page body.shop-page .read-place,body.shop-page .pdp-link,body.shop-page .prod-spec-strip li,body.shop-page .prod-spec-strip strong,body.shop-page .sw-row span,body.shop-page .sw-row,body.shop-page .qbuy-lab,body.shop-page .size-guide-link,body.shop-page .trust-row div,body.shop-page .paymarks-t,body.shop-page .foot-links a,body.shop-page .foot-soc a,body.shop-page .rv-meta,body.shop-page .rv-chip,body.shop-page .rv-sort span,body.shop-page .rv-sort select,body.shop-page .rv-more,body.shop-page .rv-src,body.shop-page .rv-src a,body.shop-page .size-table th,body.shop-page .wl-msg,body.shop-page .skip-link,body.shop-page .sm-note{font-size:15px!important;letter-spacing:.06em!important;line-height:1.5}
 body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span,body.shop-page .note-x{font-size:14px!important;letter-spacing:.04em!important}
 body.shop-page .foot-copy{font-size:14.5px!important}
 body.shop-page .prod-occasion{font-size:17px!important}
@@ -1144,12 +1140,12 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   </div>
 </section>
 
-<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% combed ring-spun cotton</div><div>A share of every sale plants ghaf</div><div>Free returns within the UAE</div></div></div>
+<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% combed ring-spun cotton</div><div>Free returns within the UAE</div></div></div>
 
 <div class="lb" id="lightbox" aria-label="Photo viewer"><button class="lb-close" id="lbClose" aria-label="Close">✕</button><button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button><img class="lb-img" id="lbImg" alt=""><button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button></div>
 
 <footer>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="paymarks" aria-label="We accept Visa and Mastercard"><svg viewBox="0 0 48 30" role="img" aria-label="Visa"><rect width="48" height="30" rx="4" fill="#fff"/><text x="24" y="20" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" font-style="italic" fill="#1A1F71">VISA</text></svg><svg viewBox="0 0 48 30" role="img" aria-label="Mastercard"><rect width="48" height="30" rx="4" fill="#fff"/><circle cx="20" cy="15" r="8" fill="#EB001B"/><circle cx="28" cy="15" r="8" fill="#F79E1B" fill-opacity=".85"/></svg><span class="paymarks-t">Secure checkout</span></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
@@ -1744,7 +1740,6 @@ function draw(){
     var fabricLine='<p class="fabric-line">'+(_polo?'<b>240 gsm</b> heavyweight &middot; <b>100% cotton piqu&eacute;</b> &middot; pre-washed':'<b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed')+'</p>';   /* Faheem, 10 Sep: the fabric right under the title */
     var fabricBars=(function(rows){return '<div class="fbars">'+rows.map(function(r){var pips='';for(var k=1;k<=4;k++)pips+='<i'+(k<=r[1]?' class="on"':'')+'></i>';return '<div class="fbar"><span class="fbar-l">'+r[0]+'</span><span class="fbar-t" role="img" aria-label="'+r[0]+': '+r[2]+', '+r[1]+' of 4">'+pips+'</span><span class="fbar-v">'+r[2]+'</span></div>';}).join('')+'</div>';})(_polo?[['Weight',4,'Heavyweight'],['Softness',2,'Textured'],['Stretch',1,'Non-stretch'],['Breathability',4,'Very airy']]:[['Weight',4,'Heavyweight'],['Softness',3,'Soft'],['Stretch',1,'Non-stretch'],['Breathability',3,'Airy']]);
     var buyLimited='<p class="buy-limited">Limited first run &mdash; once it&rsquo;s gone, it&rsquo;s gone.</p>';
-    var buyGhaf='<a class="buy-ghaf" href="/commitment.html">&#127793; A share of every tee plants ghaf trees in the UAE &rarr;</a>';
     var specList=_polo
       ?'<ul class="prod-specs"><li><strong>Fabric.</strong> 240&nbsp;gsm piqu&eacute; cotton, pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Taped shoulder seams, double-stitched and side-seamed for shape retention.</li><li><strong>Embroidery.</strong> Embroidered logo — stitched, not printed.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the embroidery.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul>'
       :'<ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% combed ring-spun cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul>';
@@ -1752,7 +1747,7 @@ function draw(){
       :(fitLabel==='oversized'?'Oversized is a relaxed drop-shoulder cut with a longer body — roomy by design. Size down if you want it a little trimmer.'
       :'Regular is a slim, true-to-size cut with a set shoulder seam. If you are between sizes, size up.');
     var storyFold='<details class="prod-fold"><summary>The story behind the '+(_polo?'polo':'tee')+'</summary><div class="fold-b">'+placeMeta+placeLead+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+readPlace+'</div></details>';
-    var detailsFold='<details class="prod-fold"><summary>Details &amp; care</summary><div class="fold-b">'+fabricBars+specStrip+specList+buyGhaf+pdpLink+'</div></details>';
+    var detailsFold='<details class="prod-fold"><summary>Details &amp; care</summary><div class="fold-b">'+fabricBars+specStrip+specList+pdpLink+'</div></details>';
     var fitFold='<details class="prod-fold"><summary>Fit &amp; sizing</summary><div class="fold-b"><p class="fit-note">'+fitNote+'</p>'+fitSwap+(fitSwap?'<br>':'')+'<a class="size-guide-link" href="#sizeguide">Size guide &amp; measurements</a><br>'+buyLimited+'</div></details>';
     var folds='<div class="folds">'+storyFold+detailsFold+fitFold+'</div>';
     var buyTrust='<div class="buy-trust"><span>&#8635; Free UAE returns</span><span>&#9873; Designed in the UAE</span><span>&#10022; '+(_polo?'240gsm piqué cotton':'230gsm heavyweight cotton')+'</span></div>';

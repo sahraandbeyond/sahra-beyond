@@ -42,6 +42,7 @@
 </script>
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=ddbe0c80"></script>
+<script src="/assets/tiktok-pixel.js" data-ttq></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -250,7 +251,7 @@ nav{transition:color .4s}
 .stop:not(.collection):not(.j-reviews):not(.film)::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(20,16,42,.26),rgba(20,16,42,0) 55%)}
 .stop.right::before{background:linear-gradient(270deg,rgba(20,16,42,.26),rgba(20,16,42,0) 55%)}
 /* the wadi plate has a bright sky where the copy sits: a deeper scrim there */
-#s-naqab::before,#s-mission::before{background:linear-gradient(270deg,rgba(20,16,42,.48),rgba(20,16,42,.18) 45%,rgba(20,16,42,0) 70%)}
+#s-naqab::before{background:linear-gradient(270deg,rgba(20,16,42,.48),rgba(20,16,42,.18) 45%,rgba(20,16,42,0) 70%)}
 .stop .col,.stop .j-stats,.stop .j-places{text-shadow:0 1px 18px rgba(20,16,42,.35)}
 .j-wrap{width:100%;max-width:1200px;margin:0 auto}
 .j-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:18px}
@@ -319,12 +320,6 @@ h1 em,h2 em{font-style:italic;color:var(--gold);font-weight:700}
 .j-place span{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,226,.6)}
 @media(max-width:900px){.j-places{grid-template-columns:1fr 1fr}.j-stats{grid-template-columns:1fr 1fr 1fr;gap:12px}}
 
-/* ---- mission ---- */
-.mission .col{max-width:600px}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
-.facts div{border-left:1px solid rgba(255,255,255,.25);padding-left:14px}
-.facts b{display:block;font-family:var(--serif);font-size:22px;margin-bottom:4px}
-.facts span{font-size:13px;color:rgba(247,239,226,.7);line-height:1.5}
 
 /* ---- newsletter + footer ---- */
 .j-news form{display:flex;gap:10px;max-width:520px;margin-top:22px}
@@ -344,6 +339,139 @@ footer .fine{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:2
 #rail a{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);transition:transform .3s,background .3s;display:block}
 #rail a.on{background:var(--gold);transform:scale(1.6)}
 @media(max-width:820px){#rail{display:none}}
+
+/* ---- hero as the hook (Faheem, 12 Sep) --------------------------------------
+   TikTok traffic lands cold and leaves in seconds, so the first screen has to
+   answer "what is this, what does it cost, where do I look next" without a
+   scroll. The product peek is the answer to the third one: three shirts, all
+   pointing at the ring. */
+.hero-peek{display:flex;gap:10px;align-items:stretch;margin:26px 0 0;flex-wrap:wrap}
+.hpk{position:relative;display:block;width:clamp(76px,20vw,108px);border-radius:12px;overflow:hidden;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);transition:transform .3s,border-color .3s}
+.hpk:hover{transform:translateY(-4px);border-color:var(--gold)}
+.hpk img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.hpk>span{display:block;padding:7px 8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(247,239,226,.92);text-align:center;line-height:1.35}
+.hpk-all{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 6px}
+.hpk-all .hpk-n{font-family:var(--serif,'Playfair Display',serif);font-size:30px;line-height:1;color:var(--gold);font-weight:700}
+.hero-rv{display:inline-flex;align-items:center;gap:7px}
+.hero-stars{color:var(--gold);letter-spacing:1.5px}
+/* the hook has to fit one screen: the hero's display type is capped below the
+   journey's, and the column clears the fixed nav */
+#s-hero h1{font-size:clamp(34px,5vw,76px);max-width:14ch;margin-bottom:18px}
+/* the hook runs taller than the old hero: top-align it so the eyebrow clears the
+   fixed nav instead of being centred up underneath it */
+#s-hero{align-items:flex-start;padding-top:calc(var(--nav-h,76px) + 52px)}
+#s-hero .meta{gap:5px 18px;font-size:11.5px}
+#s-hero .lede{max-width:46ch}
+#s-hero .meta{margin-top:0;margin-bottom:22px}
+@media(max-width:760px){
+  /* the hook is taller than a phone screen, so the hero stops centring its column
+     (which pushed the eyebrow up under the fixed nav) and pins it below the bar */
+  #s-hero{min-height:100vh;align-items:flex-start;padding-top:calc(var(--nav-h,62px) + 16px);padding-bottom:20px}
+  /* the ring has to be on the first screen: the two big buttons would push it under
+     the fold, and the ring already browses the collection (tap a card, quick add,
+     "see all 7"). The places link reappears under the ring instead. */
+  #s-hero .actions{display:none}
+  #s-hero .lede-l{display:none}
+  #s-hero .lede-s{display:inline}
+  .hring-places{display:inline-block}
+  #s-hero .scroll-cue{display:none}
+  #s-hero h1{font-size:clamp(32px,9.6vw,48px)}
+  #s-hero .lede{font-size:16.5px;line-height:1.55;margin-bottom:20px;max-width:38ch}
+  #s-hero .j-eyebrow{margin-bottom:12px}
+  #s-hero .actions{gap:9px}
+  #s-hero .actions .j-btn{padding:14px 18px;flex:1 1 auto;justify-content:center}
+  .hero-peek{gap:8px;margin-top:20px}
+  .hpk{width:calc(25% - 6px)}
+  .hpk>span{font-size:10px;padding:6px 4px}
+  /* one line each, so the ring clears the fold: the eyebrow and the proof row
+     drop a step rather than losing a word */
+  #s-hero .j-eyebrow,#s-hero .j-eyebrow{font-size:13px!important;letter-spacing:.07em!important}
+  #s-hero .meta{margin-top:0;margin-bottom:14px;gap:4px 12px;font-size:13px!important}
+}
+
+/* ---- the hero ring (Faheem, 12 Sep: "bring the 3D carousel to the hero... the
+   carousel on shop page is better") ------------------------------------------
+   The shop ring's scene, sized for the hero: on desktop it takes the empty half
+   of the stage beside the copy, on a phone it sits under it. It is never
+   scroll-driven - it drifts, and a flick or an arrow works at any moment. */
+.hring{position:relative;--hc-w:190px}
+/* no panel of its own: the ring stands on the hero's own sky (Faheem, 12 Sep) */
+.hring-stage{position:relative;height:430px;perspective:1200px;overflow:hidden;background:none;
+  touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}
+.hring-stage.dragging{cursor:grabbing}
+.hring-cap{position:absolute;left:0;right:0;top:50%;z-index:1;transform:translateY(-50%);text-align:center;
+  font-family:var(--serif,'Playfair Display',serif);font-weight:800;font-size:clamp(34px,5.4vw,74px);line-height:1;
+  color:rgba(255,255,255,.17);text-shadow:0 2px 30px rgba(40,26,14,.25);white-space:nowrap;pointer-events:none}
+.hring-ring{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none;z-index:2}
+.hring-card{position:absolute;left:50%;top:50%;width:var(--hc-w);margin-left:calc(var(--hc-w) * -.5);margin-top:calc(var(--hc-w) * -.86);
+  pointer-events:auto;display:block;background:#FFF;border-radius:14px;overflow:hidden;box-shadow:0 22px 54px rgba(0,0,0,.34);
+  text-decoration:none;color:var(--ink);will-change:transform;cursor:pointer}
+.hring-img{display:block;position:relative;aspect-ratio:4/5;background:#EFE7D8;overflow:hidden}
+.hring-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .55s ease-in-out;z-index:1}
+.hring-img img.on{opacity:1;z-index:3}
+.hring-img img.was{opacity:1;z-index:2;transition:none}
+.hring-body{display:block;padding:10px 12px 12px}
+.hring-place{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--clay-deep)}
+.hring-name{display:block;font-family:var(--serif,'Playfair Display',serif);font-size:15.5px;font-weight:700;line-height:1.2;margin:3px 0 2px}
+.hring-price{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:#5C5346}
+.hring-price .sb-price{color:#5C5346!important}
+.hring-price .sb-price{font-size:13px!important;color:#5C5346!important}
+.hring-go{display:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-deep);margin-top:6px}
+.hring-card.front .hring-go{display:block}
+/* quick add rides on whichever design is facing you (the page's own .qa module fills it) */
+.hring-card .qa{display:none}
+.hring-card.front .qa{display:flex;margin-top:9px;padding-top:9px}
+.hring-card .qa-l{display:none}
+.hring-card .qa-b{min-width:32px;height:30px;padding:0 8px;font-size:11px}
+.hring-arrow{position:absolute;top:50%;z-index:5;width:44px;height:44px;margin-top:-22px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.34);background:rgba(20,15,34,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  color:#F7EFE2;font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+.hring-arrow:hover{background:#F7EFE2;color:var(--ink)}
+.hring-arrow.prev{left:8px}.hring-arrow.next{right:8px}
+.hring-cue{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:5;padding:8px 14px;border-radius:999px;
+  background:rgba(20,15,34,.8);color:#F7EFE2;font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .4s}
+.hring.cue .hring-cue{opacity:1}
+/* the meter: a count of what you have looked at, not a prize */
+.hring-meter{display:flex;align-items:center;gap:12px;margin:14px 2px 0}
+.hring-pips{display:flex;gap:5px;flex:1}
+.hring-pips i{flex:1;height:4px;border-radius:999px;background:rgba(247,239,226,.22);transition:background .45s ease}
+.hring-pips i.on{background:var(--gold)}
+.hring-seen{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(247,239,226,.82);white-space:nowrap}
+.hring-seen b{color:var(--gold);font-weight:700}
+.hring.all-seen .hring-seen{color:var(--gold)}
+.lede-s{display:none}
+.hring-links{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.hring-places{display:none}
+.hring-all{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(247,239,226,.9);border-bottom:1px solid rgba(247,239,226,.45);padding-bottom:3px}
+.hring-all:hover{color:var(--gold);border-color:var(--gold)}
+/* desktop: the ring takes the empty half of the hero, the copy keeps the right */
+@media(min-width:961px){
+  #s-hero .j-wrap,#s-hero .j-wrap{justify-content:space-between;align-items:center;gap:40px}
+  #s-hero .hring{flex:0 0 clamp(340px,44vw,620px)}
+  #s-hero .col{flex:0 1 560px}
+  .hring{--hc-w:176px}
+  .hring-stage{height:492px}
+}
+@media(max-width:960px){
+  /* the hero stage is a row on desktop and a column below it: without this the
+     copy and the ring shared one row and both were crushed */
+  #s-hero .j-wrap,#s-hero .j-wrap{flex-direction:column;align-items:stretch;justify-content:flex-start}
+  #s-hero .col{max-width:none;width:100%}
+  .hring{margin-top:18px;width:100%}
+  .hring-stage{height:400px}
+}
+@media(max-width:760px){
+  .hring{--hc-w:146px}
+  .hring-stage{height:332px}
+  .hring-name{font-size:14px}
+  .hring-arrow{width:38px;height:38px;margin-top:-19px;font-size:22px}
+  .hring-meter{margin-top:11px;gap:9px}
+  .hring-seen{font-size:10.5px}
+}
 .scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(247,239,226,.6)}
 .fps{position:fixed;left:14px;bottom:12px;z-index:30;font-family:var(--mono);font-size:10px;letter-spacing:1px;color:rgba(247,239,226,.55);background:rgba(0,0,0,.25);padding:6px 8px;border-radius:6px}
 
@@ -467,6 +595,316 @@ footer{position:relative;z-index:2}
 .collection.ring-on .grid .card:not(.front){cursor:pointer}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
+<style data-legib>
+/* ===== legibility layer: floors for size, weight and contrast (5 Sep 2026) ===== */
+:root{--txt-soft:#4A4136;--mist:#4A4136}
+/* the product pages flip these when the scroll reaches a dark background (body.dark-bg): keep that, brighter */
+body.dark-bg{--txt-soft:rgba(244,239,230,.86);--mist:rgba(244,239,230,.86)}
+html{-webkit-text-size-adjust:100%}
+body{font-size:16px;font-weight:400}
+p,li,dd,td,label,figcaption{font-weight:400}
+.lede,.sec p,.care li,.hero-c p,.prod .story,.prod-specs li,.sm-sub,.tl-sub,.fe-card p,.ret-item span,.soon p,.mission p,.chero p{font-weight:400}
+.prod-specs li{font-size:15px}
+.prod .story,.sec p{font-size:16px}
+
+/* secondary copy: darker, and never under 14px */
+.pdp-ans-foot,.qual-item span,.card-body span,.tag-invite,.rv-count,.pk-note,.sgnote,.sz-cm,.crumb,.gal-model,.pm-sky{color:var(--txt-soft,#4A4136)}
+/* (.crumbs, .hero-ship and .meta sit on dark heroes and keep their cream) */
+.crumbs,.crumbs a{color:rgba(255,255,255,.95)!important}
+.hero-ship,.meta{color:rgba(247,239,226,.95)}
+.pdp-ans-foot,.qual-item span,.tag-invite,.pk-note,.sgnote,.sz-cm,.gal-model{font-size:14px}
+.tag-invite a{color:var(--txt-soft,#4A4136)}
+
+/* Space Mono labels stay a brand element - 12px floor, tracking halved, ink or clay rather than mist */
+.eyebrow,.j-eyebrow,.card-place,.pcard-place,.pcard-col,.pcard-cta,.crumb,.crumbs,.rv-meta,.prod-limited,.fitchip,.opt-lab,.filt,.snum,.gal-tag,.gal-fit,.gal-hint,.pm-sky,.pk-qty,.pack-grp-title,.teecta-eyebrow,.news-eyebrow,.place-tag,.qa-l,.qa-w,.scroll-cue,.vband-cap,.vband-cap a,.design-card small,.buy-trust,.sb-price,.size-table th,.sg th,.rv-chip,.rv-sort span,.card-tag,.pcard-rv-n,.rv-more{font-size:12px!important;letter-spacing:.09em!important}
+.card-tag{font-size:11px!important;font-weight:700}
+.eyebrow,.j-eyebrow,.card-place,.pcard-place,.prod-limited,.design-card small{font-weight:700}
+.pcard-place,.pm-sky,.rv-meta,.crumb,.gal-model,.rv-sort span{color:var(--txt-soft,#4A4136)}
+.qa-l{color:#7E4114}
+
+/* the shop's "Details & care" summaries (unclassed) */
+.prod details summary{font-size:13px;letter-spacing:.06em}
+/* the stragglers the audit still found under 12px */
+.sb-ship-uae,.sb-ship-gcc,.sb-ship-intl,.note .sb-rot span,.marquee span,.sm-note,.rv-src,.rv-src a,.trust-row div,.paymarks-t,.pcard-spec span,.limited,.spec-strip li,.spec-strip strong,.cw-txt,.cw-txt strong,.cw-txt em,.pdp-sizes-label,.size-guide-link,.pdp-ans-hint,.shipsub,.pmeta a,.pmeta span,.sky-card small,.sz-cap,table.sz th,.rel-place,.teecta-meta span,.pk-note,.card-body em,.meta span,.meta b,.j-place span,.foot-tag,.buy-limited,.pm-gps,.filt-lab,.buy-trust span{font-size:12px!important}
+.pk-note,.card-body em,.shipsub{font-size:13px!important}
+.sz-out{font-size:11px!important}
+.pcard-spec span{color:var(--ink,#2A2016)}
+
+/* dark panels (shop .prod.dark, the location tee band): secondary text in cream, never ink */
+.prod.dark .pm-sky,.prod.dark .pcard-rv-n,.prod.dark .rv-meta,.prod.dark .crumb,.prod.dark .pm-gps,.prod.dark .place-meta,.prod.dark .prod-specs li,.prod.dark .story,.prod.dark .pcard-place{color:rgba(247,239,226,.92)!important}
+.prod.dark .rv-stars,.prod.dark .pcard-rv .rv-stars{color:#E9B978!important}
+.teecta-txt a:not(.btn),.teecta-meta a:not(.btn),.teecta-meta span{color:#E9B978!important}
+.teecta-txt .sb-price{color:rgba(247,239,226,.95)!important}
+
+/* top bar and hero delivery line: readable on phones */
+.sb-topbar{font-size:12px!important;letter-spacing:.12em!important;padding:9px 12px!important;line-height:1.35}
+@media(max-width:560px){.sb-topbar{font-size:11.5px!important;letter-spacing:.08em!important}}
+
+/* footer links: dark footers (home, shop, product pages) at 88% cream, not 70%; the
+   guides' cream footer (.ftr) in ink */
+.foot-links a,footer:not(.ftr) .links a,footer .foot-links a{color:rgba(247,239,226,.9)!important;font-size:13px!important;letter-spacing:.08em!important}
+.foot-copy,footer .foot-copy{color:rgba(247,239,226,.9)!important;font-size:13px}
+.ftr{font-size:14px;color:#4A4136}
+.ftr .links a{color:#4A4136!important;font-size:13.5px!important}
+.m-panel a{font-size:20px}
+nav .nav-links a,.hdr-nav a,.nav-links a{font-size:15px;font-weight:500}
+
+/* review band */
+/* the review band's own style block sits in the body, after this layer: a body prefix outranks it,
+   and the template's body.dark-bg .rv-stars (gold on dark) still outranks this */
+body .rv-stars,body .rv-band .rv-stars,body .pcard-rv .rv-stars{color:#8F6212}
+body.dark-bg .rv-stars,body.dark-bg .rv-band .rv-stars{color:#E9B978}
+body .rv-text{font-size:16px;line-height:1.6}
+body .rv-count{font-size:14px}
+.rv-meta{font-size:12.5px!important}
+
+/* prices and buttons: the two things a shopper must never squint at */
+.card-price,.card-price .sb-price,.pcard-price,.pcard .sb-price{font-size:16px!important;font-weight:700;letter-spacing:.02em!important;color:var(--ink,#2A2016)}
+.price,.buy .price,.buy .sb-price{font-size:24px!important;font-weight:700;letter-spacing:.01em!important}
+.btn,button.btn,a.btn{font-size:14px;font-weight:600;letter-spacing:.08em}
+.pdp-add{font-size:16px;font-weight:700}
+/* disabled = outlined, not faded: still readable, still clearly not the filled button */
+.pdp-add:disabled{opacity:1;background:transparent;color:#5C5148;border:1.5px dashed #8A7F73;cursor:not-allowed}
+body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
+.qa-b{font-size:12.5px;font-weight:700}
+.fit-b{font-size:12px;font-weight:700}
+.filt{font-weight:700}
+
+/* homepage journey: copy over the plates */
+.lede{font-size:17px}
+.scroll-cue{color:rgba(247,239,226,.85)!important}
+.vband-cap,.vband-cap a{color:rgba(247,239,226,.9)!important}
+.j-stats b{font-size:26px}
+.j-stats span{font-size:13px}
+.design-card p{font-size:15px;color:rgba(247,239,226,.92)}
+.qual-item span{font-size:14px}
+
+/* ===== glass panels behind the text that sits on moving imagery (Faheem, 5 Sep) =====
+   The homepage's landscapes and the shop's hero change under the copy as you
+   scroll; a sheer frosted panel keeps the words on a steady ground. Dark stops
+   only - the cream "paper" stops need none. */
+#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{
+  background:rgba(16,12,30,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
+  border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:30px 32px;box-shadow:0 24px 60px rgba(0,0,0,.28);
+  box-sizing:border-box;max-width:660px}
+#s-hero .col{max-width:720px}
+@media(max-width:760px){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{padding:22px 18px;border-radius:18px}}
+@supports not (backdrop-filter:blur(1px)){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{background:rgba(16,12,30,.72)}}
+/* the design card and waitlist box already carry their own glass: flatten them inside the panel */
+.stop .col .design-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);box-shadow:none}
+/* the shop hero */
+.hero-c{background:rgba(16,12,30,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
+  border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:34px 30px!important;box-shadow:0 24px 60px rgba(0,0,0,.28);
+  width:fit-content;max-width:min(92vw,780px);margin:0 auto;box-sizing:border-box}
+@media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
+@supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
+
+/* ===== homepage and shop: one size up (Faheem, 5 Sep: "still seems small") =====
+   The two selling pages get a larger scale than the guides: copy 18-19px,
+   labels 13px, buttons 14px, card names and prices up a step. */
+.stop .lede,#s-hero .lede{font-size:clamp(18px,1.5vw,21px)!important;line-height:1.6}
+.design-card p{font-size:16.5px;line-height:1.55}
+.design-card b{font-size:28px}
+.design-card small,.j-eyebrow,.place-tag,.meta,.meta span,.meta b,.j-place span,.j-stats span,.card-place,.qa-l,.vband-cap,.vband-cap a,.scroll-cue{font-size:13px!important}
+.j-btn{font-size:14px!important;font-weight:600}
+.design-card .row .sb-price{font-size:15px!important;font-weight:700}
+.design-card .go{font-size:13px!important;font-weight:700}
+.qa-b{font-size:13.5px;min-width:42px;height:36px}
+.fit-b{font-size:13px}
+.collection .card-name,.card-name{font-size:21px}
+.card-price,.card-price .sb-price{font-size:17px!important}
+.qual-item b{font-size:23px}
+.qual-item span{font-size:15.5px}
+.j-place b{font-size:22px}
+.tag-invite{font-size:15px}
+.j-stats b{font-size:28px}
+.wl-form input,.wl-form button{font-size:16px}
+/* shop */
+.hero-c p{font-size:19px!important;line-height:1.6}
+.hero-c .eyebrow{font-size:13px!important}
+.prod .story{font-size:18px!important;line-height:1.7}
+.prod-specs li{font-size:16px!important}
+.place-meta,.place-meta a,.place-meta span,.pm-sky,.pm-gps,.pcard-rv-n,.prod-limited,.buy-limited,.opt-lab,.filt,.filt-lab,.fitchip,.trust-row div,.marquee span,.paymarks-t{font-size:13px!important}
+.prod-occasion{font-size:14.5px!important}
+.size{font-size:15px!important}
+.fit{font-size:14px!important}
+.fitswap,.size-guide-link{font-size:14px!important}
+.sm-sub,.storemap p,.sm-note{font-size:17px!important}
+.prod .btn,.prod button.btn{font-size:15px}
+.shop .card-name{font-size:21px}
+@media(max-width:560px){
+  .stop .lede,#s-hero .lede{font-size:17.5px!important}
+  .hero-c p{font-size:17.5px!important}
+  .prod .story{font-size:17px!important}
+  .design-card p{font-size:16px}
+}
+
+/* ===== bugs the same audit found ===== */
+/* product page on phones: the thumbnail strip (6 x 74px + gaps = 494px) set the
+   min-content width of the single grid column, so title, price and copy ran
+   past the screen edge and were clipped; the strip now wraps and the column
+   may shrink */
+.pdp>*{min-width:0}
+.gal-thumbs{flex-wrap:wrap}
+/* the closed mobile menu is translated off-screen but its 50px shadow still fell
+   on the top bar and dimmed it; hidden means hidden */
+.m-panel:not(.open){visibility:hidden}
+.m-panel{transition:transform .38s cubic-bezier(.4,0,.2,1),visibility 0s linear .38s}
+.m-panel.open{visibility:visible;transition:transform .38s cubic-bezier(.4,0,.2,1)}
+/* the category pages' fit links (build.js .catnav) shipped with no CSS at all, so
+   "Regular fit" and "Slim cut" ran together as one line of text */
+.catnav{display:grid;gap:10px;margin:18px 0 26px}
+@media(min-width:640px){.catnav{grid-template-columns:repeat(3,1fr)}}
+.catnav a{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border:1px solid rgba(43,37,32,.16);border-radius:12px;background:#fff;text-decoration:none;color:#2A2016}
+.catnav a b{font-family:'Playfair Display',serif;font-size:19px;font-weight:700}
+.catnav a span{font-size:14px;color:#4A4136}
+/* size tables wider than a phone */
+@media(max-width:480px){
+  table.sg{min-width:0;font-size:12.5px}
+  .size-table,table.sz{min-width:0}
+  .size-table td,.size-table th{padding:9px 6px;font-size:13px}
+  table.sz td,table.sz th,.sz th{padding:9px 5px;font-size:13px}
+  table.sg td,table.sg th{padding:8px 4px}
+}
+
+/* ===== shop page: every word one clear step up (Faheem, 5 Sep: "still very
+   small. Enhance it for the entire page. Every single word.") The page body
+   carries class shop-page; the rules are ordered small → large so the whole
+   scale moves together. !important because the earlier floors above use it. */
+body.shop-page{font-size:18px}
+/* mono labels: 15px, a little less tracking so they still fit */
+body.shop-page .eyebrow,body.shop-page .hero-c .eyebrow,body.shop-page .scroll-cue,body.shop-page .marquee span,body.shop-page .filt-lab,body.shop-page .filt,body.shop-page #filtCount,body.shop-page .filt-meta,body.shop-page .filt-clear,body.shop-page .place-meta,body.shop-page .place-meta a,body.shop-page .place-meta span,body.shop-page .pm-gps,body.shop-page .pm-sky,body.shop-page .prod-limited,body.shop-page .fitchip,body.shop-page .pcard-rv-n,body.shop-page .prod-acc summary,body.shop-page .opt-lab,body.shop-page .buy-limited,body.shop-page .buy-trust,body.shop-page .buy-trust span,body.shop-page body.shop-page .read-place,body.shop-page .pdp-link,body.shop-page .prod-spec-strip li,body.shop-page .prod-spec-strip strong,body.shop-page .sw-row span,body.shop-page .sw-row,body.shop-page .qbuy-lab,body.shop-page .size-guide-link,body.shop-page .trust-row div,body.shop-page .paymarks-t,body.shop-page .foot-links a,body.shop-page .foot-soc a,body.shop-page .rv-meta,body.shop-page .rv-chip,body.shop-page .rv-sort span,body.shop-page .rv-sort select,body.shop-page .rv-more,body.shop-page .rv-src,body.shop-page .rv-src a,body.shop-page .size-table th,body.shop-page .wl-msg,body.shop-page .skip-link,body.shop-page .sm-note{font-size:15px!important;letter-spacing:.06em!important;line-height:1.5}
+body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span,body.shop-page .note-x{font-size:14px!important;letter-spacing:.04em!important}
+body.shop-page .foot-copy{font-size:14.5px!important}
+body.shop-page .prod-occasion{font-size:17px!important}
+body.shop-page .fabric-line,body.shop-page .fbar{font-size:15px!important;letter-spacing:.04em!important}
+body.shop-page .fbar-v{letter-spacing:0!important}
+body.shop-page .prod-spec-strip li{padding:7px 13px}
+body.shop-page .prod-spec-strip{gap:8px 9px;max-width:none}
+body.shop-page .buy-trust{gap:10px 18px}
+/* prices and small headings */
+body.shop-page .sb-price,body.shop-page .prod .price .sb-price,body.shop-page .qbuy .sb-price{font-size:20px!important;letter-spacing:.04em!important}
+body.shop-page .rv-score{font-size:22px!important}
+body.shop-page .rv-count{font-size:17px!important}
+body.shop-page .fe-card h3{font-size:24px!important}
+body.shop-page .ret-item strong{font-size:17px!important}
+/* reading copy */
+body.shop-page .hero-c p{font-size:21px!important;line-height:1.6}
+body.shop-page .prod .story{font-size:20px!important;line-height:1.7;max-width:520px}
+body.shop-page .place-lead{font-size:18px!important;line-height:1.7;max-width:520px}
+body.shop-page .prod-specs li{font-size:17.5px!important;line-height:1.6}
+body.shop-page .prod-acc{max-width:520px}
+body.shop-page .fitswap{font-size:16.5px!important}
+body.shop-page .tl-sub,body.shop-page .sm-sub{font-size:19.5px!important;line-height:1.65}
+body.shop-page .tl-note{font-size:15.5px!important}
+body.shop-page .fe-card p,body.shop-page .ret-item span,body.shop-page .ret-item div{font-size:17px!important;line-height:1.6}
+body.shop-page .size-table td{font-size:17px!important}
+body.shop-page .size-table th,body.shop-page .size-table td{padding:14px 14px}
+body.shop-page .rv-text{font-size:18px!important;line-height:1.65}
+body.shop-page .soon p,body.shop-page .soon-inner p{font-size:19px!important}
+/* controls */
+body.shop-page .nav-links a{font-size:17px!important}
+body.shop-page .size span,body.shop-page .size{font-size:17px!important}
+body.shop-page .size{min-width:52px;height:52px}
+body.shop-page .prod .btn,body.shop-page .prod button.btn,body.shop-page .qbuy .btn.add,body.shop-page .wl-form button,body.shop-page .wl-form input{font-size:17px!important}
+body.shop-page .btn.add{height:56px}
+body.shop-page .filt{padding:9px 16px}
+body.shop-page .size-tab{font-size:15px!important;height:46px}
+body.shop-page .rv-chip{padding:8px 14px}
+body.shop-page .fitchip{padding:6px 14px}
+body.shop-page .foot-links{gap:10px 22px}
+@media(max-width:560px){
+  body.shop-page{font-size:17px}
+  body.shop-page .hero-c p{font-size:19px!important}
+  body.shop-page .prod .story{font-size:18.5px!important}
+  body.shop-page .tl-sub,body.shop-page .sm-sub{font-size:18px!important}
+  body.shop-page .prod-specs li{font-size:17px!important}
+  body.shop-page .eyebrow,body.shop-page .prod-spec-strip li,body.shop-page .prod-spec-strip strong,body.shop-page .place-meta,body.shop-page .place-meta a,body.shop-page .place-meta span,body.shop-page .pm-gps,body.shop-page .pm-sky,body.shop-page .buy-trust span,body.shop-page .trust-row div,body.shop-page .rv-meta,body.shop-page .marquee span,body.shop-page .filt,body.shop-page .filt-lab,body.shop-page .qbuy-lab,body.shop-page .size-guide-link{font-size:14px!important;letter-spacing:.05em!important}
+  body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span,body.shop-page .note-x{font-size:13.5px!important}
+  body.shop-page .size-table th,body.shop-page .size-table td{padding:11px 8px}
+  body.shop-page .size-table td{font-size:15.5px!important}
+}
+
+/* ===== buying pages: every word one clear step up (Faheem, 10 Sep: "the text
+   on the site STILL looks small"). Product pages, T-Shirts, Polos, Gifts, the
+   fabric guide and the size guide carry body.buy-page (build-products.js and
+   build.js shell()). Same scale as the shop page: 18px copy, 15px mono labels,
+   16-17px controls. !important because the floors above use it. */
+body.buy-page{font-size:18px}
+body.buy-page .crumb,body.buy-page .crumb a,body.buy-page .crumb span,body.buy-page .crumbs,body.buy-page .crumbs a,body.buy-page .eyebrow,body.buy-page .limited,body.buy-page .fabric-line,body.buy-page .spec-strip li,body.buy-page .spec-strip strong,body.buy-page .cw-txt,body.buy-page .cw-txt strong,body.buy-page .occasion,body.buy-page .pdp-sizes-label,body.buy-page .size-guide-link,body.buy-page body.buy-page .buy-trust,body.buy-page .buy-trust span,body.buy-page .pdp-ans-hint,body.buy-page .snum,body.buy-page .pmeta,body.buy-page .pmeta a,body.buy-page .pmeta span,body.buy-page .sky-card small,body.buy-page .sz-cap,body.buy-page table.sz th,body.buy-page .sz-cm,body.buy-page .rv-meta,body.buy-page .rv-src,body.buy-page .rv-src a,body.buy-page .rv-chip,body.buy-page .rv-more,body.buy-page .rv-sort span,body.buy-page .rv-sort select,body.buy-page .foot-links a,body.buy-page .foot-soc a,body.buy-page .gal-model,body.buy-page .gal-tag,body.buy-page .gal-fit,body.buy-page .gal-hint,body.buy-page .rel-place,body.buy-page .bb-sub,body.buy-page .pcard-place,body.buy-page .pcard-col,body.buy-page .pcard-cta,body.buy-page .pcard-spec span,body.buy-page .pcard-rv-n,body.buy-page .folds-eyebrow,body.buy-page .news-eyebrow,body.buy-page .teecta-eyebrow,body.buy-page .shopcta-eyebrow,body.buy-page .teecta-meta span,body.buy-page .fbar,body.buy-page .stock-lab,body.buy-page .stock-note,body.buy-page .pdp-echo,body.buy-page .wl-msg,body.buy-page table.sg thead th,body.buy-page .gsm-key,body.buy-page .guide-sec h3,body.buy-page .shipsub,body.buy-page .card-tag,body.buy-page .sb-curhint,body.buy-page .jkick,body.buy-page .jmeta,body.buy-page .jbyline{font-size:15px!important;letter-spacing:.06em!important;line-height:1.5}
+body.buy-page .eyebrow{letter-spacing:.12em!important}
+body.buy-page .cw-txt em{font-size:14px!important;letter-spacing:0!important}
+/* the stragglers the audit found: nested spans that carry their own 12px floor above */
+body.buy-page .pdp-ans-hint span,body.buy-page .rel-price .sb-price,body.buy-page .bb-sub .sb-price,body.buy-page table.sg th,body.buy-page table.sg tbody th,body.buy-page .rv-showall,body.buy-page .vat .sb-ship-uae,body.buy-page .vat .sb-ship-gcc,body.buy-page .vat .sb-ship-intl{font-size:15px!important}
+body.buy-page .bb-sub .sb-price{font-size:15px!important}
+body.buy-page .note,body.buy-page .note span,body.buy-page .sb-rot span,body.buy-page .note-x{font-size:14px!important;letter-spacing:.04em!important}
+body.buy-page .sz-out{font-size:11.5px!important}
+body.buy-page .foot-copy,body.buy-page .ftr{font-size:14.5px!important}
+body.buy-page .ftr .links a{font-size:15px!important}
+body.buy-page .spec-strip li{padding:8px 14px}
+body.buy-page .buy-trust{gap:10px 20px}
+body.buy-page .fbar-v{letter-spacing:0!important}
+/* prices and small headings */
+body.buy-page .price,body.buy-page .buy .price,body.buy-page .buy .sb-price{font-size:26px!important}
+body.buy-page .rv-score{font-size:22px!important}
+body.buy-page .rv-count{font-size:17px!important}
+body.buy-page .pcard-p,body.buy-page .pcard-price,body.buy-page .pcard .sb-price{font-size:18px!important}
+body.buy-page .pcard-t{font-size:21px}
+body.buy-page .item b{font-size:22px}
+body.buy-page .rel-name{font-size:22px}
+body.buy-page .bb-name{font-size:17px}
+body.buy-page .sky-card b{font-size:22px}
+body.buy-page .catnav a b{font-size:21px}
+body.buy-page .card-body strong{font-size:19px}
+body.buy-page .fold summary h2,body.buy-page .guide-sec h2{font-size:22px}
+/* reading copy */
+body.buy-page .lede,body.buy-page .buy .lede{font-size:19.5px!important;line-height:1.7;max-width:48ch}
+body.buy-page .content .lede{font-size:18px!important;line-height:1.6}
+body.buy-page .sec p,body.buy-page .place-band p,body.buy-page .sky-card p,body.buy-page .content p,body.buy-page .content li,body.buy-page .guide-sec p,body.buy-page .fold p,body.buy-page .news p,body.buy-page .teecta p,body.buy-page .shopcta p,body.buy-page .book p{font-size:18px!important;line-height:1.7}
+body.buy-page .item span{font-size:16.5px!important;line-height:1.65}
+body.buy-page .care li{font-size:17.5px!important}
+body.buy-page .faq summary{font-size:18px!important}
+body.buy-page .faq p,body.buy-page .faq details p{font-size:17px!important;line-height:1.65}
+body.buy-page .note-box{font-size:16.5px!important;line-height:1.65}
+body.buy-page .sz-note,body.buy-page .sz-method li,body.buy-page .sz-method summary,body.buy-page .sgintent,body.buy-page .sgnote,body.buy-page .sgmethod,body.buy-page .sgmethod li{font-size:16.5px!important;line-height:1.65}
+body.buy-page .pdp-ans summary{font-size:17px!important;padding:15px 2px}
+body.buy-page .pdp-ans-foot,body.buy-page .fit-warn,body.buy-page .shipcard,body.buy-page .shipcard span{font-size:16px!important;line-height:1.65}
+body.buy-page .shipcard b{font-size:16.5px!important}
+body.buy-page .vat,body.buy-page .vat span{font-size:14.5px!important}
+body.buy-page .rv-text{font-size:18px!important;line-height:1.65}
+body.buy-page .rv-title{font-size:17px!important}
+body.buy-page .rv-reply{font-size:15.5px!important}
+body.buy-page table.sz td,body.buy-page table.sg td,body.buy-page table.sg.gsm td{font-size:17px!important}
+body.buy-page table.sz th,body.buy-page table.sz td{padding:13px 12px}
+body.buy-page .rel-price{font-size:16px!important}
+body.buy-page .wl-band p.wl-lead{font-size:17px!important}
+body.buy-page .pdp-msg{font-size:15.5px!important}
+body.buy-page .pdp-loading{font-size:15px!important}
+body.buy-page .card-body span,body.buy-page .catnav a span,body.buy-page .jblurb,body.buy-page .facts li,body.buy-page .pk-note,body.buy-page .ig-hint{font-size:15.5px!important;line-height:1.6}
+body.buy-page .card-body em{font-size:14px!important}
+/* controls */
+body.buy-page .nav-links a,body.buy-page .hdr-nav a{font-size:17px!important}
+body.buy-page .btn,body.buy-page a.btn,body.buy-page button.btn{font-size:16px!important}
+body.buy-page .pdp-add{font-size:17px!important;min-height:56px}
+body.buy-page .pdp-size{font-size:17px!important;min-width:56px;height:52px}
+body.buy-page #buybar .btn{font-size:15px!important}
+body.buy-page .gal-thumbs button{width:80px}
+body.buy-page .qa-open{font-size:15px!important}
+body.buy-page .pack-btn{font-size:15px!important}
+@media(max-width:560px){
+  body.buy-page{font-size:17px}
+  body.buy-page .lede,body.buy-page .buy .lede{font-size:18px!important}
+  body.buy-page .sec p,body.buy-page .place-band p,body.buy-page .sky-card p,body.buy-page .content p,body.buy-page .content li,body.buy-page .guide-sec p,body.buy-page .fold p{font-size:17px!important}
+  body.buy-page .crumb,body.buy-page .crumb a,body.buy-page .crumb span,body.buy-page .crumbs,body.buy-page .crumbs a,body.buy-page .eyebrow,body.buy-page .limited,body.buy-page .fabric-line,body.buy-page .spec-strip li,body.buy-page .spec-strip strong,body.buy-page .cw-txt,body.buy-page .cw-txt strong,body.buy-page .occasion,body.buy-page .pdp-sizes-label,body.buy-page .size-guide-link,body.buy-page body.buy-page .buy-trust span,body.buy-page .pdp-ans-hint,body.buy-page .snum,body.buy-page .pmeta a,body.buy-page .pmeta span,body.buy-page .rv-meta,body.buy-page .gal-model,body.buy-page .gal-tag,body.buy-page .gal-fit,body.buy-page .gal-hint,body.buy-page .rel-place,body.buy-page .pcard-place,body.buy-page .pcard-col,body.buy-page .pcard-cta,body.buy-page .pcard-spec span,body.buy-page .fbar,body.buy-page table.sz th,body.buy-page table.sg thead th{font-size:14px!important;letter-spacing:.05em!important}
+  body.buy-page .price,body.buy-page .buy .price,body.buy-page .buy .sb-price{font-size:24px!important}
+  body.buy-page .pdp-ans summary{font-size:16.5px!important}
+  body.buy-page .pdp-ans-foot,body.buy-page .fit-warn,body.buy-page .shipcard,body.buy-page .shipcard span{font-size:15.5px!important}
+  body.buy-page .item span{font-size:16px!important}
+  body.buy-page table.sz td,body.buy-page table.sg td,body.buy-page table.sg.gsm td{font-size:15.5px!important}
+  body.buy-page table.sz th,body.buy-page table.sz td{padding:11px 8px}
+  body.buy-page .gal-fit{max-width:calc(100% - 20px);white-space:normal}
+}
+</style>
 </head>
 <body class="no-js has-topbar">
 <a class="skip-link" href="#s-collection">Skip to the collection</a>
@@ -482,38 +920,46 @@ footer{position:relative;z-index:2}
 
 <div id="rail" aria-hidden="true"></div>
 
-<!-- 0 · THE FILM · the brand's ad opens the page, framed as on the live site -->
-<section class="stop film" id="s-film" data-tod="dawn" data-bg="liwa">
-  <div class="j-wrap">
-    <div class="vband-full rv"><video class="vband-v" id="brandVideo"
-             poster="/video/brand-poster.jpg?v=62966f54"
-             muted loop playsinline preload="none"
-             disablepictureinpicture
-             data-src="/video/brand.mp4?v=46a6162e"
-             aria-hidden="true" tabindex="-1"></video></div>
-    <div class="vband-cap rv"><span>Sahra &amp; Beyond — the brand film</span><a href="https://www.instagram.com/p/DcRvwOCI_FR/" target="_blank" rel="noopener noreferrer">Watch the film on Instagram &#8599;</a></div>
-  </div>
-</section>
+<script>
+/* hero rating: read from the review band the sync writes into this page (12 Sep) */
+(function(){function go(){var s=document.querySelector('[data-hero-rv]');if(!s)return;
+  var band=document.querySelector('.rv-band .rv-score, .reviews .rv-score');
+  var cnt=document.querySelector('.rv-band .rv-count, .reviews .rv-count');
+  if(!band||!cnt)return;
+  var score=(band.textContent||'').split('/')[0].trim();
+  var n=(cnt.textContent||'').match(/\d+/);
+  if(!score||!n)return;
+  s.querySelector('.hero-rv-n').textContent=score+' from '+n[0]+' reviews';
+  s.hidden=false;}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
+</script>
 
 <!-- 1 · HERO · Liwa at golden hour -->
 <section class="stop tall right" id="s-hero" data-tod="dawn" data-bg="liwa">
   <div class="j-wrap"><div class="col">
-    <span class="j-eyebrow rv">Inspired by the landscapes of the UAE</span>
+    <span class="j-eyebrow rv">Original UAE t-shirts &middot; limited first run</span>
     <h1><span class="rv">Wear the</span> <em class="rv">wild side</em> <span class="rv">of the UAE.</span></h1>
-    <p class="lede rv">Original tees drawn from the real deserts, dunes and dark-sky nights we've explored across the Emirates. Every design carries a place.</p>
+    <p class="lede rv"><b>230&nbsp;gsm heavyweight tees</b><span class="lede-l">, printed with the deserts, dunes and dark-sky nights of the Emirates.</span><span class="lede-s">, printed with the real places of the Emirates.</span> <b>AED&nbsp;199</b>.</p>
+    <div class="meta rv"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></div>
     <div class="actions rv"><a class="j-btn solid" href="#collection" data-ring-jump>See the collection &#8964;</a><a class="j-btn" href="/places/">The places behind them</a></div>
-    <div class="meta rv"><span class="sb-ship-uae"><b>Free</b> next-day delivery across the UAE</span><span class="sb-ship-gcc">GCC delivery 3&ndash;5 working days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide delivery 7&ndash;14 working days</span><span>Limited first run</span></div>
-  </div></div>
-  <div class="scroll-cue">Scroll — the journey begins ⌄</div>
+  </div>
+  <div class="hring" id="heroRing" aria-label="The collection">
+  <div class="hring-stage">
+    <div class="hring-cap" aria-hidden="true"></div>
+    <div class="hring-ring"><a class="hring-card" href="/products/al-quaa-galaxy-regular/" data-handle="al-quaa-galaxy-regular" data-place="Al Quaa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back"><img loading="lazy" src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Inspired by Al Quaa</span><span class="hring-name">Al Quaa Galaxy — Regular</span><span class="hring-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="al-quaa-galaxy-regular"></span></span></a><a class="hring-card" href="/products/al-quaa-galaxy-oversized/" data-handle="al-quaa-galaxy-oversized" data-place="Al Quaa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/alquaa-oversized-back-fit.jpg" srcset="/shirts/card/alquaa-oversized-back-fit.jpg 800w, /shirts/alquaa-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back"><img loading="lazy" src="/shirts/alquaa-oversized-front-fit.jpg" srcset="/shirts/card/alquaa-oversized-front-fit.jpg 800w, /shirts/alquaa-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/alquaa-model-back.jpg" srcset="/shirts/card/alquaa-model-back.jpg 800w, /shirts/alquaa-model-back.jpg 1076w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes"></span><span class="hring-body"><span class="hring-place">Inspired by Al Quaa</span><span class="hring-name">Al Quaa Galaxy — Oversized</span><span class="hring-price"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="al-quaa-galaxy-oversized"></span></span></a><a class="hring-card" href="/products/empty-quarter-regular/" data-handle="empty-quarter-regular" data-place="Liwa"><span class="hring-img" data-cycle><img loading="eager" class="on" src="/shirts/emptyquarter-regular-front-fit.jpg" srcset="/shirts/card/emptyquarter-regular-front-fit.jpg 800w, /shirts/emptyquarter-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Regular, regular fit — embroidered design on the front"><img loading="lazy" src="/shirts/emptyquarter-regular-back-fit.jpg" srcset="/shirts/card/emptyquarter-regular-back-fit.jpg 800w, /shirts/emptyquarter-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Inspired by Liwa</span><span class="hring-name">Empty Quarter — Regular</span><span class="hring-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="empty-quarter-regular"></span></span></a><a class="hring-card" href="/products/empty-quarter-oversized/" data-handle="empty-quarter-oversized" data-place="Liwa"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/emptyquarter-oversized-front-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-front-fit.jpg 800w, /shirts/emptyquarter-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Oversized, oversized fit — embroidered design on the front"><img loading="lazy" src="/shirts/emptyquarter-oversized-back-fit.jpg" srcset="/shirts/card/emptyquarter-oversized-back-fit.jpg 800w, /shirts/emptyquarter-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/emptyquarter-model-front.jpg" srcset="/shirts/card/emptyquarter-model-front.jpg 800w, /shirts/emptyquarter-model-front.jpg 1075w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest"></span><span class="hring-body"><span class="hring-place">Inspired by Liwa</span><span class="hring-name">Empty Quarter — Oversized</span><span class="hring-price"><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="empty-quarter-oversized"></span></span></a><a class="hring-card" href="/products/hajar-mountains-regular/" data-handle="hajar-mountains-regular" data-place="Wadi Naqab"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/hajar-regular-back-fit.jpg" srcset="/shirts/card/hajar-regular-back-fit.jpg 800w, /shirts/hajar-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Regular, regular fit — design across the back"><img loading="lazy" src="/shirts/hajar-regular-front-fit.jpg" srcset="/shirts/card/hajar-regular-front-fit.jpg 800w, /shirts/hajar-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut"></span><span class="hring-body"><span class="hring-place">Inspired by Wadi Naqab</span><span class="hring-name">Hajar Mountains — Regular</span><span class="hring-price"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="hajar-mountains-regular"></span></span></a><a class="hring-card" href="/products/hajar-mountains-oversized/" data-handle="hajar-mountains-oversized" data-place="Wadi Naqab"><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/hajar-oversized-back-fit.jpg" srcset="/shirts/card/hajar-oversized-back-fit.jpg 800w, /shirts/hajar-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit — design across the back"><img loading="lazy" src="/shirts/hajar-oversized-front-fit.jpg" srcset="/shirts/card/hajar-oversized-front-fit.jpg 800w, /shirts/hajar-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body"><img loading="lazy" src="/shirts/hajar-model-back.jpg" srcset="/shirts/card/hajar-model-back.jpg 800w, /shirts/hajar-model-back.jpg 1078w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back"></span><span class="hring-body"><span class="hring-place">Inspired by Wadi Naqab</span><span class="hring-name">Hajar Mountains — Oversized</span><span class="hring-price"><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="hajar-mountains-oversized"></span></span></a><a class="hring-card" href="/products/sand-polo/" data-handle="sand-polo" data-place=""><span class="hring-img" data-cycle><img loading="lazy" class="on" src="/shirts/polo-front.jpg" srcset="/shirts/card/polo-front.jpg 800w, /shirts/polo-front.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Sahra Polo in sand — 240gsm piqué cotton with an embroidered chest logo"><img loading="lazy" src="/shirts/polo-back.jpg" srcset="/shirts/card/polo-back.jpg 800w, /shirts/polo-back.jpg 1536w" sizes="(max-width:760px) 46vw, 240px" decoding="async" alt="The Sahra Polo, back — plain"></span><span class="hring-body"><span class="hring-place"></span><span class="hring-name">The Sahra Polo</span><span class="hring-price"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></span><span class="hring-go">View the tee &rarr;</span><span class="qa" data-qa="sand-polo"></span></span></a></div>
+    <button class="hring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="hring-arrow next" type="button" aria-label="Next design">&#8250;</button>
+    <div class="hring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div>
+  </div>
+  <div class="hring-meter" aria-hidden="true"><span class="hring-pips"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="hring-seen"><b>1</b> of 7 designs</span></div>
+  <div class="hring-links"><a class="hring-all" href="#collection" data-ring-jump>See all 7 designs &darr;</a><a class="hring-all hring-places" href="/places/">The places behind them &rarr;</a></div>
+</div>
+  </div>
+  <div class="scroll-cue">Scroll — the journey begins &#8964;</div>
 </section>
 
 <div id="collection" class="anchor" aria-hidden="true"></div>
 <!-- 5 · COLLECTION · paper light; the designs on a 3D ring that opens into the grid -->
 <section class="stop collection" id="s-collection" data-tod="paper" data-bg="paper">
-<div class="ring-bg" aria-hidden="true"><img class="ring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async"><img class="ring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async"><img class="ring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async"><div class="ring-glow"></div><div class="ring-dim"></div></div>
-<div class="ring-cap" aria-hidden="true"></div>
-<button class="ring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="ring-arrow next" type="button" aria-label="Next design">&#8250;</button>
-<div class="ring-cue" aria-hidden="true"><span class="ring-cue-h">&#8592;</span> drag to spin &middot; scroll to open <span class="ring-cue-h">&#8594;</span></div>
   <div class="j-wrap">
     <span class="j-eyebrow rv">The collection</span>
     <h2 class="rv">Designs <em>with a place</em></h2>
@@ -727,6 +1173,19 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   </div>
 </section>
 
+<!-- 0 · THE FILM · the brand's ad opens the page, framed as on the live site -->
+<section class="stop film" id="s-film" data-tod="dawn" data-bg="liwa">
+  <div class="j-wrap">
+    <div class="vband-full rv"><video class="vband-v" id="brandVideo"
+             poster="/video/brand-poster.jpg?v=62966f54"
+             muted loop playsinline preload="none"
+             disablepictureinpicture
+             data-src="/video/brand.mp4?v=46a6162e"
+             aria-hidden="true" tabindex="-1"></video></div>
+    <div class="vband-cap rv"><span>The film &mdash; seven seconds in the Empty Quarter</span><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Watch on Instagram &#8599;</a></div>
+  </div>
+</section>
+
 <!-- 2 · AL QUAA · night -->
 <section class="stop" id="s-alquaa" data-tod="night" data-bg="night">
   <div class="j-wrap"><div class="col">
@@ -789,21 +1248,6 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   </div></div>
 </section>
 
-<!-- 9 · MISSION · ghaf at first light -->
-<section class="stop mission right" id="s-mission" data-tod="dawn" data-bg="wadi">
-  <div class="j-wrap"><div class="col">
-    <span class="j-eyebrow rv">Our commitment</span>
-    <h2 class="rv">A share of every sale <em>plants ghaf trees</em></h2>
-    <p class="lede rv">The ghaf is the UAE's national tree — indigenous, drought-hardy, and vital to the desert every one of our designs is drawn from. So a share of every sale goes to planting more of them, through Give a Ghaf — Goumbook's UAE native-tree programme. Wear a place; help it grow back.</p>
-    <div class="facts">
-      <div class="rv"><b>A share</b><span>of every sale, to planting</span></div>
-      <div class="rv"><b>Native ghaf</b><span>the UAE's national tree</span></div>
-      <div class="rv"><b>~35kg CO₂</b><span>a tree can absorb a year</span></div>
-    </div>
-    <div class="actions rv" style="margin-top:30px"><a class="j-btn" href="/commitment.html">Our commitment →</a></div>
-  </div></div>
-</section>
-
 <!-- 10 · NEWSLETTER · up into the stars -->
 <section class="stop j-news" id="s-news" data-tod="night" data-bg="night">
   <div class="j-wrap"><div class="col">
@@ -822,7 +1266,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 <footer>
   <div class="foot-brand">Sahra &amp; Beyond</div>
   <div class="foot-tag">Wear the wild side of the UAE</div>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#s-places">Places</a><a href="/about/">About</a><a href="/commitment.html">Our commitment</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#s-places">Places</a><a href="/about/">About</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc" style="font-size:13px;font-family:'Space Mono',monospace;letter-spacing:1px"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener" aria-label="Instagram">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 <div style="margin:12px 0 4px"><span data-sb-curslot></span></div></footer>
@@ -1093,7 +1537,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 
      Three cinematic plates were generated from Faheem's reference photographs
      (Al Quaa's Milky Way over the dunes, Liwa at sunset, Wadi Naqab with its
-     wadi bed and ghaf trees) at 2560x1440, and a depth map was estimated for
+     wadi bed and its trees) at 2560x1440, and a depth map was estimated for
      each (Depth Anything V2). The shader draws every stop from one plate,
      displacing the picture by its depth as the camera pans and pushes in, so
      the foreground sand, boulders and trees slide against the far ridges and
@@ -1257,16 +1701,15 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
        grade: [tint amount, dim, haze, exposure]
        light: [x, y (screen dir of the sun), relief strength, dust (frac) + night flag (>=1)] */
   var STOPS = [
-    { bg: 'liwa',  z: [1.42, 1.28], pan: [[-0.024, 0.014], [-0.010, 0.010]], par: 0.8, tint: '#ffd6a6', grade: [0.10, 0.96, 0.10, 1.00], haze: '#ffb46a', light: [-0.75, 0.55, 0.35, 0.55] },  /* 0 film */
     { bg: 'liwa',  z: [1.28, 1.12], pan: [[-0.010, 0.010], [ 0.014, 0.000]], par: 0.8, tint: '#ffd6a6', grade: [0.08, 1.00, 0.12, 1.02], haze: '#ffb46a', light: [-0.75, 0.55, 0.35, 0.55] },  /* 1 hero (continues) */
     { bg: 'paper', z: [1, 1], pan: [[0, 0], [0, 0]], par: 0, tint: '#ffffff', grade: [0, 1, 0, 1], haze: '#ffffff', light: [0, 1, 0, 0] },                                                    /* 5 collection */
     { bg: 'paper', z: [1, 1], pan: [[0, 0], [0, 0]], par: 0, tint: '#ffffff', grade: [0, 1, 0, 1], haze: '#ffffff', light: [0, 1, 0, 0] },                                                    /* 6 reviews */
+    { bg: 'liwa',  z: [1.42, 1.28], pan: [[-0.024, 0.014], [-0.010, 0.010]], par: 0.8, tint: '#ffd6a6', grade: [0.10, 0.96, 0.10, 1.00], haze: '#ffb46a', light: [-0.75, 0.55, 0.35, 0.55] },  /* 0 film */
     { bg: 'night', z: [1.38, 1.10], pan: [[ 0.012, 0.010], [-0.006, -0.034]], par: 0.7, tint: '#ffffff', grade: [0.00, 1.00, 0.06, 1.00], haze: '#243a6a', light: [ 0.30, 0.90, 0.16, 1.30] },  /* 2 al quaa: rise and tilt to the galaxy */
     { bg: 'liwa',  z: [1.44, 1.14], pan: [[ 0.034, 0.006], [ 0.012, 0.014]], par: 1.0, tint: '#ffb877', grade: [0.16, 1.00, 0.14, 1.04], haze: '#ffa650', light: [-0.75, 0.50, 0.40, 0.70] },  /* 3 liwa */
     { bg: 'wadi',  z: [1.40, 1.12], pan: [[-0.030, 0.020], [-0.008, 0.006]], par: 1.0, tint: '#ffc9a0', grade: [0.08, 1.00, 0.16, 1.00], haze: '#e0a070', light: [ 0.65, 0.60, 0.42, 0.45] },  /* 4 wadi naqab */
     { bg: 'wadi',  z: [1.34, 1.10], pan: [[ 0.028, -0.030], [ 0.010, -0.012]], par: 1.1, tint: '#b88cc0', grade: [0.30, 0.62, 0.34, 0.92], haze: '#6a4a6e', light: [ 0.65, 0.55, 0.30, 0.25] }, /* 7 places: dusk violet, far */
     { bg: 'night', z: [1.36, 1.12], pan: [[-0.030, 0.026], [-0.010, 0.006]], par: 0.9, tint: '#ffffff', grade: [0.00, 0.82, 0.08, 0.96], haze: '#1c2a4a', light: [ 0.30, 0.90, 0.14, 1.20] },  /* 8 story */
-    { bg: 'wadi',  z: [1.48, 1.16], pan: [[-0.040, 0.034], [-0.018, 0.012]], par: 1.0, tint: '#ffe0b8', grade: [0.18, 0.98, 0.10, 1.04], haze: '#ffcf9a', light: [ 0.65, 0.60, 0.40, 0.50] },  /* 9 mission: from the ghaf, pulling back */
     { bg: 'night', z: [1.30, 1.06], pan: [[ 0.006, -0.020], [ 0.000, -0.058]], par: 0.6, tint: '#ffffff', grade: [0.00, 0.72, 0.04, 0.95], haze: '#141a34', light: [ 0.30, 0.90, 0.10, 1.10] }   /* 10 newsletter: up into the sky */
   ];
 
@@ -1477,7 +1920,12 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     }
     measureRing(); placeRing();
     if (window.MutationObserver) { var gridRefresh = null; new MutationObserver(function () { clearTimeout(gridRefresh); gridRefresh = setTimeout(function () { ScrollTrigger.refresh(); }, 60); }).observe(grid, { childList: true }); }
-    var ringTl = gsap.timeline({
+    /* the ring moved to the hero (12 Sep): these cards are a plain grid now.
+       Opening at 1 makes placeRing() settle them into normal flow on the first
+       call, which also leaves `settled` true - so the old drag handler below
+       returns immediately and the grid behaves like a grid. */
+    ring.open = 1; ring.theta = 0; ring.spin = 0; placeRing();
+    var ringTl = false && gsap.timeline({
       scrollTrigger: { trigger: section, start: 'top top', end: '+=150%', pin: true, scrub: true, anticipatePin: 1,
         invalidateOnRefresh: true, onRefresh: function () { measureRing(); placeRing(); },
         onLeave: function () { if (phone) setTimeout(function () { ScrollTrigger.refresh(); }, 0); } }
@@ -1749,7 +2197,97 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 })();
 </script>
-<script src="/assets/sahra-cart.js" defer></script>
-<script src="/assets/sahra-market.js" defer></script>
+<script>
+/* ---- the hero ring (12 Sep) ------------------------------------------------
+   Ported from shopRing() on the shop page, which Faheem prefers: it drifts when
+   left alone, cycles each card's photos through the site's own [data-cycle]
+   slideshow, takes a drag/flick or an arrow at any moment, and shows quick add
+   on the card facing you. The meter fills as each design is brought to the
+   front - a count, not a prize: there is deliberately nothing to win. */
+(function heroRing(){
+  var st=document.getElementById('heroRing'); if(!st||!window.gsap) return;
+  var stage=st.querySelector('.hring-stage'),cards=[].slice.call(st.querySelectorAll('.hring-card')),n=cards.length; if(n<2) return;
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var S={a:0},R=0,stepA=Math.PI*2/n,cap=st.querySelector('.hring-cap'),tw=null,front=-1,inView=true,lastTouch=performance.now();
+  var pips=[].slice.call(st.querySelectorAll('.hring-pips i')),seenN=st.querySelector('.hring-seen b'),seen={},seenCount=0;
+  var cue=st.classList,cued=false;
+  try{cued=!!localStorage.getItem('sb_hring_seen');}catch(e){}
+  if(!cued)st.classList.add('cue');
+  function used(how){ if(!cued){cued=true;st.classList.remove('cue');try{localStorage.setItem('sb_hring_seen','1');}catch(e){}}
+    lastTouch=performance.now(); if(window.track)try{track('hero_ring_'+how,{source:'hero-ring'});}catch(e){} }
+  /* with no panel behind it the stage's clip edge is visible, so on a desktop the
+     radius is measured from the stage itself and the cards always land inside it.
+     On a phone they are meant to run off the screen edge - that is the cue that
+     there is more of the ring than you can see. */
+  function measure(){ var phone=innerWidth<=760;
+    if(phone){ R=Math.max(150,innerWidth*0.46); return; }
+    var sw=stage.getBoundingClientRect().width||440, cw=cards[0].getBoundingClientRect().width||190;
+    R=Math.max(140,Math.min(330,sw/2-cw/2-10)); }
+  function norm(a){return Math.atan2(Math.sin(a),Math.cos(a));}
+  function markSeen(k){ if(seen[k])return; seen[k]=1; seenCount++;
+    if(pips[k])pips[k].classList.add('on'); if(seenN)seenN.textContent=seenCount;
+    if(seenCount===n){st.classList.add('all-seen');} }
+  function place(){
+    var best=-1,bA=9;
+    for(var k=0;k<n;k++){
+      var a=k*stepA+S.a,depth=(Math.cos(a)+1)/2,sc=0.62+0.38*depth;
+      gsap.set(cards[k],{x:Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:Math.sin(a)*20,scale:sc,opacity:0.28+0.72*depth,zIndex:Math.round(depth*100)});
+      var na=Math.abs(norm(a)); if(na<bA){bA=na;best=k;}
+    }
+    if(best!==front){ front=best; markSeen(best);
+      cards.forEach(function(c,j){c.classList.toggle('front',j===best);});
+      var c=cards[best]; if(cap)cap.textContent=c.getAttribute('data-place')||'';
+    }
+  }
+  function spinTo(t,dur,done){ if(tw)tw.kill(); tw=gsap.to(S,{a:t,duration:dur||0.55,ease:'power3.out',onUpdate:place,onComplete:function(){tw=null;lastTouch=performance.now();if(done)done();}}); }
+  function nearest(a){return Math.round(a/stepA)*stepA;}
+  function step(dir,how){used(how);spinTo(nearest(S.a+dir*stepA));}
+  st.querySelectorAll('.hring-arrow').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();step(b.classList.contains('prev')?1:-1,'arrow');});});
+  document.addEventListener('keydown',function(e){ if(!inView)return; var t=e.target; if(t&&/INPUT|TEXTAREA|SELECT/.test(t.tagName))return;
+    if(e.key==='ArrowLeft'){e.preventDefault();step(1,'key');} else if(e.key==='ArrowRight'){e.preventDefault();step(-1,'key');} });
+  var drag=null,swallow=false,vel=0,lastX=0,lastT=0;
+  stage.addEventListener('pointerdown',function(e){ if(e.pointerType==='mouse'&&e.button!==0)return; if(tw){tw.kill();tw=null;}
+    drag={id:e.pointerId,x:e.clientX,y:e.clientY,a:S.a,axis:null}; vel=0;lastX=e.clientX;lastT=performance.now(); lastTouch=performance.now(); });
+  stage.addEventListener('pointermove',function(e){
+    if(!drag||e.pointerId!==drag.id)return;
+    var dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+    if(!drag.axis){ if(Math.abs(dx)<8&&Math.abs(dy)<8)return; drag.axis=Math.abs(dx)>Math.abs(dy)?'x':'y';
+      if(drag.axis==='x'){stage.classList.add('dragging');try{stage.setPointerCapture(e.pointerId);}catch(x){}} }
+    if(drag.axis!=='x')return;
+    swallow=true;
+    var stepPx=Math.max(120,cards[0].getBoundingClientRect().width||180);
+    S.a=drag.a+dx/stepPx*stepA; place();
+    var t=performance.now(),dt=t-lastT; if(dt>0){vel=0.6*vel+0.4*((e.clientX-lastX)/dt);lastX=e.clientX;lastT=t;}
+  });
+  stage.addEventListener('dragstart',function(e){e.preventDefault();});
+  function end(){
+    if(drag&&drag.axis==='x'){ used('drag');
+      var stepPx=Math.max(120,cards[0].getBoundingClientRect().width||180),fling=Math.abs(vel)>0.35?vel*260/stepPx*stepA:0;
+      spinTo(nearest(S.a+fling),fling?0.9:0.45);
+    }
+    stage.classList.remove('dragging'); drag=null; setTimeout(function(){swallow=false;},50);
+  }
+  stage.addEventListener('pointerup',end);stage.addEventListener('pointercancel',end);
+  /* a tap on a side card turns it to the front; a tap on the front card opens it */
+  stage.addEventListener('click',function(e){
+    if(e.target.closest('.qa'))return;
+    var card=e.target.closest('.hring-card'); if(!card)return;
+    var k=cards.indexOf(card);
+    if(k===front){ used('open'); if(window.track)try{track('select_item',{item_id:card.getAttribute('data-handle'),source:'hero-ring'});}catch(x){} return; }
+    e.preventDefault(); if(swallow)return; used('tap');
+    spinTo(S.a-norm(k*stepA+S.a),0.55);
+  },true);
+  /* it keeps turning when nobody is holding it - that is the whole difference
+     between this and a static row of photos */
+  if(!reduced){ gsap.ticker.add(function(t,dt){ if(!inView||drag||tw||document.hidden)return;
+    if(performance.now()-lastTouch<2600)return; S.a-=0.11*Math.min(dt,100)/1000; place(); }); }
+  try{ new IntersectionObserver(function(es){es.forEach(function(x){inView=x.isIntersecting;});},{threshold:0.2}).observe(stage); }catch(e){inView=true;}
+  addEventListener('resize',function(){measure();place();},{passive:true});
+  measure(); place(); markSeen(front);
+})();
+</script>
+
+<script src="/assets/sahra-cart.js?v=ff0a833f" defer></script>
+<script src="/assets/sahra-market.js?v=149814cb" defer></script>
 </body>
 </html>
