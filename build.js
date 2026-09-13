@@ -705,7 +705,7 @@ function footerHtml() {
   <div class="soc">${soc}</div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
-  <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
 }
 
@@ -764,7 +764,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
   gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js"></script>
+<script src="/assets/meta-pixel.js" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <style>${CSS}
@@ -2237,8 +2237,8 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
    carries the tag is left alone. Runs BEFORE stampAssets so the tag gets its
    ?v= hash like every other asset. */
 (function applyTikTokPixel() {
-  const TAG = '<script src="/assets/tiktok-pixel.js" data-ttq></script>';
-  const META = /<script src="\/assets\/meta-pixel\.js(?:\?v=[0-9a-f]*)?"><\/script>/i;
+  const TAG = '<script src="/assets/tiktok-pixel.js" data-ttq defer></script>';
+  const META = /<script src="\/assets\/meta-pixel\.js(?:\?v=[0-9a-f]*)?"[^>]*><\/script>/i;
   const pages = [];
   (function walk(d) {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -2250,7 +2250,12 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
   })(__dirname);
   let touched = 0, missing = [];
   for (const f of pages) {
-    const src = fs.readFileSync(f, 'utf8');
+    let src = fs.readFileSync(f, 'utf8');
+    /* both pixels wait for the parser: neither is called synchronously anywhere */
+    const deferred = src
+      .replace(/<script src="\/assets\/(meta|tiktok)-pixel\.js(\?v=[0-9a-f]*)?"((?:(?!defer)[^>])*)>/gi,
+               (m, w, v, rest) => `<script src="/assets/${w}-pixel.js${v || ''}"${rest} defer>`);
+    if (deferred !== src) { fs.writeFileSync(f, deferred); src = deferred; }
     if (src.indexOf('/assets/tiktok-pixel.js') !== -1) continue;
     if (!/<\/head>/i.test(src)) { missing.push(path.relative(__dirname, f)); continue; }
     const out = META.test(src)

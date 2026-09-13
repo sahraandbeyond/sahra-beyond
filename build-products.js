@@ -122,7 +122,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
   window.track=function(n,p){try{gtag('event',n,p||{});}catch(e){}};
 </script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js"></script>
+<script src="/assets/meta-pixel.js" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -376,7 +376,8 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 .gal-pause{position:absolute;top:14px;right:14px;z-index:4;width:40px;height:40px;border:none;border-radius:50%;background:rgba(20,14,10,.45);color:#fff;font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .gal-pause:hover{background:rgba(20,14,10,.7)}
 .gal-pause:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
-.gal-model{margin:10px 2px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.4px;color:var(--txt-soft)}
+.gal-model{margin:10px 2px 0;font-family:'Space Mono',monospace;font-size:13px;line-height:1.5;letter-spacing:.3px;color:var(--txt-soft)}
+.gal-model-alt{border-left:2px solid currentColor;padding:2px 0 2px 9px;color:var(--txt)}
 .shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}
 .shipsub{font-weight:400;font-size:11px;letter-spacing:.2px;color:var(--txt-soft);margin-left:4px}
 .fit-warn{margin:-4px 0 14px;font-size:14px;line-height:1.55;color:var(--txt,#2A2016);padding:10px 12px;border:1px solid rgba(42,32,22,.14);border-radius:10px;background:rgba(255,255,255,.55)}
@@ -514,6 +515,20 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
   .place-band{padding:74px 0}
   nav{padding:12px 18px}.nav-links{gap:15px;font-size:12px}
   .wrap{padding:0 20px}
+}
+
+/* ---- tablet: two columns, not a stretched phone (13 Sep 2026 audit) --------
+   The single-column rule above starts at 900px, so an 820px tablet stacked the
+   gallery and the buy box edge to edge and nothing sat beside anything - three
+   personas on tablet said the same. The homepage collection grid already uses
+   three columns comfortably at this width. Below 700px it stays one column. */
+@media(min-width:701px) and (max-width:900px){
+  .pdp{grid-template-columns:minmax(0,1fr) 304px;gap:28px;padding:18px 0 70px;align-items:start}
+  .media{position:sticky;top:78px}
+  .pdp .buy{padding:22px 18px}   /* .buy alone loses to the later max-width:900px rule */
+  .cols{grid-template-columns:repeat(2,1fr);gap:20px}
+  .rel-grid{grid-template-columns:repeat(2,1fr);gap:20px}
+  .place-inner{grid-template-columns:1.1fr .9fr;gap:32px}
 }
 
 /* ---- Mobile navigation ----------------------------------------------------
@@ -725,7 +740,8 @@ ${galShots(p).map((s,i)=>`
 ${galShots(p).map((s,i)=>`
         <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img${s[3]==='compare'?' class="fit-contain"':''} src="../..${s[0]}" alt=""></button>`).join('')}
       </div>
-      ${p.modelInfo ? `<p class="gal-model">${esc(p.modelInfo)}</p>` : ''}
+      ${/* Audit 13 Sep: 4 of 11 personas read this caption on a Regular page, saw "Oversized fit", and lost trust. The same fit-aware wording already existed on the answer-list copy below; it was missing on the one people actually see. */''}
+      ${p.modelInfo ? `<p class="gal-model${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' ? ' gal-model-alt' : ''}">${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' ? 'Photographed on the Oversized cut \u2014 this page is the ' + esc(p.fitLabel || 'Regular fit').replace(/ fit$/,'') + ' fit, which is slimmer. ' : ''}${esc(p.modelInfo)}</p>` : ''}
     </div>
 
     <div class="buy">
@@ -999,7 +1015,7 @@ ${related(p, all)}
 </div>
 
 <footer>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#contact">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>

@@ -338,6 +338,62 @@ body.buy-page .pack-btn{font-size:15px!important}
   body.buy-page table.sz th,body.buy-page table.sz td{padding:11px 8px}
   body.buy-page .gal-fit{max-width:calc(100% - 20px);white-space:normal}
 }
+/* ===== 13 Sep 2026 audit: the smallest text was carrying the facts that sell =====
+   Eleven demographic personas walked the live site. Two findings repeated across
+   almost all of them, and both are measured, not opinion:
+
+   1. Sub-14px text carried the purchase-critical facts - the hero's delivery and
+      free-returns line (12px), "Sold out" on the size grid (11.5px), the 230 GSM /
+      fit / DTG chips (11px x21), and Regular-vs-Oversized on the hero ring (10px x18).
+      Mono brand labels keep this file's established 12px floor; anything that is a
+      sentence rather than a label goes to 14px.
+
+   2. The controls that start a purchase were under 40px: the header cart at 24x23,
+      the homepage hamburger at 38x38 (the other templates already carry the 44px
+      rule - the homepage was the one that missed it), the hero ring arrows at
+      38x38, and the shop's quick-add size chips at 30x30 on phone.
+      The chips sit inside a fixed-height 3D card with overflow:hidden, so they get
+      a taller HIT AREA rather than a taller box - growing the box clips the card. */
+
+/* --- mono labels that were under the 12px floor --- */
+.hring-fit,.hring-place,.sb-curhint,.card-tag,.shopcta-eyebrow,.sring-qa-l{font-size:12px!important;letter-spacing:.07em!important}
+.hring-fit,.hring-place{line-height:1.35}
+
+/* --- facts stated as sentences: 14px, not label-sized --- */
+.read-place,.gal-model{font-size:14px!important;letter-spacing:.03em!important}
+/* this layer sets .gal-model to --txt-soft further up, which would mute the
+   wrong-fit correction on the Regular pages back into fine print */
+.gal-model-alt{color:var(--txt,#2A2016)!important}
+/* "Sold out" sits UNDER the size letter inside the chip, so it cannot simply go to
+   14px without stretching the whole size row - and body.buy-page .sz-out (0,2,1)
+   outranks a bare .sz-out anyway. 13px, a chip wide enough to hold it, and a rule
+   through the size letter itself so an unavailable size reads at a glance rather
+   than on inspection. */
+.sz-out{font-size:13px!important;letter-spacing:.03em!important}
+body.buy-page .sz-out{font-size:13px!important;letter-spacing:.03em!important}
+body.buy-page .pdp-size{min-width:68px}
+.pdp-size:disabled,.pdp-size[disabled]{text-decoration:line-through;text-decoration-thickness:1.5px}
+.pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
+.meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
+.eyebrow{font-size:13px!important}
+
+/* --- 44px targets on the path to a purchase --- */
+.cart-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.mnav{min-width:44px;min-height:44px;padding:11px;margin:-11px -11px -11px 0}
+.hring-arrow{width:44px!important;height:44px!important;margin-top:-22px!important}
+/* the shop chips keep their box and gain the hit area, so the card height is unchanged */
+.sring-qa{gap:8px}
+.sring-qa-b{position:relative}
+.sring-qa-b::after{content:"";position:absolute;top:-7px;bottom:-7px;left:-1px;right:-1px}
+/* sold out was faded to 40% on an 11px chip - invisible, and exactly the muting this
+   file forbids everywhere else. The PDP already greys XL and says "Sold out";
+   the shop grid showed no state at all to the eye. Same dashed-outline treatment
+   the rest of the site uses for a disabled control. */
+.sring-qa-b:disabled,.sring-qa-b[disabled]{opacity:1!important;color:#6B6256!important;border:1.5px dashed #9A8F82!important;background:transparent!important;text-decoration:line-through!important;text-decoration-thickness:1.5px;cursor:not-allowed}
+.sring-qa-b:disabled:hover,.sring-qa-b[disabled]:hover{background:transparent!important;color:#6B6256!important}
+/* footer social links were 134x16 - give them a real row to hit */
+.foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
+
 `;
 
 module.exports = { CSS };

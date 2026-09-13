@@ -41,14 +41,23 @@
   window.track=function(n,p){try{gtag('event',n,p||{});}catch(e){}};
 </script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=ddbe0c80"></script>
-<script src="/assets/tiktok-pixel.js" data-ttq></script>
+<script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
+<script src="/assets/tiktok-pixel.js" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Audit 13 Sep: gsap + ScrollTrigger + three.js are 233 KB and were render-blocking
+     in <head>, so nothing painted on a cold mobile visit until all three had downloaded,
+     parsed and run. They are now PRELOADED here (same download start, no blocking) and
+     EXECUTED further down, immediately before the first script that needs them, so
+     execution order is unchanged. The stops carry CSS gradient fallbacks
+     (.stop[data-tod=...]) and body.gl only swaps to transparent once WebGL is up, so the
+     hero is readable from the first paint either way. -->
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+<link rel="preload" as="image" href="/journey/plates/liwa-sunset.jpg" fetchpriority="high">
 <style>
 :root{--sand:#FAF6EF;--paper:#FFFFFF;--ink:#33271B;--mist:#6B6256;--clay:#A95A21;--clay-deep:#7E4114;--gold:#F2C98C;--line:rgba(43,37,32,.12);--edge:rgba(42,32,22,.58)}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -918,6 +927,59 @@ body.buy-page .pack-btn{font-size:15px!important}
   body.buy-page table.sz th,body.buy-page table.sz td{padding:11px 8px}
   body.buy-page .gal-fit{max-width:calc(100% - 20px);white-space:normal}
 }
+/* ===== 13 Sep 2026 audit: the smallest text was carrying the facts that sell =====
+   Eleven demographic personas walked the live site. Two findings repeated across
+   almost all of them, and both are measured, not opinion:
+
+   1. Sub-14px text carried the purchase-critical facts - the hero's delivery and
+      free-returns line (12px), "Sold out" on the size grid (11.5px), the 230 GSM /
+      fit / DTG chips (11px x21), and Regular-vs-Oversized on the hero ring (10px x18).
+      Mono brand labels keep this file's established 12px floor; anything that is a
+      sentence rather than a label goes to 14px.
+
+   2. The controls that start a purchase were under 40px: the header cart at 24x23,
+      the homepage hamburger at 38x38 (the other templates already carry the 44px
+      rule - the homepage was the one that missed it), the hero ring arrows at
+      38x38, and the shop's quick-add size chips at 30x30 on phone.
+      The chips sit inside a fixed-height 3D card with overflow:hidden, so they get
+      a taller HIT AREA rather than a taller box - growing the box clips the card. */
+
+/* --- mono labels that were under the 12px floor --- */
+.hring-fit,.hring-place,.sb-curhint,.card-tag,.shopcta-eyebrow,.sring-qa-l{font-size:12px!important;letter-spacing:.07em!important}
+.hring-fit,.hring-place{line-height:1.35}
+
+/* --- facts stated as sentences: 14px, not label-sized --- */
+.read-place,.gal-model{font-size:14px!important;letter-spacing:.03em!important}
+/* "Sold out" sits UNDER the size letter inside the chip, so it cannot simply go to
+   14px without stretching the whole size row - and body.buy-page .sz-out (0,2,1)
+   outranks a bare .sz-out anyway. 13px, a chip wide enough to hold it, and a rule
+   through the size letter itself so an unavailable size reads at a glance rather
+   than on inspection. */
+.sz-out{font-size:13px!important;letter-spacing:.03em!important}
+body.buy-page .sz-out{font-size:13px!important;letter-spacing:.03em!important}
+body.buy-page .pdp-size{min-width:68px}
+.pdp-size:disabled,.pdp-size[disabled]{text-decoration:line-through;text-decoration-thickness:1.5px}
+.pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
+.meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
+.eyebrow{font-size:13px!important}
+
+/* --- 44px targets on the path to a purchase --- */
+.cart-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.mnav{min-width:44px;min-height:44px;padding:11px;margin:-11px -11px -11px 0}
+.hring-arrow{width:44px!important;height:44px!important;margin-top:-22px!important}
+/* the shop chips keep their box and gain the hit area, so the card height is unchanged */
+.sring-qa{gap:8px}
+.sring-qa-b{position:relative}
+.sring-qa-b::after{content:"";position:absolute;top:-7px;bottom:-7px;left:-1px;right:-1px}
+/* sold out was faded to 40% on an 11px chip - invisible, and exactly the muting this
+   file forbids everywhere else. The PDP already greys XL and says "Sold out";
+   the shop grid showed no state at all to the eye. Same dashed-outline treatment
+   the rest of the site uses for a disabled control. */
+.sring-qa-b:disabled,.sring-qa-b[disabled]{opacity:1!important;color:#6B6256!important;border:1.5px dashed #9A8F82!important;background:transparent!important;text-decoration:line-through!important;text-decoration-thickness:1.5px;cursor:not-allowed}
+.sring-qa-b:disabled:hover,.sring-qa-b[disabled]:hover{background:transparent!important;color:#6B6256!important}
+/* footer social links were 134x16 - give them a real row to hit */
+.foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
+
 </style>
 </head>
 <body class="no-js has-topbar">
@@ -1204,7 +1266,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 <section class="stop" id="s-alquaa" data-tod="night" data-bg="night">
   <div class="j-wrap"><div class="col">
     <span class="place-tag rv">Al Quaa · Abu Dhabi · dark sky</span>
-    <h2 class="rv">The darkest sky <em>in the Emirates</em></h2>
+    <h2 class="rv">One of the darkest skies <em>in the Emirates</em></h2>
     <p class="lede rv">Two hours south of the city the light pollution ends and the Milky Way rises over the dunes. The galaxy that runs across the back of this tee was photographed here.</p>
     <div class="design-card rv" data-handle="al-quaa-galaxy-regular" data-fit-on="regular"><div class="card-img" data-cycle data-fit="regular"><img class="on" src="/shirts/alquaa-regular-back-fit.jpg" srcset="/shirts/card/alquaa-regular-back-fit.jpg 800w, /shirts/alquaa-regular-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit — design across the back" loading="lazy"><img src="/shirts/alquaa-regular-front-fit.jpg" srcset="/shirts/card/alquaa-regular-front-fit.jpg 800w, /shirts/alquaa-regular-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy"></div><div class="card-img" data-cycle data-fit="oversized" hidden><img class="on" src="/shirts/alquaa-oversized-back-fit.jpg" srcset="/shirts/card/alquaa-oversized-back-fit.jpg 800w, /shirts/alquaa-oversized-back-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit — design across the back" loading="lazy"><img src="/shirts/alquaa-oversized-front-fit.jpg" srcset="/shirts/card/alquaa-oversized-front-fit.jpg 800w, /shirts/alquaa-oversized-front-fit.jpg 1536w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy"><img src="/shirts/alquaa-model-back.jpg" srcset="/shirts/card/alquaa-model-back.jpg 800w, /shirts/alquaa-model-back.jpg 1076w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy"><img src="/shirts/alquaa-female-1.jpg" srcset="/shirts/card/alquaa-female-1.jpg 800w, /shirts/alquaa-female-1.jpg 1453w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn in the Hajar mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit." loading="lazy"><img src="/shirts/alquaa-model-front.jpg" srcset="/shirts/card/alquaa-model-front.jpg 800w, /shirts/alquaa-model-front.jpg 1067w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy"><img src="/shirts/alquaa-female-2.jpg" srcset="/shirts/card/alquaa-female-2.jpg 800w, /shirts/alquaa-female-2.jpg 931w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee from behind, arms out against the mountains — the Milky Way print across the back. Female model wears M in the Oversized fit." loading="lazy"><img src="/shirts/alquaa-model-dusk.jpg" srcset="/shirts/card/alquaa-model-dusk.jpg 800w, /shirts/alquaa-model-dusk.jpg 1227w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy"><img src="/shirts/alquaa-female-3.jpg" srcset="/shirts/card/alquaa-female-3.jpg 800w, /shirts/alquaa-female-3.jpg 1498w" sizes="(max-width:760px) 46vw, (max-width:1200px) calc((100vw - 100px)/3), 370px" decoding="async" alt="The back of the Al Quaa Galaxy tee in the mountains at dusk, the Milky Way print catching the last light. Female model wears M in the Oversized fit." loading="lazy"></div><span><small>The design · Al Quaa</small><b>Al Quaa Galaxy</b><p>The Milky Way across the back, a subtle صحراء mark on the chest. DTG print on 230gsm combed cotton, regular and oversized.</p><span class="row" data-fit="regular"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span><a class="go" href="/products/al-quaa-galaxy-regular/">View the tee →</a></span><span class="row" data-fit="oversized" hidden><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span><a class="go" href="/products/al-quaa-galaxy-oversized/">View the tee →</a></span></span><div class="fit-sw" role="group" aria-label="Fit"><button type="button" class="fit-b on" data-fit-pick="regular" aria-pressed="true">Regular</button><button type="button" class="fit-b" data-fit-pick="oversized" aria-pressed="false">Oversized</button></div><div class="qa" data-qa="al-quaa-galaxy-regular" data-fit="regular"></div><div class="qa" data-qa="al-quaa-galaxy-oversized" data-fit="oversized" hidden></div></div>
   </div></div>
@@ -1280,7 +1342,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 <footer>
   <div class="foot-brand">Sahra &amp; Beyond</div>
   <div class="foot-tag">Wear the wild side of the UAE</div>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#s-places">Places</a><a href="/about/">About</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#s-places">Places</a><a href="/about/">About</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc" style="font-size:13px;font-family:'Space Mono',monospace;letter-spacing:1px"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener" aria-label="Instagram">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 <div style="margin:12px 0 4px"><span data-sb-curslot></span></div></footer>
@@ -1525,6 +1587,10 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   });
 })();
 </script>
+<!-- the three libraries preloaded in <head> execute here, just before the engine that uses them -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function () {
   'use strict';

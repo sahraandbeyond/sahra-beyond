@@ -2,7 +2,7 @@
 <html lang="en" data-market="uae">
 <head>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=ddbe0c80"></script>
+<script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 
 <meta charset="UTF-8">
@@ -24,11 +24,20 @@
 <meta name="description" content="Shop original UAE t-shirts inspired by real places — Al Quaa’s dark sky, the dunes of Liwa, the Hajar mountains. 230gsm combed ring-spun cotton, limited runs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<!-- Audit 13 Sep: gsap + ScrollTrigger + three.js are 233 KB (plus lenis) and were render-blocking
+     in <head>, so nothing painted on a cold mobile visit until all three had downloaded,
+     parsed and run. They are now PRELOADED here (same download start, no blocking) and
+     EXECUTED further down, immediately before the first script that needs them, so
+     execution order is unchanged. The stops carry CSS gradient fallbacks
+     (.stop[data-tod=...]) and body.gl only swaps to transparent once WebGL is up, so the
+     hero is readable from the first paint either way. -->
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
 <!-- Leaflet is loaded lazily (only when the map scrolls into view) — see loadLeaflet() below -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{--sand:#FAF6EF;--paper:#FFF;--ink:#2A2016;--mist:#6B6256;--clay:#A95A21;--clay-deep:#7E4114;--gold:#F5D6A8;--line:rgba(42,32,22,.12);--edge:rgba(42,32,22,.58)}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -193,7 +202,7 @@ body.shop-page .prod .buy-trust{margin-top:12px;gap:6px 14px}
 .prod-fold[open] summary::after{content:'\2212'}
 .fold-b{padding:2px 0 16px}
 body.shop-page .fold-b .place-lead,body.shop-page .fold-b .story,body.shop-page .fold-b .prod-occasion{margin:0 0 12px;max-width:none}
-body.shop-page .fold-b .read-place,body.shop-page .fold-b .fitswap,body.shop-page .fold-b .buy-limited,body.shop-page .fold-b body.shop-page .fold-b .pdp-link{margin:6px 0 0;display:inline-block;border-bottom-width:1px;padding-bottom:1px}
+body.shop-page .fold-b .read-place,body.shop-page .fold-b .fitswap,body.shop-page .fold-b .buy-limited,body.shop-page .fold-b .buy-ghaf,body.shop-page .fold-b .pdp-link{margin:6px 0 0;display:inline-block;border-bottom-width:1px;padding-bottom:1px}
 body.shop-page .fold-b .pdp-link{display:block;margin-top:12px}
 body.shop-page .fold-b .prod-spec-strip{margin:0 0 12px}
 body.shop-page .fold-b .sw-row{margin:0 0 12px}
@@ -309,6 +318,22 @@ body.shop-page .fold-b .fit-note{margin:0 0 8px;line-height:1.6}
 .filt-clear,.filt-linkish{background:none;border:0;padding:0;color:var(--clay-deep,#9C521B);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .filt-empty{text-align:center;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;opacity:1;margin:6px auto 34px;padding:0 24px}
 .shop-filters+.prod,.filt-empty+.prod{margin-top:8px}
+/* "All designs" index under the filters (13 Sep 2026 audit) */
+.sidx{display:block;position:static;max-width:1060px;margin:0 auto 30px;padding:0 24px;background:none;border:0}
+.sidx-lab{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-deep);margin:0 0 12px;text-align:center}
+.sidx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:12px}
+.sidx-card{display:flex;flex-direction:column;gap:7px;text-decoration:none;color:var(--ink);background:rgba(252,249,242,.92);border:1px solid rgba(42,32,22,.14);border-radius:3px;padding:10px 10px 12px;transition:border-color .2s,transform .2s}
+.sidx-card:hover,.sidx-card:focus-visible{border-color:var(--clay);transform:translateY(-2px)}
+.sidx-img{display:block;aspect-ratio:1/1;background:#EFEAE0;border-radius:2px;overflow:hidden}
+.sidx-img img{width:100%;height:100%;object-fit:contain;padding:5%;display:block}
+.sidx-t{font-size:14.5px;line-height:1.3}
+.sidx-m{margin-top:auto;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.05em;color:var(--clay-deep)}
+.sidx-card[hidden]{display:none}
+@media(max-width:700px){
+  .sidx{padding:0 16px;margin-bottom:24px}
+  .sidx-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .sidx-t{font-size:14px}
+}
 @media(max-width:760px){
   .shop-filters{justify-content:flex-start;gap:8px 12px;font-size:10px}
   .filt-meta{margin-left:0;width:100%;justify-content:space-between}
@@ -322,7 +347,10 @@ body.shop-page .fold-b .fit-note{margin:0 0 8px;line-height:1.6}
 .read-place:hover{opacity:1}
 .prod.dark .read-place{color:var(--gold)}
 .prod-occasion{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.3px;line-height:1.5;margin:-4px 0 20px;max-width:440px;opacity:1}
-.prod.dark .pdp-link{display:block;margin-top:16px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.5px;border-bottom:1px solid var(--line);padding-bottom:12px;opacity:1;transition:opacity .3s}
+.buy-ghaf{display:inline-block;margin-top:14px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:#4C6E46;border-bottom:1px solid currentColor;padding-bottom:2px;transition:opacity .3s}
+.buy-ghaf:hover{opacity:.75}
+.prod.dark .buy-ghaf{color:#C3DBB6}
+.pdp-link{display:block;margin-top:16px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.5px;border-bottom:1px solid var(--line);padding-bottom:12px;opacity:1;transition:opacity .3s}
 .pdp-link:hover{opacity:1;color:var(--clay-deep)}
 .prod.dark .pdp-link{border-color:rgba(255,255,255,.18)}
 .prod.dark .pdp-link:hover{color:var(--gold)}
@@ -583,7 +611,7 @@ img,svg,video{max-width:100%;height:auto}
     display:inline-flex;align-items:center;min-height:44px;padding-top:2px;padding-bottom:2px}
   .foot-links a,.links a{width:100%}
   button.filt,.filt,.nav-arrow,.pcard-zoom,.pcard-t,.pcard-cta,.filt-clear,.filt-linkish,.chip,.btn,button.cta,.cta,
-  .pdp-link,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
+  .pdp-link,.buy-ghaf,.lb-close,.drawer-close,.mnav,.logo,.skip-link{
     min-height:44px}
   /* dismiss controls need to be easy to hit, not just tall */
   /* Close buttons hold text, so inline-flex centres them correctly. The
@@ -659,10 +687,11 @@ p,li,dd,td,label,figcaption{font-weight:400}
 .tag-invite a{color:var(--txt-soft,#4A4136)}
 
 /* Space Mono labels stay a brand element - 12px floor, tracking halved, ink or clay rather than mist */
-.eyebrow,.j-eyebrow,.card-place,.pcard-place,.pcard-col,.pcard-cta,.crumb,.crumbs,.rv-meta,.prod-limited,.fitchip,.opt-lab,.filt,.snum,.gal-tag,.gal-fit,.gal-hint,.pm-sky,.pk-qty,.pack-grp-title,.teecta-eyebrow,.news-eyebrow,.place-tag,.qa-l,.qa-w,.scroll-cue,.vband-cap,.vband-cap a,.design-card small,.buy-trust,.sb-price,.size-table th,.sg th,.rv-chip,.rv-sort span,.card-tag,.pcard-rv-n,.rv-more{font-size:12px!important;letter-spacing:.09em!important}
+.eyebrow,.j-eyebrow,.card-place,.pcard-place,.pcard-col,.pcard-cta,.crumb,.crumbs,.rv-meta,.prod-limited,.fitchip,.opt-lab,.filt,.snum,.gal-tag,.gal-fit,.gal-hint,.pm-sky,.pk-qty,.pack-grp-title,.teecta-eyebrow,.news-eyebrow,.place-tag,.qa-l,.qa-w,.scroll-cue,.vband-cap,.vband-cap a,.design-card small,.buy-trust,.buy-ghaf,.sb-price,.size-table th,.sg th,.rv-chip,.rv-sort span,.card-tag,.pcard-rv-n,.rv-more{font-size:12px!important;letter-spacing:.09em!important}
 .card-tag{font-size:11px!important;font-weight:700}
 .eyebrow,.j-eyebrow,.card-place,.pcard-place,.prod-limited,.design-card small{font-weight:700}
 .pcard-place,.pm-sky,.rv-meta,.crumb,.gal-model,.rv-sort span{color:var(--txt-soft,#4A4136)}
+.buy-ghaf{color:#3F6A36}
 .qa-l{color:#7E4114}
 
 /* the shop's "Details & care" summaries (unclassed) */
@@ -816,7 +845,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
    scale moves together. !important because the earlier floors above use it. */
 body.shop-page{font-size:18px}
 /* mono labels: 15px, a little less tracking so they still fit */
-body.shop-page .eyebrow,body.shop-page .hero-c .eyebrow,body.shop-page .scroll-cue,body.shop-page .marquee span,body.shop-page .filt-lab,body.shop-page .filt,body.shop-page #filtCount,body.shop-page .filt-meta,body.shop-page .filt-clear,body.shop-page .place-meta,body.shop-page .place-meta a,body.shop-page .place-meta span,body.shop-page .pm-gps,body.shop-page .pm-sky,body.shop-page .prod-limited,body.shop-page .fitchip,body.shop-page .pcard-rv-n,body.shop-page .prod-acc summary,body.shop-page .opt-lab,body.shop-page .buy-limited,body.shop-page .buy-trust,body.shop-page .buy-trust span,body.shop-page body.shop-page .read-place,body.shop-page .pdp-link,body.shop-page .prod-spec-strip li,body.shop-page .prod-spec-strip strong,body.shop-page .sw-row span,body.shop-page .sw-row,body.shop-page .qbuy-lab,body.shop-page .size-guide-link,body.shop-page .trust-row div,body.shop-page .paymarks-t,body.shop-page .foot-links a,body.shop-page .foot-soc a,body.shop-page .rv-meta,body.shop-page .rv-chip,body.shop-page .rv-sort span,body.shop-page .rv-sort select,body.shop-page .rv-more,body.shop-page .rv-src,body.shop-page .rv-src a,body.shop-page .size-table th,body.shop-page .wl-msg,body.shop-page .skip-link,body.shop-page .sm-note{font-size:15px!important;letter-spacing:.06em!important;line-height:1.5}
+body.shop-page .eyebrow,body.shop-page .hero-c .eyebrow,body.shop-page .scroll-cue,body.shop-page .marquee span,body.shop-page .filt-lab,body.shop-page .filt,body.shop-page #filtCount,body.shop-page .filt-meta,body.shop-page .filt-clear,body.shop-page .place-meta,body.shop-page .place-meta a,body.shop-page .place-meta span,body.shop-page .pm-gps,body.shop-page .pm-sky,body.shop-page .prod-limited,body.shop-page .fitchip,body.shop-page .pcard-rv-n,body.shop-page .prod-acc summary,body.shop-page .opt-lab,body.shop-page .buy-limited,body.shop-page .buy-trust,body.shop-page .buy-trust span,body.shop-page .buy-ghaf,body.shop-page .read-place,body.shop-page .pdp-link,body.shop-page .prod-spec-strip li,body.shop-page .prod-spec-strip strong,body.shop-page .sw-row span,body.shop-page .sw-row,body.shop-page .qbuy-lab,body.shop-page .size-guide-link,body.shop-page .trust-row div,body.shop-page .paymarks-t,body.shop-page .foot-links a,body.shop-page .foot-soc a,body.shop-page .rv-meta,body.shop-page .rv-chip,body.shop-page .rv-sort span,body.shop-page .rv-sort select,body.shop-page .rv-more,body.shop-page .rv-src,body.shop-page .rv-src a,body.shop-page .size-table th,body.shop-page .wl-msg,body.shop-page .skip-link,body.shop-page .sm-note{font-size:15px!important;letter-spacing:.06em!important;line-height:1.5}
 body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span,body.shop-page .note-x{font-size:14px!important;letter-spacing:.04em!important}
 body.shop-page .foot-copy{font-size:14.5px!important}
 body.shop-page .prod-occasion{font-size:17px!important}
@@ -865,6 +894,59 @@ body.shop-page .foot-links{gap:10px 22px}
   body.shop-page .size-table th,body.shop-page .size-table td{padding:11px 8px}
   body.shop-page .size-table td{font-size:15.5px!important}
 }
+/* ===== 13 Sep 2026 audit: the smallest text was carrying the facts that sell =====
+   Eleven demographic personas walked the live site. Two findings repeated across
+   almost all of them, and both are measured, not opinion:
+
+   1. Sub-14px text carried the purchase-critical facts - the hero's delivery and
+      free-returns line (12px), "Sold out" on the size grid (11.5px), the 230 GSM /
+      fit / DTG chips (11px x21), and Regular-vs-Oversized on the hero ring (10px x18).
+      Mono brand labels keep this file's established 12px floor; anything that is a
+      sentence rather than a label goes to 14px.
+
+   2. The controls that start a purchase were under 40px: the header cart at 24x23,
+      the homepage hamburger at 38x38 (the other templates already carry the 44px
+      rule - the homepage was the one that missed it), the hero ring arrows at
+      38x38, and the shop's quick-add size chips at 30x30 on phone.
+      The chips sit inside a fixed-height 3D card with overflow:hidden, so they get
+      a taller HIT AREA rather than a taller box - growing the box clips the card. */
+
+/* --- mono labels that were under the 12px floor --- */
+.hring-fit,.hring-place,.sb-curhint,.card-tag,.shopcta-eyebrow,.sring-qa-l{font-size:12px!important;letter-spacing:.07em!important}
+.hring-fit,.hring-place{line-height:1.35}
+
+/* --- facts stated as sentences: 14px, not label-sized --- */
+.read-place,.gal-model{font-size:14px!important;letter-spacing:.03em!important}
+/* "Sold out" sits UNDER the size letter inside the chip, so it cannot simply go to
+   14px without stretching the whole size row - and body.buy-page .sz-out (0,2,1)
+   outranks a bare .sz-out anyway. 13px, a chip wide enough to hold it, and a rule
+   through the size letter itself so an unavailable size reads at a glance rather
+   than on inspection. */
+.sz-out{font-size:13px!important;letter-spacing:.03em!important}
+body.buy-page .sz-out{font-size:13px!important;letter-spacing:.03em!important}
+body.buy-page .pdp-size{min-width:68px}
+.pdp-size:disabled,.pdp-size[disabled]{text-decoration:line-through;text-decoration-thickness:1.5px}
+.pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
+.meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
+.eyebrow{font-size:13px!important}
+
+/* --- 44px targets on the path to a purchase --- */
+.cart-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.mnav{min-width:44px;min-height:44px;padding:11px;margin:-11px -11px -11px 0}
+.hring-arrow{width:44px!important;height:44px!important;margin-top:-22px!important}
+/* the shop chips keep their box and gain the hit area, so the card height is unchanged */
+.sring-qa{gap:8px}
+.sring-qa-b{position:relative}
+.sring-qa-b::after{content:"";position:absolute;top:-7px;bottom:-7px;left:-1px;right:-1px}
+/* sold out was faded to 40% on an 11px chip - invisible, and exactly the muting this
+   file forbids everywhere else. The PDP already greys XL and says "Sold out";
+   the shop grid showed no state at all to the eye. Same dashed-outline treatment
+   the rest of the site uses for a disabled control. */
+.sring-qa-b:disabled,.sring-qa-b[disabled]{opacity:1!important;color:#6B6256!important;border:1.5px dashed #9A8F82!important;background:transparent!important;text-decoration:line-through!important;text-decoration-thickness:1.5px;cursor:not-allowed}
+.sring-qa-b:disabled:hover,.sring-qa-b[disabled]:hover{background:transparent!important;color:#6B6256!important}
+/* footer social links were 134x16 - give them a real row to hit */
+.foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
+
 </style>
 </head>
 <body class="shop-page">
@@ -1140,17 +1222,22 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   </div>
 </section>
 
-<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% combed ring-spun cotton</div><div>Free returns within the UAE</div></div></div>
+<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% combed ring-spun cotton</div><div>230 GSM heavyweight</div><div>Free returns within the UAE</div></div></div>
 
 <div class="lb" id="lightbox" aria-label="Photo viewer"><button class="lb-close" id="lbClose" aria-label="Close">✕</button><button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button><img class="lb-img" id="lbImg" alt=""><button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button></div>
 
 <footer>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="#sizeguide">Size &amp; fit</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/policies.html#contact">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="paymarks" aria-label="We accept Visa and Mastercard"><svg viewBox="0 0 48 30" role="img" aria-label="Visa"><rect width="48" height="30" rx="4" fill="#fff"/><text x="24" y="20" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" font-style="italic" fill="#1A1F71">VISA</text></svg><svg viewBox="0 0 48 30" role="img" aria-label="Mastercard"><rect width="48" height="30" rx="4" fill="#fff"/><circle cx="20" cy="15" r="8" fill="#EB001B"/><circle cx="28" cy="15" r="8" fill="#F79E1B" fill-opacity=".85"/></svg><span class="paymarks-t">Secure checkout</span></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 <div style="margin:12px 0 4px"><span data-sb-curslot></span></div></footer>
 
+<!-- the libraries preloaded in <head> execute here, just before the engine that uses them -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 // ========= CONFIG — paste your Shopify details to go live =========
   /* COMMERCE_OFF: the shop is browsable before payments go live. Sizes and stock
@@ -1813,6 +1900,7 @@ function draw(){
     }
     ScrollTrigger.refresh();
   }
+  buildShopIndex(secs);
   initFilters(secs);
   shopRing();
   startBgJourney(secs);
@@ -1925,6 +2013,44 @@ function shopRing(){
    State lives in the URL (?fit=oversized&size=M) so a filtered view can be linked
    from Instagram, an email or a category page. Sections are hidden, never removed,
    so cart wiring and the scroll palette keep working. */
+/* ---- "All seven designs" index (13 Sep 2026 audit) ---------------------------
+   Six of eleven personas said the same thing about this page: seven full product
+   modules stacked down 14,252px is not a way to compare seven things. One reached
+   product 2 of 7 at 30% scroll. /t-shirts/ shows the same catalogue as a grid in
+   roughly half the height, and two of them found it and preferred it.
+
+   The cinematic scroll stays; this adds a compact, scannable index directly under
+   the filters that jumps to any design in one tap. It is built FROM the rendered
+   sections rather than from PRODUCTS, so its fit/place/print/size attributes are
+   by construction identical to the ones the filters already match on. */
+function buildShopIndex(secs){
+  if(!secs||secs.length<3)return null;
+  var bar=document.getElementById('shopFilters'); if(!bar)return null;
+  if(document.getElementById('shopIndex'))return document.getElementById('shopIndex');
+  var cards=secs.map(function(sec){
+    var img=sec.querySelector('.prod-media img,.prod img'),
+        h=sec.querySelector('.prod-txt h2'),
+        pr=sec.querySelector('.sb-price'),
+        place=sec.querySelector('.plink');
+    return '<a class="sidx-card" href="#'+sec.id+'"'
+      + ' data-fit="'+(sec.getAttribute('data-fit')||'')+'"'
+      + ' data-place="'+(sec.getAttribute('data-place')||'')+'"'
+      + ' data-print="'+(sec.getAttribute('data-print')||'')+'"'
+      + ' data-sizes="'+(sec.getAttribute('data-sizes')||'')+'">'
+      + '<span class="sidx-img">'+(img?'<img src="'+img.getAttribute('src')+'" alt="" loading="lazy" decoding="async">':'')+'</span>'
+      + '<span class="sidx-t">'+(h?h.textContent:'')+'</span>'
+      + '<span class="sidx-m">'+(pr?pr.textContent:'')+(place?' &middot; '+place.textContent.replace(/^Inspired by\s*/,'').replace(/\s*\u2192\s*$/,''):'')+'</span>'
+      + '</a>';
+  }).join('');
+  var wrap=document.createElement('div');
+  wrap.className='sidx'; wrap.id='shopIndex';
+  wrap.setAttribute('role','navigation');
+  wrap.setAttribute('aria-label','Jump to a design');
+  wrap.innerHTML='<p class="sidx-lab">All '+secs.length+' designs &mdash; tap one to jump straight to it</p><div class="sidx-grid">'+cards+'</div>';
+  bar.parentNode.insertBefore(wrap,bar.nextSibling);
+  return wrap;
+}
+
 function initFilters(secs){
   var bar=document.getElementById('shopFilters');
   if(!bar)return;
@@ -1933,6 +2059,7 @@ function initFilters(secs){
       emptyEl=document.getElementById('filtEmpty'),
       resetEl=document.getElementById('filtReset'),
       btns=[].slice.call(bar.querySelectorAll('.filt')),
+      idxCards=[].slice.call(document.querySelectorAll('.sidx-card')),
       KEYS=['fit','place','print','size'],
       touched=false,          /* true once the user works the filters */
       state={};
@@ -1959,6 +2086,7 @@ function initFilters(secs){
         shown++;
       }
     });
+    idxCards.forEach(function(c){c.hidden=!matches(c);});
     var active=KEYS.filter(function(k){return state[k];});
     btns.forEach(function(b){
       var on=state[b.dataset.k]===b.dataset.v;
