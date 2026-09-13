@@ -343,6 +343,14 @@ a{color:#9C521B}
 .news-form button{padding:13px 24px;border-radius:999px;border:none;background:#E9B978;color:#2A2016;font-weight:700;letter-spacing:.4px;cursor:pointer;transition:background .25s}
 .news-form button:hover{background:#fff}
 .guide-sec{margin:24px 0}
+.ct-ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:26px 0 6px}
+.ct-way{display:flex;flex-direction:column;gap:5px;padding:18px 20px;background:#fff;border:1px solid rgba(43,37,32,.12);border-radius:16px;text-decoration:none;color:inherit;box-shadow:0 2px 12px rgba(58,42,28,.06);transition:border-color .2s,transform .2s}
+.ct-way:hover,.ct-way:focus-visible{border-color:#A95A21;transform:translateY(-2px)}
+.ct-lab{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#7E4114}
+.ct-val{font-size:19px;line-height:1.3;overflow-wrap:anywhere;hyphens:none}
+/* the address is 23 characters - at 19px it broke mid-word inside the card */
+.ct-val-em{font-size:15.5px;letter-spacing:-.01em}
+.ct-sub{font-size:14px;color:#4A4136}
 .guide-sec h2{font-size:20px;margin:0 0 8px}
 /* the fabric/cut essays fold under their heading on the buying pages: the products come first, the reading is there for whoever wants it */
 .fold{border-top:1px solid rgba(43,37,32,.14);margin:0}
@@ -705,7 +713,7 @@ function footerHtml() {
   <div class="soc">${soc}</div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
-  <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/policies.html#contact">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
 }
 
@@ -727,7 +735,10 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
 
   const ogImg = image || `${SITE}/icon-512.png`;
   const nav = (href, label, key) => `<a href="${href}"${activeNav === key ? ' class="active"' : ''}>${label}</a>`;
-  const navHtml = nav('/', 'Home', 'home') + nav('/#collection', 'Collection', 'collection') /* the homepage ring (8 Sep) */ + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about');
+  /* Faheem, 13 Sep: Contact belongs in the menu. 'Home' comes out rather than the bar
+     growing to eight items - the logo already links home, and three of eleven audit
+     personas concluded the site had no contact details at all. */
+  const navHtml = nav('/#collection', 'Collection', 'collection') /* the homepage ring (8 Sep) */ + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about') + nav('/contact/', 'Contact', 'contact');
   return `<!doctype html>
 <html lang="en" data-market="uae">
 <head>
@@ -1464,6 +1475,104 @@ if (LAUNCHED || REVEALED) (function () {
 })();
 
 
+
+/* ---- Contact (13 Sep 2026) ----------------------------------------------
+   /contact/ and /contact both returned 404, and the only address for the
+   company details was an anchor on policies.html labelled "Contact". Three of
+   the eleven audit personas concluded the site had no contact details at all;
+   one of them spent her whole session looking. Details-only by Faheem's call -
+   no wholesale or bulk invitation on this page. Single source of truth for the
+   figures below is policies.html#contact - keep them in step. */
+(function () {
+  const canonical = `${SITE}/contact/`;
+  const title = 'Contact Sahra & Beyond — WhatsApp, Email & Company Details';
+  const desc = 'Reach Sahra & Beyond on WhatsApp, by phone or by email. Company name, trade licence and registered address for our UAE apparel brand.';
+  const WA = 'https://wa.me/971585449946';
+  const jsonld = [{
+    "@context": "https://schema.org", "@type": "ContactPage",
+    "name": title, "url": canonical,
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "SAHRA AND BEYOND FZE LLC",
+      "alternateName": "Sahra & Beyond",
+      "url": SITE,
+      "email": "hello@sahraandbeyond.ae",
+      "telephone": "+971585449946",
+      "sameAs": ["https://instagram.com/sahraandbeyond.ae"],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Business Centre, Sharjah Publishing City Free Zone",
+        "addressLocality": "Sharjah",
+        "addressCountry": "AE",
+        "postOfficeBox": "73111"
+      },
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "telephone": "+971585449946",
+        "email": "hello@sahraandbeyond.ae",
+        "areaServed": "Worldwide",
+        "availableLanguage": ["en", "ar"]
+      }]
+    }
+  }];
+  const body = `
+  <section class="loc-hero" style="--hero-grad:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
+    <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
+    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Contact</span></nav>
+      <h1>Contact us</h1>
+      <p class="lede">Questions about an order, a return, sizing, or anything else &mdash; we are happy to help.</p>
+    </div>
+  </section>
+  <main>
+    <div class="content">
+      <p>The quickest way to reach us is <strong>WhatsApp</strong>: we normally reply the same day. You can also call that number during UAE business hours, or email us and we aim to reply within one working day.</p>
+    </div>
+
+    <div class="ct-ways">
+      <a class="ct-way" href="${WA}" target="_blank" rel="noopener">
+        <span class="ct-lab">WhatsApp &middot; fastest</span>
+        <span class="ct-val">+971 58 544 9946</span>
+        <span class="ct-sub">Usually the same day</span>
+      </a>
+      <a class="ct-way" href="mailto:hello@sahraandbeyond.ae">
+        <span class="ct-lab">Email</span>
+        <span class="ct-val ct-val-em">hello@sahraandbeyond.ae</span>
+        <span class="ct-sub">Within one working day</span>
+      </a>
+      <a class="ct-way" href="tel:+971585449946">
+        <span class="ct-lab">Phone</span>
+        <span class="ct-val">+971 58 544 9946</span>
+        <span class="ct-sub">UAE business hours</span>
+      </a>
+    </div>
+
+    <section class="guide-sec"><h2>Before you write</h2><div class="content">
+      <p>Most answers are already on the site: <a href="/size-guide/">the size guide</a> has garment-flat measurements in inches and centimetres for both fits, <a href="/policies.html#shipping">shipping</a> covers delivery windows and duties, and <a href="/policies.html#returns">returns &amp; refunds</a> covers the 14-day window. If yours is not there, message us.</p>
+    </div></section>
+
+    <section class="guide-sec"><h2>Business details</h2>
+      <div class="facts">
+        <ul>
+          <li><strong>Company name</strong> &middot; SAHRA AND BEYOND FZE LLC</li>
+          <li><strong>Trading name</strong> &middot; Sahra &amp; Beyond</li>
+          <li><strong>Trade licence no.</strong> &middot; 4430808.01, issued by Sharjah Publishing City Free Zone</li>
+          <li><strong>VAT / TRN</strong> &middot; Not VAT-registered</li>
+          <li><strong>Office address</strong> &middot; Business Centre, Sharjah Publishing City Free Zone, Sharjah, United Arab Emirates</li>
+          <li><strong>P.O. Box</strong> &middot; 73111</li>
+          <li><strong>Country</strong> &middot; United Arab Emirates</li>
+          <li><strong>Instagram</strong> &middot; <a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">@sahraandbeyond.ae</a></li>
+        </ul>
+      </div>
+      <div class="content"><p class="sgnote">The same details, with our full terms, sit on the <a href="/policies.html#contact">policies page</a>.</p></div>
+    </section>
+
+    <p class="back" style="margin-top:26px"><a href="/shop/">Back to the collection &rarr;</a></p>
+  </main>`;
+  write('contact/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, image: SITE + '/icon-512.png', activeNav: 'contact' }));
+})();
+
 // ---- Places index (the full directory that replaced the old planner grid) ----
 (function () {
   const canonical = `${SITE}/places/`;
@@ -2004,7 +2113,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
 function locMtime(id) { try { return fs.statSync(path.join(locDir, id + '.json')).mtime.toISOString().slice(0, 10); } catch (e) { return buildDate; } }
 const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat((LAUNCHED || REVEALED) ? [{ u: `${SITE}/shop/`, m: buildDate, p: '0.9' }] : [])
-  .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }])
+  .concat([{ u: `${SITE}/places/`, m: buildDate, p: '0.8' }, { u: `${SITE}/about/`, m: buildDate, p: '0.6' }, { u: `${SITE}/contact/`, m: buildDate, p: '0.6' }])
   // policies.html is noindex until launch — listing it earlier would put a
   // noindexed URL in the sitemap, which is the contradiction Ahrefs flags
   .concat(LAUNCHED ? [{ u: `${SITE}/policies.html`, m: buildDate, p: '0.4' }] : [])
