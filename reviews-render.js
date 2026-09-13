@@ -196,7 +196,7 @@ function productSection(handle, productName) {
  * thin rather than reassuring.
  */
 const HOMEPAGE_MIN = 3;
-/* opts.compact: three cards visible, the rest behind "Show all N reviews".
+/* opts.compact: three cards visible, the rest behind "Show more reviews".
    Category and guide pages ran six reviews back to back above the fabric
    essay; two cold readers gave up before the products (5 Sep 2026). The
    homepage and the shop keep the full band. */
@@ -273,7 +273,11 @@ function homepageBand(opts) {
           ${link}
         </li>`; }).join('')}
       </ul>
-      ${opts.compact && picked.length > 3 ? `<button type="button" class="rv-showall" onclick="this.previousElementSibling.classList.remove('rv-compact');this.hidden=true">Show all ${picked.length} reviews</button>` : ''}
+      ${/* NOT "Show all N": the band is capped at 6 while the aggregate above counts every
+           review (9 on 13 Sep), so "Show all 6 reviews" under "from 9 reviews" claimed to be
+           the complete set while three real reviews stayed hidden. The button reveals the rest
+           of THIS band, which is what it actually does. */''}
+      ${opts.compact && picked.length > 3 ? `<button type="button" class="rv-showall" onclick="this.previousElementSibling.classList.remove('rv-compact');this.hidden=true">Show more reviews</button>` : ''}
       ${LIGHTBOX}
       ${FILTERS}
       <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>

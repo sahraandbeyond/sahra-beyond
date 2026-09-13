@@ -937,7 +937,7 @@ console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
   check('size guide keeps its essay open (no folds)', !/class="fold guide-sec"/.test(sg));
   const home = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   check('homepage and shop keep the full band', !/rv-list rv-compact/.test(home) && !/rv-list rv-compact/.test(fs.readFileSync(path.join(__dirname, 'shop', 'index.html'), 'utf8')));
-  const fw = { 'al-quaa-galaxy-regular': /<p class="fit-warn"><b>Regular is a slim cut\.<\/b>[^<]*<a href="\/products\/al-quaa-galaxy-oversized\/">/, 'al-quaa-galaxy-oversized': /<p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut\.<\/b>[^<]*<a href="\/products\/al-quaa-galaxy-regular\/">/, 'sand-polo': /<p class="fit-warn"><b>One cut, true to size\.<\/b>/ };
+  const fw = { 'al-quaa-galaxy-regular': /<p class="fit-warn"><b>Regular is a slim cut\.<\/b>[^<]*<a href="\/products\/al-quaa-galaxy-oversized\/">/, 'al-quaa-galaxy-oversized': /<p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut\.<\/b>[^<]*<a href="\/products\/al-quaa-galaxy-regular\/">/, 'sand-polo': /<p class="fit-warn"><b>One cut, and it runs slim\.<\/b>[^<]*one size up from their usual letter/ };
   Object.entries(fw).forEach(([h, re]) => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); check('PDP ' + h + ': the fit is explained under the size chips, with the other fit linked', re.test(pg) && pg.indexOf('id="pdpSizes"') < pg.indexOf('<p class="fit-warn">') && pg.indexOf('<p class="fit-warn">') < pg.indexOf('id="pdpAdd"')); });
 }
 console.log('\n' + (fail ? '\x1b[31m' : '\x1b[32m') + pass + ' passed, ' + fail + ' failed\x1b[0m');

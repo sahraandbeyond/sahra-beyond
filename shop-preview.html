@@ -999,7 +999,7 @@ body.buy-page .pdp-size{min-width:68px}
     <p class="tl-sub">Every tee comes in two fits. <strong>Regular</strong> is a slim cut — size up for your usual feel. <strong>Oversized</strong> is a relaxed, dropped-shoulder cut — size down if you want it less roomy. Heavyweight 100% combed ring-spun cotton, pre-washed for minimal shrinkage.</p>
 
     <div class="fit-explain">
-      <div class="fe-card"><h3>Regular Fit</h3><p>Classic, true-to-size cut. Straight body, set shoulder seam. Pick your usual size.</p></div>
+      <div class="fe-card"><h3>Regular Fit</h3><p>A slim cut. Straight body, set shoulder seam. Most people take one size up from their usual letter.</p></div>
       <div class="fe-card"><h3>Oversized Fit</h3><p>Relaxed drop-shoulder, longer body. Roomy by design — size down for a slightly trimmer look.</p></div>
     </div>
 
@@ -1222,7 +1222,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   </div>
 </section>
 
-<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% combed ring-spun cotton</div><div>230 GSM heavyweight</div><div>Free returns within the UAE</div></div></div>
+<div class="trust"><div class="trust-row"><div>Designed in the UAE</div><div>100% combed ring-spun cotton</div><div>230 GSM tees &middot; 240 GSM polo</div><div>Free returns within the UAE</div></div></div>
 
 <div class="lb" id="lightbox" aria-label="Photo viewer"><button class="lb-close" id="lbClose" aria-label="Close">✕</button><button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button><img class="lb-img" id="lbImg" alt=""><button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button></div>
 
@@ -1830,9 +1830,9 @@ function draw(){
     var specList=_polo
       ?'<ul class="prod-specs"><li><strong>Fabric.</strong> 240&nbsp;gsm piqu&eacute; cotton, pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Taped shoulder seams, double-stitched and side-seamed for shape retention.</li><li><strong>Embroidery.</strong> Embroidered logo — stitched, not printed.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the embroidery.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul>'
       :'<ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% combed ring-spun cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Usually ships in 1&ndash;2 working days &middot; free returns within the UAE.</li></ul>';
-    var fitNote=_polo?'One unisex cut, S&ndash;XL, worn by everyone. Measurements are in the size guide.'
+    var fitNote=_polo?'One unisex cut, S&ndash;XL, and it runs slim &mdash; most people take one size up from their usual letter. Measurements are in the size guide.'
       :(fitLabel==='oversized'?'Oversized is a relaxed drop-shoulder cut with a longer body — roomy by design. Size down if you want it a little trimmer.'
-      :'Regular is a slim, true-to-size cut with a set shoulder seam. If you are between sizes, size up.');
+      :'Regular is a slim cut with a set shoulder seam. Most people take one size up from their usual letter.');
     var storyFold='<details class="prod-fold"><summary>The story behind the '+(_polo?'polo':'tee')+'</summary><div class="fold-b">'+placeMeta+placeLead+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+readPlace+'</div></details>';
     var detailsFold='<details class="prod-fold"><summary>Details &amp; care</summary><div class="fold-b">'+fabricBars+specStrip+specList+pdpLink+'</div></details>';
     var fitFold='<details class="prod-fold"><summary>Fit &amp; sizing</summary><div class="fold-b"><p class="fit-note">'+fitNote+'</p>'+fitSwap+(fitSwap?'<br>':'')+'<a class="size-guide-link" href="#sizeguide">Size guide &amp; measurements</a><br>'+buyLimited+'</div></details>';

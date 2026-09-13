@@ -378,6 +378,7 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 .gal-pause:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 .gal-model{margin:10px 2px 0;font-family:'Space Mono',monospace;font-size:13px;line-height:1.5;letter-spacing:.3px;color:var(--txt-soft)}
 .gal-model-alt{border-left:2px solid currentColor;padding:2px 0 2px 9px;color:var(--txt)}
+.gal-model-off{display:none}
 .shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}
 .shipsub{font-weight:400;font-size:11px;letter-spacing:.2px;color:var(--txt-soft);margin-left:4px}
 .fit-warn{margin:-4px 0 14px;font-size:14px;line-height:1.55;color:var(--txt,#2A2016);padding:10px 12px;border:1px solid rgba(42,32,22,.14);border-radius:10px;background:rgba(255,255,255,.55)}
@@ -741,7 +742,12 @@ ${galShots(p).map((s,i)=>`
         <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img${s[3]==='compare'?' class="fit-contain"':''} src="../..${s[0]}" alt=""></button>`).join('')}
       </div>
       ${/* Audit 13 Sep: 4 of 11 personas read this caption on a Regular page, saw "Oversized fit", and lost trust. The same fit-aware wording already existed on the answer-list copy below; it was missing on the one people actually see. */''}
-      ${p.modelInfo ? `<p class="gal-model${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' ? ' gal-model-alt' : ''}">${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' ? 'Photographed on the Oversized cut \u2014 this page is the ' + esc(p.fitLabel || 'Regular fit').replace(/ fit$/,'') + ' fit, which is slimmer. ' : ''}${esc(p.modelInfo)}</p>` : ''}
+      ${/* Faheem, 13 Sep: "Model wears XL" under the MODEL photos. On a single-cut garment
+           the note is a plain size credit, so it must not caption the two ghost-mannequin
+           studio frames that open the polo gallery - data-worn-only binds it to the frames
+           that actually show the model. The tees' note is a standing cross-fit warning about
+           the whole gallery and stays visible throughout, so it is deliberately not tagged. */''}
+      ${p.modelInfo ? `<p class="gal-model${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' ? ' gal-model-alt' : ''}"${(p.garment === 'polo' || !p.fitLabel) ? ' data-worn-only="1"' : ''}>${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' ? 'Photographed on the Oversized cut \u2014 this page is the ' + esc(p.fitLabel || 'Regular fit').replace(/ fit$/,'') + ' fit, which is slimmer. ' : ''}${esc(p.modelInfo)}</p>` : ''}
     </div>
 
     <div class="buy">
@@ -774,8 +780,13 @@ ${galShots(p).map((s,i)=>`
           <span class="pdp-loading">Loading sizes&hellip;</span>
         </div>
         ${/* the fit, explained where the decision happens (5 Sep 2026): a cold reader could not tell Regular from Oversized at the size picker */''}
+        ${/* the polo is graded to the Regular tee chart, and that chart runs slim. This line
+             used to say "One cut, true to size. Take your usual letter." - flatly contradicting
+             Fit at a glance, the size section and the FAQ, all of which say size up (Faheem,
+             13 Sep). The two blocks branch on different flags (garment vs sizingApplies), which
+             is why nothing ever put them side by side. */''}
         ${p.garment === 'polo'
-          ? `<p class="fit-warn"><b>One cut, true to size.</b> Take your usual letter.</p>`
+          ? `<p class="fit-warn"><b>One cut, and it runs slim.</b> Most people take one size up from their usual letter.</p>`
           : p.fit === 'oversized'
             ? `<p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut.</b> Take your usual letter.${p.siblingOf ? ` Want it closer to the body? <a href="/products/${p.siblingOf}-regular/">See this design in Regular &rarr;</a>` : ''}</p>`
             : `<p class="fit-warn"><b>Regular is a slim cut.</b> Most people take one size up from their usual letter.${p.siblingOf ? ` Want the relaxed feel? <a href="/products/${p.siblingOf}-oversized/">Take your usual letter in Oversized &rarr;</a>` : ''}</p>`}
@@ -840,7 +851,9 @@ ${galShots(p).map((s,i)=>`
               ? 'Measured flat, pit to pit: S 22.5&Prime; · M 23.5&Prime; · L 25&Prime; · XL 26.5&Prime;. A true drop shoulder — do not assume your Regular letter carries over.'
               : 'Runs slim — most people take one size up from their usual letter. Measured flat, pit to pit: S 19&Prime; · M 20&Prime; · L 22&Prime; · XL 24&Prime;. Measure a shirt you like and match the number, not the letter.')}
             <a href="#fit">Full chart &darr;</a></p>
-          ${p.modelInfo ? `<p class="pdp-ans-foot">${esc(p.modelInfo)}${p.fit === 'oversized' ? '' : ' — the worn photos show the Oversized cut, not this one'}.</p>` : ''}
+          ${/* same one-cut guard as the gallery badge: a garment with a single cut has no
+               "other cut" for its worn photos to be showing (13 Sep). */''}
+          ${p.modelInfo ? `<p class="pdp-ans-foot">${esc(p.modelInfo)}${(p.fit === 'oversized' || p.garment === 'polo' || !p.fitLabel) ? '' : ' — the worn photos show the Oversized cut, not this one'}.</p>` : ''}
         </details>
         ${/* About the cotton + about the decoration (Faheem, 10 Sep): the fabric
              bars every heavyweight brand shows (weight / softness / stretch / breathability)
@@ -1101,8 +1114,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
      photos ARE that cut. The polo used to have no worn photos at all, so this never
      came up; with the real shoot in (13 Sep) every detail frame is data-worn, and the
      badge was stamping "PHOTO: OVERSIZED FIT" across a garment that has no oversized
-     version - inventing a fit the product does not have, on the page that says
-     "One cut, true to size". */
+     version - inventing a fit the product does not have, on a garment with a single cut. */
   var oneCut=${p.garment === 'polo' || !p.fitLabel};
   var fitBadge=document.querySelector('.gal-fit');
   if(!fitBadge && !isOver && !oneCut && main.querySelector('img[data-worn]')){
@@ -1124,13 +1136,21 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       fitBadge.textContent=fitBadge.dataset.orig; fitBadge.classList.remove('warnfit');
     }
   }
+  /* the size credit belongs under the photographs of the model, not under the
+     ghost-mannequin studio frames (Faheem, 13 Sep) */
+  var modelNote=document.querySelector('.gal-model[data-worn-only]');
+  function syncModel(){
+    if(!modelNote)return;
+    var im=imgs[cur];
+    modelNote.classList.toggle('gal-model-off',!(im&&im.hasAttribute('data-worn')));
+  }
   function show(i){
     cur=(i%imgs.length+imgs.length)%imgs.length;
     imgs.forEach(function(im,k){im.classList.toggle('on',k===cur);});
     thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===cur);});
-    syncBadge();
+    syncBadge(); syncModel();
   }
-  syncBadge();
+  syncBadge(); syncModel();
   /* Continuous 1s loop (Faheem, 29 Aug), same manners as the shop's slideshow:
      pauses while the pointer is over the image or a finger is on it, pauses
      while the zoom lightbox is open, restarts after any thumbnail choice, and
