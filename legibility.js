@@ -357,7 +357,12 @@ body.buy-page .pack-btn{font-size:15px!important}
 
 /* --- mono labels that were under the 12px floor --- */
 .hring-fit,.hring-place,.sb-curhint,.card-tag,.shopcta-eyebrow,.sring-qa-l{font-size:12px!important;letter-spacing:.07em!important}
-.hring-fit,.hring-place{line-height:1.35}
+/* the ring reserves a line for these even when a product has none - the polo has
+   no fit and no place. That placeholder was hard-coded as calc(10px * 1.5) back
+   when these were 10px, so lifting them to 12px left the polo card 1px shorter
+   than the other six and the ring's equal-height check started failing. Derive
+   the reserved line from the font size instead of pinning it to an old one. */
+.hring-fit,.hring-place{line-height:1.35;min-height:1.35em!important}
 
 /* --- facts stated as sentences: 14px, not label-sized --- */
 .read-place,.gal-model{font-size:14px!important;letter-spacing:.03em!important}
