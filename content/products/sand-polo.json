@@ -13,14 +13,14 @@
   "theme2": "#AE9C91",
   "accent": "#9C521B",
   "scene": "dunes",
-  "imgMain": "/shirts/polo-front.jpg",
-  "imgFront": "/shirts/polo-front.jpg",
+  "imgMain": "/shirts/polo-studio-front.jpg",
+  "imgFront": "/shirts/polo-studio-front.jpg",
   "imgCard": [
     "/shirts/polo-front.jpg",
     "/shirts/polo-drape.jpg"
   ],
-  "altMain": "The Sahra Polo in sand, worn against a 4x4 in the dunes — 240gsm piqué cotton, three-button placket, embroidered mark on the chest",
-  "altFront": "The Sahra Polo in sand, worn against a 4x4 in the dunes — 240gsm piqué cotton, three-button placket, embroidered mark on the chest",
+  "altMain": "The Sahra Polo in sand, front — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
+  "altFront": "The Sahra Polo in sand, front — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
   "seoTitle": "The Sahra Polo — Embroidered 240gsm Cotton Polo",
   "seoDesc": "The Sahra Polo — 240gsm piqué cotton, embroidered rather than printed, in sand. A limited first run. The scarcest piece in the drop. AED 229.",
   "shareDesc": "240gsm embroidered piqué polo in sand. A limited first run.",
@@ -116,6 +116,10 @@
   "decoration": "Embroidered",
   "modelShots": [
     {
+      "src": "/shirts/polo-front.jpg",
+      "alt": "The Sahra Polo worn against a 4x4 in the dunes — the full front, three-button placket and embroidered chest mark"
+    },
+    {
       "src": "/shirts/polo-drape.jpg",
       "alt": "The Sahra Polo held at the hem — the weight of the piqué and the side seam"
     },
@@ -139,5 +143,7 @@
       "src": "/shirts/polo-embroidery.jpg",
       "alt": "Close-up of the embroidery on The Sahra Polo — the dune line, sun and صحراء stitched in cream thread on sand piqué"
     }
-  ]
+  ],
+  "imgBack": "/shirts/polo-studio-back.jpg",
+  "altBack": "The Sahra Polo in sand, back — plain 240gsm cotton piqué, undecorated, with the ribbed collar and set-in sleeve seams"
 }
