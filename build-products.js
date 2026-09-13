@@ -1097,8 +1097,15 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
      work exists to close. While a data-worn image is active, the badge flips
      to "PHOTO: OVERSIZED FIT" in the warning tone, then flips back. */
   var isOver=${p.fit === 'oversized'};
+  /* ...but a product with only ONE cut has no other fit to warn about, and its worn
+     photos ARE that cut. The polo used to have no worn photos at all, so this never
+     came up; with the real shoot in (13 Sep) every detail frame is data-worn, and the
+     badge was stamping "PHOTO: OVERSIZED FIT" across a garment that has no oversized
+     version - inventing a fit the product does not have, on the page that says
+     "One cut, true to size". */
+  var oneCut=${p.garment === 'polo' || !p.fitLabel};
   var fitBadge=document.querySelector('.gal-fit');
-  if(!fitBadge && !isOver && main.querySelector('img[data-worn]')){
+  if(!fitBadge && !isOver && !oneCut && main.querySelector('img[data-worn]')){
     fitBadge=document.createElement('span'); fitBadge.className='gal-fit'; fitBadge.setAttribute('aria-hidden','true');
     fitBadge.textContent='${esc(p.fitLabel || (p.sizingApplies === false ? 'POLO' : 'REGULAR FIT'))}';
     main.appendChild(fitBadge);
@@ -1109,7 +1116,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     /* every worn photo names its model and size (Faheem, 8 Sep: "mention on the photos
        that she's wearing Medium oversized"); on a Regular page it keeps the warning tone,
        since the photo shows the other cut */
-    if(im && im.hasAttribute('data-worn')){
+    if(im && im.hasAttribute('data-worn') && !oneCut){
       if(!fitBadge.dataset.orig) fitBadge.dataset.orig=fitBadge.textContent;
       fitBadge.textContent=tag?(isOver?tag:'Photo: '+tag):(isOver?fitBadge.dataset.orig:'PHOTO: OVERSIZED FIT');
       fitBadge.classList.toggle('warnfit',!isOver);
