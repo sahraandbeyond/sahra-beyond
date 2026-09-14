@@ -42,7 +42,7 @@
 </script>
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
-<script src="/assets/tiktok-pixel.js" data-ttq defer></script>
+<script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -963,10 +963,18 @@ body.buy-page .pack-btn{font-size:15px!important}
 
 /* --- mono labels that were under the 12px floor --- */
 .hring-fit,.hring-place,.sb-curhint,.card-tag,.shopcta-eyebrow,.sring-qa-l{font-size:12px!important;letter-spacing:.07em!important}
-.hring-fit,.hring-place{line-height:1.35}
+/* the ring reserves a line for these even when a product has none - the polo has
+   no fit and no place. That placeholder was hard-coded as calc(10px * 1.5) back
+   when these were 10px, so lifting them to 12px left the polo card 1px shorter
+   than the other six and the ring's equal-height check started failing. Derive
+   the reserved line from the font size instead of pinning it to an old one. */
+.hring-fit,.hring-place{line-height:1.35;min-height:1.35em!important}
 
 /* --- facts stated as sentences: 14px, not label-sized --- */
 .read-place,.gal-model{font-size:14px!important;letter-spacing:.03em!important}
+/* this layer sets .gal-model to --txt-soft further up, which would mute the
+   wrong-fit correction on the Regular pages back into fine print */
+.gal-model-alt{color:var(--txt,#2A2016)!important}
 /* "Sold out" sits UNDER the size letter inside the chip, so it cannot simply go to
    14px without stretching the whole size row - and body.buy-page .sz-out (0,2,1)
    outranks a bare .sz-out anyway. 13px, a chip wide enough to hold it, and a rule
@@ -1147,7 +1155,7 @@ body.dark-bg .rv-stars{color:#E9B978}
       <div class="rv-aggregate">
         <span class="rv-stars" aria-hidden="true">★★★★★</span>
         <span class="rv-score">5.0 / 5</span>
-        <span class="rv-count">from 11 reviews</span>
+        <span class="rv-count">from 12 reviews</span>
       </div>
       <div class="rv-filters" data-rv-filters>
         <!-- no counts on the chips: the band shows the newest 6 while the aggregate counts every
@@ -1167,6 +1175,14 @@ body.dark-bg .rv-stars{color:#E9B978}
       </div>
       <ul class="rv-list">
         
+        <li class="rv-card" data-rating="5" data-date="2026-09-13">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Super satisfied customer here!
+From the user-friendly website and fast delivery to how beautifully the package was presented, everything was such a great experience. And the quality of the shirt? Definitely not cheap material, I was genuinely impressed! Plus, they’re super generous because you even get a FREE tote bag with your order! Already loving my tee and can’t wait to see what new designs they come up with n…</p>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1789322158__1789322135952-img_5559__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1789322158__1789322135952-img_5559__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
+          <span class="rv-meta">Monna Lizz Lumabas · Verified buyer · September 2026</span>
+          <a class="rv-more" href="/products/al-quaa-galaxy-oversized/#reviews">Read the full review &rarr;</a>
+        </li>
         <li class="rv-card" data-rating="5" data-date="2026-09-10">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
           <p class="rv-text">Amazing product and value for money.
@@ -1207,17 +1223,8 @@ Highly recommended Sahra &amp; Beyond to everyone!</p>
           <span class="rv-meta">Mustafa Chulawala · Verified buyer · September 2026</span>
           <a class="rv-more" href="/products/al-quaa-galaxy-regular/#reviews">See it on Al Quaa Galaxy — Regular &rarr;</a>
         </li>
-        <li class="rv-card" data-rating="5" data-date="2026-09-01">
-          <span class="rv-stars" aria-hidden="true">★★★★★</span>
-          <p class="rv-text">Safe to say Sahra &amp; Beyond nailed it.
-
-The attention to detail is remarkable. The branded cardboard box, the premium canvas tote, and the drawstring pouch create a fantastic first impression. The standard thank-you card and the detailed product card with coordinates shows a deep connection to the brand's story. It feels like a premium, thoughtfully curated gift.
-I ordered beige colored t-shirt which looked incr…</p>
-          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788281268__111999__original.jpg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788281268__111999__original.jpg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
-          <span class="rv-meta">nabeel shahid · Verified buyer · September 2026</span>
-          <a class="rv-more" href="/products/empty-quarter-regular/#reviews">Read the full review &rarr;</a>
-        </li>
       </ul>
+      
       
       <script>(function(){if(window.__sbRvLB)return;window.__sbRvLB=1;
 var last=null;
