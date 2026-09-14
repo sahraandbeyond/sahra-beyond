@@ -399,13 +399,16 @@ a{color:#9C521B}
 .ab-intro{font-family:'Playfair Display',serif;font-size:clamp(20px,2.4vw,26px);line-height:1.45;color:#2A2016;margin:0 0 8px}
 .ab-intro em{color:#9C521B;font-style:italic}
 .ab-places{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:18px 0 8px}
-.ab-place{display:flex;flex-direction:column;gap:6px;padding:20px 20px 18px;border-radius:16px;color:#F7EFE2;text-decoration:none;position:relative;overflow:hidden;min-height:196px;justify-content:flex-end;box-shadow:0 2px 14px rgba(58,42,28,.12);transition:transform .2s,box-shadow .2s}
+.ab-place{display:flex;flex-direction:column;gap:6px;padding:20px 20px 18px;border-radius:16px;color:#F7EFE2;text-decoration:none;position:relative;overflow:hidden;min-height:300px;justify-content:flex-end;background:#2A1E45;box-shadow:0 2px 14px rgba(58,42,28,.12);transition:transform .2s,box-shadow .2s}
+@media(min-width:701px){.ab-place{min-height:400px}}
+.ab-place-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform .6s ease}
+.ab-place:hover .ab-place-img{transform:scale(1.04)}
 .ab-place:hover,.ab-place:focus-visible{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,42,28,.2)}
-.ab-place::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.45));pointer-events:none}
-.ab-place>*{position:relative;z-index:1}
+.ab-place::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,6,20,.05) 0%,rgba(10,6,20,.35) 45%,rgba(10,6,20,.82) 100%);pointer-events:none}
+.ab-place>*:not(.ab-place-img){position:relative;z-index:2}
 .ab-place-name{font-family:'Playfair Display',serif;font-size:22px;line-height:1.15}
 .ab-place-meta{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,239,226,.85)}
-.ab-place-blurb{font-size:14.5px;line-height:1.5;color:rgba(247,239,226,.92)}
+.ab-place-blurb{font-size:14.5px;line-height:1.5;color:rgba(247,239,226,.92);text-shadow:0 1px 8px rgba(0,0,0,.45)}
 .ab-place-go{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#E9B978;margin-top:4px}
 .ab-facts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:16px 0 8px}
 @media(max-width:600px){.ab-facts{grid-template-columns:1fr}}
@@ -1458,11 +1461,15 @@ function contactWays() {
     <g class="ab-arabic"><path class="ab-ink" fill-rule="evenodd" d="${L.arabic.d}"/></g>
   </svg>`;
   const places = [
-    { name: 'Al Quaa', emirate: 'Abu Dhabi', gps: '23.529° N · 54.753° E', blurb: 'One of the darkest skies in the Emirates. Far enough south that no city glow reaches it — on a clear night the Milky Way throws a shadow.', href: '/products/al-quaa-galaxy-regular/', tee: 'Al Quaa Galaxy', grad: 'linear-gradient(160deg,#0B0819 0%,#1E1740 55%,#4A2D5A 100%)' },
-    { name: 'Liwa', emirate: 'Abu Dhabi', gps: '23.134° N · 53.779° E', blurb: 'Where the Empty Quarter begins. Some of the largest dunes on earth; at sunset the ridges turn gold and the whole horizon goes quiet.', href: '/products/empty-quarter-regular/', tee: 'Empty Quarter', grad: 'linear-gradient(160deg,#7A4F2A 0%,#B5651F 55%,#E0A25A 100%)' },
-    { name: 'Wadi Naqab', emirate: 'Ras Al Khaimah', gps: '25.699° N · 56.005° E', blurb: 'Red-rock walls and terraced pools high in the Hajar, below Jebel Jais — the range that gives the northern Emirates their skyline.', href: '/products/hajar-mountains-regular/', tee: 'Hajar Mountains', grad: 'linear-gradient(160deg,#3A241C 0%,#7E4114 55%,#A65A2B 100%)' }
+    { name: 'Al Quaa', emirate: 'Abu Dhabi', gps: '23.529° N · 54.753° E', blurb: 'One of the darkest skies in the Emirates. Far enough south that no city glow reaches it — on a clear night the Milky Way throws a shadow.', href: '/products/al-quaa-galaxy-regular/', tee: 'Al Quaa Galaxy', img: '/assets/places/alquaa.jpg', alt: 'The Milky Way over the dunes at Al Quaa' },
+    { name: 'Liwa', emirate: 'Abu Dhabi', gps: '23.134° N · 53.779° E', blurb: 'Where the Empty Quarter begins. Some of the largest dunes on earth; at sunset the ridges turn gold and the whole horizon goes quiet.', href: '/products/empty-quarter-regular/', tee: 'Empty Quarter', img: '/assets/places/liwa.jpg', alt: 'The sun setting over the dunes of Liwa' },
+    { name: 'Wadi Naqab', emirate: 'Ras Al Khaimah', gps: '25.699° N · 56.005° E', blurb: 'Red-rock walls and terraced pools high in the Hajar, below Jebel Jais — the range that gives the northern Emirates their skyline.', href: '/products/hajar-mountains-regular/', tee: 'Hajar Mountains', img: '/assets/places/wadi-naqab.jpg', alt: 'Red rock peaks above Wadi Naqab in the Hajar Mountains' }
   ];
-  const placeCards = places.map(p => `<a class="ab-place" href="${p.href}" style="background:${p.grad}">
+  /* Faheem, 14 Sep: flat gradients "look like the background didn't load" - the cards
+     carry the same three landscape plates the homepage journey uses (journey/plates/),
+     cropped to the card. */
+  const placeCards = places.map(p => `<a class="ab-place" href="${p.href}">
+        <img class="ab-place-img" src="${p.img}" alt="${esc(p.alt)}" loading="lazy" decoding="async" width="900" height="1080">
         <span class="ab-place-meta">${esc(p.emirate)} &middot; ${esc(p.gps)}</span>
         <span class="ab-place-name">${esc(p.name)}</span>
         <span class="ab-place-blurb">${esc(p.blurb)}</span>
