@@ -346,6 +346,73 @@ a{color:#9C521B}
 .ct-ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:26px 0 6px}
 .ct-way{display:flex;flex-direction:column;gap:5px;padding:18px 20px;background:#fff;border:1px solid rgba(43,37,32,.12);border-radius:16px;text-decoration:none;color:inherit;box-shadow:0 2px 12px rgba(58,42,28,.06);transition:border-color .2s,transform .2s}
 .ct-way:hover,.ct-way:focus-visible{border-color:#A95A21;transform:translateY(-2px)}
+
+/* ===== About: the mark comes alive (Faheem, 14 Sep: "make the hero alive ... an
+   animated render of our mark"). The four layers of mark-paths.js draw on in the
+   order a hand would draw them - left ridge, right ridge, then the sun rises into
+   its seat and the wordmark surfaces - while the sky behind goes from night to
+   dawn. All CSS: the wipes are gradient-edged mask rects translated into place, so
+   the leading edge is soft ink rather than a hard cut. Reduced-motion gets the
+   finished frame. */
+.ab-hero{position:relative;overflow:hidden;color:#F7EFE2;min-height:clamp(560px,82vh,880px);display:flex;align-items:center;justify-content:center;padding:clamp(28px,5vw,56px) clamp(16px,5vw,32px) clamp(40px,6vw,64px);background:#0E0A1F;isolation:isolate}
+.ab-sky,.ab-dawn,.ab-stars,.ab-haze,.ab-grain{position:absolute;inset:0;pointer-events:none}
+.ab-sky{background:linear-gradient(180deg,#0B0819 0%,#171233 48%,#2A1E45 100%)}
+.ab-dawn{background:linear-gradient(180deg,#14102A 0%,#39295A 34%,#7A4F63 66%,#C0702E 100%);opacity:0;animation:abDawn 6s cubic-bezier(.4,0,.2,1) 1.3s both}
+.ab-haze{background:radial-gradient(120% 55% at 50% 100%,rgba(240,178,96,.55),rgba(240,178,96,0) 62%);opacity:0;animation:abHaze 5.5s ease-out 2s both}
+.ab-stars{background-image:radial-gradient(1.6px 1.6px at 12% 22%,#fff,transparent),radial-gradient(1.2px 1.2px at 27% 9%,#fff,transparent),radial-gradient(1.5px 1.5px at 41% 31%,#fff,transparent),radial-gradient(1.1px 1.1px at 56% 14%,#FFE9C4,transparent),radial-gradient(1.7px 1.7px at 68% 26%,#fff,transparent),radial-gradient(1.2px 1.2px at 79% 8%,#fff,transparent),radial-gradient(1.5px 1.5px at 88% 30%,#FFE9C4,transparent),radial-gradient(1px 1px at 34% 44%,#fff,transparent),radial-gradient(1px 1px at 62% 41%,#fff,transparent),radial-gradient(1.3px 1.3px at 8% 50%,#fff,transparent),radial-gradient(1px 1px at 93% 48%,#fff,transparent),radial-gradient(1.2px 1.2px at 48% 6%,#fff,transparent);opacity:.95;animation:abStars 6.5s ease-in-out 1.9s both,abTwinkle 5.5s ease-in-out infinite}
+.ab-grain{opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+.ab-hero-inner{position:relative;z-index:2;width:100%;max-width:820px;margin:0 auto;text-align:center}
+.ab-hero .crumbs{color:rgba(247,239,226,.7);text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.ab-hero .crumbs a{color:inherit}
+.ab-mark{width:min(640px,86vw);margin:clamp(6px,2vw,18px) auto clamp(18px,3vw,30px);filter:drop-shadow(0 10px 30px rgba(0,0,0,.35))}
+.ab-mark svg{display:block;width:100%;height:auto;overflow:visible}
+.ab-ink{fill:#D9C3A5}
+.ab-wipe{transform:translateX(var(--from));animation:abWipe var(--dur) cubic-bezier(.65,0,.3,1) var(--delay) both}
+.ab-sun{transform-box:fill-box;transform-origin:50% 50%;opacity:0;transform:translateY(150px) scale(.72);animation:abRise 1.4s cubic-bezier(.2,.7,.2,1) 1.9s both}
+.ab-sun .ab-ink{animation:abWarm 2.2s ease-in-out 2.9s both}
+.ab-glow{opacity:0;animation:abGlowIn 1.8s ease-out 2.2s both,abBreathe 7s ease-in-out 4s infinite}
+.ab-arabic{opacity:0;transform:translateY(38px);animation:abSurface 1.1s cubic-bezier(.2,.7,.2,1) 2.7s both}
+.ab-eyebrow{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E9B978;margin:0 0 10px}
+.ab-hero h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(30px,4.6vw,52px);line-height:1.08;letter-spacing:-.01em;margin:0 0 14px;color:#FBF4E8;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.ab-hero h1 em{font-style:italic;color:#E9B978}
+.ab-hero .lede{font-size:clamp(16px,1.6vw,19px);line-height:1.55;color:rgba(247,239,226,.88);max-width:600px;margin:0 auto 22px;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.ab-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;background:#E9B978;color:#2A2016;font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;font-weight:700;transition:background .25s,transform .2s}
+.ab-cta:hover{background:#fff;transform:translateY(-1px)}
+.ab-copy{opacity:0;transform:translateY(14px);animation:abSurface 1s cubic-bezier(.2,.7,.2,1) both}
+.ab-copy.c1{animation-delay:2.95s}.ab-copy.c2{animation-delay:3.1s}.ab-copy.c3{animation-delay:3.25s}.ab-copy.c4{animation-delay:3.4s}
+@keyframes abWipe{to{transform:translateX(0)}}
+@keyframes abRise{to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes abWarm{from{fill:#D9C3A5}to{fill:#F0C27A}}
+@keyframes abGlowIn{to{opacity:.72}}
+@keyframes abBreathe{0%,100%{opacity:.72}50%{opacity:.5}}
+@keyframes abSurface{to{opacity:1;transform:translateY(0)}}
+@keyframes abDawn{to{opacity:1}}
+@keyframes abHaze{to{opacity:1}}
+@keyframes abStars{to{opacity:.32}}
+@keyframes abTwinkle{0%,100%{filter:brightness(1)}50%{filter:brightness(.55)}}
+@media(prefers-reduced-motion:reduce){
+  .ab-dawn,.ab-haze,.ab-stars,.ab-wipe,.ab-sun,.ab-sun .ab-ink,.ab-glow,.ab-arabic,.ab-copy{animation:none!important}
+  .ab-dawn,.ab-haze,.ab-sun,.ab-arabic,.ab-copy{opacity:1;transform:none}
+  .ab-wipe{transform:translateX(0)}.ab-sun path{fill:#F0C27A}.ab-glow{opacity:.6}.ab-stars{opacity:.32}
+}
+/* the page below the hero */
+.ab-intro{font-family:'Playfair Display',serif;font-size:clamp(20px,2.4vw,26px);line-height:1.45;color:#2A2016;margin:0 0 8px}
+.ab-intro em{color:#9C521B;font-style:italic}
+.ab-places{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:18px 0 8px}
+.ab-place{display:flex;flex-direction:column;gap:6px;padding:20px 20px 18px;border-radius:16px;color:#F7EFE2;text-decoration:none;position:relative;overflow:hidden;min-height:196px;justify-content:flex-end;box-shadow:0 2px 14px rgba(58,42,28,.12);transition:transform .2s,box-shadow .2s}
+.ab-place:hover,.ab-place:focus-visible{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,42,28,.2)}
+.ab-place::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.45));pointer-events:none}
+.ab-place>*{position:relative;z-index:1}
+.ab-place-name{font-family:'Playfair Display',serif;font-size:22px;line-height:1.15}
+.ab-place-meta{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,239,226,.85)}
+.ab-place-blurb{font-size:14.5px;line-height:1.5;color:rgba(247,239,226,.92)}
+.ab-place-go{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#E9B978;margin-top:4px}
+.ab-facts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:16px 0 8px}
+@media(max-width:600px){.ab-facts{grid-template-columns:1fr}}
+.ab-fact{padding:18px 20px;background:#fff;border:1px solid rgba(43,37,32,.12);border-radius:16px;box-shadow:0 2px 12px rgba(58,42,28,.06)}
+.ab-fact b{display:block;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#7E4114;margin-bottom:6px}
+.ab-fact p{margin:0;font-size:15.5px;line-height:1.55;color:#4A4136}
+.ab-contact-more{font-size:15px;color:#6B6256;margin-top:14px}
 .ct-lab{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#7E4114}
 .ct-val{font-size:19px;line-height:1.3;overflow-wrap:anywhere;hyphens:none}
 /* the address is 23 characters - at 19px it broke mid-word inside the card */
@@ -1324,53 +1391,134 @@ LANDINGS.forEach(L => {
   write(`${L.slug}/index.html`, shell({ title: L.title, desc: L.desc, canonical, jsonld, bodyHtml: body }));
 });
 
+// The three ways to reach us, shared by /contact/ and the foot of /about/ so the
+// two can never disagree (Faheem, 14 Sep: contact info at the bottom of About too).
+const WA_URL = 'https://wa.me/971585449946';
+function contactWays() {
+  return `<div class="ct-ways">
+      <a class="ct-way" href="${WA_URL}" target="_blank" rel="noopener">
+        <span class="ct-lab">WhatsApp &middot; fastest</span>
+        <span class="ct-val">+971 58 544 9946</span>
+        <span class="ct-sub">Usually the same day</span>
+      </a>
+      <a class="ct-way" href="mailto:hello@sahraandbeyond.ae">
+        <span class="ct-lab">Email</span>
+        <span class="ct-val ct-val-em">hello@sahraandbeyond.ae</span>
+        <span class="ct-sub">Within one working day</span>
+      </a>
+      <a class="ct-way" href="tel:+971585449946">
+        <span class="ct-lab">Phone</span>
+        <span class="ct-val">+971 58 544 9946</span>
+        <span class="ct-sub">UAE business hours</span>
+      </a>
+    </div>`;
+}
+
 // ---- About page ----
+// Rewritten 14 Sep for the apparel brand (Faheem): the old copy still told the
+// outdoor-guide story - interactive map, packing lists, live weather, an Android
+// app. Every product fact below traces to MASTER_BRIEF / the live product pages:
+// 230 gsm tees, 240 gsm pique polo, DTG on Al Quaa + Hajar, embroidery on Empty
+// Quarter + polo, printed collar labels, forty per design numbered, the three
+// places with their coordinates. Nothing about origin of manufacture is claimed.
+// Coordinates live on the PRODUCT PAGES, not the garments: only the Hajar tee prints
+// them (brief section 3, Decision Log 1 Sep) - so the copy never says a tee "carries" them.
 (function () {
+  const MARK = require('./mark-paths.js');
   const canonical = `${SITE}/about/`;
-  const title = 'About Sahra & Beyond — Discover the Wild Side of the UAE';
-  const desc = 'The story behind Sahra & Beyond — a UAE outdoor guide inspired by the landscapes of the Emirates, built to help you find the wild side of the country.';
+  const title = 'About Sahra & Beyond — Wear the Wild Side of the UAE';
+  const desc = 'The story behind Sahra & Beyond — a UAE apparel brand built around real places: a dark-sky desert, the first dunes of the Empty Quarter, a red-rock wadi in the Hajar. Heavyweight cotton, printed and embroidered designs, a numbered first run.';
   const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
   const jsonld = [
     { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical },
-    { "@context": "https://schema.org", "@type": "Organization", "name": "Sahra & Beyond", "url": SITE + "/", "logo": SITE + "/icon-512.png", "slogan": TAGLINE, "sameAs": sameAs },
+    { "@context": "https://schema.org", "@type": "Organization", "name": "Sahra & Beyond", "legalName": "SAHRA AND BEYOND FZE LLC", "url": SITE + "/", "logo": SITE + "/icon-512.png", "slogan": TAGLINE, "email": "hello@sahraandbeyond.ae", "telephone": "+971585449946", "sameAs": sameAs },
     { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
       { "@type": "ListItem", "position": 2, "name": "About", "item": canonical }
     ] }
   ];
+  const L = MARK.layers;
+  /* mask rects: full height, wider than the ridge by a tail so the gradient's soft
+     edge has somewhere to go; they start translated fully off to the left */
+  const wipe = (id, layer, dur, delay) => {
+    const w = layer.w + 320, x = layer.x - 20;
+    return `<mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="2853" height="1258"><rect class="ab-wipe" style="--from:-${w}px;--dur:${dur}s;--delay:${delay}s" x="${x}" y="0" width="${w}" height="1258" fill="url(#abEdge)"/></mask>`;
+  };
+  const markSvg = `<svg viewBox="40 30 2780 1190" role="img" aria-label="The Sahra &amp; Beyond mark: three dune ridges under a rising sun, with صحراء beneath" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="abEdge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".84" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <radialGradient id="abGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F3BE78" stop-opacity=".85"/><stop offset=".38" stop-color="#F3BE78" stop-opacity=".22"/><stop offset="1" stop-color="#F3BE78" stop-opacity="0"/></radialGradient>
+      ${wipe('abMA', L.ridgeA, 1.7, 0.25)}
+      ${wipe('abMB', L.ridgeB, 1.5, 1.0)}
+    </defs>
+    <circle class="ab-glow" cx="${L.sun.cx}" cy="${L.sun.cy}" r="560" fill="url(#abGlow)"/>
+    <g class="ab-sun"><path class="ab-ink" d="${L.sun.d}"/></g>
+    <g mask="url(#abMA)"><path class="ab-ink" d="${L.ridgeA.d}"/></g>
+    <g mask="url(#abMB)"><path class="ab-ink" d="${L.ridgeB.d}"/></g>
+    <g class="ab-arabic"><path class="ab-ink" fill-rule="evenodd" d="${L.arabic.d}"/></g>
+  </svg>`;
+  const places = [
+    { name: 'Al Quaa', emirate: 'Abu Dhabi', gps: '23.529° N · 54.753° E', blurb: 'One of the darkest skies in the Emirates. Far enough south that no city glow reaches it — on a clear night the Milky Way throws a shadow.', href: '/products/al-quaa-galaxy-regular/', tee: 'Al Quaa Galaxy', grad: 'linear-gradient(160deg,#0B0819 0%,#1E1740 55%,#4A2D5A 100%)' },
+    { name: 'Liwa', emirate: 'Abu Dhabi', gps: '23.134° N · 53.779° E', blurb: 'Where the Empty Quarter begins. Some of the largest dunes on earth; at sunset the ridges turn gold and the whole horizon goes quiet.', href: '/products/empty-quarter-regular/', tee: 'Empty Quarter', grad: 'linear-gradient(160deg,#7A4F2A 0%,#B5651F 55%,#E0A25A 100%)' },
+    { name: 'Wadi Naqab', emirate: 'Ras Al Khaimah', gps: '25.699° N · 56.005° E', blurb: 'Red-rock walls and terraced pools high in the Hajar, below Jebel Jais — the range that gives the northern Emirates their skyline.', href: '/products/hajar-mountains-regular/', tee: 'Hajar Mountains', grad: 'linear-gradient(160deg,#3A241C 0%,#7E4114 55%,#A65A2B 100%)' }
+  ];
+  const placeCards = places.map(p => `<a class="ab-place" href="${p.href}" style="background:${p.grad}">
+        <span class="ab-place-meta">${esc(p.emirate)} &middot; ${esc(p.gps)}</span>
+        <span class="ab-place-name">${esc(p.name)}</span>
+        <span class="ab-place-blurb">${esc(p.blurb)}</span>
+        <span class="ab-place-go">The ${esc(p.tee)} tee &rarr;</span>
+      </a>`).join('\n      ');
   const body = `
-  <section class="loc-hero" style="--hero-grad:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
-    <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
-    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
-      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>About</span></nav>
-      <div class="loc-emoji">🌌</div>
-      <h1>Discover the wild side of the UAE</h1>
-      <p class="lede">Inspired by the unique landscapes of the Emirates &mdash; and worn on our backs: <em style="font-family:'Playfair Display',serif">${esc(TAGLINE)}</em></p>
+  <section class="ab-hero">
+    <div class="ab-sky"></div><div class="ab-dawn"></div><div class="ab-stars"></div><div class="ab-haze"></div><div class="ab-grain"></div>
+    <div class="ab-hero-inner">
+      <nav class="crumbs ab-copy c1"><a href="/">Home</a> &rsaquo; <span>About</span></nav>
+      <div class="ab-mark">${markSvg}</div>
+      <p class="ab-eyebrow ab-copy c1">Sahra &amp; Beyond</p>
+      <h1 class="ab-copy c2">Wear the <em>wild side</em> of the UAE</h1>
+      <p class="lede ab-copy c3">Sahra means desert. Beyond is everything the Emirates hold once the tarmac ends &mdash; the dark-sky south, the first dunes of the Empty Quarter, the red rock of the Hajar. We put those places on heavyweight cotton &mdash; and tell you exactly where to find them.</p>
+      <p class="ab-copy c4"><a class="ab-cta" href="/shop/">See the collection &rarr;</a></p>
     </div>
   </section>
   <main>
-    <div class="content">
-      <p>Sahra &amp; Beyond was born out of a love for the wild, quiet corners of the Emirates &mdash; the places most people drive straight past without ever knowing they are there. Inspired by the unique landscapes of the UAE, from rolling dunes and star-filled desert skies to hidden wadis, rugged mountains and empty stretches of coast, we exist to help you get out and experience them for yourself.</p>
-    </div>
+    <p class="ab-intro">Every design starts <em>somewhere you can stand.</em> A real place, drawn from its real landscape &mdash; and each shirt carries that place with it.</p>
+
     <section class="guide-sec"><h2>How it started</h2><div class="content">
-      <p>It started with a simple camping trip in the desert. One night under a sky thick with stars was all it took &mdash; that trip lit a spark, and a passion to explore more of this landscape that only grew with every journey after it.</p>
-      <p>The further we went, the more we realised how much the UAE holds beyond its cities, and how little of it is mapped for the people who actually want to find it. Sahra &amp; Beyond grew out of that: years of exploring the farthest corners of the country, turned into a guide for everyone who feels the same pull.</p>
+      <p>It started with a camping trip. One night under a sky thick with stars was enough &mdash; that trip lit something, and every journey after it went further: dunes at first light, wadis running after the rains, mountain roads with nobody on them.</p>
+      <p>The further we went, the more we realised how much of the UAE sits beyond the cities &mdash; quiet, and largely unknown to the people who would love it most. Sahra &amp; Beyond grew out of those years. First as a way to share the places. Now as something you can wear.</p>
     </div></section>
-    <section class="guide-sec"><h2>What we are about</h2><div class="content">
-      <p>Our mission is simple &mdash; to help you discover the wild side of the UAE. Not the polished, curated version, but the real one: the secluded camp spots, the wadis that flow after the rains, the mountain roads and the dark-sky deserts where the Milky Way still shows.</p>
-      <p>We want to make the outdoors feel within reach, so that anyone &mdash; first-timers and seasoned adventurers alike &mdash; can head out prepared, safe and inspired.</p>
-    </div></section>
-    <section class="guide-sec"><h2>What you will find here</h2><div class="content">
-      <p>Every place on Sahra &amp; Beyond is somewhere we would actually go. You will find an interactive map with real GPS coordinates, honest guides to camping, wadis, mountains, coast and dunes, live weather for each spot, and tailored packing lists so you arrive ready. There is a companion Android app too, so your next adventure is always in your pocket.</p>
-    </div></section>
+
+    <section class="guide-sec"><h2>The places</h2><div class="content">
+      <p>Three landscapes, three designs. Each one names its place, and every product page carries the coordinates &mdash; so the shirt is a pin on a map as much as a graphic.</p>
+    </div>
+      <div class="ab-places">
+      ${placeCards}
+      </div>
+    </section>
+
+    <section class="guide-sec"><h2>Made properly</h2><div class="content">
+      <p>Heavyweight cotton, because a shirt for the outdoors has to hold its shape through a long day and a lot of washes.</p>
+    </div>
+      <div class="ab-facts">
+        <div class="ab-fact"><b>The cloth</b><p>230&nbsp;gsm combed ring-spun cotton for the tees, 240&nbsp;gsm piqu&eacute; for the polo. Pre-washed, cut in two fits &mdash; Regular and Oversized.</p></div>
+        <div class="ab-fact"><b>The artwork</b><p>Al Quaa and the Hajar are printed direct-to-garment, so the graphic sits in the cotton rather than on top of it. The Empty Quarter and the polo are embroidered &mdash; thread, not ink.</p></div>
+        <div class="ab-fact"><b>The details</b><p>Collar labels are printed, not sewn in, so there is nothing to scratch. The mark on every chest is embroidered.</p></div>
+        <div class="ab-fact"><b>Founding Edition</b><p>The first run is deliberately small: forty of each design, numbered. When they are gone, the Founding Edition is closed.</p></div>
+      </div>
+    </section>
+
     <section class="guide-sec"><h2>The name</h2><div class="content">
-      <p>&ldquo;Sahra&rdquo; means desert in Arabic &mdash; and &ldquo;beyond&rdquo; is everything else the Emirates hold once you leave the tarmac behind: the wadis, the mountains, the coast and the quiet. That is the invitation &mdash; come explore it with us.</p>
+      <p>&ldquo;Sahra&rdquo; &mdash; <span lang="ar" dir="rtl">صحراء</span> &mdash; means desert in Arabic. &ldquo;Beyond&rdquo; is everything else the Emirates hold once you leave the tarmac behind: the wadis, the mountains, the coast and the quiet. That is the invitation. Come and see it, then wear it.</p>
     </div></section>
-    <section class="guide-sec"><h2>Wear it</h2><div class="content">
-      <p>The places we explore now live on original tees &mdash; the Milky Way over Al Quaa, the dune ridges of Liwa, the peaks of the Hajar Mountains. Every design carries a place, drawn from the real landscapes on this site.</p>
-    </div></section>
+
     ${shopBlock(null)}
-    <p class="back" style="margin-top:26px"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
+
+    <section class="guide-sec" id="contact"><h2>Say hello</h2><div class="content">
+      <p>Questions about an order, sizing, a return &mdash; or just where to go this weekend. WhatsApp is quickest; we normally reply the same day.</p>
+    </div>
+    ${contactWays()}
+      <p class="ab-contact-more">Company and trade-licence details are on the <a href="/contact/">contact page</a>.</p>
+    </section>
   </main>`;
   write('about/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, image: SITE + '/icon-512.png', activeNav: 'about' }));
 })();
@@ -1530,23 +1678,7 @@ if (LAUNCHED || REVEALED) (function () {
       <p>The quickest way to reach us is <strong>WhatsApp</strong>: we normally reply the same day. You can also call that number during UAE business hours, or email us and we aim to reply within one working day.</p>
     </div>
 
-    <div class="ct-ways">
-      <a class="ct-way" href="${WA}" target="_blank" rel="noopener">
-        <span class="ct-lab">WhatsApp &middot; fastest</span>
-        <span class="ct-val">+971 58 544 9946</span>
-        <span class="ct-sub">Usually the same day</span>
-      </a>
-      <a class="ct-way" href="mailto:hello@sahraandbeyond.ae">
-        <span class="ct-lab">Email</span>
-        <span class="ct-val ct-val-em">hello@sahraandbeyond.ae</span>
-        <span class="ct-sub">Within one working day</span>
-      </a>
-      <a class="ct-way" href="tel:+971585449946">
-        <span class="ct-lab">Phone</span>
-        <span class="ct-val">+971 58 544 9946</span>
-        <span class="ct-sub">UAE business hours</span>
-      </a>
-    </div>
+    ${contactWays()}
 
     <section class="guide-sec"><h2>Before you write</h2><div class="content">
       <p>Most answers are already on the site: <a href="/size-guide/">the size guide</a> has garment-flat measurements in inches and centimetres for both fits, <a href="/policies.html#shipping">shipping</a> covers delivery windows and duties, and <a href="/policies.html#returns">returns &amp; refunds</a> covers the 14-day window. If yours is not there, message us.</p>
