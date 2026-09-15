@@ -247,6 +247,13 @@ body.dark-bg .buy h1 em{color:var(--gold)}
 .plink:hover{opacity:.6}
 .price{font-family:'Space Mono',monospace;font-size:19px;letter-spacing:1px;margin:6px 0 5px}
 .vat{font-size:12px;color:var(--txt-soft);margin-bottom:22px}
+.pdp-rating{display:inline-flex;align-items:center;gap:8px;margin:-4px 0 12px;text-decoration:none;color:var(--txt-soft)}
+.pdp-rating .rv-stars{color:#B5651F;letter-spacing:1px}
+.pdp-rating-n{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.04em}
+.pdp-rating:hover .pdp-rating-n{text-decoration:underline}
+.pdp-reassure{margin:12px 0 0;font-size:14px;line-height:1.5;color:var(--txt-soft)}
+.pdp-reassure a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.pdp-add-p{font-weight:600}
 .colourway{display:flex;align-items:flex-start;gap:11px;margin:0 0 16px;padding:11px 13px;border:1px solid var(--line);border-radius:3px;background:rgba(0,0,0,.015)}
 .colourway .sw{flex:0 0 auto;width:34px;height:34px;border-radius:2px;border:1px solid rgba(0,0,0,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
 .cw-txt{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;line-height:1.5;text-transform:uppercase;color:var(--txt-soft)}
@@ -716,7 +723,7 @@ ${RV.CSS}
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; all seven emirates &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; a limited first run &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; a limited first run &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -755,8 +762,12 @@ ${galShots(p).map((s,i)=>`
       <h1>${p.nameHtml}</h1>
       ${/* Faheem, 10 Sep: "we're not highlighting that this is 100% 230gsm heavyweight cotton. This info should be right below the title" */''}
       <p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>
+      ${/* 15 Sep audit: this product's rating sat 6,600px below its price. A compact line
+           here, ONLY when this product has reviews, with ITS count - never the sitewide
+           pooled number - linking to its own reviews section. */''}
+      ${(() => { const d = RV.load(p.id); return d ? `<a class="pdp-rating" href="#reviews">${RV.stars(d.average)}<span class="pdp-rating-n">${d.average.toFixed(1)} &middot; ${d.count} review${d.count === 1 ? '' : 's'} &rarr;</span></a>` : ''; })()}
       <div class="price-row"><div class="price"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div><span data-sb-curslot></span></div>
-      <div class="vat"><span class="sb-ship-uae">Free returns within the UAE</span><span class="sb-ship-gcc">14-day returns &middot; duties, if any, are paid on arrival</span><span class="sb-ship-intl">14-day returns &middot; duties, if any, are paid on arrival</span></div>
+      <div class="vat"><span class="sb-ship-uae"></span><span class="sb-ship-gcc">14-day returns &middot; duties, if any, are paid on arrival</span><span class="sb-ship-intl">14-day returns &middot; duties, if any, are paid on arrival</span></div>
       ${/* Faheem, 10 Sep: "move the size selection and add to cart right under the shirt title. Users should
            be able to see the option and the photos at the same time." The lede, spec chips, colourway and
            occasion now live in the two folds that open the answer list below the buy box. */''}
@@ -791,9 +802,12 @@ ${galShots(p).map((s,i)=>`
             ? `<p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut.</b> Take your usual letter.${p.siblingOf ? ` Want it closer to the body? <a href="/products/${p.siblingOf}-regular/">See this design in Regular &rarr;</a>` : ''}</p>`
             : `<p class="fit-warn"><b>Regular is a slim cut.</b> Most people take one size up from their usual letter.${p.siblingOf ? ` Want the relaxed feel? <a href="/products/${p.siblingOf}-oversized/">Take your usual letter in Oversized &rarr;</a>` : ''}</p>`}
         <p class="pdp-stock" id="pdpStock" hidden></p>
-        <button class="btn pdp-add" id="pdpAdd" type="button" disabled>Select a size</button>
+        <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <a class="btn ghost" href="#fit">Size &amp; fit</a>
+        ${/* 15 Sep audit: returns reassurance at the point of commitment. Every clause is
+             policies.html verbatim - unworn, unwashed, tags on, exchanges subject to stock. */''}
+        <p class="pdp-reassure">Need a different size? UAE returns and exchanges are free within 14 days of delivery &mdash; unworn, unwashed, tags on; exchanges subject to stock. <a href="/policies.html#returns">Full policy &rarr;</a></p>
       </div>` : `
       <div class="cta-row">
         <a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>
@@ -823,7 +837,7 @@ ${galShots(p).map((s,i)=>`
           </div>` : ''}
         </details>
         <details class="pdp-ans">
-          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">free next-day, no minimum</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 390</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
+          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">free next-day &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 390</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
           <div class="shipcards">
             <!-- No regional-indicator (flag) emoji anywhere in these cards:
                  Windows renders them as bare letter codes, so the six-flag GCC string became
@@ -832,7 +846,7 @@ ${galShots(p).map((s,i)=>`
                  SVG — identical on every OS — and the GCC card names its
                  countries in words. 🌍 is an ordinary emoji and is safe. -->
             <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#00732F"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> United Arab Emirates</b>
-              <span>Next-day, all seven emirates — <strong>free, no minimum order</strong></span>
+              <span>Next working day, all seven emirates — order by 2 pm. <strong>Free, no minimum order</strong></span>
               <span>Free returns and exchanges within 14 days</span></div>
             <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
               <span>3–5 working days — AED 50, <strong>free over AED 390</strong></span>
@@ -841,7 +855,7 @@ ${galShots(p).map((s,i)=>`
               <span>7–14 working days — AED 80</span>
               <span>Duties and import taxes are payable on arrival</span></div>
           </div>
-          <p class="pdp-ans-foot">Dispatched in 1–2 working days · 14-day returns, unworn with tags — free within the UAE; international customers cover return postage. <a href="/policies.html#shipping">Full policy &rarr;</a></p>
+          <p class="pdp-ans-foot">Order by 2 pm UAE time for same-day dispatch · 14-day returns, unworn with tags — free within the UAE; international customers cover return postage. <a href="/policies.html#shipping">Full policy &rarr;</a></p>
         </details>
         <details class="pdp-ans">
           <summary>Fit at a glance</summary>
@@ -989,7 +1003,7 @@ ${careList(p.care)}
   <section class="sec reveal" id="delivery">
     <span class="snum">06 — Delivery &amp; returns</span>
     <h2>Getting it <em>to you</em></h2>
-    <p>Orders usually ship within 1–2 working days. You'll get tracking by email as soon as it's on its way.</p>
+    <p>Order before 2 pm UAE time on a working day and it ships the same day, arriving the next working day anywhere in the UAE. You'll get tracking by email as soon as it's on its way.</p>
     <p>Returns are free within the UAE — you have 14 days from delivery to send something back unworn, unwashed and with tags on, and exchanges for a different size or fit are free too, subject to stock. Full detail is on the <a href="/policies.html#returns" style="border-bottom:1px solid currentColor">policies page</a>.</p>
   </section>
 
@@ -1491,6 +1505,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
   var handle=box.dataset.handle;
   var sizesEl=document.getElementById('pdpSizes'),addEl=document.getElementById('pdpAdd'),msgEl=document.getElementById('pdpMsg');
+  /* the label and the price are separate spans: the market script converts the price,
+     so the button never says AED to a visitor whose page says SAR (15 Sep) */
+  var setAdd=function(label, showPrice){ var l=addEl.querySelector('.pdp-add-l'), pr=addEl.querySelector('.pdp-add-p');
+    if(l) l.textContent=label; else addEl.textContent=label; if(pr) pr.hidden=!showPrice; };
   /* Fit-check data, baked at build time from content/sizing.json. SLIM is true
      for the Regular tees and the polo (graded to the same chart); the
      Oversized fit is the roomy one and gets no warning. */
@@ -1537,7 +1555,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       b.addEventListener('click',function(){
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');
-        sel=v; addEl.disabled=false; addEl.textContent='Add to cart'; msg('');
+        sel=v; addEl.disabled=false; setAdd('Add to cart', true); msg('');
         /* Honest scarcity (Rastah benchmark): shown ONLY from live inventory,
            only at 3 or fewer, never invented. quantityAvailable can be null
            if the token cannot read inventory — then nothing is shown. */
@@ -1564,10 +1582,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     addEl.disabled=true; addEl.textContent='Adding…'; msg('');
     if(window.SahraCart){
       window.SahraCart.add(v.id).then(function(cart){
-        addEl.disabled=false; addEl.textContent='Add another';
+        addEl.disabled=false; setAdd('Add another', true);
         msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
         if(window.track) track('add_to_cart',{item_id:handle,size:v.title});
-      }).catch(function(){ addEl.disabled=false; addEl.textContent='Add to cart';
+      }).catch(function(){ addEl.disabled=false; setAdd('Add to cart', true);
         msg('Could not add to cart. Please try again.','err'); });
       return;
     }
@@ -1577,7 +1595,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
        what made the badge and the drawer disagree. assets/sahra-cart.js loads
        on every page, so its absence is a real fault: report it, never paper
        over it with a duplicate implementation. */
-    addEl.disabled=false; addEl.textContent='Add to cart';
+    addEl.disabled=false; setAdd('Add to cart', true);
     msg('Cart is unavailable right now. Please refresh, or message us on WhatsApp.','err');
   }
   addEl.addEventListener('click',function(){

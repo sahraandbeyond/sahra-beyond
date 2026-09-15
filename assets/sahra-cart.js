@@ -235,7 +235,7 @@
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
-          '<p class="sb-note">Free next-day UAE delivery, no minimum. Our fits run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
+          '<p class="sb-note">Free next-day UAE delivery — order by 2 pm, no minimum. Our fits run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
           '<a class="sb-go" id="sbGo" href="#">Checkout</a>' +
         '</div>' +
       '</aside>';
@@ -433,7 +433,7 @@
          of rendering a meter that is always full. GCC keeps its AED 390 meter. */
       if (mkt !== 'gcc') {
         el.hidden = false;
-        el.innerHTML = '<span class="sb-free-t sb-free-ok">\u2713 Free next-day delivery</span>' +
+        el.innerHTML = '<span class="sb-free-t sb-free-ok">\u2713 Free next-day delivery \u00b7 order by 2 pm</span>' +
           '<span class="sb-free-bar"><span style="width:100%"></span></span>';
         return;
       }

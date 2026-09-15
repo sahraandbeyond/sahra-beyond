@@ -378,6 +378,8 @@ body.buy-page .pack-btn{font-size:15px!important}
 body.buy-page .sz-out{font-size:13px!important;letter-spacing:.03em!important}
 body.buy-page .pdp-size{min-width:68px}
 .pdp-size:disabled,.pdp-size[disabled]{text-decoration:line-through;text-decoration-thickness:1.5px}
+/* the price inside the add-to-cart button is a .sb-price so the market script converts it; it must NOT take the 26px price scale above (15 Sep) */
+body.buy-page .pdp-add .sb-price,.pdp-add .sb-price{font-size:inherit!important;letter-spacing:inherit!important;font-weight:inherit!important}
 .pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
 .meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
 .eyebrow{font-size:13px!important}
