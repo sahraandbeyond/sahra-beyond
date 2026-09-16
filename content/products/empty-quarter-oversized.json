@@ -115,6 +115,16 @@
   "fitLabel": "Oversized fit",
   "modelShots": [
     {
+      "src": "/shirts/emptyquarter-lake-front.jpg",
+      "alt": "The Empty Quarter tee, front — the tonal embroidered dunes, sun and صحراء on the chest, close. Male model wears M in the Oversized fit.",
+      "tag": "He wears M · Oversized fit"
+    },
+    {
+      "src": "/shirts/emptyquarter-lake-side.jpg",
+      "alt": "The Empty Quarter tee at golden hour, three-quarter — the tonal embroidery catching the light. Male model wears M in the Oversized fit.",
+      "tag": "He wears M · Oversized fit"
+    },
+    {
       "src": "/shirts/emptyquarter-model-front.jpg",
       "alt": "The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest",
       "tag": "He wears L · Oversized fit"
@@ -166,5 +176,5 @@
       "model": "female"
     }
   ],
-  "modelInfo": "Male model is 182 cm, wearing L in the Oversized fit · Female model wears M in the Oversized fit"
+  "modelInfo": "All worn photos show the Oversized fit · Male model in the dunes is 182 cm, wearing L · Male and female models at the lake wear M"
 }

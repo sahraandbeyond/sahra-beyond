@@ -52,7 +52,7 @@
     },
     {
       "title": "Why black",
-      "body": "The darkest fabric we make, chosen so the print reads the way the sky actually does from a dark-sky site \u2014 not washed grey by city glow."
+      "body": "The darkest fabric we make, chosen so the print reads the way the sky actually does from a dark-sky site — not washed grey by city glow."
     }
   ],
   "printCardTitle": "DTG print",
@@ -120,6 +120,33 @@
   "fitLabel": "Oversized fit",
   "modelShots": [
     {
+      "src": "/shirts/alquaa-lake-back-close.jpg",
+      "alt": "The Al Quaa Galaxy tee from behind at golden hour — the Milky Way print across the back, close. Male model wears M in the Oversized fit.",
+      "tag": "He wears M · Oversized fit"
+    },
+    {
+      "src": "/shirts/alquaa-lake-back-her.jpg",
+      "alt": "The Al Quaa Galaxy tee from behind by the lake — the Milky Way print across the back. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
+    },
+    {
+      "src": "/shirts/alquaa-lake-front.jpg",
+      "alt": "The Al Quaa Galaxy tee worn front-on against the evening sky — the gold embroidered mark on the chest. Male model wears M in the Oversized fit.",
+      "tag": "He wears M · Oversized fit"
+    },
+    {
+      "src": "/shirts/alquaa-lake-front-her.jpg",
+      "alt": "The Al Quaa Galaxy tee, front — the gold embroidered sun-over-dunes mark and صحراء on the chest. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
+    },
+    {
+      "src": "/shirts/alquaa-lake-back.jpg",
+      "alt": "The Al Quaa Galaxy tee from behind as the sun sets over the lake — the Milky Way print across the back. Male model wears M in the Oversized fit.",
+      "tag": "He wears M · Oversized fit"
+    },
+    {
       "src": "/shirts/alquaa-model-back.jpg",
       "alt": "The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes",
       "tag": "He wears L · Oversized fit"
@@ -153,5 +180,5 @@
       "model": "female"
     }
   ],
-  "modelInfo": "Male model is 182 cm, wearing L in the Oversized fit · Female model wears M in the Oversized fit"
+  "modelInfo": "All worn photos show the Oversized fit · Male model in the dunes is 182 cm, wearing L · Male and female models at the lake wear M"
 }

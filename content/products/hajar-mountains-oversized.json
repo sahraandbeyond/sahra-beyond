@@ -120,6 +120,22 @@
   "fitLabel": "Oversized fit",
   "modelShots": [
     {
+      "src": "/shirts/hajar-lake-back-her.jpg",
+      "alt": "The Hajar Mountains tee from behind at sunset — the mountain print and coordinates filling the back. Female model wears M in the Oversized fit.",
+      "tag": "She wears M · Oversized fit",
+      "model": "female"
+    },
+    {
+      "src": "/shirts/hajar-lake-back-kneel.jpg",
+      "alt": "The Hajar Mountains tee from behind, kneeling — the mountain print and the coordinates beneath it. Male model wears M in the Oversized fit.",
+      "tag": "He wears M · Oversized fit"
+    },
+    {
+      "src": "/shirts/hajar-lake-full.jpg",
+      "alt": "The Hajar Mountains tee worn full-length with the sun behind the trees — the chest mark on the front. Male model wears M in the Oversized fit.",
+      "tag": "He wears M · Oversized fit"
+    },
+    {
       "src": "/shirts/hajar-model-back.jpg",
       "alt": "The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back",
       "tag": "He wears L · Oversized fit"
@@ -154,5 +170,5 @@
       "model": "female"
     }
   ],
-  "modelInfo": "Male model is 182 cm, wearing L in the Oversized fit · Female model wears M in the Oversized fit"
+  "modelInfo": "All worn photos show the Oversized fit · Male model in the dunes is 182 cm, wearing L · Male and female models at the lake wear M"
 }
