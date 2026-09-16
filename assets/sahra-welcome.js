@@ -95,10 +95,32 @@
   if (host) { host.classList.add('sbw-host'); host.insertBefore(wrap, host.firstChild); }
   else document.body.insertBefore(wrap, document.body.firstChild);
 
+  /* nav is position:fixed and `body.has-topbar nav{top:var(--topbar-h)}` pins it
+     that far down the viewport FOREVER — the topbar itself is position:relative
+     and scrolls away. At the old ~34px that read as a design detail; at 106px
+     with this bar the nav floats over the page. So --topbar-h stays the full
+     height (#s-hero sizes off it and should start below the whole bar) and the
+     nav's own top is driven from scroll instead, reaching 0 once the bar is
+     past. Inline style, so it beats the stylesheet rule without a specificity
+     fight; nothing else on the page writes nav.style.top — the page's own nav
+     script only toggles the .on-hero / .solid classes. */
+  var navEl = document.querySelector('nav');
+  var navRaf = 0;
+  function placeNav() {
+    navRaf = 0;
+    if (!navEl) return;
+    var h = host ? host.offsetHeight : (wrap.parentNode ? wrap.offsetHeight : 0);
+    var y = window.scrollY || document.documentElement.scrollTop || 0;
+    navEl.style.top = Math.max(0, h - y) + 'px';
+  }
+  function queueNav() { if (!navRaf) navRaf = (window.requestAnimationFrame || setTimeout)(placeNav); }
+  window.addEventListener('scroll', queueNav, { passive: true });
+
   function measure() {
     var h = host ? host.offsetHeight : wrap.offsetHeight;
     document.documentElement.style.setProperty('--topbar-h', h + 'px');
     document.body.classList.add('has-topbar');
+    placeNav();
   }
   measure();
   window.addEventListener('resize', measure);
