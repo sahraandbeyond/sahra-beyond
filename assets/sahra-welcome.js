@@ -54,7 +54,7 @@
       });
     });
   }
-  var KEY = 'sbw.v1';
+  var KEY = 'sbw.v2';   /* bump to reset every visitor's stored state */
   var RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 
   function read() { try { return JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { return {}; } }
@@ -81,15 +81,13 @@
       '<span class="sbw-go">Get the code &rarr;</span>' +
     '</span>';
 
-  var dismiss = document.createElement('button');
-  dismiss.type = 'button';
-  dismiss.className = 'sbw-x';
-  dismiss.setAttribute('aria-label', 'Hide this offer');
-  dismiss.innerHTML = '&times;';
-
+  /* No dismiss control. It lived at the right edge INSIDE the bar people tap to
+     open the offer, so aiming for the bar and hitting dismiss was the likely
+     outcome, not an edge case — and it wrote a permanent flag with no way back.
+     The modal has its own close; the bar is a one-line offer strip, not a
+     consent banner, so there is nothing here to consent away from. */
   var wrap = document.createElement('div');
   wrap.appendChild(bar);
-  wrap.appendChild(dismiss);
   wrap.className = 'sbw-wrap';
 
   if (host) { host.classList.add('sbw-host'); host.insertBefore(wrap, host.firstChild); }
@@ -191,17 +189,6 @@
   m.addEventListener('click', function (e) { if (e.target.hasAttribute('data-sbw-close')) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !m.hidden) close(); });
 
-  dismiss.addEventListener('click', function (e) {
-    e.stopPropagation();
-    wrap.remove();
-    if (host) host.classList.remove('sbw-host');
-    measure();
-    st.barOff = 1; write(st);
-    ev('welcome_offer_dismiss', {});
-  });
-
-  if (st.barOff) { wrap.remove(); if (host) host.classList.remove('sbw-host'); measure(); }
-
   /* copy */
   m.querySelector('.sbw-copy').addEventListener('click', function () {
     var b = this;
@@ -283,26 +270,24 @@
   })();
 
   /* ------------------------------------------------------- auto-surface */
-  /* Once per visitor. Desktop: exit intent, or 14 s. Phone: 45% scroll, or 16 s. */
-  if (!st.won && !st.seen) {
-    var pop = function (src) {
+  /* Opens on arrival rather than waiting for a click. 1.4 s, not 0: at zero the
+     card animates in over a half-painted page and reads as a glitch, and a
+     reflexive dismiss before anyone has read it is the worst outcome for a
+     conversion surface. The old exit-intent / 45%-scroll triggers are gone —
+     redundant once it opens by itself.
+
+     Shown once per browsing session, not once per visitor: someone who closes
+     it today sees it again on their next visit, someone who closes it and keeps
+     browsing does not get it again on the next page. Converted visitors never
+     see it auto-open; the bar still shows them their code on tap. */
+  var SESSION = 'sbw.session';
+  var openedThisSession = false;
+  try { openedThisSession = sessionStorage.getItem(SESSION) === '1'; } catch (e) {}
+  if (!st.won && !openedThisSession) {
+    setTimeout(function () {
       if (surfaced) return;
-      open(src);
-    };
-    var small = window.matchMedia && window.matchMedia('(max-width:820px)').matches;
-    if (small) {
-      var onScroll = function () {
-        var d = document.documentElement;
-        var pct = (window.scrollY || d.scrollTop) / Math.max(1, d.scrollHeight - window.innerHeight);
-        if (pct > 0.45) { window.removeEventListener('scroll', onScroll); pop('scroll'); }
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      setTimeout(function () { pop('timer'); }, 16000);
-    } else {
-      document.addEventListener('mouseout', function (e) {
-        if (!e.relatedTarget && e.clientY <= 4) pop('exit');
-      });
-      setTimeout(function () { pop('timer'); }, 14000);
-    }
+      try { sessionStorage.setItem(SESSION, '1'); } catch (e) {}
+      open('auto');
+    }, 1400);
   }
 })();

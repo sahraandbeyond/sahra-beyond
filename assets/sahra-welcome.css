@@ -18,7 +18,7 @@
   background:linear-gradient(101deg,#F2C98C 0%,#F7DCAF 38%,#E7B872 72%,#F2C98C 100%);
   color:#33271B;font-family:var(--mono,'Space Mono',monospace);
   font-size:11.5px;letter-spacing:2px;text-transform:uppercase;line-height:1.45;
-  padding:10px 44px 10px 16px;text-align:center;overflow:hidden;
+  padding:10px 16px;text-align:center;overflow:hidden;
   -webkit-appearance:none;appearance:none;
 }
 .sbw-bar:hover{background:linear-gradient(101deg,#F7DCAF 0%,#FCE8C6 38%,#EFC384 72%,#F7DCAF 100%)}
@@ -41,16 +41,8 @@
 @keyframes sbw-sweep{0%{left:-40%}55%{left:118%}100%{left:118%}}
 .sbw-dot{width:6px;height:6px;border-radius:50%;background:#A95A21;animation:sbw-pulse 1.7s ease-in-out infinite}
 @keyframes sbw-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.55)}}
-/* above .sbw-bar's z-index:62 — as a sibling with a lower index it sat
-   underneath the bar's own box and could not be clicked at all */
-.sbw-x{
-  position:absolute;right:6px;top:50%;transform:translateY(-50%);z-index:63;
-  background:none;border:0;color:#7E4114;font-size:19px;line-height:1;
-  padding:6px 10px;cursor:pointer;font-family:inherit;
-}
-.sbw-x:hover{color:#33271B}
 @media(max-width:620px){
-  .sbw-bar{font-size:10px;letter-spacing:1.1px;padding:9px 38px 9px 10px}
+  .sbw-bar{font-size:10px;letter-spacing:1.1px;padding:9px 12px}
   .sbw-bar-in{gap:7px}
   .sbw-go{font-size:9.5px;letter-spacing:1.1px;padding:4px 10px}
   .sbw-hide-sm{display:none}
@@ -137,6 +129,15 @@
   letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;
 }
 .sbw-shop:hover{background:#FCE8C6}
+
+/* side by side the input collapses to ~135px on a 390px phone and the
+   placeholder truncates — on the one control the whole offer depends on */
+@media(max-width:430px){
+  .sbw-form{flex-direction:column}
+  .sbw-form button{width:100%}
+  .sbw-card{padding:34px 22px 26px}
+  .sbw-list li{font-size:14px;padding-left:24px}
+}
 
 @media(prefers-reduced-motion:reduce){
   .sbw-sheen,.sbw-dot{animation:none}
