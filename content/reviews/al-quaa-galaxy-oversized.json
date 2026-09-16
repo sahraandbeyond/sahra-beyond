@@ -1,9 +1,39 @@
 {
  "handle": "al-quaa-galaxy-oversized",
- "count": 2,
+ "count": 4,
  "average": 5,
- "syncedAt": "2026-09-10",
+ "syncedAt": "2026-09-16",
  "reviews": [
+  {
+   "id": 1339438510,
+   "rating": 5,
+   "title": "",
+   "body": "Love the concept behind Sahra & Beyond. Al Quaa brings back some of my favourite memories of stargazing with friends, which made this design especially meaningful to me. The fabric feels great, the print quality is excellent, and even the packaging reflects the thought that has gone into the brand.",
+   "name": "Saleha Ali",
+   "date": "2026-09-15",
+   "verified": true,
+   "photos": [],
+   "handle": "al-quaa-galaxy-oversized",
+   "externalId": 9498369720508,
+   "productTitle": "Al Quaa Galaxy — Oversized",
+   "reply": ""
+  },
+  {
+   "id": 1331334850,
+   "rating": 5,
+   "title": "",
+   "body": "Super satisfied customer here!\nFrom the user-friendly website and fast delivery to how beautifully the package was presented, everything was such a great experience. And the quality of the shirt? Definitely not cheap material, I was genuinely impressed! Plus, they’re super generous because you even get a FREE tote bag with your order! Already loving my tee and can’t wait to see what new designs they come up with next!",
+   "name": "Monna Lizz Lumabas",
+   "date": "2026-09-13",
+   "verified": true,
+   "photos": [
+    "https://review-images.judgeme.com/sahra-beyond/1789322158__1789322135952-img_5559__original.jpeg?quality=80&width=1024"
+   ],
+   "handle": "al-quaa-galaxy-oversized",
+   "externalId": 9498369720508,
+   "productTitle": "Al Quaa Galaxy — Oversized",
+   "reply": ""
+  },
   {
    "id": 1327126969,
    "rating": 5,
