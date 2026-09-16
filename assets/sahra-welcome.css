@@ -1,0 +1,145 @@
+/* sahra-welcome.css — AED 50 first-order offer bar + email capture modal.
+   Sits ABOVE .sb-topbar so the geo-aware delivery rotator in sahra-market.js
+   is untouched. sahra-welcome.js owns --topbar-h and sets it to the SUM of
+   both bars, because body.has-topbar nav{top:var(--topbar-h)} positions the
+   fixed nav and #s-hero sizes off it.
+   Faint layers are named from the contrast-guard decorative list
+   (sheen/glow/scrim/ring/rule); no text rule is muted with opacity. */
+
+/* The bar lives INSIDE .sb-topbar (see the js header). .sb-topbar carries
+   padding:9px 16px, 8px 12px under 560px — the wrap cancels it so the gold
+   band bleeds the full width and sits above the delivery line. */
+.sb-topbar.sbw-host{padding-top:0}
+.sbw-wrap{position:relative;margin:0 -16px 9px}
+@media(max-width:560px){.sbw-wrap{margin:0 -12px 8px}}
+
+.sbw-bar{
+  position:relative;z-index:62;display:block;width:100%;border:0;cursor:pointer;
+  background:linear-gradient(101deg,#F2C98C 0%,#F7DCAF 38%,#E7B872 72%,#F2C98C 100%);
+  color:#33271B;font-family:var(--mono,'Space Mono',monospace);
+  font-size:11.5px;letter-spacing:2px;text-transform:uppercase;line-height:1.45;
+  padding:10px 44px 10px 16px;text-align:center;overflow:hidden;
+  -webkit-appearance:none;appearance:none;
+}
+.sbw-bar:hover{background:linear-gradient(101deg,#F7DCAF 0%,#FCE8C6 38%,#EFC384 72%,#F7DCAF 100%)}
+.sbw-bar:focus-visible{outline:3px solid #33271B;outline-offset:-3px}
+.sbw-bar-in{position:relative;z-index:2;display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.sbw-amt{font-weight:700;letter-spacing:2.4px}
+.sbw-sep{color:#7E4114}
+.sbw-go{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#33271B;color:#F2C98C;border-radius:999px;
+  padding:4px 13px;letter-spacing:1.6px;font-size:10.5px;white-space:nowrap;
+}
+.sbw-bar:hover .sbw-go{background:#14102A}
+/* decorative — carries no words */
+.sbw-sheen{
+  position:absolute;top:0;left:-40%;width:28%;height:100%;z-index:1;pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.72) 50%,rgba(255,255,255,0) 100%);
+  animation:sbw-sweep 4.6s cubic-bezier(.5,0,.4,1) infinite;
+}
+@keyframes sbw-sweep{0%{left:-40%}55%{left:118%}100%{left:118%}}
+.sbw-dot{width:6px;height:6px;border-radius:50%;background:#A95A21;animation:sbw-pulse 1.7s ease-in-out infinite}
+@keyframes sbw-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.55)}}
+/* above .sbw-bar's z-index:62 — as a sibling with a lower index it sat
+   underneath the bar's own box and could not be clicked at all */
+.sbw-x{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);z-index:63;
+  background:none;border:0;color:#7E4114;font-size:19px;line-height:1;
+  padding:6px 10px;cursor:pointer;font-family:inherit;
+}
+.sbw-x:hover{color:#33271B}
+@media(max-width:620px){
+  .sbw-bar{font-size:10px;letter-spacing:1.1px;padding:9px 38px 9px 10px}
+  .sbw-bar-in{gap:7px}
+  .sbw-go{font-size:9.5px;letter-spacing:1.1px;padding:4px 10px}
+  .sbw-hide-sm{display:none}
+}
+
+/* ---------------------------------------------------------------- modal */
+.sbw-modal[hidden]{display:none!important}
+.sbw-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.sbw-scrim{position:absolute;inset:0;background:rgba(10,8,18,.80);backdrop-filter:blur(3px)}
+.sbw-card{
+  position:relative;width:min(520px,100%);max-height:calc(100vh - 40px);overflow-y:auto;
+  background:#14102A;color:#F7EFE2;border:1px solid rgba(242,201,140,.42);
+  border-radius:18px;padding:38px 30px 30px;text-align:center;
+  box-shadow:0 30px 90px rgba(0,0,0,.6);
+  animation:sbw-in .42s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes sbw-in{from{transform:translateY(22px) scale(.97)}to{transform:none}}
+.sbw-glow{
+  position:absolute;left:50%;top:-58px;width:300px;height:170px;margin-left:-150px;
+  background:radial-gradient(ellipse at center,rgba(242,201,140,.30),rgba(242,201,140,0) 70%);
+  pointer-events:none;
+}
+.sbw-close{
+  position:absolute;right:10px;top:8px;background:none;border:0;color:#C9BEA8;
+  font-size:27px;line-height:1;padding:6px 12px;cursor:pointer;
+}
+.sbw-close:hover{color:#F2C98C}
+.sbw-eyebrow{
+  font-family:var(--mono,'Space Mono',monospace);font-size:10.5px;letter-spacing:3px;
+  text-transform:uppercase;color:#F2C98C;margin-bottom:16px;
+}
+.sbw-big{
+  font-family:var(--serif,'Playfair Display',Georgia,serif);font-weight:900;
+  font-size:clamp(58px,15vw,88px);line-height:.92;color:#F2C98C;letter-spacing:-.02em;
+}
+.sbw-big small{display:block;font-size:.26em;letter-spacing:3px;font-weight:400;
+  font-family:var(--mono,'Space Mono',monospace);color:#F7EFE2;margin-top:12px;text-transform:uppercase}
+.sbw-rule{width:58px;height:2px;background:#F2C98C;margin:20px auto}
+.sbw-list{list-style:none;margin:0 0 22px;padding:0;text-align:left;display:inline-block}
+.sbw-list li{
+  font-family:var(--sans,Inter,system-ui,sans-serif);font-size:14.5px;line-height:1.5;
+  color:#F7EFE2;padding:7px 0 7px 26px;position:relative;
+}
+.sbw-list li::before{content:"✦";position:absolute;left:0;top:7px;color:#F2C98C}
+.sbw-form{display:flex;gap:8px;margin-bottom:12px}
+.sbw-form input{
+  flex:1;min-width:0;background:#0C0A1C;border:1px solid rgba(242,201,140,.40);
+  border-radius:8px;padding:14px 15px;color:#F7EFE2;font-size:16px;
+  font-family:var(--sans,Inter,system-ui,sans-serif);
+}
+.sbw-form input::placeholder{color:#9A9184}
+.sbw-form input:focus{outline:2px solid #F2C98C;outline-offset:1px;border-color:#F2C98C}
+.sbw-form button{
+  background:#F2C98C;color:#33271B;border:0;border-radius:8px;cursor:pointer;
+  padding:14px 22px;font-family:var(--mono,'Space Mono',monospace);
+  font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;white-space:nowrap;
+}
+.sbw-form button:hover{background:#FCE8C6}
+.sbw-form button:disabled{cursor:default;background:#8C7A5C;color:#2A2118}
+.sbw-fine{font-family:var(--sans,Inter,system-ui,sans-serif);font-size:12px;line-height:1.5;color:#C9BEA8}
+.sbw-err{display:none;color:#F0A882;font-size:13px;margin-bottom:10px;font-family:var(--sans,Inter,system-ui,sans-serif)}
+.sbw-modal.is-err .sbw-err{display:block}
+.sbw-modal.is-err .sbw-form input{border-color:#F0A882}
+
+/* success */
+.sbw-won{display:none}
+.sbw-modal.is-won .sbw-won{display:block}
+.sbw-modal.is-won .sbw-ask{display:none}
+.sbw-code{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border:2px dashed #F2C98C;border-radius:10px;padding:15px 18px;margin:6px 0 16px;
+}
+.sbw-code b{
+  font-family:var(--mono,'Space Mono',monospace);font-size:21px;letter-spacing:3px;color:#F2C98C;font-weight:700;
+}
+.sbw-copy{
+  background:none;border:1px solid #F2C98C;color:#F2C98C;border-radius:6px;cursor:pointer;
+  padding:8px 13px;font-family:var(--mono,'Space Mono',monospace);font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;
+}
+.sbw-copy:hover{background:#F2C98C;color:#33271B}
+.sbw-shop{
+  display:block;background:#F2C98C;color:#33271B;text-decoration:none;border-radius:8px;
+  padding:15px;font-family:var(--mono,'Space Mono',monospace);font-size:12px;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;
+}
+.sbw-shop:hover{background:#FCE8C6}
+
+@media(prefers-reduced-motion:reduce){
+  .sbw-sheen,.sbw-dot{animation:none}
+  .sbw-sheen{display:none}
+  .sbw-card{animation:none}
+}

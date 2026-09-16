@@ -2515,6 +2515,43 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
 })();
 
 /* ==========================================================================
+   AED 50 first-order offer — bar + email-capture modal on every page.
+   ==========================================================================
+   assets/sahra-welcome.{css,js}. Injected here rather than hand-written into
+   ~60 pages, for the same reason as the TikTok pixel above: a hand-maintained
+   tag drifts. Idempotent — a page already carrying the tag is left alone.
+
+   Runs BEFORE stampAssets so both files get their ?v= content hash.
+
+   The script inserts its bar ABOVE .sb-topbar and then owns --topbar-h,
+   setting it to the SUM of both bars; body.has-topbar nav{top:var(--topbar-h)}
+   positions the fixed nav, so a stale value puts the nav over the page.
+   ========================================================================== */
+(function applyWelcomeOffer() {
+  const CSS = '<link rel="stylesheet" href="/assets/sahra-welcome.css">';
+  const JS = '<script src="/assets/sahra-welcome.js" data-sbw defer></script>';
+  const SKIP = new Set(['coming-soon.html']);
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html') && !SKIP.has(e.name)) pages.push(p);
+    }
+  })(__dirname);
+  let touched = 0, missing = [];
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    if (src.indexOf('/assets/sahra-welcome.js') !== -1) continue;
+    if (!/<\/head>/i.test(src)) { missing.push(path.relative(__dirname, f)); continue; }
+    const out = src.replace(/<\/head>/i, CSS + '\n' + JS + '\n</head>');
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  ✓ Welcome offer on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} added)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
+})();
+
+/* ==========================================================================
    Asset cache-busting — computed, never hand-written.
    ==========================================================================
    The ?v= hashes used to be hardcoded literals in this file and in the
