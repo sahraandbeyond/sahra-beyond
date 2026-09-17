@@ -12,6 +12,9 @@
 .sb-topbar.sbw-host{padding-top:0}
 .sbw-wrap{position:relative;margin:0 -16px 9px}
 @media(max-width:560px){.sbw-wrap{margin:0 -12px 8px}}
+/* no .sb-topbar to sit inside (every page but the homepage, shop and previews): the
+   negative margins cancel a padding that is not there and just overflow the viewport */
+.sbw-wrap.sbw-solo{margin:0}
 
 .sbw-bar{
   position:relative;z-index:62;display:block;width:100%;border:0;cursor:pointer;

@@ -91,7 +91,7 @@
   wrap.className = 'sbw-wrap';
 
   if (host) { host.classList.add('sbw-host'); host.insertBefore(wrap, host.firstChild); }
-  else document.body.insertBefore(wrap, document.body.firstChild);
+  else { wrap.classList.add('sbw-solo'); document.body.insertBefore(wrap, document.body.firstChild); }
 
   /* nav is position:fixed and `body.has-topbar nav{top:var(--topbar-h)}` pins it
      that far down the viewport FOREVER — the topbar itself is position:relative
@@ -102,7 +102,13 @@
      past. Inline style, so it beats the stylesheet rule without a specificity
      fight; nothing else on the page writes nav.style.top — the page's own nav
      script only toggles the .on-hero / .solid classes. */
-  var navEl = document.querySelector('nav');
+  /* ONLY the fixed site nav (#nav on the homepage, shop and previews). Every other
+     page's first <nav> is .hdr-nav - the links row INSIDE the sticky header - and
+     sahra-sky.css makes every nav position:relative, so writing top:55px to it shoved
+     the whole links row out of the header and under the hero (Faheem, 17 Sep: "the top
+     bar in other pages is getting cut off"). Those pages have no fixed nav to place. */
+  var navEl = document.getElementById('nav');
+  if (navEl && getComputedStyle(navEl).position !== 'fixed') navEl = null;
   var navRaf = 0;
   function placeNav() {
     navRaf = 0;
