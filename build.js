@@ -2552,6 +2552,40 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
 })();
 
 /* ==========================================================================
+   Shop mega-menu — one script + sheet on every page (18 Sep 2026)
+   ==========================================================================
+   assets/sahra-nav.{css,js}. Same pattern as the welcome offer: the header
+   markup lives in seven hand-maintained pages and two generators, so the
+   menu is built at runtime from the existing "Shop" link rather than written
+   into each of them. Nav decision of 18 Sep (MASTER_BRIEF Decision Log):
+   Shop dropdown holds type / fit / place / edition; Collection, T-Shirts and
+   Polo leave the desktop bar. Idempotent. Runs BEFORE stampAssets.
+   ========================================================================== */
+(function applyShopMenu() {
+  const CSS = '<link rel="stylesheet" href="/assets/sahra-nav.css">';
+  const JS = '<script src="/assets/sahra-nav.js" data-sbn defer></script>';
+  const SKIP = new Set(['coming-soon.html']);
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html') && !SKIP.has(e.name)) pages.push(p);
+    }
+  })(__dirname);
+  let touched = 0, missing = [];
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    if (src.indexOf('/assets/sahra-nav.js') !== -1) continue;
+    if (!/<\/head>/i.test(src)) { missing.push(path.relative(__dirname, f)); continue; }
+    const out = src.replace(/<\/head>/i, CSS + '\n' + JS + '\n</head>');
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  ✓ Shop menu on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} added)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
+})();
+
+/* ==========================================================================
    Asset cache-busting — computed, never hand-written.
    ==========================================================================
    The ?v= hashes used to be hardcoded literals in this file and in the
