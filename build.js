@@ -1422,7 +1422,7 @@ function contactWays() {
 // outdoor-guide story - interactive map, packing lists, live weather, an Android
 // app. Every product fact below traces to MASTER_BRIEF / the live product pages:
 // 230 gsm tees, 240 gsm pique polo, DTG on Al Quaa + Hajar, embroidery on Empty
-// Quarter + polo, printed collar labels, forty per design numbered, the three
+// Quarter + polo, printed collar labels, forty per design, the three
 // places with their coordinates. Nothing about origin of manufacture is claimed.
 // Coordinates live on the PRODUCT PAGES, not the garments: only the Hajar tee prints
 // them (brief section 3, Decision Log 1 Sep) - so the copy never says a tee "carries" them.
@@ -1430,7 +1430,7 @@ function contactWays() {
   const MARK = require('./mark-paths.js');
   const canonical = `${SITE}/about/`;
   const title = 'About Sahra & Beyond — Wear the Wild Side of the UAE';
-  const desc = 'The story behind Sahra & Beyond — a UAE apparel brand built around real places: a dark-sky desert, the first dunes of the Empty Quarter, a red-rock wadi in the Hajar. Heavyweight cotton, printed and embroidered designs, a numbered first run.';
+  const desc = 'The story behind Sahra & Beyond — a UAE apparel brand built around real places: a dark-sky desert, the first dunes of the Empty Quarter, a red-rock wadi in the Hajar. Heavyweight cotton, printed and embroidered designs, a limited first run.';
   const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
   const jsonld = [
     { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical },
@@ -1510,7 +1510,7 @@ function contactWays() {
         <div class="ab-fact"><b>The cloth</b><p>230&nbsp;gsm combed ring-spun cotton for the tees, 240&nbsp;gsm piqu&eacute; for the polo. Pre-washed, cut in two fits &mdash; Regular and Oversized.</p></div>
         <div class="ab-fact"><b>The artwork</b><p>Al Quaa and the Hajar are printed direct-to-garment, so the graphic sits in the cotton rather than on top of it. The Empty Quarter and the polo are embroidered &mdash; thread, not ink.</p></div>
         <div class="ab-fact"><b>The details</b><p>Collar labels are printed, not sewn in, so there is nothing to scratch. The mark on every chest is embroidered.</p></div>
-        <div class="ab-fact"><b>Founding Edition</b><p>The first run is deliberately small: forty of each design, numbered. When they are gone, the Founding Edition is closed.</p></div>
+        <div class="ab-fact"><b>Founding Edition</b><p>The first run is deliberately small: forty of each design. When they are gone, the Founding Edition is closed.</p></div>
       </div>
     </section>
 
