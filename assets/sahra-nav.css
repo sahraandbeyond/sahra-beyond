@@ -3,7 +3,9 @@
    builds the panel from data, so the seven hand-maintained headers and the
    two generated ones never drift. Desktop only; phones keep the slide-down
    menu, which the script regroups. Colours are the site's own tokens with
-   literal fallbacks because the shell pages do not define --sand/--ink. */
+   literal fallbacks because the shell pages do not define --sand/--ink.
+   18 Sep, second push: content changed so the ?v= hash changes — Vercel's bom1
+   edge was returning 404 for the first hashed URL (iad1 served it fine). */
 .sbn-trig{display:inline-flex;align-items:center;gap:2px}
 .sbn-caret{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;margin:0 0 0 -2px;background:none;border:0;cursor:pointer;color:inherit;border-radius:50%}
 .sbn-caret svg{width:11px;height:11px;transition:transform .25s}

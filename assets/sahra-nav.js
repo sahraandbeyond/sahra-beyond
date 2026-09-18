@@ -7,6 +7,16 @@
    Data lives here in one place; add a group when Sahel pages exist. */
 (function () {
   'use strict';
+  /* Belt and braces after the 18 Sep incident: one CDN edge answered 404 for the
+     hashed stylesheet URL while the script loaded fine, so the page rendered the
+     panel unstyled. If our sheet is present but empty, reload it unhashed. */
+  try {
+    var lk = document.querySelector('link[href*="/assets/sahra-nav.css"]');
+    if (lk && lk.sheet && lk.sheet.cssRules.length === 0) {
+      var fb = document.createElement('link'); fb.rel = 'stylesheet';
+      fb.href = '/assets/sahra-nav.css?r=' + Date.now(); document.head.appendChild(fb);
+    }
+  } catch (e) {}
   var link = document.querySelector('.nav-links a[href="/shop/"], .hdr-nav a[href="/shop/"]');
   if (!link || document.querySelector('.sbn-panel')) return;
   var host = link.closest('header.hdr') || link.closest('nav');
