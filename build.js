@@ -1730,18 +1730,106 @@ if (LAUNCHED || REVEALED) (function () {
   const secs = CATS.map(c => {
     const list = locations.filter(l => l.category === c);
     list.forEach(l => seen.add(l.id));
-    return list.length ? `<section class="guide-sec"><h2>${esc(c)}</h2><div class="cards">${list.map(locCard).join('')}</div></section>` : '';
+    return list.length ? `<section class="guide-sec" id="cat-${c.toLowerCase()}"><h2>${esc(c)}</h2><div class="cards">${list.map(locCard).join('')}</div></section>` : '';
   }).join('');
   const rest = locations.filter(l => !seen.has(l.id));
   const restHtml = rest.length ? `<section class="guide-sec"><h2>More places</h2><div class="cards">${rest.map(locCard).join('')}</div></section>` : '';
+  /* ---- Places hero, rebuilt 18 Sep 2026 (Faheem: "extremely basic, needs an
+     overhaul"). Photo-led: five real frames from the location covers in a
+     mosaic that fades into the night ground, the numbers computed from the
+     location data (never typed), landscape chips that jump to the sections
+     below, and the three places that became tees. Its CSS travels with the
+     page in a <style> so the shell sheet stays untouched; the legibility layer
+     still lands after it. Wadi Shab sits in Tiwi (Oman), so the lede counts
+     emirates from the data and says so rather than claiming "across the
+     Emirates" for all of them. */
+  const byId = Object.fromEntries(locations.map(l => [l.id, l]));
+  const MOSAIC = [
+    ['wadi-naqab', '50% 45%', 'wide'],
+    ['al-quaa-desert', '50% 88%', ''],
+    ['snoopy-island', '50% 50%', ''],
+    ['shuweihat-island', '42% 60%', 'tall'],
+    ['jabal-yanas', '50% 80%', ''],
+    ['wadi-showka', '50% 60%', '']
+  ].filter(([id]) => byId[id] && byId[id].cover);
+  const UAE = new Set(['Abu Dhabi', 'Al Ain', 'Dubai', 'Sharjah', 'Ajman', 'Umm Al Quwain', 'Ras Al Khaimah', 'Fujairah']);
+  const emirateOf = e => e === 'Al Ain' ? 'Abu Dhabi' : e;
+  const emirates = new Set(locations.filter(l => UAE.has(l.emirate)).map(l => emirateOf(l.emirate)));
+  const abroad = locations.filter(l => !UAE.has(l.emirate));
+  const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven'];
+  const catCount = c => locations.filter(l => l.category === c).length;
+  const CAT_META = { Dunes: 'dune fields', Camping: 'camps', Wadis: 'wadis', Mountains: 'mountain routes', Coast: 'coasts' };
+  const chips = CATS.filter(catCount).map(c => `<a class="pl-chip" href="#cat-${c.toLowerCase()}"><b>${catCount(c)}</b> ${esc(CAT_META[c] || c.toLowerCase())}</a>`).join('');
+  const TEES = [
+    ['al-quaa-desert', 'Al Quaa Galaxy', '/shirts/card/alquaa-regular-back-fit.jpg'],
+    ['liwa', 'Empty Quarter', '/shirts/card/emptyquarter-regular-front-fit.jpg'],
+    ['wadi-naqab', 'Hajar Mountains', '/shirts/card/hajar-regular-back-fit.jpg']
+  ].filter(([id]) => byId[id] && byId[id].productLink && byId[id].productLink.slug);
+  const tees = TEES.map(([id, tee, img]) => `<a class="pl-tee" href="/products/${esc(byId[id].productLink.slug)}/"><img src="${esc(img)}" alt="${esc(tee)} tee" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the tee &rarr;</i></span></a>`).join('');
+  const lede = `${locations.length} places, ${words[CATS.filter(catCount).length] || CATS.length} kinds of ground, ${words[emirates.size] || emirates.size} emirates` +
+    (abroad.length ? ` and ${abroad.length === 1 ? 'one detour' : abroad.length + ' detours'} over the border` : '') +
+    ` &mdash; each with its coordinates, live weather and what to pack.`;
+  const heroCss = `
+.pl-hero{position:relative;isolation:isolate;overflow:hidden;background:#14102A;color:#fff}
+.pl-mosaic{position:absolute;inset:0;z-index:0;display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;pointer-events:none}
+.pl-mosaic figure{margin:0;position:relative;overflow:hidden;background:#1C1836}
+.pl-mosaic figure.wide{grid-column:1;grid-row:1/3}
+.pl-mosaic figure.tall{grid-column:4;grid-row:1/3}
+.pl-mosaic img{width:100%;height:100%;object-fit:cover;object-position:var(--fx,50% 50%);display:block;transform:scale(1.04);animation:plDrift 22s ease-in-out infinite alternate}
+.pl-mosaic figure:nth-child(2n) img{animation-delay:-8s}
+.pl-mosaic figure:nth-child(3n) img{animation-delay:-14s}
+@keyframes plDrift{from{transform:scale(1.04) translate3d(0,0,0)}to{transform:scale(1.1) translate3d(-1.5%,-1.5%,0)}}
+.pl-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(20,16,42,.38) 0%,rgba(20,16,42,.18) 34%,rgba(20,16,42,.72) 66%,#14102A 100%),linear-gradient(90deg,rgba(20,16,42,.5),rgba(20,16,42,0) 42%)}
+.pl-inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:clamp(120px,22vw,220px) clamp(16px,5vw,32px) clamp(28px,4vw,44px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.9fr);gap:32px 48px;align-items:end}
+.pl-hero .crumbs,.pl-hero .crumbs a{color:#F3EBDD;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.pl-eyebrow{font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#F2C98C;margin:18px 0 12px}
+.pl-hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:clamp(38px,6vw,76px);line-height:1;letter-spacing:-.01em;color:#fff;margin:0 0 16px;text-shadow:0 2px 26px rgba(0,0,0,.45);text-wrap:balance}
+.pl-hero h1 i{font-style:italic;color:#F2C98C}
+.pl-hero h1::after{display:none}
+.pl-lede{font-size:clamp(16px,1.6vw,19px);line-height:1.5;color:#F3EBDD;max-width:54ch;margin:0 0 22px;text-shadow:0 1px 12px rgba(0,0,0,.5)}
+.pl-chips{display:flex;flex-wrap:wrap;gap:8px}
+.pl-chip{display:inline-flex;align-items:baseline;gap:6px;padding:9px 14px;border:1px solid rgba(243,235,221,.35);border-radius:999px;background:rgba(20,16,42,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#F3EBDD;text-decoration:none;font-size:14px;font-weight:500;transition:border-color .2s,background .2s}
+.pl-chip b{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:700;font-size:19px;color:#F2C98C}
+.pl-chip:hover,.pl-chip:focus-visible{border-color:#F2C98C;background:rgba(20,16,42,.7)}
+.pl-tees{display:grid;gap:10px;align-self:end}
+.pl-tees-h{font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#F2C98C;margin:0 0 2px}
+.pl-tee{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:8px 12px 8px 8px;border:1px solid rgba(243,235,221,.22);border-radius:12px;background:rgba(20,16,42,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#F3EBDD;text-decoration:none;transition:border-color .2s,transform .2s}
+.pl-tee:hover{border-color:#F2C98C;transform:translateY(-2px)}
+.pl-tee img{width:64px;height:80px;object-fit:cover;border-radius:8px;display:block;background:#2A2245}
+.pl-tee span{display:grid;gap:1px;min-width:0}
+.pl-tee em{font-style:normal;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#D9C3A5}
+.pl-tee b{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:18px;line-height:1.15;color:#fff}
+.pl-tee i{font-style:normal;font-size:12px;color:#F2C98C}
+@media(max-width:880px){
+  .pl-inner{grid-template-columns:1fr;padding-top:clamp(150px,44vw,240px);gap:24px}
+  .pl-mosaic{grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:1fr 1fr}
+  .pl-mosaic figure.wide{grid-column:1;grid-row:1/3}
+  .pl-mosaic figure.tall{grid-column:3;grid-row:1/3}
+  .pl-mosaic figure:nth-child(n+5){display:none}
+  .pl-tees{grid-template-columns:repeat(3,1fr);gap:8px}
+  .pl-tees-h{grid-column:1/-1}
+  .pl-tee{grid-template-columns:1fr;text-align:center;padding:10px 8px}
+  .pl-tee img{margin:0 auto;width:56px;height:70px}
+  .pl-tee i{display:none}
+}
+@media(max-width:480px){.pl-mosaic{grid-template-columns:1fr 1fr}.pl-mosaic figure.tall{display:none}.pl-tee b{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.pl-mosaic img{animation:none;transform:none}}
+.guide-sec[id]{scroll-margin-top:96px}
+`;
   const body = `
-  <section class="loc-hero" style="--hero-grad:linear-gradient(160deg,#14102A 0%,#39295A 40%,#7A4F63 72%,#C0702E 100%)">
-    <div class="stars" style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.6px 1.6px at 14% 24%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 12%,#fff,transparent),radial-gradient(1.6px 1.6px at 58% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 76% 16%,#FFE9C4,transparent),radial-gradient(1.6px 1.6px at 90% 34%,#fff,transparent);animation:ctaTwinkle 4.5s ease-in-out infinite"></div>
-    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
-      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Places</span></nav>
-      <div class="loc-emoji">🗺️</div>
-      <h1>Every place we have explored</h1>
-      <p class="lede">${locations.length} real places across the Emirates &mdash; the landscapes behind every design</p>
+  <style>${heroCss}</style>
+  <section class="pl-hero">
+    <div class="pl-mosaic" aria-hidden="true">${MOSAIC.map(([id, fx, cls], i) => `<figure class="${cls}" style="--fx:${fx}"><img src="${esc(byId[id].cover)}" alt="" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></figure>`).join('')}</div>
+    <div class="pl-scrim"></div>
+    <div class="pl-inner">
+      <div>
+        <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Places</span></nav>
+        <p class="pl-eyebrow">The map behind the brand</p>
+        <h1>Every place we have <i>explored</i>.</h1>
+        <p class="pl-lede">${lede}</p>
+        <div class="pl-chips">${chips}</div>
+      </div>
+      ${tees ? `<div class="pl-tees"><p class="pl-tees-h">Three of them became tees</p>${tees}</div>` : ''}
     </div>
   </section>
   <main>

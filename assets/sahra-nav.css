@@ -15,6 +15,13 @@
 .hdr-nav .sbn-trig{flex:0 0 auto}
 .hdr-nav .sbn-caret{width:20px;height:20px;margin-left:-8px;margin-right:2px}
 .sbn-hide{display:none!important}
+/* The links row is a <nav> and sahra-sky.css makes every nav position:relative,
+   so any script that writes top:<topbar height> to "the nav" (meant for the
+   fixed #nav on the homepage) shoves this row out of the header and under the
+   hero. Seen on Faheem's machine on /places/ on 18 Sep with a stale script
+   from the same CDN edge that 404'd this sheet. !important beats an inline
+   style, so the row stays put whatever writes to it. */
+.hdr-nav{top:0!important}
 /* the host header must sit above what follows it while the panel is open —
    sahra-sky.css flattens nav/.hdr to position:relative; z-index:1 on the
    shell and product pages, which let the hero paint over the panel. */
