@@ -282,7 +282,7 @@ function newsletterBlock() {
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
       <button type="submit">${btn}</button>
     </form>
-    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:#F7DFBE">${ok}</p>
+    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#F7DFBE">${ok}</p>
     </div>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>`;
 }
@@ -307,13 +307,13 @@ function packItemsFor(l) {
 
 const CSS = `
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:scroll}
+body{font-family:Jost,system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:scroll}
 a{color:#9C521B}
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
 .brand img{display:block;height:26px;width:auto}
 .brand-text{display:flex;flex-direction:column;line-height:1}
-.brand-sahra{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;letter-spacing:3px;color:#33271B;text-transform:uppercase}
+.brand-sahra{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:15px;font-weight:600;letter-spacing:3px;color:#33271B;text-transform:uppercase}
 .brand-beyond{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;color:#A25A20;text-transform:uppercase;margin-top:2px}
 .hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:18px;margin:0 0 24px}
 .book{margin:26px 0;padding:20px 22px;border:1px solid rgba(192,112,46,.3);background:rgba(255,247,237,.7);border-radius:16px}
@@ -325,7 +325,7 @@ a{color:#9C521B}
 .faq details{border-bottom:1px solid rgba(43,37,32,.12);padding:12px 2px}
 .faq summary{cursor:pointer;font-weight:700;font-size:15px;color:#33271B;list-style:none}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::before{content:'+ ';color:#A25A20;font-weight:800}
+.faq summary::before{content:'+ ';color:#A25A20;font-weight:700}
 .faq details[open] summary::before{content:'– '}
 .faq details p{margin:9px 0 2px;color:#5C5346;font-size:14px}
 .news{position:relative;overflow:hidden;margin:34px 0;padding:44px 26px;border-radius:18px;background:linear-gradient(180deg,#14102A 0%,#39295A 55%,#8B4E63 92%);text-align:center;color:#fff}
@@ -333,7 +333,7 @@ a{color:#9C521B}
 @keyframes nStar{0%,100%{opacity:.9}50%{opacity:.35}}
 .news-in{position:relative;z-index:1;max-width:520px;margin:0 auto}
 .news-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#F7DFBE}
-.news h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,4vw,36px);line-height:1.1;color:#fff;margin:10px 0 8px}
+.news h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;font-size:clamp(24px,4vw,36px);line-height:1.1;color:#fff;margin:10px 0 8px}
 .news h2 em{font-style:italic;color:#F7DFBE}
 .news p{margin:0 0 18px;color:rgba(255,255,255,.82);font-size:14.5px}
 .news-shop{display:inline-block;margin:4px 0 18px}
@@ -373,7 +373,7 @@ a{color:#9C521B}
 .ab-glow{opacity:0;animation:abGlowIn 1.8s ease-out 2.2s both,abBreathe 7s ease-in-out 4s infinite}
 .ab-arabic{opacity:0;transform:translateY(38px);animation:abSurface 1.1s cubic-bezier(.2,.7,.2,1) 2.7s both}
 .ab-eyebrow{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E9B978;margin:0 0 10px}
-.ab-hero h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(30px,4.6vw,52px);line-height:1.08;letter-spacing:-.01em;margin:0 0 14px;color:#FBF4E8;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.ab-hero h1{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;font-size:clamp(30px,4.6vw,52px);line-height:1.08;letter-spacing:-.01em;margin:0 0 14px;color:#FBF4E8;text-shadow:0 2px 24px rgba(0,0,0,.35)}
 .ab-hero h1 em{font-style:italic;color:#E9B978}
 .ab-hero .lede{font-size:clamp(16px,1.6vw,19px);line-height:1.55;color:rgba(247,239,226,.88);max-width:600px;margin:0 auto 22px;text-shadow:0 1px 12px rgba(0,0,0,.35)}
 .ab-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;background:#E9B978;color:#2A2016;font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;font-weight:700;transition:background .25s,transform .2s}
@@ -396,7 +396,7 @@ a{color:#9C521B}
   .ab-wipe{transform:translateX(0)}.ab-sun path{fill:#F0C27A}.ab-glow{opacity:.6}.ab-stars{opacity:.32}
 }
 /* the page below the hero */
-.ab-intro{font-family:'Playfair Display',serif;font-size:clamp(20px,2.4vw,26px);line-height:1.45;color:#2A2016;margin:0 0 8px}
+.ab-intro{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:clamp(20px,2.4vw,26px);line-height:1.45;color:#2A2016;margin:0 0 8px}
 .ab-intro em{color:#9C521B;font-style:italic}
 .ab-places{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:18px 0 8px}
 .ab-place{display:flex;flex-direction:column;gap:6px;padding:20px 20px 18px;border-radius:16px;color:#F7EFE2;text-decoration:none;position:relative;overflow:hidden;min-height:300px;justify-content:flex-end;background:#2A1E45;box-shadow:0 2px 14px rgba(58,42,28,.12);transition:transform .2s,box-shadow .2s}
@@ -406,7 +406,7 @@ a{color:#9C521B}
 .ab-place:hover,.ab-place:focus-visible{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,42,28,.2)}
 .ab-place::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,6,20,.05) 0%,rgba(10,6,20,.35) 45%,rgba(10,6,20,.82) 100%);pointer-events:none}
 .ab-place>*:not(.ab-place-img){position:relative;z-index:2}
-.ab-place-name{font-family:'Playfair Display',serif;font-size:22px;line-height:1.15}
+.ab-place-name{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:22px;line-height:1.15}
 .ab-place-meta{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,239,226,.85)}
 .ab-place-blurb{font-size:14.5px;line-height:1.5;color:rgba(247,239,226,.92);text-shadow:0 1px 8px rgba(0,0,0,.45)}
 .ab-place-go{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#E9B978;margin-top:4px}
@@ -481,7 +481,7 @@ table.sg.gsm tr.is-ours th{color:#7E4114}
 .jcard:hover{border-color:rgba(42,32,22,.85);box-shadow:0 6px 18px rgba(42,32,22,.10);transform:translateY(-2px)}
 .jcard:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
 .jkick{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#7E4114}
-.jcard b{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;line-height:1.25;color:#33271B}
+.jcard b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;font-size:18px;line-height:1.25;color:#33271B}
 .jblurb{font-size:13.5px;line-height:1.6;color:#5C5346}
 .jmeta{margin-top:auto;padding-top:6px;font-family:'Space Mono',monospace;font-size:11px;color:#6B6256}
 .jdot{padding:0 6px;color:#6B6256}
@@ -543,15 +543,15 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .ig-strip .instagram-media{margin:0!important;min-width:326px!important;width:326px!important;max-width:326px!important}
 .hdr-nav{display:flex;gap:3px;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .hdr-nav::-webkit-scrollbar{display:none}
-.hdr-nav a{flex:0 0 auto;padding:8px 14px;border-radius:999px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#6B6256;text-decoration:none;white-space:nowrap;transition:all .2s}
+.hdr-nav a{flex:0 0 auto;padding:8px 14px;border-radius:999px;font-family:Jost,sans-serif;font-size:12.5px;font-weight:600;color:#6B6256;text-decoration:none;white-space:nowrap;transition:all .2s}
 .hdr-nav a:hover{background:rgba(192,112,46,.1);color:#9C521B}
 .hdr-nav a.active{background:#A95A21;color:#fff;box-shadow:0 4px 12px rgba(192,112,46,.3)}
 main{max-width:820px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(16px,5vw,32px)}
 .crumbs{font-size:12px;color:#6B6256;margin-bottom:14px}
 .crumbs a{color:#6B6256;text-decoration:none}
-h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(28px,5vw,44px);color:#33271B;line-height:1.1;margin-bottom:10px}
+h1{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;font-size:clamp(28px,5vw,44px);color:#33271B;line-height:1.1;margin-bottom:10px}
 .lede{font-size:14px;color:#9C521B;font-weight:600;margin-bottom:22px}
-h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33271B;margin:30px 0 12px}
+h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;font-size:24px;color:#33271B;margin:30px 0 12px}
 .place-buy{margin:22px 0}
 .place-buy a{color:var(--clay-deep,#7E4114);text-decoration:underline;text-underline-offset:3px}
 .content p{margin-bottom:16px;font-size:16.5px;color:#4A4136}
@@ -616,7 +616,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .card-emoji{font-size:26px;line-height:1.2}
 .card-thumb{width:62px;height:62px;border-radius:12px;background-size:cover;background-position:center;flex:0 0 auto;box-shadow:0 3px 10px rgba(58,42,28,.18)}
 .card-body{display:flex;flex-direction:column;min-width:0}
-.card-body strong{font-family:'Playfair Display',serif;font-size:17px;color:#33271B}
+.card-body strong{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:17px;color:#33271B}
 .card-body em{font-style:normal;font-size:11.5px;color:#9C521B;font-weight:600;margin:2px 0 5px}
 .card-body span{font-size:13px;color:#6B6256}
 .back{margin-top:26px;font-weight:700}
@@ -626,7 +626,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .ftr .links a{margin:0 8px;color:#6B6256;text-decoration:none;font-size:12px}
 .ftr 
 /* premium brand layer */
-.ftr-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:#9C521B;margin-bottom:14px}
+.ftr-tagline{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-style:italic;font-size:17px;color:#9C521B;margin-bottom:14px}
 .ftr .legal{margin-top:10px;font-weight:600}
 .ftr .legal a{text-decoration:underline;text-underline-offset:3px}
 .loc-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 46%,transparent 62%);background-size:240% 100%;animation:heroSweep 9s ease-in-out infinite;pointer-events:none}
@@ -642,7 +642,7 @@ h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#33
 .teecta-img:hover img{transform:scale(1.06)}
 .teecta-txt{padding:34px 32px;display:flex;flex-direction:column;justify-content:center;background:rgba(0,0,0,.28);backdrop-filter:blur(2px)}
 .teecta-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#F7DFBE;margin-bottom:10px}
-.teecta h2{font-family:'Playfair Display',serif;font-size:clamp(24px,3.4vw,34px);font-weight:800;line-height:1.08;color:#fff;margin:0 0 10px}
+.teecta h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:clamp(24px,3.4vw,34px);font-weight:600;line-height:1.08;color:#fff;margin:0 0 10px}
 .teecta p{color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;margin:0 0 16px;max-width:46ch}
 .teecta-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:20px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;color:rgba(255,255,255,.72)}
 .teecta .btn{align-self:flex-start;background:#E9B978;color:#181109;border:none}
@@ -743,7 +743,7 @@ main,.ftr{position:relative;z-index:1}
   box-shadow:0 2px 8px rgba(43,37,32,.18);opacity:0;transition:opacity .25s}
 .pcard:hover .pcard-zoom,.pcard-zoom:focus-visible{opacity:1}
 .pcard-b{display:flex;flex-direction:column;gap:7px;padding:15px 16px 17px}
-.pcard-t{font-family:'Playfair Display',serif;font-size:18px;line-height:1.25;color:#2B2620;text-decoration:none}
+.pcard-t{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:18px;line-height:1.25;color:#2B2620;text-decoration:none}
 .pcard-t:hover{color:var(--clay,#9C521B)}
 .pcard-place{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#6B6256}
 .pcard-spec{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
@@ -768,7 +768,7 @@ main,.ftr{position:relative;z-index:1}
 .shopcta .shoot{position:absolute;top:16%;left:-12%;width:110px;height:1.5px;background:linear-gradient(90deg,transparent,#FFF6DF);border-radius:2px;transform:rotate(9deg);animation:ctaShoot 7.5s ease-in infinite;pointer-events:none}
 @keyframes ctaShoot{0%,64%{left:-12%;opacity:0}68%{opacity:1}78%,100%{left:104%;opacity:0}}
 .shopcta-eyebrow{position:relative;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#F7DFBE;margin-bottom:10px}
-.shopcta h2{position:relative;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,4.4vw,36px);color:#fff;margin:0 0 8px;line-height:1.12}
+.shopcta h2{position:relative;font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;font-size:clamp(24px,4.4vw,36px);color:#fff;margin:0 0 8px;line-height:1.12}
 .shopcta h2 em{font-style:italic;color:#F7DFBE}
 .shopcta p{position:relative;color:rgba(255,255,255,.85);font-size:14.5px;max-width:460px;margin:0 auto 18px}
 .shopcta .btn{position:relative;background:#fff;color:#2A2016;border-radius:999px;padding:12px 26px}
@@ -833,7 +833,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <meta name="twitter:description" content="${esc(desc)}">
 <meta name="twitter:image" content="${esc(ogImg)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
@@ -1049,7 +1049,7 @@ locations.forEach(l => {
       <h1>${esc(l.name)}</h1>
       <p class="lede">${esc(l.emirate)} · ${esc(l.category)} · ${esc(l.difficulty)} · Best ${esc(l.season)}</p>
       <div class="wx" id="wx" data-lat="${l.lat}" data-lng="${l.lng}">Loading live weather…</div>
-      <button type="button" id="share-btn" style="margin-top:12px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)">↗ Share this spot</button>
+      <button type="button" id="share-btn" style="margin-top:12px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);color:#fff;font-family:Jost,sans-serif;font-size:13px;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)">↗ Share this spot</button>
     </div>
   </section>
   <main>

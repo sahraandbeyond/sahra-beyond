@@ -78,7 +78,7 @@
   text-transform:uppercase;color:#F2C98C;margin-bottom:16px;
 }
 .sbw-big{
-  font-family:var(--serif,'Playfair Display',Georgia,serif);font-weight:900;
+  font-family:var(--serif,'Cormorant Garamond',Georgia,serif);font-weight:700;
   font-size:clamp(58px,15vw,88px);line-height:.92;color:#F2C98C;letter-spacing:-.02em;
 }
 .sbw-big small{display:block;font-size:.26em;letter-spacing:3px;font-weight:400;
@@ -86,7 +86,7 @@
 .sbw-rule{width:58px;height:2px;background:#F2C98C;margin:20px auto}
 .sbw-list{list-style:none;margin:0 0 22px;padding:0;text-align:left;display:inline-block}
 .sbw-list li{
-  font-family:var(--sans,Inter,system-ui,sans-serif);font-size:14.5px;line-height:1.5;
+  font-family:var(--sans,Jost,system-ui,sans-serif);font-size:14.5px;line-height:1.5;
   color:#F7EFE2;padding:7px 0 7px 26px;position:relative;
 }
 .sbw-list li::before{content:"✦";position:absolute;left:0;top:7px;color:#F2C98C}
@@ -94,7 +94,7 @@
 .sbw-form input{
   flex:1;min-width:0;background:#0C0A1C;border:1px solid rgba(242,201,140,.40);
   border-radius:8px;padding:14px 15px;color:#F7EFE2;font-size:16px;
-  font-family:var(--sans,Inter,system-ui,sans-serif);
+  font-family:var(--sans,Jost,system-ui,sans-serif);
 }
 .sbw-form input::placeholder{color:#9A9184}
 .sbw-form input:focus{outline:2px solid #F2C98C;outline-offset:1px;border-color:#F2C98C}
@@ -105,8 +105,8 @@
 }
 .sbw-form button:hover{background:#FCE8C6}
 .sbw-form button:disabled{cursor:default;background:#8C7A5C;color:#2A2118}
-.sbw-fine{font-family:var(--sans,Inter,system-ui,sans-serif);font-size:12px;line-height:1.5;color:#C9BEA8}
-.sbw-err{display:none;color:#F0A882;font-size:13px;margin-bottom:10px;font-family:var(--sans,Inter,system-ui,sans-serif)}
+.sbw-fine{font-family:var(--sans,Jost,system-ui,sans-serif);font-size:12px;line-height:1.5;color:#C9BEA8}
+.sbw-err{display:none;color:#F0A882;font-size:13px;margin-bottom:10px;font-family:var(--sans,Jost,system-ui,sans-serif)}
 .sbw-modal.is-err .sbw-err{display:block}
 .sbw-modal.is-err .sbw-form input{border-color:#F0A882}
 

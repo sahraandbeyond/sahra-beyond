@@ -2,7 +2,7 @@
 .sb-cart-btn{position:relative;background:none;border:0;cursor:pointer;font-size:19px;padding:8px;
   line-height:1;color:inherit;min-width:44px;min-height:44px;flex:0 0 auto}
 .sb-cart-count{position:absolute;top:2px;right:0;min-width:18px;height:18px;border-radius:9px;
-  background:#E9B978;color:#2B2520;font-family:Inter,sans-serif;font-size:11px;font-weight:700;
+  background:#E9B978;color:#2B2520;font-family:Jost,sans-serif;font-size:11px;font-weight:700;
   display:none;align-items:center;justify-content:center;padding:0 4px}
 .sb-ov{position:fixed!important;inset:0;background:rgba(20,16,42,.5);opacity:0;pointer-events:none;
   transition:opacity .3s;z-index:998;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
@@ -13,7 +13,7 @@
 .sb-drawer.on{transform:translateX(0)}
 .sb-dh{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 12px;
   border-bottom:1px solid rgba(43,37,32,.12)}
-.sb-dh h3{margin:0;font-family:'Playfair Display',serif;font-size:21px}
+.sb-dh h3{margin:0;font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:21px}
 .sb-x{background:none;border:0;font-size:19px;cursor:pointer;color:inherit;min-width:44px;min-height:44px}
 .sb-db{flex:1;overflow:auto;padding:14px 20px}
 .sb-empty{color:#4A3E31;font-size:14px;padding:28px 0;text-align:center}

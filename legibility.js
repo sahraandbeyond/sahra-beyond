@@ -30,6 +30,14 @@
 'use strict';
 
 const CSS = `
+/* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
+   Cormorant runs small (x-height .386/em against Playfair's .514), so every
+   rule that sets the serif family carries font-size-adjust:.44 - it renders at
+   Playfair's cap height without touching the responsive size overrides. Jost
+   (x .46) is smaller than Inter (.546) too: this root value keeps body copy at
+   Inter's apparent size. Space Mono (x .496) is unchanged by .5. Any element
+   that sets the serif family overrides this with its own .44. */
+html{font-size-adjust:.5}
 /* ===== legibility layer: floors for size, weight and contrast (5 Sep 2026) ===== */
 :root{--txt-soft:#4A4136;--mist:#4A4136}
 /* the product pages flip these when the scroll reaches a dark background (body.dark-bg): keep that, brighter */
@@ -190,7 +198,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 .catnav{display:grid;gap:10px;margin:18px 0 26px}
 @media(min-width:640px){.catnav{grid-template-columns:repeat(3,1fr)}}
 .catnav a{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border:1px solid rgba(43,37,32,.16);border-radius:12px;background:#fff;text-decoration:none;color:#2A2016}
-.catnav a b{font-family:'Playfair Display',serif;font-size:19px;font-weight:700}
+.catnav a b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:19px;font-weight:600}
 .catnav a span{font-size:14px;color:#4A4136}
 /* size tables wider than a phone */
 @media(max-width:480px){
