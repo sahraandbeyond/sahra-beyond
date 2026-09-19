@@ -28,6 +28,7 @@
     { h: 'By type', l: [
       ['/t-shirts/', 'T-shirts', 'Regular & Oversized'],
       ['/polos/', 'Polo', '240 GSM piqué'],
+      ['/tote/', 'Accessories', 'The Sahra Tote'],
       ['/gifts/', 'Gifts', ''],
       ['/shop/', 'All products', '', 'sbn-all']
     ]},
@@ -125,6 +126,7 @@
     frag.appendChild(ma('/shop/', 'All products'));
     frag.appendChild(ma('/t-shirts/', 'T-shirts', true));
     frag.appendChild(ma('/polos/', 'Polo', true));
+    frag.appendChild(ma('/tote/', 'Accessories', true));
     frag.appendChild(ma('/shop/?fit=regular', 'Regular fit', true));
     frag.appendChild(ma('/shop/?fit=oversized', 'Oversized fit', true));
     frag.appendChild(ma('/gifts/', 'Gifts', true));

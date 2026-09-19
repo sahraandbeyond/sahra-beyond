@@ -119,6 +119,21 @@
   display:block;margin-top:8px;font-family:var(--mono,'Space Mono',monospace);
   font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#F7EFE2;line-height:1.7;
 }
+/* The AED 100 sum (19 Sep). Set as a receipt total, not a third tile: a hairline
+   above it, no border of its own and no gold fill, so it reads as the total of
+   the two AED 50 tiles rather than another item on the list — and so the only
+   gold-FILLED block on the card stays the submit button. The figure is serif at
+   32–38px, between the tiles' 46 and the body copy, so the eye lands on it third
+   without it outranking the two halves it is made of. */
+.sbw-sum{
+  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:0 10px;
+  margin:0 0 18px;padding-top:13px;border-top:1px solid rgba(242,201,140,.30);
+}
+.sbw-sum small{font-family:var(--mono,'Space Mono',monospace);font-size:10.5px;letter-spacing:2px;
+  text-transform:uppercase;color:#F7EFE2}
+.sbw-sum b{font-family:var(--serif,'Cormorant Garamond',Georgia,serif);font-size-adjust:.44;
+  font-weight:700;font-size:clamp(32px,8vw,38px);line-height:1;color:#F2C98C;
+  letter-spacing:-.01em;white-space:nowrap}
 .sbw-plus{
   font-family:var(--sans,Jost,system-ui,sans-serif);font-size:15px;line-height:1.4;
   color:#F7EFE2;margin:12px 0 4px;
@@ -187,6 +202,19 @@
   .sbw-tile{padding:13px 8px 12px}
   .sbw-tile span{font-size:9.5px;letter-spacing:1.6px}
   .sbw-plus{font-size:14.5px}
+  .sbw-sum{gap:0 8px;padding-top:11px}
+  .sbw-sum small{font-size:9.5px;letter-spacing:1.6px}
+}
+
+/* Short viewports (iPhone SE, 667px tall): the sum line pushed the card past
+   calc(100vh - 40px), which put SEND MY CODE below the fold — on the one control
+   the whole offer depends on. Reclaimed from the photo band and the sum's own
+   spacing rather than from the fine print, which now carries the real conditions. */
+@media(max-height:700px){
+  .sbw-hero{aspect-ratio:1160/460}
+  .sbw-sum{margin-bottom:12px;padding-top:10px}
+  .sbw-card{padding-bottom:22px}
+  .sbw-pair{margin-bottom:16px}
 }
 
 @media(prefers-reduced-motion:reduce){

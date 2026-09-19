@@ -54,8 +54,14 @@
        substantiation rule. If that price ever moves, move it here too and the
        bar, the modal and the cart all follow. */
     toteValue: 'AED 50',
+    /* total is COMPUTED below, never typed. Both halves are real prices - GOBEYOND50
+       is AED 50 off and the same tote is listed for sale at AED 50 (SB-TOTE-50) - but a
+       third hand-maintained copy of the arithmetic is how "AED 100" survives a change
+       to either half. Change amount or toteValue and the sum follows. */
     toteImg: '/shirts/tote-band.jpg'
   };
+  OFFER.total = 'AED ' + ((parseInt(OFFER.amount.replace(/\D/g, ''), 10) || 0) +
+                          (parseInt(OFFER.toteValue.replace(/\D/g, ''), 10) || 0));
 
   /* POST an address to Shopify. Resolves with the code to show. Never rejects:
      a capture failure must not cost the visitor the offer they were promised,
@@ -157,7 +163,7 @@
   m.hidden = true;
   m.setAttribute('role', 'dialog');
   m.setAttribute('aria-modal', 'true');
-  m.setAttribute('aria-label', OFFER.amount + ' off your first order, plus a free tote worth ' + OFFER.toteValue);
+  m.setAttribute('aria-label', OFFER.amount + ' off your first order, plus a free tote worth ' + OFFER.toteValue + ' \u2014 ' + OFFER.total + ' together on your first order over AED ' + OFFER.min + '.');
   m.innerHTML =
     '<div class="sbw-scrim" data-sbw-close></div>' +
     '<div class="sbw-card">' +
@@ -179,12 +185,23 @@
           '<div class="sbw-tile"><b>' + OFFER.amount + '</b><span>off your<br>first order</span></div>' +
           '<div class="sbw-tile"><b>' + OFFER.amount + '</b><span>tote,<br>yours free</span></div>' +
         '</div>' +
+        /* The sum, added 19 Sep (Faheem: say they get AED 100 free). Deliberately
+           parts-THEN-total, not the reverse: a lone "AED 100 of value" headline is the
+           claim every discount popup makes, and three separate reviews read it as
+           inflation. Shown after the two fifties it is arithmetic the reader has just
+           verified. Set as a receipt total - hairline above, no box, no gold fill -
+           so it reads as the sum of the two tiles and not as a third line item, and so
+           the only gold-filled block on the card stays the button. */
+        '<p class="sbw-sum"><small>Together, that&rsquo;s</small><b>' + OFFER.total + '</b><small>on your first order over AED ' + OFFER.min + '</small></p>' +
         '<p class="sbw-err">That email does not look right. Try again?</p>' +
         '<form class="sbw-form" novalidate>' +
           '<input type="email" name="email" inputmode="email" autocomplete="email" required placeholder="you@email.com" aria-label="Email address">' +
           '<button type="submit">Send my code</button>' +
         '</form>' +
-        '<p class="sbw-fine">Free next-day UAE delivery, order by 2 pm &middot; free 14-day exchanges &middot; one email when a new place drops, nothing else. Minimum order AED ' + OFFER.min + '.</p>' +
+        /* The old single "Minimum order AED 150" sat under BOTH halves and read as if the
+           tote needed AED 150 too. It does not - assets/sahra-cart.js earns the gift on
+           item count with no subtotal test at all. Only the code has the minimum. */
+        '<p class="sbw-fine">Tote with every order, no minimum &middot; one code per customer &middot; free next-day UAE delivery, order by 2 pm &middot; free 14-day exchanges &middot; one email when a new place drops, nothing else.</p>' +
       '</div>' +
       '<div class="sbw-won">' +
         '<p class="sbw-eyebrow">You&rsquo;re on the list</p>' +
