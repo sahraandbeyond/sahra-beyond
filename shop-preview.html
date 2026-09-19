@@ -278,6 +278,15 @@ body.shop-page .fold-b .fit-note{margin:0 0 8px;line-height:1.6}
 .prod h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:clamp(30px,4vw,54px);font-weight:600;line-height:1.04;margin-bottom:16px}
 .prod .story{font-size:16px;font-weight:300;line-height:1.85;margin-bottom:20px;max-width:440px}
 .prod .price{font-family:'Space Mono',monospace;font-size:15px;letter-spacing:1px;margin-bottom:24px}
+/* The tote's own section (19 Sep). It borrows the panel and the grid from .prod
+   and none of the tee copy — no fit chip, no size row, no spec strip, because a
+   canvas bag has no GSM and no cut. */
+.tote-prod .prod-lead{font-size:16px;line-height:1.6;color:#4A4136;margin:0 0 14px;max-width:46ch}
+.tote-prod .tote-free{border:1px solid #C99A55;background:#FBF0DC;border-radius:10px;
+  padding:12px 14px;margin:0 0 18px;font-size:14.5px;line-height:1.5;color:#4A4136;max-width:48ch}
+.tote-prod .tote-free b{color:#33271B}
+.tote-prod .price{margin-bottom:18px}
+.tote-prod .tote-btn{text-decoration:none}
 .prod-acc{margin:2px 0 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:440px}
 .prod-acc summary{list-style:none;cursor:pointer;padding:13px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:1;display:flex;justify-content:space-between;align-items:center}
 .prod-acc summary::-webkit-details-marker{display:none}
@@ -1791,7 +1800,10 @@ async function load(){
     PRODUCTS.sort(function(a,b){
       var ap=PLACE_ORDER.indexOf(a.place),bp=PLACE_ORDER.indexOf(b.place);
       if(ap<0)ap=98; if(bp<0)bp=98;
-      var ac=(tagVal(a.tags||[],'category')==='polos')?99:ap, bc=(tagVal(b.tags||[],'category')==='polos')?99:bp;
+      /* the tote is an accessory, not part of the tee story — it closes the page */
+      if(a.handle==='sahra-tote')ap=100; if(b.handle==='sahra-tote')bp=100;
+      var ac=(a.handle==='sahra-tote')?100:((tagVal(a.tags||[],'category')==='polos')?99:ap),
+          bc=(b.handle==='sahra-tote')?100:((tagVal(b.tags||[],'category')==='polos')?99:bp);
       if(ac!==bc)return ac-bc;
       var rank=function(x){return tagVal(x.tags||[],'fit')==='oversized'?1:0;};
       return rank(a)-rank(b);
@@ -1880,6 +1892,27 @@ function draw(){
   var ringHtml=PRODUCTS.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
   var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
+    /* The tote (19 Sep). Everything below this point is the tee template — GSM,
+       fit note, place band, size chips, "limited first run" — and a canvas bag
+       has none of it. Running it through that template would print 230gsm
+       combed cotton over a tote, which the substantiation rule forbids outright.
+       So it gets a short section of its own: one photo, the price, and the fact
+       that it also arrives free with every order. data-fit / data-place /
+       data-print / data-sizes are left empty on purpose, so choosing any tee
+       facet correctly filters it out. */
+    if(p.handle==='sahra-tote'){
+      var _ti=(p.images&&p.images[0])||'/shirts/tote-model.jpg';
+      return '<section class="prod tote-prod'+((i%2)?' rev':'')+'" id="prod-sahra-tote" data-bg="" data-fit="" data-place="" data-print="" data-sizes="">'
+        + '<div class="prod-media"><div class="prod-img"><div class="slides"><img class="slide on" src="'+_ti+'" alt="The Sahra Tote in natural canvas, carried over the shoulder"></div></div></div>'
+        + '<div class="prod-txt">'
+          + '<span class="eyebrow">Sahra &amp; Beyond &middot; accessory</span>'
+          + '<h2>The Sahra Tote</h2>'
+          + '<p class="prod-lead">Natural canvas, carrying the mark and the wordmark in terracotta. Long shoulder handles, flat-bottomed.</p>'
+          + '<p class="tote-free"><b>It comes free with every order.</b> Add any tee or polo and a tote is added at no charge &mdash; this is for a second one, or the tote on its own.</p>'
+          + '<p class="price"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></p>'
+          + '<a class="btn tote-btn" href="/tote/">See the tote &rarr;</a>'
+        + '</div></section>';
+    }
     var sizes=p.sizes.map(function(sz){var av=p.variants.some(function(v){return v.size===sz&&v.avail;});return '<button class="size" data-size="'+sz+'" '+(av?'':'disabled')+'><span>'+sz+'</span></button>';}).join('');
     var fitLabel=(tagVal(p.tags||[],'fit')||'');
     if(!fitLabel&&/oversized/i.test(p.title))fitLabel='oversized';

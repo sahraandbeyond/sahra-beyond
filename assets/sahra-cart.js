@@ -148,6 +148,18 @@
   function isGift(node) {
     return !!(node && node.merchandise && node.merchandise.id === GIFT_VARIANT);
   }
+  /* The tote is also sold on its own at AED 50 (/tote/, handle sahra-tote), which
+     is what makes the "worth AED 50" on the offer card a real list price rather
+     than an invented one. It must not earn a gift: buying one tote would
+     otherwise ship two. Matched on handle, not variant id, so a reprice or a
+     second colourway of the same product keeps working. (Faheem, 19 Sep.) */
+  var TOTE_HANDLE = 'sahra-tote';
+  var TOTE_PRICE = '50';   /* shown struck through on the gift line; keep in step
+                              with the variant price and OFFER.toteValue. */
+  function isTote(node) {
+    var m = node && node.merchandise;
+    return !!(m && m.product && m.product.handle === TOTE_HANDLE);
+  }
   function cartNodes() {
     return (CART && CART.lines && CART.lines.edges) ? CART.lines.edges.map(function (e) { return e.node; }) : [];
   }
@@ -164,11 +176,19 @@
     cartNodes().forEach(function (l) { if (!isGift(l)) n += (l.quantity || 0); });
     return n;
   }
+  /* What earns the free tote: anything the customer paid for that is not itself
+     a tote. Kept separate from realQty, which is the badge count and must still
+     include a purchased tote. */
+  function giftEarningQty() {
+    var n = 0;
+    cartNodes().forEach(function (l) { if (!isGift(l) && !isTote(l)) n += (l.quantity || 0); });
+    return n;
+  }
 
   function syncGift() {
     return queue(function () {
       if (!CART || !CART.id) return CART;
-      var g = giftLine(), real = realQty();
+      var g = giftLine(), real = giftEarningQty();
       var op = null;
       if (real > 0 && !g) op = { m: GIFT_ADD, v: { id: CART.id, l: [{ merchandiseId: GIFT_VARIANT, quantity: 1 }] }, k: 'cartLinesAdd' };
       else if (real === 0 && g) op = { m: GIFT_RM, v: { id: CART.id, l: [g.id] }, k: 'cartLinesRemove' };
@@ -357,12 +377,22 @@
       /* The gift has no product page (headless-only), so no link; and no
          quantity or remove controls - it is not the customer's to manage. */
       if (isGift(l)) {
+        /* The value has to be visible where it lands, not only on the offer
+           card: the same tote is listed at AED 50, so the line shows that price
+           struck through beside FREE (Faheem, 19 Sep). money() formats but does
+           NOT convert, so the struck figure is rendered as a .sb-price node
+           carrying the handle — sahra-market.js rewrites those into the
+           visitor's currency, and its MutationObserver catches this drawer
+           because it is drawn long after that module boots. */
         return '<div class="sb-line sb-gift">' +
           (img ? '<img src="' + esc(img) + '" alt="" width="60" height="75" loading="lazy">'
                : '<span class="sb-noimg"></span>') +
           '<div class="sb-lt">' +
-            '<span class="sb-gift-t">Sahra tote &mdash; yours free</span>' +
-            '<span>' + money(0, (CART && CART.cost && CART.cost.subtotalAmount && CART.cost.subtotalAmount.currencyCode) || 'AED') + '</span>' +
+            '<span class="sb-gift-t">The Sahra Tote &mdash; yours free</span>' +
+            '<span class="sb-gift-p">' +
+              '<s class="sb-price" data-handle="' + TOTE_HANDLE + '" data-aed="' + TOTE_PRICE + '">AED ' + TOTE_PRICE + '</s>' +
+              ' <b>FREE</b>' +
+            '</span>' +
           '</div>' +
         '</div>';
       }

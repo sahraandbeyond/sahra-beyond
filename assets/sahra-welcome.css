@@ -83,6 +83,35 @@
 }
 .sbw-big small{display:block;font-size:.26em;letter-spacing:3px;font-weight:400;
   font-family:var(--mono,'Space Mono',monospace);color:#F7EFE2;margin-top:12px;text-transform:uppercase}
+/* The second half of the offer, 18 Sep 2026 (Faheem: the card must say very
+   clearly it is AED 50 off AND a free tote worth AED 50). The tote is a real
+   listed product at that price (/tote/), so the strike-through is a genuine
+   list price, not an invented anchor. */
+.sbw-plus{
+  font-family:var(--sans,Jost,system-ui,sans-serif);font-size:17px;line-height:1.35;
+  color:#F7EFE2;margin:14px 0 0;
+}
+.sbw-plus span{color:#F2C98C;font-weight:600;margin-right:4px}
+.sbw-plus b{color:#F2C98C;font-weight:600;white-space:nowrap}
+.sbw-plus-sm{font-size:14.5px;margin:12px 0 4px}
+.sbw-gift{
+  display:flex;align-items:center;gap:14px;text-align:left;
+  border:1px solid rgba(242,201,140,.34);border-radius:12px;
+  background:rgba(242,201,140,.07);padding:10px 14px 10px 10px;margin:0 0 20px;
+}
+.sbw-gift-img{
+  width:80px;height:100px;object-fit:cover;border-radius:8px;display:block;flex:none;
+  background:#241C3A;
+}
+.sbw-gift-t{display:grid;gap:3px;min-width:0}
+.sbw-gift-t b{
+  font-family:var(--serif,'Cormorant Garamond',Georgia,serif);font-size-adjust:.44;
+  font-weight:600;font-size:21px;line-height:1.1;color:#F7EFE2;
+}
+.sbw-gift-t span{
+  font-family:var(--sans,Jost,system-ui,sans-serif);font-size:14px;color:#F2C98C;
+}
+.sbw-gift-t s{color:#C9BEA8;text-decoration-thickness:1px}
 .sbw-rule{width:58px;height:2px;background:#F2C98C;margin:20px auto}
 .sbw-list{list-style:none;margin:0 0 22px;padding:0;text-align:left;display:inline-block}
 .sbw-list li{
@@ -140,6 +169,10 @@
   .sbw-form button{width:100%}
   .sbw-card{padding:34px 22px 26px}
   .sbw-list li{font-size:14px;padding-left:24px}
+  .sbw-plus{font-size:15.5px}
+  .sbw-gift{gap:11px;padding:8px 12px 8px 8px}
+  .sbw-gift-img{width:64px;height:80px}
+  .sbw-gift-t b{font-size:19px}
 }
 
 @media(prefers-reduced-motion:reduce){

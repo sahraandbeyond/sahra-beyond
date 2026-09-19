@@ -36,7 +36,13 @@
     code: 'GOBEYOND50',  /* fallback only — /api/subscribe returns the live one */
     amount: 'AED 50',
     min: 150,
-    api: '/api/subscribe'
+    api: '/api/subscribe',
+    /* The tote is a real listed product at AED 50 (/tote/), which is what makes
+       "worth AED 50" a checkable claim rather than an invented anchor — the
+       substantiation rule. If that price ever moves, move it here too and the
+       bar, the modal and the cart all follow. */
+    toteValue: 'AED 50',
+    toteImg: '/shirts/card/tote-model.jpg'
   };
 
   /* POST an address to Shopify. Resolves with the code to show. Never rejects:
@@ -74,8 +80,8 @@
     '<span class="sbw-bar-in">' +
       '<span class="sbw-dot" aria-hidden="true"></span>' +
       '<span class="sbw-amt">' + OFFER.amount + ' off your first order</span>' +
-      '<span class="sbw-sep sbw-hide-sm" aria-hidden="true">·</span>' +
-      '<span class="sbw-hide-sm">Free tote</span>' +
+      '<span class="sbw-sep" aria-hidden="true">·</span>' +
+      '<span class="sbw-amt">Free tote worth ' + OFFER.toteValue + '</span>' +
       '<span class="sbw-sep sbw-hide-sm" aria-hidden="true">·</span>' +
       '<span class="sbw-hide-sm">Free next-day UAE delivery</span>' +
       '<span class="sbw-go">Get the code &rarr;</span>' +
@@ -139,7 +145,7 @@
   m.hidden = true;
   m.setAttribute('role', 'dialog');
   m.setAttribute('aria-modal', 'true');
-  m.setAttribute('aria-label', OFFER.amount + ' off your first order');
+  m.setAttribute('aria-label', OFFER.amount + ' off your first order, plus a free tote worth ' + OFFER.toteValue);
   m.innerHTML =
     '<div class="sbw-scrim" data-sbw-close></div>' +
     '<div class="sbw-card">' +
@@ -148,12 +154,19 @@
       '<div class="sbw-ask">' +
         '<p class="sbw-eyebrow">Founding Edition &nbsp;·&nbsp; first order</p>' +
         '<p class="sbw-big">' + OFFER.amount + '<small>off your first order</small></p>' +
+        '<p class="sbw-plus"><span aria-hidden="true">+</span> a free Sahra tote, <b>worth ' + OFFER.toteValue + '</b></p>' +
         '<div class="sbw-rule" aria-hidden="true"></div>' +
+        '<div class="sbw-gift">' +
+          '<img class="sbw-gift-img" src="' + OFFER.toteImg + '" alt="The Sahra Tote in natural canvas, carried over the shoulder" width="80" height="100" loading="lazy" decoding="async">' +
+          '<div class="sbw-gift-t">' +
+            '<b>The Sahra Tote</b>' +
+            '<span><s>' + OFFER.toteValue + '</s> &nbsp;free with every order</span>' +
+          '</div>' +
+        '</div>' +
         '<ul class="sbw-list">' +
-          '<li>A free Sahra canvas tote with every order</li>' +
           '<li>Free next-day delivery across the UAE &mdash; order by 2 pm, no minimum</li>' +
           '<li>Free exchange within 14 days if the size is wrong</li>' +
-          '<li>Every piece numbered &mdash; 1 of 40 per design, never restocked</li>' +
+          '<li>Every design is a limited first run</li>' +
         '</ul>' +
         '<p class="sbw-err">That email does not look right. Try again?</p>' +
         '<form class="sbw-form" novalidate>' +
@@ -166,6 +179,7 @@
         '<p class="sbw-eyebrow">You&rsquo;re on the list</p>' +
         '<p class="sbw-big">' + OFFER.amount + '<small>use it at checkout</small></p>' +
         '<div class="sbw-code"><b>' + OFFER.code + '</b><button type="button" class="sbw-copy">Copy</button></div>' +
+        '<p class="sbw-plus sbw-plus-sm"><span aria-hidden="true">+</span> your free tote, <b>worth ' + OFFER.toteValue + '</b>, is added at checkout</p>' +
         '<a class="sbw-shop" href="/shop/">Shop the collection</a>' +
         '<p class="sbw-fine">One use per customer, on orders over AED ' + OFFER.min + '. Reopen the gold bar any time to see it again.</p>' +
       '</div>' +

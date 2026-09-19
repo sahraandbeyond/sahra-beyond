@@ -106,3 +106,10 @@
 .sb-gift-t{font-weight:600;display:block}
 .sb-gift-t::after{content:'GIFT';margin-left:8px;font-family:'Space Mono',monospace;font-size:9px;
   letter-spacing:1.4px;padding:2px 6px;border-radius:999px;background:var(--gold,#F2C98C);color:#241B12;vertical-align:middle}
+/* Quiet, but no longer silent about what it is worth: the same tote is listed
+   at AED 50, so the line shows that price struck through beside FREE. A real
+   list price, not an anchor invented for the cart (Faheem, 19 Sep). */
+.sb-gift-p{display:block;margin-top:2px}
+.sb-gift-p s{color:#6B6256;text-decoration-thickness:1px;margin-right:6px}
+.sb-gift-p b{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
+  font-weight:700;color:#7E4114}

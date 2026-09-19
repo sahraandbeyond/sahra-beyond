@@ -388,6 +388,20 @@ body.buy-page .pdp-size{min-width:68px}
 .pdp-size:disabled,.pdp-size[disabled]{text-decoration:line-through;text-decoration-thickness:1.5px}
 /* the price inside the add-to-cart button is a .sb-price so the market script converts it; it must NOT take the 26px price scale above (15 Sep) */
 body.buy-page .pdp-add .sb-price,.pdp-add .sb-price{font-size:inherit!important;letter-spacing:inherit!important;font-weight:inherit!important}
+/* Same trap, the cart drawer's free-tote line (19 Sep): the struck-through AED 50
+   is a .sb-price so the market script converts it, which makes it inherit the
+   20px shop-page price scale above and shout louder than the item it is a gift
+   with. It is a secondary figure - hold it at label size in every context. */
+.sb-gift-p .sb-price,body.shop-page .sb-gift-p .sb-price,body.buy-page .sb-gift-p .sb-price{
+  font-size:13px!important;font-weight:400!important;letter-spacing:.01em!important}
+/* /tote/ is a shell page, so two floors above land on it wrongly: .sb-price is
+   pinned to 12px as a LABEL price (a card's corner figure), and .crumbs is held
+   cream because every other shell page puts its breadcrumb on a dark hero. Here
+   the price is the headline figure and the breadcrumb sits on the cream reading
+   surface, so both are released for this page only (19 Sep). */
+body.tote-page .tt-price .sb-price{font-size:inherit!important;letter-spacing:.01em!important;font-weight:inherit!important}
+body.tote-page .crumbs,body.tote-page .crumbs a{color:#6B5B48!important}
+body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
 .meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
 .eyebrow{font-size:13px!important}
