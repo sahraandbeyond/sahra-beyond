@@ -32,6 +32,18 @@
   if (window.__sbWelcome) return;
   window.__sbWelcome = 1;
 
+  /* Same guard as sahra-nav.js: on 18 Sep one CDN edge answered 404 for a newly
+     hashed stylesheet while the script beside it loaded fine, and the offer card
+     rendered as unstyled text. If our sheet is present but empty, pull it again
+     unhashed rather than showing a broken card to a customer. */
+  try {
+    var sbwCss = document.querySelector('link[href*="/assets/sahra-welcome.css"]');
+    if (sbwCss && sbwCss.sheet && sbwCss.sheet.cssRules.length === 0) {
+      var sbwFb = document.createElement('link'); sbwFb.rel = 'stylesheet';
+      sbwFb.href = '/assets/sahra-welcome.css?r=' + Date.now(); document.head.appendChild(sbwFb);
+    }
+  } catch (e) {}
+
   var OFFER = {
     code: 'GOBEYOND50',  /* fallback only — /api/subscribe returns the live one */
     amount: 'AED 50',
@@ -42,7 +54,7 @@
        substantiation rule. If that price ever moves, move it here too and the
        bar, the modal and the cart all follow. */
     toteValue: 'AED 50',
-    toteImg: '/shirts/card/tote-model.jpg'
+    toteImg: '/shirts/tote-band.jpg'
   };
 
   /* POST an address to Shopify. Resolves with the code to show. Never rejects:
@@ -152,34 +164,33 @@
       '<span class="sbw-glow" aria-hidden="true"></span>' +
       '<button type="button" class="sbw-close" data-sbw-close aria-label="Close">&times;</button>' +
       '<div class="sbw-ask">' +
+        /* Rebuilt 19 Sep (Faheem: the eye has to land on BOTH fifties, the card
+           was crowded and the photo was small and off to one side). The tote is
+           now a full-bleed band across the top, and the two halves of the offer
+           are one symmetrical pair at the same weight — neither is a footnote to
+           the other. The three bullets collapsed into a single fine-print line;
+           they were competing with the numbers for the same attention. */
+        '<figure class="sbw-hero">' +
+          '<img src="' + OFFER.toteImg + '" alt="The Sahra Tote in natural canvas, carried over the shoulder" width="1160" height="580" decoding="async">' +
+          '<figcaption>The Sahra Tote &nbsp;·&nbsp; free with every order</figcaption>' +
+        '</figure>' +
         '<p class="sbw-eyebrow">Founding Edition &nbsp;·&nbsp; first order</p>' +
-        '<p class="sbw-big">' + OFFER.amount + '<small>off your first order</small></p>' +
-        '<p class="sbw-plus"><span aria-hidden="true">+</span> a free Sahra tote, <b>worth ' + OFFER.toteValue + '</b></p>' +
-        '<div class="sbw-rule" aria-hidden="true"></div>' +
-        '<div class="sbw-gift">' +
-          '<img class="sbw-gift-img" src="' + OFFER.toteImg + '" alt="The Sahra Tote in natural canvas, carried over the shoulder" width="80" height="100" loading="lazy" decoding="async">' +
-          '<div class="sbw-gift-t">' +
-            '<b>The Sahra Tote</b>' +
-            '<span><s>' + OFFER.toteValue + '</s> &nbsp;free with every order</span>' +
-          '</div>' +
+        '<div class="sbw-pair">' +
+          '<div class="sbw-tile"><b>' + OFFER.amount + '</b><span>off your<br>first order</span></div>' +
+          '<div class="sbw-tile"><b>' + OFFER.amount + '</b><span>tote,<br>yours free</span></div>' +
         '</div>' +
-        '<ul class="sbw-list">' +
-          '<li>Free next-day delivery across the UAE &mdash; order by 2 pm, no minimum</li>' +
-          '<li>Free exchange within 14 days if the size is wrong</li>' +
-          '<li>Every design is a limited first run</li>' +
-        '</ul>' +
         '<p class="sbw-err">That email does not look right. Try again?</p>' +
         '<form class="sbw-form" novalidate>' +
           '<input type="email" name="email" inputmode="email" autocomplete="email" required placeholder="you@email.com" aria-label="Email address">' +
           '<button type="submit">Send my code</button>' +
         '</form>' +
-        '<p class="sbw-fine">One email when a new place drops. Nothing else, and you can leave any time. Minimum order AED ' + OFFER.min + '.</p>' +
+        '<p class="sbw-fine">Free next-day UAE delivery, order by 2 pm &middot; free 14-day exchanges &middot; one email when a new place drops, nothing else. Minimum order AED ' + OFFER.min + '.</p>' +
       '</div>' +
       '<div class="sbw-won">' +
         '<p class="sbw-eyebrow">You&rsquo;re on the list</p>' +
         '<p class="sbw-big">' + OFFER.amount + '<small>use it at checkout</small></p>' +
         '<div class="sbw-code"><b>' + OFFER.code + '</b><button type="button" class="sbw-copy">Copy</button></div>' +
-        '<p class="sbw-plus sbw-plus-sm"><span aria-hidden="true">+</span> your free tote, <b>worth ' + OFFER.toteValue + '</b>, is added at checkout</p>' +
+        '<p class="sbw-plus sbw-plus-sm"><span aria-hidden="true">+</span> your tote, <b>worth ' + OFFER.toteValue + '</b>, is added free at checkout</p>' +
         '<a class="sbw-shop" href="/shop/">Shop the collection</a>' +
         '<p class="sbw-fine">One use per customer, on orders over AED ' + OFFER.min + '. Reopen the gold bar any time to see it again.</p>' +
       '</div>' +

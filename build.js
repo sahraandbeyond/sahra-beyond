@@ -1846,9 +1846,12 @@ body.tote-page main{max-width:1180px}
   })
   .catch(function(){ btn.textContent='Open the shop'; btn.disabled=false; btn.onclick=function(){location.href='/shop/';}; });
   btn.addEventListener('click',function(){
-    if(!VID||!window.SahraCart)return;
+    if(!VID)return;
+    if(!window.SahraCart){ say('The bag is still loading \u2014 give it a second, or message us on WhatsApp.'); return; }
     btn.disabled=true; btn.textContent='Adding\\u2026';
-    Promise.resolve(SahraCart.add(VID,1)).then(function(){
+    /* gift:false - a tote does not earn a free tote. It matters on an empty
+       cart, where sahra-cart.js must seed the gift before a cart exists to read. */
+    Promise.resolve(SahraCart.add(VID,1,{gift:false})).then(function(){
       btn.textContent='Add to bag'; btn.disabled=false; say(''); SahraCart.open&&SahraCart.open();
     }).catch(function(){
       btn.textContent='Add to bag'; btn.disabled=false; say('That did not go through. Try again, or message us on WhatsApp.');

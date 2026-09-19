@@ -1888,8 +1888,12 @@ function draw(){
     + '<div class="filt-meta"><span id="filtCount" role="status" aria-live="polite"></span>'
     + '<button type="button" class="filt-clear" id="filtClear" hidden>Clear all</button></div></div>'
     + '<p class="filt-empty" id="filtEmpty" hidden>Nothing matches that combination yet. <button type="button" class="filt-linkish" id="filtReset">Show everything</button></p>';
-  var ringCards=PRODUCTS.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+((p.images&&p.images.length?p.images:(p.img?[p.img]:[])).slice(0,6).map(function(u,j){return '<img class="'+(j===0?'on':'')+'" src="'+u+'" alt="'+(j===0?(p.title||'').replace(/"/g,''):'')+'" loading="'+(i<3&&j<2?'eager':'lazy')+'" decoding="async">';}).join(''))+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
-  var ringHtml=PRODUCTS.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
+  /* The ring is "the collection" — the tee story. The tote is an accessory and
+     is left out of it, for the same reason it is left out of the designs index;
+     it still has its own section in the grid below. */
+  var ringSrc=PRODUCTS.filter(function(p){return p.handle!=='sahra-tote';});
+  var ringCards=ringSrc.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+((p.images&&p.images.length?p.images:(p.img?[p.img]:[])).slice(0,6).map(function(u,j){return '<img class="'+(j===0?'on':'')+'" src="'+u+'" alt="'+(j===0?(p.title||'').replace(/"/g,''):'')+'" loading="'+(i<3&&j<2?'eager':'lazy')+'" decoding="async">';}).join(''))+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
+  var ringHtml=ringSrc.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
   var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
     /* The tote (19 Sep). Everything below this point is the tee template — GSM,
@@ -1902,7 +1906,15 @@ function draw(){
        facet correctly filters it out. */
     if(p.handle==='sahra-tote'){
       var _ti=(p.images&&p.images[0])||'/shirts/tote-model.jpg';
-      return '<section class="prod tote-prod'+((i%2)?' rev':'')+'" id="prod-sahra-tote" data-bg="" data-fit="" data-place="" data-print="" data-sizes="">'
+      /* .prod-inner is NOT optional: it carries z-index:2, which is what lifts a
+         section above #ambient-canvas (position:fixed, z-index:1). Without it the
+         ambient line-art drew straight over this section's photo and copy — the
+         tee template has always had the wrapper, so leaving it out here broke
+         only the tote (Faheem, 19 Sep). data-bg carries the sand the journey
+         tints toward; empty read as a falsy fallback to the same colour, but
+         naming it keeps the intent visible. */
+      return '<section class="prod tote-prod'+((i%2)?' rev':'')+'" id="prod-sahra-tote" data-bg="#FAF6EF" data-fit="" data-place="" data-print="" data-sizes="">'
+        + '<div class="prod-inner">'
         + '<div class="prod-media"><div class="prod-img"><div class="slides"><img class="slide on" src="'+_ti+'" alt="The Sahra Tote in natural canvas, carried over the shoulder"></div></div></div>'
         + '<div class="prod-txt">'
           + '<span class="eyebrow">Sahra &amp; Beyond &middot; accessory</span>'
@@ -1911,7 +1923,7 @@ function draw(){
           + '<p class="tote-free"><b>It comes free with every order.</b> Add any tee or polo and a tote is added at no charge &mdash; this is for a second one, or the tote on its own.</p>'
           + '<p class="price"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></p>'
           + '<a class="btn tote-btn" href="/tote/">See the tote &rarr;</a>'
-        + '</div></section>';
+        + '</div></div></section>';
     }
     var sizes=p.sizes.map(function(sz){var av=p.variants.some(function(v){return v.size===sz&&v.avail;});return '<button class="size" data-size="'+sz+'" '+(av?'':'disabled')+'><span>'+sz+'</span></button>';}).join('');
     var fitLabel=(tagVal(p.tags||[],'fit')||'');
@@ -2154,6 +2166,10 @@ function shopRing(){
    sections rather than from PRODUCTS, so its fit/place/print/size attributes are
    by construction identical to the ones the filters already match on. */
 function buildShopIndex(secs){
+  /* Designs only. The index and its label ("All N designs") are devices for the
+     tee story; counting a canvas bag as a design is simply untrue, and the tote
+     section says as much itself. It still sits in the grid and in the filters. */
+  secs=(secs||[]).filter(function(sec){return sec.id!=='prod-sahra-tote';});
   if(!secs||secs.length<3)return null;
   var bar=document.getElementById('shopFilters'); if(!bar)return null;
   if(document.getElementById('shopIndex'))return document.getElementById('shopIndex');
@@ -2279,6 +2295,13 @@ function injectProductJsonLd(products){
   try{
     var old=document.getElementById('ld-products');if(old)old.remove();
     if(!products||!products.length)return;
+    /* The tote's page is /tote/, not /products/<handle>/ — that folder is only
+       generated from content/products/*.json and has no tote entry, so the old
+       unconditional URL pointed crawlers at a 404 AND contradicted the tote
+       page's own Product JSON-LD: two conflicting entities for one SKU. */
+    var pageFor=function(p){
+      return SITE_BASE+(p.handle==='sahra-tote'?'/tote/':'/products/'+(p.handle||p.placeSlug)+'/');
+    };
     var nodes=products.map(function(p){
       var anyAvail=(p.variants||[]).some(function(v){return v.avail;});
       var imgs=(p.images||[]).map(absUrl).filter(Boolean);
@@ -2286,10 +2309,10 @@ function injectProductJsonLd(products){
       var desc=(p.story||'').replace(/\s+/g,' ').trim();
       if(!desc&&pd)desc=pd.blurb;
       var node={"@type":"Product","name":p.title,"brand":{"@type":"Brand","name":"Sahra & Beyond"},
-        "url":SITE_BASE+'/products/'+(p.handle||p.placeSlug)+'/',
+        "url":pageFor(p),
         "offers":{"@type":"Offer","priceCurrency":p.cur||'AED',"price":String(Math.round(parseFloat(p.price))),
           "availability":anyAvail?"https://schema.org/InStock":"https://schema.org/OutOfStock",
-          "url":SITE_BASE+'/products/'+(p.handle||p.placeSlug)+'/',
+          "url":pageFor(p),
           "itemCondition":"https://schema.org/NewCondition"}};
       if(imgs.length)node.image=imgs;
       if(desc)node.description=desc;

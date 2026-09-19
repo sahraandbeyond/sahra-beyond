@@ -118,7 +118,10 @@
   function afterMutation(c) {
     return syncGift().then(function () { return CART || c; });
   }
-  function add(variantId, qty) { return addRaw(variantId, qty).then(afterMutation); }
+  /* opts.gift === false: this item does not earn the free tote (it IS a tote).
+     Only affects the empty-cart path, which has to decide before a cart exists;
+     syncGift() is still the authority on every cart that already has lines. */
+  function add(variantId, qty, opts) { return addRaw(variantId, qty, opts).then(afterMutation); }
   function setQty(lineId, qty) {
     var r = setQtyRaw(lineId, qty);
     return (r && r.then) ? r.then(afterMutation) : r;
@@ -515,7 +518,8 @@
     });
   }
 
-  function addRaw(variantId, qty) {
+  function addRaw(variantId, qty, opts) {
+    var earnsGift = !(opts && opts.gift === false);
     ensureUI();
     var want = Math.max(1, (qty | 0) || 1);
 
@@ -592,6 +596,21 @@
                     { l: lines, cc: BUYER_CC });
         };
         var real = [{ merchandiseId: variantId, quantity: want }];
+        /* Only seed the gift when the item being added actually earns one. This
+           branch runs on the FIRST add to an empty cart, before any cart exists
+           to inspect — so adding the tote itself used to create a cart holding a
+           paid tote AND a free one. syncGift() removed the second a moment
+           later, but the customer saw both lines flash up, and if that removal
+           failed (it is deliberately swallowed, so a gift can never break a real
+           add) a fast click on Checkout shipped two totes for one payment.
+           earnsGift is passed by the caller because a variant id alone cannot be
+           resolved to a product handle without another round trip. */
+        if (!earnsGift) return createWith(real).then(function (d) {
+          var r = d.cartCreate;
+          if (r && r.userErrors && r.userErrors.length) throw new Error(r.userErrors[0].message);
+          if (!r || !r.cart) throw new Error('Could not start a cart.');
+          return r.cart;
+        });
         return createWith([{ merchandiseId: GIFT_VARIANT, quantity: 1 }].concat(real))
           .then(function (d) {
             var r = d && d.cartCreate, ok = r && r.cart && !(r.userErrors && r.userErrors.length) &&
