@@ -25,7 +25,12 @@
 // customer. `stored:false` in the payload is the signal that consent was NOT
 // written — watch it in the Vercel logs.
 
-const API_VERSION = '2026-10';
+/* 2026-07 is the latest SUPPORTED version. 2026-10 exists but publicApiVersions
+   reports it as the release candidate with supported:false - callable today, but
+   unstable by definition and free to change under us. In an endpoint that fails
+   soft, a version that breaks does not raise anything a customer or we would see:
+   it just returns stored:false and the address is gone. Pin to stable. */
+const API_VERSION = '2026-07';
 const DEFAULT_CODE = 'GOBEYOND50';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 
