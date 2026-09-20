@@ -8,11 +8,34 @@
 // written with the Admin API, and an admin token can never sit in the browser.
 //
 // REQUIRED env vars in Vercel (Settings > Environment Variables):
-//   SHOPIFY_STORE_DOMAIN  sahra-beyond.myshopify.com   (no https://, no slash)
-//   SHOPIFY_ADMIN_TOKEN   Admin API access token from a custom app with the
-//                         write_customers scope. KEEP SECRET. Never commit it.
+//   SHOPIFY_STORE_DOMAIN    tqcc1v-w4.myshopify.com     (no https://, no slash)
+//                           NOT sahra-beyond.myshopify.com. 'sahra-beyond' is only the
+//                           ADMIN URL handle (admin.shopify.com/store/sahra-beyond);
+//                           shop { myshopifyDomain } returns tqcc1v-w4.myshopify.com,
+//                           and the OAuth token endpoint matches on that exact subdomain
+//                           - a mismatch returns shop_not_permitted.
+//   SHOPIFY_CLIENT_ID       Client ID of the Dev Dashboard app
+//   SHOPIFY_CLIENT_SECRET   Client secret of that app. KEEP SECRET, never commit.
 // OPTIONAL:
-//   WELCOME_CODE          discount code to hand back (default GOBEYOND50)
+//   SHOPIFY_ADMIN_TOKEN     Legacy path. A static Admin API token from an
+//                           admin-created custom app. If set it is used as-is and
+//                           no token exchange happens. Shopify no longer lets you
+//                           CREATE these, so this only covers an existing one.
+//   WELCOME_CODE            discount code to hand back (default GOBEYOND50)
+//
+// Why a client id/secret and not a token (20 Sep 2026): Shopify has retired
+// admin-created custom apps - Settings > Apps > App development now only offers
+// the Dev Dashboard, and a Dev Dashboard app is not issued a permanent Admin API
+// token at all. It gets a client id and secret, and the app exchanges those for
+// an access token that expires after 24 hours (expires_in is always 86399).
+// Pasting a token into an env var would therefore have worked for one day and
+// then failed silently for good. getAccessToken() does the exchange and caches
+// the result in module scope, so a warm function reuses one token for a day.
+//
+// NOTE: the client credentials grant only works when the app and the store are in
+// the SAME Shopify organization. If the logs show `shop_not_permitted`, the store
+// is not in the org the app was created under - see the Dev Dashboard's Stores
+// list. That is a Shopify-side fix, not a code one.
 //
 // Consent recorded as SINGLE_OPT_IN with a server timestamp: the visitor typed
 // their address and submitted it to get the code, which is the explicit,
@@ -33,6 +56,39 @@
 const API_VERSION = '2026-07';
 const DEFAULT_CODE = 'GOBEYOND50';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+
+/* Tokens live 24h. Cache in module scope: Vercel reuses a warm container across
+   invocations, so most requests spend no round trip getting one. Refreshed a
+   little early so a token cannot expire mid-request. */
+let cachedToken = null;   /* { value, expiresAt } */
+const TOKEN_SKEW_MS = 5 * 60 * 1000;
+
+async function getAccessToken(domain) {
+  /* Legacy static token wins if present - nothing to exchange. */
+  if (process.env.SHOPIFY_ADMIN_TOKEN) return process.env.SHOPIFY_ADMIN_TOKEN;
+
+  const id = process.env.SHOPIFY_CLIENT_ID;
+  const secret = process.env.SHOPIFY_CLIENT_SECRET;
+  if (!id || !secret) return null;
+
+  const now = Date.now();
+  if (cachedToken && cachedToken.expiresAt - TOKEN_SKEW_MS > now) return cachedToken.value;
+
+  const r = await fetch(`https://${domain}/admin/oauth/access_token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({ client_id: id, client_secret: secret, grant_type: 'client_credentials' })
+  });
+  const body = await r.json().catch(() => ({}));
+  if (!r.ok || !body.access_token) {
+    /* body.error carries Shopify's reason, e.g. shop_not_permitted. Never log
+       the secret, and there is no address in scope here to leak. */
+    throw new Error('token_http_' + r.status + (body && body.error ? ':' + body.error : ''));
+  }
+  const ttlMs = (Number(body.expires_in) || 86399) * 1000;
+  cachedToken = { value: body.access_token, expiresAt: now + ttlMs };
+  return cachedToken.value;
+}
 
 function shopify(domain, token, query, variables) {
   return fetch(`https://${domain}/admin/api/${API_VERSION}/graphql.json`, {
@@ -93,9 +149,12 @@ module.exports = async (req, res) => {
   }
 
   const domain = process.env.SHOPIFY_STORE_DOMAIN;
-  const token = process.env.SHOPIFY_ADMIN_TOKEN;
-  if (!domain || !token) {
-    console.error('[subscribe] SHOPIFY_STORE_DOMAIN / SHOPIFY_ADMIN_TOKEN not set - consent NOT stored');
+  const hasCreds = !!process.env.SHOPIFY_ADMIN_TOKEN ||
+                   (!!process.env.SHOPIFY_CLIENT_ID && !!process.env.SHOPIFY_CLIENT_SECRET);
+  if (!domain || !hasCreds) {
+    console.error('[subscribe] not configured - need SHOPIFY_STORE_DOMAIN plus either ' +
+                  'SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET or a legacy SHOPIFY_ADMIN_TOKEN. ' +
+                  'Consent NOT stored.');
     return res.status(200).json({ ok: true, stored: false, reason: 'not_configured', code: CODE });
   }
 
@@ -106,7 +165,10 @@ module.exports = async (req, res) => {
     consentUpdatedAt: new Date().toISOString()
   };
 
-  try {
+  /* One pass over Shopify with a given token. Pulled out of the handler so a 401
+     - a token revoked or rotated before its 24h was up - can be retried once with
+     a fresh one instead of silently dropping the address. */
+  async function store(token) {
     const found = await shopify(domain, token, FIND, { q: `email:"${escapeQuery(email)}"` });
     const node = found && found.customers && found.customers.edges[0] && found.customers.edges[0].node;
 
@@ -135,9 +197,25 @@ module.exports = async (req, res) => {
       throw new Error('create: ' + msg);
     }
     return res.status(200).json({ ok: true, stored: true, created: true, code: CODE });
+  }
+
+  try {
+    let token = await getAccessToken(domain);
+    if (!token) throw new Error('no_token');
+    try {
+      return await store(token);
+    } catch (err) {
+      if (!/shopify_http_401/.test(err && err.message ? err.message : '')) throw err;
+      cachedToken = null;                       /* force a fresh exchange */
+      token = await getAccessToken(domain);
+      if (!token) throw err;
+      return await store(token);
+    }
   } catch (err) {
     /* Never echo the address back into logs. */
-    console.error('[subscribe] failed:', err && err.message ? err.message : err);
-    return res.status(200).json({ ok: true, stored: false, reason: 'shopify_error', code: CODE });
+    const msg = err && err.message ? err.message : String(err);
+    console.error('[subscribe] failed:', msg, '- consent NOT stored');
+    const reason = /^token_http_/.test(msg) ? 'auth_failed' : 'shopify_error';
+    return res.status(200).json({ ok: true, stored: false, reason: reason, code: CODE });
   }
 };
