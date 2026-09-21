@@ -2641,6 +2641,54 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
          var im=figs[(n+figs.length)%figs.length].querySelector('img'); if(im) im.loading='eager';
     }catch(e){}
   }
+
+  /* Swipe. Every listener is passive and nothing calls preventDefault: the
+     homepage is a scroll-driven journey, so a hero that could swallow a
+     vertical pan would break the page itself. A gesture only counts when it
+     travels far enough AND is clearly more sideways than up-and-down, so a
+     finger drifting during a scroll never flips a slide. Direction is read
+     from the document so an RTL page swipes the way an Arabic reader expects.
+     A swipe is a deliberate pick, so it stops the auto-advance exactly as a
+     dot click does. */
+  var hero=document.getElementById('s-hero');
+  var SWIPE=44, SLOP=1.4, SWIPE_MS=900;
+  var sx=0,sy=0,stime=0,live=false;
+  function rtl(){ try{ return getComputedStyle(document.documentElement).direction==='rtl'?-1:1; }catch(e){ return 1; } }
+  function pick(step){ held=true; stop(); show(i+step); warm(i+1); warm(i-1); }
+  if(hero){
+    hero.addEventListener('touchstart',function(e){
+      if(e.touches.length!==1){ live=false; return; }
+      sx=e.touches[0].clientX; sy=e.touches[0].clientY; stime=Date.now(); live=true;
+    },{passive:true});
+    hero.addEventListener('touchmove',function(e){
+      if(!live) return;
+      if(e.touches.length!==1){ live=false; return; }
+      var dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+      /* committed to a vertical scroll - let go and stay out of the way */
+      if(Math.abs(dy)>14&&Math.abs(dy)>Math.abs(dx)*1.2) live=false;
+    },{passive:true});
+    hero.addEventListener('touchend',function(e){
+      if(!live) return; live=false;
+      var t=e.changedTouches&&e.changedTouches[0]; if(!t) return;
+      var dx=t.clientX-sx, dy=t.clientY-sy;
+      if(Math.abs(dx)<SWIPE) return;
+      if(Math.abs(dx)<Math.abs(dy)*SLOP) return;
+      if(Date.now()-stime>SWIPE_MS) return;
+      pick((dx<0?1:-1)*rtl());
+    },{passive:true});
+    hero.addEventListener('touchcancel',function(){ live=false; },{passive:true});
+  }
+  /* Same move from the keyboard once a dot has focus. */
+  var dotwrap=document.querySelector('.hslide-dots');
+  if(dotwrap){
+    dotwrap.addEventListener('keydown',function(e){
+      var step=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+      if(!step||e.altKey||e.metaKey||e.ctrlKey) return;
+      e.preventDefault(); pick(step*rtl());
+      if(dots[i]) dots[i].focus();
+    });
+  }
+
   warm(1);
   start();
 })();
