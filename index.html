@@ -636,6 +636,22 @@ footer{position:relative;z-index:2}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <style data-hslide>
+/* ---- hero: the photograph IS the hero (Faheem, 21 Sep) -------------------
+   The frosted .col panel was covering the slideshow, so it is removed HERE ONLY -
+   the same rule also dresses #s-alquaa/#s-liwa/#s-naqab/#s-news and they still
+   need it. Tagline sits on the photo, the changing caption under it, CTA below.
+   Without the panel there is no backdrop-filter to lift the type off the image,
+   so legibility comes from a stronger scrim plus text-shadow instead. */
+#s-hero .col{
+  background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  border:0!important;box-shadow:none!important;padding:0 18px!important;
+  max-width:860px;margin:0 auto;text-align:center}
+#s-hero .j-wrap{justify-content:center!important;align-items:center}
+#s-hero h1{text-align:center;text-shadow:0 2px 30px rgba(8,6,14,.82),0 1px 8px rgba(8,6,14,.72)}
+#s-hero .actions{justify-content:center}
+#s-hero .hslide-scrim{background:linear-gradient(180deg,rgba(10,8,18,.66) 0%,rgba(10,8,18,.52) 34%,
+  rgba(10,8,18,.50) 60%,rgba(10,8,18,.84) 100%)}
+
 /* The ring used to be a flex child of #s-hero .j-wrap sized by
    #s-hero .hring{flex:0 0 clamp(340px,44vw,600px)}. Out here its container is a
    1200px block, and heroRing() measures the live stage width to size the cards
@@ -667,18 +683,28 @@ footer{position:relative;z-index:2}
 /* RIGHT side, not left: the text column owns the left half and the caption was
    rendering behind the CTA buttons, clipped and unreadable. The right inset also
    clears the section-progress dot rail pinned to the right edge. */
-.hslide-cap{position:absolute;right:0;bottom:124px;z-index:4;pointer-events:none;
-  height:64px;width:min(40ch,42vw)}
-.hslide-cap-i{position:absolute;right:clamp(70px,7vw,118px);bottom:0;width:min(34ch,36vw);
-  text-align:right;opacity:0;transform:translateY(6px);
+.hslide-cap{position:relative;height:84px;margin:14px auto 22px;width:100%;max-width:660px;
+  pointer-events:none}
+.hslide-cap-i{position:absolute;left:0;right:0;top:0;text-align:center;opacity:0;transform:translateY(6px);
+  text-shadow:0 2px 18px rgba(8,6,14,.85),0 1px 5px rgba(8,6,14,.8);
   transition:opacity .55s ease,transform .55s ease;
   font-family:Jost,system-ui,sans-serif;font-size:15px;line-height:1.5;color:#F2EADC;
   max-width:46ch;text-shadow:0 1px 14px rgba(8,6,14,.75)}
 .hslide-cap-i.is-on{opacity:1;transform:none}
-.hslide-cap-i b{display:block;font-family:'Space Mono',monospace;font-size:10.5px;
+/* :first-child, not every b: 'AED 199' inside the caption body was being turned
+   into a second gold block eyebrow on its own line. Only the leading label is one. */
+.hslide-cap-i>b:first-child{display:block;font-family:'Space Mono',monospace;font-size:10.5px;
   letter-spacing:2.4px;text-transform:uppercase;color:#E9B978;margin-bottom:7px;font-weight:400}
-.hslide-dots{position:absolute;right:0;bottom:82px;z-index:5;display:flex;gap:9px;
-  padding:0 clamp(70px,7vw,118px) 0 0;justify-content:flex-end}
+.hslide-cap-i b{color:#F7EFE2;font-weight:600}
+/* slide 5 is the existing .meta row (stars, shipping, returns) moved in whole so
+   sahra-market.js and the review script still find their own elements */
+/* slide 5's spans flow inline - stacked, the stars + shipping + returns rows
+   overran the caption box. sahra-market.js hides the two shipping variants that
+   do not match the visitor's market, so only one shows. */
+.hslide-cap-i>span{display:inline;font-size:13.5px;line-height:1.8;color:#EDE3D4;margin:0 5px}
+.hslide-cap-i>span b{color:#E9B978}
+.hslide-cap-i .hero-stars{color:#E9B978;letter-spacing:1px}
+.hslide-dots{position:relative;z-index:5;display:flex;gap:9px;margin:22px auto 0;justify-content:center}
 .hslide-dot{width:30px;height:3px;padding:0;border:0;border-radius:2px;cursor:pointer;
   background:rgba(247,239,226,.34);transition:background .3s}
 .hslide-dot.is-on{background:#E9B978}
@@ -691,9 +717,9 @@ footer{position:relative;z-index:2}
      width resolved to nothing and every word wrapped onto its own line. Span the
      viewport and let the child inset from both edges instead. Raised clear of the
      floating WhatsApp and audio buttons. */
-  .hslide-cap{left:0;right:0;bottom:152px;height:auto;width:auto}
-  .hslide-cap-i{left:18px;right:18px;width:auto;text-align:left;font-size:13.5px}
-  .hslide-dots{left:0;right:0;bottom:120px;justify-content:flex-start;padding:0 0 0 18px}
+  .hslide-cap{height:100px;margin:12px auto 18px}
+  .hslide-cap-i{font-size:13.5px}
+  .hslide-dots{margin:18px auto 0;justify-content:center}
   .hslide-dot{width:26px}
 }
 @media(prefers-reduced-motion:reduce){
@@ -1133,13 +1159,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <!-- 1 · HERO · Liwa at golden hour -->
 <section class="stop tall right" id="s-hero" data-tod="dawn" data-bg="liwa">
-  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0"><picture><source media="(max-width:760px)" srcset="/shirts/hero-places-p.jpg"><img src="/shirts/hero-places.jpg" alt="" width="1800" height="1200" fetchpriority="high" decoding="async"></picture></figure><figure class="hslide-f" data-hs="1"><picture><source media="(max-width:760px)" srcset="/shirts/hero-print-p.jpg"><img src="/shirts/hero-print.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="2"><picture><source media="(max-width:760px)" srcset="/shirts/hero-fabric-p.jpg"><img src="/shirts/hero-fabric.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="3"><picture><source media="(max-width:760px)" srcset="/shirts/hero-fits-p.jpg"><img src="/shirts/hero-fits.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><span class="hslide-scrim"></span></div><div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>From real places</b>Al Quaa, Liwa and Wadi Naqab &mdash; places you can drive to.</span><span class="hslide-cap-i" data-hc="1"><b>The print</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="2"><b>The cloth</b>230 gsm combed ring-spun cotton.</span><span class="hslide-cap-i" data-hc="3"><b>The fits</b>Regular and oversized, same design.</span></div><div class="hslide-dots" aria-label="Hero slides"><button type="button" class="hslide-dot is-on" data-hd="0" aria-label="Slide 1 of 4: From real places"></button><button type="button" class="hslide-dot" data-hd="1" aria-label="Slide 2 of 4: The print"></button><button type="button" class="hslide-dot" data-hd="2" aria-label="Slide 3 of 4: The cloth"></button><button type="button" class="hslide-dot" data-hd="3" aria-label="Slide 4 of 4: The fits"></button></div>
+  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0"><picture><source media="(max-width:760px)" srcset="/shirts/hero-places-p.jpg"><img src="/shirts/hero-places.jpg" alt="" width="1800" height="1200" fetchpriority="high" decoding="async"></picture></figure><figure class="hslide-f" data-hs="1"><picture><source media="(max-width:760px)" srcset="/shirts/hero-cloth-p.jpg"><img src="/shirts/hero-cloth.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="2"><picture><source media="(max-width:760px)" srcset="/shirts/hero-making-p.jpg"><img src="/shirts/hero-making.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="3"><picture><source media="(max-width:760px)" srcset="/shirts/hero-fits-p.jpg"><img src="/shirts/hero-fits.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="4"><picture><source media="(max-width:760px)" srcset="/shirts/hero-trust-p.jpg"><img src="/shirts/hero-trust.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><span class="hslide-scrim"></span></div>
   <div class="j-wrap"><div class="col">
-    <span class="j-eyebrow rv">Original UAE t-shirts &middot; limited first run</span>
     <h1><span class="rv">Wear the</span> <em class="rv">wild side</em> <span class="rv">of the UAE.</span></h1>
-    <p class="lede rv"><b>230&nbsp;gsm heavyweight tees</b><span class="lede-l">, printed and embroidered with the deserts, dunes and dark-sky nights of the Emirates.</span><span class="lede-s">, printed and embroidered with the real places of the Emirates.</span> <b>AED&nbsp;199</b>.</p>
-    <div class="meta rv"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></div>
+    <div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>Limited first run</b>Three places you can drive to &mdash; Al Quaa, Liwa and Wadi Naqab.</span><span class="hslide-cap-i" data-hc="1"><b>The cloth</b>230 gsm combed ring-spun cotton. <b>AED&nbsp;199</b>.</span><span class="hslide-cap-i" data-hc="2"><b>The making</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="3"><b>The fits</b>Regular and oversized, in the same design.</span><span class="hslide-cap-i" data-hc="4"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></span></div>
     <div class="actions rv"><a class="j-btn solid" href="#collection" data-ring-jump>See the collection &#8964;</a><a class="j-btn" href="/places/">The places behind them</a></div>
+    <div class="hslide-dots" aria-label="Hero slides"><button type="button" class="hslide-dot is-on" data-hd="0" aria-label="Slide 1 of 5"></button><button type="button" class="hslide-dot" data-hd="1" aria-label="Slide 2 of 5"></button><button type="button" class="hslide-dot" data-hd="2" aria-label="Slide 3 of 5"></button><button type="button" class="hslide-dot" data-hd="3" aria-label="Slide 4 of 5"></button><button type="button" class="hslide-dot" data-hd="4" aria-label="Slide 5 of 5"></button></div>
   </div>
   </div>
   <div class="scroll-cue">Scroll — the journey begins &#8964;</div>
