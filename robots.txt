@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /_backup/
 Disallow: /*.md$
 Disallow: /prepush.js
 Disallow: /launch.js

@@ -799,7 +799,14 @@ function navKeyFor(slug) {
   if (s === 'shop') return 'shop';
   return 'none';   // guides, gifts, fabric, size guide: nothing highlighted
 }
-function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'none', bodyClass = '' }) {
+function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'none', bodyClass = '',
+                 lang = 'en', altHref = null, noindex = false }) {
+  /* Arabic (21 Sep). One shell, two languages - a forked copy would drift within a
+     week. `lang` flips the html attributes, the font request, the nav labels and an
+     RTL layer; `altHref` is this page's counterpart in the other language and drives
+     hreflang both ways; `noindex` holds /ar/ out of the index until Faheem has read
+     the Arabic. Everything else is shared. */
+  const AR = lang === 'ar';
   // SERPs truncate around 60 chars; the brand suffix is the first thing to go.
   if (title.length > 60 && / \| Sahra & Beyond$/.test(title)) title = title.replace(/ \| Sahra & Beyond$/, '');
 
@@ -808,9 +815,18 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
   /* Faheem, 13 Sep: Contact belongs in the menu. 'Home' comes out rather than the bar
      growing to eight items - the logo already links home, and three of eleven audit
      personas concluded the site had no contact details at all. */
-  const navHtml = nav('/#collection', 'Collection', 'collection') /* the homepage ring (8 Sep) */ + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about') + nav('/contact/', 'Contact', 'contact');
+  /* The Arabic nav lists only what EXISTS in Arabic. Pass 1 is the commercial
+     core, so Places / T-Shirts / Polo are not linked from it - sending an Arabic
+     reader to an English page from the main nav is worse than not offering it.
+     They stay reachable through the language switcher and the footer. */
+  const navHtml = AR
+    ? nav('/ar/#collection', '\u0627\u0644\u0645\u062c\u0645\u0648\u0639\u0629', 'collection')
+      + ((LAUNCHED || REVEALED) ? nav('/ar/shop/', '\u0627\u0644\u0645\u062a\u062c\u0631', 'shop') : '')
+      + nav('/ar/about/', '\u0645\u0646 \u0646\u062d\u0646', 'about')
+      + nav('/ar/contact/', '\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627', 'contact')
+    : nav('/#collection', 'Collection', 'collection') /* the homepage ring (8 Sep) */ + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about') + nav('/contact/', 'Contact', 'contact');
   return `<!doctype html>
-<html lang="en" data-market="uae">
+<html lang="${lang}"${AR ? ' dir="rtl"' : ''} data-market="uae">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -821,6 +837,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${esc(canonical)}">
+${noindex ? '<meta name="robots" content="noindex,nofollow">\n' : ''}${altHref ? `<link rel="alternate" hreflang="${AR ? 'en' : 'ar'}" href="${esc(altHref)}">\n` + `<link rel="alternate" hreflang="${lang}" href="${esc(canonical)}">\n` + `<link rel="alternate" hreflang="x-default" href="${esc(AR ? altHref : canonical)}">` : ''}
 <meta name="theme-color" content="#C0702E">
 <meta property="og:type" content="article">
 <meta property="og:title" content="${esc(title)}">
@@ -833,7 +850,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <meta name="twitter:description" content="${esc(desc)}">
 <meta name="twitter:image" content="${esc(ogImg)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700${AR ? '&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600' : ''}&display=swap" rel="stylesheet">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
@@ -900,6 +917,98 @@ ${RV.CSS}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css">
 <link rel="stylesheet" href="/assets/sahra-cart.css">
+${AR ? `<style data-rtl>
+/* ---------------------------------------------------------------- Arabic
+   Paired to the Latin system rather than bolted on. Cormorant Garamond is a
+   high-contrast classical serif; Amiri is its closest Arabic relative - a
+   Naskh cut from the Bulaq types, with the same formality. Jost carries the
+   UI in Latin; IBM Plex Sans Arabic is the neutral, wide-weight companion.
+   Space Mono has NO Arabic coverage at all, so every eyebrow and label that
+   used it falls back to Plex here.
+
+   Four things break Arabic if they are inherited from the Latin styles, and
+   all four are set across this site:
+     1. letter-spacing - Arabic is a CONNECTED script. Any tracking pulls the
+        joins apart and renders the word as loose disconnected glyphs. It must
+        be zero, everywhere, with no exceptions.
+     2. font-size-adjust - the .44 value exists to make Cormorant match
+        Playfair's cap height. Applied to an Arabic face it rescales against a
+        Latin x-height that Arabic does not have, and the type comes out wrong.
+     3. text-transform:uppercase - Arabic has no letter case. Harmless in
+        theory, but it also suppresses nothing, so it is cleared for honesty.
+     4. font-style:italic - there is no italic in Arabic typography; a browser
+        will synthesise a slant, which reads as a rendering fault.
+   ---------------------------------------------------------------------- */
+[dir="rtl"]{
+  --serif:'Amiri', 'Cormorant Garamond', Georgia, serif;
+  --sans:'IBM Plex Sans Arabic', Jost, system-ui, sans-serif;
+  --mono:'IBM Plex Sans Arabic', Jost, system-ui, sans-serif;
+}
+[dir="rtl"] body,[dir="rtl"] p,[dir="rtl"] li,[dir="rtl"] a,[dir="rtl"] span,
+[dir="rtl"] div,[dir="rtl"] button,[dir="rtl"] input,[dir="rtl"] label,
+[dir="rtl"] td,[dir="rtl"] th{
+  font-family:var(--sans);
+}
+[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,[dir="rtl"] h4,
+[dir="rtl"] .wordmark,[dir="rtl"] .logo{
+  font-family:var(--serif);
+}
+/* the four inheritance traps, cleared site-wide */
+[dir="rtl"] *{
+  letter-spacing:0!important;
+  font-size-adjust:none!important;
+  text-transform:none!important;
+  font-style:normal!important;
+}
+/* Arabic sits smaller than Latin at the same point size and needs more leading;
+   these are ratios, so every responsive size rule upstream still governs. */
+[dir="rtl"] body{font-size:1.06em;line-height:1.85}
+[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3{line-height:1.45}
+/* mirror the things that were pinned to a physical side */
+[dir="rtl"] .crumbs,[dir="rtl"] .back,[dir="rtl"] .eyebrow,
+[dir="rtl"] .prod-txt,[dir="rtl"] .foot-links,[dir="rtl"] .links{text-align:right}
+[dir="rtl"] .hdr-nav,[dir="rtl"] .nav-links{flex-direction:row-reverse}
+/* Latin fragments inside Arabic - prices, GSM, the wordmark, codes - must run
+   LTR inside the RTL flow or the digits and units reorder on screen. */
+/* Latin-only brand furniture must be ISOLATED from the RTL flow. Without this
+   the bidi algorithm reorders "SAHRA & BEYOND" to "Sahra / Beyond &" and the
+   copyright line to "2026 \u00a9" \u2014 the ampersand and the symbol are neutral
+   characters, so they take the paragraph direction unless told otherwise.
+   isolate, not embed: these are self-contained runs, not quotes inside Arabic. */
+[dir="rtl"] .brand,[dir="rtl"] .brand-text,[dir="rtl"] .brand-sahra,
+[dir="rtl"] .brand-beyond,[dir="rtl"] .logo,[dir="rtl"] .wordmark,
+[dir="rtl"] .ftr-tagline,[dir="rtl"] .ftr small,[dir="rtl"] .ftr-legal{
+  direction:ltr;unicode-bidi:isolate;
+}
+/* the footer is still English in pass 1; keep it reading left-to-right as a
+   block rather than half-mirrored, which is harder to read than either. */
+[dir="rtl"] .ftr{direction:ltr;text-align:center}
+/* ---- Arabic core page layout ---- */
+.ar-main{max-width:820px;margin:0 auto;padding:118px 22px 70px;text-align:right}
+.ar-hero{padding:18px 0 34px;border-bottom:1px solid rgba(242,201,140,.28)}
+.ar-eyebrow{font-family:var(--sans);font-size:12.5px;color:#C0702E;margin:0 0 14px}
+.ar-main h1{font-size:clamp(34px,6.4vw,54px);line-height:1.35;margin:0 0 18px;color:#2A2016}
+.ar-main h2{font-size:clamp(25px,4vw,34px);margin:0 0 14px;color:#2A2016}
+.ar-main h3{font-size:20px;margin:0 0 6px;color:#2A2016}
+.ar-lede{font-size:17px;color:#4A3E31;margin:0 0 22px;max-width:60ch}
+.ar-main p{color:#4A3E31}
+.ar-cta{margin:26px 0 16px}
+.ar-btn{display:inline-block;background:#33271B;color:#FFF6E8;text-decoration:none;
+  padding:15px 30px;border-radius:10px;font-size:16px;min-height:52px;line-height:22px}
+.ar-btn:hover{background:#7E4114}
+.ar-fine{font-size:13.5px;color:#6B5B48;margin:10px 0 0}
+.ar-sec{padding:38px 0;border-bottom:1px solid rgba(42,32,22,.10)}
+.ar-sec:last-child{border-bottom:0}
+.ar-places{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:22px}
+.ar-place{border:1px solid rgba(42,32,22,.16);border-radius:12px;padding:20px}
+.ar-emirate{font-size:13px;color:#7E4114;margin:0 0 8px}
+.ar-edition{background:rgba(242,201,140,.10);border-radius:14px;padding:30px 24px;border-bottom:0}
+@media(max-width:700px){.ar-main{padding:104px 18px 56px}}
+[dir="rtl"] .sb-price,[dir="rtl"] .price,[dir="rtl"] .gsm,
+[dir="rtl"] code,[dir="rtl"] .sbw-code b{
+  direction:ltr;unicode-bidi:embed;display:inline-block;
+}
+</style>` : ''}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
 <header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
@@ -2801,6 +2910,102 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
    Shop dropdown holds type / fit / place / edition; Collection, T-Shirts and
    Polo leave the desktop bar. Idempotent. Runs BEFORE stampAssets.
    ========================================================================== */
+/* ==========================================================================
+   Arabic commercial core — /ar/  (21 Sep 2026, Faheem)
+   ==========================================================================
+   Pass 1 is the commercial core only: home, about, contact (shop and the PDPs
+   follow). Copy lives in ar-content.js and is TRANSCREATED, not translated.
+
+   Held out of the index with noindex until Faheem has read the Arabic — the
+   brief's shipping gate is explicit about Arabic after the Arabic-card
+   incident, and a machine-checked page is not a read page. Flip AR_NOINDEX to
+   false to publish; hreflang is already wired both ways and starts working the
+   moment the noindex comes off.
+
+   The English pages point at their Arabic counterpart via altHref, so the
+   pairing is declared from both sides as Google requires. */
+const AR = require('./ar-content');
+const AR_NOINDEX = true;
+
+function arPage({ slug, title, desc, h1, bodyHtml, enHref, jsonld }) {
+  const canonical = `${SITE}/ar/${slug}`.replace(/\/$/, '') + '/';
+  write(`ar/${slug}${slug ? '/' : ''}index.html`.replace('//', '/'), shell({
+    lang: 'ar',
+    noindex: AR_NOINDEX,
+    altHref: enHref,
+    title, desc, canonical,
+    jsonld: jsonld || { '@context': 'https://schema.org', '@type': 'WebPage', name: title, inLanguage: 'ar', url: canonical },
+    bodyHtml,
+    activeNav: 'none'
+  }));
+}
+
+(function buildArabic() {
+  const H = AR.home, A = AR.about, C = AR.contact, U = AR.ui;
+
+  /* ---- home ---- */
+  const placeCards = AR.places.map(pl =>
+    `<article class="ar-place"><h3>${esc(pl.name)}</h3><p class="ar-emirate">${esc(pl.emirate)}</p><p>${esc(pl.text)}</p></article>`
+  ).join('');
+
+  arPage({
+    slug: '', enHref: `${SITE}/`,
+    title: H.title, desc: H.desc,
+    bodyHtml: `
+<main class="ar-main">
+  <section class="ar-hero">
+    <p class="ar-eyebrow">${esc(H.editionEyebrow)}</p>
+    <h1>${esc(H.h1)}</h1>
+    <p class="ar-lede">${esc(H.lede)}</p>
+    <p class="ar-cta"><a class="ar-btn" href="/ar/shop/">${esc(H.ctaShop)}</a></p>
+    <p class="ar-fine">${esc(U.deliveryLine)}</p>
+  </section>
+  <section class="ar-sec">
+    <h2>${esc(H.placesTitle)}</h2>
+    <p class="ar-lede">${esc(H.placesText)}</p>
+    <div class="ar-places">${placeCards}</div>
+  </section>
+  <section class="ar-sec ar-edition">
+    <p class="ar-eyebrow">${esc(H.editionEyebrow)}</p>
+    <h2>${esc(H.editionTitle)}</h2>
+    <p>${esc(H.editionText)}</p>
+    <p class="ar-fine">${esc(U.gsmTee)} &middot; ${esc(U.gsmPolo)} &middot; ${esc(U.labelPrinted)}</p>
+  </section>
+</main>`
+  });
+
+  /* ---- about ---- */
+  arPage({
+    slug: 'about', enHref: `${SITE}/about/`,
+    title: A.title, desc: A.desc,
+    bodyHtml: `
+<main class="ar-main">
+  <section class="ar-sec">
+    <h1>${esc(A.h1)}</h1>
+    ${A.body.map(t => `<p>${esc(t)}</p>`).join('\n    ')}
+    <p class="ar-fine">${esc(U.gsmTee)} &middot; ${esc(U.labelPrinted)}</p>
+  </section>
+</main>`
+  });
+
+  /* ---- contact ---- */
+  arPage({
+    slug: 'contact', enHref: `${SITE}/contact/`,
+    title: C.title, desc: C.desc,
+    bodyHtml: `
+<main class="ar-main">
+  <section class="ar-sec">
+    <h1>${esc(C.h1)}</h1>
+    <p class="ar-lede">${esc(C.lede)}</p>
+    <p><strong>${esc(C.emailLabel)}:</strong> <a href="mailto:hello@sahraandbeyond.ae" dir="ltr">hello@sahraandbeyond.ae</a></p>
+    <p class="ar-fine">${esc(U.deliveryLine)}<br>${esc(U.exchangeLine)}</p>
+  </section>
+</main>`
+  });
+
+  console.log('  ✓ Arabic core: /ar/, /ar/about/, /ar/contact/' + (AR_NOINDEX ? '  (noindex — awaiting review)' : ''));
+})();
+
 (function applyShopMenu() {
   const CSS = '<link rel="stylesheet" href="/assets/sahra-nav.css">';
   const JS = '<script src="/assets/sahra-nav.js" data-sbn defer></script>';
