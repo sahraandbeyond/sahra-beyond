@@ -954,12 +954,32 @@ ${AR ? `<style data-rtl>
   font-family:var(--serif);
 }
 /* the four inheritance traps, cleared site-wide */
-[dir="rtl"] *{
+/* html[dir=rtl], not [dir=rtl]: specificity (0,1,1) not (0,1,0). The legibility
+   layer is injected AFTER this block and pins .eyebrow/.card-place/.sb-price and
+   ~30 other classes to letter-spacing:.09em!important at (0,1,0). Equal
+   specificity + equal !important = source order wins, and it is later - so the
+   reset LOST. Measured: an .eyebrow holding Arabic computed to 1.17px tracking,
+   which pulls a connected script into loose disconnected glyphs. The three
+   current /ar/ pages dodge it only because they use .ar-* classes; it would have
+   bitten the moment Arabic reached the shop and product templates.
+   ::before/::after are included because bare * does not match generated content. */
+html[dir="rtl"] *,
+html[dir="rtl"] *::before,
+html[dir="rtl"] *::after{
   letter-spacing:0!important;
   font-size-adjust:none!important;
   text-transform:none!important;
   font-style:normal!important;
+  font-variant-ligatures:normal;
 }
+/* The reset above is scoped by ANCESTOR, so it also flattened the Latin wordmark
+   that sits inside the RTL page - .brand-sahra lost its designed 3px tracking and
+   computed to normal. Isolation fixes bidi ORDER, not tracking. Put it back. */
+html[dir="rtl"] .brand-sahra{letter-spacing:3px!important}
+html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
+/* Latin-tuned underline offset collides with Arabic sub-baseline strokes and the
+   tanween in this copy (غرامًا). Relative, so it scales with the type. */
+[dir="rtl"] a{text-underline-offset:.15em}
 /* Arabic sits smaller than Latin at the same point size and needs more leading;
    these are ratios, so every responsive size rule upstream still governs. */
 [dir="rtl"] body{font-size:1.06em;line-height:1.85}
@@ -2925,7 +2945,9 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
    The English pages point at their Arabic counterpart via altHref, so the
    pairing is declared from both sides as Google requires. */
 const AR = require('./ar-content');
-const AR_NOINDEX = true;
+/* LIVE 21 Sep 2026 after five independent Arabic reviews and the fixes recorded
+   in ar-content.js. Set back to true to pull /ar/ out of the index. */
+const AR_NOINDEX = false;
 
 function arPage({ slug, title, desc, h1, bodyHtml, enHref, jsonld }) {
   const canonical = `${SITE}/ar/${slug}`.replace(/\/$/, '') + '/';
@@ -3004,6 +3026,35 @@ function arPage({ slug, title, desc, h1, bodyHtml, enHref, jsonld }) {
   });
 
   console.log('  ✓ Arabic core: /ar/, /ar/about/, /ar/contact/' + (AR_NOINDEX ? '  (noindex — awaiting review)' : ''));
+})();
+
+/* hreflang from the ENGLISH side. Google needs the pairing declared BOTH ways or
+   it ignores it, and the Arabic pages cannot declare it alone. Injected rather
+   than threaded through every page builder because two of the three counterparts
+   (the homepage, and anything hand-maintained) never pass through shell().
+   Runs only while /ar/ is indexable - pointing English pages at a noindexed page
+   would be worse than declaring nothing. */
+(function applyArabicHreflang() {
+  if (AR_NOINDEX) { console.log('  – hreflang from EN skipped (/ar/ is noindex)'); return; }
+  const PAIRS = [
+    ['index.html',        '/',         '/ar/'],
+    ['about/index.html',  '/about/',   '/ar/about/'],
+    ['contact/index.html','/contact/', '/ar/contact/']
+  ];
+  let n = 0;
+  for (const [rel, en, ar] of PAIRS) {
+    const fp = path.join(__dirname, rel);
+    if (!fs.existsSync(fp)) continue;
+    let src = fs.readFileSync(fp, 'utf8');
+    if (src.indexOf('hreflang="ar"') !== -1) continue;
+    const tags = `<link rel="alternate" hreflang="en" href="${SITE}${en}">\n`
+               + `<link rel="alternate" hreflang="ar" href="${SITE}${ar}">\n`
+               + `<link rel="alternate" hreflang="x-default" href="${SITE}${en}">\n`;
+    if (!/<\/head>/i.test(src)) continue;
+    fs.writeFileSync(fp, src.replace(/<\/head>/i, tags + '</head>'));
+    n++;
+  }
+  console.log(`  ✓ hreflang pairs declared from ${n} English page(s)`);
 })();
 
 (function applyShopMenu() {
