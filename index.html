@@ -646,7 +646,7 @@ footer{position:relative;z-index:2}
    centring - that kept collapsing .col to its content height, so space-between
    had nothing to distribute and the tagline and CTA bunched mid-screen.
    Top inset clears the fixed nav, bottom inset clears the scroll cue. */
-#s-hero .j-wrap{position:absolute!important;inset:104px 0 74px;display:flex;
+#s-hero .j-wrap{position:absolute!important;inset:84px 0 22px;display:flex;
   align-items:stretch!important;justify-content:center;padding:0!important;
   max-width:none!important;margin:0!important}
 /* flex-start + margin-top:auto on the CTA, not space-between: with three
@@ -657,12 +657,26 @@ footer{position:relative;z-index:2}
   padding:0 clamp(18px,5vw,64px)!important}
 #s-hero .actions{margin-top:auto!important;margin-bottom:0}
 #s-hero h1{margin:0 auto;max-width:15ch;flex:0 0 auto}
+/* a little smaller than the site default: every 6px off the tagline is 12px of
+   clear frame under it, which is what lets a model's face sit below the type. */
+@media(min-width:861px){#s-hero h1{font-size:clamp(34px,4.6vw,66px)}}
 #s-hero .hero-mid{flex:1 1 auto}
-#s-hero .actions{margin-left:auto;margin-right:auto;flex:0 0 auto}
-#s-hero .hslide-dots{flex:0 0 auto}
+/* CTA and dots sit on the LEFT rail, not centred (Faheem, 21 Sep: 'both the
+   faces and shirts need to be fully visible'). Measured reason: the hero shows
+   a 16:9 window, which is 37% of a 2:3 frame. Between the tagline's bottom edge
+   and a centred CTA there was only 0.19 of the original frame of clear height,
+   and a model's face-to-chest-mark span is 0.19-0.27 - so a centred CTA made
+   'face AND graphic' geometrically impossible for every full-body frame we own.
+   Off the centre line it becomes possible. Phone keeps them centred: the
+   portrait crop shows the whole body there, so nothing is fighting for room. */
+#s-hero .actions{margin-left:0;margin-right:auto;flex:0 0 auto;justify-content:flex-start}
+#s-hero .hslide-dots{flex:0 0 auto;margin-left:0;margin-right:auto;justify-content:flex-start}
 /* left rail, vertically centred, clear of the middle of the photo */
-#s-hero .hslide-cap{position:absolute;left:clamp(18px,5vw,64px);top:50%;
-  transform:translateY(-50%);width:min(30ch,28vw);height:auto;margin:0;text-align:left;z-index:4}
+/* the caption used to sit at top:50% on the left, which is precisely where a
+   left-standing model's face lands. It now rides just above the CTA, so the
+   whole left rail is one stack: caption, buttons, dots, cue. */
+#s-hero .hslide-cap{position:absolute;left:clamp(18px,5vw,64px);bottom:118px;
+  transform:none;width:min(30ch,28vw);height:76px;margin:0;text-align:left;z-index:4}
 #s-hero .hslide-cap-i{position:absolute;left:0;right:auto;top:0;width:100%;text-align:left}
 /* a soft left edge so the caption reads over whatever the photo puts there,
    without darkening the middle of the frame where the garment is */
@@ -682,8 +696,13 @@ footer{position:relative;z-index:2}
   #s-hero .j-wrap{inset:96px 0 66px}
   /* explicit height: the children are position:absolute, so height:auto collapsed
      the box to 0 and the caption printed straight over the tagline. */
-  #s-hero .hslide-cap{position:relative;left:auto;top:auto;transform:none;
-    width:100%;max-width:520px;height:82px;margin:16px auto 0;text-align:center}
+  /* the caption rides ABOVE the CTA rather than under the tagline: the
+     portrait crop puts heads around 0.28-0.33 of the frame, which is exactly
+     where the caption used to print. margin-top:auto moves the spacer here. */
+  #s-hero .hslide-cap{position:relative;left:auto;top:auto;bottom:auto;transform:none;
+    width:100%;max-width:520px;height:82px;margin:0 auto;text-align:center;
+    margin-top:auto}
+  #s-hero .actions{margin-top:14px!important}
   #s-hero .hslide-cap-i{text-align:center}
   #s-hero .hslide-scrim{background:linear-gradient(180deg,rgba(10,8,18,.72) 0%,rgba(10,8,18,.40) 30%,
     rgba(10,8,18,.38) 62%,rgba(10,8,18,.84) 100%)}
@@ -732,6 +751,11 @@ footer{position:relative;z-index:2}
    so merging these turned the cue into an in-flow flex child and it stopped being
    centred at the bottom of the hero. */
 #s-hero .scroll-cue{position:absolute;z-index:4}
+/* the cue joins the left rail too - centred, it sat across the bottom of every
+   back print. left:0 + the .col gutter keeps it under the dots. */
+@media(min-width:861px){
+  #s-hero .scroll-cue{left:clamp(18px,5vw,64px);transform:none;bottom:0}
+}
 /* the caption belongs to the photograph, so it sits with the photo rather than
    crowding the tagline block */
 /* RIGHT side, not left: the text column owns the left half and the caption was
@@ -1216,12 +1240,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <!-- 1 · HERO · Liwa at golden hour -->
 <section class="stop tall right" id="s-hero" data-tod="dawn" data-bg="liwa">
-  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0"><picture><source media="(max-width:760px)" srcset="/shirts/hero-places-p.jpg"><img src="/shirts/hero-places.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async"></picture></figure><figure class="hslide-f" data-hs="1"><picture><source media="(max-width:760px)" srcset="/shirts/hero-cloth-p.jpg"><img src="/shirts/hero-cloth.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="2"><picture><source media="(max-width:760px)" srcset="/shirts/hero-making-p.jpg"><img src="/shirts/hero-making.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="3"><picture><source media="(max-width:760px)" srcset="/shirts/hero-fits-p.jpg"><img src="/shirts/hero-fits.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="4"><picture><source media="(max-width:760px)" srcset="/shirts/hero-trust-p.jpg"><img src="/shirts/hero-trust.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><span class="hslide-scrim"></span></div>  <div class="j-wrap"><div class="col">
+  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0"><picture><source media="(max-width:760px)" srcset="/shirts/hero-places-p.jpg"><img src="/shirts/hero-places.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async"></picture></figure><figure class="hslide-f" data-hs="1"><picture><source media="(max-width:760px)" srcset="/shirts/hero-cloth-p.jpg"><img src="/shirts/hero-cloth.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="2"><picture><source media="(max-width:760px)" srcset="/shirts/hero-making-p.jpg"><img src="/shirts/hero-making.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="3"><picture><source media="(max-width:760px)" srcset="/shirts/hero-trust-p.jpg"><img src="/shirts/hero-trust.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><span class="hslide-scrim"></span></div>  <div class="j-wrap"><div class="col">
     <h1><span class="rv">Wear the</span> <em class="rv">wild side</em> <span class="rv">of the UAE.</span></h1>
-    <div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>Limited first run</b>Three places you can drive to &mdash; Al Quaa, Liwa and Wadi Naqab.</span><span class="hslide-cap-i" data-hc="1"><b>The cloth</b>230 gsm combed ring-spun cotton. <b>AED&nbsp;199</b>.</span><span class="hslide-cap-i" data-hc="2"><b>The making</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="3"><b>The fits</b>Regular and oversized, in the same design.</span><span class="hslide-cap-i" data-hc="4"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></span></div>
+    <div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>Limited first run</b>Three places you can drive to &mdash; Al Quaa, Liwa and Wadi Naqab.</span><span class="hslide-cap-i" data-hc="1"><b>The cloth</b>230 gsm combed ring-spun cotton, regular and oversized. <b>AED&nbsp;199</b>.</span><span class="hslide-cap-i" data-hc="2"><b>The making</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="3"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></span></div>
 
     <div class="actions rv"><a class="j-btn solid" href="#collection" data-ring-jump>See the collection &#8964;</a><a class="j-btn" href="/places/">The places behind them</a></div>
-    <div class="hslide-dots" aria-label="Hero slides"><button type="button" class="hslide-dot is-on" data-hd="0" aria-label="Slide 1 of 5"></button><button type="button" class="hslide-dot" data-hd="1" aria-label="Slide 2 of 5"></button><button type="button" class="hslide-dot" data-hd="2" aria-label="Slide 3 of 5"></button><button type="button" class="hslide-dot" data-hd="3" aria-label="Slide 4 of 5"></button><button type="button" class="hslide-dot" data-hd="4" aria-label="Slide 5 of 5"></button></div>
+    <div class="hslide-dots" aria-label="Hero slides"><button type="button" class="hslide-dot is-on" data-hd="0" aria-label="Slide 1 of 4"></button><button type="button" class="hslide-dot" data-hd="1" aria-label="Slide 2 of 4"></button><button type="button" class="hslide-dot" data-hd="2" aria-label="Slide 3 of 4"></button><button type="button" class="hslide-dot" data-hd="3" aria-label="Slide 4 of 4"></button></div>
   </div>
   </div>
   <div class="scroll-cue">Scroll — the journey begins &#8964;</div>
