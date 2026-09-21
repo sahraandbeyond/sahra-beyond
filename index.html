@@ -180,7 +180,7 @@ footer{background:#1C140D;color:rgba(255,255,255,.72);padding:64px 0 30px;text-a
 @media(max-width:340px){.logo>div,.logo-text{display:none}}
 @media(min-width:821px){.m-panel{display:none}}
 </style>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=895845e8">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=25a87e11">
 <style>
 /* market-aware shipping copy + currency selector (mirrors build.js shell) */
 .sb-ship-gcc,.sb-ship-intl{display:none}
@@ -635,7 +635,80 @@ footer{position:relative;z-index:2}
 .collection.ring-on .grid .card:not(.front){cursor:pointer}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
+<style data-hslide>
+/* The ring used to be a flex child of #s-hero .j-wrap sized by
+   #s-hero .hring{flex:0 0 clamp(340px,44vw,600px)}. Out here its container is a
+   1200px block, and heroRing() measures the live stage width to size the cards
+   and radius - so it rendered small and lost in whitespace. Give it the old box. */
+#s-ring{padding:34px 0 10px}
+@media(min-width:961px){#s-ring .hring{max-width:600px;margin:0 auto}}
+
+/* Hero model slideshow (21 Sep 2026, Faheem: UAE apparel sites show the product
+   the instant you land). Sits BEHIND the tagline; the collection ring moved down
+   into #s-ring so this owns the first screen.
+   z-index: #ambient-canvas is position:fixed;z-index:1, so anything that must
+   read above it needs >=2 - the same trap that put the ambient line-art over the
+   tote section. Slides sit at 2, the scrim at 3, all content at 4. */
+#s-hero{position:relative;isolation:isolate}
+.hslide{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
+.hslide-f{position:absolute;inset:0;margin:0;opacity:0;transition:opacity 1.1s ease-in-out}
+.hslide-f.is-on{opacity:1}
+.hslide-f img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
+.hslide-scrim{position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(180deg,rgba(10,8,18,.78) 0%,rgba(10,8,18,.40) 30%,
+             rgba(10,8,18,.34) 55%,rgba(10,8,18,.80) 100%)}
+#s-hero .j-wrap{position:relative;z-index:4}
+/* absolute, NOT relative: #s-hero .scroll-cue (1,1,0) outranks .scroll-cue (0,1,0),
+   so merging these turned the cue into an in-flow flex child and it stopped being
+   centred at the bottom of the hero. */
+#s-hero .scroll-cue{position:absolute;z-index:4}
+/* the caption belongs to the photograph, so it sits with the photo rather than
+   crowding the tagline block */
+/* RIGHT side, not left: the text column owns the left half and the caption was
+   rendering behind the CTA buttons, clipped and unreadable. The right inset also
+   clears the section-progress dot rail pinned to the right edge. */
+.hslide-cap{position:absolute;right:0;bottom:124px;z-index:4;pointer-events:none;
+  height:64px;width:min(40ch,42vw)}
+.hslide-cap-i{position:absolute;right:clamp(70px,7vw,118px);bottom:0;width:min(34ch,36vw);
+  text-align:right;opacity:0;transform:translateY(6px);
+  transition:opacity .55s ease,transform .55s ease;
+  font-family:Jost,system-ui,sans-serif;font-size:15px;line-height:1.5;color:#F2EADC;
+  max-width:46ch;text-shadow:0 1px 14px rgba(8,6,14,.75)}
+.hslide-cap-i.is-on{opacity:1;transform:none}
+.hslide-cap-i b{display:block;font-family:'Space Mono',monospace;font-size:10.5px;
+  letter-spacing:2.4px;text-transform:uppercase;color:#E9B978;margin-bottom:7px;font-weight:400}
+.hslide-dots{position:absolute;right:0;bottom:82px;z-index:5;display:flex;gap:9px;
+  padding:0 clamp(70px,7vw,118px) 0 0;justify-content:flex-end}
+.hslide-dot{width:30px;height:3px;padding:0;border:0;border-radius:2px;cursor:pointer;
+  background:rgba(247,239,226,.34);transition:background .3s}
+.hslide-dot.is-on{background:#E9B978}
+.hslide-dot:focus-visible{outline:2px solid #E9B978;outline-offset:4px}
+@media(max-width:760px){
+  .hslide-f img{object-position:50% 38%}
+  /* on a phone the text column is full-width, so the caption goes back to the
+     left edge and sits under the buttons rather than beside them */
+  /* left:0;right:auto left the container zero-width, so the child's percentage
+     width resolved to nothing and every word wrapped onto its own line. Span the
+     viewport and let the child inset from both edges instead. Raised clear of the
+     floating WhatsApp and audio buttons. */
+  .hslide-cap{left:0;right:0;bottom:152px;height:auto;width:auto}
+  .hslide-cap-i{left:18px;right:18px;width:auto;text-align:left;font-size:13.5px}
+  .hslide-dots{left:0;right:0;bottom:120px;justify-content:flex-start;padding:0 0 0 18px}
+  .hslide-dot{width:26px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hslide-f,.hslide-cap-i{transition:none}
+}
+</style>
 <style data-legib>
+/* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
+   Cormorant runs small (x-height .386/em against Playfair's .514), so every
+   rule that sets the serif family carries font-size-adjust:.44 - it renders at
+   Playfair's cap height without touching the responsive size overrides. Jost
+   (x .46) is smaller than Inter (.546) too: this root value keeps body copy at
+   Inter's apparent size. Space Mono (x .496) is unchanged by .5. Any element
+   that sets the serif family overrides this with its own .44. */
+html{font-size-adjust:.5}
 /* ===== legibility layer: floors for size, weight and contrast (5 Sep 2026) ===== */
 :root{--txt-soft:#4A4136;--mist:#4A4136}
 /* the product pages flip these when the scroll reaches a dark background (body.dark-bg): keep that, brighter */
@@ -986,6 +1059,20 @@ body.buy-page .pdp-size{min-width:68px}
 .pdp-size:disabled,.pdp-size[disabled]{text-decoration:line-through;text-decoration-thickness:1.5px}
 /* the price inside the add-to-cart button is a .sb-price so the market script converts it; it must NOT take the 26px price scale above (15 Sep) */
 body.buy-page .pdp-add .sb-price,.pdp-add .sb-price{font-size:inherit!important;letter-spacing:inherit!important;font-weight:inherit!important}
+/* Same trap, the cart drawer's free-tote line (19 Sep): the struck-through AED 50
+   is a .sb-price so the market script converts it, which makes it inherit the
+   20px shop-page price scale above and shout louder than the item it is a gift
+   with. It is a secondary figure - hold it at label size in every context. */
+.sb-gift-p .sb-price,body.shop-page .sb-gift-p .sb-price,body.buy-page .sb-gift-p .sb-price{
+  font-size:13px!important;font-weight:400!important;letter-spacing:.01em!important}
+/* /tote/ is a shell page, so two floors above land on it wrongly: .sb-price is
+   pinned to 12px as a LABEL price (a card's corner figure), and .crumbs is held
+   cream because every other shell page puts its breadcrumb on a dark hero. Here
+   the price is the headline figure and the breadcrumb sits on the cream reading
+   surface, so both are released for this page only (19 Sep). */
+body.tote-page .tt-price .sb-price{font-size:inherit!important;letter-spacing:.01em!important;font-weight:inherit!important}
+body.tote-page .crumbs,body.tote-page .crumbs a{color:#6B5B48!important}
+body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
 .meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
 .eyebrow{font-size:13px!important}
@@ -1008,8 +1095,13 @@ body.buy-page .pdp-add .sb-price,.pdp-add .sb-price{font-size:inherit!important;
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
 
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=970a7516">
-<script src="/assets/sahra-welcome.js?v=55407c32" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=59dc47f9">
+<script src="/assets/sahra-welcome.js?v=6c34e334" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=33e4a281">
+<script src="/assets/sahra-nav.js?v=0a87d05d" data-sbn defer></script>
+<link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/">
+<link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/">
+<link rel="alternate" hreflang="x-default" href="https://www.sahraandbeyond.ae/">
 </head>
 <body class="no-js has-topbar">
 <a class="skip-link" href="#s-collection">Skip to the collection</a>
@@ -1041,6 +1133,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <!-- 1 · HERO · Liwa at golden hour -->
 <section class="stop tall right" id="s-hero" data-tod="dawn" data-bg="liwa">
+  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0"><picture><source media="(max-width:760px)" srcset="/shirts/hero-places-p.jpg"><img src="/shirts/hero-places.jpg" alt="" width="1800" height="1200" fetchpriority="high" decoding="async"></picture></figure><figure class="hslide-f" data-hs="1"><picture><source media="(max-width:760px)" srcset="/shirts/hero-print-p.jpg"><img src="/shirts/hero-print.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="2"><picture><source media="(max-width:760px)" srcset="/shirts/hero-fabric-p.jpg"><img src="/shirts/hero-fabric.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="3"><picture><source media="(max-width:760px)" srcset="/shirts/hero-fits-p.jpg"><img src="/shirts/hero-fits.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><span class="hslide-scrim"></span></div><div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>From real places</b>Al Quaa, Liwa and Wadi Naqab &mdash; places you can drive to.</span><span class="hslide-cap-i" data-hc="1"><b>The print</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="2"><b>The cloth</b>230 gsm combed ring-spun cotton.</span><span class="hslide-cap-i" data-hc="3"><b>The fits</b>Regular and oversized, same design.</span></div><div class="hslide-dots" aria-label="Hero slides"><button type="button" class="hslide-dot is-on" data-hd="0" aria-label="Slide 1 of 4: From real places"></button><button type="button" class="hslide-dot" data-hd="1" aria-label="Slide 2 of 4: The print"></button><button type="button" class="hslide-dot" data-hd="2" aria-label="Slide 3 of 4: The cloth"></button><button type="button" class="hslide-dot" data-hd="3" aria-label="Slide 4 of 4: The fits"></button></div>
   <div class="j-wrap"><div class="col">
     <span class="j-eyebrow rv">Original UAE t-shirts &middot; limited first run</span>
     <h1><span class="rv">Wear the</span> <em class="rv">wild side</em> <span class="rv">of the UAE.</span></h1>
@@ -1048,6 +1141,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="meta rv"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></div>
     <div class="actions rv"><a class="j-btn solid" href="#collection" data-ring-jump>See the collection &#8964;</a><a class="j-btn" href="/places/">The places behind them</a></div>
   </div>
+  </div>
+  <div class="scroll-cue">Scroll — the journey begins &#8964;</div>
+</section>
+
+<!-- 4b - THE COLLECTION RING. Moved out of the hero 21 Sep so the model
+     slideshow owns the first screen. Same markup, same script hooks - the ring
+     script finds it by id, not by position. -->
+<!-- NOT class="stop": STOPS[] in the journey script is hand-authored and indexed
+     positionally against document.querySelectorAll(".stop"). Adding one shifted the
+     WebGL backdrop of every later section by one - the page's own checkOrder()
+     guard caught it. The ring is a plain section. -->
+<section class="ringstop" id="s-ring">
+  <div class="j-wrap">
   <div class="hring" id="heroRing" aria-label="The collection">
   <div class="hring-stage">
     <div class="hring-cap" aria-hidden="true"></div>
@@ -1059,7 +1165,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <div class="hring-links"><a class="hring-all" href="#collection" data-ring-jump>See all 7 designs &darr;</a><a class="hring-all hring-places" href="/places/">The places behind them &rarr;</a></div>
 </div>
   </div>
-  <div class="scroll-cue">Scroll — the journey begins &#8964;</div>
 </section>
 
 <div id="collection" class="anchor" aria-hidden="true"></div>
@@ -1159,7 +1264,7 @@ body.dark-bg .rv-stars{color:#E9B978}
       <div class="rv-aggregate">
         <span class="rv-stars" aria-hidden="true">★★★★★</span>
         <span class="rv-score">5.0 / 5</span>
-        <span class="rv-count">from 14 reviews</span>
+        <span class="rv-count">from 9 reviews</span>
       </div>
       <div class="rv-filters" data-rv-filters>
         <!-- no counts on the chips: the band shows the newest 6 while the aggregate counts every
@@ -1179,56 +1284,54 @@ body.dark-bg .rv-stars{color:#E9B978}
       </div>
       <ul class="rv-list">
         
-        <li class="rv-card" data-rating="5" data-date="2026-09-16">
-          <span class="rv-stars" aria-hidden="true">★★★★★</span>
-          <p class="rv-text">The shirt is amazing, minimalist and elegant, just the way I like it and living in Dubai for more than 10 years makes it better as I get to wear something that symbolizes UAE. 
-
-Quality of the product is great. 
-
-
-Delivery was fast as well, ordered it at night and got the product the following day and to top it off, I even get a massive discount on my next order.</p>
-          
-          <span class="rv-meta">Jeffrey Lumabas · Verified buyer · September 2026</span>
-          <a class="rv-more" href="/products/al-quaa-galaxy-oversized/#reviews">See it on Al Quaa Galaxy — Oversized &rarr;</a>
-        </li>
-        <li class="rv-card" data-rating="5" data-date="2026-09-15">
-          <span class="rv-stars" aria-hidden="true">★★★★★</span>
-          <p class="rv-text">Love the concept behind Sahra &amp; Beyond. Al Quaa brings back some of my favourite memories of stargazing with friends, which made this design especially meaningful to me. The fabric feels great, the print quality is excellent, and even the packaging reflects the thought that has gone into the brand.</p>
-          
-          <span class="rv-meta">Saleha Ali · Verified buyer · September 2026</span>
-          <a class="rv-more" href="/products/al-quaa-galaxy-oversized/#reviews">See it on Al Quaa Galaxy — Oversized &rarr;</a>
-        </li>
-        <li class="rv-card" data-rating="5" data-date="2026-09-13">
-          <span class="rv-stars" aria-hidden="true">★★★★★</span>
-          <p class="rv-text">Super satisfied customer here!
-From the user-friendly website and fast delivery to how beautifully the package was presented, everything was such a great experience. And the quality of the shirt? Definitely not cheap material, I was genuinely impressed! Plus, they’re super generous because you even get a FREE tote bag with your order! Already loving my tee and can’t wait to see what new designs they come up with n…</p>
-          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1789322158__1789322135952-img_5559__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1789322158__1789322135952-img_5559__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
-          <span class="rv-meta">Lizz · Verified buyer · September 2026</span>
-          <a class="rv-more" href="/products/al-quaa-galaxy-oversized/#reviews">Read the full review &rarr;</a>
-        </li>
-        <li class="rv-card" data-rating="5" data-date="2026-09-10">
-          <span class="rv-stars" aria-hidden="true">★★★★★</span>
-          <p class="rv-text">Amazing product and value for money.
-So much detailing and hard work behind a brilliant concept bringing the Sahara to life!
-The quality of the fabric is ideal for UK weather and conditions.
-Highly recommended plus the packaging was superb!</p>
-          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1789023041__1789023039318-img-20260904-wa0004__original.jpg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1789023041__1789023039318-img-20260904-wa0004__original.jpg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
-          <span class="rv-meta">Muhammad Yaseen · Verified buyer · September 2026</span>
-          <a class="rv-more" href="/products/al-quaa-galaxy-oversized/#reviews">See it on Al Quaa Galaxy — Oversized &rarr;</a>
-        </li>
-        <li class="rv-card" data-rating="5" data-date="2026-09-06">
-          <span class="rv-stars" aria-hidden="true">★★★★★</span>
-          <p class="rv-text">Fast next day delivery. Items come in a great little box convenient for gifting. Free tote bag is a big plus ⭐️</p>
-          
-          <span class="rv-meta">Kainat Abbasi · September 2026</span>
-          
-        </li>
         <li class="rv-card" data-rating="5" data-date="2026-09-06">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
           <p class="rv-text">Bought this as a birthday present for the husband. Super soft. Excellent fit, comparable to any premium brand. And the nicest sandstone/dunes of Al Ain sand color. Hope there’ll be more polos in the future!</p>
           <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788691900__1788691740649-img_2265__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788691900__1788691740649-img_2265__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788691905__1788691740650-img_2173__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788691905__1788691740650-img_2173__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
           <span class="rv-meta">Kainat Abbasi · Verified buyer · September 2026</span>
           <a class="rv-more" href="/products/sand-polo/#reviews">See it on The Sahra Polo &rarr;</a>
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-09-03">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">It was smooth and timely.</p>
+          
+          <span class="rv-meta">Mustafa Chulawala · September 2026</span>
+          
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-09-03">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">The quality is amazing - super soft, breathable and perfect for everyday wear. The design is unique and meaningful. You can feel the passion in every piece. 
+
+Highly recommended Sahra &amp; Beyond to everyone!</p>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788426503__1788426494814-img_4224__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788426503__1788426494814-img_4224__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788426509__1788426494815-img_4225__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788426509__1788426494815-img_4225__original.jpeg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
+          <span class="rv-meta">Mustafa Chulawala · Verified buyer · September 2026</span>
+          <a class="rv-more" href="/products/al-quaa-galaxy-regular/#reviews">See it on Al Quaa Galaxy — Regular &rarr;</a>
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-09-01">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Safe to say Sahra &amp; Beyond nailed it.
+
+The attention to detail is remarkable. The branded cardboard box, the premium canvas tote, and the drawstring pouch create a fantastic first impression. The standard thank-you card and the detailed product card with coordinates shows a deep connection to the brand's story. It feels like a premium, thoughtfully curated gift.
+I ordered beige colored t-shirt which looked incr…</p>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788281268__111999__original.jpg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788281268__111999__original.jpg?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
+          <span class="rv-meta">nabeel shahid · Verified buyer · September 2026</span>
+          <a class="rv-more" href="/products/empty-quarter-regular/#reviews">Read the full review &rarr;</a>
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-08-29">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Delivery came way faster than expected and checkout was very easy</p>
+          
+          <span class="rv-meta">Mohamed Torky · August 2026</span>
+          
+        </li>
+        <li class="rv-card" data-rating="5" data-date="2026-08-29">
+          <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          <p class="rv-text">Got the oversized version and the fit is true to size. Oversized done properly!
+
+The fabric feels amazing and very comfortable. The design looks even better in person and feels very seamlessly embedded into the t.</p>
+          <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788003745__1788003673863-cac60218-4f2d-47d9-8145-8a__original.png?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788003745__1788003673863-cac60218-4f2d-47d9-8145-8a__original.png?quality=80&amp;width=1024" alt="Customer photo" loading="lazy"></a></span>
+          <span class="rv-meta">Anonymous · Verified buyer · August 2026</span>
+          <a class="rv-more" href="/products/al-quaa-galaxy-oversized/#reviews">See it on Al Quaa Galaxy — Oversized &rarr;</a>
         </li>
       </ul>
       
@@ -2423,7 +2526,42 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 })();
 </script>
 
-<script src="/assets/sahra-cart.js?v=efbafb2d" defer></script>
+<script src="/assets/sahra-cart.js?v=b3796801" defer></script>
 <script src="/assets/sahra-market.js?v=149814cb" defer></script>
+<script data-hslide>
+/* Hero slideshow. Crossfade only - no transform, no layout work - so it cannot
+   fight the scroll-driven section animations. Auto-advance stops on reduced
+   motion, when the tab is hidden, and for good once someone picks a slide. */
+(function(){
+  var figs=[].slice.call(document.querySelectorAll('.hslide-f'));
+  var caps=[].slice.call(document.querySelectorAll('.hslide-cap-i'));
+  var dots=[].slice.call(document.querySelectorAll('.hslide-dot'));
+  if(figs.length<2) return;
+  var i=0,timer=null,held=false;
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function show(n){
+    i=(n+figs.length)%figs.length;
+    figs.forEach(function(f,k){f.classList.toggle('is-on',k===i);});
+    caps.forEach(function(c,k){c.classList.toggle('is-on',k===i);});
+    dots.forEach(function(d,k){d.classList.toggle('is-on',k===i);});
+  }
+  function tick(){ if(held||document.hidden) return; show(i+1); warm(i+1); }
+  function start(){ if(still||held||timer) return; timer=setInterval(tick,5200); }
+  function stop(){ if(timer){clearInterval(timer);timer=null;} }
+  dots.forEach(function(d,k){ d.addEventListener('click',function(){ held=true; stop(); show(k); }); });
+  document.addEventListener('visibilitychange',function(){ document.hidden?stop():start(); });
+  /* Warm only the NEXT slide, and only when the tab is visible and the connection
+     is not metered. Flipping all three to eager on a timer pulled ~570KB on every
+     visit, including one that bounced - which made loading="lazy" decorative. */
+  function warm(n){
+    try{ if(document.hidden) return;
+         var c=navigator.connection; if(c&&(c.saveData||/2g/.test(c.effectiveType||''))) return;
+         var im=figs[(n+figs.length)%figs.length].querySelector('img'); if(im) im.loading='eager';
+    }catch(e){}
+  }
+  warm(1);
+  start();
+})();
+</script>
 </body>
 </html>
