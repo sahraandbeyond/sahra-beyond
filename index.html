@@ -398,11 +398,10 @@ footer .fine{width:100%;border-top:1px solid rgba(255,255,255,.12);padding-top:2
 @media(max-width:760px){
   /* the hook is taller than a phone screen, so the hero stops centring its column
      (which pushed the eyebrow up under the fixed nav) and pins it below the bar */
-  #s-hero{min-height:100vh;align-items:flex-start;padding-top:calc(var(--nav-h,62px) + 16px);padding-bottom:20px}
-  /* the ring has to be on the first screen: the two big buttons would push it under
-     the fold, and the ring already browses the collection (tap a card, quick add,
-     "see all 7"). The places link reappears under the ring instead. */
-  #s-hero .actions{display:none}
+  #s-hero{min-height:calc(100vh - var(--topbar-h,34px));align-items:flex-start;padding-top:calc(var(--nav-h,62px) + 16px);padding-bottom:20px}
+  /* The ring used to sit inside the hero on phones, so the two big buttons were
+     hidden to keep it above the fold. The ring now has its own section (#s-ring),
+     so that reason is gone and the hero keeps its CTA on phones too. */
   #s-hero .lede-l{display:none}
   #s-hero .lede-s{display:inline}
   .hring-places{display:inline-block}
