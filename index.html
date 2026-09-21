@@ -636,6 +636,59 @@ footer{position:relative;z-index:2}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <style data-hslide>
+/* ---- hero furniture pushed to the EDGES (Faheem, 21 Sep) ------------------
+   Centred type sat straight on top of the garment and took the focus off it.
+   Tagline pins to the top, CTA and dots to the bottom, the changing caption to
+   the left edge - so the middle of every frame, where the print is, stays clear. */
+/* flex:1 1 auto beats the #s-hero .col{flex:0 1 570px} still live in the
+   min-width:961px block - without it .col hugged its content and space-between
+   had nothing to distribute, so tagline and CTA bunched in the middle. */
+/* Pin the wrap to the section box instead of negotiating with .stop's own flex
+   centring - that kept collapsing .col to its content height, so space-between
+   had nothing to distribute and the tagline and CTA bunched mid-screen.
+   Top inset clears the fixed nav, bottom inset clears the scroll cue. */
+#s-hero .j-wrap{position:absolute!important;inset:104px 0 74px;display:flex;
+  align-items:stretch!important;justify-content:center;padding:0!important;
+  max-width:none!important;margin:0!important}
+/* flex-start + margin-top:auto on the CTA, not space-between: with three
+   children (h1, actions, dots) space-between parked the CTA in the middle of
+   the frame, which is the part that has to stay clear for the garment. */
+#s-hero .col{flex:1 1 auto!important;display:flex;flex-direction:column;
+  justify-content:flex-start;max-width:none!important;width:100%;
+  padding:0 clamp(18px,5vw,64px)!important}
+#s-hero .actions{margin-top:auto!important;margin-bottom:0}
+#s-hero h1{margin:0 auto;max-width:15ch;flex:0 0 auto}
+#s-hero .hero-mid{flex:1 1 auto}
+#s-hero .actions{margin-left:auto;margin-right:auto;flex:0 0 auto}
+#s-hero .hslide-dots{flex:0 0 auto}
+/* left rail, vertically centred, clear of the middle of the photo */
+#s-hero .hslide-cap{position:absolute;left:clamp(18px,5vw,64px);top:50%;
+  transform:translateY(-50%);width:min(30ch,28vw);height:auto;margin:0;text-align:left;z-index:4}
+#s-hero .hslide-cap-i{position:absolute;left:0;right:auto;top:0;width:100%;text-align:left}
+/* a soft left edge so the caption reads over whatever the photo puts there,
+   without darkening the middle of the frame where the garment is */
+/* darken only where type sits - the top band under the tagline, the bottom band
+   under the CTA, and a soft left edge for the caption. The middle stays close to
+   clear so the print on the garment is the brightest thing on screen. */
+#s-hero .hslide-scrim{background:
+  linear-gradient(180deg,rgba(10,8,18,.72) 0%,rgba(10,8,18,.22) 24%,rgba(10,8,18,.12) 52%,
+                  rgba(10,8,18,.30) 74%,rgba(10,8,18,.82) 100%),
+  linear-gradient(90deg,rgba(10,8,18,.60) 0%,rgba(10,8,18,.14) 28%,rgba(10,8,18,0) 46%)}
+/* the wide crops are cut at 16:9, the same ratio as the desktop hero box, so
+   object-fit:cover takes almost nothing more - what is framed in the file is
+   what ships, heads and prints included. */
+#s-hero .hslide-f img{object-position:50% 50%}
+@media(max-width:860px){
+  /* no room for a left rail next to the photo - caption sits under the tagline */
+  #s-hero .j-wrap{inset:96px 0 66px}
+  #s-hero .hslide-cap{position:relative;left:auto;top:auto;transform:none;
+    width:100%;max-width:520px;margin:14px auto 0;text-align:center}
+  #s-hero .hslide-cap-i{text-align:center}
+  #s-hero .hslide-scrim{background:linear-gradient(180deg,rgba(10,8,18,.72) 0%,rgba(10,8,18,.40) 30%,
+    rgba(10,8,18,.38) 62%,rgba(10,8,18,.84) 100%)}
+  #s-hero .hslide-f img{object-position:50% 42%}
+}
+
 /* ---- hero: the photograph IS the hero (Faheem, 21 Sep) -------------------
    The frosted .col panel was covering the slideshow, so it is removed HERE ONLY -
    the same rule also dresses #s-alquaa/#s-liwa/#s-naqab/#s-news and they still
@@ -701,7 +754,10 @@ footer{position:relative;z-index:2}
 /* slide 5's spans flow inline - stacked, the stars + shipping + returns rows
    overran the caption box. sahra-market.js hides the two shipping variants that
    do not match the visitor's market, so only one shows. */
-.hslide-cap-i>span{display:inline;font-size:13.5px;line-height:1.8;color:#EDE3D4;margin:0 5px}
+/* no display declaration: spans are inline already, and setting it here beat
+   the global .sb-ship-gcc,.sb-ship-intl{display:none} on specificity, so a UAE
+   visitor was shown the GCC and worldwide shipping lines as well. */
+.hslide-cap-i>span{font-size:13.5px;line-height:1.8;color:#EDE3D4;margin:0 5px}
 .hslide-cap-i>span b{color:#E9B978}
 .hslide-cap-i .hero-stars{color:#E9B978;letter-spacing:1px}
 .hslide-dots{position:relative;z-index:5;display:flex;gap:9px;margin:22px auto 0;justify-content:center}
@@ -1159,10 +1215,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <!-- 1 · HERO · Liwa at golden hour -->
 <section class="stop tall right" id="s-hero" data-tod="dawn" data-bg="liwa">
-  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0"><picture><source media="(max-width:760px)" srcset="/shirts/hero-places-p.jpg"><img src="/shirts/hero-places.jpg" alt="" width="1800" height="1200" fetchpriority="high" decoding="async"></picture></figure><figure class="hslide-f" data-hs="1"><picture><source media="(max-width:760px)" srcset="/shirts/hero-cloth-p.jpg"><img src="/shirts/hero-cloth.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="2"><picture><source media="(max-width:760px)" srcset="/shirts/hero-making-p.jpg"><img src="/shirts/hero-making.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="3"><picture><source media="(max-width:760px)" srcset="/shirts/hero-fits-p.jpg"><img src="/shirts/hero-fits.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="4"><picture><source media="(max-width:760px)" srcset="/shirts/hero-trust-p.jpg"><img src="/shirts/hero-trust.jpg" alt="" width="1800" height="1200" loading="lazy" decoding="async"></picture></figure><span class="hslide-scrim"></span></div>
+  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0"><picture><source media="(max-width:760px)" srcset="/shirts/hero-places-p.jpg"><img src="/shirts/hero-places.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async"></picture></figure><figure class="hslide-f" data-hs="1"><picture><source media="(max-width:760px)" srcset="/shirts/hero-cloth-p.jpg"><img src="/shirts/hero-cloth.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="2"><picture><source media="(max-width:760px)" srcset="/shirts/hero-making-p.jpg"><img src="/shirts/hero-making.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="3"><picture><source media="(max-width:760px)" srcset="/shirts/hero-fits-p.jpg"><img src="/shirts/hero-fits.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><figure class="hslide-f" data-hs="4"><picture><source media="(max-width:760px)" srcset="/shirts/hero-trust-p.jpg"><img src="/shirts/hero-trust.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></picture></figure><span class="hslide-scrim"></span></div><div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>Limited first run</b>Three places you can drive to &mdash; Al Quaa, Liwa and Wadi Naqab.</span><span class="hslide-cap-i" data-hc="1"><b>The cloth</b>230 gsm combed ring-spun cotton. <b>AED&nbsp;199</b>.</span><span class="hslide-cap-i" data-hc="2"><b>The making</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="3"><b>The fits</b>Regular and oversized, in the same design.</span><span class="hslide-cap-i" data-hc="4"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></span></div>
   <div class="j-wrap"><div class="col">
     <h1><span class="rv">Wear the</span> <em class="rv">wild side</em> <span class="rv">of the UAE.</span></h1>
-    <div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>Limited first run</b>Three places you can drive to &mdash; Al Quaa, Liwa and Wadi Naqab.</span><span class="hslide-cap-i" data-hc="1"><b>The cloth</b>230 gsm combed ring-spun cotton. <b>AED&nbsp;199</b>.</span><span class="hslide-cap-i" data-hc="2"><b>The making</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="3"><b>The fits</b>Regular and oversized, in the same design.</span><span class="hslide-cap-i" data-hc="4"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></span></div>
     <div class="actions rv"><a class="j-btn solid" href="#collection" data-ring-jump>See the collection &#8964;</a><a class="j-btn" href="/places/">The places behind them</a></div>
     <div class="hslide-dots" aria-label="Hero slides"><button type="button" class="hslide-dot is-on" data-hd="0" aria-label="Slide 1 of 5"></button><button type="button" class="hslide-dot" data-hd="1" aria-label="Slide 2 of 5"></button><button type="button" class="hslide-dot" data-hd="2" aria-label="Slide 3 of 5"></button><button type="button" class="hslide-dot" data-hd="3" aria-label="Slide 4 of 5"></button><button type="button" class="hslide-dot" data-hd="4" aria-label="Slide 5 of 5"></button></div>
   </div>
