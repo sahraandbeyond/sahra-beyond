@@ -58,7 +58,7 @@
        is AED 50 off and the same tote is listed for sale at AED 50 (SB-TOTE-50) - but a
        third hand-maintained copy of the arithmetic is how "AED 100" survives a change
        to either half. Change amount or toteValue and the sum follows. */
-    toteImg: '/shirts/tote-band.jpg'
+    toteImg: '/shirts/tote-band.webp'
   };
   OFFER.total = 'AED ' + ((parseInt(OFFER.amount.replace(/\D/g, ''), 10) || 0) +
                           (parseInt(OFFER.toteValue.replace(/\D/g, ''), 10) || 0));
@@ -98,8 +98,8 @@
     '<span class="sbw-bar-in">' +
       '<span class="sbw-dot" aria-hidden="true"></span>' +
       '<span class="sbw-amt">' + OFFER.amount + ' off your first order</span>' +
-      '<span class="sbw-sep" aria-hidden="true">·</span>' +
-      '<span class="sbw-amt">Free tote worth ' + OFFER.toteValue + '</span>' +
+      '<span class="sbw-sep sbw-tote" aria-hidden="true">·</span>' +
+      '<span class="sbw-amt sbw-tote">Free tote worth ' + OFFER.toteValue + '</span>' +
       '<span class="sbw-sep sbw-hide-sm" aria-hidden="true">·</span>' +
       '<span class="sbw-hide-sm">Free next-day UAE delivery</span>' +
       '<span class="sbw-go">Get the code &rarr;</span>' +
@@ -220,6 +220,7 @@
     /* any open — including a deliberate one from the bar — counts as surfaced,
        so the timer/exit-intent below never re-opens it on top of the visitor */
     surfaced = 1; st.seen = 1; write(st);
+    var tz = document.querySelector('.sbw-teaser'); if (tz) tz.remove();
     lastFocus = document.activeElement;
     m.hidden = false;
     if (st.won) m.classList.add('is-won');
@@ -318,7 +319,7 @@
   })();
 
   /* ------------------------------------------------------- auto-surface */
-  /* Opens on arrival rather than waiting for a click. 1.4 s, not 0: at zero the
+  /* Opens on arrival (except product pages and ad landings - see below) rather than waiting for a click. 1.4 s, not 0: at zero the
      card animates in over a half-painted page and reads as a glitch, and a
      reflexive dismiss before anyone has read it is the worst outcome for a
      conversion surface. The old exit-intent / 45%-scroll triggers are gone —
@@ -331,11 +332,53 @@
   var SESSION = 'sbw.session';
   var openedThisSession = false;
   try { openedThisSession = sessionStorage.getItem(SESSION) === '1'; } catch (e) {}
+  /* 23 Sep 2026 (CRO review): NOT on a product page, and not when the visit
+     came from an ad. Those visitors arrived with intent for one product; a modal
+     over the photo and the size picker at 1.4 s stood between them and the buy
+     box. They get a small teaser instead, after their first scroll or 20 s,
+     which opens the same card only if tapped. Every other entry keeps the
+     auto-open. */
+  var qs = '';
+  try { qs = location.search || ''; } catch (e) {}
+  var AD = /[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(qs);
+  var PDP = /^\/(ar\/)?products\//.test(location.pathname || '');
+  /* the choice holds for the whole visit: an ad or product-page arrival who
+     taps through to another page still gets the teaser, not the modal */
+  var QUIET = 'sbw.quiet', quiet = false;
+  try { quiet = sessionStorage.getItem(QUIET) === '1'; if (AD || PDP) sessionStorage.setItem(QUIET, '1'); } catch (e) {}
   if (!st.won && !openedThisSession) {
+    if (AD || PDP || quiet) teaser(); else
     setTimeout(function () {
       if (surfaced) return;
       try { sessionStorage.setItem(SESSION, '1'); } catch (e) {}
       open('auto');
     }, 1400);
+  }
+
+  function teaser() {
+    var shown = false, t = null;
+    function show() {
+      if (shown || surfaced) return; shown = true;
+      removeEventListener('scroll', onScroll); clearTimeout(t);
+      try { sessionStorage.setItem(SESSION, '1'); } catch (e) {}
+      var el = document.createElement('div');
+      el.className = 'sbw-teaser';
+      el.innerHTML = '<button type="button" class="sbw-teaser-go">' + OFFER.amount + ' off your first order <span aria-hidden="true">&rarr;</span></button>' +
+        '<button type="button" class="sbw-teaser-x" aria-label="Dismiss offer">&times;</button>';
+      document.body.appendChild(el);
+      requestAnimationFrame(function () { el.classList.add('on'); });
+      el.querySelector('.sbw-teaser-go').addEventListener('click', function () { el.remove(); open('teaser'); });
+      el.querySelector('.sbw-teaser-x').addEventListener('click', function () { el.remove(); ev('welcome_teaser_dismiss', {}); });
+      /* ride above the product page's sticky buy bar instead of hiding under it */
+      var bb = document.getElementById('buybar');
+      if (bb && window.MutationObserver) {
+        var lift = function () { el.classList.toggle('lift', bb.classList.contains('on')); };
+        new MutationObserver(lift).observe(bb, { attributes: true, attributeFilter: ['class'] }); lift();
+      }
+      ev('welcome_teaser_show', { source: AD ? 'ad' : (PDP ? 'pdp' : 'visit') });
+    }
+    function onScroll() { if ((window.scrollY || 0) > 120) show(); }
+    addEventListener('scroll', onScroll, { passive: true });
+    t = setTimeout(show, 20000);
   }
 })();

@@ -44,7 +44,7 @@
       ['/places/', 'All places', '', 'sbn-all']
     ]}
   ];
-  var FEAT = { href: '/#collection', img: '/shirts/card/alquaa-model-front.jpg', badge: 'Founding Edition',
+  var FEAT = { href: '/#collection', img: '/shirts/card/alquaa-model-front.webp', badge: 'Founding Edition',
     title: 'The first run', text: 'Three places, three tees, one polo. Limited first run — when a size goes, it is gone.' };
   var FOOT = ['230 GSM tees · 240 GSM polo · printed collar labels', 'Order by 2 pm UAE time → next working day, free'];
 
@@ -143,4 +143,44 @@
     m.appendChild(frag);
     if (keep && keep !== m.firstChild) m.insertBefore(keep, m.firstChild);
   }
+})();
+/* Language switch (23 Sep 2026, CRO review): a visible English / عربي link in
+   every header. The target is this page's own counterpart where one exists
+   (the hreflang alternate, then /products/<id>/ <-> /ar/products/<id>/),
+   otherwise the other language's home. */
+(function () {
+  'use strict';
+  function place() {
+    if (document.querySelector('.sbl-lang')) return;
+    var html = document.documentElement, ar = (html.getAttribute('lang') || '').slice(0, 2) === 'ar';
+    var p = location.pathname || '/', href;
+    var alt = document.querySelector('link[rel="alternate"][hreflang="' + (ar ? 'en' : 'ar') + '"]');
+    if (alt) { try { href = new URL(alt.href).pathname; } catch (e) {} }
+    if (!href) {
+      var m = ar ? /^\/ar\/products\/([^\/]+)\/?$/.exec(p) : /^\/products\/([^\/]+)\/?$/.exec(p);
+      if (m) href = ar ? '/products/' + m[1] + '/' : '/ar/products/' + m[1] + '/';
+      else if (!ar && /^\/shop\/?$/.test(p)) href = '/ar/shop/';
+      else if (ar && /^\/ar\/shop\/?$/.test(p)) href = '/shop/';
+      else href = ar ? '/' : '/ar/';
+    }
+    var hdr = document.querySelector('.hdr') || document.getElementById('nav') || document.querySelector('body > nav') || document.querySelector('nav');
+    if (!hdr) return;
+    function mk(cls) {
+      var a = document.createElement('a');
+      a.className = 'sbl-lang ' + cls; a.href = href;
+      a.setAttribute('hreflang', ar ? 'en' : 'ar'); a.setAttribute('lang', ar ? 'en' : 'ar');
+      a.textContent = ar ? 'English' : 'عربي';
+      a.setAttribute('aria-label', ar ? 'Read this page in English' : 'اقرأ بالعربية — Arabic');
+      a.addEventListener('click', function () { try { if (window.track) track('language_switch', { to: ar ? 'en' : 'ar', from_path: p }); } catch (e) {} });
+      return a;
+    }
+    /* desktop: the last item of the link row; phone (the row is hidden): beside the cart */
+    var row = hdr.querySelector('.nav-links, .hdr-nav');
+    var before = hdr.querySelector('#sbCartBtn, #cartBtn, .cart-btn, .sb-cart-btn, .mnav');
+    var m = mk(row ? 'sbl-m' : 'sbl-any');
+    if (before && before.parentNode) before.parentNode.insertBefore(m, before); else hdr.appendChild(m);
+    if (row) row.appendChild(mk('sbl-d'));
+  }
+  function later() { setTimeout(place, 0); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', later); else later();
 })();

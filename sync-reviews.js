@@ -116,8 +116,30 @@ function normalise(r) {
     handle: pick(r, ['product_handle', 'handle'], null),
     externalId: pick(r, ['product_external_id', 'product_id', 'external_id'], null),
     productTitle: pick(r, ['product_title'], null),
-    reply: String(pick(r, ['reply', 'shop_reply'], '') || '').trim()
+    reply: String(pick(r, ['reply', 'shop_reply'], '') || '').trim(),
+    fit: fitAnswer(r)
   };
+}
+/* 23 Sep 2026 (CRO review): the answer to a "How did it fit?" review question,
+   once one is added in Judge.me (Settings > Review form > custom questions).
+   Judge.me's field name for custom answers is not confirmed against a live
+   payload yet, so this looks in the likely places and matches the question by
+   wording. Returns 'small' | 'true' | 'large' | null. */
+function fitAnswer(r) {
+  const lists = ['custom_form_answers', 'custom_forms', 'cf_answers', 'custom_fields', 'custom_questions']
+    .map(k => r[k]).filter(Array.isArray);
+  for (const list of lists) for (const a of list) {
+    if (!a || typeof a !== 'object') continue;
+    const q = String(pick(a, ['question', 'title', 'label', 'name'], '') || '');
+    if (!/\bfit|size|sizing/i.test(q)) continue;
+    let v = pick(a, ['value', 'answer', 'values', 'answers'], '');
+    if (Array.isArray(v)) v = v.join(' ');
+    v = String(v || '').toLowerCase();
+    if (/small|tight|snug|size up/.test(v)) return 'small';
+    if (/large|big|loose|size down/.test(v)) return 'large';
+    if (/true|expected|perfect|just right|as described/.test(v)) return 'true';
+  }
+  return null;
 }
 
 async function fetchPage(page) {

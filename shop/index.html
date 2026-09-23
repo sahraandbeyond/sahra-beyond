@@ -683,8 +683,8 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 @media(max-width:820px){.sb-curwrap--hdr{display:none}}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=25a87e11">
-<script src="/assets/sahra-cart.js?v=b3796801" defer></script>
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
+<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
 <script src="/assets/sahra-market.js?v=149814cb" defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
@@ -1080,11 +1080,48 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 /* footer social links were 134x16 - give them a real row to hit */
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
 
+/* ===== 23 Sep 2026 CRO review: phone product cards and category pages =====
+   On a 390px phone the card footer put the price, "Full details" and Quick add
+   on one line: the price wrapped to two lines (AED / 199) and Quick add was cut
+   off at the card edge. The footer now wraps - price and details on one row,
+   Quick add full width beneath. The two chips every tee shares (230gsm cotton,
+   Unisex S-XL) drop on phones; fit and decoration stay, as they differ. */
+@media(max-width:560px){
+  .pcard-foot{flex-wrap:wrap;row-gap:10px}
+  .pcard-p,body.buy-page .pcard-p{white-space:nowrap;font-size:17px!important}
+  .pcard-cta{white-space:nowrap;border-bottom:0!important;text-decoration:underline;text-underline-offset:3px}
+  .pcard-foot .qa{flex:1 0 100%}
+  .pcard-spec .pc-same{display:none}
+  .pcard-spec span{font-size:11px!important;padding:3px 7px}
+  .pcard-t,body.buy-page .pcard-t{font-size:18px}
+  body.buy-page .loc-hero{padding:22px 16px 64px}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero .lede{font-size:16px!important;margin-bottom:6px}
+  .catnav{grid-template-columns:1fr 1fr;gap:8px}
+  .catnav a{padding:10px 12px}
+  body.buy-page .catnav a b{font-size:17px}
+  body.buy-page .catnav a span{font-size:13px!important;line-height:1.4}
+}
+.pcard-bundle{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;color:#7E4114;font-weight:700}
+
+/* mini product strip at the top of location and guide pages (23 Sep 2026) */
+.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(43,37,32,.14);border-radius:14px;box-shadow:0 6px 20px rgba(43,37,32,.07);color:#2A2016}
+.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#EFEAE0;display:block}
+.minitee-img img{width:100%;height:100%;object-fit:cover;display:block}
+.minitee-txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+.minitee-eye{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;font-weight:700}
+.minitee-txt b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:20px;font-weight:600;line-height:1.2}
+.minitee-sub{font-size:14px;color:#4A4136}
+.minitee-sub .sb-price{font-size:14px!important;font-weight:700;color:#2A2016!important;letter-spacing:.01em!important}
+.minitee-go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#2A2016;color:#FAF6EF!important;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.minitee-go:hover{background:#7E4114}
+@media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
+
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=fc2b97e2">
-<script src="/assets/sahra-welcome.js?v=039e33a5" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=33e4a281">
-<script src="/assets/sahra-nav.js?v=5c48cb63" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=029f3bc8">
+<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
+<script src="/assets/sahra-nav.js?v=60dddeb7" data-sbn defer></script>
 </head>
 <body class="shop-page">
 <a class="skip-link" href="#products">Skip to the collection</a>
@@ -1128,7 +1165,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     </style><main id="products"><div class="sp-grid">
       <article class="sp-card">
         <a class="sp-img" href="/products/al-quaa-galaxy-regular/">
-          <img src="/shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/alquaa-regular-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/al-quaa-galaxy-regular/">Al Quaa Galaxy — Regular</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1137,7 +1174,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/al-quaa-galaxy-oversized/">
-          <img src="/shirts/alquaa-oversized-back.jpg" alt="Al Quaa Galaxy oversized t-shirt, a Milky Way desert tee — the galaxy printed across the back" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/alquaa-oversized-back.webp" alt="Al Quaa Galaxy oversized t-shirt, a Milky Way desert tee — the galaxy printed across the back" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/al-quaa-galaxy-oversized/">Al Quaa Galaxy — Oversized</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1146,7 +1183,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/empty-quarter-regular/">
-          <img src="/shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/emptyquarter-regular-front.webp" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/empty-quarter-regular/">Empty Quarter — Regular</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1155,7 +1192,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/empty-quarter-oversized/">
-          <img src="/shirts/emptyquarter-oversized-front.jpg" alt="Empty Quarter oversized t-shirt, an embroidered desert tee — a tonal sun over the dunes on the chest" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/emptyquarter-oversized-front.webp" alt="Empty Quarter oversized t-shirt, an embroidered desert tee — a tonal sun over the dunes on the chest" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/empty-quarter-oversized/">Empty Quarter — Oversized</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1164,7 +1201,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/hajar-mountains-regular/">
-          <img src="/shirts/hajar-regular-back.jpg" alt="Hajar Mountains t-shirt, a mountain graphic tee in the regular fit — the red rock of the Hajar printed across the back" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/hajar-regular-back.webp" alt="Hajar Mountains t-shirt, a mountain graphic tee in the regular fit — the red rock of the Hajar printed across the back" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/hajar-mountains-regular/">Hajar Mountains — Regular</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1173,7 +1210,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/hajar-mountains-oversized/">
-          <img src="/shirts/hajar-oversized-back.jpg" alt="Hajar Mountains oversized t-shirt, a mountain graphic tee — the red rock of the Hajar printed across the back" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/hajar-oversized-back.webp" alt="Hajar Mountains oversized t-shirt, a mountain graphic tee — the red rock of the Hajar printed across the back" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/hajar-mountains-oversized/">Hajar Mountains — Oversized</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1182,7 +1219,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/sand-polo/">
-          <img src="/shirts/polo-dune-front.jpg" alt="The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/polo-dune-front.webp" alt="The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest" width="1536" height="1536" loading="lazy">
         </a>
         <h2 class="sp-name"><a href="/products/sand-polo/">The Sahra Polo</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span> &middot; 240 GSM piqué &middot; men&rsquo;s S&ndash;XL</p>
@@ -1294,7 +1331,14 @@ body.dark-bg .rv-stars{color:#E9B978}
 #sbRvLB button{position:absolute;top:16px;right:16px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:30px;line-height:1;cursor:pointer}
 #sbRvLB button:hover{background:rgba(255,255,255,.28)}
 #sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
-@media(max-width:760px){.rv-list{grid-template-columns:1fr}}</style>
+@media(max-width:760px){.rv-list{grid-template-columns:1fr}}
+.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#5C5148;margin:4px 0 2px}
+.rv-scope{font-size:14px;color:#4A4136;margin:-6px 0 14px}
+.pdp-quotes{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}
+.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#C0702E);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
+.pdp-quotes q{font-style:italic}
+.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
+</style>
   <section class="reviews rv-band" aria-labelledby="rvb-h">
     <div class="wrap">
       <span class="eyebrow" id="rvb-h">Worn and reviewed</span>
@@ -1862,19 +1906,19 @@ var PRODUCTS=[];
 var DEMODATA=[
  {t:'Al Quaa Galaxy Tee',pl:'Al Quaa',slug:'al-quaa-desert',p:'199',st:'The Milky Way as it rises over Al Quaa — one of the darkest skies in the Emirates. A subtle صحراء mark on the chest, the galaxy across the back. Heavyweight combed cotton.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#181109',dark:1,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Al Quaa Galaxy Tee here (front + back). Currently placeholder = the oversized mockup.
-   regular:{front:'/shirts/alquaa-regular-front.jpg',back:'/shirts/alquaa-regular-back.jpg'},
+   regular:{front:'/shirts/alquaa-regular-front.webp',back:'/shirts/alquaa-regular-back.webp'},
    // OVERSIZED-fit = the finished oversized mockup. TODO: swap for a dedicated oversized shoot if/when available.
-   oversized:{front:'/shirts/alquaa-regular-front.jpg',back:'/shirts/alquaa-regular-back.jpg'}}},
+   oversized:{front:'/shirts/alquaa-regular-front.webp',back:'/shirts/alquaa-regular-back.webp'}}},
  {t:'Empty Quarter Tee',pl:'Liwa',slug:'liwa',p:'199',st:'A tonal embroidered sun setting over the dune ridges of Liwa, with صحراء beneath. Soft, heavyweight combed cotton.',v:[['S',1],['M',1],['L',0],['XL',1]],bg:'#E7D6B8',dark:0,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Empty Quarter Tee here (front + back). Currently placeholder = the oversized mockup.
-   regular:{front:'/shirts/emptyquarter-regular-front.jpg',back:'/shirts/emptyquarter-regular-back.jpg'},
+   regular:{front:'/shirts/emptyquarter-regular-front.webp',back:'/shirts/emptyquarter-regular-back.webp'},
    // OVERSIZED-fit = the finished oversized (model) mockup. TODO: swap for a dedicated oversized shoot if/when available.
-   oversized:{front:'/shirts/emptyquarter-regular-front.jpg',back:'/shirts/emptyquarter-regular-back.jpg'}}},
+   oversized:{front:'/shirts/emptyquarter-regular-front.webp',back:'/shirts/emptyquarter-regular-back.webp'}}},
  {t:'Hajar Mountains Tee',pl:'Wadi Naqab',slug:'wadi-naqab',p:'199',st:'A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. Combed cotton, made to layer.',v:[['S',1],['M',1],['L',1],['XL',1]],bg:'#C6BFD3',dark:0,fitImgs:{
    // TODO: drop the real REGULAR-fit photos for the Hajar Mountains Tee here (front + back). Currently placeholder = the oversized mockup.
-   regular:{front:'/shirts/hajar-regular-front.jpg',back:'/shirts/hajar-regular-back.jpg'},
+   regular:{front:'/shirts/hajar-regular-front.webp',back:'/shirts/hajar-regular-back.webp'},
    // OVERSIZED-fit = the finished oversized mockup. TODO: swap for a dedicated oversized shoot if/when available.
-   oversized:{front:'/shirts/hajar-regular-front.jpg',back:'/shirts/hajar-regular-back.jpg'}}}
+   oversized:{front:'/shirts/hajar-regular-front.webp',back:'/shirts/hajar-regular-back.webp'}}}
 ];
 
 /* Canonicalise placeSlug once, right after products load, so every downstream use — PLACES lookup,
@@ -2000,7 +2044,7 @@ function draw(){
      it still has its own section in the grid below. */
   var ringSrc=PRODUCTS.filter(function(p){return p.handle!=='sahra-tote';});
   var ringCards=ringSrc.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+((p.images&&p.images.length?p.images:(p.img?[p.img]:[])).slice(0,6).map(function(u,j){return '<img class="'+(j===0?'on':'')+'" src="'+u+'" alt="'+(j===0?(p.title||'').replace(/"/g,''):'')+'" loading="'+(i<3&&j<2?'eager':'lazy')+'" decoding="async">';}).join(''))+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
-  var ringHtml=ringSrc.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.jpg" alt="" loading="lazy" decoding="async" width="2560" height="1440"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
+  var ringHtml=ringSrc.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.webp" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.webp" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.webp" alt="" loading="lazy" decoding="async" width="2560" height="1440"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
   var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
     /* The tote (19 Sep). Everything below this point is the tee template — GSM,
@@ -2012,7 +2056,7 @@ function draw(){
        data-print / data-sizes are left empty on purpose, so choosing any tee
        facet correctly filters it out. */
     if(p.handle==='sahra-tote'){
-      var _ti=(p.images&&p.images[0])||'/shirts/tote-model.jpg';
+      var _ti=(p.images&&p.images[0])||'/shirts/tote-model.webp';
       /* .prod-inner is NOT optional: it carries z-index:2, which is what lifts a
          section above #ambient-canvas (position:fixed, z-index:1). Without it the
          ambient line-art drew straight over this section's photo and copy — the

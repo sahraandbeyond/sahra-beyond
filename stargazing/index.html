@@ -609,14 +609,21 @@ body.dark-bg .rv-stars{color:#E9B978}
 #sbRvLB button:hover{background:rgba(255,255,255,.28)}
 #sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}
+.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#5C5148;margin:4px 0 2px}
+.rv-scope{font-size:14px;color:#4A4136;margin:-6px 0 14px}
+.pdp-quotes{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}
+.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#C0702E);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
+.pdp-quotes q{font-style:italic}
+.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
+
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=25a87e11">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=fc2b97e2">
-<script src="/assets/sahra-welcome.js?v=039e33a5" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=33e4a281">
-<script src="/assets/sahra-nav.js?v=5c48cb63" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=029f3bc8">
+<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
+<script src="/assets/sahra-nav.js?v=60dddeb7" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1011,6 +1018,43 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 /* footer social links were 134x16 - give them a real row to hit */
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
 
+/* ===== 23 Sep 2026 CRO review: phone product cards and category pages =====
+   On a 390px phone the card footer put the price, "Full details" and Quick add
+   on one line: the price wrapped to two lines (AED / 199) and Quick add was cut
+   off at the card edge. The footer now wraps - price and details on one row,
+   Quick add full width beneath. The two chips every tee shares (230gsm cotton,
+   Unisex S-XL) drop on phones; fit and decoration stay, as they differ. */
+@media(max-width:560px){
+  .pcard-foot{flex-wrap:wrap;row-gap:10px}
+  .pcard-p,body.buy-page .pcard-p{white-space:nowrap;font-size:17px!important}
+  .pcard-cta{white-space:nowrap;border-bottom:0!important;text-decoration:underline;text-underline-offset:3px}
+  .pcard-foot .qa{flex:1 0 100%}
+  .pcard-spec .pc-same{display:none}
+  .pcard-spec span{font-size:11px!important;padding:3px 7px}
+  .pcard-t,body.buy-page .pcard-t{font-size:18px}
+  body.buy-page .loc-hero{padding:22px 16px 64px}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero .lede{font-size:16px!important;margin-bottom:6px}
+  .catnav{grid-template-columns:1fr 1fr;gap:8px}
+  .catnav a{padding:10px 12px}
+  body.buy-page .catnav a b{font-size:17px}
+  body.buy-page .catnav a span{font-size:13px!important;line-height:1.4}
+}
+.pcard-bundle{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;color:#7E4114;font-weight:700}
+
+/* mini product strip at the top of location and guide pages (23 Sep 2026) */
+.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(43,37,32,.14);border-radius:14px;box-shadow:0 6px 20px rgba(43,37,32,.07);color:#2A2016}
+.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#EFEAE0;display:block}
+.minitee-img img{width:100%;height:100%;object-fit:cover;display:block}
+.minitee-txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+.minitee-eye{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;font-weight:700}
+.minitee-txt b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:20px;font-weight:600;line-height:1.2}
+.minitee-sub{font-size:14px;color:#4A4136}
+.minitee-sub .sb-price{font-size:14px!important;font-weight:700;color:#2A2016!important;letter-spacing:.01em!important}
+.minitee-go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#2A2016;color:#FAF6EF!important;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.minitee-go:hover{background:#7E4114}
+@media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
+
 </style>
 </head>
 <body>
@@ -1025,13 +1069,14 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     </div>
   </section>
   <main>
+    <aside class="minitee"><a class="minitee-img" href="/products/al-quaa-galaxy-regular/" tabindex="-1" aria-hidden="true"><img src="/shirts/alquaa-regular-back.webp" alt="" width="72" height="90" loading="lazy" decoding="async"></a><div class="minitee-txt"><span class="minitee-eye">The tee from this place</span><b>Al Quaa Galaxy — Regular</b><span class="minitee-sub"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span> &middot; limited first run</span></div><a class="minitee-go" href="/products/al-quaa-galaxy-regular/">See the tee &rarr;</a></aside>
     <div class="content"><p>Want to know the best place to view the Milky Way galaxy in the UAE? It comes down to one thing: darkness. Escape the city glow and the desert delivers some of the clearest night skies in the region, where the Milky Way's core is bright enough to photograph — and on the darkest nights, to cast a faint shadow.</p><p class="place-buy">That view is the one printed on <a href="/products/al-quaa-galaxy-regular/">the Al Quaa Galaxy tee</a> — the core as it rises over Al Quaa, mapped rather than illustrated.</p><p>These are the spots we recommend for stargazing and astrophotography, ranked by how dark and accessible they are. Timing matters more than kit. The Milky Way's bright core is only above the horizon from roughly May to October — in midwinter it is below the horizon at night, so a December trip gives you a beautifully dark sky with no core in it. Winter nights are clearer, cooler and better for constellations; May to October is the window for the galaxy itself. Either way, go on a moonless night, bring a red-light torch, and give your eyes twenty minutes to adjust.</p></div>
-    <h2>Our top picks</h2><div class="cards"><a class="card" href="/locations/al-quaa-desert/"><span class="card-thumb" style="background-image:url('/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg')" role="img" aria-label="Al Quaa Desert"></span><span class="card-body"><strong>Al Quaa Desert</strong><em>Abu Dhabi · Camping</em><span>One of the darkest accessible skies in the Emirates. Deep in the southern desert, far from any city glow, it's a magnet for stargazers and astrophotographers chasing the Milky Way.</span></span></a><a class="card" href="/locations/crescent-moon-lake/"><span class="card-thumb" style="background-image:url('/uploads/17865510819668242.webp')" role="img" aria-label="Crescent Moon Lake"></span><span class="card-body"><strong>Crescent Moon Lake</strong><em>Dubai · Camping</em><span>A quiet desert lake where Arabian oryx, gazelle and deer come to drink at dawn and dusk. One of the best spots near the city for wildlife and birdlife.</span></span></a><a class="card" href="/locations/desert-camping-lake-view/"><span class="card-thumb" style="background-image:url('/uploads/img_20260206_175829.jpg')" role="img" aria-label="Desert Camping (Lake View)"></span><span class="card-body"><strong>Desert Camping (Lake View)</strong><em>Dubai · Camping</em><span>A hidden, little-known camping spot tucked beside a desert lake — calm water, soft dunes and almost no crowds. A local secret for a peaceful overnight.</span></span></a><a class="card" href="/locations/mleiha-desert/"><span class="card-emoji">🪨</span><span class="card-body"><strong>Mleiha Desert</strong><em>Sharjah · Dunes</em><span>An archaeological desert of golden dunes and wind-carved rock outcrops. Otherworldly formations, ancient tombs and Fossil Rock make it feel like another planet.</span></span></a></div>
+    <h2>Our top picks</h2><div class="cards"><a class="card" href="/locations/al-quaa-desert/"><span class="card-thumb" style="background-image:url('/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.webp')" role="img" aria-label="Al Quaa Desert"></span><span class="card-body"><strong>Al Quaa Desert</strong><em>Abu Dhabi · Camping</em><span>One of the darkest accessible skies in the Emirates. Deep in the southern desert, far from any city glow, it's a magnet for stargazers and astrophotographers chasing the Milky Way.</span></span></a><a class="card" href="/locations/crescent-moon-lake/"><span class="card-thumb" style="background-image:url('/uploads/17865510819668242.webp')" role="img" aria-label="Crescent Moon Lake"></span><span class="card-body"><strong>Crescent Moon Lake</strong><em>Dubai · Camping</em><span>A quiet desert lake where Arabian oryx, gazelle and deer come to drink at dawn and dusk. One of the best spots near the city for wildlife and birdlife.</span></span></a><a class="card" href="/locations/desert-camping-lake-view/"><span class="card-thumb" style="background-image:url('/uploads/img_20260206_175829.webp')" role="img" aria-label="Desert Camping (Lake View)"></span><span class="card-body"><strong>Desert Camping (Lake View)</strong><em>Dubai · Camping</em><span>A hidden, little-known camping spot tucked beside a desert lake — calm water, soft dunes and almost no crowds. A local secret for a peaceful overnight.</span></span></a><a class="card" href="/locations/mleiha-desert/"><span class="card-emoji">🪨</span><span class="card-body"><strong>Mleiha Desert</strong><em>Sharjah · Dunes</em><span>An archaeological desert of golden dunes and wind-carved rock outcrops. Otherworldly formations, ancient tombs and Fossil Rock make it feel like another planet.</span></span></a></div>
     
     
     <section class="teecta" style="--tee:#181109">
     <div class="teecta-inner">
-      <a class="teecta-img" href="/products/al-quaa-galaxy-regular/" aria-label="Al Quaa Galaxy — Regular" data-cycle><img class="on" src="/shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-regular-front.jpg" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-dune-back.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the printed Milky Way running across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print.jpg" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print-2.jpg" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-front.jpg" alt="The Al Quaa Galaxy tee, front, worn in the dunes — the embroidered sun-and-dune mark on the chest" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-chest.jpg" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-mark.jpg" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" loading="lazy" width="1080" height="1350"></a>
+      <a class="teecta-img" href="/products/al-quaa-galaxy-regular/" aria-label="Al Quaa Galaxy — Regular" data-cycle><img class="on" src="/shirts/alquaa-regular-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-regular-front.webp" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-dune-back.webp" alt="The Al Quaa Galaxy tee worn in the dunes — the printed Milky Way running across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print.webp" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print-2.webp" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-front.webp" alt="The Al Quaa Galaxy tee, front, worn in the dunes — the embroidered sun-and-dune mark on the chest" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-chest.webp" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-mark.webp" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" loading="lazy" width="1080" height="1350"></a>
       <div class="teecta-txt">
         <span class="teecta-eyebrow">The tee inspired by this place</span>
         <h2>Al Quaa Galaxy — Regular</h2>
@@ -1129,7 +1174,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=b3796801" defer></script>
+<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
 <script src="/assets/sahra-market.js?v=149814cb" defer></script>
 </body>
 </html>

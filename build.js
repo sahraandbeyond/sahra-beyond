@@ -204,6 +204,15 @@ function teeBlock(l) {
     </div>
   </section>`;
 }
+/* A compact product strip for the TOP of location and guide pages (CRO review,
+   23 Sep 2026). The full teeBlock still closes the page; this one puts the tee
+   and its price in the first screen for a reader who arrived from search. */
+function miniTee(placeSlug) {
+  const p = placeSlug ? PRODUCT_BY_PLACE[placeSlug] : null;
+  if (!p) return `<aside class="minitee minitee-all"><div class="minitee-txt"><span class="minitee-eye">Sahra &amp; Beyond</span><b>T-shirts drawn from real UAE places</b><span class="minitee-sub">From AED 199 &middot; 230gsm cotton &middot; free next-day UAE delivery</span></div><a class="minitee-go" href="/t-shirts/">Shop t-shirts &rarr;</a></aside>`;
+  const img = cardShots(p)[0];
+  return `<aside class="minitee"><a class="minitee-img" href="/products/${p.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" width="72" height="90" loading="lazy" decoding="async">` : ''}</a><div class="minitee-txt"><span class="minitee-eye">The tee from this place</span><b>${esc(p.name)}</b><span class="minitee-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> &middot; limited first run</span></div><a class="minitee-go" href="/products/${p.id}/">See the tee &rarr;</a></aside>`;
+}
 function shopBlock(l) {
   const place = (l && l.name)
     ? `Original tees inspired by real places like ${esc(l.name)} — every design carries a place.`
@@ -1026,6 +1035,64 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 .ar-emirate{font-size:13px;color:#7E4114;margin:0 0 8px}
 .ar-edition{background:rgba(242,201,140,.10);border-radius:14px;padding:30px 24px;border-bottom:0}
 @media(max-width:700px){.ar-main{padding:104px 18px 56px}}
+/* ---- Arabic product pages + shop (23 Sep 2026) ---- */
+.ar-main.arp{max-width:1120px;padding-top:92px}
+.arp-top>*{min-width:0}
+.arp-price .sb-price{font-size:26px!important;font-weight:700!important;letter-spacing:.01em!important;color:#2A2016!important}
+.arp-tile-p .sb-price{font-size:16px!important;font-weight:700!important;letter-spacing:.01em!important;color:#2A2016!important}
+.arp-crumb{font-size:13.5px;color:#6B5B48;margin:0 0 16px}
+.arp-crumb a{color:#7E4114}
+.arp-top{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:start}
+.arp-main{position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#EFE7D8}
+.arp-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
+.arp-main img.on{opacity:1}
+.arp-thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.arp-thumbs button{flex:0 0 64px;height:80px;padding:0;border:1px solid rgba(42,32,22,.25);border-radius:8px;overflow:hidden;background:none;cursor:pointer;opacity:.75}
+.arp-thumbs button.on{opacity:1;border-color:#7E4114}
+.arp-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.arp-model{font-size:14px;color:#4A3E31;margin:8px 0 0}
+.arp-buy{background:#FCF9F2;border:1px solid rgba(42,32,22,.1);border-radius:14px;padding:24px 24px 20px;box-shadow:0 14px 40px rgba(20,14,8,.08)}
+.arp-buy h1{font-size:clamp(30px,4.4vw,44px);margin:0 0 8px}
+.arp-fabric{font-size:14.5px;color:#4A3E31;margin:0 0 8px}
+.arp-rating{display:inline-flex;gap:6px;align-items:center;color:#4A3E31;text-decoration:none;font-size:14.5px;margin:0 0 6px}
+.arp-stars{color:#8F6212;letter-spacing:1px}
+.arp-price{font-size:26px;font-weight:700;color:#2A2016;margin:6px 0 8px}
+.arp-bundle{font-size:14.5px;color:#7E4114;margin:0 0 6px}
+.arp-ship{font-size:14px;color:#4A3E31;margin:0 0 16px}
+.arp-sizes-l{display:flex;justify-content:space-between;font-size:15px;margin:0 0 8px;color:#2A2016}
+.arp-sizes-l a{color:#7E4114}
+.arp-sizes{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 12px}
+.arp-size{min-width:60px;height:50px;padding:0 12px;border:1px solid rgba(42,32,22,.32);border-radius:10px;background:#fff;color:#2A2016;font-size:17px;cursor:pointer}
+.arp-size.sel{background:#E9B978;border-color:#E9B978}
+.arp-size:disabled{text-decoration:line-through;color:#6B6256;border-style:dashed;background:transparent;cursor:not-allowed}
+.arp-fit{font-size:15px;line-height:1.7;color:#2A2016;background:rgba(255,255,255,.6);border:1px solid rgba(42,32,22,.14);border-radius:10px;padding:10px 12px;margin:0 0 12px}
+.arp-fit a{color:#7E4114}
+.arp-add,.arp-now{display:block;width:100%;min-height:54px;border-radius:10px;font-size:17px;cursor:pointer;font-family:inherit}
+.arp-add{background:#2A2016;color:#FFF6E8;border:0;margin:0 0 8px}
+.arp-add:disabled{background:transparent;color:#5C5148;border:1px solid #8A7F73;cursor:default}
+.arp-now{background:transparent;color:#2A2016;border:1px solid rgba(42,32,22,.5)}
+.arp-msg{min-height:1.4em;font-size:14.5px;color:#2F6B3A;margin:8px 0 0}
+.arp-reassure{font-size:14px;line-height:1.7;color:#4A3E31;margin:6px 0 10px}
+.arp-reassure a{color:#7E4114}
+.arp-trust{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:#4A3E31;margin:0}
+.arp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.arp-card{border:1px solid rgba(42,32,22,.14);border-radius:12px;padding:16px}
+.arp-card h3{font-size:18px}
+.arp-spec,.arp-list{padding-inline-start:20px;line-height:1.9;color:#4A3E31}
+.arp-colour{display:flex;align-items:center;gap:8px;color:#4A3E31}
+.arp-sw{width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.25);display:inline-block}
+.arp-faq{border-bottom:1px solid rgba(42,32,22,.12);padding:12px 0}
+.arp-faq summary{cursor:pointer;font-size:17px;color:#2A2016}
+.arp-en{margin:28px 0 0;font-size:15px}
+.arp-en a{color:#7E4114}
+.arp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;margin-top:20px}
+.arp-tile{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:#2A2016;background:#fff;border:1px solid rgba(42,32,22,.12);border-radius:14px;overflow:hidden;padding-bottom:14px}
+.arp-tile-img{aspect-ratio:4/5;background:#EFE7D8;display:block}
+.arp-tile-img img{width:100%;height:100%;object-fit:cover;display:block}
+.arp-tile-t{font-size:19px;padding:4px 14px 0}
+.arp-tile-p{font-weight:700;padding:0 14px}
+.arp-tile-b{font-size:13.5px;color:#7E4114;padding:0 14px}
+@media(max-width:760px){.ar-main.arp{padding-top:80px}.arp-top{grid-template-columns:1fr;gap:16px}.arp-buy{padding:18px 16px}.arp-main{aspect-ratio:auto;height:min(40vh,360px)}.arp-grid{grid-template-columns:1fr 1fr;gap:12px}.arp-tile-t{font-size:16px}}
 [dir="rtl"] .sb-price,[dir="rtl"] .price,[dir="rtl"] .gsm,
 [dir="rtl"] code,[dir="rtl"] .sbw-code b{
   direction:ltr;unicode-bidi:embed;display:inline-block;
@@ -1185,6 +1252,7 @@ locations.forEach(l => {
   </section>
   <main>
     ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}" style="object-position:${esc(l.coverFocus || '50% 50%')}">` : ''}
+    ${miniTee(l.id)}
     ${galleryHtml}
     <div class="content">${withProductLink(paras(l.body || l.desc), l.productLink)}</div>
     ${Array.isArray(l.sections) ? l.sections.map(x => `<section class="guide-sec"><h2>${esc(x.h2)}</h2><div class="content">${paras(x.body)}</div></section>`).join('') : ''}
@@ -1514,6 +1582,7 @@ LANDINGS.forEach(L => {
     </div>
   </section>
   <main>
+    ${miniTee(GUIDE_TEE[L.slug])}
     <div class="content">${withProductLink(paras(L.intro), L.productLink)}</div>
     ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
     ${sectionsHtml}
@@ -2368,8 +2437,9 @@ function productCard(p) {
         <a class="pcard-t" href="/products/${p.id}/">${esc(p.name)}</a>
         ${RV.cardRating(p.id)}
         ${p.placeName ? `<span class="pcard-place">Inspired by ${esc(p.placeName)}</span>` : '<span class="pcard-place">Sahra &amp; Beyond</span>'}
-        <span class="pcard-spec">${chips.map(c => `<span>${c}</span>`).join('')}</span>
+        <span class="pcard-spec">${chips.map(c => `<span${/^(230gsm cotton|Unisex S&ndash;XL)$/.test(c) ? ' class="pc-same"' : ''}>${c}</span>`).join('')}</span>
         ${colour}
+        ${p.garment !== 'polo' ? '<span class="pcard-bundle">Any 2 tees &middot; AED 359</span>' : ''}
         <span class="pcard-foot"><span class="pcard-p">AED ${esc(String(p.price))}</span><a class="pcard-cta" href="/products/${p.id}/">Full details &rarr;</a></span>
       </span>
     </article>`;
@@ -2407,9 +2477,9 @@ CATEGORIES.forEach(C => {
     </div>
   </section>
   <main>
-    <div class="content">${paras(C.intro)}</div>
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${C.h1}</span></div>${catCards(items)}
       <a class="btn shoplink" href="${shopHref}">${C.pick ? 'Shop every t-shirt' : 'Shop ' + esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+    <div class="content">${paras(C.intro)}</div>
     ${RV.homepageBand({ compact: true })}
     ${foldsBlock(C.sections, 'Fabric, cut and make')}
     ${Array.isArray(C.faqs) && C.faqs.length ? `<section class="faq"><h2>Frequently asked questions</h2>${C.faqs.map(q => `<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''}
@@ -2457,7 +2527,7 @@ COMMERCE.forEach(P => {
     </div>
   </section>
   <main>
-    <div class="content">${paras(P.intro)}</div>
+    ${P.catNav ? '' : `<div class="content">${paras(P.intro)}</div>`}
     ${P.catNav ? `<nav class="catnav" aria-label="Shop by category">
       <a href="/t-shirts/regular/"><b>Regular fit</b><span>Slim cut — size up if in doubt</span></a>
       <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
@@ -2466,6 +2536,7 @@ COMMERCE.forEach(P => {
       <a href="/desert-t-shirts/"><b>Desert t-shirts</b><span>Liwa dunes &middot; Al Quaa night sky</span></a>
     </nav>` : ''}
     ${collectionBlock(null, P.slug === 't-shirts')}
+    ${P.catNav ? `<div class="content">${paras(P.intro)}</div>` : ''}
     ${P.slug === 't-shirts' ? RV.homepageBand({ compact: true }) : ''}
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
     ${P.gsmTable ? `<section class="guide-sec" id="gsm-table"><h2>Every t-shirt weight, compared</h2><p class="sgintent">GSM is grams per square metre &mdash; how much a square metre of the cloth weighs. It is the single most useful number on a t-shirt spec, and almost nobody selling t-shirts in the UAE explains it. Here is the whole scale.</p>${gsmTableHtml()}</section>` : ''}
@@ -3070,6 +3141,160 @@ function arPage({ slug, title, desc, h1, bodyHtml, enHref, jsonld }) {
   console.log('  ✓ Arabic core: /ar/, /ar/about/, /ar/contact/' + (AR_NOINDEX ? '  (noindex — awaiting review)' : ''));
 })();
 
+/* ==========================================================================
+   Arabic product pages and shop — /ar/products/<id>/, /ar/shop/  (23 Sep 2026)
+   ==========================================================================
+   CRO review item 13. Faheem, 23 Sep: "Switch now, I translate, native check
+   later". Copy lives in content/products-ar/*.json (+ _strings.json); prices,
+   photos, handles and stock come from the English product data and Shopify,
+   so the two languages can never disagree on a fact.
+
+   NOT YET READ BY A NATIVE SPEAKER. Held out of the index (noindex) and left
+   out of the English pages' hreflang until Faheem has had them checked - the
+   same gate /ar/ passed through on 21 Sep. Flip AR_PDP_NOINDEX to false after
+   the native check; then add the product pairs to applyArabicHreflang. */
+const AR_PDP_NOINDEX = true;
+(function buildArabicProducts() {
+  const ARDIR = path.join(__dirname, 'content', 'products-ar');
+  if (!fs.existsSync(ARDIR)) return;
+  const S = JSON.parse(fs.readFileSync(path.join(ARDIR, '_strings.json'), 'utf8'));
+  const tpl = (t, o) => String(t).replace(/\{(\w+)\}/g, (m, k) => (o[k] != null ? o[k] : m));
+  const T = PRODUCTS_ALL.map(p => {
+    const f = path.join(ARDIR, p.id + '.json');
+    return fs.existsSync(f) ? { p, a: JSON.parse(fs.readFileSync(f, 'utf8')) } : null;
+  }).filter(Boolean).sort((x, y) => (x.p.order || 0) - (y.p.order || 0));
+  const priceHtml = p => `<span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span>`;
+  const designHandles = p => p.siblingOf ? [p.siblingOf + '-regular', p.siblingOf + '-oversized'] : [p.id];
+  const shipLine = `<span class="sb-ship-uae">${esc(S.shipUae)}</span><span class="sb-ship-gcc">${esc(S.shipGcc)}</span><span class="sb-ship-intl">${esc(S.shipIntl)}</span>`;
+
+  function ratingAr(p) {
+    const pr = RV.pooled(designHandles(p)); if (!pr) return '';
+    const d = pr.d, avg = d.average.toFixed(1);
+    const label = pr.scope === 'design'
+      ? (d.count === 1 ? tpl(S.reviewsDesignOne, { avg }) : tpl(S.reviewsDesign, { avg, n: d.count }))
+      : tpl(S.reviewsCollection, { avg, n: d.count });
+    return `<a class="arp-rating" href="/products/${p.id}/#reviews" hreflang="en"><span class="arp-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span>${esc(label)}</span></a>`;
+  }
+
+  /* ---- product pages ---- */
+  T.forEach(({ p, a }) => {
+    const shots = buildProducts.galShots(p);
+    const fitWarn = p.garment === 'polo' ? S.fitPolo : (p.fit === 'oversized' ? S.fitOversized : S.fitRegular);
+    const other = p.siblingOf ? (p.fit === 'oversized'
+      ? `<a href="/ar/products/${p.siblingOf}-regular/">${esc(S.seeRegular)} &larr;</a>`
+      : `<a href="/ar/products/${p.siblingOf}-oversized/">${esc(S.seeOversized)} &larr;</a>`) : '';
+    const cards = (arr, tk, bk) => (arr || []).map(c => `<div class="arp-card"><h3>${esc(c[tk])}</h3><p>${esc(c[bk])}</p></div>`).join('');
+    const body = `
+<main class="ar-main arp">
+  <nav class="arp-crumb" aria-label="مسار الصفحة"><a href="/ar/">${esc(S.home)}</a> &lsaquo; <a href="/ar/shop/">${esc(S.shop)}</a> &lsaquo; <span>${esc(a.name)}</span></nav>
+  <section class="arp-top">
+    <div class="arp-media">
+      <div class="arp-main">${shots.map((x, i) => `<img${i === 0 ? ' class="on" fetchpriority="high"' : ' loading="lazy" decoding="async"'} src="${esc(x[0])}" alt="${esc(i === 0 ? (a.altMain || a.name) : a.name)}">`).join('')}</div>
+      <div class="arp-thumbs">${shots.map((x, i) => `<button type="button"${i === 0 ? ' class="on"' : ''} data-i="${i}" aria-label="${i + 1}"><img src="${esc(x[0])}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>
+      ${a.modelInfo ? `<p class="arp-model">${esc(a.modelInfo)}</p>` : ''}
+    </div>
+    <div class="arp-buy">
+      ${a.placeName ? `<p class="ar-eyebrow">${esc(tpl(S.inspiredBy, { place: a.placeName, emirate: a.placeEmirate || '' }))}</p>` : ''}
+      <h1>${esc(a.name)}</h1>
+      <p class="arp-fabric">${esc(p.garment === 'polo' ? S.fabricPolo : S.fabricTee)}</p>
+      ${ratingAr(p)}
+      <p class="arp-price">${priceHtml(p)}</p>
+      ${p.garment !== 'polo' ? `<p class="arp-bundle"><b>${esc(S.bundle)}</b> &middot; ${esc(S.bundleSub)}</p>` : ''}
+      <p class="arp-ship">${shipLine}</p>
+      <div class="arp-box" id="arpBox" data-handle="${esc(p.id)}">
+        <div class="arp-sizes-l">${esc(S.size)} <a href="/size-guide/" hreflang="en">${esc(S.sizeGuide)}</a></div>
+        <div class="arp-sizes" id="arpSizes" role="group" aria-label="${esc(S.selectSize)}">${['S', 'M', 'L', 'XL'].map(z => `<button type="button" class="arp-size" aria-pressed="false" dir="ltr">${z}</button>`).join('')}</div>
+        <p class="arp-fit">${esc(fitWarn)}${other ? ' ' + other : ''}</p>
+        <button type="button" class="arp-add" id="arpAdd" disabled>${esc(S.selectSize)}</button>
+        <button type="button" class="arp-now" id="arpNow">${esc(S.buyNow)}</button>
+        <p class="arp-msg" id="arpMsg" role="status" aria-live="polite"></p>
+        <p class="arp-reassure">${esc(S.reassure)} <a href="/policies.html#returns" hreflang="en">${esc(S.fullPolicy)}</a></p>
+        <p class="arp-trust"><span>${esc(S.trustReturns)}</span><span>${esc(S.trustDesigned)}</span><span>${esc(S.limited)}</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ar-sec"><p class="ar-eyebrow">${esc(S.secStory)}</p><h2>${a.placeHeading || esc(a.name)}</h2>${a.placeBlurb ? `<p>${esc(a.placeBlurb)}</p>` : ''}<p>${esc(a.lede)}</p>${a.occasion ? `<p class="ar-fine">&#10022; ${esc(a.occasion)}</p>` : ''}</section>
+  ${a.designHeading ? `<section class="ar-sec"><p class="ar-eyebrow">${esc(S.secDesign)}</p><h2>${a.designHeading}</h2><p>${esc(a.designIntro || '')}</p><div class="arp-cards">${cards(a.designCards, 'title', 'body')}${a.printCardTitle ? `<div class="arp-card"><h3>${esc(a.printCardTitle)}</h3><p>${esc(a.printCardBody || '')}</p></div>` : ''}${cards(a.constructionCards, 't', 'b')}</div></section>` : ''}
+  <section class="ar-sec"><p class="ar-eyebrow">${esc(S.secDetails)}</p><ul class="arp-spec">${(a.specChips || []).map(c => `<li>${esc(c)}</li>`).join('')}${a.decoration ? `<li>${esc(a.decoration)}</li>` : ''}</ul>${a.colourName ? `<p class="arp-colour">${p.colourHex ? `<span class="arp-sw" style="background:${esc(p.colourHex)}"></span>` : ''}${esc(S.colour)}: <b>${esc(a.colourName)}</b>${p.colourPantone ? ` <span dir="ltr">(Pantone ${esc(p.colourPantone)})</span>` : ''}</p>` : ''}${a.edition ? `<p class="ar-fine">${esc(a.edition)}</p>` : ''}</section>
+  <section class="ar-sec" id="fit"><p class="ar-eyebrow">${esc(S.secFit)}</p><h2>${a.fitHeading || esc(S.secFit)}</h2><p>${esc(a.fitWho || '')}</p>${a.fitExtra ? `<p>${esc(a.fitExtra)}</p>` : ''}<p><a href="/size-guide/" hreflang="en">${esc(S.sizeGuide)} &larr;</a></p></section>
+  ${(a.care || []).length ? `<section class="ar-sec"><p class="ar-eyebrow">${esc(S.secCare)}</p><h2>${a.careHeading || esc(S.secCare)}</h2>${a.careIntro ? `<p>${esc(a.careIntro)}</p>` : ''}<ul class="arp-list">${a.care.map(c => `<li>${esc(c)}</li>`).join('')}</ul></section>` : ''}
+  ${(a.faq || []).length ? `<section class="ar-sec"><p class="ar-eyebrow">${esc(S.secFaq)}</p>${a.faq.map(q => `<details class="arp-faq"><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''}
+  <section class="ar-sec"><p class="ar-eyebrow">${esc(S.secDelivery)}</p><p>${shipLine}</p><p>${esc(S.reassure)}</p></section>
+  <section class="ar-sec"><p class="ar-eyebrow">${esc(S.secReviews)}</p>${ratingAr(p)}<p class="ar-fine">${esc(S.reviewNote)}</p></section>
+  <p class="arp-en"><a href="/products/${p.id}/" hreflang="en" lang="en">${esc(S.readInEnglish)} &larr;</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">${esc(S.whatsapp)}</a></p>
+</main>
+<script>
+(function(){
+  var imgs=[].slice.call(document.querySelectorAll('.arp-main img')),th=[].slice.call(document.querySelectorAll('.arp-thumbs button'));
+  th.forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;imgs.forEach(function(x,k){x.classList.toggle('on',k===i);});th.forEach(function(x,k){x.classList.toggle('on',k===i);});});});
+  var box=document.getElementById('arpBox'); if(!box) return;
+  var handle=box.dataset.handle,sizes=document.getElementById('arpSizes'),add=document.getElementById('arpAdd'),now=document.getElementById('arpNow'),msg=document.getElementById('arpMsg');
+  var S=${JSON.stringify({ add: S.addToCart, adding: S.adding, added: S.added, sold: S.soldOut, pick: S.selectSize })};
+  var vs=null,sel=null,pendingSize=null,live=false;
+  function say(t){msg.textContent=t||'';}
+  function pick(b){[].forEach.call(sizes.querySelectorAll('.arp-size'),function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});b.classList.add('sel');b.setAttribute('aria-pressed','true');}
+  [].forEach.call(sizes.querySelectorAll('.arp-size'),function(b){b.addEventListener('click',function(){
+    if(b.disabled) return; pick(b); say('');
+    var t=b.textContent.trim();
+    if(!live){ pendingSize=t; return; }
+    sel=(vs||[]).filter(function(v){return v.title===t;})[0]||null;
+    add.disabled=!sel; add.textContent=sel?S.add:S.pick;
+  });});
+  function apply(list){
+    vs=list; live=true;
+    [].forEach.call(sizes.querySelectorAll('.arp-size'),function(b){
+      var v=vs.filter(function(x){return x.title===b.textContent.trim();})[0];
+      if(!v||!v.availableForSale){ b.disabled=true; b.classList.add('out'); b.setAttribute('aria-label',b.textContent.trim()+' — '+S.sold); }
+    });
+    if(pendingSize){ var hit=[].filter.call(sizes.querySelectorAll('.arp-size'),function(b){return b.textContent.trim()===pendingSize&&!b.disabled;})[0]; pendingSize=null; if(hit) hit.click(); }
+  }
+  function load(){ if(window.SahraCart&&SahraCart.variants){ SahraCart.variants(handle).then(apply).catch(function(){}); } else setTimeout(load,200); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',load); else load();
+  function go(toCheckout){
+    if(!sel){ say(S.pick); var f=sizes.querySelector('.arp-size:not([disabled])'); if(f) f.focus(); return; }
+    add.disabled=true; add.textContent=S.adding;
+    SahraCart.add(sel.id,1,toCheckout?{open:false}:undefined).then(function(){
+      if(window.track) try{track(toCheckout?'buy_now':'add_to_cart',{item_id:handle,size:sel.title,lang:'ar'});}catch(e){}
+      if(toCheckout){ var st=SahraCart.state&&SahraCart.state(); if(st&&st.checkoutUrl){ location.href=st.checkoutUrl; return; } }
+      add.disabled=false; add.textContent=S.add; say(S.added);
+    }).catch(function(){ add.disabled=false; add.textContent=S.add; });
+  }
+  add.addEventListener('click',function(){go(false);});
+  now.addEventListener('click',function(){go(true);});
+})();
+</script>`;
+    const canonical = `${SITE}/ar/products/${p.id}/`;
+    write(`ar/products/${p.id}/index.html`, shell({
+      lang: 'ar', noindex: AR_PDP_NOINDEX, altHref: `${SITE}/products/${p.id}/`,
+      title: a.seoTitle || a.name, desc: a.seoDesc || a.lede, canonical,
+      image: `${SITE}${p.imgMain}`,
+      jsonld: { '@context': 'https://schema.org', '@type': 'WebPage', name: a.name, inLanguage: 'ar', url: canonical },
+      bodyHtml: body, activeNav: 'shop'
+    }));
+  });
+
+  /* ---- shop ---- */
+  const grid = T.map(({ p, a }) => {
+    const img = (buildProducts.galShots(p)[0] || [])[0] || p.imgMain;
+    return `<a class="arp-tile" href="/ar/products/${p.id}/"><span class="arp-tile-img"><img src="${esc(img)}" alt="${esc(a.altMain || a.name)}" loading="lazy" decoding="async"></span><span class="arp-tile-t">${esc(a.name)}</span><span class="arp-tile-p">${priceHtml(p)}</span>${p.garment !== 'polo' ? `<span class="arp-tile-b">${esc(S.bundle)}</span>` : ''}</a>`;
+  }).join('');
+  write('ar/shop/index.html', shell({
+    lang: 'ar', noindex: AR_PDP_NOINDEX, altHref: `${SITE}/shop/`,
+    title: 'المتجر | Sahra & Beyond', desc: S.fabricTee, canonical: `${SITE}/ar/shop/`,
+    jsonld: { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'المتجر', inLanguage: 'ar', url: `${SITE}/ar/shop/` },
+    bodyHtml: `
+<main class="ar-main arp">
+  <nav class="arp-crumb" aria-label="مسار الصفحة"><a href="/ar/">${esc(S.home)}</a> &lsaquo; <span>${esc(S.shop)}</span></nav>
+  <h1>${esc(S.shop)}</h1>
+  <p class="ar-lede">${esc(S.shipUae)}</p>
+  <div class="arp-grid">${grid}</div>
+  <p class="arp-en"><a href="/shop/" hreflang="en" lang="en">English &larr;</a></p>
+</main>`, activeNav: 'shop'
+  }));
+  console.log(`  ✓ Arabic product pages: ${T.length} + /ar/shop/` + (AR_PDP_NOINDEX ? '  (noindex — awaiting native review)' : ''));
+})();
+
 /* hreflang from the ENGLISH side. Google needs the pairing declared BOTH ways or
    it ignores it, and the Arabic pages cannot declare it alone. Injected rather
    than threaded through every page builder because two of the three counterparts
@@ -3162,6 +3387,64 @@ function arPage({ slug, title, desc, h1, bodyHtml, enHref, jsonld }) {
     if (out !== src) { fs.writeFileSync(f, out); touched++; }
   }
   console.log(`  ✓ asset hashes stamped on ${touched} page(s)`);
+})();
+
+/* ==========================================================================
+   WebP delivery (23 Sep 2026, CRO review)
+   ==========================================================================
+   Every photo under shirts/, journey/, assets/places, uploads/ and video/ has a
+   .webp sibling at about half the bytes (24.3 MB -> 12.2 MB across 204 files).
+   This pass points <img>/<source> src and srcset, image preloads, video
+   posters and CSS url() at the sibling when it exists on disk. Share images
+   (og:image, JSON-LD, feeds) are untouched: some crawlers still want JPEG.
+   Runs on every build, so a new JPEG with no .webp simply stays a JPEG. */
+(function applyWebp() {
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html')) pages.push(p);
+    }
+  })(__dirname);
+  const seen = new Map();
+  function swap(ref, file) {
+    const m = /^([^?#]+\.)(jpe?g|png)([?#].*)?$/i.exec(ref);
+    if (!m || /^(https?:|data:|\/\/)/i.test(ref)) return ref;
+    let abs;
+    try { abs = ref[0] === '/' ? path.join(__dirname, decodeURI(m[1])) : path.join(path.dirname(file), decodeURI(m[1])); } catch (e) { return ref; }
+    const w = abs + 'webp';
+    if (!seen.has(w)) seen.set(w, fs.existsSync(w));
+    return seen.get(w) ? m[1] + 'webp' + (m[3] || '') : ref;
+  }
+  const swapSet = (v, f) => v.split(',').map(part => part.replace(/^(\s*)(\S+)/, (x, sp, u) => sp + swap(u, f))).join(',');
+  let touched = 0, refs = 0;
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    let out = src.replace(/<(img|source|video|link)\b[^>]*>/gi, (tag, name) => {
+      if (/^link$/i.test(name) && !(/rel=["']?preload/i.test(tag) && /as=["']?image/i.test(tag))) return tag;
+      return tag.replace(/\b(src|srcset|href|imagesrcset|poster|data-src|data-zoom)=(["'])([^"']*)\2/gi, (a, attr, q, v) => {
+        const nv = /srcset/i.test(attr) ? swapSet(v, f) : swap(v, f);
+        if (nv !== v) refs++;
+        return attr + '=' + q + nv + q;
+      });
+    });
+    /* site-root paths quoted inside inline scripts (the homepage journey's
+       WebGL plates) - otherwise the page preloads the .webp and the script
+       then fetches the .jpg as well. JSON-LD blocks are left alone. */
+    out = out.replace(/<script\b(?![^>]*ld\+json)[^>]*>[\s\S]*?<\/script>/gi, blk =>
+      blk.replace(/(['"])(\/[^'"\s<>]+\.(?:jpe?g|png))\1/gi, (a, q, v) => {
+        const nv = swap(v, f); if (nv !== v) refs++;
+        return q + nv + q;
+      }));
+    out = out.replace(/url\((["']?)([^"')]+\.(?:jpe?g|png))\1\)/gi, (a, q, v) => {
+      const nv = swap(v, f); if (nv !== v) refs++;
+      return 'url(' + q + nv + q + ')';
+    });
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  ✓ WebP: ${refs} image reference(s) on ${touched} page(s)`);
 })();
 
 /* ==========================================================================

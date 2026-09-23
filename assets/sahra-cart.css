@@ -113,3 +113,12 @@
 .sb-gift-p s{color:#6B6256;text-decoration-thickness:1px;margin-right:6px}
 .sb-gift-p b{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
   font-weight:700;color:#7E4114}
+
+/* Any 2 tees for AED 359 (23 Sep 2026) - saving shown on the line and above the subtotal */
+.sb-lp s{opacity:.55;margin-right:2px}
+.sb-lp b{font-weight:600}
+.sb-bundle{margin:0 0 10px;padding:9px 12px;border-radius:10px;background:rgba(192,112,46,.10);color:inherit;font-size:13px;line-height:1.45}
+.sb-bundle a{color:inherit;text-decoration:underline;white-space:nowrap}
+.sb-bundle[hidden]{display:none}
+
+.sb-pay{margin:8px 0 0;text-align:center;font-size:12.5px;color:#4A4136;letter-spacing:.01em}

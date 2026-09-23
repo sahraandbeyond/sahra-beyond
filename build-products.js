@@ -88,6 +88,10 @@ function related(p, all){
    so twice: the eyebrow and the "limited first run" chip. p.drop is now Drop 01
    across the whole catalogue, so the pill can return when Sahel ships and there
    are genuinely two drops to tell apart. The .gal-tag CSS is kept for that. */
+/* the design's handles across both fits - reviews pool per design (23 Sep 2026) */
+function designHandles(p) {
+  return p.siblingOf ? [p.siblingOf + '-regular', p.siblingOf + '-oversized'] : [p.id];
+}
 function galShots(p) {
   const raw = [
     [p.imgMain, p.altMain, 'View'],
@@ -720,6 +724,55 @@ body.dark-bg .sec .faq summary:hover{color:var(--clay-deep)}
 body.dark-bg .sec .rv-stars,body.dark-bg .sec .rv-card .rv-stars{color:#8F6212}
 
 ${RV.CSS}
+
+/* ---- phone buy box first (CRO review, 23 Sep 2026) -------------------------
+   On a 390x844 phone the title sat at 965px and the sizes at 1,417px: the first
+   screen was the delivery bar, a breadcrumb and a photo, with no name, price or
+   way to buy. Below 700px the page now reads title, rating, price, photo, sizes.
+   .buy and .media become display:contents so their children can be ordered in
+   one column; the head and body of the buy box each carry the panel look. */
+.buy-head,.buy-body{display:block}
+.fitv{margin:4px 0 10px;font-size:13px;color:var(--txt-soft)}
+.fitv-h{margin:0 0 5px;font-weight:600;color:var(--txt)}
+.fitv ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.fitv li{display:grid;grid-template-columns:92px 1fr 38px;align-items:center;gap:8px}
+.fitv i{display:block;height:6px;border-radius:99px;background:rgba(42,32,22,.12);position:relative;overflow:hidden}
+.fitv i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#B5651F;border-radius:99px}
+.fitv b{text-align:right;font-weight:600;color:var(--txt)}
+@media(max-width:700px){
+  body.buy-page .note,body.buy-page .crumb{display:none}
+  .pdp{display:flex;flex-direction:column;gap:10px;padding:10px 0 50px}
+  .pdp>.media,.pdp>.buy{display:contents}
+  .buy-head{order:1}
+  .gal-main{order:2}
+  .buy-body{order:3}
+  .gal-thumbs{order:4;margin-top:0}
+  .gal-model{order:5}
+  .buy-head,.buy-body{color:var(--txt);background:rgba(252,249,242,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+    border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 12px 34px rgba(20,14,8,.12)}
+  .buy-head{padding:12px 16px 10px}
+  .buy-body{padding:14px 16px 18px}
+  .buy-head .buy-top{margin-bottom:6px;gap:4px 12px}
+  .buy-head .buy-top .eyebrow,.buy-head .buy-top .limited{font-size:10px}
+  .buy h1{font-size:27px;margin:0 0 6px;letter-spacing:-.5px}
+  .buy-head .fabric-line{font-size:11.5px;margin:0 0 6px;line-height:1.45}
+  .buy-head .pdp-rating{margin:0 0 4px}
+  .buy-head .price-row{margin:2px 0 0}
+  .gal-main{aspect-ratio:auto;height:min(40vh,380px);width:100%;border-radius:12px}
+  .gal-main .gal-hint{display:none}
+  .buy-head .limited{display:none}
+  .buy-head,.buy-body{min-width:0;max-width:100%}
+  .buy-head .pdp-rating{gap:6px;flex-wrap:wrap}
+  .buy-head .pdp-rating-n{font-size:11px;letter-spacing:0}
+  .buy-head .sb-curhint{display:none}
+  .buy-head .sb-curpick{font-size:11px;padding:6px 24px 6px 9px;max-width:150px;min-height:0;height:auto}
+  .buy-body{display:flex;flex-direction:column}
+  .buy-body>.pdp-buy{order:-1}
+  .buy-body>.pdp-bundle-d{display:none}
+  .gal-main{height:min(34vh,300px)}
+}
+.pdp-bundle-m{display:none}
+@media(max-width:700px){.pdp-bundle-m{display:block;margin:0 0 10px}}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
@@ -748,12 +801,12 @@ ${RV.CSS}
         <span class="gal-hint">Click to zoom</span>
         <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
 ${galShots(p).map((s,i)=>`
-        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''}${s[4]?` data-tag="${esc(s[4])}"`:''} src="../..${s[0]}" alt="${esc(s[1]||'')}">`).join('')}
+        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''}${s[4]?` data-tag="${esc(s[4])}"`:''}${i===0?' fetchpriority="high"':' fetchpriority="low" decoding="async"'} src="../..${s[0]}" alt="${esc(s[1]||'')}">`).join('')}
         ${p.fitLabel ? `<span class="gal-fit" aria-hidden="true">${esc(p.fitLabel)}</span>` : ''}
       </div>
       <div class="gal-thumbs" id="thumbs">
 ${galShots(p).map((s,i)=>`
-        <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img${s[3]==='compare'?' class="fit-contain"':''} src="../..${s[0]}" alt=""></button>`).join('')}
+        <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img${s[3]==='compare'?' class="fit-contain"':''} loading="lazy" decoding="async" src="../..${s[0]}" alt=""></button>`).join('')}
       </div>
       ${/* Audit 13 Sep: 4 of 11 personas read this caption on a Regular page, saw "Oversized fit", and lost trust. The same fit-aware wording already existed on the answer-list copy below; it was missing on the one people actually see. */''}
       ${/* Faheem, 13 Sep: "Model wears XL" under the MODEL photos. On a single-cut garment
@@ -765,6 +818,7 @@ ${galShots(p).map((s,i)=>`
     </div>
 
     <div class="buy">
+      <div class="buy-head">
       <div class="buy-top">${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}<span class="limited">✦ Limited first run</span></div>
       <h1>${p.nameHtml}</h1>
       ${/* Faheem, 10 Sep: "we're not highlighting that this is 100% 230gsm heavyweight cotton. This info should be right below the title" */''}
@@ -772,8 +826,13 @@ ${galShots(p).map((s,i)=>`
       ${/* 15 Sep audit: this product's rating sat 6,600px below its price. A compact line
            here, ONLY when this product has reviews, with ITS count - never the sitewide
            pooled number - linking to its own reviews section. */''}
-      ${(() => { const d = RV.load(p.id); return d ? `<a class="pdp-rating" href="#reviews">${RV.stars(d.average)}<span class="pdp-rating-n">${d.average.toFixed(1)} &middot; ${d.count} review${d.count === 1 ? '' : 's'} &rarr;</span></a>` : ''; })()}
+      ${/* 23 Sep 2026: pooled per design, then store-wide, and always labelled as such (see reviews-render.js). */''}
+      ${RV.ratingLine(designHandles(p))}
+      ${RV.fitVerdict(designHandles(p))}
       <div class="price-row"><div class="price"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div><span data-sb-curslot></span></div>
+      </div>
+      <div class="buy-body">
+      ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-d"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits &mdash; applied automatically in your bag</p>` : ''}
       <div class="vat"><span class="sb-ship-uae"></span><span class="sb-ship-gcc">14-day returns &middot; duties, if any, are paid on arrival</span><span class="sb-ship-intl">14-day returns &middot; duties, if any, are paid on arrival</span></div>
       ${/* Faheem, 10 Sep: "move the size selection and add to cart right under the shirt title. Users should
            be able to see the option and the photos at the same time." The lede, spec chips, colourway and
@@ -795,7 +854,7 @@ ${galShots(p).map((s,i)=>`
       <div class="pdp-buy" id="pdpBuy" data-handle="${p.id}">
         <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
-          <span class="pdp-loading">Loading sizes&hellip;</span>
+          ${/* 23 Sep 2026: the four sizes paint with the page; live stock fills them in */''}${['S','M','L','XL'].map(z => `<button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">${z}</button>`).join('')}
         </div>
         ${/* the fit, explained where the decision happens (5 Sep 2026): a cold reader could not tell Regular from Oversized at the size picker */''}
         ${/* the polo is graded to the Regular tee chart, and that chart runs slim. This line
@@ -809,9 +868,11 @@ ${galShots(p).map((s,i)=>`
             ? `<p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut.</b> Take your usual letter.${p.siblingOf ? ` Want it closer to the body? <a href="/products/${p.siblingOf}-regular/">See this design in Regular &rarr;</a>` : ''}</p>`
             : `<p class="fit-warn"><b>Regular is a slim cut.</b> Most people take one size up from their usual letter.${p.siblingOf ? ` Want the relaxed feel? <a href="/products/${p.siblingOf}-oversized/">Take your usual letter in Oversized &rarr;</a>` : ''}</p>`}
         <p class="pdp-stock" id="pdpStock" hidden></p>
+        ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits</p>` : ''}
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
+        <button class="btn ghost pdp-now" id="pdpNow" type="button">Buy now</button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
-        <a class="btn ghost" href="#fit">Size &amp; fit</a>
+        ${RV.quotes(designHandles(p), 2)}
         ${/* 15 Sep audit: returns reassurance at the point of commitment. Every clause is
              policies.html verbatim - unworn, unwashed, tags on, exchanges subject to stock. */''}
         <p class="pdp-reassure">Need a different size? UAE returns and exchanges are free within 14 days of delivery &mdash; unworn, unwashed, tags on; exchanges subject to stock. <a href="/policies.html#returns">Full policy &rarr;</a></p>
@@ -919,7 +980,7 @@ ${galShots(p).map((s,i)=>`
         <p class="wl-ok">You&rsquo;re on the list. We&rsquo;ll email you before it drops. &#10022;</p>
       </div>
 `}
-
+      </div>
     </div>
   </section>
 </div>
@@ -1022,7 +1083,7 @@ ${faqList(p.faq)}
     </div>
   </section>
 
-${RV.productSection(p.id, p.name)}
+${RV.productSection(p.id, p.name, designHandles(p))}
   <section class="sec reveal" id="more">
     <span class="snum">09 — The collection</span>
     <h2>More from <em>the drop</em></h2>
@@ -1042,7 +1103,7 @@ ${related(p, all)}
 
 <div id="buybar">
   <div class="bb-inner">
-    <img class="bb-thumb" src="../..${p.imgMain}" alt="">
+    <img class="bb-thumb" loading="lazy" decoding="async" src="../..${p.imgMain}" alt="">
     <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> · Limited first run</div></div>
     ${LAUNCHED ? `<button class="btn" id="bbAdd" type="button">Add to cart</button>` : `<a class="btn" href="${SHOP_URL}#prod-${p.shopAnchor}">View in shop</a>`}
   </div>
@@ -1243,8 +1304,11 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   /* mirror the real button's state so it never promises what it cannot do */
   var add=document.getElementById('pdpAdd');
   if(add && window.MutationObserver){
-    var sync=function(){ bb.textContent = add.disabled ? 'Choose a size' : 'Add to cart'; };
+    /* 23 Sep 2026: phones hide the bar's price line, so the price rides in the button */
+    var pr=document.querySelector('.price .sb-price'),narrow=matchMedia('(max-width:620px)');
+    var sync=function(){ var t=add.disabled ? 'Choose a size' : 'Add to cart'; if(narrow.matches&&pr&&pr.textContent.trim()) t+=' \u00b7 '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
     new MutationObserver(sync).observe(add,{attributes:true,attributeFilter:['disabled']});
+    if(pr) new MutationObserver(sync).observe(pr,{childList:true,characterData:true,subtree:true});
     sync();
   }
 })();
@@ -1343,6 +1407,15 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   if(!('IntersectionObserver' in window)){return;}
   var pastHero=false,atFoot=false;
   function sync(){bar.classList.toggle('on',pastHero&&!atFoot);}
+  /* 23 Sep 2026: on phones the bar keeps a buy control in reach as soon as the
+     sizes and the Add button have scrolled out of view, instead of waiting for
+     the whole product section (6,000px of it) to pass. */
+  var ph=matchMedia('(max-width:700px)').matches,sz=document.getElementById('pdpSizes'),ad=document.getElementById('pdpAdd');
+  if(ph&&sz&&ad){
+    var vis={};
+    var io=new IntersectionObserver(function(en){en.forEach(function(e){vis[e.target.id]=e.isIntersecting;});pastHero=!vis.pdpSizes&&!vis.pdpAdd;sync();},{rootMargin:'-56px 0px -70px 0px'});
+    io.observe(sz);io.observe(ad);
+  } else
   new IntersectionObserver(function(en){pastHero=!en[0].isIntersecting;sync();},{rootMargin:'-120px 0px 0px 0px'}).observe(hero);
   if(foot)new IntersectionObserver(function(en){atFoot=en[0].isIntersecting;sync();}).observe(foot);
 })();
@@ -1546,15 +1619,25 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 
   /* A fetch that hangs never resolves or rejects, so the buy box sat on
      "Loading sizes…" indefinitely on a poor connection. */
+  /* 23 Sep 2026: S-XL are in the HTML so the picker is there on first paint.
+     A tap before live stock arrives is remembered and applied when it does. */
+  var pending=null, live=false;
+  sizesEl.querySelectorAll('.pdp-size-wait').forEach(function(b){
+    b.addEventListener('click',function(){ if(live) return;
+      sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
+      b.classList.add('sel'); b.setAttribute('aria-pressed','true'); pending=b.textContent;
+      setAdd('Checking stock\u2026', false); });
+  });
   var sizeTimer=setTimeout(function(){
-    if(sizesEl && /Loading sizes/.test(sizesEl.textContent||'')){
+    if(sizesEl && !live){ pending=null; setAdd('Select a size', false);
       sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a>.</span>';
     }
   },9000);
   sf('query($h:String!){product(handle:$h){title variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}',{h:handle})
   .then(function(d){
-    if(!d.product){ sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
+    if(!d.product){ live=true; pending=null; setAdd('Select a size', false); sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
     variants=d.product.variants.edges.map(function(e){return e.node;});
+    live=true; clearTimeout(sizeTimer);
     sizesEl.innerHTML='';
     variants.forEach(function(v){
       var b=document.createElement('button');
@@ -1568,7 +1651,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       b.addEventListener('click',function(){
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');
-        sel=v; addEl.disabled=false; setAdd('Add to cart', true); msg('');
+        sel=v; goCheckout=false; addEl.disabled=false; setAdd('Add to cart', true); msg('');
         /* Honest scarcity (Rastah benchmark): shown ONLY from live inventory,
            only at 3 or fewer, never invented. quantityAvailable can be null
            if the token cannot read inventory — then nothing is shown. */
@@ -1584,17 +1667,28 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       });
       sizesEl.appendChild(b);
     });
-    if(!variants.some(function(v){return v.availableForSale;})){ addEl.textContent='Sold out'; }
+    if(!variants.some(function(v){return v.availableForSale;})){ addEl.textContent='Sold out'; var nw=document.getElementById('pdpNow'); if(nw) nw.hidden=true; }
+    if(pending){ var want=pending; pending=null;
+      var hit=[].filter.call(sizesEl.querySelectorAll('.pdp-size'),function(x){return x.firstChild&&x.firstChild.nodeValue===want;})[0];
+      if(hit&&!hit.disabled) hit.click();
+      else { setAdd('Select a size', false); msg(want+' is sold out \u2014 please choose another size.'); } }
   })
-  .catch(function(){ sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
+  .catch(function(){ live=true; pending=null; setAdd('Select a size', false); sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
 
   var CFRAG='id checkoutUrl totalQuantity';
   function fitOk(){ try{ return sessionStorage.getItem('sb_fitok')==='1'; }catch(e){ return true; } }
   function setFitOk(){ try{ sessionStorage.setItem('sb_fitok','1'); }catch(e){} }
+  var goCheckout=false, nowClick=false;
   function doAdd(v){
-    addEl.disabled=true; addEl.textContent='Adding…'; msg('');
+    var go=goCheckout; goCheckout=false;
+    addEl.disabled=true; addEl.textContent= go ? 'Going to checkout…' : 'Adding…'; msg('');
     if(window.SahraCart){
-      window.SahraCart.add(v.id).then(function(cart){
+      window.SahraCart.add(v.id, 1, go ? {open:false} : undefined).then(function(cart){
+        /* Buy now (23 Sep 2026): same add, same fit check, then straight to
+           Shopify checkout, where Shop Pay / Google Pay sit at the top. */
+        if(go){ var st=window.SahraCart.state&&window.SahraCart.state(); var u=(st&&st.checkoutUrl)||(cart&&cart.checkoutUrl);
+          if(window.track) track('buy_now',{item_id:handle,size:v.title});
+          if(u){ location.href=u; return; } }
         addEl.disabled=false; setAdd('Add another', true);
         msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
         if(window.track) track('add_to_cart',{item_id:handle,size:v.title});
@@ -1611,7 +1705,19 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     addEl.disabled=false; setAdd('Add to cart', true);
     msg('Cart is unavailable right now. Please refresh, or message us on WhatsApp.','err');
   }
-  addEl.addEventListener('click',function(){
+  var nowEl=document.getElementById('pdpNow');
+  if(nowEl) nowEl.addEventListener('click',function(){
+    if(!sel){
+      msg('Choose a size first.','err');
+      var first=sizesEl.querySelector('.pdp-size:not([disabled])'); if(first) first.focus();
+      return;
+    }
+    goCheckout=true; nowClick=true; addEl.click(); nowClick=false;
+  });
+  addEl.addEventListener('click',function(e){
+    /* only the Buy now button makes an add a Buy now - never a tap on Add to cart,
+       and never the sticky bar, which clicks this button from script */
+    if(!nowClick) goCheckout=false;
     if(!sel) return;
     /* THE FIT CHECK (Faheem, 29 Aug): the Regular cut runs slim vs UAE
        expectations - an XL wears like many brands' M/L - and people were
@@ -1624,8 +1730,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       variants.forEach(function(v){ if(seen && !next && v.availableForSale) next=v; if(v===sel) seen=true; });
       msgEl.className='pdp-msg';
       msgEl.innerHTML='<span class="fitc"><span class="fitc-t"><strong>'+sel.title+'</strong> measures '+meas+' pit-to-pit \u2014 this cut runs slim.</span>'
-        +'<button type="button" class="fitc-btn" id="fitcYes">Add '+sel.title+' anyway</button>'
-        +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+'</button>':'')
+        +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+' (recommended)</button>':'')
+        +'<button type="button" class="fitc-btn" id="fitcYes">Keep '+sel.title+'</button>'
         +'</span>';
       document.getElementById('fitcYes').onclick=function(){ setFitOk(); msg(''); doAdd(sel); };
       var up=document.getElementById('fitcUp');
@@ -1692,3 +1798,4 @@ function buildProducts(opts){
 
 module.exports = buildProducts;
 module.exports.loadProducts = loadProducts;
+module.exports.galShots = galShots;

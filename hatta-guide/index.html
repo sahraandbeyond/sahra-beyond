@@ -609,14 +609,21 @@ body.dark-bg .rv-stars{color:#E9B978}
 #sbRvLB button:hover{background:rgba(255,255,255,.28)}
 #sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}
+.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#5C5148;margin:4px 0 2px}
+.rv-scope{font-size:14px;color:#4A4136;margin:-6px 0 14px}
+.pdp-quotes{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}
+.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#C0702E);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
+.pdp-quotes q{font-style:italic}
+.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
+
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=25a87e11">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=fc2b97e2">
-<script src="/assets/sahra-welcome.js?v=039e33a5" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=33e4a281">
-<script src="/assets/sahra-nav.js?v=5c48cb63" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=029f3bc8">
+<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
+<script src="/assets/sahra-nav.js?v=60dddeb7" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1011,6 +1018,43 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 /* footer social links were 134x16 - give them a real row to hit */
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
 
+/* ===== 23 Sep 2026 CRO review: phone product cards and category pages =====
+   On a 390px phone the card footer put the price, "Full details" and Quick add
+   on one line: the price wrapped to two lines (AED / 199) and Quick add was cut
+   off at the card edge. The footer now wraps - price and details on one row,
+   Quick add full width beneath. The two chips every tee shares (230gsm cotton,
+   Unisex S-XL) drop on phones; fit and decoration stay, as they differ. */
+@media(max-width:560px){
+  .pcard-foot{flex-wrap:wrap;row-gap:10px}
+  .pcard-p,body.buy-page .pcard-p{white-space:nowrap;font-size:17px!important}
+  .pcard-cta{white-space:nowrap;border-bottom:0!important;text-decoration:underline;text-underline-offset:3px}
+  .pcard-foot .qa{flex:1 0 100%}
+  .pcard-spec .pc-same{display:none}
+  .pcard-spec span{font-size:11px!important;padding:3px 7px}
+  .pcard-t,body.buy-page .pcard-t{font-size:18px}
+  body.buy-page .loc-hero{padding:22px 16px 64px}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero .lede{font-size:16px!important;margin-bottom:6px}
+  .catnav{grid-template-columns:1fr 1fr;gap:8px}
+  .catnav a{padding:10px 12px}
+  body.buy-page .catnav a b{font-size:17px}
+  body.buy-page .catnav a span{font-size:13px!important;line-height:1.4}
+}
+.pcard-bundle{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;color:#7E4114;font-weight:700}
+
+/* mini product strip at the top of location and guide pages (23 Sep 2026) */
+.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(43,37,32,.14);border-radius:14px;box-shadow:0 6px 20px rgba(43,37,32,.07);color:#2A2016}
+.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#EFEAE0;display:block}
+.minitee-img img{width:100%;height:100%;object-fit:cover;display:block}
+.minitee-txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+.minitee-eye{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;font-weight:700}
+.minitee-txt b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:20px;font-weight:600;line-height:1.2}
+.minitee-sub{font-size:14px;color:#4A4136}
+.minitee-sub .sb-price{font-size:14px!important;font-weight:700;color:#2A2016!important;letter-spacing:.01em!important}
+.minitee-go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#2A2016;color:#FAF6EF!important;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.minitee-go:hover{background:#7E4114}
+@media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
+
 </style>
 </head>
 <body>
@@ -1025,13 +1069,14 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     </div>
   </section>
   <main>
+    <aside class="minitee"><a class="minitee-img" href="/products/hajar-mountains-regular/" tabindex="-1" aria-hidden="true"><img src="/shirts/hajar-regular-back.webp" alt="" width="72" height="90" loading="lazy" decoding="async"></a><div class="minitee-txt"><span class="minitee-eye">The tee from this place</span><b>Hajar Mountains — Regular</b><span class="minitee-sub"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span> &middot; limited first run</span></div><a class="minitee-go" href="/products/hajar-mountains-regular/">See the tee &rarr;</a></aside>
     <div class="content"><p>Tucked into the Hajar mountains as a mountain exclave of Dubai, Hatta is the emirate's favourite high-altitude escape — cooler air, turquoise dam water and a whole hub of outdoor activities, all around a 90-minute drive from the city. It's the easiest way to swap skyscrapers for switchback roads and mountain views without leaving the emirate.</p><p>This guide covers what to do in Hatta, how to get there, the best time to go and what to bring, so you can plan a great day trip or weekend.</p></div>
     <h2>Our top picks</h2><div class="cards"><a class="card" href="/locations/hatta/"><span class="card-emoji">🏕</span><span class="card-body"><strong>Hatta Mountains</strong><em>Dubai · Camping</em><span>Dubai's hidden mountain retreat. Kayak the turquoise dam, mountain bike through trails, or camp under stars. A complete outdoor escape.</span></span></a></div>
     <section class="guide-sec"><h2>Things to do in Hatta</h2><div class="content"><p>Hatta packs a lot in. The headline is the Hatta Dam, where you can hire kayaks and pedal boats on the famously blue water. Nearby, the activity hub offers mountain biking trails, a zipline, archery and more. Add scenic hiking and mountain-bike trails of varying difficulty, the heritage village, and some of the best stargazing and drone scenery in the emirate, and there's easily a full day — or a weekend — here.</p></div></section><section class="guide-sec"><h2>The Hatta Dam and kayaking</h2><div class="content"><p>The dam is the postcard shot: vivid blue-green water hemmed in by rocky peaks. Kayaks and pedal boats are available to rent on site, and a slow paddle into the quieter arms of the reservoir is the best way to take it in. Go early in the day for calm water, cooler temperatures and smaller crowds, especially on weekends.</p></div></section><section class="guide-sec"><h2>Getting there and the best time to go</h2><div class="content"><p>Hatta sits about 90 minutes to two hours from central Dubai by car along a good, scenic road. The drive passes briefly through territory near the Oman border but the main route stays within the UAE — carry your ID just in case. The cooler months from October to April are by far the best time; summer is hot, though the altitude keeps it a touch cooler than the city.</p></div></section><section class="guide-sec"><h2>What to bring</h2><div class="content"><p>Comfortable shoes for walking and trails, sun protection, plenty of water, a hat and a light layer for breezy viewpoints. Bring cash or card for activity rentals, a power bank, and a camera or drone if you have one — the scenery rewards it. If you plan to hike, treat it like any mountain outing: more water than you think, snacks and a charged phone with offline maps.</p></div></section>
     <section class="faq"><h2>Frequently asked questions</h2><details><summary>Is Hatta worth visiting?</summary><p>Yes — Hatta offers mountain scenery, the turquoise Hatta Dam, kayaking, mountain biking and hiking, all within about a 90-minute drive of Dubai. It is one of the best outdoor day trips in the emirate.</p></details><details><summary>Can you kayak at Hatta Dam?</summary><p>Yes. Kayaks and pedal boats are available to rent at the Hatta Dam. Go early in the day for calmer water and fewer crowds, especially on weekends.</p></details><details><summary>How far is Hatta from Dubai?</summary><p>Hatta is roughly a 90-minute to two-hour drive from central Dubai along a scenic mountain road. Carry your ID, as the route passes close to the Oman border.</p></details><details><summary>When is the best time to visit Hatta?</summary><p>October to April, when the weather is cool and comfortable for outdoor activities. The mountain altitude keeps it slightly cooler than the city year-round.</p></details></section>
     <section class="teecta" style="--tee:#C6BFD3">
     <div class="teecta-inner">
-      <a class="teecta-img" href="/products/hajar-mountains-regular/" aria-label="Hajar Mountains — Regular" data-cycle><img class="on" src="/shirts/hajar-regular-back.jpg" alt="Hajar Mountains t-shirt, a mountain graphic tee in the regular fit — the red rock of the Hajar printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-regular-front.jpg" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-dune-back.jpg" alt="The Hajar Mountains tee worn in the dunes — the printed ridgeline across the back with the coordinates beneath it" loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-dune-front.jpg" alt="The Hajar Mountains tee, front, worn in the dunes — the chest mark on the sand-coloured cotton" loading="lazy" width="1080" height="1350"></a>
+      <a class="teecta-img" href="/products/hajar-mountains-regular/" aria-label="Hajar Mountains — Regular" data-cycle><img class="on" src="/shirts/hajar-regular-back.webp" alt="Hajar Mountains t-shirt, a mountain graphic tee in the regular fit — the red rock of the Hajar printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-regular-front.webp" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-dune-back.webp" alt="The Hajar Mountains tee worn in the dunes — the printed ridgeline across the back with the coordinates beneath it" loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-dune-front.webp" alt="The Hajar Mountains tee, front, worn in the dunes — the chest mark on the sand-coloured cotton" loading="lazy" width="1080" height="1350"></a>
       <div class="teecta-txt">
         <span class="teecta-eyebrow">The tee inspired by this place</span>
         <h2>Hajar Mountains — Regular</h2>
@@ -1129,7 +1174,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=b3796801" defer></script>
+<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
 <script src="/assets/sahra-market.js?v=149814cb" defer></script>
 </body>
 </html>

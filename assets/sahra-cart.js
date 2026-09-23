@@ -48,8 +48,10 @@
 
   /* quantity is part of this fragment and MUST stay rendered - see bug 2 */
   var CFRAG = 'id checkoutUrl totalQuantity buyerIdentity{countryCode} cost{subtotalAmount{amount currencyCode}}' +
-    'lines(first:100){edges{node{id quantity merchandise{... on ProductVariant{id title availableForSale ' +
-    'price{amount currencyCode} product{title handle featuredImage{url}}}}}}}';
+    'lines(first:100){edges{node{id quantity cost{totalAmount{amount currencyCode} subtotalAmount{amount currencyCode}} ' +
+    'discountAllocations{discountedAmount{amount currencyCode} ... on CartAutomaticDiscountAllocation{title}} ' +
+    'merchandise{... on ProductVariant{id title availableForSale ' +
+    'price{amount currencyCode} product{title handle productType featuredImage{url}}}}}}}';
 
   function sf(q, vars) {
     return fetch('https://' + S.domain + '/api/' + S.v + '/graphql.json', {
@@ -75,6 +77,30 @@
      KWD, BHD and OMR genuinely have three decimals — two would misprice
      every line by up to 9 fils, so the map is load-bearing, not pedantry. */
   var DECIMALS = { BHD: 3, KWD: 3, OMR: 3 };
+  /* 23 Sep 2026 — "Any 2 tees for AED 359" is a Shopify AUTOMATIC discount
+     (AED 19.50 off each tee once the bag holds 2+). The drawer used to print the
+     list price per line, so a customer saw AED 199 + AED 199 above a subtotal of
+     AED 359 and could not tell why. The line now shows the discounted unit
+     price with the list price struck through, read straight from Shopify's own
+     line cost - never computed here, so it can't drift from checkout. */
+  function lineSaving(l) {
+    try {
+      var t = parseFloat(l.cost.totalAmount.amount), st = parseFloat(l.cost.subtotalAmount.amount);
+      return st - t > 0.004 ? st - t : 0;
+    } catch (e) { return 0; }
+  }
+  function linePrice(l) {
+    var m = l.merchandise, off = lineSaving(l);
+    if (!off) return '<span>' + money(m.price.amount, m.price.currencyCode) + '</span>';
+    var unit = parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1);
+    return '<span class="sb-lp"><s>' + money(m.price.amount, m.price.currencyCode) + '</s> ' +
+      '<b>' + money(unit, l.cost.totalAmount.currencyCode) + '</b></span>';
+  }
+  function isTee(l) {
+    var m = l && l.merchandise;
+    return !!(m && m.product && /t-?shirt/i.test(m.product.productType || '')) ||
+      !!(m && m.product && /^(hajar|empty-quarter|al-quaa)/.test(m.product.handle || ''));
+  }
   function money(a, c) {
     var n = parseFloat(a || 0);
     var cur = c || 'AED';
@@ -258,8 +284,10 @@
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
-          '<p class="sb-note">Free next-day UAE delivery — order by 2 pm, no minimum. Our fits run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
+          '<p class="sb-note">Free next-day UAE delivery — order by 2 pm, no minimum. Regular tees and the polo run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
           '<a class="sb-go" id="sbGo" href="#">Checkout</a>' +
+          /* 23 Sep 2026: the store's gateway lists Shop Pay, Apple Pay and Google Pay (Admin API paymentSettings) */
+          '<p class="sb-pay">Express checkout with Shop Pay, Apple Pay or Google Pay</p>' +
         '</div>' +
       '</aside>';
     while (wrap.firstChild) document.body.appendChild(wrap.firstChild);
@@ -405,7 +433,7 @@
         '<div class="sb-lt">' +
           '<a href="/products/' + esc(m.product.handle) + '/">' + esc(m.product.title) + '</a>' +
           '<span>Size ' + esc(m.title) + '</span>' +
-          '<span>' + money(m.price.amount, m.price.currencyCode) + '</span>' +
+          linePrice(l) +
           /* Bug 2 + 3: quantity is visible AND adjustable */
           '<span class="sb-qty">' +
             '<button type="button" class="sb-q" data-act="dec" data-line="' + esc(l.id) + '" data-qty="' + q + '" aria-label="Decrease quantity">&minus;</button>' +
@@ -420,6 +448,32 @@
     document.getElementById('sbSub').textContent =
       money(CART.cost.subtotalAmount.amount, CART.cost.subtotalAmount.currencyCode);
     document.getElementById('sbGo').href = CART.checkoutUrl;
+    (function () {
+      var el = document.getElementById('sbBundle');
+      if (!el) {
+        el = document.createElement('p');
+        el.id = 'sbBundle'; el.className = 'sb-bundle';
+        var sub = document.querySelector('#sbFoot .sb-sub');
+        if (sub && sub.parentNode) sub.parentNode.insertBefore(el, sub);
+      }
+      /* only the bundle's own allocations count as the bundle saving - any other
+         automatic discount is not credited to it (review, 23 Sep) */
+      var saved = 0, tees = 0, cur = CART.cost.subtotalAmount.currencyCode;
+      var deal = cur === 'AED' ? 'any 2 tees for AED 359' : 'the 2-tee bundle price';
+      realLines.forEach(function (l) {
+        (l.discountAllocations || []).forEach(function (a) {
+          if (/2 tees|359/i.test(a.title || '')) saved += parseFloat((a.discountedAmount || {}).amount) || 0;
+        });
+        if (isTee(l)) tees += l.quantity;
+      });
+      if (saved > 0.004) {
+        el.hidden = false;
+        el.innerHTML = '\u2713 Bundle applied: ' + deal + ' \u00b7 you save ' + esc(money(saved, cur));
+      } else if (tees === 1) {
+        el.hidden = false;
+        el.innerHTML = 'Add a second tee \u2014 <b>' + deal + '</b>, applied automatically. <a href="/t-shirts/">Shop tees &rarr;</a>';
+      } else { el.hidden = true; el.innerHTML = ''; }
+    })();
 
     /* Meta InitiateCheckout — fires on the click through to Shopify checkout.
        Purchase itself is tracked on the Shopify side by the Meta sales channel,
@@ -624,7 +678,7 @@
             return r.cart;
           });
       }).then(function (c) {
-        CART = c; setCid(c.id); pending = {}; draw(); open();
+        CART = c; setCid(c.id); pending = {}; draw(); if (!(opts && opts.open === false)) open();
         return c;
       }).catch(function (e) {
         /* Shopify's own wording is more useful than ours when it is telling
@@ -632,7 +686,7 @@
         lastError = e && e.userError
           ? e.message
           : 'We could not add that to your cart. Please try again, or message us on WhatsApp.';
-        draw(); open();
+        draw(); if (!(opts && opts.open === false)) open();
         throw e;
       });
     });

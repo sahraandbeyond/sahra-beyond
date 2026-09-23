@@ -609,14 +609,21 @@ body.dark-bg .rv-stars{color:#E9B978}
 #sbRvLB button:hover{background:rgba(255,255,255,.28)}
 #sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}
+.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#5C5148;margin:4px 0 2px}
+.rv-scope{font-size:14px;color:#4A4136;margin:-6px 0 14px}
+.pdp-quotes{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}
+.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#C0702E);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
+.pdp-quotes q{font-style:italic}
+.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
+
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=25a87e11">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=fc2b97e2">
-<script src="/assets/sahra-welcome.js?v=039e33a5" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=33e4a281">
-<script src="/assets/sahra-nav.js?v=5c48cb63" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=029f3bc8">
+<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
+<script src="/assets/sahra-nav.js?v=60dddeb7" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1011,6 +1018,43 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 /* footer social links were 134x16 - give them a real row to hit */
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
 
+/* ===== 23 Sep 2026 CRO review: phone product cards and category pages =====
+   On a 390px phone the card footer put the price, "Full details" and Quick add
+   on one line: the price wrapped to two lines (AED / 199) and Quick add was cut
+   off at the card edge. The footer now wraps - price and details on one row,
+   Quick add full width beneath. The two chips every tee shares (230gsm cotton,
+   Unisex S-XL) drop on phones; fit and decoration stay, as they differ. */
+@media(max-width:560px){
+  .pcard-foot{flex-wrap:wrap;row-gap:10px}
+  .pcard-p,body.buy-page .pcard-p{white-space:nowrap;font-size:17px!important}
+  .pcard-cta{white-space:nowrap;border-bottom:0!important;text-decoration:underline;text-underline-offset:3px}
+  .pcard-foot .qa{flex:1 0 100%}
+  .pcard-spec .pc-same{display:none}
+  .pcard-spec span{font-size:11px!important;padding:3px 7px}
+  .pcard-t,body.buy-page .pcard-t{font-size:18px}
+  body.buy-page .loc-hero{padding:22px 16px 64px}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero .lede{font-size:16px!important;margin-bottom:6px}
+  .catnav{grid-template-columns:1fr 1fr;gap:8px}
+  .catnav a{padding:10px 12px}
+  body.buy-page .catnav a b{font-size:17px}
+  body.buy-page .catnav a span{font-size:13px!important;line-height:1.4}
+}
+.pcard-bundle{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;color:#7E4114;font-weight:700}
+
+/* mini product strip at the top of location and guide pages (23 Sep 2026) */
+.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(43,37,32,.14);border-radius:14px;box-shadow:0 6px 20px rgba(43,37,32,.07);color:#2A2016}
+.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#EFEAE0;display:block}
+.minitee-img img{width:100%;height:100%;object-fit:cover;display:block}
+.minitee-txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+.minitee-eye{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;font-weight:700}
+.minitee-txt b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:20px;font-weight:600;line-height:1.2}
+.minitee-sub{font-size:14px;color:#4A4136}
+.minitee-sub .sb-price{font-size:14px!important;font-weight:700;color:#2A2016!important;letter-spacing:.01em!important}
+.minitee-go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#2A2016;color:#FAF6EF!important;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.minitee-go:hover{background:#7E4114}
+@media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
+
 </style>
 </head>
 <body class="buy-page">
@@ -1025,12 +1069,11 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     </div>
   </section>
   <main>
-    <div class="content"><p>Two of our designs come from the desert, and they come from opposite ends of the same day.</p><p>The Empty Quarter tee is the evening: a tonal sun setting over the dune ridges of Liwa, on the northern edge of the Rub' al Khali. It is embroidered rather than printed — thread laid into the cloth, sand on sand.</p><p>The Al Quaa Galaxy tee is the night that follows: the Milky Way as it rises over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back with a small embroidered mark on the chest.</p><p>Both come in a slim Regular and a true drop-shoulder Oversized.</p></div>
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">Desert T-Shirts</span></div><div class="pcards">
     <article class="pcard" data-handle="al-quaa-galaxy-regular">
       <span class="pcard-img" style="background:#181109">
         <a class="pcard-imglink" href="/products/al-quaa-galaxy-regular/" tabindex="-1" data-cycle>
-          <img class="on" src="/shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-regular-front.jpg" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-dune-back.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the printed Milky Way running across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print.jpg" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print-2.jpg" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-front.jpg" alt="The Al Quaa Galaxy tee, front, worn in the dunes — the embroidered sun-and-dune mark on the chest" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-chest.jpg" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-mark.jpg" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" loading="lazy" width="1080" height="1350">
+          <img class="on" src="/shirts/alquaa-regular-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-regular-front.webp" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-dune-back.webp" alt="The Al Quaa Galaxy tee worn in the dunes — the printed Milky Way running across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print.webp" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print-2.webp" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-front.webp" alt="The Al Quaa Galaxy tee, front, worn in the dunes — the embroidered sun-and-dune mark on the chest" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-chest.webp" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-mark.webp" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" loading="lazy" width="1080" height="1350">
         </a>
         <button type="button" class="pcard-zoom" data-zoom="/shirts/alquaa-regular-back.jpg" aria-label="Zoom Al Quaa Galaxy — Regular">&#9906;</button>
       </span>
@@ -1038,15 +1081,16 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <a class="pcard-t" href="/products/al-quaa-galaxy-regular/">Al Quaa Galaxy — Regular</a>
         <span class="pcard-rv"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pcard-rv-n">5.0 · 2 reviews</span></span>
         <span class="pcard-place">Inspired by Al Quaa</span>
-        <span class="pcard-spec"><span>230gsm cotton</span><span>Regular fit</span><span>DTG + embroidery</span><span>Unisex S&ndash;XL</span></span>
+        <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Regular fit</span><span>DTG + embroidery</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#282B34"></span>Salute</span>
+        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/al-quaa-galaxy-regular/">Full details &rarr;</a></span>
       </span>
     </article>
     <article class="pcard" data-handle="al-quaa-galaxy-oversized">
       <span class="pcard-img" style="background:#181109">
         <a class="pcard-imglink" href="/products/al-quaa-galaxy-oversized/" tabindex="-1" data-cycle>
-          <img class="on" src="/shirts/alquaa-oversized-back.jpg" alt="Al Quaa Galaxy oversized t-shirt, a Milky Way desert tee — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-oversized-front.jpg" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-lake-back-close.jpg" alt="The Al Quaa Galaxy tee from behind at golden hour — the Milky Way print across the back, close. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-back-her.jpg" alt="The Al Quaa Galaxy tee from behind by the lake — the Milky Way print across the back. Female model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-front.jpg" alt="The Al Quaa Galaxy tee worn front-on against the evening sky — the gold embroidered mark on the chest. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-front-her.jpg" alt="The Al Quaa Galaxy tee, front — the gold embroidered sun-over-dunes mark and صحراء on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-back.jpg" alt="The Al Quaa Galaxy tee from behind as the sun sets over the lake — the Milky Way print across the back. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-model-back.jpg" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy" width="1076" height="1600"><img src="/shirts/alquaa-female-1.jpg" alt="The Al Quaa Galaxy tee worn in the Hajar mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1453" height="1600"><img src="/shirts/alquaa-model-front.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy" width="1067" height="1600"><img src="/shirts/alquaa-female-2.jpg" alt="The Al Quaa Galaxy tee from behind, arms out against the mountains — the Milky Way print across the back. Female model wears M in the Oversized fit." loading="lazy" width="931" height="1280"><img src="/shirts/alquaa-model-dusk.jpg" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy" width="1227" height="1600"><img src="/shirts/alquaa-female-3.jpg" alt="The back of the Al Quaa Galaxy tee in the mountains at dusk, the Milky Way print catching the last light. Female model wears M in the Oversized fit." loading="lazy" width="1498" height="1600">
+          <img class="on" src="/shirts/alquaa-oversized-back.webp" alt="Al Quaa Galaxy oversized t-shirt, a Milky Way desert tee — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-oversized-front.webp" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-lake-back-close.webp" alt="The Al Quaa Galaxy tee from behind at golden hour — the Milky Way print across the back, close. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-back-her.webp" alt="The Al Quaa Galaxy tee from behind by the lake — the Milky Way print across the back. Female model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-front.webp" alt="The Al Quaa Galaxy tee worn front-on against the evening sky — the gold embroidered mark on the chest. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-front-her.webp" alt="The Al Quaa Galaxy tee, front — the gold embroidered sun-over-dunes mark and صحراء on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-back.webp" alt="The Al Quaa Galaxy tee from behind as the sun sets over the lake — the Milky Way print across the back. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-model-back.webp" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy" width="1076" height="1600"><img src="/shirts/alquaa-female-1.webp" alt="The Al Quaa Galaxy tee worn in the Hajar mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1453" height="1600"><img src="/shirts/alquaa-model-front.webp" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy" width="1067" height="1600"><img src="/shirts/alquaa-female-2.webp" alt="The Al Quaa Galaxy tee from behind, arms out against the mountains — the Milky Way print across the back. Female model wears M in the Oversized fit." loading="lazy" width="931" height="1280"><img src="/shirts/alquaa-model-dusk.webp" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy" width="1227" height="1600"><img src="/shirts/alquaa-female-3.webp" alt="The back of the Al Quaa Galaxy tee in the mountains at dusk, the Milky Way print catching the last light. Female model wears M in the Oversized fit." loading="lazy" width="1498" height="1600">
         </a>
         <button type="button" class="pcard-zoom" data-zoom="/shirts/alquaa-oversized-back.jpg" aria-label="Zoom Al Quaa Galaxy — Oversized">&#9906;</button>
       </span>
@@ -1054,15 +1098,16 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <a class="pcard-t" href="/products/al-quaa-galaxy-oversized/">Al Quaa Galaxy — Oversized</a>
         <span class="pcard-rv"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pcard-rv-n">5.0 · 5 reviews</span></span>
         <span class="pcard-place">Inspired by Al Quaa</span>
-        <span class="pcard-spec"><span>230gsm cotton</span><span>Oversized fit</span><span>DTG + embroidery</span><span>Unisex S&ndash;XL</span></span>
+        <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Oversized fit</span><span>DTG + embroidery</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#282B34"></span>Salute</span>
+        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/al-quaa-galaxy-oversized/">Full details &rarr;</a></span>
       </span>
     </article>
     <article class="pcard" data-handle="empty-quarter-regular">
       <span class="pcard-img" style="background:#E7D6B8">
         <a class="pcard-imglink" href="/products/empty-quarter-regular/" tabindex="-1" data-cycle>
-          <img class="on" src="/shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-regular-back.jpg" alt="Empty Quarter — Regular, regular fit, back view" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-dune-front.jpg" alt="The Empty Quarter tee worn in the dunes at sunset — the tonal embroidered dunes, sun and صحراء on the chest" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-chest.jpg" alt="The Empty Quarter tee, chest close in the dunes — the tonal embroidery catching the low sun" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-detail.jpg" alt="The Empty Quarter tee, the embroidered chest at an angle — thread on thread, sand on sand" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-back.jpg" alt="The Empty Quarter tee from behind in the dunes — plain across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-neck.jpg" alt="The Empty Quarter tee, back neck close — the printed collar label below the collar seam" loading="lazy" width="1080" height="1350">
+          <img class="on" src="/shirts/emptyquarter-regular-front.webp" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-regular-back.webp" alt="Empty Quarter — Regular, regular fit, back view" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-dune-front.webp" alt="The Empty Quarter tee worn in the dunes at sunset — the tonal embroidered dunes, sun and صحراء on the chest" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-chest.webp" alt="The Empty Quarter tee, chest close in the dunes — the tonal embroidery catching the low sun" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-detail.webp" alt="The Empty Quarter tee, the embroidered chest at an angle — thread on thread, sand on sand" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-back.webp" alt="The Empty Quarter tee from behind in the dunes — plain across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-neck.webp" alt="The Empty Quarter tee, back neck close — the printed collar label below the collar seam" loading="lazy" width="1080" height="1350">
         </a>
         <button type="button" class="pcard-zoom" data-zoom="/shirts/emptyquarter-regular-front.jpg" aria-label="Zoom Empty Quarter — Regular">&#9906;</button>
       </span>
@@ -1070,15 +1115,16 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <a class="pcard-t" href="/products/empty-quarter-regular/">Empty Quarter — Regular</a>
         <span class="pcard-rv"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pcard-rv-n">5.0 · 2 reviews</span></span>
         <span class="pcard-place">Inspired by Liwa</span>
-        <span class="pcard-spec"><span>230gsm cotton</span><span>Regular fit</span><span>Embroidered</span><span>Unisex S&ndash;XL</span></span>
+        <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Regular fit</span><span>Embroidered</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#D5BA98"></span>Beige</span>
+        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/empty-quarter-regular/">Full details &rarr;</a></span>
       </span>
     </article>
     <article class="pcard" data-handle="empty-quarter-oversized">
       <span class="pcard-img" style="background:#E7D6B8">
         <a class="pcard-imglink" href="/products/empty-quarter-oversized/" tabindex="-1" data-cycle>
-          <img class="on" src="/shirts/emptyquarter-oversized-front.jpg" alt="Empty Quarter oversized t-shirt, an embroidered desert tee — a tonal sun over the dunes on the chest" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-oversized-back.jpg" alt="Empty Quarter — Oversized, oversized fit, back view" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-lake-front.jpg" alt="The Empty Quarter tee, front — the tonal embroidered dunes, sun and صحراء on the chest, close. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-lake-side.jpg" alt="The Empty Quarter tee at golden hour, three-quarter — the tonal embroidery catching the light. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-model-front.jpg" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy" width="1075" height="1600"><img src="/shirts/emptyquarter-female-1.jpg" alt="The Empty Quarter tee worn in the mountains, in profile — the tonal embroidered sun and dunes on the chest. Female model wears M in the Oversized fit." loading="lazy" width="656" height="1091"><img src="/shirts/emptyquarter-model-stand.jpg" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy" width="1067" height="1600"><img src="/shirts/emptyquarter-female-2.jpg" alt="The back of the Empty Quarter tee in the mountains — plain, with the back-neck embroidery. Female model wears M in the Oversized fit." loading="lazy" width="1091" height="1280"><img src="/shirts/emptyquarter-model-sunset.jpg" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy" width="1234" height="1275"><img src="/shirts/emptyquarter-female-3.jpg" alt="The Empty Quarter tee worn on a mountain ridge — the tonal embroidered sun over the dunes across the chest. Female model wears M in the Oversized fit." loading="lazy" width="915" height="1280"><img src="/shirts/emptyquarter-female-4.jpg" alt="The Empty Quarter tee worn in the mountains, arms out — the tonal embroidery across the chest. Female model wears M in the Oversized fit." loading="lazy" width="1035" height="1280"><img src="/shirts/emptyquarter-female-5.jpg" alt="The Empty Quarter tee worn seated on the rocks in the mountains. Female model wears M in the Oversized fit." loading="lazy" width="1131" height="1280"><img src="/shirts/emptyquarter-female-6.jpg" alt="The Empty Quarter tee in profile as the light drops over the mountains. Female model wears M in the Oversized fit." loading="lazy" width="656" height="1091">
+          <img class="on" src="/shirts/emptyquarter-oversized-front.webp" alt="Empty Quarter oversized t-shirt, an embroidered desert tee — a tonal sun over the dunes on the chest" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-oversized-back.webp" alt="Empty Quarter — Oversized, oversized fit, back view" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-lake-front.webp" alt="The Empty Quarter tee, front — the tonal embroidered dunes, sun and صحراء on the chest, close. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-lake-side.webp" alt="The Empty Quarter tee at golden hour, three-quarter — the tonal embroidery catching the light. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-model-front.webp" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy" width="1075" height="1600"><img src="/shirts/emptyquarter-female-1.webp" alt="The Empty Quarter tee worn in the mountains, in profile — the tonal embroidered sun and dunes on the chest. Female model wears M in the Oversized fit." loading="lazy" width="656" height="1091"><img src="/shirts/emptyquarter-model-stand.webp" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy" width="1067" height="1600"><img src="/shirts/emptyquarter-female-2.webp" alt="The back of the Empty Quarter tee in the mountains — plain, with the back-neck embroidery. Female model wears M in the Oversized fit." loading="lazy" width="1091" height="1280"><img src="/shirts/emptyquarter-model-sunset.webp" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy" width="1234" height="1275"><img src="/shirts/emptyquarter-female-3.webp" alt="The Empty Quarter tee worn on a mountain ridge — the tonal embroidered sun over the dunes across the chest. Female model wears M in the Oversized fit." loading="lazy" width="915" height="1280"><img src="/shirts/emptyquarter-female-4.webp" alt="The Empty Quarter tee worn in the mountains, arms out — the tonal embroidery across the chest. Female model wears M in the Oversized fit." loading="lazy" width="1035" height="1280"><img src="/shirts/emptyquarter-female-5.webp" alt="The Empty Quarter tee worn seated on the rocks in the mountains. Female model wears M in the Oversized fit." loading="lazy" width="1131" height="1280"><img src="/shirts/emptyquarter-female-6.webp" alt="The Empty Quarter tee in profile as the light drops over the mountains. Female model wears M in the Oversized fit." loading="lazy" width="656" height="1091">
         </a>
         <button type="button" class="pcard-zoom" data-zoom="/shirts/emptyquarter-oversized-front.jpg" aria-label="Zoom Empty Quarter — Oversized">&#9906;</button>
       </span>
@@ -1086,12 +1132,14 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <a class="pcard-t" href="/products/empty-quarter-oversized/">Empty Quarter — Oversized</a>
         
         <span class="pcard-place">Inspired by Liwa</span>
-        <span class="pcard-spec"><span>230gsm cotton</span><span>Oversized fit</span><span>Embroidered</span><span>Unisex S&ndash;XL</span></span>
+        <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Oversized fit</span><span>Embroidered</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#D5BA98"></span>Beige</span>
+        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/empty-quarter-oversized/">Full details &rarr;</a></span>
       </span>
     </article></div>
       <a class="btn shoplink" href="/shop/">Shop every t-shirt &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+    <div class="content"><p>Two of our designs come from the desert, and they come from opposite ends of the same day.</p><p>The Empty Quarter tee is the evening: a tonal sun setting over the dune ridges of Liwa, on the northern edge of the Rub' al Khali. It is embroidered rather than printed — thread laid into the cloth, sand on sand.</p><p>The Al Quaa Galaxy tee is the night that follows: the Milky Way as it rises over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back with a small embroidered mark on the chest.</p><p>Both come in a slim Regular and a true drop-shoulder Oversized.</p></div>
     
   <section class="reviews rv-band" aria-labelledby="rvb-h">
     <div class="wrap">
@@ -1305,7 +1353,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=b3796801" defer></script>
+<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
 <script src="/assets/sahra-market.js?v=149814cb" defer></script>
 </body>
 </html>

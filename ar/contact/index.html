@@ -610,9 +610,16 @@ body.dark-bg .rv-stars{color:#E9B978}
 #sbRvLB button:hover{background:rgba(255,255,255,.28)}
 #sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}
+.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#5C5148;margin:4px 0 2px}
+.rv-scope{font-size:14px;color:#4A4136;margin:-6px 0 14px}
+.pdp-quotes{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}
+.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#C0702E);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
+.pdp-quotes q{font-style:italic}
+.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
+
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=25a87e11">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
 <style data-rtl>
 /* ---------------------------------------------------------------- Arabic
    Paired to the Latin system rather than bolted on. Cormorant Garamond is a
@@ -720,13 +727,71 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 .ar-emirate{font-size:13px;color:#7E4114;margin:0 0 8px}
 .ar-edition{background:rgba(242,201,140,.10);border-radius:14px;padding:30px 24px;border-bottom:0}
 @media(max-width:700px){.ar-main{padding:104px 18px 56px}}
+/* ---- Arabic product pages + shop (23 Sep 2026) ---- */
+.ar-main.arp{max-width:1120px;padding-top:92px}
+.arp-top>*{min-width:0}
+.arp-price .sb-price{font-size:26px!important;font-weight:700!important;letter-spacing:.01em!important;color:#2A2016!important}
+.arp-tile-p .sb-price{font-size:16px!important;font-weight:700!important;letter-spacing:.01em!important;color:#2A2016!important}
+.arp-crumb{font-size:13.5px;color:#6B5B48;margin:0 0 16px}
+.arp-crumb a{color:#7E4114}
+.arp-top{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:start}
+.arp-main{position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#EFE7D8}
+.arp-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
+.arp-main img.on{opacity:1}
+.arp-thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.arp-thumbs button{flex:0 0 64px;height:80px;padding:0;border:1px solid rgba(42,32,22,.25);border-radius:8px;overflow:hidden;background:none;cursor:pointer;opacity:.75}
+.arp-thumbs button.on{opacity:1;border-color:#7E4114}
+.arp-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.arp-model{font-size:14px;color:#4A3E31;margin:8px 0 0}
+.arp-buy{background:#FCF9F2;border:1px solid rgba(42,32,22,.1);border-radius:14px;padding:24px 24px 20px;box-shadow:0 14px 40px rgba(20,14,8,.08)}
+.arp-buy h1{font-size:clamp(30px,4.4vw,44px);margin:0 0 8px}
+.arp-fabric{font-size:14.5px;color:#4A3E31;margin:0 0 8px}
+.arp-rating{display:inline-flex;gap:6px;align-items:center;color:#4A3E31;text-decoration:none;font-size:14.5px;margin:0 0 6px}
+.arp-stars{color:#8F6212;letter-spacing:1px}
+.arp-price{font-size:26px;font-weight:700;color:#2A2016;margin:6px 0 8px}
+.arp-bundle{font-size:14.5px;color:#7E4114;margin:0 0 6px}
+.arp-ship{font-size:14px;color:#4A3E31;margin:0 0 16px}
+.arp-sizes-l{display:flex;justify-content:space-between;font-size:15px;margin:0 0 8px;color:#2A2016}
+.arp-sizes-l a{color:#7E4114}
+.arp-sizes{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 12px}
+.arp-size{min-width:60px;height:50px;padding:0 12px;border:1px solid rgba(42,32,22,.32);border-radius:10px;background:#fff;color:#2A2016;font-size:17px;cursor:pointer}
+.arp-size.sel{background:#E9B978;border-color:#E9B978}
+.arp-size:disabled{text-decoration:line-through;color:#6B6256;border-style:dashed;background:transparent;cursor:not-allowed}
+.arp-fit{font-size:15px;line-height:1.7;color:#2A2016;background:rgba(255,255,255,.6);border:1px solid rgba(42,32,22,.14);border-radius:10px;padding:10px 12px;margin:0 0 12px}
+.arp-fit a{color:#7E4114}
+.arp-add,.arp-now{display:block;width:100%;min-height:54px;border-radius:10px;font-size:17px;cursor:pointer;font-family:inherit}
+.arp-add{background:#2A2016;color:#FFF6E8;border:0;margin:0 0 8px}
+.arp-add:disabled{background:transparent;color:#5C5148;border:1px solid #8A7F73;cursor:default}
+.arp-now{background:transparent;color:#2A2016;border:1px solid rgba(42,32,22,.5)}
+.arp-msg{min-height:1.4em;font-size:14.5px;color:#2F6B3A;margin:8px 0 0}
+.arp-reassure{font-size:14px;line-height:1.7;color:#4A3E31;margin:6px 0 10px}
+.arp-reassure a{color:#7E4114}
+.arp-trust{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:#4A3E31;margin:0}
+.arp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.arp-card{border:1px solid rgba(42,32,22,.14);border-radius:12px;padding:16px}
+.arp-card h3{font-size:18px}
+.arp-spec,.arp-list{padding-inline-start:20px;line-height:1.9;color:#4A3E31}
+.arp-colour{display:flex;align-items:center;gap:8px;color:#4A3E31}
+.arp-sw{width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.25);display:inline-block}
+.arp-faq{border-bottom:1px solid rgba(42,32,22,.12);padding:12px 0}
+.arp-faq summary{cursor:pointer;font-size:17px;color:#2A2016}
+.arp-en{margin:28px 0 0;font-size:15px}
+.arp-en a{color:#7E4114}
+.arp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;margin-top:20px}
+.arp-tile{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:#2A2016;background:#fff;border:1px solid rgba(42,32,22,.12);border-radius:14px;overflow:hidden;padding-bottom:14px}
+.arp-tile-img{aspect-ratio:4/5;background:#EFE7D8;display:block}
+.arp-tile-img img{width:100%;height:100%;object-fit:cover;display:block}
+.arp-tile-t{font-size:19px;padding:4px 14px 0}
+.arp-tile-p{font-weight:700;padding:0 14px}
+.arp-tile-b{font-size:13.5px;color:#7E4114;padding:0 14px}
+@media(max-width:760px){.ar-main.arp{padding-top:80px}.arp-top{grid-template-columns:1fr;gap:16px}.arp-buy{padding:18px 16px}.arp-main{aspect-ratio:auto;height:min(40vh,360px)}.arp-grid{grid-template-columns:1fr 1fr;gap:12px}.arp-tile-t{font-size:16px}}
 [dir="rtl"] .sb-price,[dir="rtl"] .price,[dir="rtl"] .gsm,
 [dir="rtl"] code,[dir="rtl"] .sbw-code b{
   direction:ltr;unicode-bidi:embed;display:inline-block;
 }
 </style>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=33e4a281">
-<script src="/assets/sahra-nav.js?v=5c48cb63" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
+<script src="/assets/sahra-nav.js?v=60dddeb7" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1121,6 +1186,43 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 /* footer social links were 134x16 - give them a real row to hit */
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
 
+/* ===== 23 Sep 2026 CRO review: phone product cards and category pages =====
+   On a 390px phone the card footer put the price, "Full details" and Quick add
+   on one line: the price wrapped to two lines (AED / 199) and Quick add was cut
+   off at the card edge. The footer now wraps - price and details on one row,
+   Quick add full width beneath. The two chips every tee shares (230gsm cotton,
+   Unisex S-XL) drop on phones; fit and decoration stay, as they differ. */
+@media(max-width:560px){
+  .pcard-foot{flex-wrap:wrap;row-gap:10px}
+  .pcard-p,body.buy-page .pcard-p{white-space:nowrap;font-size:17px!important}
+  .pcard-cta{white-space:nowrap;border-bottom:0!important;text-decoration:underline;text-underline-offset:3px}
+  .pcard-foot .qa{flex:1 0 100%}
+  .pcard-spec .pc-same{display:none}
+  .pcard-spec span{font-size:11px!important;padding:3px 7px}
+  .pcard-t,body.buy-page .pcard-t{font-size:18px}
+  body.buy-page .loc-hero{padding:22px 16px 64px}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero .lede{font-size:16px!important;margin-bottom:6px}
+  .catnav{grid-template-columns:1fr 1fr;gap:8px}
+  .catnav a{padding:10px 12px}
+  body.buy-page .catnav a b{font-size:17px}
+  body.buy-page .catnav a span{font-size:13px!important;line-height:1.4}
+}
+.pcard-bundle{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;color:#7E4114;font-weight:700}
+
+/* mini product strip at the top of location and guide pages (23 Sep 2026) */
+.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(43,37,32,.14);border-radius:14px;box-shadow:0 6px 20px rgba(43,37,32,.07);color:#2A2016}
+.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#EFEAE0;display:block}
+.minitee-img img{width:100%;height:100%;object-fit:cover;display:block}
+.minitee-txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+.minitee-eye{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;font-weight:700}
+.minitee-txt b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:20px;font-weight:600;line-height:1.2}
+.minitee-sub{font-size:14px;color:#4A4136}
+.minitee-sub .sb-price{font-size:14px!important;font-weight:700;color:#2A2016!important;letter-spacing:.01em!important}
+.minitee-go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#2A2016;color:#FAF6EF!important;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.minitee-go:hover{background:#7E4114}
+@media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
+
 </style>
 </head>
 <body>
@@ -1207,7 +1309,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=b3796801" defer></script>
+<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
 <script src="/assets/sahra-market.js?v=149814cb" defer></script>
 </body>
 </html>

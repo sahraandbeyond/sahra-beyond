@@ -336,7 +336,9 @@ for (const file of ['index.html', 'classic/index.html', 'homepage-preview.html']
         .slice(1)
         .map(chunk => ({
           handle: (chunk.match(/href="\/products\/([^\/]+)\//) || [])[1],
-          srcs: (chunk.match(/src="([^"]+)"/g) || []).map(x => x.slice(5, -1))
+          /* build.js serves a .webp sibling where one exists (23 Sep 2026); the
+             catalogue names the master file, so compare the image, not the format */
+          srcs: (chunk.match(/src="([^"]+)"/g) || []).map(x => x.slice(5, -1).replace(/\.webp$/, '.jpg'))
         }));
       const wantH = GRID.map(r => r[0]).join(',');
       check('the grid lists exactly the catalogue, in order',
@@ -498,7 +500,8 @@ console.log('\n\x1b[1mhero -> cards on touch\x1b[0m');
   check(pg + ': sizes follows the grid at every width (2 columns on tablets, 3 up to the wrap, then fixed)', noSizes.length === 0, noSizes.length + ' wrong sizes; expected ' + expectSizes);
   /* the w descriptor must be the file's real width - 1536w on a 1076px model
      shot lets the browser believe it picked a sharper file than it did */
-  const jpegW = f => { const d = fs.readFileSync(path.join(__dirname, f)); let i = 2; while (i < d.length && d[i] === 0xFF) { const m = d[i + 1]; if (m === 0xC0 || m === 0xC1 || m === 0xC2) return d.readUInt16BE(i + 7); i += 2 + d.readUInt16BE(i + 2); } return 0; };
+  /* a .webp is served in place of its JPEG master at the same pixel size (23 Sep 2026): measure the master */
+  const jpegW = f => { f = f.replace(/\.webp$/, '.jpg'); const d = fs.readFileSync(path.join(__dirname, f)); let i = 2; while (i < d.length && d[i] === 0xFF) { const m = d[i + 1]; if (m === 0xC0 || m === 0xC1 || m === 0xC2) return d.readUInt16BE(i + 7); i += 2 + d.readUInt16BE(i + 2); } return 0; };
   const wrongW = imgs.filter(t => { const m = t.match(/srcset="\/shirts\/card\/[^ ]+ 800w, (\/shirts\/[^ ]+) (\d+)w"/); return !m || jpegW(m[1]) !== +m[2]; });
   check(pg + ': every full-size candidate declares its true pixel width', wrongW.length === 0, wrongW.length + ' wrong: ' + wrongW.map(t => (t.match(/srcset="[^"]*"/) || [''])[0]).slice(0, 2).join(' '));
   const cardFiles = imgs.map(t => (t.match(/srcset="(\/shirts\/card\/[^ ]+) 800w/) || [])[1]).filter(Boolean);
@@ -885,7 +888,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   check('the Made-to-last band is two columns on phones', /@media\(max-width:760px\)\{\.qual\{grid-template-columns:1fr 1fr/.test(page));
   check('the ring can be swiped on a loop (spin on its own axis, snaps to a card); only the scroll opens the grid', /function swipe\(\)/.test(page) && /touch-action:pan-y/.test(page) && /ring\.theta \+ ring\.spin/.test(page) && /ring\.spin = drag\.spin \+ dx \/ step \* stepA/.test(page) && /dragstart/.test(page) && !/window\.scrollTo\(0, Math\.max\(st\.start/.test(page));
   check('review filter chips carry no counts (the band caps at 6 while the aggregate counts all)', !/rv-chip[^>]*>All \(/.test(page) && !/★ \(\d+\)<\/button>/.test(page) && /data-star="all">All</.test(fs.readFileSync(path.join(__dirname, 'reviews-render.js'), 'utf8')));
-  check('the plates are referenced from /journey/plates/', /\/journey\/plates\/[a-z-]+\.jpg/.test(page));
+  check('the plates are referenced from /journey/plates/', /\/journey\/plates\/[a-z-]+\.(jpg|webp)/.test(page));
   check('the Storefront list is filtered before fill() (free tote never listed)', /\.filter\(forSale\);fill\(products\);/.test(page));
   check('the review band markers are present', /<!--REVIEWS:START-->/.test(page) && /<!--REVIEWS:END-->/.test(page));
   check('the film is the live lazy video', /<video class="vband-v" id="brandVideo"/.test(page) && /data-src="\/video\/brand\.mp4/.test(page));

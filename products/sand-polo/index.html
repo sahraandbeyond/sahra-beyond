@@ -669,14 +669,70 @@ body.dark-bg .rv-stars{color:#E9B978}
 #sbRvLB button:hover{background:rgba(255,255,255,.28)}
 #sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}
+.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#5C5148;margin:4px 0 2px}
+.rv-scope{font-size:14px;color:#4A4136;margin:-6px 0 14px}
+.pdp-quotes{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}
+.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#C0702E);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
+.pdp-quotes q{font-style:italic}
+.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
+
+
+/* ---- phone buy box first (CRO review, 23 Sep 2026) -------------------------
+   On a 390x844 phone the title sat at 965px and the sizes at 1,417px: the first
+   screen was the delivery bar, a breadcrumb and a photo, with no name, price or
+   way to buy. Below 700px the page now reads title, rating, price, photo, sizes.
+   .buy and .media become display:contents so their children can be ordered in
+   one column; the head and body of the buy box each carry the panel look. */
+.buy-head,.buy-body{display:block}
+.fitv{margin:4px 0 10px;font-size:13px;color:var(--txt-soft)}
+.fitv-h{margin:0 0 5px;font-weight:600;color:var(--txt)}
+.fitv ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.fitv li{display:grid;grid-template-columns:92px 1fr 38px;align-items:center;gap:8px}
+.fitv i{display:block;height:6px;border-radius:99px;background:rgba(42,32,22,.12);position:relative;overflow:hidden}
+.fitv i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#B5651F;border-radius:99px}
+.fitv b{text-align:right;font-weight:600;color:var(--txt)}
+@media(max-width:700px){
+  body.buy-page .note,body.buy-page .crumb{display:none}
+  .pdp{display:flex;flex-direction:column;gap:10px;padding:10px 0 50px}
+  .pdp>.media,.pdp>.buy{display:contents}
+  .buy-head{order:1}
+  .gal-main{order:2}
+  .buy-body{order:3}
+  .gal-thumbs{order:4;margin-top:0}
+  .gal-model{order:5}
+  .buy-head,.buy-body{color:var(--txt);background:rgba(252,249,242,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+    border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 12px 34px rgba(20,14,8,.12)}
+  .buy-head{padding:12px 16px 10px}
+  .buy-body{padding:14px 16px 18px}
+  .buy-head .buy-top{margin-bottom:6px;gap:4px 12px}
+  .buy-head .buy-top .eyebrow,.buy-head .buy-top .limited{font-size:10px}
+  .buy h1{font-size:27px;margin:0 0 6px;letter-spacing:-.5px}
+  .buy-head .fabric-line{font-size:11.5px;margin:0 0 6px;line-height:1.45}
+  .buy-head .pdp-rating{margin:0 0 4px}
+  .buy-head .price-row{margin:2px 0 0}
+  .gal-main{aspect-ratio:auto;height:min(40vh,380px);width:100%;border-radius:12px}
+  .gal-main .gal-hint{display:none}
+  .buy-head .limited{display:none}
+  .buy-head,.buy-body{min-width:0;max-width:100%}
+  .buy-head .pdp-rating{gap:6px;flex-wrap:wrap}
+  .buy-head .pdp-rating-n{font-size:11px;letter-spacing:0}
+  .buy-head .sb-curhint{display:none}
+  .buy-head .sb-curpick{font-size:11px;padding:6px 24px 6px 9px;max-width:150px;min-height:0;height:auto}
+  .buy-body{display:flex;flex-direction:column}
+  .buy-body>.pdp-buy{order:-1}
+  .buy-body>.pdp-bundle-d{display:none}
+  .gal-main{height:min(34vh,300px)}
+}
+.pdp-bundle-m{display:none}
+@media(max-width:700px){.pdp-bundle-m{display:block;margin:0 0 10px}}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=25a87e11">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=fc2b97e2">
-<script src="/assets/sahra-welcome.js?v=039e33a5" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=33e4a281">
-<script src="/assets/sahra-nav.js?v=5c48cb63" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=029f3bc8">
+<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
+<script src="/assets/sahra-nav.js?v=60dddeb7" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1071,6 +1127,43 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 /* footer social links were 134x16 - give them a real row to hit */
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
 
+/* ===== 23 Sep 2026 CRO review: phone product cards and category pages =====
+   On a 390px phone the card footer put the price, "Full details" and Quick add
+   on one line: the price wrapped to two lines (AED / 199) and Quick add was cut
+   off at the card edge. The footer now wraps - price and details on one row,
+   Quick add full width beneath. The two chips every tee shares (230gsm cotton,
+   Unisex S-XL) drop on phones; fit and decoration stay, as they differ. */
+@media(max-width:560px){
+  .pcard-foot{flex-wrap:wrap;row-gap:10px}
+  .pcard-p,body.buy-page .pcard-p{white-space:nowrap;font-size:17px!important}
+  .pcard-cta{white-space:nowrap;border-bottom:0!important;text-decoration:underline;text-underline-offset:3px}
+  .pcard-foot .qa{flex:1 0 100%}
+  .pcard-spec .pc-same{display:none}
+  .pcard-spec span{font-size:11px!important;padding:3px 7px}
+  .pcard-t,body.buy-page .pcard-t{font-size:18px}
+  body.buy-page .loc-hero{padding:22px 16px 64px}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero .lede{font-size:16px!important;margin-bottom:6px}
+  .catnav{grid-template-columns:1fr 1fr;gap:8px}
+  .catnav a{padding:10px 12px}
+  body.buy-page .catnav a b{font-size:17px}
+  body.buy-page .catnav a span{font-size:13px!important;line-height:1.4}
+}
+.pcard-bundle{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;color:#7E4114;font-weight:700}
+
+/* mini product strip at the top of location and guide pages (23 Sep 2026) */
+.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(43,37,32,.14);border-radius:14px;box-shadow:0 6px 20px rgba(43,37,32,.07);color:#2A2016}
+.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#EFEAE0;display:block}
+.minitee-img img{width:100%;height:100%;object-fit:cover;display:block}
+.minitee-txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+.minitee-eye{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;font-weight:700}
+.minitee-txt b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:20px;font-weight:600;line-height:1.2}
+.minitee-sub{font-size:14px;color:#4A4136}
+.minitee-sub .sb-price{font-size:14px!important;font-weight:700;color:#2A2016!important;letter-spacing:.01em!important}
+.minitee-go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#2A2016;color:#FAF6EF!important;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.minitee-go:hover{background:#7E4114}
+@media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
+
 </style>
 </head>
 <body class="buy-page">
@@ -1096,30 +1189,30 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <span class="gal-hint">Click to zoom</span>
         <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
 
-        <img class="on" src="../../shirts/polo-dune-front.jpg" alt="The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest" width="1080" height="1350">
-        <img class="" src="../../shirts/polo-dune-back.jpg" alt="The Sahra Polo in sand, worn in the dunes, from behind — plain 240gsm cotton piqué, undecorated, with the ribbed collar and set-in sleeve seams" width="1080" height="1350">
-        <img class="" data-worn="1" src="../../shirts/polo-dune-three-quarter.jpg" alt="The Sahra Polo in the dunes, three-quarter — the placket open at the neck and the piqué texture in low sun" width="1080" height="1350">
-        <img class="" data-worn="1" src="../../shirts/polo-dune-side.jpg" alt="The Sahra Polo from the side in the dunes — the straight hem and the set-in sleeve" width="1080" height="1350">
-        <img class="" data-worn="1" src="../../shirts/polo-dune-look.jpg" alt="The Sahra Polo in the dunes — the chest, sleeve and the ribbed collar in evening light" width="1080" height="1350">
-        <img class="" data-worn="1" src="../../shirts/polo-dune-collar.jpg" alt="The Sahra Polo, collar and chest close — the ribbed collar, the three-button placket and the embroidered mark" width="1080" height="1350">
-        <img class="" data-worn="1" src="../../shirts/polo-dune-placket.jpg" alt="The Sahra Polo, placket close — the buttons, the piqué weave and the embroidered صحراء mark on the chest" width="1080" height="1350">
-        <img class="" data-worn="1" src="../../shirts/polo-dune-sunset.jpg" alt="The Sahra Polo worn on a dune ridge at sunset, wide — the sun on the horizon behind" width="1080" height="1350">
-        <img class="" data-worn="1" src="../../shirts/polo-studio-front.jpg" alt="The Sahra Polo, front, against a plain ground — the full cut of the 240gsm piqué" width="1536" height="1536">
-        <img class="" data-worn="1" src="../../shirts/polo-studio-back.jpg" alt="The Sahra Polo, back, against a plain ground — undecorated 240gsm piqué" width="1536" height="1536">
+        <img class="on" fetchpriority="high" src="../../shirts/polo-dune-front.webp" alt="The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest" width="1080" height="1350">
+        <img class="" fetchpriority="low" decoding="async" src="../../shirts/polo-dune-back.webp" alt="The Sahra Polo in sand, worn in the dunes, from behind — plain 240gsm cotton piqué, undecorated, with the ribbed collar and set-in sleeve seams" width="1080" height="1350">
+        <img class="" data-worn="1" fetchpriority="low" decoding="async" src="../../shirts/polo-dune-three-quarter.webp" alt="The Sahra Polo in the dunes, three-quarter — the placket open at the neck and the piqué texture in low sun" width="1080" height="1350">
+        <img class="" data-worn="1" fetchpriority="low" decoding="async" src="../../shirts/polo-dune-side.webp" alt="The Sahra Polo from the side in the dunes — the straight hem and the set-in sleeve" width="1080" height="1350">
+        <img class="" data-worn="1" fetchpriority="low" decoding="async" src="../../shirts/polo-dune-look.webp" alt="The Sahra Polo in the dunes — the chest, sleeve and the ribbed collar in evening light" width="1080" height="1350">
+        <img class="" data-worn="1" fetchpriority="low" decoding="async" src="../../shirts/polo-dune-collar.webp" alt="The Sahra Polo, collar and chest close — the ribbed collar, the three-button placket and the embroidered mark" width="1080" height="1350">
+        <img class="" data-worn="1" fetchpriority="low" decoding="async" src="../../shirts/polo-dune-placket.webp" alt="The Sahra Polo, placket close — the buttons, the piqué weave and the embroidered صحراء mark on the chest" width="1080" height="1350">
+        <img class="" data-worn="1" fetchpriority="low" decoding="async" src="../../shirts/polo-dune-sunset.webp" alt="The Sahra Polo worn on a dune ridge at sunset, wide — the sun on the horizon behind" width="1080" height="1350">
+        <img class="" data-worn="1" fetchpriority="low" decoding="async" src="../../shirts/polo-studio-front.jpg" alt="The Sahra Polo, front, against a plain ground — the full cut of the 240gsm piqué" width="1536" height="1536">
+        <img class="" data-worn="1" fetchpriority="low" decoding="async" src="../../shirts/polo-studio-back.jpg" alt="The Sahra Polo, back, against a plain ground — undecorated 240gsm piqué" width="1536" height="1536">
         
       </div>
       <div class="gal-thumbs" id="thumbs">
 
-        <button class="on" data-i="0" aria-label="View"><img src="../../shirts/polo-dune-front.jpg" alt="" width="1080" height="1350"></button>
-        <button data-i="1" aria-label="View back"><img src="../../shirts/polo-dune-back.jpg" alt="" width="1080" height="1350"></button>
-        <button data-i="2" aria-label="View worn photo 2"><img src="../../shirts/polo-dune-three-quarter.jpg" alt="" width="1080" height="1350"></button>
-        <button data-i="3" aria-label="View worn photo 3"><img src="../../shirts/polo-dune-side.jpg" alt="" width="1080" height="1350"></button>
-        <button data-i="4" aria-label="View worn photo 4"><img src="../../shirts/polo-dune-look.jpg" alt="" width="1080" height="1350"></button>
-        <button data-i="5" aria-label="View worn photo 6"><img src="../../shirts/polo-dune-collar.jpg" alt="" width="1080" height="1350"></button>
-        <button data-i="6" aria-label="View worn photo 7"><img src="../../shirts/polo-dune-placket.jpg" alt="" width="1080" height="1350"></button>
-        <button data-i="7" aria-label="View worn photo 8"><img src="../../shirts/polo-dune-sunset.jpg" alt="" width="1080" height="1350"></button>
-        <button data-i="8" aria-label="View worn photo 9"><img src="../../shirts/polo-studio-front.jpg" alt="" width="1536" height="1536"></button>
-        <button data-i="9" aria-label="View worn photo 10"><img src="../../shirts/polo-studio-back.jpg" alt="" width="1536" height="1536"></button>
+        <button class="on" data-i="0" aria-label="View"><img loading="lazy" decoding="async" src="../../shirts/polo-dune-front.webp" alt="" width="1080" height="1350"></button>
+        <button data-i="1" aria-label="View back"><img loading="lazy" decoding="async" src="../../shirts/polo-dune-back.webp" alt="" width="1080" height="1350"></button>
+        <button data-i="2" aria-label="View worn photo 2"><img loading="lazy" decoding="async" src="../../shirts/polo-dune-three-quarter.webp" alt="" width="1080" height="1350"></button>
+        <button data-i="3" aria-label="View worn photo 3"><img loading="lazy" decoding="async" src="../../shirts/polo-dune-side.webp" alt="" width="1080" height="1350"></button>
+        <button data-i="4" aria-label="View worn photo 4"><img loading="lazy" decoding="async" src="../../shirts/polo-dune-look.webp" alt="" width="1080" height="1350"></button>
+        <button data-i="5" aria-label="View worn photo 6"><img loading="lazy" decoding="async" src="../../shirts/polo-dune-collar.webp" alt="" width="1080" height="1350"></button>
+        <button data-i="6" aria-label="View worn photo 7"><img loading="lazy" decoding="async" src="../../shirts/polo-dune-placket.webp" alt="" width="1080" height="1350"></button>
+        <button data-i="7" aria-label="View worn photo 8"><img loading="lazy" decoding="async" src="../../shirts/polo-dune-sunset.webp" alt="" width="1080" height="1350"></button>
+        <button data-i="8" aria-label="View worn photo 9"><img loading="lazy" decoding="async" src="../../shirts/polo-studio-front.jpg" alt="" width="1536" height="1536"></button>
+        <button data-i="9" aria-label="View worn photo 10"><img loading="lazy" decoding="async" src="../../shirts/polo-studio-back.jpg" alt="" width="1536" height="1536"></button>
       </div>
       
       
@@ -1127,13 +1220,19 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     </div>
 
     <div class="buy">
+      <div class="buy-head">
       <div class="buy-top"><span class="eyebrow plink">Sahra &amp; Beyond · Founding Edition</span><span class="limited">✦ Limited first run</span></div>
       <h1>The Sahra <em>Polo</em></h1>
       
       <p class="fabric-line"><b>240 gsm</b> heavyweight &middot; <b>100% cotton piqu&eacute;</b> &middot; pre-washed</p>
       
-      <a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n">5.0 &middot; 1 review &rarr;</span></a>
+      
+      <a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n">5.0 &middot; 1 review of this design &rarr;</span></a>
+      
       <div class="price-row"><div class="price"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></div><span data-sb-curslot></span></div>
+      </div>
+      <div class="buy-body">
+      
       <div class="vat"><span class="sb-ship-uae"></span><span class="sb-ship-gcc">14-day returns &middot; duties, if any, are paid on arrival</span><span class="sb-ship-intl">14-day returns &middot; duties, if any, are paid on arrival</span></div>
       
       <!-- Live size availability, fetched from Shopify. Hidden until data arrives so we never
@@ -1149,15 +1248,17 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       <div class="pdp-buy" id="pdpBuy" data-handle="sand-polo">
         <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
-          <span class="pdp-loading">Loading sizes&hellip;</span>
+          <button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">S</button><button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">M</button><button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">L</button><button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">XL</button>
         </div>
         
         
         <p class="fit-warn"><b>One cut, and it runs slim.</b> Most people take one size up from their usual letter.</p>
         <p class="pdp-stock" id="pdpStock" hidden></p>
+        
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></span></button>
+        <button class="btn ghost pdp-now" id="pdpNow" type="button">Buy now</button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
-        <a class="btn ghost" href="#fit">Size &amp; fit</a>
+        <ul class="pdp-quotes" aria-label="What buyers say"><li><q>Bought this as a birthday present for the husband.</q><span>Kainat · verified buyer</span></li></ul>
         
         <p class="pdp-reassure">Need a different size? UAE returns and exchanges are free within 14 days of delivery &mdash; unworn, unwashed, tags on; exchanges subject to stock. <a href="/policies.html#returns">Full policy &rarr;</a></p>
       </div>
@@ -1228,7 +1329,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         </details>
         <details class="pdp-ans">
           <summary>Top questions</summary>
-          <p class="pdp-ans-foot"><strong>How is the polo different from the tees?</strong><br>Three ways. It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape. It is embroidered rather than printed. And it is made in a smaller run than the tees, counted on its own. Sizing is the same as the Regular fit tees.</p><p class="pdp-ans-foot"><strong>Who is the polo cut for?</strong><br>The polo is a men's cut, in one run of sizes from S to XL. It is graded to the same measurements as our Regular fit t-shirts. Because the size chart lists the garment measured flat rather than a body size, the reliable way to choose is to measure a polo or t-shirt you already like the fit of and match the numbers.</p><p class="pdp-ans-foot"><strong>What size should I order?</strong><br>The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL. If you know your size in one of the tees, take the same here. Full measurements are in the size chart on this page and on our size guide.</p>
+          <p class="pdp-ans-foot"><strong>How is the polo different from the tees?</strong><br>Three ways. It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape. It is embroidered rather than printed. And it is made in a smaller run than the tees, counted on its own. Sizing is the same as the Regular fit tees.</p><p class="pdp-ans-foot"><strong>Who is the polo cut for?</strong><br>The polo is a men's cut, in one run of sizes from S to XL. It is graded to the same measurements as our Regular fit t-shirts. Because the size chart lists the garment measured flat rather than a body size, the reliable way to choose is to measure a polo or t-shirt you already like the fit of and match the numbers.</p><p class="pdp-ans-foot"><strong>What size should I order?</strong><br>The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL. It runs slim like them, so take the same letter as your Regular tee (not your Oversized one) — for most people that is one size up from their usual letter. Full measurements are in the size chart on this page and on our size guide.</p>
           <p class="pdp-ans-foot"><a href="#faq">All questions &darr;</a></p>
         </details>
       </div>
@@ -1236,7 +1337,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       <!-- Pre-launch capture: the shop isn't open yet, so give high-intent visitors a way to convert.
            Remove (or leave — it still works as a restock list) once LAUNCHED. -->
       
-
+      </div>
     </div>
   </section>
 </div>
@@ -1273,7 +1374,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   <section class="sec reveal" id="fit">
     <span class="snum">04 — Size &amp; fit</span>
     <h2>Sized like the <em>tees</em></h2>
-    <p>The polo is graded to the same specification as our Regular fit t-shirts, so if you already know your size in one of the tees, take the same here. It has a set-in sleeve and sits at the natural shoulder — there is no oversized cut of the polo.</p>
+    <p>The polo is graded to the same specification as our Regular fit t-shirts, so it runs slim like them: take the same letter as your Regular tee, which for most people is one size up from their usual letter. It has a set-in sleeve and sits at the natural shoulder — there is no oversized cut of the polo.</p>
     <p><strong>Men&rsquo;s cut</strong>, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from the letter size you usually wear.</p>
     <div class="sz-wrap">
       <table class="sz">
@@ -1317,7 +1418,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     <div class="faq">
       <details><summary>How is the polo different from the tees?</summary><p>Three ways. It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape. It is embroidered rather than printed. And it is made in a smaller run than the tees, counted on its own. Sizing is the same as the Regular fit tees.</p></details>
       <details><summary>Who is the polo cut for?</summary><p>The polo is a men's cut, in one run of sizes from S to XL. It is graded to the same measurements as our Regular fit t-shirts. Because the size chart lists the garment measured flat rather than a body size, the reliable way to choose is to measure a polo or t-shirt you already like the fit of and match the numbers.</p></details>
-      <details><summary>What size should I order?</summary><p>The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL. If you know your size in one of the tees, take the same here. Full measurements are in the size chart on this page and on our size guide.</p></details>
+      <details><summary>What size should I order?</summary><p>The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL. It runs slim like them, so take the same letter as your Regular tee (not your Oversized one) — for most people that is one size up from their usual letter. Full measurements are in the size chart on this page and on our size guide.</p></details>
       <details><summary>Why such a small run?</summary><p>It is the first polo we have made and we would rather make a small number properly than guess at demand. There is no plan to restock this run.</p></details>
       <details><summary>Will it be restocked?</summary><p>This is a limited first run. We may make polos again, but not this one, and we will not promise otherwise.</p></details>
     </div>
@@ -1328,14 +1429,16 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       <div class="wrap">
         <span class="snum">08 &mdash; What buyers say</span>
         <h2 id="rv-h">Reviews</h2>
+        
         <div class="rv-aggregate">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
           <span class="rv-score">5.0 / 5</span>
-          <span class="rv-count">from 1 verified review</span>
+          <span class="rv-count">from 1 review &middot; 1 verified buyer</span>
         </div>
         <ul class="rv-list">
         <li class="rv-card">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
+          
           
           <p class="rv-text">Bought this as a birthday present for the husband. Super soft. Excellent fit, comparable to any premium brand. And the nicest sandstone/dunes of Al Ain sand color. Hope there’ll be more polos in the future!</p>
           <span class="rv-photos"><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788691900__1788691740649-img_2265__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788691900__1788691740649-img_2265__original.jpeg?quality=80&amp;width=1024" alt="Customer photo of The Sahra Polo" loading="lazy"></a><a class="rv-photo-a" href="https://review-images.judgeme.com/sahra-beyond/1788691905__1788691740650-img_2173__original.jpeg?quality=80&amp;width=1024" target="_blank" rel="noopener" aria-label="Open customer photo full size"><img class="rv-photo" src="https://review-images.judgeme.com/sahra-beyond/1788691905__1788691740650-img_2173__original.jpeg?quality=80&amp;width=1024" alt="Customer photo of The Sahra Polo" loading="lazy"></a></span>
@@ -1365,11 +1468,11 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
     <h2>More from <em>the drop</em></h2>
     <div class="rel-grid">
       <a class="rel" href="/products/al-quaa-galaxy-regular/">
-        <div class="rel-img" data-cycle><img class="on" src="../../shirts/alquaa-regular-back.jpg" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-regular-front.jpg" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-dune-back.jpg" alt="The Al Quaa Galaxy tee worn in the dunes — the printed Milky Way running across the back" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-print.jpg" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-print-2.jpg" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-front.jpg" alt="The Al Quaa Galaxy tee, front, worn in the dunes — the embroidered sun-and-dune mark on the chest" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-chest.jpg" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-mark.jpg" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" loading="lazy" width="1080" height="1350"></div>
+        <div class="rel-img" data-cycle><img class="on" src="../../shirts/alquaa-regular-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-regular-front.webp" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="../../shirts/alquaa-dune-back.webp" alt="The Al Quaa Galaxy tee worn in the dunes — the printed Milky Way running across the back" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-print.webp" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-print-2.webp" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-front.webp" alt="The Al Quaa Galaxy tee, front, worn in the dunes — the embroidered sun-and-dune mark on the chest" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-chest.webp" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" loading="lazy" width="1080" height="1350"><img src="../../shirts/alquaa-dune-mark.webp" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" loading="lazy" width="1080" height="1350"></div>
         <div class="rel-body"><div class="rel-place">Inspired by Al Quaa</div><div class="rel-name">Al Quaa Galaxy — Regular</div><div class="rel-price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></div></div>
       </a>
       <a class="rel" href="/products/empty-quarter-regular/">
-        <div class="rel-img" data-cycle><img class="on" src="../../shirts/emptyquarter-regular-front.jpg" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" loading="lazy" width="1536" height="1536"><img src="../../shirts/emptyquarter-regular-back.jpg" alt="Empty Quarter — Regular, regular fit, back view" loading="lazy" width="1536" height="1536"><img src="../../shirts/emptyquarter-dune-front.jpg" alt="The Empty Quarter tee worn in the dunes at sunset — the tonal embroidered dunes, sun and صحراء on the chest" loading="lazy" width="1080" height="1350"><img src="../../shirts/emptyquarter-dune-chest.jpg" alt="The Empty Quarter tee, chest close in the dunes — the tonal embroidery catching the low sun" loading="lazy" width="1080" height="1350"><img src="../../shirts/emptyquarter-dune-detail.jpg" alt="The Empty Quarter tee, the embroidered chest at an angle — thread on thread, sand on sand" loading="lazy" width="1080" height="1350"><img src="../../shirts/emptyquarter-dune-back.jpg" alt="The Empty Quarter tee from behind in the dunes — plain across the back" loading="lazy" width="1080" height="1350"><img src="../../shirts/emptyquarter-dune-neck.jpg" alt="The Empty Quarter tee, back neck close — the printed collar label below the collar seam" loading="lazy" width="1080" height="1350"></div>
+        <div class="rel-img" data-cycle><img class="on" src="../../shirts/emptyquarter-regular-front.webp" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" loading="lazy" width="1536" height="1536"><img src="../../shirts/emptyquarter-regular-back.webp" alt="Empty Quarter — Regular, regular fit, back view" loading="lazy" width="1536" height="1536"><img src="../../shirts/emptyquarter-dune-front.webp" alt="The Empty Quarter tee worn in the dunes at sunset — the tonal embroidered dunes, sun and صحراء on the chest" loading="lazy" width="1080" height="1350"><img src="../../shirts/emptyquarter-dune-chest.webp" alt="The Empty Quarter tee, chest close in the dunes — the tonal embroidery catching the low sun" loading="lazy" width="1080" height="1350"><img src="../../shirts/emptyquarter-dune-detail.webp" alt="The Empty Quarter tee, the embroidered chest at an angle — thread on thread, sand on sand" loading="lazy" width="1080" height="1350"><img src="../../shirts/emptyquarter-dune-back.webp" alt="The Empty Quarter tee from behind in the dunes — plain across the back" loading="lazy" width="1080" height="1350"><img src="../../shirts/emptyquarter-dune-neck.webp" alt="The Empty Quarter tee, back neck close — the printed collar label below the collar seam" loading="lazy" width="1080" height="1350"></div>
         <div class="rel-body"><div class="rel-place">Inspired by Liwa</div><div class="rel-name">Empty Quarter — Regular</div><div class="rel-price"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></div></div>
       </a>
     </div>
@@ -1386,7 +1489,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 
 <div id="buybar">
   <div class="bb-inner">
-    <img class="bb-thumb" src="../../shirts/polo-dune-front.jpg" alt="" width="1080" height="1350">
+    <img class="bb-thumb" loading="lazy" decoding="async" src="../../shirts/polo-dune-front.webp" alt="" width="1080" height="1350">
     <div class="bb-txt"><div class="bb-name">The Sahra Polo</div><div class="bb-sub"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span> · Limited first run</div></div>
     <button class="btn" id="bbAdd" type="button">Add to cart</button>
   </div>
@@ -1587,8 +1690,11 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   /* mirror the real button's state so it never promises what it cannot do */
   var add=document.getElementById('pdpAdd');
   if(add && window.MutationObserver){
-    var sync=function(){ bb.textContent = add.disabled ? 'Choose a size' : 'Add to cart'; };
+    /* 23 Sep 2026: phones hide the bar's price line, so the price rides in the button */
+    var pr=document.querySelector('.price .sb-price'),narrow=matchMedia('(max-width:620px)');
+    var sync=function(){ var t=add.disabled ? 'Choose a size' : 'Add to cart'; if(narrow.matches&&pr&&pr.textContent.trim()) t+=' · '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
     new MutationObserver(sync).observe(add,{attributes:true,attributeFilter:['disabled']});
+    if(pr) new MutationObserver(sync).observe(pr,{childList:true,characterData:true,subtree:true});
     sync();
   }
 })();
@@ -1687,6 +1793,15 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   if(!('IntersectionObserver' in window)){return;}
   var pastHero=false,atFoot=false;
   function sync(){bar.classList.toggle('on',pastHero&&!atFoot);}
+  /* 23 Sep 2026: on phones the bar keeps a buy control in reach as soon as the
+     sizes and the Add button have scrolled out of view, instead of waiting for
+     the whole product section (6,000px of it) to pass. */
+  var ph=matchMedia('(max-width:700px)').matches,sz=document.getElementById('pdpSizes'),ad=document.getElementById('pdpAdd');
+  if(ph&&sz&&ad){
+    var vis={};
+    var io=new IntersectionObserver(function(en){en.forEach(function(e){vis[e.target.id]=e.isIntersecting;});pastHero=!vis.pdpSizes&&!vis.pdpAdd;sync();},{rootMargin:'-56px 0px -70px 0px'});
+    io.observe(sz);io.observe(ad);
+  } else
   new IntersectionObserver(function(en){pastHero=!en[0].isIntersecting;sync();},{rootMargin:'-120px 0px 0px 0px'}).observe(hero);
   if(foot)new IntersectionObserver(function(en){atFoot=en[0].isIntersecting;sync();}).observe(foot);
 })();
@@ -1890,15 +2005,25 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 
   /* A fetch that hangs never resolves or rejects, so the buy box sat on
      "Loading sizes…" indefinitely on a poor connection. */
+  /* 23 Sep 2026: S-XL are in the HTML so the picker is there on first paint.
+     A tap before live stock arrives is remembered and applied when it does. */
+  var pending=null, live=false;
+  sizesEl.querySelectorAll('.pdp-size-wait').forEach(function(b){
+    b.addEventListener('click',function(){ if(live) return;
+      sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
+      b.classList.add('sel'); b.setAttribute('aria-pressed','true'); pending=b.textContent;
+      setAdd('Checking stock…', false); });
+  });
   var sizeTimer=setTimeout(function(){
-    if(sizesEl && /Loading sizes/.test(sizesEl.textContent||'')){
+    if(sizesEl && !live){ pending=null; setAdd('Select a size', false);
       sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a>.</span>';
     }
   },9000);
   sf('query($h:String!){product(handle:$h){title variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}',{h:handle})
   .then(function(d){
-    if(!d.product){ sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
+    if(!d.product){ live=true; pending=null; setAdd('Select a size', false); sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
     variants=d.product.variants.edges.map(function(e){return e.node;});
+    live=true; clearTimeout(sizeTimer);
     sizesEl.innerHTML='';
     variants.forEach(function(v){
       var b=document.createElement('button');
@@ -1912,7 +2037,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       b.addEventListener('click',function(){
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');
-        sel=v; addEl.disabled=false; setAdd('Add to cart', true); msg('');
+        sel=v; goCheckout=false; addEl.disabled=false; setAdd('Add to cart', true); msg('');
         /* Honest scarcity (Rastah benchmark): shown ONLY from live inventory,
            only at 3 or fewer, never invented. quantityAvailable can be null
            if the token cannot read inventory — then nothing is shown. */
@@ -1928,17 +2053,28 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       });
       sizesEl.appendChild(b);
     });
-    if(!variants.some(function(v){return v.availableForSale;})){ addEl.textContent='Sold out'; }
+    if(!variants.some(function(v){return v.availableForSale;})){ addEl.textContent='Sold out'; var nw=document.getElementById('pdpNow'); if(nw) nw.hidden=true; }
+    if(pending){ var want=pending; pending=null;
+      var hit=[].filter.call(sizesEl.querySelectorAll('.pdp-size'),function(x){return x.firstChild&&x.firstChild.nodeValue===want;})[0];
+      if(hit&&!hit.disabled) hit.click();
+      else { setAdd('Select a size', false); msg(want+' is sold out — please choose another size.'); } }
   })
-  .catch(function(){ sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
+  .catch(function(){ live=true; pending=null; setAdd('Select a size', false); sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
 
   var CFRAG='id checkoutUrl totalQuantity';
   function fitOk(){ try{ return sessionStorage.getItem('sb_fitok')==='1'; }catch(e){ return true; } }
   function setFitOk(){ try{ sessionStorage.setItem('sb_fitok','1'); }catch(e){} }
+  var goCheckout=false, nowClick=false;
   function doAdd(v){
-    addEl.disabled=true; addEl.textContent='Adding…'; msg('');
+    var go=goCheckout; goCheckout=false;
+    addEl.disabled=true; addEl.textContent= go ? 'Going to checkout…' : 'Adding…'; msg('');
     if(window.SahraCart){
-      window.SahraCart.add(v.id).then(function(cart){
+      window.SahraCart.add(v.id, 1, go ? {open:false} : undefined).then(function(cart){
+        /* Buy now (23 Sep 2026): same add, same fit check, then straight to
+           Shopify checkout, where Shop Pay / Google Pay sit at the top. */
+        if(go){ var st=window.SahraCart.state&&window.SahraCart.state(); var u=(st&&st.checkoutUrl)||(cart&&cart.checkoutUrl);
+          if(window.track) track('buy_now',{item_id:handle,size:v.title});
+          if(u){ location.href=u; return; } }
         addEl.disabled=false; setAdd('Add another', true);
         msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
         if(window.track) track('add_to_cart',{item_id:handle,size:v.title});
@@ -1955,7 +2091,19 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     addEl.disabled=false; setAdd('Add to cart', true);
     msg('Cart is unavailable right now. Please refresh, or message us on WhatsApp.','err');
   }
-  addEl.addEventListener('click',function(){
+  var nowEl=document.getElementById('pdpNow');
+  if(nowEl) nowEl.addEventListener('click',function(){
+    if(!sel){
+      msg('Choose a size first.','err');
+      var first=sizesEl.querySelector('.pdp-size:not([disabled])'); if(first) first.focus();
+      return;
+    }
+    goCheckout=true; nowClick=true; addEl.click(); nowClick=false;
+  });
+  addEl.addEventListener('click',function(e){
+    /* only the Buy now button makes an add a Buy now - never a tap on Add to cart,
+       and never the sticky bar, which clicks this button from script */
+    if(!nowClick) goCheckout=false;
     if(!sel) return;
     /* THE FIT CHECK (Faheem, 29 Aug): the Regular cut runs slim vs UAE
        expectations - an XL wears like many brands' M/L - and people were
@@ -1968,8 +2116,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       variants.forEach(function(v){ if(seen && !next && v.availableForSale) next=v; if(v===sel) seen=true; });
       msgEl.className='pdp-msg';
       msgEl.innerHTML='<span class="fitc"><span class="fitc-t"><strong>'+sel.title+'</strong> measures '+meas+' pit-to-pit — this cut runs slim.</span>'
-        +'<button type="button" class="fitc-btn" id="fitcYes">Add '+sel.title+' anyway</button>'
-        +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+'</button>':'')
+        +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+' (recommended)</button>':'')
+        +'<button type="button" class="fitc-btn" id="fitcYes">Keep '+sel.title+'</button>'
         +'</span>';
       document.getElementById('fitcYes').onclick=function(){ setFitOk(); msg(''); doAdd(sel); };
       var up=document.getElementById('fitcUp');
@@ -1993,7 +2141,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 </script>
 
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=b3796801" defer></script>
+<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
 <script src="/assets/sahra-market.js?v=149814cb" defer></script>
 </body>
 </html>

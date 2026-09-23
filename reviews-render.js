@@ -153,17 +153,94 @@ function cardRating(handle) {
 }
 
 /** Full reviews section for a product page. Empty string when there are none. */
-function productSection(handle, productName) {
-  const d = load(handle);
+/* ---- design- and store-level pooling (23 Sep 2026) ------------------------
+   The 15 Sep rule was "this product's own count, never a pooled number", which
+   left Hajar Regular and Empty Quarter Oversized with no social proof at all
+   beside the price. The independent CRO review (23 Sep) and Faheem reversed it,
+   on one condition that keeps it honest: a pooled figure is always LABELLED as
+   pooled. Order of preference:
+     1. this design, both fits  -> "reviews of this design"
+     2. the whole store          -> "reviews across Sahra & Beyond"
+   A product's own reviews are always a subset of 1, so nothing is hidden. */
+function merge(handles) {
+  const all = [];
+  handles.forEach(h => { const d = load(h); if (d) d.reviews.forEach(r => all.push(r)); });
+  if (!all.length) return null;
+  const seen = new Set();
+  const reviews = all.filter(r => { const k = String(r.id || (r.name + r.date + r.body)); if (seen.has(k)) return false; seen.add(k); return true; })
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  const average = reviews.reduce((t, r) => t + (Number(r.rating) || 0), 0) / reviews.length;
+  return { reviews, count: reviews.length, average, verified: reviews.filter(r => r.verified).length };
+}
+function allHandles() {
+  if (!fs.existsSync(DIR)) return [];
+  return fs.readdirSync(DIR).filter(f => f.endsWith('.json')).map(f => f.replace(/\.json$/, ''));
+}
+/* {scope:'design'|'store', d} or null */
+function pooled(designHandles) {
+  const dd = merge(designHandles || []);
+  if (dd) return { scope: 'design', d: dd };
+  const sd = merge(allHandles());
+  return sd ? { scope: 'store', d: sd } : null;
+}
+/** The line beside the price. */
+function ratingLine(designHandles) {
+  const pr = pooled(designHandles); if (!pr) return '';
+  const d = pr.d, n = d.count;
+  const label = pr.scope === 'design'
+    ? `${d.average.toFixed(1)} &middot; ${n} review${n === 1 ? '' : 's'} of this design`
+    : `${d.average.toFixed(1)} &middot; ${n} reviews across Sahra &amp; Beyond`;
+  return `<a class="pdp-rating" href="#reviews">${stars(d.average)}<span class="pdp-rating-n">${label} &rarr;</span></a>`;
+}
+/** Up to n short quotes for the buy box: first sentence, 25-140 characters. */
+function quotes(designHandles, n) {
+  /* this design's own words only: a store-wide quote under another product's
+     Buy button would read as a review of THIS shirt */
+  const pr = pooled(designHandles); if (!pr || pr.scope !== 'design') return '';
+  const picks = [];
+  pr.d.reviews.forEach(r => {
+    if (picks.length >= (n || 2) || Number(r.rating) < 4) return;
+    const body = String(r.body || '').replace(/\s+/g, ' ').trim();
+    let first = (body.match(/^.{20,160}?[.!?](\s|$)/) || [body])[0].trim();
+    if (first.length > 140) first = first.slice(0, 137).replace(/\s+\S*$/, '') + '…';
+    if (first.length < 20) return;
+    picks.push(`<li><q>${esc(first)}</q><span>${esc(String(r.name || '').split(' ')[0])}${r.verified ? ' · verified buyer' : ''}</span></li>`);
+  });
+  return picks.length ? `<ul class="pdp-quotes" aria-label="What buyers say">${picks.join('')}</ul>` : '';
+}
+
+/** Buyer-reported fit, from the review form's fit question (sync-reviews.js
+    fitAnswer). Renders NOTHING until at least FIT_MIN reviews of this design
+    carry an answer - a verdict from two people is noise dressed as data. The
+    wording is the buyers' distribution, never our own claim about the cut. */
+const FIT_MIN = 5;
+function fitVerdict(designHandles) {
+  const d = merge(designHandles || []); if (!d) return '';
+  const f = d.reviews.map(r => r.fit).filter(x => x === 'small' || x === 'true' || x === 'large');
+  if (f.length < FIT_MIN) return '';
+  const pct = k => Math.round(100 * f.filter(x => x === k).length / f.length);
+  const rows = [['small', 'Runs small'], ['true', 'As expected'], ['large', 'Runs large']]
+    .map(([k, l]) => `<li><span>${l}</span><i style="--w:${pct(k)}%"></i><b>${pct(k)}%</b></li>`).join('');
+  return `<div class="fitv"><p class="fitv-h">How it fits &mdash; ${f.length} buyers of this design</p><ul>${rows}</ul></div>`;
+}
+
+function productSection(handle, productName, designHandles) {
+  const pr = designHandles ? pooled(designHandles) : null;
+  const d = pr ? pr.d : load(handle);
   if (!d) return '';
+  const storeWide = pr && pr.scope === 'store';
+  const verifiedN = d.reviews.filter(r => r.verified).length;
 
   const cards = d.reviews.map(r => {
     const photos = (r.photos || []).slice(0, 2).map(u =>
-      photoLink(u, `Customer photo of ${productName}`)).join('');
+      photoLink(u, `Customer photo of ${storeWide ? (r.productTitle || 'a Sahra & Beyond piece') : productName}`)).join('');
+    const about = (storeWide || (designHandles && r.handle && r.handle !== handle)) && r.productTitle
+      ? `<span class="rv-about">On ${esc(r.productTitle)}</span>` : '';
     const when = fmtDate(r.date);
     return `
         <li class="rv-card">
           ${stars(r.rating)}
+          ${about}
           ${r.title ? `<strong class="rv-title">${esc(r.title)}</strong>` : ''}
           <p class="rv-text">${esc(r.body)}</p>
           ${photos ? `<span class="rv-photos">${photos}</span>` : ''}
@@ -176,11 +253,12 @@ function productSection(handle, productName) {
     <section class="sec reveal reviews" id="reviews" aria-labelledby="rv-h">
       <div class="wrap">
         <span class="snum">08 &mdash; What buyers say</span>
-        <h2 id="rv-h">Reviews</h2>
+        <h2 id="rv-h">${storeWide ? 'Reviews across Sahra &amp; Beyond' : 'Reviews'}</h2>
+        ${storeWide ? `<p class="rv-scope">This design has no reviews yet, so these are from buyers of our other pieces.</p>` : ''}
         <div class="rv-aggregate">
           ${stars(d.average)}
           <span class="rv-score">${d.average.toFixed(1)} / 5</span>
-          <span class="rv-count">from ${d.count} verified review${d.count === 1 ? '' : 's'}</span>
+          <span class="rv-count">from ${d.count} review${d.count === 1 ? '' : 's'}${verifiedN ? ` &middot; ${verifiedN} verified buyer${verifiedN === 1 ? '' : 's'}` : ''}</span>
         </div>
         <ul class="rv-list">${cards}
         </ul>
@@ -362,6 +440,13 @@ body.dark-bg .rv-stars{color:#E9B978}
 #sbRvLB button{position:absolute;top:16px;right:16px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:30px;line-height:1;cursor:pointer}
 #sbRvLB button:hover{background:rgba(255,255,255,.28)}
 #sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
-@media(max-width:760px){.rv-list{grid-template-columns:1fr}}`;
+@media(max-width:760px){.rv-list{grid-template-columns:1fr}}
+.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#5C5148;margin:4px 0 2px}
+.rv-scope{font-size:14px;color:#4A4136;margin:-6px 0 14px}
+.pdp-quotes{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}
+.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#C0702E);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
+.pdp-quotes q{font-style:italic}
+.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
+`;
 
-module.exports = { load, loadAll, stars, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN };
+module.exports = { load, loadAll, stars, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN, merge, pooled, ratingLine, quotes, fitVerdict, FIT_MIN };

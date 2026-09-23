@@ -73,7 +73,7 @@
     },
     {
       "q": "What size should I order?",
-      "a": "The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL. If you know your size in one of the tees, take the same here. Full measurements are in the size chart on this page and on our size guide."
+      "a": "The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL. It runs slim like them, so take the same letter as your Regular tee (not your Oversized one) — for most people that is one size up from their usual letter. Full measurements are in the size chart on this page and on our size guide."
     },
     {
       "q": "Why such a small run?",
@@ -87,7 +87,7 @@
   "category": "polos",
   "fit": "regular",
   "fitHeading": "Sized like the <em>tees</em>",
-  "fitWho": "The polo is graded to the same specification as our Regular fit t-shirts, so if you already know your size in one of the tees, take the same here. It has a set-in sleeve and sits at the natural shoulder — there is no oversized cut of the polo.",
+  "fitWho": "The polo is graded to the same specification as our Regular fit t-shirts, so it runs slim like them: take the same letter as your Regular tee, which for most people is one size up from their usual letter. It has a set-in sleeve and sits at the natural shoulder — there is no oversized cut of the polo.",
   "specChips": [
     "240gsm piqué cotton",
     "Ribbed collar &amp; placket",
