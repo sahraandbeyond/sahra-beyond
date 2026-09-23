@@ -743,8 +743,24 @@ footer{position:relative;z-index:2}
     margin:20px 0 0!important;text-align:left}
   #s-hero .hslide-cap-i{text-align:left}
 }
-#s-hero .hslide-scrim{background:linear-gradient(180deg,rgba(10,8,18,.66) 0%,rgba(10,8,18,.52) 34%,
-  rgba(10,8,18,.50) 60%,rgba(10,8,18,.84) 100%)}
+/* ---- brighter hero (Faheem, 23 Sep: 'too dark, photos need to be brighter
+   and clearer'). This rule used to lay a 50-84% dark wash over the WHOLE
+   frame, models included, on top of photos that are already dusk shots. The
+   scrim now darkens only where type sits: the type column on the left, a thin
+   band under the nav, and (on phones) the top and bottom thirds. The models
+   get no wash at all. The column edge follows the strip's own left edge. */
+#s-hero .hslide-scrim{background:
+  linear-gradient(180deg,rgba(10,8,18,.40) 0%,rgba(10,8,18,0) 17%,rgba(10,8,18,0) 86%,rgba(10,8,18,.28) 100%),
+  linear-gradient(90deg,rgba(10,8,18,.50) 0%,rgba(10,8,18,.42) calc(clamp(300px,42%,600px) - 90px),
+                  rgba(10,8,18,0) calc(clamp(300px,42%,600px) + 70px))}
+@media(max-width:860px){
+  /* the tagline sits at ~23-35% of the phone hero, right over the setting
+     sun, so the top band holds until ~34% and is clear before the heads (~45%) */
+  #s-hero .hslide-scrim{background:linear-gradient(180deg,rgba(10,8,18,.62) 0%,rgba(10,8,18,.54) 24%,
+    rgba(10,8,18,.44) 33%,rgba(10,8,18,0) 43%,rgba(10,8,18,0) 50%,rgba(10,8,18,.34) 62%,rgba(10,8,18,.80) 100%)}
+}
+/* with less scrim, the small type carries its own shadow */
+#s-hero .hslide-cap-i,#s-hero .lede,#s-hero .meta{text-shadow:0 1px 14px rgba(8,6,14,.72),0 1px 3px rgba(8,6,14,.62)}
 
 /* The ring used to be a flex child of #s-hero .j-wrap sized by
    #s-hero .hring{flex:0 0 clamp(340px,44vw,600px)}. Out here its container is a
@@ -790,7 +806,7 @@ footer{position:relative;z-index:2}
 @media(min-width:521px){
   .hslide-f::before{content:'';position:absolute;inset:-6%;background-image:var(--hsimg);
     background-size:cover;background-position:50% 45%;
-    filter:blur(34px) saturate(.9) brightness(.62);z-index:0}
+    filter:blur(34px) saturate(1) brightness(.8);z-index:0}
   .hs-strip .hs-t:nth-child(n+2){display:block}
 }
 /* a 320x568 screen leaves a 426px hero, wider than 2:3 once the bars are off -
@@ -1304,7 +1320,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <!-- 1 · HERO · Liwa at golden hour -->
 <section class="stop tall right" id="s-hero" data-tod="dawn" data-bg="liwa">
-  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0" style="--hsimg:url('/shirts/hero-places-a.jpg')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-places-a.jpg" alt="" width="1100" height="1650" style="--x:45%" fetchpriority="high" decoding="async"><img class="hs-t" src="/shirts/hero-places-b.jpg" alt="" width="1100" height="1650" style="--x:55%" fetchpriority="high" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-a.jpg" alt="" width="1100" height="1650" style="--x:30%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="1" style="--hsimg:url('/shirts/hero-cloth-a.jpg')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-cloth-a.jpg" alt="" width="1100" height="1650" style="--x:84%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-cloth-b.jpg" alt="" width="1100" height="1650" style="--x:63%" loading="lazy" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-b.jpg" alt="" width="1100" height="1650" style="--x:42%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="2" style="--hsimg:url('/shirts/hero-making-a.jpg')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-making-a.jpg" alt="" width="1100" height="1650" style="--x:48%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-making-b.jpg" alt="" width="1100" height="1650" style="--x:55%" loading="lazy" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-c.jpg" alt="" width="1100" height="1650" style="--x:47%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="3" style="--hsimg:url('/shirts/hero-trust-a.jpg')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-trust-a.jpg" alt="" width="1100" height="1650" style="--x:64%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-trust-b.jpg" alt="" width="1100" height="1650" style="--x:44%" loading="lazy" decoding="async"></span></figure><span class="hslide-scrim"></span></div>  <div class="j-wrap"><div class="col">
+  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0" style="--hsimg:url('/shirts/hero-places-a.jpg')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-places-a.jpg" alt="" width="1200" height="1800" style="--x:45%" fetchpriority="high" decoding="async"><img class="hs-t" src="/shirts/hero-places-b.jpg" alt="" width="1200" height="1800" style="--x:55%" fetchpriority="high" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-a.jpg" alt="" width="1200" height="1800" style="--x:30%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="1" style="--hsimg:url('/shirts/hero-cloth-a.jpg')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-cloth-a.jpg" alt="" width="1200" height="1800" style="--x:84%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-cloth-b.jpg" alt="" width="1200" height="1800" style="--x:63%" loading="lazy" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-b.jpg" alt="" width="1200" height="1800" style="--x:42%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="2" style="--hsimg:url('/shirts/hero-making-a.jpg')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-making-a.jpg" alt="" width="1200" height="1800" style="--x:48%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-making-b.jpg" alt="" width="1200" height="1800" style="--x:55%" loading="lazy" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-c.jpg" alt="" width="1200" height="1800" style="--x:47%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="3" style="--hsimg:url('/shirts/hero-trust-a.jpg')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-trust-a.jpg" alt="" width="1200" height="1800" style="--x:64%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-trust-b.jpg" alt="" width="1200" height="1800" style="--x:44%" loading="lazy" decoding="async"></span></figure><span class="hslide-scrim"></span></div>  <div class="j-wrap"><div class="col">
     <h1><span class="rv">Wear the</span> <em class="rv">wild side</em> <span class="rv">of the UAE.</span></h1>
     <div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>Limited first run</b>Three places you can drive to &mdash; Al Quaa, Liwa and Wadi Naqab.</span><span class="hslide-cap-i" data-hc="1"><b>The cloth</b>230 gsm combed ring-spun cotton, regular and oversized. <b>AED&nbsp;199</b>.</span><span class="hslide-cap-i" data-hc="2"><b>The making</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="3"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free returns</span></span></div>
 
