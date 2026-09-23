@@ -15,8 +15,8 @@
   "imgFront": "/shirts/alquaa-regular-front.jpg",
   "imgBack": "/shirts/alquaa-regular-back.jpg",
   "imgCard": [
-    "/shirts/alquaa-regular-back-fit.jpg",
-    "/shirts/alquaa-regular-front-fit.jpg"
+    "/shirts/alquaa-dune-back.jpg",
+    "/shirts/alquaa-dune-front.jpg"
   ],
   "altMain": "Al Quaa Galaxy — Regular, regular fit — design across the back",
   "altFront": "Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut",
@@ -118,6 +118,31 @@
   "imgCompare": "/shirts/alquaa-fit-comparison.jpg",
   "altCompare": "Al Quaa Galaxy — Regular — regular fit and oversized fit shown side by side",
   "fitLabel": "Regular fit",
-  "modelShots": [],
-  "modelInfo": ""
+  "modelShots": [
+    {
+      "src": "/shirts/alquaa-dune-back.jpg",
+      "alt": "The Al Quaa Galaxy tee worn in the dunes — the printed Milky Way running across the back"
+    },
+    {
+      "src": "/shirts/alquaa-dune-print.jpg",
+      "alt": "The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line"
+    },
+    {
+      "src": "/shirts/alquaa-dune-print-2.jpg",
+      "alt": "The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder"
+    },
+    {
+      "src": "/shirts/alquaa-dune-front.jpg",
+      "alt": "The Al Quaa Galaxy tee, front, worn in the dunes — the embroidered sun-and-dune mark on the chest"
+    },
+    {
+      "src": "/shirts/alquaa-dune-chest.jpg",
+      "alt": "The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton"
+    },
+    {
+      "src": "/shirts/alquaa-dune-mark.jpg",
+      "alt": "The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close"
+    }
+  ],
+  "modelInfo": "All worn photos show the Regular fit."
 }

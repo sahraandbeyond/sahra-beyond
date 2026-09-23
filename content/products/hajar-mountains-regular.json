@@ -15,8 +15,8 @@
   "imgFront": "/shirts/hajar-regular-front.jpg",
   "imgBack": "/shirts/hajar-regular-back.jpg",
   "imgCard": [
-    "/shirts/hajar-regular-back-fit.jpg",
-    "/shirts/hajar-regular-front-fit.jpg"
+    "/shirts/hajar-dune-back.jpg",
+    "/shirts/hajar-dune-front.jpg"
   ],
   "altMain": "Hajar Mountains — Regular, regular fit — design across the back",
   "altFront": "Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut",
@@ -118,6 +118,15 @@
   "imgCompare": "/shirts/hajar-fit-comparison.jpg",
   "altCompare": "Hajar Mountains — Regular — regular fit and oversized fit shown side by side",
   "fitLabel": "Regular fit",
-  "modelShots": [],
-  "modelInfo": ""
+  "modelShots": [
+    {
+      "src": "/shirts/hajar-dune-back.jpg",
+      "alt": "The Hajar Mountains tee worn in the dunes — the printed ridgeline across the back with the coordinates beneath it"
+    },
+    {
+      "src": "/shirts/hajar-dune-front.jpg",
+      "alt": "The Hajar Mountains tee, front, worn in the dunes — the chest mark on the sand-coloured cotton"
+    }
+  ],
+  "modelInfo": "All worn photos show the Regular fit."
 }

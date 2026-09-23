@@ -15,8 +15,8 @@
   "imgFront": "/shirts/emptyquarter-regular-front.jpg",
   "imgBack": "/shirts/emptyquarter-regular-back.jpg",
   "imgCard": [
-    "/shirts/emptyquarter-regular-front-fit.jpg",
-    "/shirts/emptyquarter-regular-back-fit.jpg"
+    "/shirts/emptyquarter-dune-front.jpg",
+    "/shirts/emptyquarter-dune-back.jpg"
   ],
   "altMain": "Empty Quarter — Regular, regular fit — embroidered design on the front",
   "altFront": "Empty Quarter — Regular, regular fit, front view showing the set-in shoulder and classic cut",
@@ -113,6 +113,27 @@
   "imgCompare": "/shirts/emptyquarter-fit-comparison.jpg",
   "altCompare": "Empty Quarter — Regular — regular fit and oversized fit shown side by side",
   "fitLabel": "Regular fit",
-  "modelShots": [],
-  "modelInfo": ""
+  "modelShots": [
+    {
+      "src": "/shirts/emptyquarter-dune-front.jpg",
+      "alt": "The Empty Quarter tee worn in the dunes at sunset — the tonal embroidered dunes, sun and صحراء on the chest"
+    },
+    {
+      "src": "/shirts/emptyquarter-dune-chest.jpg",
+      "alt": "The Empty Quarter tee, chest close in the dunes — the tonal embroidery catching the low sun"
+    },
+    {
+      "src": "/shirts/emptyquarter-dune-detail.jpg",
+      "alt": "The Empty Quarter tee, the embroidered chest at an angle — thread on thread, sand on sand"
+    },
+    {
+      "src": "/shirts/emptyquarter-dune-back.jpg",
+      "alt": "The Empty Quarter tee from behind in the dunes — plain across the back"
+    },
+    {
+      "src": "/shirts/emptyquarter-dune-neck.jpg",
+      "alt": "The Empty Quarter tee, back neck close — the printed collar label below the collar seam"
+    }
+  ],
+  "modelInfo": "All worn photos show the Regular fit."
 }

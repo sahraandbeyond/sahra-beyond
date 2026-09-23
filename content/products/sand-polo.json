@@ -13,14 +13,14 @@
   "theme2": "#AE9C91",
   "accent": "#9C521B",
   "scene": "dunes",
-  "imgMain": "/shirts/polo-studio-front.jpg",
-  "imgFront": "/shirts/polo-studio-front.jpg",
+  "imgMain": "/shirts/polo-dune-front.jpg",
+  "imgFront": "/shirts/polo-dune-front.jpg",
   "imgCard": [
-    "/shirts/polo-front.jpg",
-    "/shirts/polo-drape.jpg"
+    "/shirts/polo-dune-front.jpg",
+    "/shirts/polo-dune-back.jpg"
   ],
-  "altMain": "The Sahra Polo in sand, front — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
-  "altFront": "The Sahra Polo in sand, front — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
+  "altMain": "The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
+  "altFront": "The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
   "seoTitle": "The Sahra Polo — Embroidered 240gsm Cotton Polo",
   "seoDesc": "The Sahra Polo — 240gsm piqué cotton, embroidered rather than printed, in sand. A limited first run. The scarcest piece in the drop. AED 229.",
   "shareDesc": "240gsm embroidered piqué polo in sand. A limited first run.",
@@ -116,35 +116,47 @@
   "decoration": "Embroidered",
   "modelShots": [
     {
-      "src": "/shirts/polo-front.jpg",
-      "alt": "The Sahra Polo worn against a 4x4 in the dunes — the full front, three-button placket and embroidered chest mark"
+      "src": "/shirts/polo-dune-front.jpg",
+      "alt": "The Sahra Polo worn in the dunes at sunset — the full front, three-button placket and the embroidered صحراء mark"
     },
     {
-      "src": "/shirts/polo-drape.jpg",
-      "alt": "The Sahra Polo held at the hem — the weight of the piqué and the side seam"
+      "src": "/shirts/polo-dune-three-quarter.jpg",
+      "alt": "The Sahra Polo in the dunes, three-quarter — the placket open at the neck and the piqué texture in low sun"
     },
     {
-      "src": "/shirts/polo-sleeve.jpg",
-      "alt": "The Sahra Polo, chest and sleeve — the embroidered mark and the sleeve cuff"
+      "src": "/shirts/polo-dune-side.jpg",
+      "alt": "The Sahra Polo from the side in the dunes — the straight hem and the set-in sleeve"
     },
     {
-      "src": "/shirts/polo-chest.jpg",
-      "alt": "The Sahra Polo, chest detail — the embroidered صحراء mark and the buttoned placket on 240gsm piqué"
+      "src": "/shirts/polo-dune-look.jpg",
+      "alt": "The Sahra Polo in the dunes — the chest, sleeve and the ribbed collar in evening light"
     },
     {
-      "src": "/shirts/polo-shoulder.jpg",
-      "alt": "The Sahra Polo, shoulder and chest — the embroidered mark beside the shoulder seam"
+      "src": "/shirts/polo-dune-back.jpg",
+      "alt": "The Sahra Polo from behind in the dunes — plain across the back, with the ribbed collar and shoulder seams"
     },
     {
-      "src": "/shirts/polo-chest-angle.jpg",
-      "alt": "The Sahra Polo, chest at an angle — the embroidered mark and the placket"
+      "src": "/shirts/polo-dune-collar.jpg",
+      "alt": "The Sahra Polo, collar and chest close — the ribbed collar, the three-button placket and the embroidered mark"
     },
     {
-      "src": "/shirts/polo-embroidery.jpg",
-      "alt": "Close-up of the embroidery on The Sahra Polo — the dune line, sun and صحراء stitched in cream thread on sand piqué"
+      "src": "/shirts/polo-dune-placket.jpg",
+      "alt": "The Sahra Polo, placket close — the buttons, the piqué weave and the embroidered صحراء mark on the chest"
+    },
+    {
+      "src": "/shirts/polo-dune-sunset.jpg",
+      "alt": "The Sahra Polo worn on a dune ridge at sunset, wide — the sun on the horizon behind"
+    },
+    {
+      "src": "/shirts/polo-studio-front.jpg",
+      "alt": "The Sahra Polo, front, against a plain ground — the full cut of the 240gsm piqué"
+    },
+    {
+      "src": "/shirts/polo-studio-back.jpg",
+      "alt": "The Sahra Polo, back, against a plain ground — undecorated 240gsm piqué"
     }
   ],
-  "imgBack": "/shirts/polo-studio-back.jpg",
-  "modelInfo": "Model wears XL",
-  "altBack": "The Sahra Polo in sand, back — plain 240gsm cotton piqué, undecorated, with the ribbed collar and set-in sleeve seams"
+  "imgBack": "/shirts/polo-dune-back.jpg",
+  "modelInfo": "",
+  "altBack": "The Sahra Polo in sand, worn in the dunes, from behind — plain 240gsm cotton piqué, undecorated, with the ribbed collar and set-in sleeve seams"
 }
