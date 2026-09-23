@@ -2,7 +2,7 @@
  "handle": "_shop",
  "count": 4,
  "average": 5,
- "syncedAt": "2026-09-16",
+ "syncedAt": "2026-09-23",
  "reviews": [
   {
    "id": 1322856125,
@@ -16,7 +16,8 @@
    "handle": "judgeme-shop-reviews",
    "externalId": 0,
    "productTitle": "Judge.me Shop Reviews",
-   "reply": ""
+   "reply": "",
+   "fit": null
   },
   {
    "id": 1319844158,
@@ -30,7 +31,8 @@
    "handle": "judgeme-shop-reviews",
    "externalId": 0,
    "productTitle": "Judge.me Shop Reviews",
-   "reply": ""
+   "reply": "",
+   "fit": null
   },
   {
    "id": 1314155164,
@@ -44,7 +46,8 @@
    "handle": "judgeme-shop-reviews",
    "externalId": 0,
    "productTitle": "Judge.me Shop Reviews",
-   "reply": ""
+   "reply": "",
+   "fit": null
   },
   {
    "id": 1313149204,
@@ -58,7 +61,8 @@
    "handle": "judgeme-shop-reviews",
    "externalId": 0,
    "productTitle": "Judge.me Shop Reviews",
-   "reply": ""
+   "reply": "",
+   "fit": null
   }
  ]
 }
