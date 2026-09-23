@@ -1093,7 +1093,7 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 .arp-tile-p{font-weight:700;padding:0 14px}
 .arp-tile-b{font-size:13.5px;color:#7E4114;padding:0 14px}
 @media(max-width:760px){.ar-main.arp{padding-top:80px}.arp-top{grid-template-columns:1fr;gap:16px}.arp-buy{padding:18px 16px}.arp-main{aspect-ratio:auto;height:min(40vh,360px)}.arp-grid{grid-template-columns:1fr 1fr;gap:12px}.arp-tile-t{font-size:16px}}
-[dir="rtl"] .sb-price,[dir="rtl"] .price,[dir="rtl"] .gsm,
+[dir="rtl"] .sb-price:not([dir="rtl"]),[dir="rtl"] .price,[dir="rtl"] .gsm,
 [dir="rtl"] code,[dir="rtl"] .sbw-code b{
   direction:ltr;unicode-bidi:embed;display:inline-block;
 }
@@ -3163,7 +3163,8 @@ const AR_PDP_NOINDEX = true;
     const f = path.join(ARDIR, p.id + '.json');
     return fs.existsSync(f) ? { p, a: JSON.parse(fs.readFileSync(f, 'utf8')) } : null;
   }).filter(Boolean).sort((x, y) => (x.p.order || 0) - (y.p.order || 0));
-  const priceHtml = p => `<span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span>`;
+  /* Arabic price badge: '199 درهم', right-to-left; sahra-market.js keeps the Arabic form when it converts currency */
+  const priceHtml = p => `<span class="sb-price" dir="rtl" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">${esc(String(p.price))} درهم</span>`;
   const designHandles = p => p.siblingOf ? [p.siblingOf + '-regular', p.siblingOf + '-oversized'] : [p.id];
   const shipLine = `<span class="sb-ship-uae">${esc(S.shipUae)}</span><span class="sb-ship-gcc">${esc(S.shipGcc)}</span><span class="sb-ship-intl">${esc(S.shipIntl)}</span>`;
 
@@ -3281,7 +3282,7 @@ const AR_PDP_NOINDEX = true;
   }).join('');
   write('ar/shop/index.html', shell({
     lang: 'ar', noindex: AR_PDP_NOINDEX, altHref: `${SITE}/shop/`,
-    title: 'المتجر | Sahra & Beyond', desc: S.fabricTee, canonical: `${SITE}/ar/shop/`,
+    title: 'المتجر | صحراء وما بعدها', desc: S.fabricTee, canonical: `${SITE}/ar/shop/`,
     jsonld: { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'المتجر', inLanguage: 'ar', url: `${SITE}/ar/shop/` },
     bodyHtml: `
 <main class="ar-main arp">

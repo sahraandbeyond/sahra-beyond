@@ -169,7 +169,7 @@
       var a = document.createElement('a');
       a.className = 'sbl-lang ' + cls; a.href = href;
       a.setAttribute('hreflang', ar ? 'en' : 'ar'); a.setAttribute('lang', ar ? 'en' : 'ar');
-      a.textContent = ar ? 'English' : 'عربي';
+      a.textContent = ar ? 'English' : 'العربية';   /* the same word the /ar/ pages use */
       a.setAttribute('aria-label', ar ? 'Read this page in English' : 'اقرأ بالعربية — Arabic');
       a.addEventListener('click', function () { try { if (window.track) track('language_switch', { to: ar ? 'en' : 'ar', from_path: p }); } catch (e) {} });
       return a;

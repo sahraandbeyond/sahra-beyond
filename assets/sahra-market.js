@@ -64,10 +64,14 @@
   // NOTE: DECIMALS and this formatter are intentionally mirrored in
   // sahra-cart.js (the two files have no shared bundle). If a currency's
   // decimals ever change, change BOTH, or the page and the drawer disagree.
+  /* Arabic pages (23 Sep 2026): "199 درهم", number first, read right to left */
+  var AR_PAGE = /^ar/i.test(document.documentElement.getAttribute('lang') || '');
+  var AR_CUR = { AED: 'درهم', SAR: 'ريال سعودي', QAR: 'ريال قطري', OMR: 'ريال عُماني', BHD: 'دينار بحريني', KWD: 'دينار كويتي', USD: 'دولار أمريكي', EUR: 'يورو', GBP: 'جنيه إسترليني' };
   function fmt(amount, cur) {
     cur = cur || 'AED';
     var d = DECIMALS[cur] != null ? DECIMALS[cur] : 2;
     var n = parseFloat(amount || 0);
+    if (AR_PAGE && AR_CUR[cur]) return ((d === 2 && n % 1 === 0) ? n.toFixed(0) : n.toFixed(d)) + ' ' + AR_CUR[cur];
     // Brand style is "AED 199", clean integers for whole amounts — but only
     // where the currency genuinely has no sub-unit in play.
     if (d === 2 && n % 1 === 0) return cur + ' ' + n.toFixed(0);
@@ -147,7 +151,7 @@
       // The AED numbers are baked into the HTML — restore them from the
       // attribute stamped at build time rather than refetching what we have.
       document.querySelectorAll('.sb-price[data-aed]').forEach(function (el) {
-        el.textContent = 'AED ' + el.getAttribute('data-aed');
+        el.textContent = fmt(el.getAttribute('data-aed'), 'AED');
       });
       return;
     }
