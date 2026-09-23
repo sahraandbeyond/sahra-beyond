@@ -81,6 +81,13 @@ function related(p, all){
 
 /* Gallery slides, deduped. imgMain is the same file as imgFront on the products
    whose design sits on the front, which rendered slide 1 and slide 2 identically. */
+/* THE DROP PILL IS DELIBERATELY NOT RENDERED (Faheem, 23 Sep).
+   It sat on the gallery image and carried a per-DESIGN number - Al Quaa 01,
+   Empty Quarter 02, Hajar 03 - which reads to a buyer as three separate drops.
+   Everything on sale is Drop 01, the Founding Edition, and the PDP already says
+   so twice: the eyebrow and the "limited first run" chip. p.drop is now Drop 01
+   across the whole catalogue, so the pill can return when Sahel ships and there
+   are genuinely two drops to tell apart. The .gal-tag CSS is kept for that. */
 function galShots(p) {
   const raw = [
     [p.imgMain, p.altMain, 'View'],
@@ -222,6 +229,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
    viewer. Matches the .frame pattern on the homepage. */
 .gal-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .6s ease,transform .9s ease}
 .gal-main img.on{opacity:1;transform:scale(1)}
+/* dormant: the drop pill is not rendered - see the note above galShots() */
 .gal-tag{position:absolute;top:15px;left:15px;z-index:2;background:rgba(0,0,0,.78);color:var(--gold);backdrop-filter:blur(6px);font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px}
 /* Fit badge is HTML, deliberately. A label baked into the image is cut by
    every crop this site applies - 4/5 takes 10% off each side, 4/3 takes 12.5%
@@ -737,7 +745,6 @@ ${RV.CSS}
   <section class="pdp">
     <div class="media">
       <div class="gal-main" tabindex="0" role="button" aria-label="Zoom product image">
-        <span class="gal-tag">${esc(p.drop)}</span>
         <span class="gal-hint">Click to zoom</span>
         <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
 ${galShots(p).map((s,i)=>`
@@ -754,7 +761,7 @@ ${galShots(p).map((s,i)=>`
            studio frames that open the polo gallery - data-worn-only binds it to the frames
            that actually show the model. The tees' note is a standing cross-fit warning about
            the whole gallery and stays visible throughout, so it is deliberately not tagged. */''}
-      ${p.modelInfo ? `<p class="gal-model${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' ? ' gal-model-alt' : ''}"${(p.garment === 'polo' || !p.fitLabel) ? ' data-worn-only="1"' : ''}>${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' ? 'Photographed on the Oversized cut \u2014 this page is the ' + esc(p.fitLabel || 'Regular fit').replace(/ fit$/,'') + ' fit, which is slimmer. ' : ''}${esc(p.modelInfo)}</p>` : ''}
+      ${p.modelInfo ? `<p class="gal-model${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' && p.wornFitMatches !== true ? ' gal-model-alt' : ''}"${(p.garment === 'polo' || !p.fitLabel) ? ' data-worn-only="1"' : ''}>${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' && p.wornFitMatches !== true ? 'Photographed on the Oversized cut \u2014 this page is the ' + esc(p.fitLabel || 'Regular fit').replace(/ fit$/,'') + ' fit, which is slimmer. ' : ''}${esc(p.modelInfo)}</p>` : ''}
     </div>
 
     <div class="buy">
@@ -867,7 +874,7 @@ ${galShots(p).map((s,i)=>`
             <a href="#fit">Full chart &darr;</a></p>
           ${/* same one-cut guard as the gallery badge: a garment with a single cut has no
                "other cut" for its worn photos to be showing (13 Sep). */''}
-          ${p.modelInfo ? `<p class="pdp-ans-foot">${esc(p.modelInfo)}${(p.fit === 'oversized' || p.garment === 'polo' || !p.fitLabel) ? '' : ' — the worn photos show the Oversized cut, not this one'}.</p>` : ''}
+          ${p.modelInfo ? `<p class="pdp-ans-foot">${esc(p.modelInfo)}${(p.fit === 'oversized' || p.garment === 'polo' || !p.fitLabel || p.wornFitMatches === true) ? '' : ' — the worn photos show the Oversized cut, not this one'}.</p>` : ''}
         </details>
         ${/* About the cotton + about the decoration (Faheem, 10 Sep): the fabric
              bars every heavyweight brand shows (weight / softness / stretch / breathability)
@@ -1130,6 +1137,12 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
      badge was stamping "PHOTO: OVERSIZED FIT" across a garment that has no oversized
      version - inventing a fit the product does not have, on a garment with a single cut. */
   var oneCut=${p.garment === 'polo' || !p.fitLabel};
+  /* ...and from 22 Sep the Regular pages have worn photos of their OWN cut (the
+     dune shoot), so the warning would now be the lie it exists to prevent - it was
+     stamping PHOTO: OVERSIZED FIT across a Regular-fit photograph. wornFitMatches
+     is set per product in the catalogue; warn only when the worn frames really do
+     show the other cut. */
+  var wornOther=!isOver && !oneCut && !${p.wornFitMatches === true};
   var fitBadge=document.querySelector('.gal-fit');
   if(!fitBadge && !isOver && !oneCut && main.querySelector('img[data-worn]')){
     fitBadge=document.createElement('span'); fitBadge.className='gal-fit'; fitBadge.setAttribute('aria-hidden','true');
@@ -1144,8 +1157,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
        since the photo shows the other cut */
     if(im && im.hasAttribute('data-worn') && !oneCut){
       if(!fitBadge.dataset.orig) fitBadge.dataset.orig=fitBadge.textContent;
-      fitBadge.textContent=tag?(isOver?tag:'Photo: '+tag):(isOver?fitBadge.dataset.orig:'PHOTO: OVERSIZED FIT');
-      fitBadge.classList.toggle('warnfit',!isOver);
+      fitBadge.textContent=tag?(wornOther?'Photo: '+tag:tag):(wornOther?'PHOTO: OVERSIZED FIT':fitBadge.dataset.orig);
+      fitBadge.classList.toggle('warnfit',wornOther);
     } else if(fitBadge.dataset.orig){
       fitBadge.textContent=fitBadge.dataset.orig; fitBadge.classList.remove('warnfit');
     }

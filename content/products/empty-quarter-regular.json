@@ -3,7 +3,7 @@
   "name": "Empty Quarter — Regular",
   "nameHtml": "Empty <em>Quarter</em> &mdash; <em>Regular</em>",
   "sku": "SB-EQ-REG",
-  "drop": "Drop 02",
+  "drop": "Drop 01",
   "order": 21,
   "price": "199",
   "shopAnchor": "empty-quarter-regular",
@@ -135,5 +135,6 @@
       "alt": "The Empty Quarter tee, back neck close — the printed collar label below the collar seam"
     }
   ],
-  "modelInfo": "All worn photos show the Regular fit."
+  "modelInfo": "All worn photos show the Regular fit.",
+  "wornFitMatches": true
 }

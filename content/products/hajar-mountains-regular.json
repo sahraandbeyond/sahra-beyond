@@ -3,7 +3,7 @@
   "name": "Hajar Mountains — Regular",
   "nameHtml": "Hajar <em>Mountains</em> &mdash; <em>Regular</em>",
   "sku": "SB-HAJ-REG",
-  "drop": "Drop 03",
+  "drop": "Drop 01",
   "order": 31,
   "price": "199",
   "shopAnchor": "hajar-mountains-regular",
@@ -128,5 +128,6 @@
       "alt": "The Hajar Mountains tee, front, worn in the dunes — the chest mark on the sand-coloured cotton"
     }
   ],
-  "modelInfo": "All worn photos show the Regular fit."
+  "modelInfo": "All worn photos show the Regular fit.",
+  "wornFitMatches": true
 }
