@@ -198,6 +198,8 @@ function teeBlock(l) {
         <div class="teecta-meta"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span><span>${p.printChip || ''}</span><span>&#10022; Limited first run</span></div>
         <a class="btn" href="${href}">See the tee &rarr;</a>
         ${p.siblingOf ? `<p class="teecta-alt">Also in <a href="/products/${p.siblingOf}-oversized/">Oversized</a></p>` : ''}
+        ${/^hajar-mountains-/.test(p.id) ? `<p class="teecta-alt">More <a href="/mountain-t-shirts/">mountain t-shirts</a></p>`
+          : /^(empty-quarter|al-quaa-galaxy)-/.test(p.id) ? `<p class="teecta-alt">More <a href="/desert-t-shirts/">desert t-shirts</a></p>` : ''}
       </div>
     </div>
   </section>`;
@@ -793,7 +795,7 @@ function footerHtml() {
 function navKeyFor(slug) {
   const s = String(slug || '').replace(/\/index\.html$/, '').replace(/^\/|\/$/g, '');
   if (s === 'polos') return 'polos';
-  if (s === 't-shirts' || s.startsWith('t-shirts/')) return 'tshirts';
+  if (s === 't-shirts' || s.startsWith('t-shirts/') || /^(mountain|desert)-t-shirts$/.test(s)) return 'tshirts';
   if (s === 'places' || s.startsWith('locations/')) return 'places';
   if (s === 'about') return 'about';
   if (s === 'shop') return 'shop';
@@ -1590,7 +1592,7 @@ function contactWays() {
     <g class="ab-arabic"><path class="ab-ink" fill-rule="evenodd" d="${L.arabic.d}"/></g>
   </svg>`;
   const places = [
-    { name: 'Al Quaa', emirate: 'Abu Dhabi', gps: '23.529° N · 54.753° E', blurb: 'One of the darkest skies in the Emirates. Far enough south that no city glow reaches it — on a clear night the Milky Way throws a shadow.', href: '/products/al-quaa-galaxy-regular/', tee: 'Al Quaa Galaxy', img: '/assets/places/alquaa.jpg', alt: 'The Milky Way over the dunes at Al Quaa' },
+    { name: 'Al Quaa', emirate: 'Abu Dhabi', gps: '23.529° N · 54.753° E', blurb: 'One of the darkest accessible skies in the Emirates. Far enough south that no city glow reaches it — on a clear night the Milky Way throws a shadow.', href: '/products/al-quaa-galaxy-regular/', tee: 'Al Quaa Galaxy', img: '/assets/places/alquaa.jpg', alt: 'The Milky Way over the dunes at Al Quaa' },
     { name: 'Liwa', emirate: 'Abu Dhabi', gps: '23.134° N · 53.779° E', blurb: 'Where the Empty Quarter begins. Some of the largest dunes on earth; at sunset the ridges turn gold and the whole horizon goes quiet.', href: '/products/empty-quarter-regular/', tee: 'Empty Quarter', img: '/assets/places/liwa.jpg', alt: 'The sun setting over the dunes of Liwa' },
     { name: 'Wadi Naqab', emirate: 'Ras Al Khaimah', gps: '25.699° N · 56.005° E', blurb: 'Red-rock walls and terraced pools high in the Hajar, below Jebel Jais — the range that gives the northern Emirates their skyline.', href: '/products/hajar-mountains-regular/', tee: 'Hajar Mountains', img: '/assets/places/wadi-naqab.jpg', alt: 'Red rock peaks above Wadi Naqab in the Hajar Mountains' }
   ];
@@ -2194,12 +2196,12 @@ const COMMERCE = [
   {
     slug: 't-shirts', emoji: '◈', cat: 'Dunes',
     h1: 'UAE T-Shirts',
-    title: 'UAE T-Shirts — Original Designs from Real Places',
-    desc: 'Original UAE t-shirts inspired by real places — the dark sky at Al Quaa, the dunes of Liwa, the Hajar mountains. 230gsm combed ring-spun cotton, limited runs.',
+    title: 'UAE T-Shirts & Graphic Tees — Desert, Mountain and Galaxy',
+    desc: 'Original UAE graphic tees from real places: an embroidered desert tee from Liwa, a mountain t-shirt from the Hajar, the Milky Way over Al Quaa. 230gsm cotton.',
     catNav: true,
-    intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm combed ring-spun cotton, and made in limited runs.",
+    intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm combed ring-spun cotton, and made in limited runs.",
     sections: [
-      { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over one of the darkest skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
+      { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over one of the darkest accessible skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
       { h2: 'The fabric, plainly', body: "All our t-shirts are 230gsm, 100% combed ring-spun cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.\n\nEvery piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere." },
       { h2: 'Regular and oversized fits', body: "Everything is cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL. Each t-shirt design comes in both a Regular and an Oversized fit; the polo comes in one. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
       { h2: 'Limited runs', body: "Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything." }
@@ -2281,6 +2283,42 @@ const COMMERCE = [
 
 
 const CATEGORIES = [
+  /* Themed collections (Faheem, 23 Sep). Search Console showed 5 clothing
+     queries out of 361 in three months: people search by what is ON the shirt
+     ("mountain t-shirt", "desert tee", "galaxy shirt"), and a collection page
+     is what Google ranks for a generic search like that, ahead of any single
+     product. pick() filters by design rather than by the single-valued
+     category, so the same tee can sit in its fit page AND its theme page. */
+  { slug:'mountain-t-shirts', cat:'theme-mountain', emoji:'▲', catBg:'Mountains',
+    pick: p => /^hajar-mountains-/.test(p.id),
+    h1:'Mountain T-Shirts',
+    title:'Mountain T-Shirts & Graphic Tees — Hajar Mountains, UAE',
+    desc:'Mountain t-shirts drawn from the Hajar range in the UAE: the peaks in contour lines on the front, red rock printed across the back. 230gsm cotton, two fits.',
+    intro:"Most mountain t-shirts carry a peak that could be anywhere — a stock silhouette with a slogan underneath. Ours has one range on it, and it is this country's: the Hajar Mountains, which run through the northern Emirates and on into Oman.\n\nThe design takes the language of a topographic map literally. The peaks on the front are reduced to contour lines; the red rock itself is printed across the back, with the coordinates beneath it. It is inspired by Wadi Naqab, a seasonal wadi high in the Hajar below Jebel Jais, in Ras Al Khaimah.\n\nOne design, two cuts: a slim Regular and a true drop-shoulder Oversized.",
+    sections: [
+      { h2: 'Printed, and where', body: "The mountain graphic is printed direct to garment: the ink goes into the cotton rather than sitting on top of it as a film, so it stays soft and the fabric keeps breathing. The small mark above it is embroidered." },
+      { h2: 'The cloth and the fit', body: "230gsm combed ring-spun cotton, in Flint Gray, cut unisex in S to XL.\n\nRegular is a slim, straight cut — most people take one size up from their usual letter. Oversized has a true dropped shoulder, the seam sitting 2–3″ below your natural shoulder, so the width reads as a shape rather than a bigger shirt." }
+    ],
+    faqs: [
+      { q:'Is this a hiking shirt?', a:'No, and we would rather say so. It is a heavyweight cotton t-shirt, not a technical garment — it will not wick sweat the way a synthetic hiking shirt does. It is made for the drive out, the evening at camp and everywhere after.' },
+      { q:'Which mountains are on it?', a:'The Hajar Mountains, the range that runs through the northern Emirates and into Oman. The design is inspired by Wadi Naqab, below Jebel Jais in Ras Al Khaimah.' },
+      { q:'How much is it, and how fast is delivery?', a:'AED 199, in Regular or Oversized. In the UAE, delivery is free and arrives the next working day when you order by 2 pm.' }
+    ] },
+  { slug:'desert-t-shirts', cat:'theme-desert', emoji:'◠', catBg:'Dunes',
+    pick: p => /^(empty-quarter|al-quaa-galaxy)-/.test(p.id),
+    h1:'Desert T-Shirts',
+    title:'Desert T-Shirts & Graphic Tees — Liwa and Al Quaa, UAE',
+    desc:'Desert t-shirts from the UAE: an embroidered sun over the dunes of Liwa, and the Milky Way over Al Quaa. 230gsm cotton, in Regular and Oversized fits.',
+    intro:"Two of our designs come from the desert, and they come from opposite ends of the same day.\n\nThe Empty Quarter tee is the evening: a tonal sun setting over the dune ridges of Liwa, on the northern edge of the Rub' al Khali. It is embroidered rather than printed — thread laid into the cloth, sand on sand.\n\nThe Al Quaa Galaxy tee is the night that follows: the Milky Way as it rises over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back with a small embroidered mark on the chest.\n\nBoth come in a slim Regular and a true drop-shoulder Oversized.",
+    sections: [
+      { h2: 'Embroidered or printed', body: "The two desert designs are made differently, on purpose. The Empty Quarter is embroidered throughout, with no print anywhere on it. The Al Quaa Galaxy is printed direct to garment across the back — the ink goes into the cotton rather than sitting on top — with the mark on the chest embroidered." },
+      { h2: 'The cloth and the fit', body: "230gsm combed ring-spun cotton, cut unisex in S to XL.\n\nRegular is a slim, straight cut — most people take one size up from their usual letter. Oversized has a true dropped shoulder, the seam sitting 2–3″ below your natural shoulder." }
+    ],
+    faqs: [
+      { q:'Are these made for the desert heat?', a:'They are 230gsm cotton — heavier than a standard t-shirt, and not a technical garment. In the heat, fit matters more than weight: cloth held slightly off the skin moves more air, which is where the Oversized cut helps. Most people wear them for the drive out and the evening, once it cools.' },
+      { q:'Where are Liwa and Al Quaa?', a:"Both are in Abu Dhabi. Liwa sits on the northern edge of the Empty Quarter, the largest continuous sand desert in the world; Al Quaa is inland in the south-east, far from city light." },
+      { q:'How much are they, and how fast is delivery?', a:'AED 199 each, in Regular or Oversized. In the UAE, delivery is free and arrives the next working day when you order by 2 pm.' }
+    ] },
   { slug:'t-shirts/regular', cat:'regular-tees', emoji:'▭', catBg:'Dunes',
     h1:'Regular Fit T-Shirts',
     title:'Regular Fit T-Shirts — UAE Designs | Sahra & Beyond',
@@ -2342,7 +2380,9 @@ function catCards(list) {
 }
 
 CATEGORIES.forEach(C => {
-  const items = BY_CATEGORY(C.cat);
+  const items = C.pick
+    ? PRODUCTS_ALL.filter(C.pick).sort((a,b)=>(a.order||0)-(b.order||0))
+    : BY_CATEGORY(C.cat);
   // Deep-link into the shop with this category preselected. The shop reads these
   // params on load, so /shop/?fit=oversized opens already filtered.
   const SHOP = (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html';
@@ -2369,7 +2409,7 @@ CATEGORIES.forEach(C => {
   <main>
     <div class="content">${paras(C.intro)}</div>
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${C.h1}</span></div>${catCards(items)}
-      <a class="btn shoplink" href="${shopHref}">Shop ${esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+      <a class="btn shoplink" href="${shopHref}">${C.pick ? 'Shop every t-shirt' : 'Shop ' + esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
     ${RV.homepageBand({ compact: true })}
     ${foldsBlock(C.sections, 'Fabric, cut and make')}
     ${Array.isArray(C.faqs) && C.faqs.length ? `<section class="faq"><h2>Frequently asked questions</h2>${C.faqs.map(q => `<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''}
@@ -2422,6 +2462,8 @@ COMMERCE.forEach(P => {
       <a href="/t-shirts/regular/"><b>Regular fit</b><span>Slim cut — size up if in doubt</span></a>
       <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
       <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; limited run</span></a>
+      <a href="/mountain-t-shirts/"><b>Mountain t-shirts</b><span>The Hajar range, printed</span></a>
+      <a href="/desert-t-shirts/"><b>Desert t-shirts</b><span>Liwa dunes &middot; Al Quaa night sky</span></a>
     </nav>` : ''}
     ${collectionBlock(null, P.slug === 't-shirts')}
     ${P.slug === 't-shirts' ? RV.homepageBand({ compact: true }) : ''}

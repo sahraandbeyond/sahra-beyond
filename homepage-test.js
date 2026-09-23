@@ -870,7 +870,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   const page = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   const head = page.slice(0, page.indexOf('</head>'));
   check('index.html is indexable (no robots noindex)', !/name="robots"[^>]*noindex/.test(head));
-  check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond — Original UAE T-Shirts<\/title>/.test(page));
+  check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond — Desert &amp; Mountain Graphic Tees from the UAE<\/title>/.test(page));
   check('index.html canonical is the root', /<link rel="canonical" href="https:\/\/www\.sahraandbeyond\.ae\/">/.test(head));
   check('index.html does not load Lenis (native scroll drives the journey)', !/lenis/i.test(head));
   check('the seven grid cards are real links (the missing-quote bug never returns)',

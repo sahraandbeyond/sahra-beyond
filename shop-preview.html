@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow"><!-- preview only — stripped when /shop/ is generated at launch -->
-<title>Shop UAE T-Shirts — Limited Drops | Sahra &amp; Beyond</title>
+<title>Shop Desert &amp; Mountain Graphic Tees | Sahra &amp; Beyond</title>
 <meta property="og:title" content="Shop UAE-Inspired Tees | Sahra &amp; Beyond">
 <meta property="og:description" content="Original heavyweight 230gsm cotton tees inspired by real UAE places.">
 <meta property="og:url" content="https://www.sahraandbeyond.ae/shop/">
@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
 <meta property="og:image:alt" content="Sahra &amp; Beyond — the first drop">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/shop/">
-<meta name="description" content="Shop original UAE t-shirts inspired by real places — Al Quaa’s dark sky, the dunes of Liwa, the Hajar mountains. 230gsm combed ring-spun cotton, limited runs.">
+<meta name="description" content="Shop original UAE graphic tees: a desert t-shirt from Liwa, a mountain tee from the Hajar, the Milky Way over Al Quaa. 230gsm combed cotton, limited runs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <!-- Audit 13 Sep: gsap + ScrollTrigger + three.js are 233 KB (plus lenis) and were render-blocking
@@ -673,10 +673,18 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 @media(max-width:820px){.sb-curwrap--hdr{display:none}}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=895845e8">
-<script src="/assets/sahra-cart.js?v=efbafb2d" defer></script>
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=25a87e11">
+<script src="/assets/sahra-cart.js?v=b3796801" defer></script>
 <script src="/assets/sahra-market.js?v=149814cb" defer></script>
 <style data-legib>
+/* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
+   Cormorant runs small (x-height .386/em against Playfair's .514), so every
+   rule that sets the serif family carries font-size-adjust:.44 - it renders at
+   Playfair's cap height without touching the responsive size overrides. Jost
+   (x .46) is smaller than Inter (.546) too: this root value keeps body copy at
+   Inter's apparent size. Space Mono (x .496) is unchanged by .5. Any element
+   that sets the serif family overrides this with its own .44. */
+html{font-size-adjust:.5}
 /* ===== legibility layer: floors for size, weight and contrast (5 Sep 2026) ===== */
 :root{--txt-soft:#4A4136;--mist:#4A4136}
 /* the product pages flip these when the scroll reaches a dark background (body.dark-bg): keep that, brighter */
@@ -1027,6 +1035,20 @@ body.buy-page .pdp-size{min-width:68px}
 .pdp-size:disabled,.pdp-size[disabled]{text-decoration:line-through;text-decoration-thickness:1.5px}
 /* the price inside the add-to-cart button is a .sb-price so the market script converts it; it must NOT take the 26px price scale above (15 Sep) */
 body.buy-page .pdp-add .sb-price,.pdp-add .sb-price{font-size:inherit!important;letter-spacing:inherit!important;font-weight:inherit!important}
+/* Same trap, the cart drawer's free-tote line (19 Sep): the struck-through AED 50
+   is a .sb-price so the market script converts it, which makes it inherit the
+   20px shop-page price scale above and shout louder than the item it is a gift
+   with. It is a secondary figure - hold it at label size in every context. */
+.sb-gift-p .sb-price,body.shop-page .sb-gift-p .sb-price,body.buy-page .sb-gift-p .sb-price{
+  font-size:13px!important;font-weight:400!important;letter-spacing:.01em!important}
+/* /tote/ is a shell page, so two floors above land on it wrongly: .sb-price is
+   pinned to 12px as a LABEL price (a card's corner figure), and .crumbs is held
+   cream because every other shell page puts its breadcrumb on a dark hero. Here
+   the price is the headline figure and the breadcrumb sits on the cream reading
+   surface, so both are released for this page only (19 Sep). */
+body.tote-page .tt-price .sb-price{font-size:inherit!important;letter-spacing:.01em!important;font-weight:inherit!important}
+body.tote-page .crumbs,body.tote-page .crumbs a{color:#6B5B48!important}
+body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
 .meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
 .eyebrow{font-size:13px!important}
@@ -1049,8 +1071,10 @@ body.buy-page .pdp-add .sb-price,.pdp-add .sb-price{font-size:inherit!important;
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
 
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=970a7516">
-<script src="/assets/sahra-welcome.js?v=55407c32" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=fc2b97e2">
+<script src="/assets/sahra-welcome.js?v=039e33a5" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=33e4a281">
+<script src="/assets/sahra-nav.js?v=5c48cb63" data-sbn defer></script>
 </head>
 <body class="shop-page">
 <a class="skip-link" href="#products">Skip to the collection</a>
