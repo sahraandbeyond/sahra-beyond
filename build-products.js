@@ -833,9 +833,9 @@ ${galShots(p).map((s,i)=>`
           <p class="occasion">✦ ${p.occasion}</p>
         </details>
         <details class="pdp-ans pdp-ans-details">
-          <summary>Details <span class="pdp-ans-hint">${p.colourName ? esc(p.colourName) + ' · ' : ''}unisex S–XL</span></summary>
+          <summary>Details <span class="pdp-ans-hint">${p.colourName ? esc(p.colourName) + ' · ' : ''}${p.garment === 'polo' ? 'men&rsquo;s' : 'unisex'} S–XL</span></summary>
           <ul class="spec-strip">
-            <li><strong>Unisex</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm combed cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
+            <li><strong>${p.garment === 'polo' ? 'Men&rsquo;s cut' : 'Unisex'}</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm combed cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
           </ul>
           ${p.colourHex ? `<div class="colourway">
             <span class="sw" style="background:${p.colourHex}" role="img" aria-label="Colour swatch: ${esc(p.colourName)}, Pantone ${esc(p.colourPantone)}"></span>
@@ -982,7 +982,7 @@ ${cards(p.designCards)}
     <span class="snum">04 — Size &amp; fit</span>
     <h2>${p.fitHeading || 'Size &amp; <em>fit</em>'}</h2>
     <p>${p.fitWho || ''}</p>
-    <p><strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.${esc(p.fitExtra||"")}</p>
+    <p>${p.garment === 'polo' ? '<strong>Men&rsquo;s cut</strong>, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from the letter size you usually wear.' : '<strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.'}${esc(p.fitExtra||"")}</p>
     <div class="sz-wrap">
       <table class="sz">
         <caption class="sz-cap">${p.fit === 'oversized' ? 'Oversized fit' : 'Regular fit'} &middot; garment measured flat</caption>

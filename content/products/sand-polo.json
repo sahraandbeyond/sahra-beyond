@@ -68,8 +68,8 @@
       "a": "Three ways. It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape. It is embroidered rather than printed. And it is made in a smaller run than the tees, counted on its own. Sizing is the same as the Regular fit tees."
     },
     {
-      "q": "Are these unisex? Will they fit women?",
-      "a": "Yes — every piece we make is cut unisex, in one run of sizes from S to XL. There is no separate men's or women's version and no difference in the cut. Because the size chart lists the garment measured flat rather than a body size, the reliable way to choose is to measure a t-shirt you already like the fit of and match the numbers. Plenty of people size down for a closer fit or up for a relaxed one — both are the same garment."
+      "q": "Who is the polo cut for?",
+      "a": "The polo is a men's cut, in one run of sizes from S to XL. It is graded to the same measurements as our Regular fit t-shirts. Because the size chart lists the garment measured flat rather than a body size, the reliable way to choose is to measure a polo or t-shirt you already like the fit of and match the numbers."
     },
     {
       "q": "What size should I order?",
@@ -108,8 +108,8 @@
       "b": "Seam tape across the shoulders reinforces the points that carry the most stress — the difference between one season and several."
     }
   ],
-  "fitsCardTitle": "Unisex, one fit",
-  "fitsCardBody": "Cut unisex, S to XL, sized to the same specification as the Regular fit tees. Set-in sleeve at the natural shoulder — there is no oversized polo.",
+  "fitsCardTitle": "Men's cut, one fit",
+  "fitsCardBody": "A men's cut, S to XL, sized to the same specification as the Regular fit tees. Set-in sleeve at the natural shoulder — there is no oversized polo.",
   "colourName": "Sand",
   "colourPantone": "4675 C",
   "colourHex": "#DCBFA6",
