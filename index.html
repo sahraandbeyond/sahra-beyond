@@ -177,10 +177,12 @@ footer{background:#1C140D;color:rgba(255,255,255,.72);padding:64px 0 30px;text-a
    pushed the wordmark under the cart and .logo{overflow:hidden} cut it to
    "SAH|". Faheem's phone, 2 Sep 2026.) */
 @media(max-width:400px){.logo-a{font-size:13px;letter-spacing:2.5px}.logo-b{font-size:6.5px;letter-spacing:1.5px}.logo{gap:8px}}
+/* 24 Sep: at ~348px (Faheem's folded Huawei) the solid nav still clipped 'Sahra' to 'Sahr' by 10px; a smaller mark gives the wordmark its room */
+@media(max-width:370px){.logo .mark{height:14px!important}.logo{gap:6px}}
 @media(max-width:340px){.logo>div,.logo-text{display:none}}
 @media(min-width:821px){.m-panel{display:none}}
 </style>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=45ac7562">
 <style>
 /* market-aware shipping copy + currency selector (mirrors build.js shell) */
 .sb-ship-gcc,.sb-ship-intl{display:none}
@@ -1337,11 +1339,25 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .minitee-go:hover{background:#7E4114}
 @media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
 
+/* 24 Sep: size tables on phones. Five columns of '19″ / 48.3 cm' could not fit, so
+   Sleeve was cut off at the edge with no hint it existed. Inches over centimetres,
+   one per line; column labels at the 12px label floor. Must stay below the 560px
+   block above, which it overrides. */
+@media(max-width:480px){
+  table.sg .sz-sep,table.sz .sz-sep{display:none}
+  table.sg .sz-cm,table.sz .sz-cm{display:block;white-space:nowrap}
+  body.buy-page table.sg td,body.buy-page table.sz td,body.buy-page table.sg.gsm td{font-size:14px!important}
+  body.buy-page table.sg th,body.buy-page table.sz th{font-size:12px!important;letter-spacing:.02em!important}
+  table.sg th,table.sg td,table.sz th,table.sz td{padding:8px 3px!important}
+  body.buy-page table.sg .sz-cm,body.buy-page table.sz .sz-cm,table.sg .sz-cm,table.sz .sz-cm{font-size:12px!important;letter-spacing:0!important}
+  body.buy-page .sz-cap{white-space:normal}
+}
+
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=029f3bc8">
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=db75cb51">
 <script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
-<script src="/assets/sahra-nav.js?v=7788d612" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=f9cc7bfa">
+<script src="/assets/sahra-nav.js?v=8bb5be39" data-sbn defer></script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/">
 <link rel="alternate" hreflang="x-default" href="https://www.sahraandbeyond.ae/">
@@ -2803,7 +2819,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 })();
 </script>
 
-<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
+<script src="/assets/sahra-cart.js?v=48532550" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 <script data-hslide>
 /* Hero slideshow. Crossfade only - no transform, no layout work - so it cannot

@@ -124,7 +124,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
    and views 2 and 3 were pushed below it and clipped by overflow:hidden, so
    clicking a thumbnail faded view 1 out and lit view 2 up off-screen — a blank
    viewer. Matches the .frame pattern on the homepage. */
-.gal-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .6s ease,transform .9s ease}
+.gal-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .25s ease,transform .9s ease}   /* 24 Sep: .6s on a 1s loop left two photos blended for most of every second */
 .gal-main img.on{opacity:1;transform:scale(1)}
 /* dormant: the drop pill is not rendered - see the note above galShots() */
 .gal-tag{position:absolute;top:15px;left:15px;z-index:2;background:rgba(0,0,0,.78);color:var(--gold);backdrop-filter:blur(6px);font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px}
@@ -696,10 +696,12 @@ body.dark-bg .rv-stars{color:#E9B978}
   .pdp{display:flex;flex-direction:column;gap:10px;padding:10px 0 50px}
   .pdp>.media,.pdp>.buy{display:contents}
   .buy-head{order:1}
-  .gal-main{order:2}
+  /* the photo block stays together: main photo, thumbnails, model note (24 Sep: Faheem,
+     "the photos are not appearing properly" - the main photo had been cropped into a
+     short landscape box that cut heads and shirts, and the thumbnails sat far below) */
+  .gal-main,.gal-thumbs,.gal-model{order:2}
+  .gal-thumbs{margin-top:-2px}
   .buy-body{order:3}
-  .gal-thumbs{order:4;margin-top:0}
-  .gal-model{order:5}
   .buy-head,.buy-body{color:var(--txt);background:rgba(252,249,242,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
     border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 12px 34px rgba(20,14,8,.12)}
   .buy-head{padding:12px 16px 10px}
@@ -710,7 +712,7 @@ body.dark-bg .rv-stars{color:#E9B978}
   .buy-head .fabric-line{font-size:11.5px;margin:0 0 6px;line-height:1.45}
   .buy-head .pdp-rating{margin:0 0 4px}
   .buy-head .price-row{margin:2px 0 0}
-  .gal-main{aspect-ratio:auto;height:min(40vh,380px);width:100%;border-radius:12px}
+  .gal-main{aspect-ratio:4/5;height:auto;width:100%;border-radius:12px}
   .gal-main .gal-hint{display:none}
   .buy-head .limited{display:none}
   .buy-head,.buy-body{min-width:0;max-width:100%}
@@ -721,18 +723,48 @@ body.dark-bg .rv-stars{color:#E9B978}
   .buy-body{display:flex;flex-direction:column}
   .buy-body>.pdp-buy{order:-1}
   .buy-body>.pdp-bundle-d{display:none}
-  .gal-main{height:min(34vh,300px)}
 }
+/* an Arabic word inside a sentence stays in the sentence (the .item span rule made it a block) */
+.item span[lang]{display:inline}
+/* Buy now is a full-width button like Add to cart, on every screen */
+.pdp-now{display:flex;width:100%;justify-content:center;margin-top:8px}
+/* Phone polish, 24 Sep (Faheem's screenshots, Huawei in Chrome, ~384px wide):
+   the four sizes wrapped XL onto a second row, the currency picker was as wide
+   as the price, the eyebrow ran to two lines and the menu slid under the buy bar */
+@media(max-width:700px){
+  .pdp-sizes{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  body.buy-page .pdp-size{min-width:0!important;width:100%;padding:0 4px}
+  .buy-head .buy-top .eyebrow{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;display:block}
+  .buy-head .price-row{flex-wrap:nowrap;gap:10px}
+  .buy-head .sb-curpick{max-width:118px!important;font-size:11px!important;padding:5px 22px 5px 8px!important}
+}
+@media(max-width:420px){
+  /* narrow phones (Faheem's Huawei is ~350px wide): a little less gutter, a lot more photo and table */
+  .wrap{padding:0 14px}
+  /* the sticky bar's product name had room for 'Al …' only - the button says it all */
+  #buybar .bb-txt{display:none}
+  #buybar .btn{flex:1;justify-content:center;text-align:center}
+  .sec{padding:32px 14px}
+  /* no room beside the price on a phone; the currency still follows the visitor's country automatically */
+  .buy-head [data-sb-curslot]{display:none}
+  .buy-head .pdp-rating{flex-wrap:nowrap;display:flex;max-width:100%;min-width:0}
+  .buy-head .pdp-rating-n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  table.sz{min-width:0}
+  table.sz th,table.sz td{padding:10px 7px}
+  .pdp-ans-foot a,.pdp-reassure a{display:inline-block;padding:9px 0;margin:-9px 0}
+}
+body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:translateY(130%);visibility:hidden}
+
 .pdp-bundle-m{display:none}
 @media(max-width:700px){.pdp-bundle-m{display:block;margin:0 0 10px}}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=45ac7562">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=029f3bc8">
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=db75cb51">
 <script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
-<script src="/assets/sahra-nav.js?v=7788d612" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=f9cc7bfa">
+<script src="/assets/sahra-nav.js?v=8bb5be39" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1163,6 +1195,20 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .minitee-go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#2A2016;color:#FAF6EF!important;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
 .minitee-go:hover{background:#7E4114}
 @media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
+
+/* 24 Sep: size tables on phones. Five columns of '19″ / 48.3 cm' could not fit, so
+   Sleeve was cut off at the edge with no hint it existed. Inches over centimetres,
+   one per line; column labels at the 12px label floor. Must stay below the 560px
+   block above, which it overrides. */
+@media(max-width:480px){
+  table.sg .sz-sep,table.sz .sz-sep{display:none}
+  table.sg .sz-cm,table.sz .sz-cm{display:block;white-space:nowrap}
+  body.buy-page table.sg td,body.buy-page table.sz td,body.buy-page table.sg.gsm td{font-size:14px!important}
+  body.buy-page table.sg th,body.buy-page table.sz th{font-size:12px!important;letter-spacing:.02em!important}
+  table.sg th,table.sg td,table.sz th,table.sz td{padding:8px 3px!important}
+  body.buy-page table.sg .sz-cm,body.buy-page table.sz .sz-cm,table.sg .sz-cm,table.sz .sz-cm{font-size:12px!important;letter-spacing:0!important}
+  body.buy-page .sz-cap{white-space:normal}
+}
 
 </style>
 </head>
@@ -2141,7 +2187,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 </script>
 
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
+<script src="/assets/sahra-cart.js?v=48532550" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 </body>
 </html>

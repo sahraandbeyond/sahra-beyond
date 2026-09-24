@@ -460,6 +460,20 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .minitee-go:hover{background:#7E4114}
 @media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
 
+/* 24 Sep: size tables on phones. Five columns of '19″ / 48.3 cm' could not fit, so
+   Sleeve was cut off at the edge with no hint it existed. Inches over centimetres,
+   one per line; column labels at the 12px label floor. Must stay below the 560px
+   block above, which it overrides. */
+@media(max-width:480px){
+  table.sg .sz-sep,table.sz .sz-sep{display:none}
+  table.sg .sz-cm,table.sz .sz-cm{display:block;white-space:nowrap}
+  body.buy-page table.sg td,body.buy-page table.sz td,body.buy-page table.sg.gsm td{font-size:14px!important}
+  body.buy-page table.sg th,body.buy-page table.sz th{font-size:12px!important;letter-spacing:.02em!important}
+  table.sg th,table.sg td,table.sz th,table.sz td{padding:8px 3px!important}
+  body.buy-page table.sg .sz-cm,body.buy-page table.sz .sz-cm,table.sg .sz-cm,table.sz .sz-cm{font-size:12px!important;letter-spacing:0!important}
+  body.buy-page .sz-cap{white-space:normal}
+}
+
 `;
 
 module.exports = { CSS };

@@ -894,6 +894,18 @@
       syncBar();
     }
 
+    /* Phones (24 Sep): out of the way while the reader is scrolling through copy,
+       back as soon as they stop - it was sitting on words, table cells and headings. */
+    if (window.matchMedia && matchMedia('(max-width:700px)').matches) {
+      var idle = null, lastY = window.pageYOffset;
+      window.addEventListener('scroll', function () {
+        var y = window.pageYOffset;
+        if (Math.abs(y - lastY) > 6) a.classList.add('resting');
+        lastY = y; clearTimeout(idle);
+        idle = setTimeout(function () { a.classList.remove('resting'); }, 900);
+      }, { passive: true });
+    }
+
     /* Step aside while the cart drawer is open - it is a modal. */
     var drawer = document.getElementById('sbDrawer');
     if (drawer && window.MutationObserver) {

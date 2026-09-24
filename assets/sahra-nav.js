@@ -180,6 +180,14 @@
     var m = mk(row ? 'sbl-m' : 'sbl-any');
     if (before && before.parentNode) before.parentNode.insertBefore(m, before); else hdr.appendChild(m);
     if (row) row.appendChild(mk('sbl-d'));
+    /* phones (24 Sep): the header bar has no room - the link overlapped the
+       wordmark at 360-390px - so it moves to the top of the slide-down menu */
+    var mn = document.getElementById('mobileNav');
+    if (mn) {
+      var mi = mk('sbl-menu'), close = mn.querySelector('.m-close');
+      if (close && close.nextSibling) mn.insertBefore(mi, close.nextSibling); else mn.insertBefore(mi, mn.firstChild);
+      document.documentElement.classList.add('sbl-in-menu');
+    }
   }
   function later() { setTimeout(place, 0); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', later); else later();

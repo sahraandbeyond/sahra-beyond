@@ -231,7 +231,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
    and views 2 and 3 were pushed below it and clipped by overflow:hidden, so
    clicking a thumbnail faded view 1 out and lit view 2 up off-screen — a blank
    viewer. Matches the .frame pattern on the homepage. */
-.gal-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .6s ease,transform .9s ease}
+.gal-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .25s ease,transform .9s ease}   /* 24 Sep: .6s on a 1s loop left two photos blended for most of every second */
 .gal-main img.on{opacity:1;transform:scale(1)}
 /* dormant: the drop pill is not rendered - see the note above galShots() */
 .gal-tag{position:absolute;top:15px;left:15px;z-index:2;background:rgba(0,0,0,.78);color:var(--gold);backdrop-filter:blur(6px);font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px}
@@ -744,10 +744,12 @@ ${RV.CSS}
   .pdp{display:flex;flex-direction:column;gap:10px;padding:10px 0 50px}
   .pdp>.media,.pdp>.buy{display:contents}
   .buy-head{order:1}
-  .gal-main{order:2}
+  /* the photo block stays together: main photo, thumbnails, model note (24 Sep: Faheem,
+     "the photos are not appearing properly" - the main photo had been cropped into a
+     short landscape box that cut heads and shirts, and the thumbnails sat far below) */
+  .gal-main,.gal-thumbs,.gal-model{order:2}
+  .gal-thumbs{margin-top:-2px}
   .buy-body{order:3}
-  .gal-thumbs{order:4;margin-top:0}
-  .gal-model{order:5}
   .buy-head,.buy-body{color:var(--txt);background:rgba(252,249,242,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
     border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 12px 34px rgba(20,14,8,.12)}
   .buy-head{padding:12px 16px 10px}
@@ -758,7 +760,7 @@ ${RV.CSS}
   .buy-head .fabric-line{font-size:11.5px;margin:0 0 6px;line-height:1.45}
   .buy-head .pdp-rating{margin:0 0 4px}
   .buy-head .price-row{margin:2px 0 0}
-  .gal-main{aspect-ratio:auto;height:min(40vh,380px);width:100%;border-radius:12px}
+  .gal-main{aspect-ratio:4/5;height:auto;width:100%;border-radius:12px}
   .gal-main .gal-hint{display:none}
   .buy-head .limited{display:none}
   .buy-head,.buy-body{min-width:0;max-width:100%}
@@ -769,8 +771,38 @@ ${RV.CSS}
   .buy-body{display:flex;flex-direction:column}
   .buy-body>.pdp-buy{order:-1}
   .buy-body>.pdp-bundle-d{display:none}
-  .gal-main{height:min(34vh,300px)}
 }
+/* an Arabic word inside a sentence stays in the sentence (the .item span rule made it a block) */
+.item span[lang]{display:inline}
+/* Buy now is a full-width button like Add to cart, on every screen */
+.pdp-now{display:flex;width:100%;justify-content:center;margin-top:8px}
+/* Phone polish, 24 Sep (Faheem's screenshots, Huawei in Chrome, ~384px wide):
+   the four sizes wrapped XL onto a second row, the currency picker was as wide
+   as the price, the eyebrow ran to two lines and the menu slid under the buy bar */
+@media(max-width:700px){
+  .pdp-sizes{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  body.buy-page .pdp-size{min-width:0!important;width:100%;padding:0 4px}
+  .buy-head .buy-top .eyebrow{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;display:block}
+  .buy-head .price-row{flex-wrap:nowrap;gap:10px}
+  .buy-head .sb-curpick{max-width:118px!important;font-size:11px!important;padding:5px 22px 5px 8px!important}
+}
+@media(max-width:420px){
+  /* narrow phones (Faheem's Huawei is ~350px wide): a little less gutter, a lot more photo and table */
+  .wrap{padding:0 14px}
+  /* the sticky bar's product name had room for 'Al …' only - the button says it all */
+  #buybar .bb-txt{display:none}
+  #buybar .btn{flex:1;justify-content:center;text-align:center}
+  .sec{padding:32px 14px}
+  /* no room beside the price on a phone; the currency still follows the visitor's country automatically */
+  .buy-head [data-sb-curslot]{display:none}
+  .buy-head .pdp-rating{flex-wrap:nowrap;display:flex;max-width:100%;min-width:0}
+  .buy-head .pdp-rating-n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  table.sz{min-width:0}
+  table.sz th,table.sz td{padding:10px 7px}
+  .pdp-ans-foot a,.pdp-reassure a{display:inline-block;padding:9px 0;margin:-9px 0}
+}
+body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:translateY(130%);visibility:hidden}
+
 .pdp-bundle-m{display:none}
 @media(max-width:700px){.pdp-bundle-m{display:block;margin:0 0 10px}}
 </style>

@@ -1017,6 +1017,10 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 /* ---- Arabic core page layout ---- */
 .ar-main{max-width:820px;margin:0 auto;padding:118px 22px 70px;text-align:right}
 .ar-hero{padding:18px 0 34px;border-bottom:1px solid rgba(242,201,140,.28)}
+/* 24 Sep: the Arabic home opened on text alone; the English home leads with the lake photograph */
+.ar-hero-img{margin:0 0 22px;border-radius:14px;overflow:hidden;aspect-ratio:16/10;background:#241C3A}
+.ar-hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block}
+@media(max-width:700px){.ar-hero-img{aspect-ratio:4/3}}
 .ar-eyebrow{font-family:var(--sans);font-size:12.5px;color:#C0702E;margin:0 0 14px}
 .ar-main h1{font-size:clamp(34px,6.4vw,54px);line-height:1.35;margin:0 0 18px;color:#2A2016}
 .ar-main h2{font-size:clamp(25px,4vw,34px);margin:0 0 14px;color:#2A2016}
@@ -1034,7 +1038,7 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 .ar-place{border:1px solid rgba(42,32,22,.16);border-radius:12px;padding:20px}
 .ar-emirate{font-size:13px;color:#7E4114;margin:0 0 8px}
 .ar-edition{background:rgba(242,201,140,.10);border-radius:14px;padding:30px 24px;border-bottom:0}
-@media(max-width:700px){.ar-main{padding:104px 18px 56px}}
+@media(max-width:700px){.ar-main{padding:84px 18px 56px}.ar-hero{padding-top:6px}}
 /* ---- Arabic product pages + shop (23 Sep 2026) ---- */
 .ar-main.arp{max-width:1120px;padding-top:92px}
 .arp-top>*{min-width:0}
@@ -3089,6 +3093,7 @@ function arPage({ slug, title, desc, h1, bodyHtml, enHref, jsonld }) {
     bodyHtml: `
 <main class="ar-main">
   <section class="ar-hero">
+    <figure class="ar-hero-img"><img src="/shirts/hero-places-b.webp" alt="" width="1200" height="1800" fetchpriority="high" decoding="async"></figure>
     <p class="ar-eyebrow">${esc(H.editionEyebrow)}</p>
     <h1>${esc(H.h1)}</h1>
     <p class="ar-lede">${esc(H.lede)}</p>

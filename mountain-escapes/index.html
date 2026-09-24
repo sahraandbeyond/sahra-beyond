@@ -618,12 +618,12 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=0ef5b5d7">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=45ac7562">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=029f3bc8">
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=db75cb51">
 <script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=c2e5f60e">
-<script src="/assets/sahra-nav.js?v=7788d612" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=f9cc7bfa">
+<script src="/assets/sahra-nav.js?v=8bb5be39" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1055,6 +1055,20 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .minitee-go:hover{background:#7E4114}
 @media(max-width:520px){.minitee{flex-wrap:wrap}.minitee-txt{flex:1 1 0}.minitee-go{flex:1 0 100%;justify-content:center}}
 
+/* 24 Sep: size tables on phones. Five columns of '19″ / 48.3 cm' could not fit, so
+   Sleeve was cut off at the edge with no hint it existed. Inches over centimetres,
+   one per line; column labels at the 12px label floor. Must stay below the 560px
+   block above, which it overrides. */
+@media(max-width:480px){
+  table.sg .sz-sep,table.sz .sz-sep{display:none}
+  table.sg .sz-cm,table.sz .sz-cm{display:block;white-space:nowrap}
+  body.buy-page table.sg td,body.buy-page table.sz td,body.buy-page table.sg.gsm td{font-size:14px!important}
+  body.buy-page table.sg th,body.buy-page table.sz th{font-size:12px!important;letter-spacing:.02em!important}
+  table.sg th,table.sg td,table.sz th,table.sz td{padding:8px 3px!important}
+  body.buy-page table.sg .sz-cm,body.buy-page table.sz .sz-cm,table.sg .sz-cm,table.sz .sz-cm{font-size:12px!important;letter-spacing:0!important}
+  body.buy-page .sz-cap{white-space:normal}
+}
+
 </style>
 </head>
 <body>
@@ -1174,7 +1188,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=eeb05a8d" defer></script>
+<script src="/assets/sahra-cart.js?v=48532550" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 </body>
 </html>

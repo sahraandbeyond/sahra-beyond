@@ -69,3 +69,6 @@
 @media(max-width:560px){.sbl-lang{padding:0 6px;font-size:13.5px}}
 @media(min-width:821px){.sbl-lang.sbl-m{display:none}}
 @media(max-width:820px){.sbl-lang.sbl-d{display:none}}
+@media(max-width:560px){.sbl-in-menu .sbl-lang.sbl-m{display:none}}
+@media(min-width:821px){.sbl-lang.sbl-menu{display:none}}
+.sbl-lang.sbl-menu{justify-content:flex-start;padding:0;border-radius:0;font-weight:600}

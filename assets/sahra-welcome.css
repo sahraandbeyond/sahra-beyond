@@ -54,6 +54,8 @@
   body.buy-page .sbw-tote{display:none}
   body.buy-page .sbw-bar-in{flex-wrap:nowrap}
   body.buy-page .sbw-bar{padding:8px 10px}
+  body.buy-page .sbw-amt{letter-spacing:.8px}
+  body.buy-page .sbw-go{padding:4px 8px;letter-spacing:.6px}
 }
 
 /* ---------------------------------------------------------------- modal */
@@ -74,8 +76,10 @@
   pointer-events:none;
 }
 .sbw-close{
-  position:absolute;right:10px;top:8px;background:none;border:0;color:#C9BEA8;
-  font-size:27px;line-height:1;padding:6px 12px;cursor:pointer;
+  /* above the tote photo band (24 Sep: the photo was painted over the ×, so it could not be tapped) */
+  position:absolute;right:8px;top:8px;z-index:5;width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  background:rgba(20,16,42,.55)!important;border-radius:50%;color:#F7EFE2!important;background:none;border:0;color:#C9BEA8;
+  font-size:27px;line-height:1;padding:0;cursor:pointer;
 }
 .sbw-close:hover{color:#F2C98C}
 .sbw-eyebrow{
