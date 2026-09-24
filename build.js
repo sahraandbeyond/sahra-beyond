@@ -3344,7 +3344,7 @@ const AR_PDP_NOINDEX = true;
         ['04', 'Dawn', 'First light on the ridge.', 'The first run arrives this season: two pieces to start.']
       ],
       firstH: 'The first run', firstSub: 'Two pieces. Revealed at launch.',
-      tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Short', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
+      tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Shorts', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
       joinH: 'Get first access', joinP: 'Leave your email and we will write once, when the first run is ready.',
       ph: 'you@email.com', btn: 'Notify me', fine: 'One email when it lands. Unsubscribe any time.',
       ok: 'You are on the list. We will email you when the first run lands.',
