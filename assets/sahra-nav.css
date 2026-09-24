@@ -85,3 +85,7 @@
 @media(max-width:1180px) and (min-width:821px){.sbn-trail .sbn-soon{display:none}}
 .sbn-trail.active,.sbn-trail[aria-current]{background:#285C5C!important;color:#F3E7D3!important}
 .sbn-trail.active .sbn-soon{background:#D9C3A5;color:#1F4B4B}
+
+/* ambient sound: in the menu on phones, not floating in the thumb zone (24 Sep 2026) */
+@media(max-width:700px){.ambient-btn{display:none!important}}
+.sb-amb-m{background:none;border:0;cursor:pointer;font:inherit;font-weight:600;color:inherit;text-align:left}

@@ -223,3 +223,23 @@
     mn.insertBefore(m, close ? close.nextSibling : mn.firstChild);
   }
 })();
+
+/* Ambient sound toggle (24 Sep 2026, web-design review): on phones the round
+   note button sat in the bottom-left thumb zone. It moves into the menu there;
+   desktop keeps the floating button. The menu item simply presses the real one. */
+(function () {
+  'use strict';
+  function place() {
+    var amb = document.getElementById('ambient'), mn = document.getElementById('mobileNav');
+    if (!amb || !mn || mn.querySelector('.sb-amb-m')) return;
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'sbl-lang sbl-menu sb-amb-m';
+    var sync = function () { var on = amb.getAttribute('aria-pressed') === 'true' || amb.classList.contains('on');
+      b.textContent = '\u266A Desert sound: ' + (on ? 'on' : 'off'); b.setAttribute('aria-pressed', on ? 'true' : 'false'); };
+    b.addEventListener('click', function () { amb.click(); setTimeout(sync, 60); });
+    if (window.MutationObserver) new MutationObserver(sync).observe(amb, { attributes: true, attributeFilter: ['class', 'aria-pressed'] });
+    sync();
+    mn.appendChild(b);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(place, 0); }); else setTimeout(place, 0);
+})();

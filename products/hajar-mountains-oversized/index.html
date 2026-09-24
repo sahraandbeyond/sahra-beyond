@@ -724,6 +724,28 @@ body.dark-bg .rv-stars{color:#E9B978}
   .buy-body>.pdp-buy{order:-1}
   .buy-body>.pdp-bundle-d{display:none}
 }
+/* 24 Sep 2026 (phone layout review, Faheem approved): photo first, fewer lines above it */
+.pdp-subm{display:none}
+.pdp-now[hidden]{display:none!important}
+#reviews .rv-list.rv-compact .rv-card:nth-child(n+4){display:none}
+#reviews .rv-showall{display:block;margin:10px auto 0;padding:12px 22px;border:1px solid #33271B;border-radius:999px;background:#fff;color:#33271B;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+@media(max-width:700px){
+  .buy-head .fabric-line,.buy-head .pdp-rating,.buy-head .fitv{display:none!important}
+  .pdp-subm{display:block;order:2;padding:0 2px}
+  .pdp-subm .fabric-line{font-size:12.5px;line-height:1.5;margin:2px 0 6px}
+  .pdp-subm .pdp-rating{display:flex;gap:6px;align-items:center;margin:0}
+  .buy-head{padding:12px 16px 12px}
+  .buy h1{margin:0 0 4px}
+  /* the long story sections fold into three tap-to-open groups (script below) */
+  .pdp-acc{margin:0 14px 12px;border:1px solid rgba(42,32,22,.14);border-radius:12px;background:rgba(252,249,242,.92);overflow:hidden}
+  .pdp-acc-h{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;padding:18px 18px;background:none;border:0;cursor:pointer;
+    font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:22px;font-weight:600;color:var(--txt,#2A2016);text-align:left}
+  .pdp-acc-h i{font-style:normal;font-family:Jost,sans-serif;font-size:22px;font-weight:400;transition:transform .25s}
+  .pdp-acc-h[aria-expanded="true"] i{transform:rotate(45deg)}
+  .pdp-acc-b>section{margin:0!important;border-radius:0!important;box-shadow:none!important}
+  .pdp-acc-b>section.sec{padding:10px 18px 22px!important}
+  .pdp-acc-b>.place-band{padding:0!important}
+}
 /* an Arabic word inside a sentence stays in the sentence (the .item span rule made it a block) */
 .item span[lang]{display:inline}
 /* Buy now is a full-width button like Add to cart, on every screen */
@@ -759,12 +781,12 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 @media(max-width:700px){.pdp-bundle-m{display:block;margin:0 0 10px}}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=45ac7562">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=db75cb51">
-<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=8b2e5d6b">
-<script src="/assets/sahra-nav.js?v=f752ab5a" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
+<script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
+<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1210,6 +1232,28 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .sz-cap{white-space:normal}
 }
 
+
+/* 24 Sep 2026, phone layout review (Faheem: "way too crowded, no breathing room").
+   Category cards: name, rating, one fit chip, price and quick add - the place line,
+   the other chips, the colour dot and the repeated bundle line stay on the product
+   page. Category banner: half the height, so the choices show on the first screen. */
+@media(max-width:700px){
+  body.buy-page .pcard .pcard-place,body.buy-page .pcard .pcard-col,body.buy-page .pcard .pcard-bundle{display:none!important}
+  body.buy-page .pcard .pcard-spec span:not(:first-child){display:none!important}
+  body.buy-page .pcard .pcard-b{gap:8px}
+  /* the rotating note strip: one line, never two */
+  body.shop-page .note,body.buy-page .note{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span{font-size:12.5px!important;letter-spacing:.02em!important}
+  body.buy-page .loc-hero{padding:16px 16px 34px!important}
+  body.buy-page .loc-hero h1{font-size:30px!important;line-height:1.1}
+  body.buy-page .loc-hero .crumbs{margin-bottom:8px}
+  body.buy-page .loc-hero .dune-far{display:none}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero h1{margin-bottom:6px}
+  body.buy-page .loc-hero h1::after{margin-top:8px}
+  body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
+  body.buy-page .loc-hero .dune-near{height:30px}
+}
 </style>
 </head>
 <body class="buy-page">
@@ -1218,7 +1262,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; a limited first run &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition<span class="note-x"> &nbsp;·&nbsp; a limited first run</span> &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="/shop/" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -1267,6 +1311,8 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       
       
       <p class="gal-model">All worn photos show the Oversized fit · Male model in the dunes is 182 cm, wearing L · Male and female models at the lake wear M</p>
+      
+      <div class="pdp-subm"><p class="fabric-line"><b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed</p><a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n">5.0 &middot; 14 reviews across Sahra &amp; Beyond &rarr;</span></a></div>
     </div>
 
     <div class="buy">
@@ -1307,7 +1353,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits</p>
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
-        <button class="btn ghost pdp-now" id="pdpNow" type="button">Buy now</button>
+        <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
         
         
         <p class="pdp-reassure">Need a different size? UAE returns and exchanges are free within 14 days of delivery &mdash; unworn, unwashed, tags on; exchanges subject to stock. <a href="/policies.html#returns">Full policy &rarr;</a></p>
@@ -2244,6 +2290,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');
         sel=v; goCheckout=false; addEl.disabled=false; setAdd('Add to cart', true); msg('');
+        /* Buy now appears once a size is chosen: one clear action before that (24 Sep 2026) */
+        var bn=document.getElementById('pdpNow'); if(bn) bn.hidden=false;
         /* Honest scarcity (Rastah benchmark): shown ONLY from live inventory,
            only at 3 or fewer, never invented. quantityAvailable can be null
            if the token cannot read inventory — then nothing is shown. */
@@ -2353,8 +2401,49 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 
+<script>
+/* 24 Sep 2026 (phone layout review): on phones the long story sections fold into
+   three closed groups - the tee page ran to twelve screens. Desktop is untouched.
+   A link to anything inside a closed group (e.g. #fit, #care) opens it first. */
+(function(){
+  if(!window.matchMedia||!matchMedia('(max-width:700px)').matches) return;
+  var q=function(s){return document.querySelector(s);};
+  var place=q('.place-band'), groups=[
+    ['The place and the design',[place,q('#design')]],
+    ['Fabric and care',[q('#fabric'),q('#care')]],
+    ['Size, fit and delivery',[q('#fit'),q('#delivery')]]
+  ];
+  var made=[];
+  groups.forEach(function(g,gi){
+    var secs=g[1].filter(Boolean); if(!secs.length) return;
+    var box=document.createElement('section'); box.className='pdp-acc';
+    var id='pdpAcc'+gi;
+    box.innerHTML='<button type="button" class="pdp-acc-h" aria-expanded="false" aria-controls="'+id+'"><span>'+g[0]+'</span><i aria-hidden="true">+</i></button><div class="pdp-acc-b" id="'+id+'" hidden></div>';
+    secs[0].parentNode.insertBefore(box,secs[0]);
+    var body=box.querySelector('.pdp-acc-b');
+    secs.forEach(function(x){ body.appendChild(x); });
+    var h=box.querySelector('.pdp-acc-h');
+    h.addEventListener('click',function(){ var open=h.getAttribute('aria-expanded')!=='true';
+      h.setAttribute('aria-expanded',open?'true':'false'); body.hidden=!open;
+      if(open){ body.querySelectorAll('.reveal').forEach(function(r){r.classList.add('in','vis','shown');}); } });
+    made.push(box);
+  });
+  function openFor(el){ made.forEach(function(b){ if(b.contains(el)){ var h=b.querySelector('.pdp-acc-h'); if(h.getAttribute('aria-expanded')!=='true') h.click(); } }); }
+  document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return;
+    var t=document.getElementById(a.getAttribute('href').slice(1)); if(t) openFor(t); },true);
+  /* reviews: three cards, the rest one tap away (the section ran to seven phone screens) */
+  var rl=document.querySelector('#reviews .rv-list');
+  if(rl && rl.querySelectorAll('.rv-card').length>3 && !rl.parentNode.querySelector('.rv-showall')){
+    rl.classList.add('rv-compact');
+    var sb=document.createElement('button'); sb.type='button'; sb.className='rv-showall'; sb.textContent='Show more reviews';
+    sb.addEventListener('click',function(){ rl.classList.remove('rv-compact'); sb.hidden=true; });
+    rl.parentNode.insertBefore(sb, rl.nextSibling);
+  }
+  if(location.hash){ var t=document.getElementById(location.hash.slice(1)); if(t){ openFor(t); setTimeout(function(){ t.scrollIntoView(); },50); } }
+})();
+</script>
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=48532550" defer></script>
+<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 </body>
 </html>

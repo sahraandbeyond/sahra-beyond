@@ -182,7 +182,7 @@ footer{background:#1C140D;color:rgba(255,255,255,.72);padding:64px 0 30px;text-a
 @media(max-width:340px){.logo>div,.logo-text{display:none}}
 @media(min-width:821px){.m-panel{display:none}}
 </style>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=45ac7562">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
 <style>
 /* market-aware shipping copy + currency selector (mirrors build.js shell) */
 .sb-ship-gcc,.sb-ship-intl{display:none}
@@ -907,6 +907,16 @@ footer{position:relative;z-index:2}
   #s-hero .hs-shop a{flex:0 0 auto;font-size:12.5px;padding:5px 11px;min-height:34px}
   #s-hero .hs-shop a .sb-price{font-size:11px!important}
 }
+
+/* 24 Sep 2026 (web-design review): one clear action in the phone hero. "See the
+   collection" is the only filled button; "The places behind them" becomes a link. */
+@media(max-width:620px){
+  #s-hero .actions{flex-direction:column;align-items:stretch;gap:6px}
+  #s-hero .actions .j-btn.solid{background:#9C521B;color:#FFF6E8;border-color:#9C521B}
+  #s-hero .actions .j-btn.solid:hover{background:#7E4114}
+  #s-hero .actions .j-btn:not(.solid){border:0;background:none;padding:8px 0;flex:0 0 auto;align-self:center;
+    text-decoration:underline;text-underline-offset:4px;letter-spacing:1.2px}
+}
 </style>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
@@ -1353,11 +1363,33 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .sz-cap{white-space:normal}
 }
 
+
+/* 24 Sep 2026, phone layout review (Faheem: "way too crowded, no breathing room").
+   Category cards: name, rating, one fit chip, price and quick add - the place line,
+   the other chips, the colour dot and the repeated bundle line stay on the product
+   page. Category banner: half the height, so the choices show on the first screen. */
+@media(max-width:700px){
+  body.buy-page .pcard .pcard-place,body.buy-page .pcard .pcard-col,body.buy-page .pcard .pcard-bundle{display:none!important}
+  body.buy-page .pcard .pcard-spec span:not(:first-child){display:none!important}
+  body.buy-page .pcard .pcard-b{gap:8px}
+  /* the rotating note strip: one line, never two */
+  body.shop-page .note,body.buy-page .note{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span{font-size:12.5px!important;letter-spacing:.02em!important}
+  body.buy-page .loc-hero{padding:16px 16px 34px!important}
+  body.buy-page .loc-hero h1{font-size:30px!important;line-height:1.1}
+  body.buy-page .loc-hero .crumbs{margin-bottom:8px}
+  body.buy-page .loc-hero .dune-far{display:none}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero h1{margin-bottom:6px}
+  body.buy-page .loc-hero h1::after{margin-top:8px}
+  body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
+  body.buy-page .loc-hero .dune-near{height:30px}
+}
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=db75cb51">
-<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=8b2e5d6b">
-<script src="/assets/sahra-nav.js?v=f752ab5a" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
+<script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
+<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/">
 <link rel="alternate" hreflang="x-default" href="https://www.sahraandbeyond.ae/">
@@ -1551,7 +1583,7 @@ body.dark-bg .rv-stars{color:#E9B978}
           </select>
         </label>
       </div>
-      <ul class="rv-list">
+      <ul class="rv-list rv-compact">
         
         <li class="rv-card" data-rating="5" data-date="2026-09-16">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
@@ -1606,7 +1638,7 @@ Highly recommended plus the packaging was superb!</p>
         </li>
       </ul>
       
-      
+      <button type="button" class="rv-showall" onclick="this.previousElementSibling.classList.remove('rv-compact');this.hidden=true">Show more reviews</button>
       <script>(function(){if(window.__sbRvLB)return;window.__sbRvLB=1;
 var last=null;
 function close(){var d=document.getElementById('sbRvLB');if(d)d.remove();document.documentElement.style.overflow='';if(last&&last.focus)last.focus();last=null;}
@@ -2819,7 +2851,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 })();
 </script>
 
-<script src="/assets/sahra-cart.js?v=48532550" defer></script>
+<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 <script data-hslide>
 /* Hero slideshow. Crossfade only - no transform, no layout work - so it cannot

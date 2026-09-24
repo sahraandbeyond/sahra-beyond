@@ -215,6 +215,17 @@ body.shop-page .fold-b .fit-note{margin:0 0 8px;line-height:1.6}
   body.shop-page .prod h2{font-size:clamp(24px,2.4vw,34px)}
   body.shop-page .prod-txt{padding:22px 26px 20px}
 }
+/* 24 Sep 2026 (phone layout review): the shirt leads each block - a bigger photo -
+   and the spin ring is a shorter teaser, since the full grid follows right after it. */
+@media(max-width:860px){
+  body.shop-page .prod-img{width:calc(44vh * .8)!important;max-height:44vh!important}
+  body.shop-page .pthumbs{max-height:44vh!important}
+}
+@media(max-width:560px){
+  .sring{--sring-w:136px;--sring-h:350px;padding-top:12px}
+  .sring-head p{display:none}
+  .sring-head h2{font-size:24px}
+}
 @media(max-width:860px){
   body.shop-page .prod{padding:16px 0 20px}
   /* photo with its thumbnails down the side: the same height carries both */
@@ -673,8 +684,8 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 @media(max-width:820px){.sb-curwrap--hdr{display:none}}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=45ac7562">
-<script src="/assets/sahra-cart.js?v=48532550" defer></script>
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
+<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
@@ -1121,11 +1132,33 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .sz-cap{white-space:normal}
 }
 
+
+/* 24 Sep 2026, phone layout review (Faheem: "way too crowded, no breathing room").
+   Category cards: name, rating, one fit chip, price and quick add - the place line,
+   the other chips, the colour dot and the repeated bundle line stay on the product
+   page. Category banner: half the height, so the choices show on the first screen. */
+@media(max-width:700px){
+  body.buy-page .pcard .pcard-place,body.buy-page .pcard .pcard-col,body.buy-page .pcard .pcard-bundle{display:none!important}
+  body.buy-page .pcard .pcard-spec span:not(:first-child){display:none!important}
+  body.buy-page .pcard .pcard-b{gap:8px}
+  /* the rotating note strip: one line, never two */
+  body.shop-page .note,body.buy-page .note{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span{font-size:12.5px!important;letter-spacing:.02em!important}
+  body.buy-page .loc-hero{padding:16px 16px 34px!important}
+  body.buy-page .loc-hero h1{font-size:30px!important;line-height:1.1}
+  body.buy-page .loc-hero .crumbs{margin-bottom:8px}
+  body.buy-page .loc-hero .dune-far{display:none}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero h1{margin-bottom:6px}
+  body.buy-page .loc-hero h1::after{margin-top:8px}
+  body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
+  body.buy-page .loc-hero .dune-near{height:30px}
+}
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=db75cb51">
-<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=8b2e5d6b">
-<script src="/assets/sahra-nav.js?v=f752ab5a" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
+<script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
+<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
 </head>
 <body class="shop-page">
 <a class="skip-link" href="#products">Skip to the collection</a>
@@ -1294,7 +1327,7 @@ body.dark-bg .rv-stars{color:#E9B978}
           </select>
         </label>
       </div>
-      <ul class="rv-list">
+      <ul class="rv-list rv-compact">
         
         <li class="rv-card" data-rating="5" data-date="2026-09-16">
           <span class="rv-stars" aria-hidden="true">★★★★★</span>
@@ -1349,7 +1382,7 @@ Highly recommended plus the packaging was superb!</p>
         </li>
       </ul>
       
-      
+      <button type="button" class="rv-showall" onclick="this.previousElementSibling.classList.remove('rv-compact');this.hidden=true">Show more reviews</button>
       <script>(function(){if(window.__sbRvLB)return;window.__sbRvLB=1;
 var last=null;
 function close(){var d=document.getElementById('sbRvLB');if(d)d.remove();document.documentElement.style.overflow='';if(last&&last.focus)last.focus();last=null;}
@@ -1434,7 +1467,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   var SHOPIFY = { domain:'sahra-beyond.myshopify.com', token:'cc42ba8e74eb27c4f3c062d93f893fa0', collection:'', apiVersion:'2024-10' };
 // ==================================================================
 var DEMO=(SHOPIFY.domain.indexOf('YOUR-STORE')>=0||SHOPIFY.token.indexOf('YOUR_')>=0);
-if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='<span class=\'sb-rot on\'><span class=\'sb-ship-uae\'>&#8635; Free next-day delivery across the UAE<span class=\'note-x\'> &nbsp;&middot;&nbsp; order by 2 pm &nbsp;&middot;&nbsp; no minimum order</span></span><span class=\'sb-ship-gcc\'>&#9992; GCC delivery 3&ndash;5 working days &nbsp;&middot;&nbsp; Free over AED 390</span><span class=\'sb-ship-intl\'>&#9992; Worldwide delivery 7&ndash;14 working days</span><span class=\'note-x\'> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop</span></span><span class=\'sb-rot\'>&#10022; Founding Edition &nbsp;&middot;&nbsp; a limited first run &nbsp;&middot;&nbsp; &#9873; Designed in the UAE</span><span class=\'sb-rot\'>&#8635; 14-day returns &nbsp;&middot;&nbsp; free within the UAE</span>';}
+if(!DEMO){var mn=document.getElementById('mode-note');if(mn)mn.innerHTML='<span class=\'sb-rot on\'><span class=\'sb-ship-uae\'>&#8635; Free next-day delivery across the UAE<span class=\'note-x\'> &nbsp;&middot;&nbsp; order by 2 pm &nbsp;&middot;&nbsp; no minimum order</span></span><span class=\'sb-ship-gcc\'>&#9992; GCC delivery 3&ndash;5 working days &nbsp;&middot;&nbsp; Free over AED 390</span><span class=\'sb-ship-intl\'>&#9992; Worldwide delivery 7&ndash;14 working days</span><span class=\'note-x\'> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE &nbsp;&middot;&nbsp; &#10022; Limited first drop</span></span><span class=\'sb-rot\'>&#10022; Founding Edition<span class=\'note-x\'> &nbsp;&middot;&nbsp; a limited first run</span> &nbsp;&middot;&nbsp; &#9873; Designed in the UAE</span><span class=\'sb-rot\'>&#8635; 14-day returns &nbsp;&middot;&nbsp; free within the UAE</span>';}
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches,TOUCH=matchMedia('(hover:none),(pointer:coarse)').matches,HASG=(typeof gsap!=='undefined');
 function track(n,p){try{if(window.gtag)gtag('event',n,p||{});}catch(e){}}
 // theme palette used when a product has no explicit theme (black, beige, rose-blue, sage, indigo, soft-blue)

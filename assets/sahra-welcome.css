@@ -255,3 +255,31 @@
 @media(max-width:959px){.sb-topbar:not(.sbw-host){padding-top:89px!important}}
 @media(max-width:620px){.sb-topbar:not(.sbw-host){padding-top:58px!important}}
 @media(max-width:560px){.sb-topbar:not(.sbw-host){padding-top:78px!important}}
+
+/* ---- one slim rotating line on phones (24 Sep 2026, web-design review) ----
+   The offer bar wrapped to two lines and sat on top of the delivery bar, so a
+   phone lost ~150px before the page began. Now: one line that cycles the offer,
+   the free tote and delivery every 4 s, with the code button fixed on the right. */
+.sbw-rot{display:none}
+.sbw-rot .sb-ship-gcc,.sbw-rot .sb-ship-intl{display:none}
+html[data-market="gcc"] .sbw-rot .sb-ship-uae{display:none}
+html[data-market="gcc"] .sbw-rot .sb-ship-gcc{display:inline}
+html[data-market="intl"] .sbw-rot .sb-ship-uae,html[data-market="intl"] .sbw-rot .sb-ship-gcc{display:none}
+html[data-market="intl"] .sbw-rot .sb-ship-intl{display:inline}
+@media(max-width:620px){
+  .sbw-bar-in>.sbw-amt,.sbw-bar-in>.sbw-sep,.sbw-bar-in>.sbw-hide-sm{display:none}
+  .sbw-bar-in{flex-wrap:nowrap;justify-content:space-between;width:100%;gap:10px}
+  .sbw-bar{padding:8px 12px;display:block;width:100%}
+  .sbw-rot{display:grid;flex:1;min-width:0;text-align:left}
+  .sbw-ri{grid-area:1/1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;animation:sbwRot 12s infinite}
+  .sbw-ri:nth-child(2){animation-delay:4s}
+  .sbw-ri:nth-child(3){animation-delay:8s}
+  @keyframes sbwRot{0%{opacity:0;transform:translateY(5px)}3%,30%{opacity:1;transform:none}34%,100%{opacity:0;transform:translateY(-5px)}}
+  /* the delivery bar that hosts the offer: its own text now lives in the rotation */
+  .sbw-host{padding:0!important}
+  .sbw-host>.sbw-wrap{margin:0!important}
+  .sbw-host>.sb-ship-uae,.sbw-host>.sb-ship-gcc,.sbw-host>.sb-ship-intl{display:none!important}
+}
+@media(max-width:620px) and (prefers-reduced-motion:reduce){
+  .sbw-ri{animation:none}.sbw-ri:first-child{opacity:1}
+}

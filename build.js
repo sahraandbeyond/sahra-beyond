@@ -2435,7 +2435,7 @@ function productCard(p) {
         <a class="pcard-imglink" href="/products/${p.id}/" tabindex="-1" data-cycle>
           ${cycleImgs(p)}
         </a>
-        <button type="button" class="pcard-zoom" data-zoom="${esc(p.imgMain)}" aria-label="Zoom ${esc(p.name)}">&#9906;</button>
+        <button type="button" class="pcard-zoom" data-zoom="${esc(p.imgMain)}" aria-label="Zoom ${esc(p.name)}"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </span>
       <span class="pcard-b">
         <a class="pcard-t" href="/products/${p.id}/">${esc(p.name)}</a>
@@ -2801,7 +2801,7 @@ console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.le
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
     if (!MARK.test(html)) continue;
-    const raw = RV.homepageBand();
+    const raw = RV.homepageBand({ compact: true });   /* 3 cards, the rest behind Show more (24 Sep 2026: ~4 phone screens of reviews) */
     const band = raw ? '<style>' + RV.CSS + '</style>' + raw : '';
     const next = html.replace(MARK, '<!--REVIEWS:START-->' + band + '<!--REVIEWS:END-->');
     if (next !== html) {
@@ -2839,7 +2839,7 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
 <\/script>` : '';
 
   const BANDMARK = /<!--RV_BAND:START-->[\s\S]*?<!--RV_BAND:END-->/;
-  const bandHtml = RV.homepageBand();
+  const bandHtml = RV.homepageBand({ compact: true });
   for (const f of ['shop-preview.html', 'shop/index.html']) {
     const file = path.join(ROOT, f);
     if (!fs.existsSync(file)) continue;

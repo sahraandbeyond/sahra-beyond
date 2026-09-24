@@ -102,6 +102,13 @@
       '<span class="sbw-amt sbw-tote">Free tote worth ' + OFFER.toteValue + '</span>' +
       '<span class="sbw-sep sbw-hide-sm" aria-hidden="true">·</span>' +
       '<span class="sbw-hide-sm">Free next-day UAE delivery</span>' +
+      /* phones (24 Sep 2026): one slim line that rotates through the offer, the
+         tote and delivery, instead of two stacked bars eating ~150px */
+      '<span class="sbw-rot" aria-hidden="true">' +
+        '<span class="sbw-ri">' + OFFER.amount + ' off your first order</span>' +
+        '<span class="sbw-ri">Free tote worth ' + OFFER.toteValue + '</span>' +
+        '<span class="sbw-ri"><span class="sb-ship-uae">Free next-day UAE delivery</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days</span><span class="sb-ship-intl">Worldwide delivery</span></span>' +
+      '</span>' +
       '<span class="sbw-go">Get the code &rarr;</span>' +
     '</span>';
 

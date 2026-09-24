@@ -284,7 +284,7 @@
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
-          '<p class="sb-note">Free next-day UAE delivery — order by 2 pm, no minimum. Regular tees and the polo run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
+          '<p class="sb-note"><span class="sb-note-d">Free next-day UAE delivery — order by 2 pm, no minimum. </span>Regular tees and the polo run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
           '<a class="sb-go" id="sbGo" href="#">Checkout</a>' +
           /* 23 Sep 2026: the store's gateway lists Shop Pay, Apple Pay and Google Pay (Admin API paymentSettings) */
           '<p class="sb-pay">Express checkout with Shop Pay, Apple Pay or Google Pay</p>' +
@@ -366,7 +366,8 @@
     });
     [document.getElementById('sbCartBtn'), document.getElementById('cartBtn')].forEach(function (btn) {
       if (btn) btn.setAttribute('aria-label', n ? 'Open cart, ' + n + ' item' + (n === 1 ? '' : 's') : 'Open cart');
-    });
+    });    /* the floating phone cart button listens for this (24 Sep 2026) */
+    try { document.dispatchEvent(new CustomEvent('sb:cartcount', { detail: n || 0 })); } catch (e) {}
   }
 
   function esc(s) {
@@ -915,6 +916,78 @@
     }
   }
 
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
+  else build();
+})();
+
+/* ==========================================================================
+   Floating cart button on phones (24 Sep 2026, Faheem: "There needs to be a
+   floating cart button showing number of items added so users can instantly
+   go to their cart instead of scrolling back up").
+
+   - phones only (700px and under), and only once the cart has something in it
+   - hidden while the header's own cart button is on screen, so there are
+     never two cart buttons in view
+   - bottom right, in the thumb zone; the WhatsApp button moves up one step to
+     make room, and both sit above the product page's sticky buy bar
+   - the count bumps when it changes; steps aside for the drawer and the menu
+   ========================================================================== */
+(function () {
+  if (document.getElementById('sbFcart')) return;
+  var mq = window.matchMedia ? matchMedia('(max-width:700px)') : null;
+  var count = 0, hdrVisible = true, b, num;
+
+  function build() {
+    if (document.getElementById('sbFcart')) return;
+    b = document.createElement('button');
+    b.id = 'sbFcart'; b.className = 'sb-fcart'; b.type = 'button';
+    b.setAttribute('aria-label', 'Open cart');
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 7h12l-1.2 12.1a2 2 0 0 1-2 1.9H9.2a2 2 0 0 1-2-1.9L6 7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 9.5V6.5a3 3 0 0 1 6 0v3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>' +
+      '<span class="sb-fcart-n" aria-hidden="true">0</span>';
+    num = b.querySelector('.sb-fcart-n');
+    b.addEventListener('click', function () { if (window.SahraCart) window.SahraCart.open(); });
+    document.body.appendChild(b);
+
+    /* the header cart: while it is on screen, this button stays hidden */
+    var hc = document.getElementById('sbCartBtn') || document.getElementById('cartBtn') || document.querySelector('.hdr-cart');
+    if (hc && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { hdrVisible = e[0].isIntersecting; sync(); }, { threshold: 0.6 }).observe(hc);
+    } else hdrVisible = false;
+
+    var bar = document.getElementById('buybar'), drawer = document.getElementById('sbDrawer');
+    if (window.MutationObserver) {
+      var qd = 0; new MutationObserver(function () { if (!qd) qd = requestAnimationFrame(function () { qd = 0; sync(); }); }).observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    }
+    var st = window.SahraCart && window.SahraCart.state && window.SahraCart.state();
+    if (st && st.totalQuantity) set(st.totalQuantity);
+    sync();
+  }
+  function set(n) {
+    n = n || 0;
+    var up = n > count;
+    count = n;
+    if (!b) return;
+    num.textContent = n > 99 ? '99+' : n;
+    b.setAttribute('aria-label', n ? 'Open cart, ' + n + ' item' + (n === 1 ? '' : 's') : 'Open cart');
+    if (up) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+    sync();
+  }
+  var syncing = false;
+  function sync() {
+    if (!b || syncing) return; syncing = true;
+    var phone = !mq || mq.matches;
+    var drawerOn = !!document.querySelector('#sbDrawer.on'), menuOn = !!document.querySelector('.m-panel.open');
+    var bar = document.getElementById('buybar');
+    var show = phone && count > 0 && !hdrVisible && !drawerOn && !menuOn;
+    if (b.classList.contains('on') !== show) b.classList.toggle('on', show);
+    var lift = !!(bar && bar.classList.contains('on'));
+    if (b.classList.contains('lift') !== lift) b.classList.toggle('lift', lift);
+    var cls = document.documentElement && document.documentElement.classList;
+    if (cls && cls.contains('sb-fcart-on') !== show) cls.toggle('sb-fcart-on', show);
+    syncing = false;
+  }
+  document.addEventListener('sb:cartcount', function (e) { set(e.detail); });
+  if (mq && mq.addEventListener) mq.addEventListener('change', sync);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
   else build();
 })();

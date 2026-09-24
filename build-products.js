@@ -772,6 +772,28 @@ ${RV.CSS}
   .buy-body>.pdp-buy{order:-1}
   .buy-body>.pdp-bundle-d{display:none}
 }
+/* 24 Sep 2026 (phone layout review, Faheem approved): photo first, fewer lines above it */
+.pdp-subm{display:none}
+.pdp-now[hidden]{display:none!important}
+#reviews .rv-list.rv-compact .rv-card:nth-child(n+4){display:none}
+#reviews .rv-showall{display:block;margin:10px auto 0;padding:12px 22px;border:1px solid #33271B;border-radius:999px;background:#fff;color:#33271B;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+@media(max-width:700px){
+  .buy-head .fabric-line,.buy-head .pdp-rating,.buy-head .fitv{display:none!important}
+  .pdp-subm{display:block;order:2;padding:0 2px}
+  .pdp-subm .fabric-line{font-size:12.5px;line-height:1.5;margin:2px 0 6px}
+  .pdp-subm .pdp-rating{display:flex;gap:6px;align-items:center;margin:0}
+  .buy-head{padding:12px 16px 12px}
+  .buy h1{margin:0 0 4px}
+  /* the long story sections fold into three tap-to-open groups (script below) */
+  .pdp-acc{margin:0 14px 12px;border:1px solid rgba(42,32,22,.14);border-radius:12px;background:rgba(252,249,242,.92);overflow:hidden}
+  .pdp-acc-h{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;padding:18px 18px;background:none;border:0;cursor:pointer;
+    font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:22px;font-weight:600;color:var(--txt,#2A2016);text-align:left}
+  .pdp-acc-h i{font-style:normal;font-family:Jost,sans-serif;font-size:22px;font-weight:400;transition:transform .25s}
+  .pdp-acc-h[aria-expanded="true"] i{transform:rotate(45deg)}
+  .pdp-acc-b>section{margin:0!important;border-radius:0!important;box-shadow:none!important}
+  .pdp-acc-b>section.sec{padding:10px 18px 22px!important}
+  .pdp-acc-b>.place-band{padding:0!important}
+}
 /* an Arabic word inside a sentence stays in the sentence (the .item span rule made it a block) */
 .item span[lang]{display:inline}
 /* Buy now is a full-width button like Add to cart, on every screen */
@@ -816,7 +838,7 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; a limited first run &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition<span class="note-x"> &nbsp;·&nbsp; a limited first run</span> &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -847,6 +869,8 @@ ${galShots(p).map((s,i)=>`
            that actually show the model. The tees' note is a standing cross-fit warning about
            the whole gallery and stays visible throughout, so it is deliberately not tagged. */''}
       ${p.modelInfo ? `<p class="gal-model${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' && p.wornFitMatches !== true ? ' gal-model-alt' : ''}"${(p.garment === 'polo' || !p.fitLabel) ? ' data-worn-only="1"' : ''}>${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' && p.wornFitMatches !== true ? 'Photographed on the Oversized cut \u2014 this page is the ' + esc(p.fitLabel || 'Regular fit').replace(/ fit$/,'') + ' fit, which is slimmer. ' : ''}${esc(p.modelInfo)}</p>` : ''}
+      ${/* 24 Sep 2026 (phone layout review): photo first. On phones the head card is eyebrow, title and price only; the fabric line and rating follow the photo here. */''}
+      <div class="pdp-subm"><p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>${RV.ratingLine(designHandles(p))}${RV.fitVerdict(designHandles(p))}</div>
     </div>
 
     <div class="buy">
@@ -903,7 +927,7 @@ ${galShots(p).map((s,i)=>`
         ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits</p>` : ''}
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
-        <button class="btn ghost pdp-now" id="pdpNow" type="button">Buy now</button>
+        <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
         ${RV.quotes(designHandles(p), 2)}
         ${/* 15 Sep audit: returns reassurance at the point of commitment. Every clause is
              policies.html verbatim - unworn, unwashed, tags on, exchanges subject to stock. */''}
@@ -1686,6 +1710,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');
         sel=v; goCheckout=false; addEl.disabled=false; setAdd('Add to cart', true); msg('');
+        /* Buy now appears once a size is chosen: one clear action before that (24 Sep 2026) */
+        var bn=document.getElementById('pdpNow'); if(bn) bn.hidden=false;
         /* Honest scarcity (Rastah benchmark): shown ONLY from live inventory,
            only at 3 or fewer, never invented. quantityAvailable can be null
            if the token cannot read inventory — then nothing is shown. */
@@ -1795,6 +1821,47 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 
+<script>
+/* 24 Sep 2026 (phone layout review): on phones the long story sections fold into
+   three closed groups - the tee page ran to twelve screens. Desktop is untouched.
+   A link to anything inside a closed group (e.g. #fit, #care) opens it first. */
+(function(){
+  if(!window.matchMedia||!matchMedia('(max-width:700px)').matches) return;
+  var q=function(s){return document.querySelector(s);};
+  var place=q('.place-band'), groups=[
+    ['The place and the design',[place,q('#design')]],
+    ['Fabric and care',[q('#fabric'),q('#care')]],
+    ['Size, fit and delivery',[q('#fit'),q('#delivery')]]
+  ];
+  var made=[];
+  groups.forEach(function(g,gi){
+    var secs=g[1].filter(Boolean); if(!secs.length) return;
+    var box=document.createElement('section'); box.className='pdp-acc';
+    var id='pdpAcc'+gi;
+    box.innerHTML='<button type="button" class="pdp-acc-h" aria-expanded="false" aria-controls="'+id+'"><span>'+g[0]+'</span><i aria-hidden="true">+</i></button><div class="pdp-acc-b" id="'+id+'" hidden></div>';
+    secs[0].parentNode.insertBefore(box,secs[0]);
+    var body=box.querySelector('.pdp-acc-b');
+    secs.forEach(function(x){ body.appendChild(x); });
+    var h=box.querySelector('.pdp-acc-h');
+    h.addEventListener('click',function(){ var open=h.getAttribute('aria-expanded')!=='true';
+      h.setAttribute('aria-expanded',open?'true':'false'); body.hidden=!open;
+      if(open){ body.querySelectorAll('.reveal').forEach(function(r){r.classList.add('in','vis','shown');}); } });
+    made.push(box);
+  });
+  function openFor(el){ made.forEach(function(b){ if(b.contains(el)){ var h=b.querySelector('.pdp-acc-h'); if(h.getAttribute('aria-expanded')!=='true') h.click(); } }); }
+  document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return;
+    var t=document.getElementById(a.getAttribute('href').slice(1)); if(t) openFor(t); },true);
+  /* reviews: three cards, the rest one tap away (the section ran to seven phone screens) */
+  var rl=document.querySelector('#reviews .rv-list');
+  if(rl && rl.querySelectorAll('.rv-card').length>3 && !rl.parentNode.querySelector('.rv-showall')){
+    rl.classList.add('rv-compact');
+    var sb=document.createElement('button'); sb.type='button'; sb.className='rv-showall'; sb.textContent='Show more reviews';
+    sb.addEventListener('click',function(){ rl.classList.remove('rv-compact'); sb.hidden=true; });
+    rl.parentNode.insertBefore(sb, rl.nextSibling);
+  }
+  if(location.hash){ var t=document.getElementById(location.hash.slice(1)); if(t){ openFor(t); setTimeout(function(){ t.scrollIntoView(); },50); } }
+})();
+</script>
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=124ea926" defer></script>
 <script src="/assets/sahra-market.js" defer></script>

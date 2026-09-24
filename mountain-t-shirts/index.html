@@ -618,12 +618,12 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=45ac7562">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=db75cb51">
-<script src="/assets/sahra-welcome.js?v=b583a4da" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=8b2e5d6b">
-<script src="/assets/sahra-nav.js?v=f752ab5a" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
+<script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
+<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1069,6 +1069,28 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .sz-cap{white-space:normal}
 }
 
+
+/* 24 Sep 2026, phone layout review (Faheem: "way too crowded, no breathing room").
+   Category cards: name, rating, one fit chip, price and quick add - the place line,
+   the other chips, the colour dot and the repeated bundle line stay on the product
+   page. Category banner: half the height, so the choices show on the first screen. */
+@media(max-width:700px){
+  body.buy-page .pcard .pcard-place,body.buy-page .pcard .pcard-col,body.buy-page .pcard .pcard-bundle{display:none!important}
+  body.buy-page .pcard .pcard-spec span:not(:first-child){display:none!important}
+  body.buy-page .pcard .pcard-b{gap:8px}
+  /* the rotating note strip: one line, never two */
+  body.shop-page .note,body.buy-page .note{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body.shop-page .note,body.shop-page .note span,body.shop-page .sb-rot span{font-size:12.5px!important;letter-spacing:.02em!important}
+  body.buy-page .loc-hero{padding:16px 16px 34px!important}
+  body.buy-page .loc-hero h1{font-size:30px!important;line-height:1.1}
+  body.buy-page .loc-hero .crumbs{margin-bottom:8px}
+  body.buy-page .loc-hero .dune-far{display:none}
+  body.buy-page .loc-hero .loc-emoji{display:none}
+  body.buy-page .loc-hero h1{margin-bottom:6px}
+  body.buy-page .loc-hero h1::after{margin-top:8px}
+  body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
+  body.buy-page .loc-hero .dune-near{height:30px}
+}
 </style>
 </head>
 <body class="buy-page">
@@ -1089,7 +1111,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <a class="pcard-imglink" href="/products/hajar-mountains-regular/" tabindex="-1" data-cycle>
           <img class="on" src="/shirts/hajar-regular-back.webp" alt="Hajar Mountains t-shirt, a mountain graphic tee in the regular fit — the red rock of the Hajar printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-regular-front.webp" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-dune-back.webp" alt="The Hajar Mountains tee worn in the dunes — the printed ridgeline across the back with the coordinates beneath it" loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-dune-front.webp" alt="The Hajar Mountains tee, front, worn in the dunes — the chest mark on the sand-coloured cotton" loading="lazy" width="1080" height="1350">
         </a>
-        <button type="button" class="pcard-zoom" data-zoom="/shirts/hajar-regular-back.jpg" aria-label="Zoom Hajar Mountains — Regular">&#9906;</button>
+        <button type="button" class="pcard-zoom" data-zoom="/shirts/hajar-regular-back.jpg" aria-label="Zoom Hajar Mountains — Regular"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </span>
       <span class="pcard-b">
         <a class="pcard-t" href="/products/hajar-mountains-regular/">Hajar Mountains — Regular</a>
@@ -1106,7 +1128,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <a class="pcard-imglink" href="/products/hajar-mountains-oversized/" tabindex="-1" data-cycle>
           <img class="on" src="/shirts/hajar-oversized-back.webp" alt="Hajar Mountains oversized t-shirt, a mountain graphic tee — the red rock of the Hajar printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-oversized-front.webp" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-lake-back-her.webp" alt="The Hajar Mountains tee from behind at sunset — the mountain print and coordinates filling the back. Female model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-lake-back-kneel.webp" alt="The Hajar Mountains tee from behind, kneeling — the mountain print and the coordinates beneath it. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-lake-full.webp" alt="The Hajar Mountains tee worn full-length with the sun behind the trees — the chest mark on the front. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-model-back.webp" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back" loading="lazy" width="1078" height="1459"><img src="/shirts/hajar-female-1.webp" alt="The Hajar Mountains tee worn in the Hajar themselves — the contour-line mountain mark on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1308" height="1600"><img src="/shirts/hajar-model-front.webp" alt="The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest" loading="lazy" width="1157" height="1600"><img src="/shirts/hajar-female-2.webp" alt="The back of the Hajar Mountains tee in the mountains — the red-rock print across the back. Female model wears M in the Oversized fit." loading="lazy" width="878" height="1280"><img src="/shirts/hajar-female-3.webp" alt="The Hajar Mountains tee worn on the ridge, the embroidered mark on the chest, hair in the wind. Female model wears M in the Oversized fit." loading="lazy" width="1114" height="1412"><img src="/shirts/hajar-female-4.webp" alt="The Hajar Mountains tee worn seated on the rocks at last light — the red-rock print showing at the side. Female model wears M in the Oversized fit." loading="lazy" width="1545" height="1600">
         </a>
-        <button type="button" class="pcard-zoom" data-zoom="/shirts/hajar-oversized-back.jpg" aria-label="Zoom Hajar Mountains — Oversized">&#9906;</button>
+        <button type="button" class="pcard-zoom" data-zoom="/shirts/hajar-oversized-back.jpg" aria-label="Zoom Hajar Mountains — Oversized"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </span>
       <span class="pcard-b">
         <a class="pcard-t" href="/products/hajar-mountains-oversized/">Hajar Mountains — Oversized</a>
@@ -1333,7 +1355,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=48532550" defer></script>
+<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 </body>
 </html>
