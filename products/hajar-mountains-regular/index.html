@@ -1812,7 +1812,9 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     cur=(i%imgs.length+imgs.length)%imgs.length;
     imgs.forEach(function(im,k){im.classList.toggle('on',k===cur);});
     thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===cur);});
-    syncBadge(); syncModel();
+    /* the caption changes at the middle of the crossfade, not before it - otherwise
+       "She wears M" sat over the outgoing photo of him (Faheem's screenshot, 24 Sep) */
+    clearTimeout(show.t); show.t=setTimeout(function(){ syncBadge(); syncModel(); },130);
   }
   syncBadge(); syncModel();
   /* Continuous 1s loop (Faheem, 29 Aug), same manners as the shop's slideshow:
