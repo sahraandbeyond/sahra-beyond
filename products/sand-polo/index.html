@@ -1302,8 +1302,8 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <p class="pdp-stock" id="pdpStock" hidden></p>
         
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></span></button>
-        <button class="btn ghost pdp-now" id="pdpNow" type="button">Buy now</button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
+        <button class="btn ghost pdp-now" id="pdpNow" type="button">Buy now</button>
         <ul class="pdp-quotes" aria-label="What buyers say"><li><q>Bought this as a birthday present for the husband.</q><span>Kainat · verified buyer</span></li></ul>
         
         <p class="pdp-reassure">Need a different size? UAE returns and exchanges are free within 14 days of delivery &mdash; unworn, unwashed, tags on; exchanges subject to stock. <a href="/policies.html#returns">Full policy &rarr;</a></p>
@@ -2167,6 +2167,13 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
         +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+' (recommended)</button>':'')
         +'<button type="button" class="fitc-btn" id="fitcYes">Keep '+sel.title+'</button>'
         +'</span>';
+      /* 24 Sep 2026 (Faheem: "I can't add anything from phone"): on a phone this
+         confirm rendered below the fold, under Buy now and the sticky bar, so a
+         tap on Add to cart looked like it did nothing. It now sits right under
+         the button, and is scrolled into view if any of it is still hidden. */
+      (function(){ var r=msgEl.getBoundingClientRect(), bar=document.getElementById('buybar'),
+          bh=(bar&&bar.getBoundingClientRect().height)||0;
+        if(r.top<70||r.bottom>innerHeight-bh-8){ try{ msgEl.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){ msgEl.scrollIntoView(); } } })();
       document.getElementById('fitcYes').onclick=function(){ setFitOk(); msg(''); doAdd(sel); };
       var up=document.getElementById('fitcUp');
       if(up) up.onclick=function(){ setFitOk();

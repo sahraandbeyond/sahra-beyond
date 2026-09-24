@@ -902,8 +902,8 @@ ${galShots(p).map((s,i)=>`
         <p class="pdp-stock" id="pdpStock" hidden></p>
         ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits</p>` : ''}
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
-        <button class="btn ghost pdp-now" id="pdpNow" type="button">Buy now</button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
+        <button class="btn ghost pdp-now" id="pdpNow" type="button">Buy now</button>
         ${RV.quotes(designHandles(p), 2)}
         ${/* 15 Sep audit: returns reassurance at the point of commitment. Every clause is
              policies.html verbatim - unworn, unwashed, tags on, exchanges subject to stock. */''}
@@ -1767,6 +1767,13 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
         +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+' (recommended)</button>':'')
         +'<button type="button" class="fitc-btn" id="fitcYes">Keep '+sel.title+'</button>'
         +'</span>';
+      /* 24 Sep 2026 (Faheem: "I can't add anything from phone"): on a phone this
+         confirm rendered below the fold, under Buy now and the sticky bar, so a
+         tap on Add to cart looked like it did nothing. It now sits right under
+         the button, and is scrolled into view if any of it is still hidden. */
+      (function(){ var r=msgEl.getBoundingClientRect(), bar=document.getElementById('buybar'),
+          bh=(bar&&bar.getBoundingClientRect().height)||0;
+        if(r.top<70||r.bottom>innerHeight-bh-8){ try{ msgEl.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){ msgEl.scrollIntoView(); } } })();
       document.getElementById('fitcYes').onclick=function(){ setFitOk(); msg(''); doAdd(sel); };
       var up=document.getElementById('fitcUp');
       if(up) up.onclick=function(){ setFitOk();
