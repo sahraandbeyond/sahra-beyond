@@ -2747,6 +2747,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(CATEGORIES.map(C => ({ u: `${SITE}/${C.slug}/`, m: buildDate, p: '0.9' })))
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
   .concat([{ u: `${SITE}/journal/`, m: buildDate, p: '0.7' }])
+  .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])   /* Sahra Trail coming-soon page (24 Sep 2026); /ar/trail/ is noindex */
   // Articles carry their own lastmod: an article's updated date is real
   // information, unlike the build date, and re-stamping every URL on every
   // build teaches Google to ignore the field.
@@ -3299,6 +3300,285 @@ const AR_PDP_NOINDEX = true;
 </main>`, activeNav: 'shop'
   }));
   console.log(`  ✓ Arabic product pages: ${T.length} + /ar/shop/` + (AR_PDP_NOINDEX ? '  (noindex — awaiting native review)' : ''));
+})();
+
+/* ==========================================================================
+   Sahra Trail — /trail/ and /ar/trail/  (24 Sep 2026, Faheem)
+   ==========================================================================
+   The activewear line's coming-soon page. Faheem's brief: its own page, its
+   own top-bar link and Shop-menu column, exciting animated visuals of
+   mountain hiking and trail running, the Two Ridges logo animated, "coming
+   soon", built to create anticipation.
+   Approved choices (24 Sep): night-to-dawn fly-up; the logo
+   draws itself then flashes like the reflective print; "this season", no date
+   (the brief bars 29 Oct until the factory confirms); the two products as
+   silhouettes with a reflective glint only; headline "The trail starts
+   here."; sign-up on the house list tagged 'trail'; Arabic built alongside,
+   noindex until a native read.
+   Claims: none about fabric, UPF, cooling or recycling. The reflective mark
+   is real (Decision Log 24 Sep); "designed in the UAE" is the house claim.
+   Revision (24 Sep, Faheem: "these still look very fake"): the procedural
+   three.js terrain is gone. The scene is now a photographic Hajar plate (a
+   wadi-floor view of a limestone face with switchbacks, generated in Magnific
+   in night and first-light versions, plus a depth map) moved in 2.5D by one
+   raw-WebGL shader: parallax, the climb, first light arriving from the back,
+   headlamps drawn on the traced path. Plates in assets/trail/hajar-*.
+   The scene lives in assets/sahra-trail.js. The lockup below is the locked
+   master's own outlines (print-files/sahra-trail/lockup), never retyped. */
+(function buildTrail() {
+  const L = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sahra-trail-lockup.json'), 'utf8'));
+  const T = {
+    en: {
+      title: 'Sahra Trail: activewear coming this season | Sahra & Beyond',
+      desc: 'Sahra Trail is the new trail and run line from Sahra & Beyond, designed in the UAE for its trails, wadis and ridges. The first run arrives this season. Get first access.',
+      eyebrow: 'A new line from Sahra &amp; Beyond',
+      kicker: 'Activewear &middot; first run, this season',
+      h1: 'The trail starts here.',
+      cta: 'Get first access',
+      scroll: 'Scroll to climb',
+      elev: 'Elev', time: 'Time',
+      ch: [
+        ['01', 'Night', 'Headlamps on.', 'On UAE trails the day starts in the dark, ahead of the heat. The Two Ridges mark on the back is reflective, so it catches the light behind you.'],
+        ['02', 'Climb', 'Wadi floor to ridge.', 'Switchbacks, loose rock and the long pull out of the valley. Sahra Trail is for the trails, wadis and ridges of the UAE.'],
+        ['03', 'Run', 'Then you run it.', 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE.'],
+        ['04', 'Dawn', 'First light on the ridge.', 'The first run arrives this season: two pieces to start.']
+      ],
+      firstH: 'The first run', firstSub: 'Two pieces. Revealed at launch.',
+      tee: 'Sun Tee', short: '2-in-1 Trail Short', reveal: 'Revealed at launch', reflect: 'Reflective Two Ridges mark',
+      joinH: 'Get first access', joinP: 'Leave your email and we will write once, when the first run is ready.',
+      ph: 'you@email.com', btn: 'Notify me', fine: 'One email when it lands. Unsubscribe any time.',
+      ok: 'You are on the list. We will email you when the first run lands.',
+      err: 'Please enter a valid email address.',
+      back: 'Meanwhile, the Founding Edition is in the shop &rarr;', backHref: '/shop/'
+    },
+    ar: {
+      title: 'صحراء تريل: ملابس رياضية قريبًا | صحراء وما بعدها',
+      desc: 'صحراء تريل خط جديد لملابس الجري والمشي الجبلي من صحراء وما بعدها، صُمّم في الإمارات لدروبها ووديانها وقممها. الدفعة الأولى تصل هذا الموسم.',
+      eyebrow: 'خط جديد من صحراء وما بعدها',
+      kicker: 'ملابس رياضية · الدفعة الأولى هذا الموسم',
+      h1: 'الدرب يبدأ من هنا.',
+      cta: 'كن أول من يعرف',
+      scroll: 'مرّر لتصعد',
+      elev: 'الارتفاع', time: 'الوقت',
+      ch: [
+        ['01', 'الليل', 'مصابيح الرأس مضاءة.', 'على دروب الإمارات يبدأ اليوم في الظلام، قبل الحرّ. شعار القمّتين على الظهر عاكس، فيلتقط الضوء خلفك.'],
+        ['02', 'الصعود', 'من قاع الوادي إلى القمّة.', 'منعطفات متعرّجة، وصخور متناثرة، وصعود طويل من الوادي. صحراء تريل لدروب الإمارات ووديانها وقممها.'],
+        ['03', 'الجري', 'ثم تجري عليه.', 'ملابس للجري والمشي الجبلي من صحراء وما بعدها، صُمّمت في الإمارات.'],
+        ['04', 'الفجر', 'أول الضوء على القمّة.', 'الدفعة الأولى تصل هذا الموسم: قطعتان للبداية.']
+      ],
+      firstH: 'الدفعة الأولى', firstSub: 'قطعتان. يُكشف عنهما عند الإطلاق.',
+      tee: 'تيشيرت الشمس', short: 'شورت الدرب 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', reflect: 'شعار القمّتين العاكس',
+      joinH: 'كن أول من يعرف', joinP: 'اترك بريدك الإلكتروني، وسنراسلك مرة واحدة حين تصبح الدفعة الأولى جاهزة.',
+      ph: 'you@email.com', btn: 'أبلغني', fine: 'رسالة واحدة عند الإطلاق. يمكنك إلغاء الاشتراك في أي وقت.',
+      ok: 'تمّت إضافتك. سنراسلك حين تصل الدفعة الأولى.',
+      err: 'يرجى إدخال بريد إلكتروني صحيح.',
+      back: 'حتى ذلك الحين، الإصدار التأسيسي متوفر في المتجر ←', backHref: '/ar/shop/'
+    }
+  };
+  /* centre lines of the two ridges, in the symbol's own units: the reveal masks follow them */
+  const NEAR_C = 'M12.6,82.6 Q24.5,63 37.6,49.4 Q58,60.5 77.8,76.6';
+  const FAR_C = 'M54.4,32.8 Q61.5,22.2 69.6,17.2 Q80.2,23.3 88.3,31.6';
+  const logo = (id) => `
+<svg class="tr-logo" id="trLogo" viewBox="${L.vb}" role="img" aria-label="Sahra Trail" tabindex="0">
+  <defs>
+    <mask id="${id}mN" maskUnits="userSpaceOnUse" x="-50" y="-50" width="200" height="200"><path class="tr-mk tr-mk-n" d="${NEAR_C}" pathLength="1"/></mask>
+    <mask id="${id}mF" maskUnits="userSpaceOnUse" x="-50" y="-50" width="200" height="200"><path class="tr-mk tr-mk-f" d="${FAR_C}" pathLength="1"/></mask>
+    <clipPath id="${id}clip"><path transform="${L.tr}" d="${L.far} ${L.near}"/></clipPath>
+    <linearGradient id="${id}sh" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff" stop-opacity=".95"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g class="tr-sym">
+    <path class="tr-near" mask="url(#${id}mN)" transform="${L.tr}" fill="#D9C3A5" fill-rule="evenodd" d="${L.near}"/>
+    <g class="tr-far"><path mask="url(#${id}mF)" transform="${L.tr}" fill="#D9C3A5" fill-rule="evenodd" d="${L.far}"/></g>
+    <g clip-path="url(#${id}clip)"><rect class="tr-shine" x="-120" y="0" width="120" height="244.5" fill="url(#${id}sh)"/></g>
+  </g>
+  <path class="tr-word" fill="#D9C3A5" d="${L.word}"/>
+</svg>`;
+  const SYM = `<svg class="tr-glint" viewBox="6 10.76 88 78.48" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="${L.far} ${L.near}"/></svg>`;
+  const tee = `<svg class="tr-sil" viewBox="0 0 300 300" aria-hidden="true"><defs><linearGradient id="tRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d4a52"/><stop offset=".5" stop-color="#0c141b"/><stop offset="1" stop-color="#070b10"/></linearGradient></defs>
+  <path fill="url(#tRim)" stroke="rgba(217,195,165,.22)" stroke-width="1.2" d="M103 38 C118 52 182 52 197 38 L255 64 C266 69 272 78 274 90 L284 132 L240 146 L232 116 L232 262 C232 268 228 272 222 272 L78 272 C72 272 68 268 68 262 L68 116 L60 146 L16 132 L26 90 C28 78 34 69 45 64 Z"/>
+  <path fill="none" stroke="rgba(217,195,165,.18)" stroke-width="1.2" d="M103 38 C112 60 188 60 197 38"/></svg>`;
+  const shorts = `<svg class="tr-sil" viewBox="0 0 300 300" aria-hidden="true"><defs><linearGradient id="sRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d4a52"/><stop offset=".5" stop-color="#0c141b"/><stop offset="1" stop-color="#070b10"/></linearGradient></defs>
+  <path fill="url(#sRim)" stroke="rgba(217,195,165,.22)" stroke-width="1.2" d="M62 70 L238 70 L252 218 C253 226 248 232 240 233 L168 238 C160 238 155 233 154 226 L150 150 L146 226 C145 233 140 238 132 238 L60 233 C52 232 47 226 48 218 Z"/>
+  <path fill="none" stroke="rgba(217,195,165,.2)" stroke-width="1.2" d="M62 88 L238 88"/></svg>`;
+
+  function page(lang) {
+    const t = T[lang], AR = lang === 'ar', id = AR ? 'tra' : 'tre';
+    const chapters = t.ch.map((c, k) => `
+  <section class="tr-ch tr-ch-${k + 1}" aria-labelledby="${id}c${k}">
+    <div class="tr-rv">
+      <p class="tr-num"><span>${c[0]}</span> ${c[1]}</p>
+      <h2 id="${id}c${k}">${c[2]}</h2>
+      <p class="tr-lede">${c[3]}</p>
+    </div>
+  </section>`).join('');
+    return `
+<style>
+body.trail-page{background:#04070d;color:#EADBC4}
+body.trail-page .hdr{background:rgba(6,10,16,.55);border-bottom-color:rgba(217,195,165,.14);color:#EADBC4}
+body.trail-page .hdr a,body.trail-page .hdr button,body.trail-page .brand-sahra,body.trail-page .brand-beyond{color:#EADBC4}
+body.trail-page .brand img{filter:brightness(0) invert(.88) sepia(.25)}
+body.trail-page .ftr{position:relative;z-index:2}
+#trGL{position:fixed;inset:0;width:100vw;height:100vh;height:100lvh;display:block;z-index:0;background:#04070d url(data:image/webp;base64,UklGRkQBAABXRUJQVlA4IDgBAAAQCgCdASpAACQAPslSoEunpKMhtVQMAPAZCWUAy2qrUDsgnCOQ3gp9sI2OLK/S4O5m5iJ3bzNc7Lbdh1MSjk0n2GNvJ9764pDWeZjBfANQKAlPCe8cAT5oAAD+7Nfdmo+lgbqxTnxID4B4qGBbL2abEXOfbKBPW+F2jLAh2kphzGvlnxlGD1rHAgvXsN2P07ilXJ8MPfQDVQOXX5AiPBLn1/6PxIiL7C6Q93UaVp8lPdoZeNYmg2l6go4PZF1zZBdYWDSO2RcKjOhGMMqJrYz0NrxslihXPGopfxmpqLxcfu4E7w7Ts7gWPbxL769qKhyX7XY9KfdGqk0kgj1gnMXpuYNL2sKqiitbcmm3L3zIliZLdXgLSNGIdhCsDAUw4jhIskH0RNY9ef5Y/0X8l69B6ZsswYUCAAA=) 50% 66%/cover no-repeat}
+.tr-nogl #trGL{background:#04070d url(/assets/trail/hajar-night-m.webp) 50% 62%/cover no-repeat}
+main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:0!important;padding:0!important;background:transparent!important;box-shadow:none!important;border:0!important}
+.tr-veil{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(120% 80% at 50% 110%,rgba(4,7,13,0) 40%,rgba(4,7,13,.55) 100%);opacity:calc(1 - var(--tr-dawn,0)*.8)}
+.tr section{position:relative;z-index:1}
+.tr-hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 20px 110px}
+.tr-eyebrow{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#D9C3A5;opacity:0;animation:trUp .9s 2.9s forwards}
+.tr-logo{width:min(760px,88vw);height:auto;margin:22px 0 10px;overflow:visible;cursor:pointer;outline:none}
+.tr-mk{fill:none;stroke:#fff;stroke-width:19;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 2;stroke-dashoffset:1.1}
+.tr-logo.go .tr-mk-n{animation:trDraw 1.5s .35s cubic-bezier(.65,0,.35,1) forwards}
+.tr-logo.go .tr-mk-f{animation:trDraw 1.1s 1.35s cubic-bezier(.65,0,.35,1) forwards}
+.tr-far{transform-box:fill-box;transform-origin:50% 100%}
+.tr-logo.go .tr-far{animation:trLift 1.4s 1.3s cubic-bezier(.2,.8,.2,1) both}
+.tr-word{opacity:0;transform:translateX(18px)}
+.tr-logo.go .tr-word{animation:trWord 1s 2.25s cubic-bezier(.2,.8,.2,1) forwards}
+.tr-shine{transform:translateX(0)}
+.tr-logo.flash .tr-shine{animation:trShine .8s cubic-bezier(.4,0,.2,1)}
+.tr-logo.flash .tr-sym{animation:trBloom 1.2s ease-out}
+.tr-logo.flash .tr-word{animation:trWordGlow 1.2s ease-out;opacity:1;transform:none}
+@keyframes trDraw{to{stroke-dashoffset:0}}
+@keyframes trLift{0%{transform:translateY(14px)}100%{transform:none}}
+@keyframes trWord{to{opacity:1;transform:none}}
+@keyframes trShine{0%{transform:translateX(0)}100%{transform:translateX(420px)}}
+@keyframes trBloom{0%{filter:none}22%{filter:drop-shadow(0 0 14px rgba(255,255,255,1)) drop-shadow(0 0 44px rgba(210,230,255,.75)) brightness(2.1)}100%{filter:none}}
+@keyframes trWordGlow{0%{filter:none}30%{filter:drop-shadow(0 0 12px rgba(255,255,255,.55)) brightness(1.35)}100%{filter:none}}
+@keyframes trUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.tr-kicker{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:#9ED0CB;opacity:0;animation:trUp .9s 3.1s forwards;margin:4px 0 18px}
+.tr-hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(40px,7vw,86px);line-height:1.02;margin:0 0 26px;color:#F6ECDD;text-shadow:0 2px 30px rgba(0,0,0,.6);opacity:0;animation:trUp 1.1s 3.35s forwards}
+.tr-btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:#D9C3A5;color:#10161d;font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;opacity:0;animation:trUp .9s 3.7s forwards;box-shadow:0 10px 40px rgba(217,195,165,.25)}
+.tr-btn:hover{background:#F3E4CB}
+.tr-cue{position:absolute;bottom:92px;left:50%;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(234,219,196,.7);opacity:0;animation:trUp .9s 4.2s forwards}
+.tr-cue i{display:block;width:1px;height:38px;margin:10px auto 0;background:linear-gradient(#EADBC4,transparent);animation:trCue 1.8s 4.2s infinite}
+@keyframes trCue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.tr-ch{min-height:120vh;display:flex;align-items:center;padding:0 max(22px,8vw)}
+.tr-ch:nth-of-type(odd){justify-content:flex-end}
+.tr-ch>div{max-width:520px;padding:26px 28px;border-left:1px solid rgba(217,195,165,.35);background:linear-gradient(90deg,rgba(4,7,13,.55),rgba(4,7,13,0))}
+[dir=rtl] .tr-ch>div{border-left:0;border-right:1px solid rgba(217,195,165,.35);background:linear-gradient(270deg,rgba(4,7,13,.55),rgba(4,7,13,0))}
+.tr-num{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#9ED0CB;margin:0 0 12px}
+.tr-num span{color:#D9C3A5;margin-inline-end:10px}
+.tr-ch h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(38px,5.6vw,72px);line-height:1.02;margin:0 0 14px;color:#F6ECDD;text-shadow:0 2px 24px rgba(0,0,0,.55)}
+.tr-lede{font-size:18px;line-height:1.6;color:#E6D8C3;margin:0;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.tr-rv{opacity:0;transform:translateY(34px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.tr-rv.in{opacity:1;transform:none}
+.tr-first{padding:18vh 20px 10vh;text-align:center}
+.tr-first h2,.tr-join h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(36px,5vw,64px);margin:0 0 8px;color:#1b1410}
+.tr-first>div>p,.tr-join p{color:#2a2016;font-size:17px}
+.tr-pieces{display:grid;grid-template-columns:repeat(2,minmax(0,340px));gap:28px;justify-content:center;margin-top:36px}
+.tr-piece{position:relative;padding:22px 18px 20px;border-radius:18px;background:rgba(10,16,22,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(217,195,165,.18);color:#EADBC4}
+.tr-sil{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
+.tr-glint{position:absolute;width:44px;height:40px;color:#9aa5ad;animation:trGlint 5.5s infinite}
+.tr-piece:nth-child(1) .tr-glint{left:calc(50% - 22px);top:78px}
+.tr-piece:nth-child(2) .tr-glint{left:26%;top:176px;width:34px;height:31px;animation-delay:2.4s}
+@keyframes trGlint{0%,78%,100%{color:#8a959d;filter:none}84%{color:#fff;filter:drop-shadow(0 0 8px #fff) drop-shadow(0 0 22px rgba(200,225,255,.8))}90%{color:#dfe7ee;filter:drop-shadow(0 0 4px #fff)}}
+.tr-piece b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:26px;font-weight:600;color:#F6ECDD;margin-top:8px}
+.tr-piece small{display:block;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#9ED0CB;margin-top:6px}
+.tr-piece em{display:block;font-style:normal;font-size:13.5px;color:#CDBEA8;margin-top:4px}
+.tr-join{padding:8vh 20px 16vh;text-align:center}
+.tr-join>div{max-width:560px;margin:0 auto;padding:34px 26px;border-radius:20px;background:rgba(250,244,234,.92);color:#2a2016;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.tr-form{display:flex;gap:10px;margin:22px 0 10px}
+.tr-form input{flex:1;min-width:0;min-height:52px;padding:0 16px;border-radius:12px;border:1px solid rgba(42,32,22,.3);font-size:16px;background:#fff;color:#2a2016}
+.tr-form button{min-height:52px;padding:0 22px;border-radius:12px;border:0;background:#285C5C;color:#F3E7D3;font-weight:600;font-size:15px;cursor:pointer}
+.tr-form button:hover{background:#1F4B4B}
+.tr-join .tr-fine{font-size:13px;color:#5C5148;margin:0}
+.tr-join .tr-ok,.tr-join .tr-err{display:none;font-size:15px;margin:12px 0 0}
+[data-waitlist-wrap].done .tr-form,[data-waitlist-wrap].done .tr-fine{display:none}
+[data-waitlist-wrap].done .tr-ok{display:block;color:#1F4B4B;font-weight:600}
+[data-waitlist-wrap].err .tr-err{display:block;color:#9b3a25}
+[data-waitlist-wrap].loading button{opacity:.6}
+.tr-back{display:inline-block;margin-top:22px;color:#285C5C;font-weight:600}
+.tr-first,.tr-join{background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0))}
+.tr-first h2,.tr-first>div>p{color:#FFF4E4;text-shadow:0 2px 20px rgba(0,0,0,.45)}
+.tr-hud{position:fixed;left:18px;bottom:18px;z-index:3;display:flex;gap:18px;align-items:flex-end;padding:10px 14px;border-radius:12px;background:rgba(4,7,13,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(217,195,165,.16);font-family:'Space Mono',monospace;color:#EADBC4;pointer-events:none}
+.tr-hud small{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9ED0CB}
+.tr-hud b{display:block;font-size:17px;font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums;direction:ltr}
+.tr-hud i{position:absolute;left:14px;right:14px;bottom:6px;height:2px;background:rgba(217,195,165,.18)}
+.tr-hud i b{position:absolute;inset:0;background:#D9C3A5;transform-origin:left;transform:scaleX(0)}
+/* Arabic: no letter-spacing or capitals (spacing breaks the joins), the page's Arabic face, a size up */
+[dir=rtl] .tr-eyebrow,[dir=rtl] .tr-kicker,[dir=rtl] .tr-num,[dir=rtl] .tr-cue,[dir=rtl] .tr-hud small,[dir=rtl] .tr-piece small,[dir=rtl] .tr-btn{
+  font-family:inherit;letter-spacing:0;text-transform:none}
+[dir=rtl] .tr-eyebrow,[dir=rtl] .tr-kicker{font-size:16px}
+[dir=rtl] .tr-num{font-size:15px}[dir=rtl] .tr-cue{font-size:13px}[dir=rtl] .tr-hud small{font-size:11.5px}
+[dir=rtl] .tr-btn{font-size:17px}[dir=rtl] .tr-piece small{font-size:13px}
+[dir=rtl] .tr-hero h1,[dir=rtl] .tr-ch h2,[dir=rtl] .tr-first h2,[dir=rtl] .tr-join h2,[dir=rtl] .tr-piece b{font-family:inherit;font-weight:700;line-height:1.3}
+[dir=rtl] .tr-hud{direction:ltr}
+@media(max-width:700px){
+  .tr-hero{padding:80px 18px 120px}
+  .tr-ch{min-height:105vh;padding:0 18px;justify-content:flex-start!important}
+  .tr-ch>div{padding:20px 18px}
+  .tr-lede{font-size:17px}
+  .tr-pieces{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}
+  .tr-form{flex-direction:column}
+  .tr-hud{left:12px;bottom:12px;gap:14px;padding:8px 12px}
+  .tr-cue{bottom:96px}
+}
+@media(prefers-reduced-motion:reduce){
+  .tr-eyebrow,.tr-kicker,.tr-hero h1,.tr-btn,.tr-cue,.tr-word{animation:none!important;opacity:1!important;transform:none!important}
+  .tr-mk{stroke-dashoffset:0!important;animation:none!important}.tr-far{animation:none!important}
+  .tr-rv{opacity:1;transform:none;transition:none}
+  .tr-glint,.tr-cue i{animation:none}
+}
+</style>
+<canvas id="trGL" aria-hidden="true"></canvas>
+<div class="tr-veil" aria-hidden="true"></div>
+<main class="tr" id="trail">
+  <section class="tr-hero">
+    <p class="tr-eyebrow">${t.eyebrow}</p>
+    ${logo(id)}
+    <p class="tr-kicker">${t.kicker}</p>
+    <h1>${t.h1}</h1>
+    <a class="tr-btn" href="#first-access">${t.cta} <span aria-hidden="true">&darr;</span></a>
+    <div class="tr-cue" aria-hidden="true">${t.scroll}<i></i></div>
+  </section>
+  ${chapters}
+  <section class="tr-first" aria-labelledby="${id}first">
+    <div class="tr-rv">
+      <h2 id="${id}first">${t.firstH}</h2>
+      <p>${t.firstSub}</p>
+      <div class="tr-pieces">
+        <div class="tr-piece">${tee}${SYM}<b>${t.tee}</b><small>${t.reveal}</small><em>${t.reflect}</em></div>
+        <div class="tr-piece">${shorts}${SYM}<b>${t.short}</b><small>${t.reveal}</small><em>${t.reflect}</em></div>
+      </div>
+    </div>
+  </section>
+  <section class="tr-join" id="first-access" aria-labelledby="${id}join">
+    <div class="tr-rv" data-waitlist-wrap>
+      <h2 id="${id}join">${t.joinH}</h2>
+      <p>${t.joinP}</p>
+      <form class="tr-form" data-waitlist data-source="trail" novalidate>
+        <input type="email" name="email" placeholder="${t.ph}" aria-label="Email address" autocomplete="email" required dir="ltr">
+        <button type="submit">${t.btn}</button>
+      </form>
+      <p class="tr-fine">${t.fine}</p>
+      <p class="tr-ok" role="status">${t.ok}</p>
+      <p class="tr-err" role="alert">${t.err}</p>
+      <a class="tr-back" href="${t.backHref}">${t.back}</a>
+    </div>
+  </section>
+  <div class="tr-hud" aria-hidden="true"><div><small>${t.elev}</small><b id="trElev">190 m</b></div><i><b id="trBar"></b></i></div>
+</main>
+<script src="/assets/sahra-trail.js" defer></script>`;
+  }
+
+  const canonEn = `${SITE}/trail/`, canonAr = `${SITE}/ar/trail/`;
+  write('trail/index.html', shell({
+    title: T.en.title, desc: T.en.desc, canonical: canonEn, bodyClass: 'trail-page', activeNav: 'trail',
+    image: `${SITE}/assets/trail/sahra-trail-og.png`,
+    jsonld: { '@context': 'https://schema.org', '@type': 'WebPage', name: 'Sahra Trail', description: T.en.desc, url: canonEn,
+      isPartOf: { '@type': 'WebSite', name: 'Sahra & Beyond', url: SITE + '/' } },
+    bodyHtml: page('en')
+  }));
+  write('ar/trail/index.html', shell({
+    lang: 'ar', noindex: true, altHref: canonEn,
+    title: T.ar.title, desc: T.ar.desc, canonical: canonAr, bodyClass: 'trail-page', activeNav: 'trail',
+    image: `${SITE}/assets/trail/sahra-trail-og.png`,
+    jsonld: { '@context': 'https://schema.org', '@type': 'WebPage', name: 'Sahra Trail', inLanguage: 'ar', url: canonAr },
+    bodyHtml: page('ar')
+  }));
+  console.log('  ✓ Sahra Trail: /trail/ + /ar/trail/ (Arabic noindex, awaiting native review)');
 })();
 
 /* hreflang from the ENGLISH side. Google needs the pairing declared BOTH ways or

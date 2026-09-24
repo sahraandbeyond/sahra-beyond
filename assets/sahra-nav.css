@@ -32,7 +32,7 @@
   border-top:1px solid rgba(51,39,27,.1);border-bottom:1px solid rgba(51,39,27,.12);
   box-shadow:0 30px 60px -30px rgba(51,39,27,.45);
   padding:26px max(28px,calc((100% - 1180px)/2)) 20px;
-  display:grid;grid-template-columns:1fr 1fr 1fr 1.25fr;gap:26px 34px;
+  display:grid;grid-template-columns:1.05fr .95fr 1.1fr 1.25fr 1.15fr;gap:24px 24px;
   opacity:0;visibility:hidden;transform:translateY(-6px);
   transition:opacity .18s ease,transform .22s ease,visibility 0s linear .22s;
   font-family:Jost,system-ui,-apple-system,'Segoe UI',sans-serif;text-align:left;letter-spacing:0;text-transform:none}
@@ -72,3 +72,16 @@
 @media(max-width:560px){.sbl-in-menu .sbl-lang.sbl-m{display:none}}
 @media(min-width:821px){.sbl-lang.sbl-menu{display:none}}
 .sbl-lang.sbl-menu{justify-content:flex-start;padding:0;border-radius:0;font-weight:600}
+
+/* Sahra Trail (24 Sep 2026): top-bar link with a 'Soon' tag, and its mega-menu column */
+.sbn-trail{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.sbn-soon{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;line-height:1;
+  padding:3px 6px;border-radius:999px;background:#285C5C;color:#EADBC4}
+.sbn-trailcard{display:flex;align-items:center;gap:12px;padding:12px;margin:0 0 6px;border-radius:12px;background:#285C5C;color:#D9C3A5;text-decoration:none}
+.sbn-trailcard svg{width:44px;height:40px;flex:none}
+.sbn-trailcard b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:18px;line-height:1.15;color:#F3E7D3}
+.sbn-trailcard small{display:block;font-size:12.5px;line-height:1.35;color:#D9C3A5}
+.sbn-trailcard:hover{background:#1F4B4B}
+@media(max-width:1180px) and (min-width:821px){.sbn-trail .sbn-soon{display:none}}
+.sbn-trail.active,.sbn-trail[aria-current]{background:#285C5C!important;color:#F3E7D3!important}
+.sbn-trail.active .sbn-soon{background:#D9C3A5;color:#1F4B4B}
