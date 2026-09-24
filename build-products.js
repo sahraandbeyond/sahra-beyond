@@ -785,13 +785,20 @@ ${RV.CSS}
   .buy-head{padding:12px 16px 12px}
   .buy h1{margin:0 0 4px}
   /* the long story sections fold into three tap-to-open groups (script below) */
-  .pdp-acc{margin:0 14px 12px;border:1px solid rgba(42,32,22,.14);border-radius:12px;background:rgba(252,249,242,.92);overflow:hidden}
+  /* explicit colours: on the dark product pages the theme's text colour is light, which
+     made these headings near-white on a cream card (Faheem's screenshot, 24 Sep). Width is
+     pinned to the viewport so the three cards line up whichever parent they sit in. */
+  .pdp-acc{box-sizing:border-box;width:calc(100vw - 28px);max-width:none;margin:0 0 12px calc(50% - 50vw + 14px);
+    border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#FAF6EF;color:#2A2016;overflow:hidden;box-shadow:0 8px 24px rgba(20,14,8,.10)}
   .pdp-acc-h{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;padding:18px 18px;background:none;border:0;cursor:pointer;
-    font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:22px;font-weight:600;color:var(--txt,#2A2016);text-align:left}
-  .pdp-acc-h i{font-style:normal;font-family:Jost,sans-serif;font-size:22px;font-weight:400;transition:transform .25s}
+    font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:22px;font-weight:600;color:#2A2016!important;text-align:left;opacity:1}
+  .pdp-acc-h span{color:#2A2016!important;opacity:1}
+  .pdp-acc-h i{font-style:normal;font-family:Jost,sans-serif;font-size:24px;font-weight:400;color:#9C521B;transition:transform .25s}
   .pdp-acc-h[aria-expanded="true"] i{transform:rotate(45deg)}
   .pdp-acc-b>section{margin:0!important;border-radius:0!important;box-shadow:none!important}
-  .pdp-acc-b>section.sec{padding:10px 18px 22px!important}
+  .pdp-acc-b>section.sec{padding:10px 12px 20px!important}
+  .pdp-acc-b .sz-wrap{overflow-x:auto;max-width:100%}
+  .pdp-acc-b table.sz,.pdp-acc-b table.sg{width:100%}
   .pdp-acc-b>.place-band{padding:0!important}
 }
 /* an Arabic word inside a sentence stays in the sentence (the .item span rule made it a block) */
