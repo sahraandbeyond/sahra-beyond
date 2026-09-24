@@ -279,7 +279,7 @@
       hudE.textContent = elev.toLocaleString('en-US') + ' m';
       hudBar.style.transform = 'scaleX(' + p.toFixed(3) + ')';
       document.documentElement.style.setProperty('--tr-dawn', dawn.toFixed(3));
-      if (hud) hud.style.opacity = (1 - ss(0.9, 0.97, p)).toFixed(2);   /* steps aside for the sign-up */
+      if (hud) hud.style.opacity = (1 - (innerWidth < 560 ? ss(0.68, 0.76, p) : ss(0.9, 0.97, p))).toFixed(2);   /* steps aside for the product cards on phones, the sign-up elsewhere */
     }
   }
   var raf = 0, CAPTURE = /[?&]capture\b/.test(location.search);
@@ -317,4 +317,14 @@
   if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.25 });
   els.forEach(function (e) { io.observe(e); });
+})();
+
+/* ---------- the first run: tap a piece and its reflective mark flashes ---------- */
+(function () {
+  document.querySelectorAll('.tr-piece').forEach(function (b) {
+    b.addEventListener('click', function () {
+      b.classList.remove('fl'); void b.offsetWidth; b.classList.add('fl');
+      clearTimeout(b._t); b._t = setTimeout(function () { b.classList.remove('fl'); }, 1050);
+    });
+  });
 })();

@@ -81,7 +81,7 @@
     '<div class="sbn-col sbn-trail-col"><span class="sbn-h">Sahra Trail · activewear</span>' +
     '<a class="sbn-trailcard" href="/trail/"><svg viewBox="6 10.76 88 78.48" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="' + TRAIL_SYM + '"/></svg>' +
     '<span><b>Coming this season</b><small>Trail and run wear, designed in the UAE</small></span></a>' +
-    row(['/trail/', 'Sun Tee', 'coming soon']) + row(['/trail/', '2-in-1 Trail Short', 'coming soon']) +
+    row(['/trail/', 'Sahra Trail Tee', 'coming soon']) + row(['/trail/', 'Sahra Trail 2-in-1 Short', 'coming soon']) +
     row(['/trail/#first-access', 'Get first access', '', 'sbn-all']) + '</div>' +
     '<div class="sbn-foot"><span>' + esc(FOOT[0]) + '</span><span>' + esc(FOOT[1]) + '</span></div>';
   var pos = getComputedStyle(host).position;

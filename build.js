@@ -792,10 +792,10 @@ function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
   return `<div class="ftr-tagline">${esc(TAGLINE)}</div>
   <div class="soc">${soc}</div>
-  <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/">Map &amp; planner</a></div>
+  <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/places/">All places</a></div>
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
-  <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · UAE Desert &amp; Outdoor Planner · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
+  <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
 }
 
 // Which top-nav item should read as current, derived from the page slug.
@@ -3344,7 +3344,7 @@ const AR_PDP_NOINDEX = true;
         ['04', 'Dawn', 'First light on the ridge.', 'The first run arrives this season: two pieces to start.']
       ],
       firstH: 'The first run', firstSub: 'Two pieces. Revealed at launch.',
-      tee: 'Sun Tee', short: '2-in-1 Trail Short', reveal: 'Revealed at launch', reflect: 'Reflective Two Ridges mark',
+      tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Short', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
       joinH: 'Get first access', joinP: 'Leave your email and we will write once, when the first run is ready.',
       ph: 'you@email.com', btn: 'Notify me', fine: 'One email when it lands. Unsubscribe any time.',
       ok: 'You are on the list. We will email you when the first run lands.',
@@ -3367,7 +3367,7 @@ const AR_PDP_NOINDEX = true;
         ['04', 'الفجر', 'أول الضوء على القمّة.', 'الدفعة الأولى تصل هذا الموسم: قطعتان للبداية.']
       ],
       firstH: 'الدفعة الأولى', firstSub: 'قطعتان. يُكشف عنهما عند الإطلاق.',
-      tee: 'تيشيرت الشمس', short: 'شورت الدرب 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', reflect: 'شعار القمّتين العاكس',
+      tee: 'تيشيرت صحراء تريل', short: 'شورت صحراء تريل 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', teeNote: 'شعار القمّتين العاكس أسفل الياقة', shortNote: 'شعار القمّتين العاكس على الساق اليسرى', flashHint: 'انقر للوميض',
       joinH: 'كن أول من يعرف', joinP: 'اترك بريدك الإلكتروني، وسنراسلك مرة واحدة حين تصبح الدفعة الأولى جاهزة.',
       ph: 'you@email.com', btn: 'أبلغني', fine: 'رسالة واحدة عند الإطلاق. يمكنك إلغاء الاشتراك في أي وقت.',
       ok: 'تمّت إضافتك. سنراسلك حين تصل الدفعة الأولى.',
@@ -3396,13 +3396,11 @@ const AR_PDP_NOINDEX = true;
   </g>
   <path class="tr-word" fill="#D9C3A5" d="${L.word}"/>
 </svg>`;
-  const SYM = `<svg class="tr-glint" viewBox="6 10.76 88 78.48" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="${L.far} ${L.near}"/></svg>`;
-  const tee = `<svg class="tr-sil" viewBox="0 0 300 300" aria-hidden="true"><defs><linearGradient id="tRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d4a52"/><stop offset=".5" stop-color="#0c141b"/><stop offset="1" stop-color="#070b10"/></linearGradient></defs>
-  <path fill="url(#tRim)" stroke="rgba(217,195,165,.22)" stroke-width="1.2" d="M103 38 C118 52 182 52 197 38 L255 64 C266 69 272 78 274 90 L284 132 L240 146 L232 116 L232 262 C232 268 228 272 222 272 L78 272 C72 272 68 268 68 262 L68 116 L60 146 L16 132 L26 90 C28 78 34 69 45 64 Z"/>
-  <path fill="none" stroke="rgba(217,195,165,.18)" stroke-width="1.2" d="M103 38 C112 60 188 60 197 38"/></svg>`;
-  const shorts = `<svg class="tr-sil" viewBox="0 0 300 300" aria-hidden="true"><defs><linearGradient id="sRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d4a52"/><stop offset=".5" stop-color="#0c141b"/><stop offset="1" stop-color="#070b10"/></linearGradient></defs>
-  <path fill="url(#sRim)" stroke="rgba(217,195,165,.22)" stroke-width="1.2" d="M62 70 L238 70 L252 218 C253 226 248 232 240 233 L168 238 C160 238 155 233 154 226 L150 150 L146 226 C145 233 140 238 132 238 L60 233 C52 232 47 226 48 218 Z"/>
-  <path fill="none" stroke="rgba(217,195,165,.2)" stroke-width="1.2" d="M62 88 L238 88"/></svg>`;
+  /* The first run: low-key studio shots of the real garments (Magnific, from the v4 placement renders),
+     the locked symbol composited at spec size and position, and a reflective flash layered on top.
+     Tee: 50 mm, centred on CB, top edge 3 cm below the CB neck seam. Short: 42 mm, front of the
+     wearer's LEFT leg, outer edge 3 cm in from the side seam, just above the hem (Decision Log, v4). */
+  const shot = (k, alt) => `<div class="tr-shot"><img class="tr-shot-img" src="/assets/trail/trail-${k}-teaser.webp" width="800" height="993" alt="${alt}" loading="lazy" decoding="async"><img class="tr-flash" src="/assets/trail/trail-${k}-flash.png" alt="" aria-hidden="true" style="${k === 'tee' ? 'left:42.73%;top:14.63%;width:13.47%' : 'left:71.71%;top:64.93%;width:13.15%'}"><i class="tr-sweep" aria-hidden="true"></i></div>`;
 
   function page(lang) {
     const t = T[lang], AR = lang === 'ar', id = AR ? 'tra' : 'tre';
@@ -3469,11 +3467,19 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
 .tr-first>div>p,.tr-join p{color:#2a2016;font-size:17px}
 .tr-pieces{display:grid;grid-template-columns:repeat(2,minmax(0,340px));gap:28px;justify-content:center;margin-top:36px}
 .tr-piece{position:relative;padding:22px 18px 20px;border-radius:18px;background:rgba(10,16,22,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(217,195,165,.18);color:#EADBC4}
-.tr-sil{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
-.tr-glint{position:absolute;width:44px;height:40px;color:#9aa5ad;animation:trGlint 5.5s infinite}
-.tr-piece:nth-child(1) .tr-glint{left:calc(50% - 22px);top:78px}
-.tr-piece:nth-child(2) .tr-glint{left:26%;top:176px;width:34px;height:31px;animation-delay:2.4s}
-@keyframes trGlint{0%,78%,100%{color:#8a959d;filter:none}84%{color:#fff;filter:drop-shadow(0 0 8px #fff) drop-shadow(0 0 22px rgba(200,225,255,.8))}90%{color:#dfe7ee;filter:drop-shadow(0 0 4px #fff)}}
+.tr-piece{font:inherit;text-align:center;cursor:pointer;display:block;width:100%}
+.tr-piece:focus-visible{outline:2px solid #9ED0CB;outline-offset:3px}
+.tr-shot{position:relative;aspect-ratio:800/993;border-radius:12px;overflow:hidden;background:#0b0f14;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.tr-shot-img{display:block;width:100%;height:100%;object-fit:cover}
+.tr-flash{position:absolute;height:auto;opacity:0;pointer-events:none;mix-blend-mode:screen;animation:trFlash 5s infinite}
+.tr-piece:nth-child(1) .tr-flash{animation-delay:1.2s}.tr-piece:nth-child(2) .tr-flash{animation-delay:3.7s}
+.tr-sweep{position:absolute;inset:-10% -60%;pointer-events:none;background:linear-gradient(105deg,transparent 42%,rgba(255,244,228,.10) 49%,rgba(255,244,228,.16) 50%,rgba(255,244,228,.10) 51%,transparent 58%);transform:translateX(-60%);animation:trSweep 5s infinite}
+.tr-piece:nth-child(1) .tr-sweep{animation-delay:.95s}.tr-piece:nth-child(2) .tr-sweep{animation-delay:3.45s}
+.tr-piece.fl .tr-flash{animation:trFlashTap 1s 1}.tr-piece.fl .tr-sweep{animation:trSweepTap 1s 1}
+@keyframes trFlash{0%,100%{opacity:0}3%{opacity:1}9%{opacity:.85}18%{opacity:0}}
+@keyframes trSweep{0%{transform:translateX(-60%)}20%,100%{transform:translateX(60%)}}
+@keyframes trFlashTap{0%,100%{opacity:0}14%{opacity:1}40%{opacity:.8}}
+@keyframes trSweepTap{0%{transform:translateX(-60%)}100%{transform:translateX(60%)}}
 .tr-piece b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:26px;font-weight:600;color:#F6ECDD;margin-top:8px}
 .tr-piece small{display:block;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#9ED0CB;margin-top:6px}
 .tr-piece em{display:block;font-style:normal;font-size:13.5px;color:#CDBEA8;margin-top:4px}
@@ -3519,7 +3525,7 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
   .tr-eyebrow,.tr-kicker,.tr-hero h1,.tr-btn,.tr-cue,.tr-word{animation:none!important;opacity:1!important;transform:none!important}
   .tr-mk{stroke-dashoffset:0!important;animation:none!important}.tr-far{animation:none!important}
   .tr-rv{opacity:1;transform:none;transition:none}
-  .tr-glint,.tr-cue i{animation:none}
+  .tr-flash,.tr-sweep,.tr-cue i{animation:none}
 }
 </style>
 <canvas id="trGL" aria-hidden="true"></canvas>
@@ -3539,8 +3545,8 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
       <h2 id="${id}first">${t.firstH}</h2>
       <p>${t.firstSub}</p>
       <div class="tr-pieces">
-        <div class="tr-piece">${tee}${SYM}<b>${t.tee}</b><small>${t.reveal}</small><em>${t.reflect}</em></div>
-        <div class="tr-piece">${shorts}${SYM}<b>${t.short}</b><small>${t.reveal}</small><em>${t.reflect}</em></div>
+        <button type="button" class="tr-piece" aria-label="${t.tee}: ${t.flashHint}">${shot('tee', t.tee)}<b>${t.tee}</b><small>${t.reveal}</small><em>${t.teeNote}</em></button>
+        <button type="button" class="tr-piece" aria-label="${t.short}: ${t.flashHint}">${shot('short', t.short)}<b>${t.short}</b><small>${t.reveal}</small><em>${t.shortNote}</em></button>
       </div>
     </div>
   </section>
