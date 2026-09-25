@@ -91,3 +91,13 @@
 /* ambient sound: in the menu on phones, not floating in the thumb zone (24 Sep 2026) */
 @media(max-width:700px){.ambient-btn{display:none!important}}
 .sb-amb-m{background:none;border:0;cursor:pointer;font:inherit;font-weight:600;color:inherit;text-align:left}
+
+/* 25 Sep 2026 (Faheem's phone screenshot): with the ع button in the bar, the wordmark was
+   clipped to "SAH / & BEY" on phones between 341 and 389px wide. The line-art mark now
+   shrinks with the screen so the wordmark always fits (object-fit keeps its proportions). */
+@media(min-width:341px) and (max-width:389px){
+  html body .logo .logo-img,html body .brand>img,html body .brand .brand-mark,html body .sb-logo img{
+    width:min(135px,calc(100vw - 256px))!important;height:18px!important;object-fit:contain;object-position:left center}
+  html body .logo .mark{width:min(105px,calc(100vw - 256px))!important;object-fit:contain;object-position:left center}
+  html[dir="rtl"] body .brand>img{object-position:right center}
+}
