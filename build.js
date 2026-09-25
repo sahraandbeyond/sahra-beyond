@@ -224,7 +224,7 @@ function shopBlock(l) {
     : `<a class="btn" href="/#join">Join the waitlist &rarr;</a>`;
   return `<section class="shopcta"><div class="stars"></div><div class="stars2"></div><div class="shoot"></div>
     <div class="shopcta-eyebrow">${eyebrow}</div>
-    <h2>Wear the <em>wild side</em> of the UAE</h2>
+    <h2>Every design has a place</h2>
     <p>${line}</p>
     ${cta}</section>`;
 }
@@ -243,7 +243,7 @@ function collectionBlock(ctxName, allFits) {
   return `<section class="pcta">
     <div class="pcta-head">
       <span class="pcta-eyebrow">Sahra &amp; Beyond &middot; UAE t-shirts</span>
-      <h2>Wear the <em>wild side</em> of the UAE</h2>
+      <h2>Tees drawn from real UAE places</h2>
       <p>${lead}</p>
     </div>
     <div class="pcards">${cards}</div>
@@ -287,7 +287,7 @@ function newsletterBlock() {
     : '';
   return `<section class="news"><div class="news-stars"></div><div class="news-in">
     <span class="news-eyebrow">${eyebrow}</span>
-    <h2>Wear the <em>wild side</em> of the UAE</h2><p>${esc(blurb)}</p>
+    <h2>Be first to see the next drop</h2><p>${esc(blurb)}</p>
     ${shopCta}
     <form class="news-form" action="${esc(MON.newsletterAction)}" method="post">
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
@@ -651,7 +651,7 @@ h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;f
 .teecta-img{display:block;position:relative;overflow:hidden;min-height:100%}
 .teecta-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
 .teecta-img:hover img{transform:scale(1.06)}
-.teecta-txt{padding:34px 32px;display:flex;flex-direction:column;justify-content:center;background:rgba(0,0,0,.28);backdrop-filter:blur(2px)}
+.teecta-txt{padding:34px 32px;display:flex;flex-direction:column;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}   /* 25 Sep typography review: .28 left white and gold text at ~1.3:1 on the light product colours (sand, lilac) */
 .teecta-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#F7DFBE;margin-bottom:10px}
 .teecta h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:clamp(24px,3.4vw,34px);font-weight:600;line-height:1.08;color:#fff;margin:0 0 10px}
 .teecta p{color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;margin:0 0 16px;max-width:46ch}
@@ -861,7 +861,7 @@ ${noindex ? '<meta name="robots" content="noindex,nofollow">\n' : ''}${altHref ?
 <meta name="twitter:description" content="${esc(desc)}">
 <meta name="twitter:image" content="${esc(ogImg)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700${AR ? '&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600' : ''}&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700${AR ? '&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600' : ''}&display=swap" rel="stylesheet">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
@@ -1686,7 +1686,7 @@ function contactWays() {
       <nav class="crumbs ab-copy c1"><a href="/">Home</a> &rsaquo; <span>About</span></nav>
       <div class="ab-mark">${markSvg}</div>
       <p class="ab-eyebrow ab-copy c1">Sahra &amp; Beyond</p>
-      <h1 class="ab-copy c2">Wear the <em>wild side</em> of the UAE</h1>
+      <h1 class="ab-copy c2">Wear the wild side of the UAE</h1>
       <p class="lede ab-copy c3">Sahra means desert. Beyond is everything the Emirates hold once the tarmac ends &mdash; the dark-sky south, the first dunes of the Empty Quarter, the red rock of the Hajar. We put those places on heavyweight cotton &mdash; and tell you exactly where to find them.</p>
       <p class="ab-copy c4"><a class="ab-cta" href="/shop/">See the collection &rarr;</a></p>
     </div>
@@ -2181,7 +2181,7 @@ body.tote-page main{max-width:1180px}
       <div>
         <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>Places</span></nav>
         <p class="pl-eyebrow">The map behind the brand</p>
-        <h1>Every place we have <i>explored</i>.</h1>
+        <h1>Every place we have explored</h1>
         <p class="pl-lede">${lede}</p>
         <div class="pl-chips">${chips}</div>
       </div>
@@ -3335,15 +3335,15 @@ const AR_PDP_NOINDEX = true;
       desc: 'Sahra Trail is the new trail and run line from Sahra & Beyond, designed in the UAE for its trails, wadis and ridges. The first run arrives this season. Get first access.',
       eyebrow: 'A new line from Sahra &amp; Beyond',
       kicker: 'Activewear &middot; first run, this season',
-      h1: 'The trail starts here.',
+      h1: 'The trail starts here',
       cta: 'Get first access',
       scroll: 'Scroll to climb',
       elev: 'Elev', time: 'Time',
       ch: [
-        ['01', 'Night', 'Headlamps on.', 'On UAE trails the day starts in the dark, ahead of the heat. The Two Ridges mark on the back is reflective, so it catches the light behind you.'],
-        ['02', 'Climb', 'Wadi floor to ridge.', 'Switchbacks, loose rock and the long pull out of the valley. Sahra Trail is for the trails, wadis and ridges of the UAE.'],
-        ['03', 'Run', 'Then you run it.', 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE.'],
-        ['04', 'Dawn', 'First light on the ridge.', 'The first run arrives this season: two pieces to start.']
+        ['01', 'Night', 'Headlamps on', 'On UAE trails the day starts in the dark, ahead of the heat. The Two Ridges mark on the back is reflective, so it catches the light behind you.'],
+        ['02', 'Climb', 'Wadi floor to ridge', 'Switchbacks, loose rock and the long pull out of the valley. Sahra Trail is for the trails, wadis and ridges of the UAE.'],
+        ['03', 'Run', 'Then you run it', 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE.'],
+        ['04', 'Dawn', 'First light on the ridge', 'The first run arrives this season: two pieces to start.']
       ],
       firstH: 'The first run', firstSub: 'Two pieces. Revealed at launch.',
       tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Shorts', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
@@ -3358,15 +3358,15 @@ const AR_PDP_NOINDEX = true;
       desc: 'صحراء تريل خط جديد لملابس الجري والمشي الجبلي من صحراء وما بعدها، صُمّم في الإمارات لدروبها ووديانها وقممها. الدفعة الأولى تصل هذا الموسم.',
       eyebrow: 'خط جديد من صحراء وما بعدها',
       kicker: 'ملابس رياضية · الدفعة الأولى هذا الموسم',
-      h1: 'الدرب يبدأ من هنا.',
+      h1: 'الدرب يبدأ من هنا',
       cta: 'كن أول من يعرف',
       scroll: 'مرّر لتصعد',
       elev: 'الارتفاع', time: 'الوقت',
       ch: [
-        ['01', 'الليل', 'مصابيح الرأس مضاءة.', 'على دروب الإمارات يبدأ اليوم في الظلام، قبل الحرّ. شعار القمّتين على الظهر عاكس، فيلتقط الضوء خلفك.'],
-        ['02', 'الصعود', 'من قاع الوادي إلى القمّة.', 'منعطفات متعرّجة، وصخور متناثرة، وصعود طويل من الوادي. صحراء تريل لدروب الإمارات ووديانها وقممها.'],
-        ['03', 'الجري', 'ثم تجري عليه.', 'ملابس للجري والمشي الجبلي من صحراء وما بعدها، صُمّمت في الإمارات.'],
-        ['04', 'الفجر', 'أول الضوء على القمّة.', 'الدفعة الأولى تصل هذا الموسم: قطعتان للبداية.']
+        ['01', 'الليل', 'مصابيح الرأس مضاءة', 'على دروب الإمارات يبدأ اليوم في الظلام، قبل الحرّ. شعار القمّتين على الظهر عاكس، فيلتقط الضوء خلفك.'],
+        ['02', 'الصعود', 'من قاع الوادي إلى القمّة', 'منعطفات متعرّجة، وصخور متناثرة، وصعود طويل من الوادي. صحراء تريل لدروب الإمارات ووديانها وقممها.'],
+        ['03', 'الجري', 'ثم تجري عليه', 'ملابس للجري والمشي الجبلي من صحراء وما بعدها، صُمّمت في الإمارات.'],
+        ['04', 'الفجر', 'أول الضوء على القمّة', 'الدفعة الأولى تصل هذا الموسم: قطعتان للبداية.']
       ],
       firstH: 'الدفعة الأولى', firstSub: 'قطعتان. يُكشف عنهما عند الإطلاق.',
       tee: 'تيشيرت صحراء تريل', short: 'شورت صحراء تريل 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', teeNote: 'شعار القمّتين العاكس أسفل الياقة', shortNote: 'شعار القمّتين العاكس على الساق اليسرى', flashHint: 'انقر للوميض',
@@ -3409,7 +3409,7 @@ const AR_PDP_NOINDEX = true;
     const chapters = t.ch.map((c, k) => `
   <section class="tr-ch tr-ch-${k + 1}" aria-labelledby="${id}c${k}">
     <div class="tr-rv">
-      <p class="tr-num"><span>${c[0]}</span> ${c[1]}</p>
+      <p class="tr-num"><span>${c[0]}</span>&mdash; ${c[1]}</p>
       <h2 id="${id}c${k}">${c[2]}</h2>
       <p class="tr-lede">${c[3]}</p>
     </div>

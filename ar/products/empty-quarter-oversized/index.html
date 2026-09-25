@@ -26,7 +26,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <meta name="twitter:description" content="تيشيرت صحراوي بقصّة أوفرسايز وكتف منسدل: شمس بلون القماش فوق كثبان ليوا، مطرّزة لا مطبوعة. قطن 230 غرامًا، للجنسين، المقاسات S–XL. 199 درهمًا.">
 <meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/emptyquarter-oversized-front.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
@@ -376,7 +376,7 @@ h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;f
 .teecta-img{display:block;position:relative;overflow:hidden;min-height:100%}
 .teecta-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
 .teecta-img:hover img{transform:scale(1.06)}
-.teecta-txt{padding:34px 32px;display:flex;flex-direction:column;justify-content:center;background:rgba(0,0,0,.28);backdrop-filter:blur(2px)}
+.teecta-txt{padding:34px 32px;display:flex;flex-direction:column;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}   /* 25 Sep typography review: .28 left white and gold text at ~1.3:1 on the light product colours (sand, lilac) */
 .teecta-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:#F7DFBE;margin-bottom:10px}
 .teecta h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:clamp(24px,3.4vw,34px);font-weight:600;line-height:1.08;color:#fff;margin:0 0 10px}
 .teecta p{color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;margin:0 0 16px;max-width:46ch}
@@ -1282,6 +1282,64 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   html body .eyebrow,html body.buy-page .eyebrow,html body .snum,html body.buy-page .snum{font-size:12px!important}
   html body .sec h2,html body.buy-page .sec h2{font-size:25px!important;line-height:1.15!important}
 }
+
+/* ===== 25 Sep 2026 typography review (Faheem: "random words in italics to place emphasis.
+   I don't like this"). House rule: no italic anywhere. Emphasis is never slant; quotes are
+   marked by quotation marks, reviews by their stars. Words that were italicised in headings
+   (and product names like "Al Quaa Galaxy") now read as one plain phrase: same colour, same
+   weight as the rest of the heading. ===== */
+html body *,html body *::before,html body *::after{font-style:normal!important}
+html body h1 em,html body h2 em,html body h3 em,html body h4 em,html body h1 i,html body h2 i,html body h3 i,
+html body h1 .w em,html body .hero-c h1 em,html body .j-title em,html body .chero h1 em{
+  color:inherit!important;text-shadow:inherit!important;font-weight:inherit!important;letter-spacing:inherit!important;font-family:inherit!important}
+
+/* Typography review, house rules (25 Sep 2026):
+   - Space Mono only for prices, size tables, coordinates, section numbers and short labels;
+     sentence-length lines move to Jost. */
+html body .rv-src,html body .wl-msg,html body .news .wl-msg,html body .pdp-stock,html body .pdp-buy .pdp-stock{
+  font-family:Jost,system-ui,sans-serif!important;letter-spacing:0!important;text-transform:none!important}
+html body .rv-src{font-size:13px!important}
+html body .wl-msg{font-size:13.5px!important}
+html body .pdp-stock,html body .pdp-buy .pdp-stock{font-size:14px!important;font-weight:500;color:#7E4114}
+@media(max-width:700px){html body .pdp-buy .pdp-stock{font-size:13.5px!important;line-height:1.3!important;margin:0 0 4px!important}}
+/* - one family per heading level: H3 is Cormorant everywhere (the guide pages had Space Mono,
+     the policies page Jost) */
+html body .guide-sec h3,html body.buy-page .guide-sec h3,html body section.policy h3{font-family:'Cormorant Garamond',Georgia,serif!important;
+  font-size:21px!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important;line-height:1.25!important;color:#2A2016}
+html[dir="rtl"] body .guide-sec h3,html[dir="rtl"] body section.policy h3{font-family:inherit!important}
+/* - action buttons read as one set: uppercase Jost, 600, lightly tracked */
+html body .qa-open,html body .news-form button,html body .wl-form button,html body .tr-join form button{
+  text-transform:uppercase!important;font-family:Jost,system-ui,sans-serif!important;font-weight:600!important;letter-spacing:.06em!important}
+html body .qa-open{font-size:13px!important}
+html[dir="rtl"] body .qa-open,html[dir="rtl"] body .news-form button,html[dir="rtl"] body .wl-form button,html[dir="rtl"] body .tr-join form button{text-transform:none!important;letter-spacing:0!important}
+
+/* Typography review, one type scale (25 Sep 2026). Headings had drifted to 7 sizes of H1 and
+   10 of H2 across templates. Now: phone H1 32 / H2 24 / H3 21; desktop page H1 52, display
+   H1 64 (home, shop, places), H2 36. Body stays at Faheem's 15px on phones. The product title
+   (23px, sized to keep the buy box on the first screen) and the Sahra Trail film page keep
+   their own sizes. */
+@media(max-width:700px){
+  html body #s-hero h1,html body .shophero .hero-c h1,html body .pl-hero h1,html body .loc-hero h1,html body.buy-page .loc-hero h1,
+  html body .ab-hero h1,html body main>h1{font-size:32px!important;line-height:1.08!important}
+  html body .sec h2,html body.buy-page .sec h2,html body section.policy h2,html body .storemap h2,html body .sizeguide .tl-inner h2,
+  html body .soon h2,html body .place-band h2,html body .guide-sec h2,html body.buy-page .guide-sec h2,html body .news h2,html body .shopcta h2,
+  html body .pcta-head h2,html body .faq h2,html body .pack h2,html body .related h2,html body main>h2{font-size:24px!important;line-height:1.15!important}
+  html body .fe-card h3,html body.shop-page .fe-card h3{font-size:21px!important}
+  html body.shop-page .sm-sub,html body.shop-page .tl-sub,html body.shop-page .soon p,html body.shop-page .wl-msg,html body.shop-page .hero-in{font-size:15.5px!important;line-height:1.55!important}
+}
+@media(min-width:701px){
+  html body #s-hero h1,html body .shophero .hero-c h1,html body .pl-hero h1{font-size:64px!important;line-height:1.02!important}
+  html body .loc-hero h1,html body.buy-page .loc-hero h1,html body .ab-hero h1,html body main>h1{font-size:52px!important;line-height:1.05!important}
+  html body .buy-head h1,html body .buy h1{font-size:48px!important}
+  html body .sec h2,html body.buy-page .sec h2,html body section.policy h2,html body .storemap h2,html body .sizeguide .tl-inner h2,
+  html body .soon h2,html body .place-band h2,html body .guide-sec h2,html body.buy-page .guide-sec h2,html body .news h2,html body .shopcta h2,
+  html body .pcta-head h2,html body .faq h2,html body .pack h2,html body .related h2,html body main>h2{font-size:36px!important;line-height:1.12!important}
+}
+/* fold-out titles are not section headings: they keep a quieter size */
+html body .folds summary h2,html body .fold summary h2{font-size:22px!important;line-height:1.25!important}
+@media(max-width:700px){html body .folds summary h2,html body .fold summary h2{font-size:19px!important}}
+/* the Al Quaa place band set its H2 in Jost bold; every H2 is Cormorant */
+html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
 </style>
 </head>
 <body>
