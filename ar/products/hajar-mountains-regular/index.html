@@ -620,7 +620,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
 <style data-rtl>
 /* ---------------------------------------------------------------- Arabic
    Paired to the Latin system rather than bolted on. Cormorant Garamond is a
@@ -795,8 +795,8 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
   direction:ltr;unicode-bidi:embed;display:inline-block;
 }
 </style>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
-<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c528885a">
+<script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -909,7 +909,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
 @supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
 
-/* ===== homepage and shop: one size up (Faheem, 5 Sep: "still seems small") =====
+/* ===== homepage and shop: type one step larger (Faheem, 5 Sep: "still seems small") =====
    The two selling pages get a larger scale than the guides: copy 18-19px,
    labels 13px, buttons 14px, card names and prices up a step. */
 .stop .lede,#s-hero .lede{font-size:clamp(18px,1.5vw,21px)!important;line-height:1.6}
@@ -1264,6 +1264,24 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
   body.buy-page .loc-hero .dune-near{height:30px}
 }
+
+/* 25 Sep 2026 (Faheem: "the font could be a bit smaller"). Phones only: body copy steps
+   down from 17-19px to 15-15.5px, buttons and cards by a pixel or two. The 12px floor for
+   labels stays. Must stay last: it overrides the earlier one-size-up blocks. */
+@media(max-width:700px){
+  html body{font-size:15.5px}
+  html body p,html body li,html body .sec p,html body .rv-text,html body .item span,html body .fold-b p,
+  html body .pdp-ans-foot,html body .content p,html body .faq p,html body details p,html body .guide-sec p,
+  html body.shop-page p,html body.buy-page p{font-size:15px!important;line-height:1.55!important}
+  html body .lede,html body.buy-page .lede,html body.shop-page .lede{font-size:15.5px!important;line-height:1.55!important}
+  html body summary,html body .pdp-ans summary,html body .faq summary{font-size:15px!important;line-height:1.45!important}
+  html body .btn,html body.buy-page .btn,html body.shop-page .btn,html body .j-btn{font-size:13.5px!important}
+  html body .pcard-t,html body.buy-page .pcard-t{font-size:16px!important}
+  html body .pcard-p,html body.buy-page .pcard-p{font-size:15.5px!important}
+  html body .pdp-size,html body.buy-page .pdp-size{font-size:15px!important}
+  html body .eyebrow,html body.buy-page .eyebrow,html body .snum,html body.buy-page .snum{font-size:12px!important}
+  html body .sec h2,html body.buy-page .sec h2{font-size:25px!important;line-height:1.15!important}
+}
 </style>
 </head>
 <body>
@@ -1288,7 +1306,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       <div class="arp-box" id="arpBox" data-handle="hajar-mountains-regular">
         <div class="arp-sizes-l">المقاس <a href="/size-guide/" hreflang="en">دليل المقاسات</a></div>
         <div class="arp-sizes" id="arpSizes" role="group" aria-label="اختر المقاس"><button type="button" class="arp-size" aria-pressed="false" dir="ltr">S</button><button type="button" class="arp-size" aria-pressed="false" dir="ltr">M</button><button type="button" class="arp-size" aria-pressed="false" dir="ltr">L</button><button type="button" class="arp-size" aria-pressed="false" dir="ltr">XL</button></div>
-        <p class="arp-fit">قصّة ريجولر ضيّقة. معظم الناس يأخذون مقاسًا أكبر بدرجة من مقاسهم المعتاد. <a href="/ar/products/hajar-mountains-oversized/">شاهد هذا التصميم بقصّة أوفرسايز &larr;</a></p>
+        <p class="arp-fit">قصّة ريجولر مستقيمة بكتف مركّب. تحقّق من مقاسك في جدول المقاسات. <a href="/ar/products/hajar-mountains-oversized/">شاهد هذا التصميم بقصّة أوفرسايز &larr;</a></p>
         <button type="button" class="arp-add" id="arpAdd" disabled>اختر المقاس</button>
         <button type="button" class="arp-now" id="arpNow">اشترِ الآن</button>
         <p class="arp-msg" id="arpMsg" role="status" aria-live="polite"></p>
@@ -1298,12 +1316,12 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     </div>
   </section>
 
-  <section class="ar-sec"><p class="ar-eyebrow">المكان</p><h2>وادي نقب، <em>صخر أحمر</em> وبرك متدرّجة</h2><p>وادٍ موسمي مهيب عاليًا في جبال الحجر أسفل جبل جيس — جدران من الصخر الأحمر، وبرك متدرّجة، وهواء جبلي نقي. إنها السلسلة التي ترسم أفق الإمارات الشمالية.</p><p>قصّة ضيّقة وقريبة من الجسم — تستقرّ بأناقة على الكتف وتلامس الجسم بخفّة. القصّة ضيّقة: معظم الناس يأخذون مقاسًا أكبر بدرجة من مقاسهم المعتاد. هذه النسخة التي تختارها إن كنت تلبس طبقات. رسم طبوغرافي بالخطوط لقمم الجبال على الصدر، وصخر جبال الحجر الأحمر على الظهر. قطن مُمشّط، مصمّم ليُلبس تحت الطبقات.</p><p class="ar-fine">&#10022; صُنع لصباحات الجبال ورحلات المشي في أودية الحجر</p></section>
+  <section class="ar-sec"><p class="ar-eyebrow">المكان</p><h2>وادي نقب، <em>صخر أحمر</em> وبرك متدرّجة</h2><p>وادٍ موسمي مهيب عاليًا في جبال الحجر أسفل جبل جيس — جدران من الصخر الأحمر، وبرك متدرّجة، وهواء جبلي نقي. إنها السلسلة التي ترسم أفق الإمارات الشمالية.</p><p>قصّة مستقيمة ونظيفة — تستقرّ على الكتف وتنسدل باستقامة. هذه النسخة التي تختارها إن كنت تلبس طبقات. رسم طبوغرافي بالخطوط لقمم الجبال على الصدر، وصخر جبال الحجر الأحمر على الظهر. قطن مُمشّط، مصمّم ليُلبس تحت الطبقات.</p><p class="ar-fine">&#10022; صُنع لصباحات الجبال ورحلات المشي في أودية الحجر</p></section>
   <section class="ar-sec"><p class="ar-eyebrow">التصميم</p><h2>الجبال مرسومة <em>بخطوط الكنتور</em></h2><p>الخريطة الطبوغرافية ليست إلا جبلًا موصوفًا بالخطوط. هذا التصميم يأخذ تلك اللغة حرفيًا — القمم على الصدر مختزلة إلى خطوط كنتور، والصخر نفسه ممتدّ على الظهر. إنه التيشيرت الجبلي في المجموعة — والسلسلة هي جبال الحجر، لا قمة من صورة جاهزة، وإحداثياتها مطبوعة تحتها.</p><div class="arp-cards"><div class="arp-card"><h3>على الصدر</h3><p>قمم الحجر برسم طبوغرافي بالخطوط — هادئ بما يكفي لتلبسه في أي مكان، ودقيق بما يكفي ليعني شيئًا لمن يعرف هذه الجبال.</p></div><div class="arp-card"><h3>على الظهر</h3><p>صخر الحجر الأحمر، اللون الذي يكسو جدران وادي نقب.</p></div><div class="arp-card"><h3>مصمّم للطبقات</h3><p>أكثر قطع المجموعة حيادًا، عن قصد — يجلس تحت قميص ثقيل أو جاكيت دون أن ينافسه، وهكذا تلبس فعلًا لصباح في الجبال.</p></div><div class="arp-card"><h3>طباعة مباشرة على القماش (DTG)</h3><p>الطباعة المباشرة على القماش تتغلغل في النسيج بدل أن تجلس فوقه، فتبقى الرسمة ناعمة ويبقى القطن قابلًا للتنفّس — بلا طبقة بلاستيكية على ظهرك.</p></div><div class="arp-card"><h3>شعار مطرّز</h3><p>الرسمة الجبلية مطبوعة مباشرة على القماش، والشعار الذي يعلوها مطرّز. خيط في مقابل حبر، عن قصد.</p></div></div></section>
   <section class="ar-sec"><p class="ar-eyebrow">التفاصيل</p><ul class="arp-spec"><li>قطن مُمشّط 230 غرامًا</li><li>ياقة دائرية مضلّعة</li><li>شريط تقوية على خياطة الياقة والكتفين</li><li>رسمة مطبوعة بتقنية DTG، يعلوها شعار مطرّز</li></ul><p class="arp-colour"><span class="arp-sw" style="background:#A09C98"></span>اللون: <b>رمادي صوّاني</b> <span dir="ltr">(Pantone 16-5803 TCX)</span></p><p class="ar-fine">الإصدار التأسيسي — دفعة أولى محدودة</p></section>
-  <section class="ar-sec" id="fit"><p class="ar-eyebrow">المقاس والقصّة</p><h2>قصّة ضيّقة، <em>مصمّمة للطبقات</em></h2><p>قصّة ريجولر ضيّقة، لذلك يأخذ معظم الناس مقاسًا أكبر بدرجة من مقاسهم المعتاد. اختر ريجولر إن كنت تلبسه تحت قميص ثقيل أو جاكيت، أو إن كنت تشعر بالحرّ بسرعة، أو إن أردت أن يستقرّ التصميم مسطّحًا على الصدر والظهر بدل أن ينسدل. تقع خياطة الكتف حيث ينتهي كتفك فعلًا.</p><p> إن كنت تنوي لبسه تحت طبقات، فقصّة ريجولر تجلس أفضل تحت الجاكيت.</p><p><a href="/size-guide/" hreflang="en">دليل المقاسات &larr;</a></p></section>
+  <section class="ar-sec" id="fit"><p class="ar-eyebrow">المقاس والقصّة</p><h2>قصّة مستقيمة، <em>مصمّمة للطبقات</em></h2><p>تحقّق من مقاسك في الجدول أدناه قبل الطلب. اختر ريجولر إن كنت تلبسه تحت قميص ثقيل أو جاكيت، أو إن كنت تشعر بالحرّ بسرعة، أو إن أردت أن يستقرّ التصميم مسطّحًا على الصدر والظهر بدل أن ينسدل. تقع خياطة الكتف حيث ينتهي كتفك فعلًا.</p><p> إن كنت تنوي لبسه تحت طبقات، فقصّة ريجولر تجلس أفضل تحت الجاكيت.</p><p><a href="/size-guide/" hreflang="en">دليل المقاسات &larr;</a></p></section>
   <section class="ar-sec"><p class="ar-eyebrow">العناية</p><h2>لتبقى الطباعة <em>واضحة</em></h2><p>لا شيء غير مألوف — لكن هذه العادات الخمس هي ما يحافظ على وضوح طباعة DTG ونعومة القطن.</p><ul class="arp-list"><li>اغسله في الغسالة بماء بارد ومقلوبًا على وجهه الداخلي — الحرارة أسرع ما يُبهت الطباعة.</li><li>اغسله مع ألوان مشابهة، على دورة لطيفة.</li><li>انشره ليجفّ في الهواء. المجفّف هو السبب الرئيسي للانكماش وتشقّق الطباعة.</li><li>لا تكوِ فوق الطباعة مباشرة — اكوِه مقلوبًا إن احتجت.</li><li>تجنّب المبيّض ومنعّم الأقمشة؛ فالمنعّم يغلّف الألياف ويُفقد القماش رونقه.</li></ul></section>
-  <section class="ar-sec"><p class="ar-eyebrow">الأسئلة الشائعة</p><details class="arp-faq"><summary>هل ستتشقّق الطباعة؟</summary><p>حبر DTG يلتحم بألياف القطن بدل أن يجلس فوقها كطبقة سميكة، فيتحرّك مع القماش بدل أن يتشقّق. والفارق على المدى الطويل يصنعه الغسيل بماء بارد والتجفيف في الهواء بدل المجفّف.</p></details><details class="arp-faq"><summary>هل هذه التيشيرتات للجنسين؟ هل تناسب النساء؟</summary><p>نعم — كل تيشيرت نصنعه بقصّة للجنسين، بمقاسات من S إلى XL. لا توجد نسخة رجالية وأخرى نسائية، ولا فرق في القصّة. ولأن جدول المقاسات يذكر قياسات القطعة نفسها ممدودة على سطح مستوٍ لا مقاس الجسم، فأدقّ طريقة للاختيار أن تقيس تيشيرتًا يعجبك مقاسه وتطابق الأرقام. وتذكّر أن قصّة ريجولر ضيّقة، فمعظم الناس يأخذون مقاسًا أكبر بدرجة من مقاسهم المعتاد.</p></details><details class="arp-faq"><summary>هل سينكمش؟</summary><p>القماش مغسول مسبقًا لتقليل الانكماش إلى أدنى حد. اغسله بماء بارد وانشره ليجفّ، ولن تلاحظ إلا تغيّرًا طفيفًا جدًا. الغسيل بالماء الساخن والمجفّف هما سبب الانكماش.</p></details><details class="arp-faq"><summary>هل يصلح هذا التيشيرت للبس تحت طبقات؟</summary><p>لهذا صُمّم. الرسمة الطبوغرافية على الصدر هي الأكثر حيادًا في المجموعة، فتجلس تحت قميص ثقيل أو جاكيت دون أن تنافسه. بقصّة ريجولر يُلبس تحت الطبقات بسلاسة؛ أما أوفرسايز فأجمل حين يُلبس وحده.</p></details><details class="arp-faq"><summary>ماذا لو طلبت مقاسًا غير مناسب؟</summary><p>الاستبدال داخل الإمارات مجاني حسب توفّر المخزون، خلال 14 يومًا من التوصيل — بشرط ألا تكون القطعة ملبوسة أو مغسولة وأن تبقى بطاقاتها عليها. راسلنا على hello@sahraandbeyond.ae مع رقم طلبك وسنرتّب الأمر.</p></details><details class="arp-faq"><summary>هل سيُعاد إنتاج هذا التصميم؟</summary><p>هذه دفعة أولى محدودة. قد نصنع المزيد من هذا التصميم لاحقًا، لكننا لا نعد بذلك — حين ينفد مقاس من هذه الدفعة، اعتبره انتهى.</p></details></section>
+  <section class="ar-sec"><p class="ar-eyebrow">الأسئلة الشائعة</p><details class="arp-faq"><summary>هل ستتشقّق الطباعة؟</summary><p>حبر DTG يلتحم بألياف القطن بدل أن يجلس فوقها كطبقة سميكة، فيتحرّك مع القماش بدل أن يتشقّق. والفارق على المدى الطويل يصنعه الغسيل بماء بارد والتجفيف في الهواء بدل المجفّف.</p></details><details class="arp-faq"><summary>هل هذه التيشيرتات للجنسين؟ هل تناسب النساء؟</summary><p>نعم — كل تيشيرت نصنعه بقصّة للجنسين، بمقاسات من S إلى XL. لا توجد نسخة رجالية وأخرى نسائية، ولا فرق في القصّة. ولأن جدول المقاسات يذكر قياسات القطعة نفسها ممدودة على سطح مستوٍ لا مقاس الجسم، فأدقّ طريقة للاختيار أن تقيس تيشيرتًا يعجبك مقاسه وتطابق الأرقام.</p></details><details class="arp-faq"><summary>هل سينكمش؟</summary><p>القماش مغسول مسبقًا لتقليل الانكماش إلى أدنى حد. اغسله بماء بارد وانشره ليجفّ، ولن تلاحظ إلا تغيّرًا طفيفًا جدًا. الغسيل بالماء الساخن والمجفّف هما سبب الانكماش.</p></details><details class="arp-faq"><summary>هل يصلح هذا التيشيرت للبس تحت طبقات؟</summary><p>لهذا صُمّم. الرسمة الطبوغرافية على الصدر هي الأكثر حيادًا في المجموعة، فتجلس تحت قميص ثقيل أو جاكيت دون أن تنافسه. بقصّة ريجولر يُلبس تحت الطبقات بسلاسة؛ أما أوفرسايز فأجمل حين يُلبس وحده.</p></details><details class="arp-faq"><summary>ماذا لو طلبت مقاسًا غير مناسب؟</summary><p>الاستبدال داخل الإمارات مجاني حسب توفّر المخزون، خلال 14 يومًا من التوصيل — بشرط ألا تكون القطعة ملبوسة أو مغسولة وأن تبقى بطاقاتها عليها. راسلنا على hello@sahraandbeyond.ae مع رقم طلبك وسنرتّب الأمر.</p></details><details class="arp-faq"><summary>هل سيُعاد إنتاج هذا التصميم؟</summary><p>هذه دفعة أولى محدودة. قد نصنع المزيد من هذا التصميم لاحقًا، لكننا لا نعد بذلك — حين ينفد مقاس من هذه الدفعة، اعتبره انتهى.</p></details></section>
   <section class="ar-sec"><p class="ar-eyebrow">التوصيل والإرجاع</p><p><span class="sb-ship-uae">توصيل مجاني داخل الإمارات في يوم العمل التالي — اطلب قبل الساعة 2 ظهرًا، بلا حدّ أدنى للطلب</span><span class="sb-ship-gcc">التوصيل إلى دول الخليج خلال 3–5 أيام عمل — مجاني للطلبات فوق 390 درهمًا</span><span class="sb-ship-intl">التوصيل إلى جميع أنحاء العالم خلال 7–14 يوم عمل</span></p><p>تحتاج مقاسًا آخر؟ الإرجاع والاستبدال داخل الإمارات مجانيان خلال 14 يومًا من التوصيل — بشرط ألا تكون القطعة ملبوسة أو مغسولة وأن تبقى بطاقاتها عليها؛ والاستبدال حسب توفّر المخزون.</p></section>
   <section class="ar-sec"><p class="ar-eyebrow">التقييمات</p><a class="arp-rating" href="/products/hajar-mountains-regular/#reviews" hreflang="en"><span class="arp-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span>5.0 — تقييمات على المجموعة كلها: 14</span></a><p class="ar-fine">تُجمع التقييمات وتُراجَع بشكل مستقل عبر Judge.me.</p></section>
   <p class="arp-en"><a href="/products/hajar-mountains-regular/" hreflang="en" lang="en">اقرأ هذه الصفحة بالإنجليزية &larr;</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">لديك سؤال؟ راسلنا على واتساب</a></p>
@@ -1421,7 +1439,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
+<script src="/assets/sahra-cart.js?v=18758f49" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 </body>
 </html>

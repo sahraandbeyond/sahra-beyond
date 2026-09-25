@@ -182,7 +182,7 @@ footer{background:#1C140D;color:rgba(255,255,255,.72);padding:64px 0 30px;text-a
 @media(max-width:340px){.logo>div,.logo-text{display:none}}
 @media(min-width:821px){.m-panel{display:none}}
 </style>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
 <style>
 /* market-aware shipping copy + currency selector (mirrors build.js shell) */
 .sb-ship-gcc,.sb-ship-intl{display:none}
@@ -770,6 +770,8 @@ footer{position:relative;z-index:2}
    and radius - so it rendered small and lost in whitespace. Give it the old box. */
 #s-ring{padding:34px 0 10px}
 @media(min-width:961px){#s-ring .hring{max-width:600px;margin:0 auto}}
+/* 25 Sep (persona review): on phones the meter and the two links ran to the screen edge */
+@media(max-width:960px){#s-ring .hring-meter,#s-ring .hring-links{padding-left:20px;padding-right:20px;box-sizing:border-box}}
 
 /* Hero model slideshow (21 Sep 2026, Faheem: UAE apparel sites show the product
    the instant you land). Sits BEHIND the tagline; the collection ring moved down
@@ -851,6 +853,10 @@ footer{position:relative;z-index:2}
   font-family:Jost,system-ui,sans-serif;font-size:15px;line-height:1.5;color:#F2EADC;
   max-width:46ch;text-shadow:0 1px 14px rgba(8,6,14,.75)}
 .hslide-cap-i.is-on{opacity:1;transform:none}
+/* 25 Sep (persona review): sequential, not a crossfade - mid-fade the two captions
+   printed over each other. The outgoing one leaves fast; the new one waits for it. */
+.hslide-cap-i{transition:opacity .22s ease,transform .22s ease}
+.hslide-cap-i.is-on{transition:opacity .45s ease .26s,transform .45s ease .26s}
 /* :first-child, not every b: 'AED 199' inside the caption body was being turned
    into a second gold block eyebrow on its own line. Only the leading label is one. */
 .hslide-cap-i>b:first-child{display:block;font-family:'Space Mono',monospace;font-size:10.5px;
@@ -886,7 +892,7 @@ footer{position:relative;z-index:2}
   .hslide-dot{width:26px}
 }
 @media(prefers-reduced-motion:reduce){
-  .hslide-f,.hslide-cap-i{transition:none}
+  .hslide-f,.hslide-cap-i,.hslide-cap-i.is-on{transition:none}
 }
 
 /* hero "shop the look" (23 Sep 2026) - lives in this block, NOT the data-legib one, which build.js replaces */
@@ -1030,7 +1036,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
 @supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
 
-/* ===== homepage and shop: one size up (Faheem, 5 Sep: "still seems small") =====
+/* ===== homepage and shop: type one step larger (Faheem, 5 Sep: "still seems small") =====
    The two selling pages get a larger scale than the guides: copy 18-19px,
    labels 13px, buttons 14px, card names and prices up a step. */
 .stop .lede,#s-hero .lede{font-size:clamp(18px,1.5vw,21px)!important;line-height:1.6}
@@ -1385,11 +1391,29 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
   body.buy-page .loc-hero .dune-near{height:30px}
 }
+
+/* 25 Sep 2026 (Faheem: "the font could be a bit smaller"). Phones only: body copy steps
+   down from 17-19px to 15-15.5px, buttons and cards by a pixel or two. The 12px floor for
+   labels stays. Must stay last: it overrides the earlier one-size-up blocks. */
+@media(max-width:700px){
+  html body{font-size:15.5px}
+  html body p,html body li,html body .sec p,html body .rv-text,html body .item span,html body .fold-b p,
+  html body .pdp-ans-foot,html body .content p,html body .faq p,html body details p,html body .guide-sec p,
+  html body.shop-page p,html body.buy-page p{font-size:15px!important;line-height:1.55!important}
+  html body .lede,html body.buy-page .lede,html body.shop-page .lede{font-size:15.5px!important;line-height:1.55!important}
+  html body summary,html body .pdp-ans summary,html body .faq summary{font-size:15px!important;line-height:1.45!important}
+  html body .btn,html body.buy-page .btn,html body.shop-page .btn,html body .j-btn{font-size:13.5px!important}
+  html body .pcard-t,html body.buy-page .pcard-t{font-size:16px!important}
+  html body .pcard-p,html body.buy-page .pcard-p{font-size:15.5px!important}
+  html body .pdp-size,html body.buy-page .pdp-size{font-size:15px!important}
+  html body .eyebrow,html body.buy-page .eyebrow,html body .snum,html body.buy-page .snum{font-size:12px!important}
+  html body .sec h2,html body.buy-page .sec h2{font-size:25px!important;line-height:1.15!important}
+}
 </style>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
 <script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
-<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c528885a">
+<script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/">
 <link rel="alternate" hreflang="x-default" href="https://www.sahraandbeyond.ae/">
@@ -2851,7 +2875,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 })();
 </script>
 
-<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
+<script src="/assets/sahra-cart.js?v=18758f49" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 <script data-hslide>
 /* Hero slideshow. Crossfade only - no transform, no layout work - so it cannot

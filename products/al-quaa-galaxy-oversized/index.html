@@ -156,6 +156,8 @@ body.dark-bg .buy h1 em{color:var(--gold)}
 .pdp-rating .rv-stars{color:#B5651F;letter-spacing:1px}
 .pdp-rating-n{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.04em}
 .pdp-rating:hover .pdp-rating-n{text-decoration:underline}
+.pdp-rating .rl-s{display:none}
+@media(max-width:700px){.buy-head .pdp-rating .rl-f{display:none}.buy-head .pdp-rating .rl-s{display:inline}}
 .pdp-reassure{margin:12px 0 0;font-size:14px;line-height:1.5;color:var(--txt-soft)}
 .pdp-reassure a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .pdp-add-p{font-weight:600}
@@ -552,7 +554,10 @@ img,svg,video{max-width:100%;height:auto}
   background:rgba(255,255,255,.55);border-radius:10px;font-size:14px;font-weight:500;
   cursor:pointer;transition:transform .18s,background .18s,border-color .18s,box-shadow .18s;color:inherit}
 .pdp-size:hover:not(:disabled){transform:translateY(-3px)}
-.pdp-size:disabled{opacity:.32;cursor:not-allowed;text-decoration:line-through}
+.pdp-size:disabled{cursor:not-allowed;background:#ECE6DC!important;border-color:#DDD5C8!important;color:#6B6256!important;opacity:1}
+/* 25 Sep (persona review): sold-out chips read as faint strike-throughs; now a grey chip with the words in full */
+.pdp-size:disabled .sz-out{font-size:10px;letter-spacing:.3px;color:#5E564B}
+html body .pdp-size:disabled,html body .pdp-size[disabled]{text-decoration:none!important}
 /* selection has to be unmistakable — a filled gold chip with dark type */
 .pdp-size.sel{background:#E9B978;border-color:#E9B978;color:#2B2520;font-weight:700;
   box-shadow:0 0 0 3px rgba(233,185,120,.30)}
@@ -752,6 +757,17 @@ body.dark-bg .rv-stars{color:#E9B978}
   .pdp-acc-b .sz-wrap{overflow-x:auto;max-width:100%}
   .pdp-acc-b table.sz,.pdp-acc-b table.sg{width:100%}
   .pdp-acc-b>.place-band{padding:0!important}
+  /* 25 Sep: content moved in from the short rows under Add to cart */
+  .pdp-acc-x{padding:6px 18px 12px;color:#2A2016}
+  .pdp-acc-x .lede{font-size:15.5px;line-height:1.65;margin:0 0 10px;color:#2A2016}
+  .pdp-acc-x .occasion,.pdp-acc-x .spec-strip,.pdp-acc-x .colourway{margin:0 0 12px}
+  .pdp-acc-x .pdp-ans-foot{margin:0 0 12px;font-size:14px;line-height:1.6;color:#4A3F33}
+  .pdp-acc-x .pdp-ans-foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+  .pdp-acc-b .shipcards{margin:4px 0 14px}
+  html body .pdp-acc-x .occasion,html body .pdp-acc-x .cw-txt,html body .pdp-acc-x .cw-txt em,html body .pdp-acc-x .cw-txt strong,
+  html body .pdp-acc-x .fbar-l,html body .pdp-acc-x .fbar-v,html body .pdp-acc-x .spec-strip li{color:#4A3F33!important;opacity:1!important}
+  html body .pdp-acc-x .colourway{background:rgba(42,32,22,.05);border-color:rgba(42,32,22,.14)}
+  html body .pdp-acc-x .fbar-t i{background:rgba(42,32,22,.14)}html body .pdp-acc-x .fbar-t i.on{background:#2A2016}
 }
 /* an Arabic word inside a sentence stays in the sentence (the .item span rule made it a block) */
 .item span[lang]{display:inline}
@@ -786,14 +802,58 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 
 .pdp-bundle-m{display:none}
 @media(max-width:700px){.pdp-bundle-m{display:block;margin:0 0 10px}}
+.bt-ship{display:none}
+.pdp-trust-m{display:none}
+.pdp-sizehelp{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;margin:8px 0 12px;font-size:14px}
+.pdp-sizehelp a{color:var(--clay-deep,#9C521B);text-decoration:underline;text-underline-offset:3px}
+.pdp-sizehelp .pdp-other{color:var(--txt-soft,#5A5046)}
+/* ==== 25 Sep 2026 (Faheem): "the moment users land on a product page they need to see all
+   the essential information before needing to scroll down." Phones, first screen:
+   title, price and rating; the photo with its thumbnails down the side; sizes, the size
+   chart link, Add to cart, and delivery and returns. Everything else sits below, folded. */
+@media(max-width:700px){
+  .pdp{flex-direction:row!important;flex-wrap:wrap;align-items:flex-start;gap:8px 8px!important;padding:8px 0 40px!important}
+  .pdp>.buy>*,.pdp>.media>*{width:100%}
+  .buy-head .buy-top{display:none}
+  .buy-head{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:10px 14px!important}
+  .buy-head h1{flex:1 0 100%;font-size:23px!important;line-height:1.15!important;margin:0!important}
+  .buy-head .price-row{order:2;margin:0!important}
+  .buy-head .pdp-rating{display:flex!important;order:3;flex:1 1 0;min-width:0;margin:0!important;font-size:12px}
+  .buy-head .pdp-rating .rv-stars{font-size:12px}
+  .buy-head .pdp-rating-n{font-size:12px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pdp-subm .pdp-rating{display:none!important}
+  .pdp-subm{order:4!important}
+  /* the photo takes whatever height is left once the buy box fits: about 480px of the screen
+     is title, sizes, button and delivery line, so the rest is photo (never under 260px tall) */
+  .gal-main{--ph:max(260px, calc(100vh - 500px));--ph:max(260px, calc(100svh - 500px));order:2;width:min(calc(100% - 54px), calc(var(--ph) * .8))!important;flex:0 0 min(calc(100% - 54px), calc(var(--ph) * .8));aspect-ratio:4/5;height:auto!important;border-radius:12px;margin-left:auto}
+  .gal-thumbs{order:2;width:46px!important;flex:0 0 46px;display:flex!important;flex-direction:column;flex-wrap:nowrap;gap:6px;margin:0!important;
+    overflow-x:hidden;overflow-y:auto;max-height:min(calc((100vw - 82px) * 1.25), max(260px, calc(100svh - 500px)));scrollbar-width:none;margin-right:auto!important}
+  .gal-thumbs::-webkit-scrollbar{display:none}
+  .gal-thumbs button{width:46px!important;height:58px;flex:0 0 58px;border-radius:8px}
+  .gal-model{display:none!important}   /* the photo's own tag already says who wears what */
+  .buy-body{order:3;padding:12px 14px 14px!important}
+  .pdp-buy .pdp-sizes-label{display:none}
+  .pdp-buy .pdp-size{height:44px}
+  .pdp-sizehelp{font-size:13px;margin:8px 0 8px;flex-wrap:wrap}   /* 25 Sep: wraps once a size is picked and its chest shows - it ran off the card */
+  .pdp-sizehelp a{white-space:nowrap}
+  .pdp-bundle-m{font-size:13px!important;margin:0 0 8px!important}
+  .pdp-buy .pdp-stock{margin:0 0 6px!important;font-size:12px!important}
+  .pdp-buy .pdp-reassure{display:none}
+  .buy-body .buy-trust{display:none!important}
+  .pdp-trust-m{display:block!important;margin:8px 0 0;text-align:center;font-size:13px!important;line-height:1.4!important;color:var(--txt-soft,#5A5046)}
+  .pdp-buy .pdp-msg:empty{display:none}
+  .pdp-trust-m span{font-size:inherit!important;letter-spacing:inherit!important;font-family:inherit!important}
+  html body.buy-page p.pdp-trust-m,html body p.pdp-trust-m{font-size:13.5px!important;line-height:1.4!important}
+  .buy-body>.vat{display:none}
+}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
 <script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
-<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c528885a">
+<script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -906,7 +966,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
 @supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
 
-/* ===== homepage and shop: one size up (Faheem, 5 Sep: "still seems small") =====
+/* ===== homepage and shop: type one step larger (Faheem, 5 Sep: "still seems small") =====
    The two selling pages get a larger scale than the guides: copy 18-19px,
    labels 13px, buttons 14px, card names and prices up a step. */
 .stop .lede,#s-hero .lede{font-size:clamp(18px,1.5vw,21px)!important;line-height:1.6}
@@ -1261,6 +1321,24 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
   body.buy-page .loc-hero .dune-near{height:30px}
 }
+
+/* 25 Sep 2026 (Faheem: "the font could be a bit smaller"). Phones only: body copy steps
+   down from 17-19px to 15-15.5px, buttons and cards by a pixel or two. The 12px floor for
+   labels stays. Must stay last: it overrides the earlier one-size-up blocks. */
+@media(max-width:700px){
+  html body{font-size:15.5px}
+  html body p,html body li,html body .sec p,html body .rv-text,html body .item span,html body .fold-b p,
+  html body .pdp-ans-foot,html body .content p,html body .faq p,html body details p,html body .guide-sec p,
+  html body.shop-page p,html body.buy-page p{font-size:15px!important;line-height:1.55!important}
+  html body .lede,html body.buy-page .lede,html body.shop-page .lede{font-size:15.5px!important;line-height:1.55!important}
+  html body summary,html body .pdp-ans summary,html body .faq summary{font-size:15px!important;line-height:1.45!important}
+  html body .btn,html body.buy-page .btn,html body.shop-page .btn,html body .j-btn{font-size:13.5px!important}
+  html body .pcard-t,html body.buy-page .pcard-t{font-size:16px!important}
+  html body .pcard-p,html body.buy-page .pcard-p{font-size:15.5px!important}
+  html body .pdp-size,html body.buy-page .pdp-size{font-size:15px!important}
+  html body .eyebrow,html body.buy-page .eyebrow,html body .snum,html body.buy-page .snum{font-size:12px!important}
+  html body .sec h2,html body.buy-page .sec h2{font-size:25px!important;line-height:1.15!important}
+}
 </style>
 </head>
 <body class="buy-page">
@@ -1323,7 +1401,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       
       <p class="gal-model">All worn photos show the Oversized fit · Male model in the dunes is 182 cm, wearing L · Male and female models at the lake wear M</p>
       
-      <div class="pdp-subm"><p class="fabric-line"><b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed</p><a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n">5.0 &middot; 7 reviews of this design &rarr;</span></a></div>
+      <div class="pdp-subm"><p class="fabric-line"><b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed</p><a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n"><span class="rl-f">5.0 &middot; 7 reviews of this design &rarr;</span><span class="rl-s" aria-label="5.0 out of 5, 7 reviews">5.0 (7)</span></span></a></div>
     </div>
 
     <div class="buy">
@@ -1334,7 +1412,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       <p class="fabric-line"><b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed</p>
       
       
-      <a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n">5.0 &middot; 7 reviews of this design &rarr;</span></a>
+      <a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n"><span class="rl-f">5.0 &middot; 7 reviews of this design &rarr;</span><span class="rl-s" aria-label="5.0 out of 5, 7 reviews">5.0 (7)</span></span></a>
       
       <div class="price-row"><div class="price"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></div><span data-sb-curslot></span></div>
       </div>
@@ -1359,17 +1437,19 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         </div>
         
         
-        <p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut.</b> Take your usual letter. Want it closer to the body? <a href="/products/al-quaa-galaxy-regular/">See this design in Regular &rarr;</a></p>
+        
+        <p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;</a><a href="/products/al-quaa-galaxy-regular/" class="pdp-other">Also in Regular</a></p>
         <p class="pdp-stock" id="pdpStock" hidden></p>
-        <p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits</p>
+        <p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix and match</p>
         <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
+        <p class="pdp-trust-m"><span class="sb-ship-uae">Free next-day delivery &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         <ul class="pdp-quotes" aria-label="What buyers say"><li><q>The shirt is amazing, minimalist and elegant, just the way I like it and living in Dubai for more than 10 years makes it better as I get…</q><span>Jeffrey · verified buyer</span></li><li><q>Love the concept behind Sahra &amp; Beyond.</q><span>Saleha · verified buyer</span></li></ul>
         
         <p class="pdp-reassure">Need a different size? UAE returns and exchanges are free within 14 days of delivery &mdash; unworn, unwashed, tags on; exchanges subject to stock. <a href="/policies.html#returns">Full policy &rarr;</a></p>
       </div>
-      <div class="buy-trust"><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ 230gsm heavyweight cotton</span></div>
+      <div class="buy-trust"><span class="bt-ship"><span class="sb-ship-uae">⚡ Free next-day delivery</span><span class="sb-ship-gcc">✈ GCC delivery 3–5 days</span><span class="sb-ship-intl">✈ Worldwide delivery</span></span><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ 230gsm heavyweight cotton</span></div>
 
       <!-- The answer cluster (Rastah benchmark, 29 Aug 2026): the questions a
            buyer asks at the moment of hesitation — cost to ship, will it fit,
@@ -1491,7 +1571,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     </div>
     <div class="cols stagger">
       <div class="item"><b>DTG print</b><span>Direct-to-garment printing sits in the fabric rather than on top of it, so the graphic stays soft and the cotton stays breathable — no plastic panel on your back.</span></div>
-      <div class="item"><b>Unisex, two fits</b><span>Regular (slim — size up if in doubt) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.</span></div>
+      <div class="item"><b>Unisex, two fits</b><span>Regular (straight, set shoulder) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.</span></div>
       <div class="item"><b>Limited first run</b><span>Small first batch. When a size sells out in this run, it's gone rather than quietly restocked.</span></div>
     </div>
     <div class="note-box">Not sure what 230gsm means next to the 180gsm shirt you already own? We wrote the comparison out in full &mdash; the whole 150&ndash;280gsm scale, and which weight actually makes sense in a Gulf summer &mdash; on our <a href="/fabric/">fabric and GSM guide</a>.</div>
@@ -1502,6 +1582,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
     <h2>Drop shoulder, <em>worn on its own</em></h2>
     <p>Take your normal size for the intended relaxed fit; size down only if you want it just slightly loose. This is not simply a size up — the shoulder is deliberately dropped and the body cut wider, so it reads as a silhouette rather than a big t-shirt. Designed to be worn on its own; the drop shoulder fights a fitted jacket.</p>
     <p><strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.</p>
+    <div class="sfind" data-sizefinder data-fit="oversized" data-chart='{"regular":[["S",48.3],["M",50.8],["L",55.9],["XL",61]],"oversized":[["S",57.1],["M",59.7],["L",63.5],["XL",67.3]]}'></div>
     <div class="sz-wrap">
       <table class="sz">
         <caption class="sz-cap">Oversized fit &middot; garment measured flat</caption>
@@ -1509,7 +1590,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <tbody><tr><th scope="row">S</th><td><span class="sz-in">22.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">57.1&nbsp;cm</span></td><td><span class="sz-in">27.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">69.8&nbsp;cm</span></td><td><span class="sz-in">21&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">53.3&nbsp;cm</span></td><td><span class="sz-in">9&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">22.9&nbsp;cm</span></td></tr><tr><th scope="row">M</th><td><span class="sz-in">23.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">59.7&nbsp;cm</span></td><td><span class="sz-in">28.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">72.4&nbsp;cm</span></td><td><span class="sz-in">22&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">55.9&nbsp;cm</span></td><td><span class="sz-in">9.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">24.1&nbsp;cm</span></td></tr><tr><th scope="row">L</th><td><span class="sz-in">25&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">63.5&nbsp;cm</span></td><td><span class="sz-in">29.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">74.9&nbsp;cm</span></td><td><span class="sz-in">23.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">59.7&nbsp;cm</span></td><td><span class="sz-in">10&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">25.4&nbsp;cm</span></td></tr><tr><th scope="row">XL</th><td><span class="sz-in">26.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">67.3&nbsp;cm</span></td><td><span class="sz-in">30.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">77.5&nbsp;cm</span></td><td><span class="sz-in">25&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">63.5&nbsp;cm</span></td><td><span class="sz-in">10.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">26.7&nbsp;cm</span></td></tr></tbody>
       </table>
     </div>
-    <p class="sz-note">A true drop-shoulder oversized cut &mdash; the shoulder seam sits 2&ndash;3&Prime; below the natural shoulder point. Width, not length, is what creates the silhouette, so it does not simply wear like a size up.</p>
+    <p class="sz-note">A true drop-shoulder oversized cut &mdash; the shoulder seam sits 2&ndash;3&Prime; below the natural shoulder point. Width, not length, is what creates the silhouette.</p>
     <details class="sz-method"><summary>How these are measured</summary>
       <ul><li><strong>Chest</strong> &mdash; garment laid flat, measured straight across from armhole seam to armhole seam (pit&#8209;to&#8209;pit), 1&Prime; below the armhole.</li><li><strong>Length</strong> &mdash; from the highest point of the shoulder, at the collar seam, straight down to the bottom hem.</li><li><strong>Shoulder</strong> &mdash; seam to seam across the back, between the shoulder seam points.</li><li><strong>Sleeve</strong> &mdash; from the shoulder seam to the sleeve opening edge.</li></ul>
       <p>Tolerance is &plusmn;0.5&Prime; (&plusmn;1.3&nbsp;cm) on every measurement. Garments outside that are rejected at QC.</p>
@@ -1827,6 +1908,16 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
      never runs for reduced-motion users. The cross-fade comes from the
      existing .on transition - the same stack the prepush guard protects. */
   var userPaused=false;
+  /* 25 Sep 2026 (Faheem, after the persona review): no autoplay on phones - the photo
+     changed every second under a shopper trying to read the size row. Phones get a
+     swipe instead; the thumbnails still work, and the pause button is not needed. */
+  var phoneG=!!(window.matchMedia&&matchMedia('(max-width:700px)').matches);
+  if(phoneG){ userPaused=true;
+    var pb0=document.getElementById('galPause'); if(pb0){ pb0.hidden=true; pb0.style.display='none'; }
+    var sx=null, sy=null;
+    main.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY;},{passive:true});
+    main.addEventListener('touchend',function(e){ if(sx===null) return; var t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy; sx=null;
+      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3){ show((cur+(dx<0?1:-1)+imgs.length)%imgs.length); main.dataset.swiped='1'; setTimeout(function(){delete main.dataset.swiped;},650); } },{passive:true}); }
   function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
   function startAuto(){stopAuto();if(red||userPaused||imgs.length<2)return;
     timer=setInterval(function(){
@@ -1863,7 +1954,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   function open(){var on=main.querySelector('img.on');show(Math.max(0,imgs.indexOf(on)));lb.classList.add('open');
     document.body.style.overflow='hidden';if(window.track)track('image_zoom',{item_id:'al-quaa-galaxy-oversized'});}
   function close(){lb.classList.remove('open');document.body.style.overflow='';}
-  main.addEventListener('click',function(){open();});
+  main.addEventListener('click',function(){ if(main.dataset.swiped) return; open();});
   main.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
 
 /* ---------- sticky bar: buy, do not navigate away ----------
@@ -1957,7 +2048,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     /* Scarcity is worth saying; "Live from our store" is not - it tells the
        customer nothing and only appears where they expect a control. */
     var msg = left===0 ? 'Fully sold out in this run.'
-      : (left<=2 ? 'Only '+left+' size'+(left>1?'s':'')+' left in this run.' : '');
+      : (left<=2 ? (function(){ /* 25 Sep (persona review): name what has gone rather than count what is left - same fact, less pressure */
+          var out=sizes.filter(function(sz){return !seen[sz];}); if(!out.length) return '';
+          var t=out.length>1 ? out.slice(0,-1).join(', ')+' and '+out[out.length-1] : out[0];
+          return t+' ha'+(out.length>1?'ve':'s')+' sold out in this run.'; })() : '');
     if(note) note.textContent = msg || 'Live from our store.';
     if(box) box.hidden=false;
     var ps=document.getElementById('pdpStock');
@@ -2244,10 +2338,9 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
           if(typeof q==='number'&&q>0&&q<=3){ st.textContent='Only '+q+' left in '+v.title; st.hidden=false; }
           else st.hidden=true; }
         /* the number at the moment of choice - the whole fit-check idea */
-        var ec=document.getElementById('pdpEcho');
-        if(!ec){ ec=document.createElement('p'); ec.id='pdpEcho'; ec.className='pdp-echo';
-          sizesEl.insertAdjacentElement('afterend', ec); }
-        ec.textContent=MEAS[v.title]? v.title+' — '+MEAS[v.title]+' flat across the chest' : '';
+        /* 25 Sep 2026: the measurement rides in the size-help line instead of a new row */
+        var ch=box.querySelector('.pdp-chart');
+        if(ch) ch.innerHTML=MEAS[v.title]? '<b>'+v.title+'</b>: '+MEAS[v.title]+' chest &middot; chart &rarr;' : 'Check your size &rarr;';
       });
       sizesEl.appendChild(b);
     });
@@ -2268,7 +2361,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     addEl.disabled=true; addEl.textContent= go ? 'Going to checkout…' : 'Adding…'; msg('');
     if(window.SahraCart){
       window.SahraCart.add(v.id, 1, go ? {open:false} : undefined).then(function(cart){
-        /* Buy now (23 Sep 2026): same add, same fit check, then straight to
+        /* Buy now (23 Sep 2026): same add, then straight to
            Shopify checkout, where Shop Pay / Google Pay sit at the top. */
         if(go){ var st=window.SahraCart.state&&window.SahraCart.state(); var u=(st&&st.checkoutUrl)||(cart&&cart.checkoutUrl);
           if(window.track) track('buy_now',{item_id:handle,size:v.title});
@@ -2303,35 +2396,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
        and never the sticky bar, which clicks this button from script */
     if(!nowClick) goCheckout=false;
     if(!sel) return;
-    /* THE FIT CHECK (Faheem, 29 Aug): the Regular cut runs slim vs UAE
-       expectations - an XL wears like many brands' M/L - and people were
-       ordering their habitual letter. First add per session pauses for one
-       inline confirm showing the REAL measurement, with a one-tap size-up.
-       Once per session only: friction where it changes an order, never after. */
-    if(SLIM && !fitOk()){
-      var meas=MEAS[sel.title]||'';
-      var next=null, seen=false;
-      variants.forEach(function(v){ if(seen && !next && v.availableForSale) next=v; if(v===sel) seen=true; });
-      msgEl.className='pdp-msg';
-      msgEl.innerHTML='<span class="fitc"><span class="fitc-t"><strong>'+sel.title+'</strong> measures '+meas+' pit-to-pit — this cut runs slim.</span>'
-        +(next?'<button type="button" class="fitc-btn fitc-up" id="fitcUp">Switch to '+next.title+' (recommended)</button>':'')
-        +'<button type="button" class="fitc-btn" id="fitcYes">Keep '+sel.title+'</button>'
-        +'</span>';
-      /* 24 Sep 2026 (Faheem: "I can't add anything from phone"): on a phone this
-         confirm rendered below the fold, under Buy now and the sticky bar, so a
-         tap on Add to cart looked like it did nothing. It now sits right under
-         the button, and is scrolled into view if any of it is still hidden. */
-      (function(){ var r=msgEl.getBoundingClientRect(), bar=document.getElementById('buybar'),
-          bh=(bar&&bar.getBoundingClientRect().height)||0;
-        if(r.top<70||r.bottom>innerHeight-bh-8){ try{ msgEl.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){ msgEl.scrollIntoView(); } } })();
-      document.getElementById('fitcYes').onclick=function(){ setFitOk(); msg(''); doAdd(sel); };
-      var up=document.getElementById('fitcUp');
-      if(up) up.onclick=function(){ setFitOk();
-        sizesEl.querySelectorAll('.pdp-size').forEach(function(x){ x.classList.remove('sel'); x.setAttribute('aria-pressed','false');
-          if(x.textContent.indexOf(next.title)===0){ x.classList.add('sel'); x.setAttribute('aria-pressed','true'); } });
-        sel=next; msg(''); doAdd(next); };
-      return;
-    }
+    /* 25 Sep 2026 (Faheem): no fit-check pause - one tap adds to the cart. Size help
+       is the 'Check your size in the chart' link beside the size chips. */
     doAdd(sel);
   });
 
@@ -2352,24 +2418,42 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 (function(){
   if(!window.matchMedia||!matchMedia('(max-width:700px)').matches) return;
   var q=function(s){return document.querySelector(s);};
+  /* 25 Sep 2026 (persona review): the page carried two sets of fold-outs - the seven
+     short rows under Add to cart and these groups below, plus a separate questions card.
+     On phones they are now ONE list: the short rows' content moves into the matching
+     group (the story lede, the cotton bars, the market-aware delivery cards) and the rows
+     that only repeated a section below (Fit at a glance, Top questions) are dropped. */
+  var ans=q('.pdp-answers');
+  function body(sel){ var d=ans&&ans.querySelector(sel); if(!d) return null;
+    var w=document.createElement('div'); w.className='pdp-acc-x';
+    [].slice.call(d.children).forEach(function(c){ if(c.tagName!=='SUMMARY') w.appendChild(c); });
+    return w; }
+  var story=body('.pdp-ans-story'), det=body('.pdp-ans-details'), cot=body('.pdp-ans-cotton'), prn=body('.pdp-ans-print');
+  var dlv=null; if(ans){ var sc=ans.querySelector('.shipcards'); if(sc){ dlv=document.createElement('div'); dlv.className='pdp-acc-x'; dlv.appendChild(sc); } }
+  var dsec=q('#delivery'); if(dlv&&dsec){ var h2=dsec.querySelector('h2'); (h2&&h2.nextSibling)?dsec.insertBefore(dlv,h2.nextSibling):dsec.appendChild(dlv); dlv=null; }
+  if(ans) ans.hidden=true;
   var place=q('.place-band'), groups=[
-    ['The place and the design',[place,q('#design')]],
-    ['Fabric and care',[q('#fabric'),q('#care')]],
-    ['Size, fit and delivery',[q('#fit'),q('#delivery')]]
+    ['The story and the design',[story,place,q('#design')]],
+    ['Fabric, print and care',[det,cot,prn,q('#fabric'),q('#care')]],
+    ['Size chart',[q('#fit')]],
+    ['Delivery, returns and exchanges',[dlv,dsec]],
+    ['Questions',[q('#faq')]]
   ];
+  var anchor=q('.place-band')||q('#design')||q('#fabric'), mark=null;
+  if(anchor&&anchor.parentNode){ mark=document.createComment('pdp-acc'); anchor.parentNode.insertBefore(mark,anchor); }
   var made=[];
   groups.forEach(function(g,gi){
-    var secs=g[1].filter(Boolean); if(!secs.length) return;
+    var secs=g[1].filter(function(x){return x&&(x.parentNode||x.className==='pdp-acc-x');}); if(!secs.length) return;
     var box=document.createElement('section'); box.className='pdp-acc';
     var id='pdpAcc'+gi;
     box.innerHTML='<button type="button" class="pdp-acc-h" aria-expanded="false" aria-controls="'+id+'"><span>'+g[0]+'</span><i aria-hidden="true">+</i></button><div class="pdp-acc-b" id="'+id+'" hidden></div>';
-    secs[0].parentNode.insertBefore(box,secs[0]);
+    if(mark) mark.parentNode.insertBefore(box,mark); else (secs[0].parentNode||document.body).insertBefore(box,secs[0]);
     var body=box.querySelector('.pdp-acc-b');
     secs.forEach(function(x){ body.appendChild(x); });
     var h=box.querySelector('.pdp-acc-h');
     h.addEventListener('click',function(){ var open=h.getAttribute('aria-expanded')!=='true';
       h.setAttribute('aria-expanded',open?'true':'false'); body.hidden=!open;
-      if(open){ body.querySelectorAll('.reveal').forEach(function(r){r.classList.add('in','vis','shown');}); } });
+      if(open){ body.querySelectorAll('.reveal,.stagger').forEach(function(r){r.classList.add('in','vis','shown');}); } });
     made.push(box);
   });
   function openFor(el){ made.forEach(function(b){ if(b.contains(el)){ var h=b.querySelector('.pdp-acc-h'); if(h.getAttribute('aria-expanded')!=='true') h.click(); } }); }
@@ -2387,7 +2471,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
+<script src="/assets/sahra-cart.js?v=18758f49" defer></script>
+<script src="/assets/sahra-sizefinder.js?v=170093b1" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 </body>
 </html>

@@ -620,7 +620,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
 <style data-rtl>
 /* ---------------------------------------------------------------- Arabic
    Paired to the Latin system rather than bolted on. Cormorant Garamond is a
@@ -795,8 +795,8 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
   direction:ltr;unicode-bidi:embed;display:inline-block;
 }
 </style>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
-<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c528885a">
+<script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -909,7 +909,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
 @supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
 
-/* ===== homepage and shop: one size up (Faheem, 5 Sep: "still seems small") =====
+/* ===== homepage and shop: type one step larger (Faheem, 5 Sep: "still seems small") =====
    The two selling pages get a larger scale than the guides: copy 18-19px,
    labels 13px, buttons 14px, card names and prices up a step. */
 .stop .lede,#s-hero .lede{font-size:clamp(18px,1.5vw,21px)!important;line-height:1.6}
@@ -1264,6 +1264,24 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
   body.buy-page .loc-hero .dune-near{height:30px}
 }
+
+/* 25 Sep 2026 (Faheem: "the font could be a bit smaller"). Phones only: body copy steps
+   down from 17-19px to 15-15.5px, buttons and cards by a pixel or two. The 12px floor for
+   labels stays. Must stay last: it overrides the earlier one-size-up blocks. */
+@media(max-width:700px){
+  html body{font-size:15.5px}
+  html body p,html body li,html body .sec p,html body .rv-text,html body .item span,html body .fold-b p,
+  html body .pdp-ans-foot,html body .content p,html body .faq p,html body details p,html body .guide-sec p,
+  html body.shop-page p,html body.buy-page p{font-size:15px!important;line-height:1.55!important}
+  html body .lede,html body.buy-page .lede,html body.shop-page .lede{font-size:15.5px!important;line-height:1.55!important}
+  html body summary,html body .pdp-ans summary,html body .faq summary{font-size:15px!important;line-height:1.45!important}
+  html body .btn,html body.buy-page .btn,html body.shop-page .btn,html body .j-btn{font-size:13.5px!important}
+  html body .pcard-t,html body.buy-page .pcard-t{font-size:16px!important}
+  html body .pcard-p,html body.buy-page .pcard-p{font-size:15.5px!important}
+  html body .pdp-size,html body.buy-page .pdp-size{font-size:15px!important}
+  html body .eyebrow,html body.buy-page .eyebrow,html body .snum,html body.buy-page .snum{font-size:12px!important}
+  html body .sec h2,html body.buy-page .sec h2{font-size:25px!important;line-height:1.15!important}
+}
 </style>
 </head>
 <body>
@@ -1288,7 +1306,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       <div class="arp-box" id="arpBox" data-handle="sand-polo">
         <div class="arp-sizes-l">المقاس <a href="/size-guide/" hreflang="en">دليل المقاسات</a></div>
         <div class="arp-sizes" id="arpSizes" role="group" aria-label="اختر المقاس"><button type="button" class="arp-size" aria-pressed="false" dir="ltr">S</button><button type="button" class="arp-size" aria-pressed="false" dir="ltr">M</button><button type="button" class="arp-size" aria-pressed="false" dir="ltr">L</button><button type="button" class="arp-size" aria-pressed="false" dir="ltr">XL</button></div>
-        <p class="arp-fit">قصّة واحدة، وهي ضيّقة. معظم الناس يأخذون مقاسًا أكبر بدرجة من مقاسهم المعتاد.</p>
+        <p class="arp-fit">قصّة واحدة بكتف مركّب. تحقّق من مقاسك في جدول المقاسات.</p>
         <button type="button" class="arp-add" id="arpAdd" disabled>اختر المقاس</button>
         <button type="button" class="arp-now" id="arpNow">اشترِ الآن</button>
         <p class="arp-msg" id="arpMsg" role="status" aria-live="polite"></p>
@@ -1301,9 +1319,9 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   <section class="ar-sec"><p class="ar-eyebrow">المكان</p><h2>بولو صحراء</h2><p>بولو من قطن البيكيه 240 غرامًا باللون الرملي، مطرّز لا مطبوع. دفعة أولى محدودة — أهدأ ما نصنعه، وأصعبه منالًا.</p><p class="ar-fine">&#10022; صُنع لأمسيات تبدأ في الهواء الطلق وتنتهي في مكان أجمل</p></section>
   <section class="ar-sec"><p class="ar-eyebrow">التصميم</p><h2>هادئ <em>عن قصد</em></h2><p>معظم التيشيرتات تحمل مكانًا على ظهرها. البولو يفعل العكس — لا يكاد يقول شيئًا، ويقوله بالخيط. إنه القطعة للأيام التي تريد فيها العلامة معك دون أن تعلن عنها.</p><div class="arp-cards"><div class="arp-card"><h3>مطرّز، لا مطبوع</h3><p>العلامة مغروزة في القماش بالخيط لا مطبوعة عليه. بلون القماش، بارزة، تلاحظها باللمس قبل أن تلاحظها بالعين.</p></div><div class="arp-card"><h3>240 غرامًا، لا 230</h3><p>أثقل من التيشيرتات بعشرة غرامات. وفي البولو يظهر هذا الفرق — تبقى الياقة واقفة كما يجب بدل أن تلتفّ بعد موسم.</p></div><div class="arp-card"><h3>دفعة محدودة</h3><p>صُنع بكمية أقل من التيشيرتات، ولن يُعاد إنتاجه. حين ينفد، ينفد — ونفضّل أن نقول ذلك بوضوح على أن نتظاهر بعكس ذلك.</p></div><div class="arp-card"><h3>التطريز</h3><p>الخيط المغروز في القماش يمنحه ملمسًا بارزًا خفيفًا تشعر به. لا يبهت ولا يتشقّق كما قد تفعل الطباعة مع الوقت — التطريز يتغيّر مع الوقت بطريقة مختلفة، وأجمل.</p></div><div class="arp-card"><h3>قطن بيكيه 240 غرامًا</h3><p>قطن بيكيه ثقيل 100%، مغسول مسبقًا لأقل انكماش ممكن. أثقل من التيشيرتات بعشرة غرامات — بما يكفي لتبقى الياقة ثابتة بدل أن تلتفّ.</p></div><div class="arp-card"><h3>ياقة مضلّعة وفتحة أزرار</h3><p>الياقة المضلّعة تحافظ على شكلها غسلة بعد غسلة، وفتحة الأزرار مخيطة لتستقرّ مسطّحة لا لتنفرج.</p></div><div class="arp-card"><h3>شريط تقوية على الكتفين</h3><p>شريط يمتدّ على خياطة الكتفين ليقوّي النقاط التي تتحمّل أكبر ضغط — الفرق بين موسم واحد وعدة مواسم.</p></div></div></section>
   <section class="ar-sec"><p class="ar-eyebrow">التفاصيل</p><ul class="arp-spec"><li>قطن بيكيه 240 غرامًا</li><li>ياقة مضلّعة وفتحة أزرار</li><li>شريط تقوية على خياطة الكتفين</li><li>مطرّز</li></ul><p class="arp-colour"><span class="arp-sw" style="background:#DCBFA6"></span>اللون: <b>رملي</b> <span dir="ltr">(Pantone 4675 C)</span></p><p class="ar-fine">الإصدار التأسيسي — دفعة أولى محدودة</p></section>
-  <section class="ar-sec" id="fit"><p class="ar-eyebrow">المقاس والقصّة</p><h2>بمقاسات <em>التيشيرتات</em> نفسها</h2><p>البولو مصمّم بمواصفات مقاسات تيشيرتات ريجولر نفسها، لذلك قصّته ضيّقة: معظم الناس يأخذون مقاسًا أكبر بدرجة من مقاسهم المعتاد. وإن كنت تعرف مقاسك في تيشيرت ريجولر من عندنا، فخذ المقاس نفسه هنا. كُمّه مركّب عند الكتف الطبيعي — ولا توجد قصّة أوفرسايز من البولو.</p><p><a href="/size-guide/" hreflang="en">دليل المقاسات &larr;</a></p></section>
+  <section class="ar-sec" id="fit"><p class="ar-eyebrow">المقاس والقصّة</p><h2>بمقاسات <em>التيشيرتات</em> نفسها</h2><p>البولو مصمّم بمواصفات مقاسات تيشيرتات ريجولر نفسها، فإن كنت تعرف مقاسك في تيشيرت ريجولر من عندنا، فخذ المقاس نفسه هنا، وتحقّق منه في جدول المقاسات أدناه. كُمّه مركّب عند الكتف الطبيعي — ولا توجد قصّة أوفرسايز من البولو.</p><p><a href="/size-guide/" hreflang="en">دليل المقاسات &larr;</a></p></section>
   <section class="ar-sec"><p class="ar-eyebrow">العناية</p><h2>العناية <em>بالتطريز</em></h2><p>التطريز أمتن من الطباعة، لكن الخيط يبقى أفضل حالًا مع الغسيل اللطيف.</p><ul class="arp-list"><li>اغسله في الغسالة بماء بارد ومقلوبًا على وجهه الداخلي — هذا يحمي الغُرز من الاحتكاك.</li><li>اغسله مع ألوان مشابهة، على دورة لطيفة.</li><li>انشره ليجفّ في الهواء. المجفّف هو السبب الرئيسي للانكماش وتجعّد القماش حول الغُرز.</li><li>اكوِه مقلوبًا وتجنّب التطريز مباشرة — لا تضع مكواة ساخنة على الخيط أبدًا.</li><li>تجنّب المبيّض ومنعّم الأقمشة؛ فالمنعّم يغلّف الألياف ويُفقد القماش رونقه.</li><li>احذر من التعلّق — قد يعلق التطريز بشريط الفيلكرو والأسطح الخشنة.</li></ul></section>
-  <section class="ar-sec"><p class="ar-eyebrow">الأسئلة الشائعة</p><details class="arp-faq"><summary>ما الفرق بين البولو والتيشيرتات؟</summary><p>ثلاثة فروق. وزنه 240 غرامًا بدل 230، أي قماش أثقل قليلًا وياقة تحافظ على شكلها. وهو مطرّز لا مطبوع. ويُصنع بكمية أقل من التيشيرتات، تُحسب وحدها. أما المقاسات فهي نفسها مقاسات تيشيرتات ريجولر.</p></details><details class="arp-faq"><summary>لمن صُمّمت قصّة البولو؟</summary><p>البولو بقصّة رجالية، بمقاسات من S إلى XL، ومصمّم على قياسات تيشيرتات ريجولر نفسها. ولأن جدول المقاسات يذكر قياسات القطعة ممدودة على سطح مستوٍ لا مقاس الجسم، فأدقّ طريقة للاختيار أن تقيس بولو أو تيشيرتًا يعجبك مقاسه وتطابق الأرقام.</p></details><details class="arp-faq"><summary>أي مقاس أطلب؟</summary><p>البولو مصمّم بمواصفات تيشيرتات ريجولر نفسها — الصدر والطول والكتف والكمّ، من S إلى XL. وهي قصّة ضيّقة، فمعظم الناس يأخذون مقاسًا أكبر بدرجة من مقاسهم المعتاد. إن كنت تعرف مقاسك في تيشيرت ريجولر من عندنا، فخذ المقاس نفسه هنا. القياسات كاملة في جدول المقاسات في هذه الصفحة وفي دليل المقاسات.</p></details><details class="arp-faq"><summary>لماذا دفعة صغيرة إلى هذا الحد؟</summary><p>إنه أول بولو نصنعه، ونفضّل أن نصنع عددًا قليلًا بإتقان على أن نخمّن حجم الطلب. ولا توجد خطة لإعادة إنتاج هذه الدفعة.</p></details><details class="arp-faq"><summary>هل سيُعاد إنتاجه؟</summary><p>هذه دفعة أولى محدودة. قد نصنع بولو مجددًا، لكن ليس هذا، ولن نعد بغير ذلك.</p></details></section>
+  <section class="ar-sec"><p class="ar-eyebrow">الأسئلة الشائعة</p><details class="arp-faq"><summary>ما الفرق بين البولو والتيشيرتات؟</summary><p>ثلاثة فروق. وزنه 240 غرامًا بدل 230، أي قماش أثقل قليلًا وياقة تحافظ على شكلها. وهو مطرّز لا مطبوع. ويُصنع بكمية أقل من التيشيرتات، تُحسب وحدها. أما المقاسات فهي نفسها مقاسات تيشيرتات ريجولر.</p></details><details class="arp-faq"><summary>لمن صُمّمت قصّة البولو؟</summary><p>البولو بقصّة رجالية، بمقاسات من S إلى XL، ومصمّم على قياسات تيشيرتات ريجولر نفسها. ولأن جدول المقاسات يذكر قياسات القطعة ممدودة على سطح مستوٍ لا مقاس الجسم، فأدقّ طريقة للاختيار أن تقيس بولو أو تيشيرتًا يعجبك مقاسه وتطابق الأرقام.</p></details><details class="arp-faq"><summary>أي مقاس أطلب؟</summary><p>البولو مصمّم بمواصفات تيشيرتات ريجولر نفسها — الصدر والطول والكتف والكمّ، من S إلى XL. إن كنت تعرف مقاسك في تيشيرت ريجولر من عندنا، فخذ المقاس نفسه هنا. القياسات كاملة في جدول المقاسات في هذه الصفحة وفي دليل المقاسات.</p></details><details class="arp-faq"><summary>لماذا دفعة صغيرة إلى هذا الحد؟</summary><p>إنه أول بولو نصنعه، ونفضّل أن نصنع عددًا قليلًا بإتقان على أن نخمّن حجم الطلب. ولا توجد خطة لإعادة إنتاج هذه الدفعة.</p></details><details class="arp-faq"><summary>هل سيُعاد إنتاجه؟</summary><p>هذه دفعة أولى محدودة. قد نصنع بولو مجددًا، لكن ليس هذا، ولن نعد بغير ذلك.</p></details></section>
   <section class="ar-sec"><p class="ar-eyebrow">التوصيل والإرجاع</p><p><span class="sb-ship-uae">توصيل مجاني داخل الإمارات في يوم العمل التالي — اطلب قبل الساعة 2 ظهرًا، بلا حدّ أدنى للطلب</span><span class="sb-ship-gcc">التوصيل إلى دول الخليج خلال 3–5 أيام عمل — مجاني للطلبات فوق 390 درهمًا</span><span class="sb-ship-intl">التوصيل إلى جميع أنحاء العالم خلال 7–14 يوم عمل</span></p><p>تحتاج مقاسًا آخر؟ الإرجاع والاستبدال داخل الإمارات مجانيان خلال 14 يومًا من التوصيل — بشرط ألا تكون القطعة ملبوسة أو مغسولة وأن تبقى بطاقاتها عليها؛ والاستبدال حسب توفّر المخزون.</p></section>
   <section class="ar-sec"><p class="ar-eyebrow">التقييمات</p><a class="arp-rating" href="/products/sand-polo/#reviews" hreflang="en"><span class="arp-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span>5.0 — تقييم واحد لهذا التصميم</span></a><p class="ar-fine">تُجمع التقييمات وتُراجَع بشكل مستقل عبر Judge.me.</p></section>
   <p class="arp-en"><a href="/products/sand-polo/" hreflang="en" lang="en">اقرأ هذه الصفحة بالإنجليزية &larr;</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">لديك سؤال؟ راسلنا على واتساب</a></p>
@@ -1421,7 +1439,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
+<script src="/assets/sahra-cart.js?v=18758f49" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 </body>
 </html>

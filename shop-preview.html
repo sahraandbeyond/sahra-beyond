@@ -73,7 +73,7 @@ a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
 
 nav{position:fixed;top:var(--note-h,32px);left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 32px;transition:background .4s,padding .4s;background:transparent}
 nav.solid{background:rgba(250,246,239,.86);backdrop-filter:blur(16px);padding:13px 32px}
-nav.on-hero .nav-links a,nav.on-hero .logo-a,nav.on-hero .cart-btn{color:#fff}nav.on-hero .logo-b{color:var(--gold)}
+nav.on-hero .nav-links a,nav.on-hero .logo-a,nav.on-hero .cart-btn,nav.on-hero .mnav,nav.on-hero .sbl-lang{color:#fff}nav.on-hero .logo-b{color:var(--gold)}
 .logo{display:flex;align-items:center;gap:11px}
 .logo-img{height:26px;width:auto;display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -684,9 +684,22 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 @media(max-width:820px){.sb-curwrap--hdr{display:none}}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
-<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
+<script src="/assets/sahra-cart.js?v=18758f49" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
+<style id="shop-phone-first">
+/* 25 Sep 2026 (Faheem, after the persona review): on phones the first screen showed no
+   product at all - only the hero card. The hero now holds the eyebrow and headline, and the
+   collection starts inside the first screen. */
+@media(max-width:700px){
+  html body .shophero{min-height:0!important;height:auto!important;padding:84px 0 22px!important}
+  html body .shophero .hero-c{padding:18px 18px 16px!important}
+  html body .shophero .hero-c p,html body .shophero .scroll-cue{display:none!important}
+  html body .shophero .hero-c .eyebrow{margin-bottom:8px}
+  html body .shophero .hero-c h1{font-size:34px!important;margin-bottom:0}
+  html body .marquee{display:none}
+}
+</style>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -799,7 +812,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
 @supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
 
-/* ===== homepage and shop: one size up (Faheem, 5 Sep: "still seems small") =====
+/* ===== homepage and shop: type one step larger (Faheem, 5 Sep: "still seems small") =====
    The two selling pages get a larger scale than the guides: copy 18-19px,
    labels 13px, buttons 14px, card names and prices up a step. */
 .stop .lede,#s-hero .lede{font-size:clamp(18px,1.5vw,21px)!important;line-height:1.6}
@@ -1154,11 +1167,29 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
   body.buy-page .loc-hero .dune-near{height:30px}
 }
+
+/* 25 Sep 2026 (Faheem: "the font could be a bit smaller"). Phones only: body copy steps
+   down from 17-19px to 15-15.5px, buttons and cards by a pixel or two. The 12px floor for
+   labels stays. Must stay last: it overrides the earlier one-size-up blocks. */
+@media(max-width:700px){
+  html body{font-size:15.5px}
+  html body p,html body li,html body .sec p,html body .rv-text,html body .item span,html body .fold-b p,
+  html body .pdp-ans-foot,html body .content p,html body .faq p,html body details p,html body .guide-sec p,
+  html body.shop-page p,html body.buy-page p{font-size:15px!important;line-height:1.55!important}
+  html body .lede,html body.buy-page .lede,html body.shop-page .lede{font-size:15.5px!important;line-height:1.55!important}
+  html body summary,html body .pdp-ans summary,html body .faq summary{font-size:15px!important;line-height:1.45!important}
+  html body .btn,html body.buy-page .btn,html body.shop-page .btn,html body .j-btn{font-size:13.5px!important}
+  html body .pcard-t,html body.buy-page .pcard-t{font-size:16px!important}
+  html body .pcard-p,html body.buy-page .pcard-p{font-size:15.5px!important}
+  html body .pdp-size,html body.buy-page .pdp-size{font-size:15px!important}
+  html body .eyebrow,html body.buy-page .eyebrow,html body .snum,html body.buy-page .snum{font-size:12px!important}
+  html body .sec h2,html body.buy-page .sec h2{font-size:25px!important;line-height:1.15!important}
+}
 </style>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
 <script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
-<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c528885a">
+<script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 </head>
 <body class="shop-page">
 <a class="skip-link" href="#products">Skip to the collection</a>
@@ -1176,7 +1207,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   <!-- Sibling of .nav-links on purpose: that container is display:none
        below 820px and the hamburger builder skips .cart-btn, so a cart
        button nested inside it vanished entirely on every phone. -->
-  <button class="cart-btn" id="cartBtn" type="button" aria-label="Open cart"><span aria-hidden="true">&#128722;</span><span id="cartCount" class="cart-count">0</span></button><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button><button class="cart-btn" id="cartBtn" type="button" aria-label="Open cart"><span aria-hidden="true">&#128722;</span><span id="cartCount" class="cart-count">0</span></button>
 </nav>
 
 <header class="shophero" id="hero">
@@ -1207,11 +1238,11 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   <div class="tl-inner">
     <span class="eyebrow">Size &amp; fit</span>
     <h2>Find your fit</h2>
-    <p class="tl-sub">Every tee comes in two fits. <strong>Regular</strong> is a slim cut — size up for your usual feel. <strong>Oversized</strong> is a relaxed, dropped-shoulder cut — size down if you want it less roomy. Heavyweight 100% combed ring-spun cotton, pre-washed for minimal shrinkage.</p>
+    <p class="tl-sub">Every tee comes in two fits. <strong>Regular</strong> is a straight cut with a set shoulder. <strong>Oversized</strong> is a relaxed, dropped-shoulder cut. Check your size in the chart below: measure a shirt you like flat, pit to pit, and match the number. Heavyweight 100% combed ring-spun cotton, pre-washed for minimal shrinkage.</p>
 
     <div class="fit-explain">
-      <div class="fe-card"><h3>Regular Fit</h3><p>A slim cut. Straight body, set shoulder seam. Most people take one size up from their usual letter.</p></div>
-      <div class="fe-card"><h3>Oversized Fit</h3><p>Relaxed drop-shoulder, longer body. Roomy by design — size down for a slightly trimmer look.</p></div>
+      <div class="fe-card"><h3>Regular Fit</h3><p>Straight body, set shoulder seam. Layers cleanly under a shacket or jacket.</p></div>
+      <div class="fe-card"><h3>Oversized Fit</h3><p>Relaxed drop-shoulder, longer body. Roomy by design.</p></div>
     </div>
 
     <div class="size-tabs" role="tablist">
@@ -1223,7 +1254,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
         <thead><tr><th>Size</th><th>Chest (cm)</th><th>Length (cm)</th><th>Sleeve (cm)</th></tr></thead>
         <tbody id="size-tbody"></tbody>
       </table>
-      <p class="tl-note">Measurements are taken with the garment laid flat. Add roughly 4–6&nbsp;cm for body ease. Sizes run relaxed — size down in Oversized for a trimmer look.</p>
+      <p class="tl-note">Measurements are taken with the garment laid flat. Add roughly 4–6&nbsp;cm for body ease. Measure a shirt you like the same way and match the number.</p>
     </div>
 
     <div class="returns">
@@ -2087,9 +2118,9 @@ function draw(){
     var specList=_polo
       ?'<ul class="prod-specs"><li><strong>Fabric.</strong> 240&nbsp;gsm piqu&eacute; cotton, pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Taped shoulder seams, double-stitched and side-seamed for shape retention.</li><li><strong>Embroidery.</strong> Embroidered logo — stitched, not printed.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the embroidery.</li><li><strong>Delivery.</strong> Order by 2 pm and it ships the same day &middot; free returns within the UAE.</li></ul>'
       :'<ul class="prod-specs"><li><strong>Fabric.</strong> Heavyweight 100% combed ring-spun cotton (230&nbsp;gsm), pre-washed for minimal shrinkage.</li><li><strong>Construction.</strong> Ribbed crew-neck collar; taped collar &amp; shoulder seams for shape retention and longevity.</li><li><strong>Print.</strong> '+pr.long+' Original artwork inspired by '+p.place+'.</li><li><strong>Care.</strong> Machine wash cold inside-out, hang to dry; do not iron directly on the print.</li><li><strong>Delivery.</strong> Order by 2 pm and it ships the same day &middot; free returns within the UAE.</li></ul>';
-    var fitNote=_polo?'A men&rsquo;s cut, S&ndash;XL, and it runs slim &mdash; most people take one size up from their usual letter. Measurements are in the size guide.'
-      :(fitLabel==='oversized'?'Oversized is a relaxed drop-shoulder cut with a longer body — roomy by design. Size down if you want it a little trimmer.'
-      :'Regular is a slim cut with a set shoulder seam. Most people take one size up from their usual letter.');
+    var fitNote=_polo?'A men&rsquo;s cut, S&ndash;XL. Check your size in the chart in the size guide.'
+      :(fitLabel==='oversized'?'Oversized is a relaxed drop-shoulder cut with a longer body — roomy by design. Check your size in the chart.'
+      :'Regular is a straight cut with a set shoulder seam. Check your size in the chart.');
     var storyFold='<details class="prod-fold"><summary>The story behind the '+(_polo?'polo':'tee')+'</summary><div class="fold-b">'+placeMeta+placeLead+(p.story?'<p class="story">'+p.story+'</p>':'')+occasion+readPlace+'</div></details>';
     var detailsFold='<details class="prod-fold"><summary>Details &amp; care</summary><div class="fold-b">'+fabricBars+specStrip+specList+pdpLink+'</div></details>';
     var fitFold='<details class="prod-fold"><summary>Fit &amp; sizing</summary><div class="fold-b"><p class="fit-note">'+fitNote+'</p>'+fitSwap+(fitSwap?'<br>':'')+'<a class="size-guide-link" href="#sizeguide">Size guide &amp; measurements</a><br>'+buyLimited+'</div></details>';

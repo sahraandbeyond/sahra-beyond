@@ -941,8 +941,10 @@ console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
   const home = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   /* 24 Sep 2026 (Faheem, phone layout review): the homepage and shop bands are compact too - three cards, the rest behind Show more */
   check('homepage and shop bands are compact (3 shown, a Show-more button)', /rv-list rv-compact/.test(home) && /rv-list rv-compact/.test(fs.readFileSync(path.join(__dirname, 'shop', 'index.html'), 'utf8')));
-  const fw = { 'al-quaa-galaxy-regular': /<p class="fit-warn"><b>Regular is a slim cut\.<\/b>[^<]*<a href="\/products\/al-quaa-galaxy-oversized\/">/, 'al-quaa-galaxy-oversized': /<p class="fit-warn"><b>Oversized is a wide, drop-shoulder cut\.<\/b>[^<]*<a href="\/products\/al-quaa-galaxy-regular\/">/, 'sand-polo': /<p class="fit-warn"><b>One cut, and it runs slim\.<\/b>[^<]*one size up from their usual letter/ };
-  Object.entries(fw).forEach(([h, re]) => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); check('PDP ' + h + ': the fit is explained under the size chips, with the other fit linked', re.test(pg) && pg.indexOf('id="pdpSizes"') < pg.indexOf('<p class="fit-warn">') && pg.indexOf('<p class="fit-warn">') < pg.indexOf('id="pdpAdd"')); });
+  /* 25 Sep 2026 (Faheem): no fit warnings - the size chips are followed by a 'Check your size' link to the chart,
+     with the design's other fit linked beside it (the polo has one cut, so no other-fit link) */
+  const fw = { 'al-quaa-galaxy-regular': /<p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;<\/a><a href="\/products\/al-quaa-galaxy-oversized\/" class="pdp-other">/, 'al-quaa-galaxy-oversized': /<p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;<\/a><a href="\/products\/al-quaa-galaxy-regular\/" class="pdp-other">/, 'sand-polo': /<p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;<\/a><\/p>/ };
+  Object.entries(fw).forEach(([h, re]) => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); check('PDP ' + h + ': a size-chart link under the size chips, no slim-fit warning', re.test(pg) && !/runs slim|one size up/i.test(pg) && pg.indexOf('id="pdpSizes"') < pg.indexOf('<p class="pdp-sizehelp">') && pg.indexOf('<p class="pdp-sizehelp">') < pg.indexOf('id="pdpAdd"')); });
 }
 console.log('\n' + (fail ? '\x1b[31m' : '\x1b[32m') + pass + ' passed, ' + fail + ' failed\x1b[0m');
 process.exit(fail ? 1 : 0);

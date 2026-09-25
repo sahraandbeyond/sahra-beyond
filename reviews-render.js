@@ -190,7 +190,10 @@ function ratingLine(designHandles) {
   const label = pr.scope === 'design'
     ? `${d.average.toFixed(1)} &middot; ${n} review${n === 1 ? '' : 's'} of this design`
     : `${d.average.toFixed(1)} &middot; ${n} reviews across Sahra &amp; Beyond`;
-  return `<a class="pdp-rating" href="#reviews">${stars(d.average)}<span class="pdp-rating-n">${label} &rarr;</span></a>`;
+  /* 25 Sep (persona review): on phones the full label was cut to "14 reviews ac…" beside
+     the price. A short label that keeps the scope honest ("store reviews") swaps in there. */
+  const short = `${d.average.toFixed(1)} (${n})`;   /* the full label, and its scope, heads the reviews section */
+  return `<a class="pdp-rating" href="#reviews">${stars(d.average)}<span class="pdp-rating-n"><span class="rl-f">${label} &rarr;</span><span class="rl-s" aria-label="${d.average.toFixed(1)} out of 5, ${n} review${n === 1 ? '' : 's'}${pr.scope === 'design' ? '' : ' across the store'}">${short}</span></span></a>`;
 }
 /** Up to n short quotes for the buy box: first sentence, 25-140 characters. */
 function quotes(designHandles, n) {

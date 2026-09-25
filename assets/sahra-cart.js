@@ -284,7 +284,13 @@
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
-          '<p class="sb-note"><span class="sb-note-d">Free next-day UAE delivery — order by 2 pm, no minimum. </span>Regular tees and the polo run slim — <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
+          '<p class="sb-note"><span class="sb-note-d">Free next-day UAE delivery — order by 2 pm, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
+          /* 25 Sep 2026 (Faheem, persona review): a gift option. The message travels on the
+             Shopify order as its note, with a Gift attribute, so it shows on the order in Admin. */
+          '<div class="sb-giftopt"><label class="sb-giftl"><input type="checkbox" id="sbGiftChk"> This is a gift</label>' +
+            '<div class="sb-giftbox" id="sbGiftBox" hidden><label class="sb-giftml" for="sbGiftMsg">Gift message (optional)</label>' +
+            '<textarea id="sbGiftMsg" rows="3" maxlength="250" placeholder="Happy birthday, from all of us"></textarea>' +
+            '<p class="sb-gifth">We&rsquo;ll include your message with the order.</p></div></div>' +
           '<a class="sb-go" id="sbGo" href="#">Checkout</a>' +
           /* 23 Sep 2026: the store's gateway lists Shop Pay, Apple Pay and Google Pay (Admin API paymentSettings) */
           '<p class="sb-pay">Express checkout with Shop Pay, Apple Pay or Google Pay</p>' +
@@ -474,6 +480,40 @@
         el.hidden = false;
         el.innerHTML = 'Add a second tee \u2014 <b>' + deal + '</b>, applied automatically. <a href="/t-shirts/">Shop tees &rarr;</a>';
       } else { el.hidden = true; el.innerHTML = ''; }
+    })();
+
+    /* Gift option: saved to the cart as you type (debounced) and once more, awaited for at
+       most 1.5 s, on the click through to checkout - so a fast tap cannot lose the message. */
+    (function () {
+      var chk = document.getElementById('sbGiftChk'), box = document.getElementById('sbGiftBox'),
+          ta = document.getElementById('sbGiftMsg'), go = document.getElementById('sbGo');
+      if (!chk || !ta || !go || chk.__sbGift) return;
+      chk.__sbGift = 1;
+      try { var g0 = JSON.parse(localStorage.getItem('sb_gift') || 'null');
+        if (g0 && CART && g0.cart === CART.id) { chk.checked = !!g0.on; ta.value = g0.msg || ''; box.hidden = !g0.on; } } catch (e) {}
+      var t = null, last = null;
+      function save() {
+        if (!CART || !CART.id) return Promise.resolve();
+        var on = chk.checked, msg = (ta.value || '').trim().slice(0, 250);
+        var key = on + '|' + msg; if (key === last) return Promise.resolve(); last = key;
+        try { localStorage.setItem('sb_gift', JSON.stringify({ cart: CART.id, on: on, msg: msg })); } catch (e) {}
+        var note = on ? ('GIFT ORDER' + (msg ? ' - message: ' + msg : ' - no message')) : '';
+        var attrs = on ? [{ key: 'Gift', value: 'Yes' }] : [];
+        /* one after the other: sent together, the second write could restore the old note */
+        return sf('mutation($id:ID!,$n:String!){cartNoteUpdate(cartId:$id,note:$n){cart{id}userErrors{message}}}', { id: CART.id, n: note })
+          .then(function () { return sf('mutation($id:ID!,$a:[AttributeInput!]!){cartAttributesUpdate(cartId:$id,attributes:$a){cart{id}userErrors{message}}}', { id: CART.id, a: attrs }); })
+          .then(function () { if (on && window.track) try { track('gift_option', { with_message: !!msg }); } catch (e) {} })
+          .catch(function () { last = null; });
+      }
+      chk.addEventListener('change', function () { box.hidden = !chk.checked; if (chk.checked) try { ta.focus({ preventScroll: true }); } catch (e) {} save(); });
+      ta.addEventListener('input', function () { clearTimeout(t); t = setTimeout(save, 700); });
+      go.addEventListener('click', function (e) {
+        if (!chk.checked && last === null) return;
+        var href = go.href; if (!href || href.slice(-1) === '#') return;
+        e.preventDefault(); clearTimeout(t);
+        var done = false; function nav() { if (done) return; done = true; location.href = href; }
+        save().then(nav, nav); setTimeout(nav, 1500);
+      });
     })();
 
     /* Meta InitiateCheckout — fires on the click through to Shopify checkout.
@@ -907,6 +947,12 @@
       }, { passive: true });
     }
 
+    /* Phones, product page (25 Sep 2026): out of the way while Add to cart is on screen -
+       it sat on the right edge of the button in the first screen. */
+    var addBtn = document.getElementById('pdpAdd');
+    if (addBtn && 'IntersectionObserver' in window && window.matchMedia && matchMedia('(max-width:700px)').matches) {
+      new IntersectionObserver(function (e) { a.classList.toggle('near-add', e[0].isIntersecting); }).observe(addBtn);
+    }
     /* Step aside while the cart drawer is open - it is a modal. */
     var drawer = document.getElementById('sbDrawer');
     if (drawer && window.MutationObserver) {

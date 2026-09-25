@@ -165,3 +165,16 @@
   .sb-bundle{padding:8px 11px;margin:0 0 8px}
   .sb-pay{margin-top:6px}
 }
+@media(max-width:700px){.sb-wa.near-add{opacity:0;visibility:hidden;pointer-events:none;transform:scale(.85)}}
+
+/* gift option (25 Sep 2026) */
+.sb-giftopt{margin:0 0 12px}
+.sb-giftl{display:flex;align-items:center;gap:10px;min-height:44px;font-size:15px;font-weight:500;color:#2A2016;cursor:pointer}
+.sb-giftl input{width:20px;height:20px;accent-color:#2B2520;margin:0}
+.sb-giftbox{margin:2px 0 0}
+.sb-giftml{display:block;font-size:13px;color:#4A4136;margin:0 0 6px}
+.sb-giftbox textarea{box-sizing:border-box;width:100%;min-height:74px;padding:10px 12px;border:1px solid rgba(42,32,22,.3);border-radius:8px;
+  background:#fff;color:#2A2016;font:16px/1.4 Jost,system-ui,sans-serif;resize:vertical}
+.sb-giftbox textarea:focus{outline:2px solid #9C521B;outline-offset:1px}
+.sb-gifth{margin:6px 0 0;font-size:12.5px;color:#4A4136}
+@media(max-width:700px){.sb-giftopt{margin:0 0 8px}.sb-giftl{min-height:40px}}

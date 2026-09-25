@@ -618,12 +618,12 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=d7f50644">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
 
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
 <script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=dd57f250">
-<script src="/assets/sahra-nav.js?v=d7f41733" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=c528885a">
+<script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -736,7 +736,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
 @supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
 
-/* ===== homepage and shop: one size up (Faheem, 5 Sep: "still seems small") =====
+/* ===== homepage and shop: type one step larger (Faheem, 5 Sep: "still seems small") =====
    The two selling pages get a larger scale than the guides: copy 18-19px,
    labels 13px, buttons 14px, card names and prices up a step. */
 .stop .lede,#s-hero .lede{font-size:clamp(18px,1.5vw,21px)!important;line-height:1.6}
@@ -1091,6 +1091,24 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
   body.buy-page .loc-hero .lede{margin-bottom:0;font-size:15px!important;line-height:1.45}
   body.buy-page .loc-hero .dune-near{height:30px}
 }
+
+/* 25 Sep 2026 (Faheem: "the font could be a bit smaller"). Phones only: body copy steps
+   down from 17-19px to 15-15.5px, buttons and cards by a pixel or two. The 12px floor for
+   labels stays. Must stay last: it overrides the earlier one-size-up blocks. */
+@media(max-width:700px){
+  html body{font-size:15.5px}
+  html body p,html body li,html body .sec p,html body .rv-text,html body .item span,html body .fold-b p,
+  html body .pdp-ans-foot,html body .content p,html body .faq p,html body details p,html body .guide-sec p,
+  html body.shop-page p,html body.buy-page p{font-size:15px!important;line-height:1.55!important}
+  html body .lede,html body.buy-page .lede,html body.shop-page .lede{font-size:15.5px!important;line-height:1.55!important}
+  html body summary,html body .pdp-ans summary,html body .faq summary{font-size:15px!important;line-height:1.45!important}
+  html body .btn,html body.buy-page .btn,html body.shop-page .btn,html body .j-btn{font-size:13.5px!important}
+  html body .pcard-t,html body.buy-page .pcard-t{font-size:16px!important}
+  html body .pcard-p,html body.buy-page .pcard-p{font-size:15.5px!important}
+  html body .pdp-size,html body.buy-page .pdp-size{font-size:15px!important}
+  html body .eyebrow,html body.buy-page .eyebrow,html body .snum,html body.buy-page .snum{font-size:12px!important}
+  html body .sec h2,html body.buy-page .sec h2{font-size:25px!important;line-height:1.15!important}
+}
 </style>
 </head>
 <body class="buy-page">
@@ -1175,7 +1193,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
       </span>
     </article></div>
       <a class="btn shoplink" href="/shop/">Shop every t-shirt &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
-    <div class="content"><p>Two of our designs come from the desert, and they come from opposite ends of the same day.</p><p>The Empty Quarter tee is the evening: a tonal sun setting over the dune ridges of Liwa, on the northern edge of the Rub' al Khali. It is embroidered rather than printed — thread laid into the cloth, sand on sand.</p><p>The Al Quaa Galaxy tee is the night that follows: the Milky Way as it rises over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back with a small embroidered mark on the chest.</p><p>Both come in a slim Regular and a true drop-shoulder Oversized.</p></div>
+    <div class="content"><p>Two of our designs come from the desert, and they come from opposite ends of the same day.</p><p>The Empty Quarter tee is the evening: a tonal sun setting over the dune ridges of Liwa, on the northern edge of the Rub' al Khali. It is embroidered rather than printed — thread laid into the cloth, sand on sand.</p><p>The Al Quaa Galaxy tee is the night that follows: the Milky Way as it rises over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back with a small embroidered mark on the chest.</p><p>Both come in a straight Regular and a true drop-shoulder Oversized.</p></div>
     
   <section class="reviews rv-band" aria-labelledby="rvb-h">
     <div class="wrap">
@@ -1301,7 +1319,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       <p class="rv-src">Reviews are collected and moderated independently via <a href="https://judge.me/authenticity" target="_blank" rel="noopener">Judge.me</a> — we cannot edit or remove them.</p>
     </div>
   </section>
-    <section class="folds"><span class="folds-eyebrow">Fabric, cut and make</span><details class="fold guide-sec"><summary><h2>Embroidered or printed</h2></summary><div class="content"><p>The two desert designs are made differently, on purpose. The Empty Quarter is embroidered throughout, with no print anywhere on it. The Al Quaa Galaxy is printed direct to garment across the back — the ink goes into the cotton rather than sitting on top — with the mark on the chest embroidered.</p></div></details><details class="fold guide-sec"><summary><h2>The cloth and the fit</h2></summary><div class="content"><p>230gsm combed ring-spun cotton, cut unisex in S to XL.</p><p>Regular is a slim, straight cut — most people take one size up from their usual letter. Oversized has a true dropped shoulder, the seam sitting 2–3″ below your natural shoulder.</p></div></details></section>
+    <section class="folds"><span class="folds-eyebrow">Fabric, cut and make</span><details class="fold guide-sec"><summary><h2>Embroidered or printed</h2></summary><div class="content"><p>The two desert designs are made differently, on purpose. The Empty Quarter is embroidered throughout, with no print anywhere on it. The Al Quaa Galaxy is printed direct to garment across the back — the ink goes into the cotton rather than sitting on top — with the mark on the chest embroidered.</p></div></details><details class="fold guide-sec"><summary><h2>The cloth and the fit</h2></summary><div class="content"><p>230gsm combed ring-spun cotton, cut unisex in S to XL.</p><p>Regular is a straight cut with a set shoulder. Oversized has a true dropped shoulder, the seam sitting 2–3″ below your natural shoulder. Check your size in the chart before you order.</p></div></details></section>
     <section class="faq"><h2>Frequently asked questions</h2><details><summary>Are these made for the desert heat?</summary><p>They are 230gsm cotton — heavier than a standard t-shirt, and not a technical garment. In the heat, fit matters more than weight: cloth held slightly off the skin moves more air, which is where the Oversized cut helps. Most people wear them for the drive out and the evening, once it cools.</p></details><details><summary>Where are Liwa and Al Quaa?</summary><p>Both are in Abu Dhabi. Liwa sits on the northern edge of the Empty Quarter, the largest continuous sand desert in the world; Al Quaa is inland in the south-east, far from city light.</p></details><details><summary>How much are they, and how fast is delivery?</summary><p>AED 199 each, in Regular or Oversized. In the UAE, delivery is free and arrives the next working day when you order by 2 pm.</p></details></section>
     <section class="news"><div class="news-stars"></div><div class="news-in">
     <span class="news-eyebrow">Sahra &amp; Beyond &middot; Drop 01 out now</span>
@@ -1389,7 +1407,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=d28063f2" defer></script>
+<script src="/assets/sahra-cart.js?v=18758f49" defer></script>
 <script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
 </body>
 </html>

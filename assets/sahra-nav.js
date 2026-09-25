@@ -179,6 +179,9 @@
       a.className = 'sbl-lang ' + cls; a.href = href;
       a.setAttribute('hreflang', ar ? 'en' : 'ar'); a.setAttribute('lang', ar ? 'en' : 'ar');
       a.textContent = ar ? 'English' : 'العربية';   /* the same word the /ar/ pages use */
+      /* 25 Sep (persona review): an Arabic-first shopper never found the switch inside the
+         menu. Phones get a one-glyph button in the header bar itself. */
+      if (cls === 'sbl-m') a.innerHTML = '<span class="sbl-full">' + (ar ? 'English' : 'العربية') + '</span><span class="sbl-short" aria-hidden="true">' + (ar ? 'EN' : 'ع') + '</span>';
       a.setAttribute('aria-label', ar ? 'Read this page in English' : 'اقرأ بالعربية — Arabic');
       a.addEventListener('click', function () { try { if (window.track) track('language_switch', { to: ar ? 'en' : 'ar', from_path: p }); } catch (e) {} });
       return a;
