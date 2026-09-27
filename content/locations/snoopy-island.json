@@ -1,18 +1,126 @@
 {
   "emirate": "Fujairah",
   "coverFocus": "50% 75%",
-  "body": "Snoopy Island is the UAE's most popular shore snorkeling spot, lying just off Al Aqah beach on the Fujairah coast. Named for its resemblance to the cartoon dog lying on its back, the island is wrapped in shallow coral reef you can reach by swimming straight out from the sand — no boat required.\n\nExpect green turtles, blacktip reef sharks, parrotfish and clouds of sergeant majors in clear, calm water that's ideal for beginners. Go early on a weekday for the best visibility and fewest crowds, bring your own mask and fins, and wear reef-safe sunscreen. It's an easy day trip from Dubai or Sharjah and ranks among the best snorkeling experiences in the UAE.",
+  "body": "Snoopy Island is a small rock islet just off Al Aqah beach on Fujairah's northern coast, named — with reasonable accuracy — for a silhouette that looks like the cartoon beagle lying on his back. Locally it's also known as Jazirat al-Ghubbah or Al Aqah Island, but the nickname is the one that stuck, and it's now one of the better-known shore-snorkel sites in the UAE.\n\nWhat makes it worth the trip is that you don't need a boat: from the beach it's a swim, wade or short kayak of a few hundred metres out to the coral fringing the rock, which puts it within reach of a normal day out rather than a booked excursion. Repeat visitors and local guides report green turtles, blacktip reef sharks, parrotfish and clouds of sergeant majors around the reef, in water that's usually clear and calm enough for confident beginners.\n\nThat said, \"no boat required\" doesn't mean the crossing is trivial. At low tide, some of the route is over a sand path or very shallow water; at high tide it becomes a genuine open-water swim, and the current around the point can be stronger than the calm-looking surface suggests. It's worth judging your own swimming ability and the day's sea state honestly, or renting a kayak or paddleboard instead of swimming if you're at all unsure — especially with children.\n\nThe reef itself is small and self-contained: you can snorkel most of the way round the island in under an hour, part of the appeal for a half-day trip rather than a full one. A resort on the beach beside the island rents masks, fins, kayaks and paddleboards and sells day passes if you'd rather not bring your own gear, but neither is necessary — it's genuinely accessible without spending anything beyond fuel and time. Go early on a weekday, out of season crowds, and the water is at its clearest.",
   "season": "Oct–May",
   "lng": 56.364053,
   "emoji": "🐠",
   "name": "Snoopy Island",
-  "desc": "A rocky island off Al Aqah named for its dog-like profile, ringed by coral and home to turtles, reef sharks and clouds of tropical fish — the UAE's most beloved shore snorkel.",
+  "desc": "A small rock islet off Al Aqah beach in Fujairah, reached by swimming or paddling out — turtles, reef sharks and reef fish make it a well-known UAE shore snorkel, best Oct–May.",
   "status": "safe",
   "igPosts": [],
-  "distance": "~1.5h from Dubai",
+  "distance": "About 1h30–2h from Dubai",
   "cover": "/uploads/unsorted-no-geotag_01.webp",
   "id": "snoopy-island",
   "difficulty": "Easy",
   "category": "Coast",
-  "lat": 25.492221
+  "lat": 25.492221,
+  "area": "Off Al Aqah beach, on Fujairah's northern coast",
+  "months": [
+    2,
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Early on a calm weekday morning, before the wind rises, and near low tide if you'd rather wade than swim the crossing.",
+  "timeNeeded": "2–3 hours",
+  "fees": "Free (public beach access); a beachfront resort next to the island sells optional day passes with gear hire for a fee",
+  "facilities": {
+    "toilets": "nearby",
+    "food": "nearby",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "The public beach itself has no facilities. A resort on the beach beside the island sells day passes that include toilets, food and gear hire (masks, fins, kayaks, paddleboards) for a fee — bring your own gear if you'd rather not pay for it."
+  },
+  "gpsSource": "https://en.wikipedia.org/wiki/Snoopy_Island — 25°29′32″N 56°21′51″E, matching the site's existing pin almost exactly. Confirmed by independent fact-checking against the same figure.",
+  "sources": [
+    {
+      "label": "Wikipedia — Snoopy Island",
+      "url": "https://en.wikipedia.org/wiki/Snoopy_Island"
+    },
+    {
+      "label": "Wikipedia — Al Aqah",
+      "url": "https://en.wikipedia.org/wiki/Al_Aqah"
+    },
+    {
+      "label": "MyBayut — Snoopy Island guide",
+      "url": "https://www.bayut.com/mybayut/snoopy-island-guide/"
+    },
+    {
+      "label": "MissionsOffroad — Snoopy Island",
+      "url": "https://missionsoffroad.com/snoopy-island/"
+    },
+    {
+      "label": "UAE Ministry of Economy & Tourism — Snoopy Island",
+      "url": "https://www.moet.gov.ae/en/-/snoopy-island"
+    },
+    {
+      "label": "Sandy Beach Resort — day pass",
+      "url": "https://sandybeach.ae/day-pass-beach-access/"
+    },
+    {
+      "label": "Nemo Diving Center — Best time to dive Fujairah",
+      "url": "https://nemodivingcenter.com/blog/best-time-to-dive-fujairah/"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — UAE emergency numbers",
+      "url": "https://visitrasalkhaimah.com/blog/what-are-the-emergency-services-numbers-in-uae-police-ambulance-fire-coastguard/"
+    }
+  ],
+  "seoTitle": "Snoopy Island Fujairah: Snorkelling Guide & Tips",
+  "access": {
+    "vehicle": "on-foot",
+    "note": "You swim, wade or paddle out from Al Aqah beach — no boat is needed. At low tide part of the crossing can be shallow enough to wade; at high tide it's a genuine open-water swim of a few hundred metres, so weaker swimmers and children are safer on a kayak or paddleboard."
+  },
+  "seoDesc": "A small rock islet off Al Aqah beach in Fujairah, reached by swimming or paddling out — turtles, reef sharks and reef fish make it a well-known UAE shore snorkel, best Oct–May.",
+  "faqs": [
+    {
+      "q": "Do I need a boat to get to Snoopy Island?",
+      "a": "No — it's usually reached by swimming, wading or paddling from Al Aqah beach, though a kayak or paddleboard is safer than swimming for weaker swimmers or at high tide."
+    },
+    {
+      "q": "Is Snoopy Island free to visit?",
+      "a": "Yes, the public beach and swim out are free; a resort beside the beach sells optional day passes with gear hire and facilities."
+    },
+    {
+      "q": "What will I see snorkelling there?",
+      "a": "Green turtles, blacktip reef sharks, parrotfish and large schools of sergeant majors are commonly reported around the reef."
+    },
+    {
+      "q": "When is the best time to visit?",
+      "a": "October to May for calmer seas and clearer water; it's swimmable year-round but summer brings warmer, murkier conditions."
+    },
+    {
+      "q": "Is it safe for beginners and children?",
+      "a": "The reef itself is gentle, but the swim out crosses real currents, especially at high tide — non-confident swimmers and children are safer on a kayak, paddleboard or guided trip."
+    },
+    {
+      "q": "How far is it from Dubai?",
+      "a": "About 1h30 to 2 hours by road to Al Aqah on Fujairah's coast."
+    }
+  ],
+  "guide": {
+    "gettingThere": "Snoopy Island sits off Al Aqah beach, on Fujairah's coast road about 1h30 to 2 hours from Dubai depending on traffic and route (via the E611/E844 through Masafi, or the coastal road up from Fujairah city); it's a similarly easy run from Sharjah. Al Aqah's hotels and beach access points are well signed once you're on the coast road. There's no dedicated public car park for the free beach, so most visitors either use a hotel's beach or the day-pass resort beside the island. Without a car, a taxi from Fujairah or Dubai, or a day tour that bundles transport with snorkelling gear, are the realistic options — there's no direct bus route to the beach.",
+    "whenToGo": "October to May is the recommended season, in line with the general East Coast pattern: cooler months bring calmer seas and clearer water, and dive guides for the wider Gulf of Oman coast note bigger seasonal swings in temperature and visibility here than on Dubai's Gulf side. Several operators say diving and snorkelling around Fujairah works year-round, so summer isn't off-limits, but expect warmer, murkier water and harsher midday heat on the beach. Early morning on a weekday, ideally near low tide, is consistently the recommendation for the calmest conditions and fewest people.",
+    "onSite": "Once in the water, the reef wraps most of the island, so a slow circuit taking in the shallower ledges is enough to see the highlights: green turtles, blacktip reef sharks, parrotfish and dense schools of sergeant majors are the fish repeat visitors mention most. The whole outing — walk or swim out, snorkel round, swim back — comfortably fits into two to three hours, making it one of the more time-efficient marine trips on this coast. If you'd rather not swim, kayaks and paddleboards (your own, or rented from the beachfront resort) get you there and let you snorkel from the boat. Bring your own mask, fins and reef-safe sunscreen if you can, since on-site rental is limited to what the resort's day-pass desk stocks.",
+    "safety": "The main risk here is underestimating the crossing: the water can look flat from the beach, but the current around the point is real, and the distance is a genuine open-water swim at high tide, not a paddle. Weaker swimmers, and anyone with children, should use a kayak or paddleboard, or go with a guide, rather than swim it. As with any reef, standing on or touching coral damages it and doesn't help the marine life you're there to see. UAE-wide emergency numbers apply here as everywhere: police 999, ambulance 998, fire 997, coastguard 996.",
+    "heritage": "The reef fringing the island is part of Fujairah's wider Gulf of Oman coral systems, home to turtles, reef sharks and reef fish that are unusually easy to see from shore compared with most of the UAE coast. The UAE's Ministry of Economy and Tourism lists Snoopy Island among Fujairah's tourist destinations, though we could not confirm a formal marine-protection designation specifically for the island.",
+    "etiquette": "Don't touch, stand on or take pieces of coral, and don't feed or chase the turtles and fish — treat it as you would any reef you'd like to still be healthy on your next visit."
+  },
+  "overnight": false,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "No official source confirms a specific marine-protected-area designation for Snoopy Island itself, despite it appearing on the Ministry of Economy & Tourism's listings and being widely described as a reef worth protecting — kept the heritage/safety text general rather than citing a designation we couldn't verify.",
+    "Resort day-pass pricing is unreliable (the resort's own booking page showed placeholder AED 0 values at the time of checking), so no specific figure is given — described only as 'available, fee unspecified'.",
+    "'UAE's most popular shore snorkelling spot', repeated across many guides, has no independent ranking or attendance source behind it, so it's framed as reputation rather than fact.",
+    "No photo with a checkable, correct licence was confirmed in the time available — Wikimedia Commons' API was rate-limited throughout this session, blocking a license check on the 'Snoopy Island (Fujairah)' category images. Recommend a manual check before publishing; photo left null in the meantime."
+  ]
 }

@@ -1,15 +1,15 @@
 {
   "emirate": "Dubai",
   "coverFocus": "50% 37%",
-  "body": "Half Desert is a gentle stretch of rolling dunes close to Dubai, making it one of the best places in the UAE to learn desert driving. The soft, forgiving sand and modest dune heights are far less intimidating than the giants at Liwa, so it's a popular spot for first-timers to practise airing down, reading the terrain and building confidence.\n\nHead out with a tyre deflator, a basic recovery kit and ideally a more experienced convoy. Late afternoon brings cooler sand and golden light across the dunes. It's a quick, easy escape from the city for an evening of off-roading.",
+  "body": "Half Desert is a stretch of old asphalt near Al Awir, on Dubai's eastern edge close to Academic City, where drifting dunes have crept in from both sides and partly buried the road itself. The paved surface and the sand run together in the same frame, which is the whole reason people come — it's one of the more photographed 'desert reclaiming the road' spots in the UAE, and a genuine favourite with photographers for exactly that half-and-half look.\n\nCompared with the big set-piece dunes further out — Liwa's Empty Quarter chief among them — Half Desert is small, low and forgiving. The dunes here are modest and the sand is soft rather than technical, which is why it's often recommended as a place to learn desert driving: airing down your tyres, reading the terrain and building confidence before attempting anything bigger. A large share of the roads can still be driven in a normal car; it's only the loose sand off the tarmac that calls for a 4x4 and some basic off-road sense.\n\nThere's no entrance, no operator and no fee — it's simply an open, disused stretch of road that the desert is slowly taking back. That also means there's nothing here in the way of facilities: no shop, no shade, no water. Weekends draw more visitors, largely other photographers and off-roaders doing the same thing, so a weekday trip is quieter.\n\nIt's a quick outing rather than a destination in its own right: most people spend an hour or two, either driving the loose sand sections for practice or walking a short way into the dunes for photos, then move on. As a first taste of proper desert driving within 45 minutes of the city it's hard to beat, and as a photograph, the sight of tarmac disappearing under sand says something honest about how much of Dubai's outer edge is still desert underneath.",
   "season": "Oct–Apr",
   "lng": 55.4475005,
   "emoji": "🏜",
   "name": "Half Desert",
-  "desc": "Gentle, rolling dunes close to the city — the perfect place to air down and learn desert driving before tackling the bigger stuff.",
+  "desc": "Half Desert is a stretch of old road near Al Awir where drifting dunes have half-buried the tarmac — a favourite easy spot to learn desert driving or take a photo of sand reclaiming a road.",
   "status": "safe",
   "igPosts": [],
-  "distance": "~45 min from Dubai",
+  "distance": "About 30–45 min from Dubai",
   "cover": "/uploads/vlcsnap-2026-07-07-19h40m38s767.png",
   "id": "half-desert",
   "difficulty": "Easy",
@@ -19,5 +19,96 @@
     "slug": "empty-quarter-regular",
     "anchor": "the Empty Quarter tee",
     "sentence": "These are the dunes for learning on; the embroidered ridge on {{link}} belongs to Liwa, a much larger desert further south."
-  }
+  },
+  "area": "Al Awir, near Dubai Academic City, just off Emirates Road (E611)",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Early morning or the last couple of hours before sunset, when the sand is cooler and the light is best for photos.",
+  "timeNeeded": "1–2 hours",
+  "fees": "Free",
+  "facilities": {
+    "toilets": "no",
+    "food": "no",
+    "shade": "no",
+    "signal": "unknown",
+    "note": "Nothing on site — no shop, water or shade; the nearest services are back toward Al Awir or the city."
+  },
+  "gpsSource": "OpenStreetMap/Nominatim reverse-geocodes this point to Dubai's Academic City area, and it's corroborated within about 500m by an independent listing at https://kidzapp.com/kids-activities/dubai/explore-the-city/half-desert-road-109888 (25.1168, 55.4506). 'Half Desert Road' is a network of tracks rather than one point, so treat this as a representative pin, not a single gate.",
+  "sources": [
+    {
+      "label": "Capture Desert — Why Half Desert near Al Aweer is Dubai's most underrated desert spot",
+      "url": "https://capturedesert.com/desert-tour-guide/why-half-desert-near-al-aweer-is-dubais-most-underrated-desert-spot/"
+    },
+    {
+      "label": "MissionsOffroad — Wandering Dunes of Half Desert Road",
+      "url": "https://missionsoffroad.com/half-desert-road/"
+    },
+    {
+      "label": "Kidzapp — Half Desert Road",
+      "url": "https://kidzapp.com/kids-activities/dubai/explore-the-city/half-desert-road-109888"
+    },
+    {
+      "label": "Wikipedia — Al Awir",
+      "url": "https://en.wikipedia.org/wiki/Al_Awir"
+    }
+  ],
+  "seoTitle": "Half Desert Road Dubai: Where It Is & What To Know",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A normal car can drive most of Half Desert Road itself; only the loose sand off the tarmac, where dunes have crept over the old road, needs a 4x4 and some experience."
+  },
+  "seoDesc": "Half Desert is a stretch of old road near Al Awir where drifting dunes have half-buried the tarmac — a favourite easy spot to learn desert driving or take a photo of sand reclaiming a road.",
+  "faqs": [
+    {
+      "q": "Is Half Desert Road free to visit?",
+      "a": "Yes — it's an open stretch of road and desert with no entrance, operator or fee."
+    },
+    {
+      "q": "Do I need a 4x4 for Half Desert?",
+      "a": "Not for most of the road itself, which a normal car can manage; only the loose sand off the tarmac needs a 4x4 and some experience."
+    },
+    {
+      "q": "How far is Half Desert from Dubai?",
+      "a": "About 30 to 45 minutes, off Emirates Road near Dubai Academic City in the Al Awir area."
+    },
+    {
+      "q": "Is Half Desert good for beginners learning to drive in sand?",
+      "a": "Yes — the dunes here are smaller and softer than at Liwa or Big Red, which is why it's often recommended as a first place to practise."
+    },
+    {
+      "q": "Are there toilets or shops at Half Desert?",
+      "a": "No — there's nothing on site, so bring water, fuel up beforehand, and plan for a self-sufficient visit."
+    },
+    {
+      "q": "Is Half Desert busy?",
+      "a": "It gets noticeably busier with other photographers and off-roaders at weekends; weekdays are quieter."
+    }
+  ],
+  "guide": {
+    "gettingThere": "Half Desert is off Emirates Road (E611), close to Dubai Academic City in the Al Awir area — about 30 to 45 minutes from central Dubai depending on traffic and your starting point. There's no single named entrance; the roads run for some distance, so plug in a pin near Academic City and expect to explore a little once you're close, rather than arriving at a signed gate. A normal car will cover a good part of the route; only the sections where dunes have spilled across the tarmac need a 4x4. There's no public transport option and no realistic taxi drop-off given the lack of a fixed address, so this is really a self-drive or private-tour spot. Fill up before you leave the city — there's nothing out here.",
+    "whenToGo": "Sources don't give a specific best season for Half Desert, but the general UAE outdoor pattern applies: outside the summer months (roughly October to April) is far more comfortable for any time spent out of the car. Within that, early morning or the couple of hours before sunset are recommended for cooler sand and better light for photos — midday, especially in summer, is best avoided altogether. Weekends are noticeably busier with other photographers and off-roaders, so a weekday visit is the quieter option if your schedule allows it.",
+    "onSite": "There isn't a defined 'site' here so much as a length of road worth exploring on foot or by vehicle. The main thing to see is the road itself half-swallowed by sand, which is worth a short walk for photos even if you don't plan to drive off the tarmac. If you do want to practise desert driving, this is one of the more forgiving places to do it: deflate your tyres, pick a stretch of soft sand off the road, and take it slowly, ideally with someone more experienced along or a second vehicle nearby. Beyond that, it's a spot for a short, unstructured visit — a sunset stop, a practice run, or a quick photo detour on the way somewhere else — rather than a half-day destination.",
+    "safety": "The main risks are heat and getting stuck. There's no shade and no facilities anywhere along Half Desert Road, so carry water and sun protection whatever time of year you go. If you're driving into the sand rather than sticking to tarmac, deflate your tyres first, keep to a sensible speed, and don't go alone — a second vehicle makes a real difference if you bog down, since this isn't a route with regular passing traffic. Mobile signal isn't documented for this specific spot, so don't assume you'll have a strong connection if something goes wrong. No official body publishes rules specific to Half Desert; general UAE desert-driving guidance (tyre deflation, travelling in convoy, carrying recovery gear) applies.",
+    "etiquette": "Leave no rubbish, including organic waste, keep any fire small and short-lived, and park or camp on gravel and rock rather than vegetation to avoid damaging what little plant life survives out here."
+  },
+  "overnight": false,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "No source gives a confirmed local Arabic name for this stretch of road; nameAr has been left out rather than guessed.",
+    "No source states a specific 'best season' for this exact spot — Oct–Apr reflects general UAE outdoor advice rather than a Half-Desert-specific source.",
+    "'Half Desert Road' spans a network of tracks rather than one point, so the GPS pin (though corroborated within about 500m by an independent listing) should be treated as a representative spot to aim for, not a single gate or car park.",
+    "The site already has a real cover photo for this page (from the brand's own uploads); no external stock or Commons photo has been substituted for it."
+  ]
 }

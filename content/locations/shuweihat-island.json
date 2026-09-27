@@ -1,20 +1,125 @@
 {
   "emirate": "Abu Dhabi",
-  "body": "Shuweihat Island, off the UAE's far western coast in Abu Dhabi's Al Dhafra region, is famous for surreal mushroom-shaped rock formations sculpted over millennia by wind and sea. Remote and rarely visited, it's a dream for photographers and adventurers chasing raw, sculptural landscapes.\n\nReaching it is a proper expedition — long distances, soft sand and full self-sufficiency required — but the reward is a coastline that feels untouched. Plan carefully, travel in convoy, and time your visit for the cooler months when the desert and coast are at their most forgiving.",
-  "season": "Oct–Mar",
+  "body": "Shuweihat Island sits at the far western edge of Abu Dhabi's Al Dhafra region, on the coast between the industrial towns of Ruwais and Al Silaa — reached today by a causeway rather than a boat, though it began as a true island. Independent visitor write-ups keep landing on the same description: low cliffs and boulders in red, orange and yellow bands, worn by wind, rain and sea into rounded, almost sculptural shapes that one Emirati photographer compared to the surface of Mars.\n\nThe appeal isn't scale — this is not a national park — it's the strangeness of the rock itself against turquoise water and near-total quiet. Coverage in the Emirati newspaper Al Ittihad ties the island to the region's pearling past: Bani Yas families are said to have used these western islands as stepping stones between the mainland and open water, with the captains of old pearling dhows sheltering near the neighbouring Zabout rise in bad weather. Seabirds, including the locally distinctive Dami hawk, and marine life such as hawksbill turtles and dugongs are recorded in the wider area, though none of this is set up for wildlife-watching — there are no hides, boardwalks or rangers.\n\nNone of that heritage is signposted on site, and there is nothing built here at all: no visitor centre, no café, no toilet block. What's on offer is a stretch of genuinely striking, photogenic coast, and a proper logistics exercise to reach it — a long, remote drive followed by patchy, sometimes contradictory reports about how much of it you can actually walk on once you arrive.",
+  "season": "Oct–Apr",
   "lng": 52.433308,
   "emoji": "🪨",
   "name": "Shuweihat Island",
-  "desc": "A remote western island famous for surreal mushroom-shaped rock formations sculpted by wind and sea — raw, sculptural and gloriously empty.",
+  "desc": "Abu Dhabi's remote western coast holds Mars-like, mushroom-shaped rocks at Shuweihat Island — reachable by causeway, but public access is genuinely disputed near a military airfield.",
   "status": "warn",
   "igPosts": [
     "https://www.instagram.com/p/DZxo15Yo5zo/"
   ],
-  "distance": "~3.5h from Abu Dhabi",
+  "distance": "About 2.5h from Abu Dhabi, 3.5–4h from Dubai",
   "cover": "/uploads/unsorted-no-geotag_02.webp",
   "id": "shuweihat-island",
-  "difficulty": "Hard",
+  "difficulty": "Moderate",
   "category": "Coast",
   "lat": 24.110069,
-  "coverFocus": "50% 45%"
+  "coverFocus": "50% 45%",
+  "area": "Al Dhafra region, on the coast between Ruwais and Al Silaa",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Go early morning or in the last couple of hours before sunset, when the light picks out the rock's red and orange banding and the heat has eased; try a weekday if you can, since day-trippers from Abu Dhabi reportedly favour weekends.",
+  "timeNeeded": "1–2 hours to walk the rocks and coastline, on top of a long day for the round trip from Abu Dhabi",
+  "facilities": {
+    "toilets": "no",
+    "food": "no",
+    "shade": "unknown",
+    "signal": "patchy",
+    "note": "Nothing is built on the island itself. The nearest toilets, fuel and food are back in Ruwais, roughly 20–30 minutes along the E11 — stock up before the final turn."
+  },
+  "gpsSource": "https://desertleapsafari.com/shuweihat-island/ — coordinates given for the causeway entrance to the island. A second independent visitor guide (missionsoffroad.com) places its entrance point closer to 24.092, 52.456, a few kilometres south, so treat this pin as approximate and cross-check your own map before the final stretch.",
+  "sources": [
+    {
+      "label": "Desert Leap Safari — Shuweihat Island",
+      "url": "https://desertleapsafari.com/shuweihat-island/"
+    },
+    {
+      "label": "Experience Abu Dhabi (travel guide) — Shuweihat Island",
+      "url": "https://experienceabudhabi.com/shuweihat-island/"
+    },
+    {
+      "label": "Digiflow — Shuweihat Island Abu Dhabi",
+      "url": "https://digiflow.ae/trends/shuweihat-island-abu-dhabi/"
+    },
+    {
+      "label": "MissionsOffroad — Shuweihat Island",
+      "url": "https://missionsoffroad.com/shuweihat-island/"
+    },
+    {
+      "label": "Al Ittihad — جزيرة الشويهات: شاهدة على عصر اللؤلؤ",
+      "url": "https://www.aletihad.ae/article/29558/2019/%D8%AC%D8%B2%D9%8A%D8%B1%D8%A9-%D8%A7%D9%84%D8%B4%D9%88%D9%8A%D9%87%D8%A7%D8%AA-%D8%B4%D8%A7%D9%87%D8%AF%D8%A9-%D8%B9%D9%84%D9%89-%D8%B9%D8%B5%D8%B1-%D8%A7%D9%84%D9%84%D8%A4%D9%84%D8%A4"
+    },
+    {
+      "label": "CNN Arabic — Shuweihat Island rock formations",
+      "url": "https://arabic.cnn.com/travel/article/2020/07/07/shuweihat-island-abu-dhabi-uae"
+    },
+    {
+      "label": "Wikimedia Commons — File:Rock Formation at Shuweihat Island.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Rock_Formation_at_Shuweihat_Island.jpg"
+    }
+  ],
+  "seoTitle": "Shuweihat Island, Abu Dhabi: Access, Rocks & Drive Time",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A paved causeway connects the mainland to the island, so no boat is needed, and several visitor guides say a standard sedan can manage the main route; an SUV helps on the unpaved tracks nearer the coast. Public access is genuinely disputed — recent write-ups range from 'freely accessible on public roads' to 'the best-known viewpoint has been fenced off near a military airfield.' Treat any access claim, including this one, as liable to change: keep to public roads, and turn back at fencing, a checkpoint or signage rather than push on."
+  },
+  "seoDesc": "Abu Dhabi's remote western coast holds Mars-like, mushroom-shaped rocks at Shuweihat Island — reachable by causeway, but public access is genuinely disputed near a military airfield.",
+  "faqs": [
+    {
+      "q": "Is Shuweihat Island open to the public?",
+      "a": "Reports conflict. Some current visitor guides describe free access by road; others say the best-known viewpoint has been fenced off near a military airfield. Check recent visitor reports before you travel, and turn back at any fencing or signage."
+    },
+    {
+      "q": "How do I get to Shuweihat Island?",
+      "a": "Drive west from Abu Dhabi on the E11 past Ruwais. A paved causeway connects the mainland to the island, reachable in an ordinary car in around 2.5 hours from Abu Dhabi city."
+    },
+    {
+      "q": "Is there an entry fee?",
+      "a": "No fee is mentioned in any source we found, and no gate or ticket booth is reported."
+    },
+    {
+      "q": "Are there toilets or shops on the island?",
+      "a": "No. The nearest facilities are in Ruwais, about 20–30 minutes back along the E11."
+    },
+    {
+      "q": "Is it safe to drive there?",
+      "a": "The paved road and causeway are manageable in a standard car, but stay off the salt flats beside the route — they look solid but can trap a vehicle — and expect patchy phone signal."
+    },
+    {
+      "q": "Can I camp on Shuweihat Island?",
+      "a": "Some visitors describe overnight stays on the beach, but there are no facilities and no confirmed official camping status, so come fully self-sufficient and take all rubbish home."
+    }
+  ],
+  "guide": {
+    "gettingThere": "From Abu Dhabi city, head west on the E11 past Mirfa and Ruwais — reckon on about 2.5 hours for roughly 290 km of fast, four-lane dual carriageway. Several current guides note this figure is often confused with the longer time from Dubai (3.5–4 hours), so double-check your own route before you leave. Watch for the turn-off signed toward the coast beyond Ruwais; phone signal has been reported as patchy along this stretch, so download your map in advance. Fill up and shop in Ruwais — it's the last town with fuel, a supermarket and reliable toilets, roughly 20–30 minutes before the island. The final approach and causeway are paved and manageable in an ordinary car, though an SUV is more comfortable on the unpaved tracks nearer the coast. There's no public transport and no organised tour that we could verify, so this is a self-drive or private-driver trip only.",
+    "whenToGo": "Aim for October to April: independent guides put daytime temperatures in this window at a comfortable 18–28°C, and every source we found agrees that May to September should be avoided, with heat past 45°C and no shade anywhere on the island. Within that season, sources differ on the sweet spot — one guide favours the cooler months around December to February, another suggests waiting until March, when the sea has warmed enough for a comfortable swim. Early morning or the couple of hours before sunset give the best light on the coloured rock and the least heat; weekends reportedly draw more day-trippers from Abu Dhabi than weekdays.",
+    "onSite": "There's a single reason to come: the rock. Low, rounded formations in banded red, orange and yellow run along the shoreline, carved by wind, rain and sea into shapes visitor write-ups compare to alien or Mars-like terrain, with sea caves cut into some of the larger outcrops by wave action. Plan on an hour or two picking a way along the coast and photographing the formations and the unusually clear water. Some visitors treat it as a picnic or sunset stop and turn back the same day; others describe camping overnight on the beach, though nothing here is set up for it — bring your own shade and water, and take every scrap of rubbish home, since littering has been a real problem at this and similar spots. There's no swimming infrastructure, so treat the sea itself with the same caution as any unpatrolled beach.",
+    "safety": "Access here is genuinely unsettled: some recent write-ups describe reaching the coast freely on public roads, while others report the most photogenic stretch fenced off, with the island bordering a military airfield and private land — treat any access claim, including this one, as liable to change, and turn back at any fencing, checkpoint or signage rather than push on. Several independent guides flag the same specific hazard: the salt flats (sabkha) beside the approach road look solid but are soft underneath and can swallow a vehicle to the axle, so stay off them entirely, especially after rain. Mobile signal is patchy in places, there's no lifeguard or ranger presence, and the rocks near the water are sharp and sometimes slick. The nearest help is the Ruwais police station, or the UAE's general emergency numbers (999 police, 998 ambulance, 997 civil defence).",
+    "heritage": "The island's rock is linked in Al Ittihad newspaper coverage to Abu Dhabi's pearling era: Bani Yas families are said to have used these western islands as a route between the mainland and open water, with dhow captains sheltering near the neighbouring Zabout rise in storms. The distinctive red-orange-yellow banding — likened by one Emirati photographer to Martian terrain — comes from wind, rain and sea erosion working on different rock layers over a long period; no formal public geological survey of the site was found.",
+    "etiquette": "The coast borders private industrial land and reportedly a military airfield; keep to public roads and posted signage, don't photograph any military or industrial installation you pass, and turn back rather than cross a fence line."
+  },
+  "nameAr": "جزيرة الشويهات",
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Public access is genuinely disputed: some 2025–2026 visitor guides describe free road access, one describes the main viewpoint as fenced off near a military airfield, and an older (2020) report described the beach as denied by the military entirely. No official Abu Dhabi DCT or municipality statement on current access was found — verify locally before treating this as settled.",
+    "GPS: two independent visitor guides give different entrance points roughly 3 km apart (24.1114, 52.4395 vs 24.092, 52.456). We kept the point closest to the site's existing pin and flagged the discrepancy rather than guess.",
+    "No official government or tourism-board source exists for this location, only travel blogs and one mainstream news outlet (Al Ittihad/CNN Arabic in Arabic) — treat facts here as best-available rather than confirmed.",
+    "Difficulty is a judgement call: the paved causeway suits an ordinary car, but the remoteness, patchy signal, lack of facilities and disputed access pushed us from the site's previous 'Hard' rating to 'Moderate' rather than 'Easy'.",
+    "One visitor guide (MissionsOffroad) mentions a petrol station and cafeteria near an entrance roundabout, while three other guides say there are no facilities at all on the island. We went with the majority view (no facilities) but flag the conflict.",
+    "No source gives an official current opening status or hours; treat this as unrestricted open land rather than a managed site with posted hours."
+  ]
 }

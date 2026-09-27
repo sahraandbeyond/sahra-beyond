@@ -1,23 +1,134 @@
 {
-  "emirate": "Sharjah",
+  "emirate": "Ras Al Khaimah",
   "coverFocus": "50% 82%",
-  "body": "Jabal Yanas is a rugged peak rising above the UAE's east coast near Khorfakkan, prized for its surreal, fiery sunsets and panoramic Hajar mountain views. The drive and short scramble to the high points reward you with one of the most dramatic vantage points in the country.\n\nIt's a popular spot for sunset camping — pitch up on a flat shoulder, watch the light turn the ridges copper and violet, then enjoy clear mountain skies after dark. Bring proper footwear, plenty of water and a head for heights; the views over the coast and surrounding peaks are unforgettable.",
+  "body": "Jebel Yanas is a ridge in Ras Al Khaimah's Hajar Mountains, reached by driving up the same road that leads into Wadi Naqab below — the wadi actually cuts into this mountain, so the two places share one access route rather than sitting in separate ranges. A short way up, a guarded checkpoint sits where the road starts to climb; visitor accounts describe it as a formality rather than an obstacle, with no entrance fee or documents asked for and everyone waved through.\n\nFrom there the track turns properly rough: unpaved, steep in sections, loose underfoot, and lined in places with sizeable drop-offs, so a 4x4 is strongly preferred even though a careful driver in a sedan can sometimes get through. The reward for the climb is a long, elongated summit ridge with viewpoints looking down into Wadi Naqab on one side and out toward a stark, pale landscape running to the coast on the other, with Oman's own mountains visible beyond. Once you're actually on the ridge, the walking itself is comparatively gentle — one hiking guide describes it as not very challenging, with the harder part being the drive rather than the trail.\n\nNear the summit are the remains of an old, abandoned stone-built settlement, with some structures still standing today — a genuine piece of mountain heritage rather than a viewpoint alone. There are no shops, cafés or other facilities up here, so treat it as self-sufficient territory. The ridge is a well-known spot for sunset camping on flat ground, with clear, dark skies afterwards, but bring proper footwear, more water than you'd expect to need, and be ready for exposed, sun-hit sections if you're walking around midday; guides advise against hiking the ridge in the heat of the day even in winter.\n\nThese are genuinely wet mountains when it rains: in one recent UAE-wide storm, Jebel Yanas recorded the highest rainfall total of any station in the country, over 244mm in a single event — the same kind of weather that turns Wadi Naqab below into a flash-flood risk.",
   "season": "Oct–Apr",
-  "lng": 56.089363,
+  "lng": 56.1129,
   "emoji": "🌄",
-  "name": "Jabal Yanas",
-  "desc": "A rugged peak above the east coast known for surreal, fiery sunsets and panoramic mountain views — a dramatic spot to camp high above the valleys.",
+  "name": "Jebel Yanas",
+  "desc": "A rugged Ras Al Khaimah summit reached via the Wadi Naqab road — sunset ridge views, an old mountain village and a checkpoint you pass free of charge.",
   "status": "safe",
   "igPosts": [],
-  "distance": "~2h from Dubai",
+  "distance": "About 2h–2h15 from Dubai",
   "cover": "/uploads/unsorted-no-geotag_03.webp",
   "id": "jabal-yanas",
   "difficulty": "Moderate",
   "category": "Mountains",
-  "lat": 25.726756,
+  "lat": 25.7326,
   "productLink": {
     "slug": "hajar-mountains-regular",
     "anchor": "the Hajar Mountains tee",
-    "sentence": "Same mountains, different summit: the ridge on {{link}} is drawn from Wadi Naqab, further north along the Hajar."
-  }
+    "sentence": "Wadi Naqab, the valley that climbs towards this summit, is the ridge traced on {{link}}."
+  },
+  "area": "Hajar Mountains, reached via the Wadi Naqab road and its checkpoint",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Late afternoon into sunset, once the midday heat and sun exposure on the ridge have passed.",
+  "timeNeeded": "2–4 hours for the drive and ridge; longer if hiking further or camping overnight",
+  "fees": "Free (no entrance fee or documents asked for at the checkpoint)",
+  "hours": "Open access",
+  "facilities": {
+    "toilets": "no",
+    "food": "no",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "No shops, cafés or other amenities at the summit — bring everything you need."
+  },
+  "gpsSource": "https://missionsoffroad.com/jebel-yanas-winter-in-hajar-mountains/ — the guide's own trailhead coordinates (25°43'57.2\"N 56°06'46.3\"E), converted to decimal.",
+  "sources": [
+    {
+      "label": "twopassportspacked — Jebel Yanas: Let's Get High in the UAE",
+      "url": "https://twopassportspacked.com/jebel-yanas/"
+    },
+    {
+      "label": "MissionsOffroad — This Is Why You Should Go to Jebel Yanas Right Now",
+      "url": "https://missionsoffroad.com/jebel-yanas-winter-in-hajar-mountains/"
+    },
+    {
+      "label": "Gigaplaces — Jebel Yanas (925m)",
+      "url": "https://www.gigaplaces.com/en/place-jebel-yanas-925m/"
+    },
+    {
+      "label": "Gigaplaces — Departure to Jebel Yanas: View of Wadi Naqab",
+      "url": "https://www.gigaplaces.com/en/article-departure-to-jebel-yanas/"
+    },
+    {
+      "label": "Wikipedia — Wadi Naqab (cuts into Yanas Mountain)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Naqab"
+    },
+    {
+      "label": "Ibn Battuta Travel — Jabal Yanas",
+      "url": "https://ibnbattutatravel.com/مكان/جبل-يناس/"
+    },
+    {
+      "label": "Emarat Alyoum — highest rainfall of a March 2026 storm recorded at Jabal Yanas",
+      "url": "https://www.emaratalyoum.com/local-section/other/2026-03-28-1.2029532"
+    },
+    {
+      "label": "mindtrip — Jebel Yanas Checkpoint Board",
+      "url": "https://mindtrip.ai/attraction/ras-al-khaimah-emirate/jebel-yanas-checkpoint-board/at-8eIm8R51"
+    }
+  ],
+  "seoTitle": "Jebel Yanas, Ras Al Khaimah: Hike & Camping Guide",
+  "access": {
+    "vehicle": "4wd",
+    "note": "A 4x4 is strongly preferred for the steep, loose summit road past the Wadi Naqab checkpoint; a careful driver may get a sedan up, but it isn't the safe default."
+  },
+  "seoDesc": "A rugged Ras Al Khaimah summit reached via the Wadi Naqab road — sunset ridge views, an old mountain village and a checkpoint you pass free of charge.",
+  "faqs": [
+    {
+      "q": "Is Jebel Yanas in Sharjah or Ras Al Khaimah?",
+      "a": "Ras Al Khaimah. It sits on the same mountain that Wadi Naqab cuts into, and is reached via the Wadi Naqab road."
+    },
+    {
+      "q": "Do I need to pay to enter Jebel Yanas?",
+      "a": "No — there's a checkpoint on the way up, but visitors are waved through without a fee or paperwork."
+    },
+    {
+      "q": "Do I need a 4x4?",
+      "a": "Strongly recommended. The unpaved summit road is steep and loose in places with real drop-offs; a careful driver may get a sedan up, but it isn't the safe default."
+    },
+    {
+      "q": "How difficult is the hike?",
+      "a": "The drive is the hard part. Once you're on the summit ridge, walking is comparatively easy, though sections are exposed to full sun."
+    },
+    {
+      "q": "Can I camp at Jebel Yanas?",
+      "a": "Flat ground on the ridge is a well-known sunset camping spot, though there are no facilities — bring everything you need and pack it all out."
+    },
+    {
+      "q": "What's at the top?",
+      "a": "Sweeping views over Wadi Naqab and toward the coast, plus the ruins of an old stone-built settlement near the summit."
+    }
+  ],
+  "guide": {
+    "gettingThere": "Access is via the Wadi Naqab road out of Ras Al Khaimah city — the same route used for the Wadi Naqab hike, roughly two hours' drive from Dubai and around 40 minutes from RAK city, before the road climbs. A guarded checkpoint sits where the ascent begins; visitors are waved through without a fee or paperwork. From there it's an unpaved mountain track, steep and loose in sections with real drop-offs, so a 4x4 or other high-clearance vehicle is strongly preferred over a regular car. There's no fuel or shop on the mountain itself, so fill up and stock up in Ras Al Khaimah city beforehand. There's no public transport up here — this is a self-drive or organised 4x4 tour only.",
+    "whenToGo": "Winter is the season here, when temperatures are manageable and, by spring, the surrounding slopes turn green with flowering plants and grass after the rains. Even in the cooler months, avoid hiking or driving the exposed ridge around midday — the trail sits directly in the sun and heat exhaustion is a real risk. Sunset is the classic time to be on the ridge, when the light turns the rock warm colours before the mountain sky goes properly dark for stargazing or an overnight camp. Check the forecast before you go: this is some of the wettest ground in the UAE when storms roll through.",
+    "onSite": "The main draw is the drive itself and the long summit ridge it leads to, with viewpoints back down into Wadi Naqab and out over a pale, eroded landscape toward the coast and, on a clear day, Oman's mountains beyond. Several short trails branch off along the ridge, and walking here is comparatively easy once you've made the climb — most of the effort is in the road, not the footpath. At the top, the ruins of an old stone-built settlement are worth a look on foot, a real piece of mountain history rather than a modern viewpoint. Flat ground along the ridge makes for popular sunset camping. There's nothing to buy up here, so bring everything with you.",
+    "safety": "The road up is the main hazard: unpaved, steep, with loose surfaces and stretches with genuine drop-offs, and at least one recent account near the summit noted a vehicle had gone over the edge close to where a safety gate was later closed. Take the climb slowly, in a suitable vehicle, and don't push on in poor visibility or after rain, when the surface can wash out. Once on the ridge, exposure and heat are the concerns — avoid midday hiking even in winter, carry more water than you think you need, and wear proper footwear and sun protection. This area also sees some of the heaviest rainfall in the UAE during winter storms, which feeds flash flooding in Wadi Naqab directly below, so check the forecast before committing to the drive.",
+    "heritage": "Near the summit stand the remains of an old stone-built settlement, with some structures still visible on the mountaintop today. It's a genuine piece of mountain history rather than a modern lookout, and worth the walk on foot once you've made the drive up.",
+    "etiquette": "The old stone structures at the summit are a heritage site, not a ruin to climb on or take from — look, photograph, and leave everything as you found it."
+  },
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Emirate corrected from Sharjah to Ras Al Khaimah — independently confirmed by four separate sources (a travel blog, a hiking-trail listing, a route guide and an attraction listing), all placing it on the Wadi Naqab road in RAK.",
+    "Elevation is genuinely unclear: one hiking site gives 925m, Arabic-language press describes it loosely as the UAE's third-highest peak (which would need well over 1,200m), and an unsourced social-media post claims 1,450m. None of these reconcile, so no elevation figure is given in the copy.",
+    "Two independent coordinate sets differ by several kilometres: a trailhead/ridge cluster around 25.73, 56.11–56.14 (used here), and a separate 'Yanas Mountain' marker at roughly 25.69, 56.08 from a travel-listing site. Worth confirming the exact navigation point on the ground.",
+    "No source gives a direct Dubai drive time for Jebel Yanas itself; the distance stated is derived from Wadi Naqab's own ~2-hour figure plus the extra climb, and should be treated as an estimate.",
+    "The 244mm rainfall figure is attributed to National Center of Meteorology data as reported by Emarat Alyoum for a single storm on 27 March 2026, not a seasonal average — don't read it as typical rainfall.",
+    "No correctly licensed photo clearly showing Jebel Yanas itself was found on Wikimedia Commons or Unsplash, so photo is left null rather than using a generic Hajar Mountains image.",
+    "Audit (2026-09-27): the 'Al Haboos tribe' and village-name attribution came from an Ibn Battuta Travel page that now 404s and could not be re-verified from its own site or an archive; three independently checked sources (twopassportspacked, MissionsOffroad, Gigaplaces) describe the summit's stone ruins without naming a village or a tribe. Reworded to describe the ruins without the unverifiable attribution. All other checked facts (checkpoint being free, road/vehicle needs, camping spot, gate/accident near the summit, and the March 2026 rainfall record) matched their cited sources."
+  ]
 }

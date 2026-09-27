@@ -1,18 +1,18 @@
 {
   "emirate": "Dubai",
   "coverFocus": "50% 71%",
-  "body": "This is one of the UAE's best-kept secrets — a secluded desert camping spot tucked beside a quiet lake, with calm water, soft dunes and almost no crowds. For anyone hunting secluded camping spots in the UAE, it offers the kind of stillness and privacy the busier Al Qudra lakes have lost.\n\nThere are no facilities, so come fully self-sufficient with water, shade and a pack-it-out mindset. Sunset over the water and a quiet night under the stars are the whole point. A high-clearance vehicle helps you reach the more private corners away from the tracks.",
+  "body": "This is one of a scatter of small lakes inside the Al Qudra Lakes network, the man-made desert wetlands that sit within Dubai's Al Marmoom Desert Conservation Reserve at Saih Al Salam. Reverse-geocoding places it about two kilometres north of the well-documented Love Lake, in the same cluster that also includes Crescent Moon Lake and the original Al Qudra Lakes entrance — but no tourism board, news source or map found names or describes this specific body of water. That matters, because some of the detail people want most — its exact edges, whether it holds water year-round, how it compares to its neighbours — simply isn't verifiable from published sources, and hasn't been claimed here.\n\nWhat is verifiable is the setting: the whole Al Qudra/Al Marmoom area is a flat, quiet desert wetland network built to attract wildlife, not a natural oasis — expect calm water against sand and gravel, with the noise and crowds concentrated at the named, better-signed lakes like Love Lake and Al Qudra Lakes proper. If an unnamed lake nearby is what you're after, the honest advice is to treat this pin as a starting point rather than a guarantee, and to be ready to explore a little once you're in the area, since these small lakes shift with wind and water level.\n\nCamping and picnicking are permitted uses within Al Marmoom in general, but the reserve regulates where, precisely because loose camping and littering here have damaged habitat for the flamingos, oryx and gazelle it exists to protect. Nothing found confirms that this particular spot sits inside a currently designated camping area, so check current Dubai Municipality guidance before you commit to it, and consider defaulting to the named lakes nearby if you'd rather not rely on an unverified location.\n\nNone of this is a reason to skip the area — it's a genuinely striking landscape, and quieter corners of the Al Qudra cluster are real. It's a reason to go in with realistic expectations: this is desert wetland you'll need to find rather than a signed attraction, and the facts that would make it a fully documented guide entry simply aren't public yet.",
   "season": "Oct–Mar",
   "lng": 55.399099,
   "emoji": "⛺",
-  "name": "Desert Camping (Lake View)",
-  "desc": "A hidden, little-known camping spot tucked beside a desert lake — calm water, soft dunes and almost no crowds. A local secret for a peaceful overnight.",
+  "name": "An Al Qudra Desert Lake",
+  "desc": "A small, undocumented lake inside Dubai's Al Qudra Lakes cluster, a couple of kilometres from Love Lake — quieter than the named lakes nearby, with no facilities at all.",
   "gallery": [
     "/uploads/img_20260207_072923.jpg"
   ],
   "status": "safe",
   "igPosts": [],
-  "distance": "~1h from Dubai",
+  "distance": "About 1h from Dubai",
   "cover": "/uploads/img_20260206_175829.jpg",
   "id": "desert-camping-lake-view",
   "difficulty": "Moderate",
@@ -22,5 +22,107 @@
     "slug": "al-quaa-galaxy-regular",
     "anchor": "the Al Quaa Galaxy tee",
     "sentence": "Al Quaa's night sky, the one printed on {{link}}, is properly dark in a way this lake, closer to the city, rarely gets."
-  }
+  },
+  "area": "Saih Al Salam, Al Marmoom Desert Conservation Reserve — inside the Al Qudra Lakes cluster, roughly 2km north of Love Lake",
+  "months": [
+    2,
+    2,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Late afternoon into sunset, then after dark for the stars; summer daytime heat makes this a no-go, like the rest of the reserve.",
+  "timeNeeded": "Overnight, or 2–3 hours for a sunset visit",
+  "fees": "Free",
+  "facilities": {
+    "toilets": "no",
+    "food": "no",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "Nothing at the water's edge itself. The nearest public toilets and parking in the area are at Expo Lake, roughly 5km away."
+  },
+  "gpsSource": "No public source names or documents this exact water body. Reverse-geocoding (OpenStreetMap/Nominatim) places the pin in Saih Al Salam, inside the Al Marmoom Desert Conservation Reserve, about 2km north of the documented Love Lake (Wikipedia: 24.8386, 55.4051), within the same man-made Al Qudra Lakes network described by The National. Treat the coordinates as approximate.",
+  "sources": [
+    {
+      "label": "The National — How to find all of Dubai's Al Qudra desert lakes",
+      "url": "https://www.thenationalnews.com/travel/2023/03/13/how-to-find-all-of-dubais-al-qudra-desert-lakes-from-love-lake-to-crescent-moon-lake/"
+    },
+    {
+      "label": "Wikipedia — Al Marmoom Desert Conservation Reserve",
+      "url": "https://en.wikipedia.org/wiki/Al_Marmoom_Desert_Conservation_Reserve"
+    },
+    {
+      "label": "Wikipedia — Love Lake, Dubai",
+      "url": "https://en.wikipedia.org/wiki/Love_Lake,_Dubai"
+    },
+    {
+      "label": "Visit Dubai — Al Qudra Lakes",
+      "url": "https://www.visitdubai.com/en/places-to-visit/al-qudra-lakes"
+    },
+    {
+      "label": "My Secret Dubai — Al Marmoom Desert Conservation Reserve: A Practical Guide",
+      "url": "https://mysecretdubai.com/al-marmoom-desert-conservation-reserve/"
+    },
+    {
+      "label": "OpenStreetMap / Nominatim (reverse geocode of the given coordinates)",
+      "url": "https://www.openstreetmap.org/"
+    }
+  ],
+  "seoTitle": "Al Qudra Desert Lake Camping: What To Know First",
+  "access": {
+    "vehicle": "high-clearance",
+    "note": "The paved loop road through Al Qudra ends some distance short of this pin; the last stretch to the water is unpaved sand track. A high-clearance vehicle or 4x4 makes it far easier, especially to reach quieter spots away from the main tracks."
+  },
+  "seoDesc": "A small, undocumented lake inside Dubai's Al Qudra Lakes cluster, a couple of kilometres from Love Lake — quieter than the named lakes nearby, with no facilities at all.",
+  "faqs": [
+    {
+      "q": "What is this lake actually called?",
+      "a": "No public source names this specific water body — it's one of several small lakes inside the Al Qudra Lakes cluster, roughly 2km north of the better-known Love Lake."
+    },
+    {
+      "q": "Is camping allowed here?",
+      "a": "Camping is generally permitted within Al Marmoom Desert Conservation Reserve in designated areas, but nothing confirms this exact spot is one of them — check current Dubai Municipality guidance, or camp at a named, signed lake nearby instead."
+    },
+    {
+      "q": "Do I need a 4x4 to get here?",
+      "a": "A high-clearance or 4x4 vehicle is strongly recommended — the final stretch off the paved loop road is unpaved sand."
+    },
+    {
+      "q": "Are there toilets nearby?",
+      "a": "Not at the water's edge itself; the nearest public toilets and parking are at Expo Lake, about 5km away."
+    },
+    {
+      "q": "How far is it from Dubai?",
+      "a": "About an hour's drive, via Al Qudra Road."
+    },
+    {
+      "q": "Is it crowded?",
+      "a": "The named lakes nearby (Love Lake, Al Qudra Lakes) draw weekend crowds; no source describes crowd levels at this specific, undocumented spot."
+    }
+  ],
+  "guide": {
+    "gettingThere": "The whole Al Qudra Lakes area is reached via Al Qudra Road, about an hour from central Dubai depending on your starting point and traffic. The practical approach is to navigate first to a named, documented landmark — Love Lake or the main Al Qudra Lakes entrance — and treat this pin as roughly two kilometres north of Love Lake from there, since no official source describes a direct route to this specific spot. The paved loop road serves the main lakes; beyond it, tracks are unpaved sand, and a high-clearance vehicle or 4x4 makes the last stretch, and any move away from the main tracks, much easier. There's no public transport into the reserve and no realistic taxi option, so this is a self-drive or private-tour visit. Fuel up before you leave the city, and treat Expo Lake, about 5km away, as your nearest fallback for services.",
+    "whenToGo": "October to March is the workable window for the whole Al Qudra/Al Marmoom area, in line with the rest of Dubai's outdoor calendar — summer heat makes camping here impractical and arguably unsafe. Within that season, late afternoon into sunset is the strongest reason to come, followed by a clear night for stargazing away from the city's glow, though it's noticeably less dark here than at a dedicated dark-sky spot further from Dubai. No source gives a specific best day of the week for this exact lake, but the named lakes nearby are known to draw weekend crowds, so a weekday visit is the better bet if you want it quiet.",
+    "onSite": "There's very little structure here by design: this is an unnamed body of water in a desert wetland network, not a managed attraction. What you can expect, based on the wider Al Qudra cluster, is calm water against sand and gravel, birdlife using the lakes at dawn and dusk, and a genuinely dark sky once the sun is down relative to central Dubai (oryx and gazelle have both been documented moving through the wider area). If you're camping, plan for a self-sufficient overnight: there's nothing to rent or buy, so water, shade, food and a means of dealing with your own rubbish all need to come with you. A short walk along the water's edge at sunset, or a quiet hour watching for wildlife at dawn, are realistic, low-key ways to spend time here — this isn't a place with activities laid on.",
+    "safety": "Camping and picnicking are broadly permitted within the Al Marmoom Desert Conservation Reserve, but the reserve restricts where, specifically to protect habitat after past problems with littering and disturbance to wildlife — no source confirms this exact spot sits inside a currently designated area, so check current Dubai Municipality guidance before committing to camping here rather than at a named, signed site. Beyond that, the practical risks are the same as anywhere in this desert: heat and dehydration if you're out in the day, soft sand that can bog a 2wd car, and patchy-to-no phone signal once you're off the main tracks, so let someone know your plans. There are no lifeguards, barriers or lighting anywhere in the area. Take everything you bring back out with you — no open fires are permitted anywhere in the reserve.",
+    "heritage": "The Al Qudra/Al Marmoom lakes are entirely man-made desert wetlands, created inside the UAE's first unfenced nature reserve to bring water, and with it wildlife, back into the desert. The reserve is home to hundreds of bird species (estimates from different sources range from about 170 to over 360) along with Arabian oryx and gazelle, and the wider network — Love Lake, Crescent Moon Lake and the original Al Qudra Lakes among them — has become one of Dubai's better-known conservation stories since the reserve was established in 2018.",
+    "etiquette": "Treat any wildlife you see (oryx, gazelle, flamingos and other birds) as the reason this landscape exists rather than a photo prop — keep your distance, keep noise down, and take every piece of rubbish home with you."
+  },
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "This exact lake could not be pinned to a named, publicly documented place. It sits inside the Al Qudra Lakes cluster, about 2km from Love Lake, based on reverse-geocoding the given coordinates — but no tourism board, news source or map names this specific body of water. The name used here ('An Al Qudra Desert Lake') is descriptive, not an official name.",
+    "Whether camping is currently permitted at this precise spot under Al Marmoom Desert Conservation Reserve rules could not be confirmed; the reserve regulates camping to 'designated areas' generally, and readers should check current Dubai Municipality guidance rather than rely on this page alone.",
+    "The old page's claims of being 'one of the UAE's best-kept secrets' and having 'almost no crowds' are unverifiable superlatives and have been dropped.",
+    "No source confirms facilities, phone signal, or exact water extent at this point.",
+    "The site's existing content already includes what appear to be real photos of this spot (gallery/cover images from the brand's own uploads); no external stock or Commons photo has been substituted for them.",
+    "The 'months' array had April marked as a possible month (1), which conflicted with the stated season ('Oct–Mar') and the guide text's own 'October to March is the workable window' line; April has been corrected to 0 (avoid) to match.",
+    "Bird species count at Al Marmoom is inconsistently reported: Wikipedia's Al Marmoom Desert Conservation Reserve article states 'over 360 bird species' while My Secret Dubai's practical guide (already in sources) states 'over 170 species of birds' — the figure has been reworded to 'hundreds' with the range noted, rather than asserting a single number."
+  ]
 }

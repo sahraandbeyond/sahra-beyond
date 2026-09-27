@@ -1,17 +1,141 @@
 {
   "emirate": "Dubai",
-  "body": "Love Lake is a pair of giant heart-shaped lakes carved into the Al Qudra desert outside Dubai, fringed with greenery, palm trees and abundant birdlife. It's one of the easiest ways to swap the city for genuine wilderness — a short, paved drive delivers you to flamingos, swans and quiet picnic spots.\n\nThe lakes are a popular sunrise and sunset destination for walking, cycling and casual camping nearby. Facilities are minimal, so bring your own water and supplies, and take everything home to keep this green oasis pristine.",
+  "body": "Love Lake — بحيرة الحب — is a pair of interlocking, heart-shaped artificial lakes cut into the sand of the Al Qudra desert, inside Dubai's Al Marmoom Desert Conservation Reserve. Ghaf trees line parts of the shore, some planted to spell out \"Love\" when seen from above, and the lake became a minor sensation in November 2018 after Dubai's Crown Prince, Sheikh Hamdan bin Mohammed, posted photos of it. It sits within the wider Al Qudra Lakes cluster, a short drive from its better-known neighbours, Al Qudra Lake and Flamingo Lake.\n\nA paved road runs all the way to a car park by the water, so no 4x4 is needed, and the lake is open around the clock with no entry fee. On the ground there are restrooms, a children's playground and shaded benches, plus marked walking and cycling paths threading through the wider desert. Birdlife is part of the draw beyond the heart shape itself: the wider Al Marmoom reserve holds flocks of flamingos and more than 360 recorded bird species, many of them migratory, so a variety of waterbirds is a realistic sight around the lake.\n\nDespite how often it's described online as a camping spot, the lake itself is best treated as a day or sunset visit. Dubai Municipality installed signage in 2017–2018 banning camping, bonfires, barbecues, dog-walking and off-road driving directly at the Al Qudra lakes, after litter and disturbance to wildlife became a problem — a municipality wildlife specialist said at the time that the reserve \"was never meant to be a picnic area.\" Some current guides still list Al Qudra Lakes among popular camping spots, which most likely refers to designated ground elsewhere in the wider Al Marmoom reserve rather than the immediate lakeshore. If you're hoping to camp, check current on-site signage or with Dubai Municipality rather than assuming the lake edge is fair game.\n\nMost visitors come for the aerial view of the heart shape, best caught with a drone or from higher ground nearby in the day's softer light. Drones reportedly need a permit to fly here, as elsewhere in the reserve, so it's worth checking the current rules before you bring one.",
   "season": "Oct–Apr",
-  "lng": 55.403087,
+  "lng": 55.4048,
   "emoji": "💙",
   "name": "Love Lake",
-  "desc": "Two heart-shaped lakes carved into the Al Qudra desert, fringed with greenery and birdlife. A short, easy drive from the city straight into the wilderness.",
+  "desc": "Two heart-shaped artificial lakes in Dubai's Al Marmoom reserve, reached by paved road. A free, 24-hour photo and picnic stop with resident birdlife — not an official camping or BBQ site.",
   "status": "safe",
   "igPosts": [],
-  "distance": "~50 min from Dubai",
-  "cover": "",
+  "distance": "About 50 min–1h from Dubai",
+  "cover": "/uploads/places/love-lake.jpg",
   "id": "love-lake",
   "difficulty": "Easy",
   "category": "Camping",
-  "lat": 24.835454
+  "lat": 24.8381,
+  "area": "Al Qudra Lakes cluster, Al Marmoom Desert Conservation Reserve, Saih Al Salam",
+  "months": [
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2
+  ],
+  "bestTime": "Early morning or the hour before sunset, when the light is softest and the heat has eased.",
+  "timeNeeded": "1–2 hours",
+  "fees": "Free",
+  "hours": "Open 24/7",
+  "facilities": {
+    "toilets": "yes",
+    "food": "nearby",
+    "shade": "some",
+    "signal": "unknown",
+    "note": "Restrooms, a children's playground and shaded benches sit right by the lake, with marked walking and cycling paths. There's no shop or café at the lake itself — the nearest food (a food-truck park) is elsewhere in the wider Al Marmoom reserve, not walking distance away."
+  },
+  "gpsSource": "Arabic Wikipedia's infobox coordinate for the lake (24°50′17″N 55°24′17″E), matching a geotagged Wikimedia Commons photo taken at the site (24.838333, 55.403889) and The National's reported coordinate for the lakes (24.838588, 55.405063); marks the lake and its car park.",
+  "sources": [
+    {
+      "label": "Wikipedia — Love Lake, Dubai",
+      "url": "https://en.wikipedia.org/wiki/Love_Lake,_Dubai"
+    },
+    {
+      "label": "Arabic Wikipedia — بحيرة الحب",
+      "url": "https://ar.wikipedia.org/wiki/%D8%A8%D8%AD%D9%8A%D8%B1%D8%A9_%D8%A7%D9%84%D8%AD%D8%A8"
+    },
+    {
+      "label": "PropertyFinder — Love Lake Dubai",
+      "url": "https://www.propertyfinder.ae/blog/love-lake-dubai/"
+    },
+    {
+      "label": "The National — How to find all of Dubai's Al Qudra desert lakes",
+      "url": "https://www.thenationalnews.com/travel/2023/03/13/how-to-find-all-of-dubais-al-qudra-desert-lakes-from-love-lake-to-crescent-moon-lake/"
+    },
+    {
+      "label": "Wikipedia — Al Marmoom Desert Conservation Reserve",
+      "url": "https://en.wikipedia.org/wiki/Al_Marmoom_Desert_Conservation_Reserve"
+    },
+    {
+      "label": "Gulf News — Ban on camping, bonfire, barbecue, dog walking in Al Qudra Lake",
+      "url": "https://gulfnews.com/uae/environment/ban-on-camping-bonfire-barbecue-dog-walking-in-al-qudra-lake-1.2139118"
+    },
+    {
+      "label": "CityTourInDubai — Al Marmoom Conservation Reserve guide",
+      "url": "https://www.citytourindubai.com/al-marmoom-conservation-reserve/"
+    },
+    {
+      "label": "Wikimedia Commons — File:LOVE LAKE DUBAI.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:LOVE_LAKE_DUBAI.jpg"
+    }
+  ],
+  "seoTitle": "Love Lake Dubai: Getting There, Facilities & Tips",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A paved road (Al Qudra Road, D63, then the signposted Al Qudra Lakes turn-off) runs all the way to the car park by the water — no 4x4 needed."
+  },
+  "seoDesc": "Two heart-shaped artificial lakes in Dubai's Al Marmoom reserve, reached by paved road. A free, 24-hour photo and picnic stop with resident birdlife — not an official camping or BBQ site.",
+  "faqs": [
+    {
+      "q": "Is Love Lake in Dubai free to visit?",
+      "a": "Yes — entry is free and the site is open 24 hours a day, seven days a week."
+    },
+    {
+      "q": "Can I camp or have a BBQ at Love Lake?",
+      "a": "No. Dubai Municipality signage bans camping, bonfires and barbecues directly at the Al Qudra lakes, including Love Lake, after littering and wildlife-disturbance problems. Treat it as a day or sunset visit rather than a campsite."
+    },
+    {
+      "q": "Do I need a 4x4 to reach Love Lake?",
+      "a": "No. A paved road runs all the way to the car park by the lake, so a normal car is fine."
+    },
+    {
+      "q": "How do I get to Love Lake without a car?",
+      "a": "Bus route 67 serves the area, or take a taxi from Expo Metro Station, about 30 minutes away; there's no direct public transport right to the lakeside."
+    },
+    {
+      "q": "What wildlife will I see at Love Lake?",
+      "a": "Birdlife is the highlight. The wider Al Marmoom reserve supports flocks of flamingos and over 360 recorded bird species, so waterbirds around the lake are a realistic sight, though no source we checked lists species specific to Love Lake itself."
+    },
+    {
+      "q": "Can I fly a drone at Love Lake?",
+      "a": "Drones reportedly need a permit inside the Al Marmoom reserve; check current rules before flying one, since requirements and enforcement can change."
+    }
+  ],
+  "guide": {
+    "gettingThere": "Love Lake sits inside Al Marmoom Desert Conservation Reserve, about 30km from central Dubai. From the city, follow Al Qudra Road (D63) south-west past the signposted Al Qudra Lakes turn-offs; the road is fully paved as far as the lakeside car park, so a normal saloon car manages the whole trip. Fill up before you leave the city — there's no fuel at the reserve itself. Without a car, the closest practical option is public bus route 67, or a taxi from Expo City Dubai / Expo Metro Station, roughly 30 minutes away; there's no direct public transport link to the lakeside itself, so budget extra time and arrange your return in advance, since taxis are scarce out here.",
+    "whenToGo": "Love Lake is open 24 hours, but the desert heat makes October to April the most comfortable stretch, with cooler mornings and evenings good for a walk or cycle around the shore. In summer (May–September) it's still accessible, but best done at sunrise or in the last hour before sunset to avoid the worst of the heat. Weekday mornings are quietest; sunset on weekends draws the biggest crowds of photographers.",
+    "onSite": "Beyond the heart shape itself — best appreciated from height, whether a drone shot or the higher ground around the car park — there's a marked walking and cycling loop around the water, shaded benches, a children's playground and restrooms. Birdwatchers can reasonably expect flamingos and other waterbirds, part of the wider reserve's 360-plus recorded species. Most visitors spend 45 minutes to an hour and a half here: enough for a walk around, some photos and a rest in the shade. There's no food sold at the lake itself, so bring your own water and snacks.",
+    "safety": "There are no lifeguards and swimming isn't intended here, and Dubai Municipality signage bans camping, bonfires and barbecues directly at the lakeside — stick to the paths and picnic areas. Heat is the main real risk outside the cooler months: carry water, especially if you're cycling the loop, and avoid the midday sun in summer. Mobile coverage in this part of the desert can be patchy, so download offline maps before you set off. Wildlife here is generally shy; keep any dog on a lead, since pets are restricted in parts of the reserve to protect ground-nesting birds.",
+    "heritage": "Love Lake sits inside Al Marmoom Desert Conservation Reserve, the UAE's first unfenced nature reserve, established by Dubai Municipality in 2018 to protect the Al Qudra desert's flora, fauna and groundwater. The reserve covers roughly a tenth of Dubai's land area and shelters dozens of bird species, some migratory, alongside reptiles and mammals — a deliberate rewilding of what was, until recently, open desert.",
+    "etiquette": "Take all litter home, stay on the marked paths rather than walking or driving onto vegetation, and don't feed or approach the birds — Dubai Municipality has cited wildlife disturbance as one reason camping and barbecuing were banned here."
+  },
+  "nameAr": "بحيرة الحب",
+  "photoCredit": {
+    "author": "Ahmad3027",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:LOVE_LAKE_DUBAI.jpg",
+    "what": "The heart-shaped Love Lake seen from above, Al Qudra desert, Dubai."
+  },
+  "productLink": {
+    "slug": "al-quaa-galaxy-regular",
+    "anchor": "the Al Quaa Galaxy tee",
+    "sentence": "Keep driving south, past the Al Qudra lakes, and the sky gets properly dark: the Milky Way on {{link}} was drawn rising over Al Quaa."
+  },
+  "overnight": false,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Audit (27 Sep 2026): the previous text named pelicans, ducks, geese and an 'occasional endangered Asian houbara bustard' at Love Lake specifically. No source we opened — including Wikipedia's Love Lake and Al Marmoom articles, The National, and PropertyFinder — names any of those species at this lake; Wikipedia's Love Lake page says only 'local birds' and lists ornamental fish (Japanese orange and gold fish), while flamingos and 360-plus species are documented for the wider Al Marmoom reserve, not the lake specifically. Reworded to the reserve-level, sourced claim and removed the unsourced species list.",
+    "Whether camping/BBQ is currently enforced right at the lake is genuinely unclear: Dubai Municipality banned it there via signage (Gulf News, Nov 2018, citing a wildlife specialist) covering 'the series of lakes in Al Qudra' without naming Love Lake specifically, citing litter and wildlife disturbance, yet several current (2025–26) travel guides, and even Wikipedia's own Al Marmoom Reserve article, describe camping and barbecuing as \"permitted\" in the reserve, and list Al Qudra Lakes itself as a popular campsite. We've treated the lake as a picnic/photo stop rather than a campsite, but this should be checked against current on-site signage before publishing a firm claim either way.",
+    "The GPS pin is refined by roughly 300–400m from the site's current published value, based on Wikipedia's infobox coordinate and a geotagged Commons photo — not a large error, just tightened.",
+    "The drone-permit requirement is sourced to a single travel blog (CityTourInDubai), not an official GCAA or Dubai Municipality page we could open directly — worth confirming officially before stating it as a firm rule.",
+    "No source we opened mentions mosquitoes or insects at the lake specifically, so we've left it out rather than guess.",
+    "Arabic Wikipedia states the associated island is about 550 km², which looks implausibly large for this feature — likely an error in that article. We haven't used that figure."
+  ]
 }

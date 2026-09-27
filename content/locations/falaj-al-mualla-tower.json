@@ -1,23 +1,141 @@
 {
   "id": "falaj-al-mualla-tower",
-  "name": "Falaj Al Mualla Tower",
+  "name": "Falaj Al Mualla",
   "emoji": "🗼",
   "emirate": "Umm Al Quwain",
-  "category": "Dunes",
+  "category": "Heritage",
   "difficulty": "Easy",
   "season": "Oct–Apr",
-  "distance": "~1h from Dubai",
-  "lat": 25.33,
-  "lng": 55.86,
+  "distance": "About 1h from Dubai",
+  "lat": 25.353,
+  "lng": 55.853,
   "status": "safe",
-  "desc": "A lone historic watchtower standing in the open desert near Falaj Al Mualla — a striking, photogenic landmark and a favourite stop on an Umm Al Quwain desert drive.",
-  "cover": "",
-  "coverFocus": "50% 50%",
+  "desc": "A historic oasis in Umm Al Quwain, its 1825 fort and scattered watchtowers rising from date-palm groves and open desert — a real, low-key stop on a UAE heritage or desert drive.",
+  "cover": "/uploads/places/falaj-al-mualla-tower.jpg",
   "igPosts": [],
-  "body": "Rising alone from the open desert, the old watchtower near Falaj Al Mualla is one of Umm Al Quwain's most striking and photogenic landmarks. Falaj Al Mualla is a historic inland oasis, long known for its date plantations and fortifications, and this lone tower — set against nothing but sand and sky — has become a favourite stop for desert drives and photographers.\n\nThe surrounding dunes are quiet and accessible, making this an easy, rewarding detour rather than a demanding expedition. It is at its most atmospheric at sunrise and sunset, when the low light turns the sand gold and the tower throws a long shadow across the desert.\n\nCome in the cooler months from October to April, bring water and sun protection, and tread lightly — it is a piece of local heritage in a fragile desert setting. A normal car reaches the area, though the final approach over soft sand can need care.",
+  "body": "Falaj Al Mualla is a historic oasis settlement about 30km inland from Umm Al Quwain city, built around a fort, a scatter of old watchtowers and date-palm groves that have been irrigated by falaj water for centuries. There isn't one single \"lone tower\" here, despite how the site is sometimes pictured — three watchtowers (east, west and north) stand apart from each other in the dunes around the village, each a plain, striking silhouette against sand and sky, and this page covers them collectively rather than pointing to just one.\n\nThe settlement was founded by the Al Ali tribe, the same family that established Umm Al Quwain, after they moved from the island of Sinniyah when its water supply ran out. The fort at its centre dates to around 1825, built by the ruler Abdullah bin Rashid Al Mualla; it was restored in 2015 and today houses a small museum, including an archaeology room with finds ranging from the first century AD back to around 6000 BC. A nearby bathing house from the same period was restored in 2014.\n\n\"Falaj\" refers to the traditional irrigation channels that carry water down from aquifers in the Hajar Mountains — the same system that let some 60 families historically live here off roughly 5,000 date palms. The watchtowers, set higher on the dunes than the village itself, gave clear sightlines against raiders in an era before the fort's walls offered protection of their own.\n\nToday it's a quiet stop rather than a major attraction: a genuine piece of Emirati heritage a short drive off the beaten desert-drive route, at its best in the low light of sunrise or sunset, when the sand goes gold and the towers throw long shadows. Treat the fort's opening hours and modest entry fee as approximate and worth confirming locally, since sources don't fully agree on either.",
   "productLink": {
     "slug": "empty-quarter-regular",
     "anchor": "the Empty Quarter tee",
     "sentence": "The dunes embroidered across {{link}} are Liwa's, several hours south-west of this old watchtower, deep in the true Empty Quarter."
-  }
+  },
+  "area": "Falaj Al Mualla oasis, about 30km inland from Umm Al Quwain city",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Late afternoon toward sunset, for long shadows and gold light on the towers and sand — and time it within the fort's opening hours if you want the museum too.",
+  "timeNeeded": "1–2 hours",
+  "fees": "AED 5 (fort/museum)",
+  "hours": "Reportedly Sat–Thu 8am–2pm & 5pm–8pm, Fri 5pm–8pm — one source gives slightly different days/hours, so check ahead",
+  "facilities": {
+    "toilets": "unknown",
+    "food": "nearby",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "No cafés or shops at the towers themselves — bring water. A supermarket (Al Shawi) sits near the fort in the village."
+  },
+  "gpsSource": "Wikipedia's coordinate for Falaj Al Mualla (25°21′11″N 55°51′12″E = 25.353, 55.853), centred on the oasis/fort area: https://en.wikipedia.org/wiki/Falaj_Al_Mualla. Several watchtowers are scattered around the oasis rather than one single tower; the Wikimedia Commons photo used on this page carries its own GPS tag for the specific tower shown (25.3445, 55.8427), about 1.3km southwest of the fort.",
+  "sources": [
+    {
+      "label": "Wikipedia — Falaj Al Mualla",
+      "url": "https://en.wikipedia.org/wiki/Falaj_Al_Mualla"
+    },
+    {
+      "label": "Arabic Wikipedia — فلج المعلا",
+      "url": "https://ar.wikipedia.org/wiki/%D9%81%D9%84%D8%AC_%D8%A7%D9%84%D9%85%D8%B9%D9%84%D8%A7"
+    },
+    {
+      "label": "Glimpses of UAE — Falaj Al Mualla Fort",
+      "url": "https://glimpsesofuae.com/falaj-al-mualla-fort/"
+    },
+    {
+      "label": "MyBayut — Falaj Al Mualla Fort, Umm Al Quwain",
+      "url": "https://www.bayut.com/mybayut/falaj-al-mualla-fort-umm-al-quwain/"
+    },
+    {
+      "label": "Rome2Rio — Falaj al-Moalla to Dubai (drive time)",
+      "url": "https://www.rome2rio.com/s/Falaj-al-Moalla/Dubai"
+    },
+    {
+      "label": "Wikimedia Commons — Falaj Al Mualla Tower (West), GPS metadata",
+      "url": "https://commons.wikimedia.org/wiki/File:Falaj_Al_Mualla_Tower_(West).jpg"
+    },
+    {
+      "label": "Wikipedia — List of emergency telephone numbers",
+      "url": "https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers"
+    },
+    {
+      "label": "National Center of Meteorology (UAE)",
+      "url": "https://www.ncm.gov.ae/"
+    }
+  ],
+  "seoTitle": "Falaj Al Mualla, UAQ: Fort, Towers & Visiting Hours",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A sealed road reaches the village and the fort/museum car park; a couple of the outlying watchtowers stand in the surrounding dunes, where the final stretch over soft sand can need care."
+  },
+  "seoDesc": "A historic oasis in Umm Al Quwain, its 1825 fort and scattered watchtowers rising from date-palm groves and open desert — a real, low-key stop on a UAE heritage or desert drive.",
+  "faqs": [
+    {
+      "q": "Is there an entry fee for Falaj Al Mualla?",
+      "a": "The fort/museum reportedly charges around AED 5; the outlying watchtowers and village themselves are open, unticketed desert."
+    },
+    {
+      "q": "What are the opening hours?",
+      "a": "Sources differ slightly, but the fort/museum is generally open Saturday to Thursday mornings and early evenings, with shorter Friday hours — check locally before a special trip."
+    },
+    {
+      "q": "How do I get to Falaj Al Mualla from Dubai?",
+      "a": "About an hour's drive north via the E11/E611 towards Umm Al Quwain, then inland on sealed roads to the village."
+    },
+    {
+      "q": "Is there really just one tower?",
+      "a": "No — three watchtowers (east, west and north) stand around the oasis, guarding the fertile wadi; 'the tower' seen in photographs is usually one of these, not the only one."
+    },
+    {
+      "q": "Is it safe to visit?",
+      "a": "Yes, it's an easy, low-risk stop — the main precautions are sun protection and care on soft sand near some of the towers."
+    },
+    {
+      "q": "Can I combine it with other Umm Al Quwain sights?",
+      "a": "Yes — it's a natural stop on a wider Umm Al Quwain desert drive alongside the emirate's other heritage sites."
+    }
+  ],
+  "guide": {
+    "gettingThere": "From Dubai, take the E11 or E611 north towards Umm Al Quwain and follow signs inland towards Falaj Al Mualla village — it's roughly an hour's drive on sealed roads the whole way, with Al Shawi Supermarket in the village a useful landmark near the fort. A regular car manages the drive and reaches the fort's car park without difficulty; only the final approach to some of the more scattered watchtowers crosses soft sand, where care (or a higher-clearance vehicle) helps. There's no realistic way to reach this by public transport or on foot from Umm Al Quwain city — it's a self-drive or taxi destination, and not somewhere a casual tourist without a car is likely to reach easily.",
+    "whenToGo": "October to April gives the most comfortable conditions for wandering around the fort and towers in the open air. Late afternoon into sunset is the best single window, when low light picks out the texture of the sand and throws long shadows from the towers — useful for photography and much more comfortable than a midday visit in summer. The fort itself only opens within its stated hours, so a photography-only visit to the outlying towers can happen any time, but seeing the museum means timing your trip around opening hours.",
+    "onSite": "The centrepiece is the roughly 200-year-old fort, now a small museum with a courtyard, a restored bathing house nearby, and exhibits that include an archaeology room spanning the first century AD back to around 6000 BC. Scattered around the village and dunes are three separate watchtowers (east, west and north) — plain, tapering structures that once gave lookouts clear sightlines over the oasis — with the ones shown in most photographs standing alone against open desert a short distance from the fort itself. Between the fort, the towers and the date-palm groves that the falaj system still waters, this is a compact, easy stop: most people spend one to two hours here, split between the museum and a walk or drive out to photograph the towers in good light.",
+    "safety": "This is a low-risk, easy destination compared with the UAE's wadis and mountains — the main things to plan for are heat and sun, so bring water and sun protection, especially if you're walking out to the more distant watchtowers in the open desert. The final approach to some towers crosses soft sand, so carry a tyre pressure gauge and know how to deflate and re-inflate your tyres if you get stuck, or stick to the towers reachable from sealed roads. It's a lived-in oasis village and a protected heritage site, not open land, so stay on tracks, don't climb on the fort or the towers, and treat the museum's opening hours as fixed. UAE emergency numbers are 999 (police), 998 (ambulance) and 997 (civil defence).",
+    "heritage": "A falaj is a traditional gravity-fed irrigation channel that carries groundwater — here, aquifers draining from the Hajar Mountains — down to fields and palm groves, letting a community farm date palms in what would otherwise be open desert. Falaj Al Mualla takes its name from exactly this system, and its roughly 5,000 date palms once supported around 60 families. The fort, bathing house and watchtowers built by the ruling Al Mualla family in the early 19th century protected that same irrigated oasis, making the whole settlement — water system, farmland and defences — a single historic unit rather than separate curiosities.",
+    "etiquette": "It's a real village as well as a heritage site, so keep to tracks and public areas, dress modestly if you visit the fort/museum, and ask before photographing any residents you meet."
+  },
+  "nameAr": "فلج المعلا",
+  "photoCredit": {
+    "author": "Runo Zornak",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Falaj_Al_Mualla_Tower_(West).jpg",
+    "what": "One of the watchtowers of Falaj Al Mualla (the west tower), standing alone in the dunes near the oasis."
+  },
+  "overnight": false,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Opening hours for the fort/museum are reported slightly differently by two sources (Sat–Thu vs Mon–Thu, and differing evening hours) — treat the hours given as approximate and confirm locally.",
+    "The AED 5 entry fee comes from a single source and wasn't independently confirmed elsewhere.",
+    "No source confirms toilets, shade or phone signal at the towers themselves, so these are marked unknown rather than guessed.",
+    "'The tower' as commonly photographed is one of three scattered watchtowers around the oasis — this page deliberately avoids naming a single one as definitive.",
+    "Whether a normal car's final approach to the photographed tower genuinely needs care on soft sand isn't independently confirmed by a source; kept as a general caution rather than a specific claim.",
+    "Audit (2026-09-27): re-checked Wikipedia directly, which explicitly states 'three watchtowers (east, west and north)', matching MyBayut's account (also 'three... east, west and north') — the previous text's vaguer 'several' has been made specific to three, now confirmed by two independent sources. Fort founding (Al Ali tribe from Sinniyah), 1825 construction, 2015 restoration and 2014 bathing-house restoration all matched Wikipedia. Fee (AED 5) and hours remain single-sourced/conflicting as previously flagged — MyBayut, checked in this pass, gives yet a third variant (Mon–Thu, different reopening time), reinforcing rather than resolving that doubt."
+  ]
 }

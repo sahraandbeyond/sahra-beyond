@@ -6,17 +6,115 @@
   "category": "Mountains",
   "difficulty": "Moderate",
   "season": "Oct–Apr",
-  "distance": "~1h45 from Dubai",
-  "lat": 25.6988,
-  "lng": 56.0054,
+  "distance": "About 1h45–2h from Dubai",
+  "lat": 25.694806,
+  "lng": 56.045361,
   "status": "safe",
-  "desc": "A dramatic seasonal wadi high in the Hajar Mountains below Jebel Jais — red-rock walls, terraced pools and some of the clearest mountain air and darkest skies in Ras Al Khaimah.",
+  "desc": "A dramatic Hajar Mountains wadi in Ras Al Khaimah with red-rock scrambles, seasonal pools and a small dam — a genuine mountain hike with real flash-flood risk after rain.",
   "cover": "/uploads/wadi-naqab-hajar-wadi.jpg",
   "igPosts": [],
-  "body": "Wadi Naqab cuts through the north-western Hajar Mountains of Ras Al Khaimah, on the flanks of Jebel Jais — the UAE's highest peak at 1,934m. Red-rock walls rise on either side of a seasonal watercourse that fills with terraced pools after the winter rains, and the trail is a well-loved scramble for hikers who want real mountains within a couple of hours of the city. High, remote and far from the coastal glow, Naqab holds onto genuinely dark mountain skies — on a clear, moonless night the stars come down to the ridgelines. Come in the cooler months, carry more water than you think you need, wear proper grip for the rock, and give yourself time: the light on the peaks at dusk is the reason to be here. A high-clearance vehicle reaches the trailhead; the wadi itself is on foot.",
+  "body": "Wadi Naqab cuts through the Hajar Mountains of Ras Al Khaimah, into the slopes of Yanas Mountain (Jebel Yanas) — the wadi and the peak share one mountain and one access road, rather than sitting in separate ranges. Red-rock walls close in around a seasonal watercourse that fills with pools after winter rain, and a small dam — 22 metres high — now sits across the lower gorge, built as part of a $44 million infrastructure package announced in 2020. The wadi is named for the Naqbiyin tribe, and its lower reaches hold around 60 Wadi Suq-era burial tombs, several thousand years old, a handful of them excavated by University of Durham archaeologists ahead of Ring Road construction. This is old, lived-in mountain country, not an empty backdrop.\n\nTwo routes are commonly walked from the trailhead. The Red Wall hike, marked with red paint on the left fork, is the shorter option at around six hours out and back, passing seasonal pools and small hillside settlements. A longer out-and-back route toward Sheri and Baqal villages runs closer to twelve hours over boulder fields and mountain ledges, and suits only fit, well-prepared hikers. Both are exposed in places, with scrambling, loose rock and stretches with real drop-offs, so a head for heights and proper footwear matter more here than on an easy wadi walk.\n\nNone of this is a manicured park. There's no shop, tap or shade shelter along the trail, so carry more water than you think you'll need, plus food, a map or GPS track, a torch and a basic first-aid kit, and tell someone your route before you go. Groups of ten or more are asked to notify Ras Al Khaimah's tourism authorities in advance; smaller groups need no permit.\n\nThe reward, on a clear winter evening, is real: the ridgelines catch the last light in deep red and gold, and the same isolation that makes daytime hiking hard here also makes for some of the darkest mountain skies in the emirate after dark. Come between October and April, skip it altogether if rain is forecast anywhere upstream, and treat the distance and difficulty as genuinely mountain-grade rather than a casual afternoon out.",
   "productLink": {
     "slug": "hajar-mountains-regular",
     "anchor": "the Hajar Mountains tee",
     "sentence": "The peaks above this wadi are the ones traced on {{link}} — the ridge reduced to contour lines, printed across the back."
-  }
+  },
+  "area": "Hajar Mountains, off the Wadi Naqab road at Al Salihia (right off Street 33C from RAK city)",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Start early morning for the hike itself, and stay for last light on the red-rock ridgelines at dusk if you can.",
+  "timeNeeded": "6–12 hours depending on the route",
+  "fees": "Free (groups of 10 or more should notify RAK's tourism authorities in advance)",
+  "hours": "Open access",
+  "facilities": {
+    "toilets": "no",
+    "food": "no",
+    "shade": "some",
+    "signal": "unknown",
+    "note": "No shops, water points or shade shelters on the trail — every independent guide tells hikers to carry all their own food, water and equipment."
+  },
+  "gpsSource": "https://en.wikipedia.org/wiki/Wadi_Naqab — Wikipedia's coordinate for the wadi and its dam (part of a 2020 infrastructure package) in the lower gorge.",
+  "sources": [
+    {
+      "label": "Wikipedia — Wadi Naqab",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Naqab"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — Wadi Naqab Hike",
+      "url": "https://visitrasalkhaimah.com/blog/wadi-naqab-hike/"
+    },
+    {
+      "label": "Gulf Today — RAK Police rescue three tourists in Wadi Naqab",
+      "url": "https://www.gulftoday.ae/News/2023/05/22/RAK-Police-rescue-three-tourists-in-Wadi-Naqab"
+    },
+    {
+      "label": "Gulf News — RAK Police rescue nine people stranded in Wadi Naqab",
+      "url": "https://gulfnews.com/uae/rak-police-rescue-nine-people-stranded-in-wadi-naqab-1.75916603"
+    },
+    {
+      "label": "Wikimedia Commons — Dirt road from Wadi Naqab to Baqal",
+      "url": "https://commons.wikimedia.org/wiki/File:Dirt_road_from_Wadi_Naqab_to_Baqal.jpg"
+    }
+  ],
+  "seoTitle": "Wadi Naqab Hike, RAK: Trailhead, Difficulty & Safety",
+  "access": {
+    "vehicle": "high-clearance",
+    "note": "A high-clearance vehicle or 4x4 is recommended for the final stretch to the trailhead off Street 33C at Al Salihia; the hike itself is entirely on foot."
+  },
+  "seoDesc": "A dramatic Hajar Mountains wadi in Ras Al Khaimah with red-rock scrambles, seasonal pools and a small dam — a genuine mountain hike with real flash-flood risk after rain.",
+  "faqs": [
+    {
+      "q": "Is Wadi Naqab safe to hike?",
+      "a": "It can be, but take it seriously: routes are exposed with real scrambling, and Ras Al Khaimah Police have rescued stranded hikers here more than once. Never go if rain is forecast, and tell someone your planned route."
+    },
+    {
+      "q": "Do I need a permit for Wadi Naqab?",
+      "a": "No, not for a normal-sized group. Groups of ten or more are asked to notify RAK's tourism authorities before visiting."
+    },
+    {
+      "q": "How do I get to Wadi Naqab?",
+      "a": "Turn right off Street 33C from RAK city at Al Salihia. The drive is about two hours from Dubai or 40 minutes from RAK city, and the final stretch needs a 4x4 or high-clearance vehicle."
+    },
+    {
+      "q": "How long does the hike take?",
+      "a": "The main Red Wall route is around six hours return; the longer route to Sheri and Baqal villages runs closer to twelve hours."
+    },
+    {
+      "q": "Are there toilets or shops at Wadi Naqab?",
+      "a": "No — there are no facilities on site, so bring all the food, water and supplies you'll need."
+    },
+    {
+      "q": "When's the best time to visit?",
+      "a": "October to April, for cooler temperatures — and always check the forecast first, since this wadi floods quickly after rain."
+    }
+  ],
+  "guide": {
+    "gettingThere": "The trailhead is reached by turning right off Street 33C from Ras Al Khaimah city at Al Salihia, then following the road up into the Wadi Naqab gorge; RAK's tourism board puts the drive at around two hours from Dubai and about 40 minutes from RAK city. The final stretch is rough enough that a 4x4 or other high-clearance vehicle is strongly recommended, since regular cars struggle once the terrain turns to loose rock and gradient. There's no fuel, shop or public transport out here, so fill up in RAK city and buy any food and water you need before you leave town. Without your own vehicle, the practical options are a private taxi arranged for the return trip or a guided hiking tour that includes transport.",
+    "whenToGo": "Visit between October and April, when mountain temperatures are manageable for hours of scrambling. RAK's tourism board stresses starting early and allowing plenty of daylight, since both main routes run six to twelve hours. Winter afternoons bring the best light on the red rock, especially in the last hour before sunset. Avoid the wadi entirely, whatever the season, if rain is forecast anywhere in the mountains — flash floods here can rise fast, and Ras Al Khaimah Police have carried out multiple rescues of stranded hikers in past years. Weekdays are quieter than weekends.",
+    "onSite": "On foot, Wadi Naqab is a proper mountain hike rather than a stroll: red sandstone walls, boulder-hopping sections, and after rain a string of pools deep enough to wade in. The shorter Red Wall route (about six hours return) follows red trail markers past seasonal pools and small hillside settlements. The longer route toward Sheri and Baqal villages (around twelve hours return) pushes further into boulder fields and old mountain hamlets, with genuine exposure on some ledges. There's a small flood-control dam near the lower gorge, worth a look if you're not tackling the full trail. Expect scrambling rather than a marked path in the upper sections, and treat both routes as a half-day-to-full-day commitment, not a quick detour.",
+    "safety": "Flash flooding is the real hazard: Ras Al Khaimah's tourism board warns that the wadi can fill with water quickly and says plainly never to hike here when rain is expected, anywhere upstream. Ras Al Khaimah Police have rescued stranded hikers more than once — nine people were found after a night stranded in December 2020, and three exhausted tourists were rescued at altitude in May 2023 — with officers repeatedly urging hikers to tell someone their route and to keep to it rather than push further into the heights and side valleys. Some sections are genuinely exposed, so a head for heights and solid footwear aren't optional. Carry more water than you expect to need, a torch, a first-aid kit and a way to navigate, and groups of ten or more should notify RAK's tourism authorities before setting out.",
+    "heritage": "The wadi takes its name from the Naqbiyin tribe, who once worked this ground; by around 1800 it had passed to the Habus, who grew wheat and dates here and traded across the region. Its lower reaches hold roughly 60 Wadi Suq-era burial tombs, several thousand years old, four of which University of Durham archaeologists excavated before Ring Road construction reached the site. Geologically, the wadi exposes rock from the Triassic–Jurassic boundary, around 200 million years old, with a genuinely rich fossil record for anyone interested in the ground beneath the trail.",
+    "etiquette": "This is still a working, inhabited mountain landscape rather than a wilderness park — keep to the marked routes near the small settlements en route, and pack out everything you bring in."
+  },
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "The page previously placed Wadi Naqab 'on the flanks of Jebel Jais'; Wikipedia instead says the wadi cuts into Yanas Mountain (Jebel Yanas), whose summit sits roughly 26km from Jebel Jais — corrected to Yanas Mountain, which also matches Jebel Yanas being reached via this same road.",
+    "GPS uses Wikipedia's coordinate for the wadi/dam area (25.694806, 56.045361), about 4km east of the old pin's longitude. This is a general point for the site, not a confirmed named car park — worth checking on the ground.",
+    "No source directly states facilities (toilets/food/shade/signal) at Wadi Naqab. Marked 'no'/'unknown' on strong circumstantial evidence — every guide instructs hikers to bring all their own supplies — rather than an explicit statement.",
+    "Fees are inferred as free; no source gives an explicit price or says 'free' outright, only that permits are not required below a group size of ten.",
+    "No National Center of Meteorology advisory specific to this wadi was found; the flash-flood warning is sourced to Ras Al Khaimah's own tourism board and to RAK Police rescue reports instead.",
+    "Audit (2026-09-27): Wikipedia says the dam was 'part of a $44.1 million package of infrastructural developments announced in February 2020' — it does not state a completion date. The text previously said the dam was 'completed in 2020'; corrected to describe it as built as part of the 2020 package, without asserting a completion year. All other checked facts (dam height, tomb count/era, Durham excavation, rescue dates/counts, geology) matched the cited sources."
+  ]
 }

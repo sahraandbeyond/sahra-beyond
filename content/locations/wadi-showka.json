@@ -1,22 +1,115 @@
 {
   "emirate": "Ras Al Khaimah",
-  "body": "Wadi Showka sits in the Hajar foothills of Ras Al Khaimah, an accessible mountain wadi laced with rock pools, shaded gravel trails and dam-fed streams. It's a favourite for easy hiking, mountain biking and beginner-friendly camping, with sweeping ridge views and a network of marked paths.\n\nAfter rain the pools fill and the wadi comes alive; in the cooler months it's a perfect half-day escape or relaxed overnight under the mountains. A 2WD reaches the main areas, though a high-clearance vehicle opens up more of the trails.",
-  "season": "Oct–Apr",
-  "lng": 56.03,
+  "body": "Wadi Shawka runs through the Hajar foothills of Ras Al Khaimah, starting near Khari village and merging further along with the neighbouring Wadi Esfai and Wadi Ejili. Its name is generally translated as 'powerful wadi', and it earns it: the area gets around 120mm of rain a year, unusually high for this part of the UAE, which is what keeps its pools filled through the cooler months. A dam completed in 2001 — 13 metres high, holding around 275,000 cubic metres of water — sits at the heart of the site, ringed by a proper recreational area rather than a bare trailhead.\n\nThat's the part most visitors see: washrooms, a family barbecue area, a children's play area, shaded seating and parking, plus small shops at the entrance selling basic supplies (worth topping up on food and water before you arrive, since stock is limited). It's free to visit, with no entry fee at any point.\n\nBeyond the dam, Wadi Shawka turns into a genuine hiking and mountain-biking destination, with trails ranging from a gentle 1.5–2 hour loop suitable for most fitness levels up to advanced routes of six hours or more into rockier, shalier terrain further upstream. A regular car comfortably reaches the dam and park; if you want to push on to the first pools and beyond, a 4x4 or at least a high-clearance vehicle makes life considerably easier over the unpaved sections.\n\nAfter rain, the wadi genuinely comes alive — pools fill, and for a short window the area turns green in a way that catches most visitors by surprise in a country better known for its deserts. That same rain, though, is the thing to watch: parts of the trail can flood and become impassable, so this is not a place to push through in wet weather. Come in the cooler months, treat the dam area as the easy half of the visit and the upstream trails as a genuinely different, harder proposition, and you'll get the best of both.",
+  "season": "Nov–Apr",
+  "lng": 56.06,
   "emoji": "🏞",
-  "name": "Wadi Showka",
-  "desc": "A mountain wadi in the Hajar foothills with rock pools, shaded trails and sweeping ridge views — a favourite for hiking, biking and easy camping.",
+  "name": "Wadi Shawka",
+  "desc": "A family-friendly Hajar Mountains wadi in Ras Al Khaimah with dam-fed pools, free entry and marked trails, plus longer routes for serious hikers.",
   "status": "safe",
   "igPosts": [],
-  "distance": "~1h from Dubai",
+  "distance": "About 1h–1h15 from Dubai",
   "cover": "/uploads/wadi-showka-cover.jpg",
   "id": "wadi-showka",
-  "difficulty": "Moderate",
+  "difficulty": "Easy",
   "category": "Wadis",
-  "lat": 25.02,
+  "lat": 25.102,
   "productLink": {
     "slug": "hajar-mountains-regular",
     "anchor": "the Hajar Mountains tee",
-    "sentence": "The peaks printed on {{link}} rise above Wadi Naqab, a neighbouring valley in these same Hajar foothills."
-  }
+    "sentence": "The peaks printed on {{link}} rise above Wadi Naqab, further north in the same Hajar range."
+  },
+  "area": "Hajar foothills near Khari village, off the E102/Shawka intersection",
+  "months": [
+    2,
+    2,
+    2,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Morning for the dam area with children; late afternoon if you're heading upstream on the longer trails.",
+  "timeNeeded": "2–3 hours at the dam; a full day for the longer upstream trails",
+  "fees": "Free",
+  "hours": "Open access",
+  "facilities": {
+    "toilets": "yes",
+    "food": "yes",
+    "shade": "yes",
+    "signal": "unknown",
+    "note": "Washrooms, a family barbecue area, a children's play area and shaded seating at the dam, plus small shops at the entrance with basic supplies — stock is limited, so bring your own food and water too."
+  },
+  "gpsSource": "https://www.bayut.com/mybayut/wadi-shawka-rak/ — the guide's own parking coordinate for the first pool (25.102020, 56.059887), cross-checked against a geotagged Wikimedia Commons photo of the same pools (25.101444, 56.060194).",
+  "sources": [
+    {
+      "label": "Wikipedia — Wadi Shawka",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Shawka"
+    },
+    {
+      "label": "MyBayut — Wadi Shawka, RAK guide",
+      "url": "https://www.bayut.com/mybayut/wadi-shawka-rak/"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — Wadi Shawka",
+      "url": "https://visitrasalkhaimah.com/location/place/wadi-shawka/"
+    },
+    {
+      "label": "Wikimedia Commons — Wadi Shawka Panorama",
+      "url": "https://commons.wikimedia.org/wiki/File:Wadi_Shawka_Panorama.jpg"
+    }
+  ],
+  "seoTitle": "Wadi Shawka, RAK: Dam Pools, Trails & Getting There",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A regular car reaches the dam and recreational area comfortably; a 4x4 or high-clearance vehicle helps for the first pools and trails beyond it."
+  },
+  "seoDesc": "A family-friendly Hajar Mountains wadi in Ras Al Khaimah with dam-fed pools, free entry and marked trails, plus longer routes for serious hikers.",
+  "faqs": [
+    {
+      "q": "Is there an entry fee for Wadi Shawka?",
+      "a": "No — it's free to visit, at the dam and along the trails."
+    },
+    {
+      "q": "Is Wadi Shawka good for families?",
+      "a": "Yes — the dam and recreational area has washrooms, a play area, shaded seating and an easy trail. Longer trails further upstream are considerably harder."
+    },
+    {
+      "q": "Do I need a 4x4?",
+      "a": "Not for the dam and park area — a regular car is fine. A 4x4 or high-clearance vehicle helps for the first pools and trails beyond it."
+    },
+    {
+      "q": "How far is Wadi Shawka from Dubai?",
+      "a": "About 90km, roughly an hour to an hour and fifteen minutes in normal traffic via the E102."
+    },
+    {
+      "q": "Can I camp at Wadi Shawka?",
+      "a": "Yes — Ras Al Khaimah's own tourism board lists it as a popular, free wild-camping spot, with flat ground near the trails and the dam. There's no official campsite infrastructure, so bring everything you need and leave no trace."
+    },
+    {
+      "q": "When's the best time to visit?",
+      "a": "November to April, when temperatures sit around 20–26°C; the pools are also fullest then after rain."
+    }
+  ],
+  "guide": {
+    "gettingThere": "From Dubai, take the E102 highway and turn off at the Shawka intersection; from Ras Al Khaimah city, follow the E18 to the E88 crossing, then turn right and left again before the Adnoc station. It's roughly 90km from Dubai, around an hour to an hour and fifteen minutes in normal traffic. A regular car reaches the dam and recreational area without trouble; to continue to the first pools and beyond, the parking there needs a 4x4 or high-clearance vehicle over rougher ground. There's no public transport to Wadi Shawka, so this is a self-drive trip or an organised tour; fuel up before you leave the highway, since there's little beyond the small shops at the entrance.",
+    "whenToGo": "November to April is the comfortable window, with temperatures generally between 20–26°C rather than summer's extremes. Winter is also when the pools are fullest after rain, and when the surrounding hillsides briefly turn green. Weekdays are quieter than weekends at the dam area, which draws family day-trippers; if you're heading for the longer upstream trails, an early start avoids both the heat and the crowds. Whatever the season, check the forecast first — parts of the wadi flood and become impassable after heavy rain.",
+    "onSite": "At the dam, expect a proper family-day-out setup: shaded seating, a children's play area, barbecue spots and washrooms, with dam-fed pools nearby for a paddle. From there, marked trails head upstream through the wadi, ranging from a beginner-friendly 1.5–2 hour there-and-back walk to advanced routes of six hours or more over rockier, shaley ground deeper into the mountains. It's also a mountain-biking destination, with donkey trails and bike-specific tracks alongside the hiking paths, and it's used for off-roading, canyoning, swimming in the pools, picnicking and stargazing after dark. Treat the dam area as an easy half-day out on its own, and the upstream trails as a separate, harder trip if you're after more of a workout.",
+    "safety": "The dam and park area is genuinely easy and family-friendly, but don't let that lull you into treating the upstream wadi the same way: parts of it flood and become impassable after heavy rain, and the terrain turns rocky and uneven the further you go. Avoid Wadi Shawka altogether during or right after storms. Wear proper hiking shoes rather than sandals once you leave the paved park area, carry sun protection and enough water, keep your phone charged, and start early to beat the midday heat on the longer routes. The UAE's general emergency numbers apply here as everywhere — 999 for police, 998 for ambulance — worth having saved before you head off the marked paths.",
+    "etiquette": "This is a popular family spot, so keep noise down near the play areas and pack out any barbecue rubbish — bins are limited beyond the entrance."
+  },
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "GPS pin corrected from 25.02, 56.03 (roughly 9km south of the real site) to about 25.102, 56.060 — matched independently by a written guide's parking coordinates and a geotagged Wikimedia Commons photo of the wadi's pools.",
+    "Wikipedia's own coordinate for 'Wadi Shawka' (25.100, 56.033) sits about 2.6km west of the dam/pools cluster used here — it may mark a different point along the wadi's course rather than the visitor car park; flagging in case of a discrepancy.",
+    "Difficulty is set to Easy to match the dam/park area most visitors reach, resolving a previous mismatch between a 'Moderate' badge and 'beginner-friendly' text in the copy. The upstream trails run to six-plus hours and are meaningfully harder, so the single difficulty badge describes the main visitor area, not the whole site.",
+    "Name corrected from 'Wadi Showka' to 'Wadi Shawka' to match the spelling used by Wikipedia, Visit Ras Al Khaimah and MyBayut.",
+    "No source gives an official policy on camping specifically at Wadi Shawka; it's listed as an activity by one travel guide, but there's no stated campsite infrastructure or rule from an official body.",
+    "Audit (2026-09-27): Visit Ras Al Khaimah's own site (visitrasalkhaimah.com) explicitly confirms free wild camping is permitted at Wadi Shawka — the FAQ answer previously hedging this has been corrected to state it plainly, sourced to that page. No source found gives an exact Dubai-to-Wadi-Shawka distance in km; the previous '92km/95km' figures weren't traceable to any cited source, so they've been rounded to an approximate '90km' rather than stated as precise. Dam height (13m), capacity (275,000 m³), 2001 completion, 120mm annual rainfall, fee-free entry, and trail durations (1.5–2h / 6h+) all matched Wikipedia and MyBayut."
+  ]
 }

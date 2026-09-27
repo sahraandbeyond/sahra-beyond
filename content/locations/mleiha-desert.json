@@ -1,22 +1,150 @@
 {
   "id": "mleiha-desert",
-  "name": "Mleiha Desert",
+  "name": "Mleiha",
   "emoji": "🪨",
   "emirate": "Sharjah",
   "category": "Dunes",
   "difficulty": "Moderate",
   "season": "Oct–Apr",
-  "distance": "~1h from Dubai",
-  "lat": 25.1339,
-  "lng": 55.84,
+  "distance": "About 50min–1h15 from Dubai; roughly 45min from Sharjah city",
+  "lat": 25.1264,
+  "lng": 55.8575,
   "status": "warn",
-  "desc": "An archaeological desert of golden dunes and wind-carved rock outcrops. Otherworldly formations, ancient tombs and Fossil Rock make it feel like another planet.",
-  "cover": "",
+  "desc": "An archaeological desert in Sharjah where dunes meet Fossil Rock, Camel Rock and Bronze Age tombs — home to Mleiha National Park and the UNESCO-listed Faya Palaeolandscape.",
+  "cover": "/uploads/places/mleiha-desert.jpg",
   "igPosts": [],
-  "body": "The Mleiha desert in Sharjah is one of the UAE's most otherworldly landscapes — golden dunes broken by wind-carved rock outcrops, ancient tombs and the famous Fossil Rock. It's a designated archaeological area where the scenery feels almost lunar, drawing photographers, dune drivers and history lovers alike.\n\nYou can self-drive the dunes (technical in places), explore the visitor centre and Bronze Age sites, or simply chase the light around the rock formations at sunset. An easy hour from Dubai, it pairs a striking desert backdrop with a real sense of the region's deep history.",
+  "body": "Mleiha (sometimes written Maleiha) is a stretch of golden dunes and wind-carved limestone in Sharjah's Central Region, built around one of the richest archaeological landscapes in the Gulf. Sand gives way to pale rock outcrops — most famously Fossil Rock and the double-humped Camel Rock — while Bronze Age tombs and prehistoric campsites sit only a short drive from the visitor centre. It reads, at a glance, as pure desert scenery; look closer and it's also one of the longest-running records of human life in Arabia.\n\nAt the centre of the area is Mleiha National Park, built around the Mleiha Archaeological Centre, which opened in 2016 over a preserved Umm Al Nar-era tomb (roughly 2300 BC) and displays 40-plus years of finds from digs at Jebel Faya, Al Thuqeibah, Al Madam and Jebel Al-Buhais. Beyond the museum, the park runs bookable desert activities — guided archaeology and dune-buggy tours, horse riding, paragliding off the escarpment, glamping domes, an overnight camp and evening stargazing — through its own booking site rather than a walk-up ticket office.\n\nThe wider landscape now carries UNESCO World Heritage status: in July 2025, the Faya Palaeolandscape — a roughly 20km chain of limestone jebels and surrounding desert centred on Mleiha — was inscribed as a Cultural Landscape, the only Arab site added that year and the UAE's second overall, after Al Ain's oasis and cultural sites in 2011. Excavations here have pushed the record of human presence in Arabia back more than 210,000 years, with stone tools at nearby Faya-1 dated to roughly 125,000–130,000 years old — evidence used to argue that early humans didn't just pass through this desert on the way out of Africa, but settled and adapted to it across repeated wet and dry cycles.\n\nFor most visitors the draw is simpler: a self-drive or guided dune route past Fossil Rock — reportedly visible from more than 25km away on the approach road — and Camel Rock a little further into the sand, with the rust-red ridge of Al Faya rising behind. It's technical driving in places, better suited to a capable 4x4 than a rental sedan, and the pay-off is some of the most otherworldly scenery within reach of Dubai or Sharjah in about an hour.",
   "productLink": {
     "slug": "empty-quarter-regular",
     "anchor": "the Empty Quarter tee",
     "sentence": "Fossil Rock and its wind-carved outcrops are a world away from the dunes on {{link}}, which trace Liwa, well south of here."
-  }
+  },
+  "area": "Central Region, Sharjah, around Jebel Faya and the Mleiha–Al Faya desert corridor, near Dhaid",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Early morning or the last couple of hours before sunset, when the dunes and rock outcrops take on the best colour and the heat is easiest to handle; the park also runs bookable evening stargazing sessions after dark.",
+  "timeNeeded": "Half a day for the Archaeological Centre, Fossil Rock and Camel Rock; a full day or an overnight glamping stay if you add a booked activity.",
+  "fees": "AED 25 adult / AED 15 child up to 10 (under 5 free) for the Archaeological Centre; family ticket (2 adults + 3 children) AED 75",
+  "hours": "Sun–Wed 9am–7pm, Thu–Sat 9am–9pm (Archaeological Centre)",
+  "facilities": {
+    "toilets": "yes",
+    "food": "yes",
+    "shade": "some",
+    "signal": "unknown",
+    "note": "Toilets and a café are at the Archaeological Centre itself. We found no source describing facilities out at Fossil Rock or Camel Rock, several kilometres into the dunes — treat that part of the trip as facility-free."
+  },
+  "gpsSource": "Wikipedia — Mleiha Archaeological Centre coordinates (25°7′34.95″N 55°51′27.17″E), the visitor centre / museum entrance: https://en.wikipedia.org/wiki/Mleiha_Archaeological_Centre. Camel Rock is separately reported (theroadreel.com) at about 25.1174, 55.8268, roughly 1.5km from this pin — this JSON's point is the Centre, not the rock formations.",
+  "sources": [
+    {
+      "label": "Wikipedia — Mleiha",
+      "url": "https://en.wikipedia.org/wiki/Mleiha"
+    },
+    {
+      "label": "Wikipedia — Mleiha Archaeological Centre",
+      "url": "https://en.wikipedia.org/wiki/Mleiha_Archaeological_Centre"
+    },
+    {
+      "label": "Visit Sharjah — Mleiha National Park",
+      "url": "https://www.visitsharjah.com/activities/adventure/mleiha-national-park/"
+    },
+    {
+      "label": "Visit Sharjah — Mleiha City (Central Region)",
+      "url": "https://www.visitsharjah.com/regions/central-region/mleiha/"
+    },
+    {
+      "label": "Mleiha National Park (official site)",
+      "url": "https://mleihanationalpark.com/"
+    },
+    {
+      "label": "The National — Sharjah's Faya wins UNESCO World Heritage status",
+      "url": "https://www.thenationalnews.com/news/uae/2025/07/11/sharjah-faya-unesco-world-heritage-status/"
+    },
+    {
+      "label": "UNESCO World Heritage Centre — Faya Palaeolandscape",
+      "url": "https://whc.unesco.org/en/list/1735/"
+    },
+    {
+      "label": "PropertyFinder — All About Mleiha Archaeological Centre",
+      "url": "https://www.propertyfinder.ae/blog/mleiha-archaeological-centre/"
+    },
+    {
+      "label": "The Road Reel — Ultimate Guide to Mleiha and Fossil Rock",
+      "url": "https://www.theroadreel.com/mleiha-travel-guide/"
+    },
+    {
+      "label": "Wikimedia Commons — File:Fossil Rock, UAE.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Fossil_Rock,_UAE.jpg"
+    }
+  ],
+  "seoTitle": "Mleiha Desert Guide: Fossil Rock, Fees & Getting There",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A paved road reaches the Mleiha Archaeological Centre, its car park and café, so an ordinary car is fine for the museum itself. You need a 4x4 for the dune sections around Fossil Rock, Camel Rock and any self-drive route into the surrounding desert — the sand is soft and described as technical in places."
+  },
+  "seoDesc": "An archaeological desert in Sharjah where dunes meet Fossil Rock, Camel Rock and Bronze Age tombs — home to Mleiha National Park and the UNESCO-listed Faya Palaeolandscape.",
+  "faqs": [
+    {
+      "q": "Is there an entry fee for Mleiha?",
+      "a": "Yes, for the Archaeological Centre and museum — AED 25 for adults and AED 15 for children up to 10 (under-5s free), with a family ticket at AED 75. No separate fee was found for viewing Fossil Rock or Camel Rock out in the open desert."
+    },
+    {
+      "q": "What are the opening hours?",
+      "a": "The Archaeological Centre runs Sunday to Wednesday, 9am–7pm, and Thursday to Saturday, 9am–9pm, per the official park website."
+    },
+    {
+      "q": "How do I get to Mleiha from Dubai?",
+      "a": "It's about 50 minutes to just over an hour by car via Emirates Road (E611) and the roads through Dhaid. The museum and car park sit on a paved approach, though a 4x4 is needed for the dune sections."
+    },
+    {
+      "q": "Is Fossil Rock hard to reach?",
+      "a": "The approach is technical in places — soft sand and some scrambling — so a 4x4 and reasonable fitness help; the rock itself is visible from many kilometres away if you'd rather just admire it from a distance."
+    },
+    {
+      "q": "Can I camp or stay overnight at Mleiha?",
+      "a": "Yes — the park runs a bookable overnight camp and glamping domes, rather than allowing casual free camping across the protected desert."
+    },
+    {
+      "q": "Is Mleiha a UNESCO World Heritage Site?",
+      "a": "The surrounding Faya Palaeolandscape was inscribed as a UNESCO World Heritage cultural landscape in July 2025, and Mleiha's Archaeological Centre sits at its centre."
+    }
+  ],
+  "guide": {
+    "gettingThere": "Mleiha sits in Sharjah's Central Region, close to Dhaid — about 50 minutes to just over an hour from Dubai and roughly 45 minutes from Sharjah city, via Emirates Road (E611) and the roads through Dhaid. The Mleiha Archaeological Centre itself is on a paved approach road, so an ordinary car reaches the museum, car park and café without trouble; you only need a 4x4 for the dune sections around Fossil Rock, Camel Rock and any self-drive route further into the desert, where the sand is soft and technical in places. Dhaid is the last reliable town for fuel, a supermarket and a pharmacy before the turn-off toward the desert. There's no public bus route to the centre, so a taxi, private transfer or self-drive is the realistic option; some of the park's own packages include return transfers from Sharjah.",
+    "whenToGo": "October to April is the season here, as for most UAE desert destinations — daytime heat outside that window makes any time on foot at Fossil Rock or in the open dunes unpleasant and genuinely riskier. Early morning and the last couple of hours before sunset give the softest light on the sand and rock and the easiest temperatures for walking or climbing. The Archaeological Centre keeps slightly longer hours Thursday to Saturday (9am–9pm) than the rest of the week, and runs bookable evening stargazing sessions after dark. Weekdays are the quieter choice if you want Fossil Rock's viewpoints without a crowd.",
+    "onSite": "The Archaeological Centre's museum walks you through 40-plus years of local digs, built around a preserved Umm Al Nar tomb dating to about 2300 BC, with an on-site café. From there, most visitors head into the dunes: Fossil Rock, a limestone outcrop studded with marine fossils and visible from many kilometres off, and Camel Rock, a distinctive double-humped formation a little further into the sand — both reachable by 4x4, or on foot for the fitter. Bookable add-ons through the park include self-drive dune buggies, guided archaeology and 'Valley of the Caves' tours, horse riding, paragliding off the escarpment, and, after dark, stargazing sessions, glamping domes and an overnight desert camp. Budget half a day for the museum and a dune drive to the rocks; a full day or an overnight stay if you're adding any of the bookable activities.",
+    "safety": "This is a working protected archaeological landscape as well as a desert, so the two sets of risks overlap. Heat and sun are the everyday hazard — carry more water than you think you need, and avoid exposed walks at Fossil Rock in the middle of the day. Off the paved approach road, sand is soft and self-drive dune routes are described as technical in places: lower your tyre pressures, travel with at least one other vehicle, and carry recovery gear. Some areas within the Faya Palaeolandscape are designated core zones with entry restricted to private, guided tours rather than free access, so treat any track you're unsure of as off-limits and stick to marked routes. Removing fossils, artefacts or rock runs against the point of a protected site — leave everything as you find it. Phone signal out in the dunes themselves is unconfirmed either way, so don't rely on it.",
+    "heritage": "Mleiha anchors the Faya Palaeolandscape, inscribed as a UNESCO World Heritage cultural landscape in July 2025 — the only Arab site added that year, and the UAE's second, after Al Ain's oasis and cultural sites in 2011. Excavations at nearby Jebel Faya have found stone tools dated to roughly 125,000–130,000 years old, evidence used to argue that early modern humans settled this desert through wet-and-dry cycles rather than merely passing through on a route out of Africa. Mleiha's own Umm Al Nar tomb, from about 2300 BC, sits at the centre of the modern Archaeological Centre, alongside finds spanning the Neolithic through to a fortified, South Arabian-linked settlement dated to around 300 BC.",
+    "etiquette": "Treat the desert as a protected archaeological site as much as a scenic one: keep to existing tracks, don't dig or collect fossils and artefacts, and expect some areas to be off-limits to casual visitors and open only on a guided tour."
+  },
+  "nameAr": "مليحة",
+  "photoCredit": {
+    "author": "Johnhpbarlow",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Fossil_Rock,_UAE.jpg",
+    "what": "Dunes and rocky outcrops of the Mleiha desert, in the Fossil Rock area, in hazy desert light"
+  },
+  "darkSky": true,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Opening hours: the official mleihanationalpark.com site and Wikipedia both give Sun–Wed 9am–7pm / Thu–Sat 9am–9pm, but one independent guide (The Road Reel) gives Sat–Wed 9am–7pm / Thu–Fri 9am–9pm — a different weekend split, likely reflecting an older UAE weekend (Fri–Sat rather than Sat–Sun). We went with the official site's current wording.",
+    "No separate published fee was found for viewing Fossil Rock or Camel Rock outside the museum ticket — treat as likely free, open desert, but unconfirmed by any source we opened.",
+    "Specific off-road and camping rules for independent (non-tour) visitors weren't found in a single official rules document. We know only that some 'core zones' of the Faya Palaeolandscape restrict entry to guided tours (Khaleej Times, The National), so the safety text errs toward caution rather than stating a complete rulebook.",
+    "The GPS point given is the Archaeological Centre / museum entrance (sourced to Wikipedia). Fossil Rock and Camel Rock are several kilometres further into the dunes; Camel Rock's separately reported coordinates sit roughly 1.5km from this pin.",
+    "Drive time from Dubai is approximate: one independent guide gives about 50 minutes via Emirates Road, while Sharjah's own tourism material implies closer to an hour based on the park's 65km distance from Sharjah city — we've given a range rather than a single figure.",
+    "The Wikimedia Commons photo is titled and categorised as showing the Mleiha/Fossil Rock area, but we could not confirm from the image alone that the specific outcrop pictured is Fossil Rock rather than a neighbouring formation in the same desert.",
+    "Audit (27 Sep 2026): the body text attributed the 'visible from more than 25km away' claim to 'Sharjah's own tourism material'. We opened both cited Visit Sharjah pages directly and neither states this; the figure only appears in The Road Reel (theroadreel.com, already in sources), an independent travel blog. Corrected the attribution in the body so it no longer overstates this as official material — the 25km figure itself is plausible (Fossil Rock is a prominent standalone outcrop) but is blog-sourced, not official."
+  ]
 }

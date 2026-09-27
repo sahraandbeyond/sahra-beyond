@@ -1,18 +1,129 @@
 {
   "emirate": "Abu Dhabi",
   "coverFocus": "45% 36%",
-  "body": "Sir Bani Yas Island is a natural island and pioneering wildlife reserve off Abu Dhabi's western coast, home to thousands of free-roaming animals including Arabian oryx, giraffes, cheetahs and gazelles. Part of a decades-long conservation effort, the Arabian Wildlife Park offers a genuine safari within the UAE.\n\nAccess is by boat or short flight, usually as a day trip or as a stay at the island's resorts. Beyond the wildlife drives you'll find mangroves, salt domes, archaeological sites and quiet beaches — a unique blend of conservation, history and coastline found nowhere else in the country.",
+  "body": "Sir Bani Yas is a natural island off Abu Dhabi's far western coast, in the Al Dhafra region near the mainland town of Jebel Dhanna. It was the private retreat of the late Sheikh Zayed bin Sultan Al Nahyan, the UAE's founding president, who in 1971 set part of it aside as a nature reserve and, through decades of tree planting and captive breeding, turned a dry island into a working conservation project, according to Abu Dhabi's own cultural heritage authority.\n\nThat reserve is now the Arabian Wildlife Park, covering roughly 1,400 hectares of the island's 87 square kilometres. Thousands of animals roam it freely, including a large herd of Arabian oryx built up from a handful of founder animals, alongside giraffes, cheetahs, gazelles, Somali ostriches and striped hyenas — species you'd otherwise need to travel to sub-Saharan Africa to see loose in a landscape. Dolphins and sea turtles are recorded in the surrounding waters, and well over a hundred bird species have been logged on the island.\n\nThe wildlife park isn't the whole story. Archaeologists have found flint tools around 7,000 years old, a Bronze Age trading settlement roughly 4,000 years old, and the remains of a 7th–8th century Christian monastery — among the oldest confirmed Christian sites in the UAE — evidence that this coast was inhabited and connected to wider trade routes long before oil. Beyond the history, the island has mangroves, salt-dome hills, sandy beaches, and three resorts run by Anantara offering stays, water sports and horse riding alongside the wildlife drives.\n\nNone of it is a casual drop-in. There's no bridge, and almost everything beyond the free ferry crossing — the safaris especially — has to be arranged through a resort or a licensed operator before you arrive.",
   "season": "Oct–Apr",
-  "lng": 52.59,
+  "lng": 52.6,
   "emoji": "🦁",
   "name": "Sir Bani Yas Island",
-  "desc": "A natural island and pioneering wildlife reserve, home to free-roaming Arabian oryx, giraffe and cheetah as part of a decades-long conservation effort.",
+  "desc": "A natural island off Abu Dhabi reached by ferry from Jebel Dhanna: free-roaming oryx, giraffe and cheetah, a 7th-century monastery, and safaris you book through the resorts.",
   "status": "safe",
   "igPosts": [],
-  "distance": "~3h from Abu Dhabi",
+  "distance": "About 2–2.5h by road from Abu Dhabi to the Jebel Dhanna jetty, then a short ferry crossing",
   "cover": "/uploads/17992461785873452.webp",
   "id": "sir-bani-yas-island",
   "difficulty": "Easy",
   "category": "Coast",
-  "lat": 24.32
+  "lat": 24.3333,
+  "area": "Al Dhafra region, offshore near Jebel Dhanna",
+  "months": [
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2
+  ],
+  "bestTime": "Wildlife drives run at the cooler start and end of the day, so book an early-morning or late-afternoon safari and leave the beach or boat trip for the warmer middle hours.",
+  "timeNeeded": "A full day if you come as a day visitor by ferry; most people stay one to three nights at one of the island's resorts",
+  "fees": "No general island entry fee; the jetty ferry crossing is free. The main paid activity, a guided wildlife safari through the Arabian Wildlife Park, runs around AED 200–300 per person, booked through a resort or tour operator.",
+  "facilities": {
+    "toilets": "yes",
+    "food": "yes",
+    "shade": "yes",
+    "signal": "unknown",
+    "note": "As a resort island, toilets, food and shade are available at the three Anantara resorts and, most sources suggest, at the jetty terminal on arrival. We found no source describing facilities for a day visitor who isn't booked into a resort activity."
+  },
+  "gpsSource": "https://en.wikipedia.org/wiki/Sir_Bani_Yas — the island's charted coordinates (its infobox gives 24°20′N 52°36′E). This pin marks the island itself, not the mainland embarkation point — see Getting there for the Jebel Dhanna jetty, where the journey actually starts.",
+  "sources": [
+    {
+      "label": "Visit Abu Dhabi — Sir Bani Yas Island",
+      "url": "https://visitabudhabi.ae/en/where-to-go/islands/sir-bani-yas-island"
+    },
+    {
+      "label": "Visit Abu Dhabi — Your ultimate guide to Sir Bani Yas Island",
+      "url": "https://visitabudhabi.ae/en/plan-your-trip/article-hub/guide-to-sir-bani-yas-island"
+    },
+    {
+      "label": "Environment Agency – Abu Dhabi — Sir Bani Yas Island",
+      "url": "https://www.ead.gov.ae/en/Experience-Green-Abu-Dhabi/Places-To-Go/Sir-Bani-Yas-Island"
+    },
+    {
+      "label": "Abu Dhabi Culture — Sir Bani Yas Island archaeology",
+      "url": "https://abudhabiculture.ae/en/cultural-heritage/tangible/archaeology/sir-bani-yas-island"
+    },
+    {
+      "label": "Wikipedia — Sir Bani Yas",
+      "url": "https://en.wikipedia.org/wiki/Sir_Bani_Yas"
+    },
+    {
+      "label": "Etihad Airways — Sir Bani Yas Island",
+      "url": "https://www.etihad.com/en/abu-dhabi/attractions/sir-bani-yas-island"
+    },
+    {
+      "label": "Desert Leap Safari — Sir Bani Yas Island guide",
+      "url": "https://desertleapsafari.com/sir-baniyas-island/"
+    },
+    {
+      "label": "Wikimedia Commons — File:Sir Bani Yas Island Panorama.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Sir_Bani_Yas_Island_Panorama.jpg"
+    }
+  ],
+  "seoTitle": "Sir Bani Yas Island: Ferry, Safari & Visitor Guide",
+  "access": {
+    "vehicle": "boat",
+    "note": "There's no bridge or self-drive route onto the island. Drive to the Jebel Dhanna jetty and cross on the free public speedboat, or book a resort water taxi or a private seaplane. Day visitors can use the public ferry, but the wildlife safari — the main reason most people come — has to be pre-booked through a resort or a registered tour operator; you can't simply turn up and join one."
+  },
+  "seoDesc": "A natural island off Abu Dhabi reached by ferry from Jebel Dhanna: free-roaming oryx, giraffe and cheetah, a 7th-century monastery, and safaris you book through the resorts.",
+  "faqs": [
+    {
+      "q": "How do I get to Sir Bani Yas Island?",
+      "a": "Drive from Abu Dhabi to the Jebel Dhanna jetty (around two hours) and take the free public ferry, book a resort water taxi, or fly in by private seaplane. There's no bridge or self-drive route onto the island."
+    },
+    {
+      "q": "Do I have to stay at a resort to visit?",
+      "a": "No — day visitors can cross on the public ferry from Jebel Dhanna, but the main activity, the wildlife safari, still needs to be booked in advance through a resort or tour operator."
+    },
+    {
+      "q": "How much does the wildlife safari cost?",
+      "a": "Around AED 200–300 per person, based on operator listings; treat this as an estimate and confirm the current price when you book."
+    },
+    {
+      "q": "Is there an entry fee for the island itself?",
+      "a": "No general island entry fee is charged. The ferry crossing is free, and you pay only for the activities and accommodation you book."
+    },
+    {
+      "q": "What animals will I see?",
+      "a": "Arabian oryx, gazelle, giraffe, cheetah, Somali ostrich and striped hyena roam the Arabian Wildlife Park, with dolphins and sea turtles recorded in the surrounding waters."
+    },
+    {
+      "q": "Is it safe for children?",
+      "a": "Yes — safaris are vehicle-based and resort facilities are set up for families, though normal caution around free-roaming wildlife and any swimming spot applies."
+    }
+  ],
+  "guide": {
+    "gettingThere": "There's no road bridge, so you can't drive straight onto Sir Bani Yas. Most visitors drive from Abu Dhabi to the Jebel Dhanna jetty — reckon on around two hours each way, mostly on the E11 — then take the free public speedboat across; sources give the crossing itself as anywhere from 15 to 30 minutes. Hotel guests can instead book a complimentary water taxi direct to their resort, which runs several times a day but needs 24 hours' notice. A private seaplane also flies in from Abu Dhabi in around 45 minutes, landing at the island's own small airstrip, for those willing to pay for the time saved. There's no public bus route to the jetty, so this is a self-drive, private-transfer or organised-tour trip.",
+    "whenToGo": "October to April is the comfortable window for the desert and coastal parts of a visit, in line with the rest of the UAE's outdoor season. The resorts and wildlife drives run year-round, since safaris are timed for the cooler early morning and late afternoon whatever the month. If wildlife-watching is the priority, ask your resort or operator about safari timings when you book — these determine your day's schedule far more than the season does.",
+    "onSite": "The signature activity is a guided drive through the Arabian Wildlife Park, where oryx, gazelle, giraffe and cheetah roam a fenced but genuinely wild-feeling landscape — this has to be pre-booked through a resort or tour operator, typically for around AED 200–300 per person, and isn't something you can just turn up and join. Beyond the safari, the island offers kayaking through mangroves, mountain biking, archery, horse riding, snorkelling and hiking, plus visits to the Bronze Age and early-Christian archaeological sites and the salt-dome hills. Beaches here are quieter than the mainland's, and boat trips sometimes turn up dolphins. Most day visitors build their time around one safari plus a beach or boat stop; those staying overnight spread activities across several days.",
+    "safety": "This is a managed, resort-run island rather than a wild self-drive spot, so the main planning risk is logistical: safaris and most activities need booking in advance through a resort or licensed operator, and turning up without one may mean a day with little to do beyond the beach. Follow the wildlife park's rules on your safari — stay in the vehicle where instructed, and don't feed or approach the animals, several of which (cheetahs included) are genuinely dangerous. Standard UAE beach caution applies to any swimming spot: check conditions with your resort, since currents and marine life vary by location. In an emergency, UAE-wide numbers apply: 999 police, 998 ambulance, 997 civil defence.",
+    "heritage": "The island carries real weight beyond its wildlife: a 7th–8th century Christian monastery here is among the oldest confirmed Christian sites in the UAE, alongside Bronze Age trading-settlement remains roughly 4,000 years old and flint tools dated to about 7,000 years. Sheikh Zayed, the UAE's founding president, used the island as a personal retreat and, from 1971, as the starting point for a decades-long conservation programme that grew into today's Arabian Wildlife Park — one of the clearest on-the-ground legacies of his environmental push.",
+    "etiquette": "Treat the archaeological sites and monastery ruins as you would any heritage site — no climbing on the remains or removing stones — and follow your guide's instructions around the free-roaming wildlife at all times."
+  },
+  "nameAr": "صير بني ياس",
+  "overnight": false,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Founding date of the nature reserve: Abu Dhabi Culture (official) gives 1971; Wikipedia's 'Greening of the Desert' framing implies a 1977 date for the formal conservation programme. We used 1971 as the official-source date but flag the discrepancy.",
+    "The safari price (AED 200–300pp) comes from travel-guide sites, not a published official price list — confirm the current rate before treating it as fixed.",
+    "EAD.gov.ae (official) states visitors 'must be a guest of the Desert Islands Resort & Spa by Anantara' to access the island, which reads as outdated next to newer sources describing public day-ferry access. We went with the more recent, more numerous sources but could not find a page that explicitly supersedes the EAD wording.",
+    "One lower-quality source (citytourindubai.com) claimed a flat AED 15 entry fee and 2pm–6pm opening hours (except Friday); this contradicts every other source and reads as generic or templated content, so we left it out of the fee/hours fields entirely rather than include an unverified figure.",
+    "Ferry crossing time is reported inconsistently across sources (15, 20 or 30 minutes); we gave a range rather than a single figure.",
+    "The GPS pin marks the island's charted centre (from Wikipedia), not the Jebel Dhanna jetty where the journey actually begins — worth adding a separate jetty pin if the site's template supports a second location."
+  ]
 }

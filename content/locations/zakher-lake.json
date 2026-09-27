@@ -6,18 +6,120 @@
   "category": "Camping",
   "difficulty": "Easy",
   "season": "Oct–Apr",
-  "distance": "~1h45 from Dubai",
-  "lat": 24.15,
-  "lng": 55.68,
+  "distance": "About 1h45–2h from Dubai; roughly 1h30–1h45 from Abu Dhabi; about 25–30min from Al Ain city centre",
+  "lat": 24.0891,
+  "lng": 55.6335,
   "status": "safe",
-  "desc": "A reed-fringed desert lake near Al Ain, famous for flamingos and birdlife — a peaceful spot for fishing, photography and low-key lakeside camping.",
-  "cover": "",
-  "coverFocus": "50% 50%",
+  "desc": "A man-made desert lake on the edge of Al Ain, formed by rising groundwater from treated wastewater — now a magnet for flamingos and migratory birds. Swimming isn't permitted.",
+  "cover": "/uploads/places/zakher-lake.jpg",
   "igPosts": [],
-  "body": "Zakher Lake is a tranquil man-made lake on the desert edge of Al Ain, near the Oman border, formed over the years by groundwater and agricultural runoff. Ringed by tall reeds with the Hajar mountains on the horizon, it has quietly become one of the region's best spots for birdwatching, easy fishing and relaxed lakeside camping away from the crowds.\n\nThe lake is a magnet for birdlife: flamingos, herons, egrets and dozens of migratory species stop here through the cooler months, making it a favourite for photographers and families. It is an informal, facility-free spot, so come fully self-sufficient with water, shade and everything you need, and take all your rubbish home.\n\nThe best time to visit is October to April, when temperatures are mild and the birdlife is at its richest. A normal car reaches the main areas, and it makes an easy day trip or overnight from Al Ain — roughly an hour and three-quarters from Dubai or Abu Dhabi.",
+  "body": "Zakher Lake sits on the desert fringe of Al Ain, near the Oman border, and it exists almost by accident. It isn't a natural oasis: Wikipedia, drawing on CNN and NPR reporting, describes the lake as an unplanned by-product of the UAE's water management, formed when treated wastewater released onto the land raised the local groundwater table until it broke the surface. Some UAE travel pages instead put this down to agricultural runoff — that isn't what the more detailed sourcing says, so treat the groundwater and treated-wastewater explanation as the more reliable one.\n\nWhatever produced it, the result reads as a proper desert wetland: reed beds, sand dunes rolling down to the water, and the Hajar Mountains on the horizon. It has become one of the region's better birdwatching spots, drawing flamingos, herons, egrets, stilts and a long list of migratory species through the cooler months — good enough that it's sometimes described as a birdwatcher's oasis, with photographers and families turning out accordingly.\n\nThere's very little built here. Picnic tables and some shaded seating are the extent of the infrastructure, and sources disagree on whether there are public toilets at all — come prepared either way, since there are no cafés, shops or lifeguards. Swimming is explicitly described as not permitted, so this is a place to walk the shoreline, watch birds and fish rather than get in the water. Camping happens informally along the reeds and dunes; a 4x4 makes it easier to get right down to the softer sand near the shore, though an ordinary car manages the main areas without trouble.\n\nIt's an easy add-on to a trip built around Al Ain itself — roughly 25–30 minutes from the city centre — or a birdwatching detour on the longer run from Dubai or Abu Dhabi, best kept to the cooler months when both the temperature and the birdlife are at their best.",
   "productLink": {
     "slug": "al-quaa-galaxy-regular",
     "anchor": "the Al Quaa Galaxy tee",
-    "sentence": "Al Quaa lies not far past Al Ain, and its night sky is the one printed on the back of {{link}}."
-  }
+    "sentence": "Al Quaa, out in the desert south-west of Al Ain, is the night sky printed on {{link}}."
+  },
+  "area": "Al Ain, on the western Zakher edge of the city, near the Oman border",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Early morning or the couple of hours before sunset, for the softest light and the most active birdlife; stick to the cooler months (October–April) overall.",
+  "timeNeeded": "2–4 hours for a lakeside visit and some birdwatching; a full day or overnight if you're camping.",
+  "fees": "Free (no entry fee found)",
+  "hours": "Open access (no gate or posted hours found)",
+  "facilities": {
+    "toilets": "unknown",
+    "food": "no",
+    "shade": "some",
+    "signal": "unknown",
+    "note": "Sources disagree on toilets — one describes public toilets on site, another says there are none at all — so treat this as unconfirmed and come prepared either way. There are no cafés or shops; picnic tables and some shaded structures are the only other built facilities, and swimming is not permitted."
+  },
+  "gpsSource": "Wikipedia — Lake Zakher coordinates (24.089097°N, 55.633471°E): https://en.wikipedia.org/wiki/Lake_Zakher. PropertyFinder's own map places the lakeside car park very close by, at about 24.0869°N, 55.6187°E. The old page's pin (24.15, 55.68) sat roughly 8km northeast of the lake, over dry desert, and has been corrected.",
+  "sources": [
+    {
+      "label": "Wikipedia — Lake Zakher",
+      "url": "https://en.wikipedia.org/wiki/Lake_Zakher"
+    },
+    {
+      "label": "PropertyFinder — All About Lake Zakher",
+      "url": "https://www.propertyfinder.ae/blog/lake-zakher/"
+    },
+    {
+      "label": "City Tour in Dubai — Zakher Lake in Al Ain",
+      "url": "https://www.citytourindubai.com/zakher-lake/"
+    },
+    {
+      "label": "Wikimedia Commons — File:Lake Zakher, UAE.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Lake_Zakher,_UAE.jpg"
+    }
+  ],
+  "seoTitle": "Zakher Lake, Al Ain: Birdwatching Guide & Getting There",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A normal car reaches the main lakeside parking and picnic areas without trouble. The sand gets soft right down at the water's edge, so a 4x4 helps if you want to camp close to the reeds rather than park further back."
+  },
+  "seoDesc": "A man-made desert lake on the edge of Al Ain, formed by rising groundwater from treated wastewater — now a magnet for flamingos and migratory birds. Swimming isn't permitted.",
+  "faqs": [
+    {
+      "q": "Is there an entry fee for Zakher Lake?",
+      "a": "No fee is mentioned in any source we found; it's open, unmanaged land with free parking."
+    },
+    {
+      "q": "Can you swim in Zakher Lake?",
+      "a": "No — swimming isn't permitted, and one source separately warns against wading in because of creatures in the water."
+    },
+    {
+      "q": "How do I get to Zakher Lake?",
+      "a": "Drive to the western edge of Al Ain via the Abu Dhabi–Al Ain Truck Road (E30); it's about 25–30 minutes from Al Ain city centre."
+    },
+    {
+      "q": "What formed the lake?",
+      "a": "Rising groundwater from treated wastewater released onto the land, not agricultural runoff as some older write-ups claim — an unplanned side effect of the UAE's water management rather than a natural oasis."
+    },
+    {
+      "q": "Are there toilets at Zakher Lake?",
+      "a": "Sources disagree — one describes public toilets on site, another says there are none — so come prepared either way; there are no cafés or shops regardless."
+    },
+    {
+      "q": "Can I camp at Zakher Lake?",
+      "a": "Informally, yes — camping along the dunes and reed beds is common, though there's no official campsite or facilities, so bring everything you need and take your rubbish home."
+    }
+  ],
+  "guide": {
+    "gettingThere": "Zakher Lake is on the western edge of Al Ain, reached via the Abu Dhabi–Al Ain Truck Road (E30); it's about 25–30 minutes from Al Ain city centre, and roughly 1h45–2h from Dubai or 1h30–1h45 from Abu Dhabi, depending on traffic through Al Ain itself — treat these longer-distance figures as approximate, since no single source gives an official point-to-point time from either city to the lake specifically. A normal car reaches the main parking and picnic areas without any trouble; you'd only want a 4x4 to get down onto the softer sand right at the water's edge. There's no public transport route to the lake itself, so this is a self-drive or taxi trip from Al Ain — stock up on water, food and fuel in the city first, since nothing is sold at the lake.",
+    "whenToGo": "October to April is the season, as with most UAE outdoor spots — summer heat makes the shadeless lakeside uncomfortable and pushes much of the birdlife away. Within that window, the migratory and wintering birds that give Zakher its reputation are at their most numerous, so birdwatchers tend to time visits for the heart of winter. Early morning and the last hour or two before sunset bring both the softest light for photography and the most bird activity, since the water is quieter and cooler than in the middle of the day.",
+    "onSite": "The lake itself is the attraction: a stretch of open water fringed with reeds and backed by dunes, with the Hajar Mountains visible across the desert. Birdwatching is the main activity — flamingos, herons, egrets and stilts are regularly reported, alongside a long list of migratory species through the cooler months — and the shoreline is easy, flat walking. Some visitors fish from the banks; picnicking and informal camping along the dunes and reed beds are both common, since the site is otherwise unmanaged. There's no swimming — it isn't permitted — and nothing beyond picnic tables and some shade is built here, so plan on a couple of hours for a lakeside visit, longer if you're camping overnight or settling in with binoculars for serious birdwatching.",
+    "safety": "Zakher Lake has no lifeguards, no fencing and effectively no facilities, so treat it as you would any unmanaged body of water: don't go in. Swimming is explicitly described as not permitted, and one separate visitor guide warns against wading in because of what it calls poisonous creatures in the water — we couldn't independently verify that specific claim, but it's a reasonable extra reason to stay on the bank regardless. The sand near the shoreline is soft in places, which can catch an ordinary car if you drive too close to the water; keep to firmer ground unless you're in a 4x4. As with any desert camping spot, bring more water and shade than you think you'll need, and don't rely on finding help nearby — the nearest facilities are back in Al Ain, about 25–30 minutes away.",
+    "heritage": "Zakher Lake isn't a heritage site in the usual sense — it's a genuinely accidental landscape, created within living memory by treated wastewater raising the local groundwater table until it broke the surface as a lake. That makes it more of an ecological curiosity than a historical one: an unplanned wetland in the middle of the desert that birds found before people did, and which has since become one of the region's more reliable spots for flamingos and migratory waders.",
+    "etiquette": "Leave no trace — there's no rubbish collection here, so pack out everything you bring — and keep your distance from feeding and nesting birds rather than approaching for a closer photo."
+  },
+  "nameAr": "بحيرة زاخر",
+  "photoCredit": {
+    "author": "Jaiprakashsingh",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Lake_Zakher,_UAE.jpg",
+    "what": "Zakher Lake's water and a red sand island against the Hajar Mountains, Al Ain"
+  },
+  "overnight": false,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Formation cause conflicts across sources: Wikipedia (drawing on CNN and NPR reporting) attributes the lake to treated wastewater raising the groundwater table; some travel-blog copy, including the previous version of this page, says agricultural runoff instead. We've gone with the better-sourced groundwater/treated-wastewater explanation and corrected the page accordingly.",
+    "Toilets: PropertyFinder says there are none on site; City Tour in Dubai says there are public toilets. We couldn't resolve this conflict and marked it unknown rather than guess.",
+    "Drive time from Dubai and Abu Dhabi is approximate — no single official source gives a point-to-point time from either city to the lake specifically; we combined a confirmed Al Ain-to-lake time with general Al Ain driving distances from Dubai and Abu Dhabi.",
+    "The 'poisonous creatures' reason for avoiding the water (City Tour in Dubai) comes from a single, unverified source — the clearer and better-supported fact is simply that swimming is not permitted (PropertyFinder).",
+    "No official Abu Dhabi tourism board page (Experience Abu Dhabi / DCT) on Zakher Lake was found; all sourcing here is travel-blog level, one step below the official-source priority this brief asks for — treat facts accordingly and re-verify if this page needs an authoritative citation.",
+    "Difficulty is kept as 'Easy' from the previous page — reasonable given normal-car access and flat terrain, but no independent source explicitly rates it."
+  ]
 }

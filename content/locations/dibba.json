@@ -5,12 +5,129 @@
   "emirate": "Fujairah",
   "category": "Coast",
   "difficulty": "Easy",
-  "season": "Year-round",
-  "distance": "~2h from Dubai",
-  "lat": 25.6247,
-  "lng": 56.2658,
+  "season": "Oct–Apr",
+  "distance": "About 1h30–2h from Dubai",
+  "lat": 25.6031,
+  "lng": 56.3511,
   "status": "safe",
-  "desc": "World-class snorkelling and diving on the East Coast. Crystal clear water, vibrant coral, and abundant marine life.",
+  "desc": "A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride, with clear water, coral and turtles — a reliable East Coast snorkel and dive site, best October to April.",
   "cover": "",
-  "igPosts": []
+  "igPosts": [],
+  "area": "Dibba Al-Fujairah, on Fujairah's northern Gulf of Oman coast (Dibba town is also split into Sharjah and Omani sections)",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Early morning on a calm, cool-season weekday, before the wind and boat traffic pick up.",
+  "timeNeeded": "Half a day, including the boat trip",
+  "facilities": {
+    "toilets": "unknown",
+    "food": "nearby",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "There are no facilities at the rock. Toilets, food, and gear hire are at the hotels and dive centres on shore where boats depart, in Dibba and Al Aqah."
+  },
+  "gpsSource": "https://evendo.com/locations/united-arab-emirates/hajar-mountains/landmark/dibba-rock — marks the Al Fqait/Ras Dibba shore area where dive boats launch. A second aggregator lists a point about 9km further west; neither could be checked against an official map, so treat this as approximate and confirm your operator's actual meeting point.",
+  "sources": [
+    {
+      "label": "TripXL — Fujairah snorkelling guide",
+      "url": "https://tripxl.com/blog/fujairah-snorkeling/"
+    },
+    {
+      "label": "Evendo — Dibba Rock",
+      "url": "https://evendo.com/locations/united-arab-emirates/hajar-mountains/landmark/dibba-rock"
+    },
+    {
+      "label": "Wikipedia — Dibba",
+      "url": "https://en.wikipedia.org/wiki/Dibba"
+    },
+    {
+      "label": "Wikipedia — Dibba Al-Fujairah",
+      "url": "https://en.wikipedia.org/wiki/Dibba_Al-Fujairah"
+    },
+    {
+      "label": "Wikipedia — Ras Dibba",
+      "url": "https://en.wikipedia.org/wiki/Ras_Dibba"
+    },
+    {
+      "label": "Wikivoyage — Dibba (Musandam Peninsula)",
+      "url": "https://en.wikivoyage.org/wiki/Dibba_(Musandam_Peninsula)"
+    },
+    {
+      "label": "Nemo Diving Center — Dibba Rock dive site",
+      "url": "https://nemodivingcenter.com/other-diving-sites/dibba-rock-in-fujairah/"
+    },
+    {
+      "label": "Nemo Diving Center — Best time to dive Fujairah",
+      "url": "https://nemodivingcenter.com/blog/best-time-to-dive-fujairah/"
+    },
+    {
+      "label": "TripAdvisor — Dibba Rock",
+      "url": "https://www.tripadvisor.com/Attraction_Review-g1028283-d20124181-Reviews-Dibba_Rock-Dibba_Al_Fujairah_Emirate_of_Fujairah.html"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — UAE emergency numbers",
+      "url": "https://visitrasalkhaimah.com/blog/what-are-the-emergency-services-numbers-in-uae-police-ambulance-fire-coastguard/"
+    }
+  ],
+  "seoTitle": "Dibba Rock Fujairah: Snorkelling Guide, Boat Trips & Tips",
+  "access": {
+    "vehicle": "boat",
+    "note": "Dibba Rock sits offshore. You reach it on a short boat ride (about 10–15 minutes) arranged through a dive centre or hotel on the Dibba/Al Aqah coast — there's no shore or road access to the rock itself."
+  },
+  "seoDesc": "A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride, with clear water, coral and turtles — a reliable East Coast snorkel and dive site, best October to April.",
+  "body": "Dibba Rock is a small limestone outcrop a short boat ride off Fujairah's northern coast, at the point where the Hajar Mountains meet the Gulf of Oman. It isn't a beach you walk to — it's a dive and snorkel site, reached by boats that leave from the hotels and dive centres around Dibba and Al Aqah, and it's one of the more reliable places on the East Coast to see coral, reef fish and turtles without travelling as far as Musandam.\n\nThe rock itself is compact, but its sides slope from shallow shelves down to about 30 metres, so the same trip suits snorkellers staying near the surface and divers going deeper. Boulder and soft corals cover the slopes, and green turtles turn up regularly enough that operators build them into the pitch — sleeping turtles are a highlight of the night dives here, one reason Dibba Rock has a solid local reputation among East Coast dive sites. Clownfish, jawfish and reef fish fill the shallower ledges, and visibility on a good day is said to reach 30 metres or more, though that shifts with the season and the plankton bloom.\n\nDibba itself is a genuinely three-way town — one part Fujairah, one part Sharjah (Dibba Al-Hisn), and one part Oman (Dibba Al-Baya, across a fenced border) — and the rock sits on the Fujairah side. That split matters more for logistics than for the dive itself: if your boat or hotel happens to operate from the Omani side of town, non-GCC UAE residents need a passport and advance paperwork to cross, so it's worth checking which Dibba your operator is based in before you book.\n\nThere's no walk-in access and no fixed price: a snorkelling or diving trip is arranged through a dive centre or hotel, typically as a half-day outing that includes the boat, a guide and sometimes gear. It rewards a little planning rather than a spontaneous drive-past, but for the marine life on offer, it's one of the East Coast's better mornings out.",
+  "faqs": [
+    {
+      "q": "Is there an entry fee for Dibba Rock?",
+      "a": "No official entry fee — you pay for the boat trip and any gear hire through the dive centre or hotel you book with, usually bundled into a half-day snorkelling or diving package."
+    },
+    {
+      "q": "Can I swim out to Dibba Rock from the beach?",
+      "a": "No. It's offshore and reached only by boat, about 10–15 minutes from the Dibba/Al Aqah shore."
+    },
+    {
+      "q": "How far is Dibba Rock from Dubai?",
+      "a": "About 1h30 to 2 hours by road to Dibba/Al Aqah via the E611 and E89, then a short boat ride out to the rock."
+    },
+    {
+      "q": "When is the best time to visit?",
+      "a": "October to April, with visibility typically best from December to March; summer brings warmer water but rougher, less predictable seas."
+    },
+    {
+      "q": "Is Dibba Rock safe for beginners?",
+      "a": "Yes, with a guide — it suits snorkellers and newly certified divers, but currents and thermoclines mean it's not a spot to try unsupervised."
+    },
+    {
+      "q": "Which Dibba is Dibba Rock in?",
+      "a": "The Fujairah side (Dibba Al-Fujairah). The wider town also has a Sharjah exclave and an Omani exclave across the border, so it's worth confirming which side your boat departs from."
+    }
+  ],
+  "guide": {
+    "gettingThere": "From Dubai, the most direct route is via the E611 (Emirates Road) and E89 towards Dibba, a drive of roughly 1h30 to 2 hours in normal traffic; from Sharjah or Ras Al Khaimah it's shorter via the E89 through the Hajar Mountains. Head for the hotels and dive centres around Dibba and Al Aqah — Dibba Rock itself has no car park or shore access, since the trip out is by boat only. Fuel up before leaving the highway, as options thin out on the mountain road. Without a car, the realistic option is a day tour booked from Dubai, Sharjah or Fujairah that bundles transport with the boat trip; a public bus to Dibba still leaves you needing a taxi and a pre-arranged boat, so it isn't a practical independent route.",
+    "whenToGo": "October to April is the recommended window: the water is calmer, visibility is generally best from December to March as plankton levels drop, and days are comfortably warm rather than punishing. Summer (June to September) brings the warmest water and longest swims, but also lower visibility from plankton blooms and, per local dive guides, extreme heat and less predictable sea conditions. Early on a weekday, before the wind builds and other boats arrive, gives the calmest water and clearest views.",
+    "onSite": "The trip is built around the boat ride and the time in the water — allow half a day rather than a quick stop. Once at the rock, snorkellers stay on the shallower northern shelves while divers can follow the slope down to about 30 metres; turtles, clownfish and reef fish are the reliable sightings, with the occasional reef shark. Night dives here have a strong reputation, since sleeping turtles and nocturnal reef life are easier to find by torchlight — though guides are firm that you shouldn't touch or wake a sleeping turtle, since a startled one can drown. Most trips run half or full day out of Dibba/Al Aqah hotels and dive centres, with gear hire available if you don't bring your own mask and fins.",
+    "safety": "This is open-water diving and snorkelling, not a sheltered lagoon: guides warn of strong currents and thermoclines around the rock, so go with an operator rather than attempting it solo, and check conditions before booking in windier weeks. Sea conditions turn rougher and less predictable in summer. As with any UAE coastal trip, the numbers to know are police 999, ambulance 998, fire 997 and coastguard 996. If your route to the boat crosses into the Omani side of Dibba, non-GCC UAE residents must arrange border paperwork in advance — check with your operator which side of town they launch from.",
+    "heritage": "Dibba has been an active trading settlement for at least two thousand years, with archaeological finds linking it to Bahrain, Iran, Mesopotamia and India from the Hellenistic period onward. It's also remembered in early Islamic history as the site of the 7th-century Battle of Dibba during the Ridda wars, one of the defining battles of the Arabian Peninsula's early Islamic period.",
+    "etiquette": "Treat the reef and its turtles as you would any marine life worth protecting: no touching or standing on coral, no chasing turtles for a photo, and take your rubbish back to shore."
+  },
+  "overnight": false,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "GPS is uncertain: sources disagree by roughly 9km on where to pin 'Dibba Rock' (it's offshore, with no fixed shore address). Used the point nearest the Al Fqait/Ras Dibba boat-launch beaches, but the actual departure point varies by operator.",
+    "Couldn't verify a distinct Arabic name for 'Dibba Rock' specifically — nameAr reflects the town name (دبا) only.",
+    "MOCCAE's official ecotourism page for Dibba Rock exists (moccae.gov.ae/en/knowledge/ecotourism/dibba-rock) but blocked automated access both times it was tried, so any formal protection status or rules it lists couldn't be checked — worth reviewing manually before publishing anything about protected status.",
+    "The often-quoted boat-trip cost (roughly AED 100–200 per person) comes from a travel-aggregator estimate, not an official price list, so it's left out of the 'fees' field.",
+    "No photo with a checkable, correct licence was confirmed in the time available — Wikimedia Commons' API was rate-limited throughout this session, blocking a license check on the 'Dibba (Fujairah)' category images. Recommend a manual check before publishing; photo left null in the meantime."
+  ]
 }

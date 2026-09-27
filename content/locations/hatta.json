@@ -1,16 +1,153 @@
 {
   "id": "hatta",
-  "name": "Hatta Mountains",
+  "name": "Hatta",
   "emoji": "🏕",
   "emirate": "Dubai",
   "category": "Camping",
   "difficulty": "Easy",
   "season": "Oct–May",
-  "distance": "100 km from Dubai",
-  "lat": 24.8003,
-  "lng": 56.1186,
+  "distance": "About 1h30 from Dubai (roughly 105km via the E44); some routes and sources put it as far as 134km",
+  "lat": 24.7836,
+  "lng": 56.1147,
   "status": "safe",
-  "desc": "Dubai's hidden mountain retreat. Kayak the turquoise dam, mountain bike through trails, or camp under stars. A complete outdoor escape.",
-  "cover": "",
-  "igPosts": []
+  "desc": "Dubai's cool mountain exclave in the Hajar range, on the Oman border. Kayak the turquoise Hatta Dam reservoir, ride graded trails at Hatta Wadi Hub, and walk the restored Heritage Village.",
+  "cover": "/uploads/places/hatta.jpg",
+  "igPosts": [],
+  "area": "Hatta Dam and Hatta Wadi Hub, off the Dubai–Hatta Road (E44), Hatta town, on the Oman border",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2,
+    2
+  ],
+  "bestTime": "Early morning or late afternoon, to avoid the midday heat; come on a weekday if you can, since the E44 gets heavily congested on Fridays and weekends.",
+  "timeNeeded": "Half a day for the dam and Heritage Village; a full day if you add Wadi Hub activities, longer with an overnight camp.",
+  "fees": "Free to enter Hatta Dam and Heritage Village; paid activities (kayaks, mountain bikes, Wadi Hub rides, the Wadi Hub pool day pass at AED 25pp) are extra — prices for kayaks and bikes weren't published, so check current rates with the operator.",
+  "hours": "Hatta Heritage Village: Sat–Thu roughly 7:30am–8:30pm, Friday 2:30–8:30pm (verify locally, as hours shift on public holidays); Hatta Dam itself has no published gate hours.",
+  "facilities": {
+    "toilets": "unknown",
+    "food": "nearby",
+    "shade": "some",
+    "signal": "unknown",
+    "note": "Hatta Wadi Hub has food trucks and a poolside café; Heritage Village has no cafés or shops at all, so bring your own snacks and water. Toilets and mobile signal at each spot weren't confirmed by any source we opened."
+  },
+  "gpsSource": "Wikipedia's Wadi Hatta article gives Hatta Dam's coordinates as 24°47′1″N, 56°6′53″E (24.7836, 56.1147) — the dam and reservoir car park, where Hatta Kayak and Hatta Wadi Hub are also based. This sits close to, but not identical with, the site's current pin (24.8003, 56.1186).",
+  "sources": [
+    {
+      "label": "Wikipedia — Hatta, United Arab Emirates",
+      "url": "https://en.wikipedia.org/wiki/Hatta,_United_Arab_Emirates"
+    },
+    {
+      "label": "Wikipedia — Wadi Hatta (Hatta Dam coordinates and dam details)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Hatta"
+    },
+    {
+      "label": "Visit Dubai — Hatta Dam",
+      "url": "https://www.visitdubai.com/en/places-to-visit/hatta-dam-2"
+    },
+    {
+      "label": "Visit Dubai — Hatta Wadi Hub",
+      "url": "https://www.visitdubai.com/en/places-to-visit/hatta-wadi-hub"
+    },
+    {
+      "label": "Visit Hatta — Hatta Kayak",
+      "url": "https://www.visithatta.com/en/play/hatta-kayak"
+    },
+    {
+      "label": "Visit Hatta — Adventures at Hatta Wadi Hub",
+      "url": "https://www.visithatta.com/en/play/adventures"
+    },
+    {
+      "label": "WhichMuseum — Hatta Heritage Village opening hours",
+      "url": "https://whichmuseum.com/museum/hatta-heritage-village-24030/opening-hours"
+    },
+    {
+      "label": "Bayut — Complete guide to Hatta Heritage Village",
+      "url": "https://www.bayut.com/mybayut/hatta-heritage-village/"
+    },
+    {
+      "label": "Uptown DXB — Dubai to Hatta distance",
+      "url": "https://www.uptowndxb.com/dubai-to-hatta-distance/"
+    },
+    {
+      "label": "PropertyFinder — Hatta & UAE border guide",
+      "url": "https://www.propertyfinder.ae/blog/hatta-oman-border/"
+    },
+    {
+      "label": "DEWA — Hatta hydroelectric power plant (250MW pumped-storage project)",
+      "url": "https://www.dewa.gov.ae/en/about-us/strategic-initiatives/hatta-project"
+    }
+  ],
+  "seoTitle": "Hatta Dubai: Dam, Kayaking, Wadi Hub & Heritage Guide",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A normal car manages the E44 highway, the dam car park, Wadi Hub and Heritage Village without difficulty; a 4x4 only matters if you plan to explore rougher wadi tracks off the main road."
+  },
+  "seoDesc": "Dubai's cool mountain exclave in the Hajar range, on the Oman border. Kayak the turquoise Hatta Dam reservoir, ride graded trails at Hatta Wadi Hub, and walk the restored Heritage Village.",
+  "body": "Hatta is an inland exclave of Dubai, cut off from the rest of the emirate by Sharjah and Ajman territory and sitting inside the Hajar Mountains on the border with Oman. At around 330 metres above sea level, it stays noticeably cooler than coastal Dubai, though summer (June–September) still brings brutal heat — this is a place best planned around the cooler months rather than a casual midsummer detour.\n\nThe modern draw is Hatta Dam, a reservoir built in the 1990s whose turquoise water, penned in by bare grey mountains, has become one of the most photographed spots in the emirate. Hatta Kayak, based at the dam within the Hatta Wadi Hub complex, rents kayaks, water bikes and inflatable boats, with minimum ages and weight limits posted for each. Wadi Hub itself adds mountain biking, archery, ziplining, wall climbing and free-fall jumps, plus a small poolside area with food trucks — it functions as an outdoor activity centre rather than a single attraction.\n\nA short drive away, Hatta Heritage Village recreates the settlement's older life: Bait Al Wali (the former ruler's residence, now a small museum), the 19th-century Hatta Fort, watchtowers with valley views, and the centuries-old falaj irrigation channels that once carried mountain water to the fields. The oldest structure in the area, Juma Mosque, dates to 1780, and the military towers nearby were built in the 1880s — genuine history rather than a reconstruction for its own sake. Further east, Bronze Age burial chambers from around 3200–2500 BC survive in Hatta's hills, though these aren't developed as a visitor site.\n\nBecause Hatta borders Oman directly to its east and south, an official crossing — the Hatta–Al Wajajah border post — operates nearby, open around the clock; day-trippers who stay on the marked tourist routes around the dam, Wadi Hub and Heritage Village won't go near it, but it's worth knowing the border is a real, functioning one rather than a line on a map. DEWA has also developed a 250 MW pumped-storage hydroelectric plant here, using the dam's water — a rare piece of UAE infrastructure worth a mention if you're the sort of visitor who likes knowing what a dam is actually for.",
+  "faqs": [
+    {
+      "q": "Is Hatta Dam free to visit?",
+      "a": "Yes — there's no entry fee for the dam itself or Heritage Village. Kayaks, water bikes, mountain bikes and Wadi Hub's adventure activities are paid extras, booked with the operator on site."
+    },
+    {
+      "q": "Do I need a 4x4 to get to Hatta?",
+      "a": "No. A normal car handles the E44 highway and reaches the dam, Wadi Hub and Heritage Village without trouble; a 4x4 is only useful if you're heading off onto rougher wadi tracks beyond the main sites."
+    },
+    {
+      "q": "How far is Hatta from Dubai?",
+      "a": "About 105km via the E44, roughly 90 minutes in normal traffic — allow longer on Fridays and weekends, when the road gets busy."
+    },
+    {
+      "q": "Is Hatta actually near the Oman border?",
+      "a": "Yes — Hatta borders Oman to its east and south, and an official 24-hour crossing (Hatta–Al Wajajah) operates nearby. The dam, Wadi Hub and Heritage Village are all well inside UAE territory, but it's worth carrying ID."
+    },
+    {
+      "q": "Can I camp at Hatta?",
+      "a": "Camping is popular in the hills and around the dam and is a well-established local pastime, though we found no single official site setting out permit rules or designated pitches — ask locally or through a tour operator for current guidance."
+    },
+    {
+      "q": "What's the best time of year to visit Hatta?",
+      "a": "October to May, when the mountain elevation keeps it noticeably cooler than coastal Dubai. Summer (June–September) gets extremely hot and is best avoided for outdoor activity."
+    }
+  ],
+  "guide": {
+    "gettingThere": "The most direct route from Dubai is the E44 (Dubai–Hatta Road), a roughly 105km drive that takes about 90 minutes in normal traffic, though estimates for the full journey range up to 134km depending on your start point and route. An alternative via Sharjah and the E102 is usually more reliable outside peak times. Fill up before you leave the city — Hatta itself has fuel and shops, but the road in has long unserved stretches. Fridays and weekend afternoons see heavy congestion on the E44, so a weekday visit is markedly less stressful. Without a car, the practical options are an organised day tour from Dubai or a private driver; there's no realistic public transport route for a day trip.",
+    "whenToGo": "Hatta's best season runs roughly October to May, when the higher altitude keeps conditions noticeably more comfortable than the coast — June through September brings extreme heat that makes daytime activity genuinely unpleasant and, on the water or the bike trails, riskier. Within season, aim for early morning or the couple of hours before sunset, both for the light over the dam and to sidestep the heat of the day. Weekday visits are quieter on the roads and at the water sports centre; Fridays and weekends draw the heaviest crowds and traffic.",
+    "onSite": "Most visitors split their time between the dam and Wadi Hub: kayaking, pedalling a water bike or riding an inflatable boat on the reservoir, then mountain biking, archery, ziplining or wall climbing on dry land, with a poolside day pass if you just want to cool off. Hatta Heritage Village, a short drive away, is a slower stop — Bait Al Wali's household displays, the fort and watchtowers, and a walk along the old falaj channels, with roughly two hours enough to see it properly. Camping is popular in the surrounding hills and around the dam, and mountain-bike trails are graded by difficulty rather than one-size-fits-all, so ask which routes suit your group before setting off.",
+    "safety": "Hatta sits directly on the Oman border, with an official 24-hour crossing (Hatta–Al Wajajah) nearby — carry passports if there's any chance your route brushes it, even though the tourist sites themselves are well inside UAE territory. Summer heat is severe here, as across the wider Hajar Mountains, so plan water-based and outdoor activities for the cooler months and carry more water than you think you'll need. As in any Hajar Mountains wadi, low-lying ground can flood fast after rain further inland, even on an otherwise dry day at the dam — check the forecast and avoid wadi beds if rain is forecast anywhere upstream. Kayak and water-bike rentals post minimum ages and maximum weights; follow them rather than assuming a child or a heavier adult will be fine.",
+    "heritage": "Hatta's oldest surviving building, Juma Mosque, dates to 1780, with defensive watchtowers added in the 1880s and Hatta Fort itself built in 1896 — all preserved or reconstructed within Hatta Heritage Village alongside Bait Al Wali, the former ruler's residence. The village's falaj system, a network of gravity-fed channels bringing water down from the mountains, is a genuine piece of pre-modern engineering still visible on site. Further into the hills, Hatta has yielded Hafit-period burial chambers dated to roughly 3200–2500 BC, evidence of settlement here for several thousand years before the fort or mosque were built.",
+    "etiquette": "Heritage Village is a preserved historic site rather than a theme park — keep to marked paths around the fort and towers, and dress modestly, as you would at any mosque or traditional Emirati building. If your route takes you anywhere near the Hatta–Al Wajajah border post, carry ID or a passport as a matter of course."
+  },
+  "nameAr": "حتا",
+  "photoCredit": {
+    "author": "Ouremiratesjourney",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Hatta_Dam_amazing_view.jpg",
+    "what": "Hatta Dam's turquoise reservoir with the bare Hajar Mountains rising behind it, Dubai, UAE."
+  },
+  "productLink": {
+    "slug": "hajar-mountains-regular",
+    "anchor": "the Hajar Mountains tee",
+    "sentence": "Hatta sits in the Hajar Mountains; the ridge traced on {{link}} is Wadi Naqab’s, further north in the same range."
+  },
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Distance from Dubai varies significantly by source: 105km/90 minutes is the commonly cited figure, but Wikipedia's own figure for the settlement is 134km, and other estimates range as low as 96km — treated as an approximate range rather than a single number.",
+    "No source gave confirmed kayak, water bike or mountain bike rental prices from the operator's own site (only age/weight limits were published) — fees field notes this rather than inventing figures.",
+    "Toilets and mobile signal at the dam, Wadi Hub and Heritage Village weren't confirmed one way or the other by any source opened — left as 'unknown' rather than guessed.",
+    "Whether camping around the dam/hills requires a permit, or is simply informally tolerated, wasn't confirmed by an official source — worth a direct check with Dubai Municipality or a local operator before stating a rule either way.",
+    "Category is left as 'Camping' to match the current site data and its 'More Camping spots' cross-links, but Hatta's content here (dam, water sports, heritage, mountains) arguably fits 'Mountains' just as well or better — flagging for a deliberate decision rather than changing it silently.",
+    "Heritage Village's exact hours differ slightly between the two sources checked (7:30am–8:30pm vs 8am–8pm) — close enough to be the same information at different resolutions, but worth confirming directly before publishing a precise time.",
+    "The 'temperatures around 55°C' claim (previously in body, FAQ and safety guide) was checked against the UAE's official record high — 52.1°C at Sweihan, near Al Ain (a lower, hotter inland location than Hatta's 330m mountain setting) — and Al Ain's own 1991-2020 climate record, whose highest recorded June/July maxima are 48.8-49.4°C. No credible source supports 55°C anywhere in the UAE, let alone at a cooler, higher-elevation site like Hatta, so the specific figure has been removed and reworded to describe the heat without asserting an unverified number."
+  ]
 }

@@ -158,6 +158,26 @@
   ],
   "redirects": [
     {
+      "source": "/locations/wadi-shab",
+      "destination": "/wadis/",
+      "permanent": true
+    },
+    {
+      "source": "/locations/wadi-shab/",
+      "destination": "/wadis/",
+      "permanent": true
+    },
+    {
+      "source": "/locations/maleiha-desert-drive",
+      "destination": "/locations/mleiha-desert/",
+      "permanent": true
+    },
+    {
+      "source": "/locations/maleiha-desert-drive/",
+      "destination": "/locations/mleiha-desert/",
+      "permanent": true
+    },
+    {
       "source": "/_backup/:path*",
       "destination": "/",
       "permanent": true

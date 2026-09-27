@@ -6,18 +6,128 @@
   "category": "Camping",
   "difficulty": "Moderate",
   "season": "Oct–Apr",
-  "distance": "~1h30 from Dubai",
-  "lat": 25.29,
-  "lng": 56.16,
+  "distance": "About 1h45 from Dubai (approximate)",
+  "lat": 25.4966,
+  "lng": 56.0985,
   "status": "safe",
-  "desc": "A remote wild-camping spot in the Hajar mountains near Masafi — rocky, quiet and far from the crowds, for self-sufficient campers and off-road adventurers.",
-  "cover": "",
-  "coverFocus": "50% 50%",
+  "desc": "A quiet wild-camping wadi in the Hajar Mountains near Masafi, reached off the Gragrah–Ghub road, with century-old Sidr trees, rock pools after rain and no facilities at all.",
+  "cover": "/uploads/places/wadi-kub.jpg",
   "igPosts": [],
-  "body": "Wadi Kub sits deep in the Hajar mountains near Masafi, a rugged, quiet valley that has become a favourite wild-camping and off-road escape. Rocky terraces, gravel beds and mountain silence make it the kind of place you go to pitch a tent far from the crowds and fall asleep under a huge sky of stars.\n\nThe scenery is classic Hajar — folded grey peaks, dry watercourses and the occasional hardy acacia — and the remoteness is the whole appeal. It suits self-sufficient adventurers: there are no facilities, so carry everything in and pack everything out, and a high-clearance or 4x4 vehicle helps on the rougher approaches.\n\nAim for the cooler months from October to April, when the nights are comfortable for camping. Tell someone your plans, download offline maps, carry plenty of water and a first-aid kit, and travel with others if you are heading well off the beaten track.",
+  "body": "Wadi Kub is a quiet valley in the Hajar Mountains near Masafi, close to where Ras Al Khaimah meets Fujairah. It's one of the range's low-key wild-camping spots: a rocky, folded landscape of grey and red-brown stone, dry riverbed and open sky, without the crowds that gather at better-known wadis further north.\n\nThe name is often explained locally as coming from the Arabic word for \"cups\" — a reference to the natural cavities that floodwater has carved into the rock — though this isn't confirmed by an official source. Along the trail stand Sidr trees reported to be more than a hundred years old, among the hardiest plants in the UAE's mountains and a source of real shade in an otherwise exposed landscape. After rain, seasonal waterfalls appear and the gravel flats put on a brief show of wildflowers — reason enough for some visitors to time a trip for just after a storm, weather permitting.\n\nA regular car can reach the signposted trailhead off the Gragrah–Ghub road, though a higher-clearance vehicle helps once you're following the wadi bed itself or heading to the more remote camping spots. There are no facilities of any kind, which is the point: this is a place for people who are comfortable being fully self-sufficient for a night or two. Wadi Naqab, a more demanding hike with its own dramatic gorge, sits in the same range a little further north; some hiking guides describe a longer, technical route linking a narrow gorge with Wadi Naqab, though it isn't clear this is the same spot as the accessible camping trailhead described here.\n\nHistorically this stretch of the Hajar was grazing and small-scale farming country for the Mazari tribe, part of the wider Bani Yas federation — a reminder that these mountains have supported people for a very long time before anyone came here to camp for fun.",
   "productLink": {
     "slug": "hajar-mountains-regular",
     "anchor": "the Hajar Mountains tee",
     "sentence": "Wadi Naqab sits in this same range, its ridgeline the one printed on the back of {{link}}, a little further north."
-  }
+  },
+  "area": "Near Masafi, on the Ras Al Khaimah–Fujairah border in the Hajar Mountains",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Afternoon into evening, so you make camp and cook before dark and wake to a cool, quiet morning.",
+  "timeNeeded": "Half a day for a visit; most people come to camp overnight.",
+  "hours": "Open access",
+  "facilities": {
+    "toilets": "no",
+    "food": "no",
+    "shade": "some",
+    "signal": "unknown",
+    "note": "No toilets, shops or shade structures — a scatter of century-old Sidr trees gives some natural shade, but there is nothing else. Carry in everything and pack out all rubbish."
+  },
+  "gpsSource": "Trailhead coordinate from an independent off-road guide (25.496570, 56.098545, on the tarmac road at the Gragrah–Ghub turn-off): https://missionsoffroad.com/wadi-kub/. The site's previous pin was roughly 25 km away, in the wrong part of the range.",
+  "sources": [
+    {
+      "label": "Wikipedia — Wadi Kub",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Kub"
+    },
+    {
+      "label": "Arabic Wikipedia — وادي كوب",
+      "url": "https://ar.wikipedia.org/wiki/%D9%88%D8%A7%D8%AF%D9%8A_%D9%83%D9%88%D8%A8"
+    },
+    {
+      "label": "MissionsOffroad — Wadi Kub guide",
+      "url": "https://missionsoffroad.com/wadi-kub/"
+    },
+    {
+      "label": "The Road Reel — Wadi Naqab / Wadi Koob / Al Sanat hikes",
+      "url": "https://www.theroadreel.com/best-uae-hikes-wadi-naqab/"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — Wadi Naqab hike (regional drive-time reference)",
+      "url": "https://visitrasalkhaimah.com/blog/wadi-naqab-hike/"
+    },
+    {
+      "label": "Wikipedia — List of emergency telephone numbers",
+      "url": "https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers"
+    },
+    {
+      "label": "National Center of Meteorology (UAE)",
+      "url": "https://www.ncm.gov.ae/"
+    }
+  ],
+  "seoTitle": "Wadi Kub, RAK: Camping Guide, GPS & Getting There",
+  "access": {
+    "vehicle": "high-clearance",
+    "note": "A regular saloon reaches the signposted trailhead off the Gragrah–Ghub road on tarmac; a high-clearance or 4x4 vehicle is needed for the rougher tracks into the wadi itself and for remote camping spots."
+  },
+  "seoDesc": "A quiet wild-camping wadi in the Hajar Mountains near Masafi, reached off the Gragrah–Ghub road, with century-old Sidr trees, rock pools after rain and no facilities at all.",
+  "faqs": [
+    {
+      "q": "Is there an entry fee for Wadi Kub?",
+      "a": "No — it's open, unmanaged wilderness with no gate, ticket booth or fee."
+    },
+    {
+      "q": "Do I need a 4x4 to get to Wadi Kub?",
+      "a": "A regular car reaches the signposted trailhead on tarmac; a high-clearance or 4x4 vehicle is only needed once you're following the wadi bed itself or heading to more remote camping spots."
+    },
+    {
+      "q": "Is Wadi Kub safe to visit?",
+      "a": "In dry, settled weather, yes, but it can flood quickly if it rains anywhere upstream in the mountains — check the National Centre of Meteorology's forecast before you go and never enter the wadi bed if rain is forecast."
+    },
+    {
+      "q": "Are there toilets or shops at Wadi Kub?",
+      "a": "No — there are no facilities of any kind. The nearest shops and fuel are in Masafi."
+    },
+    {
+      "q": "Can I camp overnight at Wadi Kub?",
+      "a": "Yes, wild camping is the main reason people come here; bring everything you need and leave no trace."
+    },
+    {
+      "q": "When is the best time to visit?",
+      "a": "October to April for comfortable temperatures, and ideally a day or two after rain (once flood risk has passed) for waterfalls and wildflowers."
+    }
+  ],
+  "guide": {
+    "gettingThere": "From Dubai, head northeast on the E611 and E311/E44 towards Masafi, then follow the Hajar Mountain roads towards the Gragrah–Ghub area; look for the signposted \"Wadi Kub\" turn-off onto a short stretch of tarmac, where the marked trailhead begins. Allow roughly 1h45 from Dubai — there's no single official drive-time source for this exact spot, so treat that as an estimate based on the route via Masafi and nearby Wadi Naqab, which posts similar times. The last reliable fuel and shops are in Masafi. A 2WD car manages the approach road, but a high-clearance vehicle is worth having for the wadi itself and for reaching quieter camping spots further in. There's no realistic way to do this one without a car — it's a self-drive destination, not a taxi or tour stop.",
+    "whenToGo": "Aim for October to April, when Hajar Mountain nights are properly cool for camping and daytime hiking doesn't turn into a heat risk. Some visitors deliberately time a trip for just after rain, when the wadi's rock pools fill, waterfalls briefly appear and wildflowers open across the gravel flats — check the NCM forecast first, since the same rain that makes the wadi beautiful is what makes it dangerous (see Safety). Weekends bring more traffic on the approach roads and more voices carrying across the valley at night; a weekday visit is quieter.",
+    "onSite": "There's a hiking trail through Wadi Kub itself, past folded rock walls in shades of grey, red-brown and mineral green, with pools that hold water long after rain and the shade of genuinely old Sidr trees. Most people come to make camp for a night — pitching a tent on a flat gravel terrace, cooking over a camp stove, and spending the evening under a sky with very little light pollution. Some hiking guides describe a separate, more technical route linking a narrow gorge with Wadi Naqab and the abandoned mountain settlement of Al Sanat, involving scrambling, tight passages and rope-assisted sections — a serious undertaking, and not confirmed to start from this same trailhead. Photography is best in the low, raking light of early morning or late afternoon, when the folds in the rock stand out.",
+    "safety": "Like every wadi in the Hajar range, Wadi Kub can flood fast and without much warning when it rains upstream in the mountains, even if it's dry where you're standing — never enter or camp in the wadi bed itself if rain is forecast anywhere in the range, and check the National Centre of Meteorology's warnings (ncm.gov.ae) before you go. There are no facilities, no guaranteed phone signal, and few other people around if something goes wrong, so tell someone your route and expected return time, carry a first-aid kit and more water than you think you'll need, and travel with at least one other vehicle if you're heading off the main trail. UAE emergency numbers are 999 (police), 998 (ambulance) and 997 (civil defence).",
+    "heritage": "\"Kub\" is often said to be Arabic for cups, a name locally explained by the small round hollows floodwater has scoured into the rock here over centuries, though this isn't confirmed by an official source. The wadi was historically grazing and farming ground for the Mazari tribe, part of the Bani Yas federation, long before it became a weekend camping spot. Its Sidr trees, some reportedly over a hundred years old, are among the most resilient native plants of the UAE's mountains and would have provided genuine shade and shelter to travellers for generations before you.",
+    "etiquette": "Leave no trace — pack out everything you bring in, keep any fire contained and well clear of dry vegetation, and give a wide berth to any grazing livestock or local farmland you pass."
+  },
+  "photoCredit": {
+    "author": "IbrahimKumar",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Wadi_Kub_-_1.jpg",
+    "what": "The upper course of the eastern arm of Wadi Kub, showing the rocky Hajar Mountain valley."
+  },
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "No single source gives a direct drive time from Dubai to this exact trailhead; the ~1h45 estimate is derived from the route via Masafi and the similar drive time posted for nearby Wadi Naqab, not a dedicated source for Wadi Kub.",
+    "Sources give mixed signals on difficulty: one independent off-road guide calls the main trail beginner-friendly, while this page keeps 'Moderate' to reflect the fuller picture — remoteness, no facilities and real flash-flood risk.",
+    "Mobile signal at the site is not documented in any source found, so it's marked unknown rather than guessed.",
+    "Wikipedia's official Wadi Kub entry places the wadi's mouth further north near Saram; this page uses the trailhead coordinates that independent hiking/off-road guides actually direct visitors to, since that's what people search for and navigate to.",
+    "Audit (2026-09-27): a source found while re-checking (MissionsOffroad) explicitly distinguishes the easy, drive-in 'Wadi Kub' near Masafi (described here) from a separate, much more technical narrow gorge also called 'Wadi Kub/Koob' that connects underground-canyon-style to Wadi Naqab and the abandoned settlement of Al Sanat (per a second source, The Road Reel) — real risk of two different places sharing one name. Softened the body/onSite text so it no longer states as fact that this trailhead links directly to Wadi Naqab. Also softened the 'cups' name etymology, which no source directly confirms (Arabic Wikipedia was unreachable in this pass; English Wikipedia and MissionsOffroad don't explain the name). Sidr-tree age ('more than a hundred years'), Mazari/Bani Yas tribal history and no-facilities claim were all independently confirmed."
+  ]
 }

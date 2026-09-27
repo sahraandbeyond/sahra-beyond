@@ -19,5 +19,6 @@
     "slug": "empty-quarter-regular",
     "anchor": "the Empty Quarter tee",
     "sentence": "Al Faya's red sand has its own name; the sun and ridgeline on {{link}} were drawn at Liwa, further south again."
-  }
+  },
+  "hidden": true
 }

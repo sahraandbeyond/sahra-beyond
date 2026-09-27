@@ -6,17 +6,128 @@
   "category": "Mountains",
   "difficulty": "Moderate",
   "season": "Oct–Apr",
-  "distance": "~2h from Dubai",
-  "lat": 25.337,
-  "lng": 56.325,
+  "distance": "About 2h from Dubai (roughly 70 minutes from central Sharjah)",
+  "lat": 25.35,
+  "lng": 56.3,
   "status": "safe",
-  "desc": "An emerald reservoir ringed by the Hajar mountains near Khorfakkan, with ridge hikes, kayaking and a family-friendly lakeside park on Sharjah's east coast.",
-  "cover": "",
+  "desc": "An emerald reservoir in the Hajar Mountains above Khor Fakkan, with a landscaped lakeside park, hiking trails, kayaking and a 55m man-made waterfall on Sharjah's east coast.",
+  "cover": "/uploads/places/al-rafisah-dam.jpg",
   "igPosts": [],
-  "body": "Al Rafisah Dam sits in the rugged Hajar mountains just outside Khorfakkan on Sharjah's east coast, where a calm, emerald reservoir is hemmed in by dramatic peaks. It has become one of the east coast's most popular outdoor escapes — a place to hike the surrounding ridges, paddle a kayak or pedal boat on the water, and picnic by the lake with mountains rising on every side.\n\nThe hiking is the draw for adventurers. Trails climb from the dam into the mountains for sweeping views over the water and out toward the Gulf of Oman. The landscaped park at the base is easy and family-friendly, while the ridge routes are more demanding, so come prepared with plenty of water, sun protection and good footwear.\n\nThe cooler months from October to April are the time to visit, when the mountain air is pleasant and the light on the water is at its best. The dam is roughly two hours from Dubai via the scenic east-coast roads, making it a rewarding day trip or a stop on a Khorfakkan weekend.",
+  "body": "Al Rafisah Dam sits in the Hajar Mountains just inland from Khor Fakkan, on Sharjah's east coast, where a calm, emerald-green reservoir is held in by folded grey peaks. Built in the 1980s alongside the nearby Khor Fakkan Dam as part of a joint aquifer-recharge and flood-control project, it has since grown into one of the most visited outdoor spots on this side of the country, with a landscaped park built around the water.\n\nThe park itself is easy walking: a roughly 730-metre paved path runs along the shoreline past a mosque, a lakeside café, a small shop and shaded children's play areas, with a 55-metre artificial waterfall as its centrepiece. From the water's edge you can rent a kayak or pedal boat and paddle out under the mountains, or simply sit with a coffee and watch the Little Grebes and other wintering birds that use the lake (alongside less welcome introduced species like tilapia and red-eared slider turtles).\n\nFor more of a workout, trails climb out of the park into the surrounding ridges — a short, roughly one-kilometre route for families, and a longer three-and-a-half-kilometre trail that earns its harder rating with real elevation and views back over the reservoir to the Gulf of Oman beyond Khor Fakkan. The restored heritage village of Najd Al Miqsar, rebuilt as part of the same highway project that brought visitors here, and an older watchtower nearby, add a quieter, more historic layer to a trip that's mostly about the mountains and the water.\n\nVisit in the cooler months and you'll have comfortable hiking weather and clear light on the lake; the park itself is free to enter, so it works equally well as a short stop on an east-coast day trip from Dubai or Sharjah, or as the main destination for a half-day out.",
   "productLink": {
     "slug": "hajar-mountains-regular",
     "anchor": "the Hajar Mountains tee",
     "sentence": "The contour lines on {{link}} trace the peaks above Wadi Naqab, a different stretch of the Hajar range north of this dam."
-  }
+  },
+  "area": "Khor Fakkan, on Sharjah's east coast in the Hajar Mountains",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Morning for cooler hiking, or the last couple of hours before sunset when the light on the water and peaks is best.",
+  "timeNeeded": "2–4 hours; half a day if you add the longer ridge trail.",
+  "fees": "Free",
+  "hours": "Open access to the park; the on-site kayak/pedal-boat operator runs about 7am–9pm",
+  "facilities": {
+    "toilets": "yes",
+    "food": "yes",
+    "shade": "yes",
+    "signal": "unknown",
+    "note": "A mosque, restrooms, a lakeside café/restaurant, a small shop, shaded seating and children's play areas, plus a roughly 730m paved lakeside walkway."
+  },
+  "gpsSource": "Wikipedia's coordinate for Al Rafisah Dam (25°21′0″N 56°18′0″E = 25.35, 56.30): https://en.wikipedia.org/wiki/Al_Rafisah_Dam. The previous pin (25.337, 56.325) was only about 3km off and has been tightened to this figure.",
+  "sources": [
+    {
+      "label": "Wikipedia — Al Rafisah Dam",
+      "url": "https://en.wikipedia.org/wiki/Al_Rafisah_Dam"
+    },
+    {
+      "label": "Arabic Wikipedia — سد الرفيسة",
+      "url": "https://ar.wikipedia.org/wiki/%D8%B3%D8%AF_%D8%A7%D9%84%D8%B1%D9%81%D9%8A%D8%B3%D8%A9"
+    },
+    {
+      "label": "ComfortDrive — Al Rafisah Dam boating & hiking guide",
+      "url": "https://www.comfortdrive.ae/al-rafisah-dam-boating-hiking/"
+    },
+    {
+      "label": "MyBayut — Rafisah Dam, Sharjah",
+      "url": "https://www.bayut.com/mybayut/rafisah-dam-sharjah/"
+    },
+    {
+      "label": "Visit Sharjah — Al Khor Kayak at Al Rafisah Dam",
+      "url": "https://www.visitsharjah.com/al-rafisah-dam/experiences/al-khor-kayak/"
+    },
+    {
+      "label": "Wikipedia — List of emergency telephone numbers",
+      "url": "https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers"
+    },
+    {
+      "label": "National Center of Meteorology (UAE)",
+      "url": "https://www.ncm.gov.ae/"
+    }
+  ],
+  "seoTitle": "Al Rafisah Dam, Sharjah: Hiking, Fees & Getting There",
+  "access": {
+    "vehicle": "2wd",
+    "note": "A sealed road (the Sharjah–Khor Fakkan highway, Route 142) runs right to the site, with free on-site parking for around 45 cars — no 4x4 needed; the ridge trails are on foot from the car park."
+  },
+  "seoDesc": "An emerald reservoir in the Hajar Mountains above Khor Fakkan, with a landscaped lakeside park, hiking trails, kayaking and a 55m man-made waterfall on Sharjah's east coast.",
+  "faqs": [
+    {
+      "q": "Is there an entry fee for Al Rafisah Dam?",
+      "a": "No — entry to the park is free; only the kayak and pedal-boat rentals are paid extras."
+    },
+    {
+      "q": "What are the opening hours?",
+      "a": "The park itself is open access; the on-site kayak and pedal-boat operator runs from about 7am to 9pm daily."
+    },
+    {
+      "q": "How do I get to Al Rafisah Dam from Dubai?",
+      "a": "Take the E311/E611 to the Sharjah–Khor Fakkan highway (Route 142) and follow it to the signed turn-off just outside Khor Fakkan — about two hours' drive on a fully sealed road."
+    },
+    {
+      "q": "Is the hike difficult?",
+      "a": "The lakeside path is easy and suits most fitness levels; the roughly 3.5km ridge trail is a genuine moderate hike with real elevation gain."
+    },
+    {
+      "q": "Are there toilets and food on site?",
+      "a": "Yes — the park has restrooms, a mosque, a café/restaurant and a small shop."
+    },
+    {
+      "q": "When is the best time to visit?",
+      "a": "October to April, ideally on a weekday morning if you want the lakeside paths quieter."
+    }
+  ],
+  "guide": {
+    "gettingThere": "From Dubai or Sharjah, take the E311 or E611 towards the east coast and pick up the Sharjah–Khor Fakkan highway (Route 142), which runs directly past the dam — look for the signed turn-off just outside Khor Fakkan. The drive takes roughly two hours from Dubai and about 70 minutes from central Sharjah, both in normal traffic; the road is sealed the whole way, so any car manages it easily. There's free on-site parking for around 45 vehicles, which can fill on weekends. It's a genuine day-trip destination for a family with a car, but there is no realistic public transport option, so without your own vehicle you'd need an organised tour or taxi from Khor Fakkan or Fujairah.",
+    "whenToGo": "October to April is the season that makes sense here — comfortable enough to walk the ridge trails without the summer heat becoming a real risk, and with clearer light over the water. Weekends bring noticeably more visitors, family groups especially, so a weekday morning is the quieter option if you want the lakeside paths to yourself. Early morning also gives the best chance of spotting the wintering birds that use the reservoir. The on-site kayak and pedal-boat operator runs from about 7am to 9pm.",
+    "onSite": "Most visitors walk the paved lakeside path past the mosque, café, shop and play areas, pausing at the 55-metre artificial waterfall and the viewpoints back over the water. Kayaks and pedal boats are available to rent at the water's edge for a paddle out under the mountains — a single kayak runs around AED 40, with pedal boats and a doughnut-boat ride priced higher for groups, per the operator's own site. From the park, marked trails climb into the surrounding ridges: a short, family-friendly loop of about a kilometre, and a longer, roughly 3.5km route that's a proper hike, with real elevation gain and views out towards the Gulf of Oman. Birdwatchers can look out for the Little Grebe and other migrating and wintering species on the lake. Budget half a day if you want to combine the walk, the water and a longer ridge hike; two to three hours covers the park and a short walk comfortably.",
+    "safety": "The lakeside park is gentle and well used, but the ridge trails involve real elevation, loose rock and exposure to full sun with little shade once you're above the treeline, so carry more water than you think you need and wear proper footwear. As with any Hajar Mountain hike, check the National Centre of Meteorology's forecast (ncm.gov.ae) before setting out, since heavy rain in the mountains can turn dry gullies into fast-moving water with little warning. If you're kayaking or pedal-boating, at least one capable adult should be with any children in the boat. UAE emergency numbers are 999 (police), 998 (ambulance) and 997 (civil defence).",
+    "heritage": "The dam was built in the 1980s in tandem with the nearby Khor Fakkan Dam, under a joint $63-million contract, primarily to recharge groundwater and manage flash floods off the Hajar Mountains. The recreational park around it, and the restoration of the nearby heritage village of Najd Al Miqsar, followed later as part of the wider Sharjah–Khor Fakkan highway project — so the calm lake you see today is a working piece of water infrastructure that's been given a second life as a mountain park.",
+    "etiquette": "It's a family park as much as a hiking spot — keep noise down on the ridge trails for other walkers, don't feed or handle the lake's wildlife, and use the mosque respectfully if you're not visiting to pray."
+  },
+  "photoCredit": {
+    "author": "Unorganised_Landings",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Al_Rafisa_Dam.jpg",
+    "what": "The emerald reservoir of Al Rafisah Dam ringed by the Hajar Mountains near Khor Fakkan, Sharjah."
+  },
+  "overnight": false,
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Whether swimming is permitted in the lake isn't stated by any source found; left out rather than assumed either way.",
+    "A watchtower near the dam is mentioned by one source (ComfortDrive) without independent confirmation elsewhere, so it's referenced only briefly here.",
+    "Audit (2026-09-27): re-opened the already-cited Visit Sharjah 'Al Khor Kayak' page, which gives explicit operating hours (about 7am–9pm) and rental prices (from AED 40 for a single kayak) that the previous pass hadn't drawn on — used these to resolve the opening-hours doubt (the park itself is open access; MyBayut's '24 hours' and ComfortDrive's '8am-sunset' both likely describe different things — general access vs. specific facilities) and to add sourced pricing instead of leaving it out. Waterfall height (55m), walkway length (730m), dam decade/cost, trail distances (1km/3.5km) and the Little Grebe/tilapia/red-eared slider wildlife all matched Wikipedia, ComfortDrive and MyBayut."
+  ]
 }

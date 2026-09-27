@@ -4,15 +4,113 @@
   "emoji": "🏝",
   "emirate": "Ras Al Khaimah",
   "category": "Camping",
-  "difficulty": "Easy",
+  "difficulty": "Moderate",
   "season": "Oct–Apr",
-  "distance": "~1h30 from Dubai",
-  "lat": 25.87,
-  "lng": 56.05,
+  "distance": "About 1h45–2h15 from Dubai",
+  "lat": 25.8857,
+  "lng": 56.016,
   "status": "safe",
-  "desc": "A calm, mangrove-fringed beach on the Saraya Islands near Al Rams, RAK — great for kayaking, paddleboarding and relaxed beach camping with mountain views.",
+  "desc": "A quiet, causeway-linked beach at RAK's northern tip, on the Saraya Islands — calm, shallow water for kayaking and paddling, but a 4x4 with deflated tyres is needed to explore beyond the first stretch of sand.",
   "cover": "",
   "coverFocus": "50% 50%",
   "igPosts": [],
-  "body": "On the northern coast of Ras Al Khaimah, where the Hajar mountains meet the sea, Al Rams is a quiet fishing town fringed by mangroves, calm shallow water and the Saraya Islands. The beach here is a laid-back escape for swimming, kayaking through the mangrove channels and easy beach camping, all against a dramatic mountain backdrop.\n\nThe sheltered, shallow water makes it family-friendly and ideal for paddling and stand-up paddleboarding, while the nearby mangroves are alive with birdlife. It is a peaceful alternative to the busier southern beaches, and a favourite for a relaxed overnight by the water as the sun sets behind the peaks.\n\nThe cooler months from October to April are the best time to visit, with comfortable air and sea temperatures. Come self-sufficient, as facilities are limited: bring shade, plenty of water and reef-safe sunscreen, and take all your rubbish home to keep this stretch of coast pristine."
+  "body": "Al Rams is Ras Al Khaimah's northernmost coastal town, where the Hajar Mountains run down almost to the water and a bridge leads out onto the Saraya Islands — a scatter of low sandy islets separated by man-made stone spits. It's one of the quieter stretches of RAK coastline, with a pearling and fishing history behind the modern picture of paddleboarders and weekend campers.\n\nThe water is the main draw: shallow, calm and sheltered by the islands, it suits swimming, kayaking and stand-up paddleboarding far better than the more exposed beaches further south, and the mountains behind make for one of the better sunset backdrops on this coast. Several sandy beaches sit along the island, each separated from the next by stone spits, so it's worth walking or driving a little further rather than settling for the first stretch past the checkpoint.\n\nGetting beyond that first beach is where it gets more involved than an \"Easy\" label suggests: the sand across the bridge and onto the island looks solid but hides soft, wetland ground that will bog a 2WD vehicle, so a 4x4 with tyres deflated — or a guide who knows the current state of the tracks — is genuinely needed to reach the better spots and drive to the island's far end.\n\nFacilities are minimal to non-existent: Al Rams town itself has only a few shops, and nothing is sold on the beach, so this is a bring-everything trip. Reports on whether overnight camping is currently allowed on Saraya Island itself are mixed — RAK's own tourism site describes the beach as suited to pitching a tent, while at least one recent visitor account mentions signage against camping and rubbish left behind by people who did anyway. It's worth checking current signage on arrival and, if in doubt, treating the mainland side as the safer bet for an overnight stay. Either way, take every piece of your rubbish home: this coastline has had real environmental problems in recent years, and it stays worth visiting only if it stays clean.",
+  "area": "Al Rams, RAK's northernmost coastal town, across the causeway from the Saraya Islands",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "Cooler months, ideally on a weekday and at low tide — weekends bring off-roaders, horses and camels onto the island.",
+  "timeNeeded": "Half a day to overnight",
+  "fees": "Free",
+  "hours": "Open access",
+  "facilities": {
+    "toilets": "unknown",
+    "food": "unknown",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "Al Rams town has only a few shops, and nothing is sold on the beach or island — come self-sufficient with food, water and shade."
+  },
+  "gpsSource": "https://missionsoffroad.com/saraya-island/ — gives 25°53'08.6\"N 56°00'57.7\"E for the bridge/entrance onto Saraya Island. This is about 4km from the site's previous pin, and closer to the actual access point than Wikipedia's town-centre coordinate for Rams (25.8789, 56.0236).",
+  "sources": [
+    {
+      "label": "Visit Ras Al Khaimah — Al Rams Beach",
+      "url": "https://visitrasalkhaimah.com/discover/attractions/al-rams-beach/"
+    },
+    {
+      "label": "Wikipedia — Rams (Ras Al Khaimah)",
+      "url": "https://en.wikipedia.org/wiki/Rams_(Ras_Al_Khaimah)"
+    },
+    {
+      "label": "MissionsOffroad — Saraya Island",
+      "url": "https://missionsoffroad.com/saraya-island/"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — Mangrove coastline",
+      "url": "https://visitrasalkhaimah.com/location/place/mangrove-coastline/"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — UAE emergency numbers",
+      "url": "https://visitrasalkhaimah.com/blog/what-are-the-emergency-services-numbers-in-uae-police-ambulance-fire-coastguard/"
+    }
+  ],
+  "seoTitle": "Al Rams Beach RAK: Access, Saraya Islands & Camping Guide",
+  "access": {
+    "vehicle": "4wd",
+    "note": "A standard car can reach the first beach by the checkpoint car park at the north end of Al Rams town. Beyond that, a 4x4 with tyres deflated is needed to cross onto Saraya Island — the sand looks firm but hides soft, wetland patches that catch unprepared vehicles. Go with an experienced off-roader or a guide if you're not one yourself."
+  },
+  "seoDesc": "A quiet, causeway-linked beach at RAK's northern tip, on the Saraya Islands — calm, shallow water for kayaking and paddling, but a 4x4 with deflated tyres is needed to explore beyond the first stretch of sand.",
+  "faqs": [
+    {
+      "q": "Do I need a 4x4 to visit Al Rams Beach?",
+      "a": "A normal car can reach the first beach near the checkpoint, but a 4x4 with deflated tyres is needed to cross further onto Saraya Island, where the sand hides soft wetland patches."
+    },
+    {
+      "q": "Is Al Rams Beach free?",
+      "a": "Yes — Ras Al Khaimah's tourism board lists it with no admission fee, though facilities are minimal, so bring your own food, water and shade."
+    },
+    {
+      "q": "Can I camp at Al Rams Beach?",
+      "a": "Reports differ: RAK's tourism board describes it as suited to camping, but at least one visitor account mentions signage against camping on Saraya Island itself and litter left by people who camped anyway. Check current signage when you arrive."
+    },
+    {
+      "q": "How far is Al Rams from Dubai?",
+      "a": "About 1h45 to 2h15 by road via the E11 to Ras Al Khaimah, then north along the coast."
+    },
+    {
+      "q": "Is the water safe for swimming and kids?",
+      "a": "The bay is shallow and sheltered, which suits families, but keep an eye on children as on any open coastline, and check recent conditions given past reports of jellyfish and fish die-offs on this stretch."
+    },
+    {
+      "q": "Are there shops or toilets nearby?",
+      "a": "Very limited — Al Rams town has only a few shops, and nothing is sold on the beach or island itself, so come self-sufficient."
+    }
+  ],
+  "guide": {
+    "gettingThere": "From Dubai, the drive is via the E11 to Ras Al Khaimah city and then north along the coast road to Al Rams, roughly 1h45 to 2h15 depending on traffic — Al Rams sits well north of RAK's more visited beaches. From RAK city itself it's a short 20–30 minute drive. At the north end of Al Rams town, cross the bridge near the military-base checkpoint and turn left onto the island; a standard sedan can reach the first beach by the checkpoint car park, but you'll need a 4x4 with deflated tyres for anything further, since the sand tracks beyond that point are rutted and hide soft wetland patches. There's no realistic option without a car — public transport doesn't reach the island, and this isn't an area served by organised tours.",
+    "whenToGo": "October to April is the comfortable window, with milder air and sea temperatures than the summer months. Early morning and late afternoon give the calmest water for kayaking and paddleboarding, and low tide is better for spotting birdlife in the shallows, based on general RAK guidance for the emirate's mangrove coast. Weekends bring more off-road traffic — horses, camels and 4x4s — onto the island, so a weekday visit is quieter if that matters to you.",
+    "onSite": "Beyond the first beach, Al Rams/Saraya is really a string of small sandy coves divided by stone spits, so plan to explore a little rather than stopping at the nearest one. The shallow, sheltered water suits swimming, kayaking and paddleboarding, and a simple football pitch and picnic spots turn up along the way. It's a place people come to slow down in rather than tick off a list of activities: watch for birdlife in the fringing vegetation, and for the pink tint that occasionally appears on the shoreline here — a natural sabkha effect from algae and mineral build-up in shallow, saline water, not pollution. Bring everything you need for the day, since nothing is sold on site.",
+    "safety": "The practical risk here is getting a vehicle stuck: ground that looks firm can be soft wetland underneath, so keep to obvious tracks, deflate your tyres before driving on sand, and don't push further than your vehicle and experience allow. The water is shallow and generally calm, which suits swimming and paddling, but conditions on any open coastline can change, so keep children in sight in the water as you would anywhere else. This stretch of coast has had isolated but documented incidents — a mass fish die-off and a jellyfish wash-up have both been reported in past years — so it's worth a quick check of recent local reports or the National Center of Meteorology's marine forecast before you go. UAE-wide, the numbers to know are police 999, ambulance 998, fire 997 and coastguard 996.",
+    "heritage": "Al Rams was historically a pearling and fishing settlement, home to a working fleet of pearling and fishing boats before the pearl trade declined, and it played a role in regional history as the landing point for an 1819 British naval expedition before Dhayah Fort, inland from the town. Some of the old coral-and-wood buildings tied to that pearling history are still standing and have been discussed for restoration.",
+    "etiquette": "This is a working fishing town as much as a tourist beach, so keep to the marked crossing points rather than driving through residential areas, and pack out every piece of rubbish — this coast has had real litter problems from casual camping."
+  },
+  "nameAr": "شاطئ الرمس",
+  "lastChecked": "2026-09-27",
+  "_doubts": [
+    "Camping rules on Saraya Island itself are unclear: the official RAK tourism site treats the beach as suited to camping, while an independent visitor account says signage prohibits it and describes litter left by campers. Flagged in the text rather than resolved — worth a direct check with RAK Tourism Development Authority before publishing a firm answer.",
+    "Mangroves and birdlife, claimed on the current live page, aren't confirmed specifically for this beach by any source opened here — RAK's documented mangrove/protected reserve is Khor Al Muzahmi, near RAK city, not Al Rams — so this claim has been softened rather than repeated as fact.",
+    "GPS corrected to the Saraya Island bridge/entrance point from a specific sourced reading; the previous site pin was roughly 4km off, and Wikipedia's town-centre coordinate is a further ~3km from that — treat the new point as approximate until checked on a current map.",
+    "Drive time from Dubai is estimated from general Dubai–RAK timings plus the extra distance north to Al Rams; no source gives this specific leg directly.",
+    "No photo with a checkable, correct licence was confirmed in the time available — Wikimedia Commons' API was rate-limited throughout this session. Recommend a manual check of Commons categories for Ras Al Khaimah/Rams before publishing; photo left null in the meantime."
+  ]
 }

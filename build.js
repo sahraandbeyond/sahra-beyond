@@ -109,7 +109,10 @@ function addImgDims(html, baseDir) {
 function write(rel, html) { html = addImgDims(html, path.dirname(rel)); const fp = path.join(ROOT, rel); fs.mkdirSync(path.dirname(fp), { recursive: true }); fs.writeFileSync(fp, html); console.log('  ✓ ' + rel); }
 
 const locDir = path.join(ROOT, 'content/locations');
-const locations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(locDir, f))).filter(Boolean);
+const locations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(locDir, f))).filter(Boolean)
+  /* 27 Sep 2026: Wadi Shab (Oman) removed and 'Maleiha Desert Drive' merged into Mleiha (Faheem); both redirect in vercel.json */
+  .filter(l => !l.hidden);
+const PLACES = require('./places-page.js');
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
 const PRODUCT_BY_PLACE = {};
@@ -120,7 +123,7 @@ const DESIGNS = PRODUCTS_ALL.filter(p => p.fit !== 'oversized').sort((a,b)=>(a.o
 const BY_CATEGORY = cat => PRODUCTS_ALL.filter(p => p.category === cat).sort((a,b)=>(a.order||0)-(b.order||0));
 // Instagram only — the single official channel
 const social = { instagram: (settings.social && settings.social.instagram) || 'https://instagram.com/sahraandbeyond.ae' };
-const CAT_HASH = { Camping: 'camping', Wadis: 'wadis', Mountains: 'mountains', Coast: 'coast', Dunes: 'dunes' };
+const CAT_HASH = { Camping: 'camping', Wadis: 'wadis', Mountains: 'mountains', Coast: 'coast', Dunes: 'dunes', Heritage: 'heritage' };
 const WEATHER_KEY = settings.weatherKey || '';
 const packingData = readJSON(path.join(ROOT, 'content/packing.json'));
 const PACKING = (packingData && Array.isArray(packingData.items)) ? packingData.items : [];
@@ -304,7 +307,8 @@ const CAT_BG = {
   Wadis:     'linear-gradient(160deg,#14102A 0%,#2E3A50 44%,#4E6B63 76%,#A98A54 100%)',
   Coast:     'linear-gradient(160deg,#14102A 0%,#26324E 44%,#3E6172 76%,#C08A54 100%)',
   Mountains: 'linear-gradient(160deg,#14102A 0%,#332C4A 44%,#5C4A5E 76%,#B07A44 100%)',
-  Dunes:     'linear-gradient(160deg,#14102A 0%,#3A2A44 42%,#8B4E63 72%,#C0702E 100%)'
+  Dunes:     'linear-gradient(160deg,#14102A 0%,#3A2A44 42%,#8B4E63 72%,#C0702E 100%)',
+  Heritage:  'linear-gradient(160deg,#14102A 0%,#352A3E 44%,#6E5646 76%,#C08A54 100%)'
 };
 // Packing items that apply to a location's category (always + this category + overnight-only)
 function packItemsFor(l) {
@@ -876,7 +880,7 @@ ${noindex ? '<meta name="robots" content="noindex,nofollow">\n' : ''}${altHref ?
 <script src="/assets/meta-pixel.js" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
-<style>${CSS}
+<style>${CSS}${bodyClass === "lg-page" ? PLACES.PLACE_CSS : ""}
 /* ---- Mobile polish --------------------------------------------------------
    Measured at 390px on the live site: footer links were 15-21px tall, filter
    chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
@@ -1193,22 +1197,20 @@ function locCard(l) {
   const thumb = l.cover
     ? `<span class="card-thumb" style="background-image:url('${esc(l.cover)}')" role="img" aria-label="${esc(l.name)}"></span>`
     : `<span class="card-emoji">${l.emoji || '📍'}</span>`;
-  return `<a class="card" href="/locations/${l.id}/">${thumb}<span class="card-body"><strong>${esc(l.name)}</strong><em>${esc(l.emirate)} · ${esc(l.category)}</em><span>${esc(l.desc)}</span></span></a>`;
+  const dv = `data-id="${l.id}" data-cat="${esc(l.category)}" data-em="${esc(l.emirate)}" data-v="${esc((l.access && l.access.vehicle) || '')}" data-diff="${esc(l.difficulty || '')}" data-m="${Array.isArray(l.months) ? l.months.join('') : ''}"`;
+  return `<a class="card" ${dv} href="/locations/${l.id}/">${thumb}<span class="card-body"><strong>${esc(l.name)}</strong><em>${esc(l.emirate)} · ${esc(l.category)}</em><span>${esc(l.desc)}</span></span></a>`;
 }
 
 // ---- per-location pages ----
+/* 27 Sep 2026 rebuild (Faheem: accurate, useful guides; expandable sections; graphics;
+   motion). Markup, graphics and the client script live in places-page.js; the facts
+   live in content/locations/<id>.json, each with its sources. */
+const PLACE_CTX = { locations, PRODUCT_BY_PLACE, PRODUCTS_ALL, DESIGNS, CAT_BG, CAT_HASH, WEATHER_KEY,
+  teeBlock, miniTee, cardShots, withProductLink, newsletterBlock, locCard, faqsFor };
 locations.forEach(l => {
   const canonical = `${SITE}/locations/${l.id}/`;
-  /* Per-location SEO override. The generic "<name>: <category> in <emirate>"
-     pattern is fine for most places, but it loses to search intent where the
-     query is not about the category: "al quaa" is 42% of all site impressions
-     and converts at 0.28% because searchers want the dark sky, not a camping
-     listing. seoTitle/seoDesc in the location JSON win when present. */
   const title = l.seoTitle || `${l.name}: ${l.category} in ${l.emirate}, UAE | Sahra & Beyond`;
   const desc = l.seoDesc || metaDesc(l.desc);
-  const related = locations.filter(x => x.category === l.category && x.id !== l.id).slice(0, 4);
-  const hash = CAT_HASH[l.category] || '';
-  // Photos: cover + gallery. Absolute URLs for OG/schema; used for the on-page gallery too.
   const abs = p => (!p ? '' : (String(p).charAt(0) === '/' ? SITE + p : p));
   const galleryRaw = Array.isArray(l.gallery) ? l.gallery.map(g => (g && g.image) || g).filter(Boolean) : [];
   const photos = [l.cover].concat(galleryRaw).filter(Boolean);
@@ -1218,111 +1220,25 @@ locations.forEach(l => {
     "name": l.name, "description": l.desc, "url": canonical,
     "address": { "@type": "PostalAddress", "addressRegion": l.emirate, "addressCountry": "AE" },
     "geo": { "@type": "GeoCoordinates", "latitude": l.lat, "longitude": l.lng },
-    "isAccessibleForFree": true, "touristType": "UAE residents, outdoor & adventure"
+    "hasMap": `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}`
   };
+  if (l.nameAr) tourist.alternateName = l.nameAr;
+  if (/^Free\b/i.test(String(l.fees || ''))) tourist.isAccessibleForFree = true;
   if (photos.length) tourist.image = photos.map(abs);
   const faqs = faqsFor(l);
   const jsonld = [
     tourist,
-    {
-      "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
-        { "@type": "ListItem", "position": 2, "name": l.name, "item": canonical }
-      ]
-    },
-    {
-      "@context": "https://schema.org", "@type": "FAQPage",
-      "mainEntity": faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } }))
-    }
+        { "@type": "ListItem", "position": 2, "name": "Places", "item": SITE + "/places/" },
+        { "@type": "ListItem", "position": 3, "name": l.name, "item": canonical } ] },
+    { "@context": "https://schema.org", "@type": "FAQPage",
+      "mainEntity": faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } })) }
   ];
-  const packItems = packItemsFor(l);
-  // On-page photo gallery (everything after the cover photo).
-  const galleryHtml = galleryRaw.length
-    ? `<section class="gallery" aria-label="Photos of ${esc(l.name)}"><h2>Photos</h2>
-       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">
-       ${galleryRaw.map((g, i) => `<img src="${esc(g)}" alt="${esc(l.name)} — ${esc(l.category)} in ${esc(l.emirate)}, photo ${i + 2}" loading="lazy" style="width:100%;height:140px;object-fit:cover;border-radius:11px;display:block">`).join('')}
-       </div></section>`
-    : '';
-  const body = `
-  <section class="loc-hero" style="--hero-grad:${CAT_BG[l.category] || CAT_BG.Dunes}">
-    <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
-      <nav class="crumbs"><a href="/">Home</a> &rsaquo; ${esc(l.category)} &rsaquo; <span>${esc(l.name)}</span></nav>
-      <div class="loc-emoji">${l.emoji || '📍'}</div>
-      <h1>${esc(l.name)}</h1>
-      <p class="lede">${esc(l.emirate)} · ${esc(l.category)} · ${esc(l.difficulty)} · Best ${esc(l.season)}</p>
-      <div class="wx" id="wx" data-lat="${l.lat}" data-lng="${l.lng}">Loading live weather…</div>
-      <button type="button" id="share-btn" style="margin-top:12px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);color:#fff;font-family:Jost,sans-serif;font-size:13px;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)">↗ Share this spot</button>
-    </div>
-  </section>
-  <main>
-    ${l.cover ? `<img class="hero-img" src="${esc(l.cover)}" alt="${esc(l.name)}, ${esc(l.category)} in ${esc(l.emirate)}" style="object-position:${esc(l.coverFocus || '50% 50%')}">` : ''}
-    ${miniTee(l.id)}
-    ${galleryHtml}
-    <div class="content">${withProductLink(paras(l.body || l.desc), l.productLink)}</div>
-    ${Array.isArray(l.sections) ? l.sections.map(x => `<section class="guide-sec"><h2>${esc(x.h2)}</h2><div class="content">${paras(x.body)}</div></section>`).join('') : ''}
-    <aside class="facts">
-      <h2>Quick facts</h2>
-      <ul>
-        <li><strong>Emirate:</strong> ${esc(l.emirate)}</li>
-        <li><strong>Best for:</strong> ${esc(l.category)}</li>
-        <li><strong>Difficulty:</strong> ${esc(l.difficulty)}</li>
-        <li><strong>Best season:</strong> ${esc(l.season)}</li>
-        <li><strong>Distance:</strong> ${esc(l.distance)}</li>
-        <li><strong>GPS:</strong> ${l.lat}, ${l.lng}</li>
-      </ul>
-      <div class="cta">
-        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}" target="_blank" rel="noopener">Google Maps</a>
-        <a class="btn alt" href="https://maps.apple.com/?ll=${l.lat},${l.lng}&q=${encodeURIComponent(l.name)}" target="_blank" rel="noopener">Apple Maps</a>
-      </div>
-    </aside>
-    ${toursBlock(l)}
-    ${stayBlock(l)}
-    ${teeBlock(l) || collectionBlock(l && l.name)}
-    ${igSection(l.igPosts)}
-    <section class="pack">
-      <h2>What to pack for ${esc(l.name)}</h2>
-      <div class="pack-controls">
-        <div class="grp" role="group" aria-label="Group size">
-          <button class="pack-btn" type="button" data-grp="1">Solo</button>
-          <button class="pack-btn on" type="button" data-grp="4">2&ndash;4</button>
-          <button class="pack-btn" type="button" data-grp="8">5&ndash;10</button>
-          <button class="pack-btn" type="button" data-grp="12">10+</button>
-        </div>
-        <div class="grp" role="group" aria-label="Trip type">
-          <button class="pack-btn on" type="button" data-ov="0">Day trip</button>
-          <button class="pack-btn" type="button" data-ov="1">Overnight</button>
-        </div>
-      </div>
-      <div id="pack-list"></div>
-    </section>
-    ${faqBlock(l)}
-    ${newsletterBlock()}
-    ${related.length ? `<section class="related"><h2>More ${esc(l.category)} spots in the UAE</h2><div class="cards">${related.map(locCard).join('')}</div></section>` : ''}
-    <p class="back" style="margin-top:26px"><a href="/">&larr; Back to Sahra &amp; Beyond</a></p>
-  </main>
-  <script>
-  (function(){
-    var wx=document.getElementById('wx');
-    if(wx){var lat=wx.getAttribute('data-lat'),lng=wx.getAttribute('data-lng'),k=${JSON.stringify(WEATHER_KEY)};
-      if(lat&&lng&&k){fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lng+'&appid='+k+'&units=metric').then(function(r){return r.json();}).then(function(d){if(d&&d.main){var c=(d.weather&&d.weather[0]&&d.weather[0].icon||'').slice(0,2);var ic={'01':'☀️','02':'🌤','03':'⛅','04':'☁️','09':'🌧','10':'🌦','11':'⛈','13':'❄️','50':'🌫'}[c]||'🌡';wx.innerHTML='<span class="wx-ic">'+ic+'</span><span class="wx-temp">'+Math.round(d.main.temp)+'°C</span><span class="wx-desc">'+(d.weather&&d.weather[0]?d.weather[0].description:'')+'</span>';}else{wx.style.display='none';}}).catch(function(){wx.style.display='none';});}else{wx.style.display='none';}}
-    var PACK=${JSON.stringify(packItems)},state={p:4,ov:false};
-    function qy(t){if(!t)return '';return String(t).replace(/\\{water\\}/g,4*state.p).replace(/\\{half\\}/g,Math.max(1,Math.ceil(state.p/2))).replace(/\\{p\\}/g,state.p);}
-    function he(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-    function render(){var el=document.getElementById('pack-list');if(!el)return;var items=PACK.filter(function(it){return !it.overnight||state.ov;});var groups=[],idx={};items.forEach(function(it){if(!(it.group in idx)){idx[it.group]=groups.length;groups.push({h:it.group,items:[]});}groups[idx[it.group]].items.push(it);});el.innerHTML=groups.map(function(g){return '<div class="pack-grp-title">'+he(g.h)+'</div>'+g.items.map(function(it){var q=qy(it.qty);return '<div class="pack-row"><div class="pk-main"><div class="pk-name">'+he(it.name)+'</div>'+(it.note?'<div class="pk-note">'+he(it.note)+'</div>':'')+'</div>'+(q?'<span class="pk-qty">'+he(q)+'</span>':'')+'</div>';}).join('');}).join('');}
-    document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
-    document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
-    render();
-    // Share button: native share sheet where supported (WhatsApp etc.), else copy the link.
-    var sb=document.getElementById('share-btn');
-    if(sb){sb.addEventListener('click',function(){
-      var data={title:${JSON.stringify(l.name + ' — Sahra & Beyond')},text:${JSON.stringify(l.desc || '')},url:location.href};
-      if(window.gtag){gtag('event','share',{method:navigator.share?'native':'copy',location:${JSON.stringify(l.name)}});}
-      if(navigator.share){navigator.share(data).catch(function(){});}
-      else if(navigator.clipboard){navigator.clipboard.writeText(location.href).then(function(){var t=sb.textContent;sb.textContent='✓ Link copied';setTimeout(function(){sb.textContent=t;},1800);});}
-    });}
-  })();
-  </script>`;
-  write(`locations/${l.id}/index.html`, shell({ activeNav: 'places', title, desc, canonical, jsonld, bodyHtml: body, image: ogImage }));
+  const packItems = PLACES.packFor(l, PACKING);
+  const r = PLACES.renderPlace(l, PLACE_CTX);
+  const body = r.hero + r.main + PLACES.clientScript(l, PLACE_CTX, packItems);
+  write(`locations/${l.id}/index.html`, shell({ activeNav: 'places', title, desc, canonical, jsonld, bodyHtml: body, image: ogImage, bodyClass: 'lg-page' }));
 });
 
 // ---- keyword landing pages ----
@@ -2081,7 +1997,7 @@ body.tote-page main{max-width:1180px}
       { "@type": "ListItem", "position": 2, "name": "Places", "item": canonical }
     ] }
   ];
-  const CATS = ['Dunes', 'Camping', 'Wadis', 'Mountains', 'Coast'];
+  const CATS = ['Dunes', 'Camping', 'Wadis', 'Mountains', 'Coast', 'Heritage'];
   const seen = new Set();
   const secs = CATS.map(c => {
     const list = locations.filter(l => l.category === c);
@@ -2114,8 +2030,9 @@ body.tote-page main{max-width:1180px}
   const abroad = locations.filter(l => !UAE.has(l.emirate));
   const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven'];
   const catCount = c => locations.filter(l => l.category === c).length;
-  const CAT_META = { Dunes: 'dune fields', Camping: 'camps', Wadis: 'wadis', Mountains: 'mountain routes', Coast: 'coasts' };
-  const chips = CATS.filter(catCount).map(c => `<a class="pl-chip" href="#cat-${c.toLowerCase()}"><b>${catCount(c)}</b> ${esc(CAT_META[c] || c.toLowerCase())}</a>`).join('');
+  const CAT_META = { Dunes: 'dune fields', Camping: 'camps', Wadis: 'wadis', Mountains: 'mountain routes', Coast: 'coasts', Heritage: 'heritage sites' };
+  const ONE = { Dunes: 'dune field', Camping: 'camp', Wadis: 'wadi', Mountains: 'mountain route', Coast: 'coast', Heritage: 'heritage site' };
+  const chips = CATS.filter(catCount).map(c => `<a class="pl-chip" href="#cat-${c.toLowerCase()}"><b>${catCount(c)}</b> ${esc(catCount(c) === 1 ? ONE[c] : (CAT_META[c] || c.toLowerCase()))}</a>`).join('');
   const TEES = [
     ['al-quaa-desert', 'Al Quaa Galaxy', '/shirts/card/alquaa-regular-back-fit.jpg'],
     ['liwa', 'Empty Quarter', '/shirts/card/emptyquarter-regular-front-fit.jpg'],
@@ -2124,7 +2041,7 @@ body.tote-page main{max-width:1180px}
   const tees = TEES.map(([id, tee, img]) => `<a class="pl-tee" href="/products/${esc(byId[id].productLink.slug)}/"><img src="${esc(img)}" alt="${esc(tee)} tee" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the tee &rarr;</i></span></a>`).join('');
   const lede = `${locations.length} places, ${words[CATS.filter(catCount).length] || CATS.length} kinds of ground, ${words[emirates.size] || emirates.size} emirates` +
     (abroad.length ? ` and ${abroad.length === 1 ? 'one detour' : abroad.length + ' detours'} over the border` : '') +
-    ` &mdash; each with its coordinates, live weather and what to pack.`;
+    ` &mdash; each with a sourced guide: how to get there, when to go, the real risks and what to pack.`;
   const heroCss = `
 .pl-hero{position:relative;isolation:isolate;overflow:hidden;background:#14102A;color:#fff}
 .pl-mosaic{position:absolute;inset:0;z-index:0;display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;pointer-events:none}
@@ -2173,7 +2090,7 @@ body.tote-page main{max-width:1180px}
 .guide-sec[id]{scroll-margin-top:96px}
 `;
   const body = `
-  <style>${heroCss}</style>
+  <style>${heroCss}${PLACES.HUB_CSS}</style>
   <section class="pl-hero">
     <div class="pl-mosaic" aria-hidden="true">${MOSAIC.map(([id, fx, cls], i) => `<figure class="${cls}" style="--fx:${fx}"><img src="${esc(byId[id].cover)}" alt="" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></figure>`).join('')}</div>
     <div class="pl-scrim"></div>
@@ -2189,12 +2106,13 @@ body.tote-page main{max-width:1180px}
     </div>
   </section>
   <main>
-    <div class="content"><p>This is the map behind the brand: every desert, dune field, wadi, mountain trail and beach we have explored across the UAE. Each place has its own guide with GPS coordinates, live weather, honest difficulty ratings and a packing list tailored to the terrain.</p></div>
+    <div class="content"><p>This is the map behind the brand: every desert, dune field, wadi, mountain trail and beach we have explored across the UAE. Each place has its own guide: how to get there, when to go, what it costs, the real risks, and a packing list matched to the trip, with the sources for every fact.</p></div>
+    ${PLACES.hubExplorer(locations)}
     ${secs}
     ${restHtml}
     ${shopBlock(null)}
     <p class="back" style="margin-top:26px"><a href="/">&larr; Back to Sahra &amp; Beyond</a></p>
-  </main>`;
+  </main>${PLACES.hubScript()}`;
   write('places/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: 'places' }));
 })();
 
