@@ -138,7 +138,11 @@
     });
     return out;
   }
+  /* html[data-price-cur] says which currency the prices on screen are actually in,
+     so AED-only copy (the "any 2 tees AED 359" bundle line) can step aside when the
+     tee shows in USD beside it (places review, 28 Sep 2026). */
   function paint(map) {
+    document.documentElement.setAttribute('data-price-cur', cur || 'AED');
     document.querySelectorAll('.sb-price[data-handle]').forEach(function (el) {
       var p = map[el.getAttribute('data-handle')];
       if (p) el.textContent = p;
@@ -148,6 +152,7 @@
     var handles = handlesOnPage();
     if (!cur || !handles.length) return;
     if (cur === 'AED') {
+      document.documentElement.setAttribute('data-price-cur', 'AED');
       // The AED numbers are baked into the HTML — restore them from the
       // attribute stamped at build time rather than refetching what we have.
       document.querySelectorAll('.sb-price[data-aed]').forEach(function (el) {

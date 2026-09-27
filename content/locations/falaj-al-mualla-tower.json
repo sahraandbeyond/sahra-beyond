@@ -85,7 +85,7 @@
     "vehicle": "2wd",
     "note": "A sealed road reaches the village and the fort/museum car park; a couple of the outlying watchtowers stand in the surrounding dunes, where the final stretch over soft sand can need care."
   },
-  "seoDesc": "A historic oasis in Umm Al Quwain, its 1825 fort and scattered watchtowers rising from date-palm groves and open desert — a real, low-key stop on a UAE heritage or desert drive.",
+  "seoDesc": "A historic oasis in Umm Al Quwain: an 1825 fort and watchtowers among date palms and open desert. A real, low-key stop on a heritage drive.",
   "faqs": [
     {
       "q": "Is there an entry fee for Falaj Al Mualla?",
@@ -137,5 +137,11 @@
     "'The tower' as commonly photographed is one of three scattered watchtowers around the oasis — this page deliberately avoids naming a single one as definitive.",
     "Whether a normal car's final approach to the photographed tower genuinely needs care on soft sand isn't independently confirmed by a source; kept as a general caution rather than a specific claim.",
     "Audit (2026-09-27): re-checked Wikipedia directly, which explicitly states 'three watchtowers (east, west and north)', matching MyBayut's account (also 'three... east, west and north') — the previous text's vaguer 'several' has been made specific to three, now confirmed by two independent sources. Fort founding (Al Ali tribe from Sinniyah), 1825 construction, 2015 restoration and 2014 bathing-house restoration all matched Wikipedia. Fee (AED 5) and hours remain single-sourced/conflicting as previously flagged — MyBayut, checked in this pass, gives yet a third variant (Mon–Thu, different reopening time), reinforcing rather than resolving that doubt."
-  ]
+  ],
+  "glance": {
+    "how": "Sealed road to the fort car park; soft sand to the outer towers",
+    "time": "1–2 hours",
+    "best": "Late afternoon, within museum hours",
+    "cost": "AED 5 (fort and museum)"
+  }
 }

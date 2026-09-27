@@ -81,7 +81,7 @@
     "vehicle": "2wd",
     "note": "A sealed road (the Sharjah–Khor Fakkan highway, Route 142) runs right to the site, with free on-site parking for around 45 cars — no 4x4 needed; the ridge trails are on foot from the car park."
   },
-  "seoDesc": "An emerald reservoir in the Hajar Mountains above Khor Fakkan, with a landscaped lakeside park, hiking trails, kayaking and a 55m man-made waterfall on Sharjah's east coast.",
+  "seoDesc": "An emerald reservoir in the Hajar Mountains above Khor Fakkan, with a lakeside park, hiking trails, kayaking and a 55m man-made waterfall.",
   "faqs": [
     {
       "q": "Is there an entry fee for Al Rafisah Dam?",
@@ -129,5 +129,11 @@
     "Whether swimming is permitted in the lake isn't stated by any source found; left out rather than assumed either way.",
     "A watchtower near the dam is mentioned by one source (ComfortDrive) without independent confirmation elsewhere, so it's referenced only briefly here.",
     "Audit (2026-09-27): re-opened the already-cited Visit Sharjah 'Al Khor Kayak' page, which gives explicit operating hours (about 7am–9pm) and rental prices (from AED 40 for a single kayak) that the previous pass hadn't drawn on — used these to resolve the opening-hours doubt (the park itself is open access; MyBayut's '24 hours' and ComfortDrive's '8am-sunset' both likely describe different things — general access vs. specific facilities) and to add sourced pricing instead of leaving it out. Waterfall height (55m), walkway length (730m), dam decade/cost, trail distances (1km/3.5km) and the Little Grebe/tilapia/red-eared slider wildlife all matched Wikipedia, ComfortDrive and MyBayut."
-  ]
+  ],
+  "glance": {
+    "how": "Sealed road to a free car park; trails on foot",
+    "time": "2–4 hours",
+    "best": "Morning, or the last hours before sunset",
+    "cost": "Free; kayak hire extra"
+  }
 }

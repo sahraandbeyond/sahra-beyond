@@ -80,7 +80,7 @@
     "vehicle": "high-clearance",
     "note": "The paved loop road through Al Qudra ends some distance short of this pin; the last stretch to the water is unpaved sand track. A high-clearance vehicle or 4x4 makes it far easier, especially to reach quieter spots away from the main tracks."
   },
-  "seoDesc": "A small, undocumented lake inside Dubai's Al Qudra Lakes cluster, a couple of kilometres from Love Lake — quieter than the named lakes nearby, with no facilities at all.",
+  "seoDesc": "A small, unnamed lake in Dubai's Al Qudra Lakes cluster, a couple of kilometres from Love Lake: quieter than its neighbours, with no facilities.",
   "faqs": [
     {
       "q": "What is this lake actually called?",
@@ -124,5 +124,12 @@
     "The site's existing content already includes what appear to be real photos of this spot (gallery/cover images from the brand's own uploads); no external stock or Commons photo has been substituted for them.",
     "The 'months' array had April marked as a possible month (1), which conflicted with the stated season ('Oct–Mar') and the guide text's own 'October to March is the workable window' line; April has been corrected to 0 (avoid) to match.",
     "Bird species count at Al Marmoom is inconsistently reported: Wikipedia's Al Marmoom Desert Conservation Reserve article states 'over 360 bird species' while My Secret Dubai's practical guide (already in sources) states 'over 170 species of birds' — the figure has been reworded to 'hundreds' with the range noted, rather than asserting a single number."
-  ]
+  ],
+  "glance": {
+    "how": "Sand track after the paved road ends; high clearance helps",
+    "time": "Overnight, or 2–3 hours at sunset",
+    "best": "Sunset, then the stars after dark",
+    "cost": "Free"
+  },
+  "coverAlt": "A small tent pitched on sand among desert shrubs at dusk, Al Qudra"
 }

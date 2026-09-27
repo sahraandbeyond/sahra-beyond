@@ -69,7 +69,7 @@
     "vehicle": "2wd",
     "note": "A normal car can drive most of Half Desert Road itself; only the loose sand off the tarmac, where dunes have crept over the old road, needs a 4x4 and some experience."
   },
-  "seoDesc": "Half Desert is a stretch of old road near Al Awir where drifting dunes have half-buried the tarmac — a favourite easy spot to learn desert driving or take a photo of sand reclaiming a road.",
+  "seoDesc": "A stretch of old road near Al Awir where drifting dunes have half-buried the tarmac: an easy place to learn desert driving or photograph it.",
   "faqs": [
     {
       "q": "Is Half Desert Road free to visit?",
@@ -101,7 +101,7 @@
     "whenToGo": "Sources don't give a specific best season for Half Desert, but the general UAE outdoor pattern applies: outside the summer months (roughly October to April) is far more comfortable for any time spent out of the car. Within that, early morning or the couple of hours before sunset are recommended for cooler sand and better light for photos — midday, especially in summer, is best avoided altogether. Weekends are noticeably busier with other photographers and off-roaders, so a weekday visit is the quieter option if your schedule allows it.",
     "onSite": "There isn't a defined 'site' here so much as a length of road worth exploring on foot or by vehicle. The main thing to see is the road itself half-swallowed by sand, which is worth a short walk for photos even if you don't plan to drive off the tarmac. If you do want to practise desert driving, this is one of the more forgiving places to do it: deflate your tyres, pick a stretch of soft sand off the road, and take it slowly, ideally with someone more experienced along or a second vehicle nearby. Beyond that, it's a spot for a short, unstructured visit — a sunset stop, a practice run, or a quick photo detour on the way somewhere else — rather than a half-day destination.",
     "safety": "The main risks are heat and getting stuck. There's no shade and no facilities anywhere along Half Desert Road, so carry water and sun protection whatever time of year you go. If you're driving into the sand rather than sticking to tarmac, deflate your tyres first, keep to a sensible speed, and don't go alone — a second vehicle makes a real difference if you bog down, since this isn't a route with regular passing traffic. Mobile signal isn't documented for this specific spot, so don't assume you'll have a strong connection if something goes wrong. No official body publishes rules specific to Half Desert; general UAE desert-driving guidance (tyre deflation, travelling in convoy, carrying recovery gear) applies.",
-    "etiquette": "Leave no rubbish, including organic waste, keep any fire small and short-lived, and park or camp on gravel and rock rather than vegetation to avoid damaging what little plant life survives out here."
+    "etiquette": "Take every bit of rubbish home, and keep your car on the tarmac or on firm gravel rather than driving over what little plant life survives out here."
   },
   "overnight": false,
   "lastChecked": "2026-09-27",
@@ -110,5 +110,12 @@
     "No source states a specific 'best season' for this exact spot — Oct–Apr reflects general UAE outdoor advice rather than a Half-Desert-specific source.",
     "'Half Desert Road' spans a network of tracks rather than one point, so the GPS pin (though corroborated within about 500m by an independent listing) should be treated as a representative spot to aim for, not a single gate or car park.",
     "The site already has a real cover photo for this page (from the brand's own uploads); no external stock or Commons photo has been substituted for it."
-  ]
+  ],
+  "glance": {
+    "how": "Any car on the road; 4x4 only on the loose sand",
+    "time": "1–2 hours",
+    "best": "Early morning or before sunset",
+    "cost": "Free"
+  },
+  "coverAlt": "A 4x4 on a sand bank above still water at sunset, near Half Desert"
 }

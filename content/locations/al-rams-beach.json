@@ -11,8 +11,8 @@
   "lng": 56.016,
   "status": "safe",
   "desc": "A quiet, causeway-linked beach at RAK's northern tip, on the Saraya Islands — calm, shallow water for kayaking and paddling, but a 4x4 with deflated tyres is needed to explore beyond the first stretch of sand.",
-  "cover": "",
-  "coverFocus": "50% 50%",
+  "cover": "/uploads/places/al-rams-beach.jpg",
+  "coverFocus": "50% 60%",
   "igPosts": [],
   "body": "Al Rams is Ras Al Khaimah's northernmost coastal town, where the Hajar Mountains run down almost to the water and a bridge leads out onto the Saraya Islands — a scatter of low sandy islets separated by man-made stone spits. It's one of the quieter stretches of RAK coastline, with a pearling and fishing history behind the modern picture of paddleboarders and weekend campers.\n\nThe water is the main draw: shallow, calm and sheltered by the islands, it suits swimming, kayaking and stand-up paddleboarding far better than the more exposed beaches further south, and the mountains behind make for one of the better sunset backdrops on this coast. Several sandy beaches sit along the island, each separated from the next by stone spits, so it's worth walking or driving a little further rather than settling for the first stretch past the checkpoint.\n\nGetting beyond that first beach is where it gets more involved than an \"Easy\" label suggests: the sand across the bridge and onto the island looks solid but hides soft, wetland ground that will bog a 2WD vehicle, so a 4x4 with tyres deflated — or a guide who knows the current state of the tracks — is genuinely needed to reach the better spots and drive to the island's far end.\n\nFacilities are minimal to non-existent: Al Rams town itself has only a few shops, and nothing is sold on the beach, so this is a bring-everything trip. Reports on whether overnight camping is currently allowed on Saraya Island itself are mixed — RAK's own tourism site describes the beach as suited to pitching a tent, while at least one recent visitor account mentions signage against camping and rubbish left behind by people who did anyway. It's worth checking current signage on arrival and, if in doubt, treating the mainland side as the safer bet for an overnight stay. Either way, take every piece of your rubbish home: this coastline has had real environmental problems in recent years, and it stays worth visiting only if it stays clean.",
   "area": "Al Rams, RAK's northernmost coastal town, across the causeway from the Saraya Islands",
@@ -69,7 +69,7 @@
     "vehicle": "4wd",
     "note": "A standard car can reach the first beach by the checkpoint car park at the north end of Al Rams town. Beyond that, a 4x4 with tyres deflated is needed to cross onto Saraya Island — the sand looks firm but hides soft, wetland patches that catch unprepared vehicles. Go with an experienced off-roader or a guide if you're not one yourself."
   },
-  "seoDesc": "A quiet, causeway-linked beach at RAK's northern tip, on the Saraya Islands — calm, shallow water for kayaking and paddling, but a 4x4 with deflated tyres is needed to explore beyond the first stretch of sand.",
+  "seoDesc": "A quiet causeway-linked beach at RAK's northern tip, with calm shallow water for paddling; a 4x4 with deflated tyres is needed beyond the first stretch.",
   "faqs": [
     {
       "q": "Do I need a 4x4 to visit Al Rams Beach?",
@@ -112,5 +112,18 @@
     "GPS corrected to the Saraya Island bridge/entrance point from a specific sourced reading; the previous site pin was roughly 4km off, and Wikipedia's town-centre coordinate is a further ~3km from that — treat the new point as approximate until checked on a current map.",
     "Drive time from Dubai is estimated from general Dubai–RAK timings plus the extra distance north to Al Rams; no source gives this specific leg directly.",
     "No photo with a checkable, correct licence was confirmed in the time available — Wikimedia Commons' API was rate-limited throughout this session. Recommend a manual check of Commons categories for Ras Al Khaimah/Rams before publishing; photo left null in the meantime."
-  ]
+  ],
+  "glance": {
+    "how": "Any car to the first beach; 4x4 with deflated tyres for Saraya Island",
+    "time": "Half a day to overnight",
+    "best": "Weekday, cool months, at low tide",
+    "cost": "Free"
+  },
+  "photoCredit": {
+    "author": "Marcellin99",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Pink_lake_with_blue_Ras_Al_Khaimah_coastline.jpg",
+    "what": "A pink lagoon behind the dunes on Saraya Island, with the Ras Al Khaimah coastline beyond"
+  }
 }

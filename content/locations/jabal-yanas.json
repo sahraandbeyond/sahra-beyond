@@ -130,5 +130,12 @@
     "The 244mm rainfall figure is attributed to National Center of Meteorology data as reported by Emarat Alyoum for a single storm on 27 March 2026, not a seasonal average — don't read it as typical rainfall.",
     "No correctly licensed photo clearly showing Jebel Yanas itself was found on Wikimedia Commons or Unsplash, so photo is left null rather than using a generic Hajar Mountains image.",
     "Audit (2026-09-27): the 'Al Haboos tribe' and village-name attribution came from an Ibn Battuta Travel page that now 404s and could not be re-verified from its own site or an archive; three independently checked sources (twopassportspacked, MissionsOffroad, Gigaplaces) describe the summit's stone ruins without naming a village or a tribe. Reworded to describe the ruins without the unverifiable attribution. All other checked facts (checkpoint being free, road/vehicle needs, camping spot, gate/accident near the summit, and the March 2026 rainfall record) matched their cited sources."
-  ]
+  ],
+  "glance": {
+    "how": "Steep, loose summit road; a 4x4 is the safe choice",
+    "time": "2–4 hours",
+    "best": "Late afternoon into sunset",
+    "cost": "Free"
+  },
+  "coverAlt": "A hiker looking out over the Hajar ridges from Jabal Yanas under an orange sunset"
 }

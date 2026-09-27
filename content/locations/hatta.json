@@ -91,7 +91,7 @@
     "vehicle": "2wd",
     "note": "A normal car manages the E44 highway, the dam car park, Wadi Hub and Heritage Village without difficulty; a 4x4 only matters if you plan to explore rougher wadi tracks off the main road."
   },
-  "seoDesc": "Dubai's cool mountain exclave in the Hajar range, on the Oman border. Kayak the turquoise Hatta Dam reservoir, ride graded trails at Hatta Wadi Hub, and walk the restored Heritage Village.",
+  "seoDesc": "Dubai's cool mountain exclave on the Oman border. Kayak Hatta Dam, ride the Wadi Hub trails and walk the restored Heritage Village.",
   "body": "Hatta is an inland exclave of Dubai, cut off from the rest of the emirate by Sharjah and Ajman territory and sitting inside the Hajar Mountains on the border with Oman. At around 330 metres above sea level, it stays noticeably cooler than coastal Dubai, though summer (June–September) still brings brutal heat — this is a place best planned around the cooler months rather than a casual midsummer detour.\n\nThe modern draw is Hatta Dam, a reservoir built in the 1990s whose turquoise water, penned in by bare grey mountains, has become one of the most photographed spots in the emirate. Hatta Kayak, based at the dam within the Hatta Wadi Hub complex, rents kayaks, water bikes and inflatable boats, with minimum ages and weight limits posted for each. Wadi Hub itself adds mountain biking, archery, ziplining, wall climbing and free-fall jumps, plus a small poolside area with food trucks — it functions as an outdoor activity centre rather than a single attraction.\n\nA short drive away, Hatta Heritage Village recreates the settlement's older life: Bait Al Wali (the former ruler's residence, now a small museum), the 19th-century Hatta Fort, watchtowers with valley views, and the centuries-old falaj irrigation channels that once carried mountain water to the fields. The oldest structure in the area, Juma Mosque, dates to 1780, and the military towers nearby were built in the 1880s — genuine history rather than a reconstruction for its own sake. Further east, Bronze Age burial chambers from around 3200–2500 BC survive in Hatta's hills, though these aren't developed as a visitor site.\n\nBecause Hatta borders Oman directly to its east and south, an official crossing — the Hatta–Al Wajajah border post — operates nearby, open around the clock; day-trippers who stay on the marked tourist routes around the dam, Wadi Hub and Heritage Village won't go near it, but it's worth knowing the border is a real, functioning one rather than a line on a map. DEWA has also developed a 250 MW pumped-storage hydroelectric plant here, using the dam's water — a rare piece of UAE infrastructure worth a mention if you're the sort of visitor who likes knowing what a dam is actually for.",
   "faqs": [
     {
@@ -149,5 +149,11 @@
     "Category is left as 'Camping' to match the current site data and its 'More Camping spots' cross-links, but Hatta's content here (dam, water sports, heritage, mountains) arguably fits 'Mountains' just as well or better — flagging for a deliberate decision rather than changing it silently.",
     "Heritage Village's exact hours differ slightly between the two sources checked (7:30am–8:30pm vs 8am–8pm) — close enough to be the same information at different resolutions, but worth confirming directly before publishing a precise time.",
     "The 'temperatures around 55°C' claim (previously in body, FAQ and safety guide) was checked against the UAE's official record high — 52.1°C at Sweihan, near Al Ain (a lower, hotter inland location than Hatta's 330m mountain setting) — and Al Ain's own 1991-2020 climate record, whose highest recorded June/July maxima are 48.8-49.4°C. No credible source supports 55°C anywhere in the UAE, let alone at a cooler, higher-elevation site like Hatta, so the specific figure has been removed and reworded to describe the heat without asserting an unverified number."
-  ]
+  ],
+  "glance": {
+    "how": "Paved all the way: E44, dam car park, Wadi Hub and Heritage Village",
+    "time": "Half a day to a full day",
+    "best": "Early morning or late afternoon, weekdays",
+    "cost": "Free entry; activities extra"
+  }
 }

@@ -26,11 +26,11 @@
     2,
     2,
     2,
-    1,
-    1,
-    1,
-    1,
-    1,
+    0,
+    0,
+    0,
+    0,
+    0,
     2,
     2,
     2
@@ -76,7 +76,7 @@
     "vehicle": "4wd",
     "note": "There's no paved road for the final stretch — it runs over open sand. A 4x4 or other high-clearance, capable vehicle is recommended over a standard car."
   },
-  "seoDesc": "A crescent-shaped artificial lake off the beaten track in Dubai's Al Qudra desert, known for oryx sightings at dawn. Reaching it needs a 4x4 — there's no paved road for the final stretch.",
+  "seoDesc": "A crescent-shaped lake off the beaten track in Dubai's Al Qudra desert, known for oryx at dawn. The last stretch is unpaved: bring a 4x4.",
   "faqs": [
     {
       "q": "Do I need a 4x4 to reach Crescent Moon Lake?",
@@ -116,5 +116,12 @@
     "Fees and hours: no source states these explicitly for this lake, so both are left null rather than assumed \"free\"/\"open access\" by extension from the wider reserve.",
     "Whether this lake sits inside the official Al Marmoom reserve boundary, versus just being nearby in the same desert, isn't explicitly confirmed by an official source we opened.",
     "One source (Dubai OFW) mentions the lake being 'illuminated by solar panels' at dawn, possibly a reference to Dubai's nearby Mohammed bin Rashid Al Maktoum Solar Park — this is unconfirmed elsewhere and we haven't used it in the copy."
-  ]
+  ],
+  "glance": {
+    "how": "No paved road for the last stretch; 4x4 recommended",
+    "time": "1–2 hours, plus the off-road drive",
+    "best": "Dawn",
+    "cost": ""
+  },
+  "coverAlt": "An Arabian oryx crossing a sandy track in the Al Qudra desert"
 }

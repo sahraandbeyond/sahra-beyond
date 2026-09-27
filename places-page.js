@@ -77,7 +77,7 @@ const FAC = { yes: 'Yes', no: 'None', nearby: 'Nearby', some: 'Some', good: 'Goo
 function monthStrip(l, big) {
   const m = Array.isArray(l.months) && l.months.length === 12 ? l.months : null;
   if (!m) return '';
-  const cells = m.map((v, i) => `<li class="lg-m m${v}" style="--i:${i}" title="${MONTHS_LONG[i]}: ${v === 2 ? 'best' : v === 1 ? 'possible' : 'avoid'}"><span>${MONTHS[i]}</span></li>`).join('');
+  const cells = m.map((v, i) => `<li class="lg-m m${v}" style="--i:${i}" title="${MONTHS_LONG[i]}: ${v === 2 ? 'best' : v === 1 ? 'possible' : 'avoid'}"><span aria-hidden="true">${MONTHS[i]}</span><span class="lg-sr">${MONTHS_LONG[i]}: ${v === 2 ? 'best' : v === 1 ? 'possible' : 'avoid'}</span></li>`).join('');
   return `<div class="lg-months${big ? ' big' : ''}" data-months="${m.join('')}"><ol aria-label="Best months to visit">${cells}</ol>${big ? '<p class="lg-mkey"><i class="m2"></i>Best <i class="m1"></i>Possible <i class="m0"></i>Avoid <span class="lg-now">This month is marked</span></p>' : ''}</div>`;
 }
 
@@ -113,7 +113,7 @@ function routeMap(l) {
       ${lab(x1, y1 + (y1 > y2 ? 24 : -13) * sw, o.name, anc(x1, o.name), 'lg-lo')}
       ${lab(x2, y2 + (y2 >= y1 ? 26 : -15) * sw, l.name, anc(x2, l.name), 'lg-ld')}
     </svg>
-    <figcaption><span class="lg-km"><b class="lg-count" data-to="${km0}">${km0}</b> km from ${o.name} as the crow flies</span>${l.distance ? ` &middot; ${esc(l.distance)} by road` : ''}</figcaption>
+    <figcaption><span class="lg-km"><b class="lg-count" data-to="${km0}">${km0}</b> km from ${o.name} as the crow flies</span>${l.distance ? `<span class="lg-road">By road: ${esc(l.distance.replace(/^About /, 'about '))}</span>` : ''}</figcaption>
   </figure>`;
 }
 
@@ -136,7 +136,7 @@ function floodDiagram() {
 /* ---------- at a glance ---------- */
 function glance(l) {
   const a = l.access || {}, v = VEHICLE[a.vehicle];
-  const f = l.facilities || {};
+  const f = l.facilities || {}, gl = l.glance || {};
   const cell = (ic, k, val, sub) => val ? `<div class="lg-g"><span class="lg-gi">${icon(ic)}</span><span class="lg-gk">${k}</span><span class="lg-gv">${val}</span>${sub ? `<span class="lg-gs">${sub}</span>` : ''}</div>` : '';
   /* one short clause for the tile: up to the first full stop, semicolon or dash, then cut at a word */
   const short = (s, n) => { n = n || 48; s = String(s || '').trim(); let m = s.replace(/\s*\([^)]*\)/g, '').split(/(?<=[.;])\s|\s[—–]\s?/)[0].replace(/[.;,:]$/, '');
@@ -146,10 +146,10 @@ function glance(l) {
     .map(k => `<span class="lg-f lg-f-${f[k]}">${icon(k === 'toilets' ? 'wc' : k)}<b>${k === 'toilets' ? 'Toilets' : k === 'food' ? 'Food' : k === 'shade' ? 'Shade' : 'Signal'}</b> ${FAC[f[k]] || esc(f[k])}</span>`).join('');
   return `<section class="lg-glance lg-rise" aria-label="At a glance">
     <div class="lg-gg">
-      ${v ? cell(v[0], 'Getting there', v[1], short(a.note, 64) || v[2]) : ''}
-      ${cell('clock', 'Time needed', short(l.timeNeeded, 56), '')}
-      ${cell('sun', 'Best time of day', short(l.bestTime), '')}
-      ${cell('ticket', 'Cost', l.fees ? short(l.fees, 56) : '', '')}
+      ${v ? cell(v[0], 'Getting there', v[1], gl.how ? esc(gl.how) : (short(a.note, 64) || v[2])) : ''}
+      ${cell('clock', 'Time needed', gl.time ? esc(gl.time) : short(l.timeNeeded, 56), '')}
+      ${cell('sun', 'Best time of day', gl.best ? esc(gl.best) : short(l.bestTime), '')}
+      ${cell('ticket', 'Cost', 'cost' in gl ? esc(gl.cost) : (l.fees ? short(l.fees, 56) : ''), '')}
     </div>
     ${facs ? `<div class="lg-facs">${facs}</div>` : ''}
     ${monthStrip(l, false)}
@@ -159,24 +159,24 @@ function glance(l) {
 /* ---------- a fold (expandable section) ---------- */
 function fold(id, ic, title, teaser, inner, open) {
   if (!inner) return '';
-  return `<details class="lg-fold lg-rise" id="${id}"${open ? ' open' : ''}><summary><span class="lg-fi">${icon(ic)}</span><span class="lg-ft"><b>${title}</b>${teaser ? `<small>${teaser}</small>` : ''}</span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb">${inner}</div></details>`;
+  return `<details class="lg-fold lg-rise" id="${id}"${open ? ' open' : ''}><summary><span class="lg-fi">${icon(ic)}</span><span class="lg-ft"><h2 class="lg-fh">${title}</h2>${teaser ? `<small>${teaser}</small>` : ''}</span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb">${inner}</div></details>`;
 }
 function teaserOf(s, n) { s = String(s || '').replace(/\s+/g, ' ').trim(); if (s.length <= n) return esc(s); const c = s.slice(0, n); return esc(c.slice(0, c.lastIndexOf(' '))) + '…'; }
 
 /* ---------- product panel: exact place, honest kin link, or none yet ---------- */
 function productPanel(l, ctx) {
   const exact = ctx.PRODUCT_BY_PLACE[l.id];
-  if (exact) return ctx.teeBlock(l).replace('<section class="teecta"', '<section id="tee" class="teecta"');
+  if (exact) return ctx.teeBlock(l).replace('<section class="teecta"', '<section id="tee" data-match="exact" class="teecta"');
   const pl = l.productLink;
   const p = pl && pl.slug ? ctx.PRODUCTS_ALL.find(x => x.id === pl.slug) : null;
   if (p) {
     const img = ctx.cardShots(p)[0];
-    return `<section class="lg-kin lg-rise" id="tee">
+    return `<section class="lg-kin lg-rise" id="tee" data-match="kin">
       <a class="lg-kin-img" href="/products/${p.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" loading="lazy" decoding="async" width="400" height="500">` : ''}</a>
       <div class="lg-kin-t"><span class="lg-eye">${icon('tee')} Wear a place</span>
         <h2>${esc(p.name)}</h2>
         <p>${esc(pl.sentence.replace('{{link}}', pl.anchor || p.name))}</p>
-        <p class="lg-kin-m"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> &middot; 230gsm cotton &middot; any 2 tees AED 359</p>
+        <p class="lg-kin-m"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> <span class="sb-aed-only">&middot; 230gsm cotton &middot; any 2 tees AED 359</span><span class="sb-aed-alt">&middot; 230gsm cotton</span></p>
         <a class="btn" href="/products/${p.id}/">See the tee &rarr;</a>
       </div></section>`;
   }
@@ -184,7 +184,7 @@ function productPanel(l, ctx) {
     const im = ctx.cardShots(x)[0];
     return `<a class="lg-none-c" href="/products/${x.id}/">${im ? `<img src="${esc(im[0])}" alt="" loading="lazy" decoding="async" width="200" height="250">` : ''}<b>${esc(x.name.replace(/ — Regular$/, ''))}</b><span>${esc(x.placeName || '')}</span></a>`;
   }).join('');
-  return `<section class="lg-none lg-rise" id="tee"><span class="lg-eye">${icon('tee')} Wear a place</span>
+  return `<section class="lg-none lg-rise" id="tee" data-match="none"><span class="lg-eye">${icon('tee')} Wear a place</span>
     <h2>We haven&rsquo;t drawn ${esc(l.name)} yet</h2>
     <p>Every Sahra &amp; Beyond tee is drawn from one real place in the Emirates. These are the places we have drawn so far.</p>
     <div class="lg-none-g">${cards}</div>
@@ -239,7 +239,7 @@ function renderPlace(l, ctx) {
 
   const hero = `
   <section class="loc-hero lg-hero${hasPhoto ? ' has-photo' : ''}" style="--hero-grad:${ctx.CAT_BG[l.category] || ctx.CAT_BG.Dunes}">
-    ${hasPhoto ? `<img class="lg-hero-img" src="${esc(l.cover)}" alt="${esc(l.photoCredit && l.photoCredit.what ? l.photoCredit.what : l.name)}" fetchpriority="high" decoding="async" style="object-position:${esc(l.coverFocus || '50% 50%')}">` : ''}
+    ${hasPhoto ? `<img class="lg-hero-img" src="${esc(l.cover)}" alt="${esc(l.coverAlt || (l.photoCredit && l.photoCredit.what) || l.name)}" fetchpriority="high" decoding="async" style="object-position:${esc(l.coverFocus || '50% 50%')}">` : ''}
     <div class="glow"></div>
     <svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg>
     <svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#FAF6EF" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg>
@@ -259,8 +259,9 @@ function renderPlace(l, ctx) {
   const main = `
   <nav class="lg-tabs" aria-label="On this page"><div class="lg-tabs-in">${tabs.map(t => `<a href="#${t[0]}">${t[1]}</a>`).join('')}</div></nav>
   <main class="lg-main">
-    ${exact ? ctx.miniTee(l.id) : ''}
-    ${glance(l)}
+    <div class="lg-side">${exact ? ctx.miniTee(l.id) : ''}
+    ${glance(l)}</div>
+    <div class="lg-col">
     <section id="overview" class="lg-over lg-rise">
       <div class="content">${ctx.withProductLink(paras(l.body || l.desc), exact ? l.productLink : null)}</div>
       <p class="lg-checked">${icon('eye')} Last checked ${fmtDate(l.lastChecked || '2026-09-27')}. Facts on this page come from the sources listed at the bottom. <a href="https://wa.me/971585449946?text=${encodeURIComponent('Something on the ' + l.name + ' page looks out of date: ')}" target="_blank" rel="noopener">Spotted something out of date?</a></p>
@@ -297,17 +298,31 @@ function renderPlace(l, ctx) {
           <button class="pack-btn" type="button" data-grp="12">10+</button>
         </div>
         ${l.overnight === false ? '' : `<div class="grp" role="group" aria-label="Trip type">
-          <button class="pack-btn on" type="button" data-ov="0">Day trip</button>
-          <button class="pack-btn" type="button" data-ov="1">Overnight</button>
+          <button class="pack-btn${l.packDefault === 'overnight' ? '' : ' on'}" type="button" data-ov="0">Day trip</button>
+          <button class="pack-btn${l.packDefault === 'overnight' ? ' on' : ''}" type="button" data-ov="1">Overnight</button>
         </div>`}
       </div>
       <div class="lg-bagbar"><span class="lg-bag">${icon('bag')}<i class="lg-bagfill"></i></span><span class="lg-bagt">0 packed</span></div>
       <div id="pack-list"></div>
+      <div class="lg-take" id="take">
+        <h3>Take this list with you</h3>
+        <p>Send it to yourself or the people you are going with. Ticked items are marked.</p>
+        <div class="lg-take-b">
+          <a class="btn alt" id="pk-wa" href="https://wa.me/" target="_blank" rel="noopener">${icon('link')} WhatsApp it</a>
+          <a class="btn alt" id="pk-mail" href="mailto:">Email it</a>
+          <button type="button" class="btn alt" id="pk-copy">Copy</button>
+        </div>
+        <form class="lg-cap" id="pk-cap" novalidate>
+          <label for="pk-email">One email when we publish a new place guide, and AED 50 off your first order over AED 150.</label>
+          <div class="lg-cap-r"><input type="email" id="pk-email" name="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required><button type="submit" class="btn">Send my code</button></div>
+          <p class="lg-cap-m" aria-live="polite"></p>
+        </form>
+      </div>
     </section>
     ${(() => { const f = ctx.faqsFor(l); return f.length ? `<section class="faq lg-rise" id="faq"><h2>${icon('q')} Questions people ask about ${esc(l.name)}</h2>${f.map(q => `<details class="lg-q"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : ''; })()}
     ${sourcesList(l) ? `<details class="lg-fold lg-srcf lg-rise" id="sources"><summary><span class="lg-fi">${icon('link')}</span><span class="lg-ft"><b>Sources</b><small>Where the facts on this page come from</small></span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb">${sourcesList(l)}${credit ? credit.replace('lg-credit', 'lg-credit2') : ''}</div></details>` : ''}
-    ${ctx.newsletterBlock()}
     ${nearby.length ? `<section class="related lg-rise"><h2>Near ${esc(l.name)}</h2><div class="cards">${nearby.map(n => ctx.locCard(n.x).replace('</strong>', `</strong><i class="lg-near">about ${Math.max(5, Math.round(n.d / 5) * 5)} km away</i>`)).join('')}</div><p class="lg-all"><a href="/places/">All places on the map &rarr;</a></p></section>` : ''}
+    </div>
   </main>`;
   return { hero, main };
 }
@@ -327,7 +342,7 @@ function clientScript(l, ctx, packItems) {
     if(window.gtag){gtag('event','share',{method:navigator.share?'native':'copy',location:${JSON.stringify(l.name)}});}
     if(navigator.share){navigator.share(data).catch(function(){});}else if(navigator.clipboard){navigator.clipboard.writeText(location.href).then(function(){var t=sb.innerHTML;sb.textContent='Link copied';setTimeout(function(){sb.innerHTML=t;},1800);});}});}
   /* packing list: remembers what you tick */
-  var PACK=${JSON.stringify(packItems)},state={p:4,ov:false},KEY='sb_pack_${l.id}',done={};
+  var PACK=${JSON.stringify(packItems)},state={p:4,ov:${l.packDefault === 'overnight' ? 'true' : 'false'}},KEY='sb_pack_${l.id}',done={};
   try{done=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
   function qy(t){if(!t)return '';return String(t).replace(/\\{water\\}/g,4*state.p).replace(/\\{half\\}/g,Math.max(1,Math.ceil(state.p/2))).replace(/\\{p\\}/g,state.p);}
   function he(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -338,6 +353,24 @@ function clientScript(l, ctx, packItems) {
   document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
   document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
   render();
+  /* take the list with you: WhatsApp, email (their own mail app) or copy */
+  function listText(){var items=PACK.filter(function(it){return !it.overnight||state.ov;}),g='',out=['Packing list: '+${JSON.stringify(l.name)}+' ('+state.p+(state.p===1?' person':' people')+(state.ov?', overnight':', day trip')+')'];
+    items.forEach(function(it){if(it.group!==g){g=it.group;out.push('');out.push(g.toUpperCase());}var q=qy(it.qty);out.push((done[it.name]?'[x] ':'[ ] ')+it.name+(q?' ('+q+')':''));});
+    out.push('');out.push('Guide: '+location.origin+location.pathname);return out.join('\\n');}
+  function tg(n,p){try{if(window.gtag)gtag('event',n,p);}catch(e){}}
+  var pw=document.getElementById('pk-wa'),pm=document.getElementById('pk-mail'),pc=document.getElementById('pk-copy');
+  if(pw)pw.addEventListener('click',function(){pw.href='https://wa.me/?text='+encodeURIComponent(listText());tg('pack_share',{method:'whatsapp',location:${JSON.stringify(l.id)}});});
+  if(pm)pm.addEventListener('click',function(){pm.href='mailto:?subject='+encodeURIComponent('Packing list: '+${JSON.stringify(l.name)})+'&body='+encodeURIComponent(listText());tg('pack_share',{method:'email',location:${JSON.stringify(l.id)}});});
+  if(pc)pc.addEventListener('click',function(){var t=listText(),ok=function(){pc.textContent='Copied';setTimeout(function(){pc.textContent='Copy';},1800);};try{navigator.clipboard.writeText(t).then(ok,ok);}catch(e){ok();}tg('pack_share',{method:'copy',location:${JSON.stringify(l.id)}});});
+  var cap=document.getElementById('pk-cap');
+  if(cap)cap.addEventListener('submit',function(e){e.preventDefault();var inp=cap.querySelector('input'),msg=cap.querySelector('.lg-cap-m'),btn=cap.querySelector('button'),em=(inp.value||'').trim();
+    if(!/^[^\\s@]+@[^\\s@]+\\.[a-z]{2,}$/i.test(em)){msg.textContent='That email does not look right. Try again?';inp.focus();return;}
+    btn.disabled=true;btn.textContent='Sending…';
+    var win=function(code){code=code||'GOBEYOND50';try{var w=JSON.parse(localStorage.getItem('sbw.v2')||'{}')||{};w.won=1;w.seen=1;localStorage.setItem('sbw.v2',JSON.stringify(w));}catch(err){}
+      cap.classList.add('won');msg.innerHTML='You are on the list. Your code: <b>'+code.replace(/[^A-Z0-9-]/gi,'')+'</b>, AED 50 off your first order over AED 150, one use per customer. Your free tote is added at checkout.';tg('guide_signup',{source:'guide-pack',location:${JSON.stringify(l.id)}});
+      try{if(window.sbMeta&&window.sbMeta.track)window.sbMeta.track('Lead',{content_name:code});}catch(err){}};
+    fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'guide-pack-'+${JSON.stringify(l.id)}})}).then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(r.status===400)throw new Error('email');return j&&j.code;});})
+      .then(win,function(err){if(err&&err.message==='email'){msg.textContent='That email does not look right. Try again?';btn.disabled=false;btn.textContent='Send my code';return;}win();});});
   /* tabs: open the fold you jump to, and follow the reader */
   var hdr=document.querySelector('.hdr,#nav');function hh(){var h=hdr?hdr.getBoundingClientRect().height:56;document.documentElement.style.setProperty('--lg-hdr',Math.max(0,Math.round(h))+'px');}hh();addEventListener('resize',hh,{passive:true});
   function openTo(id){var t=document.getElementById(id);if(!t)return;if(t.tagName==='DETAILS'&&!t.open){t.open=true;}}
@@ -346,14 +379,21 @@ function clientScript(l, ctx, packItems) {
   var links=[].slice.call(document.querySelectorAll('.lg-tabs a')),secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
   if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var i=secs.indexOf(en.target);links.forEach(function(x,j){x.classList.toggle('on',j===i);});var a=links[i];if(a&&a.scrollIntoView&&a.parentNode){var p=a.parentNode;p.scrollTo({left:a.offsetLeft-p.clientWidth/2+a.clientWidth/2,behavior:RM?'auto':'smooth'});}}});},{rootMargin:'-45% 0px -50% 0px'});secs.forEach(function(s){if(s)io.observe(s);});}
   document.querySelectorAll('details.lg-fold').forEach(function(d){d.addEventListener('toggle',function(){if(d.open){d.classList.add('seen');if(window.gtag)gtag('event','place_fold_open',{fold:d.id,location:${JSON.stringify(l.id)}});var m=d.querySelector('.lg-map');if(m)m.classList.add('go');counters(d);}});});
+  /* measure the guide-to-tee path: panel seen, and any tee link tapped, tagged by how
+     closely the tee matches this place (exact / kin / none) */
+  (function(){var tp=document.getElementById('tee'),mt=tp?tp.getAttribute('data-match')||'':'',loc=${JSON.stringify(l.id)};
+    function g(n,p){try{if(window.gtag)gtag('event',n,p);}catch(e){}}
+    if(tp&&'IntersectionObserver' in window){var seen=false,to=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting&&!seen){seen=true;g('place_tee_view',{match:mt,location:loc});to.disconnect();}});},{threshold:.4});to.observe(tp);}
+    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a)return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});});
+  })();
   /* motion: gentle rise as sections arrive (once), and number count-ups */
-  function counters(root){(root||document).querySelectorAll('.lg-count:not(.done)').forEach(function(c){var to=+c.getAttribute('data-to');c.classList.add('done');if(RM||!to){c.textContent=to;return;}var t0=null;function step(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/1100);c.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
+  function counters(root){(root||document).querySelectorAll('.lg-count:not(.done)').forEach(function(c){var to=+c.getAttribute('data-to');c.classList.add('done');if(RM||!to){c.textContent=to;return;}var t0=null;function step(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/1750);c.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
   if('IntersectionObserver' in window&&!RM){document.documentElement.classList.add('lg-anim');var ro=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');ro.unobserve(en.target);}});},{rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.lg-rise').forEach(function(x){ro.observe(x);});}
   /* the month strip marks this month */
   var mo=new Date().getMonth();document.querySelectorAll('.lg-months li').forEach(function(li,i){if(i%12===mo)li.classList.add('now');});
   /* hero parallax: the dunes drift apart, the photo sinks slower than the page */
   var hero=document.querySelector('.lg-hero');
-  if(hero&&!RM){var far=hero.querySelector('.dune-far'),near=hero.querySelector('.dune-near'),img=hero.querySelector('.lg-hero-img'),tick=false;
+  if(hero&&!RM&&!(window.matchMedia&&matchMedia('(max-width: 760px), (pointer: coarse)').matches)){var far=hero.querySelector('.dune-far'),near=hero.querySelector('.dune-near'),img=hero.querySelector('.lg-hero-img'),tick=false;
     function par(){tick=false;var y=Math.min(scrollY,hero.offsetHeight);if(far)far.style.transform='translateY('+(14+y*0.06)+'%)';if(near)near.style.transform='translateY('+(-y*0.08)+'px)';if(img)img.style.transform='translateY('+(y*0.28)+'px) scale(1.06)';}
     addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(par);}},{passive:true});par();}
   /* sun through the day (computed for this place and date; Dubai time) */
@@ -385,13 +425,19 @@ function clientScript(l, ctx, packItems) {
     var mr=document.querySelector('.lg-moonrow');
     if(mr){var syn=29.530588853,ref=Date.UTC(2000,0,6,18,14),out='';for(var dd=0;dd<14;dd++){var dt=new Date(now.getTime()+dd*864e5);dt.setHours(21,0,0,0);var age=((dt.getTime()-ref)/864e5)%syn;if(age<0)age+=syn;var ill=(1-Math.cos(2*Math.PI*age/syn))/2,wax=age<syn/2,rx=Math.abs(1-2*ill)*10,lit=ill>0.5;
       var sh='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" class="mn-d"/>'+(ill<0.02?'':'<path class="mn-l" d="M12,2 A10,10 0 0 '+(wax?1:0)+' 12,22 A'+rx.toFixed(2)+',10 0 0 '+(wax?(lit?1:0):(lit?0:1))+' 12,2 Z"/>')+'</svg>';
-      out+='<span class="mn'+(ill<0.25?' dark':'')+'" style="--i:'+dd+'" title="'+Math.round(ill*100)+'% lit">'+sh+'<small>'+dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric'})+'</small></span>';}mr.innerHTML=out;}
+      out+='<span class="mn'+(ill<0.25?' dark':'')+'" style="--i:'+dd+'" title="'+Math.round(ill*100)+'% lit">'+sh+'<small>'+dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric'})+'</small><span class="lg-sr">, moon '+Math.round(ill*100)+'% lit</span></span>';}mr.innerHTML=out;}
   }
 })();
 </script>`;
 }
 
 const PLACE_CSS = `
+/* html{font-size-adjust:.5} (legibility layer) stops Chrome scaling SVG text with the viewBox, so map labels rendered at their raw unit size: huge on wide crops */
+.lg-page svg text,.lg-page svg tspan{font-size-adjust:none}
+
+.lg-sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important;display:block!important}
+/* hold the header and tab bar at their final height so the web-font swap does not shift the page (CLS) */
+.hdr{min-height:67px;box-sizing:border-box}.lg-tabs{min-height:52px;box-sizing:border-box}
 /* ===== location guides (27 Sep 2026) ===== */
 :root{--lg-ink:#2A2016;--lg-soft:#5A5046;--lg-clay:#9C521B;--lg-deep:#7E4114;--lg-card:#fff;--lg-line:rgba(42,32,22,.12);--lg-hdr:56px;interpolate-size:allow-keywords}
 .lg-hero{min-height:clamp(380px,62vh,620px);display:flex;align-items:flex-end}
@@ -400,7 +446,8 @@ const PLACE_CSS = `
 .lg-hero.has-photo .dune-far,.lg-hero.has-photo .glow{display:none}
 .lg-hero-img{position:absolute;inset:-6% 0 0 0;width:100%;height:112%;object-fit:cover;z-index:0;transform:scale(1.06);will-change:transform}
 .lg-hero.has-photo::before{display:none}
-.lg-hero.has-photo::after{background:linear-gradient(180deg,rgba(10,6,4,.35) 0%,rgba(10,6,4,.05) 30%,rgba(10,6,4,.25) 55%,rgba(10,6,4,.78) 100%)!important;z-index:1}
+.lg-hero.has-photo::after{background:linear-gradient(180deg,rgba(10,6,4,.42) 0%,rgba(10,6,4,.22) 28%,rgba(10,6,4,.45) 52%,rgba(10,6,4,.82) 100%)!important;z-index:1}
+.lg-hero.has-photo h1,.lg-hero.has-photo .lede,.lg-hero.has-photo .lg-ar{text-shadow:0 1px 2px rgba(0,0,0,.45),0 2px 18px rgba(0,0,0,.4)}
 .lg-hero .dune-near{z-index:3;height:clamp(40px,7vw,90px)}
 .lg-hero .loc-hero-inner{z-index:4;padding-bottom:clamp(8px,3vw,24px)}
 .lg-hero h1{font-size:clamp(34px,6vw,64px)!important;line-height:1.02!important;margin-bottom:4px}
@@ -464,7 +511,7 @@ const PLACE_CSS = `
 .lg-fold>summary::-webkit-details-marker{display:none}
 .lg-fi{width:42px;height:42px;border-radius:12px;background:#2A2016;color:#F3D7AE;display:flex;align-items:center;justify-content:center}
 .lg-ft{display:flex;flex-direction:column;min-width:0}
-.lg-ft b{font-family:'Cormorant Garamond',Georgia,serif;font-size:21px;font-weight:600;color:var(--lg-ink);line-height:1.15}
+.lg-ft b,.lg-ft .lg-fh{font-family:'Cormorant Garamond',Georgia,serif;font-size:21px;font-weight:600;color:var(--lg-ink);line-height:1.15;margin:0;letter-spacing:0;text-transform:none}
 .lg-ft small{font-size:13.5px;color:var(--lg-soft);line-height:1.4;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .lg-fold[open] .lg-ft small{display:none}
 .lg-fx{width:30px;height:30px;border-radius:50%;border:1px solid var(--lg-line);position:relative;transition:transform .35s cubic-bezier(.2,.7,.2,1),background .25s}
@@ -483,6 +530,7 @@ const PLACE_CSS = `
 .lg-gps b{font-family:'Space Mono',monospace;color:var(--lg-ink);font-size:13px}
 /* route map */
 .lg-map{margin:0 0 14px;max-width:620px}
+.lg-road{display:block;margin-top:2px}
 .lg-map svg{display:block;width:100%;height:auto;border-radius:14px;background:#DCE6E8}
 .lg-sea{fill:#DCE6E8}
 .lg-land2{fill:#EFE7D9;stroke:#D2C4AD}
@@ -541,8 +589,8 @@ const PLACE_CSS = `
 .fl-water{fill:#5E7C94;opacity:.85}
 .fl-walker{fill:none;stroke:#2A2016;stroke-width:2.4;stroke-linecap:round}.fl-walker circle{fill:#2A2016}
 .fl-t{font:600 13px Jost,sans-serif;fill:#2A2016;text-anchor:middle}
-.lg-anim .fl-water{animation:lgFlood 5s cubic-bezier(.5,0,.3,1) infinite}
-.lg-anim .fl-rain line{animation:lgRain .9s linear infinite;animation-delay:calc(var(--k) * -.18s)}
+.lg-anim .lg-fold[open] .fl-water{animation:lgFlood 5s cubic-bezier(.5,0,.3,1) 3 both}
+.lg-anim .lg-fold[open] .fl-rain line{animation:lgRain .9s linear 16;animation-delay:calc(var(--k) * -.18s)}
 @keyframes lgFlood{0%,15%{transform:translateX(0) scaleX(.35);transform-origin:240px 150px}70%,100%{transform:translateX(0) scaleX(1.7);transform-origin:240px 150px}}
 @keyframes lgRain{from{transform:translate(0,-6px);opacity:0}30%{opacity:1}to{transform:translate(-4px,14px);opacity:0}}
 .lg-flood figcaption{font-size:14px;color:var(--lg-ink);margin-top:6px;font-weight:500}
@@ -606,7 +654,7 @@ const PLACE_CSS = `
 .lg-anim .lg-glance.in .lg-m{animation:lgBar .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 35ms)}
 .lg-anim .lg-fold[open] .lg-months .lg-m{animation:lgBar .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 35ms)}
 @keyframes lgBar{from{transform:scaleY(.2);opacity:0}to{transform:none;opacity:1}}
-@media(prefers-reduced-motion:reduce){.lg-pulse,.fl-water,.fl-rain line,.lg-stars i{animation:none!important}.lg-fold::details-content,.lg-q::details-content{transition:none}.lg-hero-img{transform:none}}
+@media(prefers-reduced-motion:reduce){.lg-map.go .lg-route,.lg-map .lg-route{animation:none!important;stroke-dashoffset:0!important}.lg-fold[open] .lg-fb{animation:none!important}.lg-pulse,.fl-water,.fl-rain line,.lg-stars i{animation:none!important}.lg-fold::details-content,.lg-q::details-content{transition:none}.lg-hero-img{transform:none}}
 @media(max-width:700px){
   .lg-hero{min-height:clamp(340px,56vh,520px)}
   .lg-ar{font-size:19px}
@@ -617,9 +665,41 @@ const PLACE_CSS = `
   .lg-gv{font-size:14px}.lg-gs{font-size:12.5px}
   .lg-fold>summary{padding:14px 12px;gap:10px}
   .lg-fi{width:38px;height:38px}
-  .lg-ft b{font-size:19px}
+  .lg-ft b,.lg-ft .lg-fh{font-size:19px}
   .lg-fb{padding:0 12px 16px}
   .lg-none-c b{font-size:14px}
+}
+.lg-take{margin-top:18px;padding:18px;border-radius:16px;background:#fff;border:1px solid var(--lg-line,rgba(43,37,32,.12))}
+.lg-take h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:600;margin:0 0 4px;color:var(--lg-ink,#2A2016)}
+.lg-take>p{margin:0 0 12px;font-size:15px;color:var(--lg-soft,#5A5046)}
+.lg-take-b{display:flex;flex-wrap:wrap;gap:8px}
+.lg-take-b .btn{min-height:44px;display:inline-flex;align-items:center;gap:6px}
+.lg-cap{margin-top:16px;padding-top:14px;border-top:1px solid var(--lg-line,rgba(43,37,32,.12))}
+.lg-cap label{display:block;font-size:15px;color:var(--lg-ink,#2A2016);margin-bottom:8px}
+.lg-cap-r{display:flex;gap:8px;flex-wrap:wrap}
+.lg-cap-r input{flex:1 1 200px;min-height:46px;border-radius:999px;border:1px solid rgba(43,37,32,.25);padding:0 16px;font:16px Jost,system-ui,sans-serif;background:#FAF6EF;color:#2A2016}
+.lg-cap-r .btn{min-height:46px}
+.lg-cap-m{margin:10px 0 0;font-size:14px;color:#7E4114}
+.lg-cap.won .lg-cap-r,.lg-cap.won label{display:none}
+.lg-cap.won .lg-cap-m{font-size:15px;color:#2A2016}
+
+/* desktop (28 Sep 2026 review: 43% of a 1440 screen sat empty): the guide reads in a
+   left column, and the at-a-glance card (plus the tee, where there is one) rides along
+   in a sticky right column. Phones and tablets are unchanged. */
+@media(min-width:1120px){
+  main.lg-main{max-width:1200px;display:grid;grid-template-columns:minmax(0,1fr) 350px;column-gap:48px;align-items:start}
+  .lg-main>.lg-col{grid-column:1;grid-row:1;min-width:0}
+  .lg-main>.lg-side{grid-column:2;grid-row:1;position:sticky;top:calc(var(--lg-hdr,67px) + 68px);display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - var(--lg-hdr,67px) - 84px);overflow:auto;scrollbar-width:thin}
+  .lg-side .lg-glance{margin:0}
+  .lg-side .minitee{flex-wrap:wrap;margin:0}
+  .lg-side .minitee-txt{flex:1 1 160px}
+  .lg-side .minitee-go{flex:1 1 100%;justify-content:center;text-align:center}
+  .lg-side .lg-gg{grid-template-columns:1fr}
+  .lg-side .lg-g{padding:10px 0}
+  .lg-main .content,.lg-over .content{max-width:700px}
+  .lg-tabs-in{max-width:1200px}
+  .lg-hero .loc-hero-inner{max-width:1200px}
+
 }
 `;
 
@@ -627,14 +707,29 @@ const PLACE_CSS = `
 /* ---------- /places/ explorer: one map, every pin, filters that act on the cards too ---------- */
 const CAT_COL = { Dunes: '#C0702E', Camping: '#7A4F8A', Wadis: '#3E7A73', Mountains: '#7E4114', Coast: '#2F6F95', Heritage: '#9A7B3C' };
 function hubExplorer(locations) {
-  const pins = locations.filter(l => typeof l.lat === 'number').map((l, i) => {
-    const [x, y] = xy(l.lat, l.lng);
-    return `<a class="hx-pin" href="/locations/${l.id}/" data-id="${l.id}" data-cat="${esc(l.category)}" style="--c:${CAT_COL[l.category] || '#7E4114'};--i:${i}" aria-label="${esc(l.name)}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="30" class="hx-hit"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="13" class="hx-dot"/><title>${esc(l.name)} (${esc(l.category)})</title></a>`;
+  /* Spread pins that would overlap (the Al Qudra lakes, the RAK/Fujairah cluster):
+     push pairs apart until dots sit at least D units apart, and draw a short leader
+     line back to the true spot when a dot moves (places review, 28 Sep 2026). */
+  const P = locations.filter(l => typeof l.lat === 'number').map(l => { const [x, y] = xy(l.lat, l.lng); return { l, x0: x, y0: y, x, y }; });
+  const D = 34;
+  for (let it = 0; it < 120; it++) {
+    let moved = false;
+    for (let a = 0; a < P.length; a++) for (let b = a + 1; b < P.length; b++) {
+      let dx = P[b].x - P[a].x, dy = P[b].y - P[a].y, d = Math.hypot(dx, dy);
+      if (d >= D) continue;
+      if (d < .01) { dx = 1; dy = .3; d = Math.hypot(dx, dy); }
+      const k = (D - d) / 2 / d; P[a].x -= dx * k; P[a].y -= dy * k; P[b].x += dx * k; P[b].y += dy * k; moved = true;
+    }
+    if (!moved) break;
+  }
+  const pins = P.map((p, i) => {
+    const l = p.l, x = p.x.toFixed(1), y = p.y.toFixed(1), off = Math.hypot(p.x - p.x0, p.y - p.y0) > 6;
+    return `<a class="hx-pin" href="/locations/${l.id}/" data-id="${l.id}" data-cat="${esc(l.category)}" style="--c:${CAT_COL[l.category] || '#7E4114'};--i:${i}" aria-label="${esc(l.name)}, ${esc(l.category)}">${off ? `<line x1="${p.x0.toFixed(1)}" y1="${p.y0.toFixed(1)}" x2="${x}" y2="${y}" class="hx-lead"/><circle cx="${p.x0.toFixed(1)}" cy="${p.y0.toFixed(1)}" r="4" class="hx-true"/>` : ''}<circle cx="${x}" cy="${y}" r="${D / 2 + 6}" class="hx-hit"/><circle cx="${x}" cy="${y}" r="14" class="hx-dot"/><title>${esc(l.name)} (${esc(l.category)})</title></a>`;
   }).join('');
   const cats = Object.keys(CAT_COL).filter(c => locations.some(l => l.category === c));
   const chip = (k, v, t) => `<button type="button" class="hx-chip${k === 'all' ? ' on' : ''}" data-f="${k}" data-v="${esc(v)}">${t}</button>`;
   return `<section class="hx" id="explore" aria-label="Explore the places">
-    <div class="hx-map"><svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="img" aria-label="Map of the UAE with every place">
+    <div class="hx-map"><svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="group" aria-label="Map of the UAE with every place; each pin links to its guide">
       <rect width="${GEO.w}" height="${GEO.h}" class="lg-sea"/><path class="lg-land2" d="${GEO.SA}${GEO.OM}${GEO.QA}"/><path class="lg-land" d="${GEO.AE}"/>${pins}</svg>
       <div class="hx-tip" hidden></div></div>
     <div class="hx-side">
@@ -669,15 +764,24 @@ function hubScript() {
   apply();})();</script>`;
 }
 const HUB_CSS = `
+
+@media(min-width:1120px){
+  main{max-width:1200px}
+  .cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+.hdr{min-height:67px;box-sizing:border-box}
 .lg-sea{fill:#DCE6E8}.lg-land2{fill:#EFE7D9;stroke:#D2C4AD;stroke-width:1.2}.lg-land{fill:#E8D3B2;stroke:#B98A55;stroke-width:1.6}
 .lg-eye{font:700 11.5px 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#9C521B;margin:0}
 .hx{display:grid;gap:14px;margin:0 0 26px}
-@media(min-width:860px){.hx{grid-template-columns:1.6fr 1fr;align-items:start}}
+@media(min-width:860px){.hx{grid-template-columns:2.2fr 1fr;align-items:start}}
 .hx-map{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(58,42,28,.12)}
 .hx-map svg{display:block;width:100%;height:auto}
 .hx-pin{cursor:pointer;outline:none}
 .hx-pin:focus-visible .hx-hit{fill:none;stroke:var(--lg-ink,#2a1d12);stroke-width:5}
 .hx-hit{fill:transparent}
+.hx-lead{stroke:var(--c);stroke-width:2.5;opacity:.7}.hx-true{fill:var(--c)}
+.hx-pin.off .hx-lead,.hx-pin.off .hx-true{opacity:.15}
+.hx-map.pre .hx-lead,.hx-map.pre .hx-true{opacity:0}
 .hx-dot{fill:var(--c);stroke:#FFF8EE;stroke-width:3;transform-box:fill-box;transform-origin:center;transition:transform .25s cubic-bezier(.2,.7,.2,1),opacity .3s}
 .hx-pin:hover .hx-dot,.hx-pin:focus .hx-dot,.hx-pin.hot .hx-dot{transform:scale(1.55)}
 .hx-pin.off .hx-dot{opacity:.18;transform:scale(.7)}

@@ -77,7 +77,7 @@
     "vehicle": "2wd",
     "note": "A paved causeway connects the mainland to the island, so no boat is needed, and several visitor guides say a standard sedan can manage the main route; an SUV helps on the unpaved tracks nearer the coast. Public access is genuinely disputed — recent write-ups range from 'freely accessible on public roads' to 'the best-known viewpoint has been fenced off near a military airfield.' Treat any access claim, including this one, as liable to change: keep to public roads, and turn back at fencing, a checkpoint or signage rather than push on."
   },
-  "seoDesc": "Abu Dhabi's remote western coast holds Mars-like, mushroom-shaped rocks at Shuweihat Island — reachable by causeway, but public access is genuinely disputed near a military airfield.",
+  "seoDesc": "Mars-like, mushroom-shaped rocks on Abu Dhabi's remote western coast, reached by causeway; public access is disputed near a military airfield.",
   "faqs": [
     {
       "q": "Is Shuweihat Island open to the public?",
@@ -121,5 +121,12 @@
     "Difficulty is a judgement call: the paved causeway suits an ordinary car, but the remoteness, patchy signal, lack of facilities and disputed access pushed us from the site's previous 'Hard' rating to 'Moderate' rather than 'Easy'.",
     "One visitor guide (MissionsOffroad) mentions a petrol station and cafeteria near an entrance roundabout, while three other guides say there are no facilities at all on the island. We went with the majority view (no facilities) but flag the conflict.",
     "No source gives an official current opening status or hours; treat this as unrestricted open land rather than a managed site with posted hours."
-  ]
+  ],
+  "glance": {
+    "how": "Causeway to the island; access is disputed, turn back at fencing",
+    "time": "1–2 hours on site, plus a long drive",
+    "best": "Early morning or before sunset",
+    "cost": "No fee reported"
+  },
+  "coverAlt": "Wind-carved, mushroom-shaped sandstone rocks on the shore of Shuweihat Island"
 }

@@ -2,7 +2,7 @@
   "id": "wadi-kub",
   "name": "Wadi Kub",
   "emoji": "⛺",
-  "emirate": "Ras Al Khaimah",
+  "emirate": "Ras Al Khaimah / Fujairah",
   "category": "Camping",
   "difficulty": "Moderate",
   "season": "Oct–Apr",
@@ -80,7 +80,7 @@
     "vehicle": "high-clearance",
     "note": "A regular saloon reaches the signposted trailhead off the Gragrah–Ghub road on tarmac; a high-clearance or 4x4 vehicle is needed for the rougher tracks into the wadi itself and for remote camping spots."
   },
-  "seoDesc": "A quiet wild-camping wadi in the Hajar Mountains near Masafi, reached off the Gragrah–Ghub road, with century-old Sidr trees, rock pools after rain and no facilities at all.",
+  "seoDesc": "A quiet wild-camping wadi in the Hajar Mountains near Masafi, with century-old Sidr trees, rock pools after rain and no facilities at all.",
   "faqs": [
     {
       "q": "Is there an entry fee for Wadi Kub?",
@@ -129,5 +129,11 @@
     "Mobile signal at the site is not documented in any source found, so it's marked unknown rather than guessed.",
     "Wikipedia's official Wadi Kub entry places the wadi's mouth further north near Saram; this page uses the trailhead coordinates that independent hiking/off-road guides actually direct visitors to, since that's what people search for and navigate to.",
     "Audit (2026-09-27): a source found while re-checking (MissionsOffroad) explicitly distinguishes the easy, drive-in 'Wadi Kub' near Masafi (described here) from a separate, much more technical narrow gorge also called 'Wadi Kub/Koob' that connects underground-canyon-style to Wadi Naqab and the abandoned settlement of Al Sanat (per a second source, The Road Reel) — real risk of two different places sharing one name. Softened the body/onSite text so it no longer states as fact that this trailhead links directly to Wadi Naqab. Also softened the 'cups' name etymology, which no source directly confirms (Arabic Wikipedia was unreachable in this pass; English Wikipedia and MissionsOffroad don't explain the name). Sidr-tree age ('more than a hundred years'), Mazari/Bani Yas tribal history and no-facilities claim were all independently confirmed."
-  ]
+  ],
+  "glance": {
+    "how": "Tarmac to the trailhead; high clearance for the wadi tracks",
+    "time": "Half a day, or overnight",
+    "best": "Afternoon into evening",
+    "cost": "Free"
+  }
 }

@@ -78,7 +78,7 @@
     "vehicle": "2wd",
     "note": "The 11.7km summit road is fully paved, three lanes wide with about 60 hairpin bends, and freshly maintained — any car manages it comfortably. Go slowly on the bends, and pull in only at the marked viewpoints, not on the road itself."
   },
-  "seoDesc": "The UAE's second-highest peak, straddling the Oman border above Al Ain. A paved road climbs 1,200m through 60 hairpin bends to a summit hotel, with hot springs and Bronze Age tombs at the base.",
+  "seoDesc": "The UAE's second-highest peak above Al Ain. A paved road climbs through 60 hairpin bends to the summit, with hot springs and Bronze Age tombs below.",
   "body": "Jebel Hafeet rises abruptly from the plain just south of Al Ain, on the border the UAE shares with Oman's Al Buraimi — it's the second-highest peak in the country, after Jebel Jais in Ras Al Khaimah. Official figures put the summit at 1,249 metres, though other measurements cite a range from around 1,100 to 1,400 metres; whichever figure you use, the mountain stands roughly 900 metres above the surrounding desert, an anticline of limestone, marl and evaporite rock pushed up by ancient faulting and rich enough in marine fossils that geologists still study it.\n\nThe reason most people come is the road. Built in 1980, it climbs 11.7km and about 1,200 metres through some 60 engineered hairpin bends on three smooth lanes — Edmunds.com once called it the greatest driving road in the world, and it remains popular with cyclists training on its long, even gradient as much as with drivers after the view. Multiple marked viewpoints along the way let you stop safely for photographs over Al Ain's grid of farms and the desert beyond, with Oman visible from the higher bends.\n\nAt the base, Green Mubazzarah is a free public park built around genuine geothermal hot springs, with a lake, lawns for picnics and barbecues, and chalets for anyone who wants to stay over — the water flows down from inside the mountain itself and reaches a noticeable temperature, hot enough that it's worth testing before you get in during summer. Nearby, the foothills hold around 500 Bronze Age beehive tombs from the Hafit period (roughly 3200–2600 BC), among the earliest structures marking organised settlement in the UAE, and part of the reason Al Ain became the country's first UNESCO World Heritage Site.\n\nAt the summit, a hotel has operated for years under the Mercure brand, though recent listings suggest a rebrand is under way or has happened (see the note in doubts) — either way, it's the only accommodation on the mountain itself, with a restaurant and views in both directions along the ridge. Together, the drive, the springs and the archaeology make Jebel Hafeet one of the few UAE destinations that rewards a whole day rather than a quick stop.",
   "faqs": [
     {
@@ -116,11 +116,11 @@
   },
   "nameAr": "جبل حفيت",
   "photoCredit": {
-    "author": "Dubaideena",
+    "author": "Zainmaniyar",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "page": "https://commons.wikimedia.org/wiki/File:Al_Ain_Mountain.jpg",
-    "what": "The view from near the summit of Jebel Hafeet down over Al Ain's desert plain, looking toward the city."
+    "page": "https://commons.wikimedia.org/wiki/File:Jebel_hafeet_wide_shot.jpg",
+    "what": "The Jebel Hafeet mountain road winding through bare limestone ridges above Al Ain"
   },
   "lastChecked": "2026-09-27",
   "_doubts": [
@@ -130,5 +130,12 @@
     "Toilet facilities and mobile signal along the road and at the summit weren't confirmed by any source opened.",
     "The hot-spring pool entry fee at Green Mubazzarah was confirmed at AED 5 via Bayut's guide (already in sources); an earlier conflicting figure of AED 15 found elsewhere could not be traced to an official source and may have been confused with the park's separate AED 15/25 miniature train ticket.",
     "The UNESCO inscription of the Hafit Tombs/Cultural Sites of Al Ain was corrected to 2011 only, confirmed directly on the UNESCO World Heritage Centre listing (whc.unesco.org/en/list/1343) and Experience Abu Dhabi; an earlier reference to '1993' in this file had no traceable source and has been removed."
-  ]
+  ],
+  "glance": {
+    "how": "Paved summit road with about 60 bends; any car",
+    "time": "1.5–2 hours",
+    "best": "Early morning or before sunset",
+    "cost": "Free; hot-spring pools AED 5"
+  },
+  "coverFocus": "50% 60%"
 }

@@ -9,7 +9,7 @@
   "desc": "A natural island off Abu Dhabi reached by ferry from Jebel Dhanna: free-roaming oryx, giraffe and cheetah, a 7th-century monastery, and safaris you book through the resorts.",
   "status": "safe",
   "igPosts": [],
-  "distance": "About 2–2.5h by road from Abu Dhabi to the Jebel Dhanna jetty, then a short ferry crossing",
+  "distance": "About 2–2.5h from Abu Dhabi to the Jebel Dhanna jetty, then a short ferry crossing",
   "cover": "/uploads/17992461785873452.webp",
   "id": "sir-bani-yas-island",
   "difficulty": "Easy",
@@ -80,7 +80,7 @@
     "vehicle": "boat",
     "note": "There's no bridge or self-drive route onto the island. Drive to the Jebel Dhanna jetty and cross on the free public speedboat, or book a resort water taxi or a private seaplane. Day visitors can use the public ferry, but the wildlife safari — the main reason most people come — has to be pre-booked through a resort or a registered tour operator; you can't simply turn up and join one."
   },
-  "seoDesc": "A natural island off Abu Dhabi reached by ferry from Jebel Dhanna: free-roaming oryx, giraffe and cheetah, a 7th-century monastery, and safaris you book through the resorts.",
+  "seoDesc": "An island off Abu Dhabi reached by ferry from Jebel Dhanna: free-roaming oryx, giraffe and cheetah, a 7th-century monastery and booked safaris.",
   "faqs": [
     {
       "q": "How do I get to Sir Bani Yas Island?",
@@ -125,5 +125,12 @@
     "One lower-quality source (citytourindubai.com) claimed a flat AED 15 entry fee and 2pm–6pm opening hours (except Friday); this contradicts every other source and reads as generic or templated content, so we left it out of the fee/hours fields entirely rather than include an unverified figure.",
     "Ferry crossing time is reported inconsistently across sources (15, 20 or 30 minutes); we gave a range rather than a single figure.",
     "The GPS pin marks the island's charted centre (from Wikipedia), not the Jebel Dhanna jetty where the journey actually begins — worth adding a separate jetty pin if the site's template supports a second location."
-  ]
+  ],
+  "glance": {
+    "how": "Free ferry from Jebel Dhanna jetty; safaris must be pre-booked",
+    "time": "A full day, or stay 1–3 nights",
+    "best": "Early-morning or late-afternoon safari",
+    "cost": "Ferry free; safari about AED 200–300"
+  },
+  "coverAlt": "A giraffe among acacia trees in the wildlife park on Sir Bani Yas Island"
 }

@@ -2,7 +2,7 @@
   "emirate": "Abu Dhabi",
   "coverFocus": "50% 100%",
   "body": "Al Quaa is one of the darkest accessible skies in the UAE and arguably the best place to view the Milky Way galaxy in the country. Set deep in the southern sands of Abu Dhabi, far from any city light, it's a pilgrimage spot for stargazers and astrophotographers — especially on clear, moonless nights between May and October, when the galaxy's bright core is above the horizon.\n\nThe bright core of the Milky Way rises over an empty horizon here, with almost zero light pollution to wash it out. Come prepared for a remote, self-sufficient overnight: a capable 4x4, plenty of water, warm layers for cold desert nights and a red-light torch to protect your night vision. There are no facilities — which is exactly why the skies are so spectacular.",
-  "season": "Oct–Mar",
+  "season": "Apr–May, Sep–Oct",
   "lng": 54.75339,
   "emoji": "🌌",
   "name": "Al Quaa Desert",
@@ -13,14 +13,14 @@
     "https://www.instagram.com/p/DZogyHToe6k/",
     "https://www.instagram.com/p/DZ0fc5eiBbg/?img_index=5"
   ],
-  "distance": "~2.5h from Dubai",
+  "distance": "About 2.5h from Dubai",
   "cover": "/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg",
   "id": "al-quaa-desert",
   "difficulty": "Moderate",
   "category": "Camping",
   "lat": 23.52924,
   "seoTitle": "Al Quaa Stargazing: One of the Darkest Skies in the UAE",
-  "seoDesc": "Al Quaa has some of the darkest accessible skies in the Emirates. When to go, where to park, what you can see without a telescope, and why the core shows May to October.",
+  "seoDesc": "Al Quaa has some of the darkest accessible skies in the Emirates. When to go, where to park, what you'll see and when the Milky Way core is up.",
   "productLink": {
     "slug": "al-quaa-galaxy-regular",
     "anchor": "the Al Quaa Galaxy tee",
@@ -160,7 +160,15 @@
     "No sourced Arabic name for 'Al Quaa' was found from a source we opened — left nameAr null rather than guess a transliteration.",
     "No sourced connection between Al Quaa specifically and Bedouin star-navigation heritage was found — left heritage null rather than attach a plausible-sounding but unconfirmed cultural claim.",
     "Whether there's an actual locked gate (vs. just a landmark gate) at the site, and any set hours, isn't clear from the sources — left hours null.",
-    "The page's stated 'Best season: Oct–Mar' (comfort) and the Milky Way core's real visibility window (roughly Apr–Oct, peaking in summer) genuinely don't overlap for much of the year — this tension already exists in the page's own sections text; we've reflected it in the months/season fields here rather than resolving it either way.",
-    "Kept as the founder wrote it (4x4, Moderate, his own pin) pending Faheem's answer: his pin is ~8 km south of the public pull-off, which may be why his text says a 4x4 is needed."
-  ]
+    "Kept as the founder wrote it (4x4, Moderate, his own pin) pending Faheem's answer: his pin is ~8 km south of the public pull-off, which may be why his text says a 4x4 is needed.",
+    "27 Sep 2026: Faheem chose core-season months as best (Apr–May, Sep–Oct); Jun–Aug and Nov–Mar shown as possible."
+  ],
+  "glance": {
+    "how": "Packed-sand pull-off beside the road; a capable 4x4 for the dunes, never alone",
+    "time": "A full night, or 3–4 hours after dark",
+    "best": "A clear, moonless night, after 10:30pm",
+    "cost": "Free"
+  },
+  "packDefault": "overnight",
+  "coverAlt": "Soft sand dunes stretching to the horizon at Al Quaa, with a single 4x4 parked among them"
 }

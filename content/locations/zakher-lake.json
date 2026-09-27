@@ -19,7 +19,7 @@
     "anchor": "the Al Quaa Galaxy tee",
     "sentence": "Al Quaa, out in the desert south-west of Al Ain, is the night sky printed on {{link}}."
   },
-  "area": "Al Ain, on the western Zakher edge of the city, near the Oman border",
+  "area": "Zakher, on the western edge of Al Ain, near the Oman border",
   "months": [
     2,
     2,
@@ -69,7 +69,7 @@
     "vehicle": "2wd",
     "note": "A normal car reaches the main lakeside parking and picnic areas without trouble. The sand gets soft right down at the water's edge, so a 4x4 helps if you want to camp close to the reeds rather than park further back."
   },
-  "seoDesc": "A man-made desert lake on the edge of Al Ain, formed by rising groundwater from treated wastewater — now a magnet for flamingos and migratory birds. Swimming isn't permitted.",
+  "seoDesc": "A desert lake on the edge of Al Ain, fed by rising groundwater from treated wastewater, now home to flamingos and migratory birds. No swimming.",
   "faqs": [
     {
       "q": "Is there an entry fee for Zakher Lake?",
@@ -121,5 +121,11 @@
     "The 'poisonous creatures' reason for avoiding the water (City Tour in Dubai) comes from a single, unverified source — the clearer and better-supported fact is simply that swimming is not permitted (PropertyFinder).",
     "No official Abu Dhabi tourism board page (Experience Abu Dhabi / DCT) on Zakher Lake was found; all sourcing here is travel-blog level, one step below the official-source priority this brief asks for — treat facts accordingly and re-verify if this page needs an authoritative citation.",
     "Difficulty is kept as 'Easy' from the previous page — reasonable given normal-car access and flat terrain, but no independent source explicitly rates it."
-  ]
+  ],
+  "glance": {
+    "how": "Any car to the lakeside parking; 4x4 near the water's edge",
+    "time": "2–4 hours",
+    "best": "Early morning or before sunset",
+    "cost": "Free"
+  }
 }

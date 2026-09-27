@@ -85,7 +85,7 @@
     "vehicle": "boat",
     "note": "Dibba Rock sits offshore. You reach it on a short boat ride (about 10–15 minutes) arranged through a dive centre or hotel on the Dibba/Al Aqah coast — there's no shore or road access to the rock itself."
   },
-  "seoDesc": "A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride, with clear water, coral and turtles — a reliable East Coast snorkel and dive site, best October to April.",
+  "seoDesc": "A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride: clear water, coral and turtles, best October to April.",
   "body": "Dibba Rock is a small limestone outcrop a short boat ride off Fujairah's northern coast, at the point where the Hajar Mountains meet the Gulf of Oman. It isn't a beach you walk to — it's a dive and snorkel site, reached by boats that leave from the hotels and dive centres around Dibba and Al Aqah, and it's one of the more reliable places on the East Coast to see coral, reef fish and turtles without travelling as far as Musandam.\n\nThe rock itself is compact, but its sides slope from shallow shelves down to about 30 metres, so the same trip suits snorkellers staying near the surface and divers going deeper. Boulder and soft corals cover the slopes, and green turtles turn up regularly enough that operators build them into the pitch — sleeping turtles are a highlight of the night dives here, one reason Dibba Rock has a solid local reputation among East Coast dive sites. Clownfish, jawfish and reef fish fill the shallower ledges, and visibility on a good day is said to reach 30 metres or more, though that shifts with the season and the plankton bloom.\n\nDibba itself is a genuinely three-way town — one part Fujairah, one part Sharjah (Dibba Al-Hisn), and one part Oman (Dibba Al-Baya, across a fenced border) — and the rock sits on the Fujairah side. That split matters more for logistics than for the dive itself: if your boat or hotel happens to operate from the Omani side of town, non-GCC UAE residents need a passport and advance paperwork to cross, so it's worth checking which Dibba your operator is based in before you book.\n\nThere's no walk-in access and no fixed price: a snorkelling or diving trip is arranged through a dive centre or hotel, typically as a half-day outing that includes the boat, a guide and sometimes gear. It rewards a little planning rather than a spontaneous drive-past, but for the marine life on offer, it's one of the East Coast's better mornings out.",
   "faqs": [
     {
@@ -129,5 +129,12 @@
     "MOCCAE's official ecotourism page for Dibba Rock exists (moccae.gov.ae/en/knowledge/ecotourism/dibba-rock) but blocked automated access both times it was tried, so any formal protection status or rules it lists couldn't be checked — worth reviewing manually before publishing anything about protected status.",
     "The often-quoted boat-trip cost (roughly AED 100–200 per person) comes from a travel-aggregator estimate, not an official price list, so it's left out of the 'fees' field.",
     "No photo with a checkable, correct licence was confirmed in the time available — Wikimedia Commons' API was rate-limited throughout this session, blocking a license check on the 'Dibba (Fujairah)' category images. Recommend a manual check before publishing; photo left null in the meantime."
-  ]
+  ],
+  "glance": {
+    "how": "Short boat ride from the Dibba/Al Aqah coast; no shore access",
+    "time": "Half a day, including the boat",
+    "best": "Early morning, calm weekday",
+    "cost": "No entry fee; the boat trip is paid"
+  },
+  "ogImage": "/uploads/og/dibba.jpg"
 }

@@ -195,7 +195,7 @@ function teeBlock(l) {
     <div class="teecta-inner">
       <a class="teecta-img" href="${href}" aria-label="${esc(p.name)}" data-cycle>${cycleImgs(p)}</a>
       <div class="teecta-txt">
-        <span class="teecta-eyebrow">The tee inspired by this place</span>
+        <span class="teecta-eyebrow">The tee drawn from this place</span>
         <h2>${esc(p.name)}</h2>
         <p>${esc(p.shareDesc || p.lede || '')}</p>
         <div class="teecta-meta"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span><span>${p.printChip || ''}</span><span>&#10022; Limited first run</span></div>
@@ -214,7 +214,7 @@ function miniTee(placeSlug) {
   const p = placeSlug ? PRODUCT_BY_PLACE[placeSlug] : null;
   if (!p) return `<aside class="minitee minitee-all"><div class="minitee-txt"><span class="minitee-eye">Sahra &amp; Beyond</span><b>T-shirts drawn from real UAE places</b><span class="minitee-sub">From AED 199 &middot; 230gsm cotton &middot; free next-day UAE delivery</span></div><a class="minitee-go" href="/t-shirts/">Shop t-shirts &rarr;</a></aside>`;
   const img = cardShots(p)[0];
-  return `<aside class="minitee"><a class="minitee-img" href="/products/${p.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" width="72" height="90" loading="lazy" decoding="async">` : ''}</a><div class="minitee-txt"><span class="minitee-eye">The tee from this place</span><b>${esc(p.name)}</b><span class="minitee-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> &middot; limited first run</span></div><a class="minitee-go" href="/products/${p.id}/">See the tee &rarr;</a></aside>`;
+  return `<aside class="minitee"><a class="minitee-img" href="/products/${p.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" width="72" height="90" loading="lazy" decoding="async">` : ''}</a><div class="minitee-txt"><span class="minitee-eye">The tee drawn from this place</span><b>${esc(p.name)}</b><span class="minitee-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> &middot; limited first run</span></div><a class="minitee-go" href="/products/${p.id}/">See the tee &rarr;</a></aside>`;
 }
 function shopBlock(l) {
   const place = (l && l.name)
@@ -296,7 +296,7 @@ function newsletterBlock() {
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
       <button type="submit">${btn}</button>
     </form>
-    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#F7DFBE">${ok}</p>
+    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:18px;color:#F7DFBE">${ok}</p>
     </div>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>`;
 }
@@ -516,6 +516,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
    offers more than one real currency. Border is the control tone, not the
    hairline — a select the customer cannot find is the filter-chip bug again. */
 .sb-curwrap{display:inline-flex;align-items:center;gap:8px}
+.sb-aed-alt{display:none}html[data-price-cur]:not([data-price-cur="AED"]) .sb-aed-only{display:none}html[data-price-cur]:not([data-price-cur="AED"]) .sb-aed-alt{display:inline}
 .sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
 .sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
@@ -1194,8 +1195,10 @@ function igSection(posts) {
 }
 function locCard(l) {
   // cover photo thumbnail when one has been uploaded via the CMS; emoji fallback otherwise
+  /* 160px thumbnail (uploads/thumbs/<id>.webp) — the hub loaded 2000px heroes into 62px squares (~4.8 MB, 28 Sep 2026) */
+  const tsrc = l.cover ? (fs.existsSync(path.join(__dirname, 'uploads', 'thumbs', l.id + '.webp')) ? `/uploads/thumbs/${l.id}.webp` : l.cover) : '';
   const thumb = l.cover
-    ? `<span class="card-thumb" style="background-image:url('${esc(l.cover)}')" role="img" aria-label="${esc(l.name)}"></span>`
+    ? `<span class="card-thumb" style="background-image:url('${esc(tsrc)}')" role="img" aria-label="${esc(l.coverAlt || l.name)}"></span>`
     : `<span class="card-emoji">${l.emoji || '📍'}</span>`;
   const dv = `data-id="${l.id}" data-cat="${esc(l.category)}" data-em="${esc(l.emirate)}" data-v="${esc((l.access && l.access.vehicle) || '')}" data-diff="${esc(l.difficulty || '')}" data-m="${Array.isArray(l.months) ? l.months.join('') : ''}"`;
   return `<a class="card" ${dv} href="/locations/${l.id}/">${thumb}<span class="card-body"><strong>${esc(l.name)}</strong><em>${esc(l.emirate)} · ${esc(l.category)}</em><span>${esc(l.desc)}</span></span></a>`;
@@ -1214,7 +1217,7 @@ locations.forEach(l => {
   const abs = p => (!p ? '' : (String(p).charAt(0) === '/' ? SITE + p : p));
   const galleryRaw = Array.isArray(l.gallery) ? l.gallery.map(g => (g && g.image) || g).filter(Boolean) : [];
   const photos = [l.cover].concat(galleryRaw).filter(Boolean);
-  const ogImage = photos.length ? abs(photos[0]) : '';
+  const ogImage = photos.length ? abs(photos[0]) : (l.ogImage ? abs(l.ogImage) : '');
   const tourist = {
     "@context": "https://schema.org", "@type": "TouristAttraction",
     "name": l.name, "description": l.desc, "url": canonical,
@@ -1296,7 +1299,7 @@ const LANDINGS = [
     slug: 'wadis', h1: 'Best Wadis in the UAE for Hiking & Swimming',
     title: 'Best Wadis in the UAE — Hiking & Natural Pools | Sahra & Beyond',
     desc: 'The best wadis in the UAE for hiking and swimming in natural pools, with GPS, the best season, difficulty and essential flash-flood safety tips.',
-    pick: locations.filter(l => l.category === 'Wadis'),
+    pick: locations.filter(l => l.category === 'Wadis' || /^wadi-/.test(l.id)),
     intro: "A wadi is a valley or dry riverbed cut through the mountains — and after the rains, many fill with cool, clear natural pools that are perfect for a swim. The UAE's wadis are some of the most rewarding outdoor escapes in the region: shaded canyons, turquoise pools and scrambly hikes, all within a couple of hours of the cities.\n\nBelow are our favourite wadis in the UAE, with access notes, the best season and difficulty. Wadis are beautiful but demand respect — read the safety section before you go.",
     sections: [
       { h2: 'What makes a good wadi trip', body: "The best wadi days combine an easy-to-moderate hike with a reward at the end: a swimmable pool, a waterfall, or a viewpoint. Wear shoes you can get wet, bring a dry bag for your phone, and start early to beat both the heat and the crowds. Many wadis involve some boulder-hopping or wading, so a reasonable level of fitness helps." },
@@ -1430,7 +1433,7 @@ const LANDINGS = [
     slug: 'outdoor-things-to-do', h1: 'Outdoor Things to Do in the UAE This Weekend',
     title: 'Outdoor Things to Do in the UAE — Weekend Adventure Ideas | Sahra & Beyond',
     desc: 'Outdoor things to do in the UAE this weekend — camping, wadis, beaches, dunes and mountains, with the best spots, seasons and tips for residents.',
-    pick: ['big-red', 'wadi-shab', 'jebel-hafeet', 'snoopy-island', 'crescent-moon-lake'].map(id => locations.find(l => l.id === id)).filter(Boolean),
+    pick: ['big-red', 'wadi-naqab', 'jebel-hafeet', 'snoopy-island', 'crescent-moon-lake'].map(id => locations.find(l => l.id === id)).filter(Boolean),
     intro: "Stuck for ideas this weekend? The UAE's outdoors offer far more than most people realise — desert camping, wadi swims, mountain hikes, reef snorkeling and golden dunes, all within a couple of hours of the cities. This guide is a quick-start menu of the best outdoor things to do, whatever kind of day you are after.\n\nPick a vibe below, then dive into the full guide or location page for GPS, the best season and what to bring.",
     sections: [
       { h2: 'For a first-time adventure', body: "If you are easing into the outdoors, start gentle: a calm desert lake for an easy camp or picnic, an accessible beach for a first snorkel, or a short scenic drive into the mountains. These give you the scenery and the experience without demanding off-road skills or a big commitment." },
@@ -2026,8 +2029,9 @@ body.tote-page main{max-width:1180px}
   ].filter(([id]) => byId[id] && byId[id].cover);
   const UAE = new Set(['Abu Dhabi', 'Al Ain', 'Dubai', 'Sharjah', 'Ajman', 'Umm Al Quwain', 'Ras Al Khaimah', 'Fujairah']);
   const emirateOf = e => e === 'Al Ain' ? 'Abu Dhabi' : e;
-  const emirates = new Set(locations.filter(l => UAE.has(l.emirate)).map(l => emirateOf(l.emirate)));
-  const abroad = locations.filter(l => !UAE.has(l.emirate));
+  const emList = l => String(l.emirate || '').split(' / ');
+  const emirates = new Set(locations.flatMap(l => emList(l).filter(e => UAE.has(e)).map(emirateOf)));
+  const abroad = locations.filter(l => !emList(l).some(e => UAE.has(e)));
   const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven'];
   const catCount = c => locations.filter(l => l.category === c).length;
   const CAT_META = { Dunes: 'dune fields', Camping: 'camps', Wadis: 'wadis', Mountains: 'mountain routes', Coast: 'coasts', Heritage: 'heritage sites' };
@@ -2363,7 +2367,7 @@ function productCard(p) {
         ${p.placeName ? `<span class="pcard-place">Inspired by ${esc(p.placeName)}</span>` : '<span class="pcard-place">Sahra &amp; Beyond</span>'}
         <span class="pcard-spec">${chips.map(c => `<span${/^(230gsm cotton|Unisex S&ndash;XL)$/.test(c) ? ' class="pc-same"' : ''}>${c}</span>`).join('')}</span>
         ${colour}
-        ${p.garment !== 'polo' ? '<span class="pcard-bundle">Any 2 tees &middot; AED 359</span>' : ''}
+        ${p.garment !== 'polo' ? '<span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>' : ''}
         <span class="pcard-foot"><span class="pcard-p">AED ${esc(String(p.price))}</span><a class="pcard-cta" href="/products/${p.id}/">Full details &rarr;</a></span>
       </span>
     </article>`;

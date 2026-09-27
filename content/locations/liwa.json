@@ -75,7 +75,7 @@
     "vehicle": "4wd",
     "note": "Paved roads reach Mezairaa, the resorts and the base of Moreeb Dune, so a normal car covers the main journey. Climbing or driving on the dune itself needs a 4x4 with deflated tyres, and ideally a second vehicle for recovery — this isn't a place to try in a rental saloon."
   },
-  "seoDesc": "Moreeb Dune, a 300m mega-dune on the edge of Liwa Oasis where the Rub' al Khali begins. Home to the annual dune-bashing festival, with date farms and forts strung along the oasis road behind it.",
+  "seoDesc": "Moreeb Dune, a 300m mega-dune where the Rub' al Khali begins, with Liwa Oasis's date farms and forts strung along the road behind it.",
   "body": "Liwa Oasis curves along the northern edge of the Rub' al Khali — the Empty Quarter — in Abu Dhabi's western Al Dhafra region, a roughly 100km arc of around 50 villages built on date farming for generations, with Mezairaa as its main hub. It's genuinely historic ground: the Al Nahyan family, now Abu Dhabi's rulers, trace their move from here to Abu Dhabi island back to 1793, and the oasis is described as the birthplace of the emirate's ruling families.\n\nThe single most photographed feature is Moreeb Dune, also called Tal Mireb, about 25km south of Mezairaa — a roughly 300-metre mega-dune and one of the largest in the world, with a slipface pitched at around 50 degrees. Every December it hosts the Liwa International Festival (formerly known for its dune-bashing and camel-racing programme), drawing off-road drivers and spectators from across the country; outside festival dates, the dune and its surrounding sand sea are simply there, vast and mostly silent.\n\nBeyond the dune, Liwa rewards slower exploration: historic forts and watchtowers dot the oasis, though many sit on private farms and are best visited with access arranged through Abu Dhabi's Department of Culture and Tourism rather than approached directly. Qasr Al Sarab, an Anantara desert resort built into the dune landscape itself, along with the Liwa Hotel and other properties, gives the oasis a genuine overnight option beyond camping. The area has also drawn film productions taking advantage of its scale and light — Star Wars: The Force Awakens, both recent Dune films, and Sonic the Hedgehog were all shot here in part.\n\nLiwa is not a casual day trip in the way closer desert spots are. The drive alone runs two and a half to three hours each way from Abu Dhabi city, dining options thin out considerably once you leave the resorts, and mobile coverage gets patchy away from the main road — this is a destination that rewards planning rather than spontaneity, and one where the sand itself, not any single building or facility, is the main event.",
   "faqs": [
     {
@@ -113,11 +113,11 @@
   },
   "nameAr": "ليوا",
   "photoCredit": {
-    "author": "Nepenthes",
+    "author": "Xiaotong Gao",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-    "page": "https://commons.wikimedia.org/wiki/File:Moreeb001.jpg",
-    "what": "The slipface of Moreeb Dune in the United Arab Emirates, showing the marked climbing/driving lanes up the sand."
+    "page": "https://commons.wikimedia.org/wiki/File:Desert_-_panoramio_(6).jpg",
+    "what": "A tall dune beside date plantations in the Liwa Oasis, with more dunes rising beyond"
   },
   "darkSky": true,
   "lastChecked": "2026-09-27",
@@ -127,5 +127,12 @@
     "Difficulty is kept as 'Hard' to reflect the dune itself and off-road driving, but the official festival site notes main landmarks are reachable by paved road — for a visitor who only wants to see (not climb or drive) the dune, the practical difficulty is closer to Easy/Moderate. This nuance is spelled out in the text rather than resolved in the single difficulty field.",
     "No independently confirmed Arabic name specific to 'Moreeb Dune'/Tal Mireb was found beyond the oasis's own native name (Wahat Liwa); left unstated rather than guessed.",
     "Season was changed from the current site's 'Dec–Feb' to 'Oct–Apr' based on the official Liwa International Festival site's own visitor guidance ('visit Liwa between October and April') — flagging this as a correction to the existing data, not just an addition."
-  ]
+  ],
+  "glance": {
+    "how": "Paved to the dune base; 4x4 with deflated tyres on the sand",
+    "time": "A full day from Abu Dhabi",
+    "best": "Early morning or late afternoon",
+    "cost": "Free to visit"
+  },
+  "coverFocus": "50% 55%"
 }

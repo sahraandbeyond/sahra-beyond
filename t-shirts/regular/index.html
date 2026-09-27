@@ -235,6 +235,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
    offers more than one real currency. Border is the control tone, not the
    hairline — a select the customer cannot find is the filter-chip bug again. */
 .sb-curwrap{display:inline-flex;align-items:center;gap:8px}
+.sb-aed-alt{display:none}html[data-price-cur]:not([data-price-cur="AED"]) .sb-aed-only{display:none}html[data-price-cur]:not([data-price-cur="AED"]) .sb-aed-alt{display:inline}
 .sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
 .sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
@@ -620,8 +621,8 @@ body.dark-bg .rv-stars{color:#E9B978}
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
-<script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=7b478879">
+<script src="/assets/sahra-welcome.js?v=65fc7e57" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=77c5d546">
 <script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <style data-legib>
@@ -1195,7 +1196,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-place">Inspired by Al Quaa</span>
         <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Regular fit</span><span>DTG + embroidery</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#282B34"></span>Salute</span>
-        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
+        <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/al-quaa-galaxy-regular/">Full details &rarr;</a></span>
       </span>
     </article>
@@ -1212,7 +1213,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-place">Inspired by Liwa</span>
         <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Regular fit</span><span>Embroidered</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#D5BA98"></span>Beige</span>
-        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
+        <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/empty-quarter-regular/">Full details &rarr;</a></span>
       </span>
     </article>
@@ -1229,7 +1230,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-place">Inspired by Wadi Naqab</span>
         <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Regular fit</span><span>DTG + embroidery</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#A09C98"></span>Flint Gray</span>
-        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
+        <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/hajar-mountains-regular/">Full details &rarr;</a></span>
       </span>
     </article></div>
@@ -1370,7 +1371,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
       <button type="submit">Notify me about Drop 02</button>
     </form>
-    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#F7DFBE">You&rsquo;re on the list. We&rsquo;ll email you before the next drop. &#10022;</p>
+    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:18px;color:#F7DFBE">You&rsquo;re on the list. We&rsquo;ll email you before the next drop. &#10022;</p>
     </div>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>
     <p class="back"><a href="/t-shirts/">All t-shirts &rarr;</a></p>
@@ -1449,6 +1450,6 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=18758f49" defer></script>
-<script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
+<script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 </body>
 </html>

@@ -80,7 +80,7 @@
     "vehicle": "2wd",
     "note": "A paved road (Al Qudra Road, D63, then the signposted Al Qudra Lakes turn-off) runs all the way to the car park by the water — no 4x4 needed."
   },
-  "seoDesc": "Two heart-shaped artificial lakes in Dubai's Al Marmoom reserve, reached by paved road. A free, 24-hour photo and picnic stop with resident birdlife — not an official camping or BBQ site.",
+  "seoDesc": "Two heart-shaped lakes in Dubai's Al Marmoom reserve, reached by paved road. A free photo and picnic stop, but not a camping or BBQ site.",
   "faqs": [
     {
       "q": "Is Love Lake in Dubai free to visit?",
@@ -137,5 +137,11 @@
     "The drone-permit requirement is sourced to a single travel blog (CityTourInDubai), not an official GCAA or Dubai Municipality page we could open directly — worth confirming officially before stating it as a firm rule.",
     "No source we opened mentions mosquitoes or insects at the lake specifically, so we've left it out rather than guess.",
     "Arabic Wikipedia states the associated island is about 550 km², which looks implausibly large for this feature — likely an error in that article. We haven't used that figure."
-  ]
+  ],
+  "glance": {
+    "how": "Paved road to the car park by the water",
+    "time": "1–2 hours",
+    "best": "Early morning or the hour before sunset",
+    "cost": "Free"
+  }
 }

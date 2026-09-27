@@ -235,6 +235,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
    offers more than one real currency. Border is the control tone, not the
    hairline — a select the customer cannot find is the filter-chip bug again. */
 .sb-curwrap{display:inline-flex;align-items:center;gap:8px}
+.sb-aed-alt{display:none}html[data-price-cur]:not([data-price-cur="AED"]) .sb-aed-only{display:none}html[data-price-cur]:not([data-price-cur="AED"]) .sb-aed-alt{display:inline}
 .sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6256}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:#33271B;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2333271B' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid rgba(42,32,22,.58);border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
 .sb-curpick:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
@@ -620,8 +621,8 @@ body.dark-bg .rv-stars{color:#E9B978}
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=ac993f84">
-<script src="/assets/sahra-welcome.js?v=c955dcc1" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=7b478879">
+<script src="/assets/sahra-welcome.js?v=65fc7e57" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=77c5d546">
 <script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <style data-legib>
@@ -1183,7 +1184,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
   <main>
     <aside class="minitee minitee-all"><div class="minitee-txt"><span class="minitee-eye">Sahra &amp; Beyond</span><b>T-shirts drawn from real UAE places</b><span class="minitee-sub">From AED 199 &middot; 230gsm cotton &middot; free next-day UAE delivery</span></div><a class="minitee-go" href="/t-shirts/">Shop t-shirts &rarr;</a></aside>
     <div class="content"><p>The UAE's east coast hides some genuinely world-class snorkeling, and the best of it is reachable straight from the beach. Clear Gulf of Oman water, healthy coral and regular sightings of turtles and reef sharks make it a brilliant day out for families and beginners alike.</p><p>Below are our favourite spots for the best snorkeling in the UAE, with the right season, difficulty and access notes. Go early on weekdays for calm, clear water, bring your own mask and fins, and always wear reef-safe sunscreen to protect the coral.</p></div>
-    <h2>Our top picks</h2><div class="cards"><a class="card" data-id="dibba" data-cat="Coast" data-em="Fujairah" data-v="boat" data-diff="Easy" data-m="222100000122" href="/locations/dibba/"><span class="card-emoji">🏊</span><span class="card-body"><strong>Dibba Rock</strong><em>Fujairah · Coast</em><span>A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride, with clear water, coral and turtles — a reliable East Coast snorkel and dive site, best October to April.</span></span></a><a class="card" data-id="shuweihat-island" data-cat="Coast" data-em="Abu Dhabi" data-v="2wd" data-diff="Moderate" data-m="222100000122" href="/locations/shuweihat-island/"><span class="card-thumb" style="background-image:url('/uploads/unsorted-no-geotag_02.webp')" role="img" aria-label="Shuweihat Island"></span><span class="card-body"><strong>Shuweihat Island</strong><em>Abu Dhabi · Coast</em><span>Abu Dhabi's remote western coast holds Mars-like, mushroom-shaped rocks at Shuweihat Island — reachable by causeway, but public access is genuinely disputed near a military airfield.</span></span></a><a class="card" data-id="sir-bani-yas-island" data-cat="Coast" data-em="Abu Dhabi" data-v="boat" data-diff="Easy" data-m="222211111222" href="/locations/sir-bani-yas-island/"><span class="card-thumb" style="background-image:url('/uploads/17992461785873452.webp')" role="img" aria-label="Sir Bani Yas Island"></span><span class="card-body"><strong>Sir Bani Yas Island</strong><em>Abu Dhabi · Coast</em><span>A natural island off Abu Dhabi reached by ferry from Jebel Dhanna: free-roaming oryx, giraffe and cheetah, a 7th-century monastery, and safaris you book through the resorts.</span></span></a><a class="card" data-id="snoopy-island" data-cat="Coast" data-em="Fujairah" data-v="on-foot" data-diff="Easy" data-m="222210000122" href="/locations/snoopy-island/"><span class="card-thumb" style="background-image:url('/uploads/unsorted-no-geotag_01.webp')" role="img" aria-label="Snoopy Island"></span><span class="card-body"><strong>Snoopy Island</strong><em>Fujairah · Coast</em><span>A small rock islet off Al Aqah beach in Fujairah, reached by swimming or paddling out — turtles, reef sharks and reef fish make it a well-known UAE shore snorkel, best Oct–May.</span></span></a></div>
+    <h2>Our top picks</h2><div class="cards"><a class="card" data-id="dibba" data-cat="Coast" data-em="Fujairah" data-v="boat" data-diff="Easy" data-m="222100000122" href="/locations/dibba/"><span class="card-emoji">🏊</span><span class="card-body"><strong>Dibba Rock</strong><em>Fujairah · Coast</em><span>A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride, with clear water, coral and turtles — a reliable East Coast snorkel and dive site, best October to April.</span></span></a><a class="card" data-id="shuweihat-island" data-cat="Coast" data-em="Abu Dhabi" data-v="2wd" data-diff="Moderate" data-m="222100000122" href="/locations/shuweihat-island/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/shuweihat-island.webp')" role="img" aria-label="Wind-carved, mushroom-shaped sandstone rocks on the shore of Shuweihat Island"></span><span class="card-body"><strong>Shuweihat Island</strong><em>Abu Dhabi · Coast</em><span>Abu Dhabi's remote western coast holds Mars-like, mushroom-shaped rocks at Shuweihat Island — reachable by causeway, but public access is genuinely disputed near a military airfield.</span></span></a><a class="card" data-id="sir-bani-yas-island" data-cat="Coast" data-em="Abu Dhabi" data-v="boat" data-diff="Easy" data-m="222211111222" href="/locations/sir-bani-yas-island/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/sir-bani-yas-island.webp')" role="img" aria-label="A giraffe among acacia trees in the wildlife park on Sir Bani Yas Island"></span><span class="card-body"><strong>Sir Bani Yas Island</strong><em>Abu Dhabi · Coast</em><span>A natural island off Abu Dhabi reached by ferry from Jebel Dhanna: free-roaming oryx, giraffe and cheetah, a 7th-century monastery, and safaris you book through the resorts.</span></span></a><a class="card" data-id="snoopy-island" data-cat="Coast" data-em="Fujairah" data-v="on-foot" data-diff="Easy" data-m="222210000122" href="/locations/snoopy-island/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/snoopy-island.webp')" role="img" aria-label="A freediver swimming up through a ring of fish in clear water off Snoopy Island"></span><span class="card-body"><strong>Snoopy Island</strong><em>Fujairah · Coast</em><span>A small rock islet off Al Aqah beach in Fujairah, reached by swimming or paddling out — turtles, reef sharks and reef fish make it a well-known UAE shore snorkel, best Oct–May.</span></span></a></div>
     
     
     <section class="pcta">
@@ -1206,7 +1207,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-place">Inspired by Al Quaa</span>
         <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Regular fit</span><span>DTG + embroidery</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#282B34"></span>Salute</span>
-        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
+        <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/al-quaa-galaxy-regular/">Full details &rarr;</a></span>
       </span>
     </article>
@@ -1223,7 +1224,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-place">Inspired by Liwa</span>
         <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Regular fit</span><span>Embroidered</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#D5BA98"></span>Beige</span>
-        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
+        <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/empty-quarter-regular/">Full details &rarr;</a></span>
       </span>
     </article>
@@ -1240,7 +1241,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-place">Inspired by Wadi Naqab</span>
         <span class="pcard-spec"><span class="pc-same">230gsm cotton</span><span>Regular fit</span><span>DTG + embroidery</span><span class="pc-same">Unisex S&ndash;XL</span></span>
         <span class="pcard-col"><span class="pcard-sw" style="background:#A09C98"></span>Flint Gray</span>
-        <span class="pcard-bundle">Any 2 tees &middot; AED 359</span>
+        <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/hajar-mountains-regular/">Full details &rarr;</a></span>
       </span>
     </article></div>
@@ -1254,7 +1255,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
       <button type="submit">Notify me about Drop 02</button>
     </form>
-    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#F7DFBE">You&rsquo;re on the list. We&rsquo;ll email you before the next drop. &#10022;</p>
+    <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:18px;color:#F7DFBE">You&rsquo;re on the list. We&rsquo;ll email you before the next drop. &#10022;</p>
     </div>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
@@ -1333,6 +1334,6 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=18758f49" defer></script>
-<script src="/assets/sahra-market.js?v=4af49f1e" defer></script>
+<script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 </body>
 </html>

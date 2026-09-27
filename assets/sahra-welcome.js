@@ -123,6 +123,7 @@
 
   if (host) { host.classList.add('sbw-host'); host.insertBefore(wrap, host.firstChild); }
   else { wrap.classList.add('sbw-solo'); document.body.insertBefore(wrap, document.body.firstChild); }
+  document.body.classList.add('sbw-on');
 
   /* nav is position:fixed and `body.has-topbar nav{top:var(--topbar-h)}` pins it
      that far down the viewport FOREVER — the topbar itself is position:relative
@@ -243,7 +244,17 @@
 
   bar.addEventListener('click', function () { open('bar'); });
   m.addEventListener('click', function (e) { if (e.target.hasAttribute('data-sbw-close')) close(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !m.hidden) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (m.hidden) return;
+    if (e.key === 'Escape') { close(); return; }
+    /* keep Tab inside the card while it is open (a11y review, 28 Sep 2026) */
+    if (e.key !== 'Tab') return;
+    var f = Array.prototype.filter.call(m.querySelectorAll('.sbw-card button, .sbw-card input, .sbw-card a[href]'), function (x) { return x.offsetParent !== null && !x.disabled; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1], a = document.activeElement;
+    if (e.shiftKey && (a === first || !m.contains(a))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (a === last || !m.contains(a))) { e.preventDefault(); first.focus(); }
+  });
 
   /* copy */
   m.querySelector('.sbw-copy').addEventListener('click', function () {
@@ -349,12 +360,16 @@
   try { qs = location.search || ''; } catch (e) {}
   var AD = /[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(qs);
   var PDP = /^\/(ar\/)?products\//.test(location.pathname || '');
+  /* 28 Sep 2026 (places review): the guides are the main organic entry. A full-screen
+     card 1.4 s after landing covered the guide a searcher came for, so guides get the
+     same small teaser as product pages. Their own packing-list panel carries the offer. */
+  var GUIDE = /^\/(ar\/)?(places|locations)\//.test(location.pathname || '');
   /* the choice holds for the whole visit: an ad or product-page arrival who
      taps through to another page still gets the teaser, not the modal */
   var QUIET = 'sbw.quiet', quiet = false;
-  try { quiet = sessionStorage.getItem(QUIET) === '1'; if (AD || PDP) sessionStorage.setItem(QUIET, '1'); } catch (e) {}
+  try { quiet = sessionStorage.getItem(QUIET) === '1'; if (AD || PDP || GUIDE) sessionStorage.setItem(QUIET, '1'); } catch (e) {}
   if (!st.won && !openedThisSession) {
-    if (AD || PDP || quiet) teaser(); else
+    if (AD || PDP || GUIDE || quiet) teaser(); else
     setTimeout(function () {
       if (surfaced) return;
       try { sessionStorage.setItem(SESSION, '1'); } catch (e) {}
@@ -382,7 +397,7 @@
         var lift = function () { el.classList.toggle('lift', bb.classList.contains('on')); };
         new MutationObserver(lift).observe(bb, { attributes: true, attributeFilter: ['class'] }); lift();
       }
-      ev('welcome_teaser_show', { source: AD ? 'ad' : (PDP ? 'pdp' : 'visit') });
+      ev('welcome_teaser_show', { source: AD ? 'ad' : (PDP ? 'pdp' : (GUIDE ? 'guide' : 'visit')) });
     }
     function onScroll() { if ((window.scrollY || 0) > 120) show(); }
     addEventListener('scroll', onScroll, { passive: true });
