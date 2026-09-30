@@ -4,7 +4,7 @@
   "emoji": "⛰",
   "emirate": "Ras Al Khaimah",
   "category": "Mountains",
-  "difficulty": "Moderate",
+  "difficulty": "Hard",
   "season": "Oct–Apr",
   "distance": "About 1h45–2h from Dubai",
   "lat": 25.694806,
@@ -34,7 +34,7 @@
     2,
     2
   ],
-  "bestTime": "Start early morning for the hike itself, and stay for last light on the red-rock ridgelines at dusk if you can.",
+  "bestTime": "Start at first light so even the longer route finishes in daylight.",
   "timeNeeded": "6–12 hours depending on the route",
   "fees": "Free (groups of 10 or more should notify RAK's tourism authorities in advance)",
   "hours": "Open access",
@@ -118,10 +118,11 @@
     "Audit (2026-09-27): Wikipedia says the dam was 'part of a $44.1 million package of infrastructural developments announced in February 2020' — it does not state a completion date. The text previously said the dam was 'completed in 2020'; corrected to describe it as built as part of the 2020 package, without asserting a completion year. All other checked facts (dam height, tomb count/era, Durham excavation, rescue dates/counts, geology) matched the cited sources."
   ],
   "glance": {
-    "how": "High clearance or 4x4 for the last stretch; the hike is on foot",
+    "how": "For the last stretch to the trailhead; the hike is on foot, never alone",
     "time": "6–12 hours",
-    "best": "Start early; stay for the last light",
-    "cost": "Free; groups of 10+ notify RAK tourism"
+    "best": "Start at first light; be off the trail before dark",
+    "cost": "Free; groups of 10+ notify RAK tourism",
+    "badge": "SUV or 4x4"
   },
-  "coverAlt": "The rocky bed of Wadi Naqab between steep limestone cliffs, with a lone acacia"
+  "coverAlt": "The rocky bed of Wadi Naqab between steep pale rock cliffs, with a lone acacia"
 }

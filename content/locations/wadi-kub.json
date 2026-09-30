@@ -131,9 +131,10 @@
     "Audit (2026-09-27): a source found while re-checking (MissionsOffroad) explicitly distinguishes the easy, drive-in 'Wadi Kub' near Masafi (described here) from a separate, much more technical narrow gorge also called 'Wadi Kub/Koob' that connects underground-canyon-style to Wadi Naqab and the abandoned settlement of Al Sanat (per a second source, The Road Reel) — real risk of two different places sharing one name. Softened the body/onSite text so it no longer states as fact that this trailhead links directly to Wadi Naqab. Also softened the 'cups' name etymology, which no source directly confirms (Arabic Wikipedia was unreachable in this pass; English Wikipedia and MissionsOffroad don't explain the name). Sidr-tree age ('more than a hundred years'), Mazari/Bani Yas tribal history and no-facilities claim were all independently confirmed."
   ],
   "glance": {
-    "how": "Tarmac to the trailhead; high clearance for the wadi tracks",
+    "how": "Tarmac to the trailhead; rougher tracks into the wadi",
     "time": "Half a day, or overnight",
     "best": "Afternoon into evening",
-    "cost": "Free"
+    "cost": "Free",
+    "badge": "SUV or 4x4"
   }
 }

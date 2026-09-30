@@ -78,6 +78,17 @@
       });
     });
   }
+  /* Arabic pages (30 Sep 2026, Faheem: "put it there"): same offer, Arabic copy, RTL.
+     Western digits, as the rest of /ar/ uses. Native read still pending, like the rest of /ar/. */
+  var AR = /^ar\b/i.test(document.documentElement.getAttribute('lang') || '') || /^\/ar\//.test(location.pathname || '');
+  function t(en, ar) { return AR ? ar : en; }
+  var N = String(parseInt(OFFER.amount.replace(/\D/g, ''), 10) || 50), NT = String(parseInt(OFFER.toteValue.replace(/\D/g, ''), 10) || 50),
+      NS = OFFER.total.replace(/\D/g, '');
+  var AMT_OFF = t(OFFER.amount + ' off your first order', 'خصم ' + N + ' درهمًا على طلبك الأول'),
+      TOTE = t('Free tote worth ' + OFFER.toteValue, 'حقيبة مجانية بقيمة ' + NT + ' درهمًا'),
+      SHIP = t('<span class="sb-ship-uae">Free next-day UAE delivery</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days</span><span class="sb-ship-intl">Worldwide delivery</span>',
+               '<span class="sb-ship-uae">توصيل مجاني في اليوم التالي داخل الإمارات</span><span class="sb-ship-gcc">التوصيل لدول الخليج خلال 3–5 أيام</span><span class="sb-ship-intl">التوصيل إلى جميع أنحاء العالم</span>');
+
   var KEY = 'sbw.v2';   /* bump to reset every visitor's stored state */
   var RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 
@@ -97,19 +108,20 @@
     '<span class="sbw-sheen"></span>' +
     '<span class="sbw-bar-in">' +
       '<span class="sbw-dot" aria-hidden="true"></span>' +
-      '<span class="sbw-amt">' + OFFER.amount + ' off your first order</span>' +
+      '<span class="sbw-amt">' + AMT_OFF + '</span>' +
       '<span class="sbw-sep sbw-tote" aria-hidden="true">·</span>' +
-      '<span class="sbw-amt sbw-tote">Free tote worth ' + OFFER.toteValue + '</span>' +
+      '<span class="sbw-amt sbw-tote">' + TOTE + '</span>' +
       '<span class="sbw-sep sbw-hide-sm" aria-hidden="true">·</span>' +
-      '<span class="sbw-hide-sm">Free next-day UAE delivery</span>' +
+      /* market-aware like the phone rotation, now that this bar is the only delivery line (30 Sep 2026) */
+      '<span class="sbw-hide-sm sbw-ship">' + SHIP + '</span>' +
       /* phones (24 Sep 2026): one slim line that rotates through the offer, the
          tote and delivery, instead of two stacked bars eating ~150px */
       '<span class="sbw-rot" aria-hidden="true">' +
-        '<span class="sbw-ri">' + OFFER.amount + ' off your first order</span>' +
-        '<span class="sbw-ri">Free tote worth ' + OFFER.toteValue + '</span>' +
-        '<span class="sbw-ri"><span class="sb-ship-uae">Free next-day UAE delivery</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days</span><span class="sb-ship-intl">Worldwide delivery</span></span>' +
+        '<span class="sbw-ri">' + AMT_OFF + '</span>' +
+        '<span class="sbw-ri">' + TOTE + '</span>' +
+        '<span class="sbw-ri">' + SHIP + '</span>' +
       '</span>' +
-      '<span class="sbw-go">Get the code &rarr;</span>' +
+      '<span class="sbw-go">' + t('Get the code &rarr;', 'احصل على الرمز &larr;') + '</span>' +
     '</span>';
 
   /* No dismiss control. It lived at the right edge INSIDE the bar people tap to
@@ -171,12 +183,14 @@
   m.hidden = true;
   m.setAttribute('role', 'dialog');
   m.setAttribute('aria-modal', 'true');
-  m.setAttribute('aria-label', OFFER.amount + ' off your first order, plus a free tote worth ' + OFFER.toteValue + ' \u2014 ' + OFFER.total + ' together on your first order over AED ' + OFFER.min + '.');
+  m.setAttribute('aria-label', t(OFFER.amount + ' off your first order, plus a free tote worth ' + OFFER.toteValue + ' \u2014 ' + OFFER.total + ' together on your first order over AED ' + OFFER.min + '.',
+    'خصم ' + N + ' درهمًا على طلبك الأول، وحقيبة مجانية بقيمة ' + NT + ' درهمًا: ' + NS + ' درهم معًا على طلبك الأول فوق ' + OFFER.min + ' درهمًا.'));
+  if (AR) m.setAttribute('dir', 'rtl');
   m.innerHTML =
     '<div class="sbw-scrim" data-sbw-close></div>' +
     '<div class="sbw-card">' +
       '<span class="sbw-glow" aria-hidden="true"></span>' +
-      '<button type="button" class="sbw-close" data-sbw-close aria-label="Close">&times;</button>' +
+      '<button type="button" class="sbw-close" data-sbw-close aria-label="' + t('Close', 'إغلاق') + '">&times;</button>' +
       '<div class="sbw-ask">' +
         /* Rebuilt 19 Sep (Faheem: the eye has to land on BOTH fifties, the card
            was crowded and the photo was small and off to one side). The tote is
@@ -185,13 +199,13 @@
            the other. The three bullets collapsed into a single fine-print line;
            they were competing with the numbers for the same attention. */
         '<figure class="sbw-hero">' +
-          '<img src="' + OFFER.toteImg + '" alt="The Sahra Tote in natural canvas, carried over the shoulder" width="1160" height="580" decoding="async">' +
-          '<figcaption>The Sahra Tote &nbsp;·&nbsp; free with every order</figcaption>' +
+          '<img src="' + OFFER.toteImg + '" alt="' + t('The Sahra Tote in natural canvas, carried over the shoulder', 'حقيبة صحراء من القماش الطبيعي، محمولة على الكتف') + '" width="1160" height="580" decoding="async">' +
+          '<figcaption>' + t('The Sahra Tote &nbsp;·&nbsp; free with every order', 'حقيبة صحراء &nbsp;·&nbsp; مجانًا مع كل طلب') + '</figcaption>' +
         '</figure>' +
-        '<p class="sbw-eyebrow">Founding Edition &nbsp;·&nbsp; first order</p>' +
+        '<p class="sbw-eyebrow">' + t('Founding Edition &nbsp;·&nbsp; first order', 'الإصدار التأسيسي &nbsp;·&nbsp; الطلب الأول') + '</p>' +
         '<div class="sbw-pair">' +
-          '<div class="sbw-tile"><b>' + OFFER.amount + '</b><span>off your<br>first order</span></div>' +
-          '<div class="sbw-tile"><b>' + OFFER.amount + '</b><span>tote,<br>yours free</span></div>' +
+          '<div class="sbw-tile"><b>' + t(OFFER.amount, N + ' درهمًا') + '</b><span>' + t('off your<br>first order', 'خصم على<br>طلبك الأول') + '</span></div>' +
+          '<div class="sbw-tile"><b>' + t(OFFER.toteValue, NT + ' درهمًا') + '</b><span>' + t('tote,<br>yours free', 'حقيبة،<br>مجانًا لك') + '</span></div>' +
         '</div>' +
         /* The sum, added 19 Sep (Faheem: say they get AED 100 free). Deliberately
            parts-THEN-total, not the reverse: a lone "AED 100 of value" headline is the
@@ -200,24 +214,25 @@
            verified. Set as a receipt total - hairline above, no box, no gold fill -
            so it reads as the sum of the two tiles and not as a third line item, and so
            the only gold-filled block on the card stays the button. */
-        '<p class="sbw-sum"><small>Together, that&rsquo;s</small><b>' + OFFER.total + '</b><small>on your first order over AED ' + OFFER.min + '</small></p>' +
-        '<p class="sbw-err">That email does not look right. Try again?</p>' +
+        '<p class="sbw-sum"><small>' + t('Together, that&rsquo;s', 'معًا') + '</small><b>' + t(OFFER.total, NS + ' درهم') + '</b><small>' + t('on your first order over AED ' + OFFER.min, 'على طلبك الأول فوق ' + OFFER.min + ' درهمًا') + '</small></p>' +
+        '<p class="sbw-err" id="sbw-err" role="alert">' + t('That email does not look right. Try again?', 'يبدو أن البريد الإلكتروني غير صحيح. هل تحاول مرة أخرى؟') + '</p>' +
         '<form class="sbw-form" novalidate>' +
-          '<input type="email" name="email" inputmode="email" autocomplete="email" required placeholder="you@email.com" aria-label="Email address">' +
-          '<button type="submit">Send my code</button>' +
+          '<input type="email" name="email" inputmode="email" autocomplete="email" required placeholder="you@email.com" aria-label="' + t('Email address', 'البريد الإلكتروني') + '" aria-describedby="sbw-err"' + (AR ? ' dir="ltr"' : '') + '>' +
+          '<button type="submit">' + t('Send my code', 'أرسل لي الرمز') + '</button>' +
         '</form>' +
         /* The old single "Minimum order AED 150" sat under BOTH halves and read as if the
            tote needed AED 150 too. It does not - assets/sahra-cart.js earns the gift on
            item count with no subtotal test at all. Only the code has the minimum. */
-        '<p class="sbw-fine">Tote with every order, no minimum &middot; one code per customer &middot; free next-day UAE delivery, order by 2 pm &middot; free 14-day exchanges &middot; one email when a new place drops, nothing else.</p>' +
+        '<p class="sbw-fine">' + t('Tote with every order, no minimum &middot; one code per customer &middot; free next-day UAE delivery, order by 2 pm &middot; free 14-day exchanges &middot; emails about new places, drops and offers; unsubscribe any time.',
+          'الحقيبة مع كل طلب بلا حد أدنى &middot; رمز واحد لكل عميل &middot; توصيل مجاني في الإمارات في يوم العمل التالي للطلبات قبل الساعة 2 ظهرًا &middot; استبدال مجاني خلال 14 يومًا &middot; رسائل عن الأماكن والإصدارات والعروض الجديدة، ويمكنك إلغاء الاشتراك في أي وقت.') + '</p>' +
       '</div>' +
       '<div class="sbw-won">' +
-        '<p class="sbw-eyebrow">You&rsquo;re on the list</p>' +
-        '<p class="sbw-big">' + OFFER.amount + '<small>use it at checkout</small></p>' +
-        '<div class="sbw-code"><b>' + OFFER.code + '</b><button type="button" class="sbw-copy">Copy</button></div>' +
-        '<p class="sbw-plus sbw-plus-sm"><span aria-hidden="true">+</span> your tote, <b>worth ' + OFFER.toteValue + '</b>, is added free at checkout</p>' +
-        '<a class="sbw-shop" href="/shop/">Shop the collection</a>' +
-        '<p class="sbw-fine">One use per customer, on orders over AED ' + OFFER.min + '. Reopen the gold bar any time to see it again.</p>' +
+        '<p class="sbw-eyebrow">' + t('You&rsquo;re on the list', 'تم تسجيلك') + '</p>' +
+        '<p class="sbw-big">' + t(OFFER.amount, N + ' درهمًا') + '<small>' + t('use it at checkout', 'استخدمه عند الدفع') + '</small></p>' +
+        '<div class="sbw-code"><b>' + OFFER.code + '</b><button type="button" class="sbw-copy">' + t('Copy', 'نسخ') + '</button></div>' +
+        '<p class="sbw-plus sbw-plus-sm"><span aria-hidden="true">+</span> ' + t('your tote, <b>worth ' + OFFER.toteValue + '</b>, is added free at checkout', 'حقيبتك، <b>بقيمة ' + NT + ' درهمًا</b>، تُضاف مجانًا عند الدفع') + '</p>' +
+        '<a class="sbw-shop" href="' + t('/shop/', '/ar/shop/') + '">' + t('Shop the collection', 'تسوّق المجموعة') + '</a>' +
+        '<p class="sbw-fine">' + t('One use per customer, on orders over AED ' + OFFER.min + '. Reopen the gold bar any time to see it again.', 'استخدام واحد لكل عميل، على الطلبات فوق ' + OFFER.min + ' درهمًا. افتح الشريط الذهبي في أي وقت لتراه مجددًا.') + '</p>' +
       '</div>' +
     '</div>';
   document.body.appendChild(m);
@@ -239,7 +254,10 @@
   function close() {
     m.hidden = true;
     m.classList.remove('is-err');
-    if (lastFocus) { try { lastFocus.focus(); } catch (e) {} }
+    /* opened by the timer or the teaser, focus was on <body> (or on the teaser, now removed):
+       hand it to the gold bar instead of dropping it (a11y review, 30 Sep 2026) */
+    var back = (lastFocus && lastFocus !== document.body && document.contains(lastFocus)) ? lastFocus : bar;
+    try { back.focus(); } catch (e) {}
   }
 
   bar.addEventListener('click', function () { open('bar'); });
@@ -259,7 +277,7 @@
   /* copy */
   m.querySelector('.sbw-copy').addEventListener('click', function () {
     var b = this;
-    var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1800); };
+    var done = function () { b.textContent = t('Copied', 'تم النسخ'); setTimeout(function () { b.textContent = t('Copy', 'نسخ'); }, 1800); };
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(OFFER.code).then(done, done);
       else done();
@@ -276,7 +294,7 @@
     if (!RE.test(email)) { m.classList.add('is-err'); input.focus(); return; }
     m.classList.remove('is-err');
     var btn = form.querySelector('button');
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true; btn.textContent = t('Sending…', 'جارٍ الإرسال…');
 
     var win = function (code) {
       st.won = 1; write(st);
@@ -289,7 +307,7 @@
     subscribe(email, 'welcome-bar').then(win, function (e) {
       if (e && e.message === 'email') {
         m.classList.add('is-err');
-        btn.disabled = false; btn.textContent = 'Send my code';
+        btn.disabled = false; btn.textContent = t('Send my code', 'أرسل لي الرمز');
         input.focus();
         return;
       }
@@ -318,7 +336,7 @@
         if (!RE.test(email)) { wrapEl.classList.add('err'); if (inp) inp.focus(); return; }
         wrapEl.classList.remove('err'); wrapEl.classList.add('loading');
         var b = f.querySelector('button'), label = b ? b.textContent : '';
-        if (b) { b.disabled = true; b.textContent = 'Adding…'; }
+        if (b) { b.disabled = true; b.textContent = t('Adding…', 'جارٍ الإضافة…'); }
         var settle = function () {
           wrapEl.classList.remove('loading', 'err');
           wrapEl.classList.add('done');
@@ -385,8 +403,8 @@
       try { sessionStorage.setItem(SESSION, '1'); } catch (e) {}
       var el = document.createElement('div');
       el.className = 'sbw-teaser';
-      el.innerHTML = '<button type="button" class="sbw-teaser-go">' + OFFER.amount + ' off your first order <span aria-hidden="true">&rarr;</span></button>' +
-        '<button type="button" class="sbw-teaser-x" aria-label="Dismiss offer">&times;</button>';
+      el.innerHTML = '<button type="button" class="sbw-teaser-go">' + t(OFFER.amount + ' off<span class="sbw-t-long"> your first order</span> <span aria-hidden="true">&rarr;</span>', 'خصم ' + N + ' درهمًا<span class="sbw-t-long"> على طلبك الأول</span> <span aria-hidden="true">&larr;</span>') + '</button>' +
+        '<button type="button" class="sbw-teaser-x" aria-label="' + t('Dismiss offer', 'إخفاء العرض') + '">&times;</button>';
       document.body.appendChild(el);
       requestAnimationFrame(function () { el.classList.add('on'); });
       el.querySelector('.sbw-teaser-go').addEventListener('click', function () { el.remove(); open('teaser'); });

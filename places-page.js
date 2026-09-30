@@ -146,9 +146,9 @@ function glance(l) {
     .map(k => `<span class="lg-f lg-f-${f[k]}">${icon(k === 'toilets' ? 'wc' : k)}<b>${k === 'toilets' ? 'Toilets' : k === 'food' ? 'Food' : k === 'shade' ? 'Shade' : 'Signal'}</b> ${FAC[f[k]] || esc(f[k])}</span>`).join('');
   return `<section class="lg-glance lg-rise" aria-label="At a glance">
     <div class="lg-gg">
-      ${v ? cell(v[0], 'Getting there', v[1], gl.how ? esc(gl.how) : (short(a.note, 64) || v[2])) : ''}
+      ${v ? cell(v[0], 'Getting there', gl.badge ? esc(gl.badge) : v[1], gl.how ? esc(gl.how) : (short(a.note, 64) || v[2])) : ''}
       ${cell('clock', 'Time needed', gl.time ? esc(gl.time) : short(l.timeNeeded, 56), '')}
-      ${cell('sun', 'Best time of day', gl.best ? esc(gl.best) : short(l.bestTime), '')}
+      ${cell('sun', 'Best time', gl.best ? esc(gl.best) : short(l.bestTime), '')}
       ${cell('ticket', 'Cost', 'cost' in gl ? esc(gl.cost) : (l.fees ? short(l.fees, 56) : ''), '')}
     </div>
     ${facs ? `<div class="lg-facs">${facs}</div>` : ''}
@@ -245,11 +245,11 @@ function renderPlace(l, ctx) {
     <svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#FAF6EF" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg>
     <div class="grain"></div>
     <div class="loc-hero-inner">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/places/">Places</a> &rsaquo; <a href="/places/#${ctx.CAT_HASH[l.category] || ''}">${esc(l.category)}</a></nav>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/places/">Places</a> &rsaquo; <a href="/places/#cat-${esc(String(l.category || '').toLowerCase())}">${esc(l.category)}</a></nav>
       <h1>${esc(l.name)}</h1>
       ${l.nameAr ? `<p class="lg-ar" lang="ar" dir="rtl">${esc(l.nameAr)}</p>` : ''}
       <p class="lede">${esc(l.area || l.emirate)}${l.area && l.area.indexOf(l.emirate) === -1 ? ' &middot; ' + esc(l.emirate) : ''}</p>
-      <div class="lg-chips"><span>${esc(l.category)}</span><span>${esc(l.difficulty)}</span>${l.season ? `<span>Best ${esc(l.season)}</span>` : ''}</div>
+      <div class="lg-chips"><span>${esc(l.category)}</span><span>${esc(l.difficultyLabel || l.difficulty)}</span>${l.season ? `<span>Best ${esc(l.season)}</span>` : ''}</div>
       <div class="lg-hero-row"><div class="wx" id="wx" data-lat="${l.lat}" data-lng="${l.lng}">Loading live weather…</div>
       <button type="button" id="share-btn" class="lg-share">${icon('link')} Share this place</button></div>
     </div>
@@ -292,17 +292,17 @@ function renderPlace(l, ctx) {
       <p class="lg-pack-sub">Matched to how you get there${l.overnight === false ? '' : ' and how long you stay'}. Tap items as you pack them; this list is saved on your phone.</p>
       <div class="pack-controls">
         <div class="grp" role="group" aria-label="Group size">
-          <button class="pack-btn" type="button" data-grp="1">Solo</button>
-          <button class="pack-btn on" type="button" data-grp="4">2&ndash;4</button>
-          <button class="pack-btn" type="button" data-grp="8">5&ndash;10</button>
-          <button class="pack-btn" type="button" data-grp="12">10+</button>
+          <button class="pack-btn" type="button" aria-pressed="false" data-grp="1">Solo</button>
+          <button class="pack-btn on" type="button" aria-pressed="true" data-grp="4">2&ndash;4</button>
+          <button class="pack-btn" type="button" aria-pressed="false" data-grp="8">5&ndash;10</button>
+          <button class="pack-btn" type="button" aria-pressed="false" data-grp="12">10+</button>
         </div>
         ${l.overnight === false ? '' : `<div class="grp" role="group" aria-label="Trip type">
-          <button class="pack-btn${l.packDefault === 'overnight' ? '' : ' on'}" type="button" data-ov="0">Day trip</button>
-          <button class="pack-btn${l.packDefault === 'overnight' ? ' on' : ''}" type="button" data-ov="1">Overnight</button>
+          <button class="pack-btn${l.packDefault === 'overnight' ? '' : ' on'}" type="button" aria-pressed="${l.packDefault === 'overnight' ? 'false' : 'true'}" data-ov="0">Day trip</button>
+          <button class="pack-btn${l.packDefault === 'overnight' ? ' on' : ''}" type="button" aria-pressed="${l.packDefault === 'overnight' ? 'true' : 'false'}" data-ov="1">Overnight</button>
         </div>`}
       </div>
-      <div class="lg-bagbar"><span class="lg-bag">${icon('bag')}<i class="lg-bagfill"></i></span><span class="lg-bagt">0 packed</span></div>
+      <div class="lg-bagbar"><span class="lg-bag">${icon('bag')}<i class="lg-bagfill"></i></span><span class="lg-bagt" aria-live="polite">0 packed</span></div>
       <div id="pack-list"></div>
       <div class="lg-take" id="take">
         <h3>Take this list with you</h3>
@@ -313,7 +313,7 @@ function renderPlace(l, ctx) {
           <button type="button" class="btn alt" id="pk-copy">Copy</button>
         </div>
         <form class="lg-cap" id="pk-cap" novalidate>
-          <label for="pk-email">One email when we publish a new place guide, and AED 50 off your first order over AED 150.</label>
+          <label for="pk-email">Emails about new places, drops and offers, and AED 50 off your first order over AED 150. Unsubscribe any time.</label>
           <div class="lg-cap-r"><input type="email" id="pk-email" name="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required><button type="submit" class="btn">Send my code</button></div>
           <p class="lg-cap-m" aria-live="polite"></p>
         </form>
@@ -350,8 +350,8 @@ function clientScript(l, ctx, packItems) {
   function render(){var el=document.getElementById('pack-list');if(!el)return;var items=PACK.filter(function(it){return !it.overnight||state.ov;});var groups=[],idx={};items.forEach(function(it){if(!(it.group in idx)){idx[it.group]=groups.length;groups.push({h:it.group,items:[]});}groups[idx[it.group]].items.push(it);});
     el.innerHTML=groups.map(function(g){return '<div class="pack-grp-title">'+he(g.h)+'</div>'+g.items.map(function(it){var q=qy(it.qty);return '<button type="button" class="pack-row'+(done[it.name]?' done':'')+'" data-n="'+he(it.name)+'" aria-pressed="'+(done[it.name]?'true':'false')+'"><span class="pk-box" aria-hidden="true"></span><span class="pk-main"><span class="pk-name">'+he(it.name)+'</span>'+(it.note?'<span class="pk-note">'+he(it.note)+'</span>':'')+'</span>'+(q?'<span class="pk-qty">'+he(q)+'</span>':'')+'</button>';}).join('');}).join('');count();}
   document.addEventListener('click',function(e){var r=e.target.closest&&e.target.closest('.pack-row');if(!r)return;var n=r.getAttribute('data-n');done[n]=!done[n];if(!done[n])delete done[n];r.classList.toggle('done',!!done[n]);r.setAttribute('aria-pressed',done[n]?'true':'false');try{localStorage.setItem(KEY,JSON.stringify(done));}catch(err){}count();});
-  document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
-  document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
+  document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b?'true':'false');});render();});});
+  document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b?'true':'false');});render();});});
   render();
   /* take the list with you: WhatsApp, email (their own mail app) or copy */
   function listText(){var items=PACK.filter(function(it){return !it.overnight||state.ov;}),g='',out=['Packing list: '+${JSON.stringify(l.name)}+' ('+state.p+(state.p===1?' person':' people')+(state.ov?', overnight':', day trip')+')'];
@@ -361,18 +361,21 @@ function clientScript(l, ctx, packItems) {
   var pw=document.getElementById('pk-wa'),pm=document.getElementById('pk-mail'),pc=document.getElementById('pk-copy');
   if(pw)pw.addEventListener('click',function(){pw.href='https://wa.me/?text='+encodeURIComponent(listText());tg('pack_share',{method:'whatsapp',location:${JSON.stringify(l.id)}});});
   if(pm)pm.addEventListener('click',function(){pm.href='mailto:?subject='+encodeURIComponent('Packing list: '+${JSON.stringify(l.name)})+'&body='+encodeURIComponent(listText());tg('pack_share',{method:'email',location:${JSON.stringify(l.id)}});});
-  if(pc)pc.addEventListener('click',function(){var t=listText(),ok=function(){pc.textContent='Copied';setTimeout(function(){pc.textContent='Copy';},1800);};try{navigator.clipboard.writeText(t).then(ok,ok);}catch(e){ok();}tg('pack_share',{method:'copy',location:${JSON.stringify(l.id)}});});
+  if(pc)pc.addEventListener('click',function(){var t=listText(),say=function(m){pc.textContent=m;setTimeout(function(){pc.textContent='Copy';},1800);};try{navigator.clipboard.writeText(t).then(function(){say('Copied');},function(){say('Copy failed');});}catch(e){say('Copy failed');}tg('pack_share',{method:'copy',location:${JSON.stringify(l.id)}});});
   var cap=document.getElementById('pk-cap');
   if(cap)cap.addEventListener('submit',function(e){e.preventDefault();var inp=cap.querySelector('input'),msg=cap.querySelector('.lg-cap-m'),btn=cap.querySelector('button'),em=(inp.value||'').trim();
     if(!/^[^\\s@]+@[^\\s@]+\\.[a-z]{2,}$/i.test(em)){msg.textContent='That email does not look right. Try again?';inp.focus();return;}
     btn.disabled=true;btn.textContent='Sending…';
-    var win=function(code){code=code||'GOBEYOND50';try{var w=JSON.parse(localStorage.getItem('sbw.v2')||'{}')||{};w.won=1;w.seen=1;localStorage.setItem('sbw.v2',JSON.stringify(w));}catch(err){}
-      cap.classList.add('won');msg.innerHTML='You are on the list. Your code: <b>'+code.replace(/[^A-Z0-9-]/gi,'')+'</b>, AED 50 off your first order over AED 150, one use per customer. Your free tote is added at checkout.';tg('guide_signup',{source:'guide-pack',location:${JSON.stringify(l.id)}});
+    var save=function(){try{var w=JSON.parse(localStorage.getItem('sbw.v2')||'{}')||{};w.won=1;w.seen=1;localStorage.setItem('sbw.v2',JSON.stringify(w));}catch(err){}var tz=document.querySelector('.sbw-teaser');if(tz)tz.remove();};
+    var clean=function(c){return String(c||'GOBEYOND50').replace(/[^A-Z0-9-]/gi,'');};
+    var win=function(code){code=clean(code);save();cap.classList.add('won');msg.innerHTML='You are on the list. Your code: <b>'+code+'</b>, AED 50 off your first order over AED 150, one use per customer.';tg('guide_signup',{source:'guide-pack',location:${JSON.stringify(l.id)}});
       try{if(window.sbMeta&&window.sbMeta.track)window.sbMeta.track('Lead',{content_name:code});}catch(err){}};
-    fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'guide-pack-'+${JSON.stringify(l.id)}})}).then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(r.status===400)throw new Error('email');return j&&j.code;});})
-      .then(win,function(err){if(err&&err.message==='email'){msg.textContent='That email does not look right. Try again?';btn.disabled=false;btn.textContent='Send my code';return;}win();});});
+    /* the request failed: be honest that nothing was saved, but keep the promised code (same rule as the offer pop-up) */
+    var soft=function(){var code=clean();save();cap.classList.add('won');msg.innerHTML='We could not add you just now, so please try again later. Your code still works: <b>'+code+'</b>, AED 50 off your first order over AED 150, one use per customer.';};
+    fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'guide-pack-'+${JSON.stringify(l.id)}})}).then(function(r){if(r.status===400)throw new Error('email');if(!r.ok)throw new Error('server');return r.json().catch(function(){return {};}).then(function(j){if(j&&j.stored===false)throw new Error('server');return j&&j.code;});})
+      .then(win,function(err){if(err&&err.message==='email'){msg.textContent='That email does not look right. Try again?';btn.disabled=false;btn.textContent='Send my code';return;}soft();});});
   /* tabs: open the fold you jump to, and follow the reader */
-  var hdr=document.querySelector('.hdr,#nav');function hh(){var h=hdr?hdr.getBoundingClientRect().height:56;document.documentElement.style.setProperty('--lg-hdr',Math.max(0,Math.round(h))+'px');}hh();addEventListener('resize',hh,{passive:true});
+  var hdr=document.querySelector('.hdr,#nav');function hh(){var ps=hdr?getComputedStyle(hdr).position:'';var h=(hdr&&(ps==='sticky'||ps==='fixed'))?hdr.getBoundingClientRect().height:0;document.documentElement.style.setProperty('--lg-hdr',Math.max(0,Math.round(h))+'px');}hh();addEventListener('resize',hh,{passive:true});
   function openTo(id){var t=document.getElementById(id);if(!t)return;if(t.tagName==='DETAILS'&&!t.open){t.open=true;}}
   document.querySelectorAll('.lg-tabs a').forEach(function(a){a.addEventListener('click',function(){openTo(a.getAttribute('href').slice(1));if(window.gtag)gtag('event','place_tab',{tab:a.getAttribute('href').slice(1),location:${JSON.stringify(l.id)}});});});
   if(location.hash)openTo(location.hash.slice(1));
@@ -384,7 +387,7 @@ function clientScript(l, ctx, packItems) {
   (function(){var tp=document.getElementById('tee'),mt=tp?tp.getAttribute('data-match')||'':'',loc=${JSON.stringify(l.id)};
     function g(n,p){try{if(window.gtag)gtag('event',n,p);}catch(e){}}
     if(tp&&'IntersectionObserver' in window){var seen=false,to=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting&&!seen){seen=true;g('place_tee_view',{match:mt,location:loc});to.disconnect();}});},{threshold:.4});to.observe(tp);}
-    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a)return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});});
+    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a||!a.closest('main'))return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});});
   })();
   /* motion: gentle rise as sections arrive (once), and number count-ups */
   function counters(root){(root||document).querySelectorAll('.lg-count:not(.done)').forEach(function(c){var to=+c.getAttribute('data-to');c.classList.add('done');if(RM||!to){c.textContent=to;return;}var t0=null;function step(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/1750);c.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
@@ -414,7 +417,7 @@ function clientScript(l, ctx, packItems) {
       if(!up&&t>set&&t<set+40*6e4)ph='dusk';if(!up&&t<rise&&t>rise-40*6e4)ph='dawn';
       sky.setAttribute('data-ph',ph);
       var txt={night:'Night. The sky is dark; on a moonless night the stars come out properly away from city light.',dawn:'Before sunrise. The first light, and the coolest hour of the day.',dusk:'After sunset. Twilight fades quickly this far south.',golden:'Golden hour. Low, warm light, long shadows and the best time for photos.',noon:'Midday. The sun is at its highest and the day at its hottest; shade is scarce in the open.',day:'Daylight. Bright, flat light; carry water and plan around the heat.'}[ph];
-      lab.innerHTML='<b>'+hm(new Date(t))+'</b> '+txt;}
+      lab.innerHTML='<b>'+hm(new Date(t))+'</b> '+txt;rg.setAttribute('aria-valuetext',hm(new Date(t))+', '+ph);}
     function fromRange(){return r0+(r1-r0)*(rg.value/1000);}
     rg.addEventListener('input',function(){show(fromRange());});
     var tNow=Math.min(Math.max(now.getTime(),r0),r1);rg.value=Math.round((tNow-r0)/(r1-r0)*1000);
@@ -438,6 +441,7 @@ const PLACE_CSS = `
 .lg-sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important;display:block!important}
 /* hold the header and tab bar at their final height so the web-font swap does not shift the page (CLS) */
 .hdr{min-height:67px;box-sizing:border-box}.lg-tabs{min-height:52px;box-sizing:border-box}
+@media(max-width:620px){.hdr{min-height:52px}}
 /* ===== location guides (27 Sep 2026) ===== */
 :root{--lg-ink:#2A2016;--lg-soft:#5A5046;--lg-clay:#9C521B;--lg-deep:#7E4114;--lg-card:#fff;--lg-line:rgba(42,32,22,.12);--lg-hdr:56px;interpolate-size:allow-keywords}
 .lg-hero{min-height:clamp(380px,62vh,620px);display:flex;align-items:flex-end}
@@ -683,6 +687,13 @@ const PLACE_CSS = `
 .lg-cap.won .lg-cap-r,.lg-cap.won label{display:none}
 .lg-cap.won .lg-cap-m{font-size:15px;color:#2A2016}
 
+/* keyboard focus and jump links land below the sticky header and tab bar (WCAG 2.4.11) */
+html:has(.lg-tabs){scroll-padding-top:calc(var(--lg-hdr,67px) + 64px)}
+/* laptops with short screens: the sticky side card would be cut off, so it scrolls with the page */
+@media(min-width:1120px) and (max-height:860px){.lg-main>.lg-side{position:static;max-height:none;overflow:visible}}
+/* text sits bottom-left over the photo: darken that corner too (Liwa, Al Rams contrast) */
+.lg-hero.has-photo .loc-hero-inner::before{content:"";position:absolute;inset:-40px -40vw -30px -40vw;background:radial-gradient(ellipse at 20% 70%,rgba(10,6,4,.45),rgba(10,6,4,0) 65%);z-index:-1;pointer-events:none}
+
 /* desktop (28 Sep 2026 review: 43% of a 1440 screen sat empty): the guide reads in a
    left column, and the at-a-glance card (plus the tee, where there is one) rides along
    in a sticky right column. Phones and tablets are unchanged. */
@@ -764,6 +775,7 @@ function hubScript() {
   apply();})();</script>`;
 }
 const HUB_CSS = `
+@media(max-width:620px){.hdr{min-height:52px!important}}
 
 @media(min-width:1120px){
   main{max-width:1200px}

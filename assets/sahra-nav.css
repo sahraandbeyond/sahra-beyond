@@ -13,7 +13,7 @@
 .sbn-caret:focus-visible{outline:2px solid #C99A55;outline-offset:2px}
 .sbn-open .sbn-caret svg{transform:rotate(180deg)}
 .hdr-nav .sbn-trig{flex:0 0 auto}
-.hdr-nav .sbn-caret{width:20px;height:20px;margin-left:-8px;margin-right:2px}
+.hdr-nav .sbn-caret{width:24px;height:24px;margin-left:-10px;margin-right:0}
 .sbn-hide{display:none!important}
 /* The links row is a <nav> and sahra-sky.css makes every nav position:relative,
    so any script that writes top:<topbar height> to "the nav" (meant for the
@@ -100,4 +100,12 @@
     width:min(135px,calc(100vw - 256px))!important;height:18px!important;object-fit:contain;object-position:left center}
   html body .logo .mark{width:min(105px,calc(100vw - 256px))!important;object-fit:contain;object-position:left center}
   html[dir="rtl"] body .brand>img{object-position:right center}
+}
+
+/* 30 Sep 2026 (Faheem: "the top bars can be slimmer" on phones). Every header variant
+   (the fixed #nav on the homepage and shop, the plain <nav> on product pages, header.hdr
+   everywhere else) drops to 52px: the 44px tap targets for ع, menu and cart stay, only the
+   padding around them goes. */
+@media(max-width:620px){
+  html body>nav#nav,html body>nav#nav.solid,html body>nav:not([class]),html body>header.hdr{padding-top:4px!important;padding-bottom:4px!important;min-height:52px!important;box-sizing:border-box}
 }

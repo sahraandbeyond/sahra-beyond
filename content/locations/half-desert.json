@@ -112,10 +112,11 @@
     "The site already has a real cover photo for this page (from the brand's own uploads); no external stock or Commons photo has been substituted for it."
   ],
   "glance": {
-    "how": "Any car on the road; 4x4 only on the loose sand",
+    "how": "Sand drifts over the road in places; a 4x4 and some experience for the loose sand",
     "time": "1–2 hours",
     "best": "Early morning or before sunset",
-    "cost": "Free"
+    "cost": "Free",
+    "badge": "Any car on most of it"
   },
   "coverAlt": "A 4x4 on a sand bank above still water at sunset, near Half Desert"
 }

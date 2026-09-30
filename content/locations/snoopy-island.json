@@ -12,7 +12,7 @@
   "distance": "About 1h30–2h from Dubai",
   "cover": "/uploads/unsorted-no-geotag_01.webp",
   "id": "snoopy-island",
-  "difficulty": "Easy",
+  "difficulty": "Moderate",
   "category": "Coast",
   "lat": 25.492221,
   "area": "Off Al Aqah beach, on Fujairah's northern coast",
@@ -124,10 +124,11 @@
     "No photo with a checkable, correct licence was confirmed in the time available — Wikimedia Commons' API was rate-limited throughout this session, blocking a license check on the 'Snoopy Island (Fujairah)' category images. Recommend a manual check before publishing; photo left null in the meantime."
   ],
   "glance": {
-    "how": "Swim, wade or paddle out from Al Aqah beach",
+    "how": "Wade or swim out from Al Aqah beach; at high tide it is open water, so weaker swimmers take a kayak",
     "time": "2–3 hours",
     "best": "Calm weekday morning, near low tide",
-    "cost": "Free; resort day passes optional"
+    "cost": "Free; resort day passes optional",
+    "badge": "Swim or paddle"
   },
   "coverAlt": "A freediver swimming up through a ring of fish in clear water off Snoopy Island"
 }

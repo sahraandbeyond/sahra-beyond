@@ -132,10 +132,11 @@
     "Audit (2026-09-27): the 'Al Haboos tribe' and village-name attribution came from an Ibn Battuta Travel page that now 404s and could not be re-verified from its own site or an archive; three independently checked sources (twopassportspacked, MissionsOffroad, Gigaplaces) describe the summit's stone ruins without naming a village or a tribe. Reworded to describe the ruins without the unverifiable attribution. All other checked facts (checkpoint being free, road/vehicle needs, camping spot, gate/accident near the summit, and the March 2026 rainfall record) matched their cited sources."
   ],
   "glance": {
-    "how": "Steep, loose summit road; a 4x4 is the safe choice",
+    "how": "The summit road is steep and loose with drop-offs",
     "time": "2–4 hours",
-    "best": "Late afternoon into sunset",
-    "cost": "Free"
+    "best": "Late afternoon; be off the road before dark",
+    "cost": "Free",
+    "badge": "4x4 advised"
   },
-  "coverAlt": "A hiker looking out over the Hajar ridges from Jabal Yanas under an orange sunset"
+  "coverAlt": "A hiker looking out over the Hajar ridges from Jebel Yanas under an orange sunset"
 }

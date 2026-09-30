@@ -34,7 +34,7 @@
     2,
     2
   ],
-  "bestTime": "Morning for the dam area with children; late afternoon if you're heading upstream on the longer trails.",
+  "bestTime": "Morning for the dam area with children; start the longer upstream trails at first light.",
   "timeNeeded": "2–3 hours at the dam; a full day for the longer upstream trails",
   "fees": "Free",
   "hours": "Open access",
@@ -113,10 +113,12 @@
     "Audit (2026-09-27): Visit Ras Al Khaimah's own site (visitrasalkhaimah.com) explicitly confirms free wild camping is permitted at Wadi Shawka — the FAQ answer previously hedging this has been corrected to state it plainly, sourced to that page. No source found gives an exact Dubai-to-Wadi-Shawka distance in km; the previous '92km/95km' figures weren't traceable to any cited source, so they've been rounded to an approximate '90km' rather than stated as precise. Dam height (13m), capacity (275,000 m³), 2001 completion, 120mm annual rainfall, fee-free entry, and trail durations (1.5–2h / 6h+) all matched Wikipedia and MyBayut."
   ],
   "glance": {
-    "how": "Any car to the dam; high clearance for the pools beyond",
+    "how": "Higher clearance helps for the pools beyond",
     "time": "2–3 hours, or a full day upstream",
-    "best": "Morning with children; afternoon for long trails",
-    "cost": "Free"
+    "best": "Morning; start long trails at first light",
+    "cost": "Free",
+    "badge": "Any car to the dam"
   },
-  "coverAlt": "Layers of hazy Hajar Mountain ridges seen from the slopes above Wadi Showka"
+  "coverAlt": "Layers of hazy Hajar Mountain ridges seen from the slopes above Wadi Shawka",
+  "difficultyLabel": "Easy at the dam, hard upstream"
 }

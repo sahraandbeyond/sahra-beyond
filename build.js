@@ -896,6 +896,8 @@ img,svg,video{max-width:100%;height:auto}
 #hero-canvas,.hero canvas,.shophero canvas,canvas.fill{width:100%!important;height:100%!important;max-width:none}
 @media(max-width:820px){
   html,body{overflow-x:hidden}
+  /* clip, not hidden: hidden turns body into a scroll container, which silently disables every position:sticky below it (the guide tab bar never stuck on phones; 30 Sep 2026) */
+  @supports(overflow:clip){html,body{overflow-x:clip}}
   /* comfortable, thumb-sized targets */
   .foot-links a,.links a,.foot-soc a,.soc a,.crumbs a,.back a,.catnav a,
   .eyebrow.plink,.pm-gps,.read-place,.fitswap,.size-guide-link,.tag-invite a{
@@ -2925,42 +2927,6 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
   console.log(`  ✓ TikTok pixel on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} added)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
 })();
 
-/* ==========================================================================
-   AED 50 first-order offer — bar + email-capture modal on every page.
-   ==========================================================================
-   assets/sahra-welcome.{css,js}. Injected here rather than hand-written into
-   ~60 pages, for the same reason as the TikTok pixel above: a hand-maintained
-   tag drifts. Idempotent — a page already carrying the tag is left alone.
-
-   Runs BEFORE stampAssets so both files get their ?v= content hash.
-
-   The script inserts its bar ABOVE .sb-topbar and then owns --topbar-h,
-   setting it to the SUM of both bars; body.has-topbar nav{top:var(--topbar-h)}
-   positions the fixed nav, so a stale value puts the nav over the page.
-   ========================================================================== */
-(function applyWelcomeOffer() {
-  const CSS = '<link rel="stylesheet" href="/assets/sahra-welcome.css">';
-  const JS = '<script src="/assets/sahra-welcome.js" data-sbw defer></script>';
-  const SKIP = new Set(['coming-soon.html']);
-  const pages = [];
-  (function walk(d) {
-    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
-      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin'].includes(e.name)) continue;
-      const p = path.join(d, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith('.html') && !SKIP.has(e.name)) pages.push(p);
-    }
-  })(__dirname);
-  let touched = 0, missing = [];
-  for (const f of pages) {
-    const src = fs.readFileSync(f, 'utf8');
-    if (src.indexOf('/assets/sahra-welcome.js') !== -1) continue;
-    if (!/<\/head>/i.test(src)) { missing.push(path.relative(__dirname, f)); continue; }
-    const out = src.replace(/<\/head>/i, CSS + '\n' + JS + '\n</head>');
-    if (out !== src) { fs.writeFileSync(f, out); touched++; }
-  }
-  console.log(`  ✓ Welcome offer on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} added)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
-})();
 
 /* ==========================================================================
    Shop mega-menu — one script + sheet on every page (18 Sep 2026)
@@ -3269,8 +3235,8 @@ const AR_PDP_NOINDEX = true;
       ],
       firstH: 'The first run', firstSub: 'Two pieces. Revealed at launch.',
       tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Shorts', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
-      joinH: 'Get first access', joinP: 'Leave your email and we will write once, when the first run is ready.',
-      ph: 'you@email.com', btn: 'Notify me', fine: 'One email when it lands. Unsubscribe any time.',
+      joinH: 'Get first access', joinP: 'Leave your email and we will tell you the moment the first run is ready.',
+      ph: 'you@email.com', btn: 'Notify me', fine: 'You will also hear about new places and drops now and then. Unsubscribe any time.',
       ok: 'You are on the list. We will email you when the first run lands.',
       err: 'Please enter a valid email address.',
       back: 'Meanwhile, the Founding Edition is in the shop &rarr;', backHref: '/shop/'
@@ -3292,8 +3258,8 @@ const AR_PDP_NOINDEX = true;
       ],
       firstH: 'الدفعة الأولى', firstSub: 'قطعتان. يُكشف عنهما عند الإطلاق.',
       tee: 'تيشيرت صحراء تريل', short: 'شورت صحراء تريل 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', teeNote: 'شعار القمّتين العاكس أسفل الياقة', shortNote: 'شعار القمّتين العاكس على الساق اليسرى', flashHint: 'انقر للوميض',
-      joinH: 'كن أول من يعرف', joinP: 'اترك بريدك الإلكتروني، وسنراسلك مرة واحدة حين تصبح الدفعة الأولى جاهزة.',
-      ph: 'you@email.com', btn: 'أبلغني', fine: 'رسالة واحدة عند الإطلاق. يمكنك إلغاء الاشتراك في أي وقت.',
+      joinH: 'كن أول من يعرف', joinP: 'اترك بريدك الإلكتروني، وسنخبرك فور أن تصبح الدفعة الأولى جاهزة.',
+      ph: 'you@email.com', btn: 'أبلغني', fine: 'وستصلك أيضًا أخبار الأماكن والإصدارات الجديدة من حين لآخر. يمكنك إلغاء الاشتراك في أي وقت.',
       ok: 'تمّت إضافتك. سنراسلك حين تصل الدفعة الأولى.',
       err: 'يرجى إدخال بريد إلكتروني صحيح.',
       back: 'حتى ذلك الحين، الإصدار التأسيسي متوفر في المتجر ←', backHref: '/ar/shop/'
@@ -3538,6 +3504,43 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
     n++;
   }
   console.log(`  ✓ hreflang pairs declared from ${n} English page(s)`);
+})();
+
+/* ==========================================================================
+   AED 50 first-order offer — bar + email-capture modal on every page.
+   ==========================================================================
+   assets/sahra-welcome.{css,js}. Injected here rather than hand-written into
+   ~60 pages, for the same reason as the TikTok pixel above: a hand-maintained
+   tag drifts. Idempotent — a page already carrying the tag is left alone.
+
+   Runs AFTER the Arabic and Trail builds (30 Sep 2026: they were written after this step and never got the bar) and BEFORE stampAssets so both files get their ?v= content hash.
+
+   The script inserts its bar ABOVE .sb-topbar and then owns --topbar-h,
+   setting it to the SUM of both bars; body.has-topbar nav{top:var(--topbar-h)}
+   positions the fixed nav, so a stale value puts the nav over the page.
+   ========================================================================== */
+(function applyWelcomeOffer() {
+  const CSS = '<link rel="stylesheet" href="/assets/sahra-welcome.css">';
+  const JS = '<script src="/assets/sahra-welcome.js" data-sbw defer></script>';
+  const SKIP = new Set(['coming-soon.html']);
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html') && !SKIP.has(e.name)) pages.push(p);
+    }
+  })(__dirname);
+  let touched = 0, missing = [];
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    if (src.indexOf('/assets/sahra-welcome.js') !== -1) continue;
+    if (!/<\/head>/i.test(src)) { missing.push(path.relative(__dirname, f)); continue; }
+    const out = src.replace(/<\/head>/i, CSS + '\n' + JS + '\n</head>');
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  ✓ Welcome offer on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} added)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
 })();
 
 (function applyShopMenu() {

@@ -178,3 +178,8 @@
 .sb-giftbox textarea:focus{outline:2px solid #9C521B;outline-offset:1px}
 .sb-gifth{margin:6px 0 0;font-size:12.5px;color:#4A4136}
 @media(max-width:700px){.sb-giftopt{margin:0 0 8px}.sb-giftl{min-height:40px}}
+
+/* 30 Sep 2026: the closed drawer's shadow leaked a dark strip onto the right edge of desktop pages */
+.sb-drawer:not(.on){box-shadow:none}
+/* the AED-only bundle offer steps aside when prices show in another currency */
+html[data-price-cur]:not([data-price-cur="AED"]) .pdp-bundle{display:none}

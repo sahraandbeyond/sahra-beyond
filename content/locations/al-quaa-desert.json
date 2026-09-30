@@ -109,7 +109,7 @@
     1,
     1
   ],
-  "bestTime": "A clear, moonless night — new moon, or the few nights either side of it — from about 10:30pm to the early hours; the core sits highest roughly June–August.",
+  "bestTime": "A clear, moonless night: new moon, or the few nights either side of it. When the Milky Way core is up depends on the month: in the evening in September and October, after midnight in April and May, and most of the night in June to August.",
   "timeNeeded": "A full night is best; allow at least 3–4 hours after dark if you're not staying over.",
   "fees": "Free",
   "facilities": {
@@ -164,10 +164,11 @@
     "27 Sep 2026: Faheem chose core-season months as best (Apr–May, Sep–Oct); Jun–Aug and Nov–Mar shown as possible."
   ],
   "glance": {
-    "how": "Packed-sand pull-off beside the road; a capable 4x4 for the dunes, never alone",
+    "how": "Packed-sand pull-off by the road; the dunes beyond need a capable 4x4, and never go alone",
     "time": "A full night, or 3–4 hours after dark",
-    "best": "A clear, moonless night, after 10:30pm",
-    "cost": "Free"
+    "best": "A clear, moonless night; the core is up in the evening in Sep–Oct, after midnight in Apr–May",
+    "cost": "Free",
+    "badge": "4x4 advised"
   },
   "packDefault": "overnight",
   "coverAlt": "Soft sand dunes stretching to the horizon at Al Quaa, with a single 4x4 parked among them"

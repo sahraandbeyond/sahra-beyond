@@ -516,6 +516,7 @@ main,.ftr{position:relative;z-index:1}
 .lg-sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important;display:block!important}
 /* hold the header and tab bar at their final height so the web-font swap does not shift the page (CLS) */
 .hdr{min-height:67px;box-sizing:border-box}.lg-tabs{min-height:52px;box-sizing:border-box}
+@media(max-width:620px){.hdr{min-height:52px}}
 /* ===== location guides (27 Sep 2026) ===== */
 :root{--lg-ink:#2A2016;--lg-soft:#5A5046;--lg-clay:#9C521B;--lg-deep:#7E4114;--lg-card:#fff;--lg-line:rgba(42,32,22,.12);--lg-hdr:56px;interpolate-size:allow-keywords}
 .lg-hero{min-height:clamp(380px,62vh,620px);display:flex;align-items:flex-end}
@@ -761,6 +762,13 @@ main,.ftr{position:relative;z-index:1}
 .lg-cap.won .lg-cap-r,.lg-cap.won label{display:none}
 .lg-cap.won .lg-cap-m{font-size:15px;color:#2A2016}
 
+/* keyboard focus and jump links land below the sticky header and tab bar (WCAG 2.4.11) */
+html:has(.lg-tabs){scroll-padding-top:calc(var(--lg-hdr,67px) + 64px)}
+/* laptops with short screens: the sticky side card would be cut off, so it scrolls with the page */
+@media(min-width:1120px) and (max-height:860px){.lg-main>.lg-side{position:static;max-height:none;overflow:visible}}
+/* text sits bottom-left over the photo: darken that corner too (Liwa, Al Rams contrast) */
+.lg-hero.has-photo .loc-hero-inner::before{content:"";position:absolute;inset:-40px -40vw -30px -40vw;background:radial-gradient(ellipse at 20% 70%,rgba(10,6,4,.45),rgba(10,6,4,0) 65%);z-index:-1;pointer-events:none}
+
 /* desktop (28 Sep 2026 review: 43% of a 1440 screen sat empty): the guide reads in a
    left column, and the at-a-glance card (plus the tee, where there is one) rides along
    in a sticky right column. Phones and tablets are unchanged. */
@@ -794,6 +802,8 @@ img,svg,video{max-width:100%;height:auto}
 #hero-canvas,.hero canvas,.shophero canvas,canvas.fill{width:100%!important;height:100%!important;max-width:none}
 @media(max-width:820px){
   html,body{overflow-x:hidden}
+  /* clip, not hidden: hidden turns body into a scroll container, which silently disables every position:sticky below it (the guide tab bar never stuck on phones; 30 Sep 2026) */
+  @supports(overflow:clip){html,body{overflow-x:clip}}
   /* comfortable, thumb-sized targets */
   .foot-links a,.links a,.foot-soc a,.soc a,.crumbs a,.back a,.catnav a,
   .eyebrow.plink,.pm-gps,.read-place,.fitswap,.size-guide-link,.tag-invite a{
@@ -889,11 +899,11 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=50afb25f">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=f2cfb480">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=7b478879">
-<script src="/assets/sahra-welcome.js?v=65fc7e57" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=77c5d546">
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=483dd3eb">
+<script src="/assets/sahra-welcome.js?v=8aae3718" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=ea6684f9">
 <script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
@@ -1450,7 +1460,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#FAF6EF" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg>
     <div class="grain"></div>
     <div class="loc-hero-inner">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/places/">Places</a> &rsaquo; <a href="/places/#mountains">Mountains</a></nav>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/places/">Places</a> &rsaquo; <a href="/places/#cat-mountains">Mountains</a></nav>
       <h1>Al Rafisah Dam</h1>
       
       <p class="lede">Khor Fakkan, on Sharjah's east coast in the Hajar Mountains</p>
@@ -1465,9 +1475,9 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <div class="lg-side">
     <section class="lg-glance lg-rise" aria-label="At a glance">
     <div class="lg-gg">
-      <div class="lg-g"><span class="lg-gi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5V12l2-5h12l2 5v3.5M4 15.5h16M4 15.5V18h2.5v-2.5M20 15.5V18h-2.5v-2.5"/><circle cx="7.5" cy="13" r=".6"/><circle cx="16.5" cy="13" r=".6"/></svg></span><span class="lg-gk">Getting there</span><span class="lg-gv">Any car</span><span class="lg-gs">Sealed road to a free car park; trails on foot</span></div>
+      <div class="lg-g"><span class="lg-gi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5V12l2-5h12l2 5v3.5M4 15.5h16M4 15.5V18h2.5v-2.5M20 15.5V18h-2.5v-2.5"/><circle cx="7.5" cy="13" r=".6"/><circle cx="16.5" cy="13" r=".6"/></svg></span><span class="lg-gk">Getting there</span><span class="lg-gv">Any car</span><span class="lg-gs">Sealed road to a free car park; the trails are on foot</span></div>
       <div class="lg-g"><span class="lg-gi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="lg-gk">Time needed</span><span class="lg-gv">2–4 hours</span></div>
-      <div class="lg-g"><span class="lg-gi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></span><span class="lg-gk">Best time of day</span><span class="lg-gv">Morning, or the last hours before sunset</span></div>
+      <div class="lg-g"><span class="lg-gi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></span><span class="lg-gk">Best time</span><span class="lg-gv">Morning, or the last hours before sunset</span></div>
       <div class="lg-g"><span class="lg-gi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4z"/><path d="M14 8v10" stroke-dasharray="1.6 1.8"/></svg></span><span class="lg-gk">Cost</span><span class="lg-gv">Free; kayak hire extra</span></div>
     </div>
     <div class="lg-facs"><span class="lg-f lg-f-yes"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6.5a1 1 0 1 0 0-.01M17 6.5a1 1 0 1 0 0-.01M5 21v-6H4l1.5-6h3L10 15H9v6M15 21v-7M19 21v-7M14.5 9h5v5h-5z"/></svg><b>Toilets</b> Yes</span><span class="lg-f lg-f-yes"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M16 21V3c-2 1.5-3 4-3 7h3"/></svg><b>Food</b> Yes</span><span class="lg-f lg-f-yes"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11a9 7 0 0 1 18 0zM12 11v10M9 21h6"/></svg><b>Shade</b> Yes</span></div>
@@ -1533,14 +1543,14 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       <p class="lg-pack-sub">Matched to how you get there. Tap items as you pack them; this list is saved on your phone.</p>
       <div class="pack-controls">
         <div class="grp" role="group" aria-label="Group size">
-          <button class="pack-btn" type="button" data-grp="1">Solo</button>
-          <button class="pack-btn on" type="button" data-grp="4">2&ndash;4</button>
-          <button class="pack-btn" type="button" data-grp="8">5&ndash;10</button>
-          <button class="pack-btn" type="button" data-grp="12">10+</button>
+          <button class="pack-btn" type="button" aria-pressed="false" data-grp="1">Solo</button>
+          <button class="pack-btn on" type="button" aria-pressed="true" data-grp="4">2&ndash;4</button>
+          <button class="pack-btn" type="button" aria-pressed="false" data-grp="8">5&ndash;10</button>
+          <button class="pack-btn" type="button" aria-pressed="false" data-grp="12">10+</button>
         </div>
         
       </div>
-      <div class="lg-bagbar"><span class="lg-bag"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg><i class="lg-bagfill"></i></span><span class="lg-bagt">0 packed</span></div>
+      <div class="lg-bagbar"><span class="lg-bag"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg><i class="lg-bagfill"></i></span><span class="lg-bagt" aria-live="polite">0 packed</span></div>
       <div id="pack-list"></div>
       <div class="lg-take" id="take">
         <h3>Take this list with you</h3>
@@ -1551,7 +1561,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
           <button type="button" class="btn alt" id="pk-copy">Copy</button>
         </div>
         <form class="lg-cap" id="pk-cap" novalidate>
-          <label for="pk-email">One email when we publish a new place guide, and AED 50 off your first order over AED 150.</label>
+          <label for="pk-email">Emails about new places, drops and offers, and AED 50 off your first order over AED 150. Unsubscribe any time.</label>
           <div class="lg-cap-r"><input type="email" id="pk-email" name="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required><button type="submit" class="btn">Send my code</button></div>
           <p class="lg-cap-m" aria-live="polite"></p>
         </form>
@@ -1559,7 +1569,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     </section>
     <section class="faq lg-rise" id="faq"><h2><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.8 9.5a2.3 2.3 0 1 1 3.2 2.1c-.7.3-1 .8-1 1.5v.4M12 16.5h.01"/></svg> Questions people ask about Al Rafisah Dam</h2><details class="lg-q"><summary>Is there an entry fee for Al Rafisah Dam?</summary><p>No — entry to the park is free; only the kayak and pedal-boat rentals are paid extras.</p></details><details class="lg-q"><summary>What are the opening hours?</summary><p>The park itself is open access; the on-site kayak and pedal-boat operator runs from about 7am to 9pm daily.</p></details><details class="lg-q"><summary>How do I get to Al Rafisah Dam from Dubai?</summary><p>Take the E311/E611 to the Sharjah–Khor Fakkan highway (Route 142) and follow it to the signed turn-off just outside Khor Fakkan — about two hours' drive on a fully sealed road.</p></details><details class="lg-q"><summary>Is the hike difficult?</summary><p>The lakeside path is easy and suits most fitness levels; the roughly 3.5km ridge trail is a genuine moderate hike with real elevation gain.</p></details><details class="lg-q"><summary>Are there toilets and food on site?</summary><p>Yes — the park has restrooms, a mosque, a café/restaurant and a small shop.</p></details><details class="lg-q"><summary>When is the best time to visit?</summary><p>October to April, ideally on a weekday morning if you want the lakeside paths quieter.</p></details></section>
     <details class="lg-fold lg-srcf lg-rise" id="sources"><summary><span class="lg-fi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><span class="lg-ft"><b>Sources</b><small>Where the facts on this page come from</small></span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb"><ol class="lg-src"><li><a href="https://en.wikipedia.org/wiki/Al_Rafisah_Dam" target="_blank" rel="noopener nofollow">Wikipedia — Al Rafisah Dam</a></li><li><a href="https://ar.wikipedia.org/wiki/%D8%B3%D8%AF_%D8%A7%D9%84%D8%B1%D9%81%D9%8A%D8%B3%D8%A9" target="_blank" rel="noopener nofollow">Arabic Wikipedia — سد الرفيسة</a></li><li><a href="https://www.comfortdrive.ae/al-rafisah-dam-boating-hiking/" target="_blank" rel="noopener nofollow">ComfortDrive — Al Rafisah Dam boating &amp; hiking guide</a></li><li><a href="https://www.bayut.com/mybayut/rafisah-dam-sharjah/" target="_blank" rel="noopener nofollow">MyBayut — Rafisah Dam, Sharjah</a></li><li><a href="https://www.visitsharjah.com/al-rafisah-dam/experiences/al-khor-kayak/" target="_blank" rel="noopener nofollow">Visit Sharjah — Al Khor Kayak at Al Rafisah Dam</a></li><li><a href="https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers" target="_blank" rel="noopener nofollow">Wikipedia — List of emergency telephone numbers</a></li><li><a href="https://www.ncm.gov.ae/" target="_blank" rel="noopener nofollow">National Center of Meteorology (UAE)</a></li></ol><p class="lg-credit2">Photo: <a href="https://commons.wikimedia.org/wiki/File:Al_Rafisa_Dam.jpg" target="_blank" rel="noopener nofollow">Unorganised_Landings</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, via Wikimedia Commons</p></div></details>
-    <section class="related lg-rise"><h2>Near Al Rafisah Dam</h2><div class="cards"><a class="card" data-id="snoopy-island" data-cat="Coast" data-em="Fujairah" data-v="on-foot" data-diff="Easy" data-m="222210000122" href="/locations/snoopy-island/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/snoopy-island.webp')" role="img" aria-label="A freediver swimming up through a ring of fish in clear water off Snoopy Island"></span><span class="card-body"><strong>Snoopy Island</strong><i class="lg-near">about 15 km away</i><em>Fujairah · Coast</em><span>A small rock islet off Al Aqah beach in Fujairah, reached by swimming or paddling out — turtles, reef sharks and reef fish make it a well-known UAE shore snorkel, best Oct–May.</span></span></a><a class="card" data-id="wadi-kub" data-cat="Camping" data-em="Ras Al Khaimah / Fujairah" data-v="high-clearance" data-diff="Moderate" data-m="222100000122" href="/locations/wadi-kub/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/wadi-kub.webp')" role="img" aria-label="Wadi Kub"></span><span class="card-body"><strong>Wadi Kub</strong><i class="lg-near">about 25 km away</i><em>Ras Al Khaimah / Fujairah · Camping</em><span>A quiet wild-camping wadi in the Hajar Mountains near Masafi, reached off the Gragrah–Ghub road, with century-old Sidr trees, rock pools after rain and no facilities at all.</span></span></a><a class="card" data-id="dibba" data-cat="Coast" data-em="Fujairah" data-v="boat" data-diff="Easy" data-m="222100000122" href="/locations/dibba/"><span class="card-emoji">🏊</span><span class="card-body"><strong>Dibba Rock</strong><i class="lg-near">about 30 km away</i><em>Fujairah · Coast</em><span>A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride, with clear water, coral and turtles — a reliable East Coast snorkel and dive site, best October to April.</span></span></a><a class="card" data-id="wadi-showka" data-cat="Wadis" data-em="Ras Al Khaimah" data-v="2wd" data-diff="Easy" data-m="222200000122" href="/locations/wadi-showka/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/wadi-showka.webp')" role="img" aria-label="Layers of hazy Hajar Mountain ridges seen from the slopes above Wadi Showka"></span><span class="card-body"><strong>Wadi Shawka</strong><i class="lg-near">about 35 km away</i><em>Ras Al Khaimah · Wadis</em><span>A family-friendly Hajar Mountains wadi in Ras Al Khaimah with dam-fed pools, free entry and marked trails, plus longer routes for serious hikers.</span></span></a></div><p class="lg-all"><a href="/places/">All places on the map &rarr;</a></p></section>
+    <section class="related lg-rise"><h2>Near Al Rafisah Dam</h2><div class="cards"><a class="card" data-id="snoopy-island" data-cat="Coast" data-em="Fujairah" data-v="on-foot" data-diff="Moderate" data-m="222210000122" href="/locations/snoopy-island/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/snoopy-island.webp')" role="img" aria-label="A freediver swimming up through a ring of fish in clear water off Snoopy Island"></span><span class="card-body"><strong>Snoopy Island</strong><i class="lg-near">about 15 km away</i><em>Fujairah · Coast</em><span>A small rock islet off Al Aqah beach in Fujairah, reached by swimming or paddling out — turtles, reef sharks and reef fish make it a well-known UAE shore snorkel, best Oct–May.</span></span></a><a class="card" data-id="wadi-kub" data-cat="Camping" data-em="Ras Al Khaimah / Fujairah" data-v="high-clearance" data-diff="Moderate" data-m="222100000122" href="/locations/wadi-kub/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/wadi-kub.webp')" role="img" aria-label="Wadi Kub"></span><span class="card-body"><strong>Wadi Kub</strong><i class="lg-near">about 25 km away</i><em>Ras Al Khaimah / Fujairah · Camping</em><span>A quiet wild-camping wadi in the Hajar Mountains near Masafi, reached off the Gragrah–Ghub road, with century-old Sidr trees, rock pools after rain and no facilities at all.</span></span></a><a class="card" data-id="dibba" data-cat="Coast" data-em="Fujairah" data-v="boat" data-diff="Moderate" data-m="222100000122" href="/locations/dibba/"><span class="card-emoji">🏊</span><span class="card-body"><strong>Dibba Rock</strong><i class="lg-near">about 30 km away</i><em>Fujairah · Coast</em><span>A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride, with clear water, coral and turtles — a reliable East Coast snorkel and dive site, best October to April.</span></span></a><a class="card" data-id="wadi-showka" data-cat="Wadis" data-em="Ras Al Khaimah" data-v="2wd" data-diff="Easy" data-m="222200000122" href="/locations/wadi-showka/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/wadi-showka.webp')" role="img" aria-label="Layers of hazy Hajar Mountain ridges seen from the slopes above Wadi Shawka"></span><span class="card-body"><strong>Wadi Shawka</strong><i class="lg-near">about 35 km away</i><em>Ras Al Khaimah · Wadis</em><span>A family-friendly Hajar Mountains wadi in Ras Al Khaimah with dam-fed pools, free entry and marked trails, plus longer routes for serious hikers.</span></span></a></div><p class="lg-all"><a href="/places/">All places on the map &rarr;</a></p></section>
     </div>
   </main><script>
 (function(){
@@ -1582,8 +1592,8 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
   function render(){var el=document.getElementById('pack-list');if(!el)return;var items=PACK.filter(function(it){return !it.overnight||state.ov;});var groups=[],idx={};items.forEach(function(it){if(!(it.group in idx)){idx[it.group]=groups.length;groups.push({h:it.group,items:[]});}groups[idx[it.group]].items.push(it);});
     el.innerHTML=groups.map(function(g){return '<div class="pack-grp-title">'+he(g.h)+'</div>'+g.items.map(function(it){var q=qy(it.qty);return '<button type="button" class="pack-row'+(done[it.name]?' done':'')+'" data-n="'+he(it.name)+'" aria-pressed="'+(done[it.name]?'true':'false')+'"><span class="pk-box" aria-hidden="true"></span><span class="pk-main"><span class="pk-name">'+he(it.name)+'</span>'+(it.note?'<span class="pk-note">'+he(it.note)+'</span>':'')+'</span>'+(q?'<span class="pk-qty">'+he(q)+'</span>':'')+'</button>';}).join('');}).join('');count();}
   document.addEventListener('click',function(e){var r=e.target.closest&&e.target.closest('.pack-row');if(!r)return;var n=r.getAttribute('data-n');done[n]=!done[n];if(!done[n])delete done[n];r.classList.toggle('done',!!done[n]);r.setAttribute('aria-pressed',done[n]?'true':'false');try{localStorage.setItem(KEY,JSON.stringify(done));}catch(err){}count();});
-  document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
-  document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);});render();});});
+  document.querySelectorAll('[data-grp]').forEach(function(b){b.addEventListener('click',function(){state.p=parseInt(b.getAttribute('data-grp'),10);document.querySelectorAll('[data-grp]').forEach(function(x){x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b?'true':'false');});render();});});
+  document.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){state.ov=b.getAttribute('data-ov')==='1';document.querySelectorAll('[data-ov]').forEach(function(x){x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b?'true':'false');});render();});});
   render();
   /* take the list with you: WhatsApp, email (their own mail app) or copy */
   function listText(){var items=PACK.filter(function(it){return !it.overnight||state.ov;}),g='',out=['Packing list: '+"Al Rafisah Dam"+' ('+state.p+(state.p===1?' person':' people')+(state.ov?', overnight':', day trip')+')'];
@@ -1593,18 +1603,21 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
   var pw=document.getElementById('pk-wa'),pm=document.getElementById('pk-mail'),pc=document.getElementById('pk-copy');
   if(pw)pw.addEventListener('click',function(){pw.href='https://wa.me/?text='+encodeURIComponent(listText());tg('pack_share',{method:'whatsapp',location:"al-rafisah-dam"});});
   if(pm)pm.addEventListener('click',function(){pm.href='mailto:?subject='+encodeURIComponent('Packing list: '+"Al Rafisah Dam")+'&body='+encodeURIComponent(listText());tg('pack_share',{method:'email',location:"al-rafisah-dam"});});
-  if(pc)pc.addEventListener('click',function(){var t=listText(),ok=function(){pc.textContent='Copied';setTimeout(function(){pc.textContent='Copy';},1800);};try{navigator.clipboard.writeText(t).then(ok,ok);}catch(e){ok();}tg('pack_share',{method:'copy',location:"al-rafisah-dam"});});
+  if(pc)pc.addEventListener('click',function(){var t=listText(),say=function(m){pc.textContent=m;setTimeout(function(){pc.textContent='Copy';},1800);};try{navigator.clipboard.writeText(t).then(function(){say('Copied');},function(){say('Copy failed');});}catch(e){say('Copy failed');}tg('pack_share',{method:'copy',location:"al-rafisah-dam"});});
   var cap=document.getElementById('pk-cap');
   if(cap)cap.addEventListener('submit',function(e){e.preventDefault();var inp=cap.querySelector('input'),msg=cap.querySelector('.lg-cap-m'),btn=cap.querySelector('button'),em=(inp.value||'').trim();
     if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(em)){msg.textContent='That email does not look right. Try again?';inp.focus();return;}
     btn.disabled=true;btn.textContent='Sending…';
-    var win=function(code){code=code||'GOBEYOND50';try{var w=JSON.parse(localStorage.getItem('sbw.v2')||'{}')||{};w.won=1;w.seen=1;localStorage.setItem('sbw.v2',JSON.stringify(w));}catch(err){}
-      cap.classList.add('won');msg.innerHTML='You are on the list. Your code: <b>'+code.replace(/[^A-Z0-9-]/gi,'')+'</b>, AED 50 off your first order over AED 150, one use per customer. Your free tote is added at checkout.';tg('guide_signup',{source:'guide-pack',location:"al-rafisah-dam"});
+    var save=function(){try{var w=JSON.parse(localStorage.getItem('sbw.v2')||'{}')||{};w.won=1;w.seen=1;localStorage.setItem('sbw.v2',JSON.stringify(w));}catch(err){}var tz=document.querySelector('.sbw-teaser');if(tz)tz.remove();};
+    var clean=function(c){return String(c||'GOBEYOND50').replace(/[^A-Z0-9-]/gi,'');};
+    var win=function(code){code=clean(code);save();cap.classList.add('won');msg.innerHTML='You are on the list. Your code: <b>'+code+'</b>, AED 50 off your first order over AED 150, one use per customer.';tg('guide_signup',{source:'guide-pack',location:"al-rafisah-dam"});
       try{if(window.sbMeta&&window.sbMeta.track)window.sbMeta.track('Lead',{content_name:code});}catch(err){}};
-    fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'guide-pack-'+"al-rafisah-dam"})}).then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(r.status===400)throw new Error('email');return j&&j.code;});})
-      .then(win,function(err){if(err&&err.message==='email'){msg.textContent='That email does not look right. Try again?';btn.disabled=false;btn.textContent='Send my code';return;}win();});});
+    /* the request failed: be honest that nothing was saved, but keep the promised code (same rule as the offer pop-up) */
+    var soft=function(){var code=clean();save();cap.classList.add('won');msg.innerHTML='We could not add you just now, so please try again later. Your code still works: <b>'+code+'</b>, AED 50 off your first order over AED 150, one use per customer.';};
+    fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'guide-pack-'+"al-rafisah-dam"})}).then(function(r){if(r.status===400)throw new Error('email');if(!r.ok)throw new Error('server');return r.json().catch(function(){return {};}).then(function(j){if(j&&j.stored===false)throw new Error('server');return j&&j.code;});})
+      .then(win,function(err){if(err&&err.message==='email'){msg.textContent='That email does not look right. Try again?';btn.disabled=false;btn.textContent='Send my code';return;}soft();});});
   /* tabs: open the fold you jump to, and follow the reader */
-  var hdr=document.querySelector('.hdr,#nav');function hh(){var h=hdr?hdr.getBoundingClientRect().height:56;document.documentElement.style.setProperty('--lg-hdr',Math.max(0,Math.round(h))+'px');}hh();addEventListener('resize',hh,{passive:true});
+  var hdr=document.querySelector('.hdr,#nav');function hh(){var ps=hdr?getComputedStyle(hdr).position:'';var h=(hdr&&(ps==='sticky'||ps==='fixed'))?hdr.getBoundingClientRect().height:0;document.documentElement.style.setProperty('--lg-hdr',Math.max(0,Math.round(h))+'px');}hh();addEventListener('resize',hh,{passive:true});
   function openTo(id){var t=document.getElementById(id);if(!t)return;if(t.tagName==='DETAILS'&&!t.open){t.open=true;}}
   document.querySelectorAll('.lg-tabs a').forEach(function(a){a.addEventListener('click',function(){openTo(a.getAttribute('href').slice(1));if(window.gtag)gtag('event','place_tab',{tab:a.getAttribute('href').slice(1),location:"al-rafisah-dam"});});});
   if(location.hash)openTo(location.hash.slice(1));
@@ -1616,7 +1629,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
   (function(){var tp=document.getElementById('tee'),mt=tp?tp.getAttribute('data-match')||'':'',loc="al-rafisah-dam";
     function g(n,p){try{if(window.gtag)gtag('event',n,p);}catch(e){}}
     if(tp&&'IntersectionObserver' in window){var seen=false,to=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting&&!seen){seen=true;g('place_tee_view',{match:mt,location:loc});to.disconnect();}});},{threshold:.4});to.observe(tp);}
-    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a)return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});});
+    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a||!a.closest('main'))return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});});
   })();
   /* motion: gentle rise as sections arrive (once), and number count-ups */
   function counters(root){(root||document).querySelectorAll('.lg-count:not(.done)').forEach(function(c){var to=+c.getAttribute('data-to');c.classList.add('done');if(RM||!to){c.textContent=to;return;}var t0=null;function step(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/1750);c.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
@@ -1646,7 +1659,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       if(!up&&t>set&&t<set+40*6e4)ph='dusk';if(!up&&t<rise&&t>rise-40*6e4)ph='dawn';
       sky.setAttribute('data-ph',ph);
       var txt={night:'Night. The sky is dark; on a moonless night the stars come out properly away from city light.',dawn:'Before sunrise. The first light, and the coolest hour of the day.',dusk:'After sunset. Twilight fades quickly this far south.',golden:'Golden hour. Low, warm light, long shadows and the best time for photos.',noon:'Midday. The sun is at its highest and the day at its hottest; shade is scarce in the open.',day:'Daylight. Bright, flat light; carry water and plan around the heat.'}[ph];
-      lab.innerHTML='<b>'+hm(new Date(t))+'</b> '+txt;}
+      lab.innerHTML='<b>'+hm(new Date(t))+'</b> '+txt;rg.setAttribute('aria-valuetext',hm(new Date(t))+', '+ph);}
     function fromRange(){return r0+(r1-r0)*(rg.value/1000);}
     rg.addEventListener('input',function(){show(fromRange());});
     var tNow=Math.min(Math.max(now.getTime(),r0),r1);rg.value=Math.round((tNow-r0)/(r1-r0)*1000);

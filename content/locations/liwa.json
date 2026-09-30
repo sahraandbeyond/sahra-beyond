@@ -117,7 +117,7 @@
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "page": "https://commons.wikimedia.org/wiki/File:Desert_-_panoramio_(6).jpg",
-    "what": "A tall dune beside date plantations in the Liwa Oasis, with more dunes rising beyond"
+    "what": "A tall dune beside planted rows in the Liwa Oasis, with more dunes rising beyond"
   },
   "darkSky": true,
   "lastChecked": "2026-09-27",
@@ -129,10 +129,11 @@
     "Season was changed from the current site's 'Dec–Feb' to 'Oct–Apr' based on the official Liwa International Festival site's own visitor guidance ('visit Liwa between October and April') — flagging this as a correction to the existing data, not just an addition."
   ],
   "glance": {
-    "how": "Paved to the dune base; 4x4 with deflated tyres on the sand",
+    "how": "Paved to the dune base; the dune itself needs a 4x4 with deflated tyres",
     "time": "A full day from Abu Dhabi",
     "best": "Early morning or late afternoon",
-    "cost": "Free to visit"
+    "cost": "Free to visit",
+    "badge": "Any car, then 4x4"
   },
   "coverFocus": "50% 55%"
 }

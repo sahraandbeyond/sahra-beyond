@@ -78,7 +78,7 @@
     "vehicle": "2wd",
     "note": "A normal car reaches the roadside pull-offs and the base of the dune on the E44. You need a 4x4 — your own or a rental — to actually drive on the sand; the climb to the ridge is on foot."
   },
-  "seoDesc": "Big Red is a 60–100m red dune on the Dubai–Hatta road at Al Madam: the UAE's best-known spot for dune bashing, quad biking and sandboarding.",
+  "seoDesc": "Big Red is a 60–100m red dune on the Dubai–Hatta road at Al Madam: one of the UAE's best-known spots for dune bashing, quad biking and sandboarding.",
   "body": "Big Red is the tall red dune that gave the whole Al Badayer desert its nickname: a single sweeping face of iron-oxide sand rising somewhere between 60 and 100 metres, right where Sharjah's Al Madam plateau meets the flatter gravel plains toward Dubai. It sits directly on the Dubai–Hatta road (E44), which is why almost every desert-safari operator in the region uses it as a base — you'll usually arrive to find quad bikes, dune buggies and 4x4s parked along the roadside well before you've had a chance to look at the dune itself.\n\nThe colour comes from a thin coating of iron oxide on the sand grains, the same chemistry that reddens rock and soil elsewhere in the Hajar foothills — not a dye or a trick of the light, though a low sun does deepen it. On foot, the climb to the ridge takes most people 20 to 30 minutes and counts as a proper scramble rather than a stroll: the sand gives way underfoot, and there's no shade anywhere on the slope.\n\nMost visitors come for the driving rather than the view — dune bashing, quad biking and sandboarding down the north face are the standard activities, either through a tour operator or with your own rented 4x4. None of that requires a permit as far as any source records, and there's no fee to park roadside and walk up. What you won't find at the dune itself is any kind of facility: no toilets, no shop, no shaded seating. Rental outfits line the road nearby, so fuel and basic supplies are a short drive away rather than on site.\n\nBecause Big Red sits almost exactly on the stretch where Sharjah's Al Madam desert and Dubai's tour routes meet, you'll see it marketed by both emirates — Visit Sharjah lists it under Al Badayer, Visit Dubai promotes tours to it under its own name. Either way, it's the same dune, and one of the most recognisable single landmarks in the UAE's desert.",
   "faqs": [
     {
@@ -136,9 +136,11 @@
     "The 'months' array had April marked as a possible month (1), which conflicted with the stated season ('Oct–Mar') and the guide text's own 'best visited October to March' line; April has been corrected to 0 (avoid) to match."
   ],
   "glance": {
-    "how": "Any car to the base; 4x4 only to drive the sand",
+    "how": "A 4x4 only to drive on the sand; the climb is on foot",
     "time": "1–3 hours",
     "best": "Late afternoon into sunset",
-    "cost": "Free; tours and quads extra"
-  }
+    "cost": "Free; tours and quads extra",
+    "badge": "Any car to the base"
+  },
+  "coverAlt": "4x4s among red dunes at Al Madam, near Big Red"
 }

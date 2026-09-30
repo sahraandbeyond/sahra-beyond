@@ -5,7 +5,7 @@
   "season": "Oct–Mar",
   "lng": 55.399099,
   "emoji": "⛺",
-  "name": "An Al Qudra Desert Lake",
+  "name": "Al Qudra Desert Lake",
   "desc": "A small, undocumented lake inside Dubai's Al Qudra Lakes cluster, a couple of kilometres from Love Lake — quieter than the named lakes nearby, with no facilities at all.",
   "gallery": [
     "/uploads/img_20260207_072923.jpg"
@@ -126,10 +126,11 @@
     "Bird species count at Al Marmoom is inconsistently reported: Wikipedia's Al Marmoom Desert Conservation Reserve article states 'over 360 bird species' while My Secret Dubai's practical guide (already in sources) states 'over 170 species of birds' — the figure has been reworded to 'hundreds' with the range noted, rather than asserting a single number."
   ],
   "glance": {
-    "how": "Sand track after the paved road ends; high clearance helps",
-    "time": "Overnight, or 2–3 hours at sunset",
-    "best": "Sunset, then the stars after dark",
-    "cost": "Free"
+    "how": "Sand track after the paved road ends",
+    "time": "2–3 hours at sunset",
+    "best": "Late afternoon into sunset",
+    "cost": "Free",
+    "badge": "SUV or 4x4"
   },
   "coverAlt": "A small tent pitched on sand among desert shrubs at dusk, Al Qudra"
 }

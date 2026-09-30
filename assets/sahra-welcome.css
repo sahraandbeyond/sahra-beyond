@@ -252,21 +252,22 @@
    bar's height (CLS 0.09 on a phone). Hold that space until it arrives. The
    heights are the bar's measured height plus its margin and the topbar's own
    9px, at each width band. */
-.sb-topbar:not(.sbw-host){padding-top:61px!important}
-@media(max-width:959px){.sb-topbar:not(.sbw-host){padding-top:89px!important}}
-@media(max-width:620px){.sb-topbar:not(.sbw-host){padding-top:58px!important}}
-@media(max-width:560px){.sb-topbar:not(.sbw-host){padding-top:78px!important}}
+/* 30 Sep 2026: the topbar is now the offer bar alone at every width (its delivery line moved into the bar), so hold exactly that band */
+.sb-topbar:not(.sbw-host){height:var(--sbw-h);padding:0!important;overflow:hidden;box-sizing:border-box}
+/* phones (30 Sep 2026, slim bar): the finished topbar is the 30px offer bar alone, its own
+   delivery text moves into the rotation, so hold exactly that band (it was 78px, a 48px jump) */
+@media(max-width:620px){.sb-topbar:not(.sbw-host){height:var(--sbw-h);padding:0!important;overflow:hidden;box-sizing:border-box}}
 
 /* ---- one slim rotating line on phones (24 Sep 2026, web-design review) ----
    The offer bar wrapped to two lines and sat on top of the delivery bar, so a
    phone lost ~150px before the page began. Now: one line that cycles the offer,
    the free tote and delivery every 4 s, with the code button fixed on the right. */
 .sbw-rot{display:none}
-.sbw-rot .sb-ship-gcc,.sbw-rot .sb-ship-intl{display:none}
-html[data-market="gcc"] .sbw-rot .sb-ship-uae{display:none}
-html[data-market="gcc"] .sbw-rot .sb-ship-gcc{display:inline}
-html[data-market="intl"] .sbw-rot .sb-ship-uae,html[data-market="intl"] .sbw-rot .sb-ship-gcc{display:none}
-html[data-market="intl"] .sbw-rot .sb-ship-intl{display:inline}
+.sbw-rot .sb-ship-gcc,.sbw-rot .sb-ship-intl,.sbw-ship .sb-ship-gcc,.sbw-ship .sb-ship-intl{display:none}
+html[data-market="gcc"] .sbw-rot .sb-ship-uae,html[data-market="gcc"] .sbw-ship .sb-ship-uae{display:none}
+html[data-market="gcc"] .sbw-rot .sb-ship-gcc,html[data-market="gcc"] .sbw-ship .sb-ship-gcc{display:inline}
+html[data-market="intl"] .sbw-rot .sb-ship-uae,html[data-market="intl"] .sbw-rot .sb-ship-gcc,html[data-market="intl"] .sbw-ship .sb-ship-uae,html[data-market="intl"] .sbw-ship .sb-ship-gcc{display:none}
+html[data-market="intl"] .sbw-rot .sb-ship-intl,html[data-market="intl"] .sbw-ship .sb-ship-intl{display:inline}
 @media(max-width:620px){
   .sbw-bar-in>.sbw-amt,.sbw-bar-in>.sbw-sep,.sbw-bar-in>.sbw-hide-sm{display:none}
   .sbw-bar-in{flex-wrap:nowrap;justify-content:space-between;width:100%;gap:10px}
@@ -291,12 +292,48 @@ html[data-market="intl"] .sbw-rot .sb-ship-intl{display:inline}
    bar's exact band before the script runs, and the solo bar is held to that height.
    One line at every width: the delivery line drops out between 621 and 959px. */
 :root{--sbw-h:44px}
-@media(max-width:620px){:root{--sbw-h:38px}}
 @media(min-width:621px) and (max-width:959px){
-  .sbw-solo .sbw-hide-sm{display:none}
-  .sbw-solo .sbw-bar-in{flex-wrap:nowrap}
+  .sbw-wrap .sbw-hide-sm{display:none}
+  .sbw-wrap .sbw-bar-in{flex-wrap:nowrap}
 }
 body:not(.sbw-on):not(:has(.sb-topbar)){padding-top:var(--sbw-h)}
-.sbw-wrap.sbw-solo{height:var(--sbw-h);overflow:hidden}
-.sbw-solo .sbw-bar{height:100%;padding-top:0;padding-bottom:0;display:flex;align-items:center;justify-content:center}
-@media(max-width:620px){.sbw-solo .sbw-bar{display:block;line-height:var(--sbw-h);padding-top:0;padding-bottom:0}}
+.sbw-wrap{height:var(--sbw-h);overflow:hidden}
+.sbw-wrap .sbw-bar{height:100%;padding-top:0;padding-bottom:0;display:flex;align-items:center;justify-content:center}
+/* 30 Sep 2026 (Faheem, phone screenshot: "the top bars can be slimmer"; the pill was also
+   clipped at the bottom, because the solo bar's line-height ran into the pill): one 30px
+   line on phones, pill centred inside it, on every page type. */
+@media(max-width:620px){
+  :root{--sbw-h:30px}
+  .sbw-bar{padding:0 12px!important;height:var(--sbw-h);line-height:1.2}
+  .sbw-bar-in{height:100%;align-items:center}
+  .sbw-go{padding:3px 9px;font-size:9px;line-height:1.2}
+  .sbw-dot{width:5px;height:5px}
+}
+/* 360px phones: the delivery line (the longest of the three) fitted only with an ellipsis */
+@media(max-width:620px){.sbw-wrap:not(.sbw-solo){margin-bottom:0}}
+@media(max-width:380px){.sbw-ri{letter-spacing:.4px}}
+
+/* 30 Sep 2026: the shop page's own dark delivery strip (#mode-note) is position:fixed at
+   top:0, so it sat on top of this bar and hid the offer completely, on phones and desktop.
+   This bar already carries the delivery line, so the duplicate strip steps aside. */
+body.sbw-on #mode-note{display:none!important}
+
+/* narrow phones: keep the teaser clear of the WhatsApp button (46px + 14px gutter) */
+@media(max-width:400px){.sbw-teaser{max-width:calc(100vw - 88px)}.sbw-teaser-go{white-space:nowrap}.sbw-t-long{display:none}}
+
+/* 30 Sep 2026 (Faheem: hide the duplicate delivery strips): the gold bar now carries the
+   market-aware delivery line at every width, so the homepage topbar's own line and the
+   product pages' dark .note strip step aside. */
+.sb-topbar.sbw-host{padding:0!important}
+.sbw-host>.sbw-wrap{margin:0!important}
+.sbw-host>.sb-ship-uae,.sbw-host>.sb-ship-gcc,.sbw-host>.sb-ship-intl,.sbw-host>:not(.sbw-wrap){display:none!important}
+body.sbw-on>.note{display:none!important}
+
+/* Arabic pages (30 Sep 2026): Arabic script must not be letter-spaced or set in Space Mono
+   (tracking breaks the joins between letters), so the bar, teaser and card switch to the
+   /ar/ face. The code itself stays monospaced. */
+html[lang="ar"] .sbw-bar,html[lang="ar"] .sbw-teaser,html[lang="ar"] .sbw-card{font-family:'IBM Plex Sans Arabic',system-ui,sans-serif!important}
+html[lang="ar"] .sbw-bar *,html[lang="ar"] .sbw-teaser *,html[lang="ar"] .sbw-card *{letter-spacing:0!important;text-transform:none!important}
+html[lang="ar"] .sbw-bar{font-size:12.5px}
+html[lang="ar"] .sbw-code b{font-family:var(--mono,'Space Mono',monospace)!important;letter-spacing:.08em!important}
+@media(max-width:620px){html[lang="ar"] .sbw-bar{font-size:12px}html[lang="ar"] .sbw-go{font-size:11px}}
