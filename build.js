@@ -120,7 +120,8 @@ const allLocations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filte
    publish, move the file to content/locations/ and remove "draft": true. */
 const draftDir = path.join(ROOT, 'content/drafts');   /* listed in .vercelignore: never uploaded or served */
 const draftLocations = (fs.existsSync(draftDir) ? fs.readdirSync(draftDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(draftDir, f))).filter(Boolean)
-  .map(l => Object.assign(l, { draft: true }));
+  .map(l => Object.assign(l, { draft: true }))
+  .filter(l => !allLocations.some(x => x.id === l.id));   /* once published, a stale draft copy is ignored */
 const locations = allLocations.filter(l => !l.draft);
 const PLACES = require('./places-page.js');
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
@@ -2341,6 +2342,7 @@ const CATEGORIES = [
      product. pick() filters by design rather than by the single-valued
      category, so the same tee can sit in its fit page AND its theme page. */
   { slug:'mountain-t-shirts', cat:'theme-mountain', emoji:'▲', catBg:'Mountains',
+    places: ['wadi-naqab', 'jebel-jais', 'jabal-yanas', 'wadi-showka'],
     pick: p => /^hajar-mountains-/.test(p.id),
     h1:'Mountain T-Shirts',
     title:'Mountain T-Shirts & Graphic Tees — Hajar Mountains, UAE',
@@ -2356,6 +2358,7 @@ const CATEGORIES = [
       { q:'How much is it, and how fast is delivery?', a:'AED 199, in Regular or Oversized. In the UAE, delivery is free and arrives the next working day when you order by 2 pm.' }
     ] },
   { slug:'desert-t-shirts', cat:'theme-desert', emoji:'◠', catBg:'Dunes',
+    places: ['al-quaa-desert', 'liwa', 'big-red'],
     pick: p => /^(empty-quarter|al-quaa-galaxy)-/.test(p.id),
     h1:'Desert T-Shirts',
     title:'Desert T-Shirts & Graphic Tees — Liwa and Al Quaa, UAE',
@@ -2464,6 +2467,7 @@ CATEGORIES.forEach(C => {
     <div class="content">${paras(C.intro)}</div>
     ${RV.homepageBand({ compact: true })}
     ${foldsBlock(C.sections, 'Fabric, cut and make')}
+    ${C.places ? `<h2 class="places-h">The places behind these tees</h2><nav class="catnav" aria-label="The places behind these tees">${C.places.map(id => locations.find(l => l.id === id)).filter(Boolean).map(l => `<a href="/locations/${l.id}/"><b>${esc(l.name)}</b><span>${esc(l.emirate)} &middot; ${esc(l.category)}</span></a>`).join('')}</nav>` : ''}
     ${Array.isArray(C.faqs) && C.faqs.length ? `<section class="faq"><h2>Frequently asked questions</h2>${C.faqs.map(q => `<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''}
     ${newsletterBlock()}
     <p class="back"><a href="/t-shirts/">All t-shirts &rarr;</a></p>
@@ -2585,7 +2589,7 @@ const JOURNAL_GUIDES = [
   { href: '/wadis/',      kicker: 'Places',    name: 'The best wadis in the Emirates',
     blurb: 'Where the water actually is, when it runs, and which ones are worth the drive.' },
   { href: '/places/',     kicker: 'Places',    name: 'Every place we have mapped',
-    blurb: 'The full index — twenty-four locations across the Emirates, each with coordinates and an honest note on what it is like.' }
+    blurb: 'The full index — ' + locations.length + ' places, each with coordinates and an honest note on what it is like.' }
 ];
 
 function journalCardHtml(a) {

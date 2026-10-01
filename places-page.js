@@ -230,7 +230,7 @@ function renderPlace(l, ctx) {
   const wadiish = l.category === 'Wadis' || l.category === 'Mountains' || /^wadi-/.test(l.id);
   const hasPhoto = !!l.cover;
   const credit = l.photoCredit && l.photoCredit.author
-    ? `<p class="lg-credit">Photo: <a href="${esc(l.photoCredit.page || '#')}" target="_blank" rel="noopener nofollow">${esc(l.photoCredit.author)}</a>, <a href="${esc(l.photoCredit.licenseUrl || '#')}" target="_blank" rel="noopener nofollow">${esc(l.photoCredit.license || '')}</a>, via Wikimedia Commons</p>` : '';
+    ? `<p class="lg-credit">Photo: <a href="${esc(l.photoCredit.page || '#')}" target="_blank" rel="noopener nofollow">${esc(l.photoCredit.author)}</a>, <a href="${esc(l.photoCredit.licenseUrl || '#')}" target="_blank" rel="noopener nofollow">${esc(l.photoCredit.license || '')}</a>, via Wikimedia Commons (resized)${l.photoCredit.note ? '. ' + esc(l.photoCredit.note) : ''}</p>` : '';
   const nearby = ctx.locations.filter(x => x.id !== l.id && typeof x.lat === 'number')
     .map(x => ({ x, d: km(l, x) })).sort((a, b) => a.d - b.d).slice(0, 4);
   const exact = !!ctx.PRODUCT_BY_PLACE[l.id];
@@ -262,6 +262,7 @@ function renderPlace(l, ctx) {
     <div class="lg-side">${exact ? ctx.miniTee(l.id) : ''}
     ${glance(l)}</div>
     <div class="lg-col">
+    ${l.notice ? `<p class="lg-notice" role="note"><strong>Before you go:</strong> ${esc(l.notice)}</p>` : ''}
     ${Array.isArray(l.quick) && l.quick.length ? `<section class="lg-quick" aria-labelledby="lg-quick-h"><h2 id="lg-quick-h">Quick answers</h2><dl>${l.quick.map(q => `<div><dt>${esc(q[0])}</dt><dd>${esc(q[1])}</dd></div>`).join('')}</dl></section>` : ''}
     <section id="overview" class="lg-over lg-rise">
       <div class="content">${ctx.withProductLink(paras(l.body || l.desc), exact ? l.productLink : null)}</div>
@@ -696,6 +697,8 @@ html:has(.lg-tabs){scroll-padding-top:calc(var(--lg-hdr,67px) + 64px)}
 .lg-hero.has-photo .loc-hero-inner::before{content:"";position:absolute;inset:-40px -40vw -30px -40vw;background:radial-gradient(ellipse at 20% 70%,rgba(10,6,4,.45),rgba(10,6,4,0) 65%);z-index:-1;pointer-events:none}
 
 /* answer box (SEO plan, 1 Oct 2026): the questions people search, answered in the first screen of the guide */
+.lg-notice{background:#FFF6E3;border:1px solid #E7C98B;border-radius:14px;padding:12px 16px;margin:0 0 14px;font-size:15px;line-height:1.5;color:#3A2A14}
+.lg-notice strong{color:#7A4B0C}
 .lg-quick{background:#fff;border:1px solid var(--lg-line,rgba(42,32,22,.12));border-radius:16px;padding:18px 20px;margin:0 0 18px}
 .lg-quick h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:600;margin:0 0 10px;color:var(--lg-ink,#2A2016)}
 .lg-quick dl{margin:0;display:grid;gap:10px}

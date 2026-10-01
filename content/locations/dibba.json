@@ -11,7 +11,7 @@
   "lng": 56.3511,
   "status": "safe",
   "desc": "A rocky outcrop off Fujairah's Dibba coast, reached by a short boat ride, with clear water, coral and turtles — a reliable East Coast snorkel and dive site, best October to April.",
-  "cover": "",
+  "cover": "/uploads/places/dibba.jpg",
   "igPosts": [],
   "area": "Dibba Al-Fujairah, on Fujairah's northern Gulf of Oman coast (Dibba town is also split into Sharjah and Omani sections)",
   "months": [
@@ -137,5 +137,15 @@
     "cost": "No entry fee; the boat trip is paid",
     "badge": "By boat"
   },
-  "ogImage": "/uploads/og/dibba.jpg"
+  "ogImage": "/uploads/og/dibba.jpg",
+  "coverAlt": "Clear water and a rocky beach on the Dibba Al Fujairah coast, where boats leave for Dibba Rock",
+  "coverFocus": "50% 55%",
+  "photoCredit": {
+    "author": "Amalfm",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Dibba_Al_Fujairah_Nature3.jpg",
+    "what": "The beach at Dibba Al Fujairah (March 2020). This is the coast, not Dibba Rock itself.",
+    "note": "Shows the beach at Dibba Al Fujairah, not Dibba Rock itself."
+  }
 }
