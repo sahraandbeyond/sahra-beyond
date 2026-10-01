@@ -777,6 +777,41 @@ footer{position:relative;z-index:2}
 @media(min-width:961px){#s-ring .hring{max-width:600px;margin:0 auto}}
 /* 25 Sep (persona review): on phones the meter and the two links ran to the screen edge */
 @media(max-width:960px){#s-ring .hring-meter,#s-ring .hring-links{padding-left:20px;padding-right:20px;box-sizing:border-box}}
+/* 1 Oct 2026 (Faheem: "the scroll looks very small on desktop"; expert review).
+   From 761px up the ring is a flat coverflow instead of a 3D circle: the stage
+   grows with the screen (737px at 1024, 983 at 1366, 1280 at 1920), cards are
+   168-240px, side cards stay opaque and are dimmed with an overlay rather than
+   made see-through, and only the cards that fit are shown. Phones keep the ring. */
+@media(min-width:961px){
+  #s-ring{padding:40px 0 28px}
+  #s-ring .hring{max-width:clamp(720px,72vw,1280px)}
+}
+@media(min-width:761px){
+  #s-ring .hring-cap{display:none}
+  #s-ring .hring-ring{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 11%,#000 89%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 11%,#000 89%,transparent 100%)}
+  #s-ring .hring-card::after{content:"";position:absolute;inset:0;border-radius:inherit;background:rgba(20,15,34,var(--dim,0));pointer-events:none;transition:background .25s ease;z-index:6}
+  #s-ring .hring-card:hover::after,#s-ring .hring-card:focus-visible::after{background:rgba(20,15,34,0)}
+  #s-ring .hring-card:not(.front):hover{box-shadow:0 0 0 2px var(--gold),0 24px 50px -22px rgba(0,0,0,.6)}
+  #s-ring .hring-card.front .hring-img img{transition:opacity .55s ease-in-out,transform .5s ease}
+  #s-ring .hring-card.front:hover .hring-img img.on{transform:scale(1.04)}
+  #s-ring .hring-body{padding:14px 16px 16px}
+  #s-ring .hring-name{font-size:clamp(15.5px,calc(var(--hc-w) * .1),24px);line-height:1.12}
+  #s-ring .hring-place,#s-ring .hring-fit{font-size:clamp(12px,calc(var(--hc-w) * .056),13.5px)!important}
+  #s-ring .hring-price,#s-ring .hring-price .sb-price{font-size:clamp(13px,calc(var(--hc-w) * .072),17px)!important}
+  #s-ring .hring-go{font-size:12px;margin-top:10px}
+  #s-ring .hring-arrow{width:56px!important;height:56px!important;margin-top:-28px!important;font-size:30px;background:rgba(20,15,34,.72);color:#F7EFE2;border:1px solid rgba(247,239,226,.35)}
+  #s-ring .hring-arrow:hover{background:#F7EFE2;color:var(--ink)}
+  #s-ring .hring-arrow:focus-visible{outline:2px solid #F7EFE2;outline-offset:3px}
+  #s-ring .hring-arrow.prev{left:14px}#s-ring .hring-arrow.next{right:14px}
+  #s-ring .hring-meter,#s-ring .hring-links{max-width:720px;margin-left:auto;margin-right:auto;justify-content:center}
+  #s-ring .hring-meter{margin-top:18px;padding:10px 18px;border-radius:999px;background:rgba(20,15,34,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  #s-ring .hring-pips i{height:6px}
+  #s-ring .hring-seen{font-size:13px}
+  #s-ring .hring-links{margin-top:6px}
+  #s-ring .hring-all{font-size:13px;text-shadow:0 1px 8px rgba(8,6,14,.55)}
+  #s-ring .hring-all:first-child{padding:10px 18px;border:1px solid var(--gold);border-radius:999px;color:#F7EFE2;background:rgba(20,15,34,.35)}
+  #s-ring .hring-places{display:inline-block}
+}
 
 /* Hero model slideshow (21 Sep 2026, Faheem: UAE apparel sites show the product
    the instant you land). Sits BEHIND the tagline; the collection ring moved down
@@ -2870,12 +2905,20 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     if(tall){ var need=tall+28;
       if(stage.clientHeight<need)stage.style.height=need+'px'; }
   }
-  function measure(){ var phone=innerWidth<=760;
-    if(phone){ R=innerWidth*0.62; }                 /* the shop ring's radius: room between the cards */
-    else { var sw=stage.getBoundingClientRect().width||440;
-      var cw=Math.max(104,Math.min(178,sw*0.235));
+  /* 1 Oct 2026: from 761px up the cards sit on a flat coverflow (FLAT) sized from
+     the stage, not on a circle - the circle shrank them to 141px and stacked
+     see-through ghosts behind the front card. Phones keep the circle. */
+  var FLAT=false,CW=0,PITCH=0,LIM=1;
+  function measure(){ var phone=innerWidth<=760; FLAT=!phone;
+    if(phone){ R=innerWidth*0.62; stage.style.perspective=''; }   /* the shop ring's radius: room between the cards */
+    else { var sw=stage.getBoundingClientRect().width||720;
+      var cw=Math.max(168,Math.min(240,sw*0.24));
+      cw=Math.max(150,Math.min(cw,(innerHeight-300)/1.25));   /* short laptop screens: keep the card on screen */
+      CW=cw; PITCH=cw*0.96;
+      LIM=2;                                                     /* five cards; the outer two fade out at the stage edge (CSS mask) */
       st.style.setProperty('--hc-w',Math.round(cw)+'px');
-      R=Math.max(140,Math.min(330,sw/2-cw/2-10)); }
+      stage.style.perspective=Math.round(cw*8)+'px';
+      stage.style.height=Math.round(cw*1.25+230)+'px'; }
     measureCards(); }
   function norm(a){return Math.atan2(Math.sin(a),Math.cos(a));}
   function markSeen(k){ if(seen[k])return; seen[k]=1; seenCount++;
@@ -2884,8 +2927,15 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   function place(){
     var best=-1,bA=9;
     for(var k=0;k<n;k++){
-      var a=k*stepA+S.a,depth=(Math.cos(a)+1)/2,sc=0.62+0.38*depth;
-      gsap.set(cards[k],{x:Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:Math.sin(a)*20,scale:sc,opacity:0.28+0.72*depth,zIndex:Math.round(depth*100)});
+      var a=k*stepA+S.a;
+      if(FLAT){ var off=norm(a)/stepA,ao=Math.abs(off),ac=Math.min(ao,2);
+        var op=ao<=LIM?1:Math.max(0,1-(ao-LIM)/0.8);
+        gsap.set(cards[k],{x:off*PITCH,z:-Math.min(ao,2.5)*CW*0.45,rotateY:Math.max(-2,Math.min(2,off))*14,scale:1-0.14*ac,opacity:op,zIndex:Math.round(100-ao*20),
+          visibility:op>0.02?'visible':'hidden',pointerEvents:ao>LIM+0.5?'none':'auto'});
+        cards[k].style.setProperty('--dim',(ac*0.19).toFixed(3));
+      } else { var depth=(Math.cos(a)+1)/2,sc=0.62+0.38*depth;
+        gsap.set(cards[k],{x:Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:Math.sin(a)*20,scale:sc,opacity:0.28+0.72*depth,zIndex:Math.round(depth*100),visibility:'visible',pointerEvents:'auto'});
+        cards[k].style.removeProperty('--dim'); }
       var na=Math.abs(norm(a)); if(na<bA){bA=na;best=k;}
     }
     if(best!==front){ front=best; markSeen(best);
@@ -2893,7 +2943,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
       var c=cards[best]; if(cap)cap.textContent=c.getAttribute('data-place')||'';
     }
   }
-  function spinTo(t,dur,done){ if(tw)tw.kill(); tw=gsap.to(S,{a:t,duration:dur||0.55,ease:'power3.out',onUpdate:place,onComplete:function(){tw=null;lastTouch=performance.now();if(done)done();}}); }
+  function spinTo(t,dur,done){ if(tw)tw.kill(); tw=gsap.to(S,{a:t,duration:reduced?0.01:(dur||0.55),ease:'power3.out',onUpdate:place,onComplete:function(){tw=null;lastTouch=performance.now();if(done)done();}}); }
   function nearest(a){return Math.round(a/stepA)*stepA;}
   function step(dir,how){used(how);spinTo(nearest(S.a+dir*stepA));}
   st.querySelectorAll('.hring-arrow').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();step(b.classList.contains('prev')?1:-1,'arrow');});});
