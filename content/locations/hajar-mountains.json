@@ -1,0 +1,211 @@
+{
+  "id": "hajar-mountains",
+  "name": "Hajar Mountains",
+  "nameAr": "جبال الحجر",
+  "emoji": "⛰",
+  "emirate": "Ras Al Khaimah, Fujairah, Sharjah & Dubai (Hatta)",
+  "category": "Mountains",
+  "difficulty": "Varies",
+  "season": "Oct–Apr",
+  "distance": "Varies by access point; Wadi Naqab is about 2 hours from Dubai and 40 minutes from Ras Al Khaimah city",
+  "lat": 25.694806,
+  "lng": 56.045361,
+  "status": "safe",
+  "desc": "A range about 700km long that runs from the northern UAE into Oman. From the UAE side the usual ways in are Jebel Jais, Wadi Naqab and Jebel Yanas in Ras Al Khaimah, the wadis of Fujairah and Hatta, with Jebel Hafeet standing apart near Al Ain.",
+  "cover": "/uploads/places/hajar-mountains.jpg",
+  "igPosts": [],
+  "area": "Northern UAE, from Ras Al Khaimah through Sharjah and Fujairah to Hatta, continuing across the border into Oman",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "October to April, starting early. Leave wadis alone whenever rain is forecast anywhere in the mountains.",
+  "timeNeeded": "Half a day for a single viewpoint or wadi; a full day for a hike such as Wadi Naqab; a weekend to see more than one part of the range.",
+  "fees": "Varies by place. Wadi Naqab needs no permit (groups of ten or more should notify RAK's tourism authorities). Wadi Wurayah in Fujairah is visited on controlled group tours that Khaleej Times reported from Dh300 a person in July 2026. Jebel Jais attractions are separately priced; see its page.",
+  "hours": "Varies by place; there is no single opening time for a mountain range. Wadi Wurayah is by booked tour only, and Jebel Jais attractions keep their own hours.",
+  "access": {
+    "vehicle": "varies",
+    "note": "It depends on where you go. Visit Ras Al Khaimah recommends a 4x4 for the final stretch to the Wadi Naqab trailhead; the other places in this guide have their own pages with road details. Wadi Wurayah in Fujairah is reached on an organised tour."
+  },
+  "facilities": {
+    "toilets": "unknown",
+    "food": "some",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "Jebel Jais has a restaurant and activity operators; Wadi Naqab has no shops or water points on the trail, and guides tell hikers to carry all their own food and water. Toilets, shade and mobile signal are not confirmed across the range."
+  },
+  "gpsSource": "The Hajar range is about 700km long and has no single centre point. This pin is Wikipedia's coordinate for Wadi Naqab (25°41′41.3″N 56°02′43.3″E) in Ras Al Khaimah, chosen because the Hajar Mountains tee is drawn from the peaks above this wadi. It is a representative point on the UAE side, not a summit and not a car park.",
+  "body": "The Hajar Mountains are a range of about 700 kilometres and roughly 100 kilometres wide, on the north-east corner of the Arabian Plate, running from the Musandam Peninsula in the north to Oman's east coast, according to Wikipedia. The name, Jibal al-Hajar (جبال الحجر), is usually translated as the Rocky or Stone Mountains. The UAE holds only the northern part. Bayut's guide lists Ras Al Khaimah, Fujairah, Sharjah and Dubai among the emirates the range extends into, and the highest point of the whole range, Jebel Shams at 3,009 metres, is in Oman. UAE heights are lower: Jebel Jais is quoted at 1,934 metres by Visit Ras Al Khaimah, although Wikipedia says its summit sits on the Omani side and gives 1,892 metres for the highest point inside the UAE.\n\nThe rock is the reason the range is of interest to geologists. The Semail Ophiolite here is described as the most complete ophiolite on Earth: a slice of ancient ocean floor pushed up onto the continent tens of millions of years ago. At Wadi Wurayah in Fujairah it is exposed at the surface. At Wadi Naqab, Wikipedia says the rock exposes the Triassic to Jurassic boundary, about 200 million years old, with abundant fossils.\n\nFrom the UAE, the range is best understood as a set of separate entry points rather than one destination. In Ras Al Khaimah, Jebel Jais is the developed one, with a zipline, a restaurant and marked hiking trails, while Wadi Naqab and the Jebel Yanas ridge above it are rougher and more demanding; Bayut also lists Wadi Bih and Wadi Shawka in the emirate. In Fujairah, the mountains run close to the east coast, and Wadi Wurayah is the best-documented site: the UAE's first national park (2013), a Ramsar wetland (2010) and, according to The National, added to the UNESCO World Heritage List in July 2026. Bayut also names Wadi Al Hayl and Wadi Siji in Fujairah. Hatta, a mountain exclave of Dubai, has its own page. Jebel Hafeet, near Al Ain, is often considered an outlier of the Hajar rather than part of the main range, and its rock is different: a fold of limestone, marl and evaporites.\n\nThe practical points are weather and timing. Jebel Jais is usually about 10°C cooler than other parts of Ras Al Khaimah, and Wikipedia gives it an average annual rainfall of 129mm. Rain is the main hazard: the National Centre of Meteorology warned of flash floods and landslides in the Fujairah and Masafi hills in October 2025, and Gulf News reported rocks falling on mountain roads there. Visit Ras Al Khaimah says summer is unsuitable for hiking at Wadi Naqab because of the heat, and puts the season at October to April.",
+  "guide": {
+    "gettingThere": "There is no single route, because the range is crossed by several roads and reached from several emirates. Wadi Naqab, in Ras Al Khaimah, is reached from Street 33C at Al Salihia and is about 2 hours from Dubai and 40 minutes from Ras Al Khaimah city, according to Visit Ras Al Khaimah, which recommends a 4x4 for the last kilometres to the trailhead. Jebel Jais, Jebel Yanas, Hatta and Jebel Hafeet each have a page here with their own directions and road conditions. In Fujairah, Wadi Wurayah is roughly 45km from Fujairah city and is visited on controlled group tours booked through Fujairah Holidays, according to Khaleej Times; the Bayut guide says the park's administration issues permits, so confirm the current arrangement before travelling. A car is the practical choice for most of the range, and no public transport to these places is described.",
+    "whenToGo": "October to April is the season given by Visit Ras Al Khaimah for Jebel Jais and Wadi Naqab, and Bayut gives October to March for Fujairah's wadis. Summer is the wrong time for hiking: Visit Ras Al Khaimah calls it unsuitable at Wadi Naqab because of the heat, and even the cooler high ground can be warm, with a June record of 36.5°C recorded on Jebel Jais. Winters are cool at height. Wikipedia lists a record low of -5.7°C on Jebel Jais, in February, and notes snow there in January 2009 and January 2020. Start early, and check the forecast for the whole mountain area, not only the place you are visiting.",
+    "onSite": "What to do depends on the part of the range. Jebel Jais offers viewpoints, a zipline, the 1484 by Puro restaurant and six hiking trails totalling 16km, according to Visit Ras Al Khaimah. Jebel Jais was reported closed for seasonal maintenance in September 2026; check visitjebeljais.com before going. Wadi Naqab and the ridge of Jebel Yanas are the places for a hard day on foot or a rough drive. Hatta offers a reservoir and the mountain setting close to Dubai. In Fujairah, a Wadi Wurayah tour includes a hike of about 2.5km to freshwater pools and a 13-metre waterfall, according to Khaleej Times, while The National calls the waterfall the UAE's only permanent natural one. Jebel Hafeet, near Al Ain, is the separate outlier with its own road and tombs. For the details of each, use the individual guides rather than treating them as one trip.",
+    "safety": "Flash floods are the main hazard. Visit Ras Al Khaimah says Wadi Naqab can fill with water quickly and that you should not hike it when rain is expected. Gulf News reported in October 2025 that the National Centre of Meteorology warned of flash floods and landslides in low-lying and hilly areas, and that residents were advised to stay clear of wadis and low-lying areas. Rockfall is a second risk: the same report described rocks falling on mountain roads at Masafi in Fujairah, and motorists were told to reduce speed and take extreme caution. Heat is the third: summer is unsuitable for hiking, and the exposed rock offers little shade. For hikes, Visit Ras Al Khaimah advises carrying extra water, emergency food, layers, sun protection, offline maps, a torch and first aid. Tell someone your route before you go.",
+    "heritage": "The mountains hold a good deal of wildlife for a dry region. Wikipedia lists the Arabian tahr and mountain gazelle among the range's fauna, and reports an Arabian caracal sighting in February 2019. The National says Wadi Wurayah is home to wild Arabian tahr, an Arabian caracal rediscovered in 2025 and Blanford's fox. For vegetation, Wikipedia describes shrubland at low elevations giving way to woodland with wild olive and fig trees, and junipers higher up. The human history is old too: Wikipedia says the foothills of Jebel Hafeet contain about 500 beehive tombs from the Hafit period (3200 to 2600 BCE). Wadi Wurayah became a national park in 2013, and its Ramsar listing dates from 2010.",
+    "etiquette": "Treat the protected sites as protected. Wadi Wurayah is visited in controlled groups, and Khaleej Times explains this as a way of preventing damage to a sensitive ecosystem. At Wadi Naqab, groups of ten or more are asked to contact the authorities in advance. Carry your rubbish out, keep to established routes near the small mountain settlements, and leave wildlife and archaeology undisturbed."
+  },
+  "glance": {
+    "how": "Varies by place; check each guide. The Jebel Jais mountain was reported closed for seasonal maintenance in September 2026; check visitjebeljais.com before going",
+    "time": "Half a day to a full day per area",
+    "best": "October to April; avoid wadis if rain is forecast",
+    "cost": "Varies; Wadi Wurayah tours from Dh300 a person"
+  },
+  "quick": [
+    [
+      "Where is it?",
+      "A range of about 700km that crosses the northern UAE into Oman, on the north-east corner of the Arabian Plate."
+    ],
+    [
+      "How big is it?",
+      "About 700km long and roughly 100km wide overall. The highest point, Jebel Shams (3,009m), is in Oman; the UAE's high ground is lower."
+    ],
+    [
+      "Where can I see it from the UAE?",
+      "Jebel Jais, Jebel Yanas and Wadi Naqab in Ras Al Khaimah, the wadis of Fujairah, and Hatta. Jebel Hafeet near Al Ain is an outlier."
+    ],
+    [
+      "Best months",
+      "October to April, early in the day. Summer is too hot for hiking."
+    ],
+    [
+      "Do I need a 4x4?",
+      "It depends on the place. Visit Ras Al Khaimah recommends one for the final stretch to the Wadi Naqab trailhead."
+    ],
+    [
+      "Permits and fees",
+      "No permit at Wadi Naqab for small groups; Wadi Wurayah is by controlled tour (from Dh300 a person in July 2026). Check each place."
+    ],
+    [
+      "Is Jebel Hafeet part of it?",
+      "Wikipedia says it is often considered an outlier of the Hajar, so it is treated here as a separate stop near Al Ain."
+    ]
+  ],
+  "faqs": [
+    {
+      "q": "Where are the Hajar Mountains?",
+      "a": "They run for about 700km from the Musandam Peninsula to Oman's east coast. The UAE holds the northern part, which Bayut says reaches Ras Al Khaimah, Fujairah, Sharjah and Dubai (at Hatta)."
+    },
+    {
+      "q": "What is the highest point of the Hajar Mountains in the UAE?",
+      "a": "It depends on the source. Visit Ras Al Khaimah gives 1,934m for Jebel Jais; Wikipedia says that summit is on the Omani side and gives 1,892m for the UAE's highest point. The highest point of the whole range, Jebel Shams, is in Oman at 3,009m."
+    },
+    {
+      "q": "Where is the best place to see the Hajar Mountains from the UAE?",
+      "a": "It depends on what you want. Jebel Jais is the developed option with viewpoints and activities, Wadi Naqab and Jebel Yanas suit hikers and rough-road drivers, Hatta is a mountain exclave of Dubai, and Fujairah has the wadis. Each has its own guide on this site. Jebel Jais was reported closed for seasonal maintenance in September 2026; check visitjebeljais.com before going."
+    },
+    {
+      "q": "What can I visit in the Fujairah mountains?",
+      "a": "Wadi Wurayah is the best documented: the UAE's first national park, with a 13-metre waterfall, and visited on controlled tours that Khaleej Times said start from Dh300 a person. Bayut also lists Wadi Al Hayl and Wadi Siji. The Fujairah mountain roads near Masafi saw rocks fall on the road in October 2025, so check conditions after rain."
+    },
+    {
+      "q": "Is Wadi Wurayah open to visitors?",
+      "a": "Khaleej Times (July 2026) says the reserve reopened in January 2026 for controlled group tours booked with Fujairah Holidays, after being closed to tourists since 2013. Bayut's guide says permits come from the park administration. Confirm the current arrangement before you plan a trip."
+    },
+    {
+      "q": "Is Jebel Hafeet part of the Hajar Mountains?",
+      "a": "Wikipedia says it is often considered an outlier of the Hajar Mountains rather than part of the main range. It stands at 1,249m on the Oman border near Al Ain and is a fold of limestone, marl and evaporites."
+    },
+    {
+      "q": "When is the best time to visit the Hajar Mountains?",
+      "a": "October to April for Jebel Jais and Wadi Naqab (Visit Ras Al Khaimah), and October to March for Fujairah's wadis (Bayut). Summer is unsuitable for hiking, and rain brings flash floods."
+    },
+    {
+      "q": "Is it safe, and what is the wildlife like?",
+      "a": "The main risks are flash floods, rockfall on mountain roads and heat, so avoid wadis when rain is forecast. Wildlife includes the Arabian tahr, mountain gazelle, caracal and Blanford's fox, though sightings are not guaranteed and the best-protected habitat, Wadi Wurayah, is visited only on controlled tours."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia — Hajar Mountains",
+      "url": "https://en.wikipedia.org/wiki/Hajar_Mountains"
+    },
+    {
+      "label": "Bayut — Hajar Mountains in UAE: Wadis, Facts, Geology & More",
+      "url": "https://www.bayut.com/mybayut/hajar-mountains-uae/"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — Jebel Jais",
+      "url": "https://visitrasalkhaimah.com/location/place/jebel-jais/"
+    },
+    {
+      "label": "Wikipedia — Jebel Jais",
+      "url": "https://en.wikipedia.org/wiki/Jebel_Jais"
+    },
+    {
+      "label": "Visit Ras Al Khaimah — Wadi Naqab Hike",
+      "url": "https://visitrasalkhaimah.com/blog/wadi-naqab-hike/"
+    },
+    {
+      "label": "Wikipedia — Wadi Naqab",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Naqab"
+    },
+    {
+      "label": "Wikipedia — Jebel Hafeet",
+      "url": "https://en.wikipedia.org/wiki/Jebel_Hafeet"
+    },
+    {
+      "label": "Wikipedia — Hatta, United Arab Emirates",
+      "url": "https://en.wikipedia.org/wiki/Hatta,_United_Arab_Emirates"
+    },
+    {
+      "label": "Wikipedia — Wadi Wurayah",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Wurayah"
+    },
+    {
+      "label": "Khaleej Times — Wadi Wurayah in Fujairah: how to visit",
+      "url": "https://www.khaleejtimes.com/travel/uae-attractions/how-to-visit-wadi-wurayah-fujairah"
+    },
+    {
+      "label": "The National — Wadi Wurayah National Park added to UNESCO World Heritage List",
+      "url": "https://www.thenationalnews.com/news/uae/2026/07/25/uaes-wadi-wurayah-national-park-added-to-unesco-world-heritage-list/"
+    },
+    {
+      "label": "Gulf News — Heavy rain in UAE: waterfalls in Fujairah, rocks fall on roads",
+      "url": "https://gulfnews.com/uae/weather/heavy-rain-in-uae-waterfalls-in-fujairah-rocks-fall-on-roads-1.500313674"
+    }
+  ],
+  "seoTitle": "Hajar Mountains UAE: Where to Go, Fujairah to Jais",
+  "seoDesc": "The Hajar Mountains from the UAE: geology and extent, Jebel Jais, Wadi Naqab, Fujairah's wadis, Hatta, best months and flood and rockfall safety.",
+  "productLink": {
+    "slug": "hajar-mountains-regular",
+    "anchor": "the Hajar Mountains tee",
+    "sentence": "The peaks traced on {{link}} are drawn from the range above Wadi Naqab in Ras Al Khaimah, one stretch of the Hajar rather than the whole range."
+  },
+  "lastChecked": "2026-10-01",
+  "_doubts": [
+    "PHOTOS: no candidate is listed. commons.wikimedia.org could not be fetched in this session (the fetch tool reported the domain as cache-only), so no file's licence, dimensions or author could be checked on its file page, and the Commons API was not available either. Web search surfaced these titles as leads only, none verified for landscape orientation, 1600px width, licence or UAE-side subject: 'Mountains of Fujairah 02.jpg', 'Jebel Jais Mountain Ranges as viewed from Ras Al Khaimah, United Arab Emirates.jpg', 'Jebel Jais, Tallest Mountain of UAE 02.jpg', 'View of the top of Jabal Bil Ays - Jebel Jais and its southern slope.jpg'. Check each on its Commons page before use.",
+    "HEIGHTS: Visit RAK says Jebel Jais is 1,934m; Wikipedia's Jebel Jais page says the summit is on the Omani side with 1,892m as the UAE high point; Wikipedia's Hajar page gives 1,911m for Jebel Jais and calls Jabal ar Rahrah (1,691m) the highest UAE peak, and the Rahrah page says it is the highest mountain located entirely in the UAE. The page reports the 1,934m and 1,892m figures and does not state a single answer. Jebel Shams (3,009m) is Wikipedia's figure only.",
+    "GEOLOGY: Wikipedia calls the Semail Ophiolite the most complete on Earth; The National calls Wadi Wurayah's exposure the world's largest exposed ophiolite complex and gives about 90 million years for the crust; Visit RAK says the range formed from a collision more than 70 million years ago. These are not the same claim, so each is attributed and no age or superlative is stated in the page's own voice. Wikipedia gives only 'Late Cretaceous' for the obduction.",
+    "RANGE MEMBERSHIP OF HAFEET: Wikipedia says Jebel Hafeet is 'often considered an outlier' of the Hajar; Bayut's Hajar guide lists it among the range's highlights and says the range extends into Abu Dhabi. The page treats it as a separate stop and says so with attribution. Hafeet's height is 1,249m on Wikipedia; Exploring Emirates (opened, not cited) says 1,240m.",
+    "WADI WURAYAH: area is 12,700 hectares on Wikipedia but about 220 sq km on Khaleej Times and The National, so no area is stated. Access is unclear: Khaleej Times (27 Jul 2026) says controlled group tours via Fujairah Holidays from Dh300 a person and describes the tour season as early to mid-October on Saturdays (ambiguous), while Bayut's undated guide says permits come from the park administration. UNESCO listing (July 2026) is from The National and Khaleej Times; no UNESCO page was opened. Khaleej Times calls the waterfall 13m and year-round; The National calls it the UAE's only permanent natural waterfall; each is attributed. Prices and dates may change.",
+    "ARABIAN LEOPARD: Wikipedia's Hajar page says it was documented near Khasab (Oman); the Wadi Wurayah page says conservationists believe it survives there and that it has been unseen in the UAE since 1995. Not stated in the text because it is conflicting and unconfirmed for the UAE side.",
+    "HATTA: Wikipedia says summer highs reach 55°C, which the existing hatta.json _doubts could not support, so the figure is not used. Wikipedia gives 134km from Dubai; the Hatta page notes other estimates, and no distance is stated here. Hatta details (dam, Wadi Hub, heritage village) are left to hatta.json and are not repeated.",
+    "SNOW: Wikipedia's Jebel Jais page lists snow in January 2009 (second time on record), February 2017 (with temperatures around -5°C) and January 2020 (with hail). The text names only January 2009 and January 2020, as in jebel-jais.json, because the February 2017 entry is ambiguous about snow. The -5.7°C February record is Wikipedia's climate table.",
+    "FACILITIES AND SIGNAL: no source confirmed toilets, shade or mobile signal across the range, so these are 'unknown'. The 'varies' value for access.vehicle is not one of the template's values (2wd, high-clearance, 4wd) and may need a rendering check on the site.",
+    "FUJAIRAH WADIS: Wadi Al Hayl and Wadi Siji are named only in Bayut's lists, with no independent check of access, safety or opening rules; they are mentioned, not recommended. Bayut's separate Fujairah wadi page (opened) also lists Wadi Ham, Wadi Sana and Wadi Sidr, and Wadi Wurayah's 'open access' status there conflicts with the tour-only access in Khaleej Times; none of those details are used. Wadi Bih and Wadi Shawka are named only from Bayut's Hajar guide as Ras Al Khaimah wadis; Bayut's Wadi Bih page says Wadi Bih spans Ras Al Khaimah and Fujairah, so its emirate is not narrowed here.",
+    "WEATHER EVENTS: the Gulf News piece is dated 19 Oct 2025 and reports NCM warnings of flash floods and landslides and rocks on the roads at Masafi. A Khaleej Times article of 17 Dec 2025 (opened) repeats the avoid-wadis advice but is not used or listed, because of the 12-source limit. The Jebel Jais rockslide and closure (Khaleej Times, 3 Feb 2026) is covered on jebel-jais.json and is not repeated.",
+    "WORDING OF 'FUJAIRAH MOUNTAIN ROADS': the only road incident cited is the 19 Oct 2025 rockfall at Masafi; no source opened described road conditions, road names or drive times for Fujairah's roads, so none are given. Sharjah is named only through Bayut's list, and no Sharjah-specific place was sourced.",
+    "ARABIC NAME: Wikipedia's Hajar page gives Jibal al-Hajar as 'جِبَال ٱلْحَجَر' with diacritics, meaning Rocky or Stone Mountains; nameAr uses the undiacritised form requested.",
+    "DRIVE TIMES: only Wadi Naqab (about 2h from Dubai, 40 minutes from RAK city) and Wadi Wurayah (about 45km from Fujairah city) come from pages opened for this guide. Other access points are left to their own pages.",
+    "WADI WURAYAH DATES: The National (cited) says the site became the country's first national park in 2013; Wikipedia says it became the UAE's first protected mountain area on 16 March 2009. The page uses 2013 (national park) and 2010 (Ramsar) and no longer gives 2009."
+  ],
+  "coverAlt": "A layered limestone wall of the Hajar Mountains near Jebel Jais, with old terraced fields below",
+  "coverFocus": "50% 45%",
+  "photoCredit": {
+    "author": "Angela Manthorpe",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Jebel_Jais_mountain_wall.jpg",
+    "what": "A layered mountain wall beside Jebel Jais, Ras Al Khaimah (January 2019)."
+  }
+}

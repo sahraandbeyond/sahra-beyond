@@ -230,7 +230,7 @@ function renderPlace(l, ctx) {
   const wadiish = l.category === 'Wadis' || l.category === 'Mountains' || /^wadi-/.test(l.id);
   const hasPhoto = !!l.cover;
   const credit = l.photoCredit && l.photoCredit.author
-    ? `<p class="lg-credit">Photo: <a href="${esc(l.photoCredit.page || '#')}" target="_blank" rel="noopener nofollow">${esc(l.photoCredit.author)}</a>, <a href="${esc(l.photoCredit.licenseUrl || '#')}" target="_blank" rel="noopener nofollow">${esc(l.photoCredit.license || '')}</a>, via Wikimedia Commons (resized)${l.photoCredit.note ? '. ' + esc(l.photoCredit.note) : ''}</p>` : '';
+    ? `<p class="lg-credit">Photo: <a href="${esc(l.photoCredit.page || '#')}" target="_blank" rel="noopener nofollow">${esc(l.photoCredit.author)}</a>, <a href="${esc(l.photoCredit.licenseUrl || '#')}" target="_blank" rel="noopener nofollow">${esc(l.photoCredit.license || '')}</a>, Wikimedia Commons (${esc(l.photoCredit.edits || 'resized')})${l.photoCredit.note ? '. ' + esc(l.photoCredit.note) : ''}</p>` : '';
   const nearby = ctx.locations.filter(x => x.id !== l.id && typeof x.lat === 'number')
     .map(x => ({ x, d: km(l, x) })).sort((a, b) => a.d - b.d).slice(0, 4);
   const exact = !!ctx.PRODUCT_BY_PLACE[l.id];
@@ -470,6 +470,7 @@ const PLACE_CSS = `
 .lg-credit{position:absolute;right:12px;top:10px;z-index:5;margin:0;max-width:62%;text-align:right;font-size:10.5px;line-height:1.35;color:rgba(255,255,255,.78);text-shadow:0 1px 6px rgba(0,0,0,.5)}
 .lg-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .lg-hero:not(.has-photo) .lg-credit{display:none}
+@media(max-width:560px){.lg-credit{max-width:calc(100% - 24px);font-size:10px}}
 .lg-ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
 /* sticky in-page tabs */
 .lg-tabs{position:sticky;top:var(--lg-hdr);z-index:40;background:rgba(250,246,239,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--lg-line)}

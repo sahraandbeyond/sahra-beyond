@@ -1,0 +1,215 @@
+{
+  "id": "empty-quarter",
+  "name": "The Empty Quarter (Rub' al Khali)",
+  "nameAr": "الربع الخالي",
+  "emoji": "🏜",
+  "emirate": "Abu Dhabi",
+  "category": "Dunes",
+  "difficulty": "Hard",
+  "season": "Oct–Apr",
+  "distance": "About 3 hours by road from Abu Dhabi city to Liwa (festival site); Qasr Al Sarab gives about 2.5 hours from Abu Dhabi city and 3.5 hours from Dubai",
+  "lat": 23.1333,
+  "lng": 53.7667,
+  "status": "safe",
+  "desc": "The vast sand desert of the southern Arabian Peninsula, shared by four countries, which the UAE reaches at its northern edge around Liwa in Abu Dhabi's Al Dhafra region.",
+  "cover": "/uploads/places/empty-quarter.jpg",
+  "igPosts": [],
+  "area": "Al Dhafra region, southern Abu Dhabi, near the Saudi border",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "October to April, with December to March the most comfortable stretch for camping; go early or late in the day, and avoid May to September.",
+  "timeNeeded": "A full day from Abu Dhabi for the paved Liwa roads and a first look at the dunes; two or three days if you add a resort or camp overnight.",
+  "fees": "No entry fee for the desert itself is published. One Liwa tour operator says no permit is needed to camp on public land, but that is a single operator's statement, so check locally before you go. Guided tours, resort stays and the December Liwa International Festival are separate paid or ticketed activities.",
+  "hours": "Open terrain with no opening hours. Resorts, tours and the festival keep their own schedules.",
+  "access": {
+    "vehicle": "2wd",
+    "note": "Paved roads reach Liwa in any car. The open sand needs a 4x4, a convoy and recovery gear: the official festival site recommends a 4x4 for dune bashing and remote areas, and driving into the sand also calls for lowered tyre pressure."
+  },
+  "facilities": {
+    "toilets": "unknown",
+    "food": "nearby",
+    "shade": "no",
+    "signal": "patchy",
+    "note": "Resorts such as Qasr Al Sarab and the oasis towns are the only services; out on the sand there is nothing. The official festival site says mobile service is generally available but may be weak in remote areas, and a Liwa tour operator calls it unreliable and advises carrying a GPS or satellite messenger. No source gave a coverage map."
+  },
+  "gpsSource": "Wikipedia's Liwa Oasis article gives the oasis as centred around 23°08′N 53°46′E, on the northern edge of the Rub' al Khali, converted here to 23.1333, 53.7667. It is a labelled reference point at the Liwa edge of the desert, not the desert's centre or the border, and not Moreeb Dune (see the Liwa guide).",
+  "body": "The Rub' al Khali, the Empty Quarter, is a sand desert of the southern Arabian Peninsula. Wikipedia gives it as about 650,000 square kilometres, roughly 1,000 km long and 500 km wide, and Britannica describes it as the largest area of continuous sand in the world. It spans Saudi Arabia, Oman, Yemen and the UAE, and most of it is in Saudi Arabia: Saudipedia puts about 78% there, although its total of 550,000 square kilometres is lower than the Wikipedia and Britannica figure. The UAE holds only the northern edge, around Liwa in the south of Abu Dhabi's Al Dhafra region; most of the sand lies in Saudi Arabia.\n\nThe desert is not one uniform sea of dunes. Wikipedia describes dunes up to 250 metres high, reddish-orange from feldspar, with sand seas interspersed with gravel and gypsum plains; Britannica says dunes sometimes exceed 200 metres. Britannica adds that the desert's elevation falls from as much as 610 metres in the west, where the sand is fine and soft, to about 180 metres in the east, where dunes sit alongside salt flats and sand sheets.\n\nMost UAE visitors meet the Empty Quarter at Liwa Oasis. Wikipedia describes an arc about 100 km long on the northern edge of the Rub' al Khali, with some 50 villages, about 97.6 km south of the Gulf coast and 150 km south-west of Abu Dhabi city; the official festival site says it is about a three-hour drive from Abu Dhabi. Paved roads serve the oasis. The Liwa guide covers the oasis and Moreeb Dune in detail; this page is about the wider desert. Every December the Liwa International Festival, which Visit Abu Dhabi says lights up the Empty Quarter with three weeks of motorsport, cultural events, concerts and fireworks, brings crowds to the area.\n\nQasr Al Sarab is one of the resorts in the area. Its operator, Anantara, describes it as set in the Rub' al Khali, in the Liwa desert area, about 2.5 hours from Abu Dhabi city and 3.5 hours from Dubai, and lists camel trekking, fat biking, archery and desert drives among its activities. Independent camping is the other route: one Liwa tour operator says no permit is needed and that wild camping is allowed on public land only, not private property. That is a single operator's view, so check locally before you pitch. The festival site advises camping with a guide or group if you are new to the desert.\n\nThe desert's best-known history is Wilfred Thesiger's. He crossed it twice, in 1946 to 1947 and 1947 to 1948, and wrote about the journeys and the Bedu he travelled with in Arabian Sands (1959). Liwa features in both: the first crossing ended there, and the second passed through it on the way to Abu Dhabi.\n\nBritannica calls it one of the driest regions in the world. Wikipedia gives annual precipitation as generally under 50 mm, and humidity of about 52% in January against about 15% in June and July. Saudipedia says summer highs are above 50°C, and that two or three years may pass without rain. In the UAE, the National Centre of Meteorology recorded 48.6°C at Mezaira, in the Liwa area, on 20 June 2026, as reported by Gulf News. At the other end of the year, one Liwa operator says winter nights can fall to 5 to 10°C.\n\nThat range is why timing matters, and why the Empty Quarter rewards preparation rather than spontaneity. The paved roads are easy; the sand is not. Ordinary cars should stay on tarmac, and anyone driving into the dunes needs a suitable 4x4, recovery equipment, more water than seems necessary, a plan for fuel and a way to call for help that does not depend on mobile signal.",
+  "guide": {
+    "gettingThere": "From Abu Dhabi city, Liwa is about a three-hour drive according to the official festival site; Qasr Al Sarab says about 2.5 hours from Abu Dhabi city and 3.5 hours from Dubai, and Wikipedia's straight-line figure of 150 km south-west of Abu Dhabi city describes a different measure. Modern, multi-lane highway connects the oasis to the capital (Wikipedia), and paved roads reach the main landmarks, so an ordinary car is enough to arrive. A 4x4 is recommended for dune bashing and remote areas. No public transport option is listed for the Liwa area, so plan on a car or a booked tour, and refuel before leaving the main roads.",
+    "whenToGo": "The official Liwa International Festival site says to visit between October and April, when cooler temperatures suit outdoor activity. Visit Abu Dhabi says the cooler months suit desert experiences and the warmer months are quieter. One Liwa tour operator calls November to March the golden season for camping, picks December and January for comfortable days and clear night skies, and says May to September is unsuitable because of extreme heat. The festival runs for three weeks each December and brings more traffic and visitors than a normal weekend. Go early or late in the day even in winter, and carry a jacket, since the same operator says nights can drop to 5 to 10°C.",
+    "onSite": "Most visitors keep to the paved oasis road, the dunes beside it and the resorts, and see the Empty Quarter from the road and the resorts rather than crossing it. Qasr Al Sarab offers camel trekking, fat biking, archery and desert drives for guests. A guided drive or overnight camp is the usual way onto the sand for anyone without off-road experience. The desert beyond the UAE's edge is mostly Saudi territory, and routes, permits and border rules for driving south are not covered here. Do not treat the dunes as open-ended; stay within the areas a guide or resort recommends.",
+    "safety": "The sources agree on the basics. Do not go alone: a Liwa tour operator says to travel in a convoy of at least two vehicles, while another guide recommends at least three, so treat two as the floor. Carry recovery gear: tow rope or straps, a shovel, traction boards or sand tracks, and a jack. One dune-driving guide suggests lowering tyre pressure to 12–18 PSI on soft sand. Carry 4 to 5 litres of water per person per day, according to the Liwa operator, and extra fuel; a 2024 account in The National of a man stranded for four days in the Saudi part of the desert, with no phone signal after his vehicle stuck in soft sand and his fuel ran out, ended only when a convoy found him. Heat is the other risk: the same dune guide says to avoid driving in sandstorms or extreme heat, and temperatures near 50°C are possible inland in summer. Mobile service is generally available but can be weak in remote areas (official festival site) and is described as unreliable by the operator, which advises GPS or satellite messengers and telling someone your route. If you are new to the desert, go with a guide or group.",
+    "heritage": "Wilfred Thesiger's first crossing began from Salalah in Oman in October 1946, with four Bedouin guides, two from the Rashid and two from the Bait Kathir. He reached Liwa in mid-December 1946, visited Abu Dhabi town and returned to Salalah by 23 February 1947. His second crossing began at Manwakh well in Yemen in December 1947; his party was held briefly by Saudi authorities at Sulayil, then travelled to Liwa and reached Abu Dhabi on 14 March 1948. Arabian Sands (1959) records these journeys and what Wikipedia calls the vanishing way of life of the Bedu. Liwa itself is described as the birthplace of the ruling families of Abu Dhabi and Dubai; the Al Nahyan moved their residence from the oasis to Abu Dhabi in 1793.",
+    "etiquette": "Camp only on public land and keep away from private farms and property, as the Liwa operator advises. Take everything you bring back out with you, and drive only where the ground and local guidance allow."
+  },
+  "glance": {
+    "how": "Paved to Liwa in any car; the open sand needs a 4x4, a convoy and recovery gear",
+    "time": "A full day from Abu Dhabi; 2–3 days with an overnight",
+    "best": "October to April; avoid May to September",
+    "cost": "No entry fee found; resorts, tours and the festival are extra",
+    "badge": "Any car, then 4x4"
+  },
+  "quick": [
+    [
+      "Where is it?",
+      "The Empty Quarter spans Saudi Arabia, Oman, Yemen and the UAE. In the UAE you meet it at Liwa, in Abu Dhabi's Al Dhafra region, near the Saudi border."
+    ],
+    [
+      "How far is it?",
+      "About three hours by road from Abu Dhabi city to Liwa, per the official festival site. Qasr Al Sarab says about 2.5 hours from Abu Dhabi and 3.5 hours from Dubai."
+    ],
+    [
+      "How big is it?",
+      "Wikipedia and Britannica give about 650,000 square kilometres across four countries. The UAE holds only the northern edge, around Liwa; most of the sand lies in Saudi Arabia."
+    ],
+    [
+      "Do I need a 4x4?",
+      "Not to reach Liwa: paved roads reach it in any car. The open sand needs a 4x4, a convoy and recovery gear; the official festival site recommends a 4x4 for dune bashing and remote areas."
+    ],
+    [
+      "Best months",
+      "October to April per the official festival site. A Liwa operator picks December and January, and advises against May to September."
+    ],
+    [
+      "How hot does it get?",
+      "NCM recorded 48.6°C at Mezaira, in the Liwa area, on 20 June 2026 (Gulf News). Saudipedia gives summer highs above 50°C for the desert as a whole."
+    ],
+    [
+      "Phone signal?",
+      "Generally available but weak in remote areas, per the official festival site. Carry a satellite messenger and offline maps."
+    ]
+  ],
+  "faqs": [
+    {
+      "q": "What is the Empty Quarter?",
+      "a": "The Rub' al Khali, a sand desert in the southern Arabian Peninsula that Britannica describes as the largest area of continuous sand in the world. Wikipedia gives about 650,000 square kilometres, roughly 1,000 km long and 500 km wide, spread across Saudi Arabia, Oman, Yemen and the UAE."
+    },
+    {
+      "q": "How much of the Empty Quarter is in the UAE?",
+      "a": "The UAE holds only the northern edge, around Liwa; most of the sand lies in Saudi Arabia. No authoritative figure for the UAE's share is published. Saudipedia puts about 78% of the desert in Saudi Arabia, which leaves a minority across Oman, Yemen and the UAE, and the UAE reaches the desert at its northern edge around Liwa. Treat any specific UAE percentage with caution unless it comes with a source."
+    },
+    {
+      "q": "Where can you see the Empty Quarter in the UAE?",
+      "a": "At Liwa Oasis in Al Dhafra, southern Abu Dhabi, an arc about 100 km long on the desert's northern edge. Qasr Al Sarab describes itself as set in the Rub' al Khali in the Liwa desert area, and the December Liwa International Festival is held there."
+    },
+    {
+      "q": "Do I need a 4x4 to visit?",
+      "a": "Not to reach Liwa: paved roads serve its main landmarks, so any car will do. The open sand needs a 4x4, a convoy and recovery gear. The official festival site recommends a 4x4 for dune bashing and remote areas, and one dune-driving guide suggests lowering tyre pressure to 12–18 PSI on soft sand. A first-time visitor is better off with a guide or a resort drive."
+    },
+    {
+      "q": "What is the best time to visit?",
+      "a": "October to April, according to the official festival site. A Liwa tour operator calls November to March the golden season and December and January the most comfortable, and says May to September is unsuitable because of heat."
+    },
+    {
+      "q": "Will I have phone signal?",
+      "a": "In parts, but not reliably. The official festival site says mobile service is generally available but may be weak in remote areas, and a Liwa tour operator calls it unreliable and advises a GPS or satellite messenger. In a 2024 account in The National, a man stranded in the Saudi part of the desert had no signal for four days."
+    },
+    {
+      "q": "What did Wilfred Thesiger do in the Empty Quarter?",
+      "a": "He crossed it twice: first in 1946 to 1947 from Salalah in Oman, reaching Liwa in mid-December 1946, then in 1947 to 1948 from Manwakh in Yemen, reaching Abu Dhabi on 14 March 1948. He wrote about both in Arabian Sands (1959)."
+    },
+    {
+      "q": "Is it safe to drive into the Empty Quarter alone?",
+      "a": "No source recommends it. A Liwa tour operator says never to travel alone and to use at least two vehicles, another guide suggests three, and both list recovery gear, plenty of water and a reliable way to call for help. Anyone without experience should go with a guide."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Rub' al Khali",
+      "url": "https://en.wikipedia.org/wiki/Rub%27_al_Khali"
+    },
+    {
+      "label": "Britannica: Rub' al-Khali",
+      "url": "https://www.britannica.com/place/Rub-al-Khali"
+    },
+    {
+      "label": "Saudipedia: Al-Rub' Al-Khali (Empty Quarter) Desert",
+      "url": "https://saudipedia.com/en/article/983/geography/deserts/al-rub-al-khali-empty-quarter-desert"
+    },
+    {
+      "label": "Wikipedia: Liwa Oasis",
+      "url": "https://en.wikipedia.org/wiki/Liwa_Oasis"
+    },
+    {
+      "label": "Wikipedia: Wilfred Thesiger",
+      "url": "https://en.wikipedia.org/wiki/Wilfred_Thesiger"
+    },
+    {
+      "label": "Anantara: Qasr Al Sarab Desert Resort",
+      "url": "https://www.anantara.com/en/qasr-al-sarab-abu-dhabi"
+    },
+    {
+      "label": "Liwa International Festival: Plan your visit",
+      "url": "https://liwainternationalfestival.ae/en/plan-your-visit"
+    },
+    {
+      "label": "Experience Abu Dhabi: Visit Al Dhafra",
+      "url": "https://visitabudhabi.ae/en/where-to-go/regions/al-dhafra"
+    },
+    {
+      "label": "Gulf News: UAE summer starts with near-50°C heat (20 June 2026)",
+      "url": "https://gulfnews.com/uae/weather/uae-summer-begins-with-temperatures-near-50c-as-longest-day-approaches-1.500581210"
+    },
+    {
+      "label": "Abu Dhabi Desert Safari: Liwa Desert Camping guide (tour operator)",
+      "url": "https://abudhabi-desertsafari.com/en/blog/liwa-desert-camping-ultimate-guide/"
+    },
+    {
+      "label": "CarPrices.ae: Dune driving in the UAE (24 January 2025)",
+      "url": "https://carprices.ae/reviews/dune-driving-uae-guide"
+    },
+    {
+      "label": "The National: Lost in the Empty Quarter (30 January 2024)",
+      "url": "https://www.thenationalnews.com/uae/2024/01/30/lost-in-the-empty-quarter-how-one-man-survived-four-days-alone-in-the-desert/"
+    }
+  ],
+  "seoTitle": "Empty Quarter (Rub' al Khali) from the UAE: Liwa & Safety",
+  "seoDesc": "The Empty Quarter from the UAE: how big it is, where to experience it at Liwa, Thesiger's crossings, climate extremes, desert safety and the best months.",
+  "productLink": {
+    "slug": "empty-quarter-regular",
+    "anchor": "the Empty Quarter tee",
+    "sentence": "The embroidered dune ridges on {{link}} are drawn from Liwa, at the edge of the Empty Quarter."
+  },
+  "lastChecked": "2026-10-01",
+  "coverFocus": "50% 55%",
+  "_doubts": [
+    "PHOTOS NOT VERIFIED: Wikimedia Commons (search page, category, file pages and API) could not be opened with WebFetch ('domain is cache-only'), and the brief did not allow other fetching. The three titles in _photoCandidates come from a web-search listing only. None has had its licence, author, width or location confirmed. Needs a manual Commons check before any cover is set; cover stays null.",
+    "UAE SHARE: no opened source gives the UAE portion of the Empty Quarter. One photography blog (abubakarphotography.com) says the UAE holds 'approximately 10%', but it also says the dunes reach almost 2,600 ft, which contradicts Wikipedia (250 m) and Britannica (200 m), so it was not used and is not in the sources. Saudipedia's 78.2% Saudi share is cited as a context point only.",
+    "AREA CONFLICT: Wikipedia and Britannica give about 650,000 km2; Saudipedia gives 550,000 km2 in total with 430,000 km2 in Saudi Arabia. Both are reported. Wikipedia says 1,000 km by 500 km; Saudipedia says a maximum 1,200 km by 650 km within Saudi Arabia. Only Wikipedia's dimensions are used.",
+    "DUNE HEIGHT CONFLICT: Wikipedia says up to 250 m, Britannica says sometimes over 200 m, Saudipedia says some crests rise 200 m above surroundings. Both Wikipedia and Britannica figures are given.",
+    "AREA FIELD: 'on the Saudi border' was softened to 'near the Saudi border'. Wikipedia's Liwa article places the oasis on the northern edge of the Rub' al Khali and Wikipedia's UAE geography article says Liwa is 'near the undefined border with Saudi Arabia', which may be outdated. Wikipedia's Liwa article also mentions Abu Dhabi's southern border being 16 to 35 km from the oasis, unclear wording that was not used. No official boundary source was opened. Al Dhafra region membership of Liwa is from Wikipedia and the existing Liwa page; the Wikipedia Al Dhafra page fetched was the football club, so it gave nothing.",
+    "DISTANCE CONFLICT: official festival site says about 3 hours from Abu Dhabi; Anantara says 2.5 hours (Abu Dhabi city) to Qasr Al Sarab; Wikipedia says Liwa is 150 km south-west of Abu Dhabi city, while the existing Liwa page uses about 250 km by road to Moreeb. All different endpoints and measures; ranges and attributions are used rather than one figure.",
+    "THESIGER DETAILS: Wikipedia's Thesiger page says the first crossing departed Salalah in October 1946 (some companions turned back at Mughshin) and reached Liwa in mid-December 1946; the second began at Manwakh in December 1947 and reached Abu Dhabi on 14 March 1948. The Wikipedia Liwa page says Thesiger visited Liwa in early March 1948, which is consistent but not precise. Wikipedia's Rub' al Khali page says he crossed 'several times' between 1946 and 1950; the two-crossing count follows the Thesiger and Arabian Sands pages. 'Held briefly by Saudi authorities at Sulayil' paraphrases Wikipedia's 'imprisoned ... then released shortly after'. Companions' names (bin Kabina, bin Ghabaisha) were not on the Thesiger page and are not given. ",
+    "CLIMATE: no Liwa or UAE-side Empty Quarter climate record was found in an opened source. Saudipedia's 'above 50°C' is for the desert as a whole (Saudi context); the only UAE data point is NCM 48.6°C at Mezaira on 20 June 2026 via Gulf News. Wikipedia's humidity and under-50 mm rainfall figures are for the whole desert. Winter night 5 to 10°C comes from one tour operator, not a meteorological source. Arabiers (not used) gave different average temperatures. UAE record highs on Wikipedia relate to coastal stations and were not used.",
+    "BEST MONTHS: official festival site says October to April; the camping operator says December and January best, November to March golden season, May to September unsuitable. The months array follows the existing Liwa page (Oct to Apr good, Dec to Feb best). A third-party operator (Arabiers, not cited) said December to March; no conflict.",
+    "CONVOY SIZE CONFLICT: the Liwa tour operator says at least 2 vehicles; CarPrices.ae says at least 3 recommended; a Fathom article (not cited) quoted conventional wisdom of 3 vehicles. Both figures are stated. Tyre pressure 12 to 18 PSI comes from a single car-sales site's guide and was attributed as 'one guide'. Water 4 to 5 litres per person per day comes from the tour operator; a separate site (uaetourismguide.com, not cited) gave the same figure.",
+    "SIGNAL: official festival site says generally available but may be weak in remote areas; the operator says cell signals are unreliable. No coverage map or operator statement (Etisalat/du) was opened, so no signal claim is more specific. 'No signal' is only supported by the single National account, which describes a Saudi-side location about 400 km from the main road.",
+    "THE NATIONAL ACCOUNT: the story is about a UAE man stranded in the Saudi part of the desert, not on the UAE side; it is used only to illustrate fuel, signal and convoy risk, not to describe conditions at Liwa. Details (four days, 12-vehicle convoy) are from the fetched summary; the page was not read in full.",
+    "QASR AL SARAB: described neutrally from Anantara's own site (operator's wording: 'nestled in the Rub' al Khali', 'the world's largest sand desert' not repeated). No independent review or distance figure was opened; the body calls it only 'one of the resorts in the area'. Room counts, spa and price were left out.",
+    "CAMPING RULES: 'no permit needed; public land only' is from a tour operator (abudhabi-desertsafari.com) selling camping trips, not from an Abu Dhabi authority. The official festival site says camping is safe and recommends a guide or group for newcomers. Abu Dhabi Police festival guidelines (Gulf News) were fetched but cover only the festival and are not used. The 2012 Fathom article saying tents can be pitched free is dated and not cited.",
+    "MORE: no source on border, military or restricted-zone rules for self-driving south of Liwa was found; the page says so and avoids advice on crossing. Visit Abu Dhabi's Al Dhafra page did not mention Qasr Al Sarab and gave only generic seasonal advice and the December festival.",
+    "LATITUDE/LONGITUDE: 23.1333, 53.7667 converts Wikipedia's 23°08′N 53°46′E, a rounded oasis-centre coordinate. It differs slightly from the existing Mezairaa pin (23.1339, 53.7785) and from Moreeb Dune (22.9797, 53.7862), which the Liwa page uses.",
+    "PRODUCT LINK: empty-quarter-regular.json exists and describes the tee as embroidered (printChip 'Tonal embroidery'; seoDesc 'embroidered rather than printed: a tonal sun over the dunes of Liwa'; shareDesc 'embroidered sun setting over the dune ridges of Liwa'). The sentence says 'embroidered dune ridges drawn from Liwa'; the product page says an embroidered sun over the ridges, so confirm the wording with the product owner. An empty-quarter-oversized product also exists. The existing Liwa page uses the same product link.",
+    "STATUS/WORDING: status 'safe' and the Arabic name الربع الخالي come from the brief; the Arabic name was not found on any opened source page. 'Hard' difficulty is for self-drive on sand only; the paved Liwa roads are easy, as in the Liwa page's own doubt. No notice field was added."
+  ],
+  "coverAlt": "Rolling dune ridges of the Empty Quarter in southern Abu Dhabi",
+  "photoCredit": {
+    "author": "Nepenthes",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Rub_al_Khali_002.JPG",
+    "what": "Dunes of the Rub' al Khali in southern Abu Dhabi (December 2008)."
+  }
+}

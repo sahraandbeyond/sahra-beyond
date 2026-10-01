@@ -30,14 +30,14 @@
   ],
   "bestTime": "Early morning or late afternoon, to avoid the midday heat; come on a weekday if you can, since the E44 gets heavily congested on Fridays and weekends.",
   "timeNeeded": "Half a day for the dam and Heritage Village; a full day if you add Wadi Hub activities, longer with an overnight camp.",
-  "fees": "Free to enter Hatta Dam and Heritage Village; paid activities (kayaks, mountain bikes, Wadi Hub rides, the Wadi Hub pool day pass at AED 25pp) are extra — prices for kayaks and bikes weren't published, so check current rates with the operator.",
+  "fees": "Free to enter Hatta Dam and Heritage Village; paid activities (kayaks, mountain bikes, Wadi Hub rides, the Wadi Hub pool day pass at AED 25pp) are extra. Hatta Kayak lists AED 60 for a single boat and AED 120 for two adults (as at 1 October 2026); confirm with the operator, and check current rates for bikes and Wadi Hub rides.",
   "hours": "Hatta Heritage Village: Sat–Thu roughly 7:30am–8:30pm, Friday 2:30–8:30pm (verify locally, as hours shift on public holidays); Hatta Dam itself has no published gate hours.",
   "facilities": {
     "toilets": "unknown",
     "food": "nearby",
     "shade": "some",
     "signal": "unknown",
-    "note": "Hatta Wadi Hub has food trucks and a poolside café; Heritage Village has no cafés or shops at all, so bring your own snacks and water. Toilets and mobile signal at each spot weren't confirmed by any source we opened."
+    "note": "Hatta Wadi Hub has food trucks and a poolside café; Heritage Village has no cafés or shops at all, so bring your own snacks and water. Toilets and mobile signal at each spot are not confirmed."
   },
   "gpsSource": "Wikipedia's Wadi Hatta article gives Hatta Dam's coordinates as 24°47′1″N, 56°6′53″E (24.7836, 56.1147) — the dam and reservoir car park, where Hatta Kayak and Hatta Wadi Hub are also based. This sits close to, but not identical with, the site's current pin (24.8003, 56.1186).",
   "sources": [
@@ -84,6 +84,34 @@
     {
       "label": "DEWA — Hatta hydroelectric power plant (250MW pumped-storage project)",
       "url": "https://www.dewa.gov.ae/en/about-us/strategic-initiatives/hatta-project"
+    },
+    {
+      "label": "Hatta Kayak: home page (reservations, group size)",
+      "url": "https://hattakayak.com"
+    },
+    {
+      "label": "Hatta Kayak: Our boats (prices, checked 1 Oct 2026)",
+      "url": "https://hattakayak.com/our-boats"
+    },
+    {
+      "label": "MyBayut: Hatta Kayaking review",
+      "url": "https://www.bayut.com/mybayut/hatta-kayaking-review/"
+    },
+    {
+      "label": "What's On: Hatta announces closing date (May 2026)",
+      "url": "https://whatson.ae/2026/05/hatta-announces-closing-date/"
+    },
+    {
+      "label": "Visit Hatta: Plan your visit (season, hours)",
+      "url": "https://www.visithatta.com/en/explore-hatta/plan-your-visit"
+    },
+    {
+      "label": "Dubai Trip Guide: Hatta season dates",
+      "url": "https://www.dubaitripguide.com/hatta-dubai/"
+    },
+    {
+      "label": "Khaleej Times: Hatta dam area closed for maintenance (29 Jul 2021)",
+      "url": "https://www.khaleejtimes.com/uae/dubai-hatta-dam-area-closed-for-maintenance-work"
     }
   ],
   "seoTitle": "Hatta Dubai: Dam, Kayaking, Wadi Hub & Heritage Guide",
@@ -112,7 +140,7 @@
     },
     {
       "q": "Can I camp at Hatta?",
-      "a": "Camping is popular in the hills and around the dam and is a well-established local pastime, though we found no single official site setting out permit rules or designated pitches — ask locally or through a tour operator for current guidance."
+      "a": "Camping is popular in the hills and around the dam and is a well-established local pastime, though no single official site sets out permit rules or designated pitches — ask locally or through a tour operator for current guidance."
     },
     {
       "q": "What's the best time of year to visit Hatta?",
@@ -143,7 +171,7 @@
   "lastChecked": "2026-09-27",
   "_doubts": [
     "Distance from Dubai varies significantly by source: 105km/90 minutes is the commonly cited figure, but Wikipedia's own figure for the settlement is 134km, and other estimates range as low as 96km — treated as an approximate range rather than a single number.",
-    "No source gave confirmed kayak, water bike or mountain bike rental prices from the operator's own site (only age/weight limits were published) — fees field notes this rather than inventing figures.",
+    "KAYAK PRICES: Hatta Kayak's own site (checked 1 Oct 2026) lists AED 60 for a single boat and AED 120 for two adults; MyBayut gives a double kayak at AED 150. Bike and Wadi Hub ride prices are not given, so the fees field points to the operator.",
     "Toilets and mobile signal at the dam, Wadi Hub and Heritage Village weren't confirmed one way or the other by any source opened — left as 'unknown' rather than guessed.",
     "Whether camping around the dam/hills requires a permit, or is simply informally tolerated, wasn't confirmed by an official source — worth a direct check with Dubai Municipality or a local operator before stating a rule either way.",
     "Category is left as 'Camping' to match the current site data and its 'More Camping spots' cross-links, but Hatta's content here (dam, water sports, heritage, mountains) arguably fits 'Mountains' just as well or better — flagging for a deliberate decision rather than changing it silently.",
@@ -155,5 +183,37 @@
     "time": "Half a day to a full day",
     "best": "Early morning or late afternoon, weekdays",
     "cost": "Free entry; activities extra"
-  }
+  },
+  "sections": [
+    {
+      "h2": "Hatta Dam: kayaking and access",
+      "body": "Hatta Dam holds the reservoir in Wadi Hatta, in Dubai's mountain exclave. Wikipedia gives it as about 32 metres high and 220 metres long at the crest, built at the end of the 1990s, with a reservoir of about 30 hectares. Visit Dubai lists kayaking, pedal boats, picnicking and hiking trails; no entry fee is published for the dam area.\n\nHatta Kayak operates the boats. Its website lists a single-rider boat at AED 60 for an unlimited ride and two adults at AED 120, with family boats at AED 150 and AED 300 for one hour (as at 1 October 2026; confirm on the day). MyBayut gives a double kayak at AED 150, so check by boat type. Single kayaks and water bikes have a minimum age of 16 and weight limits; reservations are not needed for groups under 50.\n\nHours are reported two ways: Visit Hatta says daily 7am to 9pm, while MyBayut says 7am to 5:30pm. MyBayut also reports parking at the dam, lockers and a changing room but no showers or washrooms; no official source confirms this.\n\nVisit Hatta publishes the Wadi Hub season as 1 October to 5 May. What's On reported the hub closing for summer on 3 May 2026, with the dam and kayaking still open. Closures do happen: Dubai Municipality closed the dam area for maintenance in July 2021, with no reopening date given. Go early in the cooler months and phone ahead."
+    }
+  ],
+  "quick": [
+    [
+      "How far is Hatta Dam from Dubai?",
+      "About 90 minutes by road, according to Visit Dubai and Visit Hatta. Roughly 105 km via the E44, longer at weekends."
+    ],
+    [
+      "What does kayaking cost?",
+      "As at 1 October 2026, Hatta Kayak lists AED 60 for a single boat (unlimited ride) and AED 120 for two adults. MyBayut gives a double kayak at AED 150, so confirm on the day."
+    ],
+    [
+      "Opening hours?",
+      "Visit Hatta says Hatta Kayak is open daily 7am to 9pm; MyBayut says 7am to 5:30pm. The dam itself has no published gate hours."
+    ],
+    [
+      "When should I go?",
+      "Visit Hatta publishes the activity season as 1 October to 5 May. Go early in the cooler months and avoid the summer heat."
+    ],
+    [
+      "Does the dam ever close?",
+      "Yes. Dubai Municipality closed the dam area for maintenance in July 2021. What's On reported that Hatta Wadi Hub closed for summer on 3 May 2026 while the dam and kayaking stayed open."
+    ],
+    [
+      "Parking and facilities?",
+      "MyBayut reports parking at the dam, free lockers and a changing room, but no showers or washrooms. No official source confirms it, so bring water and snacks."
+    ]
+  ]
 }
