@@ -1,0 +1,260 @@
+{
+  "id": "wadi-wurayah",
+  "name": "Wadi Wurayah",
+  "nameAr": "وادي الوريعة",
+  "emoji": "🏞",
+  "emirate": "Fujairah",
+  "category": "Wadis",
+  "difficulty": "Varies",
+  "season": "Cooler months; guided tours only",
+  "distance": "About 45km from Fujairah city; about two hours from Dubai",
+  "lat": 25.4823,
+  "lng": 56.2658,
+  "status": "warn",
+  "desc": "Fujairah's UNESCO-listed mountain reserve in the Hajar range, home to what The National and Khaleej Times call the country's only permanent natural waterfall. It is open to visitors only on guided tours.",
+  "cover": "/uploads/places/wadi-wurayah.jpg",
+  "igPosts": [],
+  "area": "Hajar Mountains, Fujairah, between Masafi, Khor Fakkan and Bidiyah",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    2,
+    2
+  ],
+  "bestTime": "The cooler months. Guides name November to March or April, and Khaleej Times (27 July 2026) reported the 2026 tours as running in the hiking season from early to mid-October. Dates are set by the operator, so confirm when you book.",
+  "timeNeeded": "A full day: the operator's tour listing runs 09:00 to 17:00, with transport from Dubai not confirmed.",
+  "fees": "Guided tours from AED 300 a person (Fujairah Holidays listing and Khaleej Times, 27 July 2026; as at 1 October 2026). There is no independent entry.",
+  "hours": "No gate hours for independent visits, because there is no independent entry. The operator's tour listing gives 09:00 to 17:00 on Saturdays, with limited slots (as at 1 October 2026; the listing is marked April 2026).",
+  "access": {
+    "vehicle": "varies",
+    "note": "Entry is only as part of an organised, guided tour booked through the authorised operator. Do not drive to the wadi expecting to walk in: independent entry is not permitted."
+  },
+  "facilities": {
+    "toilets": "unknown",
+    "food": "some",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "The operator's listing says the tour includes English-language guides, a snack bag and water, and a breakfast box. Toilets, shade and mobile signal on the route are not stated by any source."
+  },
+  "gpsSource": "UNESCO World Heritage Centre lists the property at N25 28 56.39, E56 15 56.85 (https://whc.unesco.org/en/list/1724/). This is a point within the protected area, not an access point or meeting point: visits are by guided tour only, and the tour's meeting point is not published on the operator's listing.",
+  "body": "Wadi Wurayah is a mountain wadi in the Hajar range in Fujairah, on the UAE's east coast. It is a protected area known for its springs and a waterfall that The National and Khaleej Times describe as the country's only permanent natural waterfall. Khaleej Times puts the fall at about 13 metres high, fed by more than 60 springs along a channel of over 6km, and says geologists have found it has flowed without interruption for at least 10,000 years.\n\nOn 25 July 2026 the World Heritage Committee, at its 48th session in Busan, South Korea, inscribed Wadi Wurayah on the UNESCO World Heritage List. The National and What's On both report it as the UAE's third World Heritage site and the first listed for natural value. UNESCO's entry lists it under criterion (ix) and gives the property as 22,000 hectares with a 4,500-hectare buffer zone, describing well-preserved exposures of ophiolite formed in the Late Cretaceous and 1,099 recorded species (883 fauna and 216 flora), including at least ten globally threatened species.\n\nThe protection is older than the listing. Wikipedia records that on 16 March 2009 Wadi Wurayah became the UAE's first protected mountain area, and that it was designated a Ramsar wetland on 10 July 2010; The National says it became the country's first national park in 2013. Khaleej Times (January 2025) described it as closed to the general public, with access through programmes such as the Emirates Nature-WWF Leaders of Change volunteering scheme.\n\nSince January 2026 visits have been allowed again, but only in controlled groups. What's On (August 2026) and Khaleej Times (27 July and 1 August 2026) name Fujairah Holidays as the operator for the guided tours, which are booked through its \"Explore Wadi Wurayah\" package. The sections below set out the operator's current terms, what the sources say about the day, and what they do not.",
+  "sections": [
+    {
+      "id": "tour-terms",
+      "h2": "Tour terms as at 1 October 2026",
+      "body": "Fujairah Holidays is the operator named by Khaleej Times and What's On for the guided visits. Its package page and Khaleej Times (27 July 2026) agree on the price and the Saturday format. The two differ on dates, so confirm them with the operator before you plan around a particular weekend.",
+      "table": {
+        "caption": "Explore Wadi Wurayah, Fujairah Holidays (package page and Khaleej Times, checked 1 October 2026)",
+        "head": [
+          "Item",
+          "What is published"
+        ],
+        "rows": [
+          [
+            "Price",
+            "AED 300 a person (Khaleej Times: \"prices starting from Dh300 per person\")"
+          ],
+          [
+            "Day and time",
+            "Every Saturday, 09:00 to 17:00; limited slots"
+          ],
+          [
+            "Season",
+            "The package page is marked \"April 2026\". Khaleej Times (27 July 2026) says tours run only during the hiking season, from early to mid-October. Confirm current dates when booking."
+          ],
+          [
+            "Included",
+            "English-language guides, a snack bag and water, and a breakfast box"
+          ],
+          [
+            "How to book",
+            "Through the Explore Wadi Wurayah package page: \"Book Now\" or an enquiry form asking the number of people, with a phone number and WhatsApp listed. Khaleej Times says visitors must register for an organised tour."
+          ],
+          [
+            "Phone on the listing",
+            "+971 09 2222 596 (as printed on the page)"
+          ],
+          [
+            "Age limits",
+            "Not published on the package page"
+          ],
+          [
+            "Independent entry",
+            "Not permitted: visitors must join an organised tour (Dubai Standard, 27 July 2026)"
+          ]
+        ],
+        "note": "Prices and dates can change. Check the operator's page before you pay.",
+        "source": {
+          "label": "Fujairah Holidays - Explore Wadi Wurayah",
+          "url": "https://fujairahholidays.com/packages/Explore-Wadi-Wurayah"
+        }
+      },
+      "open": true
+    }
+  ],
+  "guide": {
+    "gettingThere": "Wadi Wurayah is about 45km from Fujairah city, according to Khaleej Times and The National, in the Hajar Mountains between Masafi, Khor Fakkan and Bidiyah. PropertyFinder (March 2025) puts it about two hours from Dubai. You do not drive to the wadi independently: you join a tour booked through the authorised operator, Fujairah Holidays. Whether the tour provides transport from Dubai or Fujairah, and where the group meets, is not stated on the operator's listing, so ask when you book.",
+    "whenToGo": "Guides recommend the cooler months for the Hajar wadis: PropertyFinder says November to April and Take Your Backpack says November to March, while summer temperatures can rise above 40C, which that guide calls potentially dangerous for outdoor activity. For 2026 the tours are tied to the operator's calendar: its package page shows Saturdays (marked April 2026) and Khaleej Times says tours run in the hiking season from early to mid-October. Khaleej Times (1 August 2026) also says the waterfall is best experienced early in the morning. Slots are limited, so book ahead.",
+    "onSite": "The operator's tour is a full-day guided visit, 09:00 to 17:00, with English-language guides, a snack bag, water and a breakfast box. Khaleej Times described a hike of about 2.5km through the wadi to a freshwater pool on a reporter's January 2025 citizen-science visit; that was a different, programme-led trip and is not a published route for the current tours. Khaleej Times (1 August 2026) quotes the Fujairah Environment Authority's Director-General naming the waterfall and freshwater pools, the spring-fed streams, deep canyons, rock formations, viewpoints across the Hajar Mountains and around 70 archaeological sites as features of the reserve. What the guided route actually covers is not published, so ask the operator.",
+    "safety": "Wear sturdy shoes, bring sun protection and carry plenty of water, as PropertyFinder advises for the wadi; the operator supplies water but publishes no kit list. Heat is the main risk in the warmer months. Flash floods are a feature of the wadi: Khaleej Times notes that its native fish has adapted to survive the flash floods that periodically sweep through, and PropertyFinder warns that heavy rain can flood roads and lower areas. If rain is forecast, expect the guide or operator to decide whether a tour goes ahead, and do not enter a wadi bed in or after rain.",
+    "heritage": "UNESCO's listing rests on the Hajar Mountains' exposed ophiolite, a slice of ancient oceanic crust, and on the wadi's biodiversity. The National says the park is one of only three conservation areas in the world where wild Arabian tahr roam, that an Arabian caracal was rediscovered there in 2025, and that Blanford's fox lives in the reserve. Khaleej Times adds that the Arabian tahr population grew from 11 to over 100 animals under a conservation programme (January 2025), and that Wadi Wurayah has an endemic fish, the garra, which has been recorded climbing sections of the waterfall. Around 70 archaeological sites, including settlements, burial sites and rock inscriptions, lie within the protected area.",
+    "etiquette": "Go only on an authorised, guided visit. Khaleej Times has reported that trespassers in the protected area are subject to legal action. Follow your guide, keep to the route, and take rubbish with you. The operator's own aim, as quoted by What's On, is to leave the site as unspoiled as you found it."
+  },
+  "glance": {
+    "how": "Guided tour only; no independent entry",
+    "time": "Full day (tour listing 09:00 to 17:00)",
+    "best": "Cooler months; confirm tour dates",
+    "cost": "From AED 300 a person"
+  },
+  "quick": [
+    [
+      "Where is it?",
+      "In the Hajar Mountains of Fujairah, between Masafi, Khor Fakkan and Bidiyah, about 45km from Fujairah city."
+    ],
+    [
+      "Can I just turn up?",
+      "No. Visits are by organised, guided tour only, booked through the authorised operator, Fujairah Holidays. Independent entry is not permitted."
+    ],
+    [
+      "What does a tour cost?",
+      "From AED 300 a person on the operator's package page and in Khaleej Times (27 July 2026), as at 1 October 2026. Check the operator for the current price."
+    ],
+    [
+      "When do tours run?",
+      "The package page lists Saturdays, 09:00 to 17:00, marked April 2026; Khaleej Times says tours run in the hiking season from early to mid-October. Confirm dates when booking."
+    ],
+    [
+      "Is it UNESCO-listed?",
+      "Yes. It was inscribed on 25 July 2026 at the World Heritage Committee's 48th session in Busan, as the UAE's first natural World Heritage site."
+    ],
+    [
+      "What is the waterfall?",
+      "Khaleej Times says about 13 metres high; The National and Khaleej Times call it the country's only permanent natural waterfall."
+    ],
+    [
+      "How far from Dubai?",
+      "About two hours by road according to PropertyFinder (March 2025); whether tours include transport is not stated."
+    ]
+  ],
+  "faqs": [
+    {
+      "q": "Can you visit Wadi Wurayah without a tour?",
+      "a": "No. Since January 2026 visits have been allowed only as controlled, guided tours. Khaleej Times says visitors must register for an organised tour, and Dubai Standard reports that independent entry is prohibited. Older guides that mention walking in with a permit describe the pre-2026 arrangement."
+    },
+    {
+      "q": "Who runs the Wadi Wurayah tours and how do I book?",
+      "a": "Fujairah Holidays is the operator named by Khaleej Times and What's On. Tours are booked through its Explore Wadi Wurayah package page, which has a Book Now button and an enquiry form, and lists a phone number and WhatsApp. Anyone can register, according to Khaleej Times."
+    },
+    {
+      "q": "How much does a Wadi Wurayah tour cost?",
+      "a": "AED 300 a person on the operator's package page, and Khaleej Times (27 July 2026) says prices start from Dh300 a person (as at 1 October 2026). The listing says it includes English-language guides, a snack bag and water, and a breakfast box. Check the page for the current price before you pay."
+    },
+    {
+      "q": "When was Wadi Wurayah listed by UNESCO?",
+      "a": "On 25 July 2026, at the 48th session of the World Heritage Committee in Busan, South Korea, according to The National and What's On. UNESCO lists it under criterion (ix) and gives the area as 22,000 hectares plus a 4,500-hectare buffer zone."
+    },
+    {
+      "q": "Is Wadi Wurayah the UAE's only permanent waterfall?",
+      "a": "The National and Khaleej Times describe it as the country's only permanent natural waterfall, and Khaleej Times puts it at about 13 metres high. That is the outlets' description rather than a UNESCO statement."
+    },
+    {
+      "q": "When did Wadi Wurayah become a national park?",
+      "a": "The National says it became the UAE's first national park in 2013. Wikipedia records that it was declared the first protected mountain area on 16 March 2009 and became a Ramsar wetland on 10 July 2010."
+    },
+    {
+      "q": "Can you swim at Wadi Wurayah?",
+      "a": "The sources on the current guided tours do not say whether swimming is allowed. Older guides describe swimming at a pool before the 2026 access rules, which should not be relied on. Ask the operator when you book, and follow your guide on the day."
+    },
+    {
+      "q": "What should I wear and bring, and what is the safest time to go?",
+      "a": "Sturdy shoes, sun protection and plenty of water, according to PropertyFinder; the tour supplies water, a snack bag and a breakfast box. The cooler months are best, and summer heat can pass 40C. Heavy rain can flood the wadi and the roads to it, so expect tours to be rescheduled in bad weather."
+    }
+  ],
+  "sources": [
+    {
+      "label": "UNESCO World Heritage Centre - Wadi Wurayah",
+      "url": "https://whc.unesco.org/en/list/1724/"
+    },
+    {
+      "label": "The National - Wadi Wurayah National Park added to Unesco World Heritage List (25 Jul 2026)",
+      "url": "https://www.thenationalnews.com/news/uae/2026/07/25/uaes-wadi-wurayah-national-park-added-to-unesco-world-heritage-list/"
+    },
+    {
+      "label": "The National - Wadi Wurayah National Park awaits Unesco World Heritage verdict (17 Jul 2026)",
+      "url": "https://www.thenationalnews.com/news/uae/2026/07/17/uaes-wadi-wurayah-national-park-awaits-unesco-world-heritage-verdict/"
+    },
+    {
+      "label": "What's On - Wadi Wurayah: a guide to the UAE's first natural UNESCO World Heritage Site (Aug 2026)",
+      "url": "https://whatson.ae/2026/08/wadi-wurayah-a-guide-to-the-uaes-first-natural-unesco-world-heritage-site/"
+    },
+    {
+      "label": "Khaleej Times - Wadi Wurayah in Fujairah: how to visit (27 Jul 2026)",
+      "url": "https://www.khaleejtimes.com/travel/uae-attractions/how-to-visit-wadi-wurayah-fujairah"
+    },
+    {
+      "label": "Khaleej Times - Best spots at Wadi Wurayah revealed by top UAE official (1 Aug 2026)",
+      "url": "https://www.khaleejtimes.com/uae/wadi-wurayah-unesco-site-top-spots-for-visitors-uae-fujairah"
+    },
+    {
+      "label": "Khaleej Times - Inside the protected reserve that has the country's only permanent waterfall (Jan 2025)",
+      "url": "https://www.khaleejtimes.com/uae/uaes-wadi-wurayyah-inside-protected-reserve-that-has-countrys-only-permanent-waterfall"
+    },
+    {
+      "label": "Fujairah Holidays - Explore Wadi Wurayah",
+      "url": "https://fujairahholidays.com/packages/Explore-Wadi-Wurayah"
+    },
+    {
+      "label": "Dubai Standard - Wadi Wurayah's natural waterfall opens to the public (27 Jul 2026)",
+      "url": "https://www.dubaistandard.com/wadi-wurayahs-year-round-natural-waterfall-opens-to-the-public-everything-visitors-need-to-know/"
+    },
+    {
+      "label": "Wikipedia - Wadi Wurayah",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Wurayah"
+    },
+    {
+      "label": "PropertyFinder - Wadi Wurayah in Fujairah (Mar 2025)",
+      "url": "https://www.propertyfinder.ae/blog/wadi-wurayah/"
+    },
+    {
+      "label": "Take Your Backpack - Wadi Wurayah National Park guide",
+      "url": "https://www.takeyourbackpack.com/backpacking-in-united-arab-emirates/visit-wadi-wurayah-national-park/"
+    }
+  ],
+  "seoTitle": "Wadi Wurayah, Fujairah: UNESCO Site and Guided Tours",
+  "seoDesc": "Wadi Wurayah in Fujairah: the UNESCO listing, guided-tour-only access, operator terms and price, the waterfall, best months and flash-flood safety.",
+  "productLink": {
+    "slug": "hajar-mountains-regular",
+    "anchor": "the Hajar Mountains tee",
+    "sentence": "The peaks drawn on {{link}} are from the Hajar range above Wadi Naqab in Ras Al Khaimah; Wadi Wurayah lies in the same mountains, on the Fujairah side."
+  },
+  "lastChecked": "2026-10-01",
+  "notice": "Wadi Wurayah can be visited only on a guided tour booked through the authorised operator, Fujairah Holidays; independent entry is not permitted and tour slots are limited. Check before you go: confirm the dates, price and conditions with the operator, as its listing and recent press reports describe the season differently.",
+  "todo": [
+    "TODO for Faheem: Tour dates conflict. Fujairah Holidays' package page says 'Every Saturday - (April 2026)'; Khaleej Times (27 Jul and 1 Aug 2026) says tours run 'only during the hiking season from early to mid-October' (wording ambiguous: season start or window?). Phone/WhatsApp the operator (+971 09 2222 596 as printed) and state the 2026/27 season dates, then simplify bestTime and the table.",
+    "TODO for Faheem: Age limits, minimum group size, cancellation terms, meeting point, whether transport from Dubai/Fujairah is included, and the route/hike length of the current tour are not published on the package page or in Khaleej Times/What's On/Dubai Standard. Ask the operator before stating any.",
+    "TODO for Faheem: Swimming and camping: no 2026 source states a rule. Older guides (PropertyFinder Mar 2025, MyBayut) describe swimming at a hidden pool and a visitor-centre permit with 08:00-16:30 hours, which contradicts the tours-only regime; not used. Confirm with the operator or Fujairah Environment Authority.",
+    "TODO for Faheem: Drive time from Dubai (about two hours) comes from one source, PropertyFinder (Mar 2025); the 45 km from Fujairah city is from Khaleej Times and The National with no drive time. Obtain a range (for example from Google Maps to the Khor Fakkan side) or drop it. PropertyFinder also places it 4 km north of Khor Fakkan; not used because it sits oddly beside the 45 km figure.",
+    "TODO for Faheem: Area figures differ: UNESCO 22,000 ha (+4,500 ha buffer) and The National 220 sq km (consistent); Wikipedia still says 12,700 ha. The page uses UNESCO. Also the inscription date: The National and What's On say 25 Jul 2026; the Fujairah Observer press release says approval on 27 Jul 2026. whc.unesco.org gives only '2026, 48th session'. Page uses 25 Jul.",
+    "TODO for Faheem: The UNESCO page and the MOCCAE page (moccae.gov.ae/en/knowledge/ecotourism/wadi-wurayah-national-park) were checked; MOCCAE returned a block page on two attempts, so the 2009/2010 dates come from Wikipedia and the 2013 national-park year from The National. Re-check against MOCCAE or the Fujairah government when reachable. nameAr is from research report 04 (MOCCAE spelling); not independently re-opened.",
+    "TODO for Faheem: No source gave a flash-flood rule specific to the tours or a heat cut-off; the safety text uses PropertyFinder and Take Your Backpack (both pre-tour-era guides) for general advice. Ask the operator for its wet-weather and heat policy.",
+    "TODO for Faheem: Add /locations/wadi-wurayah/ links from /locations/hajar-mountains/, /wadis/ and /hiking/, and update the permit/open-access wording on those pages (the hajar-mountains guide still says the Bayut guide mentions permits)."
+  ],
+  "coverAlt": "Dry gravel bed and eroded banks of a tributary in Wadi Wurayah, Fujairah, under the Hajar Mountains",
+  "coverFocus": "50% 55%",
+  "photoCredit": {
+    "author": "IbrahimKumar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Wadi_Wurayah_-_Right_bank_tributary.jpg",
+    "what": "A right-bank tributary in Wadi Wurayah (November 2024).",
+    "note": "Shows the dry wadi, not the waterfall."
+  }
+}

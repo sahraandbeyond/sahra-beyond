@@ -31,8 +31,8 @@
   ],
   "bestTime": "October to April, arriving early; Jais Flight and the other activities have fixed hours, and the road is best driven in daylight and clear weather.",
   "timeNeeded": "2–3 hours for the drive and the viewing deck; half a day or more with a zipline booking, a meal or a hike.",
-  "fees": "Driving up is free with no entry permit (as announced in February 2026); Jais Viewing Deck Park charges AED 10 a person including VAT; the zipline, restaurant and camps are paid, bookable extras.",
-  "hours": "The operator says the mountain is open 24/7, but it closes for seasonal maintenance and after storms (see the note above). When open, Viewing Deck Park runs Sunday–Thursday 8am–8pm and Friday–Saturday 8am–11pm; activities and restaurants keep fixed, seasonal hours.",
+  "fees": "Driving up is free with no entry permit (as announced in February 2026); Jais Viewing Deck Park charges AED 10 a person including VAT (visitjebeljais.com, as at 1 Oct 2026); the zipline, restaurant and camps are paid, bookable extras.",
+  "hours": "The operator says the mountain is open 24/7, but it closes for seasonal maintenance and after storms (see the note above). When open, Viewing Deck Park runs Sunday–Thursday 8am–8pm and Friday–Saturday 8am–11pm (visitjebeljais.com, as at 1 Oct 2026); activities and restaurants keep fixed, seasonal hours.",
   "access": {
     "vehicle": "2wd",
     "note": "The road up is fully paved and any normal car can drive it; the operator says to drive carefully in fog or rain. There is no fuel on the mountain road, so fill up before you climb."
@@ -62,6 +62,10 @@
   },
   "quick": [
     [
+      "Is Jebel Jais open?",
+      "Not confirmed. A local guide reported the mountain closed for seasonal maintenance on 14 September 2026, and no official reopening date had been found as at 1 Oct 2026. See the note at the top of this page, and check visitjebeljais.com on the day."
+    ],
+    [
       "Where is it?",
       "In the Hajar Mountains above Ras Al Khaimah city, on the border with Oman's Musandam. The viewing deck is about 1,250m up the mountain road."
     ],
@@ -78,8 +82,12 @@
       "October to April, when the season runs and the weather is cooler. Check current status first, as storms and seasonal closures happen."
     ],
     [
+      "Jebel Jais temperature",
+      "Station record 2003 to 2021: mean daily maximum from 11.2°C in January to 30.5°C in July, mean minimum 6.4°C to 24.9°C, record low −5.7°C (February). Visit Ras Al Khaimah says it is usually about 10°C cooler than the rest of the emirate. Full table above."
+    ],
+    [
       "Permit and fee",
-      "No entry permit and the drive is free (announced February 2026). Viewing Deck Park is AED 10; the zipline, restaurant and camps are booked separately."
+      "No entry permit and the drive is free (announced February 2026). Viewing Deck Park is AED 10 (visitjebeljais.com, as at 1 Oct 2026); the zipline, restaurant and camps are booked separately."
     ],
     [
       "Facilities",
@@ -87,7 +95,7 @@
     ],
     [
       "Can I camp?",
-      "Yes, at the bookable camps (Camp 1770 and the Bear Grylls Explorers Camp). Some guides mention informal roadside camping, but we found no official rule on it. Never camp in a wadi bed."
+      "Yes, at the bookable camps (Camp 1770 and the Bear Grylls Explorers Camp). Some guides mention informal roadside camping, but no official rule on it was found. Never camp in a wadi bed."
     ]
   ],
   "faqs": [
@@ -101,11 +109,11 @@
     },
     {
       "q": "Can you drive up Jebel Jais, and is there a fee?",
-      "a": "Yes. The road is fully paved and open to ordinary cars, and in February 2026 Khaleej Times reported that entry permits were no longer needed. Jais Viewing Deck Park charges AED 10 a person; the zipline, restaurant and camps are booked and paid for separately."
+      "a": "Yes. The road is fully paved and open to ordinary cars, and in February 2026 Khaleej Times reported that entry permits were no longer needed. Jais Viewing Deck Park charges AED 10 a person (visitjebeljais.com, as at 1 Oct 2026); the zipline, restaurant and camps are booked and paid for separately."
     },
     {
       "q": "Can you camp on Jebel Jais?",
-      "a": "Camp 1770 (at 1,770 metres) and the Bear Grylls Explorers Camp are the bookable options. Guides report informal camping at roadside viewpoints, but we found no official statement of permitted areas. Avoid wadis because of flash floods, and note that reported fines for littering and fires start around AED 500."
+      "a": "Camp 1770 (at 1,770 metres) and the Bear Grylls Explorers Camp are the bookable options. Guides report informal camping at roadside viewpoints, but no official statement of permitted areas was found. Avoid wadis because of flash floods, and note that reported fines for littering and fires start around AED 500."
     },
     {
       "q": "How much colder is Jebel Jais than the coast, and does it snow?",
@@ -113,7 +121,7 @@
     },
     {
       "q": "What are the Jais Flight zipline's length, limits and price?",
-      "a": "It is 2.83km long, reaches up to 150km/h and takes about three minutes. Riders must weigh 40 to 120kg; the minimum height is 122cm (operator FAQ) or 130cm (Visit Ras Al Khaimah), and under-18s need a guardian's signed waiver. Tickets are listed from AED 325, varying by season."
+      "a": "It is 2.83km long, reaches up to 150km/h and takes about three minutes. Riders must weigh 40 to 120kg; the minimum height is 122cm (operator FAQ) or 130cm (Visit Ras Al Khaimah), and under-18s need a guardian's signed waiver. Tickets are listed from AED 325, varying by season (Visit Ras Al Khaimah, as at 1 Oct 2026)."
     },
     {
       "q": "What is the best time to visit Jebel Jais?",
@@ -176,9 +184,37 @@
     {
       "label": "WOW-RAK — Is Jebel Jais open right now? (updated 14 Sep 2026)",
       "url": "https://wow-rak.com/is-jebel-jais-open/"
+    },
+    {
+      "label": "Visit Jebel Jais — adventure activities (Jais Flight, Sky Tour, Sledder)",
+      "url": "https://visitjebeljais.com/adrenaline/jais-sledder/"
+    },
+    {
+      "label": "Visit Jebel Jais — hiking trails guide",
+      "url": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "label": "Visit Jebel Jais — guided hikes",
+      "url": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "label": "Visit Jebel Jais — home page (status and activities)",
+      "url": "https://visitjebeljais.com/"
+    },
+    {
+      "label": "Visit Jebel Jais — 2025/26 season activities",
+      "url": "https://visitjebeljais.com/season-activities"
+    },
+    {
+      "label": "Visit Jebel Jais — Bear Grylls Explorers Camp",
+      "url": "https://visitjebeljais.com/bear-grylls-explorers-camp"
+    },
+    {
+      "label": "Visit Jebel Jais — Camp 1770",
+      "url": "https://visitjebeljais.com/camp-1770"
     }
   ],
-  "seoTitle": "Jebel Jais, RAK: Drive, Zipline, Camping & Weather",
+  "seoTitle": "Jebel Jais Temperature, Weather, Zipline & Hiking",
   "seoDesc": "Jebel Jais in Ras Al Khaimah: its height explained, the paved road up, Jais Flight zipline limits, camping, weather, snow and the best time to go.",
   "productLink": {
     "slug": "hajar-mountains-regular",
@@ -215,5 +251,274 @@
     "page": "https://commons.wikimedia.org/wiki/File:Mountain_view_during_sunset,_Jebel_Jais,_Ras_al_Khaimah,_UAE.jpg",
     "what": "Mountain view during sunset, Jebel Jais, Ras al Khaimah (April 2024)."
   },
-  "notice": "WOW-RAK, a local guide site, reported on 14 September 2026 that the mountain road, Viewing Deck Park and Jais Flight were closed for seasonal maintenance, with no reopening date announced. The operator's own site still says the mountain is open. It usually reopens as the weather cools, so check visitjebeljais.com or call ahead on the day before you drive up."
+  "notice": "WOW-RAK, a local guide site, reported on 14 September 2026 that the mountain road, Viewing Deck Park and Jais Flight were closed for seasonal maintenance, with no reopening date announced. The operator's own site still says the mountain is open. It usually reopens as the weather cools, so check visitjebeljais.com or call ahead on the day before you drive up.",
+  "sections": [
+    {
+      "id": "climate",
+      "h2": "Jebel Jais temperature by month",
+      "body": "The table is a station record for 2003 to 2021, published by the National Center of Meteorology (NCM) and reproduced on Wikipedia. It describes typical conditions, not a forecast, so check the weather on the day. Visit Ras Al Khaimah says the mountain is usually about 10°C cooler than other parts of the emirate.\n\nFrom December to February the mean daily maximum is only 11 to 13°C and the mean minimum is 6 to 8°C, so plan for a proper jacket, a warm layer and a hat, especially for early starts or an evening at the viewing deck. The record lows in December, January and February are all below freezing, and the February low of −5.7°C is the one reported as the UAE's lowest temperature. Snow is rare but documented, in January 2009 and January 2020. From June to August the mean maximum is about 30°C and nights stay around 24 to 25°C, with a record high of 36.5°C in June: summer on the mountain is cooler than the coast but still warm, and sun cover and water matter more than a jacket. Rain is concentrated from January to April and in November and December; June to September are almost dry.",
+      "table": {
+        "caption": "Jebel Jais climate, station record 2003–2021 (NCM via Wikipedia). Not a forecast.",
+        "head": [
+          "Month",
+          "Mean daily max °C",
+          "Mean daily min °C",
+          "Record high °C",
+          "Record low °C",
+          "Rain mm"
+        ],
+        "rows": [
+          [
+            "Jan",
+            "11.2",
+            "6.4",
+            "21.1",
+            "−0.3",
+            "29.2"
+          ],
+          [
+            "Feb",
+            "13.2",
+            "8.1",
+            "22.2",
+            "−5.7",
+            "15.1"
+          ],
+          [
+            "Mar",
+            "17.1",
+            "11.7",
+            "27.7",
+            "1.2",
+            "32.4"
+          ],
+          [
+            "Apr",
+            "21.6",
+            "16.2",
+            "29.0",
+            "5.0",
+            "15.3"
+          ],
+          [
+            "May",
+            "26.6",
+            "21.1",
+            "34.1",
+            "9.0",
+            "0.4"
+          ],
+          [
+            "Jun",
+            "30.2",
+            "24.7",
+            "36.5",
+            "16.4",
+            "0.0"
+          ],
+          [
+            "Jul",
+            "30.5",
+            "24.9",
+            "35.0",
+            "17.8",
+            "0.3"
+          ],
+          [
+            "Aug",
+            "29.8",
+            "24.5",
+            "34.9",
+            "17.8",
+            "0.6"
+          ],
+          [
+            "Sep",
+            "27.6",
+            "22.3",
+            "33.1",
+            "16.5",
+            "0.2"
+          ],
+          [
+            "Oct",
+            "23.1",
+            "17.8",
+            "29.0",
+            "11.2",
+            "5.8"
+          ],
+          [
+            "Nov",
+            "17.0",
+            "11.9",
+            "23.7",
+            "4.1",
+            "14.5"
+          ],
+          [
+            "Dec",
+            "13.3",
+            "8.3",
+            "23.0",
+            "−0.7",
+            "15.2"
+          ],
+          [
+            "Year",
+            "21.8",
+            "16.5",
+            "36.5",
+            "−5.7",
+            "129"
+          ]
+        ],
+        "note": "Rain is the average for the month; the Year row gives the annual rainfall total and the highest and lowest records. Values as published by NCM and reproduced by Wikipedia, checked 1 Oct 2026.",
+        "source": {
+          "label": "Wikipedia — Jebel Jais, climate data (National Center of Meteorology)",
+          "url": "https://en.wikipedia.org/wiki/Jebel_Jais"
+        }
+      }
+    },
+    {
+      "id": "activities",
+      "h2": "Activities and prices",
+      "body": "Activities are booked separately from the drive up, through the operator's booking system on visitjebeljais.com. They follow the mountain's status: while the mountain is closed (see the note at the top of this page) they are not running, and the operator's own page lists the Jais Sledder as temporarily closed, walk-ins only, as at 1 Oct 2026. Jais Flight's published winter slots are 9:30am to 4pm, closed on Mondays and Tuesdays (Visit Ras Al Khaimah). Where a price is not published on the operator's pages, the table says so rather than guessing.",
+      "table": {
+        "caption": "Adventure activities on Jebel Jais, as at 1 Oct 2026",
+        "head": [
+          "Activity",
+          "What it is",
+          "Limits",
+          "From price"
+        ],
+        "rows": [
+          [
+            "Jais Flight",
+            "Zipline, 2.83km, about three minutes",
+            "Weight 40 to 120kg; minimum height 130cm (Visit RAK) or 122cm (operator FAQ); under-18s need a guardian and signed waiver",
+            "From AED 325, varies by season (Visit RAK, as at 1 Oct 2026)"
+          ],
+          [
+            "Jais Sky Tour",
+            "Six connected ziplines, 5km in total, with a sky bridge; about two hours; described as family-friendly",
+            "Not published on the pages checked",
+            "See operator"
+          ],
+          [
+            "Jais Sledder",
+            "Toboggan ride, up to 40km/h, about eight minutes; temporarily closed, walk-ins only (operator, 1 Oct 2026)",
+            "Not published on the pages checked",
+            "See operator"
+          ],
+          [
+            "Jais Via Ferrata",
+            "Guided rock climbing on fixed cables",
+            "Not published on the pages checked",
+            "See operator"
+          ],
+          [
+            "Jais Ropes Course",
+            "Listed by Visit Ras Al Khaimah; no details on the operator pages checked",
+            "Not confirmed",
+            "Not confirmed"
+          ]
+        ],
+        "note": "Bookings: visitjebeljais.checkfront.com; questions to info@rakleisure.com. The operator quotes up to 160km/h for Jais Flight while Visit Ras Al Khaimah says up to 150km/h, so check on booking.",
+        "source": {
+          "label": "Visit Jebel Jais — adventure activities",
+          "url": "https://visitjebeljais.com/adrenaline/jais-sledder/"
+        }
+      }
+    },
+    {
+      "id": "trails",
+      "h2": "Hiking trails",
+      "body": "Visit Ras Al Khaimah describes six designated trails totalling 16km. The operator's own trail guide names more routes than that, listed below, so treat lengths and times as approximate and confirm on the day. Trails close with the mountain, and rehabilitation work was under way at Wadi Khammed and Hidden Oasis in September 2026. Guided hikes from Bear Grylls Explorers Camp are listed by the operator from AED 125 to AED 250 a person, for ages 8 and over, with groups of more than ten needing registration with RAKTDA. The season is October to April; carry at least 3 litres of water each, start early and stay on marked trails. Emergency number: 999.",
+      "table": {
+        "caption": "Named trails on Jebel Jais, as listed by the operator (checked 1 Oct 2026)",
+        "head": [
+          "Trail",
+          "Length",
+          "Time",
+          "Difficulty"
+        ],
+        "rows": [
+          [
+            "Ghaf Summit Trail",
+            "8.6km round trip",
+            "2.5 to 4 hours",
+            "Beginner to moderate"
+          ],
+          [
+            "Samar Trail",
+            "5.6 to 6.8km loop",
+            "1.5 to 4 hours",
+            "Beginner to moderate"
+          ],
+          [
+            "Wadi Shah",
+            "11.6km loop",
+            "5 hours",
+            "Challenging"
+          ],
+          [
+            "Al Asbaq Trail",
+            "2.2km",
+            "1 to 1.5 hours",
+            "Beginner"
+          ],
+          [
+            "Sidir Trail",
+            "1.6km",
+            "45 to 60 minutes",
+            "Beginner"
+          ],
+          [
+            "Al Teen Trail",
+            "1.2km",
+            "30 to 45 minutes",
+            "Beginner"
+          ],
+          [
+            "Farfar Trail",
+            "0.7km",
+            "20 to 30 minutes",
+            "Beginner"
+          ],
+          [
+            "Grand Loop (planned)",
+            "80km, multi-day",
+            "Not confirmed",
+            "Not confirmed"
+          ]
+        ],
+        "note": "The Grand Loop is a planned route: The National (15 Sep 2026) reported development starting January 2026 with no completion date given. It is not an open trail.",
+        "source": {
+          "label": "Visit Jebel Jais — Top hiking trails in Jebel Jais",
+          "url": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+        }
+      }
+    },
+    {
+      "id": "viewing-deck",
+      "h2": "Jebel Jais Viewing Deck Park",
+      "body": "Jais Viewing Deck Park sits about 1,250 metres up the mountain road. It has seven viewing decks with high-powered binoculars looking over the mountains, valleys and villages and, on clear days, the Gulf; two cafés, Puro Express and Muse Café; and solar-powered lighting. You can watch the zipline in action from the decks.\n\nThe operator lists opening hours of Sunday to Thursday 8am to 8pm and Friday and Saturday 8am to 11pm, and an entry fee of AED 10 a person including 5% VAT, valid for one day (visitjebeljais.com, as at 1 Oct 2026). These apply when the mountain is open; see the note at the top of this page for current status. Weather can affect the visit."
+    },
+    {
+      "id": "stay",
+      "h2": "Where to stay",
+      "body": "Two overnight options are listed on visitjebeljais.com, and both are booked through the operator's booking system.\n\nBear Grylls Explorers Camp is described by the operator as the first branded camp accommodation from the survival expert Bear Grylls, whose team curates its programmes. Accommodation is in air-conditioned shipping-container cabins with double and single beds and a bathroom, each taking up to three adults. It also runs survival courses: the Basic Survival Course (age 8 and over) is listed from AED 350 and the Primal Survival Course from AED 950, both including wild-camp accommodation, dinner and breakfast (operator page, as at 1 Oct 2026). A cabin-only nightly rate is not published on the page.\n\nCamp 1770 is a campsite the operator calls the highest in the UAE, with dome-style tents along the trails and a breakfast prepared by local mountain families. No price is published on its page. Neither camp is a place to turn up without a booking."
+    }
+  ],
+  "todo": [
+    "TODO for Faheem: Status. visitjebeljais.com home page (opened 1 Oct 2026) shows Instagram posts about a seasonal pause ('Once the weather cools, we'll be ready to welcome everyone back') and the Sledder page says 'temporarily closed', but the FAQ says 'open year-round' and no dated official reopening was found. The notice is unchanged (WOW-RAK, 14 Sep 2026); replace it the day the operator announces a date.",
+    "TODO for Faheem: Prices not published on the operator pages: Jais Sky Tour, Sledder, Via Ferrata, Ropes Course (existence per Visit RAK only), Camp 1770, Bear Grylls cabin nightly rate. Get from visitjebeljais.checkfront.com or info@rakleisure.com. Near+Far (May 2024) quoted cabins at AED 400 a night for three; not used because it is dated.",
+    "TODO for Faheem: Deck Park page lists 'experience packages' (AED 360/450 Oct-Mar, 330/410 Apr/May/Sep, 300/360 Jun-Aug) and says arrive at the Jais Welcome Centre 30 minutes before 'your reservation time'; it is unclear whether the AED 10 deck ticket needs a reservation now. Same page also says the park is accessible 8am-8pm daily, which conflicts with the Fri-Sat 8am-11pm line used here. Confirm with operator.",
+    "TODO for Faheem: Trail figures conflict. Visit RAK says six trails totalling 16km; the operator trail blog names eight routes (the listed lengths add up to well over 16km). The operator's hiking page lists five guided routes (Upper Shepherd Walk 2.5km AED 125, Wadi Loop 7.5km AED 200, Hidden Oasis Walk 7km AED 200, Hidden Oasis Loop 9.6km AED 250, Hidden Pond 9km AED 250) while the home page lists four different guided hikes (3.5, 9, 8.5, 8.5km) at AED 200 for Feb-Apr 2026. Walk one trail and confirm names on the ground. 'Wadi Shah' is spelled as the operator blog gives it.",
+    "TODO for Faheem: Jais Flight speed: Visit RAK and Wikipedia say up to 150km/h, operator pages now say up to 160km/h; operator pages also give 1,680m altitude and Sky Tour 1,250m sky bridge, 60km/h, two hours. Body text still says 150km/h.",
+    "TODO for Faheem: Who runs Camp 1770 is not stated on its page (it links to Adventurati Outdoor); Bear Grylls camp is described as developed and curated by Bear Grylls and his team. Confirm operator names before naming them.",
+    "TODO for Faheem: Climate table station location and elevation are not stated by Wikipedia/NCM; viewing deck conditions may differ. Visit RAK's other statement of about 5°C cooler (mentioned in research report 01) was not re-opened; page uses 10°C throughout.",
+    "TODO for Faheem: Dubai-to-Jais day tours (Dubai Tickets) and events (G.O.A.T. Ultra Trail in January, Jais Ride) from research 01 were not verified today and are not on the page."
+  ]
 }

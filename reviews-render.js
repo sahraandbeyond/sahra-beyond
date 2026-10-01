@@ -50,9 +50,17 @@ function productName(handle) {
 function fullSize(u) {
   return /width=\d+/.test(u) ? u.replace(/width=\d+/, 'width=1024') : u;
 }
+/* 1 Oct 2026 (Faheem, SEO handover item 23): customer photos hidden on the site. The
+   2.1 MB PNG (Judge.me picture 1788003745, Al Quaa review of 29 Aug) slowed four
+   product pages. Matched by Judge.me picture id, so a re-sync cannot bring it back;
+   the review text and stars stay. Add an id here to hide another photo. */
+const HIDDEN_PHOTO_IDS = ['1788003745'];
+function shownPhotos(list) {
+  return (list || []).filter(u => !HIDDEN_PHOTO_IDS.some(id => String(u).includes('/' + id + '__')));
+}
 function photoLink(u, alt) {
   return `<a class="rv-photo-a" href="${esc(fullSize(u))}" target="_blank" rel="noopener"` +
-         ` aria-label="Open customer photo full size"><img class="rv-photo" src="${esc(u)}" alt="${esc(alt)}" loading="lazy"></a>`;
+         ` aria-label="Open customer photo full size"><img class="rv-photo" src="${esc(u)}" alt="${esc(alt)}" width="84" height="84" loading="lazy"></a>`;
 }
 /* One per page is enough; the guard makes any duplicate a no-op. Kept
    dependency-free and delegated so photos injected after load still work. */
@@ -235,7 +243,7 @@ function productSection(handle, productName, designHandles) {
   const verifiedN = d.reviews.filter(r => r.verified).length;
 
   const cards = d.reviews.map(r => {
-    const photos = (r.photos || []).slice(0, 2).map(u =>
+    const photos = shownPhotos(r.photos).slice(0, 2).map(u =>
       photoLink(u, `Customer photo of ${storeWide ? (r.productTitle || 'a Sahra & Beyond piece') : productName}`)).join('');
     const about = (storeWide || (designHandles && r.handle && r.handle !== handle)) && r.productTitle
       ? `<span class="rv-about">On ${esc(r.productTitle)}</span>` : '';
@@ -349,7 +357,7 @@ function homepageBand(opts) {
         <li class="rv-card" data-rating="${Number(r.rating) || 0}" data-date="${esc(r.date || '')}">
           ${stars(r.rating)}
           <p class="rv-text">${esc(body)}</p>
-          ${(r.photos || []).length ? `<span class="rv-photos">${r.photos.slice(0, 2).map(u => photoLink(u, 'Customer photo')).join('')}</span>` : ''}
+          ${shownPhotos(r.photos).length ? `<span class="rv-photos">${shownPhotos(r.photos).slice(0, 2).map(u => photoLink(u, 'Customer photo')).join('')}</span>` : ''}
           <span class="rv-meta">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}${fmtDate(r.date) ? ' · ' + fmtDate(r.date) : ''}</span>
           ${link}
         </li>`; }).join('')}

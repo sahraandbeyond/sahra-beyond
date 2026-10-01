@@ -124,7 +124,18 @@ const draftLocations = (fs.existsSync(draftDir) ? fs.readdirSync(draftDir) : [])
   .filter(l => !allLocations.some(x => x.id === l.id));   /* once published, a stale draft copy is ignored */
 const locations = allLocations.filter(l => !l.draft);
 const PLACES = require('./places-page.js');
+const FG = require('./footer-guides.js');
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
+/* Arabic core pages (/ar/, /ar/about/, /ar/contact/): false = not in the sitemap and no visible
+   'العربية' link on English pages. Flip to true once Faheem signs them off (handover item 11). */
+const AR_CORE_PUBLIC = true;   /* Faheem, 1 Oct 2026: the three Arabic core pages stay live (indexable), so they go in the sitemap and the footer links them */
+/* footer guide list into the hand-maintained pages (see footer-guides.js) */
+for (const f of ['index.html', 'shop-preview.html']) {
+  const fp = path.join(ROOT, f); if (!fs.existsSync(fp)) continue;
+  const h = fs.readFileSync(fp, 'utf8');
+  const n = h.replace(/<!--GUIDES:START-->[\s\S]*?<!--GUIDES:END-->/, '<!--GUIDES:START--><style>' + FG.FOOT_GUIDES_CSS + '</style>' + FG.guidesHtml(null, AR_CORE_PUBLIC) + '<!--GUIDES:END-->');
+  if (n !== h) fs.writeFileSync(fp, n);
+}
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
 const PRODUCT_BY_PLACE = {};
 PRODUCTS_ALL.forEach(p => { if (p.placeSlug && p.fit === 'regular') PRODUCT_BY_PLACE[p.placeSlug] = p; });
@@ -804,11 +815,15 @@ main,.ftr{position:relative;z-index:1}
 `;
 
 // injected: product-card CSS for the collection module
+/* One robots meta for every page (handover item 25): indexable pages allow large image
+   previews and full snippets; gated pages (unreviewed Arabic, drafts) are noindex,follow. */
+function robotsMeta(noindex) { return `<meta name="robots" content="${noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large,max-snippet:-1'}">`; }
 function footerHtml() {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
   return `<div class="ftr-tagline">${esc(TAGLINE)}</div>
   <div class="soc">${soc}</div>
-  <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/camping/">Camping in UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/wadis/">Best wadis</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta guide</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric &amp; construction</a> · <a href="/gifts/">Gift ideas</a> · <a href="/about/">About us</a> · <a href="/places/">All places</a></div>
+  <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>
+  ${FG.guidesHtml(null, AR_CORE_PUBLIC)}
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
@@ -864,13 +879,13 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${esc(canonical)}">
-${noindex ? '<meta name="robots" content="noindex,nofollow">\n' : ''}${altHref ? `<link rel="alternate" hreflang="${AR ? 'en' : 'ar'}" href="${esc(altHref)}">\n` + `<link rel="alternate" hreflang="${lang}" href="${esc(canonical)}">\n` + `<link rel="alternate" hreflang="x-default" href="${esc(AR ? altHref : canonical)}">` : ''}
+${robotsMeta(noindex)}\n${altHref && !noindex ? `<link rel="alternate" hreflang="${AR ? 'en' : 'ar'}" href="${esc(altHref)}">\n` + `<link rel="alternate" hreflang="${lang}" href="${esc(canonical)}">\n` + `<link rel="alternate" hreflang="x-default" href="${esc(AR ? altHref : canonical)}">` : ''}
 <meta name="theme-color" content="#C0702E">
 <meta property="og:type" content="article">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${esc(canonical)}">
-<meta property="og:image" content="${esc(ogImg)}">
+<meta property="og:image" content="${esc(ogImg)}">${/\/uploads\/og\//.test(ogImg) ? '\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">' : ''}\n<meta property="og:locale" content="${AR ? 'ar_AE' : 'en_AE'}">
 <meta property="og:site_name" content="Sahra & Beyond">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
@@ -892,7 +907,7 @@ ${noindex ? '<meta name="robots" content="noindex,nofollow">\n' : ''}${altHref ?
 <script src="/assets/meta-pixel.js" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
-<style>${CSS}${bodyClass === "lg-page" ? PLACES.PLACE_CSS : ""}
+<style>${CSS}${PLACES.TABLE_CSS}${FG.FOOT_GUIDES_CSS}${bodyClass === "lg-page" ? PLACES.PLACE_CSS : ""}
 /* ---- Mobile polish --------------------------------------------------------
    Measured at 390px on the live site: footer links were 15-21px tall, filter
    chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
@@ -1190,6 +1205,7 @@ ${bodyHtml}
     if(b){e.preventDefault();im.src=b.dataset.zoom;im.alt=b.getAttribute('aria-label')||'';z.classList.add('on');document.body.style.overflow='hidden';}});
   cl.addEventListener('click',close); z.addEventListener('click',function(e){if(e.target===z)close();});
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
+<script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js" defer></script>
 <script src="/assets/sahra-cart.js" defer></script>
@@ -1230,7 +1246,8 @@ const renderLocationPage = l => {
   const abs = p => (!p ? '' : (String(p).charAt(0) === '/' ? SITE + p : p));
   const galleryRaw = Array.isArray(l.gallery) ? l.gallery.map(g => (g && g.image) || g).filter(Boolean) : [];
   const photos = [l.cover].concat(galleryRaw).filter(Boolean);
-  const ogImage = photos.length ? abs(photos[0]) : (l.ogImage ? abs(l.ogImage) : '');
+  /* 1 Oct 2026 (handover item 25): a 1200x630, ~80-150 KB social image per place, cut from the cover */
+  const ogImage = fs.existsSync(path.join(ROOT, 'uploads', 'og', l.id + '.jpg')) ? `${SITE}/uploads/og/${l.id}.jpg` : (photos.length ? abs(photos[0]) : (l.ogImage ? abs(l.ogImage) : ''));
   const tourist = {
     "@context": "https://schema.org", "@type": "TouristAttraction",
     "name": l.name, "description": l.desc, "url": canonical,
@@ -1257,25 +1274,148 @@ const renderLocationPage = l => {
   const draft = !!l.draft;
   write(`${draft ? '_drafts/' : ''}locations/${l.id}/index.html`, shell({ activeNav: 'places', title, desc, canonical, jsonld, bodyHtml: body, image: ogImage, bodyClass: 'lg-page', noindex: draft }));
 };
-locations.forEach(renderLocationPage);
-if (!process.env.VERCEL) draftLocations.forEach(renderLocationPage);
-else if (draftLocations.length) console.log('  – drafts held back: ' + draftLocations.map(l => l.id).join(', '));
+/* location pages are written after LANDINGS is defined, so each can link the guides that cover it */
 
 // ---- keyword landing pages ----
 const LANDINGS = [
   {
     slug: 'camping', h1: 'Best Camping Spots in the UAE',
-    title: 'Best Camping Spots in the UAE — Top Places to Camp | Sahra & Beyond',
-    desc: 'Discover the best camping spots in the UAE — from quiet desert lakes to mountain wadis — with GPS, seasons and tips for UAE residents.',
+    title: 'UAE Camping 2026–27: Rules, Permits & Spots | Sahra & Beyond',
+    desc: 'UAE camping rules by emirate, permits, fines, free sites and drive times from Dubai, Sharjah and Abu Dhabi, checked 1 October 2026.',
     pick: locations.filter(l => l.category === 'Camping'),
-    intro: "Looking for the best camping spots in the UAE? From hidden desert lakes to cool mountain wadis, the Emirates offer far more than the obvious weekend sites. This guide rounds up the spots we love most — chosen for their scenery, seclusion and how easy they are to reach from Dubai, Sharjah and Abu Dhabi.\n\nEvery location below has accurate GPS coordinates, the best season to go, and a difficulty rating, so you can plan a safe overnight. Most are free, wild camping sites with no facilities — so come self-sufficient with water, shade and a pack-it-out mindset.",
+    intro: "A field guide to camping in the UAE for the 2026–27 season: what each emirate asks of campers, where camping is free, how long the drive is from Dubai, Sharjah and Abu Dhabi, and the desert lakes, wadis and mountain sites that people actually use.\n\nEvery place below has GPS coordinates, a best season and a difficulty rating on its own page. Most wild sites have no toilets, bins or water, so come self-sufficient and take all rubbish home. Rules and prices change between seasons: the table notes give the source and date for each, so check the current position before you go.",
     sections: [
-      { h2: "Camping in Abu Dhabi", body: "Visit Abu Dhabi says camping is allowed in the emirate but advises against pitching on private land or at the base of dunes. The best-documented public site is Al Wathba Lake Camp, opened by Abu Dhabi's Department of Municipalities and Transport in February 2022, with 13 campsites and 24 picnic sites; Gulf News describes it as free and open around the clock, and no permit is mentioned, but check current terms. Jebel Hafeet Desert Park, near Al Ain, offers bookable camping from a basic pitch upwards, which we cover in our Jebel Hafeet guide.\n\nFor wilder options, our Al Quaa Desert guide covers a free site with no facilities and no permit for a standard visit. Liwa Oasis is usually arranged through an operator, or the Liwa Sports Club in festival season. Zakher Lake and Shuweihat Island see informal camping with little or nothing set up for it, as our guides explain. Take all rubbish home." },
-      { h2: "Camping in Dubai", body: "For a weekend tent in the desert, Gulf News (updated January 2022) reported that campers need no prior permission, while longer stays need approval and fees. Our guides cover the usual choices: Love Lake, where camping is allowed; Crescent Moon Lake; Al Qudra Desert Lake, where reports on camping and fires conflict, so read the signs on the day; and Hatta, where no official permit rules are published.\n\nSeasonal winter camps are different. Dubai Municipality issues permits for plots at Al Aweer through its website or the DubaiNow app, with a minimum three-month booking. Khaleej Times reported that applications for 2025-26 opened on 21 October 2025; dates change each season. Fees were reported at 44 fils per square metre per week, up to 400 square metres (Gulf News, 2024). Eligibility is reported inconsistently: Emirates 24|7 says citizens only, Gulf News says residents and visitors. Jebel Ali Beach allows caravan camping with a free no-objection certificate for up to 30 days. Burning or burying waste outside designated areas is illegal, per Khaleej Times." },
-      { h2: "Camping in Ras Al Khaimah", body: "Jebel Jais has bookable options: Camp 1770 and the Bear Grylls Explorers Camp, both listed by Visit Ras Al Khaimah. The mountain was reported closed for seasonal maintenance in September 2026, so check visitjebeljais.com before going. PropertyFinder and WOW-RAK report free roadside camping along the road up and three authority-designated campsites, but no official page confirms where camping is permitted, so treat that as reported. PropertyFinder also lists open fires among prohibited activities and says camping in wadis is discouraged because of flash floods. Our Jebel Jais guide has the entry and booking details.\n\nWadi Shawka is described by Visit Ras Al Khaimah as a popular free camping spot, with no permit mentioned; our Wadi Shawka guide gives the facilities. Our Wadi Kub guide covers wild camping near Masafi, and Jebel Yanas has flat ground on its ridge. Visit Ras Al Khaimah describes Al Rams Beach and Saraya Island as suited to pitching a tent and needing a 4x4, yet a visitor reports signage against camping, as our Al Rams Beach guide notes. Check the signs on arrival." },
-      { h2: "Camping on the east coast: Fujairah and Sharjah", body: "Sources disagree on permits. A PropertyFinder guide (July 2025) says no permit is typically needed for casual beach camping in Fujairah and lists Faqiat Beach as allowing bonfires and barbecues; another PropertyFinder guide (January 2026) says Al Aqah beach camping has no formal fees and inconsistent toilets. A law-firm summary (November 2025) says Fujairah requires special permits for mountain and beach camping and bars open fires near dry vegetation. Contact Fujairah Municipality before a longer stay, and keep fires off dry ground.\n\nOn the Sharjah side, one guide says Khor Fakkan and Kalba tolerate responsible camping, while the law-firm summary cites permits and fines from Dh2,000 for unauthorised camping. Sharjah's ruler announced about 800 campsites at Al Hefaiyah Lake, Kalba, in April 2024; it is not confirmed whether they are open.\n\nOur Dibba Rock and Snoopy Island guides cover snorkelling and access rather than camping. Al Rafisah Dam is a landscaped park, and Wadi Kub sits near Masafi on the RAK and Fujairah border. Never camp in a wadi bed if rain is forecast." }
+      { id: "season-2026-27", h2: "When does the 2026–27 camping season start?",
+        body: "No announcement of the 2026–27 winter camping season dates was found as of 1 October 2026. For reference, Dubai Municipality's seasonal winter camping opened on 21 October in 2024 and ran to 30 April 2025 (Dubai Municipality, 17 October 2024), and permit applications for 2025–26 opened on 21 October 2025 at 10am, for a season running from 1 November to the end of April (Khaleej Times, 21 October 2025). Check dm.gov.ae or the DubaiNow app for this year's dates before you plan around one.\n\nThose dates apply to the seasonal camps at Al Aweer in Dubai, which are booked for three to six months. Casual overnight camping in the desert is a separate question, covered in the table below. Umm Al Quwain runs its own winter permits: for 2025–26, applications were reported open from 11 November to 30 April (Gulf News, 24 October 2025)." },
+      { id: "camping-rules-by-emirate", h2: "Camping rules by emirate",
+        body: "Rules differ by emirate and, within an emirate, by site. Where sources disagree or no official page was found, the table says so rather than guessing. Federal law applies everywhere: dumping, burning or burying rubbish outside designated areas carries fines of up to AED 30,000 for individuals under Federal Law No. 12 of 2018, and driving into a valley during rain carries AED 2,000, 23 traffic points and 60 days' vehicle impoundment (Gulf News, 19 October 2025; What's On, 20 October 2025).",
+        table: {
+          caption: "Camping rules by emirate (checked 1 October 2026; source dates in the last column)",
+          head: ["Emirate", "Permit needed?", "Fires / BBQ", "Fines", "Where (official sites)", "Source & date"],
+          rows: [
+            ["Abu Dhabi",
+              "Not confirmed as a rule. Visit Abu Dhabi says camping is allowed but not on private land or at the base of dunes. No permit is mentioned for Al Wathba Lake Camp; check current terms.",
+              "Al Wathba Lake Camp has dedicated barbecue areas; barbecues in public parks are limited to designated areas (AED 500 otherwise). No heated equipment inside tents. Open-fire rules elsewhere: Not confirmed.",
+              "Not confirmed (federal waste fines apply).",
+              "Al Wathba Lake Camp (run by Abu Dhabi's Department of Municipalities and Transport); visitabudhabi.ae",
+              { t: "Visit Abu Dhabi (undated); Gulf News, 21 Nov 2023 and 27 Dec 2024", href: "https://visitabudhabi.ae/en/plan-your-trip/article-hub/10-of-the-best-places-to-camp-in-abu-dhabi" }],
+            ["Dubai",
+              "No prior permission for a one- or two-day desert camp; longer stays need approval and fees. Seasonal winter camps at Al Aweer need a permit (3 to 6 months). Jebel Ali Beach caravan camping needs a free no-objection certificate, up to 30 days.",
+              "Barbecues only in designated park areas (AED 500 otherwise). Winter camps must carry fire extinguishers and ban fireworks. Camping, bonfires and barbecues were banned at Al Qudra Lake (Al Marmoom reserve) in 2018. Hatta campsites have BBQ pits.",
+              "AED 500 for leaving waste or lighting fires in public areas.",
+              "wintercamp.dm.gov.ae and the DubaiNow app (apply); dm.gov.ae",
+              { t: "Khaleej Times, 21 Oct 2025; Dubai Municipality, 17 Oct 2024; Gulf News, 27 Dec 2024 and 1 Nov 2018", href: "https://www.khaleejtimes.com/uae/dubai-winter-camping-applications-open" }],
+            ["Sharjah",
+              "Reported inconsistently: a law-firm summary says permits are required in designated desert areas; a Sharjah guide says typical weekend camping usually needs none. No official page found.",
+              "Fires only in designated fire pits or portable barbecue grills; open fires on sand are generally forbidden (FEW guide, enforcement by the Environment and Protected Areas Authority).",
+              "AED 2,000 for unauthorised camping or littering, given as a starting figure by one source and as a maximum by another.",
+              "Mleiha National Park (mleihanationalpark.com) for bookable camping; Sharjah EPAA and SPSA named as enforcers",
+              { t: "FEW, 16 Jun 2025; Al Kabban & Associates, 23 Nov 2025; Gulf News, 19 Oct 2025", href: "https://www.few.ae/where-can-i-camp-legally-in-designated-sharjah-areas/" }],
+            ["Ras Al Khaimah",
+              "Camping on public beaches is banned outside allocated sites: the municipality said no permit allows it on open beaches. Elsewhere (mountains, wadis): Not confirmed.",
+              "Barbecuing is not allowed in open areas at Jebel Jais, where designated picnic spots exist (operator FAQ). Elsewhere: Not confirmed.",
+              "Not confirmed. A third-party guide (Feb 2026) says open fires in restricted areas start around AED 500.",
+              "RAK Municipality helpline 800661; visitjebeljais.com for the mountain",
+              { t: "Khaleej Times, 18 May 2022; Visit Jebel Jais FAQs; PropertyFinder, 20 Feb 2026", href: "https://www.khaleejtimes.com/uae/uae-camping-banned-on-public-beaches-in-ras-al-khaimah" }],
+            ["Fujairah",
+              "Reported inconsistently: one guide says no permit is typically needed for casual beach camping; a law-firm summary says special permits are needed for mountain and beach camping. Not confirmed by an official page; ask Fujairah Municipality for longer stays.",
+              "Open fires near dry vegetation are barred (law-firm summary). Faqiat Beach is described as having BBQ and bonfire zones (PropertyFinder).",
+              "AED 2,000 for unauthorised tent pitching or waste (one source gives it as a maximum, another as a starting figure).",
+              "Fujairah Municipality (no direct page found)",
+              { t: "PropertyFinder, 30 Jul 2025; Al Kabban & Associates, 23 Nov 2025; Gulf News, 19 Oct 2025", href: "https://www.propertyfinder.ae/blog/beach-camping-fujairah/" }],
+            ["Umm Al Quwain",
+              "Winter camping permits for Aqran and Thunaiyah (2025–26): 3 to 6 months, private family use only, AED 2,000 fee plus a refundable AED 10,000 deposit. Casual camping rules: Not confirmed.",
+              "Not confirmed.",
+              "Breaching permit terms cancels the permit and forfeits the deposit. Other fines: Not confirmed.",
+              "Umm Al Quwain Municipality (no portal stated)",
+              { t: "Gulf News, 24 Oct 2025", href: "https://gulfnews.com/lifestyle/umm-al-quwain-opens-winter-camping-permit-applications-for-20252026-season-1.500320327" }]
+          ],
+          note: "Ajman is not listed because no source for its camping rules was found. Always follow signs on site; they override any guide."
+        } },
+      { id: "camping-near-me-drive-times", h2: "Camping near me: drive times",
+        body: "Drive times below are the ones given on each place guide, which quote them from central Dubai rather than from Dubai Marina specifically; allow extra on Fridays and weekends and for any unpaved final stretch. \"Not confirmed\" means no source gives a time from that city.",
+        table: {
+          caption: "Camping spots by drive time (as stated on each place guide, checked 27 Sep to 1 Oct 2026)",
+          head: ["Site", "Emirate", "From Dubai", "From Sharjah", "From Abu Dhabi"],
+          rows: [
+            [{ t: "Half Desert", href: "/locations/half-desert/" }, "Dubai", "About 30–45 min", "Not confirmed", "Not confirmed"],
+            [{ t: "Love Lake", href: "/locations/love-lake/" }, "Dubai", "About 50 min–1 h", "Not confirmed", "Not confirmed"],
+            [{ t: "Al Qudra Desert Lake", href: "/locations/desert-camping-lake-view/" }, "Dubai", "About 1 h", "Not confirmed", "Not confirmed"],
+            [{ t: "Crescent Moon Lake", href: "/locations/crescent-moon-lake/" }, "Dubai", "About 1 h to 1 h 15, including the unpaved final stretch", "Not confirmed", "Not confirmed"],
+            [{ t: "Big Red", href: "/locations/big-red/" }, "Sharjah", "About 45–60 min", "Not confirmed", "Not confirmed"],
+            [{ t: "Mleiha", href: "/locations/mleiha-desert/" }, "Sharjah", "About 50 min–1 h 15", "About 45 min", "Not confirmed"],
+            [{ t: "Wadi Shawka", href: "/locations/wadi-showka/" }, "Ras Al Khaimah", "About 1 h–1 h 15", "Not confirmed", "Not confirmed"],
+            [{ t: "Hatta", href: "/locations/hatta/" }, "Dubai", "About 1 h 30 (roughly 105 km via the E44)", "Not confirmed", "Not confirmed"],
+            [{ t: "Wadi Kub", href: "/locations/wadi-kub/" }, "Ras Al Khaimah / Fujairah", "About 1 h 45 (approximate)", "Not confirmed", "Not confirmed"],
+            [{ t: "Jebel Jais", href: "/locations/jebel-jais/" }, "Ras Al Khaimah", "About 1 h 45–2 h (30–45 min from Ras Al Khaimah city)", "Not confirmed", "Not confirmed"],
+            [{ t: "Jebel Hafeet", href: "/locations/jebel-hafeet/" }, "Abu Dhabi (Al Ain)", "About 1 h 45 (roughly 160 km via the E311)", "Not confirmed", "About 1 h 20–1 h 30 (roughly 120 km)"],
+            [{ t: "Zakher Lake", href: "/locations/zakher-lake/" }, "Abu Dhabi (Al Ain)", "About 1 h 45–2 h", "Not confirmed", "About 1 h 30–1 h 45"],
+            [{ t: "Al Quaa Desert", href: "/locations/al-quaa-desert/" }, "Abu Dhabi", "About 2 h 30", "Not confirmed", "About 1 h 30"],
+            [{ t: "Liwa Oasis", href: "/locations/liwa/" }, "Abu Dhabi", "About 3 h 30–4 h (guides vary; see the Moreeb Dune guide)", "Not confirmed", "About 2 h 30–3 h (roughly 250 km to Moreeb Dune)"]
+          ],
+          note: "Times are as given on each Sahra & Beyond place guide, which cite the sources listed there. Sites with a 4x4 stretch are flagged on their own pages."
+        } },
+      { id: "free-camping-abu-dhabi", h2: "Free camping in Abu Dhabi",
+        body: "Visit Abu Dhabi says camping is allowed in the emirate, but advises against setting up on private land or at the base of dunes, leaving food out overnight or using heated equipment inside the tent. Its list of ten places to camp gives no permit or fire rules and, for most entries, no price, so confirm the current terms before you go. Take all rubbish home: dumping or burning it outside designated areas is a federal offence.\n\nAl Wathba Lake Camp is the best documented public site. Abu Dhabi's Department of Municipalities and Transport opened it in February 2022 with 13 campsites and 24 picnic sites (Visit Abu Dhabi). Gulf News (21 November 2023) describes it as free and open 24 hours, with dedicated barbecue areas, and mentions no permit.\n\nAl Quaa Desert, in southern Abu Dhabi on the Al Ain road, is free with no facilities and no permit needed for a standard visit, according to our guide; it is one of the darkest accessible skies in the UAE, so pick a moonless night. Zakher Lake near Al Ain sees informal camping along the dunes and reed beds, with free parking and no official campsite; swimming is not permitted.\n\nLiwa Oasis sits at the edge of the Rub' al Khali and is on Visit Abu Dhabi's list with no price stated. Our Liwa guide says camping is usually arranged through an operator or, in festival season, the Liwa Sports Club; our Empty Quarter guide reports one Liwa operator saying no permit is needed for wild camping on public land, and not on private land. Visit Abu Dhabi also lists Mirfa Beach and Al Dhafra Beach, and says tents can be set up across the open shoreline at Al Dhafra Beach; neither has a price or permit statement, so read the signs on arrival.\n\nTwo places that come up in searches are not free Abu Dhabi sites. Jebel Hafeet Desert Park, near Al Ain, offers tents, domes and bubbles that Visit Abu Dhabi lists as paid options, from a basic bring-your-own-gear pitch upwards (see our Jebel Hafeet guide). Mleiha is in Sharjah, not Abu Dhabi, about 45 minutes from Sharjah city: Visit Sharjah mentions camping there but gives no price or permit rule, and our Mleiha guide says the park runs a bookable overnight camp rather than casual free camping across the protected desert." },
+      { id: "camping-dubai", h2: "Camping in Dubai",
+        body: "For a weekend tent in the desert, Gulf News (updated January 2022) reported that campers need no prior permission, while longer stays need approval and fees. Our guides cover the usual choices: Love Lake, where camping is allowed; Crescent Moon Lake; Al Qudra Desert Lake, where reports on camping and fires conflict (Dubai Municipality signboards reported by Gulf News in November 2018 banned camping, bonfires and barbecues at Al Qudra Lake), so read the signs on the day; and Hatta, where Khaleej Times lists designated campsites with barbecue pits but no single official page sets out permit rules.\n\nSeasonal winter camps are different. Dubai Municipality issues permits for plots at Al Aweer through its website (wintercamp.dm.gov.ae) or the DubaiNow app, with a minimum three-month booking and a maximum of six. For 2024–25 the fee was 44 fils per square metre per week for up to 400 square metres (Dubai Municipality, 17 October 2024); the 2025–26 fee was not stated in the Khaleej Times report. Permits are for personal or family use and cannot be used by hotels or companies (Khaleej Times, 21 October 2025); older reports differ on who may apply (Emirates 24|7: citizens only; Gulf News: residents and visitors). Jebel Ali Beach allows caravan camping with a free no-objection certificate for up to 30 days. Burning or burying waste outside designated areas is illegal, per Khaleej Times." },
+      { id: "camping-ras-al-khaimah", h2: "Camping in Ras Al Khaimah",
+        body: "Jebel Jais has bookable camps on the mountain, listed by Visit Ras Al Khaimah and named on our Jebel Jais guide. A local guide reported the mountain closed for seasonal maintenance on 14 September 2026 with no reopening date, so check visitjebeljais.com before going. PropertyFinder (20 February 2026) reports informal roadside camping at the lower viewpoints and three government-designated campsites, with entry needing a booking or the AED 10 Viewing Deck Park ticket; no official page confirms where camping is permitted, so treat that as reported. The operator's FAQ says barbecuing is not allowed in open areas. PropertyFinder also says camping in wadis is strongly discouraged because of flash floods.\n\nRas Al Khaimah Municipality banned camping on public beaches outside allocated sites in May 2022. Wadi Shawka is described by Visit Ras Al Khaimah as a popular free camping spot, with no permit mentioned; our Wadi Shawka guide gives the facilities. Our Wadi Kub guide covers wild camping near Masafi, and Jebel Yanas has flat ground on its ridge. Visit Ras Al Khaimah describes Al Rams Beach and Saraya Island as suited to pitching a tent and needing a 4x4, yet a visitor reports signage against camping, as our Al Rams Beach guide notes. Check the signs on arrival." },
+      { id: "camping-east-coast-sharjah", h2: "Camping on the east coast: Fujairah and Sharjah",
+        body: "Sources disagree on permits. A PropertyFinder guide (30 July 2025) says no permit is typically needed for casual beach camping in Fujairah and lists Faqiat Beach as allowing bonfires and barbecues; another PropertyFinder guide (January 2026) says Al Aqah beach camping has no formal fees and inconsistent toilets. A law-firm summary (23 November 2025) says Fujairah requires special permits for mountain and beach camping and bars open fires near dry vegetation. Contact Fujairah Municipality before a longer stay, and keep fires off dry ground.\n\nOn the Sharjah side, a guide dated 16 June 2025 names Mleiha, Al Badayer (Big Red) and the Khor Fakkan and Kalba areas as places to camp, and says fires are allowed only in fire pits or portable barbecues. The law-firm summary cites permits and fines from AED 2,000 for unauthorised camping. Sharjah's ruler announced about 800 campsites at Al Hefaiyah Lake, Kalba, in April 2024; it is not confirmed whether they are open.\n\nOur Dibba Rock and Snoopy Island guides cover snorkelling and access rather than camping. Al Rafisah Dam is a landscaped park, and Wadi Kub sits near Masafi on the RAK and Fujairah border. Never camp in a wadi bed if rain is forecast." },
+      { id: "cold-desert-nights", h2: "What to wear on cold desert nights",
+        body: "Winter nights in the desert and the mountains are far cooler than the days. Visit Abu Dhabi's camping checklist starts with warm clothes, a charged phone and power bank and a first-aid kit. Pack a warm layer you can put on after sunset, a hat and a dry pair of socks for the morning, and keep heaters and gas stoves out of the tent." }
     ],
-    sources: [["Gulf News: Ban on camping, bonfire, barbecue, dog walking in Al Qudra Lake (2018)", "https://gulfnews.com/uae/environment/ban-on-camping-bonfire-barbecue-dog-walking-in-al-qudra-lake-1.2139118"], ["The National: Al Quaa, secluded Abu Dhabi spot for Milky Way views (2020)", "https://www.thenationalnews.com/travel/2020/12/18/al-quaa-secluded-abu-dhabi-spot-that-offers-out-of-this-world-views-of-the-milky-way/"], ["PropertyFinder: Stargazing in Abu Dhabi", "https://www.propertyfinder.ae/blog/stargazing-abu-dhabi/"], ["Visit Abu Dhabi: 10 best places to camp in Abu Dhabi", "https://visitabudhabi.ae/en/plan-your-trip/article-hub/10-of-the-best-places-to-camp-in-abu-dhabi"], ["Gulf News: Al Wathba Lake Camp, free camping spot", "https://gulfnews.com/living-in-uae/ask-us/winter-in-uae-al-wathba-lake-camp--free-camping-spot-in-abu-dhabi-1.1700578870128"], ["PropertyFinder: Desert camping places in Abu Dhabi", "https://www.propertyfinder.ae/blog/desert-camping-places-in-abu-dhabi/"], ["Gulf News: Camping in the UAE, your ultimate guide (updated Jan 2022)", "https://gulfnews.com/going-out/camping-in-the-uae-your-ultimate-guide-1.1545728195812"], ["Khaleej Times: Camping in Dubai this winter (26 Oct 2025)", "https://www.khaleejtimes.com/uae/dubai-winter-camping-best-spots-how-to-plan"], ["Emirates 24|7: Dubai Municipality recreation guide", "https://www.emirates247.com/uae/dubai-municipality-recreation-guide-how-to-book-beach-camping-chalets-fishing-permits-and-sports-fields/1516"], ["Gulf News: Winter camps, Dubai Municipality permit (2024-25 season)", "https://gulfnews.com/uae/winter-camps-dubai-municipality-reveals-who-can-apply-for-a-permit-and-how-1.104402786"], ["PropertyFinder: Camping on Jebel Jais", "https://www.propertyfinder.ae/blog/camping-jebel-jais/"], ["Visit Jebel Jais: FAQs", "https://visitjebeljais.com/faqs"], ["Visit Ras Al Khaimah: Jebel Jais", "https://visitrasalkhaimah.com/location/place/jebel-jais/"], ["WOW-RAK: Camping havens in Ras Al Khaimah", "https://wow-rak.com/camping-havens-in-ras-al-khaimah/"], ["PropertyFinder: Beach camping in Fujairah (30 Jul 2025)", "https://www.propertyfinder.ae/blog/beach-camping-fujairah/"], ["PropertyFinder: Al Aqah beach camping (Jan 2026)", "https://www.propertyfinder.ae/blog/al-aqah-beach-camping/"], ["FEW: Where can I camp legally in designated Sharjah areas", "https://www.few.ae/where-can-i-camp-legally-in-designated-sharjah-areas/"], ["Sharjah Update: Ruler announces 800 camping sites at Al Hefaiyah Lake (Apr 2024)", "https://www.sharjahupdate.com/2024/04/sharjah-ruler-announces-800-camping-sites-at-al-hefaiyah-lake/"], ["Al Kabban & Associates: UAE camping rules by emirate (23 Nov 2025)", "https://alkabban.com/news/uae-camping-season-2025-rules-permits-fines-guide/"]]
+    faqs: [
+      ["Do I need a permit to camp in Dubai?", "Not for a one- or two-night desert camp: Dubai Municipality has said campers need no prior permission for short stays, while longer stays need approval and fees (Gulf News, updated January 2022). Seasonal winter camps at Al Aweer do need a permit, booked for three to six months through wintercamp.dm.gov.ae or the DubaiNow app. Check signs on the day, because some areas, such as Al Qudra Lake, have carried bans on camping and fires."],
+      ["When does the 2026–27 camping season start in Dubai?", "No announcement of the 2026–27 dates was found as of 1 October 2026. The season opened on 21 October in 2024, and permit applications for 2025–26 opened on 21 October 2025. Check dm.gov.ae or the DubaiNow app for this year's dates."],
+      ["Can you camp for free in Abu Dhabi?", "Yes, at some sites. Al Wathba Lake Camp is described by Gulf News (21 November 2023) as free and open 24 hours, and Al Quaa Desert is free with no facilities. Visit Abu Dhabi says camping is allowed but not on private land or at the base of dunes. Jebel Hafeet Desert Park and Mleiha (which is in Sharjah) are bookable and not free."],
+      ["Can I light a fire or barbecue when camping in the UAE?", "It depends on the site. Barbecues are limited to designated areas in public parks in Abu Dhabi, Dubai and Sharjah, with a reported AED 500 fine otherwise (Gulf News, 27 December 2024). Sharjah guidance says fires only in pits or portable grills, and Jebel Jais does not allow barbecuing in open areas. Dumping or burning rubbish outside designated areas is a federal offence with fines up to AED 30,000."],
+      ["Is camping allowed on beaches in Ras Al Khaimah?", "Not on public beaches outside allocated sites. Ras Al Khaimah Municipality said in May 2022 that no permit allows camping on open beaches (Khaleej Times, 18 May 2022). Some sites such as Al Rams Beach are described as suited to camping by the tourism board but carry signage against it, so check the signs on arrival."],
+      ["Which camping spot is closest to Dubai?", "Half Desert is about 30 to 45 minutes from central Dubai, followed by Love Lake at about 50 minutes to an hour and Al Qudra Desert Lake at about an hour, per our place guides. See the drive-time table above for Sharjah and Abu Dhabi."]
+    ],
+    sources: [
+      ["Dubai Municipality: Winter camp reservations open with all-new features (17 Oct 2024)", "https://www.dm.gov.ae/winter-camp-reservations-open-with-all-new-features/"],
+      ["Khaleej Times: Dubai opens applications for temporary camps (21 Oct 2025)", "https://www.khaleejtimes.com/uae/dubai-winter-camping-applications-open"],
+      ["Khaleej Times: Dubai announces start of winter camping season on October 21 (17 Oct 2024)", "https://www.khaleejtimes.com/travel/uae-attractions/dubai-announces-start-of-winter-camping-season-on-october-21"],
+      ["Khaleej Times: Camping in Dubai this winter (26 Oct 2025)", "https://www.khaleejtimes.com/uae/dubai-winter-camping-best-spots-how-to-plan"],
+      ["Khaleej Times: Camping banned on public beaches in Ras Al Khaimah (18 May 2022)", "https://www.khaleejtimes.com/uae/uae-camping-banned-on-public-beaches-in-ras-al-khaimah"],
+      ["Gulf News: Winter camping in UAE, rules and fines every camper should know (19 Oct 2025)", "https://gulfnews.com/uae/people/winter-camping-in-uae-rules-and-fines-every-camper-should-know-1.500313287"],
+      ["What's On: Winter camping in the UAE, rules and the Dhs30,000 fine (20 Oct 2025)", "https://whatson.ae/2025/10/winter-camping-in-the-uae-rules-to-know-and-the-dhs30000-fine-to-avoid/"],
+      ["Gulf News: Umm Al Quwain opens winter camping permit applications for 2025–2026 (24 Oct 2025)", "https://gulfnews.com/lifestyle/umm-al-quwain-opens-winter-camping-permit-applications-for-20252026-season-1.500320327"],
+      ["Gulf News: Fines for barbecuing in public parks (27 Dec 2024)", "https://gulfnews.com/living-in-uae/ask-us/uae-winter-camping-safety-tips-guidelines-and-fines-for-barbecuing-in-public-parks-1.500007839"],
+      ["Gulf News: Ban on camping, bonfire, barbecue, dog walking in Al Qudra Lake (1 Nov 2018)", "https://gulfnews.com/uae/environment/ban-on-camping-bonfire-barbecue-dog-walking-in-al-qudra-lake-1.2139118"],
+      ["Gulf News: Camping in the UAE, your ultimate guide (updated Jan 2022)", "https://gulfnews.com/going-out/camping-in-the-uae-your-ultimate-guide-1.1545728195812"],
+      ["Visit Abu Dhabi: 10 best places to camp in Abu Dhabi", "https://visitabudhabi.ae/en/plan-your-trip/article-hub/10-of-the-best-places-to-camp-in-abu-dhabi"],
+      ["Gulf News: Al Wathba Lake Camp, free camping spot (21 Nov 2023)", "https://gulfnews.com/living-in-uae/ask-us/winter-in-uae-al-wathba-lake-camp--free-camping-spot-in-abu-dhabi-1.1700578870128"],
+      ["The National: Al Quaa, secluded Abu Dhabi spot for Milky Way views (2020)", "https://www.thenationalnews.com/travel/2020/12/18/al-quaa-secluded-abu-dhabi-spot-that-offers-out-of-this-world-views-of-the-milky-way/"],
+      ["PropertyFinder: Stargazing in Abu Dhabi", "https://www.propertyfinder.ae/blog/stargazing-abu-dhabi/"],
+      ["PropertyFinder: Desert camping places in Abu Dhabi", "https://www.propertyfinder.ae/blog/desert-camping-places-in-abu-dhabi/"],
+      ["Emirates 24|7: Dubai Municipality recreation guide", "https://www.emirates247.com/uae/dubai-municipality-recreation-guide-how-to-book-beach-camping-chalets-fishing-permits-and-sports-fields/1516"],
+      ["Gulf News: Winter camps, Dubai Municipality permit (2024-25 season)", "https://gulfnews.com/uae/winter-camps-dubai-municipality-reveals-who-can-apply-for-a-permit-and-how-1.104402786"],
+      ["PropertyFinder: Camping on Jebel Jais (20 Feb 2026)", "https://www.propertyfinder.ae/blog/camping-jebel-jais/"],
+      ["Visit Jebel Jais: FAQs", "https://visitjebeljais.com/faqs"],
+      ["Visit Ras Al Khaimah: Jebel Jais", "https://visitrasalkhaimah.com/location/place/jebel-jais/"],
+      ["WOW-RAK: Camping havens in Ras Al Khaimah", "https://wow-rak.com/camping-havens-in-ras-al-khaimah/"],
+      ["PropertyFinder: Beach camping in Fujairah (30 Jul 2025)", "https://www.propertyfinder.ae/blog/beach-camping-fujairah/"],
+      ["PropertyFinder: Al Aqah beach camping (Jan 2026)", "https://www.propertyfinder.ae/blog/al-aqah-beach-camping/"],
+      ["FEW: Where can I camp legally in designated Sharjah areas (16 Jun 2025)", "https://www.few.ae/where-can-i-camp-legally-in-designated-sharjah-areas/"],
+      ["Visit Sharjah: Mleiha National Park", "https://www.visitsharjah.com/activities/adventure/mleiha-national-park/"],
+      ["Sharjah Update: Ruler announces 800 camping sites at Al Hefaiyah Lake (Apr 2024)", "https://www.sharjahupdate.com/2024/04/sharjah-ruler-announces-800-camping-sites-at-al-hefaiyah-lake/"],
+      ["Al Kabban & Associates: UAE camping rules by emirate (23 Nov 2025)", "https://alkabban.com/news/uae-camping-season-2025-rules-permits-fines-guide/"]
+    ],
+    todo: [
+      "TODO for Faheem: confirm the 2026–27 Dubai winter camping season start date once Dubai Municipality announces it (none found on 1 Oct 2026; 2024 start 21 Oct, 2025 applications 21 Oct); then replace the season section with the dated announcement.",
+      "TODO for Faheem: list paid camps/glamping operators? Nothing paid or bookable is named in the Abu Dhabi section; the RAK section refers to Jebel Jais camps without names.",
+      "TODO for Faheem: drive times are from central Dubai as on the place guides; Dubai Marina, Sharjah and Abu Dhabi times for most sites are Not confirmed. Provide a verified source or time them yourself.",
+      "TODO for Faheem: Love Lake page says camping is allowed; Dubai Municipality signboards (Gulf News, 1 Nov 2018) banned camping, bonfires and barbecues at Al Qudra Lake / Al Marmoom reserve. Unresolved; confirm on site or with Dubai Municipality.",
+      "TODO for Faheem: the Hatta page says no official campsites or permit rules; Khaleej Times (26 Oct 2025) lists Hatta designated campsites with BBQ pits. Reconcile.",
+      "TODO for Faheem: no official page found for Sharjah, Fujairah, RAK or Abu Dhabi camping permits and fine schedules; the table relies on press and law-firm summaries. Ajman has no sourced rules. Ask the municipalities if you want official wording.",
+      "TODO for Faheem: Al Wathba Lake Camp picnic sites: Visit Abu Dhabi says 24, Gulf News (21 Nov 2023) says 25; text uses 24.",
+      "TODO for lead: add the Sahel hoodie link to the 'What to wear on cold desert nights' section when it is live (no product link added).",
+      "TODO for Faheem: Zawya reports a Dh500 bonfire fine at Jebel Jais and Dh2,000 elsewhere (2022, undated); not used in the table because the date and authority are unclear.",
+      "TODO for Faheem: the title now says 2026–27, so it needs updating each season."
+    ]
   },
   {
     slug: 'secluded-camping', h1: 'Secluded Camping Spots in the UAE',
@@ -1285,7 +1425,7 @@ const LANDINGS = [
     intro: "If the popular Al Qudra sites feel too busy, these secluded camping spots in the UAE trade facilities for peace and privacy. They're the quiet desert lakes and hidden corners where you can pitch a tent, watch the sunset over the water and have the stars almost entirely to yourself.\n\nSeclusion comes with responsibility: there are no toilets, bins or shops out here, so plan carefully, carry plenty of water, travel in convoy where the sand gets soft, and leave no trace so these places stay special."
   },
   {
-    slug: 'snorkeling', h1: 'Best Snorkeling in the UAE',
+    slug: 'snorkeling', related: [["/fujairah-beaches/", "Fujairah beaches", "Where to swim and snorkel on the east coast"], ["/best-beaches/", "Best beaches in the UAE", "Quiet and natural beaches"]], h1: 'Best Snorkeling in the UAE',
     title: 'Best Snorkeling in the UAE — Top Reefs & Marine Life | Sahra & Beyond',
     desc: 'The best snorkeling in the UAE — coral reefs, turtles and reef sharks you can reach from shore, with seasons and tips for UAE residents.',
     pick: locations.filter(l => l.category === 'Coast'),
@@ -1295,14 +1435,144 @@ const LANDINGS = [
     slug: 'stargazing', h1: 'Best Places to See the Milky Way Galaxy in the UAE',
     productLink: { slug: 'al-quaa-galaxy-regular', anchor: 'the Al Quaa Galaxy tee',
       sentence: 'That view is the one printed on {{link}} — the core as it rises over Al Quaa, mapped rather than illustrated.' },
-    title: 'Best Place to View the Milky Way Galaxy in the UAE | Sahra & Beyond',
-    desc: 'The Milky Way core is visible over Al Quaa from May to October, not in winter. Moon phases, the drive from Dubai, and what you can see with no telescope.',
-    pick: ['al-quaa-desert', 'crescent-moon-lake', 'desert-camping-lake-view', 'mleiha-desert'].map(id => locations.find(l => l.id === id)).filter(Boolean),
-    intro: "Want to know the best place to view the Milky Way galaxy in the UAE? It comes down to one thing: darkness. Escape the city glow and the desert delivers some of the clearest night skies in the region, where the Milky Way's core is bright enough to photograph — and on the darkest nights, to cast a faint shadow.\n\nThese are the spots we recommend for stargazing and astrophotography, ranked by how dark and accessible they are. Timing matters more than kit. The Milky Way's bright core is only above the horizon from roughly May to October — in midwinter it is below the horizon at night, so a December trip gives you a beautifully dark sky with no core in it. Winter nights are clearer, cooler and better for constellations; May to October is the window for the galaxy itself. Either way, go on a moonless night, bring a red-light torch, and give your eyes twenty minutes to adjust.",
+    title: 'Milky Way in the UAE: 8 Spots & 2026–27 Dates | Sahra & Beyond',
+    desc: 'Where and when to see the Milky Way in the UAE: 8 dark spots near the cities, new-moon dates to Sep 2027, the Geminids, and tours versus going alone.',
+    pick: ['al-quaa-desert', 'mleiha-desert', 'desert-camping-lake-view', 'crescent-moon-lake', 'wadi-showka', 'liwa'].map(id => locations.find(l => l.id === id)).filter(Boolean),
+    intro: "The Milky Way is overhead every night of the year in the UAE; what changes is whether its bright core is above the horizon after dark. That is only roughly May to October, and only on nights when the moon is out of the way. Everything else, from the spot you choose to the date you go, follows from those two facts.\n\nThis guide lists eight dark places within reach of the cities, a moon calendar to September 2027, the next meteor showers, and what a tour costs against going on your own. Go on a moonless night, bring a red-light torch, and give your eyes twenty minutes to adjust before judging the sky.",
     sections: [
-      { h2: "The Milky Way in Abu Dhabi", body: "The Milky Way is up every night of the year; what changes is when its bright core is above the horizon. The core season in the UAE is May to October: the core rises after midnight in May and June, is highest in July and August, and shows earlier in the evening in September and October. Khaleej Times, quoting Dubai Astronomy Group's operations manager, gives a wider window of late March to September, so the edges of the season are approximate, and the best hours as 9pm to 3am. In midwinter the core is below the horizon at night.\n\nAl Quaa, in southern Abu Dhabi on the Al Ain road, is about 90 minutes from Abu Dhabi city and two to three hours from Dubai. Dubai Astronomy Group describes it as one of the darkest accessible locations in the UAE, and our Al Quaa guide covers the drive. Liwa Oasis appears in a PropertyFinder stargazing guide for Abu Dhabi, which suggests November to April for cool nights; no darkness measurement is given for it.\n\nChoose a new moon, or the nights either side of it, because moonlight washes out the fainter band. Dubai Astronomy Group has held public Milky Way evenings at Al Quaa with telescopes and guided sessions, running 10pm to 2am: on 21 June 2025 (AED 120 per person including a bus from Jebel Ali Metro, per Gulf News), on 26 July 2025 and on 16 May 2026. Check dubaiastronomy.com for the next date." }
+      { id: 'this-month', until: '2026-10-15', h2: 'Last Milky Way window of 2026: 6–14 October',
+        body: "The new moon falls on Saturday 10 October 2026 at 19:50 UAE time. The nights from about 6 to 14 October are the darkest of the month, and they are the last of the year with the Milky Way core in the evening sky.\n\nIn October the core is only up for a short spell after dusk. Khaleej Times' month-by-month table has it appearing at about 6pm and gone by about 10pm. The galaxy forms an arc from the north-east to the south-west, and its densest part lies towards the constellations Scorpius and Sagittarius. Arrive before dark, find a clear horizon and look for it as soon as the sky has faded.\n\nThe core season runs from May to October, with the clearest views in July and August (Gulf News and Khaleej Times, both quoting the Emirates Astronomical Society chairman). After October the core stays below the horizon at night until spring. The next new moon, on 9 November, is a good night for constellations and camping, but there is no core to see.",
+        table: { caption: "New moon, October 2026",
+          head: ["New moon (UAE time)", "Darkest nights", "Milky Way core"],
+          rows: [["Sat 10 Oct 2026, 19:50", "About 6 to 14 Oct", "In the evening sky, about 6pm to 10pm"]],
+          note: "New-moon time is computed, then checked against the Skylive moon calendar (16:50 in its London-time view, which is 19:50 in the UAE) and MoonGiant, which shows a new moon on 10 October. Core hours are from a Khaleej Times table published 7 May 2025 and are approximate. Checked 1 Oct 2026.",
+          source: { label: "Khaleej Times: Milky Way visible from May to October", url: "https://www.khaleejtimes.com/space/uae-milky-way-visible-from-may-to-october-2025" } } },
+  
+      { id: 'where-to-go', h2: 'Where to go: 8 dark spots near the cities',
+        body: "Distance from city light matters more than anything else you can choose. Gulf News, quoting the Emirates Astronomical Society chairman, advises getting at least 35 km from urban areas. None of these places has a published sky-brightness rating on this site: to check a site yourself, look it up on the light pollution map at https://www.lightpollutionmap.info before you drive.\n\nAl Quaa is one of the darkest accessible skies in the UAE and is the best-known choice for the core. The others trade some darkness for a shorter drive or for facilities.",
+        table: { caption: "Eight places to see the Milky Way, from Dubai",
+          head: ["Spot", "Emirate", "Drive from Dubai", "4x4?", "Facilities", "Caveat"],
+          rows: [
+            [{ t: "Al Quaa", href: "/locations/al-quaa-desert/" }, "Abu Dhabi", "About 2.5 hours (about 90 minutes from Abu Dhabi city)", "A regular car reaches the usual pull-off on packed sand; a 4x4 is for the dunes", "None at the site: no toilets, shops, water or fuel", "One of the darkest accessible skies in the UAE. Fill the tank and bring everything"],
+            [{ t: "Wadi Shawka dam", href: "/locations/wadi-showka/" }, "Ras Al Khaimah", "About 1 hour to 1 hour 15", "No for the dam; a 4x4 helps on the trails beyond", "Washrooms, barbecue area, shaded seating, small shops", "The National says the dam is lit by flight paths"],
+            [{ t: "Jebel Jais area", href: "/locations/jebel-jais/" }, "Ras Al Khaimah", "About 1 hour 45 to 2 hours", "No: the road is paved", "Two cafés at the viewing deck park; no fuel on the mountain road", "A seasonal closure was reported on 14 September 2026; check the operator before you drive up"],
+            [{ t: "Liwa and Tal Moreeb", href: "/locations/moreeb-dune/" }, "Abu Dhabi", "About 3.5 to 4 hours", "Paved to the base of Moreeb; a 4x4 only on the sand", "Limited: resorts and a few stops in Liwa; pack food and water", "Remote. Busy during the Liwa International Festival, 11 December 2026 to 2 January 2027"],
+            [{ t: "Al Qudra and Al Marmoom", href: "/locations/desert-camping-lake-view/" }, "Dubai", "About 1 hour", "Paved to Love Lake; the quieter lake spots need a high-clearance vehicle", "Toilets and parking at Love Lake and Expo Lake; none at the quieter spots", "Dubai Astronomy Group held a public event here on 2 May 2026"],
+            ["Lahbab red dunes", "Dubai", "Not confirmed", "Not confirmed", "Not confirmed", "Listed by Dubai Desert as a stop for stargazing after a dune tour"],
+            [{ t: "Mleiha", href: "/locations/mleiha-desert/" }, "Sharjah", "About 50 minutes to 1 hour 15", "An ordinary car reaches the Archaeological Centre; a 4x4 is needed on the dunes", "Toilets and café at the Archaeological Centre", "Evening stargazing sessions are bookable through the park"],
+            [{ t: "Jebel Hafeet", href: "/locations/jebel-hafeet/" }, "Abu Dhabi (Al Ain)", "About 1 hour 45", "No: the summit road is paved", "Hotel restaurant at the summit; shaded lawns and chalets at Green Mubazzarah", "Listed in a PropertyFinder guide to stargazing in Abu Dhabi, with no darkness measurement given"]
+          ],
+          note: "Drive times and facilities are from the linked place guides; the sky-brightness line is yours to check on the map. Checked 1 Oct 2026.",
+          source: { label: "Gulf News: Milky Way season in the UAE", url: "https://gulfnews.com/uae/science/stargazers-in-the-uae-can-catch-the-milky-way-all-summer-long-1.500119274" } } },
+  
+      { id: 'when', h2: 'When the core is up, month by month',
+        body: "Core season is May to October. In May the core only appears after midnight; by October it is a short appearance in the early evening. Khaleej Times, quoting Dubai Astronomy Group, gives a wider season of late March to September, with the best hours from 9pm to 3am, so treat the edges of the season as approximate. In midwinter the core is below the horizon at night: a December trip gives a very dark sky and good constellations, but no core.",
+        table: { caption: "When the Milky Way core is visible, by month",
+          head: ["Month", "Core first appears", "Core gone by"],
+          rows: [["May", "12am", "4am"], ["June", "11pm", "3:30am"], ["July", "10pm", "3am"], ["August", "8:30pm", "2am"], ["September", "7pm", "12:30am"], ["October", "6pm", "10pm"]],
+          note: "Times are approximate and from a Khaleej Times table (7 May 2025). The core is clearest in July and August.",
+          source: { label: "Khaleej Times: Milky Way visible from May to October", url: "https://www.khaleejtimes.com/space/uae-milky-way-visible-from-may-to-october-2025" } } },
+  
+      { id: 'moon-calendar', h2: 'Moon calendar 2026–27',
+        body: "Pick a date within a few days of the new moon. A bright moon washes out the fainter parts of the Milky Way almost as much as city light, so the dark window matters as much as the month.",
+        table: { caption: "New moons from October 2026 to September 2027 (computed)",
+          head: ["New moon (UAE time, computed)", "Dark window (4 days either side)", "What is up"],
+          rows: [
+            ["Sat 10 Oct 2026, 19:50", "6 to 14 Oct", "Core in the evening, about 6pm to 10pm"],
+            ["Mon 9 Nov 2026, 11:02", "5 to 13 Nov", "No core; constellations and camping"],
+            ["Wed 9 Dec 2026, 04:51", "5 to 13 Dec", "No core; the Geminids peak on 13 to 14 Dec"],
+            ["Fri 8 Jan 2027, 00:24", "4 to 12 Jan", "No core; the Quadrantids peak on 4 Jan"],
+            ["Sat 6 Feb 2027, 19:56", "2 to 10 Feb", "No core"],
+            ["Mon 8 Mar 2027, 13:29", "4 to 12 Mar", "Core not yet in the usual season, which opens in late March"],
+            ["Wed 7 Apr 2027, 03:51", "3 to 11 Apr", "Core before dawn only, as the season opens"],
+            ["Thu 6 May 2027, 14:58", "2 to 10 May", "Core from about midnight to 4am"],
+            ["Fri 4 Jun 2027, 23:40", "31 May to 8 Jun", "Core from about 11pm to 3:30am"],
+            ["Sun 4 Jul 2027, 07:01", "30 Jun to 8 Jul", "Core from about 10pm to 3am"],
+            ["Mon 2 Aug 2027, 14:05", "29 Jul to 6 Aug", "Core from about 8:30pm to 2am; peak season"],
+            ["Tue 31 Aug 2027, 21:41", "27 Aug to 4 Sep", "Core in the evening, about 7pm to 12:30am"]
+          ],
+          note: "New-moon times are computed with the PyEphem astronomy library for UAE time (GST, UTC+4) and agree with published new-moon tables to the minute. The Skylive moon calendar and MoonGiant confirm the October date. What is up is from the Khaleej Times month table and season dates. Checked 1 Oct 2026.",
+          source: { label: "Skylive: Moon calendar, October 2026", url: "https://theskylive.com/moon-calendar?year=2026&month=10" } } },
+  
+      { id: 'meteor-showers', h2: 'Meteor showers: the next three',
+        body: "Meteor showers need no equipment and no core, so they work in the winter months when the Milky Way is not up. Of the next three, the Geminids have the best moon of the year.\n\nThe Geminids peak on the night of 13 to 14 December 2026. The moon is a thin waxing crescent, and by our calculation it sets at about 21:15 on 13 December and about 22:05 on 14 December, so the sky is moonless from about 22:30 to dawn. EarthSky gives the best viewing around 2am, with up to about 120 meteors an hour under ideal dark skies.\n\nThe Orionids peak on 21 October 2026 at 18:00 UTC (22:00 UAE time), with EarthSky quoting 10 to 20 meteors an hour. The moon is about three-quarters lit and sets at about 02:25 on the morning of 22 October (computed), leaving about two and a half hours of dark sky before dawn twilight.\n\nThe Quadrantids peak on 4 January 2027 at 05:47 UTC, which is 09:47 in the UAE, after sunrise. EarthSky describes a peak lasting only about six hours, with over 100 meteors an hour possible under ideal conditions, so expect fewer in the pre-dawn hours here. The moon is a thin waning crescent that rises at about 04:15 (computed).",
+        table: { caption: "Meteor showers, October 2026 to January 2027",
+          head: ["Shower", "Peak (UAE time)", "Moon", "Rate under ideal skies", "Best window"],
+          rows: [
+            ["Orionids", "21 Oct 2026, 22:00 (18:00 UTC)", "About 76% lit; sets about 02:25 on 22 Oct", "10 to 20 an hour", "About 02:30 to 05:00 on 22 Oct"],
+            ["Geminids", "14 Dec 2026, 09:44 (05:44 UTC), after sunrise", "Waxing crescent; sets about 21:15 on 13 Dec and 22:05 on 14 Dec", "Up to about 120 an hour", "From about 22:30 to dawn on 13 to 14 Dec; best around 2am"],
+            ["Quadrantids", "4 Jan 2027, 09:47 (05:47 UTC), after sunrise", "Waning crescent; rises about 04:15", "Over 100 an hour at a narrow peak", "The pre-dawn hours of 4 Jan"]
+          ],
+          note: "Peak times and rates are from EarthSky; moonset, moonrise and dark windows are computed for Dubai with PyEphem. Checked 1 Oct 2026.",
+          source: { label: "EarthSky: Geminid meteor shower", url: "https://earthsky.org/astronomy-essentials/everything-you-need-to-know-geminid-meteor-shower/" } } },
+  
+      { id: 'tours-or-diy', h2: 'Tours or DIY',
+        body: "Going on your own is free: PropertyFinder says there are no charges for independent trips to Al Quaa. A tour costs money but removes the driving, the fuel, the tents and the navigation in the dark. Prices below are what each source lists and are not quotes.",
+        table: { caption: "What stargazing tours and events cost",
+          head: ["Option", "Price listed", "What it is", "As at"],
+          rows: [
+            ["Desert Dreams, Al Quaa overnight", "AED 450 per person", "Minimum 4 people; includes barbecue dinner, breakfast, private tent, camp gear, 4x4 and guides; transfers are extra", "Page read 1 Oct 2026 (undated)"],
+            ["PropertyFinder, organised tours", "About AED 550 per person", "Full stargazing tours at Al Quaa", "Published 23 Nov 2025"],
+            ["Dubai Desert, shared desert tours", "AED 350 to 500 per person", "Shared stargazing tours near Dubai", "Page read 1 Oct 2026 (undated)"],
+            ["Dubai Desert, private camps", "AED 600 to 1,200", "Private stargazing camps; price depends on the level of luxury", "Page read 1 Oct 2026 (undated)"],
+            ["Al Sadeem Observatory, Abu Dhabi", "AED 300 adult, AED 100 child (8 to 17)", "Guided observatory sessions", "PropertyFinder, 12 Mar 2025"]
+          ],
+          note: "Prices change. Confirm with the operator before you book.",
+          source: { label: "Desert Dreams: Al Quaa overnight stargazing", url: "https://www.desertdreams.ae/al-quaa-desert-milky-way-stargazing-overnight-camping-abu-dhabi" } },
+        after: "Dubai Astronomy Group, a volunteer astronomy society, runs public stargazing evenings with telescopes and guided sessions. The most recent we can confirm: a Milky Way event at Al Quaa in late May 2026, which Khaleej Times reported drew hundreds of people, and an event at Al Qudra on 2 May 2026 (7pm to 10pm, AED 200 for adults and AED 150 for children under 13, per Travel And Tour World, 29 April 2026). An earlier Al Quaa evening on 21 June 2025 cost AED 120 including a bus from Jebel Ali Metro (Gulf News). Dates and prices change with each event, so check dubaiastronomy.com for the next one.\n\nAl Thuraya Astronomy Centre is a public astronomy facility in Mushrif Park, Dubai, established in 2018 under directives from Sheikh Mohammed bin Rashid Al Maktoum. MyBayut lists public telescope viewing at AED 20 for 10 minutes, planetarium shows at AED 20 and courses, with hours of Saturday to Thursday 1pm to 9pm and Friday 5pm to 9pm (checked 1 Oct 2026). It is inside the city, so it suits the moon and the planets rather than the Milky Way; phone ahead on +971 4 221 6603." },
+  
+      { id: 'abu-dhabi', h2: 'The Milky Way in Abu Dhabi',
+        body: "For the Milky Way in Abu Dhabi, Al Quaa is the main choice. It lies in southern Abu Dhabi on the Al Ain road, about 90 minutes from Abu Dhabi city and two to three hours from Dubai. Our Al Quaa guide covers the drive, the coordinates and what to bring.\n\nLiwa Oasis appears in PropertyFinder's guide to stargazing in Abu Dhabi, which suggests November to April for cool nights; no darkness measurement is given for it." },
+  
+      { id: 'gear-tips', h2: 'Gear and phone tips',
+        body: "Give your eyes twenty to thirty minutes away from any white light, including headlights and phone screens. A red-light torch keeps your night vision, and binoculars add real depth to the core without the bulk of a telescope.\n\nA phone camera on its own will mostly show black: night skies need a long exposure on a steady tripod, or a night mode pushed well past its automatic setting. Fuel up before you go, download offline maps because signal is patchy, wear closed shoes (Khaleej Times notes scorpions and other wildlife), and stay on the paved or packed surface rather than loose sand at the edges." }
     ],
-    sources: [["The National: Al Quaa, secluded Abu Dhabi spot for Milky Way views (2020)", "https://www.thenationalnews.com/travel/2020/12/18/al-quaa-secluded-abu-dhabi-spot-that-offers-out-of-this-world-views-of-the-milky-way/"], ["Gulf News: Dubai Astronomy final stargazing event at Al Quaa (26 Jul 2025)", "https://gulfnews.com/uae/last-chance-to-witness-the-milky-way-in-uae-dubai-astronomy-hosts-final-stargazing-event-in-al-quaa-abu-dhabi-1.500206553"], ["Gulf News: June 21 Milky Way event at Al Quaa (2025, AED 120)", "https://gulfnews.com/things-to-do/events-concerts/mark-your-calendar-june-21-brings-rare-milky-way-spectacle-to-al-quaa-abu-dhabi-1.500166560"], ["Khaleej Times: Milky Way season in UAE, Al Quaa timing", "https://www.khaleejtimes.com/uae/milky-way-season-abu-dhabi-al-quaa-location-timing-tips"], ["Dubai Astronomy Group: Milky Way Season UAE 2026", "https://dubaiastronomy.com/under-the-darkest-skies-uae-welcomes-milky-way-season-powered-by-samsung/"], ["PropertyFinder: Stargazing in Abu Dhabi", "https://www.propertyfinder.ae/blog/stargazing-abu-dhabi/"], ["PropertyFinder: Al Quaa Milky Way spot", "https://www.propertyfinder.ae/blog/al-quaa-milky-way-spot/"], ["Dubicars: Al Quaa Milky Way spot guide", "https://www.dubicars.com/news/al-quaa-milky-way-spot-guide-abu-dhabi-uae.html"]]
+    faqs: [
+      ['When can you see the Milky Way in the UAE?', 'The core is visible from about May to October, clearest in July and August. Khaleej Times quotes a wider season of late March to September, so the edges are approximate. In October it shows only in the early evening, about 6pm to 10pm, and in midwinter it is below the horizon at night.'],
+      ['What is the best place near Dubai to see the Milky Way?', 'Al Quaa in southern Abu Dhabi is one of the darkest accessible skies in the UAE, about 2.5 hours from Dubai. Closer options are Wadi Shawka dam (about an hour), Al Qudra and Mleiha, which trade some darkness for a shorter drive.'],
+      ['How far from the city do I need to go?', 'The Emirates Astronomical Society chairman, quoted by Gulf News, advises at least 35 km from urban areas. You can check how bright the sky is at a site on the light pollution map at lightpollutionmap.info.'],
+      ['Do I need a telescope?', 'No. On a clear, moonless night the Milky Way is visible to the naked eye once your eyes have adjusted, which takes twenty minutes or so. Binoculars add detail.'],
+      ['When is the next good Milky Way night?', 'The new moon on Saturday 10 October 2026 gives the last evening window of the season, from about 6 to 14 October. The next core season opens in spring 2027 (see the moon calendar above).'],
+      ['What about meteor showers?', 'The Geminids peak on the night of 13 to 14 December 2026, with the moon setting at about 22:05 and a dark sky after about 22:30. The Orionids peak on 21 October and the Quadrantids on 4 January 2027, but the Quadrantid peak falls after sunrise in the UAE.'],
+      ['Is stargazing in the UAE free?', 'Yes if you go on your own: Al Quaa and most of the other spots here charge no entry fee. Organised tours and Dubai Astronomy Group events are paid; see the price table above.']
+    ],
+    sources: [
+      ["Khaleej Times: UAE Milky Way visible from May to October (7 May 2025)", "https://www.khaleejtimes.com/space/uae-milky-way-visible-from-may-to-october-2025"],
+      ["Khaleej Times: Milky Way season, how to visit Al Quaa (31 May 2026)", "https://www.khaleejtimes.com/uae/milky-way-season-abu-dhabi-al-quaa-location-timing-tips"],
+      ["Gulf News: Stargazers in the UAE can catch the Milky Way all summer long (8 May 2025)", "https://gulfnews.com/uae/science/stargazers-in-the-uae-can-catch-the-milky-way-all-summer-long-1.500119274"],
+      ["Skylive: Moon calendar, October 2026", "https://theskylive.com/moon-calendar?year=2026&month=10"],
+      ["MoonGiant: Moon phase on 10 October 2026", "https://www.moongiant.com/phase/10/10/2026/"],
+      ["EarthSky: Orionid meteor shower 2026", "https://earthsky.org/clusters-nebulae-galaxies/everything-you-need-to-know-orionid-meteor-shower/"],
+      ["EarthSky: Geminid meteor shower 2026", "https://earthsky.org/astronomy-essentials/everything-you-need-to-know-geminid-meteor-shower/"],
+      ["EarthSky: Quadrantid meteor shower 2027", "https://earthsky.org/astronomy-essentials/everything-you-need-to-know-quadrantid-meteor-shower/"],
+      ["Light Pollution Map", "https://www.lightpollutionmap.info"],
+      ["The National: Al Quaa, secluded Abu Dhabi spot for Milky Way views (updated 8 Oct 2024)", "https://www.thenationalnews.com/travel/2020/12/18/al-quaa-secluded-abu-dhabi-spot-that-offers-out-of-this-world-views-of-the-milky-way/"],
+      ["PropertyFinder: Al Quaa Milky Way spot (23 Nov 2025)", "https://www.propertyfinder.ae/blog/al-quaa-milky-way-spot/"],
+      ["PropertyFinder: Stargazing in Abu Dhabi (12 Mar 2025)", "https://www.propertyfinder.ae/blog/stargazing-abu-dhabi/"],
+      ["Desert Dreams: Al Quaa overnight stargazing and camping", "https://www.desertdreams.ae/al-quaa-desert-milky-way-stargazing-overnight-camping-abu-dhabi"],
+      ["Dubai Desert: Stargazing spots in Dubai", "https://dubaidesert.ae/blog/stargazing-spots-in-dubai"],
+      ["MyBayut: Al Thuraya Astronomy Centre", "https://www.bayut.com/mybayut/al-thuraya-astronomy-centre/"],
+      ["Travel And Tour World: Stargazing at Al Qudra on 2 May 2026 (29 Apr 2026)", "https://www.travelandtourworld.com/news/article/stargazing-in-dubais-desert-unveil-the-mysteries-of-the-night-sky-at-al-qudra-on-2-may-2026/"],
+      ["Gulf News: June 21 Milky Way event at Al Quaa (2025, AED 120)", "https://gulfnews.com/things-to-do/events-concerts/mark-your-calendar-june-21-brings-rare-milky-way-spectacle-to-al-quaa-abu-dhabi-1.500166560"],
+      ["Dubai Astronomy Group", "https://dubaiastronomy.com/"]
+    ],
+    todo: [
+      "TODO for Faheem: /locations/al-quaa-desert/ Quick answers, FAQ and 'Being honest about the hard parts' still say a 4x4 is required, but The National (updated 8 Oct 2024), PropertyFinder (23 Nov 2025) and Khaleej Times (31 May 2026) say a regular car reaches the usual pull-off. The page's own 27 Sep audit agrees. This guide follows the sources; fix the Al Quaa page to match.",
+      "TODO for Faheem: Al Quaa page months conflict (Apr-Oct, May-Oct, Oct-Mar). This guide shows May-Oct as the core season with Khaleej Times' late March to September as the wider range.",
+      "TODO for Faheem: the old text said Dubai Astronomy Group held an Al Quaa event on 16 May 2026. I could not open dubaiastronomy.com (robots block) and found no source for that date; Khaleej Times (31 May 2026) says a late-May event. Confirm the date on dubaiastronomy.com; the page now cites late May 2026 and 2 May 2026 (Al Qudra).",
+      "TODO for Faheem: 'core low in the south-west after dusk' is not stated by Khaleej Times (it gives an arc from north-east to south-west, centre towards Scorpius and Sagittarius). Left out; add only with a source or your own observation.",
+      "TODO for Faheem: Lahbab red dunes drive time, access and facilities not found in any source opened; kept as 'Not confirmed'.",
+      "TODO for Faheem: Al Qudra/Al Marmoom drive time (about 1 hour) comes from our own Love Lake and Al Qudra pages; Gulf News and Dubai Desert give none.",
+      "TODO for Faheem: Wadi Shawka drive time here is 1 to 1h15 (our page); Gulf News gives 45 minutes from Dubai. Pick one.",
+      "TODO for Faheem: Al Thuraya Astronomy Centre hours and prices are from MyBayut (undated). Confirm on althurayaastronomycenter.ae or by phone (+971 4 221 6603).",
+      "TODO for Faheem: timeanddate.com returned 403, so the new-moon time is cited to Skylive (16:50 London time on 10 Oct = 19:50 UAE) and MoonGiant (date only). Open timeanddate.com/moon/phases/uae/dubai in a browser to add it as a third check. Moonset/moonrise and dark windows are computed (PyEphem, Dubai 25.2N 55.3E).",
+      "TODO for Faheem: Orionids moon: EarthSky says the moon sets before dawn; Royal Museums Greenwich says moonlight interferes with the peak. The 02:25 moonset (computed) reconciles both; the page gives the computed window.",
+      "TODO for Faheem: IMO website was down (only its 2027 PDF calendar was available), so showers rest on EarthSky. Check the IMO 2027 PDF for the Quadrantid peak time.",
+      "TODO for Faheem: Jebel Jais closure (WOW-RAK, 14 Sep 2026) may have ended; update the table row and remove the caveat when the mountain reopens.",
+      "TODO for Faheem: Time Out Dubai (405) and dubaiastronomy.com (robots) could not be opened; no Perseids 2027 or Time Out content used.",
+      "TODO for Faheem: the 'until' field on the this-month section is 2026-10-15; the table inside it and the October FAQ answer also refer to 10 October, so review them after that date.",
+      "TODO for Faheem: Jebel Hafeet fog caution and Al Qudra/Love Lake facilities come from our own place pages, not re-checked today."
+    ]
   },
   {
     slug: 'camping-near-dubai', h1: 'Camping Near Dubai: Best Spots for a Weekend Escape',
@@ -1324,22 +1594,108 @@ const LANDINGS = [
     ]
   },
   {
-    slug: 'wadis', h1: 'Best Wadis in the UAE for Hiking & Swimming',
-    title: 'Best Wadis in the UAE — Hiking & Natural Pools | Sahra & Beyond',
-    desc: 'The best wadis in the UAE for hiking and swimming in natural pools, with GPS, the best season, difficulty and essential flash-flood safety tips.',
-    pick: locations.filter(l => l.category === 'Wadis' || /^wadi-/.test(l.id)),
-    intro: "A wadi is a valley or dry riverbed cut through the mountains — and after the rains, many fill with cool, clear natural pools that are perfect for a swim. The UAE's wadis are some of the most rewarding outdoor escapes in the region: shaded canyons, turquoise pools and scrambly hikes, all within a couple of hours of the cities.\n\nBelow are our favourite wadis in the UAE, with access notes, the best season and difficulty. Wadis are beautiful but demand respect — read the safety section before you go.",
+    slug: 'wadis', related: [["/hiking/", "Hiking in the UAE", "Trails, heat and flash-flood safety"], ["/mountain-escapes/", "Mountain escapes", "Cooler air in the Hajar"], ["/locations/wadi-wurayah/", "Wadi Wurayah", "UNESCO site, guided tours only"]],
+    h1: 'Wadis in the UAE: Pools, Waterfalls and Where to Go',
+    title: 'Wadis in the UAE: Swimming, Waterfalls & Access | Sahra & Beyond',
+    desc: 'Ten wadis in the UAE compared: swimming, 4x4, drive from Dubai, permits and best months, plus the UAE’s waterfalls and flash-flood safety.',
+    pick: ['wadi-wurayah', 'wadi-naqab', 'wadi-showka', 'wadi-kub', 'al-rafisah-dam'].map(id => locations.find(l => l.id === id)).filter(Boolean),
+    intro: "Wadis are the dry valleys that run through the Hajar Mountains, and the UAE's best-known ones sit in Ras Al Khaimah, Fujairah and Sharjah, within about two hours of Dubai. Some hold pools after rain, one has a waterfall that runs all year, and several are better for walking than for swimming.\n\nThis guide compares ten of them side by side, then covers which have water in summer, which are closest to Dubai, the UAE's waterfalls, and the flash-flood and etiquette rules that apply to every wadi. Details are as at 1 October 2026. Access rules change, so check before you go.",
     sections: [
-      { h2: 'What makes a good wadi trip', body: "The best wadi days combine an easy-to-moderate hike with a reward at the end: a swimmable pool, a waterfall, or a viewpoint. Wear shoes you can get wet, bring a dry bag for your phone, and start early to beat both the heat and the crowds. Many wadis involve some boulder-hopping or wading, so a reasonable level of fitness helps." },
-      { h2: 'Flash-flood safety — read this first', body: "Wadis can flood fast and without warning, even when it isn't raining where you are — rain in the mountains upstream can send a wall of water down a dry valley. Never enter a wadi if rain is forecast anywhere in the catchment, check the weather before you go, keep an eye on the sky, and know your exit route to higher ground. If water starts rising or turning muddy, get out immediately." },
-      { h2: 'What to bring', body: "Plenty of water, sun protection, sturdy wet-grip footwear, a dry bag, a small first-aid kit and snacks. A change of clothes for the drive home is welcome after a swim. Each wadi's page has a tailored packing list. Carry out every scrap of rubbish — wadi pools are fragile ecosystems." },
-      { h2: 'Best season for wadis', body: "The cooler months (roughly October to April) are ideal — comfortable hiking temperatures and pools topped up by winter rain. Avoid wadis during and immediately after heavy rain because of flash-flood risk, and avoid the peak summer months when the heat makes the approach hikes dangerous." }
+      {
+        id: 'wadis-compared',
+        h2: 'The wadis compared',
+        body: "The table covers ten wadis, all in the UAE. Where no published source gives a figure, the cell says Not confirmed rather than a guess. The four wadis with their own guide on this site link from the first column.\n\nTwo cautions apply to the whole table. Swimming depends on recent rain and local rules, so treat any pool as a bonus, follow signs and never dive into water you have not checked. And Wadi Wurayah is visited in controlled guided groups, so it is not a turn-up-and-walk wadi.",
+        table: {
+          caption: 'Ten UAE wadis compared, as at 1 October 2026',
+          head: ['Wadi', 'Emirate', 'Can you swim?', '4x4 needed?', 'Drive from Dubai', 'Permit / access', 'Best months'],
+          rows: [
+            [{ t: 'Wadi Wurayah', href: '/locations/wadi-wurayah/' }, 'Fujairah', 'Not confirmed. A freshwater pool sits below the waterfall, but swimming is not addressed', 'Not confirmed. Access is by guided tour', 'Not confirmed. About 45 km from Fujairah city', 'Guided tours only, booked through Fujairah Holidays, from Dh300 a person (July 2026)', 'Cooler months. Tours restart in early to mid-October'],
+            ['Wadi Bih', 'Ras Al Khaimah / Fujairah', 'Shallow pools reported (Visit Ras Al Khaimah, as Al Beeh)', 'An SUV is suggested for the winding roads', 'About 1h30 via the E611', 'Not confirmed', 'October to March'],
+            ['Wadi Ghalilah', 'Ras Al Khaimah', 'Not confirmed. Best known for the hard Stairway to Heaven hike', 'Not confirmed', 'Not confirmed', 'Not confirmed', 'Not confirmed'],
+            ['Wadi Al Hayl', 'Fujairah', 'Small pools and streams. Swimming not confirmed', 'Not confirmed', 'Not confirmed', 'Not confirmed. Described as an ecologically sensitive site', 'October to March'],
+            ['Wadi Siji', 'Fujairah', 'Natural streams and pools. Swimming not confirmed', 'Not confirmed', 'Not confirmed', 'Not confirmed', 'October to March'],
+            ['Wadi Abadilah', 'Fujairah', 'Pools in the wadi. What’s On says swimming is possible', 'Not confirmed', 'About 1h30', 'Not confirmed', 'Not confirmed'],
+            [{ t: 'Wadi Kub', href: '/locations/wadi-kub/' }, 'Ras Al Khaimah / Fujairah', 'Rock pools after rain. Swimming not confirmed', 'A car reaches the trailhead. High clearance for the wadi bed', 'About 1h45 (approximate)', 'Free, open access, no gate', 'October to April'],
+            [{ t: 'Wadi Naqab', href: '/locations/wadi-naqab/' }, 'Ras Al Khaimah', 'Seasonal pools after rain, wading depth', 'Yes, for the last few kilometres to the trailhead', 'About 2 hours', 'No permit. Groups of 10 or more notify RAK tourism authorities', 'October to April'],
+            [{ t: 'Wadi Shawka (Showka)', href: '/locations/wadi-showka/' }, 'Ras Al Khaimah', 'Seasonal natural pools that form after rain', 'No for the dam and park. Higher clearance helps beyond', 'About 1h to 1h15 (around 92 km)', 'Free entry', 'November to April'],
+            ['Wadi Helo (Al Helo)', 'Sharjah', 'Not confirmed. Wikipedia says the valley’s water has dried up', 'Not confirmed', 'About 1h40', 'Not confirmed', 'Not confirmed']
+          ],
+          note: 'Not confirmed means no published source gives the detail yet. Drive times are approximate and depend on traffic. Visit Ras Al Khaimah spells Bih as Al Beeh, and Bih runs across the Ras Al Khaimah and Fujairah boundary.',
+          source: { label: 'MyBayut Fujairah wadi list, Visit Ras Al Khaimah, What’s On, Khaleej Times and our own place guides (full list under Sources)', url: 'https://www.bayut.com/mybayut/fujairah-wadi-list/' }
+        }
+      },
+      {
+        id: 'wadis-water-in-summer',
+        h2: 'Which wadis have water in summer?',
+        body: "Only one wadi in the UAE is reported to have a waterfall that flows all year: Wadi Wurayah. Khaleej Times gives the waterfall as about 13 metres high and says it flows through the summer months, and What's On calls it the UAE's only permanent year-round waterfall. The catch is access. Visits are by guided tour in the cooler months, so the year-round water is not something you can go and see in August.\n\nEverywhere else, assume the pools depend on rain. Visit Ras Al Khaimah says Wadi Shawka's natural pools form after rainfall, and Wadi Naqab and Wadi Kub fill with seasonal pools after winter rain. Wikipedia says the water in Wadi Helo has dried up.\n\nSummer is also the wrong season for the walk itself. Visit Ras Al Khaimah gives October to April as the best hiking season and says summer conditions make the Wadi Naqab trails inadvisable because of the heat."
+      },
+      {
+        id: 'wadis-near-dubai',
+        h2: 'Wadis near Dubai',
+        body: "Drive times below are approximate and from Dubai.\n\nWadi Shawka, Ras Al Khaimah: about an hour to an hour and a quarter. It is the easiest first wadi: any car reaches the dam and park area, entry is free, and the dam area has washrooms and shaded seating.\n\nWadi Abadilah and Wadi Bih: both about an hour and a half. What's On puts Abadilah at 1h30, a trail through farmland described as easy to moderate. MyBayut gives about 90 minutes to Wadi Bih via the E611.\n\nRainbow Valley, Wadi Ghub, Fujairah: about an hour and a half from downtown Dubai, an 11 km round trip of four to six hours through multicoloured layered rock. The Road Reel says a sedan can reach the parking area, no permit is needed, and the small seasonal pools are not suitable for swimming. It lists late November to mid-March as the best months.\n\nWadi Helo, Sharjah: about 1h40 (What's On).\n\nWadi Kub, about 1h45, and Wadi Naqab, about two hours, are the two longer drives. Naqab is a hard mountain hike that needs a 4x4 for the final stretch, and Kub is a quiet wild-camping valley with no facilities.\n\nWadi Wurayah is in Fujairah, about 45 km from Fujairah city. Its drive time from Dubai is not confirmed, and it can only be visited as part of a booked tour."
+      },
+      {
+        id: 'waterfalls-in-the-uae',
+        h2: 'Waterfalls in the UAE',
+        body: "Wadi Wurayah, Fujairah. The UAE's only permanent natural waterfall is about 13 metres high, flows year-round and sits inside a reserve of about 220 square kilometres in the Hajar Mountains (Khaleej Times, 27 July 2026). Wadi Wurayah joined the UNESCO World Heritage List on 25 July 2026 (What's On, 4 August 2026). Visits are by guided tour only, booked through Fujairah Holidays, with packages from Dh300 a person, and individual access is not permitted.\n\nSeasonal waterfalls. Visit Ras Al Khaimah says Wadi Shawka leads past small pools to waterfalls where you can take a dip, and our Wadi Kub guide notes seasonal waterfalls after rain. These appear only after rain, and rain is also what makes a wadi dangerous.\n\nMan-made waterfalls. Two waterfalls on Sharjah's east coast are artificial. PropertyFinder describes the Khorfakkan waterfall as man-made, built into natural rock above Khorfakkan Beach, and free to visit (October 2025). Visit Sharjah calls the waterfall at Al Rafisah Dam man-made, and PropertyFinder puts the dam about 10 to 15 minutes from the Khorfakkan waterfall. Both are worth a stop, but neither is a natural waterfall."
+      },
+      {
+        id: 'wadi-flash-flood-safety',
+        h2: 'Flash-flood safety: read this first',
+        body: "Wadis can flood fast and without warning, even when it is not raining where you are. Rain in the mountains upstream can send a wall of water down a dry valley. Visit Ras Al Khaimah says Wadi Naqab can fill with water quickly and that you should never attempt the hike when rain is expected.\n\nNever enter a wadi if rain is forecast anywhere in the catchment. Check the National Center of Meteorology forecast before you go, keep an eye on the sky, and know your exit route to higher ground. If water starts rising or turning muddy, get out immediately. Do not camp in the wadi bed."
+      },
+      {
+        id: 'wadi-etiquette',
+        h2: 'Wadi etiquette and what to bring',
+        body: "Wadi pools and streams are fragile. MyBayut notes that littering is strictly prohibited in the Fujairah wadis, with potential fines, so carry out every scrap of rubbish. Visit Ras Al Khaimah advises dressing modestly and leaving no trace. Keep out of areas marked as protected or under renovation, and stay on the paths at sensitive sites such as Wadi Al Hayl and Wadi Wurayah.\n\nBring plenty of water, sun protection, sturdy shoes that grip when wet, a dry bag for your phone, a small first-aid kit and snacks. Most wadis have no shop or tap, and mobile signal can be patchy. Start early to beat both the heat and the crowds, and tell someone your route."
+      },
+      {
+        id: 'best-season-for-wadis',
+        h2: 'Best season for wadis',
+        body: "October to April is the usual window, with some wadis quoted slightly narrower: November to April for Shawka, and October to March for the Fujairah wadis in the MyBayut list. Avoid wadis during and just after heavy rain, and avoid summer, when the heat makes the approach walks unsafe."
+      },
+      {
+        id: 'wadi-shab-is-in-oman',
+        h2: 'Wadi Shab is in Oman',
+        body: "Wadi Shab, the swimming wadi near Tiwi, is in the Al Sharqiyah region of Oman, less than two hours' drive from Muscat (Oman Tripper). It is not in the UAE and is not in this guide."
+      }
     ],
     faqs: [
-      ['Can you swim in the wadis in the UAE?', 'Yes — many UAE wadis have natural pools you can swim in, especially after the winter rains. Always check water depth and conditions, never dive into unknown pools, and avoid wadis when rain is forecast due to flash-flood risk.'],
-      ['Are the wadis safe?', 'They are safe with preparation, but flash floods are a real danger. Never enter a wadi if rain is forecast anywhere upstream, check the weather, and have an escape route to higher ground. Wear grippy footwear and do not go alone.'],
-      ['When is the best time to visit a wadi?', 'October to April offers comfortable temperatures and fuller pools. Avoid the summer heat and steer clear during or right after heavy rain.'],
-      ['Do I need a 4x4 to reach the wadis?', 'It depends on the wadi. Some have paved access and car parks; others need a 4x4 for the final stretch. Check the access notes on each location page before you set off.']
+      ['Can you swim in the wadis in the UAE?', "Sometimes. Wadi Shawka, Wadi Naqab and Wadi Kub have seasonal pools that form after rain, and What's On says swimming is possible at Wadi Abadilah. Whether swimming is allowed at Wadi Wurayah is not confirmed, and the small pools in Rainbow Valley are described as not suitable for swimming. Pools depend on recent rain, so check conditions, follow signs and never dive into water you have not checked."],
+      ['Is there a waterfall in the UAE?', "Yes. Wadi Wurayah in Fujairah has the UAE's only permanent natural waterfall, about 13 metres high and flowing year-round according to Khaleej Times. Other waterfalls appear only after rain. The waterfalls at Khor Fakkan and Al Rafisah Dam on Sharjah's east coast are man-made."],
+      ['Can I visit Wadi Wurayah?', "Only on a guided tour. Khaleej Times (27 July 2026) says tours are booked through Fujairah Holidays, individual access is not permitted, and packages start from Dh300 a person. Tours run in the cooler months and restart in early to mid-October."],
+      ['Do I need a 4x4 to reach the wadis?', "It depends on the wadi. A regular car reaches the dam and park area at Wadi Shawka and the trailhead at Wadi Kub. Wadi Naqab needs a 4x4 for the last few kilometres to the trailhead. MyBayut suggests an SUV for the winding roads at Wadi Bih. For several wadis in the table the access is not confirmed."],
+      ['Which wadi is closest to Dubai?', "Wadi Shawka in Ras Al Khaimah is the closest of the ten, at about an hour to an hour and a quarter. Wadi Abadilah and Wadi Bih are about an hour and a half away, and Rainbow Valley in Wadi Ghub is about the same."],
+      ['When is the best time to visit a wadi in the UAE?', "October to April, with the exact window varying by wadi: November to April for Wadi Shawka and October to March for the Fujairah wadis listed by MyBayut. Avoid summer heat, and never enter a wadi during or just after heavy rain or when rain is forecast upstream."],
+      ['Is Wadi Shab in the UAE?', "No. Wadi Shab is in the Al Sharqiyah region of Oman, less than two hours from Muscat. The wadis in this guide are all in the UAE."]
+    ],
+    sources: [
+      ['MyBayut: Fujairah wadis (Wurayah, Al Hayl, Siji, Bih and more)', 'https://www.bayut.com/mybayut/fujairah-wadi-list/'],
+      ['MyBayut: Wadi Bih', 'https://www.bayut.com/mybayut/wadi-bih-ras-al-khaimah/'],
+      ['Visit Ras Al Khaimah: the UAE’s hidden waterfalls and wadis (27 March 2023)', 'https://visitrasalkhaimah.com/blog/a-guide-to-the-uaes-hidden-waterfalls-and-wadis/'],
+      ['Visit Ras Al Khaimah: Wadi Naqab hike', 'https://visitrasalkhaimah.com/blog/wadi-naqab-hike/'],
+      ['Visit Ras Al Khaimah: Wadi Shawka', 'https://visitrasalkhaimah.com/location/place/wadi-shawka/'],
+      ['What’s On: hiking trails to try in the UAE (3 October 2024)', 'https://whatson.ae/2024/10/hiking-trails-to-try-in-the-uae/'],
+      ['Khaleej Times: how to visit Wadi Wurayah (27 July 2026)', 'https://www.khaleejtimes.com/travel/uae-attractions/how-to-visit-wadi-wurayah-fujairah'],
+      ['What’s On: Wadi Wurayah, the UAE’s first natural UNESCO World Heritage Site (4 August 2026)', 'https://whatson.ae/2026/08/wadi-wurayah-a-guide-to-the-uaes-first-natural-unesco-world-heritage-site/'],
+      ['Wikipedia: Wadi Helo', 'https://en.wikipedia.org/wiki/Wadi_Helo'],
+      ['The Road Reel: Rainbow Valley (Spectrum) trail, Fujairah', 'https://www.theroadreel.com/rainbow-valley-hike-fujairah-uae/'],
+      ['PropertyFinder: Khorfakkan waterfall guide (October 2025)', 'https://www.propertyfinder.ae/blog/khorfakkan-waterfall/'],
+      ['Visit Sharjah: the waterfall at Al Rafisah Dam', 'https://www.visitsharjah.com/al-rafisah-dam/experiences/the-waterfall/'],
+      ['Oman Tripper: Wadi Shab', 'https://omantripper.com/wadi-shab/'],
+      ['National Center of Meteorology (UAE)', 'https://www.ncm.gov.ae/']
+    ],
+    todo: [
+      'TODO for Faheem: /locations/wadi-wurayah/ is being built in parallel; the table and pick link to it. Confirm the page exists at build time (pick uses .filter(Boolean), the table link would 404 if it does not).',
+      'TODO for Faheem: Wadi Wurayah swimming, 4x4 and Dubai drive time are Not confirmed. Khaleej Times mentions a freshwater pool but not whether swimming is allowed; ask Fujairah Holidays. Khaleej Times also says visits run on Saturdays with limited spaces and What’s On says the site has been open since January 2026; neither is published here until Fujairah Holidays confirms the current schedule.',
+      'TODO for Faheem: no source found for Ghalilah (swim, 4x4, drive, permit, months), Al Hayl or Siji (4x4, drive, permit), Abadilah (4x4, permit, months; Greenway Adventures, 2022, says a sedan is enough and the fee depends on group size, but it is an old operator page) or Helo (4x4, permit, months). Fill from first-hand notes or an official source, or drop the rows.',
+      'TODO for Faheem: Wadi Bih 4x4 conflict. MyBayut says to explore by 4-wheel SUV; wow-rak.com (29 Sep 2026, a minor source) says 4x4 not required and entry free. Table shows the MyBayut line only. Also confirm Visit RAK’s Al Beeh is the same wadi as Wadi Bih (assumed from spelling and the RAK location).',
+      'TODO for Faheem: Wadi Helo swimming conflict. What’s On (2024) lists a lagoon and swimming as possible; Wikipedia says the water has dried up. Table shows only the Wikipedia line and Not confirmed.',
+      'TODO for Faheem: /locations/wadi-shab.json still exists (category Wadis, emirate Tiwi, desc says swim through turquoise pools). It was in the old pick and is surfaced on /places/ and in the GSC list (14 impressions). It is in Oman. Recommend removing the page or redirecting it, and certainly not listing it as a UAE wadi.',
+      'TODO for Faheem: al-rafisah-dam is kept in pick only to support the man-made waterfall paragraph (it is a dam, not a wadi). Drop it from pick if you want only wadis in the cards. jabal-yanas was dropped (a summit, not a wadi).',
+      'TODO for Faheem: Khorfakkan waterfall height differs by source (our Khor Fakkan guide says about 45 m from Gulf News; PropertyFinder says 43 m above sea level, 45 m long, 11 m wide), so no height is given here. PropertyFinder opening hours (8am to 6pm) not published here; add with an as-at date if wanted.',
+      'TODO for Faheem: Wadi Kub drive time (about 1h45) is our own estimate per the Kub page notes, not an official figure. Shawka 1h to 1h15 is our own page; Visit RAK gives about 92 km.',
+      'TODO for Faheem: the Wadi Wurayah Dh300 price and UNESCO date (25 July 2026) are as read on 1 October 2026 from Khaleej Times and What’s On; check them against the new Wurayah location page so both pages agree.'
     ]
   },
   {
@@ -1363,7 +1719,7 @@ const LANDINGS = [
     ]
   },
   {
-    slug: 'mountain-escapes', h1: 'Best Mountain Escapes in the UAE',
+    slug: 'mountain-escapes', related: [["/hiking/", "Hiking in the UAE", "Trails by emirate, season and safety"], ["/wadis/", "Wadis in the UAE", "Ten wadis compared"], ["/hatta-guide/", "Hatta day trip", "Wadi Hub, heritage village and the dam"]], h1: 'Best Mountain Escapes in the UAE',
     title: 'Best Mountain Escapes in the UAE — Hikes & Cool-Air Getaways | Sahra & Beyond',
     desc: 'The best mountain escapes in the UAE — cooler air, big views and hikes in the Hajar range, with GPS, the best season and what to bring.',
     pick: locations.filter(l => l.category === 'Mountains'),
@@ -1382,28 +1738,60 @@ const LANDINGS = [
     ]
   },
   {
-    slug: 'hatta-guide', h1: 'Hatta: A Complete Guide to the Mountain Escape',
-    title: 'Hatta Guide — Dam, Kayaking, Hiking & Things to Do | Sahra & Beyond',
-    desc: 'A complete guide to Hatta — the Hatta Dam, kayaking, mountain biking, hiking and the best time to visit this mountain escape near Dubai.',
-    pick: ['hatta'].map(id => locations.find(l => l.id === id)).filter(Boolean),
-    intro: "Tucked into the Hajar mountains as a mountain exclave of Dubai, Hatta is the emirate's favourite high-altitude escape — cooler air, turquoise dam water and a whole hub of outdoor activities, all around a 90-minute drive from the city. It's the easiest way to swap skyscrapers for switchback roads and mountain views without leaving the emirate.\n\nThis guide covers what to do in Hatta, how to get there, the best time to go and what to bring, so you can plan a great day trip or weekend.",
-    sections: [
-      { h2: 'Things to do in Hatta', body: "Hatta packs a lot in. The headline is the Hatta Dam, where you can hire kayaks and pedal boats on the famously blue water. Nearby, the activity hub offers mountain biking trails, a zipline, archery and more. Add scenic hiking and mountain-bike trails of varying difficulty, the heritage village, and some of the best stargazing and drone scenery in the emirate, and there's easily a full day — or a weekend — here." },
-      { h2: 'The Hatta Dam and kayaking', body: "The dam is the postcard shot: vivid blue-green water hemmed in by rocky peaks. Kayaks and pedal boats are available to rent on site, and a slow paddle into the quieter arms of the reservoir is the best way to take it in. Go early in the day for calm water, cooler temperatures and smaller crowds, especially on weekends." },
-      { h2: 'Getting there and the best time to go', body: "Hatta sits about 90 minutes to two hours from central Dubai by car along a good, scenic road. The drive passes briefly through territory near the Oman border but the main route stays within the UAE — carry your ID just in case. The cooler months from October to May are by far the best time; summer is hot, though the altitude keeps it a touch cooler than the city." },
-      { h2: 'What to bring', body: "Comfortable shoes for walking and trails, sun protection, plenty of water, a hat and a light layer for breezy viewpoints. Bring cash or card for activity rentals, a power bank, and a camera or drone if you have one — the scenery rewards it. If you plan to hike, treat it like any mountain outing: more water than you think, snacks and a charged phone with offline maps." }
-    ],
-    faqs: [
-      ['Is Hatta worth visiting?', 'Yes — Hatta offers mountain scenery, the turquoise Hatta Dam, kayaking, mountain biking and hiking, all within about a 90-minute drive of Dubai. It is one of the best outdoor day trips in the emirate.'],
-      ['Can you kayak at Hatta Dam?', 'Yes. Kayaks and pedal boats are available to rent at the Hatta Dam. Go early in the day for calmer water and fewer crowds, especially on weekends.'],
-      ['How far is Hatta from Dubai?', 'Hatta is roughly a 90-minute to two-hour drive from central Dubai along a scenic mountain road. Carry your ID, as the route passes close to the Oman border.'],
-      ['When is the best time to visit Hatta?', 'October to May, when the weather is cool and comfortable for outdoor activities. The mountain altitude keeps it slightly cooler than the city year-round.']
-    ]
-  },
+      slug: 'hatta-guide', related: [["/hiking/", "Hiking in the UAE", "Hatta Wadi Hub routes and more"], ["/locations/hatta/", "Hatta Dam", "Kayaking, prices and hours"], ["/mountain-escapes/", "Mountain escapes", "More of the Hajar"]], h1: 'Hatta Day Trip from Dubai: Wadi Hub, Heritage Village and the Dam',
+      title: 'Hatta Day Trip from Dubai: Wadi Hub, Heritage Village & Dam',
+      desc: 'Plan a Hatta day trip from Dubai: Hatta Wadi Hub season and routes, Hatta Heritage Village hours and entry, the dam and how long the drive takes.',
+      pick: ['hatta'].map(id => locations.find(l => l.id === id)).filter(Boolean),
+      intro: "Hatta is Dubai's mountain exclave in the Hajar range, about 90 minutes by car from the city according to Visit Hatta. A day there usually combines three stops that sit close together: Hatta Wadi Hub for outdoor activities and trails, Hatta Heritage Village for the old settlement, and Hatta Dam for the turquoise reservoir.\n\nThis guide is the day-trip plan. The dam and the kayak have their own page, with boat types, ages, weight limits, prices and opening hours. Prices, hours and dates below carry the source and the date they were read, and where a source is not official the text says so.",
+      sections: [
+        { id: 'getting-there', h2: 'Getting there and when to go', body: "Visit Hatta gives the drive from Dubai as about 90 minutes by car. The usual route is the E44 (Dubai-Hatta Road), roughly 105 km, and it is busier on Fridays and weekends, so a weekday start is easier. There is no realistic public transport option for a day trip; the practical choices are your own car, a private driver or an organised tour.\n\nThe cooler months, October to May, are the sensible window. Summer is very hot and best avoided for outdoor activity. Hatta borders Oman, so carry ID in case your route comes near the Hatta-Al Wajajah border post, although the Wadi Hub, the Heritage Village and the dam all sit well inside the UAE." },
+        { id: 'wadi-hub', h2: 'Hatta Wadi Hub', body: "Hatta Wadi Hub is the activity centre beside the dam. Visit Hatta's Plan your visit page gives the season as 1 October to 5 May, and its adventures page says Season 9 opens on 28 September (both read 1 October 2026). What's On reported the hub closing for summer on 3 May 2026, with the dam and kayaking staying open. Check the dates before you drive out, because the hub is seasonal.\n\nOn the trails, Visit Hatta describes five routes totalling 32.6 km, graded so that there is something for different levels. Individual route names and lengths are on the operator's Open Trails map, which is linked from its mountain biking page, so download it before you go rather than relying on phone signal.\n\nOther activities listed by Visit Hatta include mountain biking, a pool area and rides for children. Poolside access is listed at AED 25 per person (adventures page, read 1 October 2026). Opening hours are listed differently on different Visit Hatta pages, so confirm with the operators: Hatta Outdoor on +971 50 136 0085 or Go Gravity on +971 50 760 0278, the numbers Visit Hatta publishes.",
+          table: { caption: 'Hatta Wadi Hub at a glance (read 1 October 2026)', head: ['Item', 'What the source says'], rows: [
+            ['Season', '1 October to 5 May (Visit Hatta, Plan your visit); Season 9 opens 28 September (Visit Hatta, adventures)'],
+            ['Trail network', 'Five graded routes, 32.6 km in total (Visit Hatta, mountain biking)'],
+            ['Poolside access', 'AED 25 per person (Visit Hatta, adventures)'],
+            ['Opening hours', 'Not confirmed: Visit Hatta pages differ'],
+            ['Bookings', 'Hatta Outdoor +971 50 136 0085; Go Gravity +971 50 760 0278']
+          ], note: 'Fees and hours change; confirm with the operator on the day.', source: { label: 'Visit Hatta: Adventures at Hatta Wadi Hub', url: 'https://www.visithatta.com/en/play/adventures' } } },
+        { id: 'heritage-village', h2: 'Hatta Heritage Village', body: "Hatta Heritage Village is a restored settlement of reconstructed homes and stalls offering traditional crafts. Bayut lists Bait Al Wali (the former ruler's residence), Hatta Fort, watchtowers, a heritage museum and the Hatta falaj irrigation system among its features. It is a short drive from the dam and works as a slower stop after the water or the trails.\n\nBayut describes a visit as one of the free things to do in Dubai. Opening hours come from two third-party listings and differ: WhichMuseum lists 7:30am to 8:30pm on most days and 2:30pm to 8:30pm on Fridays, while Bayut lists daily 8am to 8pm (both read 1 October 2026). WhichMuseum advises checking hours before you visit, as they can change on special days and holidays. Neither listing is the village's own, so treat the times as a guide.",
+          table: { caption: 'Hatta Heritage Village: published hours (read 1 October 2026)', head: ['Source', 'Hours listed', 'Entry'], rows: [
+            ['WhichMuseum', '7:30am to 8:30pm; Friday 2:30pm to 8:30pm', 'Not stated'],
+            ['Bayut (MyBayut guide)', 'Daily, 8am to 8pm', 'Free, per Bayut']
+          ], note: 'Third-party listings; no official hours were found.', source: { label: 'Bayut: Hatta Heritage Village guide', url: 'https://www.bayut.com/mybayut/hatta-heritage-village/' } } },
+        { id: 'dam', h2: 'Hatta Dam, briefly', body: "Hatta Dam is the reservoir most people come to photograph, and it is the base for Hatta Kayak. Swimming in the reservoir is not allowed. For boat types, age and weight limits, prices, opening hours and access, use the dedicated dam and kayak page.",
+          table: { caption: 'More on the dam', head: ['Guide', 'What it covers'], rows: [[{ t: 'Hatta Dam and kayaking', href: '/locations/hatta/' }, 'Boats, ages and weight limits, prices, hours, access, swimming']] } },
+        { id: 'planning', h2: 'Putting the day together', body: "A simple order is the hub or the dam in the morning, when it is cooler, and the Heritage Village later in the day, since its listed hours run to the evening. Bring water, sun protection, a hat and cash or a card for activities, and fill the tank before leaving the city. Carry snacks and water as well; the Heritage Village has no cafés or shops." }
+      ],
+      faqs: [
+        ['How long is the drive from Dubai to Hatta?', 'Visit Hatta gives about 90 minutes by car. The E44 route is roughly 105 km and is slower on Fridays and weekends.'],
+        ['When is the Hatta Wadi Hub season?', 'Visit Hatta gives 1 October to 5 May on its Plan your visit page, and its adventures page says Season 9 opens on 28 September (both read 1 October 2026). Confirm before you go.'],
+        ['How many trails does Hatta Wadi Hub have?', 'Visit Hatta describes five graded routes totalling 32.6 km, with route details on the Open Trails map linked from its mountain biking page.'],
+        ['Is Hatta Heritage Village free?', 'Bayut describes it as one of the free things to do in Dubai (read 1 October 2026). The village has no listing of its own among the sources checked, so confirm locally.'],
+        ['What are the opening hours of Hatta Heritage Village?', 'Third-party listings differ: WhichMuseum gives 7:30am to 8:30pm (Friday from 2:30pm) and Bayut gives daily 8am to 8pm, both read 1 October 2026. Check locally before you go.'],
+        ['Can you swim at Hatta Dam?', 'No. Swimming in the reservoir is not allowed for safety reasons (dubaiofw, read 1 October 2026). See the Hatta Dam and kayaking page for what you can do on the water.'],
+        ['Where is the Hatta kayak information?', 'On the Hatta Dam and kayaking page at /locations/hatta/, which has boat types, ages, weight limits, prices and hours.']
+      ],
+      sources: [
+        ['Visit Hatta: Plan your visit', 'https://www.visithatta.com/en/explore-hatta/plan-your-visit'],
+        ['Visit Hatta: Adventures at Hatta Wadi Hub', 'https://www.visithatta.com/en/play/adventures'],
+        ['Visit Hatta: Mountain biking', 'https://www.visithatta.com/en/play/mountain-biking'],
+        ['Bayut: Hatta Heritage Village guide', 'https://www.bayut.com/mybayut/hatta-heritage-village/'],
+        ['WhichMuseum: Hatta Heritage Village opening hours', 'https://whichmuseum.com/museum/hatta-heritage-village-24030/opening-hours'],
+        ['What\'s On: Hatta announces closing date (May 2026)', 'https://whatson.ae/2026/05/hatta-announces-closing-date/'],
+        ['dubaiofw: Hatta Dam', 'https://dubaiofw.com/hatta-dam/'],
+        ['Uptown DXB: Dubai to Hatta distance', 'https://www.uptowndxb.com/dubai-to-hatta-distance/']
+      ],
+      todo: [
+        'TODO for Faheem: confirm Hatta Wadi Hub opening hours (Visit Hatta pages disagree) and the 2026-27 season dates (1 Oct-5 May vs Season 9 opens 28 Sep).',
+        'TODO for Faheem: confirm Hatta Heritage Village hours and entry fee with the site itself (only WhichMuseum and Bayut found; Visit Dubai page returned 404).',
+        'TODO for Faheem: confirm Hatta Kayak hours (7am-9pm vs 7am-5:30pm); see /locations/hatta/.',
+        'TODO for Faheem: Visit Hatta metadata mentions a 52 km trail with 4 challenge levels, which conflicts with 32.6 km across 5 routes; kept 32.6 km (body text).'
+      ]
+    },
   {
-    slug: 'best-beaches', h1: 'Best Beaches in the UAE for a Day Out', compare: true,
-    title: 'Best Beaches in the UAE — Swimming, Snorkeling & Calm Water | Sahra & Beyond',
-    desc: 'The best beaches in the UAE for swimming, snorkeling and a relaxed day by the sea, with the best season, access notes and tips for residents.',
+    slug: 'best-beaches', related: [["/fujairah-beaches/", "Fujairah beaches", "The east coast, beach by beach"], ["/snorkeling/", "Snorkeling in the UAE", "Reefs you can reach from shore"]], h1: 'Best Beaches in the UAE for a Day Out', compare: true,
+    title: 'Best Beaches in the UAE: Quiet & Natural Beaches Compared',
+    desc: 'Quiet and natural beaches across the UAE compared side by side: which sea, car or 4x4, toilets and the best months, with GPS and a guide for each beach.',
     pick: locations.filter(l => l.category === 'Coast' || l.id === 'al-rams-beach'),
     intro: "With two very different coastlines — the calm Arabian Gulf to the west and the clear, reef-rich Gulf of Oman to the east — the UAE has a beach for every kind of day out. Whether you want gentle water for the family, a snorkel over a living reef or a quiet stretch away from the resorts, the spots below are our favourites.\n\nEach has access notes, the best season and a difficulty rating, so you can pick the right beach for your plans and travel prepared.",
     sections: [
@@ -1421,8 +1809,8 @@ const LANDINGS = [
   },
   {
     slug: 'desert-safari', h1: 'Desert Safari & Best Dune Spots in the UAE',
-    title: 'Desert Safari & Best Dune Spots in the UAE | Sahra & Beyond',
-    desc: 'Where to find the best dunes in the UAE for a desert safari, dune drives, sandboarding and overnight desert camps, with seasons and safety tips.',
+    title: 'Desert Safari in the UAE: Best Dune Spots, DIY or Tour',
+    desc: 'Where the best dunes are for a UAE desert safari, from Liwa to Big Red, plus self-drive safety, the season and when a guided tour makes more sense.',
     pick: locations.filter(l => l.category === 'Dunes'),
     intro: "Rolling golden dunes are the classic image of the UAE, and there is no better way to experience them than out in the desert itself — whether on a guided safari or a self-drive adventure. From the towering dunes of Liwa to the accessible sands closer to the cities, the spots below are where the desert is at its most spectacular.\n\nThis guide covers what to expect, whether to self-drive or book a tour, dune-driving safety and the best season to go.",
     sections: [
@@ -1477,7 +1865,7 @@ const LANDINGS = [
     ]
   },
   {
-    slug: 'fujairah-beaches',
+    slug: 'fujairah-beaches', related: [["/snorkeling/", "Snorkeling in the UAE", "Reefs you can reach from shore"], ["/best-beaches/", "Best beaches in the UAE", "The country side by side"]],
     h1: 'Fujairah Beaches: A Field Guide to the East Coast',
     title: 'Fujairah Beaches: Swimming & Snorkeling Guide | Sahra & Beyond',
     desc: 'Fujairah beaches from Dibba to Kalba: where to swim, how to snorkel Snoopy Island and Dibba Rock, drive times from Dubai, seasons and water safety.',
@@ -1516,7 +1904,7 @@ const LANDINGS = [
     ]
   },
   {
-    slug: 'hiking',
+    slug: 'hiking', related: [["/wadis/", "Wadis in the UAE", "Ten wadis compared"], ["/mountain-escapes/", "Mountain escapes", "Cooler air in the Hajar"], ["/trail/", "Sahra Trail", "Our running kit for wadis and ridges"]],
     h1: 'Hiking in the UAE: Trails in Dubai, RAK & Fujairah',
     title: 'Hiking in the UAE: Trails in Dubai, RAK & Fujairah',
     desc: 'Hiking in the UAE: trails at Jebel Jais, Wadi Naqab, Wadi Shawka, Hatta and Al Rafisah, with the season, heat and water, flash-flood warnings and rules.',
@@ -1555,6 +1943,13 @@ const LANDINGS = [
   }
 ];
 
+/* 1 Oct 2026: every place page links the guides whose picks include it (SEO handover item 2:
+   no orphan guides, contextual links both ways). */
+PLACE_CTX.guidesFor = id => LANDINGS.filter(L => Array.isArray(L.pick) && L.pick.some(x => x && x.id === id)).map(L => [`/${L.slug}/`, L.h1]);
+locations.forEach(renderLocationPage);
+if (!process.env.VERCEL) draftLocations.forEach(renderLocationPage);
+else if (draftLocations.length) console.log('  – drafts held back: ' + draftLocations.map(l => l.id).join(', '));
+
 const GUIDE_TEE = {
   stargazing: 'al-quaa-desert', camping: 'al-quaa-desert', 'camping-near-dubai': 'al-quaa-desert',
   'secluded-camping': 'al-quaa-desert', 'desert-camping-beginners': 'liwa', 'desert-safari': 'liwa',
@@ -1585,7 +1980,7 @@ LANDINGS.forEach(L => {
     });
   }
   const sectionsHtml = Array.isArray(L.sections)
-    ? L.sections.map(s => `<section class="guide-sec"><h2>${esc(s.h2)}</h2><div class="content">${paras(s.body)}</div></section>`).join('')
+    ? L.sections.filter(s => !s.until || new Date().toISOString().slice(0, 10) <= s.until).map(s => `<section class="guide-sec"${s.id ? ` id="${esc(s.id)}"` : ''}${s.until ? ` data-until="${esc(s.until)}"` : ''}><h2>${esc(s.h2)}</h2><div class="content">${paras(s.body)}</div>${PLACES.tableHtml(s.table)}${s.after ? paras(s.after) : ''}</section>`).join('')
     : '';
   const faqHtml = (Array.isArray(L.faqs) && L.faqs.length)
     ? `<section class="faq"><h2>Frequently asked questions</h2>${L.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>`
@@ -1616,6 +2011,7 @@ LANDINGS.forEach(L => {
     ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
     ${L.compare && L.pick.length ? `<section class="guide-sec"><h2>The beaches side by side</h2><div class="cmp-wrap" style="overflow-x:auto"><table class="cmp" style="border-collapse:collapse;width:100%;min-width:560px;font-size:14px"><thead><tr>${['Beach', 'Emirate', 'Sea', 'Getting there', 'Toilets', 'Best months'].map(h => `<th style="text-align:left;padding:8px 10px;border-bottom:2px solid rgba(42,32,22,.2)">${h}</th>`).join('')}</tr></thead><tbody>${L.pick.map(l => { const a = (l.access || {}).vehicle, f = (l.facilities || {}).toilets; const V = { '2wd': 'Any car', '4wd': '4x4', boat: 'Boat', 'on-foot': 'Car, then on foot', 'high-clearance': 'High-clearance car' }; const T = { yes: 'Yes', no: 'No', some: 'Some', nearby: 'Nearby' }; return `<tr>${[`<a href="/locations/${l.id}/">${esc(l.name)}</a>`, esc(l.emirate), Number(l.lng) > 56.2 ? 'Gulf of Oman' : 'Arabian Gulf', V[a] || 'See guide', T[f] || 'Not confirmed', esc(l.season || '')].map(c => `<td style="padding:8px 10px;border-bottom:1px solid rgba(42,32,22,.1)">${c}</td>`).join('')}</tr>`; }).join('')}</tbody></table></div><p style="font-size:13px;opacity:.8">Taken from each beach's guide; open a guide for the detail and its sources.</p></section>` : ''}
     ${sectionsHtml}
+    ${Array.isArray(L.related) && L.related.length ? `<section class="guide-sec"><h2>Related guides</h2><nav class="catnav" aria-label="Related guides">${L.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2] || '')}</span></a>`).join('')}</nav></section>` : ''}
     ${faqHtml}
     ${Array.isArray(L.sources) && L.sources.length ? `<section class="guide-sec guide-src"><h2>Sources</h2><ul>${L.sources.map(r => `<li><a href="${esc(r[1])}" target="_blank" rel="noopener nofollow">${esc(r[0])}</a></li>`).join('')}</ul></section>` : ''}
     ${GUIDE_TEE[L.slug] ? teeFor(GUIDE_TEE[L.slug], L.h1) : collectionBlock(null)}
@@ -1665,7 +2061,7 @@ function contactWays() {
   const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
   const jsonld = [
     { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical },
-    { "@context": "https://schema.org", "@type": "Organization", "name": "Sahra & Beyond", "legalName": "SAHRA AND BEYOND FZE LLC", "url": SITE + "/", "logo": SITE + "/icon-512.png", "slogan": TAGLINE, "email": "hello@sahraandbeyond.ae", "telephone": "+971585449946", "sameAs": sameAs },
+    { "@context": "https://schema.org", "@type": "Organization", "@id": SITE + "/#organization", "name": "Sahra & Beyond", "alternateName": ["Sahra and Beyond", "Sahra Beyond"], "legalName": "SAHRA AND BEYOND FZE LLC", "url": SITE + "/", "logo": SITE + "/icon-512.png", "slogan": TAGLINE, "email": "hello@sahraandbeyond.ae", "telephone": "+971585449946", "sameAs": sameAs },
     { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
       { "@type": "ListItem", "position": 2, "name": "About", "item": canonical }
@@ -1802,11 +2198,14 @@ if (LAUNCHED || REVEALED) (function () {
           .map((p, i) => ({ "@type": "ListItem", "position": i + 1, "item": prod(p) }))
       }
     ];
-    const meta = `\n<meta name="description" content="${esc(desc)}">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-regular-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-regular-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
+    const meta = `\n<meta name="description" content="${esc(desc)}">\n${robotsMeta(false)}\n<meta property="og:locale" content="en_AE">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-regular-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-regular-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
     html = html.replace(/<meta name="robots"[^>]*><!--[^>]*-->\n?/, '');
     // shop-preview.html carries its own canonical/og:image so the preview page is
     // correct on its own; strip them here or /shop/ ends up with two of each.
     html = html.replace(/\n?<link rel="canonical"[^>]*>/g, '');
+    /* 1 Oct 2026: the preview's own description / og / twitter tags were surviving next to the
+       generated set (two descriptions and two og:titles on /shop/). Strip them all first. */
+    html = html.replace(/\n?<meta (name="description"|property="og:[a-z_:]+"|name="twitter:[a-z_:]+")[^>]*>/g, '');
     html = html.replace(/\n?<meta property="og:image(:alt)?"[^>]*>/g, '');
     html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>` + meta);
     html = html.replace(/(['"])shirts\//g, '$1/shirts/');
@@ -1880,7 +2279,7 @@ if (LAUNCHED || REVEALED) (function () {
     "mainEntity": {
       "@type": "Organization",
       "name": "SAHRA AND BEYOND FZE LLC",
-      "alternateName": "Sahra & Beyond",
+      "alternateName": ["Sahra & Beyond", "Sahra and Beyond", "Sahra Beyond"],
       "url": SITE,
       "email": "hello@sahraandbeyond.ae",
       "telephone": "+971585449946",
@@ -1965,8 +2364,9 @@ if (LAUNCHED || REVEALED) (function () {
     { "@context": "https://schema.org", "@type": "Product",
       "name": "The Sahra Tote", "image": [img], "brand": { "@type": "Brand", "name": "Sahra & Beyond" },
       "description": 'A natural canvas tote carrying the Sahra & Beyond mark, printed in terracotta. Free with every order while the Founding Edition run lasts.',
-      "offers": { "@type": "Offer", "url": canonical, "priceCurrency": "AED", "price": "50",
-        "availability": "https://schema.org/InStock", "seller": { "@type": "Organization", "name": "Sahra & Beyond" } } },
+      "offers": Object.assign({ "@type": "Offer", "url": canonical, "priceCurrency": "AED", "price": "50", "priceValidUntil": `${new Date().getFullYear() + 1}-12-31`,
+        "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition", "seller": { "@type": "Organization", "name": "Sahra & Beyond" } },
+        JSON.parse('{' + buildProducts.LD_SHIP + '}')) },
     { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
       { "@type": "ListItem", "position": 2, "name": "The Sahra Tote", "item": canonical }
@@ -2222,6 +2622,7 @@ body.tote-page main{max-width:1180px}
     ${PLACES.hubExplorer(locations)}
     ${secs}
     ${restHtml}
+    <section class="guide-sec" id="guides"><h2>Guides that pull these places together</h2><nav class="catnav" aria-label="Guides">${FG.GUIDES.filter(g => g[0] !== '/places/').map(g => `<a href="${g[0]}"><b>${esc(g[1])}</b><span>${esc((LANDINGS.find(L => '/' + L.slug + '/' === g[0]) || {}).desc ? (LANDINGS.find(L => '/' + L.slug + '/' === g[0]).pick || []).length + ' places' : '')}</span></a>`).join('')}</nav></section>
     ${shopBlock(null)}
     <p class="back" style="margin-top:26px"><a href="/">&larr; Back to Sahra &amp; Beyond</a></p>
   </main>${PLACES.hubScript()}`;
@@ -2300,7 +2701,8 @@ function gsmTableHtml() {
 const COMMERCE = [
   {
     slug: 't-shirts', emoji: '◈', cat: 'Dunes',
-    h1: 'UAE T-Shirts',
+    items: ["al-quaa-galaxy-regular", "al-quaa-galaxy-oversized", "hajar-mountains-regular", "hajar-mountains-oversized", "empty-quarter-regular", "empty-quarter-oversized"],
+    h1: 'T-Shirts in Dubai & the UAE',
     title: 'T-Shirts in Dubai & the UAE — 230 GSM Graphic Tees',
     desc: 'Original UAE graphic tees from real places: an embroidered desert tee from Liwa, a mountain t-shirt from the Hajar, the Milky Way over Al Quaa. 230gsm cotton.',
     catNav: true,
@@ -2325,12 +2727,13 @@ const COMMERCE = [
        10 Feb 1972); the 53rd was in 2024 (Khaleej Times, 12 Nov 2024), so 2026 is the 55th. No holiday
        dates are stated: they are announced by the government each year. */
     slug: 'national-day', emoji: '✦', cat: 'Dunes',
-    h1: 'UAE National Day T-Shirts',
-    title: 'UAE National Day T-Shirts & Gifts — Eid Al Etihad 2026',
+    h1: 'UAE National Day 2026: Eid Al Etihad T-Shirts & Gifts',
+    title: 'UAE National Day 2026 T-Shirts & Gifts — Eid Al Etihad',
+    items: ['al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'hajar-mountains-regular', 'hajar-mountains-oversized', 'empty-quarter-regular', 'empty-quarter-oversized', 'sand-polo'],
     desc: 'T-shirts for Eid Al Etihad drawn from real UAE places: the Al Quaa night sky, the Hajar peaks, the Liwa dunes. 230gsm cotton, free next-day UAE delivery.',
     lede: 'For Eid Al Etihad on 2 December: shirts drawn from the land itself',
     foldsTitle: 'Choosing, timing and gifting',
-    intro: "On 2 December the UAE marks Eid Al Etihad, its National Day: the anniversary of the union of 1971, when six emirates came together as one country, with Ras Al Khaimah joining in February 1972. This year is the 55th.\n\nMost National Day t-shirts carry a flag or a slogan. Ours carry a place. Each design is drawn from somewhere real in the Emirates: the Milky Way rising over the desert at Al Quaa in Abu Dhabi, the Hajar peaks above Wadi Naqab in Ras Al Khaimah, and the dune ridges of Liwa at the edge of the Empty Quarter. They are shirts to wear on the day, and every weekend after it.",
+    intro: "A t-shirt drawn from a real place in the Emirates, to give or wear for Eid Al Etihad, UAE National Day, on Wednesday 2 December 2026.\n\nOn 2 December the UAE marks Eid Al Etihad, its National Day: the anniversary of the union of 1971, when six emirates came together as one country, with Ras Al Khaimah joining in February 1972. This year is the 55th.\n\nMost National Day t-shirts carry a slogan. Ours carry a place. Each design is drawn from somewhere real in the Emirates: the Milky Way rising over the desert at Al Quaa in Abu Dhabi, the Hajar peaks above Wadi Naqab in Ras Al Khaimah, and the dune ridges of Liwa at the edge of the Empty Quarter. They are shirts to wear on the day, and every weekend after it.",
     sections: [
       { h2: 'Which design for which person', body: "Al Quaa Galaxy is the Milky Way over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back of a black tee. It suits the person who drives out of the city to look at the stars.\n\nHajar Mountains is a topographic line drawing of the Hajar peaks, printed on grey. It is the one for hikers and anyone who heads for Ras Al Khaimah when the weather turns.\n\nEmpty Quarter is a tonal sun setting over the dunes of Liwa, embroidered on beige with no print at all. It suits desert drivers and anyone who prefers a quieter shirt.\n\nThe Sahra Polo is 240gsm piqué with an embroidered mark, for someone who would rather wear a collar.\n\nEvery tee is 230gsm combed cotton, AED 199, in Regular or Oversized, sizes S to XL. Any two tees are AED 359." },
       { h2: 'Getting it in time for 2 December', body: "In the UAE, orders placed by 2 pm on a working day are dispatched the same day and delivered the next working day, free, with no minimum order. Public holidays are not working days, so order a few days before the National Day holiday rather than on the eve.\n\nGCC orders (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait) take 3 to 5 working days, at AED 50 or free over AED 390. The rest of the world takes 7 to 14 working days, at AED 80." },
@@ -2355,6 +2758,7 @@ const COMMERCE = [
   },
   {
     slug: 'gifts', emoji: '✦', cat: 'Camping',
+    items: ["al-quaa-galaxy-regular", "al-quaa-galaxy-oversized", "hajar-mountains-regular", "hajar-mountains-oversized", "empty-quarter-regular", "empty-quarter-oversized", "sand-polo"],
     h1: 'Gifts from the UAE',
     foldsTitle: 'Choosing and giving',
     title: "UAE Souvenirs & Gifts for Him That Aren't Touristy",
@@ -2475,15 +2879,15 @@ const CATEGORIES = [
     intro:"Regular is the fit to take if you layer. It sits on the shoulder and falls straight rather than hanging off it, with a 2″ chest step per size above M. Check the size chart before you order.\n\nEvery design in the collection comes in this fit, cut unisex, in sizes S to XL. Same 230gsm combed ring-spun cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette.",
     sections: [{"h2": "A straight cut, measured rather than felt", "body": "Letters mean different things at different brands, so go by the numbers. The Regular fit follows classic US/international grading: the shoulder seam sits at your natural shoulder point rather than dropped below it, and the body skims rather than hanging.\n\nMeasured flat, pit to pit: S is 19″, M is 20″, L is 22″ and XL is 24″ — a 2″ step per size above M. Those are garment measurements taken flat, not body measurements, and they come straight from the graded specification our manufacturer produced against. Every measurement holds a tolerance of ±0.5″; anything outside it is rejected at QC before it ships.\n\nThat precision is the point. If you know the flat chest measurement of a shirt you already like, you know your size here without guessing what a given brand means by Regular."}, {"h2": "How to use the measurements", "body": "Take a t-shirt you already own and wear happily. Lay it flat, smooth out the creases, and measure straight across from armhole seam to armhole seam, about an inch below the armhole. That single number is directly comparable to ours — do not double it. Our chart is flat garment measurements throughout, so 20″ on your shirt means our M.\n\nThe step is fixed and known: 2″ per size above M. If your measurement lands between two sizes, the ±0.5″ tolerance gives some room either way. Take the smaller size for a closer fit through the chest and shoulders, the larger for more ease.\n\nThe cut is unisex, S to XL. There is no separate men's or women's grade, and we do not produce an XXL — so the chart above is the whole range, not a subset of it."}, {"h2": "What the construction is doing", "body": "Every Regular tee is 230 GSM combed, ring-spun cotton. Combing removes the shorter fibres before spinning, which is what gives the cloth its smooth, dense hand instead of a looser, hairier surface.\n\nFrom there the details are about longevity rather than decoration. The shoulders carry woven shoulder taping — not cotton tape — which stops the seam stretching out under the weight of the garment over time. Seams are double-stitched. The body is side-seamed, built from front and back panels joined at the sides rather than a single tube, which holds its shape far better through repeated washing.\n\nThe cotton is pre-shrunk before cutting, so the fit you measure is close to the fit you keep. And the collar label is printed rather than woven, because a woven label against the back of the neck is a common source of irritation and we would rather you forget it is there."}, {"h2": "Layering", "body": "A true-to-size cut is a layering cut. Because the Regular fit follows the measurements rather than adding hidden room, it sits cleanly under an overshirt or light knit without bulking the silhouette — a base layer that disappears rather than competing with what is over it.\n\nIt works alone too. At 230 GSM there is enough substance to stand on its own through the warmer months without clinging or showing every seam beneath an open shirt.\n\nAnd because the grading is fixed and published, building a wardrobe from a few pieces stays simple. Your size in one Sahra & Beyond Regular tee is your size in all of them, and in the polo, which is graded to the same specification."}],
     faqs: [{"q": "How do I choose my Regular size?", "a": "Use the chart. Measured flat, pit to pit, M is 20″, L is 22″ and XL is 24″, with the shoulder seam at your natural shoulder point. Measure a shirt you like and match the number. Tolerance is ±0.5″."}, {"q": "How do I measure myself for the right size?", "a": "Do not measure yourself — measure a shirt. Lay a t-shirt you already like flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to our chart. Our figures are flat garment measurements, so there is no doubling involved."}, {"q": "My measurement falls between two sizes.", "a": "There is a ±0.5″ tolerance on every measurement, so you have some latitude. Take the smaller size to sit closer to the body, the larger for more ease through the chest. The shoulder seam position does not change between sizes."}, {"q": "What does the fabric feel like?", "a": "Dense and smooth rather than thin. It is 230 GSM combed, ring-spun cotton — combing strips out the shorter fibres before spinning, which is what produces that hand. Enough weight to hold its shape through a day without feeling heavy."}, {"q": "Will it shrink?", "a": "The cotton is pre-shrunk before cutting, so you should not see meaningful shrinkage. A cool wash and air drying will keep both the fabric and the shape at their best."}, {"q": "What are delivery and returns?", "a": "UAE: free next-day delivery to all seven emirates for orders placed by 2 pm, no minimum order. GCC: 3–5 working days, free over AED 390. Worldwide: 7–14 working days. Returns and exchanges are accepted for 14 days, unworn with tags attached — free within the UAE; international customers cover return shipping."}] },
-  { slug:'t-shirts/oversized', cat:'oversized-tees', emoji:'▯', catBg:'Camping',
-    h1:'Oversized Fit T-Shirts',
+  { slug:'t-shirts/oversized', related: [["/national-day/", "UAE National Day t-shirts", "Eid Al Etihad, 2 December"], ["/gifts/", "Gifts from the UAE", "For leaving gifts and visitors"]], cat:'oversized-tees', emoji:'▯', catBg:'Camping',
+    h1:'Oversized T-Shirts in Dubai & the UAE',
     title:'Oversized T-Shirts Dubai & UAE — Heavyweight Tees',
     desc:'Oversized drop-shoulder t-shirts. The seam sits 2–3 inches below your natural shoulder — width, not length, makes the silhouette. 230gsm cotton, S–XL.',
     intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nCut unisex, S to XL. Take your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XL.\n\nIt wears the way streetwear does, with straight or wide trousers and clean trainers, and the 230gsm cotton is heavy enough that the drop shoulder holds its line instead of collapsing.",
     sections: [{"h2": "What a real drop shoulder is", "body": "There is a meaningful difference between an oversized cut and simply buying your usual size up, and it comes down to where the shoulder seam sits.\n\nIn the Regular fit that seam stays at your natural shoulder point at every size. Going up a size adds width through the chest, but the shoulder does not move — you get a roomier version of the same silhouette. A true drop shoulder is a different pattern, not a larger copy of the same one. On the Oversized fit the seam is set 2–3″ below the natural shoulder point, out over the arm.\n\nThat is what creates the shape. Not extra fabric hanging off a standard cut, but a garment drafted from the start to sit differently on the body. It is why sizing up in a Regular and taking the Oversized in your usual size produce genuinely different results, even at a similar chest measurement."}, {"h2": "Width, not length", "body": "At M the Oversized measures 23.5″ across the chest against 20″ for the Regular — 3.5″ more at the same letter, measured flat, pit to pit. That difference is doing the work people often credit to length. The Oversized tee is not dramatically longer; it is wider, and width combined with the dropped seam is what builds the silhouette.\n\nThe full range, flat: S is 22.5″, M is 23.5″, L is 25″ and XL is 26.5″. Note that the step differs from the Regular fit — 1.5″ per size above M here, against 2″ there — so the two charts are not interchangeable and the gap between the fits narrows slightly as the sizes go up. Tolerance is ±0.5″ on every measurement.\n\nThe effect is a garment that sits away from the chest and shoulders rather than skimming them, with the sleeve opening set further along the arm."}, {"h2": "Why a looser cut wears cooler", "body": "In UAE heat, how cloth sits against skin matters as much as the cloth itself. The extra width through the chest and shoulders means the 230 GSM cotton is not pulled taut against the body — there is room for air to move between fabric and skin instead of the shirt sitting flush.\n\nThis is a function of the cut, not of anything special about the fabric. It is the same combed, ring-spun cotton used across the Regular fit and the polo, simply draped more loosely because of the drop shoulder and the wider chest. A looser garment also moves more independently of the body as you do, which is part of why an oversized silhouette tends to feel less close over a long day outdoors.\n\nA practical reason to choose the cut, alongside the look of it."}, {"h2": "Choosing your size", "body": "Because this fit is built on width rather than length, sizing comes down to how much room you want through the chest and shoulders rather than how tall you are.\n\nMeasure an oversized piece you already like the fit of: lay it flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to ours — S 22.5″, M 23.5″, L 25″, XL 26.5″. These are flat garment measurements, so there is no doubling involved.\n\nDo not assume your Regular fit letter carries across. The Oversized is a different pattern with a different grading step, so it is worth checking the number rather than defaulting to habit. Between two sizes, the smaller gives a defined drop shoulder and the larger pushes the silhouette looser still. The range is S to XL, unisex; we do not produce an XXL."}],
     faqs: [{"q": "How do I choose a size in the Oversized fit?", "a": "Compare flat chest measurements rather than assuming your usual letter carries across — this is a different pattern from the Regular, not the same shirt made larger. Measured flat, pit to pit: S 22.5″, M 23.5″, L 25″, XL 26.5″."}, {"q": "What is the difference between this and sizing up in the Regular fit?", "a": "Sizing up in the Regular adds chest width but keeps the shoulder seam at your natural shoulder point — a roomier version of the same silhouette. The Oversized sets that seam 2–3″ below it, on a pattern drafted for a drop shoulder. At M it is also 3.5″ wider in the chest. The two are not interchangeable."}, {"q": "Do the two fits use the same size steps?", "a": "No. Above M the Regular fit steps 2″ per size and the Oversized steps 1.5″, so the difference between the fits narrows slightly at the larger end. Read whichever chart applies to the fit you are buying."}, {"q": "Is the fabric different from the Regular tee?", "a": "No. Both are 230 GSM combed, ring-spun cotton with the same double-stitched seams and woven shoulder taping. The difference is entirely in the pattern — a wider chest and a dropped shoulder seam."}, {"q": "Does it need different care?", "a": "No. The cotton is pre-shrunk before cutting, so shrinkage should be minimal. A cool wash and air drying keeps the shape and the fabric at their best."}, {"q": "What are delivery and returns?", "a": "Free next-day delivery UAE-wide for orders placed by 2 pm, no minimum order. GCC in 3–5 working days, free over AED 390; worldwide in 7–14. Returns accepted for 14 days, unworn with tags on — free within the UAE, return postage on international orders is on the customer."}] },
-  { slug:'polos', cat:'polos', emoji:'✦', catBg:'Dunes',
-    h1:'Polo Shirts',
+  { slug:'polos', related: [["/national-day/", "UAE National Day t-shirts", "Eid Al Etihad, 2 December"], ["/gifts/", "Gifts from the UAE", "For leaving gifts and visitors"]], cat:'polos', emoji:'✦', catBg:'Dunes',
+    h1:'Embroidered Polo Shirts in Dubai & the UAE',
     title:'Embroidered Polo Shirts, Dubai — 240 GSM Cotton',
     desc:'The Sahra Polo — 240gsm cotton, embroidered rather than printed. A limited first run. The scarcest piece in the first drop.',
     intro:"One polo, made in a limited run. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. A men's cut, S to XL, sized to the same specification as the Regular fit tees. Made in a smaller run than the tees, counted on its own.",
@@ -2562,6 +2966,7 @@ CATEGORIES.forEach(C => {
     <div class="content">${paras(C.intro)}</div>
     ${RV.homepageBand({ compact: true })}
     ${foldsBlock(C.sections, 'Fabric, cut and make')}
+    ${Array.isArray(C.related) ? `<nav class="catnav" aria-label="Related">${C.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2] || '')}</span></a>`).join('')}</nav>` : ''}
     ${C.places ? `<h2 class="places-h">The places behind these tees</h2><nav class="catnav" aria-label="The places behind these tees">${C.places.map(id => locations.find(l => l.id === id)).filter(Boolean).map(l => `<a href="/locations/${l.id}/"><b>${esc(l.name)}</b><span>${esc(l.emirate)} &middot; ${esc(l.category)}</span></a>`).join('')}</nav>` : ''}
     ${Array.isArray(C.faqs) && C.faqs.length ? `<section class="faq"><h2>Frequently asked questions</h2>${C.faqs.map(q => `<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''}
     ${newsletterBlock()}
@@ -2582,6 +2987,7 @@ COMMERCE.forEach(P => {
   const canonical = `${SITE}/${P.slug}/`;
   const jsonld = [
     { "@context": "https://schema.org", "@type": "WebPage", "name": P.h1, "description": P.desc, "url": canonical },
+    ...(Array.isArray(P.items) ? [{ "@context": "https://schema.org", "@type": "ItemList", "name": P.h1, "itemListElement": P.items.map((id, i) => { const pr = PRODUCTS_ALL.find(x => x.id === id); return pr ? { "@type": "ListItem", "position": i + 1, "name": pr.name, "url": `${SITE}/products/${id}/` } : null; }).filter(Boolean) }] : []),
     { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
       { "@type": "ListItem", "position": 2, "name": P.h1, "item": canonical }
@@ -2630,7 +3036,54 @@ COMMERCE.forEach(P => {
   write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor(P.slug), bodyClass: 'buy-page' }));
 });
 
-const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });
+/* ---------- /hoodies/ (DRAFT, 1 Oct 2026; SEO handover item 19) -------------
+   Collection page for the Sahel Hoodie, built to report 02 section 6.1. It is a
+   DRAFT: written to _drafts/hoodies/ locally only (never on Vercel, never in the
+   sitemap) until Faheem confirms the fabric weight and the products exist in
+   Shopify. Every fact here is from MASTER_BRIEF decisions; unsettled ones are
+   visible TODO boxes in the draft. To publish: set HOODIES.draft = false. */
+const HOODIES = {
+  draft: true,
+  slug: 'hoodies',
+  title: 'Hoodies in Dubai & UAE — Embroidered Coastline | Sahra & Beyond',
+  desc: 'The Sahel Hoodie: 400 GSM brushed-back cotton fleece, a relaxed drop-shoulder cut and the UAE coastline embroidered on the back. Two colours, S to XL.',
+  h1: 'Hoodies in Dubai & the UAE',
+  todo: [
+    'TODO for Faheem: product photos (not mockups) and the Shopify product URLs, so the grid and ItemList schema can go in.',
+    'TODO for Faheem: launch date. Not final; 29 Oct is the likely on-sale date (Faheem, 1 Oct). Confirm the date, and whether the page goes up earlier as a waitlist.'
+  ]
+};
+if (!process.env.VERCEL) {
+  const H = HOODIES, canonical = `${SITE}/${H.slug}/`;
+  const todoBox = t => `<div style="border:2px dashed #C0392B;background:#FFF4F2;color:#7A1F14;border-radius:10px;padding:10px 14px;margin:12px 0;font-size:14px"><b>DRAFT TODO:</b> ${esc(t)}</div>`;
+  const jsonld = [
+    { "@context": "https://schema.org", "@type": "CollectionPage", "name": H.h1, "description": H.desc, "url": canonical },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+      { "@type": "ListItem", "position": 2, "name": H.h1, "item": canonical } ] }
+  ];
+  const body = `
+  <section class="loc-hero" style="--hero-grad:${CAT_BG.Coast}">
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(H.h1)}</span></nav>
+      <h1>${esc(H.h1)}</h1>
+      <p class="lede">The Sahel Hoodie: the UAE coastline, embroidered</p>
+    </div>
+  </section>
+  <main>
+    ${H.todo.map(todoBox).join('')}
+    <div class="content"><p>The Sahel Hoodie is the first hoodie from Sahra &amp; Beyond, designed in the UAE: 400 GSM brushed-back fleece in 100% cotton, in a relaxed oversized cut with a dropped shoulder, the UAE coastline embroidered across the back in sand thread, and a printed scene on the lower back. Two colours, Salute and Estate Blue, in S to XL, at AED 229. Delivery is free and next-day across the UAE, with free 14-day exchanges. See the <a href="/size-guide/">size guide</a> and <a href="/fabric/">how we choose our fabrics</a>.</p></div>
+    ${todoBox('Product grid goes here once the two colourways exist in Shopify (CollectionPage + ItemList schema then).')}
+    <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed oversized pullover with a dropped shoulder and a hip-length body, sized S to XL. The neck label reads the size and the fit, for example "M – OVERSIZED", and is printed rather than sewn in, so there is no tag to scratch.</p></div></section>
+    <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the UAE coastline, embroidered in sand thread, with &quot;ساحل · SAHEL&quot;. The Sahra mark is embroidered at the centre of the chest. On the lower back, each colour carries its own printed scene: contour lines on Salute, and greater flamingos at dusk at Ras Al Khor on Estate Blue.</p></div></section>
+    <section class="guide-sec"><h2>For cold desert and mountain nights</h2><div class="content"><p>Winter nights in the desert and up in the mountains get properly cold: Jebel Jais has recorded temperatures below freezing. If you are camping this season, our <a href="/camping/">camping guide</a> covers the rules by emirate, and the <a href="/stargazing/">stargazing guide</a> the darkest nights; the <a href="/locations/jebel-jais/">Jebel Jais guide</a> has the month-by-month temperatures.</p></div></section>
+    <section class="guide-sec"><h2>Care</h2><div class="content"><p>Wash cold and inside out, no bleach. Tumble dry low, and iron inside out.</p></div></section>
+    ${newsletterBlock()}
+  </main>`;
+  write(`_drafts/hoodies/index.html`, shell({ title: H.title, desc: H.desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page', noindex: true }));
+}
+
+const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, arCorePublic: AR_CORE_PUBLIC, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });
 console.log('  \u2713 ' + PRODUCT_URLS.length + ' product pages');
 
 /* ==========================================================================
@@ -2825,7 +3278,10 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(CATEGORIES.map(C => ({ u: `${SITE}/${C.slug}/`, m: buildDate, p: '0.9' })))
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
   .concat([{ u: `${SITE}/journal/`, m: buildDate, p: '0.7' }])
-  .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])   /* Sahra Trail coming-soon page (24 Sep 2026); /ar/trail/ is noindex */
+  .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])
+  /* SEO handover item 11: the three live Arabic pages join the sitemap only once Faheem confirms
+     they count as reviewed (he asked on 2 Oct that Arabic stays noindex until he has reviewed it). */
+  .concat(AR_CORE_PUBLIC ? ['/ar/', '/ar/about/', '/ar/contact/'].map(u => ({ u: SITE + u, m: buildDate, p: '0.6' })) : [])   /* Sahra Trail coming-soon page (24 Sep 2026); /ar/trail/ is noindex */
   .concat(fs.existsSync(path.join(ROOT, 'tote', 'index.html')) ? [{ u: `${SITE}/tote/`, m: buildDate, p: '0.7' }] : [])   /* the tote's own page is live and indexable (SEO plan, 1 Oct 2026) */
   // Articles carry their own lastmod: an article's updated date is real
   // information, unlike the build date, and re-stamping every URL on every
@@ -2888,6 +3344,40 @@ console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.le
       console.log(band ? `  \u2713 homepage review band (${f})` : `  \u00b7 homepage review band empty - not enough reviews yet (${f})`);
     }
   }
+})();
+
+/* ---------- homepage collection carousel photos (1 Oct 2026) -------------
+   Faheem: the carousel must show the same photos as the product pages. index.html
+   is hand-maintained, so on every build each .hring-card's photo stack is
+   rewritten from its product's content/products/<handle>.json: the main photo
+   first, then the other side, exactly the pair the product page opens with.
+   A product photo changed in its JSON now reaches the homepage on the next build. */
+(function () {
+  const file = path.join(ROOT, 'index.html');
+  if (!fs.existsSync(file)) return;
+  const html = fs.readFileSync(file, 'utf8');
+  const webp = src => { const w = String(src).replace(/\.(jpe?g|png)$/i, '.webp'); return fs.existsSync(path.join(ROOT, w.replace(/^\//, ''))) ? w : src; };
+  const card = src => { const b = path.basename(webp(src)); const c = '/shirts/card/' + b; return fs.existsSync(path.join(ROOT, c.replace(/^\//, ''))) ? c : null; };
+  let n = 0;
+  const next = html.replace(/(<a class="hring-card"[^>]*data-handle="([^"]+)"[^>]*><span class="hring-img" data-cycle>)([\s\S]*?)(<\/span>)/g, (all, open, handle, inner, close) => {
+    const pf = path.join(ROOT, 'content', 'products', handle + '.json');
+    if (!fs.existsSync(pf)) return all;
+    const p = JSON.parse(fs.readFileSync(pf, 'utf8'));
+    const main = p.imgMain || p.imgFront;
+    const other = main === p.imgBack ? p.imgFront : p.imgBack;
+    const shots = [[main, main === p.imgBack ? p.altBack : (p.altFront || p.altMain)], [other, other === p.imgBack ? p.altBack : p.altFront]]
+      .filter(x => x[0]).filter((x, i, a) => a.findIndex(y => y[0] === x[0]) === i);
+    if (!shots.length) return all;
+    const imgs = shots.map(([src, alt], i) => {
+      const full = webp(src), sm = card(src);
+      const set = sm ? ` srcset="${sm} 800w, ${full} 1536w" sizes="(max-width:760px) 46vw, 240px"` : '';
+      return `<img loading="${i ? 'lazy' : 'eager'}"${i ? '' : ' class="on"'} src="${full}"${set} decoding="async" alt="${String(alt || p.name).replace(/"/g, '&quot;')}">`;
+    }).join('');
+    n++;
+    return open + imgs + close;
+  });
+  if (next !== html) { fs.writeFileSync(file, next); }
+  console.log(`  ✓ homepage carousel photos from product data (${n} cards)`);
 })();
 
 /* ---------- shop page star ratings --------------------------------------
@@ -3372,17 +3862,17 @@ const AR_PDP_NOINDEX = true;
   const L = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sahra-trail-lockup.json'), 'utf8'));
   const T = {
     en: {
-      title: 'Sahra Trail: activewear coming this season | Sahra & Beyond',
-      desc: 'Sahra Trail is the new trail and run line from Sahra & Beyond, designed in the UAE for its trails, wadis and ridges. The first run arrives this season. Get first access.',
+      title: 'Sahra Trail: Running Tee & 2-in-1 Shorts, Designed in the UAE',
+      desc: 'Sahra Trail is running and trail kit from Sahra & Beyond: a running tee and 2-in-1 shorts designed in the UAE for its wadis and ridges. First run this season.',
       eyebrow: 'A new line from Sahra &amp; Beyond',
-      kicker: 'Activewear &middot; first run, this season',
+      kicker: 'Running &amp; trail kit &middot; first run, this season',
       h1: 'The trail starts here',
       cta: 'Get first access',
       scroll: 'Scroll to climb',
       elev: 'Elev', time: 'Time',
       ch: [
         ['01', 'Night', 'Headlamps on', 'On UAE trails the day starts in the dark, ahead of the heat. The Two Ridges mark on the back is reflective, so it catches the light behind you.'],
-        ['02', 'Climb', 'Wadi floor to ridge', 'Switchbacks, loose rock and the long pull out of the valley. Sahra Trail is for the trails, wadis and ridges of the UAE.'],
+        ['02', 'Climb', 'Wadi floor to ridge', 'Switchbacks, loose rock and the long pull out of the valley. Sahra Trail is for the <a href="/hiking/">trails</a>, <a href="/wadis/">wadis</a> and ridges of the UAE, from <a href="/locations/wadi-naqab/">Wadi Naqab</a> to <a href="/locations/jebel-jais/">Jebel Jais</a>.'],
         ['03', 'Run', 'Then you run it', 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE.'],
         ['04', 'Dawn', 'First light on the ridge', 'The first run arrives this season: two pieces to start.']
       ],
@@ -3648,7 +4138,7 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
     const fp = path.join(__dirname, rel);
     if (!fs.existsSync(fp)) continue;
     let src = fs.readFileSync(fp, 'utf8');
-    if (src.indexOf('hreflang="ar"') !== -1) continue;
+    if (src.indexOf('rel="alternate" hreflang="ar"') !== -1) continue;   /* the footer's العربية link also carries hreflang="ar" (1 Oct 2026) */
     const tags = `<link rel="alternate" hreflang="en" href="${SITE}${en}">\n`
                + `<link rel="alternate" hreflang="ar" href="${SITE}${ar}">\n`
                + `<link rel="alternate" hreflang="x-default" href="${SITE}${en}">\n`;
@@ -3847,4 +4337,23 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
     if (out !== src) { fs.writeFileSync(f, out); touched++; }
   }
   console.log(`  ✓ legibility layer on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} updated)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
+})();
+
+/* ---------- head-tag guard (1 Oct 2026, SEO handover item 4) -------------
+   Fails the build if any page ships more than one meta description, og:title,
+   twitter:title or robots meta - the /shop/ bug that sat live for a week. */
+(function () {
+  const bad = [];
+  const walk = d => fs.readdirSync(d, { withFileTypes: true }).forEach(e => {
+    const f = path.join(d, e.name);
+    if (e.isDirectory()) { if (!/^(node_modules|\.git|_backup|_drafts|admin|docs)$/.test(e.name)) walk(f); return; }
+    if (!/\.html$/.test(e.name)) return;
+    const h = fs.readFileSync(f, 'utf8'); const head = h.split(/<\/head>/i)[0];
+    const n = re => (head.match(re) || []).length;
+    const c = { description: n(/<meta\s+name="description"/gi), 'og:title': n(/<meta\s+property="og:title"/gi), 'twitter:title': n(/<meta\s+name="twitter:title"/gi), robots: n(/<meta\s+name="robots"/gi) };
+    Object.keys(c).forEach(k => { if (c[k] > 1) bad.push(path.relative(ROOT, f) + ': ' + c[k] + ' x ' + k); });
+  });
+  walk(ROOT);
+  if (bad.length) { console.error('\n✗ duplicate head tags:\n  ' + bad.join('\n  ')); process.exit(1); }
+  console.log('  ✓ head-tag guard: no duplicate description / og:title / twitter:title / robots');
 })();

@@ -6,6 +6,8 @@
    ========================================================================== */
 const fs = require('fs');
 const RV = require('./reviews-render.js');
+const FG = require('./footer-guides.js');
+let AR_CORE = false;   /* set by build.js from AR_CORE_PUBLIC */
 /* SEO plan (1 Oct 2026): rich-result fields on www product pages.
    - aggregateRating: only when the page shows reviews OF THIS DESIGN (both fits pooled, and labelled
      so on the page). Store-wide pooled reviews are shown with a label but are not this product's
@@ -58,6 +60,20 @@ function fabricBars(garment) {
 }
 function isDTG(p) { return /dtg|direct/i.test(String(p.printChip || '') + ' ' + String(p.printCardTitle || '')); }
 
+/* 1 Oct 2026 (SEO handover item 22): the H1 carries the product noun people search for. */
+const GUIDE_BY_PLACE = { 'al-quaa-desert': ['/stargazing/', 'Where to see the Milky Way in the UAE'], 'wadi-naqab': ['/hiking/', 'Hiking in the UAE'], 'liwa': ['/desert-safari/', 'The best dunes in the UAE'] };
+function guideLink(p){ const g = GUIDE_BY_PLACE[p.placeSlug]; return g ? `<a href="${g[0]}">${g[1]}</a>` : ''; }
+/* 1 Oct 2026 (handover item 23): gallery images get an 800w card version via srcset, and the
+   thumbnails load the small card image instead of the full 1536px photo. */
+function cardOf(src){ const b = String(src).replace(/\.(jpe?g|png)$/i, '.webp').split('/').pop(); return require('fs').existsSync(require('path').join(__dirname, 'shirts', 'card', b)) ? '/shirts/card/' + b : ''; }
+function cardSrcset(src){ const c = cardOf(src); if (!c) return ''; const full = String(src).replace(/\.(jpe?g|png)$/i, '.webp'); return ` srcset="${c} 800w, ${full} 1536w" sizes="(max-width:760px) 100vw, 640px"`; }
+function ogOf(p, SITE){ return require('fs').existsSync(require('path').join(__dirname, 'uploads', 'og', 'products', p.id + '.jpg')) ? `${SITE}/uploads/og/products/${p.id}.jpg` : SITE + p.imgMain; }
+function productH1(p){
+  if (p.h1) return p.h1;
+  if (p.garment === 'polo') return p.name.replace(/ Polo$/, ' Polo Shirt');
+  const design = String(p.name).split(' — ')[0];
+  return p.fit === 'oversized' ? `${design} Oversized T-Shirt` : `${design} T-Shirt, Regular Fit`;
+}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function J(s){return JSON.stringify(String(s==null?'':s));}
 
@@ -133,6 +149,31 @@ function galShots(p) {
 }
 
 function page(p, all, SITE, SHOP_URL, LAUNCHED){
+  /* 1 Oct 2026 (SEO handover item 22): the oversized pages shared 76-80% of their text with
+     the regular pages. On an oversized page with a regular sibling, the fit leads and the
+     shared story (place, design, fabric, care) is condensed with links to the full version. */
+  const LEAN = p.fit === 'oversized' && !!p.siblingOf && all.some(x => x.id === p.siblingOf + '-regular');
+  const REG = LEAN ? p.siblingOf + '-regular' : '';
+  const FIT_HTML = (p.sizingApplies === false ? `<section class="sec reveal" id="fit"><span class="snum">04 — Size &amp; fit</span><h2>Sizing</h2><p>${SIZING.polo && SIZING.polo.note ? SIZING.polo.note : ""}</p><div class="note-box">Want the measurements before it drops? Email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> and we will send them the moment they are signed off.</div></section>` : `<section class="sec reveal" id="fit">
+    <span class="snum">04 — Size &amp; fit</span>
+    <h2>${p.fitHeading || 'Size &amp; <em>fit</em>'}</h2>
+    <p>${p.fitWho || ''}</p>
+    <p>${p.garment === 'polo' ? '<strong>Men&rsquo;s cut</strong>, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from the letter size you usually wear.' : '<strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.'}${esc(p.fitExtra||"")}</p>
+    ${/* 25 Sep 2026: size finder for people buying for someone else (assets/sahra-sizefinder.js) */''}<div class="sfind" data-sizefinder data-fit="${p.fit === 'oversized' ? 'oversized' : 'regular'}" data-chart='${JSON.stringify({ regular: (SIZING.regular || []).map(function (r) { return [r[0], r[2]]; }), oversized: (SIZING.oversized || []).map(function (r) { return [r[0], r[2]]; }) })}'></div>
+    <div class="sz-wrap">
+      <table class="sz">
+        <caption class="sz-cap">${p.fit === 'oversized' ? 'Oversized fit' : 'Regular fit'} &middot; garment measured flat</caption>
+        <thead><tr><th>Size</th><th>Chest</th><th>Length</th><th>Shoulder</th><th>Sleeve</th></tr></thead>
+        <tbody>${sizeRows(p.fit === 'oversized' ? SIZING.oversized : SIZING.regular)}</tbody>
+      </table>
+    </div>
+    <p class="sz-note">${p.fit === 'oversized' ? SIZING.oversizedIntent : SIZING.regularIntent}</p>
+    <details class="sz-method"><summary>How these are measured</summary>
+      <ul>${(SIZING.method||[]).map(function(m){return '<li>'+m+'</li>';}).join('')}</ul>
+      <p>${SIZING.tolerance}</p>
+    </details>
+    ${p.siblingOf ? `<div class="note-box">Prefer the ${p.fit === 'oversized' ? 'regular' : 'oversized'} cut? <a href="/products/${p.siblingOf}-${p.fit === 'oversized' ? 'regular' : 'oversized'}/">See the same design in ${p.fit === 'oversized' ? 'Regular' : 'Oversized'} &rarr;</a> &nbsp;&middot;&nbsp; Full chart for both fits on the <a href="/size-guide/">size guide</a>.</div>` : `<div class="note-box">Full measurements for both t-shirt fits are on the <a href="/size-guide/">size guide</a>.</div>`}
+  </section>`);
   return `<!doctype html>
 <html lang="en" data-market="uae">
 <head>
@@ -143,15 +184,17 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
 <link rel="canonical" href="${SITE}/products/${p.id}/">
 <meta name="theme-color" content="${p.theme}">
 <meta property="og:type" content="product">
-<meta property="og:title" content="${esc(p.name)} | Sahra &amp; Beyond">
-<meta property="og:description" content="${esc(p.shareDesc)}">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta property="og:locale" content="en_AE">
+<meta property="og:title" content="${esc(p.seoTitle)}">
+<meta property="og:description" content="${esc(p.seoDesc)}">
 <meta property="og:url" content="${SITE}/products/${p.id}/">
-<meta property="og:image" content="${SITE}${p.imgMain}">
+<meta property="og:image" content="${ogOf(p, SITE)}">${/\/uploads\/og\//.test(ogOf(p, SITE)) ? '\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">' : ''}
 <meta property="og:site_name" content="Sahra &amp; Beyond">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${esc(p.name)} | Sahra &amp; Beyond">
-<meta name="twitter:description" content="${esc(p.shareDesc)}">
-<meta name="twitter:image" content="${SITE}${p.imgMain}">
+<meta name="twitter:title" content="${esc(p.seoTitle)}">
+<meta name="twitter:description" content="${esc(p.seoDesc)}">
+<meta name="twitter:image" content="${ogOf(p, SITE)}">
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
@@ -167,12 +210,12 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <!-- Product JSON-LD. aggregateRating ONLY from the reviews of this design that the page itself shows (never store-wide, never invented). Shipping and returns match policies.html. -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Product","name":${J(p.name)},"sku":${J(p.sku)},
+{"@context":"https://schema.org","@type":"Product","name":${J(p.name)},"sku":${J(p.sku)},"mpn":${J(p.sku)},
 "image":[${[p.imgMain,p.imgFront,p.imgBack,p.imgCompare].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).map(v=>J(SITE+v)).join(',')}],
 "description":${J(p.ldDesc)},
 "brand":{"@type":"Brand","name":"Sahra & Beyond"},
 "material":${J(p.garment === 'polo' ? '100% cotton piqué' : '100% combed ring-spun cotton')},
-"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},${ldRating(p)}"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/",${LD_SHIP}}}
+"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},${ldRating(p)}"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"priceValidUntil":"${new Date().getFullYear() + 1}-12-31","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/",${LD_SHIP}}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -950,12 +993,12 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
         <span class="gal-hint">Click to zoom</span>
         <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
 ${galShots(p).map((s,i)=>`
-        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''}${s[4]?` data-tag="${esc(s[4])}"`:''}${i===0?' fetchpriority="high"':' fetchpriority="low" decoding="async"'} src="../..${s[0]}" alt="${esc(s[1]||'')}">`).join('')}
+        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''}${s[4]?` data-tag="${esc(s[4])}"`:''}${i===0?' fetchpriority="high"':' loading="lazy" fetchpriority="low" decoding="async"'} src="../..${s[0]}"${cardSrcset(s[0])} alt="${esc(s[1]||'')}">`).join('')}
         ${p.fitLabel ? `<span class="gal-fit" aria-hidden="true">${esc(p.fitLabel)}</span>` : ''}
       </div>
       <div class="gal-thumbs" id="thumbs">
 ${galShots(p).map((s,i)=>`
-        <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img${s[3]==='compare'?' class="fit-contain"':''} loading="lazy" decoding="async" src="../..${s[0]}" alt=""></button>`).join('')}
+        <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img${s[3]==='compare'?' class="fit-contain"':''} loading="lazy" decoding="async" src="../..${cardOf(s[0]) || s[0]}" alt=""></button>`).join('')}
       </div>
       ${/* Audit 13 Sep: 4 of 11 personas read this caption on a Regular page, saw "Oversized fit", and lost trust. The same fit-aware wording already existed on the answer-list copy below; it was missing on the one people actually see. */''}
       ${/* Faheem, 13 Sep: "Model wears XL" under the MODEL photos. On a single-cut garment
@@ -971,7 +1014,7 @@ ${galShots(p).map((s,i)=>`
     <div class="buy">
       <div class="buy-head">
       <div class="buy-top">${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}<span class="limited">✦ Limited first run</span></div>
-      <h1>${p.nameHtml}</h1>
+      <h1>${esc(productH1(p))}</h1>
       ${/* Faheem, 10 Sep: "we're not highlighting that this is 100% 230gsm heavyweight cotton. This info should be right below the title" */''}
       <p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>
       ${/* 15 Sep audit: this product's rating sat 6,600px below its price. A compact line
@@ -1135,7 +1178,22 @@ ${galShots(p).map((s,i)=>`
   </section>
 </div>
 
-${p.placeSlug ? `<section class="place-band" data-bg="${p.theme}">
+${LEAN ? `<div class="wrap lean-first">${FIT_HTML.replace('04 — Size &amp; fit', '01 — The oversized fit')}
+  <section class="sec reveal" id="design">
+    <span class="snum">02 — The design, in brief</span>
+    <h2>${p.designHeading}</h2>
+    <p>${esc(p.designIntro)}</p>
+    <p>${p.placeSlug ? `Drawn from <a href="/locations/${p.placeSlug}/">${esc(p.placeName)}, ${esc(p.placeEmirate)}</a>. ` : ''}The full story of the place and the artwork is on the <a href="/products/${REG}/">regular-fit page</a>; this page is about the cut.</p>
+    ${guideLink(p) ? `<p>Planning a trip? ${guideLink(p)} &rarr;</p>` : ''}
+  </section>
+  <section class="sec reveal" id="fabric">
+    <span class="snum">03 — Fabric &amp; care</span>
+    <h2>Same cloth, cut wider</h2>
+    <p>The same 230gsm combed ring-spun cotton as the regular fit, with the ${esc(p.printCardTitle || 'same decoration')}. ${esc(p.printCardBody || '')}</p>
+    <ul class="care">${careList(p.care)}</ul>
+    <p>Why 230gsm, and how it compares with the shirt you already own, is on our <a href="/fabric/">fabric page</a>.</p>
+  </section>
+</div>` : ''}${!LEAN && p.placeSlug ? `<section class="place-band" data-bg="${p.theme}">
   <div class="wrap place-inner">
     <div class="reveal">
       <span class="snum">01 — The place behind it</span>
@@ -1146,18 +1204,18 @@ ${p.placeSlug ? `<section class="place-band" data-bg="${p.theme}">
         <span>✦ ${esc(p.skyLine)}</span>
       </div>
       <a class="btn" href="/locations/${p.placeSlug}/">Read the place story</a>
+      ${guideLink(p) ? `<p class="pguide" style="margin-top:12px;font-size:14.5px">Planning a trip? ${guideLink(p)} &rarr;</p>` : ''}
     </div>
     <div class="sky-card reveal">
       <b>${esc(p.skyLabel)}</b>
-      <small>Sky darkness scale · 1 is darkest</small>
-      <p>${p.skyCopy}</p>
-      <div class="sky-scale" aria-hidden="true">${pips(p.skyLit)}</div>
+      <p>${String(p.skyCopy || '').replace(/^The scale runs from remote desert to inner city\.\s*/, '')}</p>
+      ${/* 1 Oct 2026: no unsourced darkness ratings (handover: no Bortle numbers); readers can check a map */''}<small>Check any spot yourself on a <a href="https://www.lightpollutionmap.info" target="_blank" rel="noopener nofollow">light-pollution map</a>.</small>
     </div>
   </div>
 </section>` : ``}
 
 <div class="wrap" data-bg="${p.theme2}">
-  <section class="sec reveal" id="design">
+  ${LEAN ? '' : `<section class="sec reveal" id="design">
     <span class="snum">02 — The design</span>
     <h2>${p.designHeading}</h2>
     <p>${esc(p.designIntro)}</p>
@@ -1187,44 +1245,25 @@ ${cards(p.designCards)}
       w = w ? w[0].toLowerCase().replace(/\s+/g,'') : '230gsm';
       return 'Not sure what ' + w + ' means next to the 180gsm shirt you already own? We wrote the comparison out in full &mdash; the whole 150&ndash;280gsm scale, and which weight actually makes sense in a Gulf summer &mdash; on our <a href="/fabric/">fabric and GSM guide</a>.';
     })()}</div>
-  </section>
-
-  ${p.sizingApplies === false ? `<section class="sec reveal" id="fit"><span class="snum">04 — Size &amp; fit</span><h2>Sizing</h2><p>${SIZING.polo && SIZING.polo.note ? SIZING.polo.note : ""}</p><div class="note-box">Want the measurements before it drops? Email <a href="mailto:hello@sahraandbeyond.ae">hello@sahraandbeyond.ae</a> and we will send them the moment they are signed off.</div></section>` : `<section class="sec reveal" id="fit">
-    <span class="snum">04 — Size &amp; fit</span>
-    <h2>${p.fitHeading || 'Size &amp; <em>fit</em>'}</h2>
-    <p>${p.fitWho || ''}</p>
-    <p>${p.garment === 'polo' ? '<strong>Men&rsquo;s cut</strong>, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from the letter size you usually wear.' : '<strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.'}${esc(p.fitExtra||"")}</p>
-    ${/* 25 Sep 2026: size finder for people buying for someone else (assets/sahra-sizefinder.js) */''}<div class="sfind" data-sizefinder data-fit="${p.fit === 'oversized' ? 'oversized' : 'regular'}" data-chart='${JSON.stringify({ regular: (SIZING.regular || []).map(function (r) { return [r[0], r[2]]; }), oversized: (SIZING.oversized || []).map(function (r) { return [r[0], r[2]]; }) })}'></div>
-    <div class="sz-wrap">
-      <table class="sz">
-        <caption class="sz-cap">${p.fit === 'oversized' ? 'Oversized fit' : 'Regular fit'} &middot; garment measured flat</caption>
-        <thead><tr><th>Size</th><th>Chest</th><th>Length</th><th>Shoulder</th><th>Sleeve</th></tr></thead>
-        <tbody>${sizeRows(p.fit === 'oversized' ? SIZING.oversized : SIZING.regular)}</tbody>
-      </table>
-    </div>
-    <p class="sz-note">${p.fit === 'oversized' ? SIZING.oversizedIntent : SIZING.regularIntent}</p>
-    <details class="sz-method"><summary>How these are measured</summary>
-      <ul>${(SIZING.method||[]).map(function(m){return '<li>'+m+'</li>';}).join('')}</ul>
-      <p>${SIZING.tolerance}</p>
-    </details>
-    ${p.siblingOf ? `<div class="note-box">Prefer the ${p.fit === 'oversized' ? 'regular' : 'oversized'} cut? <a href="/products/${p.siblingOf}-${p.fit === 'oversized' ? 'regular' : 'oversized'}/">See the same design in ${p.fit === 'oversized' ? 'Regular' : 'Oversized'} &rarr;</a> &nbsp;&middot;&nbsp; Full chart for both fits on the <a href="/size-guide/">size guide</a>.</div>` : `<div class="note-box">Full measurements for both t-shirt fits are on the <a href="/size-guide/">size guide</a>.</div>`}
   </section>`}
 
-  <section class="sec reveal" id="care">
+  ${LEAN ? '' : FIT_HTML}
+
+  ${LEAN ? '' : `<section class="sec reveal" id="care">
     <span class="snum">05 — Care</span>
     <h2>${p.careHeading}</h2>
     <p>${esc(p.careIntro)}</p>
     <ul class="care">
 ${careList(p.care)}
     </ul>
-  </section>
+  </section>`}
 
-  <section class="sec reveal" id="delivery">
+  ${LEAN ? `<section class="sec reveal" id="delivery"><span class="snum">04 — Delivery &amp; returns</span><h2>Getting it to you</h2><p>Free next-day delivery across the UAE on orders placed by 2 pm on a working day; free returns and size or fit exchanges within the UAE for 14 days. The detail is in our <a href="/policies.html#shipping">delivery and returns policy</a>.</p></section>` : `<section class="sec reveal" id="delivery">
     <span class="snum">06 — Delivery &amp; returns</span>
     <h2>Getting it <em>to you</em></h2>
     <p>Order before 2 pm UAE time on a working day and it ships the same day, arriving the next working day anywhere in the UAE. You'll get tracking by email as soon as it's on its way.</p>
     <p>Returns are free within the UAE — you have 14 days from delivery to send something back unworn, unwashed and with tags on, and exchanges for a different size or fit are free too, subject to stock. Full detail is on the <a href="/policies.html#returns" style="border-bottom:1px solid currentColor">policies page</a>.</p>
-  </section>
+  </section>`}
 
   <section class="sec reveal" id="faq">
     <span class="snum">07 — Questions</span>
@@ -1262,6 +1301,7 @@ ${related(p, all)}
 
 <footer>
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/contact/">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}</style>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
@@ -1999,6 +2039,7 @@ function buildProducts(opts){
   const ROOT = opts.ROOT, SITE = opts.SITE, write = opts.write;
   const SHOP_URL = opts.shopUrl || '/shop-preview.html';
   const all = loadProducts(ROOT);
+  AR_CORE = !!opts.arCorePublic;
   all.forEach(p=>{ write(`products/${p.id}/index.html`, page(p, all, SITE, SHOP_URL, !!opts.launched)); });
   return all.map(p=>({ id:p.id, url:`${SITE}/products/${p.id}/` }));
 }
@@ -2006,3 +2047,4 @@ function buildProducts(opts){
 module.exports = buildProducts;
 module.exports.loadProducts = loadProducts;
 module.exports.galShots = galShots;
+module.exports.LD_SHIP = LD_SHIP;   /* /tote/ reuses the same shipping and returns block */

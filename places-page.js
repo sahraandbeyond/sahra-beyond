@@ -69,7 +69,9 @@ const VEHICLE = {
   'high-clearance': ['fourwd', 'High clearance', 'An SUV or 4x4 is safer on the last stretch'],
   'boat': ['boat', 'By boat', 'The last leg is on the water'],
   'on-foot': ['foot', 'Park and walk', 'The last leg is on foot'],
-  'tour-only': ['route', 'Tour only', 'Visits are by booked tour']
+  'tour-only': ['route', 'Tour only', 'Visits are by booked tour'],
+  /* 1 Oct 2026: sources disagree on the last stretch (Al Quaa); shown honestly rather than picked */
+  'disputed': ['fourwd', 'Car or 4x4?', 'Sources differ on the last stretch; a 4x4 for the dunes']
 };
 const FAC = { yes: 'Yes', no: 'None', nearby: 'Nearby', some: 'Some', good: 'Good', patchy: 'Patchy', none: 'None', unknown: 'Not confirmed' };
 
@@ -196,7 +198,7 @@ function packFor(l, PACKING) {
   const v = (l.access || {}).vehicle;
   const wadi = l.category === 'Wadis' || /^wadi-/.test(l.id);
   const allow = tag => {
-    if (tag === 'Dunes' || tag === 'Camping') return v === '4wd' || v === 'high-clearance' || l.category === 'Dunes';
+    if (tag === 'Dunes' || tag === 'Camping') return v === '4wd' || v === 'high-clearance' || v === 'disputed' || l.category === 'Dunes';
     if (tag === 'Wadis') return wadi;
     if (tag === 'Coast') return l.category === 'Coast';
     if (tag === 'Mountains') return l.category === 'Mountains' || wadi;
@@ -216,6 +218,33 @@ function safetyExtra(l) {
     <ul><li><b>999</b> Police</li><li><b>998</b> Ambulance</li><li><b>997</b> Civil Defence</li></ul>
     <p>Weather warnings: <a href="https://www.ncm.gov.ae/" target="_blank" rel="noopener">National Center of Meteorology</a>. Tell someone where you are going and when you will be back.</p></div>`;
 }
+
+
+/* 1 Oct 2026: tables inside sections (SEO handover: comparison and climate tables).
+   { caption, head:[...], rows:[[...]], note, source:{label,url} }. Cells are plain text;
+   a cell written as {t, href} becomes a link. Scrolls sideways inside its own box on phones. */
+function tableHtml(t) {
+  if (!t || !Array.isArray(t.rows) || !t.rows.length) return '';
+  const cell = c => (c && typeof c === 'object' && c.href) ? `<a href="${esc(c.href)}">${esc(c.t)}</a>` : esc(c == null ? '' : c);
+  const head = Array.isArray(t.head) ? `<thead><tr>${t.head.map(h => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead>` : '';
+  const body = t.rows.map(r => `<tr>${r.map((c, i) => i === 0 && t.rowHeads !== false ? `<th scope="row">${cell(c)}</th>` : `<td>${cell(c)}</td>`).join('')}</tr>`).join('');
+  const src = t.source && t.source.url ? ` Source: <a href="${esc(t.source.url)}" target="_blank" rel="noopener nofollow">${esc(t.source.label || t.source.url)}</a>.` : '';
+  const note = (t.note || src) ? `<p class="sb-tnote">${esc(t.note || '')}${src}</p>` : '';
+  const wide = Array.isArray(t.head) && t.head.length > 3;
+  return `${wide ? '<p class="sb-swipe" aria-hidden="true">Swipe the table sideways to see every column →</p>' : ''}<div class="sb-twrap" role="region" aria-label="${esc(t.caption || 'Table')}" tabindex="0"><table class="sb-table">${t.caption ? `<caption>${esc(t.caption)}</caption>` : ''}${head}<tbody>${body}</tbody></table></div>${note}`;
+}
+const TABLE_CSS = `.sb-twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0 6px;border:1px solid rgba(42,32,22,.14);border-radius:12px;background:#fff}
+.sb-table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px;line-height:1.4;font-variant-numeric:tabular-nums}
+.sb-table caption{caption-side:top;text-align:left;padding:10px 12px 4px;font-weight:600;font-size:14px;color:#2A2016}
+.sb-table th,.sb-table td{padding:8px 10px;border-bottom:1px solid rgba(42,32,22,.1);text-align:left;vertical-align:top}
+.sb-table thead th{border-bottom:2px solid rgba(42,32,22,.2);font-size:12.5px;letter-spacing:.02em;color:#4A3C2C;background:#FAF6EF;white-space:nowrap}
+.sb-table tbody th{font-weight:600;color:#2A2016}
+.sb-table tbody tr:last-child th,.sb-table tbody tr:last-child td{border-bottom:none}
+.sb-table a{color:#7A4B0C;text-decoration:underline;text-underline-offset:2px}
+.sb-tnote{font-size:13px;color:#5C5346;margin:4px 0 14px}
+.sb-tnote a{color:#7A4B0C}
+.sb-swipe{display:none;font-size:12.5px;color:#5C5346;margin:12px 0 -6px}
+@media (max-width:600px){.sb-swipe{display:block}.sb-table tbody th,.sb-table thead th:first-child{position:sticky;left:0;z-index:1;background:#FAF6EF;box-shadow:1px 0 0 rgba(42,32,22,.1)}.sb-table tbody th{background:#fff;min-width:96px}}`;
 
 function sourcesList(l) {
   const s = Array.isArray(l.sources) ? l.sources.filter(x => x && x.url) : [];
@@ -262,13 +291,13 @@ function renderPlace(l, ctx) {
     <div class="lg-side">${exact ? ctx.miniTee(l.id) : ''}
     ${glance(l)}</div>
     <div class="lg-col">
-    ${l.notice ? `<p class="lg-notice" role="note"><strong>Before you go:</strong> ${esc(l.notice)}</p>` : ''}
+    ${l.notice && (!l.noticeUntil || new Date().toISOString().slice(0, 10) <= l.noticeUntil) ? `<p class="lg-notice" role="note"${l.noticeUntil ? ` data-until="${esc(l.noticeUntil)}"` : ''}><strong>${esc(l.noticeLabel || 'Before you go')}:</strong> ${esc(l.notice)}</p>` : ''}
     ${Array.isArray(l.quick) && l.quick.length ? `<section class="lg-quick" aria-labelledby="lg-quick-h"><h2 id="lg-quick-h">Quick answers</h2><dl>${l.quick.map(q => `<div><dt>${esc(q[0])}</dt><dd>${esc(q[1])}</dd></div>`).join('')}</dl></section>` : ''}
     <section id="overview" class="lg-over lg-rise">
       <div class="content">${ctx.withProductLink(paras(l.body || l.desc), exact ? l.productLink : null)}</div>
       <p class="lg-checked">${icon('eye')} Last checked ${fmtDate(l.lastChecked || '2026-09-27')}. Facts on this page come from the sources listed at the bottom. <a href="https://wa.me/971585449946?text=${encodeURIComponent('Something on the ' + l.name + ' page looks out of date: ')}" target="_blank" rel="noopener">Spotted something out of date?</a></p>
     </section>
-    ${Array.isArray(l.sections) ? l.sections.map((x, i) => fold('guide-' + (i + 1), 'scroll', esc(x.h2), teaserOf(x.body, 90), `<div class="content">${paras(x.body)}</div>`, false)).join('') : ''}
+    ${Array.isArray(l.sections) ? l.sections.map((x, i) => fold(x.id || ('guide-' + (i + 1)), 'scroll', esc(x.h2), teaserOf(x.body, 90), `<div class="content">${paras(x.body)}</div>${tableHtml(x.table)}`, !!x.open)).join('') : ''}
     ${fold('getting-there', 'route', 'Getting there', teaserOf(g.gettingThere, 90),
       g.gettingThere || typeof l.lat === 'number' ? `${routeMap(l)}<div class="content">${paras(g.gettingThere)}</div>
       <div class="lg-gps">${icon('pin')}<span>GPS <b>${l.lat}, ${l.lng}</b></span></div>
@@ -322,6 +351,7 @@ function renderPlace(l, ctx) {
       </div>
     </section>
     ${(() => { const f = ctx.faqsFor(l); return f.length ? `<section class="faq lg-rise" id="faq"><h2>${icon('q')} Questions people ask about ${esc(l.name)}</h2>${f.map(q => `<details class="lg-q"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : ''; })()}
+    ${ctx.guidesFor && ctx.guidesFor(l.id).length ? `<nav class="lg-guides lg-rise" aria-label="Guides that cover ${esc(l.name)}"><h2>Guides that include ${esc(l.name)}</h2><div>${ctx.guidesFor(l.id).map(g => `<a href="${g[0]}">${esc(g[1])} &rarr;</a>`).join('')}</div></nav>` : ''}
     ${sourcesList(l) ? `<details class="lg-fold lg-srcf lg-rise" id="sources"><summary><span class="lg-fi">${icon('link')}</span><span class="lg-ft"><b>Sources</b><small>Where the facts on this page come from</small></span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb">${sourcesList(l)}${credit ? credit.replace('lg-credit', 'lg-credit2') : ''}</div></details>` : ''}
     ${nearby.length ? `<section class="related lg-rise"><h2>Near ${esc(l.name)}</h2><div class="cards">${nearby.map(n => ctx.locCard(n.x).replace('</strong>', `</strong><i class="lg-near">about ${Math.max(5, Math.round(n.d / 5) * 5)} km away</i>`)).join('')}</div><p class="lg-all"><a href="/places/">All places on the map &rarr;</a></p></section>` : ''}
     </div>
@@ -700,6 +730,7 @@ html:has(.lg-tabs){scroll-padding-top:calc(var(--lg-hdr,67px) + 64px)}
 /* answer box (SEO plan, 1 Oct 2026): the questions people search, answered in the first screen of the guide */
 .lg-notice{background:#FFF6E3;border:1px solid #E7C98B;border-radius:14px;padding:12px 16px;margin:0 0 14px;font-size:15px;line-height:1.5;color:#3A2A14}
 .lg-notice strong{color:#7A4B0C}
+.lg-guides{margin:18px 0}.lg-guides h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:600;margin:0 0 8px;color:#2A2016}.lg-guides div{display:flex;flex-wrap:wrap;gap:8px}.lg-guides a{display:inline-block;padding:9px 14px;border:1px solid rgba(42,32,22,.18);border-radius:999px;background:#fff;color:#2A2016;font-size:14px;text-decoration:none}.lg-guides a:hover{border-color:#B07A3C}
 .lg-quick{background:#fff;border:1px solid var(--lg-line,rgba(42,32,22,.12));border-radius:16px;padding:18px 20px;margin:0 0 18px}
 .lg-quick h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:600;margin:0 0 10px;color:var(--lg-ink,#2A2016)}
 .lg-quick dl{margin:0;display:grid;gap:10px}
@@ -828,4 +859,4 @@ const HUB_CSS = `
 @media(prefers-reduced-motion:reduce){.hx-map.drop .hx-dot{animation:none}}
 `;
 
-module.exports = { hubExplorer, hubScript, HUB_CSS, CAT_COL, renderPlace, clientScript, packFor, PLACE_CSS, routeMap, monthStrip };
+module.exports = { tableHtml, TABLE_CSS, hubExplorer, hubScript, HUB_CSS, CAT_COL, renderPlace, clientScript, packFor, PLACE_CSS, routeMap, monthStrip };

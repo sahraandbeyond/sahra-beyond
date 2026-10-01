@@ -30,8 +30,8 @@
   ],
   "bestTime": "Early morning or late afternoon, to avoid the midday heat; come on a weekday if you can, since the E44 gets heavily congested on Fridays and weekends.",
   "timeNeeded": "Half a day for the dam and Heritage Village; a full day if you add Wadi Hub activities, longer with an overnight camp.",
-  "fees": "Free to enter Hatta Dam and Heritage Village; paid activities (kayaks, mountain bikes, Wadi Hub rides, the Wadi Hub pool day pass at AED 25pp) are extra. Hatta Kayak lists AED 60 for a single boat and AED 120 for two adults (as at 1 October 2026); confirm with the operator, and check current rates for bikes and Wadi Hub rides.",
-  "hours": "Hatta Heritage Village: Sat–Thu roughly 7:30am–8:30pm, Friday 2:30–8:30pm (verify locally, as hours shift on public holidays); Hatta Dam itself has no published gate hours.",
+  "fees": "Free to enter Hatta Dam and Heritage Village; paid activities (kayaks, mountain bikes, Wadi Hub rides, the Wadi Hub pool day pass at AED 25pp) are extra. Hatta Kayak lists AED 60 for a single boat and AED 120 for two adults (operator site, as at 1 October 2026); confirm with the operator, and check current rates for bikes and Wadi Hub rides.",
+  "hours": "Hatta Kayak: Visit Hatta lists daily 7am to 9pm (page read 1 Oct 2026); MyBayut lists daily 7am to 5:30pm (undated article, read 1 Oct 2026); not yet confirmed with the operator. Hatta Heritage Village: WhichMuseum lists Friday 2:30pm to 8:30pm and 7:30am to 8:30pm on other days, while Bayut lists daily 8am to 8pm (both read 1 Oct 2026; hours shift on public holidays). Hatta Dam itself has no published gate hours.",
   "facilities": {
     "toilets": "unknown",
     "food": "nearby",
@@ -112,16 +112,36 @@
     {
       "label": "Khaleej Times: Hatta dam area closed for maintenance (29 Jul 2021)",
       "url": "https://www.khaleejtimes.com/uae/dubai-hatta-dam-area-closed-for-maintenance-work"
+    },
+    {
+      "label": "dubaiofw: Hatta Dam (swimming not allowed, read 1 Oct 2026)",
+      "url": "https://dubaiofw.com/hatta-dam/"
+    },
+    {
+      "label": "WhichMuseum: Hatta Heritage Village opening hours (read 1 Oct 2026)",
+      "url": "https://whichmuseum.com/museum/hatta-heritage-village-24030/opening-hours"
     }
   ],
-  "seoTitle": "Hatta Dubai: Dam, Kayaking, Wadi Hub & Heritage Guide",
+  "seoTitle": "Hatta Dam, Dubai: Kayaking, Prices, Hours & Access",
   "access": {
     "vehicle": "2wd",
     "note": "A normal car manages the E44 highway, the dam car park, Wadi Hub and Heritage Village without difficulty; a 4x4 only matters if you plan to explore rougher wadi tracks off the main road."
   },
-  "seoDesc": "Dubai's mountain exclave, cooler than the coast, on the Oman border. Kayak Hatta Dam, ride the Wadi Hub trails and walk the restored Heritage Village.",
+  "seoDesc": "Hatta Dam kayaking: boat types with age and weight limits, prices, opening hours, access and whether you can swim. Day-trip plan on our Hatta guide.",
   "body": "Hatta is an inland exclave of Dubai, cut off from the rest of the emirate by Sharjah and Ajman territory and sitting inside the Hajar Mountains on the border with Oman. At around 330 metres above sea level, it stays noticeably cooler than coastal Dubai, though summer (June–September) still brings brutal heat — this is a place best planned around the cooler months rather than a casual midsummer detour.\n\nThe modern draw is Hatta Dam, a reservoir built in the 1990s whose turquoise water, penned in by bare grey mountains, has become one of the most photographed spots in the emirate. Hatta Kayak, based at the dam within the Hatta Wadi Hub complex, rents kayaks, water bikes and inflatable boats, with minimum ages and weight limits posted for each. Wadi Hub itself adds mountain biking, archery, ziplining, wall climbing and free-fall jumps, plus a small poolside area with food trucks — it functions as an outdoor activity centre rather than a single attraction.\n\nA short drive away, Hatta Heritage Village recreates the settlement's older life: Bait Al Wali (the former ruler's residence, now a small museum), the 19th-century Hatta Fort, watchtowers with valley views, and the centuries-old falaj irrigation channels that once carried mountain water to the fields. The oldest structure in the area, Juma Mosque, dates to 1780, and the military towers nearby were built in the 1880s — genuine history rather than a reconstruction for its own sake. Further east, Bronze Age burial chambers from around 3200–2500 BC survive in Hatta's hills, though these aren't developed as a visitor site.\n\nBecause Hatta borders Oman directly to its east and south, an official crossing — the Hatta–Al Wajajah border post — operates nearby, open around the clock; day-trippers who stay on the marked tourist routes around the dam, Wadi Hub and Heritage Village won't go near it, but it's worth knowing the border is a real, functioning one rather than a line on a map. DEWA has also developed a 250 MW pumped-storage hydroelectric plant here, using the dam's water — a rare piece of UAE infrastructure worth a mention if you're the sort of visitor who likes knowing what a dam is actually for.",
   "faqs": [
+    {
+      "q": "Can you swim at Hatta Dam?",
+      "a": "No. Swimming is not allowed in the reservoir for safety reasons, as it is primarily a water-storage facility (dubaiofw, read 1 October 2026). Kayaks, water bikes and boats are the way onto the water."
+    },
+    {
+      "q": "What are the age and weight limits for Hatta Kayak?",
+      "a": "As listed by Visit Hatta (read 1 October 2026): a single kayak is for one adult aged 16 or over, maximum 110 kg; a single water bike is for one adult aged 16 or over, maximum 75 kg. A double kayak takes two adults and one child aged 2 to 4. MyBayut adds that children under 16 must be accompanied by an adult and children under 3 are not permitted."
+    },
+    {
+      "q": "What are Hatta Kayak's opening hours?",
+      "a": "Visit Hatta lists daily 7am to 9pm (read 1 October 2026), while MyBayut lists daily 7am to 5:30pm (undated review, read 1 October 2026). Phone the operator on +971 56 616 2111 (the number Visit Hatta publishes) before you drive out."
+    },
     {
       "q": "Is Hatta Dam free to visit?",
       "a": "Yes — there's no entry fee for the dam itself or Heritage Village. Kayaks, water bikes, mountain bikes and Wadi Hub's adventure activities are paid extras, booked with the operator on site."
@@ -168,7 +188,7 @@
     "anchor": "the Hajar Mountains tee",
     "sentence": "Hatta sits in the Hajar Mountains; the ridge traced on {{link}} is Wadi Naqab’s, further north in the same range."
   },
-  "lastChecked": "2026-09-27",
+  "lastChecked": "2026-10-01",
   "_doubts": [
     "Distance from Dubai varies significantly by source: 105km/90 minutes is the commonly cited figure, but Wikipedia's own figure for the settlement is 134km, and other estimates range as low as 96km — treated as an approximate range rather than a single number.",
     "KAYAK PRICES: Hatta Kayak's own site (checked 1 Oct 2026) lists AED 60 for a single boat and AED 120 for two adults; MyBayut gives a double kayak at AED 150. Bike and Wadi Hub ride prices are not given, so the fees field points to the operator.",
@@ -176,7 +196,8 @@
     "Whether camping around the dam/hills requires a permit, or is simply informally tolerated, wasn't confirmed by an official source — worth a direct check with Dubai Municipality or a local operator before stating a rule either way.",
     "Category is left as 'Camping' to match the current site data and its 'More Camping spots' cross-links, but Hatta's content here (dam, water sports, heritage, mountains) arguably fits 'Mountains' just as well or better — flagging for a deliberate decision rather than changing it silently.",
     "Heritage Village's exact hours differ slightly between the two sources checked (7:30am–8:30pm vs 8am–8pm) — close enough to be the same information at different resolutions, but worth confirming directly before publishing a precise time.",
-    "The 'temperatures around 55°C' claim (previously in body, FAQ and safety guide) was checked against the UAE's official record high — 52.1°C at Sweihan, near Al Ain (a lower, hotter inland location than Hatta's 330m mountain setting) — and Al Ain's own 1991-2020 climate record, whose highest recorded June/July maxima are 48.8-49.4°C. No credible source supports 55°C anywhere in the UAE, let alone at a cooler, higher-elevation site like Hatta, so the specific figure has been removed and reworded to describe the heat without asserting an unverified number."
+    "The 'temperatures around 55°C' claim (previously in body, FAQ and safety guide) was checked against the UAE's official record high — 52.1°C at Sweihan, near Al Ain (a lower, hotter inland location than Hatta's 330m mountain setting) — and Al Ain's own 1991-2020 climate record, whose highest recorded June/July maxima are 48.8-49.4°C. No credible source supports 55°C anywhere in the UAE, let alone at a cooler, higher-elevation site like Hatta, so the specific figure has been removed and reworded to describe the heat without asserting an unverified number.",
+    "HOURS (1 Oct 2026): Hatta Kayak is 7am-9pm per Visit Hatta and 7am-5:30pm per MyBayut (undated); both shown. Heritage Village is 7:30am-8:30pm (Fri 2:30pm) per WhichMuseum and 8am-8pm daily per Bayut; both shown. Prices re-read on hattakayak.com/our-boats on 1 Oct 2026: matches the 1 Oct figures."
   ],
   "glance": {
     "how": "Paved all the way: E44, dam car park, Wadi Hub and Heritage Village",
@@ -186,8 +207,110 @@
   },
   "sections": [
     {
-      "h2": "Hatta Dam: kayaking and access",
-      "body": "Hatta Dam holds the reservoir in Wadi Hatta, in Dubai's mountain exclave. Wikipedia gives it as about 32 metres high and 220 metres long at the crest, built at the end of the 1990s, with a reservoir of about 30 hectares. Visit Dubai lists kayaking, pedal boats, picnicking and hiking trails; no entry fee is published for the dam area.\n\nHatta Kayak operates the boats. Its website lists a single-rider boat at AED 60 for an unlimited ride and two adults at AED 120, with family boats at AED 150 and AED 300 for one hour (as at 1 October 2026; confirm on the day). MyBayut gives a double kayak at AED 150, so check by boat type. Single kayaks and water bikes have a minimum age of 16 and weight limits; reservations are not needed for groups under 50.\n\nHours are reported two ways: Visit Hatta says daily 7am to 9pm, while MyBayut says 7am to 5:30pm. MyBayut also reports parking at the dam, lockers and a changing room but no showers or washrooms; no official source confirms this.\n\nVisit Hatta publishes the Wadi Hub season as 1 October to 5 May. What's On reported the hub closing for summer on 3 May 2026, with the dam and kayaking still open. Closures do happen: Dubai Municipality closed the dam area for maintenance in July 2021, with no reopening date given. Go early in the cooler months and phone ahead."
+      "h2": "Hatta Dam: access, hours and closures",
+      "body": "Hatta Dam holds the reservoir in Wadi Hatta, in Dubai's mountain exclave. Wikipedia gives it as about 32 metres high and 220 metres long at the crest, built at the end of the 1990s, with a reservoir of about 30 hectares. Visit Dubai lists kayaking, pedal boats, picnicking and hiking trails; no entry fee is published for the dam area.\n\nHatta Kayak hours are published two ways. Visit Hatta says daily 7am to 9pm (page read 1 October 2026); MyBayut says 7am to 5:30pm (undated review, read 1 October 2026). Both are shown here until the operator confirms one. MyBayut also reports parking at the dam and free lockers at Hatta Kayak, with limited other facilities; no official source confirms this.\n\nVisit Hatta publishes the Wadi Hub season as 1 October to 5 May. What's On reported the hub closing for summer on 3 May 2026, with the dam and kayaking still open. Closures do happen: Dubai Municipality closed the dam area for maintenance in July 2021, with no reopening date given. Go early in the cooler months and phone ahead.",
+      "id": "dam"
+    },
+    {
+      "id": "kayak",
+      "h2": "Hatta Kayak: boats, ages, weight limits and prices",
+      "body": "Hatta Kayak runs the boats at the dam. The table combines the rules Visit Hatta lists with the prices on the operator's own site (hattakayak.com), both read on 1 October 2026. Yellow and donut boats carry children under 10; the kayak and water-bike limits are stated per adult.\n\nPrices differ by source: MyBayut lists a double kayak at AED 150 where the operator lists AED 120, so confirm on the day. MyBayut says Hatta Kayak accepts cash and card, and that identification should be carried. Visit Hatta gives the operator's phone number as +971 56 616 2111, and its site is hattakayak.com. The operator's home page says reservations are not needed for groups under 50.",
+      "table": {
+        "caption": "Hatta Kayak boat types, rules and prices (read 1 October 2026)",
+        "head": [
+          "Boat",
+          "Who can ride",
+          "Weight limit",
+          "Operator price"
+        ],
+        "rows": [
+          [
+            "Single kayak",
+            "1 adult, 16 or over",
+            "110 kg",
+            "AED 60, unlimited ride"
+          ],
+          [
+            "Double kayak",
+            "2 adults and 1 child aged 2 to 4",
+            "110 kg per person",
+            "AED 120, unlimited ride"
+          ],
+          [
+            "Single water bike",
+            "1 adult, 16 or over",
+            "75 kg",
+            "AED 60, unlimited ride"
+          ],
+          [
+            "Double water bike",
+            "2 adults, over 16",
+            "75 kg per person",
+            "AED 120, unlimited ride"
+          ],
+          [
+            "Triple water bike",
+            "3 adults, over 16",
+            "75 kg per person",
+            "AED 180, unlimited ride"
+          ],
+          [
+            "Yellow boat",
+            "3 adults and 1 child under 10",
+            "Not listed",
+            "AED 150, 1 hour"
+          ],
+          [
+            "Donut boat",
+            "4 adults and 2 children under 10",
+            "Not listed",
+            "AED 300, 1 hour"
+          ],
+          [
+            "Tour boat",
+            "11 people plus driver",
+            "Not listed",
+            "AED 600, 25 minutes"
+          ],
+          [
+            "VIP boat",
+            "25 people plus driver",
+            "Not listed",
+            "AED 950, 25 minutes"
+          ]
+        ],
+        "note": "Rules: Visit Hatta (single and double kayak, water bikes, yellow and donut boats), matched by the operator's site. MyBayut adds that children under 16 need an adult and children under 3 are not permitted. Prices are the operator's, as at 1 October 2026.",
+        "source": {
+          "label": "Visit Hatta: Hatta Kayak",
+          "url": "https://www.visithatta.com/en/play/hatta-kayak"
+        }
+      }
+    },
+    {
+      "id": "swimming",
+      "h2": "Can you swim at Hatta Dam?",
+      "body": "No. Swimming is not allowed in the Hatta Dam reservoir. dubaiofw's Hatta Dam guide gives the reason as safety, because the reservoir is mainly a water-storage facility and is not designed for recreational swimming (read 1 October 2026). If you want to be on the water, the kayaks, water bikes and boats above are the route; the Wadi Hub poolside area is separate and charges an entry fee."
+    },
+    {
+      "id": "plan-the-day",
+      "h2": "Planning the rest of the day",
+      "body": "This page covers the dam and the kayak. For Hatta Wadi Hub, the Heritage Village and how to fit them into one day from Dubai, use the day-trip guide.",
+      "table": {
+        "caption": "Related guide",
+        "head": [
+          "Guide",
+          "What it covers"
+        ],
+        "rows": [
+          [
+            {
+              "t": "Hatta day trip from Dubai",
+              "href": "/hatta-guide/"
+            },
+            "Wadi Hub, Heritage Village, the dam and the route"
+          ]
+        ]
+      }
     }
   ],
   "quick": [
@@ -197,11 +320,15 @@
     ],
     [
       "What does kayaking cost?",
-      "As at 1 October 2026, Hatta Kayak lists AED 60 for a single boat (unlimited ride) and AED 120 for two adults. MyBayut gives a double kayak at AED 150, so confirm on the day."
+      "As at 1 October 2026, Hatta Kayak's own site lists AED 60 for a single kayak or single water bike (unlimited ride) and AED 120 for a double kayak or double water bike. MyBayut gives a double kayak at AED 150, so confirm on the day."
     ],
     [
-      "Opening hours?",
-      "Visit Hatta says Hatta Kayak is open daily 7am to 9pm; MyBayut says 7am to 5:30pm. The dam itself has no published gate hours."
+      "Can you swim at Hatta Dam?",
+      "No. Swimming is not allowed in the reservoir for safety reasons, because it is a water-storage facility (dubaiofw, read 1 October 2026)."
+    ],
+    [
+      "Hatta Kayak opening hours?",
+      "Two published ranges. Visit Hatta (page read 1 October 2026): daily 7am to 9pm. MyBayut (undated review, read 1 October 2026): daily 7am to 5:30pm. The dam itself has no published gate hours. Aim to finish before 5:30pm until the operator confirms."
     ],
     [
       "When should I go?",
@@ -215,5 +342,10 @@
       "Parking and facilities?",
       "MyBayut reports parking at the dam, free lockers and a changing room, but no showers or washrooms. No official source confirms it, so bring water and snacks."
     ]
+  ],
+  "todo": [
+    "TODO for Faheem: confirm Hatta Kayak hours (Visit Hatta 7am-9pm vs MyBayut 7am-5:30pm) by phone on +971 56 616 2111 or in person, then publish one.",
+    "TODO for Faheem: confirm Hatta Heritage Village hours with the site or Dubai Culture; only third-party listings found.",
+    "TODO for Faheem: Hatta Wadi Hub hours conflict between Visit Hatta pages; kept off the dam page (see /hatta-guide/)."
   ]
 }

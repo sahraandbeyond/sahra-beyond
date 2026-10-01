@@ -1,8 +1,8 @@
 {
   "emirate": "Abu Dhabi",
   "coverFocus": "50% 100%",
-  "body": "Al Quaa is one of the darkest accessible skies in the UAE and arguably the best place to view the Milky Way galaxy in the country. Set deep in the southern sands of Abu Dhabi, far from any city light, it's a pilgrimage spot for stargazers and astrophotographers — especially on clear, moonless nights between May and October, when the galaxy's bright core is above the horizon.\n\nThe bright core of the Milky Way rises over an empty horizon here, with almost zero light pollution to wash it out. Come prepared for a remote, self-sufficient overnight: a capable 4x4, plenty of water, warm layers for cold desert nights and a red-light torch to protect your night vision. There are no facilities — which is exactly why the skies are so spectacular.",
-  "season": "Apr–May, Sep–Oct",
+  "body": "Al Quaa is one of the darkest accessible skies in the UAE and one of the best-known places to see the Milky Way galaxy in the country. Set deep in the southern sands of Abu Dhabi, far from any city light, it's a pilgrimage spot for stargazers and astrophotographers — especially on clear, moonless nights between May and October, when the galaxy's bright core is above the horizon.\n\nThe bright core of the Milky Way rises over an empty horizon here, far from city lights to wash it out. Come prepared for a remote, self-sufficient overnight: plenty of water, warm layers for cold desert nights, a red-light torch to protect your night vision, and a 4x4 if you plan to drive into the dunes (guides differ on whether a regular car is enough for the main stargazing spot). There are no facilities — which is exactly why the skies are so spectacular.",
+  "season": "May–Oct",
   "lng": 54.75339,
   "emoji": "🌌",
   "name": "Al Quaa Desert",
@@ -28,8 +28,58 @@
   },
   "sections": [
     {
-      "h2": "When the Milky Way's core is actually visible",
-      "body": "The bright core of the galaxy — the dense, luminous band that makes a stargazing trip worth the drive — only clears the horizon for part of the year. From around February it starts rising in the hours before dawn, climbing earlier and higher through spring until it is visible at a sociable hour by summer. By early autumn it is back to a brief, low appearance in the evening sky before sinking below the horizon until the following spring.\n\nThat matters because the cooler months that make camping most comfortable in the UAE do not line up with core season. From roughly November to January the core sits below the horizon through the night regardless of how dark the sky is. Chase the core and you are going in summer heat; come for comfort and constellations and you are going in winter, when the core is not there. It is a genuine trade-off, and worth deciding which trip you are making before you set off."
+      "id": "milky-way",
+      "h2": "Seeing the Milky Way at Al Quaa",
+      "body": "Season: the Milky Way is visible in the UAE sky from May to October, with the core at its highest and clearest in July and August (Gulf News, 8 May 2025). Khaleej Times quotes Ibrahim Al-Jarwan, chairman of the Emirates Astronomical Society, saying July offers the clearest view. Comfortable camping weather is October to April, so the two seasons overlap only in October.\n\nMoon phase: choose a new moon night or a weak crescent, and avoid full moon nights (The National; the Emirates Astronomical Society chairman, via Khaleej Times). The next window is around the new moon on 10 October 2026 (19:50, UAE time), which gives the darkest evenings from about 6 to 14 October. The new moon date is computed for UAE time and checked against published tables; the window is about four days either side.\n\nTime of night: the core appears around midnight in May and about 11 pm in June, then earlier as the season goes on: 10 pm in July, 8:30 pm in August, 7 pm in September and 6 pm in October. It disappears around 4 am in May and 10 pm in October (Khaleej Times). The table below pairs each month with its nearest new moon.\n\nHow dark is it: Al Quaa is one of the darkest accessible skies in the UAE. We do not publish a numeric rating. To check for yourself, open lightpollutionmap.info, find your pin and compare it with the cities nearby.",
+      "table": {
+        "caption": "Milky Way core by month, with the nearest new moon",
+        "head": [
+          "Month",
+          "Core up (appears to disappears)",
+          "Nearest new moon (UAE time) and darker nights"
+        ],
+        "rows": [
+          [
+            "October 2026",
+            "6 pm to 10 pm",
+            "10 Oct 2026, 19:50; about 6 to 14 Oct"
+          ],
+          [
+            "May 2027",
+            "12 am to 4 am",
+            "6 May 2027, 14:58; about 2 to 10 May"
+          ],
+          [
+            "June 2027",
+            "11 pm to 3:30 am",
+            "4 Jun 2027, 23:40; about 31 May to 8 Jun"
+          ],
+          [
+            "July 2027",
+            "10 pm to 3 am",
+            "4 Jul 2027, 07:01; about 30 Jun to 8 Jul"
+          ],
+          [
+            "August 2027",
+            "8:30 pm to 2 am",
+            "2 Aug 2027, 14:05; about 29 Jul to 6 Aug"
+          ],
+          [
+            "September 2027",
+            "7 pm to 12:30 am",
+            "31 Aug 2027, 21:41; about 27 Aug to 4 Sep"
+          ]
+        ],
+        "note": "Core times are Khaleej Times' monthly guide (2025 article), checked 1 Oct 2026. New moon dates are computed for UAE time and cross-checked against two published new-moon tables.",
+        "source": {
+          "label": "Khaleej Times: Milky Way visible from May to October",
+          "url": "https://www.khaleejtimes.com/space/uae-milky-way-visible-from-may-to-october-2025"
+        }
+      }
+    },
+    {
+      "h2": "Core season or camping season",
+      "body": "Core season is May to October, with the core highest in July and August. Comfortable camping weather runs October to April, so the two overlap only in October. Chase the core and you are going in the summer heat; come for comfort and constellations and you are going in the cooler months, when the core is not the main event. It is a genuine trade-off, and worth deciding which trip you are making before you set off."
     },
     {
       "h2": "The moon decides more than the date",
@@ -41,11 +91,11 @@
     },
     {
       "h2": "Being honest about the hard parts",
-      "body": "This is not a casual detour. Al Quaa is around two and a half hours from Dubai, deep in southern Abu Dhabi, and reaching it needs a capable 4x4. Fuel up, eat and carry plenty of water before you leave the city, because there are no facilities of any kind at the site itself.\n\nCore season is also the hottest half of the year here, and the heat does not fully switch off after dark. Humidity near dawn can soften contrast even on a clear night. And if you are hoping to capture what you see, a phone camera on its own will mostly show black — night skies need a long exposure on a steady tripod, or a night mode pushed well past what it does automatically. The sensor cannot gather enough light in the split second it is built for."
+      "body": "This is not a casual detour. Al Quaa is around two and a half hours from Dubai, deep in southern Abu Dhabi. Guides differ on the vehicle: The National, PropertyFinder and Pit Stop Arabia say a regular car reaches the main stargazing spot on packed sand, Dubicars recommends a 4x4 but not always required, and for the dunes the guides point to a 4x4. Fuel up, eat and carry plenty of water before you leave the city, because there are no facilities of any kind at the site itself.\n\nCore season is also the hottest half of the year here, and the heat does not fully switch off after dark. Humidity near dawn can soften contrast even on a clear night. And if you are hoping to capture what you see, a phone camera on its own will mostly show black — night skies need a long exposure on a steady tripod, or a night mode pushed well past what it does automatically. The sensor cannot gather enough light in the split second it is built for."
     },
     {
       "h2": "Preparing for a night out there",
-      "body": "Treat it as the overnight desert trip it is. Check the moon phase and the core's position for your dates before committing to a night. Tell someone your plan and your rough return time. Fill the tank before leaving, bring more water than you think you need, and pack for the season you are actually travelling in — summer nights stay warm, winter nights drop sharply.\n\nA red-light torch protects your night vision far better than the white light on a phone. Download offline maps and save the coordinates — 23.52924, 54.75339 — in advance rather than relying on a live connection once you are off the highway. Build in slack, too: a moderate 4x4 route in low light takes longer than the same drive by day."
+      "body": "Treat it as the overnight desert trip it is. Check the moon phase and the core's position for your dates before committing to a night. Tell someone your plan and your rough return time. Fill the tank before leaving, bring more water than you think you need, and pack for the season you are actually travelling in — summer nights stay warm, winter nights drop sharply.\n\nA red-light torch protects your night vision far better than the white light on a phone. Download offline maps in advance rather than relying on a live connection once you are off the highway, and check your pin first: our coordinates are 23.52924, 54.75339, while The National publishes 23.604633, 54.750256, about 8 km north. Build in slack, too: an unpaved final stretch in low light takes longer than the same drive by day."
     }
   ],
   "faqs": [
@@ -58,8 +108,16 @@
       "a": "Around two and a half hours by road. Plan a full evening or an overnight trip rather than an after-work detour."
     },
     {
+      "q": "What are the coordinates for Al Quaa?",
+      "a": "Our pin is 23.52924, 54.75339. The National publishes 23.604633, 54.750256 (about 8 km north of ours) and PropertyFinder gives 23.6054742, 54.7504395. Check your pin on your own map before you leave, and download offline maps, since signal is patchy off the highway."
+    },
+    {
+      "q": "When is the next good night for the Milky Way at Al Quaa?",
+      "a": "The new moon on 10 October 2026 gives the darkest evenings from about 6 to 14 October, when the core is up roughly 6 pm to 10 pm. After that the next window within core season is around the new moon on 6 May 2027. New moon dates are computed for UAE time."
+    },
+    {
       "q": "Do I need a 4x4 to get to Al Quaa?",
-      "a": "Yes. A capable 4x4 is needed and the route is rated moderate rather than beginner-friendly. It is not a drive for a standard saloon car."
+      "a": "Guides differ. The National, PropertyFinder and Pit Stop Arabia say a regular car reaches the main stargazing spot on packed sand (stay on firm ground; Pit Stop Arabia warns that sedans can get stuck). Dubicars recommends a 4x4 but says it is not always required. For driving into the dunes the guides point to a 4x4, and we advise going with company rather than alone."
     },
     {
       "q": "Are there any facilities at Al Quaa?",
@@ -67,7 +125,7 @@
     },
     {
       "q": "When is the Milky Way visible at Al Quaa?",
-      "a": "The bright core is above the horizon roughly from May to October, highest in the middle of that window. Outside it the core is below the horizon at night and will not appear however dark the sky is."
+      "a": "May to October, with the core at its highest in July and August (Gulf News; Khaleej Times, quoting the Emirates Astronomical Society). In October the core is up from about 6 pm to 10 pm. Comfortable camping weather is October to April, so the two seasons overlap only in October."
     },
     {
       "q": "Do I need a telescope to see the Milky Way?",
@@ -99,17 +157,17 @@
     1,
     1,
     1,
+    1,
     2,
     2,
-    1,
-    1,
-    1,
+    2,
+    2,
     2,
     2,
     1,
     1
   ],
-  "bestTime": "A clear, moonless night: new moon, or the few nights either side of it. When the Milky Way core is up depends on the month: in the evening in September and October, after midnight in April and May, and most of the night in June to August.",
+  "bestTime": "Milky Way core season is May–October, peaking July–August (Gulf News; Khaleej Times, quoting the Emirates Astronomical Society). Comfortable camping weather is October–April. A clear, moonless night matters most: new moon, or the few nights either side of it.",
   "timeNeeded": "A full night is best; allow at least 3–4 hours after dark if you're not staying over.",
   "fees": "Free",
   "facilities": {
@@ -119,7 +177,7 @@
     "signal": "patchy",
     "note": "No toilets, shops, water or fuel at the site itself. The nearest fuel and food is about 15 minutes back toward Al Ain."
   },
-  "gpsSource": "Kept at the brand’s own stargazing spot (the coordinates in the text below). Research found the most-cited public pull-off at about 23.6056, 54.7504 (The National, PropertyFinder, geotagged Commons photo); Faheem to confirm which to show.",
+  "gpsSource": "Our own stargazing pin (23.52924, 54.75339). The National publishes 23.604633, 54.750256 and PropertyFinder 23.6054742, 54.7504395, both about 8 km north of ours; a geotagged Wikimedia Commons photo also sits near that northern point.",
   "sources": [
     {
       "label": "The National — Al Quaa: secluded Abu Dhabi spot that offers out-of-this-world views of the Milky Way",
@@ -140,20 +198,36 @@
     {
       "label": "Wikimedia Commons — File:Mesmerising natural beauty - the milky way and the desert at Al Quaa.jpg",
       "url": "https://commons.wikimedia.org/wiki/File:Mesmerising_natural_beauty_-_the_milky_way_and_the_desert_at_Al_Quaa.jpg"
+    },
+    {
+      "label": "Pit Stop Arabia — Road trip to Al Quaa",
+      "url": "https://www.pitstoparabia.com/en/news/road-trip-to-al-quaa"
+    },
+    {
+      "label": "Khaleej Times — Milky Way visible in the UAE from May to October",
+      "url": "https://www.khaleejtimes.com/space/uae-milky-way-visible-from-may-to-october-2025"
+    },
+    {
+      "label": "Gulf News — Stargazers in the UAE can catch the Milky Way all summer long",
+      "url": "https://gulfnews.com/uae/science/stargazers-in-the-uae-can-catch-the-milky-way-all-summer-long-1.500119274"
+    },
+    {
+      "label": "Light Pollution Map",
+      "url": "https://www.lightpollutionmap.info"
     }
   ],
   "access": {
-    "vehicle": "4wd",
-    "note": "The usual stargazing pull-off is on packed sand beside the road; how far you can go beyond it depends on your vehicle and the sand. Go with a capable 4x4 if you plan to drive into the dunes, and never alone."
+    "vehicle": "disputed",
+    "note": "The National, PropertyFinder and Pit Stop Arabia say a regular car reaches the main stargazing spot on packed sand (stay on firm ground; Pit Stop Arabia warns that sedans can get stuck). Dubicars recommends a 4x4 but says it is not always required. For driving into the dunes the guides point to a 4x4, and we advise going with company rather than alone."
   },
   "guide": {
-    "gettingThere": "From Dubai, Al Quaa is reached via the E-road network toward Al Ain and then south into Abu Dhabi's southern desert, a drive of roughly two and a half hours; from Abu Dhabi city it's closer to ninety minutes, largely on paved road toward Al Ain. Look for a large roundabout on the approach, with a dirt track and gate just behind it leading into the desert — a regular car manages this stretch on packed sand, so a 4x4 isn't essential unless you want to explore further among the dunes. Fill the tank and eat before you leave the highway: the nearest fuel and food is about 15 minutes back the way you came, and there's nothing at the site itself. This is a self-drive destination only; there's no public transport or realistic taxi option this far out.",
-    "whenToGo": "The comfortable camping season (Oct–Mar) and the Milky Way's core season (roughly Apr–Oct) don't overlap, so decide which trip you're making. For the core at its highest, aim for June–August despite the heat; for cooler nights without the core, come Nov–Jan. Whichever month, a clear, moonless night matters more than the date — check the moon phase and aim for new moon or the nights either side of it, arriving well before dark to set up.",
+    "gettingThere": "From Dubai, Al Quaa is reached via the E-road network toward Al Ain and then south into Abu Dhabi's southern desert, a drive of roughly two and a half hours; from Abu Dhabi city it's closer to ninety minutes, largely on paved road toward Al Ain. Look for a large roundabout on the approach, with a dirt track and gate just behind it leading into the desert. On the vehicle, the published guides differ. The National, PropertyFinder and Pit Stop Arabia say a regular car reaches the main stargazing spot on packed sand (stay on firm ground; Pit Stop Arabia warns that sedans can get stuck). Dubicars recommends a 4x4 but says it is not always required. For driving into the dunes the guides point to a 4x4, and we advise going with company rather than alone. PropertyFinder adds that the final stretch is unpaved, and Dubicars that most of the road is paved with a sandy stretch near the site. Fill the tank and eat before you leave the highway: the nearest fuel and food is about 15 minutes back the way you came, and there's nothing at the site itself. This is a self-drive destination only; there's no public transport or realistic taxi option this far out.",
+    "whenToGo": "The Milky Way's core season is May to October, with the core at its highest in July and August (Gulf News; Khaleej Times, quoting the Emirates Astronomical Society). Comfortable camping weather runs October to April (PropertyFinder, Dubicars), so the two overlap only in October. For the core at its highest, aim for July–August despite the heat; for cooler nights, come November–April and expect constellations rather than the core. Whichever month, a clear, moonless night matters more than the date: aim for new moon or the nights either side of it, arriving well before dark to set up.",
     "onSite": "Once your eyes adapt to the dark — allow twenty to thirty minutes away from any white light — the main draw is naked-eye: thousands of stars and the pale band of the Milky Way overhead, with meteors on a clear night. Binoculars add real depth without the setup of a telescope. Photographers use a tripod and a long exposure, or a manually-pushed night mode, since a phone camera alone will mostly show black. Dubai Astronomy Group also runs occasional public Milky Way observation events at Al Quaa in season, with telescopes and guided sessions, for anyone who'd rather not go it alone.",
     "safety": "This is a genuine overnight desert trip, not a casual detour: there's no fuel, water, food or reliable phone signal once you're off the highway, so carry more water than you think you'll need and tell someone your route and return time. Core season overlaps with the hottest half of the year, and the heat doesn't fully switch off after dark, so pace any walking around after sunset. Stay on the packed sand track unless you have a 4x4 and the experience to go further — soft sand off the main route can bog down a standard car quickly. Check the weather forecast before you go, since fog or cloud can wash out a night's stargazing entirely."
   },
   "darkSky": true,
-  "lastChecked": "2026-09-27",
+  "lastChecked": "2026-10-01",
   "_doubts": [
     "The current site's GPS pin (23.52924, 54.75339) is roughly 8-9km south of the verified stargazing spot (23.605572, 54.750445), confirmed independently by a geotagged photo and two travel guides — recommend updating the pin, since visitors using the page's own map buttons are currently misdirected.",
     "Audit (27 Sep 2026): confirmed via three independent sources opened directly (The National, PropertyFinder, Dubicars) that a regular car reaches the main stargazing pull-off on packed sand, and a 4x4 is needed only for off-roading further into the dunes. Fixed the internal contradiction this created: 'difficulty' changed from Moderate to Easy, 'access.vehicle' changed from 4wd to 2wd, and the FAQ that wrongly stated 'a capable 4x4 is needed... not a drive for a standard saloon car' has been removed (a second FAQ on the same page already gave the correct answer). IMPORTANT — per the audit brief, al-quaa-desert's body and sections are the founder's own text and were left untouched, but they still describe the site as needing 'a capable 4x4' and reaching it as part of 'not a casual detour' framing. That founder's-voice text now sits alongside a corrected Easy/2wd rating and should be reconciled by Faheem — either the body's difficulty framing should be softened to match the sourced facts, or, if the founder's own on-the-ground experience genuinely required a 4x4 (e.g. a different, less-used approach), the structured fields should be reverted to match it.",
@@ -164,11 +238,11 @@
     "27 Sep 2026: Faheem chose core-season months as best (Apr–May, Sep–Oct); Jun–Aug and Nov–Mar shown as possible."
   ],
   "glance": {
-    "how": "Packed-sand pull-off by the road; the dunes beyond need a capable 4x4, and never go alone",
+    "how": "Packed-sand pull-off by the road; guides differ on car or 4x4 there, and the dunes need a 4x4. Never go alone",
     "time": "A full night, or 3–4 hours after dark",
-    "best": "A clear, moonless night; the core is up in the evening in Sep–Oct, after midnight in Apr–May",
+    "best": "Milky Way core May–Oct, peak Jul–Aug; camping weather Oct–Apr; pick a moonless night",
     "cost": "Free",
-    "badge": "4x4 advised"
+    "badge": "4x4 for dunes"
   },
   "packDefault": "overnight",
   "coverAlt": "Soft sand dunes stretching to the horizon at Al Quaa, with a single 4x4 parked among them",
@@ -178,16 +252,20 @@
       "Open desert in southern Abu Dhabi emirate, south of the Abu Dhabi–Al Ain road, about 15 minutes past the last fuel and food."
     ],
     [
+      "Which coordinates?",
+      "Our pin is 23.52924, 54.75339. The National publishes 23.604633, 54.750256, about 8 km north of ours, and PropertyFinder gives 23.6054742, 54.7504395. Check your pin on your own map before you leave, and download offline maps."
+    ],
+    [
       "How far is it?",
       "About 2.5 hours from Dubai, and about 1.5 to 2 hours from Abu Dhabi city, mostly on paved road towards Al Ain."
     ],
     [
       "Do I need a 4x4?",
-      "Yes. The usual pull-off is packed sand beside the road, but a capable 4x4 is the safe choice here, and essential for the dunes. Never go alone."
+      "Guides differ. The National, PropertyFinder and Pit Stop Arabia say a regular car reaches the main stargazing spot on packed sand (stay on firm ground; Pit Stop Arabia warns that sedans can get stuck). Dubicars recommends a 4x4 but says it is not always required. For driving into the dunes the guides point to a 4x4, and we advise going with company rather than alone."
     ],
     [
       "Best months",
-      "For the Milky Way core, roughly April to October (highest June to August, but hot). For cool camping nights without the core, October to March. A moonless night matters more than the month."
+      "Milky Way core: May to October, peaking July to August (Gulf News; Khaleej Times, quoting the Emirates Astronomical Society), though summer is hot. Comfortable camping weather: October to April. A moonless night matters more than the month."
     ],
     [
       "Permit and fee",
@@ -197,5 +275,15 @@
       "Facilities",
       "None: no toilets, water, food, fuel or reliable signal. Bring everything, including more water than you expect to need."
     ]
+  ],
+  "notice": "Last Milky Way window of 2026: the new moon on 10 October gives the darkest evenings from about 6 to 14 October, when the core is up from about 6 pm to 10 pm (Khaleej Times). The core season ends with October (Gulf News: May to October); the next new-moon window within core season is in May 2027.",
+  "noticeUntil": "2026-10-15",
+  "todo": [
+    "TODO for Faheem: your 4x4 verdict for the pull-off (car or 4x4, and what changes after rain). The page now shows the sourced positions side by side; replace them with your answer. Also confirm access.vehicle and difficulty to match.",
+    "TODO for Faheem: your exact pin for the stargazing pull-off. Our lat/lng (23.52924, 54.75339) is unchanged and sits about 8 km south of The National's 23.604633, 54.750256 and PropertyFinder's 23.6054742, 54.7504395. Once confirmed, update lat/lng so the map buttons open on the right place.",
+    "TODO for Faheem: your months. Page now says core season May-Oct (peak Jul-Aug) and camping weather Oct-Apr; the months array marks May-Oct as 2 (core) and Nov-Apr as 1. On 27 Sep you had chosen Apr-May and Sep-Oct as best.",
+    "TODO for Faheem: DIY vs organised tour prices - approve listing before publishing: PropertyFinder about AED 550 per person (tour with tents, gear, telescopes, meals, transport); Desert Dreams AED 450 per person, minimum 4, transport extra; Dubai Astronomy Group public evening AED 120 including bus (21 Jun 2025). Recheck each before publishing.",
+    "TODO for Faheem: photography settings from your own session (lens, exposure, ISO, tripod, how long to wait for the core, one unedited frame).",
+    "TODO for Faheem: one drive time from Dubai: page says about 2.5 h; Dubicars and Pit Stop Arabia say about 2 h."
   ]
 }
