@@ -19,8 +19,8 @@
   "difficulty": "Moderate",
   "category": "Camping",
   "lat": 23.52924,
-  "seoTitle": "Al Quaa Stargazing: One of the Darkest Skies in the UAE",
-  "seoDesc": "Al Quaa has some of the darkest accessible skies in the Emirates. When to go, where to park, what you'll see and when the Milky Way core is up.",
+  "seoTitle": "Al Quaa Desert: Stargazing, Camping & Directions (2026)",
+  "seoDesc": "Al Quaa has one of the darkest accessible skies in the UAE. How to get there from Dubai and Abu Dhabi, when the Milky Way is up, and what to bring.",
   "productLink": {
     "slug": "al-quaa-galaxy-regular",
     "anchor": "the Al Quaa Galaxy tee",
@@ -171,5 +171,31 @@
     "badge": "4x4 advised"
   },
   "packDefault": "overnight",
-  "coverAlt": "Soft sand dunes stretching to the horizon at Al Quaa, with a single 4x4 parked among them"
+  "coverAlt": "Soft sand dunes stretching to the horizon at Al Quaa, with a single 4x4 parked among them",
+  "quick": [
+    [
+      "Where is it?",
+      "Open desert in southern Abu Dhabi emirate, south of the Abu Dhabi–Al Ain road, about 15 minutes past the last fuel and food."
+    ],
+    [
+      "How far is it?",
+      "About 2.5 hours from Dubai, and about 1.5 to 2 hours from Abu Dhabi city, mostly on paved road towards Al Ain."
+    ],
+    [
+      "Do I need a 4x4?",
+      "Yes. The usual pull-off is packed sand beside the road, but a capable 4x4 is the safe choice here, and essential for the dunes. Never go alone."
+    ],
+    [
+      "Best months",
+      "For the Milky Way core, roughly April to October (highest June to August, but hot). For cool camping nights without the core, October to March. A moonless night matters more than the month."
+    ],
+    [
+      "Permit and fee",
+      "Free, with no permit needed for a standard visit."
+    ],
+    [
+      "Facilities",
+      "None: no toilets, water, food, fuel or reliable signal. Bring everything, including more water than you expect to need."
+    ]
+  ]
 }

@@ -8,6 +8,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Shop UAE T-Shirts &amp; Polos — Limited Runs | Sahra &amp; Beyond</title>
 <meta name="description" content="Original heavyweight 230gsm cotton tees inspired by real UAE places — the Milky Way over Al Quaa, the dunes of Liwa and the Hajar Mountains.">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/shop/">
@@ -31,7 +32,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shop UAE-Inspired Tees | Sahra &amp; Beyond">
 <meta name="twitter:description" content="Original heavyweight 230gsm cotton tees inspired by real UAE places.">
-<meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
+<meta name="twitter:image" content="https://www.sahraandbeyond.ae/shirts/alquaa-regular-back.jpg">
 <meta name="description" content="Shop original UAE graphic tees: a desert t-shirt from Liwa, a mountain tee from the Hajar, the Milky Way over Al Quaa. 230gsm combed cotton, limited runs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1652,7 +1653,7 @@ var PLACES={
  /* Coordinates are the authoritative ones from the /locations/ pages + content/locations/*.json — keep them in sync. */
  'al-quaa-desert':{lat:23.52924,lng:54.75339,sky:'One of the darkest skies in the Emirates',blurb:'One of the darkest skies in the Emirates — deep in the southern desert, far from any city glow, a magnet for stargazers chasing the Milky Way.'},
  'liwa':{lat:23.1339,lng:53.7785,sky:'Deep-desert dark sky',blurb:'Home to some of the largest sand dunes on earth, where the Empty Quarter begins — an otherworldly landscape of mega-dunes and silence.'},
- 'wadi-naqab':{lat:25.6988,lng:56.0054,sky:'Dark mountain sky',blurb:'A dramatic seasonal wadi high in the Hajar Mountains below Jebel Jais — red-rock walls, terraced pools and clear mountain air.'}
+ 'wadi-naqab':{lat:25.6988,lng:56.0054,sky:'Dark mountain sky',blurb:'A dramatic seasonal wadi high in the Hajar Mountains below Jebel Yanas — red-rock walls, terraced pools and clear mountain air.'}
 };
 
 /* Tolerant place lookup. A Shopify `place:` tag like "Al Quaa" slugifies to `al-quaa`, which does NOT
@@ -2180,7 +2181,7 @@ function draw(){
      it still has its own section in the grid below. */
   var ringSrc=PRODUCTS.filter(function(p){return p.handle!=='sahra-tote';});
   var ringCards=ringSrc.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+((p.images&&p.images.length?p.images:(p.img?[p.img]:[])).slice(0,6).map(function(u,j){return '<img class="'+(j===0?'on':'')+'" src="'+u+'" alt="'+(j===0?(p.title||'').replace(/"/g,''):'')+'" loading="'+(i<3&&j<2?'eager':'lazy')+'" decoding="async">';}).join(''))+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
-  var ringHtml=ringSrc.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.webp" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.webp" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.webp" alt="" loading="lazy" decoding="async" width="2560" height="1440"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
+  var ringHtml=ringSrc.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.webp" alt="" loading="lazy" decoding="async" width="1920" height="1080"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.webp" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.webp" alt="" loading="lazy" decoding="async" width="1920" height="1080"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
   var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
     /* The tote (19 Sep). Everything below this point is the tee template — GSM,

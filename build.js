@@ -14,7 +14,7 @@ const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 
 // Clean previously-generated output so deleted locations don't leave orphan pages
-['locations', 'about', 'shop', 'places', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
+['locations', '_drafts', 'about', 'shop', 'places', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
 
 const TAGLINE = 'Wear the wild side of the UAE';
 // Pre-launch mode: the site opens on the coming-soon experience.
@@ -109,9 +109,19 @@ function addImgDims(html, baseDir) {
 function write(rel, html) { html = addImgDims(html, path.dirname(rel)); const fp = path.join(ROOT, rel); fs.mkdirSync(path.dirname(fp), { recursive: true }); fs.writeFileSync(fp, html); console.log('  ✓ ' + rel); }
 
 const locDir = path.join(ROOT, 'content/locations');
-const locations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(locDir, f))).filter(Boolean)
+const allLocations = (fs.existsSync(locDir) ? fs.readdirSync(locDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(locDir, f))).filter(Boolean)
   /* 27 Sep 2026: Wadi Shab (Oman) removed and 'Maleiha Desert Drive' merged into Mleiha (Faheem); both redirect in vercel.json */
   .filter(l => !l.hidden);
+/* 1 Oct 2026: "draft": true holds a guide back until Faheem has his own photos and a
+   real visit behind it (SEO plan rule). Drafts are left out of everything public:
+   no /locations/ page, no sitemap, hub, nearby list, guide hub or feed. Draft JSON
+   lives in content/drafts/ (in .vercelignore, so it is never served); a local
+   preview is written to _drafts/ (gitignored, noindex) and never on Vercel. To
+   publish, move the file to content/locations/ and remove "draft": true. */
+const draftDir = path.join(ROOT, 'content/drafts');   /* listed in .vercelignore: never uploaded or served */
+const draftLocations = (fs.existsSync(draftDir) ? fs.readdirSync(draftDir) : []).filter(f => f.endsWith('.json')).map(f => readJSON(path.join(draftDir, f))).filter(Boolean)
+  .map(l => Object.assign(l, { draft: true }));
+const locations = allLocations.filter(l => !l.draft);
 const PLACES = require('./places-page.js');
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
@@ -1212,7 +1222,7 @@ function locCard(l) {
    live in content/locations/<id>.json, each with its sources. */
 const PLACE_CTX = { locations, PRODUCT_BY_PLACE, PRODUCTS_ALL, DESIGNS, CAT_BG, CAT_HASH, WEATHER_KEY,
   teeBlock, miniTee, cardShots, withProductLink, newsletterBlock, locCard, faqsFor };
-locations.forEach(l => {
+const renderLocationPage = l => {
   const canonical = `${SITE}/locations/${l.id}/`;
   const title = l.seoTitle || `${l.name}: ${l.category} in ${l.emirate}, UAE | Sahra & Beyond`;
   const desc = l.seoDesc || metaDesc(l.desc);
@@ -1243,8 +1253,12 @@ locations.forEach(l => {
   const packItems = PLACES.packFor(l, PACKING);
   const r = PLACES.renderPlace(l, PLACE_CTX);
   const body = r.hero + r.main + PLACES.clientScript(l, PLACE_CTX, packItems);
-  write(`locations/${l.id}/index.html`, shell({ activeNav: 'places', title, desc, canonical, jsonld, bodyHtml: body, image: ogImage, bodyClass: 'lg-page' }));
-});
+  const draft = !!l.draft;
+  write(`${draft ? '_drafts/' : ''}locations/${l.id}/index.html`, shell({ activeNav: 'places', title, desc, canonical, jsonld, bodyHtml: body, image: ogImage, bodyClass: 'lg-page', noindex: draft }));
+};
+locations.forEach(renderLocationPage);
+if (!process.env.VERCEL) draftLocations.forEach(renderLocationPage);
+else if (draftLocations.length) console.log('  – drafts held back: ' + draftLocations.map(l => l.id).join(', '));
 
 // ---- keyword landing pages ----
 const LANDINGS = [
@@ -1588,7 +1602,7 @@ function contactWays() {
   const places = [
     { name: 'Al Quaa', emirate: 'Abu Dhabi', gps: '23.529° N · 54.753° E', blurb: 'One of the darkest accessible skies in the Emirates. Far enough south that no city glow reaches it — on a clear night the Milky Way throws a shadow.', href: '/products/al-quaa-galaxy-regular/', tee: 'Al Quaa Galaxy', img: '/assets/places/alquaa.jpg', alt: 'The Milky Way over the dunes at Al Quaa' },
     { name: 'Liwa', emirate: 'Abu Dhabi', gps: '23.134° N · 53.779° E', blurb: 'Where the Empty Quarter begins. Some of the largest dunes on earth; at sunset the ridges turn gold and the whole horizon goes quiet.', href: '/products/empty-quarter-regular/', tee: 'Empty Quarter', img: '/assets/places/liwa.jpg', alt: 'The sun setting over the dunes of Liwa' },
-    { name: 'Wadi Naqab', emirate: 'Ras Al Khaimah', gps: '25.699° N · 56.005° E', blurb: 'Red-rock walls and terraced pools high in the Hajar, below Jebel Jais — the range that gives the northern Emirates their skyline.', href: '/products/hajar-mountains-regular/', tee: 'Hajar Mountains', img: '/assets/places/wadi-naqab.jpg', alt: 'Red rock peaks above Wadi Naqab in the Hajar Mountains' }
+    { name: 'Wadi Naqab', emirate: 'Ras Al Khaimah', gps: '25.699° N · 56.005° E', blurb: 'Red-rock walls and terraced pools high in the Hajar, below Jebel Yanas — the range that gives the northern Emirates their skyline.', href: '/products/hajar-mountains-regular/', tee: 'Hajar Mountains', img: '/assets/places/wadi-naqab.jpg', alt: 'Red rock peaks above Wadi Naqab in the Hajar Mountains' }
   ];
   /* Faheem, 14 Sep: flat gradients "look like the background didn't load" - the cards
      carry the same three landscape plates the homepage journey uses (journey/plates/),
@@ -2205,6 +2219,7 @@ const COMMERCE = [
       { h2: 'Regular and oversized fits', body: "The t-shirts are cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL, and each design comes in both a Regular and an Oversized fit. The polo is a men's cut, S to XL, in one fit. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
       { h2: 'Limited runs', body: "Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything." }
     ],
+    related: [['/national-day/', 'UAE National Day t-shirts', 'For Eid Al Etihad, 2 December'], ['/gifts/', 'Gifts from the UAE', 'Leaving gifts that are not touristy']],
     faqs: [
       ['Where do you ship?', 'We ship worldwide from Dubai. In the UAE: free next-day delivery to all seven emirates, with no minimum order — order by 2 pm and it arrives the next working day. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 390. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.'],
       ['What size should I order?', 'Every t-shirt design comes in Regular and Oversized fits, S to XL; the polo comes in one fit. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.'],
@@ -2213,17 +2228,54 @@ const COMMERCE = [
     ]
   },
   {
+    /* SEO plan (1 Oct 2026): live by 10 Oct for "uae national day t shirt" and "national day gifts uae".
+       Facts: Eid Al Etihad, 2 December; the union of 2 Dec 1971 (six emirates; Ras Al Khaimah joined
+       10 Feb 1972); the 53rd was in 2024 (Khaleej Times, 12 Nov 2024), so 2026 is the 55th. No holiday
+       dates are stated: they are announced by the government each year. */
+    slug: 'national-day', emoji: '✦', cat: 'Dunes',
+    h1: 'UAE National Day T-Shirts',
+    title: 'UAE National Day T-Shirts & Gifts — Eid Al Etihad 2026',
+    desc: 'T-shirts for Eid Al Etihad drawn from real UAE places: the Al Quaa night sky, the Hajar peaks, the Liwa dunes. 230gsm cotton, free next-day UAE delivery.',
+    lede: 'For Eid Al Etihad on 2 December: shirts drawn from the land itself',
+    foldsTitle: 'Choosing, timing and gifting',
+    intro: "On 2 December the UAE marks Eid Al Etihad, its National Day: the anniversary of the union of 1971, when six emirates came together as one country, with Ras Al Khaimah joining in February 1972. This year is the 55th.\n\nMost National Day t-shirts carry a flag or a slogan. Ours carry a place. Each design is drawn from somewhere real in the Emirates: the Milky Way rising over the desert at Al Quaa in Abu Dhabi, the Hajar peaks above Wadi Naqab in Ras Al Khaimah, and the dune ridges of Liwa at the edge of the Empty Quarter. They are shirts to wear on the day, and every weekend after it.",
+    sections: [
+      { h2: 'Which design for which person', body: "Al Quaa Galaxy is the Milky Way over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back of a black tee. It suits the person who drives out of the city to look at the stars.\n\nHajar Mountains is a topographic line drawing of the Hajar peaks, printed on grey. It is the one for hikers and anyone who heads for Ras Al Khaimah when the weather turns.\n\nEmpty Quarter is a tonal sun setting over the dunes of Liwa, embroidered on beige with no print at all. It suits desert drivers and anyone who prefers a quieter shirt.\n\nThe Sahra Polo is 240gsm piqué with an embroidered mark, for someone who would rather wear a collar.\n\nEvery tee is 230gsm combed cotton, AED 199, in Regular or Oversized, sizes S to XL. Any two tees are AED 359." },
+      { h2: 'Getting it in time for 2 December', body: "In the UAE, orders placed by 2 pm on a working day are dispatched the same day and delivered the next working day, free, with no minimum order. Public holidays are not working days, so order a few days before the National Day holiday rather than on the eve.\n\nGCC orders (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait) take 3 to 5 working days, at AED 50 or free over AED 390. The rest of the world takes 7 to 14 working days, at AED 80." },
+      { h2: 'Giving it as a gift', body: "Tick 'This is a gift' in your bag and add a message: we include it with the order. Every order comes with the Sahra Tote, free. If the size is wrong, exchanges within the UAE are free within 14 days of delivery, as long as the shirt is unworn with its tags on." },
+      { h2: 'Wear the place, then go there', body: "The National Day weekend falls in the cool season, the best time of year to see the places behind the designs. Each one has its own guide: how to get there, when to go, the real risks and what to pack." }
+    ],
+    related: [
+      ['/locations/al-quaa-desert/', 'Al Quaa Desert', 'The night sky behind Al Quaa Galaxy'],
+      ['/locations/wadi-naqab/', 'Wadi Naqab', 'The peaks behind Hajar Mountains'],
+      ['/locations/liwa/', 'Liwa', 'The dunes behind Empty Quarter'],
+      ['/gifts/', 'Gifts from the UAE', 'More ideas for someone leaving, visiting or missing the desert'],
+      ['/t-shirts/oversized/', 'Oversized fit', 'All three designs, true drop shoulder'],
+      ['/polos/', 'The Sahra Polo', '240gsm piqué, embroidered']
+    ],
+    faqs: [
+      ['Do you sell UAE National Day t-shirts?', "Yes, though not flag prints. Our tees are drawn from real places in the Emirates: the Al Quaa night sky, the Hajar peaks at Wadi Naqab and the Liwa dunes. Each is AED 199 in Regular or Oversized, sizes S to XL."],
+      ['Will my order arrive before 2 December?', "In the UAE, orders placed by 2 pm on a working day are delivered the next working day. Public holidays are not working days, so order a few days ahead of the National Day holiday. GCC orders take 3 to 5 working days."],
+      ['Can I send it as a gift?', "Yes. Tick 'This is a gift' in your bag and add a message, and we include it with the order. Every order also comes with the Sahra Tote, free."],
+      ['How much do they cost?', "Every tee is AED 199, and any two tees are AED 359. The Sahra Polo is AED 229. UAE delivery is free with no minimum order."],
+      ['What is Eid Al Etihad?', "It is the name used for the UAE's National Day celebrations on 2 December, which mark the union of the emirates in 1971. Eid Al Etihad means the celebration of the union."]
+    ]
+  },
+  {
     slug: 'gifts', emoji: '✦', cat: 'Camping',
     h1: 'Gifts from the UAE',
+    foldsTitle: 'Choosing and giving',
     title: 'Gifts from the UAE That Are Not Touristy',
     desc: 'A gift from the UAE that is not a fridge magnet. Original t-shirts tied to real Emirati places — for someone leaving, visiting, or missing the desert.',
     intro: "Buying a gift from the UAE usually means choosing between a fridge magnet, a camel keyring, or a t-shirt with the Dubai skyline printed across the front. All of them say the same thing: I went to a shop at the airport.\n\nA Sahra & Beyond t-shirt says something more specific. Each one is tied to a real place in the Emirates — somewhere the person you are buying for has probably actually been. That is a very different gift from a souvenir.",
     sections: [
+      { h2: 'For UAE National Day', body: "For Eid Al Etihad on 2 December, a shirt drawn from a real place in the Emirates says more than a flag print: the Al Quaa night sky, the Hajar peaks or the Liwa dunes. Order a few days before the National Day holiday, since UAE delivery runs on working days. Our National Day page has the designs side by side." },
       { h2: 'A leaving gift for someone moving away', body: "This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?\n\nA skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately." },
       { h2: 'For someone who loves the outdoors here', body: "If the person you are buying for spends their weekends camping, dune driving, stargazing or hiking, the design will land. Each of our t-shirts comes from a place they can drive to, and every product page tells the story of that place — including the coordinates.\n\nHeavyweight 230gsm combed cotton means it is a shirt they will actually keep wearing, not a novelty they wear once." },
       { h2: 'For a visitor who wants something real', body: "Visitors often want something from the UAE that is not obviously made for visitors. A limited-run t-shirt from a small local brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat." },
       { h2: 'Practical things', body: "All our t-shirts are AED 199 and come in Regular and Oversized fits. The Sahra Polo is AED 229 and comes in one fit. The t-shirts are cut unisex and the polo is a men's cut, all in S to XL. In the UAE, delivery is next working day to all seven emirates for orders placed by 2 pm, and free with no minimum order — and we now ship worldwide too. Exact delivery cost is always shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
     ],
+    related: [['/national-day/', 'UAE National Day t-shirts', 'Eid Al Etihad, 2 December']],
     faqs: [
       ['What is a good leaving gift for an expat in the UAE?', 'Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.'],
       ['Can I exchange it if the size is wrong?', 'Yes. Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the item is unworn, unwashed and still has its tags.'],
@@ -2293,14 +2345,14 @@ const CATEGORIES = [
     h1:'Mountain T-Shirts',
     title:'Mountain T-Shirts & Graphic Tees — Hajar Mountains, UAE',
     desc:'Mountain t-shirts drawn from the Hajar range in the UAE: the peaks in contour lines on the front, red rock printed across the back. 230gsm cotton, two fits.',
-    intro:"Most mountain t-shirts carry a peak that could be anywhere — a stock silhouette with a slogan underneath. Ours has one range on it, and it is this country's: the Hajar Mountains, which run through the northern Emirates and on into Oman.\n\nThe design takes the language of a topographic map literally. The peaks on the front are reduced to contour lines; the red rock itself is printed across the back, with the coordinates beneath it. It is inspired by Wadi Naqab, a seasonal wadi high in the Hajar below Jebel Jais, in Ras Al Khaimah.\n\nOne design, two cuts: a straight Regular and a true drop-shoulder Oversized.",
+    intro:"Most mountain t-shirts carry a peak that could be anywhere — a stock silhouette with a slogan underneath. Ours has one range on it, and it is this country's: the Hajar Mountains, which run through the northern Emirates and on into Oman.\n\nThe design takes the language of a topographic map literally. The peaks on the front are reduced to contour lines; the red rock itself is printed across the back, with the coordinates beneath it. It is inspired by Wadi Naqab, a seasonal wadi high in the Hajar below Jebel Yanas, in Ras Al Khaimah.\n\nOne design, two cuts: a straight Regular and a true drop-shoulder Oversized.",
     sections: [
       { h2: 'Printed, and where', body: "The mountain graphic is printed direct to garment: the ink goes into the cotton rather than sitting on top of it as a film, so it stays soft and the fabric keeps breathing. The small mark above it is embroidered." },
       { h2: 'The cloth and the fit', body: "230gsm combed ring-spun cotton, in Flint Gray, cut unisex in S to XL.\n\nRegular is a straight cut with a set shoulder. Oversized has a true dropped shoulder, the seam sitting 2–3″ below your natural shoulder, so the width reads as a shape rather than a bigger shirt. Check your size in the chart before you order." }
     ],
     faqs: [
       { q:'Is this a hiking shirt?', a:'No, and we would rather say so. It is a heavyweight cotton t-shirt, not a technical garment — it will not wick sweat the way a synthetic hiking shirt does. It is made for the drive out, the evening at camp and everywhere after.' },
-      { q:'Which mountains are on it?', a:'The Hajar Mountains, the range that runs through the northern Emirates and into Oman. The design is inspired by Wadi Naqab, below Jebel Jais in Ras Al Khaimah.' },
+      { q:'Which mountains are on it?', a:'The Hajar Mountains, the range that runs through the northern Emirates and into Oman. The design is inspired by Wadi Naqab, below Jebel Yanas in Ras Al Khaimah.' },
       { q:'How much is it, and how fast is delivery?', a:'AED 199, in Regular or Oversized. In the UAE, delivery is free and arrives the next working day when you order by 2 pm.' }
     ] },
   { slug:'desert-t-shirts', cat:'theme-desert', emoji:'◠', catBg:'Dunes',
@@ -2444,7 +2496,7 @@ COMMERCE.forEach(P => {
      pages fold theirs under the products */
   const sectionsHtml = P.slug === 'size-guide'
     ? (P.sections || []).map(x => `<section class="guide-sec"><h2>${esc(x.h2)}</h2><div class="content">${paras(x.body)}</div></section>`).join('')
-    : foldsBlock(P.sections, 'Fabric, cut and make');
+    : foldsBlock(P.sections, P.foldsTitle || 'Fabric, cut and make');
   const faqHtml = (P.faqs && P.faqs.length)
     ? `<section class="faq"><h2>Frequently asked questions</h2>${P.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
   const body = `
@@ -2452,8 +2504,8 @@ COMMERCE.forEach(P => {
     <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(P.h1)}</span></nav>
       <div class="loc-emoji">${P.emoji}</div>
-      <h1>${esc(P.h1)}</h1>
-      <p class="lede">Inspired by the landscapes of the UAE &mdash; wear the wild side of it</p>
+      <h1>${esc(P.h1).replace(/(\S+-\S+)/g, '<span style="white-space:nowrap">$1</span>')}</h1>
+      <p class="lede">${P.lede ? esc(P.lede) : 'Inspired by the landscapes of the UAE &mdash; wear the wild side of it'}</p>
     </div>
   </section>
   <main>
@@ -2471,6 +2523,7 @@ COMMERCE.forEach(P => {
     ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
     ${P.gsmTable ? `<section class="guide-sec" id="gsm-table"><h2>Every t-shirt weight, compared</h2><p class="sgintent">GSM is grams per square metre &mdash; how much a square metre of the cloth weighs. It is the single most useful number on a t-shirt spec, and almost nobody selling t-shirts in the UAE explains it. Here is the whole scale.</p>${gsmTableHtml()}</section>` : ''}
     ${sectionsHtml}
+    ${P.related ? `<nav class="catnav" aria-label="Related">${P.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2])}</span></a>`).join('')}</nav>` : ''}
     ${faqHtml}
     ${newsletterBlock()}
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
@@ -2674,6 +2727,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
   .concat([{ u: `${SITE}/journal/`, m: buildDate, p: '0.7' }])
   .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])   /* Sahra Trail coming-soon page (24 Sep 2026); /ar/trail/ is noindex */
+  .concat(fs.existsSync(path.join(ROOT, 'tote', 'index.html')) ? [{ u: `${SITE}/tote/`, m: buildDate, p: '0.7' }] : [])   /* the tote's own page is live and indexable (SEO plan, 1 Oct 2026) */
   // Articles carry their own lastmod: an article's updated date is real
   // information, unlike the build date, and re-stamping every URL on every
   // build teaches Google to ignore the field.
@@ -2691,7 +2745,7 @@ const feed = {
   site: SITE,
   weatherKey: WEATHER_KEY,
   social: settings.social || {},
-  locations: locations.map(l => Object.assign({}, l, { url: SITE + '/locations/' + l.id + '/' })),
+  locations: locations.map(l => (({ _doubts, ...rest }) => Object.assign(rest, { url: SITE + '/locations/' + l.id + '/' }))(l)),
   packing: PACKING
 };
 /* Keep the previous `updated` stamp when nothing else in the feed changed.

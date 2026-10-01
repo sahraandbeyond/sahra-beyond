@@ -10,9 +10,9 @@
  * product card actively looks like a bad rating. Every function here returns an
  * empty string when it has no real data.
  *
- * Nothing in here fabricates a rating, and no aggregateRating markup is emitted
- * — see docs/Reviews_Setup.md for why that stays off until there is a real body
- * of reviews.
+ * Nothing in here fabricates a rating. aggregateRating markup is emitted by
+ * build-products.js (ldRating, 1 Oct 2026) only when at least 3 reviews are
+ * about that design; store-wide reviews never produce stars in search.
  */
 const fs = require('fs');
 const path = require('path');

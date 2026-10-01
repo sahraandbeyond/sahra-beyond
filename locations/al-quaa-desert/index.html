@@ -7,20 +7,20 @@
 copy never flashes UAE-then-swaps. First visits paint the UAE default (which
 is also what crawlers index) and sahra-market.js corrects after /api/geo. */
 try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<title>Al Quaa Stargazing: One of the Darkest Skies in the UAE</title>
-<meta name="description" content="Al Quaa has some of the darkest accessible skies in the Emirates. When to go, where to park, what you'll see and when the Milky Way core is up.">
+<title>Al Quaa Desert: Stargazing, Camping &amp; Directions (2026)</title>
+<meta name="description" content="Al Quaa has one of the darkest accessible skies in the UAE. How to get there from Dubai and Abu Dhabi, when the Milky Way is up, and what to bring.">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/locations/al-quaa-desert/">
 
 <meta name="theme-color" content="#C0702E">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Al Quaa Stargazing: One of the Darkest Skies in the UAE">
-<meta property="og:description" content="Al Quaa has some of the darkest accessible skies in the Emirates. When to go, where to park, what you'll see and when the Milky Way core is up.">
+<meta property="og:title" content="Al Quaa Desert: Stargazing, Camping &amp; Directions (2026)">
+<meta property="og:description" content="Al Quaa has one of the darkest accessible skies in the UAE. How to get there from Dubai and Abu Dhabi, when the Milky Way is up, and what to bring.">
 <meta property="og:url" content="https://www.sahraandbeyond.ae/locations/al-quaa-desert/">
 <meta property="og:image" content="https://www.sahraandbeyond.ae/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg">
 <meta property="og:site_name" content="Sahra & Beyond">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Al Quaa Stargazing: One of the Darkest Skies in the UAE">
-<meta name="twitter:description" content="Al Quaa has some of the darkest accessible skies in the Emirates. When to go, where to park, what you'll see and when the Milky Way core is up.">
+<meta name="twitter:title" content="Al Quaa Desert: Stargazing, Camping &amp; Directions (2026)">
+<meta name="twitter:description" content="Al Quaa has one of the darkest accessible skies in the UAE. How to get there from Dubai and Abu Dhabi, when the Milky Way is up, and what to bring.">
 <meta name="twitter:image" content="https://www.sahraandbeyond.ae/uploads/sahra_and_beyond_widedunes_dji_0457_t24.5s.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -769,6 +769,16 @@ html:has(.lg-tabs){scroll-padding-top:calc(var(--lg-hdr,67px) + 64px)}
 /* text sits bottom-left over the photo: darken that corner too (Liwa, Al Rams contrast) */
 .lg-hero.has-photo .loc-hero-inner::before{content:"";position:absolute;inset:-40px -40vw -30px -40vw;background:radial-gradient(ellipse at 20% 70%,rgba(10,6,4,.45),rgba(10,6,4,0) 65%);z-index:-1;pointer-events:none}
 
+/* answer box (SEO plan, 1 Oct 2026): the questions people search, answered in the first screen of the guide */
+.lg-quick{background:#fff;border:1px solid var(--lg-line,rgba(42,32,22,.12));border-radius:16px;padding:18px 20px;margin:0 0 18px}
+.lg-quick h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:600;margin:0 0 10px;color:var(--lg-ink,#2A2016)}
+.lg-quick dl{margin:0;display:grid;gap:10px}
+.lg-quick dl>div{display:grid;grid-template-columns:150px 1fr;gap:12px;padding-top:10px;border-top:1px solid var(--lg-line,rgba(42,32,22,.1))}
+.lg-quick dl>div:first-child{border-top:0;padding-top:0}
+.lg-quick dt{font-weight:600;font-size:15px;color:var(--lg-ink,#2A2016)}
+.lg-quick dd{margin:0;font-size:15px;line-height:1.55;color:#3E352B}
+@media(max-width:560px){.lg-quick{padding:16px}.lg-quick dl>div{grid-template-columns:1fr;gap:2px}}
+
 /* desktop (28 Sep 2026 review: 43% of a 1440 screen sat empty): the guide reads in a
    left column, and the at-a-glance card (plus the tee, where there is one) rides along
    in a sticky right column. Phones and tablets are unchanged. */
@@ -1470,7 +1480,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     </div>
     
   </section>
-  <nav class="lg-tabs" aria-label="On this page"><div class="lg-tabs-in"><a href="#overview">Overview</a><a href="#getting-there">Getting there</a><a href="#when-to-go">When to go</a><a href="#safety">Safety</a><a href="#pack">Pack</a><a href="#faq">FAQ</a><a href="#tee">The tee</a></div></nav>
+  <nav class="lg-tabs" aria-label="On this page"><div class="lg-tabs-in"><a href="#overview">Overview</a><a href="#getting-there">Getting there</a><a href="#when-to-go">When to go</a><a href="#safety">Safety</a><a href="#pack">Pack</a><a href="#faq">FAQ</a><a href="#tee">Wear the place</a></div></nav>
   <main class="lg-main">
     <div class="lg-side"><aside class="minitee"><a class="minitee-img" href="/products/al-quaa-galaxy-regular/" tabindex="-1" aria-hidden="true"><img src="/shirts/alquaa-regular-back.webp" alt="" width="72" height="90" loading="lazy" decoding="async"></a><div class="minitee-txt"><span class="minitee-eye">The tee drawn from this place</span><b>Al Quaa Galaxy — Regular</b><span class="minitee-sub"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span> &middot; limited first run</span></div><a class="minitee-go" href="/products/al-quaa-galaxy-regular/">See the tee &rarr;</a></aside>
     <section class="lg-glance lg-rise" aria-label="At a glance">
@@ -1484,6 +1494,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <div class="lg-months" data-months="111221112211"><ol aria-label="Best months to visit"><li class="lg-m m1" style="--i:0" title="January: possible"><span aria-hidden="true">J</span><span class="lg-sr">January: possible</span></li><li class="lg-m m1" style="--i:1" title="February: possible"><span aria-hidden="true">F</span><span class="lg-sr">February: possible</span></li><li class="lg-m m1" style="--i:2" title="March: possible"><span aria-hidden="true">M</span><span class="lg-sr">March: possible</span></li><li class="lg-m m2" style="--i:3" title="April: best"><span aria-hidden="true">A</span><span class="lg-sr">April: best</span></li><li class="lg-m m2" style="--i:4" title="May: best"><span aria-hidden="true">M</span><span class="lg-sr">May: best</span></li><li class="lg-m m1" style="--i:5" title="June: possible"><span aria-hidden="true">J</span><span class="lg-sr">June: possible</span></li><li class="lg-m m1" style="--i:6" title="July: possible"><span aria-hidden="true">J</span><span class="lg-sr">July: possible</span></li><li class="lg-m m1" style="--i:7" title="August: possible"><span aria-hidden="true">A</span><span class="lg-sr">August: possible</span></li><li class="lg-m m2" style="--i:8" title="September: best"><span aria-hidden="true">S</span><span class="lg-sr">September: best</span></li><li class="lg-m m2" style="--i:9" title="October: best"><span aria-hidden="true">O</span><span class="lg-sr">October: best</span></li><li class="lg-m m1" style="--i:10" title="November: possible"><span aria-hidden="true">N</span><span class="lg-sr">November: possible</span></li><li class="lg-m m1" style="--i:11" title="December: possible"><span aria-hidden="true">D</span><span class="lg-sr">December: possible</span></li></ol></div>
   </section></div>
     <div class="lg-col">
+    <section class="lg-quick" aria-labelledby="lg-quick-h"><h2 id="lg-quick-h">Quick answers</h2><dl><div><dt>Where is it?</dt><dd>Open desert in southern Abu Dhabi emirate, south of the Abu Dhabi–Al Ain road, about 15 minutes past the last fuel and food.</dd></div><div><dt>How far is it?</dt><dd>About 2.5 hours from Dubai, and about 1.5 to 2 hours from Abu Dhabi city, mostly on paved road towards Al Ain.</dd></div><div><dt>Do I need a 4x4?</dt><dd>Yes. The usual pull-off is packed sand beside the road, but a capable 4x4 is the safe choice here, and essential for the dunes. Never go alone.</dd></div><div><dt>Best months</dt><dd>For the Milky Way core, roughly April to October (highest June to August, but hot). For cool camping nights without the core, October to March. A moonless night matters more than the month.</dd></div><div><dt>Permit and fee</dt><dd>Free, with no permit needed for a standard visit.</dd></div><div><dt>Facilities</dt><dd>None: no toilets, water, food, fuel or reliable signal. Bring everything, including more water than you expect to need.</dd></div></dl></section>
     <section id="overview" class="lg-over lg-rise">
       <div class="content"><p>Al Quaa is one of the darkest accessible skies in the UAE and arguably the best place to view the Milky Way galaxy in the country. Set deep in the southern sands of Abu Dhabi, far from any city light, it's a pilgrimage spot for stargazers and astrophotographers — especially on clear, moonless nights between May and October, when the galaxy's bright core is above the horizon.</p><p class="place-buy">We mapped this sky onto a shirt — <a href="/products/al-quaa-galaxy-regular/">the Al Quaa Galaxy tee</a> prints the Milky Way exactly as it rises here, on 230gsm cotton dark enough to read it against.</p><p>The bright core of the Milky Way rises over an empty horizon here, with almost zero light pollution to wash it out. Come prepared for a remote, self-sufficient overnight: a capable 4x4, plenty of water, warm layers for cold desert nights and a red-light torch to protect your night vision. There are no facilities — which is exactly why the skies are so spectacular.</p></div>
       <p class="lg-checked"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg> Last checked 27 September 2026. Facts on this page come from the sources listed at the bottom. <a href="https://wa.me/971585449946?text=Something%20on%20the%20Al%20Quaa%20Desert%20page%20looks%20out%20of%20date%3A%20" target="_blank" rel="noopener">Spotted something out of date?</a></p>
@@ -1627,7 +1638,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
   (function(){var tp=document.getElementById('tee'),mt=tp?tp.getAttribute('data-match')||'':'',loc="al-quaa-desert";
     function g(n,p){try{if(window.gtag)gtag('event',n,p);}catch(e){}}
     if(tp&&'IntersectionObserver' in window){var seen=false,to=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting&&!seen){seen=true;g('place_tee_view',{match:mt,location:loc});to.disconnect();}});},{threshold:.4});to.observe(tp);}
-    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a||!a.closest('main'))return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});});
+    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a||!a.closest('main'))return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});if(where==='panel'||where==='mini')g('wear_the_place_click',{match:mt,where:where,location:loc,product:(a.getAttribute('href').match(/products[/]([^/]+)/)||[])[1]||'all'});});
   })();
   /* motion: gentle rise as sections arrive (once), and number count-ups */
   function counters(root){(root||document).querySelectorAll('.lg-count:not(.done)').forEach(function(c){var to=+c.getAttribute('data-to');c.classList.add('done');if(RM||!to){c.textContent=to;return;}var t0=null;function step(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/1750);c.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}

@@ -6,6 +6,33 @@
    ========================================================================== */
 const fs = require('fs');
 const RV = require('./reviews-render.js');
+/* SEO plan (1 Oct 2026): rich-result fields on www product pages.
+   - aggregateRating: only when the page shows reviews OF THIS DESIGN (both fits pooled, and labelled
+     so on the page). Store-wide pooled reviews are shown with a label but are not this product's
+     rating, so they get no markup.
+   - shippingDetails / hasMerchantReturnPolicy: the terms in policies.html (UAE free next working day,
+     GCC AED 50 in 3-5 working days; 14-day returns, free within the UAE). Rest of world is left out:
+     schema needs named countries. */
+/* Visible breadcrumb + BreadcrumbList share one trail (SEO plan, 1 Oct 2026):
+   Home > T-Shirts > Desert|Mountain > design name, or Home > Polo > name. */
+function crumbTrail(p) {
+  const short = String(p.name).replace(/\s+[—-]\s+(Regular|Oversized)$/, '');
+  if (p.garment === 'polo') return [['Home', '/'], ['Polo', '/polos/'], [short, null]];
+  const mountain = /^hajar/.test(p.id);
+  return [['Home', '/'], ['T-Shirts', '/t-shirts/'], [mountain ? 'Mountain' : 'Desert', mountain ? '/mountain-t-shirts/' : '/desert-t-shirts/'], [p.name, null]];
+}
+function ldRating(p) {
+  const pr = RV.pooled(designHandles(p));
+  /* 1 Oct 2026: stars in search only where at least 3 reviews are about this design. */
+  if (!pr || pr.scope !== 'design' || !pr.d.count || pr.d.count < 3) return '';
+  return `"aggregateRating":{"@type":"AggregateRating","ratingValue":"${pr.d.average.toFixed(1)}","reviewCount":"${pr.d.count}","bestRating":"5","worstRating":"1"},`;
+}
+const LD_SHIP = '"shippingDetails":['
+  + '{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"0","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"AE"},'
+  + '"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":1,"unitCode":"DAY"}}},'
+  + ['SA','QA','OM','BH','KW'].map(c => '{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"50","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"' + c + '"},'
+  + '"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":3,"maxValue":5,"unitCode":"DAY"}}}').join(',')
+  + '],"hasMerchantReturnPolicy":{"@type":"MerchantReturnPolicy","applicableCountry":"AE","returnPolicyCountry":"AE","returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow","merchantReturnDays":14,"returnMethod":"https://schema.org/ReturnByMail","returnFees":"https://schema.org/FreeReturn"}';
 const path = require('path');
 
 /* ---- fabric facts shown on every product page (10 Sep 2026) ----------------
@@ -138,20 +165,18 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<!-- Product JSON-LD. NOTE: no aggregateRating until there are REAL reviews — never fabricate ratings. -->
+<!-- Product JSON-LD. aggregateRating ONLY from the reviews of this design that the page itself shows (never store-wide, never invented). Shipping and returns match policies.html. -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":${J(p.name)},"sku":${J(p.sku)},
 "image":[${[p.imgMain,p.imgFront,p.imgBack,p.imgCompare].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).map(v=>J(SITE+v)).join(',')}],
 "description":${J(p.ldDesc)},
 "brand":{"@type":"Brand","name":"Sahra & Beyond"},
-"material":"100% combed ring-spun cotton",
-"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/"}}
+"material":${J(p.garment === 'polo' ? '100% cotton piqué' : '100% combed ring-spun cotton')},
+"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},${ldRating(p)}"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/",${LD_SHIP}}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
-{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},
-{"@type":"ListItem","position":2,"name":"Shop","item":"https://www.sahraandbeyond.ae${SHOP_URL}"},
-{"@type":"ListItem","position":3,"name":${J(p.name)},"item":"${SITE}/products/${p.id}/"}]}
+${crumbTrail(p).map((c, i) => `{"@type":"ListItem","position":${i + 1},"name":${J(c[0])},"item":"${SITE}${c[1] || '/products/' + p.id + '/'}"}`).join(',\n')}]}
 </script>
 <style>
 /* ==================================================================
@@ -219,7 +244,8 @@ body.dark-bg .logo-b{color:var(--gold)}
 .crumb{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--txt-soft);padding:24px 0 0}
 .crumb a:hover{color:var(--clay-deep)}
 body.dark-bg .crumb a:hover{color:var(--gold)}
-.crumb span{opacity:1;color:var(--txt-soft);margin:0 7px}
+.crumb span[aria-hidden]{opacity:1;color:var(--txt-soft);margin:0 7px}
+.crumb span[aria-current]{color:var(--txt-soft)}
 
 /* ---------- hero ---------- */
 .pdp{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:start;padding:22px 0 90px}
@@ -745,7 +771,9 @@ ${RV.CSS}
 .fitv i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#B5651F;border-radius:99px}
 .fitv b{text-align:right;font-weight:600;color:var(--txt)}
 @media(max-width:700px){
-  body.buy-page .note,body.buy-page .crumb{display:none}
+  body.buy-page .note{display:none}
+  /* visible on phones again (SEO plan, 1 Oct 2026): one compact line above the title */
+  body.buy-page .crumb{order:0;padding:6px 0 0;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .pdp{display:flex;flex-direction:column;gap:10px;padding:10px 0 50px}
   .pdp>.media,.pdp>.buy{display:contents}
   .buy-head{order:1}
@@ -914,7 +942,7 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 <main id="main">
 <!-- data-bg drives the scroll-linked background journey (same technique as the shop page) -->
 <div class="wrap" data-bg="#FAF6EF">
-  <div class="crumb"><a href="/">Home</a><span>/</span><a href="${SHOP_URL}" class="shoplink">Shop</a><span>/</span>${esc(p.name)}</div>
+  <nav class="crumb" aria-label="Breadcrumb">${crumbTrail(p).map(c => c[1] ? `<a href="${c[1]}">${esc(c[0])}</a>` : `<span aria-current="page">${esc(c[0])}</span>`).join('<span aria-hidden="true">/</span>')}</nav>
 
   <section class="pdp">
     <div class="media">

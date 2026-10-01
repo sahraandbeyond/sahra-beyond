@@ -31,20 +31,21 @@
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<!-- Product JSON-LD. NOTE: no aggregateRating until there are REAL reviews — never fabricate ratings. -->
+<!-- Product JSON-LD. aggregateRating ONLY from the reviews of this design that the page itself shows (never store-wide, never invented). Shipping and returns match policies.html. -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":"Al Quaa Galaxy — Oversized","sku":"SB-ALQ-OVR",
 "image":["https://www.sahraandbeyond.ae/shirts/alquaa-oversized-back.jpg","https://www.sahraandbeyond.ae/shirts/alquaa-oversized-front.jpg","https://www.sahraandbeyond.ae/shirts/alquaa-fit-comparison.jpg"],
 "description":"The Milky Way as it rises over Al Quaa — one of the darkest accessible skies in the Emirates. A subtle صحراء mark on the chest, the galaxy across the back. Heavyweight 230gsm combed cotton.",
 "brand":{"@type":"Brand","name":"Sahra & Beyond"},
 "material":"100% combed ring-spun cotton",
-"color":"Salute (Pantone 19-4011 TCX)","offers":{"@type":"Offer","priceCurrency":"AED","price":"199","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"https://www.sahraandbeyond.ae/products/al-quaa-galaxy-oversized/"}}
+"color":"Salute (Pantone 19-4011 TCX)","aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"7","bestRating":"5","worstRating":"1"},"offers":{"@type":"Offer","priceCurrency":"AED","price":"199","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"https://www.sahraandbeyond.ae/products/al-quaa-galaxy-oversized/","shippingDetails":[{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"0","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"AE"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":1,"unitCode":"DAY"}}},{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"50","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"SA"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":3,"maxValue":5,"unitCode":"DAY"}}},{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"50","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"QA"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":3,"maxValue":5,"unitCode":"DAY"}}},{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"50","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"OM"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":3,"maxValue":5,"unitCode":"DAY"}}},{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"50","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"BH"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":3,"maxValue":5,"unitCode":"DAY"}}},{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"50","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"KW"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":3,"maxValue":5,"unitCode":"DAY"}}}],"hasMerchantReturnPolicy":{"@type":"MerchantReturnPolicy","applicableCountry":"AE","returnPolicyCountry":"AE","returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow","merchantReturnDays":14,"returnMethod":"https://schema.org/ReturnByMail","returnFees":"https://schema.org/FreeReturn"}}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
 {"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},
-{"@type":"ListItem","position":2,"name":"Shop","item":"https://www.sahraandbeyond.ae/shop/"},
-{"@type":"ListItem","position":3,"name":"Al Quaa Galaxy — Oversized","item":"https://www.sahraandbeyond.ae/products/al-quaa-galaxy-oversized/"}]}
+{"@type":"ListItem","position":2,"name":"T-Shirts","item":"https://www.sahraandbeyond.ae/t-shirts/"},
+{"@type":"ListItem","position":3,"name":"Desert","item":"https://www.sahraandbeyond.ae/desert-t-shirts/"},
+{"@type":"ListItem","position":4,"name":"Al Quaa Galaxy — Oversized","item":"https://www.sahraandbeyond.ae/products/al-quaa-galaxy-oversized/"}]}
 </script>
 <style>
 /* ==================================================================
@@ -112,7 +113,8 @@ body.dark-bg .logo-b{color:var(--gold)}
 .crumb{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--txt-soft);padding:24px 0 0}
 .crumb a:hover{color:var(--clay-deep)}
 body.dark-bg .crumb a:hover{color:var(--gold)}
-.crumb span{opacity:1;color:var(--txt-soft);margin:0 7px}
+.crumb span[aria-hidden]{opacity:1;color:var(--txt-soft);margin:0 7px}
+.crumb span[aria-current]{color:var(--txt-soft)}
 
 /* ---------- hero ---------- */
 .pdp{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:start;padding:22px 0 90px}
@@ -697,7 +699,9 @@ body.dark-bg .rv-stars{color:#E9B978}
 .fitv i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#B5651F;border-radius:99px}
 .fitv b{text-align:right;font-weight:600;color:var(--txt)}
 @media(max-width:700px){
-  body.buy-page .note,body.buy-page .crumb{display:none}
+  body.buy-page .note{display:none}
+  /* visible on phones again (SEO plan, 1 Oct 2026): one compact line above the title */
+  body.buy-page .crumb{order:0;padding:6px 0 0;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .pdp{display:flex;flex-direction:column;gap:10px;padding:10px 0 50px}
   .pdp>.media,.pdp>.buy{display:contents}
   .buy-head{order:1}
@@ -1414,7 +1418,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <main id="main">
 <!-- data-bg drives the scroll-linked background journey (same technique as the shop page) -->
 <div class="wrap" data-bg="#FAF6EF">
-  <div class="crumb"><a href="/">Home</a><span>/</span><a href="/shop/" class="shoplink">Shop</a><span>/</span>Al Quaa Galaxy — Oversized</div>
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/t-shirts/">T-Shirts</a><span aria-hidden="true">/</span><a href="/desert-t-shirts/">Desert</a><span aria-hidden="true">/</span><span aria-current="page">Al Quaa Galaxy — Oversized</span></nav>
 
   <section class="pdp">
     <div class="media">

@@ -6,3 +6,6 @@ node_modules/
 
 # Vercel local state.
 .vercel/
+
+# Local previews of draft place guides (build.js). Never committed or deployed.
+_drafts/

@@ -173,7 +173,7 @@ function productPanel(l, ctx) {
     const img = ctx.cardShots(p)[0];
     return `<section class="lg-kin lg-rise" id="tee" data-match="kin">
       <a class="lg-kin-img" href="/products/${p.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" loading="lazy" decoding="async" width="400" height="500">` : ''}</a>
-      <div class="lg-kin-t"><span class="lg-eye">${icon('tee')} Wear a place</span>
+      <div class="lg-kin-t"><span class="lg-eye">${icon('tee')} Wear the place</span>
         <h2>${esc(p.name)}</h2>
         <p>${esc(pl.sentence.replace('{{link}}', pl.anchor || p.name))}</p>
         <p class="lg-kin-m"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> <span class="sb-aed-only">&middot; 230gsm cotton &middot; any 2 tees AED 359</span><span class="sb-aed-alt">&middot; 230gsm cotton</span></p>
@@ -184,7 +184,7 @@ function productPanel(l, ctx) {
     const im = ctx.cardShots(x)[0];
     return `<a class="lg-none-c" href="/products/${x.id}/">${im ? `<img src="${esc(im[0])}" alt="" loading="lazy" decoding="async" width="200" height="250">` : ''}<b>${esc(x.name.replace(/ — Regular$/, ''))}</b><span>${esc(x.placeName || '')}</span></a>`;
   }).join('');
-  return `<section class="lg-none lg-rise" id="tee" data-match="none"><span class="lg-eye">${icon('tee')} Wear a place</span>
+  return `<section class="lg-none lg-rise" id="tee" data-match="none"><span class="lg-eye">${icon('tee')} Wear the place</span>
     <h2>We haven&rsquo;t drawn ${esc(l.name)} yet</h2>
     <p>Every Sahra &amp; Beyond tee is drawn from one real place in the Emirates. These are the places we have drawn so far.</p>
     <div class="lg-none-g">${cards}</div>
@@ -235,7 +235,7 @@ function renderPlace(l, ctx) {
     .map(x => ({ x, d: km(l, x) })).sort((a, b) => a.d - b.d).slice(0, 4);
   const exact = !!ctx.PRODUCT_BY_PLACE[l.id];
   const tabs = [['overview', 'Overview'], g.gettingThere && ['getting-there', 'Getting there'], (g.whenToGo || l.months) && ['when-to-go', 'When to go'],
-    g.safety && ['safety', 'Safety'], ['pack', 'Pack'], ['faq', 'FAQ'], ['tee', exact ? 'The tee' : 'Wear a place']].filter(Boolean);
+    g.safety && ['safety', 'Safety'], ['pack', 'Pack'], ['faq', 'FAQ'], ['tee', 'Wear the place']].filter(Boolean);
 
   const hero = `
   <section class="loc-hero lg-hero${hasPhoto ? ' has-photo' : ''}" style="--hero-grad:${ctx.CAT_BG[l.category] || ctx.CAT_BG.Dunes}">
@@ -262,6 +262,7 @@ function renderPlace(l, ctx) {
     <div class="lg-side">${exact ? ctx.miniTee(l.id) : ''}
     ${glance(l)}</div>
     <div class="lg-col">
+    ${Array.isArray(l.quick) && l.quick.length ? `<section class="lg-quick" aria-labelledby="lg-quick-h"><h2 id="lg-quick-h">Quick answers</h2><dl>${l.quick.map(q => `<div><dt>${esc(q[0])}</dt><dd>${esc(q[1])}</dd></div>`).join('')}</dl></section>` : ''}
     <section id="overview" class="lg-over lg-rise">
       <div class="content">${ctx.withProductLink(paras(l.body || l.desc), exact ? l.productLink : null)}</div>
       <p class="lg-checked">${icon('eye')} Last checked ${fmtDate(l.lastChecked || '2026-09-27')}. Facts on this page come from the sources listed at the bottom. <a href="https://wa.me/971585449946?text=${encodeURIComponent('Something on the ' + l.name + ' page looks out of date: ')}" target="_blank" rel="noopener">Spotted something out of date?</a></p>
@@ -387,7 +388,7 @@ function clientScript(l, ctx, packItems) {
   (function(){var tp=document.getElementById('tee'),mt=tp?tp.getAttribute('data-match')||'':'',loc=${JSON.stringify(l.id)};
     function g(n,p){try{if(window.gtag)gtag('event',n,p);}catch(e){}}
     if(tp&&'IntersectionObserver' in window){var seen=false,to=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting&&!seen){seen=true;g('place_tee_view',{match:mt,location:loc});to.disconnect();}});},{threshold:.4});to.observe(tp);}
-    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a||!a.closest('main'))return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});});
+    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="/products/"],a[href="/t-shirts/"]');if(!a||!a.closest('main'))return;var where=a.closest('#tee')?'panel':(a.closest('.minitee')?'mini':(a.closest('.lg-over,.lg-body')?'story':'other'));g('place_tee_click',{match:mt,where:where,location:loc,href:a.getAttribute('href')});if(where==='panel'||where==='mini')g('wear_the_place_click',{match:mt,where:where,location:loc,product:(a.getAttribute('href').match(/products[/]([^/]+)/)||[])[1]||'all'});});
   })();
   /* motion: gentle rise as sections arrive (once), and number count-ups */
   function counters(root){(root||document).querySelectorAll('.lg-count:not(.done)').forEach(function(c){var to=+c.getAttribute('data-to');c.classList.add('done');if(RM||!to){c.textContent=to;return;}var t0=null;function step(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/1750);c.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
@@ -693,6 +694,16 @@ html:has(.lg-tabs){scroll-padding-top:calc(var(--lg-hdr,67px) + 64px)}
 @media(min-width:1120px) and (max-height:860px){.lg-main>.lg-side{position:static;max-height:none;overflow:visible}}
 /* text sits bottom-left over the photo: darken that corner too (Liwa, Al Rams contrast) */
 .lg-hero.has-photo .loc-hero-inner::before{content:"";position:absolute;inset:-40px -40vw -30px -40vw;background:radial-gradient(ellipse at 20% 70%,rgba(10,6,4,.45),rgba(10,6,4,0) 65%);z-index:-1;pointer-events:none}
+
+/* answer box (SEO plan, 1 Oct 2026): the questions people search, answered in the first screen of the guide */
+.lg-quick{background:#fff;border:1px solid var(--lg-line,rgba(42,32,22,.12));border-radius:16px;padding:18px 20px;margin:0 0 18px}
+.lg-quick h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:600;margin:0 0 10px;color:var(--lg-ink,#2A2016)}
+.lg-quick dl{margin:0;display:grid;gap:10px}
+.lg-quick dl>div{display:grid;grid-template-columns:150px 1fr;gap:12px;padding-top:10px;border-top:1px solid var(--lg-line,rgba(42,32,22,.1))}
+.lg-quick dl>div:first-child{border-top:0;padding-top:0}
+.lg-quick dt{font-weight:600;font-size:15px;color:var(--lg-ink,#2A2016)}
+.lg-quick dd{margin:0;font-size:15px;line-height:1.55;color:#3E352B}
+@media(max-width:560px){.lg-quick{padding:16px}.lg-quick dl>div{grid-template-columns:1fr;gap:2px}}
 
 /* desktop (28 Sep 2026 review: 43% of a 1440 screen sat empty): the guide reads in a
    left column, and the at-a-glance card (plus the tee, where there is one) rides along

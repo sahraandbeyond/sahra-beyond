@@ -72,12 +72,12 @@
       "url": "https://commons.wikimedia.org/wiki/File:Rock_Formation_at_Shuweihat_Island.jpg"
     }
   ],
-  "seoTitle": "Shuweihat Island, Abu Dhabi: Access, Rocks & Drive Time",
+  "seoTitle": "Shuweihat Island: Mushroom Rocks, Access & Directions",
   "access": {
     "vehicle": "2wd",
     "note": "A paved causeway connects the mainland to the island, so no boat is needed, and several visitor guides say a standard sedan can manage the main route; an SUV helps on the unpaved tracks nearer the coast. Public access is genuinely disputed — recent write-ups range from 'freely accessible on public roads' to 'the best-known viewpoint has been fenced off near a military airfield.' Treat any access claim, including this one, as liable to change: keep to public roads, and turn back at fencing, a checkpoint or signage rather than push on."
   },
-  "seoDesc": "Mars-like, mushroom-shaped rocks on Abu Dhabi's remote western coast, reached by causeway; public access is disputed near a military airfield.",
+  "seoDesc": "Shuweihat Island's mushroom-shaped rocks on Abu Dhabi's western coast: the drive, the causeway, the salt-flat hazard and what's known about public access.",
   "faqs": [
     {
       "q": "Is Shuweihat Island open to the public?",
@@ -128,5 +128,35 @@
     "best": "Early morning or before sunset",
     "cost": "No fee reported"
   },
-  "coverAlt": "Wind-carved, mushroom-shaped rocks with orange banding on the shore of Shuweihat Island"
+  "coverAlt": "Wind-carved, mushroom-shaped rocks with orange banding on the shore of Shuweihat Island",
+  "quick": [
+    [
+      "Where is it?",
+      "On Abu Dhabi's far western coast in Al Dhafra, beyond Ruwais, joined to the mainland by a paved causeway."
+    ],
+    [
+      "How far is it?",
+      "About 2.5 hours from Abu Dhabi city (roughly 290 km on the E11), and 3.5 to 4 hours from Dubai."
+    ],
+    [
+      "Do I need a 4x4?",
+      "No. The road and causeway are paved, and guides say a normal car manages them. An SUV helps on the unpaved tracks near the coast. Stay off the salt flats, which can trap a vehicle."
+    ],
+    [
+      "Is it open to the public?",
+      "Reports conflict: some visitors reach the coast on public roads, others find the best-known viewpoint fenced off near a military airfield. Turn back at any fence, checkpoint or sign."
+    ],
+    [
+      "Permit and fee",
+      "No fee or permit is mentioned in any source we found, and no gate or ticket booth is reported."
+    ],
+    [
+      "Best months",
+      "October to April, early in the morning or in the last hours before sunset."
+    ],
+    [
+      "Facilities",
+      "None on the island. The nearest toilets, fuel and food are in Ruwais, about 20 to 30 minutes back along the E11."
+    ]
+  ]
 }

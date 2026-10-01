@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sahra &amp; Beyond — Desert &amp; Mountain Graphic Tees from the UAE</title>
+<title>Sahra &amp; Beyond — UAE Clothing Brand, Desert &amp; Mountain Tees</title>
 <meta name="description" content="UAE graphic tees from real places: a desert t-shirt from Liwa, a mountain tee from the Hajar, the Milky Way over Al Quaa. 230gsm cotton, limited runs.">
 <link rel="canonical" href="https://www.sahraandbeyond.ae/">
 <meta name="theme-color" content="#171232">
@@ -334,10 +334,11 @@ h1 em,h2 em{font-style:italic;color:var(--gold);font-weight:700}
 .j-stats b{display:block;font-family:var(--serif);font-size-adjust:.44;font-size:clamp(40px,5vw,72px);line-height:1;color:var(--gold)}
 .j-stats span{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,226,.7)}
 .j-places{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.j-places.j-guides{grid-template-columns:repeat(3,1fr);margin-top:16px}
 .j-place{border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:18px;background:rgba(20,16,42,.28);backdrop-filter:blur(6px)}
 .j-place b{display:block;font-family:var(--serif);font-size-adjust:.44;font-size:20px;margin-bottom:6px}
 .j-place span{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,239,226,.6)}
-@media(max-width:900px){.j-places{grid-template-columns:1fr 1fr}.j-stats{grid-template-columns:1fr 1fr 1fr;gap:12px}}
+@media(max-width:900px){.j-places,.j-places.j-guides{grid-template-columns:1fr 1fr}.j-stats{grid-template-columns:1fr 1fr 1fr;gap:12px}}
 
 
 /* ---- newsletter + footer ---- */
@@ -1829,8 +1830,18 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <div class="j-places">
       <a class="j-place rv" href="/locations/al-quaa-desert/"><b>Al Quaa Desert</b><span>Abu Dhabi · Dark sky</span></a>
       <a class="j-place rv" href="/locations/wadi-naqab/"><b>Wadi Naqab</b><span>RAK · Hajar Mountains</span></a>
-      <a class="j-place rv" href="/locations/wadi-showka/"><b>Wadi Showka</b><span>RAK · Hajar foothills</span></a>
+      <a class="j-place rv" href="/locations/wadi-showka/"><b>Wadi Shawka</b><span>RAK · Hajar foothills</span></a>
       <a class="j-place rv" href="/locations/liwa/"><b>Liwa Dunes</b><span>Abu Dhabi · Desert</span></a>
+    </div>
+    <!-- SEO plan (1 Oct 2026): the homepage passes its weight to the six strongest guides -->
+    <span class="j-eyebrow rv" style="display:block;margin-top:34px">Guides for getting out there</span>
+    <div class="j-places j-guides">
+      <a class="j-place rv" href="/stargazing/"><b>Stargazing in the UAE</b><span>Dark skies · Milky Way</span></a>
+      <a class="j-place rv" href="/camping-near-dubai/"><b>Camping near Dubai</b><span>Desert · Lakes</span></a>
+      <a class="j-place rv" href="/wadis/"><b>Wadis in the UAE</b><span>Hikes · Pools</span></a>
+      <a class="j-place rv" href="/best-beaches/"><b>Best beaches in the UAE</b><span>Coast · Snorkelling</span></a>
+      <a class="j-place rv" href="/mountain-escapes/"><b>Mountain escapes</b><span>Hajar · Jebel Hafeet</span></a>
+      <a class="j-place rv" href="/hatta-guide/"><b>Hatta guide</b><span>Dam · Trails · Heritage</span></a>
     </div>
     <div class="actions rv" style="margin-top:28px"><a class="j-btn" href="/places/">Explore the places</a></div>
   </div>
@@ -1865,7 +1876,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 <footer>
   <div class="foot-brand">Sahra &amp; Beyond</div>
   <div class="foot-tag">Wear the wild side of the UAE</div>
-  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="#s-places">Places</a><a href="/about/">About</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/contact/">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/t-shirts/">Shop</a><a href="/places/">Places</a><a href="/journal/">Journal</a><a href="/fabric/">Fabric</a><a href="/size-guide/">Size guide</a><a href="/about/">About</a><a href="/gifts/">Gift ideas</a><a href="/national-day/">National Day t-shirts</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/policies.html#terms">Terms</a><a href="/contact/">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div class="foot-soc" style="font-size:13px;font-family:'Space Mono',monospace;letter-spacing:1px"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener" aria-label="Instagram">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 <div style="margin:12px 0 4px"><span data-sb-curslot></span></div></footer>
