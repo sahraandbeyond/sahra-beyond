@@ -7,6 +7,7 @@
 const fs = require('fs');
 const RV = require('./reviews-render.js');
 const FG = require('./footer-guides.js');
+const IG = require('./instagram-feed.js');   /* 4 Oct 2026: 'Seen on our feed' rail and the footer row */
 let AR_CORE = false;   /* set by build.js from AR_CORE_PUBLIC */
 /* SEO plan (1 Oct 2026): rich-result fields on www product pages.
    - aggregateRating: only when the page shows reviews OF THIS DESIGN (both fits pooled, and labelled
@@ -1273,6 +1274,8 @@ ${faqList(p.faq)}
     </div>
   </section>
 
+  ${/* 4 Oct 2026: the posts tagged to this design (content/instagram.json), between the questions and the reviews */''}${IG.railHtml(IG.forProduct(p.id), { title: 'Seen on our feed' }) ? `<section class="sec reveal ig-prod" id="feed">${IG.railHtml(IG.forProduct(p.id), { title: 'Seen on our feed' })}</section>` : ''}
+
 ${RV.productSection(p.id, p.name, designHandles(p))}
   <section class="sec reveal" id="more">
     <span class="snum">09 — The collection</span>
@@ -1301,7 +1304,8 @@ ${related(p, all)}
 
 <footer>
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/contact/">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
-  ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}</style>
+  ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}${IG.CSS}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}body.dark-bg .ig-prod .ig-rail-sec{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}</style>
+  ${IG.footerRowHtml()}
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
@@ -2004,6 +2008,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 <script src="/assets/sahra-cart.js?v=124ea926" defer></script>
 <script src="/assets/sahra-sizefinder.js" defer></script>
 <script src="/assets/sahra-market.js" defer></script>
+<script>${IG.JS}</script>
 </body>
 </html>
 `;

@@ -1,0 +1,759 @@
+{
+  "_readme": "Curated Instagram feed for the site (4 Oct 2026). One object per post. 'id' is the Instagram shortcode; the post date is decoded from it at build time (Instagram media ids carry their timestamp), so there is no date field to keep in sync. 'label' is OUR wording for the site, never a copy of the caption (some older captions predate the brand rules). 'src' is the folder in Social Media/ that holds the slides, for covers and the on-site step-through; a post with no src gets its cover from uploads/ig/<id>.webp only. Covers: uploads/ig/<id>.webp (1080x1350) and <id>-540.webp. Slides: uploads/ig/s/<id>/NN.mp4. A post whose cover file is missing is skipped by the build, so the site never shows an empty card. To add a post: add an object at the top, drop its cover (and slides) in, rebuild.",
+  "accounts": {
+    "house": "sahraandbeyond.ae",
+    "trail": "sahratrail"
+  },
+  "topics": {
+    "sizing": "Sizing & ordering",
+    "delivery": "Sizing & ordering",
+    "shop": "Sizing & ordering",
+    "product": "The pieces",
+    "places": "Places",
+    "trail": "Sahra Trail",
+    "sahel": "Sahel",
+    "brand": "The brand",
+    "fabric": "The brand",
+    "community": "The brand"
+  },
+  "posts": [
+    {
+      "id": "DdKD_PQCHBA",
+      "pin": 1,
+      "kind": "carousel",
+      "label": "Regular or oversized? The fit guide",
+      "topic": "sizing",
+      "guides": [
+        "/size-guide/"
+      ],
+      "wear": [
+        "/size-guide/",
+        "Size guide"
+      ],
+      "src": "CAROUSELS-28Sep-10Oct/D01-28sep-regular-or-oversized",
+      "srcNote": "Step-through uses the 28 Sep rebuild of the guide (no slim-fit wording); the pinned 11 Sep post is the older cut of the same guide."
+    },
+    {
+      "id": "DeCehfniGGo",
+      "kind": "carousel",
+      "label": "Which outside are you? Two questions, three tees",
+      "topic": "shop",
+      "products": [
+        "al-quaa-galaxy-regular",
+        "empty-quarter-regular",
+        "hajar-mountains-regular"
+      ],
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ],
+      "src": "SHOP-FRIDAY-02-Oct/01-pick-your-outside"
+    },
+    {
+      "id": "DeBQVY_oMkq",
+      "account": "trail",
+      "kind": "reel",
+      "label": "Can you see the runner? Sahra Trail, episode 3",
+      "topic": "trail",
+      "guides": [
+        "/trail/",
+        "/hiking/"
+      ],
+      "wear": [
+        "/trail/",
+        "Sahra Trail"
+      ],
+      "src": "SAHRA-TRAIL-reels/T3-EP03-can-you-see-the-runner/v2-2-Oct",
+      "cover": "SahraTrail_EP03_v2_cover.jpg"
+    },
+    {
+      "id": "Dd_mXdmjCpX",
+      "kind": "carousel",
+      "label": "Pack your Friday: three tees, one bag",
+      "topic": "shop",
+      "products": [
+        "al-quaa-galaxy-regular",
+        "empty-quarter-regular",
+        "hajar-mountains-regular"
+      ],
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ],
+      "src": "SHOP-FRIDAY-02-Oct/03-pack-your-friday"
+    },
+    {
+      "id": "Dd9SAagDJKS",
+      "kind": "carousel",
+      "label": "October, outdoors: dates to save",
+      "topic": "places",
+      "places": [
+        "al-quaa-desert"
+      ],
+      "guides": [
+        "/stargazing/",
+        "/camping/"
+      ],
+      "wear": [
+        "/stargazing/",
+        "Milky Way guide"
+      ],
+      "src": "CAROUSELS-28Sep-10Oct/D08-01oct-october-outdoors-dates/v2-motion"
+    },
+    {
+      "id": "Dd7-gsoImTj",
+      "account": "trail",
+      "kind": "reel",
+      "label": "1,934 m before the sun. Sahra Trail, episode 2",
+      "topic": "trail",
+      "places": [
+        "jebel-jais"
+      ],
+      "guides": [
+        "/trail/",
+        "/locations/jebel-jais/"
+      ],
+      "wear": [
+        "/locations/jebel-jais/",
+        "Jebel Jais guide"
+      ],
+      "src": "SAHRA-TRAIL-reels/T2-EP02-1934m",
+      "cover": "SahraTrail_EP02_1934m_cover.jpg"
+    },
+    {
+      "id": "Dd5qAsMoVNq",
+      "kind": "reel",
+      "label": "Three places. One mark.",
+      "topic": "brand",
+      "guides": [
+        "/places/"
+      ],
+      "wear": [
+        "/places/",
+        "The places"
+      ],
+      "src": "FOUNDING-MARK-REEL-30-Sep",
+      "reel": "SahraBeyond_FoundingEdition_MarkReel_v3_DuneMatch_1080x1920.mp4"
+    },
+    {
+      "id": "Dd4X685iH0k",
+      "kind": "carousel",
+      "label": "Everything out here is vast. So is the fit: the Empty Quarter Tee, oversized",
+      "topic": "product",
+      "products": [
+        "empty-quarter-oversized"
+      ],
+      "places": [
+        "empty-quarter",
+        "liwa"
+      ],
+      "wear": [
+        "/products/empty-quarter-oversized/",
+        "Empty Quarter Oversized T-Shirt"
+      ],
+      "src": "CAROUSELS-29-Sep/Empty-Quarter-Oversized/V2"
+    },
+    {
+      "id": "Dd342EwoQho",
+      "account": "trail",
+      "kind": "reel",
+      "label": "Sunrise hike: Sahra Trail, episode 1",
+      "topic": "trail",
+      "guides": [
+        "/trail/",
+        "/hiking/"
+      ],
+      "wear": [
+        "/hiking/",
+        "Hiking guide"
+      ],
+      "src": "SAHRA-TRAIL-reels/T1-EP01-before-the-sun/v6-29-Sep",
+      "cover": "SahraTrail_T1_EP01_v6_cover.jpg"
+    },
+    {
+      "id": "DdzOsr5CFNq",
+      "kind": "carousel",
+      "label": "This is a mountain. So is this: the Hajar Mountains Tee",
+      "topic": "product",
+      "products": [
+        "hajar-mountains-regular"
+      ],
+      "places": [
+        "hajar-mountains",
+        "wadi-naqab"
+      ],
+      "wear": [
+        "/products/hajar-mountains-regular/",
+        "Hajar Mountains T-Shirt"
+      ],
+      "src": "CAROUSELS-26-27-Sep/02-Hajar-Regular-27-Sep"
+    },
+    {
+      "id": "DdvrCpdCIUc",
+      "kind": "carousel",
+      "label": "We stitched this sunset into a t-shirt: the Empty Quarter Tee",
+      "topic": "product",
+      "products": [
+        "empty-quarter-regular"
+      ],
+      "places": [
+        "liwa",
+        "empty-quarter"
+      ],
+      "wear": [
+        "/products/empty-quarter-regular/",
+        "Empty Quarter T-Shirt"
+      ],
+      "src": "CAROUSELS-26-27-Sep/01-Empty-Quarter-Regular-26-Sep"
+    },
+    {
+      "id": "Ddt8NV-iCoL",
+      "kind": "carousel",
+      "label": "We put this sky on a t-shirt: the Al Quaa Galaxy Tee",
+      "topic": "product",
+      "products": [
+        "al-quaa-galaxy-regular"
+      ],
+      "places": [
+        "al-quaa-desert"
+      ],
+      "guides": [
+        "/stargazing/"
+      ],
+      "wear": [
+        "/products/al-quaa-galaxy-regular/",
+        "Al Quaa Galaxy T-Shirt"
+      ],
+      "src": "CAROUSELS-25-Sep/01-Al-Quaa-Regular",
+      "exclude": [
+        "_preview-all-slides.mp4"
+      ]
+    },
+    {
+      "id": "Ddq9DeUh6uE",
+      "kind": "reel",
+      "label": "Why the Milky Way season ends in October",
+      "topic": "places",
+      "places": [
+        "al-quaa-desert"
+      ],
+      "guides": [
+        "/stargazing/"
+      ],
+      "wear": [
+        "/stargazing/",
+        "Milky Way guide"
+      ],
+      "src": "WEEKLY-PACKS/24sep-U1-milky-way-weekends-reel",
+      "cover": "U1_cover.jpg"
+    },
+    {
+      "id": "DdoZwkFCCf-",
+      "kind": "carousel",
+      "label": "09:00 desk. 18:34 dune. The Sahra Polo",
+      "topic": "product",
+      "products": [
+        "sand-polo"
+      ],
+      "wear": [
+        "/products/sand-polo/",
+        "The Sahra Polo Shirt"
+      ],
+      "src": "CAROUSELS-23-Sep-v3/01-Sahra-Polo"
+    },
+    {
+      "id": "DdlXZPRIkWh",
+      "kind": "reel",
+      "label": "Same shirt, desk to dune: the Sahra Polo",
+      "topic": "product",
+      "products": [
+        "sand-polo"
+      ],
+      "wear": [
+        "/products/sand-polo/",
+        "The Sahra Polo Shirt"
+      ]
+    },
+    {
+      "id": "DdeUJrfCOxP",
+      "kind": "carousel",
+      "label": "The Sahra Tote, AED 50 in the shop",
+      "topic": "shop",
+      "guides": [
+        "/tote/"
+      ],
+      "wear": [
+        "/tote/",
+        "The tote"
+      ],
+      "src": "WEEKLY-PACKS/19sep-tote-aed50"
+    },
+    {
+      "id": "DdcCKD3IrNv",
+      "kind": "reel",
+      "label": "Black or sand? The polo, two ways",
+      "topic": "product",
+      "products": [
+        "sand-polo"
+      ],
+      "wear": [
+        "/polos/",
+        "Polo shirts"
+      ]
+    },
+    {
+      "id": "DdWwJDWCIib",
+      "kind": "carousel",
+      "label": "Drive out of the city and the country goes quiet",
+      "topic": "places",
+      "guides": [
+        "/places/",
+        "/outdoor-things-to-do/"
+      ],
+      "wear": [
+        "/places/",
+        "The places"
+      ],
+      "src": "WEEKLY-PACKS/16sep-the-other-uae",
+      "stills": true
+    },
+    {
+      "id": "DdUIGBqiPoF",
+      "kind": "carousel",
+      "label": "Founding Edition: forty were made",
+      "topic": "brand",
+      "products": [
+        "al-quaa-galaxy-oversized"
+      ],
+      "wear": [
+        "/products/al-quaa-galaxy-oversized/",
+        "Al Quaa Galaxy Oversized T-Shirt"
+      ],
+      "src": "WEEKLY-PACKS/16sep-3-left",
+      "noSlides": true,
+      "srcNote": "Stock counts on the slides are from 15 Sep, so the slides are not shown on the site; cover only."
+    },
+    {
+      "id": "DdS3WQKoFIj",
+      "kind": "reel",
+      "label": "The road to the sky: two hours from the skyline",
+      "topic": "places",
+      "places": [
+        "al-quaa-desert"
+      ],
+      "guides": [
+        "/stargazing/"
+      ],
+      "wear": [
+        "/locations/al-quaa-desert/",
+        "Al Quaa guide"
+      ]
+    },
+    {
+      "id": "DdO1bElCPmE",
+      "kind": "carousel",
+      "label": "The Sahra Polo: desk at eight, dunes at six",
+      "topic": "product",
+      "products": [
+        "sand-polo"
+      ],
+      "wear": [
+        "/products/sand-polo/",
+        "The Sahra Polo Shirt"
+      ],
+      "src": "WEEKLY-PACKS/13sep-polo-live",
+      "noSlides": true,
+      "srcNote": "Two of the nine slides were stills in the source folder, so only the cover is used on the site."
+    },
+    {
+      "id": "DdGfpZBh8bq",
+      "pin": 2,
+      "kind": "reel",
+      "label": "Dubai has another side: a wadi an hour past the last tower",
+      "topic": "places",
+      "places": [
+        "wadi-naqab"
+      ],
+      "guides": [
+        "/wadis/",
+        "/hiking/"
+      ],
+      "wear": [
+        "/wadis/",
+        "Wadis guide"
+      ]
+    },
+    {
+      "id": "DdDjvm0jr7l",
+      "kind": "carousel",
+      "label": "With @ppayuss: wearing the places that make us feel alive",
+      "topic": "community",
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ]
+    },
+    {
+      "id": "DdCGmkIiMNy",
+      "kind": "carousel",
+      "label": "The Hajar Mountains Tee, up close",
+      "topic": "product",
+      "products": [
+        "hajar-mountains-regular"
+      ],
+      "wear": [
+        "/products/hajar-mountains-regular/",
+        "Hajar Mountains T-Shirt"
+      ]
+    },
+    {
+      "id": "Dc_kRqwiIyH",
+      "kind": "carousel",
+      "label": "The Empty Quarter, in sand: tonal embroidery",
+      "topic": "product",
+      "products": [
+        "empty-quarter-regular"
+      ],
+      "wear": [
+        "/products/empty-quarter-regular/",
+        "Empty Quarter T-Shirt"
+      ]
+    },
+    {
+      "id": "Dc6kEW7CBsx",
+      "kind": "carousel",
+      "label": "The Milky Way season: the last weekends of the year",
+      "topic": "places",
+      "places": [
+        "al-quaa-desert"
+      ],
+      "guides": [
+        "/stargazing/"
+      ],
+      "wear": [
+        "/stargazing/",
+        "Milky Way guide"
+      ]
+    },
+    {
+      "id": "Dc3jWoIgaM5",
+      "kind": "carousel",
+      "label": "Evenings that start outside: the Sahra Polo",
+      "topic": "product",
+      "products": [
+        "sand-polo"
+      ],
+      "wear": [
+        "/products/sand-polo/",
+        "The Sahra Polo Shirt"
+      ]
+    },
+    {
+      "id": "Dc1MTxpIIcP",
+      "kind": "reel",
+      "label": "The first box: what arrives at your door",
+      "topic": "delivery",
+      "wear": [
+        "/size-guide/",
+        "Size guide"
+      ]
+    },
+    {
+      "id": "Dcy1S5loC4f",
+      "kind": "carousel",
+      "label": "230 GSM: the difference you can feel",
+      "topic": "fabric",
+      "guides": [
+        "/fabric/"
+      ],
+      "wear": [
+        "/fabric/",
+        "The fabric"
+      ]
+    },
+    {
+      "id": "DcwGC5_AYgj",
+      "kind": "carousel",
+      "label": "Free next-day UAE delivery: how it works",
+      "topic": "delivery",
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ]
+    },
+    {
+      "id": "DcsT6ZTCO0M",
+      "pin": 3,
+      "kind": "carousel",
+      "label": "Shipping across the GCC is live",
+      "topic": "delivery",
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ]
+    },
+    {
+      "id": "Dcv7ahaiJYU",
+      "kind": "carousel",
+      "label": "The Hajar Mountains don't ask for a visa",
+      "topic": "product",
+      "products": [
+        "hajar-mountains-regular"
+      ],
+      "places": [
+        "wadi-naqab"
+      ],
+      "wear": [
+        "/products/hajar-mountains-regular/",
+        "Hajar Mountains T-Shirt"
+      ]
+    },
+    {
+      "id": "DctffmTiOEj",
+      "kind": "photo",
+      "label": "The Al Quaa Galaxy Tee, worn",
+      "topic": "product",
+      "products": [
+        "al-quaa-galaxy-regular"
+      ],
+      "wear": [
+        "/products/al-quaa-galaxy-regular/",
+        "Al Quaa Galaxy T-Shirt"
+      ]
+    },
+    {
+      "id": "Dcqxmt-iG41",
+      "kind": "carousel",
+      "label": "The Empty Quarter doesn't announce itself",
+      "topic": "product",
+      "products": [
+        "empty-quarter-regular"
+      ],
+      "places": [
+        "empty-quarter"
+      ],
+      "wear": [
+        "/products/empty-quarter-regular/",
+        "Empty Quarter T-Shirt"
+      ]
+    },
+    {
+      "id": "Dco5M3WI28V",
+      "kind": "reel",
+      "label": "Desert drive. Dinner in town.",
+      "topic": "brand",
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ]
+    },
+    {
+      "id": "DcjgRfQiFRO",
+      "kind": "carousel",
+      "label": "The Al Quaa Galaxy Tee, decoded",
+      "topic": "product",
+      "products": [
+        "al-quaa-galaxy-regular"
+      ],
+      "places": [
+        "al-quaa-desert"
+      ],
+      "wear": [
+        "/products/al-quaa-galaxy-regular/",
+        "Al Quaa Galaxy T-Shirt"
+      ]
+    },
+    {
+      "id": "DciJLwmI0rg",
+      "kind": "reel",
+      "label": "Wear a place, not just a logo: live now",
+      "topic": "brand",
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ]
+    },
+    {
+      "id": "DcePHxqiGAy",
+      "kind": "carousel",
+      "label": "The Empty Quarter Tee, decoded",
+      "topic": "product",
+      "products": [
+        "empty-quarter-regular"
+      ],
+      "wear": [
+        "/products/empty-quarter-regular/",
+        "Empty Quarter T-Shirt"
+      ]
+    },
+    {
+      "id": "DcctuJfoD49",
+      "kind": "reel",
+      "label": "Off-grid, without a plane ticket",
+      "topic": "places",
+      "guides": [
+        "/secluded-camping/"
+      ],
+      "wear": [
+        "/secluded-camping/",
+        "Secluded camping"
+      ]
+    },
+    {
+      "id": "DcWO-mdiNTS",
+      "kind": "carousel",
+      "label": "The Hajar Mountains Tee, decoded",
+      "topic": "product",
+      "products": [
+        "hajar-mountains-regular"
+      ],
+      "places": [
+        "wadi-naqab"
+      ],
+      "wear": [
+        "/products/hajar-mountains-regular/",
+        "Hajar Mountains T-Shirt"
+      ]
+    },
+    {
+      "id": "DcVbQZRiERv",
+      "kind": "carousel",
+      "label": "Al Quaa: the dark sky behind the Galaxy Tee",
+      "topic": "places",
+      "places": [
+        "al-quaa-desert"
+      ],
+      "guides": [
+        "/stargazing/"
+      ],
+      "wear": [
+        "/locations/al-quaa-desert/",
+        "Al Quaa guide"
+      ]
+    },
+    {
+      "id": "DcRvwOCI_FR",
+      "kind": "reel",
+      "label": "The UAE of glass and gold has another side",
+      "topic": "brand",
+      "wear": [
+        "/about/",
+        "Our story"
+      ]
+    },
+    {
+      "id": "DcNOhlDCLpU",
+      "kind": "carousel",
+      "label": "Tees drawn from real places in the Emirates",
+      "topic": "brand",
+      "guides": [
+        "/places/"
+      ],
+      "wear": [
+        "/places/",
+        "The places"
+      ]
+    },
+    {
+      "id": "DbgmGBYjKtW",
+      "kind": "carousel",
+      "label": "Sahra: the desert. One dune line and a sun",
+      "topic": "brand",
+      "wear": [
+        "/about/",
+        "Our story"
+      ]
+    },
+    {
+      "id": "DbYoa-niLzk",
+      "kind": "carousel",
+      "label": "The desert isn't empty: the Arabian oryx",
+      "topic": "places",
+      "guides": [
+        "/places/"
+      ],
+      "wear": [
+        "/places/",
+        "The places"
+      ]
+    },
+    {
+      "id": "DbOGuKpIJB9",
+      "kind": "reel",
+      "label": "Forty minutes from the towers, the UAE goes quiet",
+      "topic": "places",
+      "guides": [
+        "/outdoor-things-to-do/"
+      ],
+      "wear": [
+        "/outdoor-things-to-do/",
+        "Things to do outdoors"
+      ]
+    },
+    {
+      "id": "DbJWwNNoY9a",
+      "kind": "reel",
+      "label": "This is where it starts: 230 GSM combed cotton",
+      "topic": "fabric",
+      "guides": [
+        "/fabric/"
+      ],
+      "wear": [
+        "/fabric/",
+        "The fabric"
+      ]
+    },
+    {
+      "id": "Da-hlfzIl7C",
+      "kind": "reel",
+      "label": "Beyond the towers, there's another UAE",
+      "topic": "brand",
+      "wear": [
+        "/about/",
+        "Our story"
+      ]
+    },
+    {
+      "id": "q-before-you-order",
+      "site": true,
+      "hidden": true,
+      "kind": "carousel",
+      "label": "Before you order: six answers",
+      "topic": "sizing",
+      "src": "CAROUSELS-28Sep-10Oct/D02-29sep-before-you-order",
+      "srcNote": "Not an Instagram post yet (D2, built 29 Sep). Used by /q/before-you-order/ for WhatsApp replies."
+    }
+  ],
+  "pages": [
+    {
+      "slug": "oversized",
+      "post": "DdKD_PQCHBA",
+      "title": "Regular or oversized? The fit guide",
+      "h1": "Regular or oversized?",
+      "intro": "Same print, same price, two different shirts. Step through the guide, then take your usual letter for Oversized, or check the chart for Regular.",
+      "shop": [
+        "/t-shirts/",
+        "Shop the tees"
+      ],
+      "second": [
+        "/size-guide/",
+        "Full size guide"
+      ]
+    },
+    {
+      "slug": "before-you-order",
+      "post": "q-before-you-order",
+      "title": "Before you order: six answers",
+      "h1": "Before you order",
+      "intro": "Delivery, exchanges and returns, size, payment, GCC shipping and the tote: one swipe each.",
+      "shop": [
+        "/t-shirts/",
+        "Shop the tees"
+      ],
+      "second": [
+        "/policies.html#shipping",
+        "Shipping and returns"
+      ]
+    }
+  ]
+}

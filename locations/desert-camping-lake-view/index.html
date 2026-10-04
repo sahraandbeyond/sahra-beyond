@@ -525,6 +525,74 @@ main,.ftr{position:relative;z-index:1}
 .sb-tnote a{color:#7A4B0C}
 .sb-swipe{display:none;font-size:12.5px;color:#5C5346;margin:12px 0 -6px}
 @media (max-width:600px){.sb-swipe{display:block}.sb-table tbody th,.sb-table thead th:first-child{position:sticky;left:0;z-index:1;background:#FAF6EF;box-shadow:1px 0 0 rgba(42,32,22,.1)}.sb-table tbody th{background:#fff;min-width:96px}}.foot-guides{position:static;display:block;max-width:980px;margin:14px auto 6px;padding:0 16px;font-size:13px;line-height:1.95;text-align:center}.foot-guides div{margin:2px 0}.foot-guides b{font-weight:600}.foot-guides a{text-decoration:none;white-space:nowrap}.foot-guides a:hover{text-decoration:underline}
+/* ---- Instagram blocks (instagram-feed.js) ---- */
+.ig-strip,.ig-rail-sec,.ig-foot,.ig-feedhead,.ig-grid{--ig-ink:#2B2620;--ig-soft:#5C5346;--ig-line:rgba(43,37,32,.14);--ig-fill:#fff;--ig-accent:#9C521B;--ig-seg:rgba(43,37,32,.25);--ig-segon:#9C521B}
+.ig-dark{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}
+.ig-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 12px}
+.ig-eyebrow,.ig-head h2.ig-eyebrow,.sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;color:var(--ig-soft);font-weight:400;margin:0;max-width:none;line-height:1.5;font-style:normal;opacity:1;visibility:visible;transform:none}
+.ig-follow{font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ig-ink);text-decoration:none;border:1px solid var(--ig-line);border-radius:999px;padding:7px 12px;white-space:nowrap}
+.ig-follow:hover{border-color:var(--ig-ink)}
+.ig-rail{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 16px;padding:4px 0 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.ig-rail::-webkit-scrollbar{display:none}
+.ig-card{flex:0 0 62vw;max-width:252px;min-width:0;scroll-snap-align:center;background:var(--ig-fill);border:1px solid var(--ig-line);border-radius:14px;overflow:hidden;position:relative;transition:transform .25s ease,border-color .25s ease}
+@media(min-width:761px){.ig-card{flex-basis:calc((100% - 60px)/6);max-width:none}.ig-rail-short .ig-card{flex-basis:220px}.ig-card:hover{transform:translateY(-6px);border-color:var(--ig-ink)}}
+.ig-media{position:relative;aspect-ratio:4/5;background:#181109;overflow:hidden}
+.ig-media img,.ig-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ig-media video{opacity:0;transition:opacity .6s ease;pointer-events:none}
+.ig-media video.on{opacity:1}
+.ig-seg{position:absolute;top:8px;left:8px;right:8px;display:flex;gap:3px;z-index:3;pointer-events:none}
+.ig-seg i{flex:1;height:2px;border-radius:2px;background:var(--ig-seg);position:relative;overflow:hidden}
+.ig-seg i::after{content:'';position:absolute;inset:0;background:var(--ig-segon);transform:scaleX(0);transform-origin:left}
+.ig-seg i.done::after{transform:scaleX(1)}
+.ig-card.active .ig-seg i.on::after{animation:igFill 5s linear forwards}
+.ig-card:not(.active) .ig-seg i.on::after{transform:scaleX(1)}
+@keyframes igFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.ig-open{position:absolute;inset:0;z-index:1}.ig-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ig-tap{position:absolute;top:0;bottom:0;width:33%;border:0;background:transparent;z-index:2;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
+.ig-prev{left:0}.ig-next{right:0}
+.ig-tap:focus-visible{outline:2px solid var(--ig-accent);outline-offset:-4px}
+.ig-kind{position:absolute;left:10px;bottom:10px;z-index:3;pointer-events:none;font-family:'Space Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.42);border-radius:999px;padding:4px 8px;backdrop-filter:blur(4px)}
+.ig-card.ig-new .ig-media::before{content:'';position:absolute;top:18px;right:12px;width:8px;height:8px;border-radius:50%;background:#C8703A;box-shadow:0 0 0 0 rgba(200,112,58,.6);z-index:4;animation:igPulse 1.6s ease-in-out 3}
+@keyframes igPulse{0%{box-shadow:0 0 0 0 rgba(200,112,58,.6)}70%{box-shadow:0 0 0 10px rgba(200,112,58,0)}100%{box-shadow:0 0 0 0 rgba(200,112,58,0)}}
+.ig-txt{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px}
+.ig-ago{font-family:'Space Mono',ui-monospace,monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ig-soft)}
+.ig-label{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:17px;line-height:1.2;margin:0;color:var(--ig-ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-width:none;letter-spacing:0}
+.ig-label a{color:inherit;text-decoration:none}
+.ig-label a:hover{text-decoration:underline;text-underline-offset:3px}
+.ig-wear{font-size:12.5px;color:var(--ig-accent);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ig-wear:hover{text-decoration:underline}
+.ig-more{margin:6px 0 0;font-size:13px}.ig-more a{color:var(--ig-accent);text-decoration:none}.ig-more a:hover{text-decoration:underline}
+.ig-strip{width:100%;max-width:1180px;margin:28px auto 0;padding:0 clamp(16px,6vw,96px)}
+.ig-rail-sec{margin:28px 0}
+/* footer row */
+.ig-foot{max-width:720px;margin:18px auto 10px;padding:0 16px;text-align:center}
+.ig-foot-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:480px){.ig-foot-row{grid-template-columns:repeat(2,1fr)}}
+.ig-foot-card{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--ig-line);background:#181109}
+.ig-foot-card img,.ig-foot-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ig-foot-card video{opacity:0;transition:opacity .6s}.ig-foot-card video.on{opacity:1}
+.ig-foot-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 8px 7px;font-size:11px;line-height:1.3;color:#fff;text-align:left;background:linear-gradient(transparent,rgba(0,0,0,.7))}.ig-foot-cap span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ig-foot-line{margin:12px 0 0;font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ig-soft)}
+.ig-foot-line a{color:var(--ig-ink);text-decoration:none}.ig-foot-line a:hover{text-decoration:underline}
+.ig-foot-last{letter-spacing:1px}
+/* /feed/ */
+.ig-feedhead{max-width:760px;margin:0 auto 22px}
+.ig-feedhead h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.05;margin:8px 0 10px;text-wrap:balance}
+.ig-feedhead .lede{color:var(--ig-soft);font-size:15.5px;margin:0 0 14px}
+.ig-followrow{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.ig-chips{display:flex;gap:8px;flex-wrap:wrap}
+.ig-chips button{font:inherit;font-size:13px;padding:7px 14px;border-radius:999px;border:1px solid var(--ig-line);background:transparent;color:var(--ig-ink);cursor:pointer}
+.ig-chips button.on{background:var(--ig-ink);color:#FAF6EF;border-color:var(--ig-ink)}
+.ig-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:1180px;margin:0 auto}.ig-cell{min-width:0}
+@media(min-width:761px){.ig-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+@media(min-width:1100px){.ig-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.ig-grid .ig-card{flex:none;max-width:none;width:100%}
+.ig-empty{text-align:center;color:var(--ig-soft);margin:30px 0}
+/* /q/ pages */
+.ig-big{max-width:420px;margin:0 auto}
+.ig-big .ig-label{font-size:20px}
+@media(prefers-reduced-motion:reduce){.ig-card,.ig-seg i::after,.ig-media video,.ig-card.ig-new .ig-media::before{transition:none;animation:none!important}.ig-card.active .ig-seg i.on::after{transform:scaleX(1)}}
+
 /* html{font-size-adjust:.5} (legibility layer) stops Chrome scaling SVG text with the viewBox, so map labels rendered at their raw unit size: huge on wide crops */
 .lg-page svg text,.lg-page svg tspan{font-size-adjust:none}
 
@@ -1591,6 +1659,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       </div>
     </section>
     <section class="faq lg-rise" id="faq"><h2><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.8 9.5a2.3 2.3 0 1 1 3.2 2.1c-.7.3-1 .8-1 1.5v.4M12 16.5h.01"/></svg> Questions people ask about Al Qudra Desert Lake</h2><details class="lg-q"><summary>What is this lake actually called?</summary><p>No public source names this specific water body — it's one of several small lakes inside the Al Qudra Lakes cluster, roughly 2km north of the better-known Love Lake.</p></details><details class="lg-q"><summary>Is camping allowed here?</summary><p>Camping is generally permitted within Al Marmoom Desert Conservation Reserve in designated areas, but nothing confirms this exact spot is one of them — check current Dubai Municipality guidance, or camp at a named, signed lake nearby instead.</p></details><details class="lg-q"><summary>Do I need a 4x4 to get here?</summary><p>A high-clearance or 4x4 vehicle is strongly recommended — the final stretch off the paved loop road is unpaved sand.</p></details><details class="lg-q"><summary>Are there toilets nearby?</summary><p>Not at the water's edge itself; the nearest public toilets and parking are at Expo Lake, about 5km away.</p></details><details class="lg-q"><summary>How far is it from Dubai?</summary><p>About an hour's drive, via Al Qudra Road.</p></details><details class="lg-q"><summary>Is it crowded?</summary><p>The named lakes nearby (Love Lake, Al Qudra Lakes) draw weekend crowds; no source describes crowd levels at this specific, undocumented spot.</p></details></section>
+    
     <nav class="lg-guides lg-rise" aria-label="Guides that cover Al Qudra Desert Lake"><h2>Guides that include Al Qudra Desert Lake</h2><div><a href="/camping/">Best Camping Spots in the UAE &rarr;</a><a href="/secluded-camping/">Secluded Camping Spots in the UAE &rarr;</a><a href="/stargazing/">Best Places to See the Milky Way Galaxy in the UAE &rarr;</a><a href="/camping-near-dubai/">Camping Near Dubai: Best Spots for a Weekend Escape &rarr;</a><a href="/desert-camping-beginners/">Desert Camping for Beginners in the UAE &rarr;</a></div></nav>
     <details class="lg-fold lg-srcf lg-rise" id="sources"><summary><span class="lg-fi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><span class="lg-ft"><b>Sources</b><small>Where the facts on this page come from</small></span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb"><ol class="lg-src"><li><a href="https://www.thenationalnews.com/travel/2023/03/13/how-to-find-all-of-dubais-al-qudra-desert-lakes-from-love-lake-to-crescent-moon-lake/" target="_blank" rel="noopener nofollow">The National — How to find all of Dubai's Al Qudra desert lakes</a></li><li><a href="https://en.wikipedia.org/wiki/Al_Marmoom_Desert_Conservation_Reserve" target="_blank" rel="noopener nofollow">Wikipedia — Al Marmoom Desert Conservation Reserve</a></li><li><a href="https://en.wikipedia.org/wiki/Love_Lake,_Dubai" target="_blank" rel="noopener nofollow">Wikipedia — Love Lake, Dubai</a></li><li><a href="https://www.visitdubai.com/en/places-to-visit/al-qudra-lakes" target="_blank" rel="noopener nofollow">Visit Dubai — Al Qudra Lakes</a></li><li><a href="https://mysecretdubai.com/al-marmoom-desert-conservation-reserve/" target="_blank" rel="noopener nofollow">My Secret Dubai — Al Marmoom Desert Conservation Reserve: A Practical Guide</a></li><li><a href="https://www.openstreetmap.org/" target="_blank" rel="noopener nofollow">OpenStreetMap / Nominatim (reverse geocode of the given coordinates)</a></li></ol></div></details>
     <section class="related lg-rise"><h2>Near Al Qudra Desert Lake</h2><div class="cards"><a class="card" data-id="love-lake" data-cat="Camping" data-em="Dubai" data-v="2wd" data-diff="Easy" data-m="222211111222" href="/locations/love-lake/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/love-lake.webp')" role="img" aria-label="Love Lake"></span><span class="card-body"><strong>Love Lake</strong><i class="lg-near">about 5 km away</i><em>Dubai · Camping</em><span>Two heart-shaped artificial lakes in Dubai's Al Marmoom reserve, reached by paved road. A free photo, picnic and camping spot with resident birdlife.</span></span></a><a class="card" data-id="crescent-moon-lake" data-cat="Camping" data-em="Dubai" data-v="4wd" data-diff="Moderate" data-m="222200000222" href="/locations/crescent-moon-lake/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/crescent-moon-lake.webp')" role="img" aria-label="An Arabian oryx crossing a sandy track in the Al Qudra desert"></span><span class="card-body"><strong>Crescent Moon Lake</strong><i class="lg-near">about 10 km away</i><em>Dubai · Camping</em><span>A crescent-shaped artificial lake off the beaten track in Dubai's Al Qudra desert, known for oryx sightings at dawn. Reaching it needs a 4x4 — there's no paved road for the final stretch.</span></span></a><a class="card" data-id="half-desert" data-cat="Dunes" data-em="Dubai" data-v="2wd" data-diff="Easy" data-m="222100000122" href="/locations/half-desert/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/half-desert.webp')" role="img" aria-label="A 4x4 on a sand bank above still water at sunset, near Half Desert"></span><span class="card-body"><strong>Half Desert</strong><i class="lg-near">about 30 km away</i><em>Dubai · Dunes</em><span>Half Desert is a stretch of old road near Al Awir where drifting dunes have half-buried the tarmac — a favourite easy spot to learn desert driving or take a photo of sand reclaiming a road.</span></span></a><a class="card" data-id="big-red" data-cat="Dunes" data-em="Sharjah" data-v="2wd" data-diff="Moderate" data-m="222000000122" href="/locations/big-red/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/big-red.webp')" role="img" aria-label="4x4s among red dunes at Al Madam, near Big Red"></span><span class="card-body"><strong>Big Red</strong><i class="lg-near">about 35 km away</i><em>Sharjah · Dunes</em><span>Big Red is a 60–100m red sand dune on the Dubai–Hatta road at Al Madam, on the Sharjah side — the UAE's best-known spot for dune bashing, quad biking and sandboarding.</span></span></a></div><p class="lg-all"><a href="/places/">All places on the map &rarr;</a></p></section>
@@ -1702,6 +1771,10 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>
   <div class="foot-guides" role="navigation" aria-label="Guides and more"><div><b>Guides:</b> <a href="/places/">All places</a> · <a href="/camping/">Camping in the UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/wadis/">Wadis in the UAE</a> · <a href="/hiking/">Hiking in the UAE</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta day trip</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/fujairah-beaches/">Fujairah beaches</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a></div><div><b>More:</b> <a href="/national-day/">National Day t-shirts</a> · <a href="/gifts/">Gift ideas</a> · <a href="/trail/">Sahra Trail</a> · <a href="/tote/">Canvas tote</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric</a> · <a href="/size-guide/">Size guide</a> · <a href="/ar/" hreflang="ar" lang="ar">العربية</a></div></div>
+  <nav class="ig-foot ig-dark" aria-label="More from our Instagram">
+  <div class="ig-foot-row"><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/Dd5qAsMoVNq/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/Dd5qAsMoVNq-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Three places. One mark.</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/Dd4X685iH0k/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/Dd4X685iH0k/01.mp4"><img src="/uploads/ig/Dd4X685iH0k-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Everything out here is vast. So is the fit: the Empty Quarter Tee, oversized</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahratrail/reel/Dd342EwoQho/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/Dd342EwoQho-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Sunrise hike: Sahra Trail, episode 1</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/DdzOsr5CFNq/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DdzOsr5CFNq/01.mp4"><img src="/uploads/ig/DdzOsr5CFNq-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>This is a mountain. So is this: the Hajar Mountains Tee</span></span></a></div>
+  <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 3 Oct</span> · <a href="/feed/">all posts</a></p>
+</nav>
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© 2026 Sahra &amp; Beyond · <a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a></div></footer>
@@ -1775,5 +1848,69 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=18758f49" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
+<script>(function(){
+var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
+var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var con=navigator.connection||{};var slow=!!con.saveData||/(^|[^4-9])[23]g$/.test(con.effectiveType||'');
+var canAuto=!reduced&&!slow;
+var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function dayOf(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();}
+/* posted-ago, recomputed on load so a cached page stays honest (calendar days, viewer's clock) */
+[].forEach.call(document.querySelectorAll('.ig-ago[data-date]'),function(e){var d=new Date(e.getAttribute('data-date'));if(isNaN(d))return;var days=Math.round((dayOf(new Date())-dayOf(d))/864e5),t;if(days<=0)t='Posted today';else if(days===1)t='Posted yesterday';else if(days<7)t='Posted '+days+' days ago';else if(days<28)t='Posted '+Math.floor(days/7)+' week'+(days<14?'':'s')+' ago';else t='Posted '+d.getDate()+' '+MONTHS[d.getMonth()];e.textContent=t;});
+/* the new-post dot: newest card, under 7 days, not seen before */
+[].forEach.call(document.querySelectorAll('[data-newest]'),function(r){var id=r.getAttribute('data-newest');if(!id)return;var c=r.querySelector('.ig-card[data-id="'+id+'"]');if(!c)return;var d=new Date(c.getAttribute('data-date')||0);if(Date.now()-d>7*864e5)return;var seen=null;try{seen=localStorage.getItem('sb_ig_seen');}catch(e){}if(seen===id)return;c.classList.add('ig-new');var t=null;try{new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){t=t||setTimeout(function(){try{localStorage.setItem('sb_ig_seen',id);}catch(x){}},2500);}else if(t){clearTimeout(t);t=null;}});},{threshold:.6}).observe(c);}catch(e){}});
+/* slides */
+function slidesOf(c){var s=c.getAttribute('data-slides');return s?s.split('|'):[];}
+function st(c){return c.__ig||(c.__ig={i:0,v:null,img:null,timer:null,manual:false});}
+function media(c){return c.querySelector('.ig-media');}
+function clearTimer(s){if(s.timer){clearTimeout(s.timer);s.timer=null;}}
+function announce(c,i,n){var sr=c.querySelector('.ig-sr');if(sr)sr.textContent='Slide '+(i+1)+' of '+n;}
+function dropVideo(v){if(!v)return;try{v.pause();v.removeAttribute('src');v.load();v.remove();}catch(e){}}
+function show(c,i,play){var s=st(c),sl=slidesOf(c);if(!sl.length)return;i=(i+sl.length)%sl.length;s.i=i;var src=sl[i];clearTimer(s);
+ [].forEach.call(c.querySelectorAll('.ig-seg i'),function(e,k){e.classList.toggle('on',k===i);e.classList.toggle('done',k<i);});
+ announce(c,i,sl.length);
+ var old=s.v;
+ if(/\.mp4$/.test(src)){if(s.img){s.img.style.opacity=0;}
+  var v=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');v.loop=true;v.preload='auto';v.setAttribute('aria-hidden','true');v.tabIndex=-1;v.src=src;media(c).appendChild(v);s.v=v;
+  var done=false,ok=function(){if(done)return;done=true;if(v.error){dropVideo(v);if(s.v===v)s.v=null;return;}v.classList.add('on');setTimeout(function(){dropVideo(old);},650);};
+  v.addEventListener('playing',ok);v.addEventListener('loadeddata',function(){if(!play)ok();});v.addEventListener('error',function(){done=true;dropVideo(v);if(s.v===v)s.v=null;});
+  setTimeout(function(){if(!done){if(v.readyState>=2)ok();else{done=true;dropVideo(v);if(s.v===v)s.v=null;}}},6000);
+  if(play){var p=v.play();if(p&&p.catch)p.catch(function(){if(v.readyState>=2)ok();});}else{v.load();}
+ }else{var im=s.img;if(!im){im=document.createElement('img');im.className='ig-slide';im.alt='';im.decoding='async';im.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s';media(c).appendChild(im);s.img=im;}
+  dropVideo(old);s.v=null;im.src=src;im.onload=function(){im.style.opacity=1;};}
+ /* a story-style auto-advance while the card is active, until the visitor steps it by hand */
+ if(play&&canAuto&&!s.manual&&sl.length>1)s.timer=setTimeout(function(){if(c.classList.contains('active'))show(c,s.i+1,true);},5000);}
+function stop(c){var s=c.__ig;if(!s)return;clearTimer(s);dropVideo(s.v);s.v=null;if(s.img)s.img.style.opacity=0;}
+function activate(c){if(c.classList.contains('active'))return;c.classList.add('active');if(canAuto&&slidesOf(c).length)show(c,st(c).i,true);}
+function deactivate(c){if(!c.classList.contains('active'))return;c.classList.remove('active');stop(c);}
+var rails=[].slice.call(document.querySelectorAll('.ig-rail,.ig-grid,.ig-big'));var vis={};
+function railOf(c){for(var k=0;k<rails.length;k++){if(rails[k]===c||rails[k].contains(c))return rails[k];}return null;}
+/* a tap makes that card the active one, and only that one, until the rail scrolls again */
+function step(c,dir){var s=st(c);s.manual=true;var r=railOf(c);if(r)r.__pin=c;cards.forEach(function(x){if(x!==c)deactivate(x);});c.classList.add('active');show(c,s.i+dir,!reduced);}
+cards.forEach(function(c){var sl=slidesOf(c);if(sl.length<2)return;
+ [].forEach.call(c.querySelectorAll('.ig-tap'),function(b){b.hidden=false;});
+ c.querySelector('.ig-prev').addEventListener('click',function(e){e.preventDefault();step(c,-1);});
+ c.querySelector('.ig-next').addEventListener('click',function(e){e.preventDefault();step(c,1);});
+ c.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();step(c,1);}if(e.key==='ArrowLeft'){e.preventDefault();step(c,-1);}});
+ if(matchMedia('(hover:hover)').matches){c.addEventListener('mouseenter',function(){if(!canAuto)return;var r=railOf(c);if(r)r.__hover=c;pick();});c.addEventListener('mouseleave',function(){var r=railOf(c);if(r&&r.__hover===c)r.__hover=null;pick();});}
+});
+/* one active card on the page: the pinned or hovered one, else the card nearest the viewport centre in a visible rail */
+function pick(){var best=null,bd=1e9;rails.forEach(function(r,ri){var cs=(r.classList.contains('ig-card')?[r]:[].slice.call(r.querySelectorAll('.ig-card'))).filter(function(c){return !c.hidden&&!(c.parentNode&&c.parentNode.hidden)&&slidesOf(c).length;});if(!cs.length)return;
+ if(r.__pin&&cs.indexOf(r.__pin)>=0&&inView(r.__pin)){best=r.__pin;bd=-2;return;}
+ if(r.__hover&&cs.indexOf(r.__hover)>=0){if(bd>-1){best=r.__hover;bd=-1;}return;}
+ if(!vis[ri])return;var cx=innerWidth/2,cy=innerHeight/2;cs.forEach(function(c){var b=c.getBoundingClientRect();if(b.bottom<0||b.top>innerHeight||b.right<0||b.left>innerWidth)return;var d=Math.abs(b.left+b.width/2-cx)+Math.abs(b.top+b.height/2-cy)*(r.classList.contains('ig-grid')?1:0.15);if(d<bd){bd=d;best=c;}});});
+ cards.forEach(function(c){if(c===best)activate(c);else deactivate(c);});}
+function inView(c){var b=c.getBoundingClientRect();return b.bottom>0&&b.top<innerHeight&&b.right>0&&b.left<innerWidth;}
+var raf=null;function onScroll(){if(raf)return;raf=requestAnimationFrame(function(){raf=null;rails.forEach(function(r){if(r.__pin&&!inView(r.__pin))r.__pin=null;});pick();});}
+try{var io=new IntersectionObserver(function(es){es.forEach(function(e){vis[rails.indexOf(e.target)]=e.isIntersecting;});pick();},{threshold:0});rails.forEach(function(r){io.observe(r);r.addEventListener('scroll',function(){r.__pin=null;onScroll();},{passive:true});});}catch(e){rails.forEach(function(r,i){vis[i]=true;});}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);
+document.addEventListener('visibilitychange',function(){if(document.hidden)cards.forEach(deactivate);else pick();});
+document.addEventListener('click',function(e){if(e.target&&e.target.closest&&e.target.closest('.ig-chips'))setTimeout(pick,50);});
+/* footer row: stills; a hover or focus plays the first slide, nothing on touch */
+if(canAuto&&matchMedia('(hover:hover)').matches)[].forEach.call(document.querySelectorAll('.ig-foot-card[data-slide$=".mp4"]'),function(a){var v=null;function on(){if(v)return;v=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.loop=true;v.src=a.getAttribute('data-slide');v.setAttribute('aria-hidden','true');a.appendChild(v);v.addEventListener('playing',function(){v.classList.add('on');});var p=v.play();if(p&&p.catch)p.catch(function(){});}
+ function off(){dropVideo(v);v=null;}
+ a.addEventListener('mouseenter',on);a.addEventListener('focus',on);a.addEventListener('mouseleave',off);a.addEventListener('blur',off);});
+pick();
+})();</script>
 </body>
 </html>

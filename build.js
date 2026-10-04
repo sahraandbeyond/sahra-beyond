@@ -14,7 +14,7 @@ const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 
 // Clean previously-generated output so deleted locations don't leave orphan pages
-['locations', '_drafts', 'about', 'shop', 'places', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do', 'hiking', 'fujairah-beaches'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
+['locations', '_drafts', 'about', 'shop', 'places', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do', 'hiking', 'fujairah-beaches', 'feed', 'q'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
 
 const TAGLINE = 'Wear the wild side of the UAE';
 // Pre-launch mode: the site opens on the coming-soon experience.
@@ -125,6 +125,7 @@ const draftLocations = (fs.existsSync(draftDir) ? fs.readdirSync(draftDir) : [])
 const locations = allLocations.filter(l => !l.draft);
 const PLACES = require('./places-page.js');
 const FG = require('./footer-guides.js');
+const IG = require('./instagram-feed.js');   /* 4 Oct 2026: the Instagram posts on the site, from content/instagram.json */
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
 /* Arabic core pages (/ar/, /ar/about/, /ar/contact/): false = not in the sitemap and no visible
    'العربية' link on English pages. Flip to true once Faheem signs them off (handover item 11). */
@@ -133,7 +134,11 @@ const AR_CORE_PUBLIC = true;   /* Faheem, 1 Oct 2026: the three Arabic core page
 for (const f of ['index.html', 'shop-preview.html']) {
   const fp = path.join(ROOT, f); if (!fs.existsSync(fp)) continue;
   const h = fs.readFileSync(fp, 'utf8');
-  const n = h.replace(/<!--GUIDES:START-->[\s\S]*?<!--GUIDES:END-->/, '<!--GUIDES:START--><style>' + FG.FOOT_GUIDES_CSS + '</style>' + FG.guidesHtml(null, AR_CORE_PUBLIC) + '<!--GUIDES:END-->');
+  let n = h.replace(/<!--GUIDES:START-->[\s\S]*?<!--GUIDES:END-->/, '<!--GUIDES:START--><style>' + FG.FOOT_GUIDES_CSS + '</style>' + FG.guidesHtml(null, AR_CORE_PUBLIC) + '<!--GUIDES:END-->');
+  /* Instagram blocks (instagram-feed.js): the strip under the film on the home page, the footer row, and one script */
+  n = n.replace(/<!--IG:STRIP-->[\s\S]*?<!--\/IG:STRIP-->/, '<!--IG:STRIP-->' + IG.stripHtml() + '<!--/IG:STRIP-->')
+       .replace(/<!--IG:FOOT-->[\s\S]*?<!--\/IG:FOOT-->/, '<!--IG:FOOT--><style>' + IG.CSS + '</style>' + IG.footerRowHtml() + '<!--/IG:FOOT-->')
+       .replace(/<!--IG:JS-->[\s\S]*?<!--\/IG:JS-->/, '<!--IG:JS--><script>' + IG.JS + '</script><!--/IG:JS-->');
   if (n !== h) fs.writeFileSync(fp, n);
 }
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
@@ -824,6 +829,7 @@ function footerHtml() {
   <div class="soc">${soc}</div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>
   ${FG.guidesHtml(null, AR_CORE_PUBLIC)}
+  ${IG.footerRowHtml()}
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
@@ -907,7 +913,7 @@ ${robotsMeta(noindex)}\n${altHref && !noindex ? `<link rel="alternate" hreflang=
 <script src="/assets/meta-pixel.js" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
-<style>${CSS}${PLACES.TABLE_CSS}${FG.FOOT_GUIDES_CSS}${bodyClass === "lg-page" ? PLACES.PLACE_CSS : ""}
+<style>${CSS}${PLACES.TABLE_CSS}${FG.FOOT_GUIDES_CSS}${IG.CSS}${bodyClass === "lg-page" ? PLACES.PLACE_CSS : ""}
 /* ---- Mobile polish --------------------------------------------------------
    Measured at 390px on the live site: footer links were 15-21px tall, filter
    chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
@@ -1210,6 +1216,7 @@ ${bodyHtml}
 <script src="/assets/sahra-sky.js" defer></script>
 <script src="/assets/sahra-cart.js" defer></script>
 <script src="/assets/sahra-market.js" defer></script>
+<script>${IG.JS}</script>
 </body>
 </html>`;
 }
@@ -1945,6 +1952,7 @@ const LANDINGS = [
 
 /* 1 Oct 2026: every place page links the guides whose picks include it (SEO handover item 2:
    no orphan guides, contextual links both ways). */
+PLACE_CTX.igFor = id => IG.railHtml(IG.forPlace(id), { title: 'From our Instagram' });
 PLACE_CTX.guidesFor = id => LANDINGS.filter(L => Array.isArray(L.pick) && L.pick.some(x => x && x.id === id)).map(L => [`/${L.slug}/`, L.h1]);
 locations.forEach(renderLocationPage);
 if (!process.env.VERCEL) draftLocations.forEach(renderLocationPage);
@@ -2011,6 +2019,7 @@ LANDINGS.forEach(L => {
     ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
     ${L.compare && L.pick.length ? `<section class="guide-sec"><h2>The beaches side by side</h2><div class="cmp-wrap" style="overflow-x:auto"><table class="cmp" style="border-collapse:collapse;width:100%;min-width:560px;font-size:14px"><thead><tr>${['Beach', 'Emirate', 'Sea', 'Getting there', 'Toilets', 'Best months'].map(h => `<th style="text-align:left;padding:8px 10px;border-bottom:2px solid rgba(42,32,22,.2)">${h}</th>`).join('')}</tr></thead><tbody>${L.pick.map(l => { const a = (l.access || {}).vehicle, f = (l.facilities || {}).toilets; const V = { '2wd': 'Any car', '4wd': '4x4', boat: 'Boat', 'on-foot': 'Car, then on foot', 'high-clearance': 'High-clearance car' }; const T = { yes: 'Yes', no: 'No', some: 'Some', nearby: 'Nearby' }; return `<tr>${[`<a href="/locations/${l.id}/">${esc(l.name)}</a>`, esc(l.emirate), Number(l.lng) > 56.2 ? 'Gulf of Oman' : 'Arabian Gulf', V[a] || 'See guide', T[f] || 'Not confirmed', esc(l.season || '')].map(c => `<td style="padding:8px 10px;border-bottom:1px solid rgba(42,32,22,.1)">${c}</td>`).join('')}</tr>`; }).join('')}</tbody></table></div><p style="font-size:13px;opacity:.8">Taken from each beach's guide; open a guide for the detail and its sources.</p></section>` : ''}
     ${sectionsHtml}
+    ${IG.railHtml(IG.forGuide('/' + L.slug + '/'), { title: 'From our Instagram' })}
     ${Array.isArray(L.related) && L.related.length ? `<section class="guide-sec"><h2>Related guides</h2><nav class="catnav" aria-label="Related guides">${L.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2] || '')}</span></a>`).join('')}</nav></section>` : ''}
     ${faqHtml}
     ${Array.isArray(L.sources) && L.sources.length ? `<section class="guide-sec guide-src"><h2>Sources</h2><ul>${L.sources.map(r => `<li><a href="${esc(r[1])}" target="_blank" rel="noopener nofollow">${esc(r[0])}</a></li>`).join('')}</ul></section>` : ''}
@@ -3036,6 +3045,51 @@ COMMERCE.forEach(P => {
   write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor(P.slug), bodyClass: 'buy-page' }));
 });
 
+/* ---------- /feed/ and /q/<slug>/ (4 Oct 2026) -------------------------------
+   /feed/: every Instagram post from content/instagram.json, newest first, each with
+   the page on the site it belongs to. One URL for the Instagram bio, crawlable and
+   fast, instead of a link-in-bio service. Indexable, low priority in the sitemap.
+   /q/<slug>/: a single post as a full step-through with a shop button, for pasting
+   into WhatsApp replies instead of retyping the answer. noindex (a tool, not a page). */
+(function instagramPages() {
+  const posts = IG.all();
+  if (posts.length) {
+    const canonical = `${SITE}/feed/`;
+    const title = 'From our Instagram: every post, and where it lives | Sahra & Beyond';
+    const desc = 'Every Sahra & Beyond Instagram post in one place: the fit guide, the places behind each tee, Sahra Trail and Sahel, each linked to its page on the site.';
+    const jsonld = [
+      { "@context": "https://schema.org", "@type": "CollectionPage", "name": "From our Instagram", "description": desc, "url": canonical, "isPartOf": { "@id": SITE + '/#website' } },
+      { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+        { "@type": "ListItem", "position": 2, "name": "From our Instagram", "item": canonical } ] }
+    ];
+    const body = `
+  <main class="feed-main" style="max-width:1180px;margin:0 auto;padding:28px clamp(16px,4vw,40px) 60px">
+    <nav class="crumbs" style="margin-bottom:14px"><a href="/">Home</a> &rsaquo; <span>From our Instagram</span></nav>
+    ${IG.feedPageHtml()}
+    ${newsletterBlock()}
+  </main>`;
+    write('feed/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page feed-page' }));
+  }
+  for (const Q of (IG.DATA.pages || [])) {
+    const post = IG.byId(Q.post);
+    if (!post || !post.slides.length || !fs.existsSync(path.join(ROOT, 'uploads', 'ig', post.id + '.webp'))) { console.log('  – /q/' + Q.slug + '/ skipped (no slides yet)'); continue; }
+    const canonical = `${SITE}/q/${Q.slug}/`;
+    const body = `
+  <main class="q-main" style="max-width:640px;margin:0 auto;padding:28px 16px 60px;text-align:center">
+    <p class="ig-eyebrow" style="margin-bottom:8px">Sahra &amp; Beyond &middot; quick answer</p>
+    <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(30px,5vw,44px);line-height:1.05;margin:0 0 10px;text-wrap:balance">${esc(Q.h1)}</h1>
+    <p class="lede" style="color:#5C5346;margin:0 auto 18px;max-width:46ch">${esc(Q.intro)}</p>
+    ${IG.card(post, { big: true, eager: true, wear: false, sizes: '(max-width:760px) 92vw, 420px' })}
+    <p style="font-size:13px;color:#5C5346;margin:10px 0 18px">Tap the right or left side of the card to step through. ${post.slides.length} slides.</p>
+    <p style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="book-btn" href="${esc(Q.shop[0])}">${esc(Q.shop[1])}</a><a class="book-btn alt" href="${esc(Q.second[0])}">${esc(Q.second[1])}</a></p>
+    <p style="font-size:13.5px;color:#5C5346;margin-top:22px">Still unsure? <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a question about ' + Q.h1.toLowerCase())}" target="_blank" rel="noopener">WhatsApp us</a> your height and a shirt you like.</p>
+  </main>`;
+    write(`q/${Q.slug}/index.html`, shell({ title: Q.title + ' | Sahra & Beyond', desc: Q.intro, canonical, jsonld: [], bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page q-page', noindex: true }));
+  }
+  console.log('  ✓ Instagram: ' + posts.length + ' post(s) with covers; strip ' + IG.strip().length + ', footer ' + IG.footerRow().length + (posts.length ? ', /feed/' : ''));
+})();
+
 /* ---------- /hoodies/ (DRAFT, 1 Oct 2026; SEO handover item 19) -------------
    Collection page for the Sahel Hoodie, built to report 02 section 6.1. It is a
    DRAFT: written to _drafts/hoodies/ locally only (never on Vercel, never in the
@@ -3279,6 +3333,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
   .concat([{ u: `${SITE}/journal/`, m: buildDate, p: '0.7' }])
   .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])
+  .concat(fs.existsSync(path.join(ROOT, 'feed', 'index.html')) ? [{ u: `${SITE}/feed/`, m: buildDate, p: '0.5' }] : [])   /* every Instagram post with where it lives on the site (4 Oct 2026); /q/ pages are noindex */
   /* SEO handover item 11: the three live Arabic pages join the sitemap only once Faheem confirms
      they count as reviewed (he asked on 2 Oct that Arabic stays noindex until he has reviewed it). */
   .concat(AR_CORE_PUBLIC ? ['/ar/', '/ar/about/', '/ar/contact/'].map(u => ({ u: SITE + u, m: buildDate, p: '0.6' })) : [])   /* Sahra Trail coming-soon page (24 Sep 2026); /ar/trail/ is noindex */

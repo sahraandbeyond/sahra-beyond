@@ -351,6 +351,7 @@ function renderPlace(l, ctx) {
       </div>
     </section>
     ${(() => { const f = ctx.faqsFor(l); return f.length ? `<section class="faq lg-rise" id="faq"><h2>${icon('q')} Questions people ask about ${esc(l.name)}</h2>${f.map(q => `<details class="lg-q"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : ''; })()}
+    ${ctx.igFor ? ctx.igFor(l.id).replace('class="ig-rail-sec"', 'class="ig-rail-sec lg-rise"') : ''}
     ${ctx.guidesFor && ctx.guidesFor(l.id).length ? `<nav class="lg-guides lg-rise" aria-label="Guides that cover ${esc(l.name)}"><h2>Guides that include ${esc(l.name)}</h2><div>${ctx.guidesFor(l.id).map(g => `<a href="${g[0]}">${esc(g[1])} &rarr;</a>`).join('')}</div></nav>` : ''}
     ${sourcesList(l) ? `<details class="lg-fold lg-srcf lg-rise" id="sources"><summary><span class="lg-fi">${icon('link')}</span><span class="lg-ft"><b>Sources</b><small>Where the facts on this page come from</small></span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb">${sourcesList(l)}${credit ? credit.replace('lg-credit', 'lg-credit2') : ''}</div></details>` : ''}
     ${nearby.length ? `<section class="related lg-rise"><h2>Near ${esc(l.name)}</h2><div class="cards">${nearby.map(n => ctx.locCard(n.x).replace('</strong>', `</strong><i class="lg-near">about ${Math.max(5, Math.round(n.d / 5) * 5)} km away</i>`)).join('')}</div><p class="lg-all"><a href="/places/">All places on the map &rarr;</a></p></section>` : ''}
