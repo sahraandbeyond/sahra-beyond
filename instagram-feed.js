@@ -123,10 +123,10 @@ function footerRowHtml() {
   const posts = footerRow(4);
   if (posts.length < 4) return '';
   const last = all().filter(p => p.date).sort((a, b) => b.date - a.date)[0];
-  return `<nav class="ig-foot ig-dark" aria-label="More from our Instagram">
+  return `<div class="ig-foot ig-dark" role="navigation" aria-label="More from our Instagram">
   <div class="ig-foot-row">${posts.map(p => `<a class="ig-foot-card" href="${esc(postUrl(p))}" target="_blank" rel="noopener" data-slide="${esc(p.slides[0] || '')}"><img src="/uploads/ig/${p.id}-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>${esc(p.label)}</span></span></a>`).join('')}</div>
   <p class="ig-foot-line"><a href="${IG_URL}${DATA.accounts.house}/" target="_blank" rel="noopener">Instagram &mdash; @${DATA.accounts.house}</a>${last ? ` <span class="ig-foot-last">· last post ${esc(shortDate(last.date))}</span>` : ''} · <a href="/feed/">all posts</a></p>
-</nav>`;
+</div>`;
 }
 
 /* a short rail for a product page or a guide: {products:[..]} | {places:[..]} | {guides:[..]} */

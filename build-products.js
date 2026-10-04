@@ -924,6 +924,19 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 @media(max-width:700px){.pdp-bundle-m{display:block;margin:0 0 10px}}
 .bt-ship{display:none}
 .pdp-trust-m{display:none}
+.pdp-fits{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:12px;margin:0 0 12px}.pdp-fit:first-child{border-radius:11px 0 0 11px}.pdp-fit:last-child{border-radius:0 11px 11px 0}.pdp-fit:focus-visible{outline:2px solid var(--clay-deep,#9C521B);outline-offset:-2px;z-index:1;position:relative}
+.pdp-fit{display:flex;flex-direction:column;gap:2px;padding:9px 12px;text-decoration:none;color:var(--txt-soft,#5A5046);background:transparent;transition:background .2s,color .2s}
+.pdp-fit b{font-weight:600;font-size:14px;color:var(--txt,#2B2620)}.pdp-fit span{font-size:11.5px;line-height:1.3}
+.pdp-fit.on{background:var(--txt,#2B2620);color:rgba(255,255,255,.75)}.pdp-fit.on b{color:#fff}
+.pdp-fit:not(.on):hover{background:rgba(43,37,32,.05)}
+body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg .pdp-fit.on b{color:#2B2620}
+.pdp-model{color:var(--txt-soft,#5A5046)}
+.pdp-wallets{font-size:12px;color:var(--txt-soft,#5A5046);text-align:center;margin:8px 0 0;letter-spacing:.2px}
+.pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
+.pdp-tote img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none}.pdp-tote b{color:var(--txt,#2B2620);font-weight:600}.pdp-tote a{color:var(--clay-deep,#9C521B)}
+.pdp-why{margin:12px 0 0;display:grid;gap:8px}.pdp-why div{display:grid;gap:2px}.pdp-why dt{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-soft,#5A5046)}.pdp-why dd{margin:0;font-size:13.5px;line-height:1.45;color:var(--txt,#2B2620)}.pdp-why a{color:var(--clay-deep,#9C521B)}
+.pdp-add.pulse .pdp-add-l{animation:none}.pdp-sizes.pulse .pdp-size{animation:pdpPulse .5s ease 2}@keyframes pdpPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06);border-color:var(--clay-deep,#9C521B)}}
+@media(prefers-reduced-motion:reduce){.pdp-sizes.pulse .pdp-size{animation:none}}
 .pdp-sizehelp{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;margin:8px 0 12px;font-size:14px}
 .pdp-sizehelp a{color:var(--clay-deep,#9C521B);text-decoration:underline;text-underline-offset:3px}
 .pdp-sizehelp .pdp-other{color:var(--txt-soft,#5A5046)}
@@ -977,7 +990,7 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition<span class="note-x"> &nbsp;·&nbsp; a limited first run</span> &nbsp;·&nbsp; ⚐ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition<span class="note-x"> &nbsp;·&nbsp; a limited first run</span> &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav>
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -1047,6 +1060,7 @@ ${galShots(p).map((s,i)=>`
       <!-- Buy box. Product pages are where search and social traffic lands, so
            they must sell directly instead of bouncing to /shop/ to start again. -->
       <div class="pdp-buy" id="pdpBuy" data-handle="${p.id}">
+        ${/* 4 Oct 2026 (CRO panel, idea 8): the two fits of a design as one control, not a text link */''}${p.siblingOf && p.garment !== 'polo' ? `<div class="pdp-fits" role="group" aria-label="Fit"><a class="pdp-fit${p.fit !== 'oversized' ? ' on' : ''}" href="/products/${p.siblingOf}-regular/"${p.fit !== 'oversized' ? ' aria-current="page"' : ''}><b>Regular</b><span>Sits on the shoulder</span></a><a class="pdp-fit${p.fit === 'oversized' ? ' on' : ''}" href="/products/${p.siblingOf}-oversized/"${p.fit === 'oversized' ? ' aria-current="page"' : ''}><b>Oversized</b><span>Dropped shoulder, wider body</span></a></div>` : ''}
         <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
           ${/* 23 Sep 2026: the four sizes paint with the page; live stock fills them in */''}${['S','M','L','XL'].map(z => `<button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">${z}</button>`).join('')}
@@ -1059,13 +1073,20 @@ ${galShots(p).map((s,i)=>`
              is why nothing ever put them side by side. */''}
         ${/* 25 Sep 2026 (Faheem): no fit warnings - one line that sends people to the chart,
              with the design's other fit beside it where there is one */''}
-        <p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;</a>${p.siblingOf && p.garment !== 'polo' ? `<a href="/products/${p.siblingOf}-${p.fit === 'oversized' ? 'regular' : 'oversized'}/" class="pdp-other">Also in ${p.fit === 'oversized' ? 'Regular' : 'Oversized'}</a>` : ''}</p>
+        <p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;</a>${p.modelInfo && /wears (S|M|L|XL)/.test(p.modelInfo) ? `<span class="pdp-model">Model wears ${p.modelInfo.match(/wears (S|M|L|XL)/)[1]}</span>` : ''}</p>
         <p class="pdp-stock" id="pdpStock" hidden></p>
         ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix and match</p>` : ''}
-        <button class="btn pdp-add" id="pdpAdd" type="button" disabled><span class="pdp-add-l">Select a size</span><span class="pdp-add-p" hidden> &mdash; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
+        <button class="btn pdp-add" id="pdpAdd" type="button" aria-disabled="true"><span class="pdp-add-l">Choose your size</span><span class="pdp-add-p"> &middot; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
-        <p class="pdp-trust-m"><span class="sb-ship-uae">Free next-day delivery &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
+        <p class="pdp-wallets">Apple Pay, Google Pay and Shop Pay at checkout</p>
+        <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
+        ${/* 4 Oct 2026 (CRO panel, ideas 5 and 6): the gift and the two objections, answered where the thumb is */''}
+        <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
+        <dl class="pdp-why">
+          <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? '240 GSM piqué cotton, embroidered, in a small first run.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? '230 GSM combed cotton, pre-washed, embroidered rather than printed, in a small first run.' : '230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark, in a small first run.')} Designed in the UAE.</dd></div>
+          <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
+        </dl>
         ${RV.quotes(designHandles(p), 2)}
         ${/* 15 Sep audit: returns reassurance at the point of commitment. Every clause is
              policies.html verbatim - unworn, unwashed, tags on, exchanges subject to stock. */''}
@@ -1074,7 +1095,7 @@ ${galShots(p).map((s,i)=>`
       <div class="cta-row">
         <a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>
       </div>`}
-      <div class="buy-trust"><span class="bt-ship"><span class="sb-ship-uae">⚡ Free next-day delivery</span><span class="sb-ship-gcc">✈ GCC delivery 3–5 days</span><span class="sb-ship-intl">✈ Worldwide delivery</span></span><span>↺ Free UAE returns</span><span>⚐ Designed in the UAE</span><span>✦ ${p.garment === 'polo' ? '240gsm piqué cotton' : '230gsm heavyweight cotton'}</span></div>
+      <div class="buy-trust"><span class="bt-ship"><span class="sb-ship-uae">⚡ Free next-day delivery</span><span class="sb-ship-gcc">✈ GCC delivery 3–5 days</span><span class="sb-ship-intl">✈ Worldwide delivery</span></span><span>↺ Free UAE returns</span><span>✦ Designed in the UAE</span><span>✦ ${p.garment === 'polo' ? '240gsm piqué cotton' : '230gsm heavyweight cotton'}</span></div>
 
       <!-- The answer cluster (Rastah benchmark, 29 Aug 2026): the questions a
            buyer asks at the moment of hesitation — cost to ship, will it fit,
@@ -1304,9 +1325,10 @@ ${related(p, all)}
 
 <footer>
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/contact/">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
-  ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}${IG.CSS}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}body.dark-bg .ig-prod .ig-rail-sec{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}</style>
+  ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}${IG.CSS}.foot-pay{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.7;margin:6px 0 10px}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}body.dark-bg .ig-prod .ig-rail-sec{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}</style>
   ${IG.footerRowHtml()}
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
+  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay</div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
 
@@ -1513,8 +1535,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   if(add && window.MutationObserver){
     /* 23 Sep 2026: phones hide the bar's price line, so the price rides in the button */
     var pr=document.querySelector('.price .sb-price'),narrow=matchMedia('(max-width:620px)');
-    var sync=function(){ var t=add.disabled ? 'Choose a size' : 'Add to cart'; if(narrow.matches&&pr&&pr.textContent.trim()) t+=' \u00b7 '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
-    new MutationObserver(sync).observe(add,{attributes:true,attributeFilter:['disabled']});
+    var sync=function(){ var t=add.getAttribute('aria-disabled')==='true' ? 'Choose a size' : (/sold out/i.test(add.textContent) ? 'Sold out' : 'Add to cart'); if(narrow.matches&&pr&&pr.textContent.trim()) t+=' \u00b7 '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
+    new MutationObserver(sync).observe(add,{attributes:true,attributeFilter:['disabled','aria-disabled'],childList:true,subtree:true,characterData:true});
     if(pr) new MutationObserver(sync).observe(pr,{childList:true,characterData:true,subtree:true});
     sync();
   }
@@ -1835,17 +1857,17 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   sizesEl.querySelectorAll('.pdp-size-wait').forEach(function(b){
     b.addEventListener('click',function(){ if(live) return;
       sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
-      b.classList.add('sel'); b.setAttribute('aria-pressed','true'); pending=b.textContent;
-      setAdd('Checking stock\u2026', false); });
+      b.classList.add('sel'); b.setAttribute('aria-pressed','true'); pending=b.textContent; addEl.removeAttribute('aria-disabled');
+      setAdd('Checking stock\u2026', true); });
   });
   var sizeTimer=setTimeout(function(){
-    if(sizesEl && !live){ pending=null; setAdd('Select a size', false);
+    if(sizesEl && !live){ pending=null; setAdd('Choose your size', true);
       sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a>.</span>';
     }
   },9000);
   sf('query($h:String!){product(handle:$h){title variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}',{h:handle})
   .then(function(d){
-    if(!d.product){ live=true; pending=null; setAdd('Select a size', false); sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
+    if(!d.product){ live=true; pending=null; setAdd('Choose your size', true); sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
     variants=d.product.variants.edges.map(function(e){return e.node;});
     live=true; clearTimeout(sizeTimer);
     sizesEl.innerHTML='';
@@ -1861,7 +1883,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       b.addEventListener('click',function(){
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');
-        sel=v; goCheckout=false; addEl.disabled=false; setAdd('Add to cart', true); msg('');
+        sel=v; goCheckout=false; addEl.disabled=false; addEl.removeAttribute('aria-disabled'); setAdd('Add to cart', true); msg('');
         /* Buy now appears once a size is chosen: one clear action before that (24 Sep 2026) */
         var bn=document.getElementById('pdpNow'); if(bn) bn.hidden=false;
         /* Honest scarcity (Rastah benchmark): shown ONLY from live inventory,
@@ -1878,13 +1900,13 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
       });
       sizesEl.appendChild(b);
     });
-    if(!variants.some(function(v){return v.availableForSale;})){ addEl.textContent='Sold out'; var nw=document.getElementById('pdpNow'); if(nw) nw.hidden=true; }
+    if(!variants.some(function(v){return v.availableForSale;})){ setAdd('Sold out', false); addEl.disabled=true; addEl.removeAttribute('aria-disabled'); var nw=document.getElementById('pdpNow'); if(nw) nw.hidden=true; }
     if(pending){ var want=pending; pending=null;
       var hit=[].filter.call(sizesEl.querySelectorAll('.pdp-size'),function(x){return x.firstChild&&x.firstChild.nodeValue===want;})[0];
       if(hit&&!hit.disabled) hit.click();
-      else { setAdd('Select a size', false); msg(want+' is sold out \u2014 please choose another size.'); } }
+      else { setAdd('Choose your size', true); msg(want+' is sold out \u2014 please choose another size.'); } }
   })
-  .catch(function(){ live=true; pending=null; setAdd('Select a size', false); sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
+  .catch(function(){ live=true; pending=null; setAdd('Choose your size', true); sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
 
   var CFRAG='id checkoutUrl totalQuantity';
   function fitOk(){ try{ return sessionStorage.getItem('sb_fitok')==='1'; }catch(e){ return true; } }
@@ -1892,7 +1914,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var goCheckout=false, nowClick=false;
   function doAdd(v){
     var go=goCheckout; goCheckout=false;
-    addEl.disabled=true; addEl.textContent= go ? 'Going to checkout…' : 'Adding…'; msg('');
+    addEl.disabled=true; setAdd(go ? 'Going to checkout…' : 'Adding…', false); msg('');
     if(window.SahraCart){
       window.SahraCart.add(v.id, 1, go ? {open:false} : undefined).then(function(cart){
         /* Buy now (23 Sep 2026): same add, then straight to
@@ -1929,7 +1951,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     /* only the Buy now button makes an add a Buy now - never a tap on Add to cart,
        and never the sticky bar, which clicks this button from script */
     if(!nowClick) goCheckout=false;
-    if(!sel) return;
+    if(!sel){ /* 4 Oct 2026: a tap before a size is chosen points at the chips instead of doing nothing */
+      sizesEl.classList.remove('pulse'); void sizesEl.offsetWidth; sizesEl.classList.add('pulse'); msg('Choose a size above.');
+      var f=sizesEl.querySelector('.pdp-size:not([disabled])'); if(f){ try{ f.focus({preventScroll:true}); }catch(e){} }
+      sizesEl.scrollIntoView({block:'center',behavior:'smooth'}); return; }
     /* 25 Sep 2026 (Faheem): no fit-check pause - one tap adds to the cart. Size help
        is the 'Check your size in the chart' link beside the size chips. */
     doAdd(sel);

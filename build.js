@@ -127,6 +127,52 @@ const PLACES = require('./places-page.js');
 const FG = require('./footer-guides.js');
 const IG = require('./instagram-feed.js');   /* 4 Oct 2026: the Instagram posts on the site, from content/instagram.json */
 const settings = readJSON(path.join(ROOT, 'content/settings.json')) || {};
+/* 4 Oct 2026 (CRO panel, idea 8): a design's two fits as ONE card with a Regular |
+   Oversized switch, so seven cards read as four designs. Works on the home grid
+   (<a class="card">) and the product grids (<article class="pcard">). The Oversized
+   card is in the HTML (and in the sitemap, as its own page); the switch only chooses
+   which one is shown. Without JS the Regular card shows and its page carries the
+   same switch. Build-time, so there is no layout shift. */
+function pairFits(html) {
+  const open = /<(a|article) class="(card|pcard)"[^>]*(?:href|data-handle)="(?:\/products\/)?([a-z-]+?)-(regular|oversized)\/?"[^>]*>/g;
+  const cards = []; let m;
+  while ((m = open.exec(html))) {
+    const close = '</' + m[1] + '>';
+    const end = html.indexOf(close, m.index);
+    if (end < 0) continue;
+    cards.push({ start: m.index, end: end + close.length, design: m[3], fit: m[4], tag: m[1] });
+  }
+  const byDesign = {};
+  cards.forEach(c => { (byDesign[c.design] = byDesign[c.design] || {})[c.fit] = c; });
+  /* rebuild the string from pieces, so the pair's order in the source does not matter */
+  const pieces = []; let pos = 0; const done = new Set();
+  cards.sort((a, b) => a.start - b.start);
+  for (const c of cards) {
+    const pair = byDesign[c.design];
+    if (!pair.regular || !pair.oversized) continue;
+    pieces.push(html.slice(pos, c.start));
+    if (!done.has(c.design)) {
+      done.add(c.design);
+      const regHtml = html.slice(pair.regular.start, pair.regular.end), ovHtml = html.slice(pair.oversized.start, pair.oversized.end);
+      pieces.push(`<div class="fitpair" data-fit="regular" data-design="${c.design}"><div class="fitpair-sw" role="group" aria-label="Fit"><button type="button" class="on" data-fit="regular" aria-pressed="true">Regular</button><button type="button" data-fit="oversized" aria-pressed="false">Oversized</button></div>${regHtml}${ovHtml}</div>`);
+    }
+    pos = c.end;
+  }
+  pieces.push(html.slice(pos));
+  return pieces.join('');
+}
+const FITPAIR_CSS = `.fitpair{position:relative;display:flex;flex-direction:column}.fitpair>.card,.fitpair>.pcard{flex:1}
+.fitpair[data-fit="regular"]>[href*="-oversized/"],.fitpair[data-fit="regular"]>[data-handle$="-oversized"],.fitpair[data-fit="oversized"]>[href*="-regular/"],.fitpair[data-fit="oversized"]>[data-handle$="-regular"]{display:none}
+.fitpair-sw{position:absolute;top:10px;left:10px;z-index:3;display:inline-flex;padding:3px;border-radius:999px;background:rgba(20,15,34,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);gap:2px}
+.fitpair-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(247,239,226,.8);cursor:pointer;line-height:1.2}
+.fitpair-sw button.on{background:#F7EFE2;color:#2B2620;font-weight:600}
+.fitpair-sw button:focus-visible{outline:2px solid #E9B978;outline-offset:1px}`;
+const FITPAIR_JS = `(function(){var pairs=[].slice.call(document.querySelectorAll('.fitpair'));if(!pairs.length)return;var saved=null;try{saved=localStorage.getItem('sb_fit');}catch(e){}
+function set(fit,remember){pairs.forEach(function(w){w.setAttribute('data-fit',fit);[].forEach.call(w.querySelectorAll('.fitpair-sw button'),function(b){var on=b.getAttribute('data-fit')===fit;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});});if(remember){try{localStorage.setItem('sb_fit',fit);}catch(e){}}}
+if(saved==='oversized')set('oversized',false);
+document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.fitpair-sw button');if(!b)return;e.preventDefault();e.stopPropagation();set(b.getAttribute('data-fit'),true);if(window.track)track('fit_switch',{fit:b.getAttribute('data-fit')});},true);
+})();`;
+
 /* Arabic core pages (/ar/, /ar/about/, /ar/contact/): false = not in the sitemap and no visible
    'العربية' link on English pages. Flip to true once Faheem signs them off (handover item 11). */
 const AR_CORE_PUBLIC = true;   /* Faheem, 1 Oct 2026: the three Arabic core pages stay live (indexable), so they go in the sitemap and the footer links them */
@@ -136,9 +182,17 @@ for (const f of ['index.html', 'shop-preview.html']) {
   const h = fs.readFileSync(fp, 'utf8');
   let n = h.replace(/<!--GUIDES:START-->[\s\S]*?<!--GUIDES:END-->/, '<!--GUIDES:START--><style>' + FG.FOOT_GUIDES_CSS + '</style>' + FG.guidesHtml(null, AR_CORE_PUBLIC) + '<!--GUIDES:END-->');
   /* Instagram blocks (instagram-feed.js): the strip under the film on the home page, the footer row, and one script */
+  if (f === 'index.html') { /* the home grid: pair the fits (idempotent) */
+    const gs = n.indexOf('<div class="grid" id="grid">');
+    if (gs >= 0 && n.indexOf('fitpair', gs) < 0 || (gs >= 0 && n.indexOf('fitpair', gs) > n.indexOf('</section>', gs))) {
+      let depth = 0, i = gs, ge = -1; const re = /<div\b|<\/div>/g; re.lastIndex = gs; let m;
+      while ((m = re.exec(n))) { depth += m[0] === '</div>' ? -1 : 1; if (depth === 0) { ge = m.index + 6; break; } }
+      if (ge > gs) n = n.slice(0, gs) + pairFits(n.slice(gs, ge)) + n.slice(ge);
+    }
+  }
   n = n.replace(/<!--IG:STRIP-->[\s\S]*?<!--\/IG:STRIP-->/, '<!--IG:STRIP-->' + IG.stripHtml() + '<!--/IG:STRIP-->')
-       .replace(/<!--IG:FOOT-->[\s\S]*?<!--\/IG:FOOT-->/, '<!--IG:FOOT--><style>' + IG.CSS + '</style>' + IG.footerRowHtml() + '<!--/IG:FOOT-->')
-       .replace(/<!--IG:JS-->[\s\S]*?<!--\/IG:JS-->/, '<!--IG:JS--><script>' + IG.JS + '</script><!--/IG:JS-->');
+       .replace(/<!--IG:FOOT-->[\s\S]*?<!--\/IG:FOOT-->/, '<!--IG:FOOT--><style>' + IG.CSS + FITPAIR_CSS + '</style>' + IG.footerRowHtml() + '<!--/IG:FOOT-->')
+       .replace(/<!--IG:JS-->[\s\S]*?<!--\/IG:JS-->/, '<!--IG:JS--><script>' + IG.JS + '</script><script>' + FITPAIR_JS + '</script><!--/IG:JS-->');
   if (n !== h) fs.writeFileSync(fp, n);
 }
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
@@ -214,7 +268,7 @@ function cycleImgs(p) {
     `<img${i === 0 ? ' class="on"' : ''} src="${esc(src)}" alt="${esc(alt)}" loading="lazy">`).join('');
 }
 
-function teeBlock(l) {
+function teeBlock(l, lead) {
   const p = l && l.id ? PRODUCT_BY_PLACE[l.id] : null;
   if (!p) return '';
   const href = `/products/${p.id}/`;
@@ -222,7 +276,7 @@ function teeBlock(l) {
     <div class="teecta-inner">
       <a class="teecta-img" href="${href}" aria-label="${esc(p.name)}" data-cycle>${cycleImgs(p)}</a>
       <div class="teecta-txt">
-        <span class="teecta-eyebrow">The tee drawn from this place</span>
+        <span class="teecta-eyebrow">${lead ? esc(lead) + ' ' : ''}${lead && /Hatta|mountains|hike/i.test(lead) ? 'The tee drawn from these mountains' : 'The tee drawn from this place'}</span>
         <h2>${esc(p.name)}</h2>
         <p>${esc(p.shareDesc || p.lede || '')}</p>
         <div class="teecta-meta"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span><span>${p.printChip || ''}</span><span>&#10022; Limited first run</span></div>
@@ -269,7 +323,7 @@ function collectionBlock(ctxName, allFits) {
   // pages keep the deduped one-per-design list so they don't repeat themselves.
   const SRC = allFits ? PRODUCTS_ALL : DESIGNS;
   const TEES = SRC.filter(p => p.garment !== 'polo').sort((a,b)=>(a.order||0)-(b.order||0));
-  const cards = TEES.map(productCard).join('');
+  const cards = allFits ? pairFits(TEES.map(productCard).join('')) : TEES.map(productCard).join('');
   return `<section class="pcta">
     <div class="pcta-head">
       <span class="pcta-eyebrow">Sahra &amp; Beyond &middot; UAE t-shirts</span>
@@ -280,10 +334,86 @@ function collectionBlock(ctxName, allFits) {
     <a class="btn shoplink" href="${(LAUNCHED||REVEALED)?'/shop/':'/t-shirts/'}">Shop the collection &rarr;</a><a class="btn ghost" href="/t-shirts/">See all t-shirts &rarr;</a>
   </section>`;
 }
-function teeFor(placeSlug, ctxName) {
+function teeFor(placeSlug, ctxName, lead) {
   const p = PRODUCT_BY_PLACE[placeSlug];
-  return p ? teeBlock({ id: placeSlug }) : collectionBlock(ctxName);
+  return p ? teeBlock({ id: placeSlug }, lead) : collectionBlock(ctxName);
 }
+/* 4 Oct 2026 (CRO panel, idea 3): where no tee is honest (the coast), ask which place
+   should be drawn next instead of forcing a match. One tap to WhatsApp, nothing to fill in. */
+function askBlock(name) {
+  const generic = /^the /.test(name);
+  const msg = encodeURIComponent(generic ? `I'd wear a tee drawn from ${name}` : `I'd wear a ${name} tee`);
+  return `<section class="askcta"><span class="teecta-eyebrow">Not drawn yet</span><h2>Which place should be next?</h2><p>Every Sahra &amp; Beyond tee is drawn from one real place in the Emirates. ${generic ? 'Nothing from ' + esc(name) + ' yet.' : esc(name) + ' is not one of them yet.'} If it should be, say so: one tap, no form.</p><p class="askcta-row"><a class="btn" href="https://wa.me/971585449946?text=${msg}" target="_blank" rel="noopener">${generic ? 'Draw ' + esc(name) + ' next' : `I'd wear a ${esc(name)} tee`}</a><a class="btn ghost" href="/t-shirts/">See the places we have drawn &rarr;</a></p></section>`;
+}
+/* 4 Oct 2026 (CRO panel, idea 2): a slim buy bar for guides and place pages. It appears
+   once the top product strip has scrolled away, and a tap opens a size sheet that adds
+   to the bag without leaving the page. Sizes come from Shopify at tap time, like the
+   product page, so nothing is shown that is not in stock. */
+function guideBar(p) {
+  if (!p) return '';
+  const img = cardShots(p)[0];
+  return `<div class="gbar" id="gbar" hidden data-handle="${esc(p.id)}" data-name="${esc(p.name)}" data-aed="${esc(String(p.price))}">
+    <a class="gbar-img" href="/products/${p.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" width="40" height="50" loading="lazy" decoding="async">` : ''}</a>
+    <div class="gbar-t"><b>${esc(p.name.replace(/ — (Regular|Oversized)$/, ''))}</b><span><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span><span class="sb-ship-uae"> &middot; next-day UAE</span></span></div>
+    <button type="button" class="gbar-btn" id="gbarOpen">Pick size</button>
+  </div>
+  <div class="gsheet" id="gsheet" hidden role="dialog" aria-modal="true" aria-label="Choose a size">
+    <div class="gsheet-in">
+      <div class="gsheet-h"><b>${esc(p.name)}</b><button type="button" class="gsheet-x" id="gsheetX" aria-label="Close">&#10005;</button></div>
+      <p class="gsheet-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> &middot; ${esc(p.fit === 'oversized' ? 'Oversized fit' : (p.garment === 'polo' ? 'One cut' : 'Regular fit'))} &middot; <a href="/size-guide/">size guide</a></p>
+      <div class="gsheet-sizes" id="gsheetSizes" role="group" aria-label="Sizes"><span class="gsheet-wait">Loading sizes&hellip;</span></div>
+      <p class="gsheet-msg" id="gsheetMsg" role="status" aria-live="polite"></p>
+      <button type="button" class="btn gsheet-add" id="gsheetAdd" disabled>Choose a size</button>
+      <p class="gsheet-foot"><span class="sb-ship-uae"><span data-sb-clock>Free next-day UAE delivery</span> &middot; free 14-day exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span> &middot; <a href="/products/${p.id}/">full details &rarr;</a></p>
+    </div>
+  </div>`;
+}
+const GBAR_CSS = `.gbar{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:117;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 8px;border-radius:14px;background:rgba(28,20,13,.94);color:#F7EFE2;box-shadow:0 10px 30px -10px rgba(0,0,0,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transform:translateY(calc(100% + 20px));transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.gbar.on{transform:none}.gbar[hidden]{display:none}
+.gbar-img{flex:none;width:40px;height:50px;border-radius:8px;overflow:hidden;background:#2a2016}.gbar-img img{width:100%;height:100%;object-fit:cover;display:block}
+.gbar-t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}.gbar-t b{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gbar-t span{font-size:12px;color:rgba(247,239,226,.75)}
+.gbar-btn{flex:none;font:inherit;font-weight:600;font-size:13.5px;padding:10px 16px;border-radius:999px;border:0;background:#E9B978;color:#2A2016;cursor:pointer}
+@media(min-width:761px){.gbar{left:auto;right:24px;bottom:24px;width:360px}}
+html.sb-gbar .sb-wa{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+body.sb-gsheet-open .sb-wa,body.sb-gsheet-open .sb-fcart,body.sb-gsheet-open .gbar{display:none!important}
+html.sb-gbar .sb-fcart{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+html.sb-gbar.sb-fcart-on .sb-wa{bottom:calc(150px + env(safe-area-inset-bottom,0px))!important}
+@media(min-width:761px){html.sb-gbar .sb-wa{right:400px!important;bottom:28px!important}}
+.gsheet{position:fixed;inset:0;z-index:990;background:rgba(10,8,22,.55);display:flex;align-items:flex-end;justify-content:center}.gsheet[hidden]{display:none}
+.gsheet-in{width:100%;max-width:480px;background:#FAF6EF;color:#2B2620;border-radius:18px 18px 0 0;padding:16px 18px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.3)}
+@media(min-width:761px){.gsheet{align-items:center}.gsheet-in{border-radius:18px}}
+.gsheet-h{display:flex;justify-content:space-between;align-items:center;gap:10px}.gsheet-h b{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:22px}
+.gsheet-x{font:inherit;border:0;background:transparent;font-size:18px;cursor:pointer;padding:6px;color:#5C5346}
+.gsheet-sub{margin:4px 0 12px;font-size:13.5px;color:#5C5346}.gsheet-sub a{color:#9C521B}
+.gsheet-sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 10px}.gsheet-wait{grid-column:1/-1;font-size:13px;color:#5C5346}
+.gsheet-size{font:inherit;font-weight:600;font-size:15px;padding:12px 0;border-radius:10px;border:1px solid rgba(43,37,32,.2);background:#fff;cursor:pointer;color:#2B2620}
+.gsheet-size[aria-pressed="true"]{background:#2B2620;color:#fff;border-color:#2B2620}.gsheet-size:disabled{opacity:.45;cursor:default;text-decoration:line-through}
+.gsheet-msg{min-height:18px;margin:0 0 8px;font-size:13px;color:#9C521B}
+.gsheet-add{width:100%;display:block;text-align:center}.gsheet-add:disabled{opacity:.55}
+.gsheet-foot{margin:10px 0 0;font-size:12.5px;color:#5C5346;text-align:center}.gsheet-foot a{color:#9C521B}`;
+const GBAR_JS = `(function(){var bar=document.getElementById('gbar');if(!bar)return;
+var sheet=document.getElementById('gsheet'),sizes=document.getElementById('gsheetSizes'),addB=document.getElementById('gsheetAdd'),msgEl=document.getElementById('gsheetMsg'),handle=bar.getAttribute('data-handle'),sel=null,loaded=false,on=false;
+function show(v){if(v===on)return;on=v;if(v){bar.hidden=false;requestAnimationFrame(function(){bar.classList.add('on');});document.documentElement.classList.add('sb-gbar');}else{bar.classList.remove('on');document.documentElement.classList.remove('sb-gbar');setTimeout(function(){if(!on)bar.hidden=true;},400);}}
+/* visible once the top strip is gone, hidden again at the closing tee block and the footer */
+var top=document.querySelector('.minitee, .lg-strip, #tee, .teecta'),bottom=document.querySelector('.teecta, .askcta, .folds + .teecta'),foot=document.querySelector('footer');
+var topGone=false,bottomNear=false,footNear=false;
+var drawer=document.getElementById('sbDrawer');function drawerOpen(){var d=drawer||(drawer=document.getElementById('sbDrawer'));return !!(d&&d.classList.contains('on'));}
+function sync(){show(topGone&&!bottomNear&&!footNear&&!drawerOpen());}
+try{new MutationObserver(function(){sync();}).observe(document.body,{attributes:true,subtree:true,attributeFilter:['class']});}catch(e){}
+try{if(top)new IntersectionObserver(function(es){es.forEach(function(e){topGone=!e.isIntersecting&&e.boundingClientRect.bottom<0;});sync();}).observe(top);
+if(bottom&&bottom!==top)new IntersectionObserver(function(es){es.forEach(function(e){bottomNear=e.isIntersecting;});sync();}).observe(bottom);
+if(foot)new IntersectionObserver(function(es){es.forEach(function(e){footNear=e.isIntersecting;});sync();}).observe(foot);}catch(e){topGone=true;sync();}
+addEventListener('scroll',function(){if(top&&top.getBoundingClientRect().bottom<0!==topGone){topGone=top.getBoundingClientRect().bottom<0;sync();}},{passive:true});
+function msg(t){msgEl.textContent=t||'';}
+var lastFocus=null;function openSheet(){lastFocus=document.activeElement;sheet.hidden=false;document.body.style.overflow='hidden';document.body.classList.add('sb-gsheet-open');setTimeout(function(){var f=sheet.querySelector('.gsheet-size:not([disabled])')||document.getElementById('gsheetX');if(f)f.focus();},50);setTimeout(function(){if(!sheet.hidden&&sizes.querySelector('.gsheet-wait')&&!sizes.querySelector('.gsheet-size'))sizes.innerHTML='<span class="gsheet-wait">Sizes are taking a while. <a href="/products/'+handle+'/">Open the product page</a>.</span>';},9000);if(window.track)track('guide_bar_open',{item_id:handle});if(!loaded&&window.SahraCart&&SahraCart.variants){loaded=true;SahraCart.variants(handle).then(function(vs){sizes.innerHTML='';vs.forEach(function(v){var b=document.createElement('button');b.type='button';b.className='gsheet-size';b.textContent=v.title;b.setAttribute('aria-pressed','false');if(!v.availableForSale){b.disabled=true;b.setAttribute('aria-label',v.title+' sold out');}b.addEventListener('click',function(){[].forEach.call(sizes.children,function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');sel=v;addB.disabled=false;addB.textContent='Add to bag';msg('');});sizes.appendChild(b);});if(!vs.length)sizes.innerHTML='<span class="gsheet-wait">Sizes unavailable right now. <a href="/products/'+handle+'/">Open the product page</a>.</span>';}).catch(function(){loaded=false;sizes.innerHTML='<span class="gsheet-wait">Could not load sizes. <a href="/products/'+handle+'/">Open the product page</a>.</span>';});}}
+function closeSheet(opts){sheet.hidden=true;if(!(opts&&opts.keepLock))document.body.style.overflow='';document.body.classList.remove('sb-gsheet-open');if(lastFocus&&lastFocus.focus&&!(opts&&opts.keepLock)){try{lastFocus.focus();}catch(e){}}}
+sheet.addEventListener('keydown',function(e){if(e.key!=='Tab')return;var f=[].slice.call(sheet.querySelectorAll('button:not([disabled]),a[href],select,input')).filter(function(x){return x.offsetParent!==null;});if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
+document.getElementById('gbarOpen').addEventListener('click',openSheet);
+document.getElementById('gsheetX').addEventListener('click',closeSheet);
+sheet.addEventListener('click',function(e){if(e.target===sheet)closeSheet();});
+addEventListener('keydown',function(e){if(e.key==='Escape'&&!sheet.hidden)closeSheet();});
+addB.addEventListener('click',function(){if(!sel){msg('Choose a size first.');return;}addB.disabled=true;addB.textContent='Adding\u2026';SahraCart.add(sel.id,1).then(function(){closeSheet({keepLock:true});addB.disabled=false;addB.textContent='Add another';if(window.track)track('add_to_cart',{item_id:handle,size:sel.title,via:'guide-bar'});}).catch(function(){addB.disabled=false;addB.textContent='Add to bag';msg('Could not add. Please try again.');});});
+})();`;
 /* essays as folds (5 Sep 2026): products first, reading on request */
 function foldsBlock(sections, eyebrow) {
   if (!Array.isArray(sections) || !sections.length) return '';
@@ -678,6 +808,7 @@ h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;f
 .hdr-nav a.shopnav{color:#9C521B;font-weight:700}
 /* shop CTA band — living night sky */
 /* --- the tee inspired by this place (product cross-link) --- */
+.askcta{margin:34px 0;padding:26px 24px;border:1px solid rgba(192,112,46,.3);border-radius:16px;background:rgba(255,247,237,.7)}.askcta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.4vw,34px);font-weight:600;margin:6px 0 8px}.askcta p{margin:0 0 12px;color:#5C5346;font-size:14.5px}.askcta-row{display:flex;gap:10px;flex-wrap:wrap}.askcta .btn{display:inline-block;background:#A95A21;color:#fff;font-weight:700;padding:11px 18px;border-radius:999px;text-decoration:none}.askcta .btn.ghost{background:transparent;color:#9C521B;border:1px solid rgba(192,112,46,.5)}
 .teecta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;background:var(--tee,#181109);color:#fff;box-shadow:0 24px 60px rgba(0,0,0,.18)}
 .teecta-inner{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:0;align-items:stretch}
 .teecta-img{display:block;position:relative;overflow:hidden;min-height:100%}
@@ -831,6 +962,7 @@ function footerHtml() {
   ${FG.guidesHtml(null, AR_CORE_PUBLIC)}
   ${IG.footerRowHtml()}
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
+  <div class="links" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.75">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay</div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
 }
@@ -913,7 +1045,7 @@ ${robotsMeta(noindex)}\n${altHref && !noindex ? `<link rel="alternate" hreflang=
 <script src="/assets/meta-pixel.js" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
-<style>${CSS}${PLACES.TABLE_CSS}${FG.FOOT_GUIDES_CSS}${IG.CSS}${bodyClass === "lg-page" ? PLACES.PLACE_CSS : ""}
+<style>${CSS}${PLACES.TABLE_CSS}${FG.FOOT_GUIDES_CSS}${IG.CSS}${GBAR_CSS}${FITPAIR_CSS}${bodyClass === "lg-page" ? PLACES.PLACE_CSS : ""}
 /* ---- Mobile polish --------------------------------------------------------
    Measured at 390px on the live site: footer links were 15-21px tall, filter
    chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
@@ -1217,6 +1349,8 @@ ${bodyHtml}
 <script src="/assets/sahra-cart.js" defer></script>
 <script src="/assets/sahra-market.js" defer></script>
 <script>${IG.JS}</script>
+<script>${GBAR_JS}</script>
+<script>${FITPAIR_JS}</script>
 </body>
 </html>`;
 }
@@ -1952,6 +2086,7 @@ const LANDINGS = [
 
 /* 1 Oct 2026: every place page links the guides whose picks include it (SEO handover item 2:
    no orphan guides, contextual links both ways). */
+PLACE_CTX.guideBar = guideBar; PLACE_CTX.askBlock = askBlock;
 PLACE_CTX.igFor = id => IG.railHtml(IG.forPlace(id), { title: 'From our Instagram' });
 PLACE_CTX.guidesFor = id => LANDINGS.filter(L => Array.isArray(L.pick) && L.pick.some(x => x && x.id === id)).map(L => [`/${L.slug}/`, L.h1]);
 locations.forEach(renderLocationPage);
@@ -1961,8 +2096,13 @@ else if (draftLocations.length) console.log('  – drafts held back: ' + draftLo
 const GUIDE_TEE = {
   stargazing: 'al-quaa-desert', camping: 'al-quaa-desert', 'camping-near-dubai': 'al-quaa-desert',
   'secluded-camping': 'al-quaa-desert', 'desert-camping-beginners': 'liwa', 'desert-safari': 'liwa',
-  wadis: 'wadi-naqab', 'mountain-escapes': 'wadi-naqab', 'hatta-guide': 'wadi-naqab', hiking: 'wadi-naqab'
+  wadis: 'wadi-naqab', 'mountain-escapes': 'wadi-naqab', 'hatta-guide': 'wadi-naqab', hiking: 'wadi-naqab',
+  'family-friendly-outdoors': 'liwa'
 };
+/* coast guides: no tee is drawn from the sea yet, so the closer asks instead of forcing a match */
+const GUIDE_ASK = { 'best-beaches': 'the coast', snorkeling: 'Snoopy Island', 'fujairah-beaches': 'the Fujairah coast' };
+/* the closer's first words, by guide (CRO panel, idea 3) */
+const GUIDE_LEAD = { stargazing: 'Back from the dark?', camping: 'Back from camp?', 'camping-near-dubai': 'Back from camp?', 'secluded-camping': 'Back from camp?', 'desert-camping-beginners': 'Back from the dunes?', 'desert-safari': 'Back from the dunes?', wadis: 'Back from the wadi?', 'mountain-escapes': 'Back from the mountains?', 'hatta-guide': 'Back from Hatta?', hiking: 'After the hike?', 'family-friendly-outdoors': 'Back from the dunes?' };
 LANDINGS.forEach(L => {
   const canonical = `${SITE}/${L.slug}/`;
   const jsonld = [
@@ -2023,7 +2163,8 @@ LANDINGS.forEach(L => {
     ${Array.isArray(L.related) && L.related.length ? `<section class="guide-sec"><h2>Related guides</h2><nav class="catnav" aria-label="Related guides">${L.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2] || '')}</span></a>`).join('')}</nav></section>` : ''}
     ${faqHtml}
     ${Array.isArray(L.sources) && L.sources.length ? `<section class="guide-sec guide-src"><h2>Sources</h2><ul>${L.sources.map(r => `<li><a href="${esc(r[1])}" target="_blank" rel="noopener nofollow">${esc(r[0])}</a></li>`).join('')}</ul></section>` : ''}
-    ${GUIDE_TEE[L.slug] ? teeFor(GUIDE_TEE[L.slug], L.h1) : collectionBlock(null)}
+    ${GUIDE_TEE[L.slug] ? teeFor(GUIDE_TEE[L.slug], L.h1, GUIDE_LEAD[L.slug]) : (GUIDE_ASK[L.slug] ? askBlock(GUIDE_ASK[L.slug]) + collectionBlock(null) : collectionBlock(null))}
+    ${guideBar(GUIDE_TEE[L.slug] ? PRODUCT_BY_PLACE[GUIDE_TEE[L.slug]] : null)}
     ${newsletterBlock()}
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
   </main>`;
@@ -2833,7 +2974,7 @@ const COMMERCE = [
       { h2: 'If you order the wrong size', body: "Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the piece is unworn, unwashed and still has its tags. Email hello@sahraandbeyond.ae with your order number and we will arrange it.\n\nIf you would rather get it right first time, email us before you order and we will talk you through it." }
     ],
     faqs: [
-      ['Are these unisex?', 'The t-shirts are: every tee is cut unisex, S to XL, with no separate men\'s or women\'s version. The polo is a men\'s cut. Because the tables above give the garment measured flat rather than a body size, measure a t-shirt you already like the fit of and match the numbers. Sizing down gives a closer fit, sizing up a more relaxed one — same garment either way.'],
+      ['Are these unisex?', 'The t-shirts are: every tee is cut unisex, S to XL, with no separate men\'s or women\'s version. The polo is a men\'s cut. Because the tables above give the garment measured flat rather than a body size, measure a t-shirt you already like the fit of and match the numbers. Both fits are the same garment for everyone; the chart decides the letter.'],
       ['How do I measure my t-shirt size?', 'Lay a t-shirt you already own flat, measure straight across from armpit seam to armpit seam for the flat chest measurement, then from the top of the shoulder down to the hem for length. Compare both to the tables above.'],
       ['How do I pick my size?', 'Use the size chart. Measure a t-shirt you already like flat, armpit to armpit, and pick the size with the closest number. The oversized cut already adds width and a dropped shoulder, so compare the numbers rather than the letter.'],
       ['Are exchanges free?', 'Yes, within the UAE, within 14 days of delivery and subject to stock, as long as the item is unworn, unwashed and still has tags.']
@@ -3933,9 +4074,10 @@ const AR_PDP_NOINDEX = true;
       ],
       firstH: 'The first run', firstSub: 'Two pieces. Revealed at launch.',
       tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Shorts', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
-      joinH: 'Get first access', joinP: 'Leave your email and we will tell you the moment the first run is ready.',
-      ph: 'you@email.com', btn: 'Notify me', fine: 'You will also hear about new places and drops now and then. Unsubscribe any time.',
-      ok: 'You are on the list. We will email you when the first run lands.',
+      joinH: 'First to know on 22 October', joinP: 'Leave your email and your sizes, and we will write to you first when Sahra Trail opens on 22 October: the running tee, the 2-in-1 short and the kit.',
+      ph: 'you@email.com', btn: 'Tell me first', fine: 'Sizes help us plan the run. You will also hear about new places and drops now and then. Unsubscribe any time.',
+      sizeTee: 'Tee size', sizeShort: 'Short size', sizeAny: 'Not sure yet',
+      ok: 'You are on the list. You will hear first on 22 October.',
       err: 'Please enter a valid email address.',
       back: 'Meanwhile, the Founding Edition is in the shop &rarr;', backHref: '/shop/'
     },
@@ -3956,7 +4098,8 @@ const AR_PDP_NOINDEX = true;
       ],
       firstH: 'الدفعة الأولى', firstSub: 'قطعتان. يُكشف عنهما عند الإطلاق.',
       tee: 'تيشيرت صحراء تريل', short: 'شورت صحراء تريل 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', teeNote: 'شعار القمّتين العاكس أسفل الياقة', shortNote: 'شعار القمّتين العاكس على الساق اليسرى', flashHint: 'انقر للوميض',
-      joinH: 'كن أول من يعرف', joinP: 'اترك بريدك الإلكتروني، وسنخبرك فور أن تصبح الدفعة الأولى جاهزة.',
+      joinH: 'كن أول من يعرف في 22 أكتوبر', joinP: 'اترك بريدك الإلكتروني ومقاساتك، وسنراسلك أولًا عندما تُفتح صحراء تريل في 22 أكتوبر: تيشيرت الجري، والشورت 2 في 1، والطقم.',
+      sizeTee: 'مقاس التيشيرت', sizeShort: 'مقاس الشورت', sizeAny: 'لست متأكدًا بعد',
       ph: 'you@email.com', btn: 'أبلغني', fine: 'وستصلك أيضًا أخبار الأماكن والإصدارات الجديدة من حين لآخر. يمكنك إلغاء الاشتراك في أي وقت.',
       ok: 'تمّت إضافتك. سنراسلك حين تصل الدفعة الأولى.',
       err: 'يرجى إدخال بريد إلكتروني صحيح.',
@@ -4074,6 +4217,10 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
 .tr-join{padding:8vh 20px 16vh;text-align:center}
 .tr-join>div{max-width:560px;margin:0 auto;padding:34px 26px;border-radius:20px;background:rgba(250,244,234,.92);color:#2a2016;box-shadow:0 30px 80px rgba(0,0,0,.35)}
 .tr-form{display:flex;gap:10px;margin:22px 0 10px}
+.tr-form-sizes{flex-direction:column}.tr-row{display:flex;gap:10px}.tr-sizes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tr-sizes label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:#5C5346}.tr-sizes span{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase}
+.tr-sizes select{min-height:46px;padding:0 12px;border-radius:12px;border:1px solid rgba(42,32,22,.3);font:inherit;font-size:15px;background:#fff;color:#2a2016}
+@media(max-width:600px){.tr-row{flex-direction:column}}
 .tr-form input{flex:1;min-width:0;min-height:52px;padding:0 16px;border-radius:12px;border:1px solid rgba(42,32,22,.3);font-size:16px;background:#fff;color:#2a2016}
 .tr-form button{min-height:52px;padding:0 22px;border-radius:12px;border:0;background:#285C5C;color:#F3E7D3;font-weight:600;font-size:15px;cursor:pointer}
 .tr-form button:hover{background:#1F4B4B}
@@ -4142,9 +4289,11 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
     <div class="tr-rv" data-waitlist-wrap>
       <h2 id="${id}join">${t.joinH}</h2>
       <p>${t.joinP}</p>
-      <form class="tr-form" data-waitlist data-source="trail" novalidate>
-        <input type="email" name="email" placeholder="${t.ph}" aria-label="Email address" autocomplete="email" required dir="ltr">
-        <button type="submit">${t.btn}</button>
+      <form class="tr-form tr-form-sizes" data-waitlist data-source="trail" novalidate>
+        ${/* 4 Oct 2026 (CRO panel, idea 17): sizes travel with the address as customer tags; Faheem promised 'first to know', not a head start */''}
+        <div class="tr-sizes"><label><span>${t.sizeTee}</span><select name="tee_size"><option value="">${t.sizeAny}</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label><label><span>${t.sizeShort}</span><select name="short_size"><option value="">${t.sizeAny}</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label></div>
+        <div class="tr-row"><input type="email" name="email" placeholder="${t.ph}" aria-label="Email address" autocomplete="email" required dir="ltr">
+        <button type="submit">${t.btn}</button></div>
       </form>
       <p class="tr-fine">${t.fine}</p>
       <p class="tr-ok" role="status">${t.ok}</p>

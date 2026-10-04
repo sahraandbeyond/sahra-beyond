@@ -372,6 +372,7 @@ h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;f
 .hdr-nav a.shopnav{color:#9C521B;font-weight:700}
 /* shop CTA band — living night sky */
 /* --- the tee inspired by this place (product cross-link) --- */
+.askcta{margin:34px 0;padding:26px 24px;border:1px solid rgba(192,112,46,.3);border-radius:16px;background:rgba(255,247,237,.7)}.askcta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.4vw,34px);font-weight:600;margin:6px 0 8px}.askcta p{margin:0 0 12px;color:#5C5346;font-size:14.5px}.askcta-row{display:flex;gap:10px;flex-wrap:wrap}.askcta .btn{display:inline-block;background:#A95A21;color:#fff;font-weight:700;padding:11px 18px;border-radius:999px;text-decoration:none}.askcta .btn.ghost{background:transparent;color:#9C521B;border:1px solid rgba(192,112,46,.5)}
 .teecta{position:relative;overflow:hidden;margin:34px 0;border-radius:18px;background:var(--tee,#181109);color:#fff;box-shadow:0 24px 60px rgba(0,0,0,.18)}
 .teecta-inner{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:0;align-items:stretch}
 .teecta-img{display:block;position:relative;overflow:hidden;min-height:100%}
@@ -590,7 +591,34 @@ main,.ftr{position:relative;z-index:1}
 .ig-big{max-width:420px;margin:0 auto}
 .ig-big .ig-label{font-size:20px}
 @media(prefers-reduced-motion:reduce){.ig-card,.ig-seg i::after,.ig-media video,.ig-card.ig-new .ig-media::before{transition:none;animation:none!important}.ig-card.active .ig-seg i.on::after{transform:scaleX(1)}}
-
+.gbar{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:117;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 8px;border-radius:14px;background:rgba(28,20,13,.94);color:#F7EFE2;box-shadow:0 10px 30px -10px rgba(0,0,0,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transform:translateY(calc(100% + 20px));transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.gbar.on{transform:none}.gbar[hidden]{display:none}
+.gbar-img{flex:none;width:40px;height:50px;border-radius:8px;overflow:hidden;background:#2a2016}.gbar-img img{width:100%;height:100%;object-fit:cover;display:block}
+.gbar-t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}.gbar-t b{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gbar-t span{font-size:12px;color:rgba(247,239,226,.75)}
+.gbar-btn{flex:none;font:inherit;font-weight:600;font-size:13.5px;padding:10px 16px;border-radius:999px;border:0;background:#E9B978;color:#2A2016;cursor:pointer}
+@media(min-width:761px){.gbar{left:auto;right:24px;bottom:24px;width:360px}}
+html.sb-gbar .sb-wa{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+body.sb-gsheet-open .sb-wa,body.sb-gsheet-open .sb-fcart,body.sb-gsheet-open .gbar{display:none!important}
+html.sb-gbar .sb-fcart{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+html.sb-gbar.sb-fcart-on .sb-wa{bottom:calc(150px + env(safe-area-inset-bottom,0px))!important}
+@media(min-width:761px){html.sb-gbar .sb-wa{right:400px!important;bottom:28px!important}}
+.gsheet{position:fixed;inset:0;z-index:990;background:rgba(10,8,22,.55);display:flex;align-items:flex-end;justify-content:center}.gsheet[hidden]{display:none}
+.gsheet-in{width:100%;max-width:480px;background:#FAF6EF;color:#2B2620;border-radius:18px 18px 0 0;padding:16px 18px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.3)}
+@media(min-width:761px){.gsheet{align-items:center}.gsheet-in{border-radius:18px}}
+.gsheet-h{display:flex;justify-content:space-between;align-items:center;gap:10px}.gsheet-h b{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:22px}
+.gsheet-x{font:inherit;border:0;background:transparent;font-size:18px;cursor:pointer;padding:6px;color:#5C5346}
+.gsheet-sub{margin:4px 0 12px;font-size:13.5px;color:#5C5346}.gsheet-sub a{color:#9C521B}
+.gsheet-sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 10px}.gsheet-wait{grid-column:1/-1;font-size:13px;color:#5C5346}
+.gsheet-size{font:inherit;font-weight:600;font-size:15px;padding:12px 0;border-radius:10px;border:1px solid rgba(43,37,32,.2);background:#fff;cursor:pointer;color:#2B2620}
+.gsheet-size[aria-pressed="true"]{background:#2B2620;color:#fff;border-color:#2B2620}.gsheet-size:disabled{opacity:.45;cursor:default;text-decoration:line-through}
+.gsheet-msg{min-height:18px;margin:0 0 8px;font-size:13px;color:#9C521B}
+.gsheet-add{width:100%;display:block;text-align:center}.gsheet-add:disabled{opacity:.55}
+.gsheet-foot{margin:10px 0 0;font-size:12.5px;color:#5C5346;text-align:center}.gsheet-foot a{color:#9C521B}.fitpair{position:relative;display:flex;flex-direction:column}.fitpair>.card,.fitpair>.pcard{flex:1}
+.fitpair[data-fit="regular"]>[href*="-oversized/"],.fitpair[data-fit="regular"]>[data-handle$="-oversized"],.fitpair[data-fit="oversized"]>[href*="-regular/"],.fitpair[data-fit="oversized"]>[data-handle$="-regular"]{display:none}
+.fitpair-sw{position:absolute;top:10px;left:10px;z-index:3;display:inline-flex;padding:3px;border-radius:999px;background:rgba(20,15,34,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);gap:2px}
+.fitpair-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(247,239,226,.8);cursor:pointer;line-height:1.2}
+.fitpair-sw button.on{background:#F7EFE2;color:#2B2620;font-weight:600}
+.fitpair-sw button:focus-visible{outline:2px solid #E9B978;outline-offset:1px}
 /* ---- Mobile polish --------------------------------------------------------
    Measured at 390px on the live site: footer links were 15-21px tall, filter
    chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
@@ -702,10 +730,10 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=f2cfb480">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=ca63aa16">
 
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=483dd3eb">
-<script src="/assets/sahra-welcome.js?v=8aae3718" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=c41b33d2" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=ea6684f9">
 <script src="/assets/sahra-nav.js?v=c2dd45e3" data-sbn defer></script>
 <style data-legib>
@@ -1280,7 +1308,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       <p>Every t-shirt we make is drawn from a real place in the Emirates — heavyweight combed cotton, limited runs.</p>
     </div>
     <div class="pcards">
-    <article class="pcard" data-handle="al-quaa-galaxy-regular">
+    <div class="fitpair" data-fit="regular" data-design="al-quaa-galaxy"><div class="fitpair-sw" role="group" aria-label="Fit"><button type="button" class="on" data-fit="regular" aria-pressed="true">Regular</button><button type="button" data-fit="oversized" aria-pressed="false">Oversized</button></div><article class="pcard" data-handle="al-quaa-galaxy-regular">
       <span class="pcard-img" style="background:#181109">
         <a class="pcard-imglink" href="/products/al-quaa-galaxy-regular/" tabindex="-1" data-cycle>
           <img class="on" src="/shirts/alquaa-regular-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-regular-front.webp" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-dune-back.webp" alt="The Al Quaa Galaxy tee worn in the dunes — the printed Milky Way running across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print.webp" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print-2.webp" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-front.webp" alt="The Al Quaa Galaxy tee, front, worn in the dunes — the embroidered sun-and-dune mark on the chest" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-chest.webp" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-mark.webp" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" loading="lazy" width="1080" height="1350">
@@ -1296,8 +1324,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/al-quaa-galaxy-regular/">Full details &rarr;</a></span>
       </span>
-    </article>
-    <article class="pcard" data-handle="al-quaa-galaxy-oversized">
+    </article><article class="pcard" data-handle="al-quaa-galaxy-oversized">
       <span class="pcard-img" style="background:#181109">
         <a class="pcard-imglink" href="/products/al-quaa-galaxy-oversized/" tabindex="-1" data-cycle>
           <img class="on" src="/shirts/alquaa-oversized-back.webp" alt="Al Quaa Galaxy oversized t-shirt, a Milky Way desert tee — the galaxy printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-oversized-front.webp" alt="Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy" width="1536" height="1536"><img src="/shirts/alquaa-lake-back-close.webp" alt="The Al Quaa Galaxy tee from behind at golden hour — the Milky Way print across the back, close. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-back-her.webp" alt="The Al Quaa Galaxy tee from behind by the lake — the Milky Way print across the back. Female model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-front.webp" alt="The Al Quaa Galaxy tee worn front-on against the evening sky — the gold embroidered mark on the chest. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-front-her.webp" alt="The Al Quaa Galaxy tee, front — the gold embroidered sun-over-dunes mark and صحراء on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-lake-back.webp" alt="The Al Quaa Galaxy tee from behind as the sun sets over the lake — the Milky Way print across the back. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-model-back.webp" alt="The Al Quaa Galaxy tee worn at sunset — the Milky Way print across the back as the sun drops behind the dunes" loading="lazy" width="1076" height="1600"><img src="/shirts/alquaa-female-1.webp" alt="The Al Quaa Galaxy tee worn in the Hajar mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1453" height="1600"><img src="/shirts/alquaa-model-front.webp" alt="The Al Quaa Galaxy tee worn in the dunes — the gold embroidered sun-over-dunes mark and صحراء on the chest" loading="lazy" width="1067" height="1600"><img src="/shirts/alquaa-female-2.webp" alt="The Al Quaa Galaxy tee from behind, arms out against the mountains — the Milky Way print across the back. Female model wears M in the Oversized fit." loading="lazy" width="931" height="1280"><img src="/shirts/alquaa-model-dusk.webp" alt="The Al Quaa Galaxy tee worn facing the last light, embroidered chest mark catching the gold" loading="lazy" width="1227" height="1600"><img src="/shirts/alquaa-female-3.webp" alt="The back of the Al Quaa Galaxy tee in the mountains at dusk, the Milky Way print catching the last light. Female model wears M in the Oversized fit." loading="lazy" width="1498" height="1600">
@@ -1313,8 +1340,9 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/al-quaa-galaxy-oversized/">Full details &rarr;</a></span>
       </span>
-    </article>
-    <article class="pcard" data-handle="empty-quarter-regular">
+    </article></div>
+    
+    <div class="fitpair" data-fit="regular" data-design="empty-quarter"><div class="fitpair-sw" role="group" aria-label="Fit"><button type="button" class="on" data-fit="regular" aria-pressed="true">Regular</button><button type="button" data-fit="oversized" aria-pressed="false">Oversized</button></div><article class="pcard" data-handle="empty-quarter-regular">
       <span class="pcard-img" style="background:#E7D6B8">
         <a class="pcard-imglink" href="/products/empty-quarter-regular/" tabindex="-1" data-cycle>
           <img class="on" src="/shirts/emptyquarter-regular-front.webp" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-regular-back.webp" alt="Empty Quarter — Regular, regular fit, back view" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-dune-front.webp" alt="The Empty Quarter tee worn in the dunes at sunset — the tonal embroidered dunes, sun and صحراء on the chest" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-chest.webp" alt="The Empty Quarter tee, chest close in the dunes — the tonal embroidery catching the low sun" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-detail.webp" alt="The Empty Quarter tee, the embroidered chest at an angle — thread on thread, sand on sand" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-back.webp" alt="The Empty Quarter tee from behind in the dunes — plain across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-dune-neck.webp" alt="The Empty Quarter tee, back neck close — the printed collar label below the collar seam" loading="lazy" width="1080" height="1350">
@@ -1330,8 +1358,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/empty-quarter-regular/">Full details &rarr;</a></span>
       </span>
-    </article>
-    <article class="pcard" data-handle="empty-quarter-oversized">
+    </article><article class="pcard" data-handle="empty-quarter-oversized">
       <span class="pcard-img" style="background:#E7D6B8">
         <a class="pcard-imglink" href="/products/empty-quarter-oversized/" tabindex="-1" data-cycle>
           <img class="on" src="/shirts/emptyquarter-oversized-front.webp" alt="Empty Quarter oversized t-shirt, an embroidered desert tee — a tonal sun over the dunes on the chest" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-oversized-back.webp" alt="Empty Quarter — Oversized, oversized fit, back view" loading="lazy" width="1536" height="1536"><img src="/shirts/emptyquarter-lake-front.webp" alt="The Empty Quarter tee, front — the tonal embroidered dunes, sun and صحراء on the chest, close. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-lake-side.webp" alt="The Empty Quarter tee at golden hour, three-quarter — the tonal embroidery catching the light. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/emptyquarter-model-front.webp" alt="The Empty Quarter tee worn in the dunes — the tonal embroidered dunes, sun and صحراء wordmark across the chest" loading="lazy" width="1075" height="1600"><img src="/shirts/emptyquarter-female-1.webp" alt="The Empty Quarter tee worn in the mountains, in profile — the tonal embroidered sun and dunes on the chest. Female model wears M in the Oversized fit." loading="lazy" width="656" height="1091"><img src="/shirts/emptyquarter-model-stand.webp" alt="The Empty Quarter tee worn standing on a dune at golden hour" loading="lazy" width="1067" height="1600"><img src="/shirts/emptyquarter-female-2.webp" alt="The back of the Empty Quarter tee in the mountains — plain, with the back-neck embroidery. Female model wears M in the Oversized fit." loading="lazy" width="1091" height="1280"><img src="/shirts/emptyquarter-model-sunset.webp" alt="The back of the Empty Quarter tee at sunset, back-neck embroidery visible over the dunes" loading="lazy" width="1234" height="1275"><img src="/shirts/emptyquarter-female-3.webp" alt="The Empty Quarter tee worn on a mountain ridge — the tonal embroidered sun over the dunes across the chest. Female model wears M in the Oversized fit." loading="lazy" width="915" height="1280"><img src="/shirts/emptyquarter-female-4.webp" alt="The Empty Quarter tee worn in the mountains, arms out — the tonal embroidery across the chest. Female model wears M in the Oversized fit." loading="lazy" width="1035" height="1280"><img src="/shirts/emptyquarter-female-5.webp" alt="The Empty Quarter tee worn seated on the rocks in the mountains. Female model wears M in the Oversized fit." loading="lazy" width="1131" height="1280"><img src="/shirts/emptyquarter-female-6.webp" alt="The Empty Quarter tee in profile as the light drops over the mountains. Female model wears M in the Oversized fit." loading="lazy" width="656" height="1091">
@@ -1347,8 +1374,9 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/empty-quarter-oversized/">Full details &rarr;</a></span>
       </span>
-    </article>
-    <article class="pcard" data-handle="hajar-mountains-regular">
+    </article></div>
+    
+    <div class="fitpair" data-fit="regular" data-design="hajar-mountains"><div class="fitpair-sw" role="group" aria-label="Fit"><button type="button" class="on" data-fit="regular" aria-pressed="true">Regular</button><button type="button" data-fit="oversized" aria-pressed="false">Oversized</button></div><article class="pcard" data-handle="hajar-mountains-regular">
       <span class="pcard-img" style="background:#C6BFD3">
         <a class="pcard-imglink" href="/products/hajar-mountains-regular/" tabindex="-1" data-cycle>
           <img class="on" src="/shirts/hajar-regular-back.webp" alt="Hajar Mountains t-shirt, a mountain graphic tee in the regular fit — the red rock of the Hajar printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-regular-front.webp" alt="Hajar Mountains — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-dune-back.webp" alt="The Hajar Mountains tee worn in the dunes — the printed ridgeline across the back with the coordinates beneath it" loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-dune-front.webp" alt="The Hajar Mountains tee, front, worn in the dunes — the chest mark on the sand-coloured cotton" loading="lazy" width="1080" height="1350">
@@ -1364,8 +1392,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/hajar-mountains-regular/">Full details &rarr;</a></span>
       </span>
-    </article>
-    <article class="pcard" data-handle="hajar-mountains-oversized">
+    </article><article class="pcard" data-handle="hajar-mountains-oversized">
       <span class="pcard-img" style="background:#C6BFD3">
         <a class="pcard-imglink" href="/products/hajar-mountains-oversized/" tabindex="-1" data-cycle>
           <img class="on" src="/shirts/hajar-oversized-back.webp" alt="Hajar Mountains oversized t-shirt, a mountain graphic tee — the red rock of the Hajar printed across the back" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-oversized-front.webp" alt="Hajar Mountains — Oversized, oversized fit, front view showing the drop shoulder and boxy body" loading="lazy" width="1536" height="1536"><img src="/shirts/hajar-lake-back-her.webp" alt="The Hajar Mountains tee from behind at sunset — the mountain print and coordinates filling the back. Female model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-lake-back-kneel.webp" alt="The Hajar Mountains tee from behind, kneeling — the mountain print and the coordinates beneath it. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-lake-full.webp" alt="The Hajar Mountains tee worn full-length with the sun behind the trees — the chest mark on the front. Male model wears M in the Oversized fit." loading="lazy" width="1080" height="1350"><img src="/shirts/hajar-model-back.webp" alt="The Hajar Mountains tee worn at sunset — the mountain print and Wadi Naqab coordinates across the back" loading="lazy" width="1078" height="1459"><img src="/shirts/hajar-female-1.webp" alt="The Hajar Mountains tee worn in the Hajar themselves — the contour-line mountain mark on the chest. Female model wears M in the Oversized fit." loading="lazy" width="1308" height="1600"><img src="/shirts/hajar-model-front.webp" alt="The Hajar Mountains tee worn in the dunes — the contour-line mountain print on the chest" loading="lazy" width="1157" height="1600"><img src="/shirts/hajar-female-2.webp" alt="The back of the Hajar Mountains tee in the mountains — the red-rock print across the back. Female model wears M in the Oversized fit." loading="lazy" width="878" height="1280"><img src="/shirts/hajar-female-3.webp" alt="The Hajar Mountains tee worn on the ridge, the embroidered mark on the chest, hair in the wind. Female model wears M in the Oversized fit." loading="lazy" width="1114" height="1412"><img src="/shirts/hajar-female-4.webp" alt="The Hajar Mountains tee worn seated on the rocks at last light — the red-rock print showing at the side. Female model wears M in the Oversized fit." loading="lazy" width="1545" height="1600">
@@ -1382,6 +1409,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="pcard-foot"><span class="pcard-p">AED 199</span><a class="pcard-cta" href="/products/hajar-mountains-oversized/">Full details &rarr;</a></span>
       </span>
     </article></div>
+    </div>
     <a class="btn shoplink" href="/shop/">Shop the collection &rarr;</a><a class="btn ghost" href="/t-shirts/">See all t-shirts &rarr;</a>
   </section>
     <div class="content"><p>Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.</p><p>Every Sahra &amp; Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm combed ring-spun cotton, and made in limited runs.</p><p>Three designs, two fits. Al Quaa Galaxy and Hajar Mountains are printed direct to garment, so the ink sits in the cotton rather than on top of it; Empty Quarter is embroidered. Each comes in a straight Regular fit or a drop-shoulder Oversized, S to XL. If you are buying in Dubai or anywhere in the UAE, delivery is free and arrives the next working day on orders placed by 2 pm.</p></div>
@@ -1532,11 +1560,12 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>
   <div class="foot-guides" role="navigation" aria-label="Guides and more"><div><b>Guides:</b> <a href="/places/">All places</a> · <a href="/camping/">Camping in the UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/wadis/">Wadis in the UAE</a> · <a href="/hiking/">Hiking in the UAE</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta day trip</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/fujairah-beaches/">Fujairah beaches</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a></div><div><b>More:</b> <a href="/national-day/">National Day t-shirts</a> · <a href="/gifts/">Gift ideas</a> · <a href="/trail/">Sahra Trail</a> · <a href="/tote/">Canvas tote</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric</a> · <a href="/size-guide/">Size guide</a> · <a href="/ar/" hreflang="ar" lang="ar">العربية</a></div></div>
-  <nav class="ig-foot ig-dark" aria-label="More from our Instagram">
+  <div class="ig-foot ig-dark" role="navigation" aria-label="More from our Instagram">
   <div class="ig-foot-row"><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/Dd5qAsMoVNq/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/Dd5qAsMoVNq-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Three places. One mark.</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/Dd4X685iH0k/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/Dd4X685iH0k/01.mp4"><img src="/uploads/ig/Dd4X685iH0k-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Everything out here is vast. So is the fit: the Empty Quarter Tee, oversized</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahratrail/reel/Dd342EwoQho/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/Dd342EwoQho-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Sunrise hike: Sahra Trail, episode 1</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/DdzOsr5CFNq/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DdzOsr5CFNq/01.mp4"><img src="/uploads/ig/DdzOsr5CFNq-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>This is a mountain. So is this: the Hajar Mountains Tee</span></span></a></div>
   <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 3 Oct</span> · <a href="/feed/">all posts</a></p>
-</nav>
+</div>
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
+  <div class="links" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.75">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay</div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© 2026 Sahra &amp; Beyond · <a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a></div></footer>
 
@@ -1607,7 +1636,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=18758f49" defer></script>
+<script src="/assets/sahra-cart.js?v=c92325e9" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
@@ -1672,6 +1701,34 @@ if(canAuto&&matchMedia('(hover:hover)').matches)[].forEach.call(document.querySe
  function off(){dropVideo(v);v=null;}
  a.addEventListener('mouseenter',on);a.addEventListener('focus',on);a.addEventListener('mouseleave',off);a.addEventListener('blur',off);});
 pick();
+})();</script>
+<script>(function(){var bar=document.getElementById('gbar');if(!bar)return;
+var sheet=document.getElementById('gsheet'),sizes=document.getElementById('gsheetSizes'),addB=document.getElementById('gsheetAdd'),msgEl=document.getElementById('gsheetMsg'),handle=bar.getAttribute('data-handle'),sel=null,loaded=false,on=false;
+function show(v){if(v===on)return;on=v;if(v){bar.hidden=false;requestAnimationFrame(function(){bar.classList.add('on');});document.documentElement.classList.add('sb-gbar');}else{bar.classList.remove('on');document.documentElement.classList.remove('sb-gbar');setTimeout(function(){if(!on)bar.hidden=true;},400);}}
+/* visible once the top strip is gone, hidden again at the closing tee block and the footer */
+var top=document.querySelector('.minitee, .lg-strip, #tee, .teecta'),bottom=document.querySelector('.teecta, .askcta, .folds + .teecta'),foot=document.querySelector('footer');
+var topGone=false,bottomNear=false,footNear=false;
+var drawer=document.getElementById('sbDrawer');function drawerOpen(){var d=drawer||(drawer=document.getElementById('sbDrawer'));return !!(d&&d.classList.contains('on'));}
+function sync(){show(topGone&&!bottomNear&&!footNear&&!drawerOpen());}
+try{new MutationObserver(function(){sync();}).observe(document.body,{attributes:true,subtree:true,attributeFilter:['class']});}catch(e){}
+try{if(top)new IntersectionObserver(function(es){es.forEach(function(e){topGone=!e.isIntersecting&&e.boundingClientRect.bottom<0;});sync();}).observe(top);
+if(bottom&&bottom!==top)new IntersectionObserver(function(es){es.forEach(function(e){bottomNear=e.isIntersecting;});sync();}).observe(bottom);
+if(foot)new IntersectionObserver(function(es){es.forEach(function(e){footNear=e.isIntersecting;});sync();}).observe(foot);}catch(e){topGone=true;sync();}
+addEventListener('scroll',function(){if(top&&top.getBoundingClientRect().bottom<0!==topGone){topGone=top.getBoundingClientRect().bottom<0;sync();}},{passive:true});
+function msg(t){msgEl.textContent=t||'';}
+var lastFocus=null;function openSheet(){lastFocus=document.activeElement;sheet.hidden=false;document.body.style.overflow='hidden';document.body.classList.add('sb-gsheet-open');setTimeout(function(){var f=sheet.querySelector('.gsheet-size:not([disabled])')||document.getElementById('gsheetX');if(f)f.focus();},50);setTimeout(function(){if(!sheet.hidden&&sizes.querySelector('.gsheet-wait')&&!sizes.querySelector('.gsheet-size'))sizes.innerHTML='<span class="gsheet-wait">Sizes are taking a while. <a href="/products/'+handle+'/">Open the product page</a>.</span>';},9000);if(window.track)track('guide_bar_open',{item_id:handle});if(!loaded&&window.SahraCart&&SahraCart.variants){loaded=true;SahraCart.variants(handle).then(function(vs){sizes.innerHTML='';vs.forEach(function(v){var b=document.createElement('button');b.type='button';b.className='gsheet-size';b.textContent=v.title;b.setAttribute('aria-pressed','false');if(!v.availableForSale){b.disabled=true;b.setAttribute('aria-label',v.title+' sold out');}b.addEventListener('click',function(){[].forEach.call(sizes.children,function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');sel=v;addB.disabled=false;addB.textContent='Add to bag';msg('');});sizes.appendChild(b);});if(!vs.length)sizes.innerHTML='<span class="gsheet-wait">Sizes unavailable right now. <a href="/products/'+handle+'/">Open the product page</a>.</span>';}).catch(function(){loaded=false;sizes.innerHTML='<span class="gsheet-wait">Could not load sizes. <a href="/products/'+handle+'/">Open the product page</a>.</span>';});}}
+function closeSheet(opts){sheet.hidden=true;if(!(opts&&opts.keepLock))document.body.style.overflow='';document.body.classList.remove('sb-gsheet-open');if(lastFocus&&lastFocus.focus&&!(opts&&opts.keepLock)){try{lastFocus.focus();}catch(e){}}}
+sheet.addEventListener('keydown',function(e){if(e.key!=='Tab')return;var f=[].slice.call(sheet.querySelectorAll('button:not([disabled]),a[href],select,input')).filter(function(x){return x.offsetParent!==null;});if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
+document.getElementById('gbarOpen').addEventListener('click',openSheet);
+document.getElementById('gsheetX').addEventListener('click',closeSheet);
+sheet.addEventListener('click',function(e){if(e.target===sheet)closeSheet();});
+addEventListener('keydown',function(e){if(e.key==='Escape'&&!sheet.hidden)closeSheet();});
+addB.addEventListener('click',function(){if(!sel){msg('Choose a size first.');return;}addB.disabled=true;addB.textContent='Adding…';SahraCart.add(sel.id,1).then(function(){closeSheet({keepLock:true});addB.disabled=false;addB.textContent='Add another';if(window.track)track('add_to_cart',{item_id:handle,size:sel.title,via:'guide-bar'});}).catch(function(){addB.disabled=false;addB.textContent='Add to bag';msg('Could not add. Please try again.');});});
+})();</script>
+<script>(function(){var pairs=[].slice.call(document.querySelectorAll('.fitpair'));if(!pairs.length)return;var saved=null;try{saved=localStorage.getItem('sb_fit');}catch(e){}
+function set(fit,remember){pairs.forEach(function(w){w.setAttribute('data-fit',fit);[].forEach.call(w.querySelectorAll('.fitpair-sw button'),function(b){var on=b.getAttribute('data-fit')===fit;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});});if(remember){try{localStorage.setItem('sb_fit',fit);}catch(e){}}}
+if(saved==='oversized')set('oversized',false);
+document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.fitpair-sw button');if(!b)return;e.preventDefault();e.stopPropagation();set(b.getAttribute('data-fit'),true);if(window.track)track('fit_switch',{fit:b.getAttribute('data-fit')});},true);
 })();</script>
 </body>
 </html>

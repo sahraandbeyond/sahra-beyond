@@ -165,6 +165,14 @@ function fold(id, ic, title, teaser, inner, open) {
 }
 function teaserOf(s, n) { s = String(s || '').replace(/\s+/g, ' ').trim(); if (s.length <= n) return esc(s); const c = s.slice(0, n); return esc(c.slice(0, c.lastIndexOf(' '))) + '…'; }
 
+/* the product the slim buy bar should carry on this place page, if any */
+function barProduct(l, ctx) {
+  if (ctx.PRODUCT_BY_PLACE[l.id]) return ctx.PRODUCT_BY_PLACE[l.id];
+  const pl = l.productLink; const p = pl && pl.slug ? ctx.PRODUCTS_ALL.find(x => x.id === pl.slug) : null; if (p) return p;
+  const NEAR = { Mountains: 'hajar-mountains-regular', Wadis: 'hajar-mountains-regular', Dunes: 'empty-quarter-regular', Camping: 'empty-quarter-regular' };
+  if (/Coast|Heritage/.test(l.category || '') || /beach|island|coast|khor|corniche/i.test(l.name || '')) return null;
+  return NEAR[l.category] ? ctx.PRODUCTS_ALL.find(x => x.id === NEAR[l.category]) : null;
+}
 /* ---------- product panel: exact place, honest kin link, or none yet ---------- */
 function productPanel(l, ctx) {
   const exact = ctx.PRODUCT_BY_PLACE[l.id];
@@ -186,9 +194,23 @@ function productPanel(l, ctx) {
     const im = ctx.cardShots(x)[0];
     return `<a class="lg-none-c" href="/products/${x.id}/">${im ? `<img src="${esc(im[0])}" alt="" loading="lazy" decoding="async" width="200" height="250">` : ''}<b>${esc(x.name.replace(/ — Regular$/, ''))}</b><span>${esc(x.placeName || '')}</span></a>`;
   }).join('');
-  return `<section class="lg-none lg-rise" id="tee" data-match="none"><span class="lg-eye">${icon('tee')} Wear the place</span>
-    <h2>We haven&rsquo;t drawn ${esc(l.name)} yet</h2>
-    <p>Every Sahra &amp; Beyond tee is drawn from one real place in the Emirates. These are the places we have drawn so far.</p>
+  /* 4 Oct 2026 (CRO panel, idea 3): the nearest honest tee for mountain, wadi and dune
+     places; the coast and heritage sites ask which place should be drawn next. */
+  const NEAR = { Mountains: ['hajar-mountains-regular', 'Our mountain tee: the Hajar range, drawn in one contour line.'], Wadis: ['hajar-mountains-regular', 'Our mountain tee: the Hajar range above Wadi Naqab, drawn in one contour line.'], Dunes: ['empty-quarter-regular', 'Our desert tee: the Liwa sunset, embroidered tone on tone.'], Camping: ['empty-quarter-regular', 'Our desert tee: the Liwa sunset, embroidered tone on tone.'] };
+  const near = NEAR[l.category] && ctx.PRODUCTS_ALL.find(x => x.id === NEAR[l.category][0]);
+  const coastal = /Coast|Heritage/.test(l.category || '') || /beach|island|coast|khor|corniche/i.test(l.name || '');
+  if (near && !coastal) {
+    const img = ctx.cardShots(near)[0];
+    return `<section class="lg-kin lg-rise" id="tee" data-match="near">
+      <a class="lg-kin-img" href="/products/${near.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" loading="lazy" decoding="async" width="400" height="500">` : ''}</a>
+      <div class="lg-kin-t"><span class="lg-eye">${icon('tee')} Not this place, but the same kind of ground</span>
+        <h2>${esc(near.name)}</h2>
+        <p>${esc(NEAR[l.category][1])} We have not drawn ${esc(l.name)} yet.</p>
+        <p class="lg-kin-m"><span class="sb-price" data-handle="${esc(near.id)}" data-aed="${esc(String(near.price))}">AED ${esc(String(near.price))}</span> <span class="sb-aed-only">&middot; 230gsm cotton &middot; any 2 tees AED 359</span></p>
+        <a class="btn" href="/products/${near.id}/">See the tee &rarr;</a>
+      </div></section>`;
+  }
+  return `${ctx.askBlock ? ctx.askBlock(l.name).replace('<section class="askcta"', '<section id="tee" data-match="none" class="askcta lg-rise"') : ''}<section class="lg-none lg-rise"><span class="lg-eye">${icon('tee')} The places we have drawn</span>
     <div class="lg-none-g">${cards}</div>
     <a class="btn ghost" href="/t-shirts/">See all t-shirts &rarr;</a></section>`;
 }
@@ -317,7 +339,7 @@ function renderPlace(l, ctx) {
       g.safety ? `${wadiish ? floodDiagram() : ''}<div class="content">${paras(g.safety)}</div>${safetyExtra(l)}` : '', false)}
     ${fold('heritage', 'scroll', 'Heritage, nature and etiquette', teaserOf(g.heritage || g.etiquette, 90),
       (g.heritage || g.etiquette) ? `<div class="content">${paras(g.heritage)}${g.etiquette ? `<p class="lg-etq"><b>Etiquette.</b> ${esc(g.etiquette)}</p>` : ''}</div>` : '', false)}
-    ${productPanel(l, ctx)}
+    ${productPanel(l, ctx)}${ctx.guideBar ? ctx.guideBar(barProduct(l, ctx)) : ''}
     <section class="pack lg-rise" id="pack">
       <h2>${icon('bag')} What to pack for ${esc(l.name)}</h2>
       <p class="lg-pack-sub">Matched to how you get there${l.overnight === false ? '' : ' and how long you stay'}. Tap items as you pack them; this list is saved on your phone.</p>
