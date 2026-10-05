@@ -159,6 +159,14 @@ module.exports = async (req, res) => {
   }
 
   const tags = ['site-signup', 'welcome-50', 'src-' + source];
+  /* 4 Oct 2026: optional fields (e.g. tee_size, short_size from /trail/) become tags such as
+     f-tee_size-m. Keys and values are whitelisted and capped so nothing odd reaches Shopify. */
+  const fields = body.fields && typeof body.fields === 'object' ? body.fields : {};
+  const ALLOWED = { tee_size: ['s', 'm', 'l', 'xl'], short_size: ['s', 'm', 'l', 'xl'] };
+  Object.keys(ALLOWED).forEach(key => {
+    const val = String(fields[key] || '').trim().toLowerCase();
+    if (ALLOWED[key].includes(val)) tags.push('f-' + key + '-' + val);
+  });
   const consent = {
     marketingState: 'SUBSCRIBED',
     marketingOptInLevel: 'SINGLE_OPT_IN',

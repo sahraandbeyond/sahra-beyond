@@ -50,7 +50,7 @@
   var CFRAG = 'id checkoutUrl totalQuantity buyerIdentity{countryCode} cost{subtotalAmount{amount currencyCode}}' +
     'lines(first:100){edges{node{id quantity cost{totalAmount{amount currencyCode} subtotalAmount{amount currencyCode}} ' +
     'discountAllocations{discountedAmount{amount currencyCode} ... on CartAutomaticDiscountAllocation{title}} ' +
-    'merchandise{... on ProductVariant{id title availableForSale ' +
+    'merchandise{... on ProductVariant{id title availableForSale quantityAvailable ' +
     'price{amount currencyCode} product{title handle productType featuredImage{url}}}}}}}';
 
   function sf(q, vars) {
@@ -95,6 +95,49 @@
     var unit = parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1);
     return '<span class="sb-lp"><s>' + money(m.price.amount, m.price.currencyCode) + '</s> ' +
       '<b>' + money(unit, l.cost.totalAmount.currencyCode) + '</b></span>';
+  }
+  /* the six tees, for the second-tee card (handles, names and card images are stable) */
+  var TEES = [
+    { h: 'al-quaa-galaxy-regular', name: 'Al Quaa Galaxy', fit: 'regular', img: '/shirts/card/alquaa-regular-back.webp' },
+    { h: 'empty-quarter-regular', name: 'Empty Quarter', fit: 'regular', img: '/shirts/card/emptyquarter-regular-front.webp' },
+    { h: 'hajar-mountains-regular', name: 'Hajar Mountains', fit: 'regular', img: '/shirts/card/hajar-regular-back.webp' },
+    { h: 'al-quaa-galaxy-oversized', name: 'Al Quaa Galaxy', fit: 'oversized', img: '/shirts/card/alquaa-oversized-back.webp' },
+    { h: 'empty-quarter-oversized', name: 'Empty Quarter', fit: 'oversized', img: '/shirts/card/emptyquarter-oversized-front.webp' },
+    { h: 'hajar-mountains-oversized', name: 'Hajar Mountains', fit: 'oversized', img: '/shirts/card/hajar-oversized-back.webp' }
+  ];
+  /* 4 Oct 2026 (CRO panel, idea 9): the delivery promise as a real clock. Rule from
+     Faheem (4 Oct): orders by 2 pm Dubai time Monday to Saturday go out the same day
+     and arrive the next day; Sunday orders, and orders after 2 pm Saturday, arrive
+     Tuesday. HOLIDAYS are dates with no dispatch; keep the list current. UAE only
+     (the span is market-gated). If anything fails the static promise stays. */
+  var HOLIDAYS = ['2026-12-01', '2026-12-02', '2026-12-03', '2027-01-01'];
+  function dubaiNow() {
+    var f = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Dubai', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', weekday: 'short', hour12: false }).formatToParts(new Date());
+    var g = function (k) { var x = f.filter(function (p) { return p.type === k; })[0]; return x ? x.value : ''; };
+    return { y: +g('year'), m: +g('month'), d: +g('day'), h: +g('hour') % 24, mi: +g('minute'), wd: g('weekday') };
+  }
+  function ymd(dt) { return dt.getUTCFullYear() + '-' + ('0' + (dt.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + dt.getUTCDate()).slice(-2); }
+  function dispatchDay(dt) { var wd = dt.getUTCDay(); return wd !== 0 && HOLIDAYS.indexOf(ymd(dt)) < 0; }
+  function clockText() {
+    try {
+      var n = dubaiNow(); if (!n.y) return '';
+      var today = new Date(Date.UTC(n.y, n.m - 1, n.d));
+      var before = (n.h < 14) && dispatchDay(today);
+      var ship = new Date(today.getTime()); if (!before) ship.setUTCDate(ship.getUTCDate() + 1);
+      var guard = 0; while (!dispatchDay(ship) && guard++ < 10) ship.setUTCDate(ship.getUTCDate() + 1);
+      var arrive = new Date(ship.getTime()); arrive.setUTCDate(arrive.getUTCDate() + 1);
+      guard = 0; while (HOLIDAYS.indexOf(ymd(arrive)) >= 0 && guard++ < 10) arrive.setUTCDate(arrive.getUTCDate() + 1);
+      var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MONS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var when = DAYS[arrive.getUTCDay()] + ' ' + arrive.getUTCDate() + ' ' + MONS[arrive.getUTCMonth()];
+      var tomorrow = (arrive.getTime() - today.getTime()) === 864e5;
+      if (before) { var mins = (14 * 60) - (n.h * 60 + n.mi), hh = Math.floor(mins / 60), mm = mins % 60;
+        return 'Order in ' + (hh ? hh + 'h ' : '') + mm + 'm for free delivery ' + (tomorrow ? 'tomorrow' : 'on ' + when) + (tomorrow ? ' (' + when + ')' : ''); }
+      return 'Order now for free delivery ' + (tomorrow ? 'tomorrow (' + when + ')' : 'on ' + when);
+    } catch (e) { return ''; }
+  }
+  function tickClocks() {
+    var t = clockText(); if (!t) return;
+    [].forEach.call(document.querySelectorAll('[data-sb-clock]'), function (e) { if (e.textContent !== t) e.textContent = t; });
   }
   function isTee(l) {
     var m = l && l.merchandise;
@@ -284,7 +327,7 @@
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
-          '<p class="sb-note"><span class="sb-note-d">Free next-day UAE delivery — order by 2 pm, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
+          '<p class="sb-note"><span class="sb-note-d sb-ship-uae"><span data-sb-clock>Free next-day UAE delivery — order by 2 pm</span>, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
           /* 25 Sep 2026 (Faheem, persona review): a gift option. The message travels on the
              Shopify order as its note, with a Gift attribute, so it shows on the order in Admin. */
           '<div class="sb-giftopt"><label class="sb-giftl"><input type="checkbox" id="sbGiftChk"> This is a gift</label>' +
@@ -297,6 +340,7 @@
         '</div>' +
       '</aside>';
     while (wrap.firstChild) document.body.appendChild(wrap.firstChild);
+    try { tickClocks(); } catch (e) {}
 
     document.getElementById('sbX').addEventListener('click', close);
     document.getElementById('sbOv').addEventListener('click', close);
@@ -445,7 +489,9 @@
           '<span class="sb-qty">' +
             '<button type="button" class="sb-q" data-act="dec" data-line="' + esc(l.id) + '" data-qty="' + q + '" aria-label="Decrease quantity">&minus;</button>' +
             '<span class="sb-qn" aria-label="Quantity">' + q + '</span>' +
-            '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '" aria-label="Increase quantity">+</button>' +
+            (function () { var qa = l.merchandise && l.merchandise.quantityAvailable; var capped = (typeof qa === 'number') && q >= qa;
+              return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" title="Only ' + qa + ' left" aria-label="Increase quantity (only ' + qa + ' left)"' : ' aria-label="Increase quantity"') + '>+</button>' +
+                (capped ? '<span class="sb-cap">Only ' + qa + ' left</span>' : ''); })() +
           '</span>' +
         '</div>' +
         '<button class="sb-rm" data-act="rm" data-line="' + esc(l.id) + '" aria-label="Remove ' + esc(m.product.title) + '">&#10005;</button>' +
@@ -474,12 +520,25 @@
         if (isTee(l)) tees += l.quantity;
       });
       if (saved > 0.004) {
-        el.hidden = false;
+        el.hidden = false; el.className = 'sb-bundle';
         el.innerHTML = '\u2713 Bundle applied: ' + deal + ' \u00b7 you save ' + esc(money(saved, cur));
       } else if (tees === 1) {
+        /* 4 Oct 2026 (CRO panel, idea 14): one tap adds a second design in the same size.
+           The pair price is Shopify's own automatic discount (AED 19.50 off each of the
+           six tees at two or more), so the saving shown is the real one. */
+        var have = realLines.filter(isTee)[0], hm = have && have.merchandise, hh = hm && hm.product && hm.product.handle || '';
+        var fit = /oversized/.test(hh) ? 'oversized' : 'regular', size = hm && hm.title || '';
+        var pick = TEES.filter(function (t) { return t.h !== hh && t.fit === fit; })[0] || TEES.filter(function (t) { return t.h !== hh; })[0];
         el.hidden = false;
-        el.innerHTML = 'Add a second tee \u2014 <b>' + deal + '</b>, applied automatically. <a href="/t-shirts/">Shop tees &rarr;</a>';
-      } else { el.hidden = true; el.innerHTML = ''; }
+        if (pick && cur === 'AED') {
+          el.className = 'sb-bundle sb-second';
+          el.innerHTML = '<img src="' + pick.img + '" alt="" width="44" height="55" loading="lazy"><span class="sb-second-t"><b>Add a second, pair AED 359</b> \u00b7 saves AED 39<br>' + esc(pick.name) + (size ? ' in ' + esc(size) : '') + ', ' + fit + '</span>' +
+            '<button type="button" class="sb-second-add" data-handle="' + pick.h + '" data-size="' + esc(size) + '">Add</button>';
+        } else {
+          el.className = 'sb-bundle';
+          el.innerHTML = 'Add a second tee \u2014 <b>' + deal + '</b>, applied automatically. <a href="/t-shirts/">Shop tees &rarr;</a>';
+        }
+      } else { el.hidden = true; el.innerHTML = ''; el.className = 'sb-bundle'; }
     })();
 
     /* Gift option: saved to the cart as you type (debounced) and once more, awaited for at
@@ -598,6 +657,18 @@
         if (r && r.userErrors && r.userErrors.length) throw new Error(r.userErrors[0].message);
         if (!r || !r.cart) throw new Error('That cart is no longer available.');
         CART = r.cart;
+        /* 4 Oct 2026 (Faheem: "the + button doesn't seem to be working"): Shopify does not
+           refuse a quantity above stock, it quietly caps the line and returns the cart
+           unchanged, so the + looked dead. Compare what came back with what was asked. */
+        var got = null;
+        (CART.lines && CART.lines.edges || []).forEach(function (e) { if (e.node.id === lineId) got = e.node; });
+        if (q > 0 && got && got.quantity < q) {
+          var m = got.merchandise || {}, nm = (m.product && m.product.title) || 'this item';
+          lastError = got.quantity === 1
+            ? 'Only one ' + nm + (m.title ? ' in ' + m.title : '') + ' is left, so it stays at 1.'
+            : 'Only ' + got.quantity + ' of ' + nm + (m.title ? ' in ' + m.title : '') + ' are left, so it stays at ' + got.quantity + '.';
+          pending[lineId] = got.quantity;
+        }
         /* server has spoken - drop any pending intent it has now satisfied */
         (CART.lines && CART.lines.edges || []).forEach(function (e) {
           if (pending[e.node.id] === e.node.quantity) delete pending[e.node.id];
@@ -830,6 +901,17 @@
     }).observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ['class'] });
   } catch (e) {}
 
+  tickClocks(); setInterval(tickClocks, 15000);
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest && e.target.closest('.sb-second-add'); if (!b) return;
+    e.preventDefault(); b.disabled = true; b.textContent = 'Adding\u2026';
+    var h = b.getAttribute('data-handle'), sz = b.getAttribute('data-size');
+    variants(h).then(function (vs) {
+      var v = vs.filter(function (x) { return x.title === sz && x.availableForSale; })[0];
+      if (!v) { b.textContent = sz ? sz + ' sold out' : 'Sold out'; b.disabled = true; var l = b.parentNode && b.parentNode.querySelector('.sb-second-t'); if (l) l.innerHTML += '<br><a href="/products/' + h + '/">Other sizes &rarr;</a>'; return; }
+      return add(v.id, 1).then(function () { if (window.track) track('add_to_cart', { item_id: h, size: v.title, via: 'second-tee' }); });
+    }).catch(function () { b.disabled = false; b.textContent = 'Add'; });
+  });
   window.SahraCart = {
     add: add, open: open, close: close, variants: variants,
     refresh: function () { return refresh().then(afterMutation); },

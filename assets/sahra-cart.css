@@ -183,3 +183,12 @@
 .sb-drawer:not(.on){box-shadow:none}
 /* the AED-only bundle offer steps aside when prices show in another currency */
 html[data-price-cur]:not([data-price-cur="AED"]) .pdp-bundle{display:none}
+/* 4 Oct 2026: second-tee card in the drawer */
+.sb-second{display:flex;align-items:center;gap:10px;padding:9px 10px}
+.sb-second img{width:44px;height:55px;border-radius:6px;object-fit:cover;flex:none}
+.sb-second-t{flex:1;min-width:0;font-size:12.5px;line-height:1.4}.sb-second-t b{font-weight:600}
+.sb-second-add{flex:none;font:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer}
+.sb-second-add:disabled{opacity:.6;cursor:default}
+/* 4 Oct 2026: the + stops at the last unit and says so */
+.sb-q:disabled{opacity:.45;cursor:not-allowed}
+.sb-cap{font-size:11px;color:#9C521B;margin-left:8px;white-space:nowrap}

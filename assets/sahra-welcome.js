@@ -66,11 +66,11 @@
   /* POST an address to Shopify. Resolves with the code to show. Never rejects:
      a capture failure must not cost the visitor the offer they were promised,
      and /api/subscribe reports stored:false in the Vercel log when that happens. */
-  function subscribe(email, source) {
+  function subscribe(email, source, fields) {
     return fetch(OFFER.api, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, source: source })
+      body: JSON.stringify(fields ? { email: email, source: source, fields: fields } : { email: email, source: source })
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (j) {
         if (r.status === 400) throw new Error('email');
@@ -342,7 +342,10 @@
           wrapEl.classList.add('done');
           ev('waitlist_signup', { source: src });
         };
-        subscribe(email, src).then(settle, function (err) {
+        /* 4 Oct 2026: named selects in the form (sizes on /trail/) ride along as fields */
+        var fields = null;
+        [].forEach.call(f.querySelectorAll('select[name], input[type=hidden][name]'), function (el) { if (el.value) { fields = fields || {}; fields[el.name] = el.value; } });
+        subscribe(email, src, fields).then(settle, function (err) {
           if (err && err.message === 'email') {
             wrapEl.classList.remove('loading'); wrapEl.classList.add('err');
             if (b) { b.disabled = false; b.textContent = label; }
