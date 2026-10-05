@@ -387,9 +387,13 @@
   var GUIDE = /^\/(ar\/)?(places|locations)\//.test(location.pathname || '');
   /* the choice holds for the whole visit: an ad or product-page arrival who
      taps through to another page still gets the teaser, not the modal */
+  /* 6 Oct 2026 (Sahel page review): /sahel/ exists to collect one email for the Sahel list. The
+     welcome card opening over it 1.4 s after landing would be a second, competing ask, and the
+     corner teaser sits on the page's own gauge. The top bar still carries the offer. */
+  var STORY = /^\/sahel\//.test(location.pathname || '');
   var QUIET = 'sbw.quiet', quiet = false;
   try { quiet = sessionStorage.getItem(QUIET) === '1'; if (AD || PDP || GUIDE) sessionStorage.setItem(QUIET, '1'); } catch (e) {}
-  if (!st.won && !openedThisSession) {
+  if (!st.won && !openedThisSession && !STORY) {
     if (AD || PDP || GUIDE || quiet) teaser(); else
     setTimeout(function () {
       if (surfaced) return;

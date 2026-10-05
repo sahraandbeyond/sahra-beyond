@@ -109,3 +109,10 @@
 @media(max-width:620px){
   html body>nav#nav,html body>nav#nav.solid,html body>nav:not([class]),html body>header.hdr{padding-top:4px!important;padding-bottom:4px!important;min-height:52px!important;box-sizing:border-box}
 }
+
+/* Sahel (6 Oct 2026): top-bar link in the edition's Estate Blue; a second heading inside the Trail column */
+.sbn-sahel .sbn-soon{background:#233658;color:#F4ECDF}
+.sbn-sahel.active,.sbn-sahel[aria-current]{background:#233658!important;color:#F4ECDF!important}
+.sbn-sahel.active .sbn-soon{background:#D9C3A5;color:#233658}
+.sbn-h2{margin-top:14px}
+@media(max-width:1280px) and (min-width:821px){.sbn-trail .sbn-soon{display:none}}

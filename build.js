@@ -340,7 +340,12 @@ function teeFor(placeSlug, ctxName, lead) {
 }
 /* 4 Oct 2026 (CRO panel, idea 3): where no tee is honest (the coast), ask which place
    should be drawn next instead of forcing a match. One tap to WhatsApp, nothing to fill in. */
-function askBlock(name) {
+function askBlock(name, category) {
+  /* 6 Oct 2026: the coast IS being drawn (Sahel, the Coast Edition), so coast pages no longer ask
+     'which place next' or offer 'a Snoopy Island tee' ('Snoopy' may not name a garment: Peanuts
+     trademark, Decision Log 5 Oct). Every coast page gets the same line, so none is singled out
+     before the reveal. */
+  if (category === 'Coast') return `<section class="askcta askcta-sahel"><span class="teecta-eyebrow">The coast is next</span><h2>Sahel, the Coast Edition</h2><p>Our next edition is drawn from the coast of the UAE. It is launching soon.</p><p class="askcta-row"><a class="btn" href="/sahel/#first-to-know" data-track="place_sahel">Be first to know &rarr;</a><a class="btn ghost" href="/sahel/">See the page</a></p></section>`;
   const generic = /^the /.test(name);
   const msg = encodeURIComponent(generic ? `I'd wear a tee drawn from ${name}` : `I'd wear a ${name} tee`);
   return `<section class="askcta"><span class="teecta-eyebrow">Not drawn yet</span><h2>Which place should be next?</h2><p>Every Sahra &amp; Beyond tee is drawn from one real place in the Emirates. ${generic ? 'Nothing from ' + esc(name) + ' yet.' : esc(name) + ' is not one of them yet.'} If it should be, say so: one tap, no form.</p><p class="askcta-row"><a class="btn" href="https://wa.me/971585449946?text=${msg}" target="_blank" rel="noopener">${generic ? 'Draw ' + esc(name) + ' next' : `I'd wear a ${esc(name)} tee`}</a><a class="btn ghost" href="/t-shirts/">See the places we have drawn &rarr;</a></p></section>`;
@@ -1553,7 +1558,7 @@ const LANDINGS = [
       "TODO for Faheem: the Hatta page says no official campsites or permit rules; Khaleej Times (26 Oct 2025) lists Hatta designated campsites with BBQ pits. Reconcile.",
       "TODO for Faheem: no official page found for Sharjah, Fujairah, RAK or Abu Dhabi camping permits and fine schedules; the table relies on press and law-firm summaries. Ajman has no sourced rules. Ask the municipalities if you want official wording.",
       "TODO for Faheem: Al Wathba Lake Camp picnic sites: Visit Abu Dhabi says 24, Gulf News (21 Nov 2023) says 25; text uses 24.",
-      "TODO for lead: add the Sahel hoodie link to the 'What to wear on cold desert nights' section when it is live (no product link added).",
+      "TODO for lead: add the Shuweihat Hoodie and Ras Al Khor Hoodie links to the 'What to wear on cold desert nights' section when they are live (no product link added).",
       "TODO for Faheem: Zawya reports a Dh500 bonfire fine at Jebel Jais and Dh2,000 elsewhere (2022, undated); not used in the table because the date and authority are unclear.",
       "TODO for Faheem: the title now says 2026–27, so it needs updating each season."
     ]
@@ -2163,7 +2168,7 @@ LANDINGS.forEach(L => {
     ${Array.isArray(L.related) && L.related.length ? `<section class="guide-sec"><h2>Related guides</h2><nav class="catnav" aria-label="Related guides">${L.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2] || '')}</span></a>`).join('')}</nav></section>` : ''}
     ${faqHtml}
     ${Array.isArray(L.sources) && L.sources.length ? `<section class="guide-sec guide-src"><h2>Sources</h2><ul>${L.sources.map(r => `<li><a href="${esc(r[1])}" target="_blank" rel="noopener nofollow">${esc(r[0])}</a></li>`).join('')}</ul></section>` : ''}
-    ${GUIDE_TEE[L.slug] ? teeFor(GUIDE_TEE[L.slug], L.h1, GUIDE_LEAD[L.slug]) : (GUIDE_ASK[L.slug] ? askBlock(GUIDE_ASK[L.slug]) + collectionBlock(null) : collectionBlock(null))}
+    ${GUIDE_TEE[L.slug] ? teeFor(GUIDE_TEE[L.slug], L.h1, GUIDE_LEAD[L.slug]) : (GUIDE_ASK[L.slug] ? askBlock(GUIDE_ASK[L.slug], 'Coast') + collectionBlock(null) : collectionBlock(null))}
     ${guideBar(GUIDE_TEE[L.slug] ? PRODUCT_BY_PLACE[GUIDE_TEE[L.slug]] : null)}
     ${newsletterBlock()}
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
@@ -3232,7 +3237,8 @@ COMMERCE.forEach(P => {
 })();
 
 /* ---------- /hoodies/ (DRAFT, 1 Oct 2026; SEO handover item 19) -------------
-   Collection page for the Sahel Hoodie, built to report 02 section 6.1. It is a
+   Collection page for the two Sahel hoodies (named 5 Oct 2026: the Shuweihat Hoodie in Salute and
+   the Ras Al Khor Hoodie in Estate Blue), built to report 02 section 6.1. It is a
    DRAFT: written to _drafts/hoodies/ locally only (never on Vercel, never in the
    sitemap) until Faheem confirms the fabric weight and the products exist in
    Shopify. Every fact here is from MASTER_BRIEF decisions; unsettled ones are
@@ -3241,7 +3247,7 @@ const HOODIES = {
   draft: true,
   slug: 'hoodies',
   title: 'Hoodies in Dubai & UAE — Embroidered Coastline | Sahra & Beyond',
-  desc: 'The Sahel Hoodie: 400 GSM brushed-back cotton fleece, a relaxed drop-shoulder cut and the UAE coastline embroidered on the back. Two colours, S to XL.',
+  desc: 'The Shuweihat Hoodie and the Ras Al Khor Hoodie: 400 GSM brushed-back cotton fleece, a relaxed drop-shoulder cut and the UAE coastline embroidered on the back.',
   h1: 'Hoodies in Dubai & the UAE',
   todo: [
     'TODO for Faheem: product photos (not mockups) and the Shopify product URLs, so the grid and ItemList schema can go in.',
@@ -3262,15 +3268,15 @@ if (!process.env.VERCEL) {
     <div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(H.h1)}</span></nav>
       <h1>${esc(H.h1)}</h1>
-      <p class="lede">The Sahel Hoodie: the UAE coastline, embroidered</p>
+      <p class="lede">The Shuweihat Hoodie and the Ras Al Khor Hoodie: the UAE coastline, embroidered</p>
     </div>
   </section>
   <main>
     ${H.todo.map(todoBox).join('')}
-    <div class="content"><p>The Sahel Hoodie is the first hoodie from Sahra &amp; Beyond, designed in the UAE: 400 GSM brushed-back fleece in 100% cotton, in a relaxed oversized cut with a dropped shoulder, the UAE coastline embroidered across the back in sand thread, and a printed scene on the lower back. Two colours, Salute and Estate Blue, in S to XL, at AED 229. Delivery is free and next-day across the UAE, with free 14-day exchanges. See the <a href="/size-guide/">size guide</a> and <a href="/fabric/">how we choose our fabrics</a>.</p></div>
-    ${todoBox('Product grid goes here once the two colourways exist in Shopify (CollectionPage + ItemList schema then).')}
+    <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE: 400 GSM brushed-back fleece in 100% cotton, in a relaxed oversized cut with a dropped shoulder, the UAE coastline embroidered across the back in sand thread, and a printed scene on the lower back. There are two: the Shuweihat Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each in S to XL, at AED 229. Delivery is free and next-day across the UAE, with free 14-day exchanges. See the <a href="/size-guide/">size guide</a> and <a href="/fabric/">how we choose our fabrics</a>.</p></div>
+    ${todoBox('Product grid goes here once the Shuweihat Hoodie and the Ras Al Khor Hoodie exist in Shopify as two products (CollectionPage + ItemList schema then).')}
     <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed oversized pullover with a dropped shoulder and a hip-length body, sized S to XL. The neck label reads the size and the fit, for example "M – OVERSIZED", and is printed rather than sewn in, so there is no tag to scratch.</p></div></section>
-    <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the UAE coastline, embroidered in sand thread, with &quot;ساحل · SAHEL&quot;. The Sahra mark is embroidered at the centre of the chest. On the lower back, each colour carries its own printed scene: contour lines on Salute, and greater flamingos at dusk at Ras Al Khor on Estate Blue.</p></div></section>
+    <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the UAE coastline, embroidered in sand thread, with &quot;ساحل · SAHEL&quot;. The Sahra mark is embroidered at the centre of the chest. On the lower back, each hoodie carries its own printed scene. The Shuweihat Hoodie has contour lines where the dunes meet the sea, inspired by <a href="/locations/shuweihat-island/">Shuweihat Island</a>. The Ras Al Khor Hoodie has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>.</p></div></section>
     <section class="guide-sec"><h2>For cold desert and mountain nights</h2><div class="content"><p>Winter nights in the desert and up in the mountains get properly cold: Jebel Jais has recorded temperatures below freezing. If you are camping this season, our <a href="/camping/">camping guide</a> covers the rules by emirate, and the <a href="/stargazing/">stargazing guide</a> the darkest nights; the <a href="/locations/jebel-jais/">Jebel Jais guide</a> has the month-by-month temperatures.</p></div></section>
     <section class="guide-sec"><h2>Care</h2><div class="content"><p>Wash cold and inside out, no bleach. Tumble dry low, and iron inside out.</p></div></section>
     ${newsletterBlock()}
@@ -3474,6 +3480,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
   .concat([{ u: `${SITE}/journal/`, m: buildDate, p: '0.7' }])
   .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])
+  .concat([{ u: `${SITE}/sahel/`, m: buildDate, p: '0.8' }])   /* Sahel teaser page (6 Oct 2026) */
   .concat(fs.existsSync(path.join(ROOT, 'feed', 'index.html')) ? [{ u: `${SITE}/feed/`, m: buildDate, p: '0.5' }] : [])   /* every Instagram post with where it lives on the site (4 Oct 2026); /q/ pages are noindex */
   /* SEO handover item 11: the three live Arabic pages join the sitemap only once Faheem confirms
      they count as reviewed (he asked on 2 Oct that Arabic stays noindex until he has reviewed it). */
@@ -4323,6 +4330,9 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
   }));
   console.log('  ✓ Sahra Trail: /trail/ + /ar/trail/ (Arabic noindex, awaiting native review)');
 })();
+
+/* Sahel · The Coast Edition (6 Oct 2026): the page lives in sahel-page.js */
+require('./sahel-page.js')({ shell, write, SITE });
 
 /* hreflang from the ENGLISH side. Google needs the pairing declared BOTH ways or
    it ignores it, and the Arabic pages cannot declare it alone. Injected rather

@@ -82,7 +82,9 @@
     '<a class="sbn-trailcard" href="/trail/"><svg viewBox="6 10.76 88 78.48" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="' + TRAIL_SYM + '"/></svg>' +
     '<span><b>Coming this season</b><small>Trail and run wear, designed in the UAE</small></span></a>' +
     row(['/trail/', 'Sahra Trail Tee', 'coming soon']) + row(['/trail/', 'Sahra Trail 2-in-1 Shorts', 'coming soon']) +
-    row(['/trail/#first-access', 'Get first access', '', 'sbn-all']) + '</div>' +
+    row(['/trail/#first-access', 'Get first access', '', 'sbn-all']) +
+    /* Sahel, the Coast Edition (6 Oct 2026): a teaser row until the reveal */
+    '<span class="sbn-h sbn-h2">Sahel · The Coast Edition</span>' + row(['/sahel/', 'Sahel \u0633\u0627\u062d\u0644', 'launching soon']) + '</div>' +
     '<div class="sbn-foot"><span>' + esc(FOOT[0]) + '</span><span>' + esc(FOOT[1]) + '</span></div>';
   var pos = getComputedStyle(host).position;
   if (pos === 'static') host.style.position = 'relative';
@@ -139,6 +141,8 @@
     frag.appendChild(ma('/gifts/', 'Gifts', true));
     frag.appendChild(mh('Sahra Trail · activewear'));
     frag.appendChild(ma('/trail/', 'Coming this season'));
+    frag.appendChild(mh('Sahel · The Coast Edition'));
+    frag.appendChild(ma('/sahel/', 'Launching soon'));
     frag.appendChild(mh('Places'));
     frag.appendChild(ma('/places/', 'All places'));
     frag.appendChild(ma('/shop/?place=al-quaa-desert', 'Al Quaa', true));
@@ -224,6 +228,19 @@
     var m = a.cloneNode(true); m.classList.remove('active');
     var close = mn.querySelector('.m-close');
     mn.insertBefore(m, close ? close.nextSibling : mn.firstChild);
+  }
+  /* Sahel, the Coast Edition (6 Oct 2026): beside Sahra Trail, English pages only until it has an Arabic page */
+  if (!ar && !row.querySelector('.sbn-sahel')) {
+    var s = document.createElement('a');
+    s.className = 'sbn-trail sbn-sahel'; s.href = '/sahel/';
+    if (/^\/sahel\/?$/.test(location.pathname)) { s.classList.add('active'); s.setAttribute('aria-current', 'page'); }
+    s.innerHTML = 'Sahel<span class="sbn-soon">Soon</span>';
+    row.insertBefore(s, a.nextSibling);
+    if (mn && !mn.querySelector('a[href$="/sahel/"]')) {
+      var ms = s.cloneNode(true); ms.classList.remove('active');
+      var mt = mn.querySelector('a[href$="/trail/"]');
+      if (mt && mt.parentNode === mn) mn.insertBefore(ms, mt.nextSibling); else mn.appendChild(ms);
+    }
   }
 })();
 

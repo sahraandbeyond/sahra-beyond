@@ -25,6 +25,7 @@ const SHOP_LINKS = [
   ['/national-day/', 'National Day t-shirts'],
   ['/gifts/', 'Gift ideas'],
   ['/trail/', 'Sahra Trail'],
+  ['/sahel/', 'Sahel: The Coast Edition'],
   ['/tote/', 'Canvas tote'],
   ['/journal/', 'Journal'],
   ['/fabric/', 'Fabric'],

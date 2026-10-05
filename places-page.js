@@ -210,7 +210,7 @@ function productPanel(l, ctx) {
         <a class="btn" href="/products/${near.id}/">See the tee &rarr;</a>
       </div></section>`;
   }
-  return `${ctx.askBlock ? ctx.askBlock(l.name).replace('<section class="askcta"', '<section id="tee" data-match="none" class="askcta lg-rise"') : ''}<section class="lg-none lg-rise"><span class="lg-eye">${icon('tee')} The places we have drawn</span>
+  return `${ctx.askBlock ? ctx.askBlock(l.name, l.category).replace('<section class="askcta"', '<section id="tee" data-match="none" class="askcta lg-rise"') : ''}<section class="lg-none lg-rise"><span class="lg-eye">${icon('tee')} The places we have drawn</span>
     <div class="lg-none-g">${cards}</div>
     <a class="btn ghost" href="/t-shirts/">See all t-shirts &rarr;</a></section>`;
 }

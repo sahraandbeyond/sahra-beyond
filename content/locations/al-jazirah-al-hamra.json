@@ -1,0 +1,215 @@
+{
+  "id": "al-jazirah-al-hamra",
+  "name": "Al Jazirah Al Hamra",
+  "nameAr": "الجزيرة الحمراء",
+  "emoji": "🦪",
+  "emirate": "Ras Al Khaimah",
+  "category": "Coast",
+  "difficulty": "Easy",
+  "season": "Nov–Mar",
+  "distance": "About 20 minutes by road from central Ras Al Khaimah (Visit Ras Al Khaimah); no source opened gives a drive time from Dubai",
+  "lat": 25.708889,
+  "lng": 55.797222,
+  "status": "safe",
+  "desc": "An abandoned coral-stone pearling and fishing town on the Ras Al Khaimah coast, now run as a heritage village with a fort, souq, mosque and restored courtyard houses. It is on UNESCO's tentative list.",
+  "cover": "/uploads/places/al-jazirah-al-hamra.jpg",
+  "coverAlt": "Flat-roofed coral-stone and plaster buildings of Al Jazirah Al Hamra seen from above, with a cloudy sky over the rooftops",
+  "coverFocus": "50% 78%",
+  "igPosts": [],
+  "area": "Al Jazirah Al Hamra, southern Ras Al Khaimah, just off the E11 near Al Hamra Mall",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "bestTime": "A Tuesday to Sunday morning or late afternoon, within opening times and outside the midday heat. Visit Ras Al Khaimah advises daylight visits only, and its blog suggests earlier or later in the day.",
+  "timeNeeded": "About 45 to 90 minutes on your own (Visit Ras Al Khaimah blog); the village lists guided heritage tours of 1 to 2 hours.",
+  "fees": "Visit Ras Al Khaimah says there is no entry fee to explore the site (last checked October 2026). The village's own website lists heritage tours but shows no ticket prices, so any tour or event charge is unconfirmed. The RAK Art festival in January and February 2026 had free general entry with ticketed experiences from Dh50 (The National, January 2026); no 2027 prices were found.",
+  "hours": "The village's own website, ajah.ae, lists Tuesday to Sunday and closed Mondays, but gives two sets of times: 10:00 to 18:00 on its home, Visit Us, Events and Bookings pages, and 09:00 to 17:00 on its About and Contact pages (last checked October 2026). Visit Ras Al Khaimah says the open-air site is unmanned, suggests 8 am to 6 pm and advises visiting in daylight only (last checked October 2026). Ring the village on +971 7 236 8797 before you travel.",
+  "facilities": {
+    "toilets": "unknown",
+    "food": "unknown",
+    "shade": "some",
+    "signal": "unknown",
+    "note": "Visit Ras Al Khaimah says there is signed parking near the entrance and minimal shade, and advises carrying drinking water and wearing sunscreen, a hat and walking shoes. The Department of Antiquities and Museums says the open-air museum is unmanned. No source opened confirms public toilets, a cafe or mobile signal on an ordinary visiting day; food trucks and pop-up restaurants were reported only during the 2025 RAK Art festival (The National)."
+  },
+  "gpsSource": "https://en.wikipedia.org/wiki/Al_Jazirah_Al_Hamra gives 25°42′32″N 55°47′50″E, converted here to 25.708889, 55.797222; this is a point in the village and a photo geotagged inside it on Wikimedia Commons (Karachun, January 2026) sits within about 40 metres of it. UNESCO's tentative list entry (https://whc.unesco.org/en/tentativelists/6464) gives N25 42 34 E55 47 40, about 25.709444, 55.794444, roughly 280 metres to the west. Both are in whole seconds, so the six decimals are a conversion, not a survey. Confirm the entrance on a current map.",
+  "sources": [
+    {
+      "label": "Al Jazeera Al Hamra Heritage Village (official site): home",
+      "url": "https://www.ajah.ae/"
+    },
+    {
+      "label": "Al Jazeera Al Hamra Heritage Village: history and conservation",
+      "url": "https://www.ajah.ae/history"
+    },
+    {
+      "label": "Al Jazeera Al Hamra Heritage Village: visit us",
+      "url": "https://www.ajah.ae/visit-us"
+    },
+    {
+      "label": "Al Jazeera Al Hamra Heritage Village: about",
+      "url": "https://www.ajah.ae/about"
+    },
+    {
+      "label": "Al Jazeera Al Hamra Heritage Village: bookings",
+      "url": "https://www.ajah.ae/bookings"
+    },
+    {
+      "label": "Al Jazeera Al Hamra Heritage Village: contact",
+      "url": "https://www.ajah.ae/contact-us"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Al Jazeera Al Hamra",
+      "url": "https://visitrasalkhaimah.com/discover/attractions/al-jazeera-al-hamra/"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Al Jazeera Al Hamra visit guide (blog, July 2026)",
+      "url": "https://visitrasalkhaimah.com/blog/al-jazeera-al-hamra-open-air-gallery/"
+    },
+    {
+      "label": "Ras Al Khaimah Department of Antiquities and Museums: Al Jazeera Al Hamra",
+      "url": "https://rakheritage.rak.ae/al-jazeera-al-hamra/"
+    },
+    {
+      "label": "UNESCO World Heritage Centre: The pearl trading town of Jazirat Al-Hamra (tentative list)",
+      "url": "https://whc.unesco.org/en/tentativelists/6464"
+    },
+    {
+      "label": "UAE Ministry of Culture: UNESCO includes four sites in Ras Al Khaimah in the tentative list",
+      "url": "https://moc.gov.ae/en/news/unesco-includes-four-sites-in-ras-al-khaimah-in-the-tentative-list-of-global-heritage-sites/"
+    },
+    {
+      "label": "Ras Al Khaimah Media Office: watchtower restoration (July 2020)",
+      "url": "https://www.rakmediaoffice.ae/en/media-center/press-releases/ras-al-khaimah-restores-historic-al-jazirah-al-hamra-watchtower/"
+    },
+    {
+      "label": "Wikipedia: Al Jazirah Al Hamra",
+      "url": "https://en.wikipedia.org/wiki/Al_Jazirah_Al_Hamra"
+    },
+    {
+      "label": "The National: Our guide to the living ghost town Jazirat Al Hamra (2014)",
+      "url": "https://www.thenationalnews.com/uae/our-guide-to-the-living-ghost-town-jazirat-al-hamra-ras-al-khaimah-1.604481/"
+    },
+    {
+      "label": "The National: Raiders of the lost RAK (March 2022)",
+      "url": "https://www.thenationalnews.com/weekend/2022/03/17/raiders-of-the-lost-rak-one-day-visit-to-the-emirates-hidden-heritage-gems/"
+    },
+    {
+      "label": "The National: Ras Al Khaimah Art returns to abandoned pearling village (January 2025)",
+      "url": "https://www.thenationalnews.com/arts-culture/art-design/2025/01/30/rak-art-al-jazeera-al-hamra-heritage-village-2025/"
+    },
+    {
+      "label": "The National: Six things not to miss at the Ras Al Khaimah Arts Festival (January 2026)",
+      "url": "https://www.thenationalnews.com/arts-culture/art-design/2026/01/19/six-things-not-to-miss-at-the-ras-al-khaimah-arts-festival/"
+    },
+    {
+      "label": "Khaleej Times: Jazirat Al Hamra, a trip back in time (2016)",
+      "url": "https://www.khaleejtimes.com/uae/jazirat-al-hamra-a-trip-back-in-time"
+    },
+    {
+      "label": "Gulf News: Centuries-old souq to be restored in RAK (2018)",
+      "url": "https://gulfnews.com/entertainment/arts-culture/centuries-old-souq-to-be-restored-in-rak-1.2017457"
+    },
+    {
+      "label": "Ras Al Khaimah Art: 2027 festival",
+      "url": "https://www.rakart.ae/2027-festival"
+    },
+    {
+      "label": "UAE Government portal: Aviation safety (drones)",
+      "url": "https://u.ae/en/information-and-services/justice-safety-and-the-law/aviation-safety"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: UAE emergency numbers",
+      "url": "https://visitrasalkhaimah.com/blog/what-are-the-emergency-services-numbers-in-uae-police-ambulance-fire-coastguard/"
+    }
+  ],
+  "seoTitle": "Al Jazirah Al Hamra, RAK: Pearling Town Visitor Guide",
+  "seoDesc": "Visit the abandoned pearling town of Al Jazirah Al Hamra in Ras Al Khaimah: its history, opening times, fees, tours, photography and site rules.",
+  "access": {
+    "vehicle": "2wd",
+    "note": "Visit Ras Al Khaimah says the site is just off the E11 highway, about 20 minutes from central Ras Al Khaimah and close to Al Hamra Mall, with signed parking near the entrance. You walk the lanes on foot. No source opened mentions a need for a 4x4."
+  },
+  "body": "Al Jazirah Al Hamra (Arabic: الجزيرة الحمراء, the Red Island) is an abandoned coral-stone pearling and fishing town on the coast of Ras Al Khaimah. The village's own website says the Za'ab tribe founded it in the late 16th century on a tidal island, and that it stayed an island until the lagoon around it was infilled in the late 1970s. The name is also written Al Jazeera Al Hamra and Jazirat Al Hamra. The National noted in 2014 that it is no longer an island: land has been filled in on all sides, and it now sits near an industrial zone, a port, a water park, a gated community and a golf course.\n\nPearling is the reason it matters. The village website quotes a Dutch East India Company director who wrote in 1756 that the people of the Red Island lived from pearl-diving and had many small vessels. In 1820 the Za'ab kept a fleet of 25 pearling boats, according to the Ras Al Khaimah Department of Antiquities and Museums. By the early 20th century the village website counts about 500 houses and between 2,500 and 3,000 residents, with fishing, boat-building, ceramics, date farming and a souq that ran a caravan of 100 camels and 100 donkeys to the interior. The pearl trade collapsed from the 1920s, which the village website attributes to artificial pearls and the Great Depression. Residents left between about 1968 and 1971, and the Department of Antiquities and Museums and the village website both say it was abandoned after oil was found. UNESCO has held the town on the UAE's tentative World Heritage list since 26 July 2020, under the title The pearl trading town of Jazirat Al-Hamra. That is a preliminary step, not an inscription.\n\nWhat you can see today is a mix of restored and ruined buildings. The village website lists a fort with a round watchtower, the souq, the Abdul Kareem House of a prominent trader, the Bin Dulum House of a pearling captain, the large Friday Mosque and six restored courtyard houses. Visit Ras Al Khaimah adds that many other buildings are in ruin or disrepair and that the open-air site is unmanned. The village website says the village has been stewarded since 2010 by the UAE Ministry of Energy and Infrastructure and the Department of Antiquities and Museums, and that the site is now run by the Al Qasimi Foundation with the Department. It lists guided heritage tours of 1 to 2 hours led by trained volunteer guides. The Ras Al Khaimah Art festival is held in the village each winter; the 2027 edition is scheduled for 22 January to 14 February.\n\nVisit Ras Al Khaimah says entry is free and photography is allowed and encouraged, but asks visitors not to climb on or enter the buildings, which may be unstable, and says removing anything from the protected site is prohibited. Opening times differ between the village's own pages, so ring ahead. Many families still own the houses and visit them, according to The National (2014) and Khaleej Times (2016), so treat the lanes as a heritage site and a family place, not a film set. The town also has a reputation as a ghost town: The National (2022) says local legends of hauntings gave it the name Ghost Village. This guide treats that as folklore only and does not verify any story.",
+  "faqs": [
+    {
+      "q": "Is Al Jazirah Al Hamra free to visit?",
+      "a": "Visit Ras Al Khaimah says there is no entry fee to explore the site (last checked October 2026). The village's own website lists guided heritage tours but shows no ticket prices, so ask before booking a tour. Events such as the RAK Art festival have had their own ticketed experiences; The National reported free general entry and ticketed experiences from Dh50 for the 2026 edition."
+    },
+    {
+      "q": "What are the opening hours?",
+      "a": "The village website, ajah.ae, says Tuesday to Sunday and closed Mondays, but shows 10:00 to 18:00 on most pages and 09:00 to 17:00 on its About and Contact pages (last checked October 2026). Visit Ras Al Khaimah says the open-air site is unmanned, suggests 8 am to 6 pm and advises visiting in daylight only. Ring +971 7 236 8797 before you go."
+    },
+    {
+      "q": "Can I go inside the old buildings?",
+      "a": "Visit Ras Al Khaimah asks visitors not to climb on or venture into the buildings because they may be unstable, and says it is prohibited to remove anything from the protected site. Ring the village on +971 7 236 8797 to ask which restored buildings are open to visitors."
+    },
+    {
+      "q": "Is it a UNESCO World Heritage Site?",
+      "a": "Not yet. UNESCO's World Heritage Centre lists The pearl trading town of Jazirat Al-Hamra on the UAE's tentative list, submitted on 26 July 2020 under criteria (iii) and (v). A tentative listing is a preliminary step and does not make the site a World Heritage Site."
+    },
+    {
+      "q": "Is Al Jazirah Al Hamra haunted?",
+      "a": "There is no evidence in any source we opened. The town has a reputation as a ghost town: The National (2022) says local legends of hauntings gave it the name Ghost Village. Treat that as folklore. The practical risks are heat, uneven ground and unstable walls."
+    },
+    {
+      "q": "Can I take photos and fly a drone?",
+      "a": "Visit Ras Al Khaimah says photography is allowed and encouraged. No source opened gives a drone rule for this site. UAE rules from the General Civil Aviation Authority, set out on the UAE government portal, require drone operators to hold authorisation and, for drones that record, security clearance, and to check permitted zones in the My Drone Hub app. The village's Bookings page says film and photography productions need a booking."
+    }
+  ],
+  "guide": {
+    "gettingThere": "Visit Ras Al Khaimah says the village is just off the E11 highway, about 20 minutes' drive from central Ras Al Khaimah and close to Al Hamra Mall, with signed parking near the entrance. No source opened gives a drive time from Dubai, so check a live map for your route. A 2016 Khaleej Times directions note names the E311 and a turn after about 5 kilometres, but road layouts have changed, so use current signs and a map pin instead.",
+    "whenToGo": "No source opened gives a best season. The site is open-air with minimal shade, and Visit Ras Al Khaimah advises sunscreen, a hat and water; its blog suggests earlier or later in the day and says to avoid midday heat. The months rating on this page is our own judgement based on that advice and is not from a source. The Ras Al Khaimah Art festival has run in January and February at the village, and the 2027 edition is scheduled for 22 January to 14 February 2027 (rakart.ae). The village's summer camps run in July and August for children and are not general visiting hours. Allow 45 to 90 minutes on your own, or 1 to 2 hours on a guided tour.",
+    "onSite": "Walk the lanes between the coral-stone houses to the fort, with its round watchtower, the souq and the Friday Mosque. The village website names the Abdul Kareem House and the Bin Dulum House, and says six courtyard houses have been restored. The National (2022) quoted its chief archaeologist, Christian Velde, describing it as a town frozen in time that looks as it would have in the mid-20th century. Guided heritage tours of 1 to 2 hours are listed by the village, with trained volunteer guides; no price is shown. Visit Ras Al Khaimah and the Department of Antiquities and Museums both describe the open-air site as unmanned, so do not count on staff or a cafe being there.",
+    "safety": "Visit Ras Al Khaimah says many buildings are in ruin or disrepair and may be unstable, so do not climb on or enter them. It says there is limited lighting and no safety personnel on site and advises visiting in daylight only. Shade is minimal, so carry drinking water and wear a hat, sunscreen and sturdy shoes. UAE emergency numbers are police 999, ambulance 998, fire 997 and coastguard 996 (Visit Ras Al Khaimah). No source opened confirms mobile signal at the site.",
+    "heritage": "The village website dates the settlement to the late 16th century and says the Za'ab tribe, who also had date orchards at Kalba, moved between the coast and the interior each year. The Department of Antiquities and Museums says Sheikh Rajib bin Ahmed Al Zaabi, ruler of the village in 1820, was one of four independent signatories to the 1820 treaty between the Trucial States and the British. Buildings use coral blocks and fossilised beach rock, mangrove beams, date palm trunks and matting, according to the Department. The village website says stone buildings mark the early settlement and sand-brick buildings the period after 1955. The village website says the Ministry of Energy and Infrastructure and the Department have stewarded its preservation since 2010. In 2020 the Department restored a watchtower outside the village, about 11.9 metres high, using lime-based mortar (Ras Al Khaimah Media Office); whether it has opened to the public is unconfirmed. UNESCO holds the town on the tentative list under the title The pearl trading town of Jazirat Al-Hamra.",
+    "etiquette": "Visit Ras Al Khaimah asks you not to climb on or enter the buildings and not to remove anything from the site; Khaleej Times (2016) also says to be respectful and not take artefacts, because many houses still belong to the original families, who occasionally visit. Visit Ras Al Khaimah recommends modest clothing. Visit Ras Al Khaimah's blog also asks you not to lean on, touch or move fragile walls, doors or old structures. For a commercial film or photo shoot, the village's Bookings page says to book through the village; its page showed bookings temporarily closed at the time of checking."
+  },
+  "overnight": false,
+  "lastChecked": "2026-10-06",
+  "_doubts": [
+    "OPENING HOURS CONFLICT: ajah.ae (the village's own site) says Tuesday to Sunday, closed Monday, with 10:00 to 18:00 on its home, Visit Us, Events, Bookings and Educational Programs pages, but 09:00 to 17:00 on its About and Contact pages. Visit Ras Al Khaimah's attraction page says the site is unmanned, 'the ideal time to visit is between 8 am and 6 pm' and to visit in daylight only. A Visit RAK blog (updated 15 July 2026) says Tuesday to Sunday, closed Monday, and does not say whether that applies to the village, the open-air gallery or tours. The text reports all of them and tells the reader to ring ahead. No gate or fence was confirmed, so 'closed Mondays' may apply to staffed access only.",
+    "FEES: Visit RAK says no entry fee. ajah.ae shows no ticket prices and its Visit Us page offers a 'Book a Tour' button with no price. Whether tours are free or paid is unknown. The Bookings page says new bookings are temporarily closed (likely venue and event hire; not clear if tours are affected).",
+    "HAUNTED REPUTATION: The National (2022) says local legends of hauntings gave the town the name Ghost Village; The National (2025) says it acquired 'a rather mystical reputation'; Wikipedia says it is widely believed locally to be haunted and that a mosque is reported haunted. No specific story was used and nothing is presented as fact. The National (2014) says its 'living ghost town' headline refers to the abandoned look and the annual reunions, not paranormal activity.",
+    "COORDINATES: Wikipedia (25°42′32″N 55°47′50″E) and UNESCO (N25 42 34 E55 47 40) differ by about 280 metres, both in whole seconds. The page uses the Wikipedia point, which a January 2026 Commons photo geotag supports. The entrance and car park were not located; confirm on a current map.",
+    "DRIVE TIME: only Visit RAK's 'about 20 minutes from central Ras Al Khaimah' was found. No source opened gives a time from Dubai or Abu Dhabi, so none is given. Khaleej Times (2016) names the E311 and a turn after 5 km; Visit RAK names the E11. The road numbering was not checked, so the 2016 directions are flagged as dated.",
+    "2WD CLAIM: access is marked 2wd because Visit RAK says you can drive directly and that parking is near the entrance. No source states the surface of the car park or approach road; Visit RAK's page classes the terrain as sandy.",
+    "FACILITIES: no source opened confirms public toilets, a cafe or mobile signal. One staff biography on ajah.ae mentions maintaining restroom facilities, which is not enough to promise toilets. Food trucks and pop-ups were reported only during the 2025 festival. Shade is set to 'some' only because the field has no 'minimal' value; Visit RAK says minimal shade.",
+    "POPULATION AND DATES: ajah.ae and The National (2025) give about 2,500 residents (ajah: 2,500 to 3,000 in about 500 houses); Wikipedia gives about 2,500 before 1968 and 200 in 1830; The National (2014) gives a peak of 4,100 by 1831, which conflicts and was not used. Abandonment is 1968 to 1971 (Department of Antiquities and Museums, Visit RAK), 'began in 1969, early 1970s' (ajah.ae) and 'by 1968' (Khaleej Times 2016). The decline of pearling is dated to the 1920s by ajah.ae and the Department; Khaleej Times (2016) ties it to cultured pearls in the 1930s. The text gives 1920s and 'about 1968 to 1971'.",
+    "SHEIKH'S NAME: the Department, ajah.ae and Wikipedia give Rajib bin Ahmed Al Zaabi as the 1820 signatory; Visit RAK's attraction page gives 'Qadib'. The page uses Rajib and the Department's wording. Wikipedia's 1830 population (about 200) and 1914 transfer to Ras Al Khaimah were not used.",
+    "SUPERLATIVES: Visit RAK, the Department and ajah.ae describe it as the only remaining historical pearling village in the Gulf; the Minister of Culture called it 'the best-preserved pearling town in the Gulf' (Ministry of Culture news item, 8 September 2020); Visit RAK also calls it the oldest village in the UAE. None was repeated as fact, and the oldest-village claim was left out because no independent source was found.",
+    "GULF NEWS RESTORATION COUNT: a Gulf News item (id 986066, shown as updated 15 September 2018) says 334 buildings, including 11 mosques, 18 shops and 2 schools, were restored and the village opened; it looks like an older reunion report re-indexed in 2018 and conflicts with the Department's 'six restored courtyard houses'. Left out. Gulf News (November 2018) also reported plans for a restored mosque, parking, museums, a boutique hotel and restaurants; the current status of those plans is unknown and none are mentioned.",
+    "WATCHTOWER: the 2020 press release says the Department planned to open the restored watchtower to the public; whether it did was not found.",
+    "ANNUAL REUNION: The National (2014) says former residents hold an annual reunion party, started in 2012. No current source confirms it still takes place, so it is not listed as an event.",
+    "EVENTS: the 2027 RAK Art dates (22 January to 14 February 2027) and theme come from rakart.ae; no ticket or entry information for 2027 was published on the pages opened. The 2026 pricing is from The National, not from the festival site. The 2026 edition ran 16 January to 8 February (The National, Wikipedia); it is past and not listed as an event.",
+    "SEASON: no source gives a best season. The months array (best November to March, shoulder October and April, avoid May to September) is a judgement based on Visit RAK's heat advice and the January and February festival; it needs an editor's check. No temperatures were quoted.",
+    "DRONES AND PHOTOGRAPHY: no site-specific drone rule was found on Visit RAK, ajah.ae or the Department's page. The u.ae page describes GCAA authorisation, security clearance for recording drones and the My Drone Hub app in general terms; whether the site is in a restricted zone was not checked. The Bookings page says production bookings are accepted; commercial shoot rules and fees are unknown.",
+    "NAME SPELLING AND ARABIC: Wikipedia gives الجزيرة الحمراء. The operator uses Al Jazeera Al Hamra Heritage Village, Visit RAK uses both spellings and UNESCO uses Jazirat Al-Hamra. The id and name follow the brief.",
+    "WIKIMEDIA PHOTO: the first-choice photo (Karachun, January 2026) is a rooftop view from what appears to be the fort; it shows restored flat-roofed buildings, not ruins. Commons category files titled 'Old City Al Jazirat Al Hamra In Umm Al Quwain' are mislabelled panoramio uploads and were not considered. Several panoramio and Flickr images in the category are lower quality, show hotels or are watermarked.",
+    "NOT CHECKED: Tripadvisor, Atlas Obscura, PropertyFinder and Wanderlog pages were found in search but not opened or used. The Gulf News 2020 UNESCO article was opened and only confirms the tentative listing. The Visit RAK attraction page itself was blocked to direct download (Cloudflare) and was read through the fetch tool, which returned quotations."
+  ],
+  "glance": {
+    "how": "Drive off the E11, park near the entrance and walk the lanes; no public transport details were found",
+    "time": "45 to 90 minutes; 1 to 2 hours with a guided tour",
+    "best": "Tuesday to Sunday in daylight, outside the midday heat; ring ahead for times",
+    "cost": "No entry fee (Visit Ras Al Khaimah); tours and events may charge",
+    "badge": "Heritage village"
+  },
+  "photoCredit": {
+    "author": "Karachun",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Al_Jazirah_Al_Hamra_2026-01.jpg",
+    "what": "A view over the flat roofs and lanes of Al Jazirah Al Hamra, taken in January 2026.",
+    "edits": "resized"
+  }
+}

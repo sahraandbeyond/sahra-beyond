@@ -1,0 +1,106 @@
+{
+  "_note": "Sahel product names, places and map pins. Source: MASTER_BRIEF Decision Log 2026-10-05 'Sahel product names now carry a place' and HANDOFF-2026-10-05-sahel-product-names.md. 'Snoopy' never appears in a garment name (Peanuts trademark); it stays only as the place name. Tees take the short design name on cards and pins and add 'Tee' where the name stands alone. Before the reveal sahel-page.js prints the name and the type only (Faheem, 6 Oct); colour, place and price wait for STATE 'reveal'. Arabic product names are not written yet (they need Faheem's read).",
+  "pieces": [
+    {
+      "id": "khor-fakkan-bay",
+      "design": "Khor Fakkan Bay",
+      "name": "Khor Fakkan Bay Tee",
+      "type": "tee",
+      "label": "Tee",
+      "colour": "Jet Set",
+      "price": 199,
+      "fits": [
+        "Regular",
+        "Oversized"
+      ],
+      "placeName": "Khor Fakkan",
+      "placeSlug": "khor-fakkan-beach",
+      "was": "Khor Fakkan tee"
+    },
+    {
+      "id": "al-hamra-pearl-diver",
+      "design": "Al Hamra Pearl Diver",
+      "name": "Al Hamra Pearl Diver Tee",
+      "type": "tee",
+      "label": "Tee",
+      "colour": "Estate Blue",
+      "price": 199,
+      "fits": [
+        "Regular",
+        "Oversized"
+      ],
+      "placeName": "Al Jazirah Al Hamra",
+      "placeSlug": "al-jazirah-al-hamra",
+      "was": "Pearl Diver tee"
+    },
+    {
+      "id": "al-aqah-reef",
+      "design": "Al Aqah Reef",
+      "name": "Al Aqah Reef Tee",
+      "type": "tee",
+      "label": "Tee",
+      "colour": "Deep Teal",
+      "price": 199,
+      "fits": [
+        "Regular",
+        "Oversized"
+      ],
+      "placeName": "Snoopy Island, Al Aqah",
+      "placeSlug": "snoopy-island",
+      "was": "Snoopy Island tee"
+    },
+    {
+      "id": "sahel-logo-tee",
+      "design": "Sahel Logo Tee",
+      "name": "Sahel Logo Tee",
+      "type": "tee",
+      "label": "Tee",
+      "colour": "Jet Set",
+      "price": 139,
+      "fits": [
+        "Regular",
+        "Oversized"
+      ],
+      "placeName": null,
+      "placeSlug": null,
+      "was": "Plain Logo Tee"
+    },
+    {
+      "id": "sahel-polo",
+      "design": "The Sahel Polo",
+      "name": "The Sahel Polo",
+      "type": "polo",
+      "label": "Polo",
+      "colour": "Black",
+      "price": null,
+      "placeName": null,
+      "placeSlug": null,
+      "was": "Black polo"
+    },
+    {
+      "id": "shuweihat-hoodie",
+      "design": "Shuweihat Hoodie",
+      "name": "Shuweihat Hoodie",
+      "type": "hoodie",
+      "label": "Hoodie",
+      "colour": "Salute",
+      "price": 229,
+      "placeName": "Shuweihat Island",
+      "placeSlug": "shuweihat-island",
+      "inspiredBy": true,
+      "was": "Sahel Hoodie, Salute"
+    },
+    {
+      "id": "ras-al-khor-hoodie",
+      "design": "Ras Al Khor Hoodie",
+      "name": "Ras Al Khor Hoodie",
+      "type": "hoodie",
+      "label": "Hoodie",
+      "colour": "Estate Blue",
+      "price": 229,
+      "placeName": "Ras Al Khor Wildlife Sanctuary",
+      "placeSlug": "ras-al-khor",
+      "was": "Sahel Hoodie, Estate Blue"
+    }
+  ]
+}

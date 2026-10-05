@@ -1,0 +1,192 @@
+{
+  "id": "ras-al-khor",
+  "name": "Ras Al Khor Wildlife Sanctuary",
+  "nameAr": "رأس الخور للحياة الفطرية",
+  "emoji": "🦩",
+  "emirate": "Dubai",
+  "category": "Coast",
+  "difficulty": "Easy",
+  "season": "Oct–Mar",
+  "distance": "Inside Dubai, at the head of Dubai Creek; no source gives a drive time",
+  "lat": 25.190992,
+  "lng": 55.310547,
+  "status": "safe",
+  "desc": "A protected Ramsar wetland at the head of Dubai Creek with three bird hides, flamingos reported all year and large winter bird numbers. A Dh650-million redevelopment has been reported to have closed it temporarily, so check first.",
+  "cover": "/uploads/places/ras-al-khor.jpg",
+  "coverAlt": "Hundreds of greater flamingos standing in shallow water at Ras Al Khor, with mangroves behind",
+  "coverFocus": "50% 60%",
+  "igPosts": [],
+  "area": "Head of Dubai Creek, Dubai, with hides on the E66 and the Dubai to Hatta road (E44)",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2,
+    2
+  ],
+  "bestTime": "October to March, the Municipality's winter season, when bird numbers are highest. Go in the morning and check the tide: uaebirding says high tide pushes waders toward the Mangrove Hide.",
+  "timeNeeded": "About 1 to 2 hours for one or two hides (our estimate; uaebirding suggests starting with an hour at the Mangrove Hide)",
+  "fees": "No entry fee is listed on Dubai Municipality's visitor pages; Khaleej Times (July 2025) and Visit Dubai describe the hides as free (last checked October 2026). Walk-in registration is required for individuals and families. Schools, universities, tour companies and media must pre-book through the Municipality's online portal.",
+  "hours": "Dubai Municipality's Plan Your Visit page lists 7:30am–5:30pm in winter (October–March) and 6:00am–6:00pm in summer (April–September), last checked October 2026. The page does not say which days. Whether the sanctuary is actually open is unconfirmed: see the closure notes in the text, and call 800900.",
+  "facilities": {
+    "toilets": "unknown",
+    "food": "unknown",
+    "shade": "unknown",
+    "signal": "unknown",
+    "note": "No source we opened confirms toilets, food, shade or mobile signal at the hides. Food and drink are not allowed inside the hides (Dubai Municipality). Parking is at lay-bys by the hides; sources differ on how much space there is, and the sanctuary is under redevelopment."
+  },
+  "gpsSource": "Pin is the Flamingo Hide lay-by, 25.190992, 55.310547, from https://www.uaebirding.com/ras-al-khor (Mangrove Hide lay-by at 25.185125, 55.331003 on the same page). Cross-check: Wikipedia's Ras Al Khor article gives 25°11′34.8″N 55°19′22.8″E, which is 25.193000, 55.323000 (a rounded area centre between the two hides): https://en.wikipedia.org/wiki/Ras_Al_Khor. Birding Places gives 25.191930747768, 55.31055329291 for the sanctuary: https://www.birdingplaces.eu/en/birdingplaces/united-arab-emirates/ras-al-khor-wildlife-sanctuary.",
+  "sources": [
+    {
+      "label": "Dubai Municipality: Ras Al Khor Wildlife Sanctuary (Dubai Protected Areas)",
+      "url": "https://www.dm.gov.ae/dubai-protected-areas/wildlife/"
+    },
+    {
+      "label": "Dubai Municipality: Plan Your Visit (hours, rules)",
+      "url": "https://www.dm.gov.ae/dubai-protected-areas/plan-your-visit/"
+    },
+    {
+      "label": "Dubai Municipality: Book a visit (hides, registration, groups)",
+      "url": "https://www.dm.gov.ae/dubai-protected-areas/book-a-visit/"
+    },
+    {
+      "label": "Dubai Municipality: Contact (helpline 800900)",
+      "url": "https://www.dm.gov.ae/contact/"
+    },
+    {
+      "label": "Ramsar Sites Information Service: Ras Al Khor Wildlife Sanctuary (site 1715)",
+      "url": "https://rsis.ramsar.org/ris/1715"
+    },
+    {
+      "label": "Wikipedia: Ras Al Khor",
+      "url": "https://en.wikipedia.org/wiki/Ras_Al_Khor"
+    },
+    {
+      "label": "uaebirding: Ra's al-Khor Wildlife Reserve",
+      "url": "https://www.uaebirding.com/ras-al-khor"
+    },
+    {
+      "label": "Birding Places: Ras al Khor Wildlife Sanctuary",
+      "url": "https://www.birdingplaces.eu/en/birdingplaces/united-arab-emirates/ras-al-khor-wildlife-sanctuary"
+    },
+    {
+      "label": "Khaleej Times: Dubai temporarily closes Ras Al Khor sanctuary for Dh650-million development",
+      "url": "https://www.khaleejtimes.com/travel/uae-attractions/ras-al-khor-sanctuary-temporary-closure"
+    },
+    {
+      "label": "Gulf Construction: Dubai Municipality awards contract for first phase of Ras Al Khor Sanctuary",
+      "url": "https://gulfconstructiononline.com/ArticleTA/434521/Dubai-Municipality-awards-contract-for-first-phase-of-Ras-Al-Khor-Sanctuary-"
+    },
+    {
+      "label": "Economy Middle East: first phase of the Ras Al Khor Sanctuary Project",
+      "url": "https://economymiddleeast.com/news/dubai-municipality-awards-contract-for-first-phase-of-177-million-ras-al-khor-sanctuary-project/"
+    },
+    {
+      "label": "The National: Dubai approves Dh650 million Ras Al Khor Wildlife Sanctuary project",
+      "url": "https://www.thenationalnews.com/news/uae/2025/06/30/dubai-approves-dh650-million-ras-al-khor-wildlife-sanctuary-project/"
+    },
+    {
+      "label": "Visit Dubai: Ras Al Khor Wildlife Sanctuary",
+      "url": "https://www.visitdubai.com/en/places-to-visit/ras-al-khor-wildlife-sanctuary"
+    },
+    {
+      "label": "PropertyFinder: Your guide to Ras Al Khor Wildlife Sanctuary",
+      "url": "https://www.propertyfinder.ae/blog/your-guide-to-ras-al-khor-wildlife-sanctuary/"
+    },
+    {
+      "label": "MyBayut: Ras Al Khor Wildlife Sanctuary",
+      "url": "https://www.bayut.com/mybayut/ras-al-khor-wildlife-sanctuary/"
+    },
+    {
+      "label": "GCAA: Unmanned Aircraft Recreational Flights, CAR-UAR Issue 04",
+      "url": "https://www.gcaa.gov.ae/en/epublication/EPublications/Civil%20Aviation%20Regulations%20(CARs)/EMERGING%20TECHNOLOGIES/UNMANNED%20AIR%20SYSTEMS%20(UAS)/CAR-UAR%20-%20UNMANNED%20AIRCRAFT%20UA%20RECREATIONAL%20FLIGHTS%20-%20ISSUE%2004.pdf"
+    }
+  ],
+  "seoTitle": "Ras Al Khor Wildlife Sanctuary, Dubai: Hides & Hours",
+  "seoDesc": "Ras Al Khor Wildlife Sanctuary, Dubai: the three bird hides, listed hours, flamingos by season, and what the redevelopment means for visits.",
+  "access": {
+    "vehicle": "2wd",
+    "note": "The hides are reached from lay-bys off main roads (E66 for the Flamingo Hide, the Dubai to Hatta road E44 for the Mangrove Hide, per uaebirding), and the Lagoon Hide by a sandy road from the Flamingo Hide. No source states a vehicle requirement, and the exits are described as poorly signposted."
+  },
+  "body": "Ras Al Khor Wildlife Sanctuary is a protected wetland at the head of Dubai Creek, in the middle of the city. The name translates as Head of the Creek (Wikipedia). Dubai Municipality describes it as a wetland of international importance in a hyper-arid setting, formally designated under the Ramsar Convention in 2007 as the first wetland in the country, and also an Important Bird Area under BirdLife International. Its habitats are mangroves, intertidal areas, mudflats and sabkhas. Sources disagree on its size: the Municipality gives 10.13 km2, while the Ramsar information sheet gives 620 hectares, so no single figure is used here.\n\nThe first thing to know is that access is unclear. Khaleej Times reported on 4 July 2025 that the sanctuary had temporarily closed as part of a Dh650-million development, and the uaebirding site noted in September 2025 that the reserve appeared to be temporarily closed. Dubai Municipality's own statement on the project says the first phase is expected to finish by the end of 2026. Yet the Municipality's Book a visit page, last checked October 2026, marks only the Mangrove Hide as temporarily closed and lists the Flamingo Hide and Lagoon Hide without a closure note. We could not reconcile these. Call the Municipality helpline on 800900 before you travel. There are three bird hides, built by Dubai Municipality around the fenced reserve. The Mangrove Hide is described by the Municipality as the place for migratory ducks, snipes, shanks, greater cormorants and Eurasian spoonbills, with storks possible in winter; its Book a visit entry says Temporarily closed as of October 2026. The Flamingo Hide is the one the Municipality advertises for flamingos all year round. The Lagoon Hide opens onto the creek water and is pitched at keen birdwatchers, with waders through to raptors; uaebirding says it is reached by a sandy road from the Flamingo Hide. Inside any hide, the Municipality asks for a quiet zone with no phones, pets, food, drink or smoking, and allows only 15 people at a time.\n\nThe sanctuary is mainly known for migratory birds. The Municipality says winter numbers may reach up to 25,000 birds, and counts 201 bird species on its wildlife page. The Ramsar information sheet gives a different picture, more than 20,000 waterbirds of 67 species in winter and more than 3,000 greater flamingos counted, without a year in the text we read. Flamingos are present year-round at the Flamingo Hide according to the Municipality and uaebirding. Other seasonal patterns come from uaebirding: Broad-billed Sandpipers from July to April, and Greater Spotted Eagles in view from October to April. It adds that high tide pushes waders toward the Mangrove Hide. The Municipality lists Socotra Cormorant, Ferruginous Duck and Sociable Lapwing as globally threatened species the site supports.\n\nBoth open hides sit beside main roads. uaebirding gives a lay-by for the Flamingo Hide off the E66 at 25.190992, 55.310547, with an exit it calls un-signposted, and a lay-by for the Mangrove Hide off the westbound lane of the Dubai to Hatta road (E44) at 25.185125, 55.331003. PropertyFinder suggests the Dubai Metro Green Line to Al Jadaf or Creek station and then a short taxi ride; we have not confirmed bus routes. The Municipality's listed hours are 7:30am to 5:30pm in winter (October to March) and 6:00am to 6:00pm in summer (April to September), last checked October 2026. Entry is not priced on the Municipality's pages and Khaleej Times and Visit Dubai describe the hides as free, but walk-in registration is required and you may be asked for an Emirates ID. Bring binoculars, a camera and a field guide, as the Municipality suggests, keep behind the fence and No Entry signs, and treat the wetland as the birds' home first. Parking outside designated areas, approaching wildlife and making noise can bring heavy fines.",
+  "faqs": [
+    {
+      "q": "Is Ras Al Khor Wildlife Sanctuary open now?",
+      "a": "We could not confirm it. Khaleej Times reported a temporary closure for redevelopment on 4 July 2025, and uaebirding noted the same in September 2025. Dubai Municipality's Book a visit page, last checked October 2026, marks only the Mangrove Hide as temporarily closed. Call the Municipality helpline on 800900 before travelling."
+    },
+    {
+      "q": "Is it free, and do I need a permit?",
+      "a": "The Municipality's visitor pages list no fee, and Khaleej Times and Visit Dubai describe the hides as free (last checked October 2026). Families and individuals do not need a permit but must complete walk-in registration and may be asked for an Emirates ID. Schools, universities, tour companies and media groups must pre-book through the Municipality's online portal; media filming needs a No Objection Certificate (nrs@dm.gov.ae)."
+    },
+    {
+      "q": "Which bird hides are there, and which are open?",
+      "a": "Three: Mangrove Hide, Flamingo Hide and Lagoon Hide. On its Book a visit page, last checked October 2026, Dubai Municipality marks the Mangrove Hide as temporarily closed, describes the Flamingo Hide for flamingos all year round, and pitches the Lagoon Hide at experienced birdwatchers. It does not give a separate open or closed notice for the last two, so confirm by phone."
+    },
+    {
+      "q": "When can I see flamingos?",
+      "a": "Dubai Municipality says flamingos are at the Flamingo Hide all year round, and uaebirding says the hide always has greater flamingos present. The Municipality adds that winter is the peak for bird numbers, with up to 25,000 birds."
+    },
+    {
+      "q": "Can I get there by metro or bus?",
+      "a": "PropertyFinder suggests the Dubai Metro Green Line to Al Jadaf or Creek station and then a short taxi ride. We have not confirmed any bus routes with the RTA. uaebirding says most taxi drivers know the Mangrove Hide."
+    },
+    {
+      "q": "Can I fly a drone or take photographs?",
+      "a": "Photographers can walk in with registration. Phones are listed as not allowed inside the hides, and the Municipality tells visitors to bring a camera. Its visitor rules do not mention drones, but they ban noise-producing equipment and approaching wildlife, and UAE recreational drone rules (GCAA CAR-UAR) require flight approval. Treat drones as not allowed unless the Municipality approves in writing."
+    }
+  ],
+  "guide": {
+    "gettingThere": "Ras Al Khor is inside Dubai, so there is no long drive. uaebirding describes two entrances on the roads that wrap the wetland. For the Flamingo Hide, take the E66 round the inlet to an exit it calls un-signposted, with a lay-by at 25.190992, 55.310547. For the Mangrove Hide, you need to be on the Dubai to Hatta road (E44) heading west, back toward the city, where the lay-by turn-off is poorly signposted at 25.185125, 55.331003. The Municipality gives Makani numbers for the hides: 31623 86559 (Mangrove), 29772 87328 (Flamingo) and 30487 87923 (Lagoon). The two lay-bys are about 2.73 km apart by road (uaebirding), and walking between the Mangrove and Flamingo hides is not permitted. Without a car, PropertyFinder suggests the Green Line to Al Jadaf or Creek station and a short taxi ride, and uaebirding says most taxi drivers know the Mangrove Hide.",
+    "whenToGo": "Dubai Municipality splits the year into a winter season (October to March, 7:30am to 5:30pm) and a summer season (April to September, 6:00am to 6:00pm), last checked October 2026. Bird numbers are highest in winter: the Municipality says up to 25,000 birds, and the Ramsar information sheet gives more than 20,000 waterbirds. Flamingos are reported year-round at the Flamingo Hide. uaebirding says Broad-billed Sandpipers are present from July to April and Greater Spotted Eagles are always in view from October to April. The Municipality asks visitors to check air quality and weather before planning. Because of the redevelopment, confirm opening with the helpline (800900) whatever the season.",
+    "onSite": "Plan around the hides, not a trail. The Mangrove Hide is the place for waders and, per uaebirding, for Broad-billed Sandpipers and Pacific Golden Plovers right in front of it; the Municipality lists migratory ducks, snipes, shanks, greater cormorants, Eurasian spoonbills and, in winter, storks. The Flamingo Hide looks over the flamingo water and, in winter, uaebirding says Greater Spotted Eagles soar overhead. The Lagoon Hide opens onto the creek water and is for experienced birdwatchers. The Municipality suggests binoculars, a camera and a bird and nature guide. Once the first phase is complete, Economy Middle East, reporting the Municipality's project statement, describes a visitor centre and birdwatching towers; the second phase adds 3 km of walking trails and 5.6 km of cycling tracks (Gulf Construction), at a later stage.",
+    "safety": "The Municipality asks visitors to take responsibility for their own safety: no more than 15 people at a time in a hide, do not sit on the window plank, keep hydrated, no rushing or pushing, and mind your belongings. Do not go beyond No Entry signs or the fenced area. Summer heat is the obvious hazard, and the summer opening hours run from 6:00am. The exits to the Flamingo and Mangrove hide lay-bys come off fast roads and are poorly signposted (uaebirding), so slow down early. Dubai Municipality's helpline is 800900.",
+    "heritage": "Dubai Municipality says Ras Al Khor was an important spawning area for fish, which supported traditional fishing that led to the early 18th-century settlements of Deira, Shindaga and Bur Dubai. It was declared a protected area on 1 March 1998 (Local Order No. 2 of 1998) and designated a Ramsar site in 2007, the first wetland in the country. Wikipedia notes it was formerly the end of Dubai Creek, before the Dubai Canal was built. The Municipality's own Protected Areas page records the 2015 GCC Award for Environment and Wildlife.",
+    "etiquette": "Keep quiet in the hides and keep phones put away, as Dubai Municipality asks. Stay behind the fence, park only in designated areas, bring no pets, and do not approach, disturb or feed the birds: the Municipality lists approaching or harming wildlife, noise, polluting, collecting plants or animals and hunting as prohibited and subject to heavy fines. Walk-in registration is required, and you may be asked for an Emirates ID. Commercial photography and filming need a No Objection Certificate from the Municipality's Natural Reserves Section. Do not fly a drone without written approval."
+  },
+  "overnight": false,
+  "lastChecked": "2026-10-06",
+  "_doubts": [
+    "STATUS CONFLICT (most important): Khaleej Times (4 Jul 2025) says the whole sanctuary has temporarily closed for the Dh650-million development, but gives no start date, no reopening date and no quote from the Municipality. uaebirding (Sept 2025 update) says it appears temporarily closed, rumours of three years, not confirmed. MyBayut says temporarily closed for redevelopment, undated. Against that, Dubai Municipality's Book a visit page (footer showed it modified 5 Oct 2026, which may be a site-wide stamp) marks only the Mangrove Hide as temporarily closed and shows hours on the Plan Your Visit page, and PropertyFinder (modified 27 Sep 2026) gives hours with no closure note. The Municipality's project statement (via Gulf Construction, Gulf Today, Economy Middle East, 30 Jun to 2 Jul 2025) does not mention a closure. The page therefore says 'unconfirmed, call 800900'. Please verify by phone or on site before publishing anything stronger.",
+    "HIDES: Birding Places (updated 30 Aug 2024) said two hides were open (Mangrove and Flamingo) and the Lagoon Hide was closed for renovation. The Municipality's current page describes the Lagoon Hide with no closure note. A Gulf News item 'Ras Al Khor Mangrove Hide closed for maintenance' appeared in search results but was not opened, so it is not used. No dated, official open/closed status per hide exists beyond the Mangrove Hide note.",
+    "HOURS: only the Municipality's seasonal hours are given (7:30am-5:30pm Oct-Mar, 6:00am-6:00pm Apr-Sep). The page does not state days of the week; PropertyFinder says daily and Visit Dubai says hides open daily, not used as hours. uaebirding says the Mangrove Hide is open 9am to 4pm, which conflicts and is older, so left out. Whether the hides open the full sanctuary hours is not stated.",
+    "FEES: no fee or ticket price appears on the Municipality's pages. 'Free' comes from Khaleej Times, Visit Dubai (search snippet-level text from a partial page read), Bayut and Wikipedia. Walk-in registration and Emirates ID wording is from the Municipality's Book a visit page; it is not stated what a tourist without an Emirates ID should present.",
+    "PERMIT FOR GROUPS: the Municipality says schools, universities, tour companies, media and research groups must pre-book (media and research via a No Objection Certificate). No group size threshold is given. uaebirding's claim that no permit is needed for the three hides applies to ordinary visitors and predates the closure.",
+    "AREA: Dubai Municipality and Wikipedia give 10.13 km2; the Ramsar information sheet gives 620 ha; Wikipedia's infobox gives 1,300 ha; The National (30 Jun 2025) gives about 6.4 km2 for the sanctuary, while Gulf Construction/Economy Middle East say Phase I covers about 6.4 km2 of the sanctuary, so the 6.4 figure may be the project area. No figure is given on the page. The Ramsar designation date of 29 August 2007 appears in Wikipedia's infobox citing the Ramsar sheet and in one read of the sheet but not another, so only '2007' (the Municipality's wording) is used.",
+    "BIRD COUNTS: Municipality 'up to 25,000 birds of 201 species' in winter (this reads as the all-time species total, not winter-only); Ramsar sheet 'more than 20,000 waterbirds of 67 species' and 'more than 3,000 Greater Flamingoes' with no year in the text read; The National says about 20,000 migratory birds annually; uaebirding says 190 species excluding escapes. All attributed; none given as current. The Municipality says 472 total species, Wikipedia and Ramsar say about 470 and over 450; not used. BirdLife's IBA factsheet URL returned 404 so the IBA status rests on the Municipality's page. eBird hotspot pages were not opened (links appear on uaebirding), so no eBird counts or seasonality charts are used.",
+    "FLAMINGO SEASONALITY: the only official statement is 'all year round'. Whether numbers peak in a particular month is not stated by an official source; PropertyFinder's feeding-time claim (10am to 4pm in winter) and uaebirding's claim that rangers feed flamingos every afternoon are single-source and not used.",
+    "MONTHS SCORES: judgement, not sourced. Based on the Municipality's winter season (Oct-Mar) for bird numbers and autumn/spring passage (Birding Places), with summer scored 0 for heat and the shorter bird presence; no temperature source was opened. Oct, Sep and Apr scored as shoulder or good accordingly.",
+    "TRANSPORT: the metro (Green Line to Al Jadaf or Creek, then a short taxi) comes from PropertyFinder only. Bus routes 55, 61, 63E, X23 and E16 named there were not used or confirmed with the RTA; the Moovit page could not be fetched (robots). Visit Dubai's page excerpt gave no directions. Birding Places mentions an entrance via Oud Metha Road; this conflicts with uaebirding's lay-by description and was not used.",
+    "COORDINATES: the pin is the Flamingo Hide lay-by from uaebirding (a birding site, not an official map). The Municipality publishes Makani numbers instead of coordinates. Wikipedia's 25.193000, 55.323000 is a rounded area centre. Confirm on a current map once access is clear.",
+    "DISTANCE AND TIME: no source gives a drive time from Dubai places, so none is given. timeNeeded (1 to 2 hours) is our estimate.",
+    "VEHICLE: access.vehicle '2wd' is inferred from lay-bys beside main roads; no source states a vehicle type. Birding Places says 'accessible by car on unpaved roads' for the entrance; uaebirding says the Lagoon Hide is by a sandy road.",
+    "FACILITIES: no source opened confirms toilets, shade, food or signal; all marked unknown. Parking sources conflict (uaebirding: tiny lot at the Mangrove Hide that fills at weekends, older; PropertyFinder: a large car park; Bayut: parking on site), so no capacity is stated.",
+    "DRONES: no official Ras Al Khor-specific drone rule was found. The Municipality's rules ban noise-producing equipment and approaching wildlife and do not name drones. GCAA CAR-UAR Issue 04 requires registration, training and flight approval and says to stay clear of restricted areas shown on the UAE Drones platform; it does not name wildlife reserves. 'Treat drones as not allowed unless approved in writing' is our cautious advice, not a quoted rule. Dubai Airports and the Dubai Media Office were not checked.",
+    "PHOTOGRAPHY: the Municipality says 'No Phone' inside the hides and also tells visitors to bring a camera; how phone cameras are treated is not stated. The Municipality lists photographers as walk-in with registration, and commercial filming needs a NOC from the Natural Reserves Section.",
+    "REDEVELOPMENT DETAILS: the Dh650-million cost, 144 percent increase in water bodies to 74 ha, 10 ha of new mudflat, mangrove increase from 40 to 65 ha, visitor centre, towers, 3 km of trails and 5.6 km of cycling tracks are from the Municipality's June 2025 statement as reported by Khaleej Times, Gulf Construction, Gulf News and Economy Middle East. They are left out of the body except for the first-phase end-2026 target, the visitor centre/towers and trails, because they are plans and may have changed. Whether works finished on schedule is unknown. The Time Out and MEP Middle East pages returned errors and were not read.",
+    "NAME: nameAr 'رأس الخور للحياة الفطرية' is the Arabic Wikipedia article title as shown on the English Wikipedia language links; the Municipality's Arabic page was not read for its preferred wording. 'Head of the Creek' translation is Wikipedia's.",
+    "NOT FOUND: no Visit Dubai-hosted hours, no official statement on guided tours (Visit Dubai's snippet mentions free guided tours; the Municipality mentions free awareness programmes for schools and universities only), no official guidance on telescope or tripod use, no official guidance on children or dress.",
+    "PHOTO: three Commons candidates were checked on their file pages and by eye; no Commons category for the sanctuary has a wide choice, and the first choice shows the wetland rather than a close flamingo shot. The Commons API was rate-limited during the search, so other suitable files may exist."
+  ],
+  "glance": {
+    "how": "Drive or taxi to lay-bys beside the hides; walk-in registration required",
+    "time": "About 1 to 2 hours",
+    "best": "October to March, mornings; confirm it is open first",
+    "cost": "No fee listed; hides described as free",
+    "badge": "Bird hides"
+  },
+  "photoCredit": {
+    "author": "Mohammed Abdul Haris",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Wings_of_Grace.jpg",
+    "what": "Greater flamingos in golden light at Ras Al Khor Wildlife Sanctuary, Dubai, with mangroves behind.",
+    "edits": "resized"
+  }
+}
