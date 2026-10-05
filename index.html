@@ -969,6 +969,108 @@ footer{position:relative;z-index:2}
     text-decoration:underline;text-underline-offset:4px;letter-spacing:1.2px}
 }
 </style>
+<style data-hx>
+/* ---- Home hero, 5 Oct 2026: one piece per slide --------------------------------
+   Three bands: a line of type, the photographs edge to edge, the piece's name.
+   Nothing is laid over the photographs and nothing sits at the sides. These rules
+   are written against #s-hero.hx so the older #s-hero rules above cannot reach in. */
+html body #s-hero.hx{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;
+  padding:0!important;margin:0!important;height:calc(100vh - var(--hx-bar,44px));height:calc(100svh - var(--hx-bar,44px));min-height:560px!important;max-height:1180px;
+  background:#120E0A!important;color:#F7EFE2;overflow:hidden;text-align:center}
+html body #s-hero.hx::before,html body #s-hero.hx::after{content:none!important;display:none!important}
+#s-hero.hx .hx-top{flex:none;padding:calc(var(--hx-nav,76px) + 18px) 20px 20px}
+html.hx-in #rail{opacity:0!important;pointer-events:none!important}
+#rail{transition:opacity .4s}
+html body #s-hero.hx h1{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:500;font-size:clamp(21px,2.1vw,30px)!important;
+  line-height:1.15!important;letter-spacing:.2px;margin:0!important;padding:0!important;color:#F7EFE2!important;text-shadow:none!important;
+  max-width:none!important;width:auto!important;text-align:center!important;text-wrap:balance;opacity:1!important;transform:none!important}
+#s-hero.hx .hx-slides{position:relative;flex:1 1 auto;min-height:0;width:100%;overflow:hidden}
+#s-hero.hx .hx-s{position:absolute;inset:0;display:block;opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s;
+  color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
+#s-hero.hx .hx-s.is-on{opacity:1;visibility:visible;transition:opacity .9s ease,visibility 0s;z-index:1}
+#s-hero.hx .hx-s:focus-visible{outline:2px solid #F2C98C;outline-offset:-4px}
+#s-hero.hx .hx-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:minmax(0,1fr);gap:3px;width:100%;height:100%;background:#120E0A}
+#s-hero.hx .hx-t{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--x,50%) var(--y,22%);min-height:0;background:#2A2018;
+  transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+#s-hero.hx .hx-t:not([src]){visibility:hidden}
+@media(hover:hover){#s-hero.hx .hx-s:hover .hx-lead{transform:scale(1.025)}}
+#s-hero.hx .hx-bot{flex:none;position:relative;z-index:2;background:#120E0A;padding:18px 20px max(8px,env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:4px}
+#s-hero.hx .hx-names{display:grid;width:100%;justify-items:center}
+#s-hero.hx .hx-n{grid-area:1/1;display:flex;flex-direction:column;align-items:center;gap:5px;color:#F7EFE2;text-decoration:none;
+  opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s linear .6s;padding:2px 12px}
+#s-hero.hx .hx-n.is-on{opacity:1;visibility:visible;transition:opacity .6s ease .15s,visibility 0s}
+#s-hero.hx .hx-place{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:#F2C98C;margin-right:-.28em}
+#s-hero.hx .hx-name{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;font-size:clamp(30px,2.7vw,56px);line-height:1.05;letter-spacing:.3px}
+#s-hero.hx .hx-cta{display:inline-flex;align-items:center;gap:12px;min-height:42px;padding:0 26px;margin-top:7px;background:#F2C98C;color:#241B12;
+  font-size:13.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;border-radius:2px;transition:background .25s,transform .25s}
+#s-hero.hx .hx-cta .sb-price{color:inherit;font:inherit;letter-spacing:inherit}
+#s-hero.hx .hx-cta i{width:1px;height:13px;background:rgba(36,27,18,.4)}
+#s-hero.hx .hx-n:hover .hx-cta,#s-hero.hx .hx-slides:hover~.hx-bot .hx-n.is-on .hx-cta{background:#FBE0B4}
+#s-hero.hx .hx-n:focus-visible{outline:2px solid #F2C98C;outline-offset:6px;border-radius:2px}
+#s-hero.hx .hx-dots{display:flex;gap:2px;justify-content:center;align-items:center}
+#s-hero.hx .hx-dot,#s-hero.hx .hx-pause{appearance:none;-webkit-appearance:none;border:0;background:none;width:40px;height:28px;padding:0;cursor:pointer;position:relative;color:#F7EFE2}
+#s-hero.hx .hx-dot::before{content:"";position:absolute;left:4px;right:4px;top:50%;margin-top:-1.5px;height:3px;border-radius:2px;background:rgba(247,239,226,.5);transition:background .3s}
+#s-hero.hx .hx-dot:hover::before{background:rgba(247,239,226,.8)}
+#s-hero.hx .hx-dot.is-on::before{background:#F2C98C}
+#s-hero.hx .hx-dot:focus-visible,#s-hero.hx .hx-pause:focus-visible{outline:2px solid #F2C98C;outline-offset:-2px}
+#s-hero.hx .hx-pause{width:32px;margin-left:6px;opacity:.7;transition:opacity .25s}
+#s-hero.hx .hx-pause:hover{opacity:1}
+#s-hero.hx .hx-pause span{position:absolute;left:50%;top:50%;width:8px;height:10px;margin:-5px 0 0 -4px;border-left:2.5px solid currentColor;border-right:2.5px solid currentColor;box-sizing:border-box}
+#s-hero.hx .hx-pause[aria-pressed="true"] span{width:0;height:0;margin:-6px 0 0 -3px;border:0;border-left:9px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
+html.hx-in nav.on-hero{background:rgba(18,14,10,.94)!important}
+.hx-trust{position:relative;z-index:2;background:#1B150F;border-top:1px solid rgba(247,239,226,.08);border-bottom:1px solid rgba(242,201,140,.3);color:rgba(247,239,226,.9);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:6px 28px;padding:13px 20px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;line-height:1.5;text-align:center}
+.hx-trust .hx-tr{white-space:nowrap}
+.hx-trust .hero-stars{color:#F2C98C;letter-spacing:1px;font-weight:400}
+.hx-trust .hx-all{color:#F2C98C;text-decoration:none;border-bottom:1px solid rgba(242,201,140,.55)}
+.hx-trust .hx-all:hover{border-color:#F2C98C}
+@media(min-width:1100px) and (max-height:780px){
+  #s-hero.hx .hx-top{padding:calc(var(--hx-nav,76px) + 10px) 20px 12px}
+  html body #s-hero.hx h1{font-size:21px!important}
+  #s-hero.hx .hx-bot{padding-top:14px;gap:4px}
+  #s-hero.hx .hx-n{gap:4px}
+  #s-hero.hx .hx-name{font-size:32px}
+  #s-hero.hx .hx-cta{margin-top:6px;min-height:40px}
+}
+@media(max-width:1099px){
+  #s-hero.hx .hx-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #s-hero.hx .hx-s:not(.hx-tabc) .hx-t3,#s-hero.hx .hx-s.hx-tabc .hx-t2{display:none}
+  #s-hero.hx .hx-s.hx-tabc .hx-lead{order:-1}
+}
+@media(min-width:700px) and (max-width:1099px){
+  html body #s-hero.hx{height:auto;max-height:none;min-height:0!important}
+  #s-hero.hx .hx-slides{flex:none;height:min(75vw,calc(100svh - var(--hx-bar,44px) - 330px));min-height:420px}
+}
+@media(max-width:699px){
+  html body #s-hero.hx{min-height:520px!important;height:calc(100vh - var(--hx-bar,30px));height:calc(100svh - var(--hx-bar,30px))}
+  #s-hero.hx .hx-top{padding:calc(var(--hx-nav,52px) + 12px) 16px 13px}
+  html body #s-hero.hx h1{font-size:20px!important}
+  #s-hero.hx .hx-strip{grid-template-columns:minmax(0,1fr)}
+  #s-hero.hx .hx-s .hx-t:not(.hx-lead){display:none!important}
+  #s-hero.hx .hx-bot{padding:14px 16px max(8px,env(safe-area-inset-bottom,0px));gap:2px}
+  #s-hero.hx .hx-n{gap:5px}
+  #s-hero.hx .hx-name{font-size:30px}
+  #s-hero.hx .hx-place{font-size:11px}
+  #s-hero.hx .hx-cta{margin-top:6px;font-size:13px;padding:0 20px}
+  #s-hero.hx .hx-dot{width:44px;height:36px}
+  #s-hero.hx .hx-pause{height:36px;width:36px}
+  .hx-trust{font-size:10.5px;letter-spacing:1px;gap:5px 16px;padding:13px 14px}
+  .hx-trust .hx-tr-d{display:none}
+}
+@media(max-width:380px){
+  #s-hero.hx .hx-cta{padding:0 14px;font-size:12px;letter-spacing:1px;gap:9px}
+  #s-hero.hx .hx-name{font-size:28px}
+}
+/* Ultrawide monitors: three portrait frames stretched across 2560px would be cropped
+   to letterboxes that lose the head or the print, so the row keeps its proportions
+   and sits centred on the dark ground instead. */
+@media(min-aspect-ratio:2/1) and (min-width:1700px){
+  #s-hero.hx .hx-strip{max-width:calc((100vh - var(--hx-bar,44px) - 345px)*2.55);margin:0 auto}
+}
+@media(prefers-reduced-motion:reduce){
+  #s-hero.hx .hx-s,#s-hero.hx .hx-n,#s-hero.hx .hx-t{transition:none!important}
+}
+</style>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1550,22 +1652,25 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </script>
 
 <!-- 1 · HERO · Liwa at golden hour -->
-<section class="stop tall right" id="s-hero" data-tod="dawn" data-bg="liwa">
-  <div class="hslide" aria-hidden="true"><figure class="hslide-f is-on" data-hs="0" style="--hsimg:url('/shirts/hero-places-a.webp')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-places-a.webp" alt="" width="1200" height="1800" style="--x:45%" fetchpriority="high" decoding="async"><img class="hs-t" src="/shirts/hero-places-b.webp" alt="" width="1200" height="1800" style="--x:55%" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-a.webp" alt="" width="1200" height="1800" style="--x:30%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="1" style="--hsimg:url('/shirts/hero-cloth-a.webp')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-cloth-a.webp" alt="" width="1200" height="1800" style="--x:84%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-cloth-b.webp" alt="" width="1200" height="1800" style="--x:63%" loading="lazy" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-b.webp" alt="" width="1200" height="1800" style="--x:42%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="2" style="--hsimg:url('/shirts/hero-making-a.webp')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-making-a.webp" alt="" width="1200" height="1800" style="--x:48%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-making-b.webp" alt="" width="1200" height="1800" style="--x:55%" loading="lazy" decoding="async"><img class="hs-t hs-t3" src="/shirts/hero-dune-c.webp" alt="" width="1200" height="1800" style="--x:47%" loading="lazy" decoding="async"></span></figure><figure class="hslide-f" data-hs="3" style="--hsimg:url('/shirts/hero-trust-a.webp')"><span class="hs-strip"><img class="hs-t" src="/shirts/hero-trust-a.webp" alt="" width="1200" height="1800" style="--x:64%" loading="lazy" decoding="async"><img class="hs-t" src="/shirts/hero-trust-b.webp" alt="" width="1200" height="1800" style="--x:44%" loading="lazy" decoding="async"></span></figure><span class="hslide-scrim"></span></div>  <div class="j-wrap"><div class="col">
-    <h1><span class="rv">Wear the</span> <span class="rv">wild side</span> <span class="rv">of the UAE</span></h1>
-    <p class="hero-sub rv">Original tees from Al Quaa, Liwa and Wadi Naqab &middot; <span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span> &middot; <span class="sb-ship-uae">free next-day UAE delivery</span><span class="sb-ship-gcc">GCC delivery in 3–5 days</span><span class="sb-ship-intl">worldwide delivery</span></p>
-    <div class="hslide-cap" aria-hidden="true"><span class="hslide-cap-i is-on" data-hc="0"><b>Limited first run</b>Three places you can drive to &mdash; Al Quaa, Liwa and Wadi Naqab.</span><span class="hslide-cap-i" data-hc="1"><b>The cloth</b>230 gsm combed ring-spun cotton, regular and oversized. <b>AED&nbsp;199</b>.</span><span class="hslide-cap-i" data-hc="2"><b>The making</b>Printed on two designs, embroidered on two.</span><span class="hslide-cap-i" data-hc="3"><span class="hero-rv" data-hero-rv hidden><b class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span><span class="sb-ship-uae"><b>Free</b> next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide 7&ndash;14 days</span><span>Free UAE returns</span></span></div>
-
-
-    <!-- 23 Sep 2026 (CRO review): the pieces in each hero photo, one tap from their page.
-         The lake photographs are the Oversized fit (see the product pages' model notes). -->
-    <div class="hs-shop" role="navigation" aria-label="Shop this look"><div class="hs-shop-i is-on" data-hss="0"><span class="hs-shop-l">Shop the look</span><a href="/products/al-quaa-galaxy-oversized/" data-track="hero_look">Al Quaa Galaxy <span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></a><a href="/products/empty-quarter-oversized/" data-track="hero_look">Empty Quarter <span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span></a><a href="/products/sand-polo/" data-track="hero_look">The Sahra Polo <span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></a></div><div class="hs-shop-i" data-hss="1" hidden><span class="hs-shop-l">Shop the look</span><a href="/products/hajar-mountains-oversized/" data-track="hero_look">Hajar Mountains <span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></a><a href="/products/al-quaa-galaxy-oversized/" data-track="hero_look">Al Quaa Galaxy <span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></a><a href="/products/sand-polo/" data-track="hero_look">The Sahra Polo <span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></a></div><div class="hs-shop-i" data-hss="2" hidden><span class="hs-shop-l">Shop the look</span><a href="/products/al-quaa-galaxy-oversized/" data-track="hero_look">Al Quaa Galaxy <span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></a><a href="/products/hajar-mountains-oversized/" data-track="hero_look">Hajar Mountains <span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></a><a href="/products/sand-polo/" data-track="hero_look">The Sahra Polo <span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></a></div><div class="hs-shop-i" data-hss="3" hidden><span class="hs-shop-l">Shop the look</span><a href="/products/al-quaa-galaxy-oversized/" data-track="hero_look">Al Quaa Galaxy <span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span></a><a href="/products/hajar-mountains-oversized/" data-track="hero_look">Hajar Mountains <span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></a><a href="/products/empty-quarter-oversized/" data-track="hero_look">Empty Quarter <span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span></a></div></div>
-    <div class="actions rv"><a class="j-btn solid" href="/t-shirts/" data-track="hero_shop">Shop the tees &rarr;</a><a class="j-btn" href="/places/">The places behind them</a></div>
-    <div class="hslide-dots" aria-label="Hero slides"><button type="button" class="hslide-dot is-on" data-hd="0" aria-label="Slide 1 of 4"></button><button type="button" class="hslide-dot" data-hd="1" aria-label="Slide 2 of 4"></button><button type="button" class="hslide-dot" data-hd="2" aria-label="Slide 3 of 4"></button><button type="button" class="hslide-dot" data-hd="3" aria-label="Slide 4 of 4"></button></div>
+<section class="stop hx" id="s-hero" data-tod="dawn" data-bg="liwa" aria-roledescription="carousel" aria-label="The collection, one piece at a time">
+  <!-- 5 Oct 2026 (Faheem): one shirt per slide, the whole slide opens that shirt's page.
+       Type sits in a band above and a band below the photographs, never on them, so no
+       face or print is covered. The dune photographs are the Regular fit, so each slide
+       opens the Regular page (the fit control there is one tap from Oversized). -->
+  <div class="hx-top"><h1>Wear the wild side of the UAE</h1></div>
+  <div class="hx-slides"><a class="hx-s is-on" href="/products/al-quaa-galaxy-regular/" data-hx="0" data-track="hero_slide" tabindex="-1" aria-hidden="true"><span class="hx-strip"><img class="hx-t hx-t2" alt="" width="1400" height="2100" style="--x:60%;--y:20%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-galaxy-b.webp" data-srcset="/shirts/hs-galaxy-b-720.webp 720w, /shirts/hs-galaxy-b.webp 1400w"><img class="hx-t hx-lead" alt="" width="1400" height="2100" style="--x:50%;--y:8%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" src="/shirts/hs-galaxy-a.webp" srcset="/shirts/hs-galaxy-a-720.webp 720w, /shirts/hs-galaxy-a.webp 1400w" fetchpriority="high"><img class="hx-t hx-t3" alt="" width="1400" height="2100" style="--x:55%;--y:14%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-galaxy-c.webp" data-srcset="/shirts/hs-galaxy-c-720.webp 720w, /shirts/hs-galaxy-c.webp 1400w"></span></a><a class="hx-s" href="/products/empty-quarter-regular/" data-hx="1" data-track="hero_slide" tabindex="-1" aria-hidden="true"><span class="hx-strip"><img class="hx-t hx-t2" alt="" width="1400" height="2100" style="--x:45%;--y:22%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-eq-b.webp" data-srcset="/shirts/hs-eq-b-720.webp 720w, /shirts/hs-eq-b.webp 1400w"><img class="hx-t hx-lead" alt="" width="1400" height="2100" style="--x:45%;--y:30%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-eq-a.webp" data-srcset="/shirts/hs-eq-a-720.webp 720w, /shirts/hs-eq-a.webp 1400w"><img class="hx-t hx-t3" alt="" width="1400" height="2100" style="--x:50%;--y:40%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-eq-c.webp" data-srcset="/shirts/hs-eq-c-720.webp 720w, /shirts/hs-eq-c.webp 1400w"></span></a><a class="hx-s hx-tabc" href="/products/hajar-mountains-regular/" data-hx="2" data-track="hero_slide" tabindex="-1" aria-hidden="true"><span class="hx-strip"><img class="hx-t hx-t2" alt="" width="1400" height="2100" style="--x:50%;--y:20%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-hajar-b.webp" data-srcset="/shirts/hs-hajar-b-720.webp 720w, /shirts/hs-hajar-b.webp 1400w"><img class="hx-t hx-lead" alt="" width="1400" height="2100" style="--x:50%;--y:0%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-hajar-a.webp" data-srcset="/shirts/hs-hajar-a-720.webp 720w, /shirts/hs-hajar-a.webp 1400w"><img class="hx-t hx-t3" alt="" width="1400" height="2100" style="--x:48%;--y:35%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-hajar-c.webp" data-srcset="/shirts/hs-hajar-c-720.webp 720w, /shirts/hs-hajar-c.webp 1400w"></span></a><a class="hx-s" href="/products/sand-polo/" data-hx="3" data-track="hero_slide" tabindex="-1" aria-hidden="true"><span class="hx-strip"><img class="hx-t hx-t2" alt="" width="1400" height="2100" style="--x:50%;--y:40%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-polo-b.webp" data-srcset="/shirts/hs-polo-b-720.webp 720w, /shirts/hs-polo-b.webp 1400w"><img class="hx-t hx-lead" alt="" width="1400" height="2100" style="--x:14%;--y:14%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-polo-a.webp" data-srcset="/shirts/hs-polo-a-720.webp 720w, /shirts/hs-polo-a.webp 1400w"><img class="hx-t hx-t3" alt="" width="1400" height="2100" style="--x:55%;--y:3%" sizes="(max-width:699px) 100vw, (max-width:1099px) 50vw, 34vw" decoding="async" data-src="/shirts/hs-polo-c.webp" data-srcset="/shirts/hs-polo-c-720.webp 720w, /shirts/hs-polo-c.webp 1400w"></span></a></div>
+  <div class="hx-bot">
+    <div class="hx-names"><a class="hx-n is-on" href="/products/al-quaa-galaxy-regular/" data-hxn="0" data-track="hero_name"><span class="hx-place">Al Quaa &middot; Abu Dhabi</span><span class="hx-name">Al Quaa Galaxy</span><span class="hx-cta">Shop the tee<i aria-hidden="true"></i><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></span></a><a class="hx-n" href="/products/empty-quarter-regular/" data-hxn="1" data-track="hero_name" inert><span class="hx-place">Liwa &middot; The Empty Quarter</span><span class="hx-name">Empty Quarter</span><span class="hx-cta">Shop the tee<i aria-hidden="true"></i><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></span></a><a class="hx-n" href="/products/hajar-mountains-regular/" data-hxn="2" data-track="hero_name" inert><span class="hx-place">Wadi Naqab &middot; Ras Al Khaimah</span><span class="hx-name">Hajar Mountains</span><span class="hx-cta">Shop the tee<i aria-hidden="true"></i><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span></span></a><a class="hx-n" href="/products/sand-polo/" data-hxn="3" data-track="hero_name" inert><span class="hx-place">The dunes at dusk</span><span class="hx-name">The Sahra Polo</span><span class="hx-cta">Shop the polo<i aria-hidden="true"></i><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></span></a></div>
+    <div class="hx-dots" role="group" aria-label="Choose a piece"><button type="button" class="hx-dot is-on" data-hxd="0" aria-label="Al Quaa Galaxy, slide 1 of 4" aria-current="true"></button><button type="button" class="hx-dot" data-hxd="1" aria-label="Empty Quarter, slide 2 of 4"></button><button type="button" class="hx-dot" data-hxd="2" aria-label="Hajar Mountains, slide 3 of 4"></button><button type="button" class="hx-dot" data-hxd="3" aria-label="The Sahra Polo, slide 4 of 4"></button><button type="button" class="hx-pause" aria-label="Pause the slides" aria-pressed="false"><span aria-hidden="true"></span></button></div>
   </div>
-  </div>
-  <div class="scroll-cue">Scroll — the journey begins &#8964;</div>
 </section>
+<div class="hx-trust" role="note">
+  <span class="hx-tr"><span class="sb-ship-uae">Free next-day UAE delivery &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days &middot; free over AED 390</span><span class="sb-ship-intl">Worldwide delivery in 7&ndash;14 days</span></span>
+  <span class="hx-tr hero-rv" data-hero-rv hidden><b class="hero-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b> <span class="hero-rv-n"></span></span>
+  <span class="hx-tr">Free 14-day exchanges</span>
+  <span class="hx-tr hx-tr-d">Limited first run</span>
+  <a class="hx-tr hx-all" href="/t-shirts/" data-track="hero_shop">Shop all tees &rarr;</a>
+</div>
 
 <!-- 4b - THE COLLECTION RING. Moved out of the hero 21 Sep so the model
      slideshow owns the first screen. Same markup, same script hooks - the ring
@@ -1852,7 +1957,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <span class="ig-kind">Carousel · 10 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-03T16:21:43.464Z">Posted yesterday</span>
+    <span class="ig-ago" data-date="2026-10-03T16:21:43.464Z">Posted 2 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DeCehfniGGo/" target="_blank" rel="noopener" aria-label="Which outside are you? Two questions, three tees on @sahraandbeyond.ae, opens on Instagram">Which outside are you? Two questions, three tees</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1865,7 +1970,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <span class="ig-kind">Reel</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-03T04:58:29.848Z">Posted yesterday</span>
+    <span class="ig-ago" data-date="2026-10-03T04:58:29.848Z">Posted 2 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahratrail/reel/DeBQVY_oMkq/" target="_blank" rel="noopener" aria-label="Can you see the runner? Sahra Trail, episode 3, a Reel on @sahratrail, opens on Instagram">Can you see the runner? Sahra Trail, episode 3</a></h3>
     <a class="ig-wear" href="/trail/">Sahra Trail &rarr;</a>
   </div>
@@ -1878,7 +1983,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <span class="ig-kind">Carousel · 9 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-02T13:32:32.294Z">Posted 2 days ago</span>
+    <span class="ig-ago" data-date="2026-10-02T13:32:32.294Z">Posted 3 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/Dd_mXdmjCpX/" target="_blank" rel="noopener" aria-label="Pack your Friday: three tees, one bag on @sahraandbeyond.ae, opens on Instagram">Pack your Friday: three tees, one bag</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1891,7 +1996,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <span class="ig-kind">Carousel · 6 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-01T15:56:08.857Z">Posted 3 days ago</span>
+    <span class="ig-ago" data-date="2026-10-01T15:56:08.857Z">Posted 4 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/Dd9SAagDJKS/" target="_blank" rel="noopener" aria-label="October, outdoors: dates to save on @sahraandbeyond.ae, opens on Instagram">October, outdoors: dates to save</a></h3>
     <a class="ig-wear" href="/stargazing/">Milky Way guide &rarr;</a>
   </div>
@@ -1904,7 +2009,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <span class="ig-kind">Reel</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-01T03:46:33.129Z">Posted 3 days ago</span>
+    <span class="ig-ago" data-date="2026-10-01T03:46:33.129Z">Posted 4 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahratrail/reel/Dd7-gsoImTj/" target="_blank" rel="noopener" aria-label="1,934 m before the sun. Sahra Trail, episode 2, a Reel on @sahratrail, opens on Instagram">1,934 m before the sun. Sahra Trail, episode 2</a></h3>
     <a class="ig-wear" href="/locations/jebel-jais/">Jebel Jais guide &rarr;</a>
   </div>
@@ -3180,91 +3285,107 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 
 <script src="/assets/sahra-cart.js?v=e3d6a2a2" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
-<script data-hslide>
-/* Hero slideshow. Crossfade only - no transform, no layout work - so it cannot
-   fight the scroll-driven section animations. Auto-advance stops on reduced
-   motion, when the tab is hidden, and for good once someone picks a slide. */
+<script data-hx>
+/* Home hero: one piece per slide. Crossfade only, so it cannot fight the page's
+   scroll-driven sections. Auto-advance stops on reduced motion, when the tab is
+   hidden, while a pointer rests on the hero or focus is inside it, and for good
+   once someone picks a slide. Photographs for slides that are not showing, and
+   for tiles this screen width hides, are not fetched until they are needed. */
 (function(){
-  var figs=[].slice.call(document.querySelectorAll('.hslide-f'));
-  var caps=[].slice.call(document.querySelectorAll('.hslide-cap-i'));
-  var dots=[].slice.call(document.querySelectorAll('.hslide-dot'));
-  var shops=[].slice.call(document.querySelectorAll('.hs-shop-i'));
-  if(figs.length<2) return;
-  var i=0,timer=null,held=false;
+  var hero=document.getElementById('s-hero'); if(!hero) return;
+  var sl=[].slice.call(hero.querySelectorAll('.hx-s'));
+  var nm=[].slice.call(hero.querySelectorAll('.hx-n'));
+  var dots=[].slice.call(hero.querySelectorAll('.hx-dot'));
+  var nav=document.querySelector('nav');
+  /* The promo bar above the page and the fixed nav both vary in height, so the hero
+     measures them: it ends exactly at the bottom of the first screen, and its top
+     line starts clear of the nav. Only measured at the top of the page. */
+  function navh(){ try{
+    if((window.scrollY||0)>4) return;
+    var top=Math.max(0,Math.round(hero.getBoundingClientRect().top));
+    hero.style.setProperty('--hx-bar',top+'px');
+    if(nav){ var nb=Math.round(nav.getBoundingClientRect().bottom)-top; if(nb>30&&nb<140) hero.style.setProperty('--hx-nav',nb+'px'); }
+  }catch(e){} }
+  navh(); window.addEventListener('load',navh);
+  try{ new IntersectionObserver(function(en){ document.documentElement.classList.toggle('hx-in',en[0].intersectionRatio>.35); },{threshold:[0,.35,.6]}).observe(hero); }catch(e){}
+  function fill(n){
+    var s=sl[(n+sl.length)%sl.length]; if(!s) return;
+    var im=s.querySelectorAll('img[data-src]');
+    for(var k=0;k<im.length;k++){
+      var el=im[k];
+      if(getComputedStyle(el).display==='none') continue;
+      if(el.getAttribute('data-srcset')) el.srcset=el.getAttribute('data-srcset');
+      el.src=el.getAttribute('data-src'); el.removeAttribute('data-src'); el.removeAttribute('data-srcset');
+    }
+  }
+  fill(0);
+  if(sl.length<2) return;
+  var i=0,timer=null,held=false,over=false;
   var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function set(el,on){
+    el.classList.toggle('is-on',on);
+    if(el.classList.contains('hx-n')){ if(on) el.removeAttribute('inert'); else el.setAttribute('inert',''); }
+  }
   function show(n){
-    i=(n+figs.length)%figs.length;
-    figs.forEach(function(f,k){f.classList.toggle('is-on',k===i);});
-    caps.forEach(function(c,k){c.classList.toggle('is-on',k===i);});
-    dots.forEach(function(d,k){d.classList.toggle('is-on',k===i);});
-    shops.forEach(function(g,k){g.hidden=k!==i;g.classList.toggle('is-on',k===i);});
+    i=(n+sl.length)%sl.length; fill(i);
+    sl.forEach(function(f,k){ set(f,k===i); });
+    nm.forEach(function(f,k){ set(f,k===i); });
+    dots.forEach(function(d,k){ d.classList.toggle('is-on',k===i); if(k===i) d.setAttribute('aria-current','true'); else d.removeAttribute('aria-current'); });
   }
-  function tick(){ if(held||document.hidden) return; show(i+1); warm(i+1); }
-  function start(){ if(still||held||timer) return; timer=setInterval(tick,5200); }
-  function stop(){ if(timer){clearInterval(timer);timer=null;} }
-  dots.forEach(function(d,k){ d.addEventListener('click',function(){ held=true; stop(); show(k); }); });
+  function slow(){ try{ var c=navigator.connection; return !!(c&&(c.saveData||/2g/.test(c.effectiveType||''))); }catch(e){ return false; } }
+  function warm(n){ if(document.hidden||slow()) return; fill(n); }
+  function tick(){ if(held||over||document.hidden) return; show(i+1); warm(i+1); }
+  function start(){ if(still||held||timer) return; timer=setInterval(tick,6000); }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+  var pb=hero.querySelector('.hx-pause');
+  function mark(){ if(!pb) return; var p=held||still; pb.setAttribute('aria-pressed',p?'true':'false'); pb.setAttribute('aria-label',p?'Play the slides':'Pause the slides'); }
+  function pick(n){ held=true; stop(); show(n); warm(i+1); warm(i-1); mark(); }
+  if(pb){ pb.addEventListener('click',function(){ if(held||still){ held=false; still=false; start(); } else { held=true; stop(); } mark(); }); mark(); }
+  dots.forEach(function(d,k){ d.addEventListener('click',function(){ pick(k); }); });
   document.addEventListener('visibilitychange',function(){ document.hidden?stop():start(); });
-  /* Warm only the NEXT slide, and only when the tab is visible and the connection
-     is not metered. Flipping all three to eager on a timer pulled ~570KB on every
-     visit, including one that bounced - which made loading="lazy" decorative. */
-  function warm(n){
-    try{ if(document.hidden) return;
-         var c=navigator.connection; if(c&&(c.saveData||/2g/.test(c.effectiveType||''))) return;
-         /* a slide is two tiles now, so warm both */
-         var ims=figs[(n+figs.length)%figs.length].querySelectorAll('img');
-         for(var k=0;k<ims.length;k++) ims[k].loading='eager';
-    }catch(e){}
+  /* Hover only pauses where there is a real pointer: a touch screen fires
+     mouseenter on tap and never the matching mouseleave. */
+  if(window.matchMedia&&window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    hero.addEventListener('mouseenter',function(){ over=true; });
+    hero.addEventListener('mouseleave',function(){ over=false; });
   }
+  hero.addEventListener('focusin',function(e){ over=!(e.target&&e.target.classList&&e.target.classList.contains('hx-pause')); });
+  hero.addEventListener('focusout',function(){ over=false; });
+  var rz=null; window.addEventListener('resize',function(){ clearTimeout(rz); rz=setTimeout(function(){ navh(); fill(i); },160); });
 
-  /* Swipe. Every listener is passive and nothing calls preventDefault: the
-     homepage is a scroll-driven journey, so a hero that could swallow a
-     vertical pan would break the page itself. A gesture only counts when it
-     travels far enough AND is clearly more sideways than up-and-down, so a
-     finger drifting during a scroll never flips a slide. Direction is read
-     from the document so an RTL page swipes the way an Arabic reader expects.
-     A swipe is a deliberate pick, so it stops the auto-advance exactly as a
-     dot click does. */
-  var hero=document.getElementById('s-hero');
-  var SWIPE=44, SLOP=1.4, SWIPE_MS=900;
-  var sx=0,sy=0,stime=0,live=false;
+  /* Swipe. Every listener is passive and nothing calls preventDefault: a hero that
+     could swallow a vertical pan would break the page. A gesture counts only when
+     it travels far enough and is clearly more sideways than up-and-down. Direction
+     is read from the document, so an RTL page swipes the way its reader expects.
+     A swipe never opens the product page: browsers send no click after a drag. */
+  var SWIPE=44, SLOP=1.4, SWIPE_MS=900, sx=0, sy=0, st=0, live=false;
   function rtl(){ try{ return getComputedStyle(document.documentElement).direction==='rtl'?-1:1; }catch(e){ return 1; } }
-  function pick(step){ held=true; stop(); show(i+step); warm(i+1); warm(i-1); }
-  if(hero){
-    hero.addEventListener('touchstart',function(e){
-      if(e.touches.length!==1){ live=false; return; }
-      sx=e.touches[0].clientX; sy=e.touches[0].clientY; stime=Date.now(); live=true;
-    },{passive:true});
-    hero.addEventListener('touchmove',function(e){
-      if(!live) return;
-      if(e.touches.length!==1){ live=false; return; }
-      var dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
-      /* committed to a vertical scroll - let go and stay out of the way */
-      if(Math.abs(dy)>14&&Math.abs(dy)>Math.abs(dx)*1.2) live=false;
-    },{passive:true});
-    hero.addEventListener('touchend',function(e){
-      if(!live) return; live=false;
-      var t=e.changedTouches&&e.changedTouches[0]; if(!t) return;
-      var dx=t.clientX-sx, dy=t.clientY-sy;
-      if(Math.abs(dx)<SWIPE) return;
-      if(Math.abs(dx)<Math.abs(dy)*SLOP) return;
-      if(Date.now()-stime>SWIPE_MS) return;
-      pick((dx<0?1:-1)*rtl());
-    },{passive:true});
-    hero.addEventListener('touchcancel',function(){ live=false; },{passive:true});
-  }
-  /* Same move from the keyboard once a dot has focus. */
-  var dotwrap=document.querySelector('.hslide-dots');
-  if(dotwrap){
-    dotwrap.addEventListener('keydown',function(e){
-      var step=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
-      if(!step||e.altKey||e.metaKey||e.ctrlKey) return;
-      e.preventDefault(); pick(step*rtl());
-      if(dots[i]) dots[i].focus();
-    });
-  }
-
-  warm(1);
-  start();
+  hero.addEventListener('touchstart',function(e){
+    if(e.touches.length!==1){ live=false; return; }
+    sx=e.touches[0].clientX; sy=e.touches[0].clientY; st=Date.now(); live=true;
+  },{passive:true});
+  hero.addEventListener('touchmove',function(e){
+    if(!live) return;
+    if(e.touches.length!==1){ live=false; return; }
+    var dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+    if(Math.abs(dy)>14&&Math.abs(dy)>Math.abs(dx)*1.2) live=false;
+  },{passive:true});
+  hero.addEventListener('touchend',function(e){
+    if(!live) return; live=false;
+    var t=e.changedTouches&&e.changedTouches[0]; if(!t) return;
+    var dx=t.clientX-sx, dy=t.clientY-sy;
+    if(Math.abs(dx)<SWIPE||Math.abs(dx)<Math.abs(dy)*SLOP||Date.now()-st>SWIPE_MS) return;
+    pick(i+(dx<0?1:-1)*rtl());
+  },{passive:true});
+  hero.addEventListener('touchcancel',function(){ live=false; },{passive:true});
+  var dw=hero.querySelector('.hx-dots');
+  if(dw) dw.addEventListener('keydown',function(e){
+    var step=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!step||e.altKey||e.metaKey||e.ctrlKey) return;
+    e.preventDefault(); pick(i+step*rtl()); if(dots[i]) dots[i].focus();
+  });
+  function begin(){ warm(1); start(); }
+  if(document.readyState==='complete') begin(); else window.addEventListener('load',begin);
 })();
 </script>
 <!--IG:JS--><script>(function(){
