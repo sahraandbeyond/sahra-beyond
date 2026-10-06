@@ -1,0 +1,267 @@
+{
+  "slug": "al-rabi",
+  "name": "Al Rabi Tower Trail",
+  "emirate": "Sharjah",
+  "area": "Above Khor Fakkan town on the east coast, starting at Al Rabi Tower and climbing the mountain behind the town to the summit flag.",
+  "placeSlug": null,
+  "gradeAsked": "Moderate",
+  "gradeRecommended": "Moderate",
+  "gradeBasis": "Visit Sharjah (the Sharjah Commerce and Tourism Development Authority) calls it a 'moderate climb' that is 'ideal for beginners' and gives no formal grade scale. The climb is about 330 m over roughly 2.6 km each way on a constant ascent with loose rock and no shade, which sits at the easier end of Moderate; it is a borderline Easy/Moderate route and the card should say so.",
+  "officialTrails": [
+    {
+      "name": "Al Rabi Hiking Trail",
+      "grade": "Moderate climb, described as ideal for beginners (no formal scale given)",
+      "lengthKm": "4 to 5 km round trip",
+      "time": "2 to 3 hours",
+      "source": "https://www.visitsharjah.com/activities/hiking-trails/al-rabi-hiking-trail/"
+    },
+    {
+      "name": "Mleiha Fossil Rock Hiking Trail",
+      "grade": "Described as suiting intermediate hikers, with steep sections",
+      "lengthKm": "6 km",
+      "time": "2 to 3 hours",
+      "source": "https://www.visitsharjah.com/activities/hiking-trails/al-rabi-hiking-trail/"
+    },
+    {
+      "name": "Wadi Shees Nature Trail",
+      "grade": "Easy and accessible, suitable for all ages",
+      "lengthKm": "1.8 km loop",
+      "time": "30 to 40 minutes",
+      "source": "https://www.visitsharjah.com/activities/hiking-trails/al-rabi-hiking-trail/"
+    },
+    {
+      "name": "Al Rafisah Hiking Trail",
+      "grade": "Described as demanding, no formal grade or details given",
+      "lengthKm": null,
+      "time": null,
+      "source": "https://www.visitsharjah.com/activities/hiking-trails/al-rabi-hiking-trail/"
+    }
+  ],
+  "distanceKm": 5.2,
+  "distanceNote": "Total return distance, about 5 km. Visit Sharjah says 4 to 5 km round trip. Sharjah24 (Sharjah government media, December 2024) says the marked trail is 2,600 m each way, which gives 5.2 km. Other figures: 5.5 km (the trail supervisor quoted by Al Etihad, January 2024), 5.3 km (The Road Reel), 3,000 m one way to the summit on the trailhead map (as transcribed by Lyle Writes), 6.2 km (ECC Adventures). Print 'about 5 km return'.",
+  "climbM": 330,
+  "climbNote": "About 330 m of ascent from the tower area to the summit. Lyle Writes (Gaia GPS track, January 2026 update) gives 329 to 350 m; The Road Reel and Ummi Goes Where say about 300 m; ECC Adventures says 370 m. No authority publishes an ascent figure.",
+  "time": "2 to 3 hours return",
+  "shape": "out-and-back",
+  "trailhead": {
+    "name": "Al Rabi Tower trailhead, Khor Fakkan",
+    "lat": 25.34158,
+    "lng": 56.35802,
+    "coordSource": "Visit Sharjah's own map pin for Al Rabi Tower (25.3415801, 56.3580189); OpenStreetMap node for Al Rabi Tower gives 25.3417073, 56.3578711. The official start is at the tower.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.34158,56.35802",
+    "parking": "Visit Sharjah says there are a few spaces at the start of the trail that fill quickly, with more parking lower down the hill. Lyle Writes describes a large car park at the foot of the hill below the tower (about 25.33950, 56.35875, taken from the Google Maps link in that guide) from which you walk up the tarmac road to the tower. My Planet Playground says the spaces at the tower itself are for tower visitors only. Free parking is not confirmed by any official source.",
+    "vehicle": "2WD (paved road to the car park and tower)"
+  },
+  "routeDescription": [
+    "Start at Al Rabi Tower, a watchtower built in 1915 and restored before the site reopened in 2019 (Sharjah24). If you have parked at the foot of the hill, walk up the tarmac road to the tower first. There is a trailhead map and a trail sign here, and the tower area has a cafe and toilets according to blog guides; the trail itself has no toilets.",
+    "From the tower, the marked path leaves along a short stretch of tarmac and then becomes a cleared path of sand and rock that zigzags up the mountain with the Gulf of Oman on one side. Sharjah24 describes signs showing the way and signs showing distance covered, for example 'distance covered 1500 m'. The climb is steady with a few steeper sections, and the path is open to the sun.",
+    "Al Etihad names three rest areas on the trail: East (Al Sharq), Jabal Al Shams (the first peak) and the summit. The Road Reel and My Planet Playground describe a covered rest area partway up, and a flatter shortcut that leaves the main path at the 1,500 m rest point towards a camping area in the saddle between the first peak and the summit. Lyle Writes reports that the trailhead map marks a yellow trail for hikers and a red trail that is not for hiking, so follow the yellow markers.",
+    "The turn-around is the summit, marked by a flag, with views over Khor Fakkan town, the port and Shark Island. You can turn back at any rest area, as Sharjah24 says visitors may choose a point and return without reaching the top. Most sources describe returning the same way; Lyle Writes reports a descent by a back route that rejoins the start, and this is not confirmed by an official source, so treat the route as out and back.",
+    "Waymarking is the strong point: Visit Sharjah calls the paths well marked with historical signage, and Sharjah24 says the route is clear from the start to the summit. Two blog guides report that no guide is needed. Keep to the marked path and do not shortcut across the slope."
+  ],
+  "bestMonths": "November to March, with October and April as shoulder months",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "Sharjah24 and Al Etihad say hikers should walk between sunrise and shortly before sunset and avoid hot, humid hours or heavy rain. The Road Reel suggests starting before sunrise in the shoulder months and avoiding summer; Lyle Writes suggests 6 to 9 am or 4 to 6 pm. Plan to be back down before sunset.",
+  "shade": "Very little. ECC Adventures says there are no areas of shade on the trail; blog guides mention covered rest areas partway up and a canopy at the camping area. The tower car park has a single shade tree according to My Planet Playground.",
+  "water": "No source reports drinking water on the route. Visit Sharjah says to bring plenty of water. ECC Adventures suggests 1 to 2 litres from December to March and 2 to 3 litres in other months; My Planet Playground suggests 3 litres; The Road Reel suggests 3 to 4 litres. These are operator and blog figures, not official ones.",
+  "signal": "Visit Sharjah says phone signals are usually close at hand on its trails. Lyle Writes and The Road Reel report good signal on this trail, with some fluctuation in places. No official coverage map was found.",
+  "fees": "Free. Visit Sharjah states no entry fee for the trail and KidzApp lists access as free, AED 0 (last checked October 2026). Cafe and restaurant prices at the tower are separate.",
+  "permits": "No permit is mentioned by Visit Sharjah, Sharjah24 or Al Etihad (last checked October 2026).",
+  "hours": "No gate hours are published by Visit Sharjah. Sharjah24 (December 2024) and Al Etihad (January 2024, quoting the trail supervisor) say the entrance guidance asks hikers to walk from sunrise to just before sunset (last checked October 2026). Trip.com lists 04:00 to 20:00, which is a third-party listing and conflicts with the sunrise-to-sunset guidance.",
+  "closure": "None found. Visit Sharjah shows no closure or notice on the trail page (last checked October 2026). The page is a tourism listing and does not rule out a short-notice closure, so confirm with Visit Sharjah before travelling.",
+  "safety": [
+    "Walk only between sunrise and shortly before sunset, as the trail guidance says, and avoid hot and humid hours or heavy rain (Sharjah24, Al Etihad).",
+    "The climb is constant and the path is exposed to the sun, so heat is the main hazard from April to October; ECC Adventures lists steady ascent, loose rocks, sun exposure and exposure to heights.",
+    "Wear shoes with good grip, as the path crosses loose rock.",
+    "Sharjah24 recommends walking in a group or with at least one other person, and carrying a basic first aid kit.",
+    "Stay on the marked yellow path and ignore any route marked red on the trailhead map (reported by Lyle Writes).",
+    "There are no toilets on the trail; use the facilities at the tower before you start (Ummi Goes Where).",
+    "Goats rest on the rocks and acacia trees along the path have sharp thorns (The Road Reel, Lyle Writes); keep your distance from animals and clean any puncture wound.",
+    "The trail is busy at weekends and on Friday evenings (Visit Sharjah, The Road Reel), so allow for crowds at the rest areas and in the car park.",
+    "Do not light fires or use charcoal, hunt, write on or move rocks, interfere with signs, or leave rubbish (Sharjah24, listing the safety boards on the trail).",
+    "Turning back is always allowed: you can stop at any rest area and return the way you came."
+  ],
+  "carry": [
+    "Water (see the water note)",
+    "Sturdy hiking shoes or boots",
+    "Hat and sunscreen",
+    "Snacks",
+    "A small first aid kit",
+    "A charged phone",
+    "A head torch only if you might finish near dusk"
+  ],
+  "emergency": "Police 999 and ambulance 998, free to call anywhere in the UAE (Visit Ras Al Khaimah emergency numbers page, last checked October 2026). For a mountain rescue, call 999 and give the Al Rabi Tower trail and your last marker.",
+  "driveNote": "About 1 hour 45 minutes from downtown Dubai via the Sharjah to Khor Fakkan road (The Road Reel). Ummi Goes Where gives about 3 hours from Abu Dhabi. These are blog figures; no authority gives a drive time.",
+  "intro": "Al Rabi Tower Trail climbs the mountain above Khor Fakkan from a restored 1915 watchtower to a flag on the summit, with views of the town, port and Gulf of Oman. It is a marked route of about 5 km return that Visit Sharjah describes as a moderate climb taking 2 to 3 hours.",
+  "seoTitle": "Al Rabi Tower Trail, Khor Fakkan: Hiking Guide",
+  "seoDesc": "Al Rabi Tower hike in Khor Fakkan, Sharjah: about 5 km return, 2 to 3 hours, moderate climb, parking, hours, best months and safety notes.",
+  "sources": [
+    {
+      "label": "Visit Sharjah, Al Rabi Hiking Trail",
+      "url": "https://www.visitsharjah.com/activities/hiking-trails/al-rabi-hiking-trail/"
+    },
+    {
+      "label": "Visit Sharjah, Hiking Trails index",
+      "url": "https://www.visitsharjah.com/activities/hiking-trails/"
+    },
+    {
+      "label": "Visit Sharjah, Al Rabi Tower and hiking trail (tower page with map pin)",
+      "url": "https://www.visitsharjah.com/en/activities/heritage/al-rabi-tower/"
+    },
+    {
+      "label": "Sharjah24, Al Rabi Tower (Arabic, 29 December 2024)",
+      "url": "https://sharjah24.ae/ar/Articles/2024/12/29/NJ1040"
+    },
+    {
+      "label": "Al Etihad, Al Rabi, nature in the heart of Khorfakkan (Arabic, 26 January 2024)",
+      "url": "https://www.aletihad.ae/news/%D8%AF%D9%86%D9%8A%D8%A7/4459119/-%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D9%8A----%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%B9%D8%A9-%D9%81%D9%8A-%D9%82%D9%84%D8%A8-%D8%AE%D9%88%D8%B1%D9%81%D9%83%D8%A7%D9%86"
+    },
+    {
+      "label": "World's Coolest Winter, Al Rabi Hiking Trail (summit 395 m)",
+      "url": "https://worldscoolestwinter.ae/en/attractions/al-rabi-hiking-trail/"
+    },
+    {
+      "label": "KidzApp, Al Rabi Tower and Hiking Trail (price AED 0)",
+      "url": "https://kidzapp.com/kids-activities/sharjah/outdoor-nature/al-rabi-tower-and-hiking-trail-114073"
+    },
+    {
+      "label": "Lyle Writes, Al Rabi Hiking Trail guide (blog; trailhead map, Gaia GPS, parking)",
+      "url": "https://lylewrites.com/al-rabi-hiking-trail-guide"
+    },
+    {
+      "label": "The Road Reel, Al Rabi hike guide (blog)",
+      "url": "https://www.theroadreel.com/al-rabi-hike-uae/"
+    },
+    {
+      "label": "Ummi Goes Where, Al-Rabi trail (blog)",
+      "url": "https://ummigoeswhere.com/al-rabi-khor-fakkan/"
+    },
+    {
+      "label": "My Planet Playground, Al Rabi Tower summit trail (blog)",
+      "url": "https://www.myplanetplayground.com/post/hiking-how-to-hike-the-al-rabi-tower-summit-trail-in-sharjah-uae"
+    },
+    {
+      "label": "ECC Adventures, Al Rabi (guided hike operator)",
+      "url": "https://eccadventures.com/adventure/al-rabi/"
+    },
+    {
+      "label": "OpenStreetMap Nominatim, Al Rabi Tower node 8178308052",
+      "url": "https://nominatim.openstreetmap.org/search?q=Al+Rabi+Tower+Khor+Fakkan&format=jsonv2"
+    },
+    {
+      "label": "Visit Ras Al Khaimah, UAE emergency numbers",
+      "url": "https://visitrasalkhaimah.com/blog/emergency-numbers-ras-al-khaimah-other-uae-cities/"
+    },
+    {
+      "label": "Trip.com, Al Rabi Hiking Trail (third-party listing, hours not used)",
+      "url": "https://www.trip.com/travel-guide/attraction/khor-fakkan/al-rabi-hiking-trail-137927216/"
+    }
+  ],
+  "lastChecked": "2026-10-06",
+  "_doubts": [
+    "RECOMMENDATION: fit to print for a Moderate card, with one caveat. It is open, free, officially listed by Visit Sharjah and marked, but the official grade wording is 'moderate climb' and 'ideal for beginners' at once, and most blogs call it easy to beginner-plus. Visit Sharjah's trail index shows no formal grade labels; the grades in officialTrails are my reading of each listing's wording, not a published scale.",
+    "DISTANCE DISAGREES: Visit Sharjah 4 to 5 km round trip; Sharjah24 2,600 m each way (5.2 km); Al Etihad quoting the trail supervisor 5.5 km; The Road Reel 5.3 km; trailhead map via Lyle Writes 3,000 m to the summit one way (about 6 km return); ECC Adventures 6.2 km; Visit Sharjah's tower page and Al Etihad also say the mountain path is 1,600 m, which does not fit the rest. 5.2 km was chosen as the figure closest to the official range and Sharjah24; the card should say about 5 km.",
+    "SUMMIT HEIGHT DISAGREES: 395 m (Visit Sharjah tower page, Sharjah24, World's Coolest Winter, ECC, blogs); 400 m (trail supervisor in Al Etihad, trailhead sign per Lyle Writes); 379 m (Gaia GPS per Lyle Writes, also Visit Sharjah's trail page says the tower is perched at 379 m); 385 m (Wikimedia Commons uploader, who also says the summit is Jabal Khawr Fakkan and is 'incorrectly called Al Rabi Peak'). The tower is at the base of the climb, so Visit Sharjah's statement that the tower sits at 379 m or 395 m looks like the summit height mixed up with the tower; no elevation is printed in the JSON beyond this note.",
+    "CLIMB: no authority gives total ascent. 330 m is from one Gaia GPS track (Lyle Writes, 329 to 350 m); blogs say about 300 m and ECC says 370 m.",
+    "LOOP OR OUT-AND-BACK: Visit Sharjah and Sharjah24 say round trip; Lyle Writes says he returned by a back route in a loop, and My Planet Playground and The Road Reel describe retracing. Recorded as out-and-back. Whether a one-way loop is open or permitted is unknown.",
+    "HOURS: no gate hours from Visit Sharjah. The sunrise to before sunset rule is from Sharjah24 and Al Etihad (quoting the supervisor, who says it appears on the entrance board). Trip.com lists 04:00 to 20:00 and was not used. Whether the entrance is staffed or gated was not found; Al Etihad says security guards were added.",
+    "TIMING: Visit Sharjah says 2 to 3 hours; ECC says 3 to 4 hours for a guided hike; My Planet Playground says about 4 hours; Visit Sharjah's page says the moderate climb takes 2 to 3 hours.",
+    "RED TRAIL: the red-trail-not-for-hiking statement is from one blog's reading of the trailhead sign; no official source confirms which sections are closed.",
+    "PARKING: the car park coordinates (25.33950, 56.35875) come from a Google Maps short link in Lyle Writes, not an authority. The statement of over 100 spaces is the blogger's count. Tower-side spaces: Visit Sharjah says a few for hikers, My Planet Playground says tower visitors only. Free parking is not confirmed.",
+    "TOWER FACILITIES: a cafe, restaurant and toilets at the tower come from Al Etihad (cafe and restaurant, public facilities) and blogs; toilet opening times were not found. The trailhead sign translations are from one blog.",
+    "SIGNAL: Visit Sharjah gives a general statement for all its trails only; the 'good signal' reports are blogs.",
+    "WATER AND SEASON: water amounts are operator and blog figures. Shoulder months disagree: The Road Reel and Ummi Goes Where treat April to May and September to November as shoulder months needing a before-sunrise start; I scored April and October as 1 and May to September as 0 to stay cautious. Lyle Writes gives November to March as the best season.",
+    "DRIVE TIME: only blogs give it. Ummi Goes Where says both about 1.5 hours and 2 to 3 hours from Dubai in different places, so only The Road Reel's 1 hour 45 minutes is used for Dubai.",
+    "EMERGENCY: 999 and 998 are from Visit Ras Al Khaimah's page. The same page lists 995 for search and rescue, while Lyle Writes gives the National Search and Rescue Centre as 800 823 727; these disagree and neither is used on the card. The Visit Ras Al Khaimah page did not load by direct fetch and was read through a summary tool.",
+    "SOURCES NOT AVAILABLE: Wikiloc and AllTrails pages blocked automated access, so no app distance or ascent figure was read from them. The Visit Sharjah trail page is undated; its 'Last modified' footer refers to the privacy policy only. I did not find a Khorfakkan Municipality or Sharjah Executive Council page on the trail.",
+    "COMMONS PHOTOS: all three files are by one uploader (IbrahimKumar, 8 February 2023) and show the summit ridge and the upper path, not the tower. I viewed a 960 px thumbnail of each. The uploader's captions call the summit 'incorrectly called Al Rabi Peak'. All three are CC0, so credit is not required but is courteous; a fourth file in the same set (-_2.jpg) was not used.",
+    "SECOND CHOICE: Visit Sharjah lists Mleiha Fossil Rock Hiking Trail (6 km, 2 to 3 hours, steep sections, near Kalba) as the other official trail of about this level. I did not research it, so it is a name only, not a verified alternative.",
+    "LEFT OUT: the German submarine, tower history and nearby sights, the Khorfakkan Mountain Challenge races, and the 30,000 visitors a year figure, none of which the card needs; I also left out ratings and any claim that the trail is easy or safe."
+  ],
+  "n": 3,
+  "grade": "Moderate",
+  "nearPlace": "khor-fakkan-beach",
+  "facts": {
+    "distance": "About 5 km return",
+    "climb": "About 330 m (from a GPS track, not an official figure)",
+    "time": "2 to 3 hours",
+    "shape": "Out and back"
+  },
+  "report": {
+    "distance": "about 5 km return",
+    "climb": "about 330 m (unofficial)",
+    "time": "2 to 3 h"
+  },
+  "photo": {
+    "src": "/uploads/hikes/al-rabi.jpg",
+    "w": 1280,
+    "h": 720,
+    "edits": "resized",
+    "author": "IbrahimKumar",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Jabal_Khawr_Fakk%C4%81n_-_1.jpg",
+    "what": "The summit ridge and zigzag path above Khor Fakkan",
+    "alt": "The zigzag path climbing the ridge above Khor Fakkan, with a rest shelter below the summit"
+  },
+  "page": {
+    "gradeBasis": "Visit Sharjah, the emirate's tourism authority, calls it a moderate climb that is ideal for beginners, with no formal scale. The ascent is constant, rocky and unshaded: the easier end of Moderate.",
+    "route": [
+      "You start at Al Rabi Tower, a watchtower built in 1915 and restored before the site reopened in 2019. If you parked at the foot of the hill, walk up the tarmac road to the tower first.",
+      "The path leaves along a short stretch of tarmac, then becomes cleared sand and rock zigzagging up the mountain with the Gulf of Oman on one side. It is steady with a few steeper sections and open to the sun. Visit Sharjah calls the paths well marked.",
+      "The turn-around is the summit flag, with views over Khor Fakkan town, the port and Shark Island. You can turn back at any rest area. Most guides describe returning the way you came, so treat it as out and back."
+    ],
+    "distance": "Visit Sharjah gives 4 to 5 km round trip. Sharjah24 says the marked trail is 2,600 m each way, about 5.2 km return.",
+    "climb": "No official source publishes an ascent figure. A walker's GPS track gives about 330 m from the tower to the summit.",
+    "time": "Visit Sharjah gives 2 to 3 hours return. A guided-hike operator says 3 to 4 hours.",
+    "start": "Al Rabi Tower, above Khor Fakkan town in Sharjah, where there is a trailhead map and trail sign.",
+    "coordNote": "The pin is Visit Sharjah's own map pin for Al Rabi Tower, where the official start is. OpenStreetMap gives a slightly different position.",
+    "parking": "Not confirmed. Visit Sharjah says a few spaces at the start fill quickly, with more lower down. Check with Visit Sharjah.",
+    "vehicle": "2WD. The road to the car park and tower is paved.",
+    "getting": "About 1 hour 45 minutes from downtown Dubai, and about 3 hours from Abu Dhabi. Both are blog figures.",
+    "bestMonths": "November to March; October and April are shoulder months.",
+    "startTime": "Walk between sunrise and shortly before sunset, avoiding hot, humid hours.",
+    "shade": "Very little. One guide says none; there are covered rest areas partway up.",
+    "water": "None reported on the route. Assume you cannot refill.",
+    "signal": "Visit Sharjah says signal is usually close at hand on its trails. Do not rely on it.",
+    "fees": "Free. Visit Sharjah states no entry fee and KidzApp lists AED 0. Last checked October 2026.",
+    "permits": "No permit is mentioned by Visit Sharjah, Sharjah24 or Al Etihad. Last checked October 2026.",
+    "hours": "Visit Sharjah publishes no gate hours. Sharjah24 and Al Etihad say walk from sunrise to just before sunset. A third-party listing says 04:00 to 20:00, which conflicts. Last checked October 2026.",
+    "closure": "Unconfirmed. Visit Sharjah shows no closure on the trail page, but that does not rule out a short-notice closure. Confirm with Visit Sharjah before travelling. Last checked October 2026.",
+    "safety": [
+      "Walk only between sunrise and shortly before sunset, and avoid hot, humid hours and heavy rain.",
+      "The climb is constant and open to the sun, so heat is the main hazard from April to October.",
+      "The path crosses loose rock and has exposure to heights.",
+      "Follow the yellow markers and ignore any route marked red on the trailhead map.",
+      "Walk with at least one other person, as Sharjah24 advises. There are no toilets on the trail."
+    ],
+    "carry": [
+      "Plenty of water",
+      "Sturdy shoes with good grip",
+      "Hat and sunscreen",
+      "Snacks",
+      "Small first aid kit",
+      "Charged phone"
+    ],
+    "emergency": "Police 999 · Ambulance 998. For a mountain rescue, call 999 and give the Al Rabi Tower trail and your last marker.",
+    "notConfirmed": [
+      "Opening status: no gate hours are published, and a short-notice closure is not ruled out.",
+      "Parking: free parking is not confirmed, and spaces at the tower may be for tower visitors only.",
+      "Climb: about 330 m comes from one walker's GPS track, not an official figure.",
+      "Markers: a red trail closed to hikers is one blog's reading of the trailhead sign, not officially confirmed."
+    ]
+  }
+}

@@ -1,0 +1,389 @@
+{
+  "slug": "wadi-shah",
+  "name": "Wadi Shah Trail, Jebel Jais",
+  "emirate": "Ras Al Khaimah",
+  "area": "Wadi Shah, on the lower Jebel Jais mountain road above Ras Al Khaimah city, starting near Jebel Jais Base Camp (Bear Grylls Explorers Camp), about 4km by straight line below Jais Viewing Deck Park.",
+  "placeSlug": "jebel-jais",
+  "gradeAsked": "Difficult",
+  "gradeRecommended": "Difficult",
+  "gradeBasis": "Visit Jebel Jais (the operator, RAK Leisure) grades Wadi Shah 'Challenging' and describes steep ascents, rocky scrambling and a long, demanding route for experienced hikers (visitjebeljais.com trail guide, last checked October 2026). It is the only operator-graded Challenging walking trail on the mountain, and the operator tells hikers to keep a map, compass or GPS for this trail.",
+  "officialTrails": [
+    {
+      "name": "Wadi Shah (loop)",
+      "grade": "Challenging",
+      "lengthKm": 11.6,
+      "time": "5 hours (the operator's day-trip blog says nearly 4.75 hours)",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Ghaf Summit Trail (round trip)",
+      "grade": "Beginner to Moderate",
+      "lengthKm": 8.6,
+      "time": "2.5 to 4 hours; elevation given as 1,640m",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Samar Trail (loop)",
+      "grade": "Beginner to Moderate",
+      "lengthKm": 6.8,
+      "time": "1.5 to 4 hours; operator gives 5.6 to 6.8km; elevation given as 500m",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Al Asbaq Trail",
+      "grade": "Easy",
+      "lengthKm": 2.2,
+      "time": "1 to 1.5 hours",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Sidir Trail",
+      "grade": "Easy",
+      "lengthKm": 1.6,
+      "time": "45 to 60 minutes",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Al Teen Trail",
+      "grade": "Easy",
+      "lengthKm": 1.2,
+      "time": "30 to 45 minutes",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Farfar Trail",
+      "grade": "Easy",
+      "lengthKm": 0.7,
+      "time": "20 to 30 minutes",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Jais Via Ferrata (fixed cables and ladders, booked, based at Bear Grylls Explorers Camp; not a walking trail)",
+      "grade": "Moderate to Challenging",
+      "lengthKm": 0.47,
+      "time": "2 to 3 hours on the trail guide; about 3.5 hours, ages 14 and up, on the operator's hiking page",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Upper Shepherd Walk (guided walk from Bear Grylls Explorers Camp)",
+      "grade": "Beginner",
+      "lengthKm": 2.5,
+      "time": "2 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "The Wadi Loop (guided walk from Bear Grylls Explorers Camp)",
+      "grade": "Beginner to intermediate",
+      "lengthKm": 7.5,
+      "time": "3 to 3.5 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Hidden Oasis Walk (guided walk from Bear Grylls Explorers Camp)",
+      "grade": "Beginner to intermediate",
+      "lengthKm": 7.0,
+      "time": "3.5 to 4 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Hidden Oasis Loop (guided walk from Bear Grylls Explorers Camp; highest elevation 1,044m)",
+      "grade": "Experienced hikers",
+      "lengthKm": 9.6,
+      "time": "5 to 6 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Hidden Pond (guided walk from Bear Grylls Explorers Camp; highest elevation 1,137m)",
+      "grade": "Experienced hikers",
+      "lengthKm": 9.0,
+      "time": "6 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    }
+  ],
+  "distanceKm": 11.6,
+  "distanceNote": "Total, loop, as stated by Visit Jebel Jais. Walkers' blogs and tour operators give 13km to 15km for what appear to be longer versions; see _doubts.",
+  "climbM": 753,
+  "climbNote": "The operator's trail guide lists 'Elevation: 753 Metres' for Wadi Shah and does not define the term (total ascent or height gained is not stated). Independent figures point the same way: a walker's blog (The Road Reel) records a start near 450m, a high point of 1,194m and about 744m of cumulative gain on a 13km track; Adventure Faktory (2018) gives about 730m of gain; Adventure Quest gives 700m of ascent on a 15km version; a tour operator (ECC Adventures) gives 783m on a 14.6km loop. Treat 753m as the operator's figure for the height climbed, not as the altitude of the summit.",
+  "time": "About 5 hours of walking (operator); allow longer for breaks",
+  "shape": "loop",
+  "trailhead": {
+    "name": "Jebel Jais Base Camp, Wadi Shah (Bear Grylls Explorers Camp area), Jebel Jais road",
+    "lat": 25.89987,
+    "lng": 56.13984,
+    "coordSource": "A walker's blog, The Road Reel (published 7 November 2020, updated 23 September 2025), gives the trailhead at Bear Grylls Exploration Base Camp as 25.899871, 56.139836. A travel listing (Airial) gives the camp itself as 25.8990211, 56.143547, about 380m to the east. The operator names only 'near Jebel Jais Base Camp' and gives no coordinate for this trail. Confirm on the ground; the map pin is accurate to a few hundred metres.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.899871,56.139836",
+    "parking": "Walkers report parking at the Bear Grylls Exploration Base Camp (The Road Reel) or just past the Via Ferrata briefing area, close by the trees (Adventure Faktory, January 2018). The operator does not describe the trail car park or any charge; its day-trip blog only says to bring cash for parking. Last checked October 2026.",
+    "vehicle": "2WD (the camp is on the Jebel Jais road and a walker's blog says a 4x4 is not needed; one tour operator mentions 4WD for a different meeting point, see _doubts)"
+  },
+  "routeDescription": [
+    "The Wadi Shah loop starts near Jebel Jais Base Camp, where the Bear Grylls Explorers Camp stands on the Jebel Jais road, about 4km by straight line below the Jais Viewing Deck Park. The operator gives the trailhead only as 'near Jebel Jais Base Camp'. Walkers' blogs start at the camp or just past the Via Ferrata briefing area, at about 450m above sea level.",
+    "The operator describes a loop that begins with a steep ascent, then meets rocky ground in the middle section where the climb gets harder, with steep ascents and rocky scrambling throughout. Walkers' blogs describe the early part differently: a gradually rising walk up a canyon of boulders and large rocks, with some man-made staircases and a gravel track, then rougher, narrower ground with bouldering and scrambling up to a first settlement, a date palm plantation and a flat grey rock river bed. They advise keeping left at the first split.",
+    "The operator names the Hidden Oasis, 'a vibrant green patch amidst the rocky cliffs', as the midpoint landmark. Walkers also report two mountain settlements, a cemetery on a plateau, terraced fields, a high point with a cairn, a scree slope on the descent, a narrow path with an exposed edge around the mountain, and a steep, bouldery wadi descent before a final gravel track back to the start. The old settlement of Shah is described as abandoned by Wikipedia, while one blog mentions villagers at the settlements, so do not count on meeting anyone. The operator does not say which way round the loop is walked, and the blogs differ on length (13km) and on what lies on the route.",
+    "Waymarking is thin. The operator says previous hikers left stone markers, that it is best to stay on track, and that for Wadi Shah a map, compass or GPS device is highly recommended. Walkers mention cairns and tell hikers to keep left, but also report stretches with no defined path across the plateau and alternative routes that are hard to follow. The operator says trail works and new signage begin this season at the Hidden Oasis, with a map of sign locations due after mid-October, so markers may change.",
+    "The loop returns to the start, so there is no turn-around point. Walkers advise starting by 8am so the loop finishes before dusk, which falls at about 5.30pm in winter (The Road Reel)."
+  ],
+  "bestMonths": "November to April (Visit Jebel Jais gives November to April for Wadi Shah and October to April for hiking on the mountain)",
+  "months": [
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "The operator says to start early to enjoy cooler temperatures and enough daylight, and warns that summer temperatures can exceed 40 degrees Celsius (trail guide, last checked October 2026). Walkers' blogs advise leaving by 8am and report 6 hours of walking, with a full day (up to 10 hours) once breaks are included. Do not plan to be on the plateau or the final wadi descent after dark.",
+  "shade": "No operator statement on shade. One walker's blog mentions a tree shelter point in the lower canyon; the rest is open rock and sun.",
+  "water": "No reliable water source on the route. The operator says to carry at least 3 litres per person and rehydration drinks (visitjebeljais.com/jais-hiking, last checked October 2026); walkers' blogs say at least 4 litres per person. Seasonal pools form in the wadi after rain, but they should not be relied on.",
+  "signal": "Unknown for this route; no operator source. One travel listing (Airial) says mobile signal can be spotty in the mountains, so download an offline map and GPS track before you set off.",
+  "fees": "The operator says the trails are open to the public and free to walk on your own (visitjebeljais.com/jais-hiking, last checked October 2026). No trail entry fee was found. The operator's day-trip blog tells hikers to bring cash for parking but gives no amount, and the car park for this trail is not described by the operator. Guided hikes from Bear Grylls Explorers Camp are priced from AED 125 to AED 250 per adult, with lower child rates (operator, same page).",
+  "permits": "The operator says you do not need a guide to walk the trails (last checked October 2026). No individual permit for Wadi Shah was found in any source opened. Groups of more than 10 must register in advance with RAKTDA (Ras Al Khaimah Tourism Development Authority): the operator says group size should be limited to 10 unless registered, and Visit Ras Al Khaimah says groups of more than 10 are obliged to inform the authority ahead of the hike with route, participant and timing details. The camp handles larger groups.",
+  "hours": "No trail opening hours found. The operator's FAQ says the mountain is open 24/7, with fixed hours only for activities such as the zipline, sledder and restaurants (last checked October 2026). That statement conflicts with the seasonal pause described under closure.",
+  "closure": "Current status cannot be confirmed. Opened on 6 October 2026: the operator's hiking page says 'the trails are open to the public and you do not need a guide', that trail works and signage renewal start from October 'first at the Hidden Oasis', that 'some sections may be busy while the work goes in', and its newsletter box says 'the mountain is open'. The same operator's home page and season page still show social posts (29 June and 5 July) about a short pause, saying the mountain will reopen 'once the weather cools', with no date; WOW-RAK (a local guide site, updated 14 September 2026) says the whole mountain, including hiking trails, is closed for seasonal maintenance with no reopening date, and that rehabilitation of Wadi Khammed and the Hidden Oasis is under way. The National (15 September 2026) reports rehabilitation on the Wadi Khammed to Hidden Oasis route, with direction signs going in, continuing through the 2026/27 season with no completion date; WhatsOn describes Wadi Khammed as the Hidden Oasis. No source mentions Wadi Shah by name in connection with the works, but the operator names the Hidden Oasis as this loop's midpoint, so the works may touch it. Storm of December 2025: The National (23 December 2025) said hiking and climbing areas were not closed but hikers were urged to avoid affected routes, while commercial operations were suspended; the earlier researcher recorded a reopening on 31 January 2026, and headlines seen in today's search agree. Last checked October 2026. Confirm with the operator (info@rakleisure.com or the camp on +971 56 501 5831) before printing and before each visit.",
+  "safety": [
+    "Confirm the mountain and the trail are open before you drive up: sources opened on 6 October 2026 disagree and no reopening date is published.",
+    "The operator grades the loop Challenging, with steep ascents and rocky scrambling, and says it is for experienced hikers or those looking for a challenging excursion.",
+    "Navigation is part of the challenge. The operator recommends a map, compass or GPS device for Wadi Shah, and walkers report stretches with no defined path and alternative routes that are hard to follow. Download an offline track before you start.",
+    "Visit Ras Al Khaimah asks hikers for a good head for heights and reasonable fitness. Walkers report a narrow path with an exposed edge and a scree slope, and a tour operator (ECC Adventures) says the route is not recommended for people with vertigo.",
+    "The route runs through a wadi. A walker's blog (Adventure Faktory) says it is usually dry but pools fill and water flows down after rain a few days earlier, and after the December 2025 storms authorities warned of standing water, shifting rocks and slippery paths and advised against camping in wadis (The National). No source gives a flood threshold for Wadi Shah, so do not start in or after rain and watch the sky over the mountains.",
+    "Heat: the operator says summer temperatures can pass 40 degrees Celsius and advises October to April. Do not walk this loop in summer.",
+    "Loose rock, boulders and a steep final descent: wear sturdy hiking boots with good grip. A walker's blog suggests trekking poles for the descent.",
+    "Hike with a companion and tell someone your route and expected return time (operator).",
+    "Do not rely on mobile signal. Allow for the loop taking longer than the 5 hours quoted, and plan to finish before dusk.",
+    "A walker's blog warns against taking an alternative longer route through a third village after the second settlement, because other hikers found it hard to follow."
+  ],
+  "carry": [
+    "At least 3 litres of water per person (operator); walkers advise 4 litres",
+    "Rehydration drink",
+    "Energy snacks and lunch",
+    "Offline map, compass or GPS device with the route loaded",
+    "Sturdy hiking boots with good grip",
+    "Sunscreen, hat and sunglasses",
+    "First aid kit",
+    "Fully charged phone and a power bank",
+    "Warm layer for early starts",
+    "Trekking poles (optional, for the final descent)",
+    "Head torch as a precaution",
+    "Cash for parking (operator blog)"
+  ],
+  "emergency": "Police 999 (Ras Al Khaimah Police, as listed on visitjebeljais.com/jais-hiking); ambulance 998 and civil defence 997 (Ajman government emergency numbers page, ajman.ae). Last checked October 2026.",
+  "driveNote": "The operator's FAQ says Jebel Jais is approximately 2 hours by car from Dubai and about 45 minutes from Ras Al Khaimah city. Its day-trip blog says nearly 175km from Dubai and 2 to 2.5 hours. The base camp is lower on the mountain road than the viewing deck. No source opened gave a drive time from Abu Dhabi.",
+  "intro": "Wadi Shah is an 11.6km loop near Jebel Jais Base Camp that the operator grades Challenging, with steep ascents, rocky scrambling and a stop at the Hidden Oasis. It takes about 5 hours, is thinly waymarked and needs a GPS track, so it is a route for experienced hikers in the cooler months only.",
+  "seoTitle": "Wadi Shah Hike, Jebel Jais: Route, Time and Tips",
+  "seoDesc": "Wadi Shah loop on Jebel Jais, Ras Al Khaimah: 11.6km, about 5 hours, graded Challenging. Start point, route, waymarking, flood and heat risks, and status.",
+  "sources": [
+    {
+      "label": "Visit Jebel Jais: Top hiking trails in Jebel Jais (Wadi Shah grade, length, time, elevation, trailhead, markers, all trails)",
+      "url": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "label": "Visit Jebel Jais: Jebel Jais hiking (public trails, no guide needed, guided walks from the camp, group rule, safety, emergency, trail works)",
+      "url": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "label": "Visit Jebel Jais: home page (seasonal pause posts)",
+      "url": "https://visitjebeljais.com/"
+    },
+    {
+      "label": "Visit Jebel Jais: 2025/26 season page (seasonal pause posts)",
+      "url": "https://visitjebeljais.com/season-activities"
+    },
+    {
+      "label": "Visit Jebel Jais: FAQs (open 24/7, drive times, fog and rain)",
+      "url": "https://visitjebeljais.com/faqs"
+    },
+    {
+      "label": "Visit Jebel Jais: day trips from Dubai (Wadi Shah 11.6km, 4.75 hours, drive time, parking cash)",
+      "url": "https://visitjebeljais.com/blog/day-trips-dubai-jebel-jais-mountain-views"
+    },
+    {
+      "label": "Visit Jebel Jais: Bear Grylls Explorers Camp (no location data)",
+      "url": "https://visitjebeljais.com/bear-grylls-explorers-camp"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Hiking (six trails 16km, head for heights, group notification)",
+      "url": "https://visitrasalkhaimah.com/discover/activities/hiking/"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Bear Grylls Explorers Camp (at the entrance of Jebel Jais)",
+      "url": "https://visitrasalkhaimah.com/discover/activities/bear-grylls-explorers-camp/"
+    },
+    {
+      "label": "The Road Reel: How to hike Wadi Shah (trailhead coordinates, route stages, 13km, 744m gain; published 2020, updated 23 September 2025)",
+      "url": "https://www.theroadreel.com/wadi-shah-hike-rasalkhaimah-uae/"
+    },
+    {
+      "label": "Adventure Faktory: Trekking Wadi Shah (parking, route, flood and guide comments; January 2018)",
+      "url": "https://adventurefaktory.com/trekking-wadi-shah-in-the-united-arab-emirates/"
+    },
+    {
+      "label": "Pushpitha, LiveJournal: Wadi Shah hike (13km, 1,194m high point; 11 November 2024)",
+      "url": "https://pushpitha.livejournal.com/1699406.html"
+    },
+    {
+      "label": "ECC Adventures: Wadi Shah (tour operator, 14.6km, 783m gain, vertigo warning)",
+      "url": "https://eccadventures.com/adventure/wadi-shah/"
+    },
+    {
+      "label": "Adventure Quest: Hidden Oasis Shah Loop (15km, 700m ascent, 4x4 for final approach)",
+      "url": "https://www.adventurequest.ae/events/hidden-oasis-shah-loop"
+    },
+    {
+      "label": "Airial: Bear Grylls Explorers Camp (camp coordinates, parking, signal)",
+      "url": "https://www.airial.travel/attractions/united-arab-emirates/ras-al-khaimah/bear-grylls-explorers-camp-DU7XIyDJ"
+    },
+    {
+      "label": "WOW-RAK: Bear Grylls Explorers Camp (address Jebel Jais, Wadi Shehah)",
+      "url": "https://wow-rak.com/bear-grylls-explorers-camp-ras-al-khaimah/"
+    },
+    {
+      "label": "Dubai Family Leisure Guide: Bear Grylls camp (halfway up Jebel Jais, at Wadi Shehah)",
+      "url": "https://liloneoftheashes.com/2024/01/17/bear-grylls-camp-jebel-jais/"
+    },
+    {
+      "label": "Wikipedia: Wadi Shah, Ras Al Khaimah (25 55 03 N, 56 08 26 E, 714m, abandoned settlement of Shah)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Shah,_Ras_Al_Khaimah"
+    },
+    {
+      "label": "WOW-RAK: Is Jebel Jais open right now (updated 14 September 2026)",
+      "url": "https://wow-rak.com/is-jebel-jais-open/"
+    },
+    {
+      "label": "The National: Jebel Jais Grand Loop and trail rehabilitation (15 September 2026)",
+      "url": "https://www.thenationalnews.com/news/uae/2026/09/15/ras-al-khaimah-jebel-jais-grand-loop-via-ferrata-hiking/"
+    },
+    {
+      "label": "Dubai Week: Marjan Lifestyle launches Grand Loop trail (3 October 2026)",
+      "url": "https://www.dubaiweek.ae/marjan-lifestyle-launches-80km-jebel-jais-grand-loop-trail-and-via-ferrata/"
+    },
+    {
+      "label": "Gulf News: Jebel Jais 80km hiking loop (Wadi Khammed to Hidden Oasis rehabilitation, mountain rescue)",
+      "url": "https://gulfnews.com/business/tourism/uaes-highest-peak-jebel-jais-gets-an-80km-hiking-loop-and-five-day-climb-1.500675347"
+    },
+    {
+      "label": "WhatsOn: Jebel Jais 80km hiking loop (Wadi Khammed described as the Hidden Oasis)",
+      "url": "https://whatson.ae/2026/09/jebel-jais-80km-hiking-loop-via-ferrata-ras-al-khaimah/"
+    },
+    {
+      "label": "The National: Jebel Jais temporarily closed following UAE storms (23 December 2025)",
+      "url": "https://www.thenationalnews.com/lifestyle/2025/12/23/jebel-jais-mountain-in-rak-temporarily-closed-following-uae-storms/"
+    },
+    {
+      "label": "Ajman government: emergency numbers",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Existing place data (read, not a web source): jebel-jais.json, place id and status notice",
+      "url": "/home/claude/site/content/locations/jebel-jais.json"
+    },
+    {
+      "label": "Wikimedia Commons: Category Wadi Shah (file pages and licences)",
+      "url": "https://commons.wikimedia.org/wiki/Category:Wadi_Shah"
+    }
+  ],
+  "lastChecked": "2026-10-06",
+  "_doubts": [
+    "STATUS: not confirmed. The operator hiking page (opened 6 October 2026) says trails are open to the public and its newsletter box says the mountain is open, while the home and season pages still carry pause posts from June and July and WOW-RAK (14 September 2026) says all trails are closed with no date. The operator FAQ says open 24/7. No dated reopening announcement was found, and a search for one returned only January 2026 reopening items. Re-check on the day of printing and at launch.",
+    "WORKS AT THE HIDDEN OASIS: the operator says trail works start there first from October, and The National, Gulf News and Dubai Week report rehabilitation on the Wadi Khammed to Hidden Oasis route. WhatsOn calls Wadi Khammed 'the Hidden Oasis'. No source names Wadi Shah or says the loop's route is closed or changed. That the works touch this loop is my inference from the operator naming the Hidden Oasis as the loop's midpoint. Whether the operator's Hidden Oasis and the blogs' first village are the same place is also unconfirmed.",
+    "DISTANCE AND ROUTE CONFLICT: operator 11.6km loop; The Road Reel and LiveJournal 13km; ECC Adventures 14.6km loop (and a 9km retrace of 435m); Adventure Quest 15km; Adventure Faktory 16 to 18km round trip to the summit. The operator's route may be a shorter version, or the loop may have more than one alignment. The operator figure is used. Blogs also disagree with the operator's description of how the loop begins (canyon walk first versus steep ascent first).",
+    "TIME CONFLICT: operator trail guide 5 hours; operator day-trip blog nearly 4.75 hours; The Road Reel 6 hours walking and 10 to 11 hours with breaks; ECC Adventures 6 to 7 hours; Adventure Quest 6 to 7 hours; Adventure Faktory 8 to 9 hours. The operator figure of about 5 hours is used and the page should say allow longer.",
+    "753 M: the operator's trail guide labels it 'Elevation' and does not define it. I treat it as height climbed because independent tracks give 700 to 783m of gain, but this is my reading. It is not an altitude, since the start is about 450m and the blogs put the high point at 1,095 to 1,194m. Wikiloc and AllTrails pages could not be opened (403 and robots rules), so no trail-app ascent or GPX was checked.",
+    "TRAILHEAD: no operator coordinate. 25.899871, 56.139836 comes from one blog; Airial gives the camp at 25.8990211, 56.143547 (about 380m east). Wikipedia puts Wadi Shah (the wadi and old settlement) at 25.9175, 56.1406 and 714m, about 2km north of the blog trailhead, which fits a walk that climbs up the wadi but is not a trailhead. OpenStreetMap could not be queried (blocked). Which of the two start points is correct for the operator's loop is unknown. The camp's own pages give no address beyond 'Jebel Jais, Wadi Shehah'.",
+    "LOOP DIRECTION: no source states a direction. Blogs describe canyon first, then settlements and high point, then a steep wadi descent; I have not called it clockwise or anticlockwise.",
+    "PARKING AND FEES: no operator statement on the trail car park, its capacity or any charge. The Road Reel and Adventure Faktory report parking at or beside the camp; Airial says parking is available at the camp. 'Free to walk' is the operator's wording for the trails, not a statement about parking or the camp area. Whether the AED 10 Jais Viewing Deck Park fee applies is irrelevant to this start point but was not confirmed for the base camp.",
+    "VEHICLE: The Road Reel says a 4x4 is not required; Adventure Quest says a 4x4 is required for the final approach to its trailhead, and gives 'Wadi Shah (bear grills camp) or Wadi Kub entrance' as meeting points, so that statement probably refers to a different access. 2WD is the best-supported reading for the camp.",
+    "WAYMARKING: operator mentions stone markers by previous hikers and, in its general tips, painted markers, red and white flags or signposts; no source shows signage on the loop itself. New signage is promised from October with a sign map after mid-October, so this paragraph may be out of date by launch.",
+    "SETTLEMENTS: Wikipedia calls the old settlement of Shah abandoned; The Road Reel describes inhabited villages and tells hikers to ask villagers for directions. Commons captions say 'old Shah settlement'. The page should not suggest help will be available.",
+    "GUIDE ADVICE: the operator says no guide is needed and that guides are a good idea on a first visit; Adventure Faktory (2018) says not to go to the summit without someone who knows the route; ECC Adventures sells the trek with a certified guide. The page can say a guided walk from the camp exists, but the operator's guided Hidden Oasis Loop is a different, shorter route (9.6km).",
+    "FLASH FLOODS: no authority gave a Wadi Shah specific flood rule. The flood and rain warning rests on one blog (water flows down after rain), the December 2025 warnings reported by The National, and common sense. 'Do not start in or after rain' is my advice, not a quoted rule.",
+    "RAKTDA RULE WORDING: the operator says group size should be limited to 10 unless registered; Visit Ras Al Khaimah says groups of more than 10 'are obliged to inform' the authority. No registration form or contact was found.",
+    "TRAIL INVENTORY: Visit Ras Al Khaimah says six trails totalling 16km; the operator guide lists more trails with longer total length. Operator guided-hike lists also differ between its hiking page (five walks, 2.5 to 9.6km) and its home page (events of 3.5km, 8.5km and 9km priced AED 200, dated February to April 2026). Operator figures from the hiking page and trail guide are used.",
+    "SEASON: operator says November to April for Wadi Shah and October to April for hiking; blogs say mid-October to mid-March. Month scores are editorial: October and March and April are scored shoulder.",
+    "SIGNAL, SHADE: no operator source. Airial and one blog mention a tree shelter point or spotty signal; nothing specific to the loop.",
+    "NOT USED: AllTrails 'Wadi Shah to Oasis to Jais' appears to be a different point-to-point route towards Jais; it could not be opened. Adventure Faktory's 16 to 18km summit trek and ECC's 'Musaibat Trail' naming were not used for the card.",
+    "PHOTOS: all three candidates are by Ciorraga, CC BY-SA 4.0 (ShareAlike, credit required), taken in January 2023 in Wadi Shah. Only one has a camera location (25.892403, 56.123814, near the old Shah settlement, about 1.8km from the trailhead pin). None is tagged to the operator's Wadi Shah loop, so caption them as Wadi Shah, not as the loop.",
+    "NO ABU DHABI DRIVE TIME found; omitted.",
+    "WIKIPEDIA COORDINATE: 25 55 03 N, 56 08 26 E converts to 25.9175, 56.14056. Only used as a cross-check."
+  ],
+  "n": 6,
+  "grade": "Difficult",
+  "nearPlace": "jebel-jais",
+  "facts": {
+    "distance": "11.6 km loop",
+    "climb": "753 m (the operator's \"elevation\" figure, read as height climbed)",
+    "time": "About 5 hours; blogs report 6 or more",
+    "shape": "Loop"
+  },
+  "report": {
+    "distance": "11.6 km loop",
+    "climb": "753 m (operator)",
+    "time": "about 5 h"
+  },
+  "photo": {
+    "src": "/uploads/hikes/wadi-shah.jpg",
+    "w": 1280,
+    "h": 720,
+    "edits": "resized",
+    "author": "Ciorraga",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Wadi_Shah_gorge.jpg",
+    "what": "The Wadi Shah gorge; not tagged to the marked loop",
+    "alt": "The Wadi Shah gorge cutting through bare limestone mountains on Jebel Jais"
+  },
+  "page": {
+    "gradeBasis": "Visit Jebel Jais, run by RAK Leisure, grades Wadi Shah Challenging: steep ascents, rocky scrambling and a long, demanding route for experienced hikers.",
+    "route": [
+      "You start near Jebel Jais Base Camp, by the Bear Grylls Explorers Camp, at about 450m above sea level. The operator says the loop begins with a steep ascent; walkers describe a gradual canyon of boulders first.",
+      "The ground turns rocky and the climb gets harder, with scrambling. The operator names the Hidden Oasis, a green patch among the cliffs, as the midpoint. Walkers advise keeping left at the first split. Waymarking is thin: stone markers and cairns only.",
+      "The loop returns to the start, so there is no turn-around point. Walkers describe a scree slope, then a steep, bouldery wadi descent and a final gravel track. The operator does not say which way round to walk."
+    ],
+    "distance": "Visit Jebel Jais gives 11.6km for the loop. Walkers and tour operators give 13km to 15km.",
+    "climb": "Visit Jebel Jais lists 'Elevation: 753 Metres' without defining it. Walkers' tracks give 700m to 783m of climbing.",
+    "time": "Visit Jebel Jais gives about 5 hours. Walkers report 6 hours, up to 10 with breaks.",
+    "start": "Near Jebel Jais Base Camp (Bear Grylls Explorers Camp) on the Jebel Jais road. The operator gives no exact trailhead.",
+    "coordNote": "The pin comes from one walker's blog and is accurate to a few hundred metres.",
+    "parking": "Not confirmed. Walkers report parking at the camp. The operator describes no car park but says bring cash. Check with Visit Jebel Jais.",
+    "vehicle": "Not confirmed. A walker's blog says a 4x4 is not needed at the camp. Check with Visit Jebel Jais.",
+    "getting": "Visit Jebel Jais says about 2 hours by car from Dubai, 45 minutes from Ras Al Khaimah city.",
+    "bestMonths": "November to April, says Visit Jebel Jais. Do not walk it in summer.",
+    "startTime": "Start by 8am for cooler temperatures and enough daylight, as walkers advise. Finish before dark.",
+    "shade": "Little. One walker's blog mentions a tree shelter in the lower canyon; the rest is open.",
+    "water": "None reliable on the route. Do not rely on seasonal pools. Carry all you need.",
+    "signal": "Unknown. Signal can be spotty in the mountains, so assume none and download an offline map.",
+    "fees": "Visit Jebel Jais says the trails are free to walk on your own. It gives no parking charge, only to bring cash. Last checked October 2026.",
+    "permits": "The operator says you do not need a guide, and no permit for Wadi Shah is listed. Groups over 10 must register in advance with RAKTDA, the tourism authority. Last checked October 2026.",
+    "hours": "No trail hours are published. The operator's FAQ says the mountain is open 24/7, which conflicts with the seasonal pause reported. Last checked October 2026.",
+    "closure": "Not confirmed. The operator says the trails are open, but a local guide site says they are closed, with no reopening date. Trail works are reported at the Hidden Oasis, the loop's midpoint. Ask the operator (info@rakleisure.com) or the camp (+971 56 501 5831). Last checked October 2026.",
+    "safety": [
+      "Do not start in or after rain. The route runs through a wadi, and water flows down days after rain.",
+      "Do not walk in summer. The operator says temperatures can pass 40 degrees Celsius.",
+      "Expect steep ascents, scrambling, scree and a narrow path with an exposed edge. You need a good head for heights.",
+      "Some stretches have no defined path. Load an offline GPS track before you set off.",
+      "Go with a companion, tell someone your route and return time, and do not rely on mobile signal.",
+      "Check the trail is open before you drive up. Reports disagree."
+    ],
+    "carry": [
+      "At least 3 litres each; walkers advise 4",
+      "Rehydration drink and food",
+      "Offline map, compass or GPS",
+      "Sturdy boots with good grip",
+      "Sunscreen, hat and sunglasses",
+      "First aid kit",
+      "Charged phone and power bank",
+      "Cash for parking"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Whether the trail is open. Reports disagree, and works are reported at the Hidden Oasis.",
+      "The exact trailhead and parking. The operator says only near Jebel Jais Base Camp.",
+      "The climb figure. The operator's 753 metres is not defined.",
+      "Waymarking. New signage is due this season, so markers may change."
+    ]
+  }
+}

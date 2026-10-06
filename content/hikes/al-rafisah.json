@@ -1,0 +1,305 @@
+{
+  "slug": "al-rafisah",
+  "name": "Al Rafisah Dam to Al Suhub Rest House",
+  "emirate": "Sharjah",
+  "area": "Al Rafisah Dam, Wadi Shie, above Khor Fakkan on Sharjah's east coast in the Hajar Mountains",
+  "placeSlug": "al-rafisah-dam",
+  "gradeAsked": "Easy",
+  "gradeRecommended": "Moderate",
+  "gradeBasis": "Visit Sharjah calls the Al Rafisah Hiking Trail 'easy to moderate' and 'well marked', with a 3 hour round trip to the Al Suhub Rest House. Its own numbers do not fit 'Easy': a roughly 3 km path (The National, 2021) climbs to a rest house at about 580 m above sea level (Wikipedia), and secondary sources report an ascent of 440 m (Glimpses of UAE) to 600 m (Sharjah24), with steep sections and loose rock (Glimpses of UAE). Graded here as Moderate on distance, sustained climb and terrain.",
+  "officialTrails": [
+    {
+      "name": "Al Rafisah Hiking Trail (dam to Al Suhub Rest House, return by the same path)",
+      "grade": "Easy to moderate (Visit Sharjah wording; no numeric grade given)",
+      "lengthKm": 3,
+      "time": "About 3 hours round trip; itinerary on the same site allows 1 to 1.5 hours each way",
+      "source": "Visit Sharjah hiking trail page for time and grade; length of about 3 km one way from The National (15 July 2021). Visit Sharjah's own 'Trail Length 20km' field is identical on its Walk page and is not credible, so it is not used."
+    },
+    {
+      "name": "The Walk (lakeside walkway at the dam)",
+      "grade": "Not graded; described as a peaceful meander for families with young children",
+      "lengthKm": 0.73,
+      "time": "Not given",
+      "source": "Visit Sharjah 'About Al Rafisah Dam' page gives a 730 m walkway; the Walk page describes it and says it is the start of the more extensive hike. Visit Sharjah's 'Trail Length 20km' field on that page is not used."
+    },
+    {
+      "name": "Najd Al Maqsar to Al Rafisah Dam 'dedicated trail' and trail to the 300-year-old Al Maqsar fortress",
+      "grade": "Not given",
+      "lengthKm": null,
+      "time": "Not given",
+      "source": "Visit Sharjah, Najd Al Maqsar Village page lists two hiking routes (to the fortress, and a dedicated trail to Rafisah dam) with no length, time or grade. The straight-line gap between the dam wall and the village pin is about 0.6 km (calculated from OpenStreetMap and Visit Sharjah coordinates)."
+    },
+    {
+      "name": "Wadi Shees Nature Trail (separate site near Khor Fakkan, not at the dam)",
+      "grade": "Family-friendly",
+      "lengthKm": 1.8,
+      "time": "30 to 40 minutes",
+      "source": "Visit Sharjah activities page for Al Rafisah Dam; listed as a loop"
+    },
+    {
+      "name": "Al Rabi Hiking Trail (separate site in Khor Fakkan, not at the dam)",
+      "grade": "Moderate",
+      "lengthKm": null,
+      "time": "2 to 3 hours",
+      "source": "Visit Sharjah activities page for Al Rafisah Dam: 4 to 5 km round trip, 379 m elevation as stated there, moderate. Not part of this route."
+    }
+  ],
+  "distanceKm": 3,
+  "distanceNote": "One way, about 3 km from the dam to the rest house (The National, 15 July 2021, on the opening of the path; Bayut and Property Finder repeat 3 km). Round trip is therefore about 6 km. Glimpses of UAE gives about 7.5 km round trip, so treat the total as 6 to 7.5 km.",
+  "climbM": 440,
+  "climbNote": "Glimpses of UAE reports about 440 m total ascent. Sharjah24 gives 600 m. The rest house stands at about 580 m above sea level (Wikipedia); no source gave the elevation of the dam car park, so the figure could not be cross-checked. Quote 'about 440 to 600 m' if a range is wanted.",
+  "time": "About 3 hours round trip (Visit Sharjah)",
+  "shape": "out-and-back",
+  "trailhead": {
+    "name": "Al Rafisah Dam (walkway at the dam wall; the trail start is marked on Visit Sharjah's map but its exact point could not be confirmed)",
+    "lat": 25.34885,
+    "lng": 56.31126,
+    "coordSource": "OpenStreetMap way 'Al Rafisah Dam' via Nominatim (25.3488475, 56.3112640), the dam wall itself, not a surveyed trail start or car park. Trip.com lists the dam at plus code 88X6+GFX, which falls in the same cell. Wikipedia's 25.35, 56.30 is about 1 km off and was not used.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.34885,56.31126",
+    "parking": "Car park at the dam, 45 spaces (Wikipedia). Paid parking applies at Al Rafisah Dam from 8am to 10pm daily, Dh2 for one hour, Dh5 for two, Dh8 for three, Dh12 for five, paid at machines or by text to 5566 (The National, August 2022; rates and method may have changed). Can be full at weekends and holidays (East Coast Tourism).",
+    "vehicle": "2WD (sealed road to the dam and car park; the trail is on foot)"
+  },
+  "routeDescription": [
+    "Start at Al Rafisah Dam. Visit Sharjah describes a walkway of palm trees, benches and picnic areas leading away from the dam towards the mountain edge, and says this walk is the start of the longer hike. Follow the signs and the route marked on Visit Sharjah's map; the exact first junction was not confirmed from any source.",
+    "Underfoot, the path is a zig-zagging mountain trail that climbs steadily to the Al Suhub Rest House (Glimpses of UAE). The same source reports steep sections and loose rock. Visit Sharjah calls the trail well marked and easy to moderate, and says less keen hikers see good views in the first part, after which it is easy to turn back.",
+    "Visit Sharjah lists benches along the trail. The Al Suhub Rest House stands at the summit, about 580 m above sea level (Wikipedia), with a restaurant and views over Khor Fakkan and the Gulf of Oman. The Visit Sharjah itinerary allows 1 to 1.5 hours up, a rest, and 1 to 1.5 hours back. A separate short climb of about 30 minutes to the castle (Al Hosn) is listed on the same itinerary.",
+    "The turn-around is the rest house. Return the same way to the dam. A road reaches the rest house too (a 5.6 km mountain road from Khor Fakkan, per Property Finder), so do not mistake vehicle traffic at the top for the trail.",
+    "Waymarking: described as well marked by Visit Sharjah. Visit Sharjah also advises hikers to research the route, check the weather and tell someone where they are going. No source gives detail on individual waymarks, so carry an offline map."
+  ],
+  "bestMonths": "November to March",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "No source gives a start time. Visit Sharjah says to take more water than you think you will need and to check the weather. Start early in the cooler months so the climb is done before the sun is high, and finish before dark; the trail has a climb of several hundred metres in full sun.",
+  "shade": "Not documented by any source for the trail itself. Sharjah24 mentions a mountain-village walkway beside the lake but not shade on the climb. Plan for little shade on the ascent.",
+  "water": "No source documents water on the trail. The rest house has a restaurant, and the dam park has a mini mart, according to Visit Sharjah. Visit Sharjah says to carry more water than you think you need; no litres figure is given.",
+  "signal": "Sharjah24 says the trail has strong mobile network coverage and Visit Sharjah says phone signals are usually close at hand, but neither is a measured survey. Treat as unverified.",
+  "fees": "Entry to the dam park is free (UAE East Coast Tourism, last checked October 2026). Parking at the dam is paid, 8am to 10pm daily, from Dh2 an hour (The National, August 2022; rates not confirmed for 2026). Kayak and pedal boats are extra (Glimpses of UAE: single kayak AED 40, 7am to 9pm). The Al Suhub Rest House is described as free to enter (Khor Fakkan Tours, last checked October 2026). No fee for the trail itself was found (Property Finder).",
+  "permits": "None found. No source mentions a permit for the trail, last checked October 2026.",
+  "hours": "The dam park is described as open 24/7 by UAE East Coast Tourism, and 'open all day' by Trip.com (last checked October 2026). Visit Sharjah gives no opening hours for the trail. Al Suhub restaurant and cafe hours are given variously as 8am to 10pm (Property Finder) and 9am to 10pm daily with cafe 10am to 8pm (Khor Fakkan Tours). Boats run 7am to 9pm. Paid parking is enforced 8am to 10pm.",
+  "closure": "None found for the dam or the trail in sources opened on 6 October 2026. Gulf News reports a temporary closure of the Khorfakkan Road Al Rugh Tunnel towards Sharjah from 6 to 11 January 2026, which is past and which the article does not link to the dam. Re-check before printing, since the rest house or paths could close for rain damage or works.",
+  "safety": [
+    "This is a mountain climb, not a park stroll: Glimpses of UAE reports steep sections and loose rock, and the Sharjah24 and Glimpses of UAE figures are a 440 to 600 m ascent.",
+    "Wear proper hiking shoes with grip; Visit Sharjah and Atworldsorigins both advise sturdy footwear for rocky, uneven ground.",
+    "Carry more water than you think you will need (Visit Sharjah). Do not walk in the summer heat; the existing Al Rafisah Dam page marks May to September as months to avoid.",
+    "The dam sits at the head of a wadi and is built for flash-flood control (Wikipedia). Check the National Center of Meteorology forecast before going and do not walk the wadi bed or the trail in or after heavy rain.",
+    "Tell someone where you are going and take a friend unless very experienced (Visit Sharjah).",
+    "Visit Sharjah notes you may meet farm workers and local people on the way; be respectful and keep to the marked route.",
+    "Take all rubbish with you (Visit Sharjah).",
+    "If you are tired or short of water, turn back; Visit Sharjah says it is easy to turn back in the first part of the trail."
+  ],
+  "carry": [
+    "Water, more than you think you need",
+    "Snacks",
+    "Sturdy hiking shoes",
+    "Sun hat and sun cream",
+    "Offline map or downloaded route",
+    "Small first-aid kit (plasters and insect bite ointment, per Visit Sharjah)",
+    "Phone, charged",
+    "Bag to carry out your rubbish"
+  ],
+  "emergency": "Police 999, ambulance 998, civil defence 997 (Wikipedia, List of emergency telephone numbers, opened October 2026).",
+  "driveNote": "No source opened today gives a drive time from Dubai or Abu Dhabi. Visit Sharjah says Najd Al Maqsar is around 50 minutes' drive from the E611 on the Sharjah to Khorfakkan road, and Sustain Sharjah says the dam is about 45 minutes from Sharjah city; these are not from Dubai or Abu Dhabi.",
+  "intro": "The marked trail from Al Rafisah Dam climbs about 3 km through the Hajar Mountains to the Al Suhub Rest House, rated easy to moderate by Visit Sharjah and taking about 3 hours there and back. You start beside the lake and end with a view over Khor Fakkan and the Gulf of Oman.",
+  "seoTitle": "Al Rafisah Dam to Al Suhub Trail, Khor Fakkan",
+  "seoDesc": "Al Rafisah Hiking Trail: about 3 km up from the dam to Al Suhub Rest House, 3 hours return, easy to moderate. Distance, climb, fees and safety.",
+  "sources": [
+    {
+      "label": "Visit Sharjah - Al Rafisah Hiking Trail",
+      "url": "https://www.visitsharjah.com/al-rafisah-dam/experiences/al-rafisah-hiking-trail/"
+    },
+    {
+      "label": "Visit Sharjah - Al Rafisah Hiking Trail (activities page)",
+      "url": "https://www.visitsharjah.com/activities/hiking-trails/al-rafisah-hiking-trail/"
+    },
+    {
+      "label": "Visit Sharjah - The Walk",
+      "url": "https://www.visitsharjah.com/al-rafisah-dam/experiences/the-walk/"
+    },
+    {
+      "label": "Visit Sharjah - About Al Rafisah Dam",
+      "url": "https://www.visitsharjah.com/al-rafisah-dam/about-al-rafisah-dam/"
+    },
+    {
+      "label": "Visit Sharjah - Al Rafisah Dam activities (Wadi Shees and Al Rabi trails)",
+      "url": "https://www.visitsharjah.com/en/activities/nature-and-wildlife/al-rafisah-dam/"
+    },
+    {
+      "label": "Visit Sharjah - Najd Al Maqsar Village",
+      "url": "https://www.visitsharjah.com/activities/heritage/najd-al-maqsar-village/"
+    },
+    {
+      "label": "The National - Sharjah Ruler opens mountain-top destination (15 July 2021)",
+      "url": "https://www.thenationalnews.com/uae/2021/07/15/sharjah-ruler-opens-mountain-top-destination-offering-panoramic-views-of-khor-fakkan/"
+    },
+    {
+      "label": "The National - Khor Fakkan paid parking (6 August 2022)",
+      "url": "https://www.thenationalnews.com/uae/transport/2022/08/06/sharjahs-khor-fakkan-to-introduce-paid-parking-on-august-15/"
+    },
+    {
+      "label": "Glimpses of UAE - Rafisa Dam (trail 7.5 km round trip, 440 m, boat prices and hours)",
+      "url": "https://glimpsesofuae.com/rafisa-dam-khorfakkan/"
+    },
+    {
+      "label": "Sharjah24 - Al Rafisah Dam (600 m ascent)",
+      "url": "https://sharjah24.ae/en/Articles/2024/12/29/NJ580"
+    },
+    {
+      "label": "UAE East Coast Tourism - Al Rafisah Dam (24/7, no entry fee, paid parking)",
+      "url": "https://uaeeastcoasttourism.com/al-rafisah-dam"
+    },
+    {
+      "label": "Trip.com - Al Rafisah Dam listing",
+      "url": "https://www.trip.com/travel-guide/attraction/khor-fakkan/al-rafisah-dam-131208443/"
+    },
+    {
+      "label": "Sustain Sharjah - Al Rafisah Dam",
+      "url": "https://www.sustainsharjah.com/categories/explore-nature/al-rafisah-dam/"
+    },
+    {
+      "label": "Property Finder - Al Suhub Rest House (3 km trail, hours)",
+      "url": "https://www.propertyfinder.ae/blog/al-suhub-rest-house/"
+    },
+    {
+      "label": "Bayut MyBayut - Al Suhub Rest House (3 km path)",
+      "url": "https://www.bayut.com/mybayut/al-suhub-rest-house/"
+    },
+    {
+      "label": "Khor Fakkan Tours - Al Suhub Rest House (hours, free entry)",
+      "url": "https://khorfakkantours.com/blog/al-suhub-rest-house"
+    },
+    {
+      "label": "Wikipedia - Al Suhub Rest House",
+      "url": "https://en.wikipedia.org/wiki/Al_Suhub_Rest_House"
+    },
+    {
+      "label": "Wikipedia - Al Rafisah Dam",
+      "url": "https://en.wikipedia.org/wiki/Al_Rafisah_Dam"
+    },
+    {
+      "label": "Wikipedia - Wadi Shie",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Shie"
+    },
+    {
+      "label": "Wikipedia - List of emergency telephone numbers",
+      "url": "https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers"
+    },
+    {
+      "label": "At World's Origins - Al Rafisah Dam (the Walk, footwear)",
+      "url": "https://atworldsorigins.com/2022/03/06/al-rafisah-dam-boating-hiking-and-an-archeological-site/"
+    },
+    {
+      "label": "Gulf News - Khorfakkan Road temporary closure, January 2026",
+      "url": "https://gulfnews.com/uae/transport/uae-traffic-alert-sharjah-rta-announces-temporary-closure-on-khorfakkan-road-1.500399452"
+    },
+    {
+      "label": "OpenStreetMap Nominatim - Al Rafisah Dam and Najd Al Maqsar Heritage Village",
+      "url": "https://nominatim.openstreetmap.org/search?q=Rafisah+Dam&format=json"
+    },
+    {
+      "label": "Existing site page - al-rafisah-dam.json",
+      "url": "file:///home/claude/site/content/locations/al-rafisah-dam.json"
+    }
+  ],
+  "lastChecked": "2026-10-06",
+  "_doubts": [
+    "GRADE: Easy was asked for and is not supported. Visit Sharjah says 'easy to moderate' for a hike that climbs to a rest house at about 580 m. The existing place page rates the place Moderate and calls the 3.5 km ridge trail the moderate one; that 3.5 km figure and a '1 km family loop' come from ComfortDrive/Bayut and were not re-confirmed from an official source, and the official source gives about 3 km. I settled on Moderate for the marked trail.",
+    "Visit Sharjah's 'Trail Length 20km' on both the hiking-trail page and The Walk page is identical on both, contradicts its own 3-hour itinerary, and is ignored. The about 3 km one-way length comes from The National (2021) and is repeated by Bayut and Property Finder; Glimpses of UAE says about 7.5 km round trip, so total length is 6 to 7.5 km.",
+    "Ascent disagrees: 440 m (Glimpses of UAE) against 600 m (Sharjah24). No source gives the elevation of the dam car park. Neither is from an authority; no AllTrails, Wikiloc or Komoot figure could be read because Wikiloc returned 403 to every fetch.",
+    "The exact trailhead point is not confirmed. The coordinate given is the dam wall from OpenStreetMap, not a surveyed trail start. Visit Sharjah says the start is marked on a map I could not view. Someone should walk it or check the on-site sign before the QR page gives a pin.",
+    "Wadi Shie / Najd Al Maqsar heritage trail: Visit Sharjah lists a 'dedicated trail' between Najd Al Maqsar and the dam and a trail to the Al Maqsar fortress, with no length, time, grade or route. UAE East Coast Tourism mentions Wadi Shea Fortress and Najd Al Maqsar only as sights. No source describes a named heritage trail with distances, so none is offered as a route. Sharjah Collection's Najd Al Meqsar page describes a hotel and restaurant and gave no trail data.",
+    "Parking: the existing site page says free parking; The National (August 2022) and UAE East Coast Tourism say paid. The rates (Dh2 to Dh12) are from 2022 and may have changed; At World's Origins (2022) says AED 10 an hour via the Digital Sharjah app, which disagrees with The National. Entry to the park is free by every source. Not verified with Sharjah Municipality for October 2026.",
+    "Hours: no authority gives trail hours. '24/7' comes from a regional tourism site, 'open all day' from Trip.com. Rest house hours differ between Property Finder (8am to 10pm) and Khor Fakkan Tours (9am to 10pm, cafe 10am to 8pm).",
+    "Months array (2,2,2,1,0,0,0,0,0,1,2,2) is carried over from the existing site page, not from an official source. I narrowed best months to November to March; October and April are shoulder months, not tested against any source.",
+    "Signal: only generic claims (Sharjah24, Visit Sharjah). Shade and water on the trail: no source. Wildlife and grazing: none documented for this trail beyond Visit Sharjah noting farm workers and local community members.",
+    "Drive times from Dubai and Abu Dhabi: no source opened gave them, so none are stated. The existing page's 'about 2 hours from Dubai' was not re-sourced.",
+    "Visit Sharjah's emergency-numbers panel did not render any numbers in the fetched text; the UAE numbers come from Wikipedia.",
+    "Left out: swimming in the lake (no source), kayak and boat detail beyond price and hours, the Al Rabi Tower trail (a separate Khor Fakkan trail, not at the dam), and a '55 m waterfall' (not relevant to the route).",
+    "Photos: licences were read from the Wikimedia Commons API metadata for each file, not by reading the visual file page. None shows the trail itself; they show the dam and its mountains. Check the Commons file pages before use.",
+    "Nearest suitable alternatives if an Easy card is required: for an Easy grade the 1.8 km Wadi Shees Nature Trail loop (Visit Sharjah, 30 to 40 minutes), which is a different site and was not researched here. The lakeside walkway (730 m) is a walk, not a hike."
+  ],
+  "n": 4,
+  "grade": "Moderate",
+  "nearPlace": "al-rafisah-dam",
+  "facts": {
+    "distance": "About 6 km return",
+    "climb": "About 440 m (unofficial; another source says 600 m)",
+    "time": "About 3 hours",
+    "shape": "Out and back"
+  },
+  "report": {
+    "distance": "about 6 km return",
+    "climb": "about 440 m (unofficial; 600 m in another source)",
+    "time": "about 3 h"
+  },
+  "photo": {
+    "src": "/uploads/places/al-rafisah-dam.jpg",
+    "alt": "The emerald reservoir of Al Rafisah Dam ringed by the Hajar Mountains near Khor Fakkan, Sharjah.",
+    "author": "Unorganised_Landings",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Al_Rafisa_Dam.jpg",
+    "what": "The emerald reservoir of Al Rafisah Dam ringed by the Hajar Mountains near Khor Fakkan, Sharjah."
+  },
+  "page": {
+    "gradeBasis": "Visit Sharjah calls the trail easy to moderate but gives no numeric grade. Graded Moderate here for the sustained climb to a rest house at about 580 m, with steep sections and loose rock.",
+    "route": [
+      "You start at Al Rafisah Dam, on the walkway of palm trees and benches leading towards the mountain edge. Visit Sharjah says this walk begins the longer hike. Follow the signs and its map. The first junction is not confirmed.",
+      "The path is a zig-zagging mountain trail that climbs steadily, with steep sections and loose rock (Glimpses of UAE). Visit Sharjah calls it well marked, with benches along the way. No source describes the waymarks.",
+      "The turn-around is the Al Suhub Rest House, about 580 m above sea level, with a restaurant and views over Khor Fakkan and the Gulf of Oman. Return the same way. A road also reaches the rest house, so do not mistake its traffic for the trail."
+    ],
+    "distance": "The National (2021) gives about 3 km one way, so about 6 km return. Glimpses of UAE gives 7.5 km.",
+    "climb": "Glimpses of UAE reports about 440 m of ascent, Sharjah24 600 m. Neither is official.",
+    "time": "Visit Sharjah gives about 3 hours round trip, allowing 1 to 1.5 hours each way.",
+    "start": "The walkway at the dam wall. Visit Sharjah marks the start on its map; the exact point is not confirmed.",
+    "coordNote": "The pin is the dam wall from OpenStreetMap, not a surveyed trail start or car park.",
+    "parking": "Car park at the dam, 45 spaces (Wikipedia). Paid 8am to 10pm daily, from Dh2 an hour (The National, 2022). Can fill at weekends.",
+    "vehicle": "2WD. The road to the dam is sealed; the trail is on foot.",
+    "getting": "Sustain Sharjah says the dam is about 45 minutes from Sharjah city.",
+    "bestMonths": "November to March. Avoid May to September.",
+    "startTime": "No source gives a start time. Start early, before the sun is high, and finish before dark.",
+    "shade": "Unknown. No source documents shade on the climb, so plan for little.",
+    "water": "Unknown on the trail. The rest house has a restaurant and the dam park a mini mart. Carry your own.",
+    "signal": "Unknown. Sharjah24 and Visit Sharjah say coverage is good, but this is unverified. Do not rely on it.",
+    "fees": "Dam park and rest house entry are free. Parking is paid, from Dh2 an hour (The National, 2022). No trail fee was found. Last checked October 2026.",
+    "permits": "None found. No source mentions a permit. Last checked October 2026.",
+    "hours": "The dam park is described as open 24/7 (UAE East Coast Tourism). Visit Sharjah gives no trail hours. Rest house hours vary. Last checked October 2026.",
+    "closure": "Not confirmed either way. No closure was found for the dam or trail on 6 October 2026. Check before you go, as rain damage or works could close it. Last checked October 2026.",
+    "safety": [
+      "Flash floods: the dam is at the head of a wadi. Check the forecast and avoid the trail in or after heavy rain.",
+      "Heat: avoid May to September. The climb is several hundred metres with no documented shade.",
+      "Terrain: steep sections and loose rock are reported. Wear sturdy hiking shoes with grip.",
+      "Water: carry more than you think you need (Visit Sharjah). If short of water, turn back.",
+      "Navigation: waymarks are undocumented, so carry an offline map. Tell someone your route; take a friend unless very experienced."
+    ],
+    "carry": [
+      "Water, more than you think you need",
+      "Sturdy hiking shoes",
+      "Sun hat and sun cream",
+      "Offline map or downloaded route",
+      "Charged phone",
+      "Snacks",
+      "Small first-aid kit",
+      "Bag for your rubbish"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Opening hours: none are published for the trail.",
+      "Exact trailhead: the pin marks the dam wall, not a surveyed trail start.",
+      "Parking rates: figures date from 2022 and are not confirmed for 2026.",
+      "Climb: sources disagree, 440 m against 600 m, and neither is official.",
+      "Waymarking, shade, water and signal: no source documents them."
+    ]
+  }
+}

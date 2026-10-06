@@ -1,0 +1,343 @@
+{
+  "slug": "wadi-shees",
+  "name": "Wadi Shees Nature Trail",
+  "emirate": "Sharjah",
+  "area": "Shees (Shis) village in Wadi Shees, in the Hajar Mountains near Khor Fakkan, on the Sharjah east coast side of the Khorfakkan Road (S142).",
+  "placeSlug": null,
+  "gradeAsked": "Easy",
+  "gradeRecommended": "Easy",
+  "gradeBasis": "Visit Sharjah lists the trail as an accessible 1.8 km loop of 30 to 40 minutes that it describes as family-friendly and suitable for all ages, but it publishes no formal grade (last checked October 2026). Easy is a judgement from the short distance, the one flight of steps up to the old village and the village and farm paths, which several blogs describe as beginner level with uneven ground.",
+  "officialTrails": [
+    {
+      "name": "Wadi Shees Nature Trail",
+      "grade": "Not graded (Visit Sharjah describes it as accessible, family-friendly and suitable for all ages)",
+      "lengthKm": 1.8,
+      "time": "30 to 40 minutes",
+      "source": "https://www.visitsharjah.com/activities/hiking-trails/wadi-shees-nature-trail/"
+    },
+    {
+      "name": "Al Rabi Hiking Trail (Khorfakkan)",
+      "grade": "Not graded (described as ideal for beginners; 'the moderate climb takes 2-3 hours')",
+      "lengthKm": "4 to 5 round trip",
+      "time": "2 to 3 hours",
+      "source": "https://www.visitsharjah.com/en/activities/hiking-trails/al-rabi-hiking-trail/"
+    },
+    {
+      "name": "Al Rafisah Hiking Trail (Khorfakkan area)",
+      "grade": "'easy to moderate, well marked trail' (Visit Sharjah wording)",
+      "lengthKm": null,
+      "time": "3 hours round trip to the Al Suhab Rest Houses and back",
+      "source": "https://www.visitsharjah.com/activities/hiking-trails/al-rafisah-hiking-trail/"
+    },
+    {
+      "name": "Mleiha Fossil Rock Hiking Trail (near Kalba)",
+      "grade": "Intermediate (Visit Sharjah wording), with one short steep vertical rock-climbing section",
+      "lengthKm": 6,
+      "time": "2 to 3 hours",
+      "source": "https://www.visitsharjah.com/activities/hiking-trails/mleiha-fossil-rock-hiking-trail/"
+    }
+  ],
+  "distanceKm": 1.8,
+  "distanceNote": "Total loop distance, from Visit Sharjah (Wadi Shees Nature Trail page, last checked October 2026). Broken Boots Travel also gives 1.8 km. No authority publishes a GPX track or map, so the exact line of the loop is not independently measured.",
+  "climbM": null,
+  "climbNote": "No source gives a total ascent. Visit Sharjah gives none. Glimpses of UAE (updated April 2026) says over 100 steps lead up to the old village; Sports Travel Tom (April 2026) calls it a moderate elevation gain by a refurbished staircase. OpenStreetMap maps a flight of steps about 75 m long marked as going up at the start of the Wadi Shees Hike path.",
+  "time": "30 to 40 minutes (Visit Sharjah). Blogs report 45 to 60 minutes (Sports Travel Tom, April 2026) and 1 to 2 hours with stops (Broken Boots Travel), so allow an hour.",
+  "shape": "loop",
+  "trailhead": {
+    "name": "Shees village car park at the start of the Wadi Shees Nature Trail (OpenStreetMap parking node 'Shiis Pools', beside the Wadi Shees Hike path)",
+    "lat": 25.29111,
+    "lng": 56.24462,
+    "coordSource": "OpenStreetMap parking node 3790286366 'Shiis Pools' (25.2911101, 56.2446205), next to way 1257679719 'Wadi Shees Hike' (starts 25.29095, 56.24465). A Wikimedia Commons photo titled 'Path inside Wadi Shees' is geotagged 25.291067, 56.244638 and 'Shees falaj 01' 25.291111, 56.244722, which agree to within about 50 m. No authority publishes coordinates. Shees Park is a different place, about 0.9 km to the west-north-west (OpenStreetMap park centre 25.29312, 56.23605).",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.29111,56.24462",
+    "parking": "Sports Travel Tom (April 2026) says the trail starts next to a car park near Shees Park with an information board; Broken Boots Travel says it begins right beside the parking area outside the village of Shees, marked by a large sign. Glimpses of UAE (updated April 2026) says parking at Shees Park is paid by meter, using coins or SMS. Gulf News (August 2022) reported paid parking at Shees Park from 15 August 2022 (Dh2 for one hour, Dh5 for two, Dh8 for three, Dh12 for five, by meter or SMS to 5566). Bayut says there are ample spaces outside the park, and a Tripadvisor reviewer says parking is free. Whether the car park at the trail start is paid is not confirmed (see _doubts).",
+    "vehicle": "2WD (the trail start is a village car park reached by paved road; Visit Sharjah says four-wheel drive may be required only for certain off-road areas of the wadi, which this loop does not use)"
+  },
+  "routeDescription": [
+    "Start at the car park at the foot of Shees village, where Broken Boots Travel and Sports Travel Tom both report a large sign or information board marking the start. The path crosses the wadi bed at a ford and then begins with a flight of stone steps up to the old village. Glimpses of UAE says there are over 100 steps, and Sports Travel Tom describes the staircase as refurbished. Glimpses of UAE also notes an easier way up that avoids the steps, with directions in its article.",
+    "Above the steps the route follows the village paths and a water channel. Visit Sharjah describes an ancient falaj irrigation system, terraced farms, shaded palm groves, archaeological remnants and the old village and local farms along the walk. Broken Boots Travel describes the water channel running beside the path and adds that the ground can be uneven. The falaj age is given as about 3,000 years by Visit Sharjah, Sports Travel Tom and Broken Boots Travel, and over 2,000 years by Property Finder.",
+    "The route passes through a village where people live. Broken Boots Travel advises sticking to the main path and respecting residents. OpenStreetMap shows a footpath of about 540 m beyond the steps that crosses the wadi at several fords, but it does not show the whole 1.8 km loop, so treat the loop line as unmapped by any authority.",
+    "The walk returns to the village car park, completing the 1.8 km loop that Visit Sharjah gives. A separate gravel walk of about 1 km, flat, leads towards the Oman border according to Property Finder (July 2025); it is not part of the 1.8 km loop and is not recommended on the card.",
+    "Waymarking: Visit Sharjah says Sharjah walks generally have information boards, and Sports Travel Tom and Broken Boots Travel report an information board or sign at the start. No source describes waymarks on the loop itself, so keep an offline map on your phone."
+  ],
+  "bestMonths": "October to April",
+  "months": [
+    2,
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2,
+    2
+  ],
+  "startAdvice": "Go early in the morning or late afternoon in the warmer months. Glimpses of UAE (updated April 2026) says the area is busiest at weekends and holidays, recommends winter visits and says the road is sometimes shut off at peak times; The Sandy Times (July 2024) advises getting there early on Fridays. The month ratings are a judgement from UAE heat, not from a published season.",
+  "shade": "Some. Visit Sharjah mentions shaded palm groves and Sustain Sharjah mentions palm trees providing some shade. A Tripadvisor review and Sports Travel Tom report plenty of shade, but the sources do not agree on how much, and the steps and open sections are not described as shaded.",
+  "water": "A falaj water channel and a stream run beside the path, and Sports Travel Tom (April 2026) says water flows constantly, but no source says it is drinkable and it should not be treated as a drinking supply. Visit Sharjah says there are no major rest stops on the trail. Cafes and shops are at Shees Park and the Shees Rest Area nearby. Visit Sharjah and Property Finder advise bringing plenty of water; no source gives a quantity.",
+  "signal": "unknown (Visit Sharjah says generally that help and phone signals are usually close at hand on Sharjah walks; no source gives coverage for this trail)",
+  "fees": "No fee for walking the trail was found. Property Finder (July 2025) says there is no entrance fee to Wadi Shees and Sports Travel Tom (April 2026) says it is free (last checked October 2026). Shees Park, about 0.9 km away, is reported by a Tripadvisor reviewer, UAE Travel Mom and Glimpses of UAE to charge AED 5 (children under five or six free), while Bayut says entry is free; Visit Sharjah's Shees Park page mentions QR-based ticketing. Parking at Shees Park is reported as paid by meter (Gulf News 2022; Glimpses of UAE 2026).",
+  "permits": "No permit mentioned by Visit Sharjah or any other source opened (last checked October 2026).",
+  "hours": "Visit Sharjah gives no opening hours for the trail or the wadi (last checked October 2026). Glimpses of UAE (updated April 2026) gives Shees Park as open from around 7:30 am to 10:30 pm daily, but that is a blog figure for the park and not an authority statement for the trail.",
+  "closure": "None found for the trail itself (last checked October 2026). Sharjah Police closed roads including the Nahwa to Shis road during heavy rain on 7 January 2023 to keep the public safe while wadis filled (Khaleej Times). Sharjah Police set up a mobile police station in the Shees tourist area in November 2024 (Gulf News) and its commander urged visitors to avoid flood-prone areas such as riverbeds. Glimpses of UAE says the road is sometimes shut off at peak weekend and holiday periods. Check Sharjah Police or the Khorfakkan Municipality before going after rain.",
+  "safety": [
+    "Do not go during or after heavy rain. Wadi Shees is prone to flash floods (Property Finder, July 2025; Broken Boots Travel), and Gulf News reports that valleys flood quickly in heavy rain.",
+    "During the February 2024 storm the National Emergency Crisis and Disasters Management Authority advised against travel to coastal areas, mountain ranges or valleys (Sharjah24); follow current official weather warnings.",
+    "Stay out of riverbeds and wadi channels in bad weather, as the Sharjah Police commander urged visitors in November 2024 (Gulf News).",
+    "The ground can be uneven and there are over 100 stone steps (Broken Boots Travel; Glimpses of UAE). Wear closed shoes with grip, not flip-flops. No source mentions handrails on the steps, so do not assume there are any.",
+    "The trail runs through an occupied village and working farms. Stay on the main path and respect residents (Broken Boots Travel).",
+    "Swimming is not allowed (Sports Travel Tom, April 2026). Camping is not allowed at Shees Park (The Sandy Times, July 2024; Bayut).",
+    "There are no toilets on the trail (Sports Travel Tom); toilets are reported at Shees Park and the rest area.",
+    "Summer heat is a risk; walk early or late in the day and carry water.",
+    "Visit Sharjah asks walkers to take all packaging and rubbish away with them."
+  ],
+  "carry": [
+    "plenty of water",
+    "sturdy shoes with grip, not flip-flops",
+    "hat and sunscreen",
+    "snacks",
+    "small first-aid kit (plasters, insect bite ointment) as Visit Sharjah suggests",
+    "offline map on a charged phone",
+    "bag for your rubbish",
+    "coins or a phone for paying parking, if the car park is metered"
+  ],
+  "emergency": "Police 999, ambulance 998, fire and civil defence 997 (Ajman government website, 'Handling Emergencies', which states the numbers apply anywhere in the UAE; last checked October 2026). A mobile police station operating around the clock was set up in the Shees tourist area in November 2024 (Gulf News).",
+  "driveNote": "Visit Sharjah gives the route only: Emirates Road (E611), then the Khorfakkan Road exit, about 70 km along Khorfakkan Road, then the ramp towards Shees. Sharjah24 says Shees Park is about 95 km from Sharjah city. Sports Travel Tom (April 2026) says about 60 minutes from Dubai via the S142 and that there are no petrol stations on the S142; Gulf News (2023) says 1 to 2 hours from the major emirates. No source gives an Abu Dhabi drive time. These times are from blogs and press, not an authority.",
+  "intro": "The Wadi Shees Nature Trail is a 1.8 km loop through Shees village in the Hajar Mountains near Khor Fakkan, following an ancient falaj water channel past terraced farms and palm groves. Visit Sharjah gives the walk as 30 to 40 minutes.",
+  "seoTitle": "Wadi Shees Nature Trail: Khor Fakkan Easy Loop",
+  "seoDesc": "Walk guide to the 1.8 km Wadi Shees Nature Trail near Khor Fakkan, Sharjah: falaj, terraced farms, steps, parking, fees, flood warnings and what to carry.",
+  "sources": [
+    {
+      "label": "Visit Sharjah, Wadi Shees Nature Trail",
+      "url": "https://www.visitsharjah.com/activities/hiking-trails/wadi-shees-nature-trail/"
+    },
+    {
+      "label": "Visit Sharjah, Wadi Shees",
+      "url": "https://www.visitsharjah.com/activities/nature-and-wildlife/wadi-shees/"
+    },
+    {
+      "label": "Visit Sharjah, Shees Village",
+      "url": "https://www.visitsharjah.com/activities/nature-and-wildlife/shees-village/"
+    },
+    {
+      "label": "Visit Sharjah, Shees Park",
+      "url": "https://www.visitsharjah.com/activities/family/shees-park/"
+    },
+    {
+      "label": "Visit Sharjah, hiking trails index",
+      "url": "https://www.visitsharjah.com/activities/hiking-trails/"
+    },
+    {
+      "label": "Visit Sharjah, Al Rabi Hiking Trail",
+      "url": "https://www.visitsharjah.com/en/activities/hiking-trails/al-rabi-hiking-trail/"
+    },
+    {
+      "label": "Visit Sharjah, Al Rafisah Hiking Trail",
+      "url": "https://www.visitsharjah.com/activities/hiking-trails/al-rafisah-hiking-trail/"
+    },
+    {
+      "label": "Visit Sharjah, Mleiha Fossil Rock Hiking Trail",
+      "url": "https://www.visitsharjah.com/activities/hiking-trails/mleiha-fossil-rock-hiking-trail/"
+    },
+    {
+      "label": "Sustain Sharjah, Wadi Shees Nature Trail",
+      "url": "https://www.sustainsharjah.com/categories/explore-nature/wadi-shees-nature-trail/"
+    },
+    {
+      "label": "Sharjah24, Sharjah Ruler inaugurates Shees Rest Area (27 Oct 2023)",
+      "url": "https://sharjah24.ae/en/Articles/2023/10/27/Sharjah-Ruler-inaugurates-Shees-Rest-Area"
+    },
+    {
+      "label": "Sharjah24, Shis a fully-serviced tourist area (25 Nov 2024)",
+      "url": "https://sharjah24.ae/en/Articles/2024/11/25/ZX77"
+    },
+    {
+      "label": "Sharjah24, Shees Park: quiet solitude away from city life (28 Dec 2024)",
+      "url": "https://sharjah24.ae/en/Articles/2024/12/28/NJ592"
+    },
+    {
+      "label": "Sharjah24, Extreme rainfall in Khorfakkan (12 Feb 2024)",
+      "url": "https://sharjah24.ae/en/Articles/2024/02/12/Extreme-rainfall-in-Khorfakkan"
+    },
+    {
+      "label": "Khaleej Times, Police announce closure of key roads in Sharjah (7 Jan 2023)",
+      "url": "https://www.khaleejtimes.com/uae/weather/uae-rains-police-announce-closure-of-key-roads-to-tourist-attraction-residential-area-in-sharjah"
+    },
+    {
+      "label": "Gulf News, Mobile police station set up in Shees tourist area (Nov 2024)",
+      "url": "https://gulfnews.com/uae/crime/mobile-police-station-set-up-in-shees-tourist-area-sharjah-1.104668861"
+    },
+    {
+      "label": "Gulf News, Shees Rest Area guide (updated 12 Nov 2023)",
+      "url": "https://gulfnews.com/living-in-uae/ask-us/shees-rest-area---all-you-need-to-know-about-sharjahs-latest-outdoor-spot-1.1699540268413"
+    },
+    {
+      "label": "Gulf News, Khorfakkan paid parking from 15 August 2022",
+      "url": "https://gulfnews.com/living-in-uae/transport/planning-to-go-to-khorfakkan-you-will-soon-need-to-pay-for-parking-1.1659709295374"
+    },
+    {
+      "label": "OpenStreetMap, way 1257679719 Wadi Shees Hike (API)",
+      "url": "https://www.openstreetmap.org/api/0.6/way/1257679719/full.json"
+    },
+    {
+      "label": "OpenStreetMap, map data around Shees village (API bbox)",
+      "url": "https://www.openstreetmap.org/api/0.6/map.json?bbox=56.2400,25.2880,56.2500,25.2970"
+    },
+    {
+      "label": "OpenStreetMap Nominatim search, Shees Park and Wadi Shees",
+      "url": "https://nominatim.openstreetmap.org/search?q=Wadi+Shees&format=json"
+    },
+    {
+      "label": "Property Finder blog, Wadi Shees (7 Jul 2025)",
+      "url": "https://www.propertyfinder.ae/blog/wadi-shees/"
+    },
+    {
+      "label": "Glimpses of UAE, Wadi Shees hiking and facilities (updated 29 Apr 2026)",
+      "url": "https://glimpsesofuae.com/wadi-shees/"
+    },
+    {
+      "label": "Sports Travel Tom, Wadi Shees Nature Trail guide (6 Apr 2026)",
+      "url": "https://www.sportstraveltom.com/post/wadi-shees-nature-trail-guide-uae-a-rare-oasis-walk-in-the-desert"
+    },
+    {
+      "label": "Broken Boots Travel, Things to do in Wadi Shees",
+      "url": "https://brokenbootstravel.com/things-to-do-in-wadi-shees/"
+    },
+    {
+      "label": "The Sandy Times, Where to go hiking in the UAE (11 Jul 2024)",
+      "url": "https://sandytimes.ae/articles/423/where-to-go-hiking-in-the-uae-wadi-shees-and-more-places"
+    },
+    {
+      "label": "Bayut MyBayut, Shees Park guide",
+      "url": "https://www.bayut.com/mybayut/shees-park-guide/"
+    },
+    {
+      "label": "UAE Travel Mom, Shees Park",
+      "url": "https://www.uaetravelmom.com/shees-park"
+    },
+    {
+      "label": "Tripadvisor, Wadi Shees reviews",
+      "url": "https://www.tripadvisor.com/Attraction_Review-g298064-d19929706-Reviews-Wadi_Shees-Sharjah_Emirate_of_Sharjah.html"
+    },
+    {
+      "label": "Tripadvisor, Sheeh Park reviews",
+      "url": "https://www.tripadvisor.com/Attraction_Review-g660713-d21364645-Reviews-Sheeh_Park-Khorfakkan.html"
+    },
+    {
+      "label": "Wikipedia, Shees Park",
+      "url": "https://en.wikipedia.org/wiki/Shees_Park"
+    },
+    {
+      "label": "Travel And Tour World, Sharjah adventure trails (10 Dec 2024)",
+      "url": "https://www.travelandtourworld.com/news/article/wadi-shees-al-rabi-mleiha-fossil-rock-and-al-rafisah-attracting-global-tourists-to-sharjah-with-adventure-tourism/"
+    },
+    {
+      "label": "Ajman government, Handling Emergencies",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Wikimedia Commons API, file metadata for Shees falaj 01, Wadi Shees and Wadi Shees Sharjah Emirate",
+      "url": "https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url|size|extmetadata&titles=File:Shees_falaj_01.jpg"
+    }
+  ],
+  "lastChecked": "2026-10-06",
+  "_doubts": [
+    "No authority publishes a map, GPX track or coordinates for the loop. The 1.8 km figure and 30 to 40 minutes are Visit Sharjah's. The exact line of the loop is not verified; OpenStreetMap shows only about 650 m of path and steps near the start.",
+    "Trailhead coordinates come from OpenStreetMap (a parking node named 'Shiis Pools') corroborated by geotagged Commons photos, not from an authority. Blogs say the trail starts 'near Shees Park' or 'outside the village'; Shees Park itself is about 0.9 km away. A person on site should confirm that the car park at 25.29111, 56.24462 is the one with the information board.",
+    "Parking: Gulf News (2022) and Glimpses of UAE (2026) say parking at Shees Park is paid by meter or SMS; a Tripadvisor reviewer says free parking; Bayut says ample spaces outside the park. Not confirmed whether the trail-start car park is paid. The card should not state parking is free.",
+    "Fees: no authority states a trail fee. Shees Park entry is reported as AED 5 by three non-official sources and as free by Bayut and Property Finder; Visit Sharjah mentions QR-based ticketing at the park but gives no price. Sharjah Investment and Development Authority, Khor Fakkan Municipality and Sharjah Public Parks pages were not found or gave no figures. The park fee is not needed for the trail on the sources available.",
+    "Hours: no authority gives hours for the trail or park. The 7:30 am to 10:30 pm figure is from one blog (Glimpses of UAE) about the park only.",
+    "Falaj age disagrees: about 3,000 years (Visit Sharjah, Sports Travel Tom, Broken Boots Travel) against over 2,000 years (Property Finder). The brief recommends the official figure, but the page text should avoid committing to an age or say 'ancient'.",
+    "Time disagrees: Visit Sharjah says 30 to 40 minutes; Sports Travel Tom says 45 to 60 minutes; Broken Boots Travel says 1 to 2 hours; one Tripadvisor reviewer did it in 20 minutes. The official figure is used, with the blog range noted.",
+    "Climb: not given by any source. climbM left null. Steps are described as over 100 (Glimpses of UAE), but no source states handrails; the card must not claim handrails.",
+    "Shade: sources disagree between 'some' (Sustain Sharjah) and 'plenty' (Sports Travel Tom, a Tripadvisor review). Described neutrally.",
+    "Grade: Visit Sharjah does not grade the trail; Easy is a judgement from distance and the steps. The 'suitable for all ages' wording is Visit Sharjah's and was not repeated as a claim of ours.",
+    "Water: sources say the falaj and stream flow most or all of the year, but one photographer's Commons caption and a blog are the only support for 'year-round'. Not stated as drinkable. A 2024 Tripadvisor review mentions a landslide that destroyed things in the area; no date, location or closure was found.",
+    "Closures and rules after rain: no Visit Sharjah, Khor Fakkan Municipality or Sharjah Investment and Development Authority notice on Wadi Shees was found. The only official-source closures found are the 7 January 2023 Sharjah Police road closures (reported by Khaleej Times, which does not name Wadi Shees) and the Sharjah Police mobile station statement. Visit Sharjah's own pages give no rain rules.",
+    "Signal: Visit Sharjah's statement about phone signals is generic for Sharjah walks, so signal is recorded as unknown.",
+    "Drive time: only blog or press figures exist (about 60 minutes from Dubai by Sports Travel Tom; 1 to 2 hours by Gulf News); the 60 minute figure looks optimistic against the 70 km on Khorfakkan Road plus the Dubai leg, so it is flagged as unverified. No Abu Dhabi time found.",
+    "Emergency numbers are cited to the Ajman government site because the u.ae page did not load; numbers are national.",
+    "Months scoring is a judgement from UAE temperatures; no authority publishes a season for this trail. Sports Travel Tom says the trail is accessible year-round.",
+    "Left out: the 1 km gravel walk towards the Oman border (Property Finder), the Shees Pools and wadi-bed walking beyond the village (not an official trail; flood risk), and the 4x4 wadi tracks. Second choice if this route is not used: Al Rafisah Hiking Trail (Visit Sharjah: easy to moderate, well marked, 3 hours round trip) or Al Rabi (Visit Sharjah: ideal for beginners but a moderate climb of 2 to 3 hours, so closer to Moderate).",
+    "Photo file pages on commons.wikimedia.org could not be opened directly (cache-only in this environment); licence, author and size were read from the Wikimedia Commons API metadata for each file."
+  ],
+  "n": 1,
+  "grade": "Easy",
+  "nearPlace": "khor-fakkan-beach",
+  "facts": {
+    "distance": "1.8 km loop",
+    "climb": "Not published; more than 100 steps",
+    "time": "30 to 40 minutes; allow 1 hour",
+    "shape": "Loop"
+  },
+  "report": {
+    "distance": "1.8 km",
+    "climb": "not published (100+ steps)",
+    "time": "30 to 40 min (allow 1 h)"
+  },
+  "photo": {
+    "src": "/uploads/hikes/wadi-shees.jpg",
+    "w": 1280,
+    "h": 960,
+    "edits": "resized",
+    "author": "Angela Manthorpe",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Shees_falaj_01.jpg",
+    "what": "The falaj at Wadi Shees",
+    "alt": "The falaj water channel running along the rock at Wadi Shees"
+  },
+  "page": {
+    "gradeBasis": "No authority grades this trail. Visit Sharjah calls the 1.8 km loop accessible and family-friendly but gives no grade. Easy is a judgement from the short distance, one flight of steps and village paths that blogs call beginner level with uneven ground.",
+    "route": [
+      "You start at the car park at the foot of Shees village. The path crosses the wadi bed at a ford, then climbs a flight of stone steps to the old village. Glimpses of UAE counts over 100 steps and mentions an easier way up.",
+      "Above the steps you follow village paths beside a falaj, an ancient water channel. Visit Sharjah describes terraced farms, palm groves and archaeological remnants. Broken Boots Travel says the ground can be uneven. People live here, so stick to the main path.",
+      "The walk returns to the village car park, completing the 1.8 km loop. Keep an offline map on your phone. Do not follow the wadi bed beyond the village; it is not part of the trail and carries flood risk."
+    ],
+    "distance": "Visit Sharjah gives 1.8 km for the full loop. No authority publishes a map or track, so the exact line is not measured.",
+    "climb": "No source publishes a total climb. Glimpses of UAE counts over 100 steps up to the old village.",
+    "time": "Visit Sharjah gives 30 to 40 minutes. Blogs report 45 minutes to 2 hours with stops, so allow an hour.",
+    "start": "Shees village car park, where blogs report a large sign or information board.",
+    "coordNote": "The pin comes from OpenStreetMap and geotagged photos, within about 50 m. No authority publishes coordinates.",
+    "parking": "Not confirmed whether the trail car park is paid. Shees Park nearby is paid by meter or SMS, so carry coins and a phone.",
+    "vehicle": "2WD. The start is a village car park on a paved road. Visit Sharjah says four-wheel drive is for off-road wadi areas only.",
+    "getting": "Blogs and press give about 60 minutes from Dubai (Sports Travel Tom, unverified) to 1 to 2 hours from the major emirates (Gulf News). Sports Travel Tom says there are no petrol stations on the S142, so fill up first.",
+    "bestMonths": "October to April; winter is best.",
+    "startTime": "Go early morning or late afternoon in warmer months. It is busiest at weekends and holidays.",
+    "shade": "Some. Visit Sharjah mentions shaded palm groves. Sources disagree on how much shade, and the steps are not described as shaded.",
+    "water": "A channel and stream run beside the path, but no source says it is drinkable. Do not drink it; bring your own.",
+    "signal": "Unknown. Visit Sharjah says signal is generally close at hand on its walks, but nothing covers this trail. Assume none.",
+    "fees": "No fee for walking the trail was found. Property Finder and Sports Travel Tom say it is free. Shees Park nearby may charge entry; reports differ. Last checked October 2026.",
+    "permits": "No permit is mentioned by Visit Sharjah or any other source. Last checked October 2026.",
+    "hours": "Visit Sharjah gives no opening hours for the trail. One blog gives Shees Park as open about 7:30 am to 10:30 pm, which is not official. Last checked October 2026.",
+    "closure": "Unconfirmed: no official notice for the trail was found. Sharjah Police closed the Nahwa to Shis road in heavy rain on 7 January 2023. Check Sharjah Police or Khorfakkan Municipality after rain. Last checked October 2026.",
+    "safety": [
+      "Do not go during or after heavy rain. Wadi Shees is prone to flash floods.",
+      "Stay out of riverbeds and wadi channels in bad weather. Follow official weather warnings.",
+      "Over 100 stone steps and uneven ground: wear closed shoes with grip. Do not assume there are handrails.",
+      "No authority publishes a map of the loop, and no waymarks are described. Keep an offline map.",
+      "Summer heat is a risk. Walk early or late and carry water.",
+      "You pass through an occupied village and working farms. Respect residents."
+    ],
+    "carry": [
+      "Plenty of water",
+      "Sturdy shoes with grip",
+      "Hat and sunscreen",
+      "Snacks",
+      "Small first-aid kit",
+      "Offline map on a charged phone",
+      "Bag for your rubbish",
+      "Coins and a phone for parking"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Fire and civil defence 997",
+    "notConfirmed": [
+      "Whether the trail is open: no official notice was found. Check Sharjah Police or Khorfakkan Municipality, especially after rain.",
+      "The exact trailhead: the pin comes from map data, not an authority. Shees Park is a different place, 0.9 km away.",
+      "Whether the car park is paid, and the opening hours.",
+      "The total climb: no source gives one.",
+      "Waymarking along the loop: no source describes any."
+    ]
+  }
+}

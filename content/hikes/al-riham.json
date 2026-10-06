@@ -1,0 +1,339 @@
+{
+  "slug": "al-riham",
+  "name": "Al Riham Trail",
+  "emirate": "Fujairah",
+  "area": "Wadi Saham, in the Hajar Mountains about 15 to 20 km southwest of Fujairah City, Fujairah emirate. The route climbs Jebel Riham (also spelt Raham).",
+  "placeSlug": null,
+  "gradeAsked": "Difficult",
+  "gradeRecommended": "Difficult",
+  "gradeBasis": "Fujairah Adventures Centre, the emirate's official trail operator, grades Al Riham Trail 'Hard' and calls it a challenging mountain ridge trail. It is the only one of its 14 listed trails graded 'Hard'; Dhanha and Al Aqah are graded 'Extreme'. A commercial guide company, ECC Adventures, rates its guided Mount Riham ascent 'Intermediate (6/10)' and warns of steep grades from the start, loose rocks and exposure to heights.",
+  "officialTrails": [
+    {
+      "name": "Dhanha Trail",
+      "grade": "Extreme",
+      "lengthKm": 6.0,
+      "time": "120 to 180 minutes",
+      "area": "Dibba",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Al Aqah Trail",
+      "grade": "Extreme",
+      "lengthKm": 3.0,
+      "time": "2 hours",
+      "area": "Dibba",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Al Riham Trail",
+      "grade": "Hard",
+      "lengthKm": 7.71,
+      "time": "2 to 3 hours",
+      "area": "Fujairah",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Wadi Al Abadilah Trail",
+      "grade": "Easy",
+      "lengthKm": 2.8,
+      "time": "60 to 120 minutes",
+      "area": "Masafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Ain Al Sheria Trail",
+      "grade": "Moderate",
+      "lengthKm": 8.05,
+      "time": "180 to 200 minutes",
+      "area": "Al Taween",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Jabal Al Hamri Trail",
+      "grade": "Easy",
+      "lengthKm": 4.0,
+      "time": "180 to 200 minutes",
+      "area": "Al Taween",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Al Dhaher Water Spring Trail",
+      "grade": "Moderate",
+      "lengthKm": 8.0,
+      "time": "240 to 300 minutes",
+      "area": "Al Taween",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Sal Khail Trail",
+      "grade": "Easy",
+      "lengthKm": 4.5,
+      "time": "120 to 180 minutes",
+      "area": "Masafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Al Qfair Trail",
+      "grade": "Easy",
+      "lengthKm": 5.5,
+      "time": "126 to 160 minutes",
+      "area": "Massafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Seven Summits Trail",
+      "grade": "Easy",
+      "lengthKm": 2.0,
+      "time": "60 minutes",
+      "area": "Fujairah",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Al Taiba Trail",
+      "grade": "Easy",
+      "lengthKm": 4.5,
+      "time": "90 to 120 minutes",
+      "area": "Masafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Wadi Al Milh Trail",
+      "grade": "Moderate",
+      "lengthKm": 3.0,
+      "time": "120 to 160 minutes",
+      "area": "Masafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Ihfarah Trail",
+      "grade": "Easy",
+      "lengthKm": 4.0,
+      "time": "180 to 200 minutes",
+      "area": "Fujairah",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    },
+    {
+      "name": "Al Fqit Trail",
+      "grade": "Moderate",
+      "lengthKm": 3.0,
+      "time": "130 to 160 minutes",
+      "area": "Dibba",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (the data behind fujairahadventures.ae), opened 2026-10-06"
+    }
+  ],
+  "distanceKm": 7.71,
+  "distanceNote": "Official figure from Fujairah Adventures Centre, which does not say whether 7.71 km is one way or the whole route. Two third-party sources give about 7 km for the same mountain (MissionsOffroad, November 2023; ECC Adventures, 7.0 km), and ECC calls its version a loop, so 7.71 km is most likely the whole route; that is an inference, not an operator statement.",
+  "climbM": 450,
+  "climbNote": "About 450 m, from MissionsOffroad (published 16 November 2023: 'around 7 km and 450 m elevation gain'). ECC Adventures gives 470 m for its guided loop. Fujairah Adventures Centre gives no ascent figure, so treat 450 to 470 m as third-party and approximate.",
+  "time": "2 to 3 hours (operator); a guided group on the same mountain is quoted 2.5 to 3.5 hours (ECC Adventures)",
+  "shape": "loop",
+  "trailhead": {
+    "name": "Al Riham Trail pin, Wadi Saham (operator's Google Maps place)",
+    "lat": 25.1108212,
+    "lng": 56.2236185,
+    "coordSource": "Operator pin: the Google Maps short link that Fujairah Adventures Centre attaches to Al Riham Trail (maps.app.goo.gl/4nvyqrHTyqBnq5WN8) resolves to a place named 'Al Riham Trail' at 25.1108212, 56.2236185. A second start point is given by MissionsOffroad for the Jebel Raham hike: 25.112677, 56.211266, beside the Wadi Saham petroglyph rock (25.112754, 56.209106), about 1.3 km west of the operator pin. The two have not been reconciled.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.1108212,56.2236185",
+    "parking": null,
+    "vehicle": null
+  },
+  "routeDescription": [
+    "Fujairah Adventures Centre says the trail starts in Wadi Saham, passes water springs and climbs to the top of the mountain. Wadi Saham here is the one southwest of Fujairah City (Al Ittihad, December 2022: about 20 km southwest of the city; Al Khaleej, 2013: about 15 km), reached from the city along Sheikh Khalifa Street and then a winding mountain road. The operator's pin is at 25.1108, 56.2236. MissionsOffroad gives a different start, 25.112677, 56.211266, near the petroglyph rock; confirm which one the signs lead to when you arrive.",
+    "The mountain is Jebel Riham (spelt Raham by some sources). Al Ittihad reports that Fujairah Adventures Centre renamed it and built dedicated mountain trails to its summit. Underfoot, ECC Adventures describes a steady ascent and descent with loose rocks, steep grades from the start, exposure to heights and full sun. It tells people with vertigo or a fear of heights not to join.",
+    "Landmarks named by the operator are archaeological sites along the way and the 'Jameel' Rock. ECC lists petroglyphs and views over mainland Fujairah, the sea, and the villages of Al Hayl and Saham. Do not touch or climb on rock art.",
+    "Official length is 7.71 km and official time 2 to 3 hours; about 450 to 470 m of climbing is reported by third parties. ECC describes a loop, and the operator does not give the turn-around or finish point, so follow the operator's map and do not assume you can cut the route short.",
+    "Waymarking: the operator says each of its trails is marked with a difficulty rating, and it publishes this trail in its Fujairah Trails app (links on its website). No source describes the markers on this trail, so download the route before you go and do not rely on finding signs."
+  ],
+  "bestMonths": "December to March is the best period according to ECC Adventures, a guide company. The official hiking season opened on 25 September 2026 and its end date was not found; April and October to November are workable if you start early.",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    2
+  ],
+  "startAdvice": "Start early. ECC Adventures meets its guests at 7:00 am and starts walking at 7:45 am; it says other months than December to March are hotter and need more water. No official start time is given.",
+  "shade": "Little, according to ECC Adventures, which lists sun exposure as a challenge of this route. The operator gives no shade information.",
+  "water": "The operator says the route passes water springs near the start, but not whether they flow or whether the water is drinkable, so carry all you need. ECC Adventures tells its guests to carry 1 to 2 litres from December to March and 2 to 3 litres in other months.",
+  "signal": "unknown. No source opened gives mobile coverage for this trail.",
+  "fees": "No fee for walkers was found on the Fujairah Adventures Centre website, last checked October 2026. Its permit services are for companies, event organisers and guides.",
+  "permits": "No walker permit was found on the Fujairah Adventures Centre website, last checked October 2026. Its permit services are for companies, event organisers and guides. Its FAQ says: 'Hiking is allowed only during the official adventure season, announced annually on Fujairah Adventure social media platforms.' No group-size rule for hikers was found.",
+  "hours": "No opening hours were found for this trail, last checked October 2026.",
+  "closure": "None found for this trail, last checked October 2026. Khaleej Times and Zawya (1 October 2026) report that Fujairah reopened all its officially approved trails on 25 September 2026; neither names Al Riham, but the trail is on the operator's current list, updated August 2026. Al Khaleej (2013) reports that when Wadi Saham fills with water the road to the village can be cut off.",
+  "safety": [
+    "The operator's FAQ says hiking is allowed only during the official adventure season, announced each year on Fujairah Adventures' social media. Check its channels before you go.",
+    "Al Riham is graded Hard by the operator. ECC Adventures describes steep grades from the start, loose rocks and exposure to heights, and advises against it for people with vertigo or a fear of heights.",
+    "Stay on the marked trail, tell someone your route and expected return time, and check the weather first.",
+    "Wadi Saham fills with water after rain and the road to the village can be cut off (Al Khaleej). Do not go in or near the wadi if rain has fallen or is forecast.",
+    "The route has little shade and full sun, so start early and carry more water than you expect to need.",
+    "Ancient petroglyphs and archaeological sites lie along the route. Do not touch or move them, and take your rubbish with you.",
+    "Pets are not allowed on most Fujairah Adventures trails; the operator names only Tayyibah and Seven Summits as pet-friendly."
+  ],
+  "carry": [
+    "Plenty of water",
+    "Sturdy hiking shoes",
+    "Hat and sun protection",
+    "Fully charged phone with the route downloaded for offline use",
+    "Snacks",
+    "Basic first aid kit"
+  ],
+  "emergency": "Police 999, ambulance 998, fire and civil defence 997 (Ajman government emergency numbers page, opened October 2026; these are the UAE-wide numbers).",
+  "driveNote": null,
+  "intro": "Al Riham Trail climbs Jebel Riham from Wadi Saham, southwest of Fujairah City, and is the one route Fujairah Adventures Centre grades Hard. The operator lists 7.71 km and 2 to 3 hours, and third parties report about 450 m of climbing.",
+  "seoTitle": "Al Riham Trail, Fujairah: Hard Hike Guide",
+  "seoDesc": "Al Riham Trail, Wadi Saham, Fujairah: official Hard grade, 7.71 km, 2 to 3 hours, about 450 m climb, map pin, season rules and what to carry.",
+  "sources": [
+    {
+      "label": "Fujairah Adventures Centre hiking trails data (official operator API behind fujairahadventures.ae)",
+      "url": "https://new-api.fujairahadventures.ae/api/v1/trails/hiking"
+    },
+    {
+      "label": "Fujairah Adventures Centre hiking trails data, page 2",
+      "url": "https://new-api.fujairahadventures.ae/api/v1/trails/hiking?page=2"
+    },
+    {
+      "label": "Fujairah Adventures Centre website (FAQ on season, pets, permits; trail labels; app links)",
+      "url": "https://fujairahadventures.ae/"
+    },
+    {
+      "label": "Google Maps place for Al Riham Trail, linked by Fujairah Adventures Centre",
+      "url": "https://maps.app.goo.gl/4nvyqrHTyqBnq5WN8"
+    },
+    {
+      "label": "Google Maps place for Dhanha Trail, linked by Fujairah Adventures Centre",
+      "url": "https://maps.app.goo.gl/N7NSY1EWTesF7uc99"
+    },
+    {
+      "label": "Khaleej Times, Fujairah reopens hiking and biking trails (1 October 2026)",
+      "url": "https://www.khaleejtimes.com/travel/uae-attractions/uae-fujairah-reopens-hiking-biking-trails-september-temperatures-drop"
+    },
+    {
+      "label": "Zawya, Fujairah announces the new season for adventure tourism (1 October 2026)",
+      "url": "https://www.zawya.com/en/press-release/companies-news/fujairah-announces-the-new-season-for-adventure-tourism-1460383"
+    },
+    {
+      "label": "The National, Fujairah's new hiking trails (21 December 2024), for general trail rules",
+      "url": "https://www.thenationalnews.com/news/uae/2024/12/21/where-are-fujairahs-new-hiking-trails-and-how-do-you-reach-them/"
+    },
+    {
+      "label": "Wikipedia, Wadi Saham (coordinates, petroglyphs)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Saham"
+    },
+    {
+      "label": "Ajman government, Handling Emergencies (UAE emergency numbers)",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Wikimedia Commons, File:Wadi Sham Petroglyph.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Wadi_Sham_Petroglyph.jpg"
+    },
+    {
+      "label": "Wikimedia Commons, File:Wadi Saham Petroglyphs.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Wadi_Saham_Petroglyphs.jpg"
+    },
+    {
+      "label": "MissionsOffroad, Wadi Saham (16 November 2023): Jebel Raham hike 7 km, 450 m gain, start coordinates, 4x4 camping area",
+      "url": "https://missionsoffroad.com/wadi-saham/"
+    },
+    {
+      "label": "ECC Adventures, Mount Riham Ascent: 7.0 km loop, 470 m, 2.5 to 3.5 hours, terrain, water, season",
+      "url": "https://eccadventures.com/adventure/https-eccadventures-com-adventure-mount-riham-ascent/"
+    },
+    {
+      "label": "Al Ittihad, Wadi Saham, a destination for adventure lovers (20 December 2022): location, Fujairah Adventures built trails to Riham mountain",
+      "url": "https://www.aletihad.ae/news/%D8%AF%D9%86%D9%8A%D8%A7/4339371/-%D9%88%D8%A7%D8%AF%D9%8A-%D8%B3%D9%87%D9%85----%D9%88%D8%AC%D9%87%D8%A9-%D9%85%D8%AD%D8%A8%D9%8A-%D8%A7%D9%84%D9%85%D8%BA%D8%A7%D9%85%D8%B1%D8%A7%D8%AA"
+    },
+    {
+      "label": "Al Khaleej, Wadi Saham, a village of beautiful nature (14 February 2013): road access, flooding",
+      "url": "https://www.alkhaleej.ae/%D9%85%D9%84%D8%AD%D9%82/%D9%88%D8%A7%D8%AF%D9%8A-%D8%B3%D9%87%D9%85-%D9%82%D8%B1%D9%8A%D8%A9-%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%B9%D8%A9-%D8%A7%D9%84%D8%AE%D9%84%D8%A7%D8%A8%D8%A9"
+    }
+  ],
+  "lastChecked": "2026-10-06",
+  "_doubts": [
+    "Climb 450 m is third-party (MissionsOffroad 450 m; ECC Adventures 470 m). The operator gives no ascent, and its Wikiloc and AllTrails records could not be opened (Cloudflare 403 or robots block), so the exact figure for the operator's route is unconfirmed.",
+    "Shape 'loop' comes only from ECC Adventures' guided route. The operator does not say loop, return or one way, or whether 7.71 km is the whole route. MissionsOffroad and ECC give about 7 km, so the whole route is likely, but that is my inference.",
+    "Two start points: the operator's Google Maps pin (25.1108212, 56.2236185) and MissionsOffroad's Jebel Raham start (25.112677, 56.211266, about 1.3 km west, beside the petroglyph rock). ECC meets guests at the ADNOC station at the Fujairah entrance, not at the trailhead. Not reconciled; the page should link the operator's map and say a person must confirm the start on site.",
+    "Parking and vehicle: no source describes the car park or the road surface to the trailhead. Al Khaleej (2013) describes a winding mountain road to Wadi Saham village from Sheikh Khalifa Street, and MissionsOffroad says a 4x4 is needed for the wadi camping area (25.0889, 56.1973), not for the trail start. Both fields left null.",
+    "Which Wadi Saham: resolved as the one southwest of Fujairah City (Wikipedia coordinates 25.1128, 56.2089; Al Ittihad about 20 km southwest of the city; Al Khaleej about 15 km southwest; the operator's Al Riham pin; MissionsOffroad and ECC all agree). The operator's destination text 'Wadi Saham in Dibba' refers to a different place and does not apply. The 15 km and 20 km distances disagree; I give a range.",
+    "Grade disagreement: operator 'Hard' versus ECC Adventures 'Intermediate (6/10)'. The operator's grade is used. Time disagreement: operator 2 to 3 hours versus ECC 2.5 to 3.5 hours guided. Operator figures used as the headline.",
+    "Waymarking: the operator's FAQ says each trail is marked with difficulty ratings and Al Ittihad says it built trails to the summit, but no source describes markers on this trail. The December 2024 signage claims (The National) were for four other new trails.",
+    "Season: the 2026 to 2027 season opened 25 September 2026 (Khaleej Times, Zawya, 1 October 2026). No end date found. The operator's season announcements are on social media, which could not be read. No group-size or walker-permit rule was found; its permit pages are for companies, events and guides. Emarat Al Youm (11 October 2025) announced a 15th trail without naming it, so I could not tell if it is Riham.",
+    "months values are editorial: December to March best from ECC Adventures, the rest from the season opening date and UAE heat. No official month-by-month rating exists.",
+    "Fees, hours: none found for walkers (operator site, last checked October 2026). Mobile signal, wildlife and scrambling are unknown. The flood warning is general advice backed by Al Khaleej's note about the road.",
+    "Drive time from Dubai and Abu Dhabi: no source for this trail, so null.",
+    "Emergency numbers 999, 998 and 997 come from the Ajman government page only; a UAE federal page could not be opened (u.ae returned 404).",
+    "Tried and not obtained: Wikiloc (four Al Riham or Jebel Raham records, 403), AllTrails (robots), YouTube video (HTTP 429), Komoot, Outdooractive and Gaia (searches returned only Oman or unrelated pages), Strava and Relive (no results), UAE Trekkers (no Riham page found), WAM (no result), Al Bayan (no result), the operator's social posts (not readable), the operator feed (no elevation, gpx or track fields on the record). Sources not used: travelandtourworld.com (figures disagree with the operator).",
+    "Photos: the only Commons files found for Wadi Saham show petroglyph rocks, not the trail; they are in the same wadi as the MissionsOffroad start point. No trail photos found.",
+    "Second choice if Al Riham is dropped: Dhanha (Rainbow) Trail, Dibba, graded Extreme by the operator, 6.0 km, 120 to 180 minutes, pin 25.578877, 56.186329. Its grade is above Difficult and I did not research it further."
+  ],
+  "n": 5,
+  "grade": "Difficult",
+  "nearPlace": null,
+  "facts": {
+    "distance": "7.7 km (operator figure; other sources suggest this is the whole loop)",
+    "climb": "About 450 m (from a third-party report, not the operator)",
+    "time": "2 to 3 hours (operator figure)",
+    "shape": "Loop, according to one tour operator"
+  },
+  "report": {
+    "distance": "7.7 km (operator)",
+    "climb": "about 450 m (third party)",
+    "time": "2 to 3 h (operator)"
+  },
+  "photo": null,
+  "page": {
+    "gradeBasis": "Fujairah Adventures Centre, the emirate's official trail operator, grades it Hard, the only one of its 14 trails with that grade. ECC Adventures, a guide company, rates its guided ascent Intermediate (6/10) and warns of steep grades, loose rocks and heights.",
+    "route": [
+      "You start in Wadi Saham, southwest of Fujairah City, along a winding mountain road. The operator says the trail passes water springs and climbs towards the top of Jebel Riham. Expect steep grades from the start.",
+      "ECC Adventures describes loose rocks, exposure to heights and full sun. Along the way are archaeological sites, the 'Jameel' Rock and petroglyphs, with views of mainland Fujairah and the sea. Waymarking is not described, so download the route first.",
+      "The operator does not say where the route turns round or finishes. ECC describes a loop, and 7.71 km is most likely the whole route, but this is not confirmed. Follow the operator's map."
+    ],
+    "distance": "Fujairah Adventures Centre gives 7.71 km but does not say whether that is one way or the whole route. Two other sources give about 7 km.",
+    "climb": "Fujairah Adventures Centre gives no climb figure. MissionsOffroad (2023) reports about 450 m and ECC Adventures gives 470 m, so treat it as approximate.",
+    "time": "Fujairah Adventures Centre gives 2 to 3 hours. ECC Adventures quotes a guided group 2.5 to 3.5 hours on the same mountain.",
+    "start": "Wadi Saham, southwest of Fujairah City. Two start points are published, about 1.3 km apart, and they have not been reconciled.",
+    "coordNote": "Operator's Google Maps place for Al Riham Trail. MissionsOffroad gives a different start 1.3 km west; the two are not reconciled.",
+    "parking": "Not confirmed. No source describes the car park. Check with Fujairah Adventures Centre before you go.",
+    "vehicle": "Not confirmed. No source describes the road surface to the trailhead. Check with Fujairah Adventures Centre.",
+    "getting": "",
+    "bestMonths": "December to March (ECC Adventures). April, October and November only with an early start.",
+    "startTime": "Start early. ECC Adventures starts walking at 7:45 am. No official start time is given.",
+    "shade": "Little, according to ECC Adventures, which lists sun exposure as a challenge. The operator gives no shade information.",
+    "water": "Unknown if the springs near the start flow or are drinkable. Assume none. ECC advises 1 to 2 litres December to March.",
+    "signal": "Unknown. No source gives mobile coverage for this trail. Assume none and download the route before you go.",
+    "fees": "No walker fee was found on the Fujairah Adventures Centre website. Its permit services are for companies, event organisers and guides. Last checked October 2026.",
+    "permits": "No walker permit was found. Hiking is allowed only during the official adventure season, announced each year on Fujairah Adventures' social media. No group-size rule was found. Last checked October 2026.",
+    "hours": "No opening hours were found for this trail. Hiking is allowed only in the official season, which opened on 25 September 2026. Last checked October 2026.",
+    "closure": "Open status is not confirmed. Fujairah reopened its officially approved trails on 25 September 2026, but reports do not name Al Riham. When Wadi Saham fills with water, the village road can be cut off. Last checked October 2026.",
+    "safety": [
+      "Wadi Saham fills with water after rain and the road can be cut off. Avoid the wadi if rain has fallen or is forecast.",
+      "Steep grades from the start, loose rocks and exposure to heights. ECC advises against it with vertigo or a fear of heights.",
+      "Little shade and full sun. Start early and carry more water than you expect to need.",
+      "Tell someone your route and return time, check the weather, and download the route.",
+      "Hiking is allowed only in the official season. Check Fujairah Adventures' social media first.",
+      "Do not touch or move petroglyphs or archaeological sites."
+    ],
+    "carry": [
+      "Water, 1 to 2 litres December to March",
+      "Water, 2 to 3 litres in other months",
+      "Sturdy hiking shoes",
+      "Hat and sun protection",
+      "Phone with route downloaded offline",
+      "Basic first aid kit"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Fire and Civil Defence 997",
+    "notConfirmed": [
+      "Whether the trail is open this season: reports of the 25 September 2026 reopening do not name it. Check Fujairah Adventures' social media.",
+      "The trailhead: the operator's pin and a second start point 1.3 km west disagree. Confirm which signs lead the way on arrival.",
+      "Parking and the road surface to the start: no source describes either. Ask Fujairah Adventures Centre.",
+      "The climb: about 450 to 470 m is a third-party figure, and whether 7.71 km is the whole route is unconfirmed.",
+      "Waymarking: no source describes the markers on this trail, so do not rely on finding signs."
+    ]
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "slug": "al-taiba",
+  "name": "Al Taiba Trail",
+  "emirate": "Fujairah",
+  "area": "Tayyibah (Al Taiba) village in the Hajar Mountains near Masafi, Fujairah, off the Dibba to Masafi road (E89).",
+  "placeSlug": null,
+  "gradeAsked": "Easy",
+  "gradeRecommended": "Easy",
+  "gradeBasis": "Fujairah Adventures Centre, the emirate's official trail operator, grades Al Taiba Trail 'Easy' in its trail data, and its own description calls it easy to moderate and suitable for family hikes or people of various fitness levels. It was chosen from the operator's seven Easy trails because it has the fullest evidence: an operator description, a named operator map pin, a start point stated in two press reports, an operator FAQ line naming it pet-friendly, and a blog walk-through that starts at the same village. The other Easy trails were weaker: Wadi Al Abadilah (data 2.8 km, text 'around 7 km return'), Jabal Al Hamri (data 4.0 km, text '6km loop'), Ihfarah (graded Easy but described as rugged with steep slopes and 'suitable for moderately experienced adventurers'), Sal Khail (description is copied Dibba text), Al Qfair (operator warns the descent into the valley can be difficult), Seven Summits (a 2.0 km park-style trail with a 176-step staircase).",
+  "officialTrails": [
+    {
+      "name": "Al Fqit Trail",
+      "grade": "Moderate",
+      "lengthKm": 3.0,
+      "time": "130 to 160 minutes",
+      "area": "Dibba",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Ihfarah Trail",
+      "grade": "Easy",
+      "lengthKm": 4.0,
+      "time": "180 to 200 minutes",
+      "area": "Fujairah",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Wadi Al Milh Trail",
+      "grade": "Moderate",
+      "lengthKm": 3.0,
+      "time": "120 to 160 minutes",
+      "area": "Masafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Al Taiba Trail",
+      "grade": "Easy",
+      "lengthKm": 4.5,
+      "time": "90 to 120 minutes",
+      "area": "Masafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Seven Summits Trail",
+      "grade": "Easy",
+      "lengthKm": 2.0,
+      "time": "60 minutes",
+      "area": "Fujairah",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Al Qfair Trail",
+      "grade": "Easy",
+      "lengthKm": 5.5,
+      "time": "126 to 160 minutes",
+      "area": "Massafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Sal Khail Trail",
+      "grade": "Easy",
+      "lengthKm": 4.5,
+      "time": "120 to 180 minutes",
+      "area": "Masafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Al Dhaher Water Spring Trail",
+      "grade": "Moderate",
+      "lengthKm": 8.0,
+      "time": "240 to 300 minutes",
+      "area": "Al Taween",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Jabal Al Hamri Trail",
+      "grade": "Easy",
+      "lengthKm": 4.0,
+      "time": "180 to 200 minutes",
+      "area": "Al Taween",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Ain Al Sheria Trail",
+      "grade": "Moderate",
+      "lengthKm": 8.05,
+      "time": "180 to 200 minutes",
+      "area": "Al Taween",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Wadi Al Abadilah Trail",
+      "grade": "Easy",
+      "lengthKm": 2.8,
+      "time": "60 to 120 minutes",
+      "area": "Masafi",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Al Riham Trail",
+      "grade": "Hard",
+      "lengthKm": 7.71,
+      "time": "2 to 3 hours",
+      "area": "Fujairah",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Al Aqah Trail",
+      "grade": "Extreme",
+      "lengthKm": 3.0,
+      "time": "2 hours",
+      "area": "Dibba",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    },
+    {
+      "name": "Dhanha Trail",
+      "grade": "Extreme",
+      "lengthKm": 6.0,
+      "time": "120 to 180 minutes",
+      "area": "Dibba",
+      "source": "Fujairah Adventures Centre trail list, new-api.fujairahadventures.ae/api/v1/trails/hiking (pages 1 and 2), opened 2026-10-06"
+    }
+  ],
+  "distanceKm": 4.5,
+  "distanceNote": "Official figure from Fujairah Adventures Centre (4.50 km). The operator does not say whether this is one way or the whole route. A blog that walked the area from the same village recorded about 5 km as a loop, but it partly left the marked trail.",
+  "climbM": null,
+  "climbNote": "No source opened today gives the ascent of the operator's marked Al Taiba Trail. The operator's trail data has no elevation field and its Wikiloc track (wikiloc.com/hiking-trails/al-taiba-180058198) is blocked to automated access. For context only: The Road Reel (blog, updated 19 December 2024) lists 211 m of ascent for a roughly 5 km loop from Al Tayyibah Heritage Museum, but says the authors left the marked trail and climbed the hills, so that figure is not for the official trail.",
+  "time": "1 hour 30 minutes to 2 hours",
+  "shape": null,
+  "trailhead": {
+    "name": "Al Taiba Trail pin, Tayyibah village (Google Maps place 'Fujairah Adventures Al Tayybahi Hiking Trail', linked by Fujairah Adventures Centre)",
+    "lat": 25.4133905,
+    "lng": 56.1676243,
+    "coordSource": "The Google Maps short link that Fujairah Adventures Centre attaches to Al Taiba Trail (maps.app.goo.gl/dS11XDM5ryeWpAdaA) resolves to a place named 'Fujairah Adventures Al Tayybahi Hiking Trail' at 25.4133905, 56.1676243. It lies about 100 m from the Al Tayyibah Heritage Museum point (25.414383, 56.167547) given by The Road Reel and within a few hundred metres of the Wikipedia village coordinates (25.40383, 56.16778). The National and Travels Dubai say the hike starts at the Flag Fort in Al Taiba village; no source gives the Flag Fort's coordinates.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.4133905,56.1676243",
+    "parking": "The National (21 December 2024) says each of the new trails, which include Al Taiba, has parking facilities, signage, rest areas and waste bins. No source says where the car park is or how many cars it holds.",
+    "vehicle": null
+  },
+  "routeDescription": [
+    "Fujairah Adventures Centre says Al Taiba Trail is in the Al Taiba (Tayyibah) area near Masafi. The National and Travels Dubai (both December 2024) say to take the Dibba to Masafi road (E89) and continue to the Flag Fort in Al Taiba village, where the hike starts. The operator's map pin is in the same village, close to the Al Tayyibah Heritage Museum.",
+    "The operator describes diverse terrain of mountain valleys and traditional farms that have grown dates, vegetables and fruit for centuries, and says the trail runs through traditional villages with old clay and stone houses. It rates the trail easy to moderate and suitable for family hikes. It does not describe the surface, gradients or any scrambling, so this page makes no claim about them.",
+    "The operator also says visitors can see local wildlife and plant life and can visit personal museums with archaeological collections. A blog walk-through from the same village (The Road Reel, updated December 2024) mentions hiking signposts, traditional irrigation channels, an old graveyard and the remains of old houses, and says the wadi fills with pools and running springs in winter. The blog is not the operator, and its route partly left the marked trail.",
+    "The official length is 4.5 km and the official time is 90 to 120 minutes. The operator does not say whether the route is a loop, an out-and-back or one-way, or where it turns round. The operator's Wikiloc track for the trail could not be opened, so the route line was not checked.",
+    "The National reports that Fujairah's approved trails have directional signage, illuminated markers and rest areas. Specific waymarking on Al Taiba is not described by the operator, so follow the signs from the start and carry the operator's route offline."
+  ],
+  "bestMonths": "November to March (The Road Reel, a blog, calls these the most pleasant months in the UAE). Hiking on the official trails is allowed only in the official adventure season; the 2026 to 2027 season opened on 25 September 2026 and no closing date was found.",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "No operator source gives a start time. The Road Reel advises starting early or in the late afternoon to avoid midday heat, and before sunrise from April to October. Allow the operator's 90 to 120 minutes and finish before the heat builds.",
+  "shade": "Unknown. No source describes shade on this trail. The operator mentions farms and valleys, but not tree cover.",
+  "water": "The operator does not mention water on the route. The Road Reel says the wadi fills with natural pools and running springs in winter, but that is a blog and not a guarantee for any given day. Carry all the water you need; no source gives a figure.",
+  "signal": "Unknown. No source opened gives mobile coverage for this trail.",
+  "fees": "No walker fee was found on the Fujairah Adventures Centre website or in the press coverage, last checked October 2026.",
+  "permits": "No walker permit was found on the Fujairah Adventures Centre website, last checked October 2026; its permit services are for companies, event organisers and guides. Its FAQ says hiking is allowed only during the official adventure season announced each year on its social media.",
+  "hours": "No opening hours were found for this trail, last checked October 2026.",
+  "closure": "None found for this trail, last checked October 2026. Khaleej Times and Zawya (both 1 October 2026) report that Fujairah reopened all its officially approved trails on 25 September 2026. Neither names Al Taiba, but the trail is on the operator's current list, last updated 24 August 2026 according to its data.",
+  "safety": [
+    "Hiking on Fujairah Adventures trails is allowed only during the official adventure season, which the operator announces on its social media each year. Check its channels before you go.",
+    "Stay on the marked trail, tell someone your route and expected return time, and check the weather first, as Fujairah's trail rules reported by Travels Dubai advise.",
+    "The operator grades Al Taiba Easy but describes it as easy to moderate. Allow for uneven rocky ground and farm paths, and turn back if conditions change.",
+    "The route is in a mountain valley. Flash floods are a general hazard in UAE wadis after rain; no source gives a trail-specific warning, so do not enter the wadi if rain has fallen or is forecast. The operator's own Al Qfair text, for a nearby trail, mentions debris left by seasonal flash floods.",
+    "The National quotes a licensed guide warning of falling rocks where goats graze, and of snakes and scorpions. Do not leave your group or sit in unsafe spots.",
+    "Fujairah Adventures reports a smart tracking system for hikers and inspectors at trailheads (The National, December 2024). Do not rely on them in place of your own planning.",
+    "Farms and old houses along the route are private or historic property. Keep to the trail and take litter away with you.",
+    "The operator's FAQ names Tayyibah Trail as one of the few trails where pets are allowed. Keep any dog on a lead, and carry extra water for it."
+  ],
+  "carry": [
+    "Plenty of water",
+    "Sturdy footwear with ankle support",
+    "Hat and sun protection",
+    "Fully charged phone with the route downloaded for offline use",
+    "Snacks",
+    "A light jacket for cooler weather",
+    "Basic first aid kit and any personal medication"
+  ],
+  "emergency": "Police 999, ambulance 998, fire and civil defence 997 (Ajman government emergency numbers page, opened October 2026; these are the UAE-wide numbers).",
+  "driveNote": "The Road Reel (a blog, updated December 2024) gives about 135 km and about 1 hour 30 minutes by car from Downtown Dubai to Al Tayyibah Heritage Museum. No source gives a drive time from Abu Dhabi to this trail.",
+  "intro": "Al Taiba Trail runs through the farms, valleys and old village houses of Tayyibah near Masafi, and is one of the trails that Fujairah Adventures Centre grades Easy. The operator lists it at 4.5 km and 90 to 120 minutes, with the start in Al Taiba village.",
+  "seoTitle": "Al Taiba Trail, Fujairah: Easy Hike Guide",
+  "seoDesc": "Al Taiba (Tayyibah) Trail near Masafi, Fujairah: the operator's Easy grade, 4.5 km, 90 to 120 minutes, map pin, season rules and what to carry.",
+  "sources": [
+    {
+      "label": "Fujairah Adventures Centre hiking trails data, page 1 (official operator API behind fujairahadventures.ae)",
+      "url": "https://new-api.fujairahadventures.ae/api/v1/trails/hiking"
+    },
+    {
+      "label": "Fujairah Adventures Centre hiking trails data, page 2",
+      "url": "https://new-api.fujairahadventures.ae/api/v1/trails/hiking?page=2"
+    },
+    {
+      "label": "Fujairah Adventures Centre website (FAQ on season and pets read from the site's English text)",
+      "url": "https://fujairahadventures.ae/"
+    },
+    {
+      "label": "Google Maps place for Al Taiba Trail, linked by Fujairah Adventures Centre",
+      "url": "https://maps.app.goo.gl/dS11XDM5ryeWpAdaA"
+    },
+    {
+      "label": "Google Maps place for Al Qfair Trail, linked by Fujairah Adventures Centre (comparison)",
+      "url": "https://maps.app.goo.gl/Hn3wMCaNAGsK1kZZA"
+    },
+    {
+      "label": "The National, Where are Fujairah's new hiking trails and how do you reach them? (21 December 2024)",
+      "url": "https://www.thenationalnews.com/news/uae/2024/12/21/where-are-fujairahs-new-hiking-trails-and-how-do-you-reach-them/"
+    },
+    {
+      "label": "Travels Dubai, Fujairah's new hiking trails: routes, safety tips and rules (21 December 2024)",
+      "url": "https://www.travelsdubai.com/21-Dec-2024/fujairah-s-new-hiking-trails-your-guide-to-routes-safety-tips-and-rules"
+    },
+    {
+      "label": "Khaleej Times, Fujairah reopens hiking and biking trails (1 October 2026)",
+      "url": "https://www.khaleejtimes.com/travel/uae-attractions/uae-fujairah-reopens-hiking-biking-trails-september-temperatures-drop"
+    },
+    {
+      "label": "Zawya, Fujairah announces the new season for adventure tourism (1 October 2026)",
+      "url": "https://www.zawya.com/en/press-release/companies-news/fujairah-announces-the-new-season-for-adventure-tourism-1460383"
+    },
+    {
+      "label": "The Road Reel, Hiking in UAE: 13 easy trails near Dubai (blog, updated 19 December 2024), Wadi Tayyibah section",
+      "url": "https://www.theroadreel.com/easy-hiking-trails-in-the-uae/"
+    },
+    {
+      "label": "Wikipedia, Tayyibah (village coordinates)",
+      "url": "https://en.wikipedia.org/wiki/Tayyibah"
+    },
+    {
+      "label": "Wikipedia, Wadi Tayyibah",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Tayyibah"
+    },
+    {
+      "label": "Fujairah Tourism, Hiking destinations (general mention of Wadi Tayyibah Trail, no figures)",
+      "url": "https://tourism.fujairah.ae/destinations/hiking"
+    },
+    {
+      "label": "Ajman government, Handling Emergencies (UAE emergency numbers)",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Wikimedia Commons API (licence, author, size and geotag metadata for the three photo candidates)",
+      "url": "https://commons.wikimedia.org/w/api.php?action=query&titles=File:Tayyibah_Heritage_Museum.jpg|File:Farm_at_Tayyibah.jpg|File:Wadi_Tayyibah_after_rain.jpg&prop=imageinfo|coordinates&iiprop=url|size|extmetadata&format=json"
+    }
+  ],
+  "lastChecked": "2026-10-06",
+  "_doubts": [
+    "Climb is null. The operator's data has no elevation field, and the operator's Wikiloc track (wikiloc.com/hiking-trails/al-taiba-180058198, also loc.wiki/t/...) and AllTrails return a Cloudflare block to automated access, so the GPS line and ascent could not be read. The only ascent figure found (211 m, The Road Reel, ~5 km loop from the heritage museum) is from a track that left the marked trail, so it was not used as the official figure. A person should open the Wikiloc link in a browser and read the ascent and route line before print.",
+    "Shape is null: the operator does not say whether 4.5 km is a loop, out-and-back or one way, nor where it turns round. The blog's 5 km loop is its own partly off-trail route. Distance is therefore not confirmed as one way or total.",
+    "Time: the operator's data gives 90 to 120 (the site's column is minutes). A tour-company page (dubaitourpackage.ae) says 2 to 3 hours for 'Wadi Tayyibah'; The Road Reel says about 2 hours. I used the operator's figure.",
+    "Grade wording: the operator's data says Easy, but its description says 'easy to moderate in difficulty'. I kept Easy as the official grade, as confirmed by the founder, and used the 'easy to moderate' wording in the safety text.",
+    "Trailhead: the coordinate is the operator's Google Maps place pin, not a labelled car park. Two press reports say the hike starts at the Flag Fort in Al Taiba village; I could not find the Flag Fort's coordinates and cannot say whether it is the same spot as the pin or the Heritage Museum (about 100 m from the pin). Check the start on site or with the operator before print.",
+    "Parking and vehicle: The National says all trails have parking, but names no car park for Al Taiba. Nothing says what vehicle is needed; the access is on tarmac to the village per the E89 directions, but that is not a stated vehicle requirement, so vehicle is null.",
+    "The statement that hiking is season-only comes from the operator's English FAQ text in its site script (the page itself is a script-rendered app that a plain page fetch shows empty). The 2026 to 2027 season opened 25 September 2026 (Khaleej Times, Zawya); no source found gives the closing date. A tour-trade page claiming late September to late April was not used. Check the operator's social media channels, which could not be read, before print.",
+    "Closure: no trail-specific closure notice found. The press reports say 'all officially approved trails' reopened and do not name them. Absence of evidence only.",
+    "Fees, permits, hours: none found for walkers. Travels Dubai's rules say to 'ensure you have necessary permits', but the operator's permit pages cover companies, events and guides, so I recorded no walker permit and flagged it for confirmation with the operator.",
+    "months values are my editorial judgement: season opening date, The Road Reel's November to March 'most pleasant' range, and its advice against hiking June to October. No source gives a month-by-month rating for this trail.",
+    "Water and shade: the blog says the wadi has pools and running springs in winter; the operator says nothing about water or shade. The flood warning is general UAE wadi advice and not from a trail-specific source. Mobile signal unknown.",
+    "Operator inconsistencies noted: Wadi Al Abadilah has data 2.8 km but long text 'around 7 km (return)'; Jabal Al Hamri has data 4.0 km but text '6km loop'; Ihfarah is graded Easy but described as rugged with steep slopes. Dhanha is graded Extreme with a length given without units (6.0, read as km). Al Riham and Al Aqah have times given in hours; the others are minutes.",
+    "The operator's feed spells the trail 'Al Taiba' while its own FAQ and Google pin say 'Tayyibah' and 'Al Tayybahi'. These are the same trail; Wikipedia uses Tayyibah for the village. I assumed so because the pin is in Tayyibah village and the FAQ names Tayyibah among pet-friendly trails.",
+    "Drive time from Abu Dhabi: no source for this trail, so omitted. The Dubai figure is from a blog, not an authority.",
+    "Photos: the three Commons images are geotagged in or near Tayyibah village (see each 'what'), photographed 2020-11-13 by the same author. None is confirmed to lie on the operator's marked route line. They show the village and its farms and wadi, not the trail itself. Licence read from the Commons API: CC BY-SA 4.0 for all three, which needs credit and share-alike for derivatives.",
+    "Not read: Wikiloc, AllTrails (blocked), the operator's social media, the YouTube and Google Maps review content, and the operator's Fujairah Trails app.",
+    "Second choice: Al Qfair Trail (Masafi), Easy, 5.5 km, 126 to 160 minutes, pin 25.4094351, 56.1909431 (Google place 'Fujairah Adventures Qfair Hiking Trail'), The National gives 1 hour 30 minutes from Dubai. It has less documentation, and the operator warns that the descent into the valley can be difficult because of flash-flood debris."
+  ],
+  "n": 2,
+  "grade": "Easy",
+  "nearPlace": null,
+  "facts": {
+    "distance": "4.5 km (operator figure; one way or total not stated)",
+    "climb": "Not published",
+    "time": "1.5 to 2 hours",
+    "shape": "Not stated by the operator"
+  },
+  "report": {
+    "distance": "4.5 km (operator)",
+    "climb": "not published",
+    "time": "1.5 to 2 h"
+  },
+  "photo": {
+    "src": "/uploads/hikes/al-taiba.jpg",
+    "w": 1280,
+    "h": 960,
+    "edits": "resized",
+    "author": "Alexandermcnabb",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Wadi_Tayyibah_after_rain.jpg",
+    "what": "Wadi Tayyibah after rain, about 1 km from the trailhead; not confirmed to be on the marked trail",
+    "alt": "The gravel bed of Wadi Tayyibah between rocky slopes, with trees and a little water after rain"
+  },
+  "page": {
+    "gradeBasis": "Fujairah Adventures Centre, the emirate's official trail operator, grades Al Taiba Trail Easy, though its own description says easy to moderate, for family hikes and various fitness levels.",
+    "route": [
+      "You start in Tayyibah (Al Taiba) village near Masafi, off the Dibba to Masafi road (E89). Press reports say the hike begins at the Flag Fort in the village. The operator's map pin is close to the Al Tayyibah Heritage Museum.",
+      "The operator describes mountain valleys, traditional farms and old clay and stone houses, but not the surface or gradients. A blog walker from the same village mentions hiking signposts, irrigation channels, an old graveyard and ruined houses.",
+      "The operator does not say whether the 4.5 km is a loop, an out-and-back or one way, or where it turns round. Follow the signs from the start, and keep time and energy for the way back."
+    ],
+    "distance": "Fujairah Adventures Centre gives 4.5 km but does not say whether that is one way or the whole route.",
+    "climb": "No source publishes the climb for the marked trail. A blog's 211 m is for a partly off-trail loop, so do not rely on it.",
+    "time": "Fujairah Adventures Centre gives 90 to 120 minutes.",
+    "start": "Tayyibah village, near Masafi. Press reports say the hike starts at the Flag Fort in the village.",
+    "coordNote": "The pin is the operator's own Google Maps place, near the Heritage Museum. It is not a labelled car park.",
+    "parking": "Not confirmed. The National says the new trails have parking, but not where. Check with Fujairah Adventures Centre.",
+    "vehicle": "Not confirmed. No source states a vehicle requirement. Check with Fujairah Adventures Centre.",
+    "getting": "A blog gives about 135 km and 1 hour 30 minutes by car from Downtown Dubai to the Heritage Museum.",
+    "bestMonths": "November to March, which a blog calls most pleasant. Hiking is allowed only in season.",
+    "startTime": "No operator start time. A blog advises starting early or late afternoon, and before sunrise from April to October.",
+    "shade": "Unknown. No source describes shade. Assume little and bring sun protection.",
+    "water": "The operator lists no water. A blog reports winter pools and springs; do not count on them. Carry all you need.",
+    "signal": "Unknown. Assume patchy or no coverage; download the route offline.",
+    "fees": "No walker fee was found on the operator's website or in press coverage. Last checked October 2026.",
+    "permits": "No walker permit was found; the operator's permit services are for companies, events and guides. Its FAQ says hiking is allowed only in the official season. Last checked October 2026.",
+    "hours": "No opening hours were found for this trail. Last checked October 2026.",
+    "closure": "Not confirmed for this trail. No closure notice was found. Fujairah reopened its approved trails on 25 September 2026 without naming Al Taiba. Last checked October 2026.",
+    "safety": [
+      "Flash floods are a hazard in UAE wadis. Do not enter the wadi if rain has fallen or is forecast.",
+      "Heat: a blog advises starting before sunrise from April to October. No shade is documented.",
+      "The operator does not describe waymarking. Download its route for offline use and follow signs.",
+      "A guide quoted by The National warns of falling rocks where goats graze, and of snakes and scorpions.",
+      "Stay on the marked trail, tell someone your route and return time, and check the weather first.",
+      "Hike only in the official adventure season, announced on the operator's social media. Check before you go."
+    ],
+    "carry": [
+      "Plenty of water",
+      "Sturdy ankle-support footwear",
+      "Hat and sun protection",
+      "Phone with offline route",
+      "Snacks",
+      "Light jacket for cooler weather",
+      "First aid kit and personal medication"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Whether the trail is open today. The season opened on 25 September 2026, but no source names Al Taiba.",
+      "Exactly where the walk starts, and where to park. No car park location is given.",
+      "Whether the 4.5 km is a loop, an out-and-back or one way, and where it turns round.",
+      "The climb. No source publishes it for the marked trail.",
+      "Waymarking on the ground. Ask the operator if unsure."
+    ]
+  }
+}

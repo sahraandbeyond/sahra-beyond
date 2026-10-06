@@ -328,6 +328,126 @@
       "source": "/journey/index.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/h/1",
+      "destination": "/trail/hikes/wadi-shees/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-1",
+      "permanent": false
+    },
+    {
+      "source": "/h/1/",
+      "destination": "/trail/hikes/wadi-shees/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-1",
+      "permanent": false
+    },
+    {
+      "source": "/H/1",
+      "destination": "/trail/hikes/wadi-shees/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-1",
+      "permanent": false
+    },
+    {
+      "source": "/H/1/",
+      "destination": "/trail/hikes/wadi-shees/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-1",
+      "permanent": false
+    },
+    {
+      "source": "/h/2",
+      "destination": "/trail/hikes/al-taiba/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-2",
+      "permanent": false
+    },
+    {
+      "source": "/h/2/",
+      "destination": "/trail/hikes/al-taiba/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-2",
+      "permanent": false
+    },
+    {
+      "source": "/H/2",
+      "destination": "/trail/hikes/al-taiba/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-2",
+      "permanent": false
+    },
+    {
+      "source": "/H/2/",
+      "destination": "/trail/hikes/al-taiba/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-2",
+      "permanent": false
+    },
+    {
+      "source": "/h/3",
+      "destination": "/trail/hikes/al-rabi/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-3",
+      "permanent": false
+    },
+    {
+      "source": "/h/3/",
+      "destination": "/trail/hikes/al-rabi/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-3",
+      "permanent": false
+    },
+    {
+      "source": "/H/3",
+      "destination": "/trail/hikes/al-rabi/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-3",
+      "permanent": false
+    },
+    {
+      "source": "/H/3/",
+      "destination": "/trail/hikes/al-rabi/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-3",
+      "permanent": false
+    },
+    {
+      "source": "/h/4",
+      "destination": "/trail/hikes/al-rafisah/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-4",
+      "permanent": false
+    },
+    {
+      "source": "/h/4/",
+      "destination": "/trail/hikes/al-rafisah/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-4",
+      "permanent": false
+    },
+    {
+      "source": "/H/4",
+      "destination": "/trail/hikes/al-rafisah/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-4",
+      "permanent": false
+    },
+    {
+      "source": "/H/4/",
+      "destination": "/trail/hikes/al-rafisah/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-4",
+      "permanent": false
+    },
+    {
+      "source": "/h/5",
+      "destination": "/trail/hikes/al-riham/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-5",
+      "permanent": false
+    },
+    {
+      "source": "/h/5/",
+      "destination": "/trail/hikes/al-riham/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-5",
+      "permanent": false
+    },
+    {
+      "source": "/H/5",
+      "destination": "/trail/hikes/al-riham/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-5",
+      "permanent": false
+    },
+    {
+      "source": "/H/5/",
+      "destination": "/trail/hikes/al-riham/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-5",
+      "permanent": false
+    },
+    {
+      "source": "/h/6",
+      "destination": "/trail/hikes/wadi-shah/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-6",
+      "permanent": false
+    },
+    {
+      "source": "/h/6/",
+      "destination": "/trail/hikes/wadi-shah/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-6",
+      "permanent": false
+    },
+    {
+      "source": "/H/6",
+      "destination": "/trail/hikes/wadi-shah/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-6",
+      "permanent": false
+    },
+    {
+      "source": "/H/6/",
+      "destination": "/trail/hikes/wadi-shah/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-6",
+      "permanent": false
     }
   ]
 }
