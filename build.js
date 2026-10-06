@@ -4070,7 +4070,7 @@ const AR_PDP_NOINDEX = true;
       desc: 'Sahra Trail is running and trail kit from Sahra & Beyond: a running tee and 2-in-1 shorts designed in the UAE for its wadis and ridges. First run this season.',
       eyebrow: 'A new line from Sahra &amp; Beyond',
       kicker: 'Running &amp; trail kit &middot; first run, this season',
-      h1: 'The trail starts here',
+      h1: 'Choose the climb.',   /* the Sahra Trail tagline (Faheem, 6 Oct 2026): exactly this, with the full stop */
       cta: 'Get first access',
       scroll: 'Scroll to climb',
       elev: 'Elev', time: 'Time',
@@ -4096,6 +4096,7 @@ const AR_PDP_NOINDEX = true;
       eyebrow: 'خط جديد من صحراء وما بعدها',
       kicker: 'ملابس رياضية · الدفعة الأولى هذا الموسم',
       h1: 'الدرب يبدأ من هنا',
+      tag: 'Choose the climb.',   /* shown in English under the lockup: no Arabic version is approved (Faheem, 6 Oct 2026) */
       cta: 'كن أول من يعرف',
       scroll: 'مرّر لتصعد',
       elev: 'الارتفاع', time: 'الوقت',
@@ -4185,7 +4186,16 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
 @keyframes trBloom{0%{filter:none}22%{filter:drop-shadow(0 0 14px rgba(255,255,255,1)) drop-shadow(0 0 44px rgba(210,230,255,.75)) brightness(2.1)}100%{filter:none}}
 @keyframes trWordGlow{0%{filter:none}30%{filter:drop-shadow(0 0 12px rgba(255,255,255,.55)) brightness(1.35)}100%{filter:none}}
 @keyframes trUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.tr-kicker{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:#9ED0CB;opacity:0;animation:trUp .9s 3.1s forwards;margin:4px 0 18px}
+/* The tagline as the lockup's sign-off (Faheem, 6 Oct 2026, option A): Jost Medium capitals, tracked like TRAIL,
+   starting under the S of SAHRA and ending under the L of TRAIL. Every size is a fraction of the lockup's own
+   width (min(760px,88vw)): wordmark starts at 29.68% and is 67.14% wide; at .36em tracking the line fills that
+   width at a font-size of 4.316% of the lockup. The source stays sentence case with its full stop. */
+html body main.tr .tr-hero .tr-tagline{font-family:'Jost','Space Mono',system-ui,sans-serif!important;font-weight:500!important;font-style:normal!important;font-size-adjust:none!important;
+  font-size:min(32.8px,3.798vw)!important;letter-spacing:.36em!important;text-transform:uppercase!important;line-height:1!important;white-space:nowrap;
+  color:#D9C3A5!important;text-shadow:0 2px 18px rgba(0,0,0,.6)!important;direction:ltr;unicode-bidi:isolate;text-align:left!important;
+  box-sizing:border-box;width:min(760px,88vw);max-width:none!important;padding:0 0 0 min(225.6px,26.12vw)!important;
+  margin:calc(min(760px,88vw)*-.052 - 10px) 0 calc(min(760px,88vw)*.05) !important;opacity:0;animation:trUp .9s 2.9s forwards}
+.tr-kicker{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:#9ED0CB;opacity:0;animation:trUp .9s 3.1s forwards;margin:4px 0 26px}
 .tr-hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(40px,7vw,86px);line-height:1.02;margin:0 0 26px;color:#F6ECDD;text-shadow:0 2px 30px rgba(0,0,0,.6);opacity:0;animation:trUp 1.1s 3.35s forwards}
 .tr-btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:#D9C3A5;color:#10161d;font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;opacity:0;animation:trUp .9s 3.7s forwards;box-shadow:0 10px 40px rgba(217,195,165,.25)}
 .tr-btn:hover{background:#F3E4CB}
@@ -4266,7 +4276,7 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
   .tr-cue{bottom:96px}
 }
 @media(prefers-reduced-motion:reduce){
-  .tr-eyebrow,.tr-kicker,.tr-hero h1,.tr-btn,.tr-cue,.tr-word{animation:none!important;opacity:1!important;transform:none!important}
+  .tr-eyebrow,.tr-kicker,.tr-tagline,.tr-hero h1,.tr-btn,.tr-cue,.tr-word{animation:none!important;opacity:1!important;transform:none!important}
   .tr-mk{stroke-dashoffset:0!important;animation:none!important}.tr-far{animation:none!important}
   .tr-rv{opacity:1;transform:none;transition:none}
   .tr-flash,.tr-sweep,.tr-cue i{animation:none}
@@ -4278,8 +4288,9 @@ main.tr{position:relative;z-index:1;--tr-dawn:0;max-width:none!important;margin:
   <section class="tr-hero">
     <p class="tr-eyebrow">${t.eyebrow}</p>
     ${logo(id)}
+    ${t.tag ? `<p class="tr-tagline" lang="en" dir="ltr">${t.tag}</p>` : `<h1 class="tr-tagline">${t.h1}</h1>`}
     <p class="tr-kicker">${t.kicker}</p>
-    <h1>${t.h1}</h1>
+    ${t.tag ? `<h1>${t.h1}</h1>` : ''}
     <a class="tr-btn" href="#first-access">${t.cta} <span aria-hidden="true">&darr;</span></a>
     <div class="tr-cue" aria-hidden="true">${t.scroll}<i></i></div>
   </section>
