@@ -66,7 +66,7 @@
   /* POST an address to Shopify. Resolves with the code to show. Never rejects:
      a capture failure must not cost the visitor the offer they were promised,
      and /api/subscribe reports stored:false in the Vercel log when that happens. */
-  function subscribe(email, source, fields) {
+  function post(email, source, fields) {
     return fetch(OFFER.api, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -74,10 +74,11 @@
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (j) {
         if (r.status === 400) throw new Error('email');
-        return (j && j.code) || OFFER.code;
+        return { code: (j && j.code) || OFFER.code, stored: !!(j && j.stored) };
       });
     });
   }
+  function subscribe(email, source, fields) { return post(email, source, fields).then(function (o) { return o.code; }); }
   /* Arabic pages (30 Sep 2026, Faheem: "put it there"): same offer, Arabic copy, RTL.
      Western digits, as the rest of /ar/ uses. Native read still pending, like the rest of /ar/. */
   var AR = /^ar\b/i.test(document.documentElement.getAttribute('lang') || '') || /^\/ar\//.test(location.pathname || '');
@@ -329,30 +330,54 @@
       var src = f.getAttribute('data-source') || 'waitlist';
       f.removeAttribute('data-endpoint');
       var inp = f.querySelector('input[type=email], input[name=email_address], input[name=email]');
-      if (inp) inp.addEventListener('input', function () { wrapEl.classList.remove('err'); });
+      /* the error line goes back to its bad-email wording as soon as the visitor edits the address */
+      var resetErr = function () { var x = wrapEl.querySelector('[data-err]'); if (x) x.style.display = 'none';
+        var y = wrapEl.querySelector('[data-bad-email]'); if (y) y.textContent = y.getAttribute('data-bad-email'); };
+      if (inp) inp.addEventListener('input', function () { wrapEl.classList.remove('err'); resetErr(); });
       f.addEventListener('submit', function (e) {
         e.preventDefault();
+        resetErr();
         var email = ((inp && inp.value) || '').trim();
         if (!RE.test(email)) { wrapEl.classList.add('err'); if (inp) inp.focus(); return; }
         wrapEl.classList.remove('err'); wrapEl.classList.add('loading');
         var b = f.querySelector('button'), label = b ? b.textContent : '';
         if (b) { b.disabled = true; b.textContent = t('Adding…', 'جارٍ الإضافة…'); }
+        var errEl = wrapEl.querySelector('.tr-err, .sh-err, [data-err]');
+        if (errEl && !errEl.hasAttribute('data-bad-email')) errEl.setAttribute('data-bad-email', errEl.textContent);
         var settle = function () {
           wrapEl.classList.remove('loading', 'err');
           wrapEl.classList.add('done');
           ev('waitlist_signup', { source: src });
         };
+        /* 8 Oct 2026 (Faheem): the success line shows only once Shopify has the address. If saving fails
+           we try once more, then say so plainly instead of pretending, so nobody thinks they are on a list
+           they are not on. */
+        var fail = function (badEmail) {
+          wrapEl.classList.remove('loading'); wrapEl.classList.add('err');
+          if (b) { b.disabled = false; b.textContent = label; }
+          var msg = badEmail ? (errEl && errEl.getAttribute('data-bad-email')) :
+            t('That did not save. Please try again, or message us on WhatsApp: +971 58 544 9946.', 'لم يُحفظ طلبك. يُرجى المحاولة مرة أخرى، أو راسلنا على واتساب: ‎+971 58 544 9946');
+          if (errEl) errEl.textContent = msg;
+          else { errEl = document.createElement('p'); errEl.setAttribute('data-err', ''); errEl.setAttribute('role', 'alert'); errEl.style.cssText = 'margin:12px 0 0;color:#9b3a25;font-size:15px'; errEl.textContent = msg; f.parentNode.insertBefore(errEl, f.nextSibling); }
+          if (errEl.hasAttribute('data-err')) errEl.style.display = 'block';
+          if (!badEmail) ev('waitlist_fail', { source: src });
+        };
         /* 4 Oct 2026: named selects in the form (sizes on /trail/) ride along as fields */
         var fields = null;
         [].forEach.call(f.querySelectorAll('select[name], input[type=hidden][name]'), function (el) { if (el.value) { fields = fields || {}; fields[el.name] = el.value; } });
-        subscribe(email, src, fields).then(settle, function (err) {
-          if (err && err.message === 'email') {
-            wrapEl.classList.remove('loading'); wrapEl.classList.add('err');
-            if (b) { b.disabled = false; b.textContent = label; }
-            return;
-          }
-          settle();
-        });
+        if (AR) { fields = fields || {}; fields.lang = 'ar'; }
+        var attempt = function (n) {
+          post(email, src, fields).then(function (o) {
+            if (o.stored) return settle();
+            if (n < 1) return setTimeout(function () { attempt(n + 1); }, 1500);
+            fail(false);
+          }, function (err) {
+            if (err && err.message === 'email') return fail(true);
+            if (n < 1) return setTimeout(function () { attempt(n + 1); }, 1500);
+            fail(false);
+          });
+        };
+        attempt(0);
       });
     })(forms[i]);
   })();

@@ -158,7 +158,12 @@ module.exports = async (req, res) => {
     return res.status(200).json({ ok: true, stored: false, reason: 'not_configured', code: CODE });
   }
 
-  const tags = ['site-signup', 'welcome-50', 'src-' + source];
+  /* 8 Oct 2026 (Faheem): 'welcome-50' only for the AED 50 welcome offer. Early-access lists get their own
+     tag so a send aimed at one list never reaches the other. */
+  const tags = ['site-signup', 'src-' + source];
+  if (/^welcome/.test(source)) tags.push('welcome-50');
+  if (source === 'trail') tags.push('early-access-trail');
+  if (source === 'sahel') tags.push('early-access-sahel');
   /* 4 Oct 2026: optional fields (e.g. tee_size, short_size from /trail/) become tags such as
      f-tee_size-m. Keys and values are whitelisted and capped so nothing odd reaches Shopify. */
   const fields = body.fields && typeof body.fields === 'object' ? body.fields : {};
@@ -167,6 +172,8 @@ module.exports = async (req, res) => {
     const val = String(fields[key] || '').trim().toLowerCase();
     if (ALLOWED[key].includes(val)) tags.push('f-' + key + '-' + val);
   });
+  /* 8 Oct 2026: sign-ups from Arabic pages are tagged so a confirmation email can be sent in Arabic */
+  if (String(fields.lang || '').toLowerCase() === 'ar') tags.push('lang-ar');
   const consent = {
     marketingState: 'SUBSCRIBED',
     marketingOptInLevel: 'SINGLE_OPT_IN',
@@ -201,7 +208,13 @@ module.exports = async (req, res) => {
       /* A race, or an address Shopify holds in a state the search missed.
          Taken already is not a failure from the visitor's point of view. */
       const msg = cErrs[0].message || '';
-      if (/taken|already/i.test(msg)) return res.status(200).json({ ok: true, stored: true, created: false, code: CODE });
+      if (/taken|already/i.test(msg)) {
+        /* 8 Oct 2026: the address exists but search missed it; still record which list they joined */
+        const again = await shopify(domain, token, FIND, { q: `email:"${escapeQuery(email)}"` }).catch(() => null);
+        const n = again && again.customers && again.customers.edges[0] && again.customers.edges[0].node;
+        if (n) await shopify(domain, token, ADD_TAGS, { id: n.id, tags }).catch(() => {});
+        return res.status(200).json({ ok: true, stored: !!n, created: false, code: CODE });
+      }
       throw new Error('create: ' + msg);
     }
     return res.status(200).json({ ok: true, stored: true, created: true, code: CODE });
