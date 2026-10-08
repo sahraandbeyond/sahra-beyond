@@ -491,8 +491,11 @@
             '<span class="sb-qn" aria-label="Quantity">' + q + '</span>' +
             (function () { var qa = l.merchandise && l.merchandise.quantityAvailable; var capped = (typeof qa === 'number') && q >= qa;
               return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" title="Only ' + qa + ' left" aria-label="Increase quantity (only ' + qa + ' left)"' : ' aria-label="Increase quantity"') + '>+</button>' +
-                (capped ? '<span class="sb-cap">Only ' + qa + ' left</span>' : ''); })() +
+                (capped && !(qa > 0 && qa <= 3) ? '<span class="sb-cap">Only ' + qa + ' left</span>' : ''); })() +
           '</span>' +
+          /* 7 Oct 2026: live remaining count, 3 or fewer only; never the run size */
+          (function () { var qa = l.merchandise && l.merchandise.quantityAvailable;
+            return (typeof qa === 'number' && qa > 0 && qa <= 3) ? '<span class="sb-left">Only ' + qa + ' left in ' + esc(m.title) + '</span>' : ''; })() +
         '</div>' +
         '<button class="sb-rm" data-act="rm" data-line="' + esc(l.id) + '" aria-label="Remove ' + esc(m.product.title) + '">&#10005;</button>' +
       '</div>';
@@ -843,7 +846,7 @@
   }
 
   function variants(handle) {
-    return sf('query($h:String!){product(handle:$h){variants(first:20){edges{node{id title availableForSale}}}}}', { h: handle })
+    return sf('query($h:String!){product(handle:$h){variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}', { h: handle })
       .then(function (d) { return d.product ? d.product.variants.edges.map(function (e) { return e.node; }) : []; });
   }
 

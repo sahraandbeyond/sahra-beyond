@@ -486,6 +486,9 @@ body.dark-bg .fit-warn{color:#F7EFE2;border-color:rgba(255,255,255,.2);backgroun
 .pdp-stock{margin:0 0 10px;font-family:'Space Mono',monospace;font-size:12px;
   letter-spacing:.6px;color:#7E4114}
 .sz-out{display:block;font-size:9px;letter-spacing:.6px;margin-top:2px;color:#6B6256}
+/* 7 Oct 2026: live remaining count on the chip itself, 3 or fewer only (handover: low-stock counts) */
+.sz-left{display:block;font-size:10px;font-weight:600;letter-spacing:.3px;line-height:1;margin-top:2px;color:#7E4114;white-space:nowrap}
+.pdp-size.sel .sz-left{color:#2B2520}
 .gal-main:focus-visible{outline:2px solid #7E4114;outline-offset:3px}
 .sz-chip{font-family:'Space Mono',monospace;font-size:12px;padding:9px 15px;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;background:var(--chip)}
 .sz-chip.out{opacity:.42;text-decoration:line-through}
@@ -1880,6 +1883,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
            greyed chip, tapped it, and nothing explained why. */
         b.setAttribute('aria-label', v.title+' — sold out');
         b.innerHTML = v.title+'<span class="sz-out">Sold out</span>'; }
+      else { var ql=v.quantityAvailable;
+        /* live Shopify count, read on page load; null (token cannot read stock) or above 3 shows nothing */
+        if(typeof ql==='number'&&ql>0&&ql<=3){ b.setAttribute('aria-label', v.title+', only '+ql+' left');
+          b.innerHTML = v.title+'<span class="sz-left">'+ql+' left</span>'; } }
       b.addEventListener('click',function(){
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');

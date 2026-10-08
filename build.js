@@ -1244,6 +1244,9 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 .arp-sizes{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 12px}
 .arp-size{min-width:60px;height:50px;padding:0 12px;border:1px solid rgba(42,32,22,.32);border-radius:10px;background:#fff;color:#2A2016;font-size:17px;cursor:pointer}
 .arp-size.sel{background:#E9B978;border-color:#E9B978}
+.arp-left{display:block;font-size:11px;font-weight:700;line-height:1.1;color:#7E4114;white-space:nowrap}
+.arp-size.sel .arp-left{color:#2A2016}
+.arp-stock{margin:0 0 10px;font-size:14px;font-weight:700;color:#7E4114}
 .arp-size:disabled{text-decoration:line-through;color:#6B6256;border-style:dashed;background:transparent;cursor:not-allowed}
 .arp-fit{font-size:15px;line-height:1.7;color:#2A2016;background:rgba(255,255,255,.6);border:1px solid rgba(42,32,22,.14);border-radius:10px;padding:10px 12px;margin:0 0 12px}
 .arp-fit a{color:#7E4114}
@@ -3948,6 +3951,7 @@ const AR_PDP_NOINDEX = true;
       <div class="arp-box" id="arpBox" data-handle="${esc(p.id)}">
         <div class="arp-sizes-l">${esc(S.size)} <a href="/size-guide/" hreflang="en">${esc(S.sizeGuide)}</a></div>
         <div class="arp-sizes" id="arpSizes" role="group" aria-label="${esc(S.selectSize)}">${['S', 'M', 'L', 'XL'].map(z => `<button type="button" class="arp-size" aria-pressed="false" dir="ltr">${z}</button>`).join('')}</div>
+        <p class="arp-stock" id="arpStock" role="status" hidden></p>
         <p class="arp-fit">${esc(fitWarn)}${other ? ' ' + other : ''}</p>
         <button type="button" class="arp-add" id="arpAdd" disabled>${esc(S.selectSize)}</button>
         <button type="button" class="arp-now" id="arpNow">${esc(S.buyNow)}</button>
@@ -3974,24 +3978,33 @@ const AR_PDP_NOINDEX = true;
   th.forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;imgs.forEach(function(x,k){x.classList.toggle('on',k===i);});th.forEach(function(x,k){x.classList.toggle('on',k===i);});});});
   var box=document.getElementById('arpBox'); if(!box) return;
   var handle=box.dataset.handle,sizes=document.getElementById('arpSizes'),add=document.getElementById('arpAdd'),now=document.getElementById('arpNow'),msg=document.getElementById('arpMsg');
-  var S=${JSON.stringify({ add: S.addToCart, adding: S.adding, added: S.added, sold: S.soldOut, pick: S.selectSize })};
+  var S=${JSON.stringify({ add: S.addToCart, adding: S.adding, added: S.added, sold: S.soldOut, pick: S.selectSize, left1: 'بقيت قطعة واحدة فقط', left2: 'بقيت قطعتان فقط', left3: 'بقيت {n} قطع فقط', leftShort: 'بقي {n}', inSize: 'بمقاس' })};
   var vs=null,sel=null,pendingSize=null,live=false;
   function say(t){msg.textContent=t||'';}
+  /* 7 Oct 2026: live remaining count at 3 or fewer. The size is read from the chip's first text node,
+     because the chip can now carry a count under the letter. */
+  function sz(b){return (b.firstChild&&b.firstChild.nodeValue||'').trim();}
+  function left(q){return q===1?S.left1:q===2?S.left2:S.left3.replace('{n}',q);}
+  function stock(v){var st=document.getElementById('arpStock'); if(!st) return; var q=v&&v.quantityAvailable;
+    if(typeof q==='number'&&q>0&&q<=3){ st.innerHTML=left(q)+' '+S.inSize+' <span dir="ltr">'+v.title+'</span>'; st.hidden=false; } else st.hidden=true; }
   function pick(b){[].forEach.call(sizes.querySelectorAll('.arp-size'),function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});b.classList.add('sel');b.setAttribute('aria-pressed','true');}
   [].forEach.call(sizes.querySelectorAll('.arp-size'),function(b){b.addEventListener('click',function(){
     if(b.disabled) return; pick(b); say('');
-    var t=b.textContent.trim();
+    var t=sz(b);
     if(!live){ pendingSize=t; return; }
     sel=(vs||[]).filter(function(v){return v.title===t;})[0]||null;
+    stock(sel);
     add.disabled=!sel; add.textContent=sel?S.add:S.pick;
   });});
   function apply(list){
     vs=list; live=true;
     [].forEach.call(sizes.querySelectorAll('.arp-size'),function(b){
-      var v=vs.filter(function(x){return x.title===b.textContent.trim();})[0];
-      if(!v||!v.availableForSale){ b.disabled=true; b.classList.add('out'); b.setAttribute('aria-label',b.textContent.trim()+' — '+S.sold); }
+      var v=vs.filter(function(x){return x.title===sz(b);})[0];
+      if(!v||!v.availableForSale){ b.disabled=true; b.classList.add('out'); b.setAttribute('aria-label',sz(b)+' — '+S.sold); }
+      else { var q=v.quantityAvailable;
+        if(typeof q==='number'&&q>0&&q<=3){ b.setAttribute('aria-label',sz(b)+' — '+left(q)); b.innerHTML=sz(b)+'<span class="arp-left" dir="rtl">'+S.leftShort.replace('{n}',q)+'</span>'; } }
     });
-    if(pendingSize){ var hit=[].filter.call(sizes.querySelectorAll('.arp-size'),function(b){return b.textContent.trim()===pendingSize&&!b.disabled;})[0]; pendingSize=null; if(hit) hit.click(); }
+    if(pendingSize){ var hit=[].filter.call(sizes.querySelectorAll('.arp-size'),function(b){return sz(b)===pendingSize&&!b.disabled;})[0]; pendingSize=null; if(hit) hit.click(); }
   }
   function load(){ if(window.SahraCart&&SahraCart.variants){ SahraCart.variants(handle).then(apply).catch(function(){}); } else setTimeout(load,200); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',load); else load();
@@ -4082,10 +4095,10 @@ const AR_PDP_NOINDEX = true;
       ],
       firstH: 'The first run', firstSub: 'Two pieces. Revealed at launch.',
       tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Shorts', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
-      joinH: 'First to know on 22 October', joinP: 'Leave your email and your sizes, and we will write to you first when Sahra Trail opens on 22 October: the running tee, the 2-in-1 short and the kit.',
-      ph: 'you@email.com', btn: 'Tell me first', fine: 'Sizes help us plan the run. You will also hear about new places and drops now and then. Unsubscribe any time.',
+      joinH: 'Buy 24 hours before everyone else', joinP: 'Leave your email and your sizes. When Sahra Trail opens, this list can buy a full day before everyone else: the running tee, the 2-in-1 short and the kit.',
+      ph: 'you@email.com', btn: 'Get early access', fine: 'Sizes help us plan the run. You will also hear about new places and drops now and then. Unsubscribe any time.',
       sizeTee: 'Tee size', sizeShort: 'Short size', sizeAny: 'Not sure yet',
-      ok: 'You are on the list. You will hear first on 22 October.',
+      ok: 'You are on the list. You can buy 24 hours before everyone else.',
       err: 'Please enter a valid email address.',
       back: 'Meanwhile, the Founding Edition is in the shop &rarr;', backHref: '/shop/',
       hikes: 'Six UAE hikes, by grade &rarr;'
@@ -4108,10 +4121,10 @@ const AR_PDP_NOINDEX = true;
       ],
       firstH: 'الدفعة الأولى', firstSub: 'قطعتان. يُكشف عنهما عند الإطلاق.',
       tee: 'تيشيرت صحراء تريل', short: 'شورت صحراء تريل 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', teeNote: 'شعار القمّتين العاكس أسفل الياقة', shortNote: 'شعار القمّتين العاكس على الساق اليسرى', flashHint: 'انقر للوميض',
-      joinH: 'كن أول من يعرف في 22 أكتوبر', joinP: 'اترك بريدك الإلكتروني ومقاساتك، وسنراسلك أولًا عندما تُفتح صحراء تريل في 22 أكتوبر: تيشيرت الجري، والشورت 2 في 1، والطقم.',
+      joinH: 'اشترِ قبل الجميع بـ24 ساعة', joinP: 'اترك بريدك الإلكتروني ومقاساتك. عند افتتاح صحراء تريل، يستطيع المسجّلون في هذه القائمة الشراء قبل الجميع بيوم كامل: تيشيرت الجري، والشورت 2 في 1، والطقم.',
       sizeTee: 'مقاس التيشيرت', sizeShort: 'مقاس الشورت', sizeAny: 'لست متأكدًا بعد',
-      ph: 'you@email.com', btn: 'أبلغني', fine: 'وستصلك أيضًا أخبار الأماكن والإصدارات الجديدة من حين لآخر. يمكنك إلغاء الاشتراك في أي وقت.',
-      ok: 'تمّت إضافتك. سنراسلك حين تصل الدفعة الأولى.',
+      ph: 'you@email.com', btn: 'انضم إلى القائمة', fine: 'وستصلك أيضًا أخبار الأماكن والإصدارات الجديدة من حين لآخر. يمكنك إلغاء الاشتراك في أي وقت.',
+      ok: 'تمّت إضافتك. ستتمكن من الشراء قبل الجميع بـ24 ساعة.',
       err: 'يرجى إدخال بريد إلكتروني صحيح.',
       back: 'حتى ذلك الحين، الإصدار التأسيسي متوفر في المتجر ←', backHref: '/ar/shop/'
     }
@@ -4310,7 +4323,7 @@ html body main.tr .tr-hero .tr-tagline{font-family:'Jost','Space Mono',system-ui
       <h2 id="${id}join">${t.joinH}</h2>
       <p>${t.joinP}</p>
       <form class="tr-form tr-form-sizes" data-waitlist data-source="trail" novalidate>
-        ${/* 4 Oct 2026 (CRO panel, idea 17): sizes travel with the address as customer tags; Faheem promised 'first to know', not a head start */''}
+        ${/* 4 Oct 2026 (CRO panel, idea 17): sizes travel with the address as customer tags; 7 Oct 2026: Faheem approved a 24-hour head start for this list (demand strategy); no dates in the promise */''}
         <div class="tr-sizes"><label><span>${t.sizeTee}</span><select name="tee_size"><option value="">${t.sizeAny}</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label><label><span>${t.sizeShort}</span><select name="short_size"><option value="">${t.sizeAny}</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label></div>
         <div class="tr-row"><input type="email" name="email" placeholder="${t.ph}" aria-label="Email address" autocomplete="email" required dir="ltr">
         <button type="submit">${t.btn}</button></div>

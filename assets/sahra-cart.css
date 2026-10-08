@@ -192,3 +192,4 @@ html[data-price-cur]:not([data-price-cur="AED"]) .pdp-bundle{display:none}
 /* 4 Oct 2026: the + stops at the last unit and says so */
 .sb-q:disabled{opacity:.45;cursor:not-allowed}
 .sb-cap{font-size:11px;color:#9C521B;margin-left:8px;white-space:nowrap}
+.sb-left{display:block;font-size:12px;font-weight:600;color:#7E4114;margin-top:4px}

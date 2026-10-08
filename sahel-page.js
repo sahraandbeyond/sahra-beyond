@@ -70,12 +70,13 @@ const T = {
   piecesP: 'The Founding Edition came from the desert and the mountains. Sahel is the coast. Designed in the UAE. Limited first run.',
   reveal: 'Revealed soon',
   hint: 'Tap a piece to bring the light',
-  joinH: 'Be first to know',
-  joinP: 'Leave your email and we will write to you when Sahel is revealed, and again when it opens.',
+  /* 7 Oct 2026 (Faheem, demand strategy): the list buys 24 hours before everyone else. Promise only, no dates. */
+  joinH: 'Buy 24 hours before everyone else',
+  joinP: 'Leave your email and we will write to you when Sahel is revealed. When it opens, this list can buy a full day before everyone else.',
   size: 'Your size (optional)', sizeAny: 'Not sure yet',
-  ph: 'you@email.com', btn: 'Tell me first',
+  ph: 'you@email.com', btn: 'Get early access',
   fine: 'You will also hear about new places and drops now and then. Unsubscribe any time.',
-  ok: 'You are on the list. You will hear from us first.',
+  ok: 'You are on the list. You can buy 24 hours before everyone else.',
   err: 'Please enter a valid email address.',
   back: 'Meanwhile, the Founding Edition is in the shop &rarr;', backHref: '/shop/',
   trail: 'Running kit? Sahra Trail &rarr;', trailHref: '/trail/'
