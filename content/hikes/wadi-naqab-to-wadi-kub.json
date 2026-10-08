@@ -1,0 +1,336 @@
+{
+  "slug": "wadi-naqab-to-wadi-kub",
+  "name": "Wadi Naqab to Wadi Kub",
+  "emirate": "Ras Al Khaimah",
+  "area": "Wadi Naqab, off the road at Al Salihia, about 40 minutes from Ras Al Khaimah city. Not the Wadi Kub camping area near Masafi",
+  "placeSlug": "wadi-naqab",
+  "official": false,
+  "gradeRecommended": "Difficult",
+  "gradeBasis": "No official grade exists for this route. Sources range from Moderate (Wikiloc track page, a walkers' blog, Visit Ras Al Khaimah's 'moderately challenging' for the Red Wall hike) to 'seasoned hikers' only (Gulf News, 29 October 2025) and 'strongly recommend a guide' for the full route (The Road Reel). The route has exposed ledges, a rope-assisted ledge, crawling through a gap, a loose scree climb to Al Sanat, no clear path after the staircase, no mobile signal in the wadi and a long record of police rescues in Wadi Naqab. Difficult is the cautious reading of those facts for a reader who has not walked it before.",
+  "officialTrails": [
+    {
+      "name": "Red Wall Hike, Wadi Naqab (described by Visit Ras Al Khaimah; it lists a Wadi Koob stop and Sanat Village; no map, distance or formal grade published)",
+      "grade": "Moderately challenging (blog wording, not a formal grade)",
+      "lengthKm": null,
+      "time": "About 6 hours out and back; 5 to 6 hours of walking in the same post",
+      "source": "https://visitrasalkhaimah.com/blog/wadi-naqab-hike/"
+    },
+    {
+      "name": "Sheri Village and Baqal Village Hike, Wadi Naqab (described by Visit Ras Al Khaimah; a different route)",
+      "grade": "Moderately challenging (blog wording, not a formal grade)",
+      "lengthKm": null,
+      "time": "About 12 hours out and back",
+      "source": "https://visitrasalkhaimah.com/blog/wadi-naqab-hike/"
+    }
+  ],
+  "distanceKm": 8.5,
+  "distanceNote": "Not confirmed. Sources conflict. Komoot's Wadi Naqab Canyon page (FAQ) gives about 8.5km for the route connecting Wadi Naqab to Wadi Kub. A Wikiloc track page gives 7.7km, with the author expecting 9 to 10km on a GPS and a comment adding about 4km if the road is damaged. The Road Reel calls it a 14km loop but its own section distances (about 4km, 2km and 1.5km, plus a descent under 1km) add to about 8.5km. Visit Ras Al Khaimah gives no distance. 8.5km is used as the middle figure, not a measured one.",
+  "climbM": 515,
+  "climbNote": "Not confirmed. The Road Reel lists 'elevation gain/loss: 515 meters' but its lowest and highest points are printed the wrong way round (720m and 250m), so the figure is unreliable. The Wikiloc track page gives no gain and says Al Sanat village is at 618m; Komoot places the Wadi Naqab Canyon highlight at about 450m. Property Finder gives 846m for its Red Wall hike and a walker's blog (idoitcauseican, 2019) gives about 610m for the Sheri route, both different routes. Treat 515m as a rough walker's figure only.",
+  "time": "About 5 to 6 hours of walking (The Road Reel); sources say about 6 hours (Visit Ras Al Khaimah, Gulf News, Komoot '6+')",
+  "shape": "out-and-back with a loop at Al Sanat village",
+  "trailhead": {
+    "name": "Closest drivable parking in Wadi Naqab, at a sign on the rocks (the start used by walkers' track pages)",
+    "lat": 25.721215,
+    "lng": 56.124656,
+    "coordSource": "The Road Reel (published 9 February 2021, updated 16 February 2026) gives the closest drivable parking at 25.721215, 56.124656. A Wikiloc track page for 'Wadi Naqab - Wadi Koub - Al Sanat Village' gives the 4x4 start at 25.721285, 56.124709, about 10m away, and a sedan start at 25.714996, 56.106097, 2 to 3km before it. An older blog (idoitcauseican, 20 February 2019) and MissionsOffroad (2020) give parking near 25.7165, 56.1102 and 25.7159, 56.1093, which fits the old road end before it was extended. No government source gives a trailhead coordinate.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.721215,56.124656",
+    "parking": "Informal parking at the end of the dirt road in the wadi bed. No official car park, attendant or charge is described by any source. Where you can park depends on the state of the road, which one Wikiloc comment says was damaged by water. Last checked October 2026.",
+    "vehicle": "Not confirmed. Visit Ras Al Khaimah (March 2026) says a 4x4 is advised because the last few kilometres are too rough for an ordinary car. The Road Reel says the road was extended and sedans can now reach the start, and Gulf News (October 2025) says no 4x4 is needed. Wikiloc gives separate sedan and 4x4 starts."
+  },
+  "routeDescription": [
+    "Walkers' sources describe one route. It starts in Wadi Naqab, continues into a narrow canyon called Wadi Koub (or Wadi Kub), with seasonal pools, and then climbs to the abandoned mountain village of Al Sanat. The Road Reel treats Wadi Koub as part of the same trail, and Wikipedia says routes from Wadi Naqab lead to Wadi Kub (also spelled Koub), which has seasonal pools. No source describes walking from Wadi Naqab right through to the camping Wadi Kub near Masafi. MissionsOffroad says there are two places called Wadi Kub: a drive-in one off the Gragrah to Ghub road, and another reached only by hours of hiking up a canyon from Wadi Naqab.",
+    "The Road Reel describes about 2km of walking over boulders in the wadi bed, past a large rock with red Arabic writing, then a signed path up on to a ledge (the 'balcony') on the left to bypass the dead end at the Red Wall. After narrow ledges and a stretch of bouldering you reach Wadi Koub: a ledge crossing with a metal rope of about 3m, a spot with a UAE flag, seasonal pools, and a boulder section with a narrow gap to crawl through. Wikiloc puts the left fork towards Wadi Koub at about 2km and the Red Wall at about 1.5km, so distances differ between sources.",
+    "Al Sanat is the hardest part. After the pools you reach a staircase with black ropes, then a climb of about 45 minutes (The Road Reel) up cairned loose rock and scree to the village. Wikiloc says the markings run out after the staircase and some walkers got lost or turned back there. The Road Reel says there is no clear path and only a few cairns, and mentions an old uncovered well at the village.",
+    "Both sources describe coming back down a different way, by a ridge on the far side of the village, with loose rocks (Wikiloc) and a path of about 750m (The Road Reel), then rejoining the wadi and retracing the approach. Visit Ras Al Khaimah says most walks in Wadi Naqab are there-and-back with no shortcuts to the vehicle.",
+    "Marking is informal. Visit Ras Al Khaimah says the Red Wall route is marked with red markers on the left fork. MissionsOffroad says some trails have signs sprayed on rocks or cairns and others are poorly marked. The Road Reel says new markings were added recently. Another track page (Heli Hike, Wikiloc) describes small boards, cairns and spray-painted arrows. None of this is an official waymarking scheme. Walkers start by 8am to finish in daylight (The Road Reel)."
+  ],
+  "bestMonths": "December to February is best, with shorter morning hikes from mid-October to mid-March (The Road Reel); Visit Ras Al Khaimah says October to April. Not in summer.",
+  "months": [
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    2
+  ],
+  "startAdvice": "Start at first light. The Road Reel suggests starting as early as 8am to finish in daylight and says an attempt in June, above 40 degrees Celsius, was cut short and dangerously tiring. Do not plan to be on the Al Sanat descent after dark; the Road Reel says the ridge descent is best avoided at night for anyone who has not hiked in the dark before.",
+  "shade": "Not confirmed. No source describes shade on the route.",
+  "water": "No reliable source on the route. The Road Reel says to carry at least 4 litres per person on a hot day and says the seasonal pools are very likely to hold water in winter but were empty when it photographed them; the dead-end pool holds water all year but is described as not very clean. A tour operator (ECC Adventures, for a different 10km out-and-back route) suggests 1 to 2 litres from December to March and 2 to 3 litres the rest of the year. A hiking company director quoted by The National (6 September 2020) advised at least 5 litres. Carry at least 4 litres and treat the pools as a bonus, not a supply.",
+  "signal": "Poor to none in the wadi, with signal near the top of the mountain at Al Sanat (The Road Reel and Wikiloc). MissionsOffroad (2020) says mobile coverage in Wadi Naqab is almost nonexistent. Download an offline map and GPS track before you set off. Wikiloc says GPS readings in this area are unreliable.",
+  "fees": "No entry fee or parking charge was found in any source opened (last checked October 2026). Visit Ras Al Khaimah (March 2026) says no permits are required.",
+  "permits": "Visit Ras Al Khaimah (blog published 5 March 2026) says no permit is needed but groups of 10 or more should contact the tourism authority in advance. The National (24 October 2023, updated 4 March 2024) reported separate hiking rules for Fujairah and Ras Al Khaimah, including registration with a code at the start of each trail, a qualified leader for organised groups (in Ras Al Khaimah one certified leader for up to 10 people), fines of up to Dh50,000 for breaches, and the line that you cannot hike alone. The Fujairah decision itself, reported by The National and Khaleej Times on 2 to 3 March 2023, places duties on tour companies. Whether any registration code or fine applies to individual walkers at the Wadi Naqab trailhead is not confirmed. Last checked October 2026.",
+  "hours": "No opening hours found. The wadi is open access in every source opened. Last checked October 2026.",
+  "closure": "No closure, ban or restricted-area notice for Wadi Naqab or Wadi Koub was found in Visit Ras Al Khaimah, RAK Police or national press (last checked October 2026). This does not prove the route is open: no official body publishes a status for it. The road to the trailhead has been reported damaged by water (a Wikiloc comment, undated in the page, near a hike dated 18 February 2024) and MissionsOffroad says the track tends to be damaged after rain. No private-land or military-area restriction on the route was found; this is also not confirmed. Check the road and the weather on the day.",
+  "safety": [
+    "Flash floods. MissionsOffroad (April 2020) says floods can sweep away cars and houses and advises not to visit even in light rain; The Road Reel calls the floods deadly; Wikipedia says the wadi is prone to severe flash floods in winter. The canyon section has vertical walls and no easy escape (Wikiloc, Heli Hike page). Do not go if rain is forecast anywhere in the mountains or has fallen in recent days.",
+    "Police rescues in Wadi Naqab are frequent. Reported cases: an exhausted 60-year-old man (about 18 April 2020), four tourists airlifted (5 September 2020), nine people found after a 13-hour search (December 2020), eight people rescued after more than nine hours (5 to 6 February 2021), a German hiker with a broken leg (21 December 2021), four women lost after dark (4 January 2022), three tourists found exhausted (May 2023), and a 27-year-old Austrian man who died after a fall on the Wadi Naqab trail (reported 14 February 2023). None of these reports names Wadi Koub or Al Sanat.",
+    "Exposed and physical. Walkers describe narrow ledges with drops, a rope-assisted ledge, crawling through a narrow gap, loose scree and a steep climb to Al Sanat. You need a good head for heights. The Road Reel says the Al Sanat climb is not for beginners unless they are guided, fit and not afraid of heights.",
+    "Navigation. Markings run out after the staircase and some walkers have got lost or turned back there (Wikiloc). Several rescues above were people lost in the mountains. Load an offline track, and go with a licensed guide if you have not walked it before.",
+    "Heat. Police rescued an exhausted man in Wadi Naqab in April 2020 and four tourists in September 2020, and told the public to avoid mountain hikes in high temperatures. Do not walk this route from May to September.",
+    "No mobile signal in the wadi. Do not hike alone, tell someone your route and expected return time, and know that rescue teams may struggle to reach you; RAK Civil Defence urged hikers to avoid rugged areas for this reason (The National, 22 December 2021).",
+    "Do not be on the route in the dark. The January 2022 rescue was four women lost after dark, and police advised against hiking in the dark. Start early and turn back if you are behind schedule.",
+    "Carry at least 4 litres of water each. Sources disagree on whether the pools hold water, and the year-round pool is described as not clean."
+  ],
+  "carry": [
+    "At least 4 litres of water per person (The Road Reel); some advise 5 litres",
+    "Rehydration drink and electrolytes",
+    "Food and emergency snacks",
+    "Offline map and a GPS track of the route",
+    "Sturdy hiking boots with good grip",
+    "Sun protection: hat, sunglasses and sunscreen",
+    "Head torch and spare batteries",
+    "First aid kit",
+    "Fully charged phone and a power bank",
+    "Extra layer for early starts",
+    "Trekking poles (suggested by some walkers for the descent)"
+  ],
+  "emergency": "Police 999, ambulance 998, civil defence 997 (Ajman government emergency numbers page, ajman.ae). Wikiloc also mentions the NA998 app, which can share your location with the ambulance service, and the UAE Poison Centre on 800424 for snake bites. Last checked October 2026.",
+  "driveNote": "Visit Ras Al Khaimah (March 2026) says about 2 hours from Dubai and 40 minutes from Ras Al Khaimah city. The Road Reel says about 1.5 hours from Downtown Dubai. No source opened gave a drive time from Abu Dhabi.",
+  "intro": "This is an unofficial walk from Wadi Naqab into the narrow Wadi Koub (also written Wadi Kub) and up to the abandoned village of Al Sanat in Ras Al Khaimah. It is not the drive-in camping Wadi Kub near Masafi. Sources give 7.7 to 14km and about 6 hours. It is exposed, thinly marked and has little or no mobile signal, so it is for experienced walkers in the cooler months or those with a licensed guide.",
+  "seoTitle": "Wadi Naqab to Wadi Kub Hike, RAK: Route and Safety",
+  "seoDesc": "Wadi Naqab to Wadi Koub canyon and Al Sanat, Ras Al Khaimah (not the Masafi camping Wadi Kub): unofficial, about 6 hours, exposed. Floods, rescues, rules.",
+  "sources": [
+    {
+      "label": "The Road Reel: How to hike from Wadi Naqab to Wadi Koob pools and Al Sanat Village (distance, sections, coordinates, hazards, guide advice; published 9 February 2021, updated 16 February 2026)",
+      "url": "https://www.theroadreel.com/best-uae-hikes-wadi-naqab/"
+    },
+    {
+      "label": "Wikiloc (via loc.wiki): Wadi Naqab - Wadi Koub - Al Sanat Village (7.7km, Moderate, coordinates, warnings, comments)",
+      "url": "https://loc.wiki/hiking-trails/wadi-naqab-wadi-koub-al-sanat-village-96321137"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Wadi Naqab hiking guide (Red Wall and Sheri/Baqal routes, red markers, 4x4, no permit, groups of 10 or more; published 5 March 2026, modified 13 March 2026)",
+      "url": "https://visitrasalkhaimah.com/blog/wadi-naqab-hike/"
+    },
+    {
+      "label": "Komoot: Wadi Naqab Canyon highlight (FAQ gives about 8.5km and 6+ hours for the Wadi Naqab to Wadi Kub route; coordinates 25.723071, 56.141505)",
+      "url": "https://www.komoot.com/highlight/4683080"
+    },
+    {
+      "label": "MissionsOffroad: The Secrets of Wadi Naqab (published 8 April 2020, updated 10 June 2020: access, flash floods, getting lost, Wadi Koub coordinates)",
+      "url": "https://missionsoffroad.com/wadi-naqab/"
+    },
+    {
+      "label": "MissionsOffroad: Wadi Kub (the drive-in Wadi Kub off the Gragrah to Ghub road, and the note that another Wadi Kub is reached from Wadi Naqab; published 27 June 2021, updated 1 June 2024)",
+      "url": "https://missionsoffroad.com/wadi-kub/"
+    },
+    {
+      "label": "Wikipedia: Wadi Naqab (location, dam, routes to Sheri and Wadi Kub, rescues)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Naqab"
+    },
+    {
+      "label": "Wikipedia: Wadi Kub (a Fujairah and Ras Al Khaimah wadi draining to Wadi Mu'taridah near Saram; mouth 25.6545, 55.9995; no hiking mentioned)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Kub"
+    },
+    {
+      "label": "Gulf News: 7 UAE hiking trails for expert trekkers (Wadi Naqab loop to Al Sanat about 6 hours, seasoned hikers; updated 29 October 2025)",
+      "url": "https://gulfnews.com/lifestyle/7-uae-hiking-trails-for-expert-trekkers-chasing-views-and-adrenaline-1.500324206"
+    },
+    {
+      "label": "ECC Adventures: Wadi Koob and Wadi Naqab (tour operator, 10km out-and-back, 257m gain, guide, flash-flood and rescue warning)",
+      "url": "https://eccadventures.com/adventure/wadi-koob-wadi-naqab/"
+    },
+    {
+      "label": "Wikiloc (via loc.wiki): Heli Hike (Reverse) Wadi Kub, Wadi Naqab end of road (canyon, slippery rock, flash-flood warning, markings)",
+      "url": "https://www.loc.wiki/hiking-trails/heli-hike-reverse-wadi-kub-rak-hike-68792208"
+    },
+    {
+      "label": "idoitcauseican: Wadi Naqab hike (20 February 2019; older trailhead coordinates, Sheri route; no mention of Koub)",
+      "url": "https://idoitcauseican.com/wadi-naqab-hike/"
+    },
+    {
+      "label": "Property Finder: Wadi Naqab trails (published 11 April 2025, modified 13 May 2026; Red Wall 7km and 846m, a different figure set)",
+      "url": "https://www.propertyfinder.ae/blog/?p=154967"
+    },
+    {
+      "label": "WOW-RAK: Best wadis in Ras Al Khaimah (rescues called out most in the upper reaches; no guide required for individuals; updated 29 September 2026)",
+      "url": "https://wow-rak.com/wadis-in-ras-al-khaimah/"
+    },
+    {
+      "label": "Al Bayan: rescue of an exhausted man in Wadi Naqab (20 April 2020, Arabic)",
+      "url": "https://www.albayan.ae/across-the-uae/news-and-reports/2020-04-20-1.3835935"
+    },
+    {
+      "label": "Dubai Eye 103.8: RAK Police rescue 4 stranded tourists in Wadi Naqab (6 September 2020)",
+      "url": "https://www.dubaieye1038.com/news/local/rak-police-rescue-4-stranded-tourists-in-wadi-naqab"
+    },
+    {
+      "label": "The National: 'People are risking their lives': safety warning after more stranded hikers rescued (6 September 2020)",
+      "url": "https://www.thenationalnews.com/uae/government/people-are-risking-their-lives-safety-warning-after-more-stranded-hikers-rescued-in-ras-al-khaimah-1.1073729"
+    },
+    {
+      "label": "Gulf News: RAK Police rescue nine people stranded in Wadi Naqab (15 December 2020)",
+      "url": "https://gulfnews.com/uae/rak-police-rescue-nine-people-stranded-in-wadi-naqab-1.75916603"
+    },
+    {
+      "label": "Emarat Al Youm: nine people stuck in Wadi Naqab for a full day (16 December 2020, Arabic)",
+      "url": "https://www.emaratalyoum.com/local-section/accidents/2020-12-16-1.1433025"
+    },
+    {
+      "label": "Gulf Today: RAK team rescues 8 people from mountains (6 February 2021)",
+      "url": "https://www.gulftoday.ae/news/2021/02/06/rak-team-rescues-8-people-from-mountains"
+    },
+    {
+      "label": "The National: hiker flown to hospital after breaking leg, Wadi Naqab (22 December 2021)",
+      "url": "https://www.thenationalnews.com/uae/2021/12/22/hiker-flown-to-hospital-after-breaking-leg-on-ras-al-khaimah-mountain-trek/"
+    },
+    {
+      "label": "The National: four women hikers lost in Wadi Naqab brought to safety (5 January 2022)",
+      "url": "https://www.thenationalnews.com/uae/2022/01/05/four-women-hikers-lost-in-ras-al-khaimah-valley-brought-to-safety/"
+    },
+    {
+      "label": "The National: Austrian man dies on hiking trip, Wadi Naqab trail (14 February 2023)",
+      "url": "https://www.thenationalnews.com/uae/2023/02/14/austrian-man-reported-as-missing-after-weekend-hiking-trip-to-ras-al-khaimah/"
+    },
+    {
+      "label": "Khaleej Times: young European hiker found dead after falling from mountain in Ras Al Khaimah (February 2023; wadi not named)",
+      "url": "https://www.khaleejtimes.com/uae/emergencies/uae-young-european-hiker-found-dead-after-falling-from-mountain-in-ras-al-khaimah"
+    },
+    {
+      "label": "Gulf Today: RAK Police rescue three tourists in Wadi Naqab (22 May 2023)",
+      "url": "https://www.gulftoday.ae/News/2023/05/22/RAK-Police-rescue-three-tourists-in-Wadi-Naqab"
+    },
+    {
+      "label": "The National: UAE hiking season gets under way with new rules (24 October 2023, updated 4 March 2024)",
+      "url": "https://www.thenationalnews.com/uae/2023/10/24/uae-hiking-season-gets-under-way-with-new-rules-to-improve-safety/"
+    },
+    {
+      "label": "The National: Fujairah to fine tourism companies Dh50,000 (3 March 2023)",
+      "url": "https://www.thenationalnews.com/uae/2023/03/03/fujairah-to-fine-tourism-companies-dh50000-if-they-jepoardise-the-safety-of-hikers/"
+    },
+    {
+      "label": "The National: the RAK mountain tribe that guides lost trekkers home (16 January 2019; the Wadi Kub foothill town about 40km south of Ras Al Khaimah city, 'kub' means cup)",
+      "url": "https://www.thenationalnews.com/uae/heritage/the-rak-mountain-tribe-that-guides-lost-trekkers-home-1.811557"
+    },
+    {
+      "label": "Ajman government: emergency numbers",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Existing place data (read, not a web source): wadi-naqab.json and wadi-kub.json",
+      "url": "/home/claude/site/content/locations/wadi-naqab.json"
+    },
+    {
+      "label": "Wikimedia Commons: File:Wadi Naqab - 13.jpg, by IbrahimKumar, CC0 (photo)",
+      "url": "https://commons.wikimedia.org/wiki/File:Wadi_Naqab_-_13.jpg"
+    }
+  ],
+  "lastChecked": "2026-10-08",
+  "_doubts": [
+    "WHICH WADI KUB: the biggest doubt. Walkers' sources use 'Wadi Koob/Koub/Kub' for the narrow canyon and pools reached from Wadi Naqab (Komoot highlight 25.723071, 56.141505; MissionsOffroad pools 25.7227, 56.1449; Commons photo tagged 25.7223, 56.1429). The existing place page wadi-kub.json describes a different place: the drive-in camping wadi off the Gragrah to Ghub road near Masafi (trailhead 25.49657, 56.098545, about 25km south), and Wikipedia's Wadi Kub is a third description (17km wadi, mouth 25.6545, 55.9995 near Saram, Fujairah, no hiking). MissionsOffroad (27 June 2021, updated 1 June 2024) says there are two places called Wadi Kub and the other is an extension of Wadi Naqab reached by hours of hiking. I found no source describing a through-walk from Wadi Naqab to the Masafi camping Wadi Kub, and I found no source that links the Naqab-side canyon to Wikipedia's Wadi Kub drainage. The slug and name follow the brief; the page text says what the sources describe. Whether the two are the same wadi system at any point is not confirmed.",
+    "NAME VARIANTS used in searches: Wadi Naqab, Wadi Nagab, Wadi Naqb; Wadi Kub, Wadi Koub, Wadi Koob, Wadi Kob; Al Sanat, Sanat Village, Sall Al Shaheh; Arabic وادي نقب, وادي كوب, الصنعة. Brief gave the Arabic as وادي نقب الى وادي كوب. 'Naqab' also appears for the Negev in Arabic and English results, which I ignored. 'Wadi Naqat' appears in Commons search results and is a different place.",
+    "OFFICIAL STATUS: marked official false. Visit Ras Al Khaimah (the tourism authority's site) describes the Red Wall hike as moderately challenging, mentions a Wadi Koob UAE flag stop and Sanat Village, and says the route is marked with red markers, but publishes no map, distance, coordinate or formal grade, and does not describe the whole route as a managed trail. This partly contradicts the 6 October note that no official grade was found, so a reviewer may prefer to treat it as a Visit RAK description rather than no description at all. No operator such as Visit Jebel Jais or RAK Leisure covers this route.",
+    "ROUTE SHAPE: The Road Reel and Gulf News say loop. Wikiloc says retrace the approach after descending a different side of Al Sanat. Visit Ras Al Khaimah says most Wadi Naqab walks are there-and-back. I described it as out-and-back with a loop at the village, which is my reading of the Wikiloc and Road Reel descriptions.",
+    "DISTANCE: Road Reel 14km (headline) against section figures that add to about 8.5km; Wikiloc 7.7km, author expects 9 to 10km on GPS; Komoot FAQ 8.5km; Visit RAK Red Wall hike 'nearly nine miles' in its 2022 hiking list (about 14km, modified 19 September 2025; not tied to Koub); ECC Adventures 10km out-and-back from Jebel Yanas (different route); Property Finder 7km for Red Wall. 8.5km is a mid-range figure, not measured. Komoot's FAQ looks generated and could be wrong.",
+    "CLIMB: 515m from The Road Reel has its low and high points printed the wrong way round (720m and 250m). Wikiloc: Al Sanat village at 618m, no gain given. Komoot 450m at the canyon. Other pages give 257m (ECC), 610m (Sheri route, 2019 blog) and 846m (Property Finder Red Wall), all different or unclear routes. The 515m figure is weak.",
+    "TIME: 5 to 6 hours of walking (Road Reel); about 6 hours (Visit RAK, Gulf News); 6+ hours (Komoot); ECC 3.5 to 4.5 hours (different, shorter route). Wikiloc adds 30 to 45 minutes if the road is damaged and you must walk from further back, and a comment suggests adding about 8km. The page time assumes the trailhead at 25.7212, 56.1247.",
+    "TRAILHEAD AND ROAD: coordinates agree between two track pages (within about 10m) but both are walkers' data. Road condition is unclear: The Road Reel (2021 text, updated 2026) says sedans can reach the start; Wikiloc says the road was damaged by water and gives a sedan start 2 to 3km back; Visit RAK says a 4x4 is advised; Gulf News says no 4x4 needed. Rock damage after rain is also noted by MissionsOffroad.",
+    "RESCUES: every rescue I found names Wadi Naqab, not Wadi Koub or Al Sanat, and gives no trail. I cannot say any of them were on this route. Dates are from the article dates: Al Bayan 20 April 2020 ('the day before yesterday', so about 18 April); Dubai Eye said the police post was 5 September 2020; Gulf News 15 December 2020 (rescue date unstated); Gulf Today 6 February 2021 (search began 4pm Friday 5 February); The National 22 December 2021 (alarm 9.55am on 'Tuesday', so 21 December); The National 5 January 2022 (call 7.17pm on the Tuesday, 4 January); The National 14 February 2023 (missing from Saturday 11 February; The National says Wadi Naqab trail, Khaleej Times does not name the wadi, the Austrian Foreign Ministry said border area); Gulf Today 22 May 2023 (incident date not stated). The National's 6 September 2020 article said RAK Police had done 19 rescue missions for stranded hikers so far in 2020 (all areas). Not counted: an April 2024 airlift of three Europeans at about 4,000ft (Dubai Eye, wadi not named), the July 2026 airlift in Wadi Shah (Gulf News), and a November 2024 fall in Wadi Hiqal (Emarat Al Youm). I found no Wadi Naqab incident reported in 2024 to 2026 by name, but absence from my searches is not proof there were none. I could not open RAK Police's own news portal (robots.txt) and two Al Khaleej Arabic items (URL too long), so police press releases were read only through newspapers.",
+    "RULES: The National's October 2023 article (updated March 2024) says registration by code at trail starts, one certified leader per 10 people in Ras Al Khaimah, a Dh50,000 fine and 'you cannot hike alone'. The Fujairah decision (The National, 3 March 2023) is about tour companies and Fujairah trails. An Esquire Middle East item (February 2021) relaying Khaleej Times says paid or organised treks in RAK without a permit risk a Dh10,000 fine. Visit RAK (March 2026) says no permits except groups of 10 or more should inform the authority. WOW-RAK (September 2026) says no guide is required for individuals. I did not find an RAK government text of a rule for individual walkers, so I did not tell readers a code or leader is required, only that they should check.",
+    "EMIRATE BOUNDARY: Visit RAK, Wikipedia and every walkers' source place the route in Ras Al Khaimah. The Austrian Foreign Ministry called the 2023 incident area a UAE and Oman border area. Wikipedia places Wadi Kub (the other one) partly in Fujairah. I did not check the Ras Al Khaimah and Fujairah boundary near Al Sanat, so which emirate's rules apply near the village is unconfirmed.",
+    "AL SANAT: Wikiloc says the village is at 618m. The Road Reel suggests camping at the village; I did not repeat that advice. Whether anyone lives there is not stated by these sources (Visit RAK mentions small hillside settlements on the Red Wall route). 'Sall Al Shaheh' on Komoot is a nearby hiking highlight and may or may not be the same place.",
+    "WATER: pools: Road Reel says empty when photographed, Wikiloc and Heli Hike pages say dry or full depending on rain. Water advice differs: 4 litres (Road Reel), 5 litres (quoted expert, The National 2020), 1 to 3 litres (ECC Adventures). I used 4 litres as the minimum and noted the rest.",
+    "SIGNAL: Road Reel and Wikiloc agree on poor signal in the wadi and some at Al Sanat; I did not test it.",
+    "SHADE: no source. Komoot lists no facilities in the canyon. Not guessed.",
+    "BEST MONTHS: Road Reel says December to February best and mid-October to mid-March for shorter morning hikes; Visit RAK says October to April; Property Finder says November to March. Month scores are editorial.",
+    "DRIVE TIMES: Visit RAK says 2 hours from Dubai, 40 minutes from RAK city; Road Reel says 1.5 hours from Downtown Dubai. No Abu Dhabi time found.",
+    "SOURCES NOT OPENED: Wikiloc and AllTrails pages directly returned 403 or are blocked, so the Wikiloc content came from a loc.wiki mirror of the same track page and an AllTrails track was not seen. The Wikiloc page shows no author name or date; comments mention a hike on 18 February 2024. Commons API was rate-limited, so the photo details were read from Commons file pages.",
+    "PHOTO: File:Wadi Naqab - 13.jpg by IbrahimKumar, CC0, taken 4 January 2024. The uploader's caption says 'Kub Canyon area'; the file page lists an object location of about 25.7223, 56.1429, which matches the Wadi Koub pools coordinates from walkers' sources. The caption is the uploader's and was not independently confirmed. The photo shows two small figures in a narrow limestone gorge with a shallow pool, so it shows the canyon section only, not Al Sanat or the trailhead. Other files in the same series show the Red Wall and Heli Canyon areas.",
+    "NOT USED: the Sheri and Baqal route (12 hours, different), the Jebel Yanas routes, the Wadi Naqab bat cave route (Gulf News, 19.5km dry river beds, different), the Heli Hike rope section (needs ropes and experts; separate route at the end of the Koub canyon), and the Hajar tee page text."
+  ],
+  "grade": "Difficult",
+  "nearPlace": "wadi-naqab",
+  "facts": {
+    "distance": "About 8.5 km (sources: 7.7 to 14)",
+    "climb": "Not confirmed",
+    "time": "5 to 6 hours",
+    "shape": "Out and back"
+  },
+  "photo": {
+    "src": "/uploads/hikes/wadi-naqab-to-wadi-kub.jpg",
+    "w": 1280,
+    "h": 720,
+    "edits": "resized",
+    "author": "IbrahimKumar",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Wadi_Naqab_-_13.jpg",
+    "commonsFile": "File:Wadi Naqab - 13.jpg",
+    "what": "The Wadi Kub canyon, reached on foot from Wadi Naqab",
+    "alt": "Two walkers in a narrow canyon of pale layered rock, with a shallow pool on the rock floor",
+    "whatFull": "The narrow canyon labelled Kub Canyon area by the uploader, taken 4 January 2024 in the Wadi Naqab to Wadi Koub section; file page location about 25.7223, 56.1429. It shows the canyon section only, not the trailhead or Al Sanat."
+  },
+  "page": {
+    "status": "Not an official waymarked route: there is no official map or grade, and the paint marks and cairns are informal and incomplete. Go with a licensed guide if you have not walked it before. This guide covers the Wadi Kub (also written Koub or Koob) canyon and pools that you reach on foot from Wadi Naqab. It is not the drive-in camping Wadi Kub near Masafi, off the Gragrah to Ghub road.",
+    "gradeBasis": "There is no official grade. Visit Ras Al Khaimah calls the Red Wall hike in Wadi Naqab moderately challenging, and a Wikiloc track page says Moderate. Gulf News says it is for seasoned hikers, and The Road Reel recommends a guide for beginners. We rate it Difficult because of the exposed ledges, scree, thin markings, lack of signal and repeated rescues in Wadi Naqab.",
+    "route": [
+      "This guide covers the Wadi Kub (also written Koub or Koob) canyon and pools that you reach on foot from Wadi Naqab. It is not the drive-in camping Wadi Kub near Masafi, off the Gragrah to Ghub road. Walkers describe one route from the Wadi Naqab trailhead. You cross about 2km of boulders in the wadi bed, take a signed path along a ledge on the left to bypass the dead end at the Red Wall, then enter the narrow Wadi Koub with its seasonal pools.",
+      "In Wadi Koub there is a short ledge with a metal rope, a spot with a UAE flag, polished rock and a boulder section with a narrow gap to crawl through. Al Sanat is the hardest part: a staircase with black ropes, then about 45 minutes up loose rock and scree to the abandoned village. Markings run out after the staircase.",
+      "You return by a ridge on the far side of the village, with loose rock, then rejoin the wadi and retrace your steps. Visit Ras Al Khaimah says most Wadi Naqab walks are there-and-back with no shortcuts to the vehicle. Start by 8am to finish in daylight."
+    ],
+    "distance": "Not confirmed. Komoot gives about 8.5km and Wikiloc 7.7km. The Road Reel says 14km but its own sections add to about 8.5km.",
+    "climb": "Not confirmed. The Road Reel gives 515m but its own high and low points do not add up. Other pages give 257m to 846m for nearby routes.",
+    "time": "About 6 hours in most sources; The Road Reel says 5 to 6 hours of walking.",
+    "start": "The closest drivable parking in Wadi Naqab, at a sign on the rocks. There is no official trailhead. Set your map to Wadi Naqab, not to the Masafi camping Wadi Kub, which is a different place (MissionsOffroad).",
+    "coordNote": "The pin comes from two walkers' track pages that agree to about 10 metres. No government source gives a coordinate, and the road end may change.",
+    "parking": "Informal parking at the end of the dirt road. No official car park or charge is described. Where you can park depends on the road, which has been reported as damaged. Check before you go.",
+    "vehicle": "Not confirmed. Visit Ras Al Khaimah advises a 4x4 for the last few kilometres. Some walkers say a sedan can now reach the start.",
+    "getting": "Visit Ras Al Khaimah says about 2 hours from Dubai and 40 minutes from Ras Al Khaimah city. Turn right at Al Salihia.",
+    "bestMonths": "The Road Reel recommends December to February, and mid-October to mid-March for early starts. Visit Ras Al Khaimah says October to April. Do not walk it in summer.",
+    "startTime": "Start at first light, by 8am at the latest, so you are off the route before dark.",
+    "shade": "Not confirmed. No source describes shade on the route.",
+    "water": "None you can rely on. Pools may be dry, and the year-round pool is described as not clean. Carry at least 4 litres each.",
+    "signal": "Poor to none in the wadi. Some signal at Al Sanat. Download an offline map and track.",
+    "fees": "No fee found. Visit Ras Al Khaimah says no permit is needed. Last checked October 2026.",
+    "permits": "Visit Ras Al Khaimah says no permit is needed, but groups of 10 or more should contact the tourism authority in advance. The National reported in 2023 that hiking rules for Fujairah and Ras Al Khaimah include trail registration and a qualified leader for organised groups. Check whether they apply to you. Last checked October 2026.",
+    "hours": "No hours are published. The wadi is open access. Last checked October 2026.",
+    "closure": "No closure notice was found, but no official body publishes a status for this route. The road to the trailhead has been reported damaged by water. Check the road and the forecast on the day. Last checked October 2026.",
+    "safety": [
+      "Do not go if rain is forecast anywhere in the mountains, or if it has rained recently. Flash floods are described as deadly in Wadi Naqab, and the canyon has no easy exit.",
+      "Police have rescued hikers in Wadi Naqab many times since 2020, including a man who died in February 2023. Reports do not say which trail each was on.",
+      "Expect narrow ledges, a rope-assisted ledge, a gap to crawl through and a steep climb on loose scree to Al Sanat. You need a good head for heights.",
+      "Markings run out after the staircase and some walkers have got lost. Load an offline track, and go with a licensed guide if you have not walked it before.",
+      "Do not walk it from May to September. Police rescued an exhausted man in April 2020 and four tourists in September 2020 and urged people to avoid mountain hikes in high temperatures.",
+      "Do not hike alone. There is no signal in the wadi, so tell someone your route and return time.",
+      "Finish before dark. A rescue in January 2022 was four women lost after dark. Turn back if you are behind schedule.",
+      "Carry at least 4 litres of water each. Do not rely on the pools."
+    ],
+    "carry": [
+      "At least 4 litres each",
+      "Rehydration drink and food",
+      "Offline map and GPS track",
+      "Sturdy boots with good grip",
+      "Sun hat, sunglasses and sunscreen",
+      "Head torch",
+      "First aid kit",
+      "Charged phone and power bank"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Which place you are heading for. This page covers the Wadi Kub canyon reached on foot from Wadi Naqab, not the camping Wadi Kub near Masafi. No source describes a walk linking the two.",
+      "The distance and the climb. Sources disagree, and the figures here are rough.",
+      "Where the road ends and where you can park. The road has been reported damaged, and sources disagree on whether a sedan can reach the start.",
+      "Whether trail registration or a qualified leader is required where you start. Ask Visit Ras Al Khaimah.",
+      "Whether the markings on the route are current. They are informal and may have changed."
+    ]
+  },
+  "factsFull": {
+    "distance": "About 8.5 km (sources give 7.7 to 14 km)",
+    "climb": "Not confirmed (one blog gives 515 m)",
+    "time": "5 to 6 hours of walking; about 6 hours in most sources",
+    "shape": "Out-and-back with a loop at Al Sanat village"
+  },
+  "report": {
+    "distance": "About 8.5 km (sources: 7.7 to 14)",
+    "climb": "Not confirmed",
+    "time": "5 to 6 hours"
+  },
+  "areaFull": "Wadi Naqab, in the Hajar Mountains of Ras Al Khaimah, reached by turning right at Al Salihia about 40 minutes by road from Ras Al Khaimah city (Visit Ras Al Khaimah, March 2026). The trail follows Wadi Naqab up to the narrow canyon and seasonal pools that walkers call Wadi Koub or Wadi Kub, then climbs to the abandoned mountain village of Al Sanat."
+}

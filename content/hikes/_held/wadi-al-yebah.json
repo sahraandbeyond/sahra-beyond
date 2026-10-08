@@ -1,0 +1,202 @@
+{
+  "slug": "wadi-al-yebah",
+  "name": "Wadi AlYebah (location not confirmed)",
+  "emirate": "Ras Al Khaimah",
+  "area": "Not confirmed. Reported on social media as a narrow limestone canyon in Ras Al Khaimah, but no map, track page, press article or official source was found that places it.",
+  "placeSlug": null,
+  "nearPlace": null,
+  "official": false,
+  "gradeRecommended": "Difficult",
+  "grade": "Difficult",
+  "gradeBasis": "No source grades this route and none could be found that describes it, so this grade is a precaution, not a measurement. It is set to Difficult because narrow limestone canyons in the Hajar Mountains involve scrambling, loose rock and flash-flood exposure, and because the route, its length and its start point are all unconfirmed. Do not treat it as a graded trail.",
+  "officialTrails": [],
+  "distanceKm": null,
+  "distanceNote": "Not confirmed. No source opened gives a distance for a route of this name.",
+  "climbM": null,
+  "climbNote": "Not confirmed. No source opened gives ascent or elevation for a route of this name.",
+  "time": "Not confirmed",
+  "shape": "Not confirmed",
+  "trailhead": {
+    "name": "Not confirmed. The pin on the map is the centre of Ras Al Khaimah city, not a trailhead.",
+    "lat": 25.77377,
+    "lng": 55.93823,
+    "coordSource": "No trailhead coordinate was found. The figure is the OpenStreetMap (Nominatim) position of Ras Al Khaimah city, queried on 8 October 2026, used only so the page has a valid coordinate. OpenStreetMap, Wikipedia's wadi lists, Komoot and loc.wiki returned nothing for Yebah, Yabah, Yibah, Lyabah or the Arabic name.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=Wadi+Al+Yebah+Ras+Al+Khaimah",
+    "parking": "Not confirmed.",
+    "vehicle": "Not confirmed."
+  },
+  "routeDescription": [
+    "Nothing could be confirmed about where this wadi is or which route people mean. It was brought to us by an Instagram video that titles it Wadi Alyebah, with the Arabic name written as وادي اليباه, and describes a narrow limestone canyon in Ras Al Khaimah. Instagram is not a source, so none of that is verified.",
+    "Searches in English and Arabic on the spellings Wadi Al Yebah, Wadi Yebah, Wadi Alyebah, Wadi Al Yabah, Wadi Yabah, Wadi Yibah, Wadi Lyabah and the Arabic name found no matching wadi on Visit Ras Al Khaimah, Visit Jebel Jais, WOW-RAK, Gulf News, The National, Wikipedia, Komoot, loc.wiki or OpenStreetMap. Wikiloc, AllTrails and climbing7 pages could not be opened (blocked), so a track page may exist that this search did not see.",
+    "Names that sound similar and are different places: Wadi Bih (also written Wadi Al Bih or Wadi Al Beeh), a large canyon reached from the E18; Jebel Yabana, a peak above Wadi Shah (loc.wiki); Jebel Yibir; and Wadi Al Lyat, near the Faya dunes in southern Ras Al Khaimah (Platinumlist). None of these is confirmed to be the route in question.",
+    "Because the route is unknown, no description of its start, direction, waymarks or finish is given. Do not use this page to find the canyon."
+  ],
+  "bestMonths": "Not confirmed for this route. For hiking in Ras Al Khaimah generally, Visit Jebel Jais gives October to April (visitjebeljais.com mountain safety page, last checked October 2026).",
+  "months": [
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "Not confirmed for this route. General guidance only: Visit Jebel Jais recommends the cooler months from October to April. Start early and plan to finish well before dark.",
+  "shade": "Not confirmed.",
+  "water": "Not confirmed. Assume there is no reliable drinking water and carry everything you need.",
+  "signal": "Not confirmed. Assume no mobile signal inside a narrow canyon.",
+  "fees": "Not confirmed. No fee for this route was found. Last checked October 2026.",
+  "permits": "Not confirmed. No permit rule for this route was found. For Ras Al Khaimah generally, the operator Visit Jebel Jais and Visit Ras Al Khaimah say groups of more than 10 should inform the tourism authority (RAKTDA) in advance; that was read on the Wadi Shah research and not re-checked for this route. Last checked October 2026.",
+  "hours": "Not confirmed.",
+  "closure": "Not confirmed. No closure, restriction, private-land or military-area notice naming this wadi was found in English or Arabic searches. The absence of a notice does not mean the route is open or permitted. Mountain areas of Ras Al Khaimah have been affected by storms and seasonal closures (The National, 23 December 2025, on Jebel Jais, said hiking areas stayed open but visitors should avoid affected routes and not camp in wadis). Last checked October 2026.",
+  "safety": [
+    "The location of this wadi is not confirmed. Do not go looking for it from this page.",
+    "Narrow canyons are flash-flood traps. Do not enter any wadi in or after rain, or when storms are forecast over the mountains. Rain far upstream can send water down a dry canyon with little warning.",
+    "No source for this route describes its difficulty, scrambling, climbs or exposure. Treat it as Difficult until a reliable source says otherwise.",
+    "Go with a licensed guide if you have not walked it before. An unmarked canyon with no confirmed route is not a place to navigate alone.",
+    "After the December 2025 storms, authorities in Ras Al Khaimah warned of standing water, shifting rocks and slippery paths, and advised against camping in wadis (The National, 23 December 2025).",
+    "Heat: Visit Jebel Jais advises hiking from October to April. Do not walk any canyon in summer.",
+    "Carry far more water than you expect to need, tell someone your route and return time, and turn back early.",
+    "Do not rely on mobile signal. In an emergency call police on 999, ambulance on 998 or civil defence on 997."
+  ],
+  "carry": [
+    "At least 3 litres of water per person (Visit Jebel Jais guidance for its trails); more in warm weather",
+    "Food and a rehydration drink",
+    "Offline map and GPS track, only if you have a reliable one for the route",
+    "Sturdy hiking boots with good grip",
+    "Sunscreen, hat and sunglasses",
+    "First aid kit",
+    "Fully charged phone and a power bank",
+    "Head torch as a precaution",
+    "Helmet if the guide advises it for loose rock"
+  ],
+  "emergency": "Police 999 (Ras Al Khaimah Police, as listed on visitjebeljais.com); ambulance 998 and civil defence 997 (Ajman government emergency numbers page, ajman.ae). Last checked October 2026.",
+  "driveNote": "Not confirmed. The location is unknown, so no drive time is given.",
+  "intro": "Wadi AlYebah is reported on social media as a narrow limestone canyon in Ras Al Khaimah, but we could not find a map, track or official page that confirms where it is or which route people mean. Until it is confirmed, treat this as a placeholder and go only with a licensed guide.",
+  "seoTitle": "Wadi AlYebah, Ras Al Khaimah: What We Know",
+  "seoDesc": "Wadi AlYebah is reported as a narrow limestone canyon in Ras Al Khaimah. Its location and route are not confirmed. Safety notes and what to check.",
+  "sources": [
+    {
+      "label": "Visit Ras Al Khaimah: A guide to the UAE's hidden waterfalls and wadis (names Wadi Shawka, Wadi Ghalilah, Wadi Al Beeh; no Yebah)",
+      "url": "https://visitrasalkhaimah.com/blog/a-guide-to-the-uaes-hidden-waterfalls-and-wadis/"
+    },
+    {
+      "label": "WOW-RAK: Best wadis in Ras Al Khaimah (Shawka, Al Bih, Naqab, Ghalilah; no Yebah)",
+      "url": "https://wow-rak.com/wadis-in-ras-al-khaimah/"
+    },
+    {
+      "label": "The National: Hidden gems, eight mountain adventures in Ras Al Khaimah (27 January 2022; no Yebah)",
+      "url": "https://www.thenationalnews.com/travel/destinations/2022/01/27/hidden-gems-of-the-uae-eight-mountain-adventures-in-ras-al-khaimah/"
+    },
+    {
+      "label": "Visit Jebel Jais: Mountain safety (October to April, guides for Wadi Naqab)",
+      "url": "https://visitjebeljais.com/the-mountain/mountain-safety"
+    },
+    {
+      "label": "The National: Jebel Jais temporarily closed following UAE storms (23 December 2025)",
+      "url": "https://www.thenationalnews.com/lifestyle/2025/12/23/jebel-jais-mountain-in-rak-temporarily-closed-following-uae-storms/"
+    },
+    {
+      "label": "loc.wiki: Jebel Yabana summit hike from Wadi Shah (similar name, different place)",
+      "url": "https://www.loc.wiki/hiking-trails/jebel-yabana-summit-hike-from-wadi-shah-khamed-88684772"
+    },
+    {
+      "label": "Platinumlist: Hiking trail at Wadi Al Lyat Halah (similar name, southern Ras Al Khaimah)",
+      "url": "https://rak.platinumlist.net/event-tickets/hiking-trail-at-wadi-al-lyat-halah"
+    },
+    {
+      "label": "Komoot: Wadi Naqab Canyon highlight (checked as a possible match; not the same name)",
+      "url": "https://www.komoot.com/highlight/4683080"
+    },
+    {
+      "label": "OpenStreetMap Nominatim: Ras Al Khaimah city position, and empty results for all Yebah spellings",
+      "url": "https://nominatim.openstreetmap.org/"
+    },
+    {
+      "label": "Ajman government: emergency numbers",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    }
+  ],
+  "lastChecked": "2026-10-08",
+  "_doubts": [
+    "IDENTITY: NOT CONFIRMED. I could not establish where Wadi AlYebah is, or that it is in Ras Al Khaimah, from any non-Instagram source. The only evidence is the brief's mention of an Instagram video. The page must not be published as a route guide until a map, track page or official source identifies it.",
+    "SPELLINGS SEARCHED (English): Wadi Al Yebah, Wadi Alyebah, Wadi Yebah, Wadi Yebba, Wadi Yeba, Wadi Al Yabah, Wadi Yabah, Wadi Yaba, Wadi Yibah, Wadi Yiba, Wadi Ayba, Wadi Lyabah, Wadi Lyaba, Yebah canyon. Arabic searched: وادي اليباه, اليباه, وادي اليبة, وادي اليبه, وادي الياب, وادي اليابة. Web search returned unrelated results (Wadi Litibah and Wadi Tayyibah in Saudi Arabia, Wadi al-Yabis in Jordan). OpenStreetMap Nominatim returned nothing for any spelling within or near Ras Al Khaimah.",
+    "SOURCES THAT COULD NOT BE OPENED: Wikiloc and AllTrails (blocked), climbing7.com and loc.wiki search (Cloudflare challenge or 403), Wikimedia Commons search (rate limited). A Wikiloc or climbing7 page under another spelling may exist. A fact-checker with browser access should search these directly.",
+    "POSSIBLE MATCHES NOT CONFIRMED: Wadi Bih / Wadi Al Bih (a canyon, but the spelling is different); Jebel Yabana (a peak above Wadi Shah, per loc.wiki; it is a mountain, not a wadi); Jebel Yibir (a mountain per Ask Explorer and loc.wiki); Wadi Al Lyat (southern RAK, near Faya dunes, a wide valley with streams per Platinumlist, not described as a narrow canyon). Spelling resemblance is not evidence of identity.",
+    "ARABIC NAME: the Arabic form was supplied in the brief, not found in any source. I did not verify the vowels. Local pronunciation may differ (Yebah, Yibah, Ayyabah), which could explain the lack of hits.",
+    "GRADE: Difficult is a precaution chosen by me because nothing is known. It is not drawn from any source. Change it as soon as a track page or guide describes the route.",
+    "COORDINATES: lat 25.77377, lng 55.93823 is Ras Al Khaimah city centre (OpenStreetMap node 262479317, queried 8 October 2026). It is not a trailhead and must not be shown as one. Consider hiding the map for this page. The mapUrl is a text search for the name, which may return nothing or the wrong place.",
+    "DISTANCE, CLIMB, TIME, SHAPE, PARKING, VEHICLE, SHADE, WATER, SIGNAL, FEES, PERMITS, HOURS, DRIVE TIME: all Not confirmed. Nothing was estimated.",
+    "SAFETY SEARCH: searched English and Arabic phrases for rescue, accident, flood, police and closure with the name variants. Results were general RAK flood-rescue stories (Gulf News, The National, Gulf Today, Khaleej Times via PressReader, 2017 to 2019 headlines seen in search results only, not opened) and none named this wadi. No closure, fine, private-land or military-area item naming it was found. Absence of results is weak evidence because the name could not be matched to a place.",
+    "PERMITS: the RAKTDA rule for groups over 10 in the permits field comes from the Wadi Shah research (Visit Jebel Jais and Visit Ras Al Khaimah wording), not from a page about this route. Check before reuse.",
+    "SEASON: October to April is the operator's general advice for hiking on Jebel Jais (mountain safety page), applied here only as general guidance. Month scores are editorial and generic.",
+    "GENERAL SAFETY STATEMENTS: flash-flood and rescue advice is generic wadi advice and the December 2025 storm warning (The National). It is not specific to this wadi.",
+    "PHOTO: none used. No photograph could be tied to this place, and Commons search could not be completed. A photo of another canyon would misrepresent the place."
+  ],
+  "facts": {
+    "distance": "Not confirmed",
+    "climb": "Not confirmed",
+    "time": "Not confirmed",
+    "shape": "Not confirmed"
+  },
+  "photo": null,
+  "page": {
+    "status": "Unconfirmed route: we could not find an official trail, waymarks, map or grade for this wadi, and its location is not confirmed. Go only with a licensed guide.",
+    "gradeBasis": "No source grades this route. Difficult is a precaution because it is reported as a narrow limestone canyon and nothing about it is confirmed.",
+    "route": [
+      "We could not confirm where Wadi AlYebah is or which route people mean. It was reported on social media as a narrow limestone canyon in Ras Al Khaimah, and social media is not a source we can rely on.",
+      "Searches under many spellings, in English and Arabic, found no official page, press article or track page for it. Similar names exist, such as Wadi Bih, Jebel Yabana and Wadi Al Lyat, but none is confirmed to be this place.",
+      "Because the route is unknown, we give no start, direction or finish. Do not use this page to find the canyon."
+    ],
+    "distance": "Not confirmed.",
+    "climb": "Not confirmed.",
+    "time": "Not confirmed.",
+    "start": "Not confirmed. The map shows the centre of Ras Al Khaimah city only. It is not a trailhead.",
+    "coordNote": "No trailhead coordinate was found. The map position is the centre of Ras Al Khaimah city, from OpenStreetMap, and does not mark the wadi.",
+    "parking": "Not confirmed.",
+    "vehicle": "Not confirmed.",
+    "getting": "Not confirmed. Without a known location, no drive time can be given.",
+    "bestMonths": "Not confirmed for this route. Visit Jebel Jais advises October to April for hiking in the area. Do not walk any canyon in summer.",
+    "startTime": "Start early and finish well before dark. Not confirmed for this route.",
+    "shade": "Not confirmed.",
+    "water": "Not confirmed. Carry all the water you need.",
+    "signal": "Not confirmed. Assume none in a narrow canyon.",
+    "fees": "Not confirmed. Last checked October 2026.",
+    "permits": "Not confirmed. Groups of more than 10 should inform the tourism authority (RAKTDA) before walking in Ras Al Khaimah. Last checked October 2026.",
+    "hours": "Not confirmed.",
+    "closure": "Not confirmed. We found no closure notice naming this wadi, but we could not match the name to a place. Last checked October 2026.",
+    "safety": [
+      "Do not enter any wadi in or after rain, or when storms are forecast over the mountains. Narrow canyons flood fast.",
+      "The location and route are not confirmed. Do not go looking for this canyon from this page.",
+      "Nothing is known about scrambling, drops or exposure here. Treat it as Difficult.",
+      "Go with a licensed guide if you have not walked it before.",
+      "Do not walk in summer. Heat is a serious risk in canyons with little shade.",
+      "Carry plenty of water, tell someone your route and return time, and turn back early.",
+      "Do not rely on mobile signal. After storms, authorities have warned of standing water, shifting rocks and slippery paths (The National, 23 December 2025)."
+    ],
+    "carry": [
+      "At least 3 litres of water each",
+      "Food and a rehydration drink",
+      "Offline map and GPS, if you have a reliable track",
+      "Sturdy boots with good grip",
+      "Sunscreen, hat and sunglasses",
+      "First aid kit",
+      "Charged phone and power bank",
+      "Head torch"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Where the wadi is, and whether it is in Ras Al Khaimah. Check this first.",
+      "Which route people mean, and its distance, climb, time and shape.",
+      "The trailhead, parking and vehicle needs.",
+      "Whether the land is open to walkers, or private or restricted.",
+      "The grade. Difficult is a precaution, not a measured grade.",
+      "The Arabic and English spellings. We found no match for any of them."
+    ]
+  }
+}

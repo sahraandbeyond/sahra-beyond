@@ -1,0 +1,334 @@
+{
+  "slug": "sal-shehhah",
+  "name": "Sal Shehhah (Sal Shuha, the Hidden Oasis), Wadi Shah, Jebel Jais",
+  "emirate": "Ras Al Khaimah",
+  "area": "Wadi Shah (also written Wadi Shehah, Wadi Khamed or Khammed), on the lower Jebel Jais mountain road above Ras Al Khaimah city. The walk starts near Jebel Jais Base Camp (Bear Grylls Explorers Camp) and climbs to the Hidden Oasis, known locally as Sal Shuha.",
+  "placeSlug": "jebel-jais",
+  "official": true,
+  "grade": "Moderate",
+  "gradeRecommended": "Moderate",
+  "gradeBasis": "Visit Jebel Jais (the operator, RAK Leisure) grades its Hidden Oasis Walk 'beginner to intermediate' with moderate fitness needed (7km, 3.5 to 4 hours, visitjebeljais.com/jais-hiking, last checked October 2026). Its Hidden Oasis Loop (9.6km) and Hidden Pond (9km) are 'experienced hikers', and its 11.6km Wadi Shah (Hidden Oasis) loop is 'Challenging'. Independent grades for the walk to the oasis run from Moderate (a Wikiloc track author, Nukta) to intermediate plus, 7 out of 10 (ECC Adventures). Moderate is used for the walk to the oasis and back. The longer routes that continue to Shahha village, the summit or the seven-village loop are harder and are not graded here.",
+  "officialTrails": [
+    {
+      "name": "Hidden Oasis Walk (guided walk from Bear Grylls Explorers Camp)",
+      "grade": "Beginner to intermediate; moderate fitness",
+      "lengthKm": 7.0,
+      "time": "3.5 to 4 hours; from AED 200 per adult",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Hidden Oasis Loop (guided walk from Bear Grylls Explorers Camp; highest point 1,044m)",
+      "grade": "Experienced hikers",
+      "lengthKm": 9.6,
+      "time": "5 to 6 hours; from AED 250 per adult",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Hidden Pond (guided walk from Bear Grylls Explorers Camp; highest point 1,137m)",
+      "grade": "Experienced hikers; more uphill",
+      "lengthKm": 9.0,
+      "time": "6 hours; from AED 250 per adult",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "The Wadi Loop (guided walk from Bear Grylls Explorers Camp)",
+      "grade": "Beginner to intermediate; more uphill",
+      "lengthKm": 7.5,
+      "time": "3 to 3.5 hours; from AED 200 per adult",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Wadi Shah (Hidden Oasis) Trail (self-guided loop; the Hidden Oasis is the midpoint)",
+      "grade": "Challenging",
+      "lengthKm": 11.6,
+      "time": "About 5 hours; elevation given as 753m",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Hidden Oasis Hike (guided event listing, February to April 2026)",
+      "grade": "Intermediate; steep first climb",
+      "lengthKm": 8.5,
+      "time": "About 4 hours, 08:00 start, AED 200",
+      "source": "https://visitjebeljais.com/?p=1624"
+    }
+  ],
+  "distanceKm": 7.0,
+  "distanceNote": "Return distance for the walk from the Wadi Shah trailhead to the Hidden Oasis and back, as given for the operator's guided Hidden Oasis Walk (7km). The operator does not say whether that walk is a loop or an out-and-back. Other sources differ: Nukta gives a 5km route of 2 to 3 hours; the operator's Feb to Apr 2026 listing gives 8.5km; ECC Adventures gives 8.7km 'one way' from an unnamed start. See _doubts.",
+  "climbM": null,
+  "climbNote": "Not confirmed. The operator gives no climb for the Hidden Oasis Walk. ECC Adventures gives 900m for an 8.7km one-way trek and a Wikiloc track author gives 'more than 900m', but both appear to include the climb on towards Shahha village and the Jebel Jais road. Komoot lists its Hidden Oasis point at 700m; the walkers' trailhead is at about 450m (The Road Reel, via the sister Wadi Shah page). That would suggest roughly 250m to the oasis, but this is my inference from two different sources and is not used as a fact.",
+  "time": "3.5 to 4 hours (operator, guided Hidden Oasis Walk); Nukta says 2 to 3 hours for a 5km version; the operator's 8.5km listing says about 4 hours",
+  "shape": "out-and-back or loop (not confirmed)",
+  "trailhead": {
+    "name": "Wadi Shah trailhead, next to the Bear Grylls Explorers Camp (old Via Ferrata area), Jebel Jais road",
+    "lat": 25.90007,
+    "lng": 56.14183,
+    "coordSource": "Four independent walker sources agree within about 100m: the hiker Patrick's write-up (hikerpatrick.com, 25.900073, 56.141830, published 16 April 2025), two Wikiloc tracks as mirrored on loc.wiki (25.899797, 56.141828 and 25.900125, 56.141759) and the Nukta guide's parking pin (25.899310, 56.142025). None is an operator coordinate. The operator names only 'near Jebel Jais Base Camp'.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.90007,56.14183",
+    "parking": "Walkers report parking next to the Bear Grylls camp, and one Wikiloc author says sedans can reach it. The operator does not describe a trail car park. A Wikiloc author (undated) says the road beyond a point called P-08 is for dam construction traffic only. Last checked October 2026.",
+    "vehicle": "2WD to the camp area (the operator's FAQ says the Jebel Jais road is paved and a normal car is enough; a Wikiloc author says sedans park at the trailhead)."
+  },
+  "routeDescription": [
+    "The walk starts at the Wadi Shah trailhead beside the Bear Grylls Explorers Camp, about 450m above sea level, and heads up Wadi Shah (also called Wadi Khamed) towards the Hidden Oasis. Walkers call the oasis Sal Shuha or Sal Shahha. In straight-line terms the oasis point on Komoot (25.9242, 56.1547) is about 3km north-east of the trailhead pin; that distance is my calculation.",
+    "Older accounts (hikerpatrick.com, hike done in 2021) describe the first section as boulder-hopping with no path. Later accounts say dam works in the wadi removed the boulders and that a proper trail, partly laid for the Highlander event and by RAKTDA, now leads to the oasis. A Wikiloc author (2024) describes stairs, zigzag paths and a trail board just past the dam where the built trail begins. The operator says the first section of its Hidden Oasis Hike is a steep climb.",
+    "The Hidden Oasis is a green patch of palms and fields in the mountains. The Wikiloc seven-villages track lists 'Sal Shuha (Hidden Oasis)' as the first of seven villages and calls it a ruin. ECC Adventures says the green fields show mainly after winter rain. Walkers can extend the outing up steep stairs to Shahha village and on to the upper Jebel Jais road, but that is a longer, harder day.",
+    "The operator says trail works start at the Hidden Oasis first, from October 2026, with wider paths, easier grades, better rock crossings and new signposts at junctions where people often get lost. The National (15 September 2026) reports the same for the Wadi Khammed to Hidden Oasis route. The route and its markers may therefore differ from older tracks and blogs.",
+    "No source says which way a loop would run, or gives a turn-around point for an out-and-back. Plan to finish well before dusk."
+  ],
+  "bestMonths": "October to April (Visit Jebel Jais gives October to April as the hiking season). ECC Adventures says the oasis is greenest after winter rain.",
+  "months": [
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "The operator says to start early, especially in warmer months. ECC Adventures starts its group at about 7:15am and finishes by late morning. The operator's own guided walks start at 08:00. Do not plan to be on the steep sections in the heat of the day.",
+  "shade": "Not confirmed. No source describes shade on the route. Assume little, apart from the palms at the oasis.",
+  "water": "No reliable water source for walkers. The operator says to carry at least 3 litres per person plus rehydration drinks (visitjebeljais.com/jais-hiking, last checked October 2026). ECC Adventures says 1 to 2 litres from December to March and 2 to 3 litres the rest of the year for its guided trek; a Wikiloc author says at least 4 litres. The higher figures are safer.",
+  "signal": "Not confirmed. ECC Adventures says phone coverage is better than before. Do not rely on it; download an offline map first.",
+  "fees": "The operator says the Hidden Oasis trails are free to walk on your own (visitjebeljais.com/jais-hiking, last checked October 2026). No parking charge was found. Guided walks from the camp: Hidden Oasis Walk from AED 200 and Hidden Oasis Loop from AED 250 per adult, lower for children (operator). ECC Adventures lists its Hidden Oasis trek at AED 200 to 250 per adult and AED 150 to 200 per child for dates from 1 November 2026, with Dubai transport extra (eccadventures.com, last checked October 2026).",
+  "permits": "The operator says you do not need a guide for the Hidden Oasis trails (last checked October 2026). No individual permit was found. Groups of more than 10 must inform RAKTDA (Ras Al Khaimah Tourism Development Authority) in advance: the operator says to limit groups to 10 unless registered, and Visit Ras Al Khaimah says groups above 10 must email the authority with route, participants and timing.",
+  "hours": "No trail opening hours found. The operator's FAQ says the mountain is open around the clock, with fixed hours only for activities such as the zipline and restaurants (last checked October 2026). That conflicts with the seasonal pause described under closure.",
+  "closure": "Current status cannot be confirmed. The operator's hiking page (read today) says the trails are open to the public and that trail works begin in October 'first at the Hidden Oasis', with some sections busy while work goes on. The operator's home page still carries pause posts from summer saying the mountain will reopen once the weather cools, with no date. WOW-RAK (a local guide site, 14 September 2026) says the mountain, including the hiking trails, is closed for seasonal maintenance with no reopening date, and that rehabilitation of Wadi Khammed and the Hidden Oasis is under way. The National (15 September 2026) reports the Wadi Khammed to Hidden Oasis rehabilitation, with direction signs going in and no completion date, and does not mention a closure. Unlike the sister Wadi Shah page, the works here are on the route itself. After the December 2025 storms The National (23 December 2025) said hiking and climbing areas stayed open but visitors should avoid affected routes. Last checked October 2026. Confirm with Visit Jebel Jais (info@rakleisure.com) before each visit.",
+  "safety": [
+    "Confirm the mountain and the trail are open before you drive up. Sources read in October 2026 disagree and no reopening date is published.",
+    "Trail works are under way at the Hidden Oasis this season (operator, The National). Expect closed or changed sections, workers, and signs that differ from old maps.",
+    "This is a wadi route. Water flows and trail sections wash out after rain (Wikiloc author, 2024). The National (23 December 2025) reported standing water, shifting rocks and slippery paths after storms and advised against camping in wadis. Wadi Shah recorded 247.4mm of rain in six days in April 2019, the highest in the country in that spell (Gulf News, 16 April 2019). Do not start in or after rain.",
+    "Rescues in Wadi Shah are on record. Police rescued seven hikers who lost their way in Wadi Shehah on 22 February 2024; one had collapsed from exhaustion and was airlifted (Dubai Eye). A citizen with severe exhaustion was airlifted from about 2,000 feet on the Wadi Shah trail, reported 15 July 2026 (Gulf News, Al Khaleej). Nine people were airlifted from a high peak in the Shah area, reported 8 April 2021 (Emarat Al Youm). None of these reports names the Hidden Oasis, so the exact spots are not known.",
+    "Heat: the operator advises October to April and says to avoid midday hiking in warmer months. Do not walk this route in summer.",
+    "ECC Adventures describes constant climbing, many stairs, narrow cliff-side ledges, slippery sections and loose rock. Wear boots with good grip.",
+    "A Wikiloc author (undated) says part of the route crosses a dam construction area used by heavy trucks. Keep clear of vehicles and obey any signs or barriers.",
+    "Go with a companion, tell someone your route and return time (operator), and do not rely on mobile signal. Turn back if you are running late or the weather changes."
+  ],
+  "carry": [
+    "At least 3 litres of water per person (operator); more in warm weather",
+    "Rehydration drink",
+    "Snacks and lunch",
+    "Offline map or GPS track downloaded before you leave",
+    "Sturdy hiking boots or shoes with good grip",
+    "Sunscreen, hat and sunglasses",
+    "First aid kit",
+    "Fully charged phone and a power bank",
+    "Light layer for early starts",
+    "Trekking poles (optional)",
+    "Bag for your rubbish"
+  ],
+  "emergency": "Police 999 (Ras Al Khaimah Police, as listed on visitjebeljais.com/jais-hiking); ambulance 998 and civil defence 997 (Ajman government emergency numbers page, ajman.ae; the numbers apply across the UAE). Last checked October 2026.",
+  "driveNote": "The operator's FAQ says Jebel Jais is about 2 hours by car from Dubai and about 45 minutes from Ras Al Khaimah city (visitjebeljais.com/faqs, last checked October 2026). The base camp is lower on the mountain road than the viewing deck. No source opened gave a drive time from Abu Dhabi.",
+  "intro": "Sal Shuha, the Hidden Oasis, is a green patch of palms and old terraces up Wadi Shah on Jebel Jais, reached from the Bear Grylls camp trailhead. The operator's guided walk to it is 7km, about 3.5 to 4 hours and graded beginner to intermediate. Trail works are under way, so check that it is open before you go.",
+  "seoTitle": "Sal Shuha Hidden Oasis Hike, Wadi Shah, Jebel Jais",
+  "seoDesc": "Hidden Oasis (Sal Shuha) walk in Wadi Shah, Jebel Jais, Ras Al Khaimah: about 7km, 3.5 to 4 hours, Moderate. Start, flood and heat risks, status.",
+  "sources": [
+    {
+      "label": "Visit Jebel Jais: Jebel Jais hiking (Hidden Oasis walks, grades, prices, free trails, trail works, group rule, safety, police number)",
+      "url": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "label": "Visit Jebel Jais: Top hiking trails (Wadi Shah (Hidden Oasis) Trail, 11.6km, Challenging)",
+      "url": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "label": "Visit Jebel Jais: home page (Hidden Oasis Hike listing Feb to Apr 2026, pause posts)",
+      "url": "https://visitjebeljais.com/?p=1624"
+    },
+    {
+      "label": "Visit Jebel Jais: FAQs (drive times, paved road, open 24/7)",
+      "url": "https://visitjebeljais.com/faqs"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Hiking (head for heights, group notification, safety)",
+      "url": "https://visitrasalkhaimah.com/discover/activities/hiking/"
+    },
+    {
+      "label": "ECC Adventures: Hidden Oasis trek (locally known as Sal Shuha; 8.7km one way, 900m, 7/10; prices; safety notes)",
+      "url": "https://eccadventures.com/adventure/hidden-oasis/"
+    },
+    {
+      "label": "Alpine Trekkers: Wadi Shah hike (Hidden Oasis 'Sal Shahha', Shehhi tribe name, connector walk, safety)",
+      "url": "https://alpinetrekkersae.com/trip/wadi-shah-hike/"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Hidden Oasis, Wadi Shah to Jebel Jais (Sal Shuha, trailhead 25.899797, 56.141828, dam works, water)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-shah-to-jebel-jais-via-hidden-oasis-and-shahha-village-99494279"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Wadi Shah Full Loop, marked trail route 2024 (trailhead 25.900125, 56.141759, trail board, washouts)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-shah-full-loop-marked-trail-route-2024-164769451"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Hidden Oasis - Wadi Shah Loop (difficulty comments, RAKTDA works, scrambling)",
+      "url": "https://www.loc.wiki/hiking-trails/hidden-oasis-wadi-shah-loop-rak-70217262"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Shahha 7 Villages Loop (Sal Shuha as village 1, RAKTDA trails 2022, villages inhabited or ruined)",
+      "url": "https://www.loc.wiki/hiking-trails/shahha-7-villages-loop-hike-123487122"
+    },
+    {
+      "label": "Hiker Patrick: Project Jais #5, Wadi Shah to Jais true summit (trailhead 25.900073, 56.141830; boulders removed by dam works; published 16 April 2025)",
+      "url": "https://hikerpatrick.com/project-jais-5-wadi-shah-hidden-oasis-shahha-village-puro-1484-restaurant-jais-true-summit-hike-ras-al-khaimah/"
+    },
+    {
+      "label": "Nukta: UAE hiking trails (Hidden Oasis parking 25.899310, 56.142025; 5km and 15km options)",
+      "url": "https://nukta.com/exploring-uaes-most-beautiful-and-underrated-hiking-trails"
+    },
+    {
+      "label": "Komoot: Hidden Oasis highlight (25.924194, 56.154712, 700m)",
+      "url": "https://www.komoot.com/highlight/8210144"
+    },
+    {
+      "label": "Komoot: Sall Al Shaheh Hiking Trails highlight (25.919629, 56.145051)",
+      "url": "https://www.komoot.com/highlight/7255083"
+    },
+    {
+      "label": "Wikipedia: Wadi Shah, Ras Al Khaimah (Arabic name, Wadi Shehah, 25.9175, 56.14056, abandoned settlement of Shah)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Shah,_Ras_Al_Khaimah"
+    },
+    {
+      "label": "Wikipedia: Wadi Sal (a different place, further south, near Wadi Bih)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Sal"
+    },
+    {
+      "label": "WOW-RAK: Is Jebel Jais open right now (updated 14 September 2026)",
+      "url": "https://wow-rak.com/is-jebel-jais-open/"
+    },
+    {
+      "label": "The National: Jebel Jais Grand Loop and trail rehabilitation (15 September 2026)",
+      "url": "https://www.thenationalnews.com/news/uae/2026/09/15/ras-al-khaimah-jebel-jais-grand-loop-via-ferrata-hiking/"
+    },
+    {
+      "label": "The National: Jebel Jais temporarily closed following UAE storms (23 December 2025)",
+      "url": "https://www.thenationalnews.com/lifestyle/2025/12/23/jebel-jais-mountain-in-rak-temporarily-closed-following-uae-storms/"
+    },
+    {
+      "label": "Gulf News: Wadi Shah record rainfall (16 April 2019)",
+      "url": "https://gulfnews.com/uae/weather/wadi-shah-in-ras-al-khaimah-posts-record-2474mm-rainfall-breaking-2003-record-in-abu-dhabis-al-razeen-at-1898-mm-ncm-1.1555324477199"
+    },
+    {
+      "label": "Dubai Eye: Seven stranded hikers rescued in Ras Al Khaimah (22 February 2024, Wadi Shehah)",
+      "url": "https://www.dubaieye1038.com/news/local/seven-stranded-hikers-rescued-in-ras-al-khaimah"
+    },
+    {
+      "label": "Gulf News: RAK Police Air Wing rescues Emirati stranded at 2,000ft in Wadi Shah (15 July 2026)",
+      "url": "https://gulfnews.com/uae/emergencies/rak-police-air-wing-rescues-emirati-stranded-at-2000ft-in-wadi-shah-1.500608701"
+    },
+    {
+      "label": "Al Khaleej: Air Wing rescues a citizen in the Wadi Shah mountain area (15 July 2026, Arabic)",
+      "url": "https://www.alkhaleej.ae/2026-07-15/الإمارات/أخبار-الدار/جناح-الجو-بشرطة-رأس-الخيمة-ينقذ-مواطنا-في-منطقة-جبلية"
+    },
+    {
+      "label": "Emarat Al Youm: Police rescue 9 people stranded in Shah (8 April 2021, Arabic)",
+      "url": "https://www.emaratalyoum.com/local-section/accidents/2021-04-08-1.1475406"
+    },
+    {
+      "label": "Ajman government: emergency numbers",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Wikimedia Commons: Category Wadi Shah (file pages and licences)",
+      "url": "https://commons.wikimedia.org/wiki/Category:Wadi_Shah"
+    }
+  ],
+  "lastChecked": "2026-10-08",
+  "_doubts": [
+    "WHICH PLACE: the Instagram name 'Sal Shehhah' is taken to mean Sal Shuha / Sal Shahha, the local name for the Hidden Oasis up Wadi Shah (Wadi Shehah) on Jebel Jais. Evidence: ECC Adventures ('locally known as Sal Shuha'), Alpine Trekkers ('Sal Shahha', Shehhi tribe name), a Wikiloc track ('Sal Shuha (Hidden Oasis)') and Komoot ('Sall Al Shaheh Hiking Trails' at 25.9196, 56.1451). No source uses the exact spelling 'Sal Shehhah' and no Arabic spelling was found; Arabic searches for variants of سل شحة returned nothing relevant. The identification is probable, not proven.",
+    "NOT WADI SAL: Wikipedia's 'Wadi Sal' (25.781, 56.0646) is a different place, a farming wadi and Habus village of Sal joining Wadi Bih, about 15km south-south-west. The name 'Sal' alone could mean either; 'Shehhah' points to Wadi Shah. If the Instagram author meant the Wadi Sal village, this page is for the wrong place.",
+    "WHICH WALK: 'Sal Shuha' is a place, not an operator-named route. Sources describe several different walks to or through it: oasis and back (5 to 8.7km), the 9.6km Hidden Oasis Loop, the 11.6km Wadi Shah loop with the oasis at the midpoint, the 16km seven-villages loop, and a point-to-point to Jebel Jais. This page covers only the walk to the oasis and back. Entry and exit points of the operator's 7km walk are not published.",
+    "DISTANCE AND TIME CONFLICT: operator Hidden Oasis Walk 7km, 3.5 to 4 hours; operator Feb to Apr 2026 listing 8.5km, about 4 hours; Nukta 5km, 2 to 3 hours; ECC Adventures 8.7km 'one way', 3.5 to 4.5 hours; Alpine Trekkers 'about 7km round trip' for its connector and a '20 minute' walk for the last stretch. The operator figure is used. Alpine Trekkers' own distance, time and itinerary figures do not match each other.",
+    "CLIMB: no operator figure. 900m (ECC) and 'more than 900m' (Wikiloc) cannot be for the oasis alone if the oasis is near 700m and the start near 450m. climbM is left null. Wikiloc and AllTrails pages returned 403 so no GPX or ascent figure was checked directly; Wikiloc content was read through the loc.wiki mirror.",
+    "OFFICIAL: set true because the operator publishes Hidden Oasis walks with grades and lengths and says the Hidden Oasis trails need no guide. The operator publishes no map or GPX and does not use the name Sal Shuha. If 'official' should mean a published waymarked route with a map, this should be false.",
+    "GRADE: Moderate is my judgement from conflicting sources: operator 'beginner to intermediate' and 'intermediate', ECC 7/10, Nukta 'Moderate' in the header but 'intermediate to advanced' in the text, Wikiloc comments 'Moderate plus' with some reviewers saying Difficult for the longer loop. Reviewers' Difficult ratings are for the longer loop, not the oasis walk.",
+    "STATUS: the operator hiking page says trails are open and that works begin at the Hidden Oasis; the operator home page and WOW-RAK (14 September 2026) say the mountain is closed with no date; The National (15 September 2026) does not mention a closure. No dated reopening notice found. Whether the works close the oasis route to walkers is not stated by any source.",
+    "TRAIL STATE: trail construction (dam works, RAKTDA, Highlander trail, 2026 rehabilitation and new signposts) means older blogs describing boulder routes (hikerpatrick, hike done in 2021) and the Wikiloc dam-trucks warning (undated) may be out of date or may be current. Mapped tracks may not match the ground.",
+    "TRAILHEAD: four walker sources within about 100m, none an operator source. The Road Reel (cited on the sister Wadi Shah page) gives a point about 150m west, 25.899871, 56.139836; it was not re-opened for this page. P-08 and the dam-works road limit in the Wikiloc warning were not verified against any official source.",
+    "RESCUES: the three Wadi Shah rescues found (8 April 2021, 22 February 2024, 15 July 2026) are named as 'Shah', 'Wadi Shehah' and 'Wadi Shah' only. None is tied to the Hidden Oasis. The July 2026 item appears in Gulf News and Al Khaleej (Arabic) and a Dubai Eye item states the hiker was on the Wadi Shah trail; one report says severe exhaustion, the other says trapped. No deaths at Wadi Shah or the Hidden Oasis were found. A European hiker's death in Ras Al Khaimah mountains (Gulf News, February 2023) gives no location and is not used. The 2019 rainfall item's URL says 2474mm but its text says 247.4mm; the text figure is used.",
+    "FLASH FLOODS: no authority gives a Wadi Shah flood rule or threshold. The flood advice rests on a Wikiloc author (washouts after rain), The National (December 2025 storm advice) and the 2019 rainfall record. 'Do not start in or after rain' is my advice, not a quoted rule.",
+    "VILLAGE STATUS: the Wikiloc seven-villages author calls Sal Shuha a ruin and says Shahha, Khamed and Musaibat are inhabited; Wikipedia calls the settlement of Shah abandoned. Do not expect help from residents.",
+    "RESTRICTIONS: no source mentions private land, military area, fines or a permit for this route. Not finding one is not proof there is none. The dam works area may have its own restrictions.",
+    "PRICES: ECC Adventures dates run 1 November 2026 to 2 January 2027 (AED 200 to 250 adult, 150 to 200 child). Operator prices are 'from' prices on its hiking page; the Feb to Apr 2026 home page listing was AED 200 and may be stale.",
+    "NOT USED: Alpine Trekkers' claim of 400+ palms in 2008 to 2009 and a fire during road works, and ECC's 'Julfar' and Shehhi tribe wording; both are single-source promotional statements. Komoot's user tip calling its 874m 'Sall Al Shaheh' segment 'very easy and simple short hike' is a single review of a short segment, not of the oasis walk.",
+    "SEASON: month scores are editorial, from the operator's October to April hiking season; the oasis is greenest after winter rain (ECC).",
+    "PHOTO: no free photograph of the Hidden Oasis itself was found on Commons. The photo is Ciorraga's Wadi Shah gorge, camera location 25.892403, 56.123814 (about 1.8km west of the trailhead, near the old Shah settlement), so it shows the wider valley, not the oasis walk. The sister Wadi Shah page uses 'Wadi Shah gorge.jpg' by the same author; this page uses a different file of the same gorge. Commons API was rate-limited, so only the five files in Category:Wadi Shah were checked.",
+    "NO ABU DHABI DRIVE TIME found; omitted."
+  ],
+  "nearPlace": "jebel-jais",
+  "facts": {
+    "distance": "About 7 km return (operator's guided Hidden Oasis Walk)",
+    "climb": "Not confirmed",
+    "time": "3.5 to 4 hours (operator); other sources 2 to 4.5 hours",
+    "shape": "Out-and-back or loop, not confirmed"
+  },
+  "photo": {
+    "src": "/uploads/hikes/sal-shehhah.jpg",
+    "w": 0,
+    "h": 0,
+    "edits": "resized",
+    "author": "Ciorraga",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Another_view_of_the_Wadi_Shah_gorge.jpg",
+    "commonsFile": "File:Another view of the Wadi Shah gorge.jpg",
+    "what": "The Wadi Shah gorge, taken on 5 January 2023 near the old Shah settlement, about 1.8km west of the trailhead. It does not show the Hidden Oasis or the walk itself.",
+    "alt": "A deep gorge cutting through bare limestone mountains in Wadi Shah, Jebel Jais"
+  },
+  "page": {
+    "status": "Part-official: Visit Jebel Jais lists graded Hidden Oasis walks but publishes no map or waymarked route under the name Sal Shuha, and new signs are still being fitted, so go with a licensed guide if you have not walked it before.",
+    "gradeBasis": "Visit Jebel Jais, run by RAK Leisure, grades its Hidden Oasis Walk beginner to intermediate for people with moderate fitness. Other sources range from Moderate to intermediate plus.",
+    "route": [
+      "You start at the Wadi Shah trailhead beside the Bear Grylls Explorers Camp, at about 450m above sea level, and walk up the wadi to the Hidden Oasis. Walkers call the oasis Sal Shuha or Sal Shahha.",
+      "Older accounts describe boulder-hopping with no path. Later accounts describe a built trail with stairs and zigzags past a dam. The operator says the first section is a steep climb.",
+      "The oasis is a patch of palms and fields, greenest after winter rain. The operator is rebuilding trails here this season, so the path and signs may differ from older maps. Most sources do not say whether the walk is a loop or an out-and-back."
+    ],
+    "distance": "Visit Jebel Jais gives 7km for its guided Hidden Oasis Walk. Other sources give 5km to 8.7km.",
+    "climb": "Not confirmed. The operator gives no figure, and sources that give about 900m appear to include the climb beyond the oasis.",
+    "time": "Visit Jebel Jais gives 3.5 to 4 hours. Other sources give 2 to 4.5 hours.",
+    "start": "Wadi Shah trailhead next to the Bear Grylls Explorers Camp on the Jebel Jais road. The operator gives no exact point.",
+    "coordNote": "The pin comes from four walkers' sources that agree within about 100m. None is an official coordinate.",
+    "parking": "Not confirmed. Walkers report parking next to the camp. The operator describes no car park. Check with Visit Jebel Jais.",
+    "vehicle": "A normal car is enough on the paved Jebel Jais road, says the operator. Parking at the trailhead is not confirmed.",
+    "getting": "Visit Jebel Jais says about 2 hours by car from Dubai, 45 minutes from Ras Al Khaimah city.",
+    "bestMonths": "October to April, says Visit Jebel Jais. Do not walk it in summer.",
+    "startTime": "Start early. The operator's guided walks leave at 8am. Finish well before dark.",
+    "shade": "Not confirmed. Assume little.",
+    "water": "None reliable on the route. Carry at least 3 litres each, as the operator advises.",
+    "signal": "Not confirmed. Assume none and download an offline map.",
+    "fees": "Visit Jebel Jais says the trails are free to walk on your own. No parking charge was found. Guided walks start at AED 200. Last checked October 2026.",
+    "permits": "The operator says you do not need a guide, and no permit is listed. Groups over 10 must inform RAKTDA, the tourism authority, in advance. Last checked October 2026.",
+    "hours": "No trail hours are published. The operator's FAQ says the mountain is open around the clock, which conflicts with the seasonal pause reported. Last checked October 2026.",
+    "closure": "Not confirmed. The operator says the trails are open and that works begin at the Hidden Oasis from October. A local guide site says the mountain is closed, with no reopening date. Ask Visit Jebel Jais (info@rakleisure.com). Last checked October 2026.",
+    "safety": [
+      "Check the mountain and trail are open before you drive up. Reports disagree.",
+      "Trail works are under way at the Hidden Oasis. Expect changed paths and busy sections.",
+      "Do not start in or after rain. This is a wadi route, and sections wash out. Wadi Shah recorded 247.4mm of rain in six days in April 2019.",
+      "Police have rescued hikers in Wadi Shah, including a lost group of seven in February 2024 and a hiker with severe exhaustion in July 2026. Both were airlifted.",
+      "Do not walk in summer. Carry at least 3 litres of water each.",
+      "Expect steep stairs, loose rock and narrow ledges. Wear boots with good grip.",
+      "Part of the area is a dam construction site. Keep clear of trucks and obey any barriers or signs.",
+      "Go with a companion, tell someone your route and return time, and do not rely on signal. Turn back if you are running late."
+    ],
+    "carry": [
+      "At least 3 litres of water each",
+      "Rehydration drink and food",
+      "Offline map or GPS",
+      "Sturdy boots or shoes with good grip",
+      "Sunscreen, hat and sunglasses",
+      "First aid kit",
+      "Charged phone and power bank",
+      "Bag for your rubbish"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Which walk is meant. 'Sal Shehhah' is not a published route name. This page assumes the walk to the Hidden Oasis (Sal Shuha) and back.",
+      "Whether the trail is open. Reports disagree, and works are under way at the oasis.",
+      "The climb, and whether the walk is a loop or an out-and-back.",
+      "The exact trailhead and parking. The operator says only near Jebel Jais Base Camp.",
+      "Waymarking. New signs are being fitted this season."
+    ]
+  }
+}

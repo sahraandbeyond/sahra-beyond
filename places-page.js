@@ -16,6 +16,11 @@ const ORIGINS = {
   dubai: { name: 'Dubai', lat: 25.2048, lng: 55.2708 },
   abudhabi: { name: 'Abu Dhabi', lat: 24.4539, lng: 54.3773 }
 };
+/* 8 Oct 2026: hike guides that start from a place are linked from that place's page */
+const HIKES_BY_PLACE = (() => { const m = {}; const dir = path.join(__dirname, 'content/hikes');
+  try { fs.readdirSync(dir).filter(f => f.endsWith('.json')).forEach(f => { const d = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+    if (d.placeSlug) (m[d.placeSlug] = m[d.placeSlug] || []).push(d); }); } catch (e) {}
+  return m; })();
 const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -374,6 +379,7 @@ function renderPlace(l, ctx) {
     </section>
     ${(() => { const f = ctx.faqsFor(l); return f.length ? `<section class="faq lg-rise" id="faq"><h2>${icon('q')} Questions people ask about ${esc(l.name)}</h2>${f.map(q => `<details class="lg-q"><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : ''; })()}
     ${ctx.igFor ? ctx.igFor(l.id).replace('class="ig-rail-sec"', 'class="ig-rail-sec lg-rise"') : ''}
+    ${(HIKES_BY_PLACE[l.id] || []).length ? `<nav class="lg-guides lg-rise" aria-label="Hike guides from ${esc(l.name)}"><h2>Hike guides from ${esc(l.name)}</h2><div>${HIKES_BY_PLACE[l.id].map(h => `<a href="/trail/hikes/${h.slug}/">${esc(h.name)} (${esc(h.grade)}${h.n || h.official ? '' : ', unmarked'}) &rarr;</a>`).join('')}</div></nav>` : ''}
     ${ctx.guidesFor && ctx.guidesFor(l.id).length ? `<nav class="lg-guides lg-rise" aria-label="Guides that cover ${esc(l.name)}"><h2>Guides that include ${esc(l.name)}</h2><div>${ctx.guidesFor(l.id).map(g => `<a href="${g[0]}">${esc(g[1])} &rarr;</a>`).join('')}</div></nav>` : ''}
     ${sourcesList(l) ? `<details class="lg-fold lg-srcf lg-rise" id="sources"><summary><span class="lg-fi">${icon('link')}</span><span class="lg-ft"><b>Sources</b><small>Where the facts on this page come from</small></span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb">${sourcesList(l)}${credit ? credit.replace('lg-credit', 'lg-credit2') : ''}</div></details>` : ''}
     ${nearby.length ? `<section class="related lg-rise"><h2>Near ${esc(l.name)}</h2><div class="cards">${nearby.map(n => ctx.locCard(n.x).replace('</strong>', `</strong><i class="lg-near">about ${Math.max(5, Math.round(n.d / 5) * 5)} km away</i>`)).join('')}</div><p class="lg-all"><a href="/places/">All places on the map &rarr;</a></p></section>` : ''}

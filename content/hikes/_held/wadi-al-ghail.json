@@ -1,0 +1,263 @@
+{
+  "slug": "wadi-al-ghail",
+  "name": "Wadi Al Ghail to Ghail Village, Wadi Qadaah",
+  "emirate": "Ras Al Khaimah",
+  "area": "Wadi Ghail, a side valley of Wadi Qadaah in the Hajar Mountains east of Ras Al Khaimah city, reached by about 4.5km of dirt track up Wadi Qadaah from the dam. The walk goes up to the small mountain settlement of Ghail (Al Ghail), in the area the press calls Al Ghail in Wadi Qadaah.",
+  "placeSlug": null,
+  "official": false,
+  "gradeRecommended": "Moderate",
+  "gradeBasis": "No government body or land operator grades this route. The grade is my own reading of the sources. The only detailed account (Patrick's Hikes, on Wikiloc) gives about 7km and about 500m of climbing, done in roughly 4 hours on a faint trail with few markers, and calls it a good summer endurance hike; the author's longer route onwards to Jebel Bahar is rated Difficult by the same author. Moderate fits the short Ghail village walk because of the climb, the faint path, the lack of shade and the long dirt-track approach. It is a judgement call: the track has not been checked on the ground, and the access road is the harder part for many people.",
+  "officialTrails": [],
+  "distanceKm": 7,
+  "distanceNote": "7km as stated by one walker (Patrick's Hikes, Wikiloc, date not stated). The page says he walked down the same way, so this is read as an out-and-back total, but it does not say so in words. The longer route on to Jebel Bahar has no distance on its Wikiloc page. A separate, older-looking route into the same valley (Wadi Qadaah to Silay Al Khatami, 11.76km) is a different village and is not this route.",
+  "climbM": 500,
+  "climbNote": "The author gives 'about 500 metres of elevation gain' and describes it elsewhere as under 600m (Wikiloc, Patrick's Hikes). It is one walker's figure, not an operator or survey figure, and he warns that Wikiloc tracks can have GPS errors in wadi sections.",
+  "time": "About 4 hours (one walker started at 4am and finished before 8am, in summer)",
+  "shape": "out-and-back",
+  "trailhead": {
+    "name": "Parking in Wadi Qadaah after the left exit towards the mountain, below Wadi Ghail (unofficial; no marked trailhead)",
+    "lat": 25.763513,
+    "lng": 56.115583,
+    "coordSource": "Patrick's Hikes, Wikiloc, 'Wadi Qadaah to Ghail village', parking point 25.763513, 56.115583, about 4.5km up the wadi from the start of the dirt track at 25.784836, 56.074711. The same author's later page for the longer Jebel Bahar route gives a parking point at 25.767852, 56.122904, roughly 0.9km further on (my calculation from his two coordinates); he says a 4x4 is needed to reach that point, or you can park about 1km earlier and walk. Both are one walker's pins.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.763513,56.115583",
+    "parking": "Informal parking in the wadi, with no operator and no charge mentioned. One walker's page gives the parking pin above. Whether it is allowed, or how many cars it holds, is not confirmed. Last checked October 2026.",
+    "vehicle": "4x4 or high-clearance AWD. Patrick's Hikes says the access road is about 6km of dirt needing a high-clearance SUV or 4x4, that sedans will struggle, and that the first kilometre of the walk is on a rough track a sturdy 4x4 can drive. A Spanish-language track page for the neighbouring Qadaah/Silay Al Khatami route says heavy rain can make the track impassable and that signs now limit vehicles to village residents (see _doubts)."
+  },
+  "routeDescription": [
+    "Ghail (also written Al Ghail, الغيل) is a small settlement of about five houses and some terraced fields up a side valley of Wadi Qadaah. Patrick's Hikes (Wikiloc) calls Wadi Ghail a tributary of Wadi Qadaah. The hike starts from the dirt track in Wadi Qadaah: drive about 4.5km up the wadi from its mouth, take the left exit towards the mountain and park (25.763513, 56.115583).",
+    "The author describes the first kilometre as a rough track that is also walked. After that the trail is faint with few markers, following the wadi and then climbing towards the mountain. Cairns and white paint circles on stones help. A second walker on the same page says the path was manageable by following these.",
+    "The walk ends at the lowest house of Ghail village, about five houses with some terraced fields, and returns the same way. The author says the village is suitable for camping. He does not say whether the houses are lived in or whether you may enter them, so treat them as private property.",
+    "Longer routes continue from Ghail. Patrick's Hikes describes a trail opened around 2022 that links Ghail with the Hebs villages and Wadi Bih, and a Difficult route on to the Bahar plateau and Jebel Bahar (summit listed at 1,420m) over loose scree. That longer route is clear for about the first half and then relies on boulders, scree and navigation. It is not covered by this guide.",
+    "No source gives a waymarked route, a sign map or an official length for this walk. Wikiloc tracks are a walker's recording and can be wrong in the wadi."
+  ],
+  "bestMonths": "No route-specific source. The National (24 October 2023) says the winter walking season traditionally starts around 1 November. The one walker's account was a summer walk, started at 4am to beat the heat, and he calls it an endurance hike for summer. Winter is the sensible choice; I do not recommend summer.",
+  "months": [
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "The only account starts at 4am in summer and finishes before 8am to avoid the heat. In the cooler months, start early enough to be back well before dark. Patrick's Hikes says to choose a turn-back time, and a commenter on his longer-route page says the same. Do not be in the wadi after dark.",
+  "shade": "Not confirmed. No source describes shade on this route. The terrain is described as wadi and mountainside; assume little.",
+  "water": "No reliable water source is described. The author says to carry hydration and notes the walk was done in summer. Water may lie in pools after rain (a commenter on a neighbouring Jebel Qadaah route reports puddles in the lower wadis), but do not rely on that. Carry all you need.",
+  "signal": "Not confirmed. No source states mobile coverage on this route. Assume none and load an offline map.",
+  "fees": "No entry fee or parking fee was found for this walk. No official body publishes it, so there is no fee schedule to check. Last checked October 2026.",
+  "permits": "No permit for this walk was found. Visit Ras Al Khaimah says groups of more than 10 must inform the Ras Al Khaimah Tourism Development Authority ahead of a hike (visitrasalkhaimah.com, last checked October 2026). Khaleej Times (20 February 2021) reported a Dh10,000 fine for organising treks without an RAKTDA permit; it applies to organisers, not individual walkers. The National (24 October 2023) reported rules for the mountains of Fujairah and Ras Al Khaimah that say hiking alone is not permitted, a certified leader from a licensed organisation may lead up to 10 people, and fines of up to Dh50,000 for breaches. Whether these apply to an unmarked walk like this one is not confirmed. Check with RAKTDA before you go.",
+  "hours": "No opening hours. There is no gate or operator for this walk. Last checked October 2026.",
+  "closure": "No closure notice for this walk was found, but current status cannot be confirmed. Access is the main question. A Spanish-language track page for the neighbouring Wadi Qadaah route (via Danab and the Wadi Qadaah dam) says signs now limit vehicle access to village residents, and an older Jebel Qadaah account mentions walking past a 'no access' sign. Neither names Ghail, and neither page is dated, so it is not known whether they apply to the Ghail track. After the December 2025 storms, The National (23 December 2025) reported that hiking and climbing areas in Ras Al Khaimah were not closed but that hikers were urged to avoid affected routes with standing water and shifting rocks, and not to camp in wadis. Last checked October 2026. Confirm with RAKTDA or RAK Police before you go.",
+  "safety": [
+    "Rescues in the Ghail area: RAK Police Air Wing rescued five members of an Emirati family exhausted and stranded in 'Al Ghail in Wadi Qada' on 4 November 2020 (Gulf News, 4 November 2020; Emarat Al Youm, 5 November 2020). The police advised walkers to take care and coordinate with the authorities beforehand.",
+    "Rescues elsewhere in Wadi Qadaah, the valley this wadi joins: seven hikers lost and airlifted on 22 February 2022 (The National) and five Asian tourists lost on 28 August 2022 (Gulf News, date from the article's update stamp). Police advice was to avoid difficult areas in valleys and mountains, especially in the heat of the day.",
+    "No death was found in any source that names Wadi Ghail, Ghail or Wadi Qadaah. Gulf News and others report deaths in Ras Al Khaimah mountains in 2023, but the reports name no location.",
+    "Flash floods: Ghail is a wadi route. No authority gave a flood rule for Wadi Ghail. The Ministry of Energy and Industry warned in October 2018 against camping in wadis and said to leave a wadi at once if you hear flowing water (Gulf News, 29 October 2018), and after the December 2025 storms authorities warned of standing water and shifting rocks (The National). One walker says heavy rain can make the Qadaah track impassable.",
+    "Heat: the only recorded walk started at 4am in summer to beat the heat. A 70-year-old walker was airlifted from Ras Al Khaimah mountains in May 2025 after being severely exhausted and dehydrated (Gulf News; location not named). Do not walk this route in the hot months.",
+    "The trail is faint after the first stretch, with few markers. The author warns that Wikiloc recordings can be wrong in the wadi and says to use them for reference only. Download an offline map and carry a spare power bank.",
+    "The access is a rough dirt track of about 6km that needs a high-clearance 4x4. If you cannot drive it, do not walk it from the road: it adds distance and heat. Park only where you can turn round, and do not block the track.",
+    "Go with a companion, tell someone your route and return time, and set a turn-back time. The National (24 October 2023) reported that hiking alone is not allowed under the new rules. Call 999 for police; the UAE National Search and Rescue hotline is 995 (Gulf News, May 2025)."
+  ],
+  "carry": [
+    "Plenty of water: at least 3 litres per person in cool weather, more if warm",
+    "Rehydration drink",
+    "Food and snacks",
+    "Offline map and GPS track, plus a compass",
+    "Sturdy hiking boots with good grip",
+    "Sunscreen, hat and sunglasses",
+    "First aid kit",
+    "Fully charged phone and a power bank",
+    "Warm layer for early starts",
+    "Head torch as a precaution",
+    "A bag for your litter"
+  ],
+  "emergency": "Police 999 (Ras Al Khaimah Police); ambulance 998 and civil defence 997 (Ajman government emergency numbers page, ajman.ae); UAE National Search and Rescue hotline 995 (Gulf News, May 2025). Last checked October 2026.",
+  "driveNote": "Not confirmed. No source gives a drive time to the start of this track. Patrick's Hikes gives the dirt track as starting at the mouth of Wadi Qadaah (25.784836, 56.074711) and the parking about 4.5km up the wadi. Wikipedia places the mouth of Wadi Qada'ah about 10km east of Ras Al Khaimah.",
+  "intro": "Wadi Ghail is a side valley of Wadi Qadaah in the Ras Al Khaimah mountains, and this walk goes up it to the small settlement of Ghail. One walker's account gives about 7km and 500m of climbing in around 4 hours on a faint, unmarked trail. There is no official route, grade or map, and the dirt-track access needs a 4x4.",
+  "seoTitle": "Wadi Al Ghail Hike, Ras Al Khaimah: Route and Safety",
+  "seoDesc": "Wadi Al Ghail to Ghail village, Wadi Qadaah, Ras Al Khaimah: about 7km, 500m climb, unmarked, 4x4 access. Flood and heat risks, and what is unconfirmed.",
+  "sources": [
+    {
+      "label": "Patrick's Hikes (Wikiloc): Wadi Qadaah to Ghail village (7km, about 500m, 4 hours, parking 25.763513, 56.115583, 4x4 access, cairns and white paint circles, village of about five houses)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-qadaah-to-ghail-village-rak-147313711"
+    },
+    {
+      "label": "Patrick's Hikes (Wikiloc): Wadi Ghail - Jebel Bahar hike (Difficult, parking 25.767852, 56.122904, route onwards from Ghail, comments)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-ghail-jebel-bahar-hike-160062092"
+    },
+    {
+      "label": "Patrick's Hikes (Wikiloc): Wadi Ghail to Bahar plateau summit (Wadi Ghail as a tributary of Wadi Qadaah, trail opened around 2022 to the Hebs villages)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-ghail-to-bahar-plateau-summit-169684249"
+    },
+    {
+      "label": "Gulf News: Emirati family rescued from Al Ghail Mountain in Ras Al Khaimah (4 November 2020)",
+      "url": "https://gulfnews.com/uae/emirati-family-rescued-from-al-ghail-mountain-in-ras-al-khaimah-1.75051686"
+    },
+    {
+      "label": "Emarat Al Youm: rescue of a family stranded in Al Ghail in Wadi Qidaa'a (5 November 2020, Arabic)",
+      "url": "https://www.emaratalyoum.com/local-section/accidents/2020-11-05-1.1418152"
+    },
+    {
+      "label": "The National: RAK Police rescue seven hikers lost in Wadi Qada'a (22 February 2022)",
+      "url": "https://thenationalnews.com/uae/2022/02/22/rak-police-rescue-seven-hikers-lost-in-wadi-qadaa"
+    },
+    {
+      "label": "Gulf News: Five Asians lost atop RAK mountain rescued, Wadi Qada'a (article stamped 28 August 2022)",
+      "url": "https://gulfnews.com/uae/uae-five-asians-lost-atop-rak-mountain-rescued-1.1661713330455"
+    },
+    {
+      "label": "Gulf News: UAE National Guard airlifts hiker in his 70s from Ras Al Khaimah mountains (May 2025; hotline 995; location not named)",
+      "url": "https://gulfnews.com/uae/heroic-rescue-uae-national-guard-airlifts-hiker-in-70s-from-ras-al-khaimah-mountains-1.500139416"
+    },
+    {
+      "label": "Wikipedia: Wadi Qada'ah (about 10km east of Ras Al Khaimah, mouth at 25.782306, 56.062889, hiking routes, rescue reports)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Qada%27ah"
+    },
+    {
+      "label": "Wikipedia: Qada'ah village (870m, about 1km from the Omani border, reached on foot)",
+      "url": "https://en.wikipedia.org/wiki/Qada%27ah"
+    },
+    {
+      "label": "Wikiloc (via loc.wiki): Wadi Qada'ah to Silay Al Khatami (11.76km; vehicle access signs; track and rain warnings; neighbouring route)",
+      "url": "https://www.loc.wiki/hiking-trails/emiratos-eau-ras-al-khaimah-del-wadi-qadaah-wdy-qd-a-silay-col-910-m-silay-al-khatami-sly-lkhthmy-y-161832056"
+    },
+    {
+      "label": "Wikiloc (via loc.wiki): Jebel Qada'ah routes 1 and 2 (a 'no access' sign mentioned; neighbouring routes)",
+      "url": "https://www.loc.wiki/hiking-trails/jebel-qadaah-routes-1-and-2-19573408"
+    },
+    {
+      "label": "Gulf News: 11 UAE wadis for hiking (Wadi Aasimah route starts from the village of Al Ghail; updated 21 December 2020)",
+      "url": "https://gulfnews.com/going-out/worlds-coolest-winter-11-uae-wadis-and-mountains-perfect-for-hiking-1.1608546632353"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Hiking (groups over 10 must inform the tourism authority; safety advice)",
+      "url": "https://visitrasalkhaimah.com/discover/activities/hiking/"
+    },
+    {
+      "label": "The National: UAE hiking season gets under way with new rules to improve safety (24 October 2023)",
+      "url": "https://www.thenationalnews.com/uae/2023/10/24/uae-hiking-season-gets-under-way-with-new-rules-to-improve-safety/"
+    },
+    {
+      "label": "Khaleej Times: Dh10,000 fine for organising treks in RAK without a licence (20 February 2021)",
+      "url": "https://www.khaleejtimes.com/uae/emergencies/uae-dh10000-fine-for-organising-treks-in-rak-without-a-licence?amp=1"
+    },
+    {
+      "label": "The National: Jebel Jais temporarily closed following UAE storms (23 December 2025; hiking areas open, avoid affected routes, do not camp in wadis)",
+      "url": "https://www.thenationalnews.com/lifestyle/2025/12/23/jebel-jais-mountain-in-rak-temporarily-closed-following-uae-storms/"
+    },
+    {
+      "label": "Gulf News: Ministry warns against camping in wadis (29 October 2018)",
+      "url": "https://gulfnews.com/news/uae/weather/ministry-warns-against-camping-in-wadis-1.2295082"
+    },
+    {
+      "label": "Ajman government: emergency numbers",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Missions Offroad: Al Ghail Village (a different or unverified Al Ghail; not used for coordinates)",
+      "url": "https://missionsoffroad.com/al-ghail/"
+    },
+    {
+      "label": "Wikimedia Commons: File:Wadi Qada´ah-1.jpg (CC0, IbrahimKumar)",
+      "url": "https://commons.wikimedia.org/wiki/File:Wadi_Qada%C2%B4ah-1.jpg"
+    }
+  ],
+  "lastChecked": "2026-10-08",
+  "_doubts": [
+    "IDENTITY OF THE WADI: no government, operator or national-press page describes a 'Wadi Al Ghail hike'. The best-supported meaning is the Ghail (Al Ghail, الغيل) settlement and side valley of Wadi Qadaah near the Omani border: Patrick's Hikes (Wikiloc) calls Wadi Ghail a tributary of Wadi Qadaah, and Gulf News and Emarat Al Youm (4 and 5 November 2020) place a rescue 'in Al Ghail in Wadi Qada'. Everything else about the route comes from a single Wikiloc author, so it is one walker's account, not a verified route. A fact-checker should confirm it with RAKTDA or a local guide.",
+    "OTHER 'GHAIL' PLACES: Gulf News (list updated 21 December 2020, and a separate Gulf News list updated 27 December 2023) says the Wadi Aasimah off-road track (16.8km in the first list) starts 'from the village of Al Ghail in Ras Al Khaimah'; neither gives coordinates, so it is not known whether it is the same Ghail. Missions Offroad (30 January 2021) describes an 'Al Ghail village' whose coordinates (25.382196, 56.064514) are far south of the Wadi Qadaah coordinates (about 25.76 N) and do not match; I did not use them and did not verify which emirate they are in. AllTrails lists a 'Wadi Kub to Al Ghail Village OHV trail' (page could not be opened; robots rules), so a third Ghail may exist. Wadi Ghalilah (غليلة) is a different, well-known wadi and was not used. Wikiloc tags place the walk 'near Athabat' on one page and 'near Mak Sikek' on another.",
+    "NAME VARIANTS USED: Wadi Ghail, Wadi Al Ghail, Ghail village, Al Ghail, Ghayl, الغيل, وادي الغيل, Wadi Qadaah, Wadi Qada'ah, Wadi Qada'a, وادي قداعة, Wadi Qidaa'a (Emarat Al Youm transliteration), Ghalilah (excluded).",
+    "SINGLE SOURCE: distance 7km, 500m climb, 4 hours, parking pin and the 6km access road all come from one Wikiloc page (Patrick's Hikes, date not stated, summer hike). The 7km is not stated to be a round trip; I read it as one because he says he went back the same way. Wikiloc and AllTrails pages could not be opened directly (403 or robots), so the pages were read through the loc.wiki mirror and the GPX was not checked. The author warns Wikiloc GPS tracks can be wrong in the wadi.",
+    "TRAILHEAD: two parking pins from the same author, about 0.9km apart (25.763513, 56.115583 on the Ghail village page; 25.767852, 56.122904 on the Jebel Bahar page). The Bahar page says to park about 1km earlier if you cannot drive the last part, which fits. Which one the 7km walk was measured from is not stated. The dirt-track start (25.784836, 56.074711) is about 4.7km in a straight line from the first pin, which fits his '4.5km into the wadi', but his '6km' access-road figure is not reconciled with it.",
+    "VEHICLE ACCESS AND SIGNS: a Spanish-language Wikiloc page for the neighbouring Danab/Wadi Qadaah dam track (parking 25.757451, 56.127913, about 1.3km from the Bahar pin) says signs now limit vehicles to village residents and that 4x4 caravans have annoyed villagers; an older Jebel Qadaah account mentions a 'no access' sign that the walker passed. Neither names Ghail and neither is dated. It is not confirmed whether vehicle access to the Ghail track is restricted. Possible private land and border-area limits (the area is close to the Omani border) were searched for and none was found in an official source.",
+    "PERMITS AND ALONE-HIKING RULE: The National (24 October 2023) says hiking alone is not permitted and fines of up to Dh50,000 apply, and that walkers register with a code at the start of each trail. That report is about trail rules in Fujairah and Ras Al Khaimah generally. It was not checked against a government source and it is not known whether it covers unmarked routes. Khaleej Times (20 February 2021) fine of Dh10,000 is for organisers only.",
+    "RESCUES: Gulf News (4 November 2020) names the Al Ghail area of Wadi Qada and gives the date and the Air Wing; Emarat Al Youm (5 November 2020) says the family of five were exhausted and the father had minor injuries. The 22 February 2022 (The National) and 28 August 2022 (Gulf News, date from update stamp; article inconsistent on whether all five were airlifted) rescues name Wadi Qada'a, not Ghail, so they may have been elsewhere in the valley. Other rescue reports in RAK mountains (April 2024, May 2023, May 2025, July 2026) name Wadi Naqb, Wadi Shah, Wadi Haqeel or no place, not Ghail. No Arabic or English report of a death at Ghail was found. Searches were not exhaustive.",
+    "FLASH FLOODS: no authority gave a Wadi Ghail specific rule. The flood warning rests on the 2018 Ministry advice, the December 2025 storm warnings (The National) and one walker's remark that heavy rain damages the Qadaah track. 'Do not start in or after rain' is my advice, not a quoted rule. Emarat Al Youm (14 November 2020) reported thunder and rain at nearby Ghalilah; not used.",
+    "GRADE: my own judgement (Moderate). The sources give no grade for the Ghail village walk. The same author rates the longer Bahar route Difficult. A commenter's 'Moderate' on the Ghail village page was a rating of scenery, not difficulty, and was not used.",
+    "SEASON: no route-specific source. Months are editorial, based on UAE-wide advice (The National, 24 October 2023) and the fact that the one account was a summer dawn walk.",
+    "SHADE, SIGNAL, WATER: no source describes them for this route. Stated as unknown.",
+    "ABU DHABI AND DUBAI DRIVE TIMES: none found; omitted.",
+    "EMERGENCY NUMBERS: 995 is the National Search and Rescue hotline per Gulf News (May 2025, date is the update stamp; the rescue 'Saturday' is probably 24 May 2025, my inference). 999, 998 and 997 per ajman.ae, not RAK-specific.",
+    "VILLAGE USE: the author says the village is suitable for camping and has about five houses; whether the houses are occupied or the land is private is not stated. Missions Offroad (a different Ghail, see above) says its village is fenced and protected. I advise treating any house or fenced land as private.",
+    "PHOTO: IbrahimKumar's CC0 photograph is of Wadi Qada'ah, a tributary of Wadi Bih, from the climb to Silay Al Khatami (caption, 20 February 2024). It is the same valley system but not Wadi Ghail and not tagged to this route; one other CC0 photo (View of Wadi Qada'ah from Qada'ah Village, 22 February 2024) was also found. The file page was read directly from Commons, but the Commons API was rate-limited, so no coordinates were checked."
+  ],
+  "grade": "Moderate",
+  "nearPlace": null,
+  "facts": {
+    "distance": "About 7 km out and back (one walker's figure)",
+    "climb": "About 500 m (one walker's figure)",
+    "time": "About 4 hours (one summer dawn walk)",
+    "shape": "Out and back"
+  },
+  "photo": {
+    "src": "/uploads/hikes/wadi-al-ghail.jpg",
+    "w": 0,
+    "h": 0,
+    "edits": "resized",
+    "author": "IbrahimKumar",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Wadi_Qada%C2%B4ah-1.jpg",
+    "commonsFile": "File:Wadi Qada´ah-1.jpg",
+    "what": "Wadi Qada'ah, a tributary of Wadi Bih, seen from the climb to the village of Silay Al Khatami (Commons caption, 20 February 2024). Same valley system as Wadi Ghail, but not Wadi Ghail and not tagged to this route.",
+    "alt": "Wadi Qadaah in the Hajar Mountains of Ras Al Khaimah, seen from the climb to a mountain village"
+  },
+  "page": {
+    "status": "Unmarked route: there is no official trail, waymarks or grade. Go with a licensed guide if you have not walked it before.",
+    "gradeBasis": "No official grade exists. Moderate is our reading of one walker's account: about 7km, about 500m of climbing, a faint trail and a long dirt-track approach. The same walker rates the longer route on to Jebel Bahar Difficult.",
+    "route": [
+      "The walk starts from the dirt track in Wadi Qadaah. A walker drove about 4.5km up the wadi from its mouth, took the left exit towards the mountain and parked there. A 4x4 is needed.",
+      "The first kilometre is a rough track. After that the trail is faint with few markers, following the wadi and then climbing. Cairns and white paint circles on stones help.",
+      "The walk ends at the lowest house of Ghail, a small settlement of about five houses with some terraced fields, and returns the same way. Treat the houses as private. Longer routes continue on to the Hebs villages and Jebel Bahar; they are harder and are not covered here."
+    ],
+    "distance": "About 7km, as one walker recorded it. The page says he returned the same way, so this reads as an out-and-back total. It is not an official figure.",
+    "climb": "About 500m, from the same walker. He warns that GPS tracks can be wrong in wadis.",
+    "time": "About 4 hours, from one summer walk that started at 4am. Allow longer, especially in winter or with stops.",
+    "start": "Parking in Wadi Qadaah, about 4.5km along the dirt track from the wadi mouth. There is no marked trailhead.",
+    "coordNote": "The pin comes from one walker's Wikiloc page. A second pin from the same walker is about 0.9km further on. Treat both as approximate.",
+    "parking": "Not confirmed. The walker parked in the wadi at the pin. No operator, charge or capacity is given. Check before you go.",
+    "vehicle": "4x4 or high-clearance AWD. The walker says sedans will struggle on the roughly 6km of dirt. A neighbouring route reports signs limiting vehicles to village residents, so check that you may drive in.",
+    "getting": "No drive time is confirmed. Wikipedia places the mouth of Wadi Qadaah about 10km east of Ras Al Khaimah city. The dirt track starts there.",
+    "bestMonths": "No route-specific source. Winter is the sensible season; The National says the walking season traditionally starts around 1 November. Do not walk it in summer.",
+    "startTime": "Start early and be back well before dark. The one recorded walk started at 4am in summer. Set a turn-back time.",
+    "shade": "Not confirmed. Assume little.",
+    "water": "No reliable source. Carry all you need. Do not rely on pools.",
+    "signal": "Not confirmed. Assume none and download an offline map.",
+    "fees": "No fee was found for the walk or the parking. Last checked October 2026.",
+    "permits": "No permit for this walk was found. Groups of more than 10 must inform the tourism authority (Visit Ras Al Khaimah). The National reported in October 2023 that hiking alone is not allowed under the rules for Ras Al Khaimah and Fujairah mountains, with fines up to Dh50,000. It is not confirmed whether that covers this route. Last checked October 2026.",
+    "hours": "No hours. There is no gate or operator. Last checked October 2026.",
+    "closure": "No closure was found, but status cannot be confirmed. A neighbouring route reports signs limiting vehicle access to village residents. After the December 2025 storms authorities told hikers to avoid affected routes with standing water. Check with RAKTDA before you go. Last checked October 2026.",
+    "safety": [
+      "Rescues have happened here. Police airlifted an exhausted family of five from Al Ghail in Wadi Qadaah on 4 November 2020. Seven hikers (February 2022) and five tourists (August 2022) were rescued from Wadi Qadaah.",
+      "Do not start in or after rain. This is a wadi route. The Ministry warned in 2018 to leave a wadi at once if you hear flowing water, and a walker says rain can make the track impassable.",
+      "Do not walk it in summer. The one recorded walk started at 4am to beat the heat, and walkers have been airlifted from Ras Al Khaimah mountains suffering from heat and dehydration.",
+      "There is no official trail. After the first kilometre the path is faint with few markers. Load an offline GPS track, and remember that GPS tracks can be wrong in wadis.",
+      "The dirt-track access needs a 4x4. Do not block the track or drive into the village.",
+      "Go with a companion, tell someone your route and return time, and set a turn-back time. Do not rely on mobile signal.",
+      "If you have not walked it before, go with a licensed guide. The longer routes beyond Ghail involve loose scree and are for experienced walkers only."
+    ],
+    "carry": [
+      "At least 3 litres of water each, more if warm",
+      "Rehydration drink and food",
+      "Offline map, GPS and compass",
+      "Sturdy boots with good grip",
+      "Sunscreen, hat and sunglasses",
+      "First aid kit",
+      "Charged phone and power bank",
+      "Bag for your litter"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997 · National Search and Rescue 995",
+    "notConfirmed": [
+      "That this is the walk people mean by Wadi Al Ghail. It rests on one walker's account and press reports of a rescue at Al Ghail in Wadi Qadaah.",
+      "Whether you may drive the track. A neighbouring route reports signs limiting vehicles to residents.",
+      "The exact start, the true distance and the climb. They come from one walker's recording.",
+      "Whether the rule against hiking alone and the permit rules apply to this unmarked route.",
+      "Shade, mobile signal and water. No source describes them."
+    ]
+  }
+}

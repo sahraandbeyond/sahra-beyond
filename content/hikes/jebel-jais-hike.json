@@ -1,0 +1,425 @@
+{
+  "slug": "jebel-jais-hike",
+  "name": "Ghaf Summit Trail, Jebel Jais",
+  "emirate": "Ras Al Khaimah",
+  "area": "Jais Viewing Deck Park, near the top of the Jebel Jais road, Ras Al Khaimah",
+  "placeSlug": "jebel-jais",
+  "gradeRecommended": "Moderate",
+  "gradeBasis": "Visit Jebel Jais (the operator, RAK Leisure) grades the Ghaf Summit Trail 'Beginner to Moderate' and lists it at 8.6km round trip and 2.5 to 4 hours (trail guide, last checked October 2026). The same page also calls it one of the most challenging hiking trails in the UAE, so the operator's own wording is not consistent. A tour operator (ECC Adventures) rates a shorter 5.3km version 'Beginner+', 4 out of 10. Walkers' posts describe a hard first 30 minutes of steep steps, then easier ground and a final climb, and call it doable for most people (Sports Travel Tom, updated March 2025). I rate it Moderate: about 390m of climbing at 1,250m to 1,640m altitude, steep stairs and loose stones, some paths near edges, and little confirmed shade. It suits fit beginners who carry enough water and start early in the cooler months.",
+  "officialTrails": [
+    {
+      "name": "Ghaf Summit Trail (round trip; this guide)",
+      "grade": "Beginner to Moderate",
+      "lengthKm": 8.6,
+      "time": "2.5 to 4 hours; elevation given as 1,640m (the summit height)",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Wadi Shah (loop; has its own guide on this site)",
+      "grade": "Challenging",
+      "lengthKm": 11.6,
+      "time": "5 hours",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Samar Trail (loop)",
+      "grade": "Beginner to Moderate",
+      "lengthKm": 6.8,
+      "time": "1.5 to 4 hours; operator gives 5.6 to 6.8km; elevation given as 500m",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Al Asbaq Trail",
+      "grade": "Easy",
+      "lengthKm": 2.2,
+      "time": "1 to 1.5 hours",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Sidir Trail",
+      "grade": "Easy",
+      "lengthKm": 1.6,
+      "time": "45 to 60 minutes",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Al Teen Trail",
+      "grade": "Easy",
+      "lengthKm": 1.2,
+      "time": "30 to 45 minutes",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Farfar Trail",
+      "grade": "Easy",
+      "lengthKm": 0.7,
+      "time": "20 to 30 minutes",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Jais Via Ferrata (fixed cables and ladders, booked, based at Bear Grylls Explorers Camp; not a walking trail)",
+      "grade": "Moderate to Challenging",
+      "lengthKm": 0.47,
+      "time": "2 to 3 hours on the trail guide; about 3.5 hours, ages 14 and up, on the operator's hiking page",
+      "source": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "name": "Upper Shepherd Walk (guided walk from Bear Grylls Explorers Camp)",
+      "grade": "Beginner",
+      "lengthKm": 2.5,
+      "time": "2 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "The Wadi Loop (guided walk from Bear Grylls Explorers Camp)",
+      "grade": "Beginner to intermediate",
+      "lengthKm": 7.5,
+      "time": "3 to 3.5 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Hidden Oasis Walk (guided walk from Bear Grylls Explorers Camp)",
+      "grade": "Beginner to intermediate",
+      "lengthKm": 7.0,
+      "time": "3.5 to 4 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Hidden Oasis Loop (guided walk from Bear Grylls Explorers Camp; highest elevation 1,044m)",
+      "grade": "Experienced hikers",
+      "lengthKm": 9.6,
+      "time": "5 to 6 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Hidden Pond (guided walk from Bear Grylls Explorers Camp; highest elevation 1,137m)",
+      "grade": "Experienced hikers",
+      "lengthKm": 9.0,
+      "time": "6 hours",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "name": "Grand Loop (80km multi-day route; in development, not open)",
+      "grade": "Not graded",
+      "lengthKm": 80.0,
+      "time": "Multi-day; the operator marks it 'In development, not open yet'",
+      "source": "https://visitjebeljais.com/jais-hiking"
+    }
+  ],
+  "distanceKm": 8.6,
+  "distanceNote": "Round trip, 4.3km each way, as stated by Visit Jebel Jais (trail guide); PropertyFinder (updated 6 March 2026) repeats 4.3km. A tour operator, ECC Adventures, lists 5.3km out and back, possibly a shorter version (the operator's guide mentions a 2.5km hike from the Adventure Peak Welcome Centre). A walker's track on loc.wiki (DreamTrail 6) gives 8km one way to the Jebel Jais summit area beyond the Ghaf Summit, which is a different and longer route, not this trail. The operator figure is used.",
+  "climbM": 390,
+  "climbNote": "Not published by the operator. Visit Jebel Jais lists 'Elevation: approximately 1,640 metres' for this trail, which is the height of the summit above sea level, not the climb. The 390m figure is my own subtraction: a walker's track (Wellube, on loc.wiki) gives the start at Jais Viewing Deck Park at 1,250m, and the operator gives the summit at 1,640m. ECC Adventures lists 289m of gain on its 5.3km version, which would not reach 1,640m from 1,250m, so it probably stops short or counts differently. The same track records about 200m of climbing in the first 750m. Treat 390m as approximate.",
+  "time": "2.5 to 4 hours round trip (operator); a tour operator gives 2.5 to 3 hours and a walker's blog gives about 4 hours. Allow longer for rests.",
+  "shape": "out-and-back",
+  "trailhead": {
+    "name": "Jais Viewing Deck Park, Jebel Jais mountain road",
+    "lat": 25.937837,
+    "lng": 56.131012,
+    "coordSource": "Visit Jebel Jais gives the Ghaf Summit Trail start point as Jais Viewing Deck Park at 25.937837, 56.131012 (trail guide, last checked October 2026). A walker's track (Wellube, loc.wiki) gives the start at 25.938019, 56.131225, about 25m away. The site's own Jebel Jais place page lists the park at 25.93738, 56.13098 (from MapLoco).",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.937837,56.131012",
+    "parking": "The operator does not describe trail parking. Walkers' posts report parking at the viewing deck park and along the road, and one 2021 post says the road to the start has a 40km/h limit and carries zipline transport (Prints and Stamps, hiked on 1 April, year not stated, posted May 2021). Older posts mention AED 5 for parking (Prints and Stamps 2021; Sports Travel Tom 2024, updated March 2025). Visit Jebel Jais now charges AED 10 a person for Jais Viewing Deck Park entry (last checked October 2026). Whether a walker on foot pays the entry fee, parking fee or both is not confirmed.",
+    "vehicle": "2WD. The mountain road is paved, and the site's Jebel Jais place page says an ordinary car manages it. I did not find an operator page that states this directly; walkers' posts do not mention needing a 4x4."
+  },
+  "routeDescription": [
+    "The Ghaf Summit Trail starts at Jais Viewing Deck Park, at about 1,250m above sea level, near the top of the Jebel Jais road. Visit Jebel Jais gives the start as the park. A walker's blog (Prints and Stamps, 2021) reports a signposted map at the start. The trail is out and back, so you return the way you came.",
+    "The operator says the climb starts gently, then turns steep where it meets natural paths and stairs, with rest areas and viewing points along the way. Walkers describe a steep first section, with a track (Wellube) recording about 200m of climbing in the first 750m. Walkers report that this section ends at a UAE flag and a wooden board reading 'viewing deck park summit', and that many people turn back there for a shorter walk. A blogger gives 25 to 30 minutes to reach it (Prints and Stamps).",
+    "Beyond that, walkers describe an undulating middle section, a rest shelter where the route splits, and a connecting path that leads back towards the viewing deck. The Wellube track places the Puro 1484 restaurant at about 1,490m along the way. A blogger mentions a bridge about 3.5km in (Prints and Stamps) and steps that are sandy and gravelly on the way down (Sports Travel Tom). The final stretch is a climb to the Ghaf Summit at about 1,640m (operator), where two markers stand for photographs.",
+    "The operator says to follow green 'Ghaf Summit 7' signs and maroon, white and yellow markers. Walkers also mention a white and red flag with a yellow square painted on a rock behind the shelter. The operator says trail works and new signage begin this season, with old markers removed, so what you see may differ from this description.",
+    "Stop at the marked summit. The operator calls it the highest publicly accessible point in the UAE. It is not the top of Jebel Jais: Wikipedia, as used on this site's Jebel Jais page, places the Jebel Jais summit just across the border in Oman, and a track author (DreamTrail 6, loc.wiki) says there is no marked trail beyond about 1,600m, that border stones lie further on, and that there is a security checkpoint near Puro with possible inspections. These are track-author comments, not an official notice, but they are a reason to stay on the marked route and carry photo ID."
+  ],
+  "bestMonths": "October to April (Visit Jebel Jais, hiking page and trail guide; its Samar Trail text says November to April)",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "The operator says to start early to avoid the heat, to follow the marked path, to bring a light jacket and sturdy shoes, and to carry a headlamp for sunset hikes (trail guide, last checked October 2026). It gives sunset as between 5:30pm and 6:00pm (Jais Viewing Deck Park page). Jais Viewing Deck Park lists opening hours of 8am to 8pm Sunday to Thursday and 8am to 11pm Friday and Saturday, with entry from 8am to 8pm (same page); whether the trail can be walked outside those hours is not confirmed. A walker's blog says the first section gets sun before 8am. The summit is about 4.3km from the start, so plan to be back well before dusk.",
+  "shade": "No operator statement on shade. A walker's blog (Sports Travel Tom) says the first section gets sun before 8am, and another (Prints and Stamps) mentions a rest shelter on the route. Assume most of the walk is in the open.",
+  "water": "No water source on the trail. The operator says to carry at least 3 litres per person and rehydration drinks (visitjebeljais.com/jais-hiking, last checked October 2026); a walker's blog also says about 3 litres, more in hot months. The Puro Express and Muse Cafe at the deck park sell drinks when open, but opening on the day is not confirmed.",
+  "signal": "Not confirmed for this trail. No operator statement. A track note for a different route up the mountain (Wadi Ghalilah) says mobile coverage was available all the way, which cannot be assumed here. Download an offline map first.",
+  "fees": "The operator says the trails are open to the public and free to walk on your own (visitjebeljais.com/jais-hiking, last checked October 2026). Jais Viewing Deck Park charges AED 10 per guest including VAT, valid for one day (visitjebeljais.com/jais-viewing-deck-park, last checked October 2026), and Khaleej Times reported on 3 February 2026 that visitors without a booking for an attraction needed the AED 10 deck ticket, bought at the security entrance, to pass the checkpoints. Whether a walker starting this trail must pay is not confirmed. Guided Ghaf Summit walks are sold by a tour operator (ECC Adventures) from AED 200 to 250, plus a separate AED 10 access booking; this is not an operator price.",
+  "permits": "The operator says you do not need a guide to walk the trails (last checked October 2026). No permit for this trail was found. Groups of more than 10 must register in advance with RAKTDA (Ras Al Khaimah Tourism Development Authority): the operator says group size should be limited to 10 unless registered, and Visit Ras Al Khaimah says groups of more than 10 are obliged to inform the authority by email with route, participant and timing details. A walker's blog (Sports Travel Tom) says there is a registration booth by the food hut but that it is 'hit or miss', and a track author (Wellube) says security may ask walkers to register.",
+  "hours": "Jais Viewing Deck Park: 8am to 8pm Sunday to Thursday, 8am to 11pm Friday and Saturday, entry 8am to 8pm (visitjebeljais.com/jais-viewing-deck-park, last checked October 2026). The operator's FAQ says the mountain is open 24/7, with fixed hours only for activities, which conflicts with the seasonal closures below. No trail-specific hours were found. A track author (DreamTrail 6 comments) says the 1,600m point can be reached on foot when the park is closed; this is unverified.",
+  "closure": "Current status cannot be confirmed. Checked 8 October 2026. Visit Jebel Jais's hiking page says 'trails open to the public, no guide required' and says trail works and new signage begin from October, with 'some sections may be busy'. Its home page and 2025/26 season page still show social posts from 29 June and 5 July about a short pause, saying it will welcome visitors back 'once the weather cools', with no date and no 2026/27 season dates. Its Viewing Deck Park page shows no closure notice, only a booking widget reading 'Searching Availability'. WOW-RAK, a local guide site (posted 14 July, updated 14 September 2026), says everything on the mountain is closed, listing Jais Viewing Deck Park and drive-up access, with no reopening date. Gulf News, Khaleej Times and The National (15 September 2026) and Dubai Week (3 October 2026) report trail rehabilitation at Wadi Khammed to Hidden Oasis and signage 'ahead of the season opening' without saying whether the mountain is open or giving an opening date. None of them mentions the Ghaf Summit Trail. The start of this trail is the viewing deck park, so a closure of the park or the road would stop you reaching it. Earlier closures: after storms on 17 to 19 December 2025, reopened gradually from 31 January 2026 (Gulf Business, 29 January 2026; hiking and climbing areas were not formally closed, The National, 23 December 2025); and again on 24 March 2026 'until further notice' because of unstable weather (Gulf News). Confirm with the operator (info@rakleisure.com) and check visitjebeljais.com on the morning you go.",
+  "safety": [
+    "Status is not confirmed. Sources checked on 8 October 2026 disagree on whether the mountain and the trail are open, and no reopening date is published. The trail starts at the viewing deck park, which one guide site lists as closed.",
+    "Heat is a real risk. The operator says summer temperatures can pass 40 degrees Celsius and advises October to April. The National reported that a 25-year-old British man died while hiking up Jebel Jais in June 2017 on a day when Ras Al Khaimah reached 45 degrees; the route was not named.",
+    "Expect steep steps, loose stones and sandy, gravelly descents. A walker's blog says some paths run close to edges and advises keeping children close. A tour operator lists exposure to heights and slippery sections.",
+    "This is a mountain track, not a wadi, so flash flooding is not the main risk, but rain, fog and wind are. The operator says heavy fog or rain reduces visibility, and the mountain was closed after storms in December 2025 and in March 2026. Do not set out in or after heavy rain or in fog.",
+    "Start early and be back before dusk. Sunset is between 5:30pm and 6:00pm in winter (operator). Carry a headlamp. Take a warm layer: the summit is much cooler than the coast.",
+    "Stay on the marked path and stop at the Ghaf Summit markers. Beyond them the ground is unmarked, and a track author reports border stones and a checkpoint with possible inspections. Carry photo ID.",
+    "Carry at least 3 litres of water each, hike with a companion, tell someone your route and return time, and do not rely on mobile signal.",
+    "No rescue or accident on this trail was found. Police helicopters have rescued walkers elsewhere on Jebel Jais, for example a trekker near the summit in January 2019 (The National) and a man who fell from a cliff in September 2021 (Gulf News). Call 999."
+  ],
+  "carry": [
+    "At least 3 litres of water per person (operator)",
+    "Rehydration drink",
+    "Energy snacks and lunch",
+    "Offline map or GPS track downloaded before you go",
+    "Sturdy hiking boots or shoes with good grip",
+    "Sunscreen, hat and sunglasses",
+    "Light jacket or warm layer (operator)",
+    "Headlamp for late afternoon or sunset starts (operator)",
+    "First aid kit",
+    "Fully charged phone and a power bank",
+    "Photo ID",
+    "Cash for the AED 10 entry or for parking"
+  ],
+  "emergency": "Police 999 (Ras Al Khaimah Police, as listed on visitjebeljais.com/jais-hiking); ambulance 998 and civil defence 997 (Ajman government emergency numbers page, ajman.ae). Last checked October 2026.",
+  "driveNote": "The operator's FAQ says Jebel Jais is approximately 2 hours by car from Dubai and about 45 minutes from Ras Al Khaimah city. The viewing deck park is near the top of the mountain road. No source opened gave a drive time from Abu Dhabi.",
+  "intro": "The Ghaf Summit Trail climbs from Jais Viewing Deck Park to a marked summit that Visit Jebel Jais calls the highest publicly accessible point in the UAE, about 1,640m. It is 8.6km round trip, graded Beginner to Moderate by the operator, and takes 2.5 to 4 hours. The 2026/27 season status is not confirmed, so check before you drive up.",
+  "seoTitle": "Ghaf Summit Trail, Jebel Jais: Route, Time and Status",
+  "seoDesc": "Ghaf Summit Trail on Jebel Jais, Ras Al Khaimah: 8.6km return, 2.5 to 4 hours, graded Beginner to Moderate. Start point, route, heat risk and open status.",
+  "sources": [
+    {
+      "label": "Visit Jebel Jais: Top hiking trails in Jebel Jais (Ghaf Summit Trail grade, length, time, elevation, start coordinate, markers; all trails)",
+      "url": "https://visitjebeljais.com/blog/hiking-trails-jebel-jais"
+    },
+    {
+      "label": "Visit Jebel Jais: Jebel Jais hiking (public trails, no guide needed, trail works, season, group rule, safety tips, emergency number, Grand Loop in development)",
+      "url": "https://visitjebeljais.com/jais-hiking"
+    },
+    {
+      "label": "Visit Jebel Jais: Jais Viewing Deck Park (AED 10 entry, hours, sunset, facilities)",
+      "url": "https://visitjebeljais.com/jais-viewing-deck-park"
+    },
+    {
+      "label": "Visit Jebel Jais: FAQs (open 24/7, drive times, fog and rain, facilities)",
+      "url": "https://visitjebeljais.com/faqs"
+    },
+    {
+      "label": "Visit Jebel Jais: home page (pause posts)",
+      "url": "https://visitjebeljais.com/"
+    },
+    {
+      "label": "Visit Jebel Jais: season page (pause posts, no 2026/27 dates)",
+      "url": "https://visitjebeljais.com/season-activities"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Hiking (six trails 16km, group notification to RAKTDA, safety advice)",
+      "url": "https://visitrasalkhaimah.com/discover/activities/hiking/"
+    },
+    {
+      "label": "WOW-RAK: Is Jebel Jais open right now (closed list, updated 14 September 2026)",
+      "url": "https://wow-rak.com/is-jebel-jais-open/"
+    },
+    {
+      "label": "Dubai Week: Marjan Lifestyle launches Grand Loop trail (3 October 2026)",
+      "url": "https://www.dubaiweek.ae/marjan-lifestyle-launches-80km-jebel-jais-grand-loop-trail-and-via-ferrata/"
+    },
+    {
+      "label": "Gulf News: Jebel Jais 80km hiking loop (15 September 2026; rehabilitation, rescue support)",
+      "url": "https://gulfnews.com/business/tourism/uaes-highest-peak-jebel-jais-gets-an-80km-hiking-loop-and-five-day-climb-1.500675347"
+    },
+    {
+      "label": "The National: Jebel Jais Grand Loop and trail rehabilitation (15 September 2026)",
+      "url": "https://www.thenationalnews.com/news/uae/2026/09/15/ras-al-khaimah-jebel-jais-grand-loop-via-ferrata-hiking/"
+    },
+    {
+      "label": "Khaleej Times: Jebel Jais Grand Loop (15 September 2026; no open or closed statement)",
+      "url": "https://www.khaleejtimes.com/uae/uaes-highest-peak-jebel-jais-gets-80km-grand-loop-and-5-day-climbing-trail"
+    },
+    {
+      "label": "Khaleej Times: Jebel Jais reopens with entry rules (3 February 2026; AED 10 deck ticket, booking rule)",
+      "url": "https://www.khaleejtimes.com/uae/jebel-jais-reopens-entry-rules-booking-viewing-deck-ticket-required"
+    },
+    {
+      "label": "Gulf Business: Jebel Jais open again (29 January 2026)",
+      "url": "https://gulfbusiness.com/en/2026/uae/jebel-jais-open-again-uaes-winter-destination/"
+    },
+    {
+      "label": "The National: Jebel Jais temporarily closed following UAE storms (23 December 2025)",
+      "url": "https://www.thenationalnews.com/lifestyle/2025/12/23/jebel-jais-mountain-in-rak-temporarily-closed-following-uae-storms/"
+    },
+    {
+      "label": "Gulf News: Jebel Jais temporarily closed due to unstable weather (updated 24 March 2026)",
+      "url": "https://gulfnews.com/uae/rain-in-uae-jebel-jais-temporarily-closed-due-to-unstable-weather-1.500484893"
+    },
+    {
+      "label": "PropertyFinder: Jebel Jais blog (Ghaf Summit Trail 4.3km; last modified 6 March 2026)",
+      "url": "https://www.propertyfinder.ae/blog/?p=82136"
+    },
+    {
+      "label": "ECC Adventures: Ghaf Summit Trail (tour operator, 5.3km, 289m, 2.5 to 3 hours, AED 10 access booking)",
+      "url": "https://eccadventures.com/adventure/ghaf-summit-trail/"
+    },
+    {
+      "label": "Sports Travel Tom: Hiking the UAE's highest public point (4 hours, markers, parking AED 5, registration booth; published 7 May 2024, updated 12 March 2025)",
+      "url": "https://www.sportstraveltom.com/post/conquering-jebel-jais-a-beginner-s-guide-to-hiking-the-uae-s-highest-public-point"
+    },
+    {
+      "label": "Prints and Stamps: Ghaf Summit Hike (route stages, signage, parking; posted 3 May 2021)",
+      "url": "https://printsandstamps.blog/2021/05/03/ghaf-summit-hike-uae/"
+    },
+    {
+      "label": "loc.wiki (Wikiloc mirror): Ghaf Trail, Puro 1484 Summit, Wellube (start 25.938019, 56.131225, 1,250m start, 1,640m Ghaf Summit, 200m in 750m)",
+      "url": "https://loc.wiki/hiking-trails/ghaf-trail-puro-1484-summit-jebel-jais-107347160"
+    },
+    {
+      "label": "loc.wiki (Wikiloc mirror): DreamTrail 6, Deck Park to Jais true summit (8km one way, 820m; border stones, checkpoint, comments)",
+      "url": "https://www.loc.wiki/hiking-trails/dreamtrail6-jebel-jais-deck-park-ghaf-jais-true-summit-1932-meters-63537795"
+    },
+    {
+      "label": "loc.wiki (Wikiloc mirror): Wadi Ghalilah Dam to Jebel Jais Ghaf Summit part 1 (different route; signal note)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-ghalilah-dam-to-jebel-jais-ghaf-summit-part-1-64435544"
+    },
+    {
+      "label": "The National (via PressReader): Hiker dies on Jebel Jais (June 2017; 45 degrees)",
+      "url": "https://www.pressreader.com/uae/the-national-news/20170622/281621010336123"
+    },
+    {
+      "label": "The National: RAK helicopter team rescues Jebel Jais trekker (26 January 2019)",
+      "url": "https://thenationalnews.com/uae/rak-helicopter-team-rescues-jebel-jais-trekker-1.818170"
+    },
+    {
+      "label": "Gulf News: RAK Civil Defence rescue man who fell from a mountain cliff in Jebel Jais (September 2021)",
+      "url": "https://gulfnews.com/amp/story/uae%2Frak-civil-defence-rescue-man-who-fell-from-a-mountain-cliff-in-jebel-jais-1.82136447"
+    },
+    {
+      "label": "Al Khaleej: RAK Police Air Wing rescue in the Wadi Shahah area (15 July 2026; a different area, not this trail)",
+      "url": "https://www.alkhaleej.ae/2026-07-15/الإمارات/أخبار-الدار/جناح-الجو-بشرطة-رأس-الخيمة-ينقذ-مواطنا-في-منطقة-جبلية"
+    },
+    {
+      "label": "Ajman government: emergency numbers",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Existing place data (read, not a web source): jebel-jais.json",
+      "url": "/home/claude/site/content/locations/jebel-jais.json"
+    },
+    {
+      "label": "Wikimedia Commons: File:View from Jebel Jais - panoramio.jpg (photo, CC BY 3.0)",
+      "url": "https://commons.wikimedia.org/wiki/File:View_from_Jebel_Jais_-_panoramio.jpg"
+    }
+  ],
+  "lastChecked": "2026-10-08",
+  "_doubts": [
+    "ROUTE CHOICE: 'Hiking Jais Mountain' most likely means the walk up from the top of the road. I chose the Ghaf Summit Trail because (1) the operator publishes it with a grade, length, time, start coordinate and markers; (2) it starts at Jais Viewing Deck Park, the main visitor stop at the top of the road, so it is the route most visitors can reach and walk; (3) the operator describes it as leading to the highest publicly accessible point in the UAE; (4) it is the other main trail in the operator's guide besides Wadi Shah (the Samar Trail is shorter and lower, at about 500m). Wadi Shah is covered by its own file. The Samar Trail and the guided Hidden Oasis walks are listed in officialTrails only.",
+    "NAME VARIANTS used in searches: Jebel Jais, Jabal Jais, Jais Mountain, Jebel Jaïs; Arabic جبل جيس (searched with rescue, closure and trail words). Trail names: Ghaf Summit Trail, Ghaf Trail, 'Ghaf Summit', Upper Segment; Viewing Deck Park summit, South Summit and North Summit (walkers' wording). Place is in Ras Al Khaimah.",
+    "STATUS: not confirmed. The operator's hiking page (fetched 8 October 2026) says the trails are open to the public, but its home and season pages still carry the 29 June and 5 July pause posts, and WOW-RAK (updated 14 September 2026) lists the whole mountain, including the deck park and drive-up access, as closed with no reopening date. No dated reopening announcement was found for the 2026/27 season (Dubai Week, 3 October 2026, and Khaleej Times and Gulf News, 15 September 2026, give no open or closed status). A Khaleej Times link text on 15 September 2026 pointed to a closure story involving an Iran-related precaution; I could not find or open that story and did not use it. Re-check on the day of publishing and at launch.",
+    "TRAILHEAD ACCESS: the trail starts inside the paid viewing deck park area. If the park or the road above the security checkpoint is closed or booking-only, the trail may be unreachable even if the trail itself is 'open'. The operator's hiking page does not address this.",
+    "DISTANCE: operator 8.6km round trip (4.3km each way); PropertyFinder 4.3km (same source family); ECC Adventures 5.3km out and back (possibly the 2.5km Adventure Peak Welcome Centre option doubled, or a shorter version; unconfirmed). The operator figure is used. DreamTrail 6 gives 8km one way to the Jebel Jais summit, which is a different route.",
+    "CLIMB: no published climb. The operator's 'Elevation approximately 1,640 metres' is the summit altitude, not gain. 390m is my subtraction from a track's 1,250m start. ECC says 289m. Wadi Shah's operator 'Elevation: 753' on the same page appears to mean climb, so the operator uses the word inconsistently. Wikiloc and AllTrails pages returned 403 errors, so no GPX or app ascent was checked; only loc.wiki mirrors of two tracks were read.",
+    "TIME: operator 2.5 to 4 hours; ECC 2.5 to 3 hours; Sports Travel Tom about 4 hours. No total-time figure from a dated track was found.",
+    "GRADE: the operator says Beginner to Moderate and, on the same page, 'one of the most challenging hiking trails in the UAE'. My Moderate is a judgement. ECC says Beginner+ (4 out of 10). The Via Ferrata length on the operator page is given as both 470 metres and 470 km, which shows the page has typing errors.",
+    "'GHAF SUMMIT 7' SIGNS: the operator and a blog both mention green 'Ghaf Summit 7' signs; I could not find what the 7 means (a distance, a sign series, or something else). Not explained on the page.",
+    "SUMMIT HEIGHT AND CLAIM: the operator says 1,640m and 'highest publicly accessible point'. Sports Travel Tom lists the first summit (Viewing Deck Park Summit) at 1,415m. The Wellube track gives 1,490m at Puro 1484 and 1,640m at the Ghaf Summit. The site's Jebel Jais place data says the Jebel Jais summit (1,934m) is in Oman and the UAE-side high point is about 1,892m. The claim on the page is attributed to the operator.",
+    "BORDER AND CHECKPOINT: the border stones, security checkpoint near Puro, possible inspections and a 'Royal property fence' near a camping area at about 1,800m come only from comments and a description by one track author (DreamTrail 6, loc.wiki, undated), and relate to the route beyond the Ghaf Summit. No official restriction notice was found for the Ghaf trail itself. No military-area or private-land restriction on the Ghaf trail was found in the sources opened.",
+    "FEES AND PARKING: the operator says AED 10 per guest for Jais Viewing Deck Park (valid one day). Walkers' posts from 2021 and 2024 to 2025 mention AED 5 for parking per person in the car. ECC says a separate AED 10 access booking is needed. Khaleej Times (3 February 2026) says visitors without a booking need the AED 10 deck ticket at the security entrance. Whether that applies to trail walkers, and whether there is separate parking charge, is not confirmed. The operator's fee for the trails is 'free'. The old AED 5 figure is probably out of date.",
+    "HOURS: deck park 8am to 8pm Sunday to Thursday and 8am to 11pm Friday and Saturday (operator); entry 8am to 8pm; the operator FAQ says the mountain is open 24/7. A Wellube track started at 4am and a track comment says the 1,600m point can be reached when the park is closed; unverified and not repeated as advice.",
+    "ENTRY RULE (BOOKING): Khaleej Times (3 February 2026) said access was 'currently available only to visitors with confirmed bookings for designated attractions' or with the AED 10 deck ticket, subject to capacity and road conditions. The operator's FAQ and the Feb 2026 'no permit' reports differ in emphasis. Not confirmed for the 2026/27 season.",
+    "WORKS AND SIGNAGE: the operator says old markers will be removed and new wayfinding added from October, with the first confirmed sign locations in mid-October, a map of signs, and QR codes carried by crews. The sources name Wadi Khammed to Hidden Oasis; none names the Ghaf trail, so the route description may be out of date at launch.",
+    "RESCUES AND DEATHS: no rescue, death, fine or warning specific to the Ghaf Summit Trail was found in English or Arabic searches (searched 'rescue', 'died', 'stranded', 'إنقاذ', 'جبل جيس'). Dated Jebel Jais incidents found: June 2017 death of a British man 'hiking up Jebel Jais' on a 45 degree day (The National via PressReader; exact date and route not stated); about 2 November 2018 European tourist airlifted after a fall while trekking (Gulf News, no precise location); 25 January 2019 trekker rescued near the summit at about 1,900m (The National) and an injured man airlifted on the same day at about 3,500ft (Gulf News), possibly the same incident; 7 June 2019 British hiker died at Al Manaie area (Gulf News; peak not named, not confirmed as Jebel Jais); about 7 September 2021 man fell from a cliff in the Jebel Jais area (Gulf News); 15 July 2026 citizen rescued in the Wadi Shahah area (Al Khaleej; a different area). Dates for several are inferred from the article's update date and weekday and are approximate. The 2018 article's mention of a December 2018 helicopter crash on the mountain was not used.",
+    "FLASH FLOOD: this is a ridge and stair route, not a wadi route, so I did not apply the wadi flood warning. The rain and fog warning rests on the operator FAQ, the December 2025 and March 2026 closures, and common sense. No Ghaf-specific rule was found.",
+    "SHADE AND SIGNAL: no operator statement. The loc.wiki note that Etisalat coverage was available is for the Wadi Ghalilah route, not this trail.",
+    "FACILITIES: the operator lists Puro Express and Muse Cafe at the deck park. A 2021 blog mentions food vans and restrooms. The site's own Jebel Jais place data says toilets at the deck park were reported as limited. Not confirmed for the 2026/27 season.",
+    "CONTACT: the operator's hiking page gives info@rakleisure.com as the general email. Two WhatsApp numbers appear (the Bear Grylls Explorers Camp +971 56 501 5831 and another at the top of the page, +971 50 277 0352); I did not use either on the page because their purpose for trail enquiries is unclear.",
+    "RAKTDA RULE WORDING: the operator says group size should be limited to 10 unless registered; Visit Ras Al Khaimah says groups of more than 10 are 'obliged to inform' the authority. No form was found.",
+    "TRAIL INVENTORY: Visit Ras Al Khaimah says six trails totalling 16km; the operator's guide lists more trails. Operator hiking-page guided-walk prices (AED 125 to 250) are not repeated on the page because they are for Bear Grylls camp walks, not this trail.",
+    "SEASON: operator says October to April for hiking; Samar Trail text says November to April. Month scores are editorial: October and April are scored as shoulder months.",
+    "PHOTO: File:View from Jebel Jais - panoramio.jpg by wilhelmtittes, CC BY 3.0, taken 16 April 2016, tagged 25.936155, 56.133978 (about 350m from the trailhead, near the top of the mountain road). It shows the mountain road switchbacks and the Hajar ridges at low sun, not the trail itself. The file came from Panoramio, where the author credit links to a web archive page; the licence is as shown on Commons. Other free files seen: 'Jebel Jais, Tallest Mountain of UAE 02.jpg' (CC BY 4.0, Ganesh.V, but the caption names Jabal ar Rahrah) and 'Jebel Jais Mountain Ranges as viewed from Ras Al Khaimah' (CC0, Ginevrajocosa88, a distant view from the city). Commons category pages could not be opened directly; files were found by search and checked through the Commons API.",
+    "NO ABU DHABI DRIVE TIME found; omitted.",
+    "NOT OPENED: Wikiloc and AllTrails pages (403 errors), including 'Ghaf Summit Upper Jebel Jais', 'Jebel Jais Ghaf Summit sunset hike' and 'Ghaf Summit north and south ends', so track statistics for the Ghaf Summit Trail itself are limited to the loc.wiki mirror of the Wellube track, which gave no distance or total ascent."
+  ],
+  "grade": "Moderate",
+  "official": true,
+  "nearPlace": "jebel-jais",
+  "facts": {
+    "distance": "8.6 km round trip",
+    "climb": "About 390 m (our estimate)",
+    "time": "2.5 to 4 hours",
+    "shape": "Out and back"
+  },
+  "photo": {
+    "src": "/uploads/hikes/jebel-jais-hike.jpg",
+    "w": 1280,
+    "h": 719,
+    "edits": "resized",
+    "author": "wilhelmtittes",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:View_from_Jebel_Jais_-_panoramio.jpg",
+    "what": "The Jebel Jais road and the Hajar ridges, about 350m from the trailhead",
+    "alt": "Sunlit rock ridges of the Hajar Mountains with the winding Jebel Jais road below, seen from near the top of the mountain",
+    "commonsFile": "File:View from Jebel Jais - panoramio.jpg",
+    "whatFull": "The Jebel Jais mountain road and the Hajar ridges at low sun, photographed on 16 April 2016 from near the top of the road. The file is tagged about 350m from the trailhead at Jais Viewing Deck Park. It does not show the trail itself."
+  },
+  "page": {
+    "status": "Official waymarked route: Visit Jebel Jais lists it and grades it Beginner to Moderate. The operator is renewing signs this season, so markers may change.",
+    "gradeBasis": "Visit Jebel Jais, run by RAK Leisure, grades it Beginner to Moderate, but also calls it one of the most challenging trails in the UAE. We rate it Moderate: steep steps and about 390m of climbing at altitude.",
+    "route": [
+      "You start at Jais Viewing Deck Park, at about 1,250m above sea level. The first section is steep, with steps. Walkers report a UAE flag and a wooden board at the end of it, where many people turn back.",
+      "The middle section undulates. Walkers report a rest shelter where the route splits, with a connecting path back towards the viewing deck. Follow the green 'Ghaf Summit' signs and the maroon, white and yellow markers. The operator is renewing signs this season, so they may change.",
+      "The last stretch climbs to the Ghaf Summit at about 1,640m, where two markers stand. Visit Jebel Jais calls it the highest publicly accessible point in the UAE. You return the same way. Stop at the markers: it is not the top of Jebel Jais, and the ground beyond is unmarked and leads towards the Omani border."
+    ],
+    "distance": "Visit Jebel Jais gives 8.6km round trip, 4.3km each way. A tour operator gives 5.3km, probably a shorter version.",
+    "climb": "Not published by the operator. Its 'elevation of 1,640 metres' is the summit height. From a 1,250m start that is about 390m of climbing (our calculation). A tour operator gives 289m.",
+    "time": "Visit Jebel Jais gives 2.5 to 4 hours round trip. A blog gives about 4 hours. Allow time for rests.",
+    "start": "Jais Viewing Deck Park, near the top of the Jebel Jais road. Visit Jebel Jais gives its coordinate as 25.937837, 56.131012.",
+    "coordNote": "The operator's coordinate and a walker's track agree to within about 25m.",
+    "parking": "Not confirmed. Visit Jebel Jais charges AED 10 a person to enter the deck park but does not describe parking. Older walkers' posts mention AED 5 for parking. Check with Visit Jebel Jais. Last checked October 2026.",
+    "vehicle": "2WD. The road is paved and walkers do not mention needing a 4x4.",
+    "getting": "Visit Jebel Jais says about 2 hours by car from Dubai and 45 minutes from Ras Al Khaimah city.",
+    "bestMonths": "October to April, says Visit Jebel Jais. Do not walk it in summer.",
+    "startTime": "Start early. The park opens at 8am (Visit Jebel Jais). Sunset is between 5:30pm and 6:00pm in winter, so be back well before dark.",
+    "shade": "Little confirmed. A blog says the first section gets sun before 8am, and another mentions a rest shelter.",
+    "water": "None on the trail. Carry at least 3 litres each, as the operator advises.",
+    "signal": "Not confirmed. Download an offline map before you go.",
+    "fees": "Visit Jebel Jais says the trails are free to walk. Entering Jais Viewing Deck Park costs AED 10 a person. Whether walkers pay it is not confirmed. Last checked October 2026.",
+    "permits": "The operator says you do not need a guide, and no permit for this trail was found. Visit Jebel Jais says groups larger than 10 should register in advance with RAKTDA, the tourism authority. Walkers may be asked to register at the park. Last checked October 2026.",
+    "hours": "Jais Viewing Deck Park: 8am to 8pm Sunday to Thursday, 8am to 11pm Friday and Saturday (Visit Jebel Jais). No trail hours are published. Last checked October 2026.",
+    "closure": "Not confirmed. Visit Jebel Jais says the trails are open, but its home page still carries a pause notice with no date, and a local guide site (14 September 2026) lists the deck park and road as closed. Trail works and new signs are due this season. Ask info@rakleisure.com. Last checked October 2026.",
+    "safety": [
+      "Check the mountain is open before you drive up. Reports disagree, and the trail starts at the viewing deck park.",
+      "Do not walk in summer. Visit Jebel Jais advises avoiding midday hikes in warmer months. A 25-year-old British man died on Jebel Jais in June 2017, when temperatures in Ras Al Khaimah reached 45 degrees Celsius (The National, June 2017). The report does not name the trail.",
+      "Expect steep steps, loose stones and sandy descents. Some paths run close to edges, so keep children close.",
+      "Do not start in or after heavy rain, or in fog. Rain makes steps slippery, and the mountain has closed after storms.",
+      "Start early and be back before dusk, at 5:30pm to 6:00pm in winter. Take a headlamp and a warm layer.",
+      "Stay on the marked path and stop at the summit markers. Beyond them the ground is unmarked, and the Omani border is near. Carry photo ID.",
+      "Carry at least 3 litres of water each, go with a companion and tell someone your route and return time. Do not rely on mobile signal.",
+      "No incident on this trail was found. Police and Civil Defence rescued an injured trekker at the Jebel Jais summit (The National, 26 January 2019) and a man who fell from a cliff (Gulf News, September 2021). Neither report names this trail. Call 999."
+    ],
+    "carry": [
+      "At least 3 litres each",
+      "Rehydration drink and food",
+      "Offline map or GPS",
+      "Sturdy boots or shoes with good grip",
+      "Sunscreen, hat and sunglasses",
+      "Light jacket",
+      "Headlamp",
+      "First aid kit",
+      "Charged phone and power bank",
+      "Photo ID and cash"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Whether the mountain, the deck park and the trail are open, and the 2026/27 season dates.",
+      "Whether walkers must pay the AED 10 entry fee, and what parking costs.",
+      "The climb. The operator publishes the summit height, not the ascent.",
+      "Waymarking. New signage is due this season, so markers may change.",
+      "Whether the trail can be walked outside the park's opening hours."
+    ]
+  },
+  "factsFull": {
+    "distance": "8.6 km round trip (4.3 km each way)",
+    "climb": "About 390 m (our calculation from a 1,250 m start and the operator's 1,640 m summit; not an operator figure)",
+    "time": "2.5 to 4 hours round trip",
+    "shape": "Out and back"
+  },
+  "report": {
+    "distance": "8.6 km round trip",
+    "climb": "About 390 m (our estimate)",
+    "time": "2.5 to 4 hours"
+  },
+  "areaFull": "Jais Viewing Deck Park, at the top of the Jebel Jais mountain road above Ras Al Khaimah city, in the Hajar Mountains near the border with Oman's Musandam. The park is about 1,250m above sea level (Wellube track on loc.wiki; Jebel Jais place data on this site)."
+}

@@ -1,0 +1,268 @@
+{
+  "slug": "wadi-qadaah",
+  "name": "Wadi Qada'ah to Qada'ah village",
+  "emirate": "Ras Al Khaimah",
+  "area": "Danam village in Wadi Qada'ah, about 10km east of Ras Al Khaimah city, climbing to Qada'ah village near the Oman border",
+  "placeSlug": "hajar-mountains",
+  "gradeRecommended": "Difficult",
+  "gradeBasis": "No official grade exists. This is our reading of the sources. A walker's recorded track (Wikiloc, seen through a mirror, loc.wiki) climbs about 650m in 3.4km each way, starts with a near-vertical climb beside a dry waterfall about 50m high, has loose stones, short slightly exposed sections and an unmarked final stretch. It rates the technical difficulty level 4 and calls it very difficult, and the risk moderate. Ras Al Khaimah Police have airlifted lost or exhausted hikers from Wadi Qada'ah several times since 2021 (The National, Gulf News, Gulf Today).",
+  "officialTrails": [],
+  "distanceKm": 6.8,
+  "distanceNote": "Out and back, 6.79km, from one recorded Wikiloc track (via loc.wiki mirror). It is the only distance found for this route; no operator or government figure exists. A different Wikiloc route from the same area, Wadi Qada'ah to Silay Al Khatami, is 11.76km (see _doubts).",
+  "climbM": 650,
+  "climbNote": "One recorded track (Wikiloc, via loc.wiki) gives 649.62m of ascent and 650.12m of descent, between a minimum of 290m and a maximum of 885.3m above sea level. Wikipedia gives the village at about 870m. Only one track was found for this route, so treat the figure as indicative.",
+  "time": "Not confirmed. The one recorded track shows 2 hours 24 minutes of moving time and 7 hours 41 minutes elapsed, including more than 5 hours stopped. No recommended time is published.",
+  "shape": "out-and-back",
+  "trailhead": {
+    "name": "Parking just before the trailhead at Danam (Dhanab) village, Wadi Qada'ah",
+    "lat": 25.757451,
+    "lng": 56.127913,
+    "coordSource": "Wikiloc track 'Dhanab to Qada'ah village' (Spanish title 'de Danab en el Wadi Qada'ah a la aldea de Qada'ah'), read through the loc.wiki mirror because Wikiloc returned an access error. It gives the parking a few metres before the trailhead at 25.757451, 56.127913 and the village at about 25.750444, 56.146469. Wikipedia places Qada'ah village at 25 45 01.58 N, 56 08 47.29 E (about 25.7504, 56.1465), which agrees. A Commons photo taken in the village carries 25.750717, 56.147202. Confirm the start on the ground.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.757451,56.127913",
+    "parking": "The track source says parking is a few metres before the trailhead. No operator or authority describes it; no charge was found. Last checked October 2026.",
+    "vehicle": "4x4 is ideal (Wikiloc track via loc.wiki). A higher-clearance car is wise. The same source says a low-clearance sedan can sometimes get through slowly and with difficulty, and that heavy rain can make the dirt track impassable. The approach is almost 8km of dirt track from the Wadi Qada'ah Dam."
+  },
+  "routeDescription": [
+    "Wadi Qada'ah is a dry river valley and tributary of Wadi Bih in Ras Al Khaimah, about 10km east of the city (Wikipedia). It runs for 15.3km and flows almost only in the rainy season. Several walks start from it. Instagram lists use the name loosely, so this guide covers the best-documented one: the climb from Danam village to Qada'ah village. Other walks from the same wadi are named under _doubts.",
+    "To reach the start you drive up Wadi Qada'ah, then follow an almost 8km dirt track from the Wadi Qada'ah Dam to Danam, a village on the wadi bank. The recorded track puts the parking a few metres before the trailhead.",
+    "The walk begins with a near-vertical climb beside a dry waterfall about 50m high. Concrete-set stone steps help here. Higher up, steps become rare and the path is dirt and natural rock, zigzagging up. The source describes the slope as steep with a lot of small loose stone, and says each step must be secured because a slip can cause a serious accident. Short sections have slight exposure, with natural handholds.",
+    "Qada'ah village stands on a high plateau at about 870m (Wikipedia), just over 1km from the Oman border. It has dry-stone ruins, cisterns, water channels and terraces, with views west over the wadi towards the Gulf, north to Jabal Al Ahqab and east to the border cliffs. Wikipedia says it has about 20 houses, mostly used as second homes by their owners. The source adds that a few people live there permanently. These are private homes: do not enter them or the terraces.",
+    "The final stretch before the village is unmarked and the path is poorly defined (track source). You return the same way. Wikipedia describes the same steep, rocky donkey path from Danam as the usual way up, and says the village can only be reached on foot or by donkey."
+  ],
+  "bestMonths": "November to March (the author of the Wikiloc track on the Silay Al Khatami route, via loc.wiki, says November to March has the best temperatures; no source states a season for the Qada'ah village route itself)",
+  "months": [
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "No source gives a start time for this route. A walker's blog on the nearby Ghail village route (Patrick's Hikes, via loc.wiki) started at 4am and finished before 8am to avoid summer heat, and called it an endurance hike. RAK Police have repeatedly asked hikers to avoid valleys and mountains in the heat of the day (The National, 22 February 2022; Gulf Today, 18 January 2021). Start early and plan to be back well before dark.",
+  "shade": "Not confirmed. No source describes shade on this route; the climb is on open rock and the village plateau is open.",
+  "water": "No water source is confirmed. Wadi Qada'ah flows almost only in the rainy season (Wikipedia). Carry all the water you need. No source gives a litre figure for this route.",
+  "signal": "Not confirmed. No source gives mobile signal for this route. Download an offline map and the track before you set off.",
+  "fees": "No entry fee or parking charge was found in any source opened. No government or operator page covers this route. Last checked October 2026.",
+  "permits": "No hiker permit for Wadi Qada'ah was found. The Ras Al Khaimah Tourism Development Authority requires a permit to organise treks or mountain events, with a Dh10,000 fine for organisers who do not have one (Khaleej Times, 20 February 2021; the report does not name this wadi). The same report tells hikers to stay off private land and farms. Qada'ah village is private property. Last checked October 2026.",
+  "hours": "No opening hours found. The route is not run by an operator.",
+  "closure": "Status cannot be confirmed. No official page for this route was found. Wadi Qada'ah and Wadi Bih flooded Emirates Street (the bypass road) around 26 March 2026, and Emarat Al Youm (28 March 2026) reports mountain tracks closed in Ras Al Khaimah and the Eastern Region after the weather system; it gives no dates for reopening and does not name this route. Police urged the public to avoid wadi channels and dam areas. A walker's track page (via loc.wiki) says signs restrict driving on the Silay Al Khatami track to village residents; that is a different track from the Danam one and the date of that note is unknown. Last checked October 2026. Ask RAK Police before you go.",
+  "safety": [
+    "Flash-flood risk: Wadi Qada'ah flows almost only in the rainy season and floods are real. Around 26 March 2026 it flooded the Emirates Street bypass road together with Wadi Bih, and police told the public to keep away from wadi channels and dam areas (Emarat Al Youm, 28 March 2026). Do not go in or after rain, and note that rain also makes the approach track impassable.",
+    "Rescues in the wadi: RAK Police airlifted three exhausted tourists on about 16 January 2021 (Gulf Today, Emarat Al Youm), seven lost hikers on 22 February 2022 (The National), five lost hikers on 28 August 2022, one taken to hospital with sun exposure (Gulf News, Al Bayan), and two teenagers aged 16 and 17 with heat exhaustion on 16 August 2023 (Dubai Eye). The reports do not say which path they were on. No deaths in this wadi were found in the searches made.",
+    "The climb is steep with a lot of loose stone. The track source warns that a slip or trip can cause a serious accident and that some short sections are slightly exposed. Wear boots with good grip and place each step.",
+    "The final stretch before the village is unmarked with a poorly defined path, and the route has no official waymarks. Load an offline track and consider a licensed guide if you have not walked it before.",
+    "Heat: do not walk in summer. The August 2022 and 2023 rescues involved sun exposure and heat exhaustion. Police ask hikers to avoid the mountains in the heat of the day.",
+    "Carry all your water and food, as no water source is confirmed. Do not rely on mobile signal.",
+    "Go with a companion and tell someone your route and return time. If you need help, call 999.",
+    "Respect the village and the border. Qada'ah is private property, mostly second homes, and sits just over 1km from the Oman border. Do not enter houses, do not damage terraces, and do not go towards the border."
+  ],
+  "carry": [
+    "All the water you will need, plus a spare litre",
+    "Food and a rehydration drink",
+    "Offline map and GPS track of the route",
+    "Sturdy hiking boots with good grip",
+    "Trekking poles (the source says poles help balance)",
+    "Sunscreen, hat and sunglasses",
+    "First aid kit",
+    "Fully charged phone and a power bank",
+    "Head torch as a precaution"
+  ],
+  "emergency": "Police 999, ambulance 998 and civil defence 997 (Ajman government emergency numbers page, ajman.ae, which lists them for anywhere in the UAE). Last checked October 2026.",
+  "driveNote": "Wikipedia puts Wadi Qada'ah about 10km east of Ras Al Khaimah city. No drive time to the trailhead, from Ras Al Khaimah, Dubai or Abu Dhabi, was found. The last part is almost 8km of dirt track from the Wadi Qada'ah Dam (track source via loc.wiki), so it takes longer than the distance suggests. Not confirmed.",
+  "intro": "Wadi Qada'ah is a dry valley east of Ras Al Khaimah city. The walk described in most detail by walkers starts at Danam village and climbs about 650m in 3.4km to the mountain village of Qada'ah, then returns the same way. It is steep and loose, the last part is unmarked, and police have rescued hikers from the wadi several times since 2021.",
+  "seoTitle": "Wadi Qada'ah Hike to Qada'ah Village, Ras Al Khaimah",
+  "seoDesc": "Wadi Qada'ah, Ras Al Khaimah: Danam to Qada'ah village, 6.8km out and back, about 650m climb. Unmarked and steep. Flood risk, rescues, access, status.",
+  "sources": [
+    {
+      "label": "Wikipedia: Wadi Qada'ah (location, 15.3km length, intermittent flow, spellings, rescue reports cited)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Qada%27ah"
+    },
+    {
+      "label": "Wikipedia: Qada'ah (village, 870m, coordinates, about 20 houses, donkey path from Danam, Oman border)",
+      "url": "https://en.wikipedia.org/wiki/Qada%27ah"
+    },
+    {
+      "label": "Wikiloc track via loc.wiki mirror: Danab (Danam) to Qada'ah village (6.79km, 650m, route, warnings, 4x4 notes, parking coordinates)",
+      "url": "https://www.loc.wiki/hiking-trails/emiratos-eau-ras-al-khaimah-rak-de-danab-en-el-wadi-qadaah-wdy-qd-a-la-aldea-de-qadaah-kidaah-y-reg-161982467"
+    },
+    {
+      "label": "Wikiloc track via loc.wiki mirror: Wadi Qada'ah to Silay Al Khatami (11.76km, access restrictions on the track)",
+      "url": "https://www.loc.wiki/hiking-trails/emiratos-eau-ras-al-khaimah-del-wadi-qadaah-wdy-qd-a-silay-col-910-m-silay-al-khatami-sly-lkhthmy-y-161832056"
+    },
+    {
+      "label": "Wikiloc track via loc.wiki mirror: Wadi Qadaah to Ghail village (7km, Patrick's Hikes; 4x4 access, faint trail)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-qadaah-to-ghail-village-rak-147313711"
+    },
+    {
+      "label": "Wikiloc track via loc.wiki mirror: Jebel Qada'ah routes 1 and 2 (summit routes from the wadi)",
+      "url": "https://www.loc.wiki/hiking-trails/jebel-qadaah-routes-1-and-2-19573408"
+    },
+    {
+      "label": "The National: RAK Police rescue seven hikers lost in Wadi Qada'a (22 February 2022)",
+      "url": "https://thenationalnews.com/uae/2022/02/22/rak-police-rescue-seven-hikers-lost-in-wadi-qadaa"
+    },
+    {
+      "label": "Gulf News: Five Asians lost atop RAK mountain rescued (Wadi Qada'a, 28 August 2022)",
+      "url": "https://gulfnews.com/uae/uae-five-asians-lost-atop-rak-mountain-rescued-1.1661713330455"
+    },
+    {
+      "label": "Al Bayan: five Asians lost in Wadi Qada'a (28 August 2022, Arabic)",
+      "url": "https://www.albayan.ae/uae/accidents/2022-08-28-1.4503160"
+    },
+    {
+      "label": "Dubai Eye 103.8: Stranded teenagers rescued from Ras Al Khaimah mountains (Wadi Quda'ah, 17 August 2023)",
+      "url": "https://www.dubaieye1038.com/news/local/stranded-teenagers-rescued-from-ras-al-khaimah-mountains/"
+    },
+    {
+      "label": "Gulf Today: RAK Police airlift 3 exhausted Arab trekkers (Wadi Qada'ah, 18 January 2021)",
+      "url": "https://gulftoday.ae/news/2021/01/18/rak-police-airlift-3-exhausted-arab-trekkers-from-mountain"
+    },
+    {
+      "label": "Emarat Al Youm: Air Wing rescues 3 tourists in Wadi Qada'a (18 January 2021, Arabic)",
+      "url": "https://www.emaratalyoum.com/local-section/accidents/2021-01-18-1.1444372"
+    },
+    {
+      "label": "Gulf News: Three exhausted tourists stuck in RAK mountains rescued (19 January 2021; names Wadi Al-Baih, mentions Wadi Qada)",
+      "url": "https://gulfnews.com/uae/three-exhausted-tourists-stuck-in-rak-mountains-rescued-1.76572842"
+    },
+    {
+      "label": "Emarat Al Youm: mountain tracks closed in Ras Al Khaimah and the Eastern Region (28 March 2026, Arabic; Wadi Bih and Wadi Qada'ah flood Emirates Street)",
+      "url": "https://www.emaratalyoum.com/local-section/other/2026-03-28-1.2029467"
+    },
+    {
+      "label": "Khaleej Times: Dh10,000 fine for organising treks in RAK without a licence (20 February 2021)",
+      "url": "https://www.khaleejtimes.com/uae/emergencies/uae-dh10000-fine-for-organising-treks-in-rak-without-a-licence?amp=1"
+    },
+    {
+      "label": "Climbing7: Leopard Canyon, Ras Al Khaimah (start at the border control tower at the end of Wadi Qada'a)",
+      "url": "https://climbing7.com/?p=41377"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Hiking blog (checked; does not list Wadi Qada'ah)",
+      "url": "https://visitrasalkhaimah.com/blog/hiking"
+    },
+    {
+      "label": "Ajman government: emergency numbers",
+      "url": "https://www.ajman.ae/en/happiness-bundle/life-ajman/handling-emergencies"
+    },
+    {
+      "label": "Wikimedia Commons: File:View of Wadi Qada'ah from Qada'ah Village.jpg (CC0, IbrahimKumar)",
+      "url": "https://commons.wikimedia.org/wiki/File:View_of_Wadi_Qada%27ah_from_Qada%27ah_Village.jpg"
+    }
+  ],
+  "lastChecked": "2026-10-08",
+  "_doubts": [
+    "WHICH HIKE: the name is confirmed as a place but not as a single hike. Wadi Qada'ah (Wikipedia: valley about 10km east of Ras Al Khaimah city, tributary of Wadi Bih, 15.3km long) is firmly located. But the Instagram list gives only the wadi's name, and several different walks start in or from it: Danam to Qada'ah village (6.79km, 650m; used here), Wadi Qada'ah to Silay Al Khatami via Silay Col (11.76km, 781m), the Ghail village walk (about 7km, 500m), Leopard Canyon / Wadi Zebat from Qada'ah, and the Jebel Qada'ah (Jabal Al Ahqab) summit routes. No official source (Visit Ras Al Khaimah, RAKTDA, RAK Police) names a hike called Wadi Qada'ah. The Danam to Qada'ah village walk was chosen as the best-documented and most likely one, but that is my judgement. A fact-checker should confirm with the person who wrote the Instagram list.",
+    "NAME VARIANTS USED: Wadi Qada'ah, Wadi Qada'a, Wadi Qadaa, Wadi Qadaah, Wadi Quda'ah, Wadi Kida'ah, Wadi Al Qadah, وادي القدعة, وادي قدعة, وادي قداعة, وادي القداعة, وادي كداعة. The Arabic spelling used by the press and Wikipedia is وادي قداعة (also وادي كداعة); searches for وادي القدعة found nothing relevant. Village spellings: Danam (Wikipedia), Dhanab, Danab (Wikiloc), Qada'ah / Kida'ah / Qidaah.",
+    "SINGLE SOURCE: distance, ascent, route description and parking coordinates for the Danam route rest on one Wikiloc track page, which I could only read through the loc.wiki mirror (Wikiloc itself returned 403). The author and date are not stated. Not independently checked against a second track, AllTrails or Komoot.",
+    "TIME: no recommended time found. The track shows 2h24 moving and 7h41 total with 5h17 stopped. The Silay Al Khatami track shows 4h43 moving, 6h27 total. The time field says Not confirmed; do not print a time.",
+    "TRAILHEAD COORDINATE: 25.757451, 56.127913 is the parking per the track page. Wikipedia's coordinate for the wadi (25 46 56.3 N, 56 03 46.4 E) is near the wadi mouth about 6km away and is not a trailhead. The Ghail walk's parking (25.763513, 56.115583) and the start of its 4x4 road (25.784836, 56.074711) are for a different route. The Wadi Qada'ah Dam's own coordinate was not found. The Instagram list may intend a different start.",
+    "VEHICLE AND ACCESS: the track source says 4x4 ideal, sedan 'sometimes' possible; the Ghail walk author says 4x4 or high-clearance AWD, about 6km offroad. Climbing7 (Leopard Canyon, date unknown) says a good stony track of 7 to 8km with no 4x4 requirement. The distance from the wadi mouth to the trailhead is stated as almost 8km (track source) and 4.5 to 6km (Ghail author) for different points.",
+    "ACCESS RESTRICTIONS: the Silay Al Khatami track page says signs now limit driving to village residents, and mentions groups of 4x4 vehicles disrupting a village. Whether the same applies to the Danam track is not stated. Another Wikiloc page (Jebel Qada'ah routes, via loc.wiki) says its author walked past a 'no access' sign at the start of the track into Wadi Sal; I have not repeated that advice. No source says whether the land is private, whether a landowner or village objects to walkers, or whether permission is needed. Please check with RAKTDA or RAK Police.",
+    "BORDER: Qada'ah village is just over 1km from the Oman border (Wikipedia), and Climbing7 describes a border control tower at the end of Wadi Qada'a. No source says walkers need ID or permission on this route, and no military-area restriction was found; this is not confirmed either way.",
+    "STATUS: not confirmed. The Emarat Al Youm report of 28 March 2026 says mountain tracks were closed after the late-March 2026 weather system but does not list which ones or give dates. No later reopening notice was found. A search for 2025 and 2026 rescues in the wadi found nothing newer than August 2023 that names it.",
+    "RESCUES: locations are given only as 'Wadi Qada'a'; none says the Danam to Qada'ah village path. Gulf Today (18 January 2021) and Emarat Al Youm (18 January 2021) report 3 Arab tourists; Gulf News (19 January 2021) reports 3 tourists in 'Wadi Al-Baih' and mentions 'Wadi Qada'. I took these as the same event; not confirmed. Gulf News dates the August 2022 rescue only by its 'last updated' stamp of 28 August 2022, confirmed by Al Bayan's URL date. Dubai Eye gives the 2023 call as Wednesday afternoon; I derived 16 August 2023 from its 17 August publication date. A Khaleej Times report of 4 April 2024 (three European hikers) and Gulf News 14 April 2024 (two Asian men, leg fracture) name no wadi and were not used. Wikipedia says accidents are frequent; I did not find a rescue count.",
+    "DEATHS AND FINES: no death on this route or in the wadi was found in English or Arabic searches. This does not prove there have been none. The Dh10,000 fine (Khaleej Times, February 2021) applies to organising treks without a RAKTDA permit and was not reported for this wadi. Whether it is still in force in 2026 is not confirmed.",
+    "FLASH FLOODS: the March 2026 flooding is sourced. No source gives a flood threshold or a forecast tool for Wadi Qada'ah. 'Do not go in or after rain' is my advice, not a quoted rule. Wikipedia states the wadi flows almost only in the rainy season. The Wadi Bih Dam is cited by Wikipedia for groundwater recharge; its effect on flows here was not checked.",
+    "SEASON: no source gives a season for the Danam route. November to March is borrowed from the author of the Silay Al Khatami track; the Ghail author did a summer pre-dawn walk. Month scores are editorial.",
+    "VILLAGE OCCUPANCY: Wikipedia says most habitable homes are second homes; the track author says a few permanent residents remain. Do not expect help or facilities.",
+    "GRADE: Difficult is my judgement. The source author describes the effort itself as moderate but the terrain as demanding. The source's technical level 4 uses Wikiloc's scale, whose maximum I could not confirm.",
+    "DRIVE TIMES: none found for Ras Al Khaimah city, Dubai or Abu Dhabi. Omitted.",
+    "NOT USED: AllTrails and Komoot pages for Wadi Qada'ah could not be opened or were not found. A Spanish-titled Wikiloc page (Jebel Tafif via dry waterfall) and Wikiloc 'Wadi Ghail, Qadah village, Tafifi village, Wadi Sal' were seen in search results but not opened (403).",
+    "PHOTO: File:View of Wadi Qada'ah from Qada'ah Village.jpg by IbrahimKumar, CC0 1.0, taken 22 February 2024, 4000 x 2250 pixels. It has no GPS tag; a sister photo (Qada'ah Village - 1.jpg, taken 11 minutes later) is tagged 25.750717, 56.147202, in the village itself. It shows the view from the end of the route, not the start. It needs downloading and resizing (w and h are 0)."
+  ],
+  "grade": "Difficult",
+  "official": false,
+  "nearPlace": "hajar-mountains",
+  "facts": {
+    "distance": "6.8 km (one track)",
+    "climb": "About 650 m (one track)",
+    "time": "Not confirmed",
+    "shape": "Out and back"
+  },
+  "photo": {
+    "src": "/uploads/hikes/wadi-qadaah.jpg",
+    "w": 1280,
+    "h": 720,
+    "edits": "resized",
+    "author": "IbrahimKumar",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:View_of_Wadi_Qada%27ah_from_Qada%27ah_Village.jpg",
+    "what": "The view over Wadi Qada'ah from Qada'ah village, the top of the route",
+    "alt": "View over Wadi Qada'ah and the surrounding mountains from the plateau at Qada'ah village",
+    "commonsFile": "File:View of Wadi Qada'ah from Qada'ah Village.jpg",
+    "whatFull": "The view over Wadi Qada'ah taken from Qada'ah village, the top end of the Danam to Qada'ah route (photographed 22 February 2024). No GPS tag on this file; a sister photo from the village is tagged 25.750717, 56.147202."
+  },
+  "page": {
+    "status": "Unmarked route: there is no official trail, waymarks or grade. Go with a licensed guide if you have not walked it before.",
+    "gradeBasis": "No official grade exists. We rate it Difficult because the one recorded track climbs about 650m in 3.4km each way on steep, loose ground, with a near-vertical start, short exposed sections and an unmarked last stretch. Police have rescued hikers from the wadi several times since 2021.",
+    "route": [
+      "You drive up Wadi Qada'ah and follow an almost 8km dirt track from the Wadi Qada'ah Dam to Danam, a village on the wadi bank. Parking is reported a few metres before the trailhead.",
+      "The walk starts with a near-vertical climb beside a dry waterfall about 50m high, helped by cemented stone steps. Higher up the steps thin out and the path zigzags over dirt and rock, with a lot of loose small stone and a few slightly exposed sections.",
+      "The path reaches Qada'ah village on a high plateau, with dry-stone ruins, cisterns and terraces. The last stretch before the village is unmarked and the path is poorly defined. The homes are private, mostly second homes. You return the same way."
+    ],
+    "distance": "About 6.8km out and back, from one recorded walker's track. No official figure exists.",
+    "climb": "About 650m of climbing, from the same track. It runs from about 290m to 885m above sea level.",
+    "time": "Not confirmed. The one recorded track shows 2 hours 24 minutes of moving time, with long stops bringing the total to 7 hours 41 minutes.",
+    "start": "Danam (Dhanab) village on Wadi Qada'ah, east of Ras Al Khaimah city. Parking is reported a few metres before the trailhead.",
+    "coordNote": "The pin comes from one walker's track on Wikiloc and has not been checked on the ground. It is accurate to a few hundred metres at best.",
+    "parking": "Not confirmed. A recorded track puts the parking just before the trailhead. No authority describes it. Check before you go.",
+    "vehicle": "Not confirmed. The track source says a 4x4 is ideal for the almost 8km dirt track, and that heavy rain can make it impassable. A low sedan may pass slowly.",
+    "getting": "Wikipedia puts Wadi Qada'ah about 10km east of Ras Al Khaimah city. No drive time was found. The dirt track adds to the journey.",
+    "bestMonths": "Cooler months, November to March, according to a walker's track on the nearby Silay Al Khatami route. No source gives a season for this route. Do not walk it in summer.",
+    "startTime": "Start early and finish well before dark. Police ask hikers to avoid the mountains in the heat of the day.",
+    "shade": "Not confirmed. Assume little.",
+    "water": "No water source is confirmed. Carry everything you need.",
+    "signal": "Not confirmed. Assume none and download an offline map.",
+    "fees": "No entry fee or parking charge was found. Last checked October 2026.",
+    "permits": "No hiker permit was found. Organisers of treks need a RAKTDA permit, the tourism authority says (Khaleej Times, February 2021). The houses in Qada'ah village are privately owned, mostly second homes, and whether walkers may enter the village is not confirmed. Last checked October 2026.",
+    "hours": "No hours are published. This is not an operated site. Last checked October 2026.",
+    "closure": "Not confirmed. After the late-March 2026 floods, roads in Ras Al Khaimah were closed and police urged people to avoid mountain areas (Emarat Al Youm, 28 March 2026). That report does not name this route or its access track. Check with RAK Police before you go. Last checked October 2026.",
+    "safety": [
+      "Do not go in or after rain. Wadi Qada'ah flooded the Emirates Street bypass in late March 2026, and rain can make the access track impassable.",
+      "Police have airlifted lost or exhausted hikers from Wadi Qada'ah in January 2021, February 2022, August 2022 and August 2023. Two of those cases involved sun exposure.",
+      "Do not walk in summer. Police ask hikers to avoid the mountains in the heat of the day.",
+      "The climb is steep with loose stone and a few exposed sections. A slip can cause a serious accident. Wear boots with good grip.",
+      "The last stretch before the village is unmarked. Load an offline track, or go with a licensed guide if you have not walked it before.",
+      "Carry all your water and food, go with a companion, and tell someone your route and return time. Do not rely on mobile signal.",
+      "Qada'ah has houses that are privately owned, mostly second homes, near the Oman border. Do not enter houses or damage terraces, and do not go towards the border."
+    ],
+    "carry": [
+      "All your water, plus a spare litre",
+      "Food and a rehydration drink",
+      "Offline map and GPS track",
+      "Sturdy boots with good grip",
+      "Trekking poles",
+      "Sunscreen, hat and sunglasses",
+      "First aid kit",
+      "Charged phone and power bank"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Which walk the name 'Wadi Qada'ah' means. Several routes start in this wadi, and no official source names one. This page covers Danam to Qada'ah village.",
+      "Whether the track and the route are open. Roads were closed and police urged people to avoid mountain areas after the March 2026 floods, and no notice about this route was found.",
+      "Access and permission. Signs limit vehicles on a nearby track to village residents, and no source says whether walkers need permission.",
+      "The trailhead, parking and drive time. They come from one walker's track and no authority.",
+      "Distance, climb and time. They come from a single recorded track."
+    ]
+  },
+  "factsFull": {
+    "distance": "6.8 km out and back (one recorded track)",
+    "climb": "About 650 m (one recorded track)",
+    "time": "Not confirmed; one track shows 2 h 24 min moving",
+    "shape": "Out and back"
+  },
+  "report": {
+    "distance": "6.8 km (one track)",
+    "climb": "About 650 m (one track)",
+    "time": "Not confirmed"
+  },
+  "areaFull": "Wadi Qada'ah, a tributary valley of Wadi Bih in the Hajar Mountains, about 10km east of Ras Al Khaimah city (Wikipedia). The walk described here starts at the village of Danam (also spelt Dhanab or Danab) on the banks of the wadi and climbs to the mountain village of Qada'ah, just over 1km from the Oman border."
+}

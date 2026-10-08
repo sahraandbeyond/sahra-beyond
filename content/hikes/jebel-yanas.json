@@ -1,0 +1,349 @@
+{
+  "slug": "jebel-yanas",
+  "name": "Jebel Yanas",
+  "emirate": "Ras Al Khaimah",
+  "area": "The end of the unpaved road up Jebel Yanas, off the Wadi Naqab road, Ras Al Khaimah",
+  "placeSlug": "jabal-yanas",
+  "official": false,
+  "gradeRecommended": "Moderate",
+  "gradeBasis": "No government body or land operator grades this route (no Visit Ras Al Khaimah, Visit Jebel Jais or RAKTDA page for Jebel Yanas was found, last checked October 2026). Walker-recorded tracks disagree: MissionsOffroad (published February 2020, last modified June 2024) calls the roughly 13km orange-marked ridge walk 'not very challenging' and exposed to sun; the Wikiloc track 'Wadi Naqab to Yanas Green Gate' is described as Moderate with a steep start; the Wikiloc 'Jebel Yanas Loop - Mountain Villages and Gorge Scramble' is rated Difficult by its author, who raised it from Moderate for steeper descents and a scramble of about 100m at the end. Moderate is the judgement for the main ridge walk from the end of the summit road. The gorge loops are harder than that, and any version is unmarked in places, so treat the grade as indicative only.",
+  "officialTrails": [
+    {
+      "name": "Unofficial walker track: Jebel Yanas ridge walk to the first viewpoint and camping flat (MissionsOffroad, out and back)",
+      "grade": "Not graded (author: 'not very challenging')",
+      "lengthKm": 13,
+      "time": "Not confirmed; about 1 hour to the first viewpoint",
+      "source": "https://missionsoffroad.com/jebel-yanas-winter-in-hajar-mountains/"
+    },
+    {
+      "name": "Unofficial walker track: Jebel Yanas-Gorge-Wadi Loop (Wikiloc)",
+      "grade": "Not graded (commenters: easy to follow, scenery easy to moderate; description: 'hard work')",
+      "lengthKm": null,
+      "time": "About 3 hours reported by one commenter",
+      "source": "https://www.loc.wiki/hiking-trails/jebel-yanas-gorge-wadi-loop-64352416"
+    },
+    {
+      "name": "Unofficial walker track: Jebel Yanas Loop - Mountain Villages and Gorge Scramble (Wikiloc)",
+      "grade": "Difficult (author, raised from Moderate)",
+      "lengthKm": null,
+      "time": "Not confirmed",
+      "source": "https://www.loc.wiki/hiking-trails/jebel-yanas-loop-mountain-villages-and-gorge-scramble-64356621"
+    },
+    {
+      "name": "Unofficial walker track: Wadi Naqab to Yanas Green Gate (Wikiloc, up from Wadi Naqab, out and back)",
+      "grade": "Moderate (author)",
+      "lengthKm": 3,
+      "time": "Not confirmed; the author says the group started early and finished 'in decent time'. Distance is given as under 3km, so 3 is an upper bound",
+      "source": "https://www.loc.wiki/hiking-trails/wadi-naqab-to-yanas-green-gate-rak-85740413"
+    },
+    {
+      "name": "Unofficial walker track: Azabat Village on Yanas Mountain, plateau and wadi hike (Wikiloc)",
+      "grade": "Not graded",
+      "lengthKm": null,
+      "time": "Not confirmed",
+      "source": "https://www.loc.wiki/hiking-trails/azabat-village-on-yanas-mountain-mistake-in-end-point-plateau-and-wadi-hike-34929803"
+    },
+    {
+      "name": "Unofficial multi-day event: RAKTRAV 2020, day 6, Wadi Sal - Yanas Mountain - Wadi Naqab (FOX.AE hiking group)",
+      "grade": "Not graded",
+      "lengthKm": 27.89,
+      "time": "Not confirmed",
+      "source": "https://pinayhakawati.com/raktrav-longest-hiking-trail-in-uae/"
+    }
+  ],
+  "distanceKm": 13,
+  "distanceNote": "Out and back, as given by one walker (MissionsOffroad, who says many shorter and longer variations exist). The two Wikiloc loop pages opened give no distance in the text that could be read. The Wikiloc 'Green Gate' track from Wadi Naqab is described as under 3km one way. The RAKTRAV event's day 6 through Yanas Mountain is 27.89km, a one-way day between wadis. No official distance exists.",
+  "climbM": null,
+  "climbNote": "Not confirmed for the ridge walk. The Wikiloc 'Wadi Naqab to Yanas Green Gate' author says up to about 600m of climb within under 3km from Wadi Naqab. Gigaplaces gives the height of Jebel Yanas as 925m without saying what it measures; no other source confirms a summit height. MissionsOffroad says the ridge walk goes downhill on the way out and uphill on the way back, with no figure.",
+  "time": "Not confirmed. MissionsOffroad reports about 1 hour to the first viewpoint; one commenter on the Wikiloc Gorge-Wadi loop reports about 3 hours for that loop. Allow a half day and more for the longer variations.",
+  "shape": "out-and-back (the walker-recorded loops through the gorge are variations)",
+  "trailhead": {
+    "name": "End of the Jebel Yanas summit road, start of the ridge and village walk (reached via the Wadi Naqab road)",
+    "lat": 25.73256,
+    "lng": 56.11286,
+    "coordSource": "MissionsOffroad (published 23 February 2020, last modified 1 June 2024) gives the trail start as 25°43'57.2\"N 56°06'46.3\"E, converted here to decimal. A Wikiloc track page ('Azabat Village on Yanas Mountain') gives a start of 25.732532, 56.112465, about 40m away. Gigaplaces, the other place page opened, gives no coordinates. The lower start used by the Wikiloc 'Green Gate' track is at Wadi Naqab, 25.715457, 56.087495. Confirm on the ground; the pin is accurate to tens of metres at best.",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=25.73256,56.11286",
+    "parking": "Wikiloc ('Jebel Yanas Loop') says to park at the end of the road and suggests turning the car round before setting out, as the area may fill up or it may get dark. MissionsOffroad says that without a 4x4 you can leave the car earlier on the road to the top and walk to the start. Wikiloc ('Gorge-Wadi Loop') says some walkers parked in lay-bys along the road. No official car park, charge or capacity was found. Last checked October 2026.",
+    "vehicle": "4WD or high-clearance advised. MissionsOffroad says a 4x4 is needed to reach the start; Wikiloc ('Gorge-Wadi Loop') recommends an SUV or AWD for the final parking area and says a sedan with enough clearance might manage; twopassportspacked (visited February 2022) says a regular sedan can probably reach the top but a 4x4 is preferable. The road is untarred with large boulders and drop-offs (twopassportspacked)."
+  },
+  "routeDescription": [
+    "The usual walk starts at the end of the unpaved Jebel Yanas summit road. The road is reached from the Wadi Naqab road out of Ras Al Khaimah city. Visit Ras Al Khaimah says the Wadi Naqab trailhead is about 40 minutes from Ras Al Khaimah city and about 2 hours from Dubai (page dated March 2026), and describes the turn as a right turn at Al Salihia. Wikiloc ('Gorge-Wadi Loop') says to enter a gate on the quarry road just before the turn-off to Wadi Naqab, where security asks you to sign in. twopassportspacked (visit February 2022) describes a security checkpoint where the road begins to climb, where the guard simply opened the gate. Whether the gate is staffed now is not confirmed.",
+    "MissionsOffroad describes a ridge walk of about 13km, out and back, from a start at 25°43'57.2\"N 56°06'46.3\"E. It says the path is marked with orange spray paint on stones, goes downhill on the way out and uphill on the way back, and is mostly in full sun. The first viewpoint over the mountain villages is about an hour in, at 25°43'59.4\"N 56°07'49.1\"E. The author continued on the orange-marked path to a flat camping spot at 25°44'02.4\"N 56°08'14.1\"E. The author says there are many shorter and longer variations that link the villages.",
+    "Two Wikiloc loops go through the villages and down into a wadi. 'Jebel Yanas-Gorge-Wadi Loop' starts with an easy, mostly marked walk (yellow or orange dots and cairns) past old ruins, modern stone houses and terraced slopes, with views of Wadi Naqab and its dam. Markings thin out after the village. The second half is unmarked, with moderately steep drops into a wadi and gorge, a short easy scramble up a rock wall, and a steep, loose-rock climb back to the parking area. 'Jebel Yanas Loop - Mountain Villages and Gorge Scramble' follows a similar line, is rated Difficult by its author, and ends with a scramble of about 100m. The author says the final section may be too much for children or people afraid of heights, and gives an easier alternative of walking up the ridge to the road and returning along it.",
+    "A shorter and steeper route climbs from Wadi Naqab. The Wikiloc track 'Wadi Naqab to Yanas Green Gate' starts at 25.715457, 56.087495 near the Baqal village hike start, is under 3km one way with up to about 600m of climb, and follows a faint worn path and cairns. It ends at a locked green gate in a farm fence. The author says the summit there is private property and advises against trespassing, and warns that the descent is loose and unstable. The author says the start is reachable by sedan. The multi-day RAKTRAV event (FOX.AE hiking group, 2020, not an official trail) also crossed Yanas Mountain on its day 6, between Wadi Sal and Wadi Naqab.",
+    "People live and farm in the mountain villages. The Wikiloc 'Azabat Village' track says residents still live there and warns walkers not to enter buildings, fences or properties and not to open gates, which keep animals out. The Gorge-Wadi loop page says cemeteries lie along the route near the modern village, and the Mountain Villages loop asks walkers to keep to the farm's perimeter wall and avoid the centre and old village site. One Wikiloc route continues from Yanas via Sal village to a Jebel Tafif summit, and a separate Wikiloc track from Wadi Bih to Jebel Tafif describes white border posts and a summit in Omani territory. No source says the Yanas ridge walk itself crosses the border."
+  ],
+  "bestMonths": "October to April. Visit Ras Al Khaimah recommends October to April for the nearby Wadi Naqab hike; no source gives a season for Jebel Yanas itself. MissionsOffroad advises avoiding midday even in winter.",
+  "months": [
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "startAdvice": "Start early and be off the mountain before dark. MissionsOffroad advises avoiding midday because the route is mostly exposed to sun, and Ras Al Khaimah Police asked hikers in December 2025 not to hike after dark (Gulf News, updated 5 December 2025). Three hikers were airlifted with heat exhaustion on a May 2020 morning (Dubai Eye, 30 May 2020; location reported as 'Jebel Janas' near the Baqal area, see _doubts).",
+  "shade": "Little. Wikiloc ('Gorge-Wadi Loop') says there is little cover on the ridge; MissionsOffroad says the route is mostly exposed to sun. No other shade information was found.",
+  "water": "No water source is mentioned by any source. Villagers farm the area, but do not count on water from private farms or village cisterns. Carry everything you need. Visit Jebel Jais advises at least 3 litres per person for its mountain trails and Visit Ras Al Khaimah says to carry more water than you think you need for the nearby Wadi Naqab; neither page covers Jebel Yanas.",
+  "signal": "Unknown. No source states mobile signal on Jebel Yanas. Assume none in the wadis and download an offline map and the track before you set off.",
+  "fees": "No entrance or parking fee is mentioned in any source opened for Jebel Yanas (Visit Ras Al Khaimah, MissionsOffroad, twopassportspacked, Wikiloc). The earlier claim that visitors are waved through free of charge is not stated in twopassportspacked beyond the guard opening the gate. Last checked October 2026.",
+  "permits": "No Jebel Yanas permit was found. Visit Ras Al Khaimah says for the nearby Wadi Naqab hike that no permit is needed but groups of 10 or more must contact the organisers in advance (page dated March 2026). Rules reported by The National (24 October 2023) say walkers in Ras Al Khaimah register via a code at the start of each trail, that 'you cannot hike alone', that groups of 10 or more need a qualified leader and that breaching the rules carries fines of Dh50,000; the article does not mention Jebel Yanas, and whether the rules or a registration code apply here is not confirmed. Khaleej Times (20 February 2021, quoting RAKTDA) reports a Dh10,000 penalty for organising treks without a permit. The Wikiloc 'Green Gate' track says the summit is private property with a locked gate. Last checked October 2026.",
+  "hours": "No opening hours are published. Wikiloc ('Gorge-Wadi Loop') says security at the quarry-road gate asks visitors to sign in, which suggests access can be controlled; whether it is staffed, and at what hours, is not confirmed. Last checked October 2026.",
+  "closure": "Current status cannot be confirmed. No closure notice for Jebel Yanas was found in government or press sources in October 2026. Past reports: twopassportspacked (visit February 2022) found a closed gate blocking access to the very top of the mountain and a locked, unattended paragliding launch site; MissionsOffroad (published February 2020) says the Wadi Naqab entrance, where a police car stood, was closed for about two months for a film shoot. The Wikiloc 'Green Gate' track says the summit is private property behind a locked gate. Visit Ras Al Khaimah and Wikipedia do not describe Yanas access rules. Last checked October 2026. Ask Ras Al Khaimah Police (999 for emergencies) or RAKTDA before relying on access, and tell someone where you are going.",
+  "safety": [
+    "No official trail, grade, waymarks or rescue plan exist for Jebel Yanas. Routes are walker-recorded tracks (Wikiloc, MissionsOffroad). Go with a licensed guide unless you have walked it before.",
+    "Rescues on or near Jebel Yanas reported in the press: 12 March 2020, a 26-year-old Emirati man with severe exhaustion in the Shuairi area, near Jabal Yanas, flown out by RAK Police Air Wing (Emarat Alyoum, 15 and 16 March 2020; Dubai Eye, 15 March 2020); 29 May 2020 (reported 30 May), three hikers with heat exhaustion airlifted from 'Jebel Janas' near the Baqal area (Dubai Eye); about 22 May 2021, a boy aged 2 years 9 months missing in the Jebel Yanas area, found by a local man in a hole after a six-hour Civil Defence search (Al Bayan, 22 May 2021; Dubai Eye, 30 May 2021); 10 November 2021, a 26-year-old Emirati man who rolled off the mountain, airlifted by the National Search and Rescue Centre (Gulf News, 10 November 2021). No death on Jebel Yanas was found in English or Arabic searches. These are the items found, not a complete list.",
+    "The road is a hazard in itself: untarred, boulder-strewn and with drop-offs (twopassportspacked). That writer reported that a car had gone over the edge a few days before a February 2022 visit, with no injuries. Wikiloc and MissionsOffroad advise a 4x4, SUV or AWD for the last stretch.",
+    "Flash floods: the mountain is very wet when it rains. The National Center of Meteorology recorded 244mm at Jabal Yanas on 27 March 2026, the highest figure of that storm (Emarat Alyoum, 28 March 2026). MissionsOffroad says a nearby steep road can be damaged by rain, with loose stones and leaves. Visit Ras Al Khaimah says never to hike Wadi Naqab when rain is expected or after rainfall; the Yanas loops drop into wadis. No flood threshold for Yanas is published. Do not go in or after rain.",
+    "Heat and sun: the ridge is mostly unshaded (MissionsOffroad, Wikiloc). Visit Ras Al Khaimah advises October to April for Wadi Naqab. Dubai Eye reported three hikers with heat exhaustion in late May 2020. Do not walk in summer.",
+    "Terrain: the gorge loops have steep descents, loose rock, a rock wall, and a final scramble of about 100m or more (Wikiloc). The Gorge-Wadi loop author strongly recommends trekking poles and some reviewers say the second half is hard for anyone not ready for repeated descents and climbs. Markings thin out after the village.",
+    "Land use: farms, houses, cemeteries and an old village lie on the route, and people live there. Stay out of buildings, fences and farms and do not open gates (Wikiloc 'Azabat Village'). The summit on the Green Gate route is private property behind a locked gate.",
+    "Border: no source places the Yanas ridge walk on the Oman border, but routes that go on to Jebel Tafif may approach it, and a separate Wikiloc track from Wadi Bih describes white border posts there. Do not continue towards the border without confirming where you may lawfully walk.",
+    "RAK Police advice to hikers: tell someone your route, carry enough food and water, charge your phone, avoid rugged terrain in unstable weather, and do not hike after dark (Gulf News, 2018 and 5 December 2025). A 2018 Gulf News report quotes police asking hikers to inform them of trips on 999.",
+    "Do not rely on mobile signal. Walkers' GPS tracks can be inaccurate in wadi sections (Wikiloc authors)."
+  ],
+  "carry": [
+    "At least 3 litres of water per person; more in warm weather",
+    "Food and a rehydration drink",
+    "Offline map and a GPS track loaded on a charged phone, plus a power bank",
+    "Sturdy boots with good grip",
+    "Trekking poles (recommended by the Wikiloc authors for the descents and climbs)",
+    "Sunscreen, hat and sunglasses",
+    "First aid kit",
+    "Head torch as a precaution",
+    "Warm layer for early or late hours on the mountain",
+    "Bag to carry out all rubbish"
+  ],
+  "emergency": "Police 999, ambulance 998, fire and Civil Defence 997 (Visit Ras Al Khaimah emergency numbers page, dated 29 September 2022). No mountain rescue number was found. Last checked October 2026.",
+  "driveNote": "Visit Ras Al Khaimah gives about 40 minutes from Ras Al Khaimah city and about 2 hours from Dubai to the Wadi Naqab trailhead (page dated March 2026). Gigaplaces and twopassportspacked give no drive time or distance to the end of the Jebel Yanas summit road. Added time for the unpaved climb is not confirmed. No source gives a drive time from Abu Dhabi.",
+  "intro": "Jebel Yanas is a mountain above Wadi Naqab in Ras Al Khaimah with no official trail, grade or waymarks. Walkers use an unpaved road to the summit area, then follow orange-marked paths between mountain villages. It suits the cooler months, a 4x4 or high-clearance car and a guide if you have not been before.",
+  "seoTitle": "Jebel Yanas Hike, Ras Al Khaimah: Route, Access, Safety",
+  "seoDesc": "Jebel Yanas walk near Wadi Naqab, Ras Al Khaimah: unofficial route, about 13km, 4x4 road, private land, flood and heat risks, and past rescues.",
+  "sources": [
+    {
+      "label": "MissionsOffroad: Jebel Yanas winter in the Hajar Mountains (trail start, viewpoint and camp coordinates, 13km, orange markers, 4x4 note; published 23 Feb 2020, modified 1 Jun 2024)",
+      "url": "https://missionsoffroad.com/jebel-yanas-winter-in-hajar-mountains/"
+    },
+    {
+      "label": "twopassportspacked: Jebel Yanas (security checkpoint, road condition, closed gate near the top, car over the edge; visited Feb 2022, modified 5 Apr 2026)",
+      "url": "https://twopassportspacked.com/jebel-yanas/"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Jebel Yanas-Gorge-Wadi Loop (quarry-road gate and sign-in, vehicle advice, route, cemeteries)",
+      "url": "https://www.loc.wiki/hiking-trails/jebel-yanas-gorge-wadi-loop-64352416"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Jebel Yanas Loop - Mountain Villages and Gorge Scramble (Difficult, farm and old village site, scramble)",
+      "url": "https://www.loc.wiki/hiking-trails/jebel-yanas-loop-mountain-villages-and-gorge-scramble-64356621"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Wadi Naqab to Yanas Green Gate (start coordinates, under 3km, 600m, locked gate, private property)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-naqab-to-yanas-green-gate-rak-85740413"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Azabat Village on Yanas Mountain (start coordinates, residents, 4x4 note)",
+      "url": "https://www.loc.wiki/hiking-trails/azabat-village-on-yanas-mountain-mistake-in-end-point-plateau-and-wadi-hike-34929803"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Jebel Yanas-Sal village-Jebel Tafif Summit (one-way route to Tafif, 20m rope for a waterfall descent)",
+      "url": "https://www.loc.wiki/hiking-trails/the-hike-when-i-led-ben-robbins-133330435"
+    },
+    {
+      "label": "Wikiloc via loc.wiki: Wadi Bih UAE to Jebel Tafif Oman (border posts, summit in Oman)",
+      "url": "https://www.loc.wiki/hiking-trails/wadi-bih-uae-to-jebel-tafif-oman-65959122"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: Wadi Naqab hike guide (drive times, 4x4, no permit, groups of 10, flood and heat advice; dated 5 Mar 2026)",
+      "url": "https://visitrasalkhaimah.com/?p=84402"
+    },
+    {
+      "label": "Visit Ras Al Khaimah: UAE emergency numbers (dated 29 Sep 2022)",
+      "url": "https://visitrasalkhaimah.com/blog/what-are-the-emergency-services-numbers-in-uae-police-ambulance-fire-coastguard/"
+    },
+    {
+      "label": "Gigaplaces: Jebel Yanas (925m) (elevation figure, dirt road)",
+      "url": "https://www.gigaplaces.com/en/place-jebel-yanas-925m/"
+    },
+    {
+      "label": "Wikipedia: Wadi Naqab (cuts into Yanas Mountain; dam; flash floods)",
+      "url": "https://en.wikipedia.org/wiki/Wadi_Naqab"
+    },
+    {
+      "label": "Wikipedia: Baqal, Ras Al Khaimah (village access on foot, trail from Wadi Naqab)",
+      "url": "https://en.wikipedia.org/wiki/Baqal,_Ras_Al_Khaimah"
+    },
+    {
+      "label": "Wikipedia: Shairi, Ras Al Khaimah (coordinates 25°41'22\"N 56°05'18\"E; reached on foot)",
+      "url": "https://en.wikipedia.org/wiki/Shairi,_Ras_Al_Khaimah"
+    },
+    {
+      "label": "Pinay Hakawati: RAKTRAV 2020 (FOX.AE group; day 6 Wadi Sal - Yanas Mountain - Wadi Naqab, 27.89km; not official)",
+      "url": "https://pinayhakawati.com/raktrav-longest-hiking-trail-in-uae/"
+    },
+    {
+      "label": "Emarat Alyoum, 28 March 2026: 244mm at Jabal Yanas on 27 March 2026 (NCM)",
+      "url": "https://www.emaratalyoum.com/local-section/other/2026-03-28-1.2029532"
+    },
+    {
+      "label": "Emarat Alyoum, 15 March 2020: air wing rescue in Shuairi area near Jabal Yanas (Arabic)",
+      "url": "https://www.emaratalyoum.com/local-section/accidents/2020-03-15-1.1320287"
+    },
+    {
+      "label": "Emarat Alyoum, 16 March 2020: same rescue, further detail (Arabic)",
+      "url": "https://www.emaratalyoum.com/local-section/accidents/2020-03-16-1.1320594"
+    },
+    {
+      "label": "Dubai Eye, 15 March 2020: man rescued from Jebel Yanis",
+      "url": "https://www.dubaieye1038.com/news/local/man-rescued-from-ras-al-khaimas-jebal-yunis"
+    },
+    {
+      "label": "Dubai Eye, 30 May 2020: three exhausted hikers airlifted, 'Jebel Janas'",
+      "url": "https://dubaieye1038.com/news/local/3-exhausted-hikers-airlifted-to-safety-in-ras-al-khaimah"
+    },
+    {
+      "label": "Al Bayan, 22 May 2021: child missing in the Jebel Yanas area (Arabic)",
+      "url": "https://www.albayan.ae/uae/accidents/2021-05-22-1.4169860"
+    },
+    {
+      "label": "Dubai Eye, 30 May 2021: man honoured for helping find the child on Jebel Yanas",
+      "url": "https://dubaieye1038.com/news/local/emirati-honoured-for-helping-rescue-toddler-on-mountain"
+    },
+    {
+      "label": "Gulf News, 10 November 2021: injured Emirati man rescued from Jebel Yanis",
+      "url": "https://gulfnews.com/uae/government/uae-injured-emirati-man-rescued-from-jebel-yanis-in-ras-al-khaimah-1.83596808"
+    },
+    {
+      "label": "The National, 24 October 2023: new UAE hiking rules (RAK registration, fines)",
+      "url": "https://www.thenationalnews.com/uae/2023/10/24/uae-hiking-season-gets-under-way-with-new-rules-to-improve-safety/"
+    },
+    {
+      "label": "Khaleej Times, 20 February 2021: Dh10,000 fine for organising treks in RAK without a licence",
+      "url": "https://www.khaleejtimes.com/uae/emergencies/uae-dh10000-fine-for-organising-treks-in-rak-without-a-licence?amp=1"
+    },
+    {
+      "label": "Gulf News, updated 5 December 2025: holiday hikers warned as RAK Police step up mountain patrols",
+      "url": "https://gulfnews.com/amp/story/uae%2Ftransport%2Fholiday-hikers-warned-as-rak-police-step-up-mountain-patrols-1.500370078"
+    },
+    {
+      "label": "Gulf News, 2018: residents urged to contact police before mountain trips",
+      "url": "https://gulfnews.com/news/uae/emergencies/residents-urged-to-contact-police-before-mountain-trips-1.2281803"
+    },
+    {
+      "label": "Wikimedia Commons: Wadi Naqab - 13.jpg (photo, CC0)",
+      "url": "https://commons.wikimedia.org/wiki/File:Wadi_Naqab_-_13.jpg"
+    }
+  ],
+  "lastChecked": "2026-10-08",
+  "_doubts": [
+    "ROUTE NOT DEFINED OFFICIALLY: there is no government, RAK Leisure or RAKTDA page for a Jebel Yanas hike. Visit Ras Al Khaimah's Wadi Naqab guide (dated 5 March 2026) and its hiking pages do not name Yanas. Routes here are walker-recorded: one blog (MissionsOffroad, about 13km out and back), three Wikiloc loops, one Wikiloc climb from Wadi Naqab, and a 2020 group event. Which is 'the usual route' is a judgement. The ridge walk from the end of the summit road is used because it has a named coordinate source.",
+    "DISTANCE: only the MissionsOffroad figure (about 13km, with 'many variations') is given in readable text. The Wikiloc loop pages are rendered by script and their statistics could not be read; the Wikiloc site itself returned 403 to the fetch tool, and the mirror loc.wiki was used. A fact-checker should open the Wikiloc pages in a browser for distance, ascent and duration. Time is also not confirmed.",
+    "GRADE: Moderate is my judgement. Sources range from 'not very challenging' (MissionsOffroad) to Difficult (the Wikiloc 'Mountain Villages and Gorge Scramble' author). If a printed card or page quotes a grade it should say it is unofficial.",
+    "ACCESS AND PRIVATE LAND: the Wikiloc 'Green Gate' page says the summit is private property behind a locked green gate in a farm fence. The Wikiloc 'Azabat' page says residents live in the villages. Whether the farm at the top is the same place as the village area on the ridge walk is not confirmed. No source says walking on the ridge itself is forbidden, and none gives a legal right of way. Ask RAKTDA or RAK Police.",
+    "GATE AND CHECKPOINT: twopassportspacked (visit February 2022) says a security checkpoint at the start of the climb opened the gate without questions; Wikiloc ('Gorge-Wadi Loop', undated) says a gate on the quarry road, just before the Wadi Naqab turn-off, has security who ask for a sign-in; MissionsOffroad says a police car was at the Wadi Naqab entrance during a closure in early 2020. These may be one gate or different gates, and none is confirmed as in use in October 2026. The place page's claim that visitors are waved through free of charge goes beyond what twopassportspacked states.",
+    "CLOSED GATE NEAR THE TOP: twopassportspacked says a closed gate blocked access to the very top in February 2022, and that the paragliding launch site was locked and unattended. The existing place page says a vehicle had gone over the edge 'close to where a safety gate was later closed'; the source only says the car went over the edge a few days before the visit and that a gate was closed. Current status unknown.",
+    "REGISTRATION RULES: The National (24 October 2023) reports that walkers in RAK must register via a code at the start of trails, that 'you cannot hike alone', and that fines of Dh50,000 apply. No other source repeating this was found, the article does not mention Yanas, and no registration code or sign was reported at Jebel Yanas. Treat as unconfirmed for this route. Khaleej Times (20 February 2021) reports a Dh10,000 fine for organising treks without a RAKTDA permit; that concerns organisers.",
+    "BORDER: no source gives the distance from the Yanas ridge to the Oman border, so none is stated. A Wikiloc track from Wadi Bih to Jebel Tafif describes white border posts and a summit in Oman. The Wikiloc 'Jebel Yanas-Sal village-Jebel Tafif Summit' route is titled as reaching a Tafif summit; whether that summit and the Omani Jebel Tafif are the same peak is not confirmed. No restricted military area, border-zone notice or private-land notice was found for the ridge walk itself. Do not rely on this as clearance.",
+    "RESCUE MATCHING: 12 March 2020 (Emarat Alyoum 15 and 16 March 2020 say the call was at 3.05pm 'last Thursday'; the Dubai Eye report of the 26-year-old is timed Sunday 15 March 2020, 16:26). Same incident assumed from matching age, hospital and area, not confirmed. The Arabic spelling in the articles is ينس. The Emarat Alyoum articles place the Shuairi area 'near Jabal Yanas'; the Shuairi village (Shairi) is a separate village on the Wadi Naqab side, so the incident may not have been on the ridge walk.",
+    "RESCUE MATCHING: Dubai Eye (30 May 2020) says 'Jebel Janas' near the 'Saliyah Al Baqal area' at '4,000 feet', with the alert at 6.30am on Friday. Neither 'Yanas' nor 'Yanis' appears. Taking this as Jebel Yanas is an inference from the spelling and the Baqal area. The 4,000 feet figure is the article's and does not match the 925m (about 3,035 feet) Gigaplaces gives for Jebel Yanas.",
+    "RESCUE DATES: the Gulf News 10 November 2021 date is the article's own date, 'today'. The Al Bayan article is dated 22 May 2021 and says the search lasted six continuous hours; the child's disappearance date is taken as that day. Dubai Eye (30 May 2021) says 'last week'. The Gulf News Nov 2021 injured man is 26 years old, as in March 2020; two different incidents are assumed, as the dates and units differ.",
+    "NAME VARIANTS USED IN SEARCHES: Jebel Yanas, Jabal Yanas, Yanas Mountain, Jebel Yanis, Jebel Yunis, Jebel Janas, Jebal Yans, and in Arabic جبل يناس, جبل ينس, جبل يانس. Press Arabic uses ينس (Emarat Alyoum, Al Bayan). The task gave جبل يانس; the page should check which form RAK sources use before printing Arabic.",
+    "COORDINATES: the trailhead pin is from MissionsOffroad (DMS) and is within about 40m of a Wikiloc start. The earlier place file mentions a separate 'Yanas Mountain' marker near 25.69, 56.08: Wikipedia gives Shairi village as 25°41'22\"N 56°05'18\"E, which is that area, so the marker may be Shairi or Wadi Naqab rather than the summit road. Wikipedia gives the Wadi Naqab dam at 25.6948, 56.0454 (listed as the wadi's coordinates).",
+    "ELEVATION: Gigaplaces gives 925m without a method or source. The earlier place file records press calling Jabal Yanas the UAE's third-highest peak, which is not reconcilable with 925m; none of these is used on the page. The 244mm rainfall figure is for one storm (27 March 2026), not a seasonal average.",
+    "PHOTO: the closest free photo found is 'Wadi Naqab - 13.jpg' by IbrahimKumar (CC0), tagged to 25.7223, 56.1429 ('Kub Canyon area'), about 3km east-south-east of the trailhead pin by my reading. It shows a canyon, not the ridge or villages. The Commons file named 'Jebel yanas.jpg' (DonaldEsola, CC BY-SA 4.0, Wiki Loves Earth 2024) has the caption 'Mleiha', a Sharjah location, so it was not used. Files named 'Yanas 0xxxx.jpg' are in Peru.",
+    "SOURCES NOT RE-OPENED: the earlier place page cites Ibn Battuta Travel and Mindtrip; neither was used here. Visit Jebel Jais, which grades Jebel Jais trails, does not cover Jebel Yanas. Wikiloc itself returned 403, so Wikiloc statistics (distance, ascent, dates) were not read; only text mirrored at loc.wiki was read.",
+    "FACTS FROM THE EARLIER PLACE PAGE NOT CONFIRMED: 'a short way up, a guarded checkpoint is a formality with no fee or documents'; 'old, abandoned stone-built settlement near the summit' (sources here describe villages with residents, some old ruins, and farms; none of the sources read here uses the word 'abandoned' for a settlement at the summit); no source was found for the 'toilets', 'food' or 'facilities' entries."
+  ],
+  "grade": "Moderate",
+  "nearPlace": "jabal-yanas",
+  "facts": {
+    "distance": "About 13 km (one track)",
+    "climb": "Not confirmed",
+    "time": "Not confirmed",
+    "shape": "Out and back"
+  },
+  "photo": {
+    "src": "/uploads/hikes/wadi-naqab-to-wadi-kub.jpg",
+    "w": 1280,
+    "h": 720,
+    "edits": "resized",
+    "author": "IbrahimKumar",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Wadi_Naqab_-_13.jpg",
+    "what": "A canyon in Wadi Naqab, about 3km from the start; it does not show the Yanas ridge",
+    "alt": "Two small figures walking along a pale rock floor between tall limestone walls in a canyon in Wadi Naqab",
+    "commonsFile": "File:Wadi Naqab - 13.jpg",
+    "whatFull": "A rock canyon in Wadi Naqab, tagged to the Kub Canyon area about 3km from the Jebel Yanas trailhead pin; it shows the wadi below the mountain, not the Yanas ridge or its villages"
+  },
+  "page": {
+    "gradeBasis": "No official grade exists. Walkers rate the ridge walk as not very challenging to Moderate, and the gorge loops as Difficult. Moderate is the judgement for the main ridge walk; the loops are harder.",
+    "status": "Unmarked route: there is no official trail, waymarks or grade. Go with a licensed guide if you have not walked it before.",
+    "route": [
+      "The usual walk starts at the end of the unpaved summit road on Jebel Yanas, reached by the Wadi Naqab road. One walker records about 13km out and back on a path marked with orange paint on stones: downhill on the way out, uphill on the way back, with a first viewpoint over the mountain villages after about an hour.",
+      "Other walkers have recorded loops through the villages and down into a wadi and gorge, with a short scramble up a rock wall and a steep loose climb out. One is rated Difficult by its author. Markings thin out after the village, so keep a GPS track loaded.",
+      "A steeper alternative climbs from Wadi Naqab to a locked green gate on a farm at the top. The author says the summit there is private property and advises not going past the gate. People live in the villages: stay out of buildings, fences and farms."
+    ],
+    "distance": "About 13km out and back, from one walker (MissionsOffroad). Variations are shorter and longer. No official figure.",
+    "climb": "Not confirmed. The climb from Wadi Naqab to the green gate is up to about 600m in under 3km, says its Wikiloc author.",
+    "time": "Not confirmed. About 1 hour to the first viewpoint; about 3 hours for one loop, from a commenter.",
+    "start": "The end of the Jebel Yanas summit road, reached by the Wadi Naqab road out of Ras Al Khaimah city.",
+    "coordNote": "The pin comes from a walker's blog and agrees with a second walker's track to about 40m. Check it on the ground.",
+    "parking": "No official car park. Walkers report parking at the end of the road, or earlier on the road if the car cannot reach it. Not confirmed.",
+    "vehicle": "A 4x4 or high-clearance car is advised. The road is unpaved, with boulders and drop-offs. One blog says a sedan can probably reach the top; others say an SUV or 4x4.",
+    "getting": "Visit Ras Al Khaimah says the Wadi Naqab trailhead is about 40 minutes from Ras Al Khaimah city and about 2 hours from Dubai. Time to the summit road is not confirmed.",
+    "bestMonths": "October to April is advised for nearby Wadi Naqab. Do not walk it in summer.",
+    "startTime": "Start early and finish before dark. Avoid midday, even in winter.",
+    "shade": "Little. The ridge is mostly in the sun.",
+    "water": "No source on the route. Carry all you need.",
+    "signal": "Unknown. Assume none and download an offline map.",
+    "fees": "No fee is mentioned in the sources opened. Last checked October 2026.",
+    "permits": "No Jebel Yanas permit was found. A 2023 report says walkers in Ras Al Khaimah must register at trail starts and cannot hike alone; it does not mention Yanas, so check before you go. Groups of 10 or more should contact the organisers of nearby Wadi Naqab in advance. Land at the summit of the Green Gate route is private property behind a locked gate (Wikiloc author), and people live in the villages. No right of way is confirmed. Last checked October 2026.",
+    "hours": "No hours are published. A security gate on the access road may ask you to sign in. Not confirmed. Last checked October 2026.",
+    "closure": "Not confirmed. No notice was found in October 2026. Walkers have reported a closed gate near the summit (February 2022) and a locked green gate in a farm fence at the top of the Wadi Naqab climb, where the Wikiloc author says the summit is private property. A security gate on the access road may also ask you to sign in. Ask RAKTDA or Ras Al Khaimah Police before you go. Last checked October 2026.",
+    "safety": [
+      "There is no official trail, rescue plan or waymarking. Go with a licensed guide if you have not walked it before.",
+      "Do not go in or after rain. The National Center of Meteorology recorded 244mm at Jabal Yanas on 27 March 2026 (Emarat Al Youm), and the loops drop into wadis that can flood.",
+      "Do not walk in summer. The ridge has little shade, and hikers have been airlifted with exhaustion or heat exhaustion in this area (March and May 2020).",
+      "Police and Civil Defence rescues near Jebel Yanas were reported in March 2020, May 2020, May 2021 and November 2021, including a fall and a missing child. This is not a complete list.",
+      "Expect steep loose ground, a rock wall and a final scramble on the gorge loops. Trekking poles are recommended. Stay out of farms, houses and fenced land, and do not open gates.",
+      "Do not cross the border. Routes that go on to Jebel Tafif may approach it, and one walker's track from Wadi Bih describes white border posts there.",
+      "Tell someone your route and return time. Do not rely on mobile signal, and do not hike after dark.",
+      "The summit road has drop-offs. Drive slowly in a suitable vehicle."
+    ],
+    "carry": [
+      "At least 3 litres of water each",
+      "Food and rehydration drink",
+      "Offline map and GPS track",
+      "Sturdy boots with good grip",
+      "Trekking poles",
+      "Sunscreen, hat and sunglasses",
+      "First aid kit and head torch",
+      "Charged phone and power bank"
+    ],
+    "emergency": "Police 999 · Ambulance 998 · Civil Defence 997",
+    "notConfirmed": [
+      "Where you may lawfully walk. Parts of the mountain are private farmland and the summit gate is locked.",
+      "Whether the access gate is staffed, whether you must sign in, and whether trail registration applies.",
+      "The distance, climb and time of each variation. Only one 13km figure was found.",
+      "Current road and gate conditions. A gate near the summit was closed in 2022."
+    ]
+  },
+  "factsFull": {
+    "distance": "About 13 km out and back (one walker's track); no official figure",
+    "climb": "Not confirmed",
+    "time": "Not confirmed; about 1 hour to the first viewpoint",
+    "shape": "Out and back (loops are variations)"
+  },
+  "report": {
+    "distance": "About 13 km (one track)",
+    "climb": "Not confirmed",
+    "time": "Not confirmed"
+  },
+  "areaFull": "Jebel Yanas, a mountain in the Hajar range reached by the Wadi Naqab road out of Ras Al Khaimah city. The walk starts at the end of the unpaved summit road, about 3km by straight line north-east of the start used by one Wikiloc track from Wadi Naqab (25.715457, 56.087495)."
+}

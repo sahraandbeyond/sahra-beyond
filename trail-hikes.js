@@ -24,6 +24,10 @@
 const fs = require('fs'), path = require('path');
 
 const ORDER = ['wadi-shees', 'al-taiba', 'al-rabi', 'al-rafisah', 'al-riham', 'wadi-shah'];   // card numbers 1..6, never reorder
+/* 8 Oct 2026 (Faheem): more Ras Al Khaimah hikes, not on the cards and never numbered. Unmarked routes
+   carry a status line from their data. Held back (identity or access not confirmed): Wadi Al Yebah,
+   Wadi Al Ghail, Jebel Mebrah, in content/hikes/_held/. */
+const EXTRA = ['jebel-jais-hike', 'hidden-oasis', 'wadi-naqab-to-wadi-kub', 'jebel-yanas', 'wadi-qadaah'];
 const UTM = n => `?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-${n}`;
 
 /* one scale across the six (handover: state the basis, use one scale) */
@@ -35,7 +39,9 @@ const SCALE = [
 const NOTICE = {
   'al-taiba': 'Fujairah trails are open only in the official hiking season, which the operator announces each year. The 2026 to 2027 season opened on 25 September 2026 (Khaleej Times, 1 October 2026). Confirm with Fujairah Adventures before you travel.',
   'al-riham': 'Fujairah trails are open only in the official hiking season, which the operator announces each year. The 2026 to 2027 season opened on 25 September 2026 (Khaleej Times, 1 October 2026). The trailhead and parking for this route are not confirmed by the operator: read the trailhead notes below and confirm with Fujairah Adventures before you travel.',
-  'wadi-shah': 'Open status not confirmed. On 6 October 2026 the operator’s hiking page said the trails were open, while its home page still showed a seasonal pause and another source reported all trails closed. Trail works are also reported at the Hidden Oasis, the midpoint of this loop. Ring or email the operator before you travel.'
+  'wadi-shah': 'Open status not confirmed. On 6 October 2026 the operator’s hiking page said the trails were open, while its home page still showed a seasonal pause and another source reported all trails closed. Trail works are also reported at the Hidden Oasis, the midpoint of this loop. Ring or email the operator before you travel.',
+  'jebel-jais-hike': 'Open status not confirmed. On 8 October 2026 the operator’s hiking page said the trails were open, while its home page still showed a seasonal pause and another source (14 September 2026) listed the Jais Viewing Deck Park, where this trail starts, as closed. Confirm with Visit Jebel Jais before you drive up.',
+  'hidden-oasis': 'Open status not confirmed, and trail works are reported at the oasis itself. On 8 October 2026 the operator said the trails were open while another source said they were closed. Confirm with Visit Jebel Jais before you go.'
 };
 
 module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
@@ -49,6 +55,16 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
     if (/\b(is|are) (perfectly |completely |very )?safe\b/i.test(JSON.stringify([d.intro, d.page]))) throw new Error(`hikes: ${slug} must not call a route safe`);
     return d;
   });
+  const E = EXTRA.map(slug => {
+    const d = JSON.parse(fs.readFileSync(path.join(dir, slug + '.json'), 'utf8'));
+    if (d.slug !== slug || d.n) throw new Error(`hikes: ${slug} is not a card route and must not carry a number`);
+    if (!d.page || !Array.isArray(d.page.route) || !Array.isArray(d.page.notConfirmed) || !d.page.status) throw new Error(`hikes: ${slug} needs the reader-facing page text and a status line`);
+    if (!d.sources || d.sources.length < 3 || !d.lastChecked || !Array.isArray(d._doubts)) throw new Error(`hikes: ${slug} needs sources, lastChecked and _doubts`);
+    if (!d.trailhead || typeof d.trailhead.lat !== 'number' || typeof d.trailhead.lng !== 'number') throw new Error(`hikes: ${slug} needs trailhead coordinates`);
+    if (/\b(is|are) (perfectly |completely |very )?safe\b/i.test(JSON.stringify([d.intro, d.page]))) throw new Error(`hikes: ${slug} must not call a route safe`);
+    return d;
+  });
+  const ALL = H.concat(E);
   const list = v => Array.isArray(v) ? v : String(v || '').split(/\n\n+/).filter(Boolean);
   const p = v => list(v).map(x => `<p>${esc(x)}</p>`).join('');
   const na = (v, fallback) => (v === null || v === undefined || v === '') ? `<span class="hk-na">${esc(fallback)}</span>` : esc(v);
@@ -133,14 +149,15 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
 
   function page(d) {
     const th = d.trailhead, P = d.page, url = `${SITE}/trail/hikes/${d.slug}/`;
-    const others = H.filter(x => x.slug !== d.slug && x.grade === d.grade).concat(H.filter(x => x.grade !== d.grade)).slice(0, 3);
+    const pool = d.n ? H : E.concat(H);
+    const others = pool.filter(x => x.slug !== d.slug && x.grade === d.grade).concat(pool.filter(x => x.slug !== d.slug && x.grade !== d.grade)).slice(0, 3);
     const place = d.placeSlug || d.nearPlace;
     const placeName = place ? JSON.parse(fs.readFileSync(path.join(root, 'content', 'locations', place + '.json'), 'utf8')).name : null;
     const body = `${CSS}
 <section class="hk-hero">
   ${img(d, 'hk-hero-img', false)}
   <div class="hk-hero-in">
-    <p class="hk-crumbs"><a href="/trail/">Sahra Trail</a> &rsaquo; <a href="/trail/hikes/">Six UAE hikes</a> &rsaquo; Route ${d.n} of 6</p>
+    <p class="hk-crumbs"><a href="/trail/">Sahra Trail</a> &rsaquo; <a href="/trail/hikes/">UAE hikes</a> &rsaquo; ${d.n ? `Route ${d.n} of 6` : 'Ras Al Khaimah'}</p>
     <span class="hk-badge ${gcls(d.grade)}">${esc(d.grade)}</span>
     <h1>${esc(d.name)}</h1>
     <p class="hk-where">${esc(d.area)}</p>
@@ -154,12 +171,13 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
     <div class="hk-stat"><small>Typical time</small><b>${esc(d.facts.time)}</b></div>
     <div class="hk-stat"><small>Shape</small><b>${esc(d.facts.shape)}</b></div>
   </div>
+  ${!d.n && d.page.status ? `<div class="hk-notice" role="note"><b>${d.official ? 'Route status' : 'Unmarked route'}</b>${esc(d.page.status)}</div>` : ''}
   ${NOTICE[d.slug] ? `<div class="hk-notice" role="note"><b>Check before you go</b>${esc(NOTICE[d.slug])}</div>` : ''}
   <p class="hk-intro">${esc(d.intro)}</p>
 
   <section class="hk-sec"><h2>Why it is graded ${esc(d.grade)}</h2>
     <p>${esc(P.gradeBasis)}</p>
-    <p>We use one scale across all six routes: <a href="/trail/hikes/#scale">how we grade</a>.</p>
+    <p>We use one scale across all our routes: <a href="/trail/hikes/#scale">how we grade</a>.</p>
   </section>
 
   <section class="hk-sec"><h2>The route</h2>${p(P.route)}
@@ -216,16 +234,16 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
 
   <section class="hk-sec"><h2>Sources</h2>
     <ul class="hk-src">${d.sources.filter(x => /^https?:\/\//.test(x.url || '')).map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener nofollow">${esc(s.label)}</a></li>`).join('')}</ul>
-    <p class="hk-foot">Last checked ${when(d)} &middot; Route ${d.n} of 6 &middot; ${esc(SITE.replace('https://', ''))}/h/${d.n}</p>
+    <p class="hk-foot">Last checked ${when(d)}${d.n ? ` &middot; Route ${d.n} of 6 &middot; ${esc(SITE.replace('https://', ''))}/h/${d.n}` : ''}</p>
   </section>
 
   <section class="hk-sec"><h2>More</h2>
     <div class="hk-next">
-      ${others.slice(0, 1).map(o => `<a href="/trail/hikes/${o.slug}/"><small>${esc(o.grade)} &middot; route ${o.n}</small><b>${esc(o.name)}</b><span>${esc(o.facts.distance)}</span></a>`).join('')}
+      ${others.slice(0, 1).map(o => `<a href="/trail/hikes/${o.slug}/"><small>${esc(o.grade)}${o.n ? ` &middot; route ${o.n}` : ' &middot; Ras Al Khaimah'}</small><b>${esc(o.name)}</b><span>${esc(o.facts.distance)}</span></a>`).join('')}
       ${placeName ? `<a href="/locations/${place}/"><small>Place guide</small><b>${esc(placeName)}</b><span>${d.placeSlug ? 'Our guide to the place this route starts from.' : 'Our guide to the nearest place we cover.'}</span></a>` : `<a href="/hiking/"><small>Guide</small><b>Hiking in the UAE</b><span>Season, heat, water and rules by emirate.</span></a>`}
       <a href="/trail/"><small>Sahra Trail</small><b>Sahra Trail Tee and 2-in-1 Shorts</b><span>Our running and trail kit, designed in the UAE.</span></a>
     </div>
-    <p style="margin-top:16px"><a href="/trail/hikes/">All six routes, by grade &rarr;</a></p>
+    <p style="margin-top:16px"><a href="/trail/hikes/">All our UAE hikes, by grade &rarr;</a></p>
   </section>
 </main>`;
     const jsonld = [
@@ -234,28 +252,32 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
         publisher: { '@type': 'Organization', name: 'Sahra & Beyond', url: SITE + '/' } },
       { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Sahra Trail', item: SITE + '/trail/' },
-        { '@type': 'ListItem', position: 2, name: 'Six UAE hikes', item: SITE + '/trail/hikes/' },
+        { '@type': 'ListItem', position: 2, name: 'UAE hikes', item: SITE + '/trail/hikes/' },
         { '@type': 'ListItem', position: 3, name: d.name, item: url }] }
     ];
     write(`trail/hikes/${d.slug}/index.html`, shell({ title: d.seoTitle, desc: d.seoDesc, canonical: url, jsonld, bodyHtml: body, activeNav: 'trail', bodyClass: 'buy-page hike-page', image: d.photo ? SITE + d.photo.src : undefined }));
   }
-  H.forEach(page);
+  ALL.forEach(page);
 
   /* ---- the index ---- */
   const iurl = `${SITE}/trail/hikes/`;
-  const ititle = 'Six UAE Hikes by Grade: Easy, Moderate, Difficult', idesc = 'Six UAE hiking routes, two easy, two moderate and two difficult, each with distance, climb, time, trailhead coordinates and the sources behind every figure.';
-  const card = d => `<a class="hk-card" href="/trail/hikes/${d.slug}/">${d.photo ? img(d, 'hk-card-img', true) : `<span class="hk-card-ph">No photo yet</span>`}<span class="hk-card-b"><span class="hk-badge ${gcls(d.grade)}" style="align-self:flex-start">${esc(d.grade)} &middot; ${d.n}</span><h3>${esc(d.name)}</h3><p>${esc(d.area)}</p><span class="hk-card-m">${esc(d.report.distance)} &middot; ${esc(d.report.time)}</span></span></a>`;
+  const ititle = 'UAE Hikes by Grade: Sharjah, Fujairah, Ras Al Khaimah', idesc = 'UAE hiking routes by grade, each with distance, climb, time, trailhead coordinates and the sources behind every figure.';
+  const card = d => `<a class="hk-card" href="/trail/hikes/${d.slug}/">${d.photo ? img(d, 'hk-card-img', true) : `<span class="hk-card-ph">No photo yet</span>`}<span class="hk-card-b"><span class="hk-badge ${gcls(d.grade)}" style="align-self:flex-start">${esc(d.grade)}${d.n ? ` &middot; ${d.n}` : ''}</span>${!d.n && !d.official ? '<span class="hk-card-m">Unmarked route</span>' : ''}<h3>${esc(d.name)}</h3><p>${esc(d.area)}</p><span class="hk-card-m">${esc(d.report.distance)} &middot; ${esc(d.report.time)}</span></span></a>`;
   const ibody = `${CSS}
 <section class="hk-hero"><div class="hk-hero-in">
-  <p class="hk-crumbs"><a href="/trail/">Sahra Trail</a> &rsaquo; Six UAE hikes</p>
-  <h1>Six UAE hikes, by grade</h1>
+  <p class="hk-crumbs"><a href="/trail/">Sahra Trail</a> &rsaquo; UAE hikes</p>
+  <h1>UAE hikes, by grade</h1>
   <p class="hk-where">Two easy, two moderate and two difficult routes in Sharjah, Fujairah and Ras Al Khaimah. Each page gives the distance, the climb, the time, the trailhead and the sources behind every figure.</p>
 </div></section>
 <main class="hk-main">
   <section class="hk-sec" style="margin-top:26px"><p class="hk-intro">These are the routes on the cards that come with Sahra Trail orders. Each one is a specific walk from a named start, not a general area. Where no source gives a figure, the page says so.</p></section>
   ${['Easy', 'Moderate', 'Difficult'].map(g => `<section class="hk-sec"><h2>${g}</h2><div class="hk-list">${H.filter(d => d.grade === g).map(card).join('')}</div></section>`).join('')}
+  <section class="hk-sec" id="more-rak"><h2>More hikes in Ras Al Khaimah</h2>
+    <p>Five more routes in the Ras Al Khaimah mountains. They are not on the cards. Most are unmarked, with no official trail or grade, and some have a record of rescues: each page says so at the top. If you have not walked one before, go with a licensed guide.</p>
+    <div class="hk-list">${E.map(card).join('')}</div>
+  </section>
   <section class="hk-sec" id="scale"><h2>How we grade</h2>
-    <p>One scale across all six. Where a trail operator or authority publishes a grade, we start from it and say so on the route page; otherwise the grade rests on distance, climb, ground and how hard the way is to find.</p>
+    <p>One scale across every route. Where a trail operator or authority publishes a grade, we start from it and say so on the route page; otherwise the grade rests on distance, climb, ground and how hard the way is to find.</p>
     <ul class="hk-scale">${SCALE.map(([g, t]) => `<li><span class="hk-badge ${gcls(g)}">${g}</span><span>${esc(t)}</span></li>`).join('')}</ul>
   </section>
   <section class="hk-sec"><h2>Before any of them</h2>
@@ -264,8 +286,8 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
   </section>
 </main>`;
   write('trail/hikes/index.html', shell({ title: ititle, desc: idesc, canonical: iurl, bodyHtml: ibody, activeNav: 'trail', bodyClass: 'buy-page hike-page',
-    jsonld: [{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Six UAE hikes by grade', url: iurl,
-      itemListElement: H.map(d => ({ '@type': 'ListItem', position: d.n, name: d.name, url: `${SITE}/trail/hikes/${d.slug}/` })) }] }));
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'UAE hikes by grade', url: iurl,
+      itemListElement: ALL.map((d, i) => ({ '@type': 'ListItem', position: i + 1, name: d.name, url: `${SITE}/trail/hikes/${d.slug}/` })) }] }));
 
   /* ---- /h/<n>/ : the address the QR encodes. Static, so it survives a host change. ---- */
   H.forEach(d => {
@@ -281,7 +303,8 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
   const next = JSON.stringify(Object.assign({}, V, { redirects: keep.concat(mine) }), null, 2) + '\n';
   if (next !== fs.readFileSync(vp, 'utf8')) fs.writeFileSync(vp, next);
 
-  console.log(`  ✓ Sahra Trail hikes: /trail/hikes/ + ${H.length} routes, short URLs /h/1 to /h/${H.length}`);
-  return H.map(d => ({ slug: d.slug, n: d.n, lastChecked: d.lastChecked }));
+  console.log(`  ✓ Sahra Trail hikes: /trail/hikes/ + ${H.length} card routes (short URLs /h/1 to /h/${H.length}) + ${E.length} more RAK hikes`);
+  return ALL.map(d => ({ slug: d.slug, n: d.n, lastChecked: d.lastChecked }));
 };
 module.exports.ORDER = ORDER;
+module.exports.EXTRA = EXTRA;

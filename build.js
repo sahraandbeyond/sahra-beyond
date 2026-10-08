@@ -2053,7 +2053,7 @@ const LANDINGS = [
     ]
   },
   {
-    slug: 'hiking', related: [["/wadis/", "Wadis in the UAE", "Ten wadis compared"], ["/mountain-escapes/", "Mountain escapes", "Cooler air in the Hajar"], ["/trail/hikes/", "Six UAE hikes by grade", "Two easy, two moderate, two difficult, with sources"]],
+    slug: 'hiking', related: [["/wadis/", "Wadis in the UAE", "Ten wadis compared"], ["/mountain-escapes/", "Mountain escapes", "Cooler air in the Hajar"], ["/trail/hikes/", "UAE hikes by grade", "Eleven routes, each with its sources"]],
     h1: 'Hiking in the UAE: Trails in Dubai, RAK & Fujairah',
     title: 'Hiking in the UAE: Trails in Dubai, RAK & Fujairah',
     desc: 'Hiking in the UAE: trails at Jebel Jais, Wadi Naqab, Wadi Shawka, Hatta and Al Rafisah, with the season, heat and water, flash-flood warnings and rules.',
@@ -3497,7 +3497,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(locations.map(l => ({ u: `${SITE}/locations/${l.id}/`, m: locMtime(l.id), p: '0.8' })))
   .concat([{ u: `${SITE}/journal/`, m: buildDate, p: '0.7' }])
   .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])
-  .concat(['', ...require('./trail-hikes.js').ORDER.map(x => x + '/')].map(x => ({ u: `${SITE}/trail/hikes/${x}`, m: buildDate, p: '0.7' })))   /* Sahra Trail hikes for the QR cards (6 Oct 2026) */
+  .concat(['', ...require('./trail-hikes.js').ORDER.concat(require('./trail-hikes.js').EXTRA).map(x => x + '/')].map(x => ({ u: `${SITE}/trail/hikes/${x}`, m: buildDate, p: '0.7' })))   /* Sahra Trail hikes for the QR cards (6 Oct 2026) */
   .concat([{ u: `${SITE}/sahel/`, m: buildDate, p: '0.8' }])   /* Sahel teaser page (6 Oct 2026) */
   .concat(fs.existsSync(path.join(ROOT, 'feed', 'index.html')) ? [{ u: `${SITE}/feed/`, m: buildDate, p: '0.5' }] : [])   /* every Instagram post with where it lives on the site (4 Oct 2026); /q/ pages are noindex */
   /* SEO handover item 11: the three live Arabic pages join the sitemap only once Faheem confirms
