@@ -792,7 +792,10 @@ html:has(.lg-tabs){scroll-padding-top:calc(var(--lg-hdr,67px) + 64px)}
 
 /* ---------- /places/ explorer: one map, every pin, filters that act on the cards too ---------- */
 const CAT_COL = { Dunes: '#C0702E', Camping: '#7A4F8A', Wadis: '#3E7A73', Mountains: '#7E4114', Coast: '#2F6F95', Heritage: '#9A7B3C' };
-function hubExplorer(locations) {
+function hubExplorer(locations, opts) {
+  /* 8 Oct 2026 (map placement review): the full map adds two layers, the places that became tees
+     (gold ring, "Shop the tee" in the tip) and the hike trailheads (triangles, off until chosen). */
+  opts = opts || {}; const TEES = opts.tees || {}, HIKES = opts.hikes || [];
   /* Spread pins that would overlap (the Al Qudra lakes, the RAK/Fujairah cluster):
      push pairs apart until dots sit at least D units apart, and draw a short leader
      line back to the true spot when a dot moves (places review, 28 Sep 2026). */
@@ -810,18 +813,27 @@ function hubExplorer(locations) {
   }
   const pins = P.map((p, i) => {
     const l = p.l, x = p.x.toFixed(1), y = p.y.toFixed(1), off = Math.hypot(p.x - p.x0, p.y - p.y0) > 6;
-    return `<a class="hx-pin" href="/locations/${l.id}/" data-id="${l.id}" data-cat="${esc(l.category)}" style="--c:${CAT_COL[l.category] || '#7E4114'};--i:${i}" aria-label="${esc(l.name)}, ${esc(l.category)}">${off ? `<line x1="${p.x0.toFixed(1)}" y1="${p.y0.toFixed(1)}" x2="${x}" y2="${y}" class="hx-lead"/><circle cx="${p.x0.toFixed(1)}" cy="${p.y0.toFixed(1)}" r="4" class="hx-true"/>` : ''}<circle cx="${x}" cy="${y}" r="${D / 2 + 6}" class="hx-hit"/><circle cx="${x}" cy="${y}" r="14" class="hx-dot"/><title>${esc(l.name)} (${esc(l.category)})</title></a>`;
+    const t = TEES[l.id];
+    return `<a class="hx-pin${t ? ' hx-tee' : ''}" href="/locations/${l.id}/" data-id="${l.id}" data-cat="${esc(l.category)}"${t ? ` data-tee="${esc(t.name)}" data-shop="${esc(t.url)}"` : ''} style="--c:${CAT_COL[l.category] || '#7E4114'};--i:${i}" aria-label="${esc(l.name)}, ${esc(l.category)}">${off ? `<line x1="${p.x0.toFixed(1)}" y1="${p.y0.toFixed(1)}" x2="${x}" y2="${y}" class="hx-lead"/><circle cx="${p.x0.toFixed(1)}" cy="${p.y0.toFixed(1)}" r="4" class="hx-true"/>` : ''}<circle cx="${x}" cy="${y}" r="${D / 2 + 6}" class="hx-hit"/>${t ? `<circle cx="${x}" cy="${y}" r="22" class="hx-ring"/>` : ''}<circle cx="${x}" cy="${y}" r="14" class="hx-dot"/><title>${esc(l.name)} (${esc(l.category)})${t ? ' · ' + esc(t.name) + ' tee' : ''}</title></a>`;
   }).join('');
+  /* hike trailheads: spread among themselves, drawn as small triangles, hidden until the Hikes chip is on */
+  const HP = HIKES.filter(h => typeof h.lat === 'number').map(h => { const [x, y] = xy(h.lat, h.lng); return { h, x0: x, y0: y, x, y }; });
+  for (let it = 0; it < 120; it++) { let moved = false;
+    for (let a = 0; a < HP.length; a++) for (let b = a + 1; b < HP.length; b++) { let dx = HP[b].x - HP[a].x, dy = HP[b].y - HP[a].y, d = Math.hypot(dx, dy); if (d >= 28) continue; if (d < .01) { dx = 1; dy = .3; d = Math.hypot(dx, dy); } const k = (28 - d) / 2 / d; HP[a].x -= dx * k; HP[a].y -= dy * k; HP[b].x += dx * k; HP[b].y += dy * k; moved = true; }
+    if (!moved) break; }
+  const hikePins = HP.map(p => { const h = p.h, x = p.x, y = p.y, off = Math.hypot(p.x - p.x0, p.y - p.y0) > 6;
+    return `<a class="hx-pin hx-hike" href="/trail/hikes/${esc(h.slug)}/" data-hike="${esc(h.slug)}" data-name="${esc(h.name)}" data-grade="${esc(h.grade)}" aria-label="Hike: ${esc(h.name)}, ${esc(h.grade)}" style="--c:#285C5C">${off ? `<line x1="${p.x0.toFixed(1)}" y1="${p.y0.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" class="hx-lead"/>` : ''}<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="18" class="hx-hit"/><path class="hx-tri" d="M${x.toFixed(1)},${(y - 11).toFixed(1)} L${(x + 10).toFixed(1)},${(y + 7).toFixed(1)} L${(x - 10).toFixed(1)},${(y + 7).toFixed(1)} Z"/><title>Hike: ${esc(h.name)} (${esc(h.grade)})</title></a>`; }).join('');
   const cats = Object.keys(CAT_COL).filter(c => locations.some(l => l.category === c));
   const chip = (k, v, t) => `<button type="button" class="hx-chip${k === 'all' ? ' on' : ''}" data-f="${k}" data-v="${esc(v)}">${t}</button>`;
   return `<section class="hx" id="explore" aria-label="Explore the places">
     <div class="hx-map"><svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="group" aria-label="Map of the UAE with every place; each pin links to its guide">
-      <rect width="${GEO.w}" height="${GEO.h}" class="lg-sea"/><path class="lg-land2" d="${GEO.SA}${GEO.OM}${GEO.QA}"/><path class="lg-land" d="${GEO.AE}"/>${pins}</svg>
+      <rect width="${GEO.w}" height="${GEO.h}" class="lg-sea"/><path class="lg-land2" d="${GEO.SA}${GEO.OM}${GEO.QA}"/><path class="lg-land" d="${GEO.AE}"/>${pins}<g class="hx-hikes">${hikePins}</g></svg>
       <div class="hx-tip" hidden></div></div>
     <div class="hx-side">
       <p class="lg-eye">Filter the places</p>
       <div class="hx-chips">${chip('all', '', 'All')}${cats.map(c => chip('cat', c, `<i style="background:${CAT_COL[c]}"></i>${c}`)).join('')}</div>
       <div class="hx-chips">${chip('month', '', 'Good this month')}${chip('car', '', 'Any car')}${chip('easy', '', 'Easy')}</div>
+      ${Object.keys(TEES).length || HP.length ? `<p class="lg-eye" style="margin-top:14px">On the map</p><div class="hx-chips">${Object.keys(TEES).length ? chip('tee', '', '<i class="hx-k-tee"></i>Places that became tees') : ''}${HP.length ? chip('hikes', '', '<i class="hx-k-hike"></i>Hike trailheads') : ''}</div>` : ''}
       <p class="hx-count" aria-live="polite"></p>
     </div>
   </section>`;
@@ -830,21 +842,24 @@ function hubScript() {
   return `<script>(function(){
   var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var cards=[].slice.call(document.querySelectorAll('.cards .card[data-id]')),pins=[].slice.call(document.querySelectorAll('.hx-pin')),tip=document.querySelector('.hx-tip'),map=document.querySelector('.hx-map');
-  var mo=new Date().getMonth(),f={k:'all',v:''},extra={month:false,car:false,easy:false};
-  function ok(el){var d=el.dataset;if(f.k==='cat'&&d.cat!==f.v)return false;if(extra.month&&(d.m||'').charAt(mo)!=='2')return false;if(extra.car&&d.v!=='2wd')return false;if(extra.easy&&d.diff!=='Easy')return false;return true;}
+  var mo=new Date().getMonth(),f={k:'all',v:''},extra={month:false,car:false,easy:false,tee:false,hikes:false};var TEE={};pins.forEach(function(p){if(p.dataset.tee)TEE[p.dataset.id]=1;});
+  function ok(el){var d=el.dataset;if(f.k==='cat'&&d.cat!==f.v)return false;if(extra.month&&(d.m||'').charAt(mo)!=='2')return false;if(extra.car&&d.v!=='2wd')return false;if(extra.easy&&d.diff!=='Easy')return false;if(extra.tee&&!TEE[d.id])return false;return true;}
   function apply(){var n=0;cards.forEach(function(c){var y=ok(c);c.hidden=!y;if(y)n++;});var byId={};cards.forEach(function(c){byId[c.dataset.id]=c;});
-    pins.forEach(function(p){var c=byId[p.dataset.id];p.classList.toggle('off',!!(c&&c.hidden));});
+    pins.forEach(function(p){if(p.dataset.hike)return;var c=byId[p.dataset.id];p.classList.toggle('off',!!(c&&c.hidden)||(extra.tee&&!p.dataset.tee));});if(map)map.classList.toggle('hx-show-hikes',extra.hikes);
     document.querySelectorAll('.guide-sec[id^=cat-]').forEach(function(s){s.hidden=!s.querySelector('.card:not([hidden])');});
     var t=document.querySelector('.hx-count');if(t)t.textContent=n+' of '+cards.length+' places'+(extra.month?' at their best in '+new Date().toLocaleString('en-GB',{month:'long'}):'');}
   document.querySelectorAll('.hx-chip').forEach(function(b){b.addEventListener('click',function(){var k=b.dataset.f;
     if(k==='all'||k==='cat'){f={k:k,v:b.dataset.v};document.querySelectorAll('.hx-chip[data-f=all],.hx-chip[data-f=cat]').forEach(function(x){x.classList.toggle('on',x===b);});}
     else{extra[k]=!extra[k];b.classList.toggle('on',extra[k]);}
     apply();if(window.gtag)gtag('event','places_filter',{filter:k,value:b.dataset.v||String(extra[k])});});});
-  function show(p){if(!tip||!map)return;var c=cards.filter(function(x){return x.dataset.id===p.dataset.id;})[0];var r=p.querySelector('.hx-dot').getBoundingClientRect(),m=map.getBoundingClientRect();
-    tip.innerHTML='<b>'+(c?c.querySelector('strong').textContent:'')+'</b><span>'+(c?c.dataset.cat+' &middot; '+c.dataset.em:'')+'</span><a href="'+p.getAttribute('href')+'">Open the guide &rarr;</a>';tip.hidden=false;
+  function show(p){if(!tip||!map)return;var c=cards.filter(function(x){return x.dataset.id===p.dataset.id;})[0];var r=p.querySelector('.hx-dot,.hx-tri').getBoundingClientRect(),m=map.getBoundingClientRect();
+    if(p.dataset.hike){tip.innerHTML='<b>'+p.dataset.name+'</b><span>Hike &middot; '+p.dataset.grade+'</span><a href="'+p.getAttribute('href')+'">Open the hike guide &rarr;</a>';}
+    else{tip.innerHTML='<b>'+(c?c.querySelector('strong').textContent:'')+'</b><span>'+(c?c.dataset.cat+' &middot; '+c.dataset.em:'')+'</span>'+(p.dataset.tee?'<a href="'+p.dataset.shop+'" data-cta="shop">Shop the '+p.dataset.tee+' tee &rarr;</a><br>':'')+'<a href="'+p.getAttribute('href')+'">Open the guide &rarr;</a>';}
+    tip.hidden=false;if(window.gtag)gtag('event','map_pin_click',{place:p.dataset.id||p.dataset.hike,surface:'places'});
     var x=r.left-m.left+r.width/2,y=r.top-m.top;tip.style.left=Math.min(Math.max(x,90),m.width-90)+'px';tip.style.top=y+'px';}
   pins.forEach(function(p){p.addEventListener('mouseenter',function(){show(p);});p.addEventListener('focus',function(){show(p);});
-    p.addEventListener('click',function(e){if(matchMedia('(hover: none)').matches&&tip.hidden!==false||tip.dataset.id!==p.dataset.id){if(matchMedia('(hover: none)').matches){e.preventDefault();show(p);tip.dataset.id=p.dataset.id;}}});});
+    /* touch: first tap shows the tip, a second tap on the same pin follows the link (8 Oct 2026: keyed for hike pins too) */
+    p.addEventListener('click',function(e){var key=p.dataset.id||('h:'+p.dataset.hike);if(matchMedia('(hover: none)').matches&&(tip.hidden||tip.dataset.id!==key)){e.preventDefault();show(p);tip.dataset.id=key;}});});
   cards.forEach(function(c){c.addEventListener('mouseenter',function(){pins.forEach(function(p){p.classList.toggle('hot',p.dataset.id===c.dataset.id);});});c.addEventListener('mouseleave',function(){pins.forEach(function(p){p.classList.remove('hot');});});});
   if('IntersectionObserver' in window&&!RM&&map){map.classList.add('pre');var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){map.classList.remove('pre');map.classList.add('drop');io.disconnect();}},{threshold:.25});io.observe(map);}
   apply();})();</script>`;
@@ -871,7 +886,7 @@ const HUB_CSS = `
 .hx-map.pre .hx-lead,.hx-map.pre .hx-true{opacity:0}
 .hx-dot{fill:var(--c);stroke:#FFF8EE;stroke-width:3;transform-box:fill-box;transform-origin:center;transition:transform .25s cubic-bezier(.2,.7,.2,1),opacity .3s}
 .hx-pin:hover .hx-dot,.hx-pin:focus .hx-dot,.hx-pin.hot .hx-dot{transform:scale(1.55)}
-.hx-pin.off .hx-dot{opacity:.18;transform:scale(.7)}
+.hx-pin.off .hx-dot{opacity:.18;transform:scale(.7);animation:none!important}   /* 8 Oct 2026: the drop animation's end state was overriding the filter's dimming */
 .hx-map.pre .hx-dot{opacity:0;transform:translateY(-14px)}
 .hx-map.drop .hx-dot{animation:hxDrop .55s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(var(--i) * 45ms)}
 @keyframes hxDrop{from{opacity:0;transform:translateY(-16px) scale(.6)}to{opacity:1;transform:none}}
@@ -885,6 +900,10 @@ const HUB_CSS = `
 .hx-chip.on{background:#2A2016;color:#FAF6EF;border-color:#2A2016}
 .hx-count{font-size:14px;color:#5A5046;margin-top:10px}
 .card[hidden]{display:none!important}
+.hx-ring{fill:none;stroke:#C98A2E;stroke-width:4}.hx-pin.off .hx-ring{opacity:.15}
+.hx-hikes{display:none}.hx-show-hikes .hx-hikes{display:inline}
+.hx-tri{fill:#285C5C;stroke:#FFF8EE;stroke-width:2.5}.hx-hike:hover .hx-tri,.hx-hike:focus .hx-tri{fill:#1F4B4B}
+.hx-k-tee{background:transparent!important;border:2px solid #C98A2E}.hx-k-hike{background:#285C5C!important;border-radius:2px!important;clip-path:polygon(50% 0,100% 100%,0 100%)}
 @media(prefers-reduced-motion:reduce){.hx-map.drop .hx-dot{animation:none}}
 `;
 

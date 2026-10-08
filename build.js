@@ -190,6 +190,8 @@ for (const f of ['index.html', 'shop-preview.html']) {
       if (ge > gs) n = n.slice(0, gs) + pairFits(n.slice(gs, ge)) + n.slice(ge);
     }
   }
+  /* 8 Oct 2026: the shirt map in the home page's places block (place-map.js) */
+  if (f === 'index.html') n = n.replace(/<!--PLACEMAP:START-->[\s\S]*?<!--PLACEMAP:END-->/, () => '<!--PLACEMAP:START-->' + require('./place-map.js').homeBlock(ROOT) + '<!--PLACEMAP:END-->');
   n = n.replace(/<!--IG:STRIP-->[\s\S]*?<!--\/IG:STRIP-->/, '<!--IG:STRIP-->' + IG.stripHtml() + '<!--/IG:STRIP-->')
        .replace(/<!--IG:FOOT-->[\s\S]*?<!--\/IG:FOOT-->/, '<!--IG:FOOT--><style>' + IG.CSS + FITPAIR_CSS + '</style>' + IG.footerRowHtml() + '<!--/IG:FOOT-->')
        .replace(/<!--IG:JS-->[\s\S]*?<!--\/IG:JS-->/, '<!--IG:JS--><script>' + IG.JS + '</script><script>' + FITPAIR_JS + '</script><!--/IG:JS-->');
@@ -2791,7 +2793,7 @@ body.tote-page main{max-width:1180px}
   </section>
   <main>
     <div class="content"><p>This is the map behind the brand: every desert, dune field, wadi, mountain trail and beach we have explored across the UAE. Each place has its own guide: how to get there, when to go, what it costs, the real risks, and a packing list matched to the trip, with the sources for every fact.</p></div>
-    ${PLACES.hubExplorer(locations)}
+    ${PLACES.hubExplorer(locations, { tees: Object.fromEntries(Object.entries(PRODUCT_BY_PLACE).filter(([, p]) => p.fit === 'regular').map(([k, p]) => [k, { name: String(p.name || '').replace(/\s+[—-]\s+Regular$/, ''), url: '/products/' + p.id + '/' }])), hikes: fs.readdirSync(path.join(ROOT, 'content/hikes')).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ROOT, 'content/hikes', f), 'utf8'))).map(h => ({ slug: h.slug, name: h.name, grade: h.grade, lat: h.trailhead.lat, lng: h.trailhead.lng })) })}
     ${secs}
     ${restHtml}
     <section class="guide-sec" id="guides"><h2>Guides that pull these places together</h2><nav class="catnav" aria-label="Guides">${FG.GUIDES.filter(g => g[0] !== '/places/').map(g => `<a href="${g[0]}"><b>${esc(g[1])}</b><span>${esc((LANDINGS.find(L => '/' + L.slug + '/' === g[0]) || {}).desc ? (LANDINGS.find(L => '/' + L.slug + '/' === g[0]).pick || []).length + ' places' : '')}</span></a>`).join('')}</nav></section>
