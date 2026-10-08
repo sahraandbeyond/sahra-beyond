@@ -1251,7 +1251,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=483dd3eb">
 <script src="/assets/sahra-welcome.js?v=e4d22264" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=bfddf479">
-<script src="/assets/sahra-nav.js?v=edf9888a" data-sbn defer></script>
+<script src="/assets/sahra-nav.js?v=7dd0b525" data-sbn defer></script>
 </head>
 <body class="shop-page">
 <a class="skip-link" href="#products">Skip to the collection</a>
@@ -1293,6 +1293,19 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       .sp-meta{margin:0 0 8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.8px;color:#6B6256}
       .sp-desc{margin:0 0 10px;font-size:14.5px;line-height:1.6}
       .sp-cta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#7E4114}
+      /* 8 Oct 2026: Sahra Trail band under the grid, with the revealed prices */
+      .sp-trail{position:relative;z-index:3;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;align-items:stretch;max-width:1120px;margin:48px auto 96px;width:calc(100% - 40px);box-shadow:0 24px 60px rgba(30,20,10,.18);border-radius:14px;overflow:hidden;background:#0F2626;color:#EADBC4}
+      .sp-trail img{display:block;width:100%;height:100%;object-fit:cover}
+      .sp-trail>div{padding:28px 28px 24px}
+      .sp-trail-k{margin:0 0 6px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#9ED0CB}
+      .sp-trail h2{margin:0 0 14px;font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(26px,3vw,34px);color:#F6ECDD}
+      .sp-trail ul{list-style:none;margin:0 0 14px;padding:0}
+      .sp-trail li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid rgba(217,195,165,.22);font-size:15.5px}
+      .sp-trail li b{font-weight:600;color:#F6ECDD;white-space:nowrap}
+      .sp-trail-s{margin:0 0 14px;font-size:14px;color:#CDBEA8}
+      .sp-trail-a{display:inline-flex;align-items:center;min-height:46px;padding:0 20px;border-radius:999px;background:#D9C3A5;color:#10161d;font-weight:600;text-decoration:none}
+      .sp-trail-r{margin:12px 0 0;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:#B9AC98}
+      @media(max-width:700px){.sp-trail{grid-template-columns:1fr;width:calc(100% - 32px);margin:36px auto 72px}.sp-trail>div{padding:22px 18px 20px}}
     </style><main id="products"><div class="sp-grid">
       <article class="sp-card">
         <a class="sp-img" href="/products/al-quaa-galaxy-regular/">
@@ -1356,7 +1369,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <p class="sp-meta"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span> &middot; 240 GSM piqué &middot; men&rsquo;s S&ndash;XL</p>
         <p class="sp-desc">240gsm embroidered piqué polo in sand. A limited first run.</p>
         <a class="sp-cta" href="/products/sand-polo/">View The Sahra Polo</a>
-      </article></div></main>
+      </article></div></main><section class="sp-trail" aria-labelledby="spTrailH"><img src="/assets/trail/reveal/trail-kit-720.webp" width="720" height="547" alt="The Sahra Trail Kit: the Tee and the 2-in-1 Shorts" loading="lazy" decoding="async"><div><p class="sp-trail-k">Sahra Trail &middot; the first run</p><h2 id="spTrailH">Trail and run wear, revealed</h2><ul><li><span>Sahra Trail Tee</span><b>AED 139</b></li><li><span>Sahra Trail 2-in-1 Shorts</span><b>AED 169</b></li><li><span>The Kit, Tee + Shorts</span><b>AED 249</b></li></ul><p class="sp-trail-s">Not on sale yet. The early-access list can buy 24 hours before everyone else.</p><a class="sp-trail-a" href="/trail/">See Sahra Trail &rarr;</a><p class="sp-trail-r">Pre-production renders</p></div></section>
 
 <!-- ============ THE MAP AS THE STORE ============ -->
 <section class="storemap" id="storemap">

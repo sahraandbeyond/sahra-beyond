@@ -80,9 +80,10 @@
     /* Sahra Trail, the activewear line (24 Sep 2026): its own column until the first run is on sale */
     '<div class="sbn-col sbn-trail-col"><span class="sbn-h">Sahra Trail · activewear</span>' +
     '<a class="sbn-trailcard" href="/trail/"><svg viewBox="6 10.76 88 78.48" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="' + TRAIL_SYM + '"/></svg>' +
-    '<span><b>Coming this season</b><small>Trail and run wear, designed in the UAE</small></span></a>' +
-    row(['/trail/', 'Sahra Trail Tee', 'coming soon']) + row(['/trail/', 'Sahra Trail 2-in-1 Shorts', 'coming soon']) +
-    row(['/trail/#first-access', 'Get first access', '', 'sbn-all']) +
+    '<span><b>The first run, revealed</b><small>Trail and run wear, designed in the UAE</small></span></a>' +
+    /* 8 Oct 2026: prices public after the reveal; not on sale until the early-access opening */
+    row(['/trail/', 'Sahra Trail Tee', 'AED 139']) + row(['/trail/', 'Sahra Trail 2-in-1 Shorts', 'AED 169']) + row(['/trail/', 'The Kit, Tee + Shorts', 'AED 249']) +
+    row(['/trail/#first-access', 'Get early access', '', 'sbn-all']) +
     /* Sahel, the Coast Edition (6 Oct 2026): a teaser row until the reveal */
     '<span class="sbn-h sbn-h2">Sahel · The Coast Edition</span>' + row(['/sahel/', 'Sahel \u0633\u0627\u062d\u0644', 'launching soon']) + '</div>' +
     '<div class="sbn-foot"><span>' + esc(FOOT[0]) + '</span><span>' + esc(FOOT[1]) + '</span></div>';
@@ -140,7 +141,7 @@
     frag.appendChild(ma('/shop/?fit=oversized', 'Oversized fit', true));
     frag.appendChild(ma('/gifts/', 'Gifts', true));
     frag.appendChild(mh('Sahra Trail · activewear'));
-    frag.appendChild(ma('/trail/', 'Coming this season'));
+    frag.appendChild(ma('/trail/', 'Tee AED 139 · Shorts AED 169 · Kit AED 249'));
     frag.appendChild(mh('Sahel · The Coast Edition'));
     frag.appendChild(ma('/sahel/', 'Launching soon'));
     frag.appendChild(mh('Places'));

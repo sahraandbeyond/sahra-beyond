@@ -319,6 +319,24 @@
   els.forEach(function (e) { io.observe(e); });
 })();
 
+/* ---------- the reveal film (8 Oct 2026): muted loop, plays only in view, never under reduced motion ---------- */
+(function () {
+  var v = document.querySelector('.tr-film video'), b = document.querySelector('.tr-film-btn');
+  if (!v || !b) return;
+  var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var user = calm ? 'pause' : null;   /* the viewer's own choice wins over the auto play */
+  function label() { b.textContent = v.paused ? b.getAttribute('data-play') : b.getAttribute('data-pause'); }
+  function go() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  v.addEventListener('play', label); v.addEventListener('pause', label);
+  b.addEventListener('click', function () { if (v.paused) { user = 'play'; go(); } else { user = 'pause'; v.pause(); } });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) {
+      if (e.isIntersecting) { if (user !== 'pause') go(); } else if (!v.paused) v.pause();
+    }); }, { threshold: .35 }).observe(v);
+  }
+  label();
+})();
+
 /* ---------- the first run: tap a piece and its reflective mark flashes ---------- */
 (function () {
   document.querySelectorAll('.tr-piece').forEach(function (b) {
