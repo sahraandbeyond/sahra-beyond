@@ -176,6 +176,12 @@ document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&
 /* Arabic core pages (/ar/, /ar/about/, /ar/contact/): false = not in the sitemap and no visible
    'العربية' link on English pages. Flip to true once Faheem signs them off (handover item 11). */
 const AR_CORE_PUBLIC = true;   /* Faheem, 1 Oct 2026: the three Arabic core pages stay live (indexable), so they go in the sitemap and the footer links them */
+/* 9 Oct 2026: two hand-maintained customer pages never had GA4 (found while fixing /shop/); give them the shared tag */
+for (const f of ['policies.html', 'commitment.html']) {
+  const fp = path.join(ROOT, f); if (!fs.existsSync(fp)) continue;
+  const h = fs.readFileSync(fp, 'utf8'); const G = require('./ga4.js');
+  if (h.indexOf(G.GA4_ID) < 0 && h.indexOf('<head>') >= 0) fs.writeFileSync(fp, h.replace('<head>', '<head>\n' + G.GA4_HEAD));
+}
 /* footer guide list into the hand-maintained pages (see footer-guides.js) */
 for (const f of ['index.html', 'shop-preview.html']) {
   const fp = path.join(ROOT, f); if (!fs.existsSync(fp)) continue;
@@ -1040,14 +1046,7 @@ ${robotsMeta(noindex)}\n${altHref && !noindex ? `<link rel="alternate" hreflang=
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700${AR ? '&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600' : ''}&display=swap" rel="stylesheet">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
-<script>
-  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-  gtag('js',new Date());gtag('config','G-5NVFDWT29F');
-  var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
-  gtag('set','user_properties',{platform:_app?'app':'web'});
-</script>
+${require('./ga4.js').GA4_HEAD}
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
@@ -2384,10 +2383,10 @@ if (LAUNCHED || REVEALED) (function () {
        build time. The Shopify fetch still replaces it on load with live stock
        and availability, so nothing about the shopping experience changes — it
        simply is not the only way to see the catalogue. */
-    const staticGrid = PRODUCTS_ALL.slice().sort((a, b) => (a.order || 99) - (b.order || 99)).map(p => `
+    const staticGrid = PRODUCTS_ALL.slice().sort((a, b) => (a.order || 99) - (b.order || 99)).map((p, gi) => `
       <article class="sp-card">
         <a class="sp-img" href="/products/${esc(p.id)}/">
-          <img src="${esc(p.imgMain || p.imgFront)}" alt="${esc(p.altMain || p.name)}" width="1536" height="1536" loading="lazy">
+          <img src="${esc(buildProducts.cardOf(p.imgMain || p.imgFront) || (p.imgMain || p.imgFront))}" alt="${esc(p.altMain || p.name)}" width="800" height="800" ${gi === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">${/* 9 Oct 2026: the 800px card image, not the 1536px photo; the first one is the largest paint on a phone, so it loads first */''}
         </a>
         <h2 class="sp-name"><a href="/products/${esc(p.id)}/">${esc(p.name)}</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> &middot; ${esc(p.garment === 'polo' ? '240 GSM piqué' : '230 GSM cotton')} &middot; ${p.garment === 'polo' ? 'men&rsquo;s' : 'unisex'} S&ndash;XL</p>
@@ -2429,6 +2428,8 @@ if (LAUNCHED || REVEALED) (function () {
       gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>' + TRAIL_BAND
     );
 
+    /* 9 Oct 2026: the shop template never had GA4; add the shared tag at the top of <head> */
+    if (html.indexOf(require('./ga4.js').GA4_ID) < 0) html = html.replace('<head>', '<head>\n' + require('./ga4.js').GA4_HEAD);
     write('shop/index.html', html);
   } catch (e) { console.log('  ! shop page skipped: ' + e.message); }
 })();

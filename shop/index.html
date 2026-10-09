@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" data-market="uae">
 <head>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-5NVFDWT29F');
+  var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
+  gtag('set','user_properties',{platform:_app?'app':'web'});
+  window.track=window.track||function(n,p){try{gtag('event',n,p||{});}catch(e){}};
+</script>
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
 <script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
@@ -36,10 +45,12 @@
      hero is readable from the first paint either way. -->
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
-<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
-<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js">
-<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+<!-- 9 Oct 2026 (shop weight handover): the motion libraries are preloaded and run only on desktop with a mouse.
+     Phones skip them: the page already falls back to CSS (no gsap: anim-ready is removed; no THREE: no WebGL). -->
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" media="(hover:hover) and (pointer:fine) and (min-width:900px)">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" media="(hover:hover) and (pointer:fine) and (min-width:900px)">
+<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js" media="(hover:hover) and (pointer:fine) and (min-width:900px)">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" media="(hover:hover) and (pointer:fine) and (min-width:900px)">
 <!-- Leaflet is loaded lazily (only when the map scrolls into view) — see loadLeaflet() below -->
 <style>
 :root{--sand:#FAF6EF;--paper:#FFF;--ink:#2A2016;--mist:#6B6256;--clay:#A95A21;--clay-deep:#7E4114;--gold:#F5D6A8;--line:rgba(42,32,22,.12);--edge:rgba(42,32,22,.58)}
@@ -1309,7 +1320,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     </style><main id="products"><div class="sp-grid">
       <article class="sp-card">
         <a class="sp-img" href="/products/al-quaa-galaxy-regular/">
-          <img src="/shirts/alquaa-regular-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/card/alquaa-regular-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" width="800" height="800" fetchpriority="high" decoding="async">
         </a>
         <h2 class="sp-name"><a href="/products/al-quaa-galaxy-regular/">Al Quaa Galaxy — Regular</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1318,7 +1329,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/al-quaa-galaxy-oversized/">
-          <img src="/shirts/alquaa-oversized-back.webp" alt="Al Quaa Galaxy oversized t-shirt, a Milky Way desert tee — the galaxy printed across the back" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/card/alquaa-oversized-back.webp" alt="Al Quaa Galaxy oversized t-shirt, a Milky Way desert tee — the galaxy printed across the back" width="800" height="800" loading="lazy" decoding="async">
         </a>
         <h2 class="sp-name"><a href="/products/al-quaa-galaxy-oversized/">Al Quaa Galaxy — Oversized</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1327,7 +1338,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/empty-quarter-regular/">
-          <img src="/shirts/emptyquarter-regular-front.webp" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/card/emptyquarter-regular-front.webp" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" width="800" height="800" loading="lazy" decoding="async">
         </a>
         <h2 class="sp-name"><a href="/products/empty-quarter-regular/">Empty Quarter — Regular</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1336,7 +1347,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/empty-quarter-oversized/">
-          <img src="/shirts/emptyquarter-oversized-front.webp" alt="Empty Quarter oversized t-shirt, an embroidered desert tee — a tonal sun over the dunes on the chest" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/card/emptyquarter-oversized-front.webp" alt="Empty Quarter oversized t-shirt, an embroidered desert tee — a tonal sun over the dunes on the chest" width="800" height="800" loading="lazy" decoding="async">
         </a>
         <h2 class="sp-name"><a href="/products/empty-quarter-oversized/">Empty Quarter — Oversized</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="empty-quarter-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1345,7 +1356,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/hajar-mountains-regular/">
-          <img src="/shirts/hajar-regular-back.webp" alt="Hajar Mountains t-shirt, a mountain graphic tee in the regular fit — the red rock of the Hajar printed across the back" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/card/hajar-regular-back.webp" alt="Hajar Mountains t-shirt, a mountain graphic tee in the regular fit — the red rock of the Hajar printed across the back" width="800" height="800" loading="lazy" decoding="async">
         </a>
         <h2 class="sp-name"><a href="/products/hajar-mountains-regular/">Hajar Mountains — Regular</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1354,7 +1365,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/hajar-mountains-oversized/">
-          <img src="/shirts/hajar-oversized-back.webp" alt="Hajar Mountains oversized t-shirt, a mountain graphic tee — the red rock of the Hajar printed across the back" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/card/hajar-oversized-back.webp" alt="Hajar Mountains oversized t-shirt, a mountain graphic tee — the red rock of the Hajar printed across the back" width="800" height="800" loading="lazy" decoding="async">
         </a>
         <h2 class="sp-name"><a href="/products/hajar-mountains-oversized/">Hajar Mountains — Oversized</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span> &middot; 230 GSM cotton &middot; unisex S&ndash;XL</p>
@@ -1363,7 +1374,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       </article>
       <article class="sp-card">
         <a class="sp-img" href="/products/sand-polo/">
-          <img src="/shirts/polo-dune-front.webp" alt="The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest" width="1536" height="1536" loading="lazy">
+          <img src="/shirts/card/polo-dune-front.webp" alt="The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest" width="800" height="800" loading="lazy" decoding="async">
         </a>
         <h2 class="sp-name"><a href="/products/sand-polo/">The Sahra Polo</a></h2>
         <p class="sp-meta"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span> &middot; 240 GSM piqué &middot; men&rsquo;s S&ndash;XL</p>
@@ -1713,10 +1724,8 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 <div style="margin:12px 0 4px"><span data-sb-curslot></span></div></footer>
 
 <!-- the libraries preloaded in <head> execute here, just before the engine that uses them -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>/* 9 Oct 2026: desktop with a mouse only, and not for reduced motion; written in place so they still run before the engine below */
+if(matchMedia('(hover:hover) and (pointer:fine) and (min-width:900px)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"><\/script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"><\/script><script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"><\/script><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');}</script>
 <script>
 // ========= CONFIG — paste your Shopify details to go live =========
   /* COMMERCE_OFF: the shop is browsable before payments go live. Sizes and stock
@@ -2122,6 +2131,8 @@ async function sf(q,v){var r=await fetch('https://'+SHOPIFY.domain+'/api/'+SHOPI
 var PFRAG='id title handle description featuredImage{url altText} images(first:12){edges{node{url}}} priceRange{minVariantPrice{amount currencyCode}} tags variants(first:20){edges{node{id title availableForSale price{amount currencyCode} selectedOptions{name value}}}}';
 var CFRAG='id checkoutUrl cost{subtotalAmount{amount currencyCode}} lines(first:50){edges{node{id quantity merchandise{... on ProductVariant{id title price{amount currencyCode} product{title featuredImage{url}}}}}}}';
 function money(a,c){return (c||'AED')+' '+Math.round(parseFloat(a));}
+/* 9 Oct 2026: ask the Shopify CDN for an image sized to where it is shown, not the 2,000px original (polo photos were about 200 KB each) */
+function sz(u,w){if(!u||!/cdn\.shopify\.com|\/cdn\/shop\//.test(u))return u;return u.replace(/([?&])width=\d+&?/,'$1').replace(/[?&]$/,'')+(u.indexOf('?')>=0?'&':'?')+'width='+w;}
 function tagVal(t,k){var x=(t||[]).find(function(y){return y.toLowerCase().indexOf(k+':')===0;});return x?x.split(':').slice(1).join(':'):'';}
 function slugify(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
 var PRODUCTS=[];
@@ -2265,8 +2276,8 @@ function draw(){
      is left out of it, for the same reason it is left out of the designs index;
      it still has its own section in the grid below. */
   var ringSrc=PRODUCTS.filter(function(p){return p.handle!=='sahra-tote';});
-  var ringCards=ringSrc.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+((p.images&&p.images.length?p.images:(p.img?[p.img]:[])).slice(0,6).map(function(u,j){return '<img class="'+(j===0?'on':'')+'" src="'+u+'" alt="'+(j===0?(p.title||'').replace(/"/g,''):'')+'" loading="'+(i<3&&j<2?'eager':'lazy')+'" decoding="async">';}).join(''))+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
-  var ringHtml=ringSrc.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night.webp" alt="" loading="lazy" decoding="async" width="1920" height="1080"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset.webp" alt="" loading="lazy" decoding="async" width="2560" height="1440"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab.webp" alt="" loading="lazy" decoding="async" width="1920" height="1080"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
+  var ringCards=ringSrc.map(function(p,i){return '<a class="sring-card" href="#prod-'+(p.handle||p.placeSlug)+'" data-place="'+(p.place||'').replace(/"/g,'')+'"><span class="sring-img">'+((p.images&&p.images.length?p.images:(p.img?[p.img]:[])).slice(0,6).map(function(u,j){return '<img class="'+(j===0?'on':'')+'" src="'+sz(u,400)+'" alt="'+(j===0?(p.title||'').replace(/"/g,''):'')+'" loading="'+(i<3&&j<1?'eager':'lazy')+'" decoding="async">';}).join(''))+'</span><span class="sring-name">'+p.title+'</span><span class="sring-price sb-price" data-handle="'+(p.handle||'')+'" data-aed="'+p.price+'">'+money(p.price,p.cur)+'</span><span class="sring-go">See this tee &darr;</span><span class="sring-qa"><span class="sring-qa-l">Quick add</span>'+(p.variants||[]).map(function(v){return '<button type="button" class="sring-qa-b" data-vid="'+v.id+'" data-size="'+v.size+'" aria-label="Add '+v.size+' to cart"'+(v.avail?'':' disabled title="Sold out"')+'>'+v.size+'</button>';}).join('')+'</span></a>';}).join('');
+  var ringHtml=ringSrc.length>1?'<section class="sring" id="shopRing" aria-label="The collection"><div class="sring-head"><span class="eyebrow">The collection</span><h2>Spin the collection</h2><p>Drag to turn &middot; tap a tee to go to it</p></div><div class="sring-stage"><div class="sring-bg" aria-hidden="true"><img class="sring-plate" data-place="night" src="/journey/plates/alquaa-night-blur.webp" alt="" loading="lazy" decoding="async" width="480" height="270"><img class="sring-plate" data-place="liwa" src="/journey/plates/liwa-sunset-blur.webp" alt="" loading="lazy" decoding="async" width="480" height="270"><img class="sring-plate" data-place="wadi" src="/journey/plates/wadi-naqab-blur.webp" alt="" loading="lazy" decoding="async" width="480" height="270"><div class="sring-glow"></div><div class="sring-dim"></div></div><div class="sring-cap" aria-hidden="true"></div><button class="sring-arrow prev" type="button" aria-label="Previous design">&#8249;</button><button class="sring-arrow next" type="button" aria-label="Next design">&#8250;</button><div class="sring-ring">'+ringCards+'</div><div class="sring-cue" aria-hidden="true">&#8592; drag to spin &#8594;</div></div></section>':'';
   var jump=ringHtml+bar;
   host.innerHTML=jump+PRODUCTS.map(function(p,i){
     /* The tote (19 Sep). Everything below this point is the tee template — GSM,
@@ -2278,7 +2289,7 @@ function draw(){
        data-print / data-sizes are left empty on purpose, so choosing any tee
        facet correctly filters it out. */
     if(p.handle==='sahra-tote'){
-      var _ti=(p.images&&p.images[0])||'/shirts/tote-model.webp';
+      var _ti=sz((p.images&&p.images[0])||'/shirts/tote-model.webp',800);
       /* .prod-inner is NOT optional: it carries z-index:2, which is what lifts a
          section above #ambient-canvas (position:fixed, z-index:1). Without it the
          ambient line-art drew straight over this section's photo and copy — the
@@ -2323,9 +2334,10 @@ function draw(){
     var fitSwap=_sib?'<a class="fitswap" href="#prod-'+_sib.handle+'">See this design in '+otherFit+' fit &rarr;</a>':'';
     var plink=p.place?'<a class="eyebrow plink" href="/locations/'+p.placeSlug+'/">Inspired by '+p.place+' &rarr;</a>':'';
     var gal=(p.images&&p.images.length)?p.images:[];
-    var slides=gal.map(function(u,k){return '<img class="slide'+(k===0?' on':'')+'" src="'+u+'" alt="'+p.title+'">';}).join('');
+    /* 9 Oct 2026: only the first photo of each product loads with the page; the rest load as the slideshow reaches them */
+    var slides=gal.map(function(u,k){return '<img class="slide'+(k===0?' on':'')+'" '+(k===0?'src':'data-src')+'="'+sz(u,800)+'" alt="'+p.title+'" loading="lazy" decoding="async" width="800" height="1000">';}).join('');
     var arrows=gal.length>1?'<button class="nav-arrow prev" aria-label="Previous">&#8249;</button><button class="nav-arrow next" aria-label="Next">&#8250;</button><button class="slide-pause" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>':'';
-    var thumbs=gal.length>1?('<div class="pthumbs">'+gal.map(function(u,k){return '<button class="pthumb'+(k===0?' on':'')+'" data-i="'+k+'" aria-label="View '+(k+1)+'"><img src="'+u+'" alt=""></button>';}).join('')+'</div>'):'';
+    var thumbs=gal.length>1?('<div class="pthumbs">'+gal.map(function(u,k){return '<button class="pthumb'+(k===0?' on':'')+'" data-i="'+k+'" aria-label="View '+(k+1)+'"><img src="'+sz(u,160)+'" alt="" loading="lazy" decoding="async" width="80" height="100"></button>';}).join('')+'</div>'):'';
     var media='<div class="prod-media"><div class="prod-img">'+(gal.length?('<div class="slides">'+slides+'</div>'+arrows):'[ Design photo ]')+'</div>'+thumbs+'</div>';
     var _pi=placeInfo(p);var pd=_pi?_pi.data:null;
     var placeMeta=pd?'<div class="place-meta"><a class="pm-gps" href="https://www.google.com/maps/search/?api=1&query='+pd.lat+','+pd.lng+'" target="_blank" rel="noopener">&#128205; '+pd.lat+', '+pd.lng+'</a><span class="pm-sky">&#10022; '+pd.sky+'</span></div>':'';
@@ -2362,10 +2374,13 @@ function draw(){
     // ---- image slideshow (auto-advancing, arrows + thumbnails) ----
     var galList=(p.images||[]).slice(),curi=0,timer=null;
     var imgBox=sec.querySelector('.prod-img'),thumbBox=sec.querySelector('.pthumbs');
-    function showSlide(k){var sl=sec.querySelectorAll('.slide');if(!sl.length)return;curi=(k%sl.length+sl.length)%sl.length;sl.forEach(function(s,j){s.classList.toggle('on',j===curi);});sec.querySelectorAll('.pthumb').forEach(function(t,j){t.classList.toggle('on',j===curi);});}
+    function wake(im){if(im&&im.dataset.src&&!im.getAttribute('src')){im.src=im.dataset.src;}}
+    function showSlide(k){var sl=sec.querySelectorAll('.slide');if(!sl.length)return;curi=(k%sl.length+sl.length)%sl.length;wake(sl[curi]);wake(sl[(curi+1)%sl.length]);sl.forEach(function(s,j){s.classList.toggle('on',j===curi);});sec.querySelectorAll('.pthumb').forEach(function(t,j){t.classList.toggle('on',j===curi);});}
     var userPaused=false;
     function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
-    function startAuto(){stopAuto();if(red||userPaused||galList.length<2)return;timer=setInterval(function(){showSlide(curi+1);},1000);/* 1s per Faheem, 29 Aug */}
+    var inView=!('IntersectionObserver' in window);
+    function startAuto(){stopAuto();if(red||userPaused||!inView||galList.length<2)return;wake(sec.querySelectorAll('.slide')[1]);timer=setInterval(function(){showSlide(curi+1);},1000);/* 1s per Faheem, 29 Aug; 9 Oct: runs only while the product is on screen */}
+    if(!inView){new IntersectionObserver(function(es){inView=es[0].isIntersecting;if(inView)startAuto();else stopAuto();},{rootMargin:'100px'}).observe(sec);}
     var pauseBtn=sec.querySelector('.slide-pause');
     if(pauseBtn)pauseBtn.addEventListener('click',function(e){e.stopPropagation();
       userPaused=!userPaused;
@@ -2750,9 +2765,9 @@ function renderMap(el,pts){
   L.tileLayer('https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png?key=cb1_2ycd_1_4c8f950b148540b12724e889',{maxZoom:12,minZoom:6,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
   var markers=[];
   pts.forEach(function(o){
-    var icon=L.divIcon({className:'mp-pin',html:'<span class="mp-dot"'+(o.p.img?' style="background-image:url(\''+o.p.img+'\')"':'')+'></span>',iconSize:[44,44],iconAnchor:[22,22],popupAnchor:[0,-18]});
+    var icon=L.divIcon({className:'mp-pin',html:'<span class="mp-dot"'+(o.p.img?' style="background-image:url(\''+sz(o.p.img,120)+'\')"':'')+'></span>',iconSize:[44,44],iconAnchor:[22,22],popupAnchor:[0,-18]});
     var m=L.marker([o.lat,o.lng],{icon:icon,title:o.p.title+' · '+o.p.place}).addTo(map);
-    var pop='<div class="mp-pop">'+(o.p.img?'<img src="'+o.p.img+'" alt="'+o.p.title+'">':'')+'<div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+money(o.p.price,o.p.cur)+'</span><a class="mp-shop" href="#prod-'+o.p.placeSlug+'">Shop this tee &rarr;</a></div></div>';
+    var pop='<div class="mp-pop">'+(o.p.img?'<img src="'+sz(o.p.img,240)+'" alt="'+o.p.title+'">':'')+'<div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+money(o.p.price,o.p.cur)+'</span><a class="mp-shop" href="#prod-'+o.p.placeSlug+'">Shop this tee &rarr;</a></div></div>';
     m.bindPopup(pop,{closeButton:true,offset:[0,-4],maxWidth:260});
     m.on('mouseover',function(){m.openPopup();});
     markers.push(m);

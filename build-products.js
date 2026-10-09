@@ -196,13 +196,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
 <meta name="twitter:title" content="${esc(p.seoTitle)}">
 <meta name="twitter:description" content="${esc(p.seoDesc)}">
 <meta name="twitter:image" content="${ogOf(p, SITE)}">
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
-<script>
-  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-  gtag('js',new Date());gtag('config','G-5NVFDWT29F');
-  window.track=function(n,p){try{gtag('event',n,p||{});}catch(e){}};
-</script>
+${require('./ga4.js').GA4_HEAD}
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js" defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
@@ -2084,4 +2078,5 @@ function buildProducts(opts){
 module.exports = buildProducts;
 module.exports.loadProducts = loadProducts;
 module.exports.galShots = galShots;
+module.exports.cardOf = cardOf;
 module.exports.LD_SHIP = LD_SHIP;   /* /tote/ reuses the same shipping and returns block */
