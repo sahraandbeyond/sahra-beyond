@@ -383,7 +383,7 @@
   })();
 
   /* ------------------------------------------------------- auto-surface */
-  /* Opens on arrival (except product pages and ad landings - see below) rather than waiting for a click. 1.4 s, not 0: at zero the
+  /* HISTORY (superseded 12 Oct 2026, see below: every entry now gets the teaser). It opened on arrival (except product pages and ad landings) rather than waiting for a click. 1.4 s, not 0: at zero the
      card animates in over a half-painted page and reads as a glitch, and a
      reflexive dismiss before anyone has read it is the worst outcome for a
      conversion surface. The old exit-intent / 45%-scroll triggers are gone —
@@ -418,25 +418,28 @@
   var STORY = /^\/sahel\//.test(location.pathname || '');
   var QUIET = 'sbw.quiet', quiet = false;
   try { quiet = sessionStorage.getItem(QUIET) === '1'; if (AD || PDP || GUIDE) sessionStorage.setItem(QUIET, '1'); } catch (e) {}
-  if (!st.won && !openedThisSession && !STORY) {
-    if (AD || PDP || GUIDE || quiet) teaser(); else
-    setTimeout(function () {
-      if (surfaced) return;
-      try { sessionStorage.setItem(SESSION, '1'); } catch (e) {}
-      open('auto');
-    }, 1400);
-  }
+  /* 12 Oct 2026 (SEO and UX pass, Faheem): no full-screen card on arrival anywhere. The homepage
+     and the category pages, where search and ad visitors land, opened with the card over the first
+     screen; every entry now gets the small teaser after the first scroll or 20 s, and the card opens
+     only when it is tapped. The top bar still carries the offer from the first paint. */
+  if (!st.won && !openedThisSession && !STORY) teaser();
 
   function teaser() {
-    var shown = false, t = null;
+    /* 12 Oct 2026: the timer was named t, shadowing the t() translation helper, so show() threw
+       "t is not a function" and the teaser never appeared (product pages, guides, ad visits). */
+    var shown = false, tmr = null;
     function show() {
       if (shown || surfaced) return; shown = true;
-      removeEventListener('scroll', onScroll); clearTimeout(t);
+      removeEventListener('scroll', onScroll); clearTimeout(tmr);
       try { sessionStorage.setItem(SESSION, '1'); } catch (e) {}
       var el = document.createElement('div');
       el.className = 'sbw-teaser';
       el.innerHTML = '<button type="button" class="sbw-teaser-go">' + t(OFFER.amount + ' off<span class="sbw-t-long"> your first order</span> <span aria-hidden="true">&rarr;</span>', 'خصم ' + N + ' درهمًا<span class="sbw-t-long"> على طلبك الأول</span> <span aria-hidden="true">&larr;</span>') + '</button>' +
         '<button type="button" class="sbw-teaser-x" aria-label="' + t('Dismiss offer', 'إخفاء العرض') + '">&times;</button>';
+      /* 12 Oct 2026: the homepage and /shop/ keep a round ambient-sound button in the same corner on
+         desktop; when it is showing, the teaser sits to its right instead of over it */
+      var amb = document.getElementById('ambient');
+      if (amb && amb.getBoundingClientRect().width > 0 && getComputedStyle(amb).visibility !== 'hidden') el.classList.add('sbw-teaser-amb');
       document.body.appendChild(el);
       requestAnimationFrame(function () { el.classList.add('on'); });
       el.querySelector('.sbw-teaser-go').addEventListener('click', function () { el.remove(); open('teaser'); });
@@ -451,6 +454,6 @@
     }
     function onScroll() { if ((window.scrollY || 0) > 120) show(); }
     addEventListener('scroll', onScroll, { passive: true });
-    t = setTimeout(show, 20000);
+    tmr = setTimeout(show, 20000);
   }
 })();

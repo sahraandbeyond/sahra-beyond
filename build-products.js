@@ -30,6 +30,26 @@ function ldRating(p) {
   if (!pr || pr.scope !== 'design' || !pr.d.count || pr.d.count < 3) return '';
   return `"aggregateRating":{"@type":"AggregateRating","ratingValue":"${pr.d.average.toFixed(1)}","reviewCount":"${pr.d.count}","bestRating":"5","worstRating":"1"},`;
 }
+/* 12 Oct 2026 (SEO and UX pass): up to three of the reviews this page shows, as Review items beside
+   the aggregate, and the design as a ProductGroup so Regular and Oversized read as one product with one
+   set of reviews. Same gate as ldRating: only reviews of this design, at least 3. */
+function ldReviews(p) {
+  const pr = RV.pooled(designHandles(p));
+  if (!pr || pr.scope !== 'design' || !pr.d.count || pr.d.count < 3) return '';
+  const picks = pr.d.reviews.filter(r => String(r.body || '').trim().length >= 20).slice(0, 3);
+  if (!picks.length) return '';
+  return '"review":[' + picks.map(r => JSON.stringify({ "@type": "Review",
+    "reviewRating": { "@type": "Rating", "ratingValue": String(r.rating), "bestRating": "5", "worstRating": "1" },
+    "author": { "@type": "Person", "name": String(r.name || 'Customer').split(' ')[0] },
+    ...(/^\d{4}-\d{2}-\d{2}/.test(String(r.date || '')) ? { "datePublished": String(r.date).slice(0, 10) } : {}),
+    "reviewBody": String(r.body || '').replace(/\s+/g, ' ').trim() })).join(',') + '],';
+}
+function ldGroup(p, SITE) {
+  if (!p.siblingOf) return '';
+  const name = String(p.name).replace(/\s+[—-]\s+(Regular|Oversized)$/, '') + ' T-Shirt';
+  return '"isVariantOf":' + JSON.stringify({ "@type": "ProductGroup", "productGroupID": p.siblingOf, "name": name,
+    "url": SITE + '/products/' + p.siblingOf + '-regular/', "brand": { "@type": "Brand", "name": "Sahra & Beyond" } }) + ',"inProductGroupWithID":' + JSON.stringify(p.siblingOf) + ',';
+}
 const LD_SHIP = '"shippingDetails":['
   + '{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"0","currency":"AED"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"AE"},'
   + '"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":1,"unitCode":"DAY"}}},'
@@ -169,6 +189,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
       </table>
     </div>
     <p class="sz-note">${p.fit === 'oversized' ? SIZING.oversizedIntent : SIZING.regularIntent}</p>
+    ${p.garment === 'polo' ? '' : '<p class="sz-note">Compare the two cuts: <a href="/t-shirts/regular/">regular fit t-shirts</a> &middot; <a href="/t-shirts/oversized/">oversized t-shirts and the drop shoulder</a>.</p>'}
     <details class="sz-method"><summary>How these are measured</summary>
       <ul>${(SIZING.method||[]).map(function(m){return '<li>'+m+'</li>';}).join('')}</ul>
       <p>${SIZING.tolerance}</p>
@@ -210,7 +231,7 @@ ${require('./ga4.js').GA4_HEAD}
 "description":${J(p.ldDesc)},
 "brand":{"@type":"Brand","name":"Sahra & Beyond"},
 "material":${J(p.garment === 'polo' ? '100% cotton piqué' : '100% combed ring-spun cotton')},
-"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},${ldRating(p)}"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"priceValidUntil":"${new Date().getFullYear() + 1}-12-31","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/",${LD_SHIP}}}
+"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},${ldRating(p)}${ldReviews(p)}${ldGroup(p, SITE)}"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"priceValidUntil":"${new Date().getFullYear() + 1}-12-31","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/",${LD_SHIP}}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -929,6 +950,9 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg .pdp-fit.on b{color:#2B2620}
 .pdp-model{color:var(--txt-soft,#5A5046)}
 .pdp-wallets{font-size:12px;color:var(--txt-soft,#5A5046);text-align:center;margin:8px 0 0;letter-spacing:.2px}
+.pdp-wallets{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 6px;max-width:215px;margin-left:auto;margin-right:auto}
+.pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#5A5046)}
+.pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(51,39,27,.22);border-radius:5px;background:#fff;color:#33271B;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
 .pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
 .pdp-tote img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none}.pdp-tote b{color:var(--txt,#2B2620);font-weight:600}.pdp-tote a{color:var(--clay-deep,#9C521B)}
 .pdp-why{margin:12px 0 0;display:grid;gap:8px}.pdp-why div{display:grid;gap:2px}.pdp-why dt{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-soft,#5A5046)}.pdp-why dd{margin:0;font-size:13.5px;line-height:1.45;color:var(--txt,#2B2620)}.pdp-why a{color:var(--clay-deep,#9C521B)}
@@ -1076,7 +1100,7 @@ ${galShots(p).map((s,i)=>`
         <button class="btn pdp-add" id="pdpAdd" type="button" aria-disabled="true"><span class="pdp-add-l">Choose your size</span><span class="pdp-add-p"> &middot; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
-        <p class="pdp-wallets">Apple Pay, Google Pay and Shop Pay at checkout</p>
+        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         ${/* 4 Oct 2026 (CRO panel, ideas 5 and 6): the gift and the two objections, answered where the thumb is */''}
         <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
@@ -1245,7 +1269,7 @@ ${cards(p.designCards)}
 
   <section class="sec reveal" id="fabric">
     <span class="snum">03 — Fabric &amp; construction</span>
-    <h2>Built to be worn, washed and <em>worn again</em></h2>
+    <h2>${p.garment === 'polo' ? 'Heavyweight 240gsm piqué, built to be <em>worn again</em>' : 'Heavyweight 230gsm cotton, built to be <em>worn again</em>'}</h2>
     <p>${p.constructionIntro || 'A tee earns its place by surviving. Heavyweight combed ring-spun cotton, finished with the construction details that decide whether a shirt still looks right after a year.'}</p>
     <div class="cols stagger">
       ${(p.constructionCards || [
@@ -1277,9 +1301,9 @@ ${careList(p.care)}
     </ul>
   </section>`}
 
-  ${LEAN ? `<section class="sec reveal" id="delivery"><span class="snum">04 — Delivery &amp; returns</span><h2>Getting it to you</h2><p>Free next-day delivery across the UAE on orders placed by 2 pm on a working day; free returns and size or fit exchanges within the UAE for 14 days. The detail is in our <a href="/policies.html#shipping">delivery and returns policy</a>.</p></section>` : `<section class="sec reveal" id="delivery">
+  ${LEAN ? `<section class="sec reveal" id="delivery"><span class="snum">04 — Delivery &amp; returns</span><h2>Free next-day UAE delivery and exchanges</h2><p>Free next-day delivery across the UAE on orders placed by 2 pm on a working day; free returns and size or fit exchanges within the UAE for 14 days. The detail is in our <a href="/policies.html#shipping">delivery and returns policy</a>.</p></section>` : `<section class="sec reveal" id="delivery">
     <span class="snum">06 — Delivery &amp; returns</span>
-    <h2>Getting it <em>to you</em></h2>
+    <h2>Free next-day UAE delivery and <em>exchanges</em></h2>
     <p>Order before 2 pm UAE time on a working day and it ships the same day, arriving the next working day anywhere in the UAE. You'll get tracking by email as soon as it's on its way.</p>
     <p>Returns are free within the UAE — you have 14 days from delivery to send something back unworn, unwashed and with tags on, and exchanges for a different size or fit are free too, subject to stock. Full detail is on the <a href="/policies.html#returns" style="border-bottom:1px solid currentColor">policies page</a>.</p>
   </section>`}

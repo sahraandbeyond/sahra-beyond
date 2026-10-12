@@ -337,3 +337,5 @@ html[lang="ar"] .sbw-bar *,html[lang="ar"] .sbw-teaser *,html[lang="ar"] .sbw-ca
 html[lang="ar"] .sbw-bar{font-size:12.5px}
 html[lang="ar"] .sbw-code b{font-family:var(--mono,'Space Mono',monospace)!important;letter-spacing:.08em!important}
 @media(max-width:620px){html[lang="ar"] .sbw-bar{font-size:12px}html[lang="ar"] .sbw-go{font-size:11px}}
+/* 12 Oct 2026: clear of the ambient-sound button (home and /shop/, desktop) */
+.sbw-teaser.sbw-teaser-amb{left:74px}
