@@ -11,13 +11,13 @@
   "theme2": "#6B4A18",
   "accent": "#C0702E",
   "scene": "dunes",
-  "imgMain": "/shirts/emptyquarter-oversized-front.jpg",
+  "imgMain": "/shirts/emptyquarter-model-stand.jpg",
   "heroShot": "/shirts/emptyquarter-model-stand.jpg",
-  "imgFront": "/shirts/emptyquarter-oversized-front.jpg",
-  "imgBack": "/shirts/emptyquarter-oversized-back.jpg",
+  "imgFront": "/shirts/emptyquarter-model-stand.jpg",
+  "imgBack": "/shirts/emptyquarter-model-sunset.jpg",
   "imgCard": [
-    "/shirts/emptyquarter-oversized-front-fit.jpg",
-    "/shirts/emptyquarter-oversized-back-fit.jpg"
+    "/shirts/emptyquarter-model-stand.jpg",
+    "/shirts/emptyquarter-model-sunset.jpg"
   ],
   "altMain": "Empty Quarter oversized t-shirt, an embroidered desert tee — a tonal sun over the dunes on the chest",
   "altFront": "Empty Quarter — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
@@ -111,8 +111,6 @@
   "colourPantone": "14-1118 TCX",
   "colourHex": "#D5BA98",
   "decoration": "Embroidered throughout — no print",
-  "imgCompare": "/shirts/emptyquarter-fit-comparison.jpg",
-  "altCompare": "Empty Quarter — Oversized — regular fit and oversized fit shown side by side",
   "fitLabel": "Oversized fit",
   "modelShots": [
     {

@@ -11,13 +11,13 @@
   "theme2": "#1B1430",
   "accent": "#E9B978",
   "scene": "galaxy",
-  "imgMain": "/shirts/alquaa-oversized-back.jpg",
+  "imgMain": "/shirts/alquaa-model-back.jpg",
   "heroShot": "/shirts/alquaa-model-back.jpg",
-  "imgFront": "/shirts/alquaa-oversized-front.jpg",
-  "imgBack": "/shirts/alquaa-oversized-back.jpg",
+  "imgFront": "/shirts/alquaa-model-front.jpg",
+  "imgBack": "/shirts/alquaa-model-back.jpg",
   "imgCard": [
-    "/shirts/alquaa-oversized-back-fit.jpg",
-    "/shirts/alquaa-oversized-front-fit.jpg"
+    "/shirts/alquaa-model-back.jpg",
+    "/shirts/alquaa-model-front.jpg"
   ],
   "altMain": "Al Quaa Galaxy oversized t-shirt, a Milky Way desert tee — the galaxy printed across the back",
   "altFront": "Al Quaa Galaxy — Oversized, oversized fit, front view showing the drop shoulder and boxy body",
@@ -116,8 +116,6 @@
       "b": "The graphic on the back is printed direct-to-garment, but the logo on the front is stitched — raised thread you notice by touch. Two techniques on one shirt."
     }
   ],
-  "imgCompare": "/shirts/alquaa-fit-comparison.jpg",
-  "altCompare": "Al Quaa Galaxy — Oversized — regular fit and oversized fit shown side by side",
   "fitLabel": "Oversized fit",
   "modelShots": [
     {

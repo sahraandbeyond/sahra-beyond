@@ -193,9 +193,18 @@ for (const f of ['index.html', 'homepage-preview.html', 'classic/index.html', 'p
   if (re.test(h)) { const n = h.replace(re, () => G.GA4_HEAD); if (n !== h) fs.writeFileSync(fp, n); }
 }
 /* footer guide list into the hand-maintained pages (see footer-guides.js) */
+/* 13 Oct 2026 (Faheem: "I can still see AI mockups on the site"): the Shopify product images
+   are the studio renders, and the home grid and /shop/ draw their pictures from Shopify at run
+   time. SB_IMGS gives each handle its real photographs from content/products, and the run-time
+   code prefers them. */
+const SB_IMGS = (function () { const o = {}; for (const p of require("./build-products.js").loadProducts(ROOT)) { const seen = new Set(), l = [];
+  for (const s of [p.heroShot, p.imgMain, p.imgFront, p.imgBack, ...((p.modelShots || []).map(m => m.src))]) { if (!s) continue; const w = String(s).replace(/\.(jpe?g|png)$/i, '.webp'); if (!seen.has(w)) { seen.add(w); l.push(w); } }
+  o[p.id] = l; } return o; })();
+const SB_IMGS_TAG = '<!--SBIMGS:START--><script>window.SB_IMGS=' + JSON.stringify(SB_IMGS) + ';</script><!--SBIMGS:END-->';
 for (const f of ['index.html', 'shop-preview.html']) {
   const fp = path.join(ROOT, f); if (!fs.existsSync(fp)) continue;
-  const h = fs.readFileSync(fp, 'utf8');
+  const h0 = fs.readFileSync(fp, 'utf8');
+  const h = /<!--SBIMGS:START-->/.test(h0) ? h0.replace(/<!--SBIMGS:START-->[\s\S]*?<!--SBIMGS:END-->/, () => SB_IMGS_TAG) : h0.replace('</head>', () => SB_IMGS_TAG + '\n</head>');
   let n = h.replace(/<!--GUIDES:START-->[\s\S]*?<!--GUIDES:END-->/, '<!--GUIDES:START--><style>' + FG.FOOT_GUIDES_CSS + '</style>' + FG.guidesHtml(null, AR_CORE_PUBLIC) + '<!--GUIDES:END-->');
   /* Instagram blocks (instagram-feed.js): the strip under the film on the home page, the footer row, and one script */
   if (f === 'index.html') { /* the home grid: pair the fits (idempotent) */
@@ -211,7 +220,7 @@ for (const f of ['index.html', 'shop-preview.html']) {
   n = n.replace(/<!--IG:STRIP-->[\s\S]*?<!--\/IG:STRIP-->/, '<!--IG:STRIP-->' + IG.stripHtml() + '<!--/IG:STRIP-->')
        .replace(/<!--IG:FOOT-->[\s\S]*?<!--\/IG:FOOT-->/, '<!--IG:FOOT--><style>' + IG.CSS + FITPAIR_CSS + '</style>' + IG.footerRowHtml() + '<!--/IG:FOOT-->')
        .replace(/<!--IG:JS-->[\s\S]*?<!--\/IG:JS-->/, '<!--IG:JS--><script>' + IG.JS + '</script><script>' + FITPAIR_JS + '</script><!--/IG:JS-->');
-  if (n !== h) fs.writeFileSync(fp, n);
+  if (n !== h0) fs.writeFileSync(fp, n);
 }
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
 const PRODUCT_BY_PLACE = {};
@@ -948,7 +957,7 @@ main,.ftr{position:relative;z-index:1}
 .pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
 .pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
 .pcard-imglink{position:absolute;inset:0;display:block}
-.pcard-img img{width:100%;height:100%;object-fit:contain;display:block;padding:6%;transition:transform .6s ease}
+.pcard-img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;padding:0;transition:transform .6s ease}
 /* The photo links to the product, same as the title. The anchor wraps only the
    image and sits BESIDE the zoom button rather than around it: a <button>
    inside an <a> is invalid, and the zoom control needs its own click. It is
@@ -2362,7 +2371,7 @@ if (LAUNCHED || REVEALED) (function () {
     const prod = p => ({
       "@type": "Product",
       "name": p.name,
-      "image": SITE + (p.imgMain || p.imgFront || '/shirts/alquaa-regular-back.jpg'),
+      "image": SITE + (p.imgMain || p.imgFront || '/shirts/alquaa-dune-back.jpg'),
       "description": p.shareDesc || p.ldDesc || p.seoDesc || '',
       "sku": p.sku || undefined,
       "brand": { "@type": "Brand", "name": "Sahra & Beyond" },
@@ -2388,7 +2397,7 @@ if (LAUNCHED || REVEALED) (function () {
           .map((p, i) => ({ "@type": "ListItem", "position": i + 1, "item": prod(p) }))
       }
     ];
-    const meta = `\n<meta name="description" content="${esc(desc)}">\n${robotsMeta(false)}\n<meta property="og:locale" content="en_AE">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-regular-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-regular-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
+    const meta = `\n<meta name="description" content="${esc(desc)}">\n${robotsMeta(false)}\n<meta property="og:locale" content="en_AE">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-dune-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-dune-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
     html = html.replace(/<meta name="robots"[^>]*><!--[^>]*-->\n?/, '');
     // shop-preview.html carries its own canonical/og:image so the preview page is
     // correct on its own; strip them here or /shop/ ends up with two of each.
@@ -2429,7 +2438,7 @@ if (LAUNCHED || REVEALED) (function () {
       .sp-grid{display:grid;gap:34px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:0 0 8px}
       .sp-card{margin:0}
       .sp-img{display:block;aspect-ratio:4/5;overflow:hidden;border-radius:2px;background:#EFEAE0}
-      .sp-img img{width:100%;height:100%;object-fit:contain;padding:6%;display:block}
+      .sp-img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;padding:0;display:block}
       .sp-name{font-size:19px;margin:14px 0 4px;font-weight:400}
       .sp-name a{color:inherit;text-decoration:none}
       .sp-meta{margin:0 0 8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.8px;color:#6B6256}
@@ -2437,7 +2446,7 @@ if (LAUNCHED || REVEALED) (function () {
       .sp-cta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#7E4114}
       /* 8 Oct 2026: Sahra Trail band under the grid, with the revealed prices */
       .sp-trail{position:relative;z-index:3;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;align-items:stretch;max-width:1120px;margin:48px auto 96px;width:calc(100% - 40px);box-shadow:0 24px 60px rgba(30,20,10,.18);border-radius:14px;overflow:hidden;background:#0F2626;color:#EADBC4}
-      .sp-trail img{display:block;width:100%;height:100%;object-fit:cover}
+      .sp-trail img{display:block;width:100%;height:100%;object-fit:cover}.sp-trail-im{position:relative;display:block;min-height:100%}.sp-mock{position:absolute;top:12px;left:12px;padding:4px 9px;border-radius:999px;background:rgba(10,16,22,.78);color:#F6ECDD;font:600 11px/1.2 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
       .sp-trail>div{padding:28px 28px 24px}
       .sp-trail-k{margin:0 0 6px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#9ED0CB}
       .sp-trail h2{margin:0 0 14px;font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(26px,3vw,34px);color:#F6ECDD}
@@ -2450,7 +2459,7 @@ if (LAUNCHED || REVEALED) (function () {
       @media(max-width:700px){.sp-trail{grid-template-columns:1fr;width:calc(100% - 32px);margin:36px auto 72px}.sp-trail>div{padding:22px 18px 20px}}
     </style>`;
 
-    const TRAIL_BAND = '<section class="sp-trail" aria-labelledby="spTrailH"><img src="/assets/trail/reveal/trail-kit-720.webp" width="720" height="547" alt="The Sahra Trail Kit: the Tee and the 2-in-1 Shorts" loading="lazy" decoding="async"><div><p class="sp-trail-k">Sahra Trail &middot; the first run</p><h2 id="spTrailH">Trail and run wear, revealed</h2><ul><li><span>Sahra Trail Tee</span><b>AED 139</b></li><li><span>Sahra Trail 2-in-1 Shorts</span><b>AED 169</b></li><li><span>The Kit, Tee + Shorts</span><b>AED 249</b></li></ul><p class="sp-trail-s">Not on sale yet. The early-access list can buy 24 hours before everyone else.</p><a class="sp-trail-a" href="/trail/">See Sahra Trail &rarr;</a><p class="sp-trail-r">Pre-production renders</p></div></section>';
+    const TRAIL_BAND = '<section class="sp-trail" aria-labelledby="spTrailH"><span class="sp-trail-im"><img src="/assets/trail/reveal/trail-kit-720.webp" width="720" height="547" alt="The Sahra Trail Kit: the Tee and the 2-in-1 Shorts, a pre-production render" loading="lazy" decoding="async"><span class="sp-mock">Mock-up</span></span><div><p class="sp-trail-k">Sahra Trail &middot; the first run</p><h2 id="spTrailH">Trail and run wear, revealed</h2><ul><li><span>Sahra Trail Tee</span><b>AED 139</b></li><li><span>Sahra Trail 2-in-1 Shorts</span><b>AED 169</b></li><li><span>The Kit, Tee + Shorts</span><b>AED 249</b></li></ul><p class="sp-trail-s">Not on sale yet. The early-access list can buy 24 hours before everyone else.</p><a class="sp-trail-a" href="/trail/">See Sahra Trail &rarr;</a><p class="sp-trail-r">Pre-production renders</p></div></section>';
     html = html.replace(
       '<main id="products"><div class="loading">Loading the collection&hellip;</div></main>',
       gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>' + TRAIL_BAND
@@ -2752,9 +2761,9 @@ body.tote-page main{max-width:1180px}
   const ONE = { Dunes: 'dune field', Camping: 'camp', Wadis: 'wadi', Mountains: 'mountain route', Coast: 'coast', Heritage: 'heritage site' };
   const chips = CATS.filter(catCount).map(c => `<a class="pl-chip" href="#cat-${c.toLowerCase()}"><b>${catCount(c)}</b> ${esc(catCount(c) === 1 ? ONE[c] : (CAT_META[c] || c.toLowerCase()))}</a>`).join('');
   const TEES = [
-    ['al-quaa-desert', 'Al Quaa Galaxy', '/shirts/card/alquaa-regular-back-fit.jpg'],
-    ['liwa', 'Empty Quarter', '/shirts/card/emptyquarter-regular-front-fit.jpg'],
-    ['wadi-naqab', 'Hajar Mountains', '/shirts/card/hajar-regular-back-fit.jpg']
+    ['al-quaa-desert', 'Al Quaa Galaxy', '/shirts/card/alquaa-dune-back.jpg'],
+    ['liwa', 'Empty Quarter', '/shirts/card/emptyquarter-dune-front.jpg'],
+    ['wadi-naqab', 'Hajar Mountains', '/shirts/card/hajar-dune-back.jpg']
   ].filter(([id]) => byId[id] && byId[id].productLink && byId[id].productLink.slug);
   const tees = TEES.map(([id, tee, img]) => `<a class="pl-tee" href="/products/${esc(byId[id].productLink.slug)}/"><img src="${esc(img)}" alt="${esc(tee)} tee" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the tee &rarr;</i></span></a>`).join('');
   const lede = `${locations.length} places, ${words[CATS.filter(catCount).length] || CATS.length} kinds of ground, ${words[emirates.size] || emirates.size} emirates` +
@@ -4150,7 +4159,7 @@ const AR_PDP_NOINDEX = true;
         tee: { name: 'Sahra Trail Tee', price: 'AED 139', line: 'Ocean-inspired print.', feats: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'], alt: 'Sahra Trail Tee in teal with the ocean-inspired print, front and back' },
         short: { name: 'Sahra Trail 2-in-1 Shorts', price: 'AED 169', line: 'Wave-inspired graphic.', feats: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'], alt: 'Sahra Trail 2-in-1 Shorts in charcoal with the wave-inspired graphic, front and back' },
         kit: { name: 'The Kit', price: 'AED 249', line: 'The Tee and the 2-in-1 Shorts together.', save: 'Save AED 59', alt: 'The Sahra Trail Kit: the Tee and the 2-in-1 Shorts' },
-        renders: 'Pre-production renders', film: 'The reveal', filmAlt: 'Sahra Trail reveal film, muted: the Tee and the 2-in-1 Shorts and their details', pause: 'Pause film', play: 'Play film',
+        renders: 'Pre-production renders', mock: 'Mock-up', film: 'The reveal', filmAlt: 'Sahra Trail reveal film, muted: the Tee and the 2-in-1 Shorts and their details', pause: 'Pause film', play: 'Play film',
         cta: 'Get early access', ctaSub: 'The list can buy 24 hours before everyone else.'
       },
       tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Shorts', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
@@ -4183,7 +4192,7 @@ const AR_PDP_NOINDEX = true;
         tee: { name: 'تيشيرت صحراء تريل', price: '139 درهمًا', line: 'نقشة مستوحاة من البحر.', feats: ['أكمام راجلان', 'ألواح شبكية على الجانبين', 'درزات مغطّاة', 'شعار القمّتين العاكس أسفل الياقة'], alt: 'تيشيرت صحراء تريل باللون الأخضر المزرق بنقشة مستوحاة من البحر، من الأمام والخلف' },
         short: { name: 'شورت صحراء تريل 2 في 1', price: '169 درهمًا', line: 'رسمة مستوحاة من الأمواج.', feats: ['شورتان في واحد، مع بطانة داخلية مخفية', 'جيب للهاتف ملتصق بالبطانة', 'جيب بسحّاب للمفاتيح والبطاقات', 'رباط داخلي', 'شعار القمّتين العاكس'], alt: 'شورت صحراء تريل 2 في 1 باللون الفحمي برسمة مستوحاة من الأمواج، من الأمام والخلف' },
         kit: { name: 'الطقم', price: '249 درهمًا', line: 'التيشيرت والشورت 2 في 1 معًا.', save: 'وفّر 59 درهمًا', alt: 'طقم صحراء تريل: التيشيرت والشورت 2 في 1' },
-        renders: 'صور تصميم قبل الإنتاج', film: 'فيلم الكشف', filmAlt: 'فيلم الكشف عن صحراء تريل بلا صوت: التيشيرت والشورت 2 في 1 وتفاصيلهما', pause: 'إيقاف الفيلم', play: 'تشغيل الفيلم',
+        renders: 'صور تصميم قبل الإنتاج', mock: 'تصميم تجريبي', film: 'فيلم الكشف', filmAlt: 'فيلم الكشف عن صحراء تريل بلا صوت: التيشيرت والشورت 2 في 1 وتفاصيلهما', pause: 'إيقاف الفيلم', play: 'تشغيل الفيلم',
         cta: 'انضم إلى القائمة', ctaSub: 'يستطيع المسجّلون الشراء قبل الجميع بـ24 ساعة.'
       },
       tee: 'تيشيرت صحراء تريل', short: 'شورت صحراء تريل 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', teeNote: 'شعار القمّتين العاكس أسفل الياقة', shortNote: 'شعار القمّتين العاكس على الساق اليسرى', flashHint: 'انقر للوميض',
@@ -4314,12 +4323,14 @@ html body main.tr .tr-hero .tr-tagline{font-family:'Jost','Space Mono',system-ui
 .tr-piece em{display:block;font-style:normal;font-size:13.5px;color:#CDBEA8;margin-top:4px}
 .tr-rvl{display:grid;grid-template-columns:minmax(0,340px) minmax(0,460px);gap:40px;justify-content:center;align-items:start;margin-top:40px;text-align:start}
 .tr-film{position:sticky;top:96px;margin:0}
+/* 13 Oct 2026 (Faheem): the garments are not photographed yet, so every render says so on the image */
+.mock-tag{position:absolute;top:12px;inset-inline-start:12px;z-index:2;padding:4px 9px;border-radius:999px;background:rgba(10,16,22,.78);color:#F6ECDD;font:600 11px/1.2 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
 .tr-film video{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:22px;background:#0b0f14;box-shadow:0 30px 70px rgba(0,0,0,.5);border:1px solid rgba(217,195,165,.22)}
 .tr-film-btn{position:absolute;bottom:42px;inset-inline-end:12px;min-height:36px;padding:0 14px;border-radius:999px;border:0;background:rgba(10,16,22,.72);color:#F6ECDD;font:600 12.5px/1 'Jost',system-ui,sans-serif;letter-spacing:.06em;cursor:pointer}
 .tr-film-btn:focus-visible{outline:2px solid #9ED0CB;outline-offset:2px}
 .tr-film figcaption{margin-top:10px;text-align:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#CDBEA8}
 .tr-cards{display:flex;flex-direction:column;gap:22px}
-.tr-card{border-radius:18px;overflow:hidden;background:rgba(10,16,22,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(217,195,165,.18);color:#EADBC4;padding:0 0 18px}
+.tr-card{position:relative;border-radius:18px;overflow:hidden;background:rgba(10,16,22,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(217,195,165,.18);color:#EADBC4;padding:0 0 18px}
 .tr-card img{display:block;width:100%;height:auto;aspect-ratio:1080/820}
 .tr-card-t{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:16px 20px 0}
 html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:26px;line-height:1.15;margin:0;color:#F6ECDD}
@@ -4401,12 +4412,12 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
       <p>${t.firstSub}</p>
       ${/* 8 Oct 2026: the reveal on the site. Film (muted loop cut from the Reel) beside three cards with prices. */''}
       <div class="tr-rvl">
-        <figure class="tr-film"><video id="${id}film" muted loop playsinline preload="none" poster="/assets/trail/reveal/trail-reveal-poster.jpg" width="720" height="1280" aria-label="${t.rv.filmAlt}"><source src="/assets/trail/reveal/trail-reveal-loop.mp4" type="video/mp4"></video>
+        <figure class="tr-film"><video id="${id}film" muted loop playsinline preload="none" poster="/assets/trail/reveal/trail-reveal-poster.jpg" width="720" height="1280" aria-label="${t.rv.filmAlt}"><source src="/assets/trail/reveal/trail-reveal-loop.mp4" type="video/mp4"></video><span class="mock-tag">${t.rv.mock}</span>
           <button type="button" class="tr-film-btn" data-play="${t.rv.play}" data-pause="${t.rv.pause}" aria-controls="${id}film">${t.rv.play}</button>
           <figcaption>${t.rv.film} &middot; ${t.rv.renders}</figcaption></figure>
         <div class="tr-cards">
-          ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${r.price}</p></div><p class="tr-line">${r.line}</p><ul>${r.feats.map(f => `<li>${f}</li>`).join('')}</ul></article>`; }).join('')}
-          <article class="tr-card tr-kit"><img src="/assets/trail/reveal/trail-kit-720.webp" srcset="/assets/trail/reveal/trail-kit-720.webp 720w, /assets/trail/reveal/trail-kit.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${t.rv.kit.alt}" loading="lazy" decoding="async"><div class="tr-card-t"><h3>${t.rv.kit.name}</h3><p class="tr-price">${t.rv.kit.price}</p></div><p class="tr-line">${t.rv.kit.line} <b>${t.rv.kit.save}</b></p>
+          ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${r.price}</p></div><p class="tr-line">${r.line}</p><ul>${r.feats.map(f => `<li>${f}</li>`).join('')}</ul></article>`; }).join('')}
+          <article class="tr-card tr-kit"><img src="/assets/trail/reveal/trail-kit-720.webp" srcset="/assets/trail/reveal/trail-kit-720.webp 720w, /assets/trail/reveal/trail-kit.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${t.rv.kit.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${t.rv.kit.name}</h3><p class="tr-price">${t.rv.kit.price}</p></div><p class="tr-line">${t.rv.kit.line} <b>${t.rv.kit.save}</b></p>
             <a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a><p class="tr-cta-sub">${t.rv.ctaSub}</p></article>
           <p class="tr-renders">${t.rv.renders}</p>
         </div>

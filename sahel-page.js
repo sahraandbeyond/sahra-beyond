@@ -114,6 +114,7 @@ module.exports = function buildSahel({ shell, write, SITE }) {
     const attrs = href ? ` href="${href}"` : ' type="button"';
     return `<${tag}${attrs} class="sh-piece sh-piece-${p.k}" aria-label="Piece ${n}: ${label}. ${reveal ? '' : T.reveal}">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-${p.k}.webp);aspect-ratio:${d[0]}/${d[1]}"><img src="${reveal && p.img ? p.img : `/assets/sahel/sahel-${p.k}.webp`}" width="${d[0]}" height="${d[1]}" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        <span class="sh-mock">${T.mock || 'Mock-up'}</span>
         <span class="sh-n">${n}</span><b>${label}</b><small>${reveal ? [p.place ? (p.inspiredBy ? 'Inspired by ' : '') + p.place : null, p.price].filter(Boolean).join(' · ') || p.type : (typed ? T.reveal : `${p.type} &middot; ${T.reveal}`)}</small>
       </${tag}>`;
   }).join('\n      ');
@@ -181,6 +182,7 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
 .sh-piece.lit .sh-ca{opacity:.36;filter:blur(1px)}
 .sh-piece.lit .sh-form{filter:drop-shadow(0 0 .8px rgba(210,246,242,1)) drop-shadow(0 0 16px rgba(92,184,178,.7)) drop-shadow(0 26px 30px rgba(3,8,16,.6));transform:translateY(-6px)}
 .sh-piece.lit .sh-form img{filter:brightness(.78) saturate(.3)}
+.sh-mock{display:inline-block;margin-top:12px;padding:3px 8px;border:1px solid rgba(230,211,182,.45);border-radius:999px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#E6D3B6}   /* 13 Oct 2026 (Faheem): renders say so until the samples are shot */
 .sh-n{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.22em;color:#E6D3B6;margin-top:20px}
 .sh-piece b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:24px;line-height:1.12;font-weight:600;color:#F4ECDF;margin-top:4px;text-wrap:balance}
 .sh-piece small{display:block;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#C9F0EB;margin-top:5px}

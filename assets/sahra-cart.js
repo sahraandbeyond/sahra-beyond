@@ -44,6 +44,7 @@
       identical to a successful one. Failures now surface in the drawer.
    ========================================================================== */
 (function () {
+  var CART_REAL = { 'al-quaa-galaxy-regular': '/shirts/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/emptyquarter-model-stand.webp', 'hajar-mountains-regular': '/shirts/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/hajar-lake-back-her.webp', 'sand-polo': '/shirts/polo-dune-front.webp' };
   var S = { domain: 'sahra-beyond.myshopify.com', token: 'cc42ba8e74eb27c4f3c062d93f893fa0', v: '2024-10' };
 
   /* quantity is part of this fragment and MUST stay rendered - see bug 2 */
@@ -98,12 +99,12 @@
   }
   /* the six tees, for the second-tee card (handles, names and card images are stable) */
   var TEES = [
-    { h: 'al-quaa-galaxy-regular', name: 'Al Quaa Galaxy', fit: 'regular', img: '/shirts/card/alquaa-regular-back.webp' },
-    { h: 'empty-quarter-regular', name: 'Empty Quarter', fit: 'regular', img: '/shirts/card/emptyquarter-regular-front.webp' },
-    { h: 'hajar-mountains-regular', name: 'Hajar Mountains', fit: 'regular', img: '/shirts/card/hajar-regular-back.webp' },
-    { h: 'al-quaa-galaxy-oversized', name: 'Al Quaa Galaxy', fit: 'oversized', img: '/shirts/card/alquaa-oversized-back.webp' },
-    { h: 'empty-quarter-oversized', name: 'Empty Quarter', fit: 'oversized', img: '/shirts/card/emptyquarter-oversized-front.webp' },
-    { h: 'hajar-mountains-oversized', name: 'Hajar Mountains', fit: 'oversized', img: '/shirts/card/hajar-oversized-back.webp' }
+    { h: 'al-quaa-galaxy-regular', name: 'Al Quaa Galaxy', fit: 'regular', img: '/shirts/card/alquaa-dune-back.webp' },
+    { h: 'empty-quarter-regular', name: 'Empty Quarter', fit: 'regular', img: '/shirts/card/emptyquarter-dune-front.webp' },
+    { h: 'hajar-mountains-regular', name: 'Hajar Mountains', fit: 'regular', img: '/shirts/card/hajar-dune-back.webp' },
+    { h: 'al-quaa-galaxy-oversized', name: 'Al Quaa Galaxy', fit: 'oversized', img: '/shirts/card/alquaa-model-back.webp' },
+    { h: 'empty-quarter-oversized', name: 'Empty Quarter', fit: 'oversized', img: '/shirts/card/emptyquarter-model-stand.webp' },
+    { h: 'hajar-mountains-oversized', name: 'Hajar Mountains', fit: 'oversized', img: '/shirts/card/hajar-lake-back-her.webp' }
   ];
   /* 4 Oct 2026 (CRO panel, idea 9): the delivery promise as a real clock. Rule from
      Faheem (4 Oct): orders by 2 pm Dubai time Monday to Saturday go out the same day
@@ -454,7 +455,9 @@
 
     body.innerHTML = err + lines.map(function (l) {
       var m = l.merchandise;
-      var img = (m.product && m.product.featuredImage) ? m.product.featuredImage.url : '';
+      /* 13 Oct 2026: Shopify's product images are studio renders; the bag shows the real photograph */
+      var hh = m.product && m.product.handle, real = (window.SB_IMGS && SB_IMGS[hh] && SB_IMGS[hh][0]) || CART_REAL[hh];
+      var img = real ? real.replace('/shirts/', '/shirts/card/') : ((m.product && m.product.featuredImage) ? m.product.featuredImage.url : '');
       var q = l.quantity;
       /* The gift has no product page (headless-only), so no link; and no
          quantity or remove controls - it is not the customer's to manage. */

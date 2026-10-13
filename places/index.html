@@ -482,7 +482,7 @@ main,.ftr{position:relative;z-index:1}
 .pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
 .pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
 .pcard-imglink{position:absolute;inset:0;display:block}
-.pcard-img img{width:100%;height:100%;object-fit:contain;display:block;padding:6%;transition:transform .6s ease}
+.pcard-img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;padding:0;transition:transform .6s ease}
 /* The photo links to the product, same as the title. The anchor wraps only the
    image and sits BESIDE the zoom button rather than around it: a <button>
    inside an <a> is invalid, and the zoom control needs its own click. It is
@@ -1397,7 +1397,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <p class="pl-lede">30 places, six kinds of ground, six emirates and one detour over the border &mdash; each with a sourced guide: how to get there, when to go, the real risks and what to pack.</p>
         <div class="pl-chips"><a class="pl-chip" href="#cat-dunes"><b>6</b> dune fields</a><a class="pl-chip" href="#cat-camping"><b>8</b> camps</a><a class="pl-chip" href="#cat-wadis"><b>2</b> wadis</a><a class="pl-chip" href="#cat-mountains"><b>6</b> mountain routes</a><a class="pl-chip" href="#cat-coast"><b>7</b> coasts</a><a class="pl-chip" href="#cat-heritage"><b>1</b> heritage site</a></div>
       </div>
-      <div class="pl-tees"><p class="pl-tees-h">Three of them became tees</p><a class="pl-tee" href="/products/al-quaa-galaxy-regular/"><img src="/shirts/card/alquaa-regular-back-fit.webp" alt="Al Quaa Galaxy tee" loading="lazy" width="120" height="150"><span><em>Al Quaa Desert</em><b>Al Quaa Galaxy</b><i>See the tee &rarr;</i></span></a><a class="pl-tee" href="/products/empty-quarter-regular/"><img src="/shirts/card/emptyquarter-regular-front-fit.webp" alt="Empty Quarter tee" loading="lazy" width="120" height="150"><span><em>Liwa Oasis</em><b>Empty Quarter</b><i>See the tee &rarr;</i></span></a><a class="pl-tee" href="/products/hajar-mountains-regular/"><img src="/shirts/card/hajar-regular-back-fit.webp" alt="Hajar Mountains tee" loading="lazy" width="120" height="150"><span><em>Wadi Naqab</em><b>Hajar Mountains</b><i>See the tee &rarr;</i></span></a></div>
+      <div class="pl-tees"><p class="pl-tees-h">Three of them became tees</p><a class="pl-tee" href="/products/al-quaa-galaxy-regular/"><img src="/shirts/card/alquaa-dune-back.webp" alt="Al Quaa Galaxy tee" loading="lazy" width="120" height="150"><span><em>Al Quaa Desert</em><b>Al Quaa Galaxy</b><i>See the tee &rarr;</i></span></a><a class="pl-tee" href="/products/empty-quarter-regular/"><img src="/shirts/card/emptyquarter-dune-front.webp" alt="Empty Quarter tee" loading="lazy" width="120" height="150"><span><em>Liwa Oasis</em><b>Empty Quarter</b><i>See the tee &rarr;</i></span></a><a class="pl-tee" href="/products/hajar-mountains-regular/"><img src="/shirts/card/hajar-dune-back.webp" alt="Hajar Mountains tee" loading="lazy" width="120" height="150"><span><em>Wadi Naqab</em><b>Hajar Mountains</b><i>See the tee &rarr;</i></span></a></div>
     </div>
   </section>
   <main>
@@ -1527,7 +1527,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=7e1d3f5e" defer></script>
+<script src="/assets/sahra-cart.js?v=c4d6c7c1" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;

@@ -484,7 +484,7 @@ main,.ftr{position:relative;z-index:1}
 .pcard:hover{box-shadow:0 14px 34px rgba(43,37,32,.13);transform:translateY(-3px)}
 .pcard-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFEAE0}
 .pcard-imglink{position:absolute;inset:0;display:block}
-.pcard-img img{width:100%;height:100%;object-fit:contain;display:block;padding:6%;transition:transform .6s ease}
+.pcard-img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;padding:0;transition:transform .6s ease}
 /* The photo links to the product, same as the title. The anchor wraps only the
    image and sits BESIDE the zoom button rather than around it: a <button>
    inside an <a> is invalid, and the zoom control needs its own click. It is
@@ -1672,14 +1672,14 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <p>Weather warnings: <a href="https://www.ncm.gov.ae/" target="_blank" rel="noopener">National Center of Meteorology</a>. Tell someone where you are going and when you will be back.</p></div></div></details>
     <details class="lg-fold lg-rise" id="heritage"><summary><span class="lg-fi"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h11a2 2 0 0 1 2 2v1h-4M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V7M7 4a2 2 0 0 1 2 2v12M11 10h4M11 14h4"/></svg></span><span class="lg-ft"><h2 class="lg-fh">Heritage, nature and etiquette</h2><small>This is a popular family spot, so keep noise down near the play areas and pack out any…</small></span><span class="lg-fx" aria-hidden="true"></span></summary><div class="lg-fb"><div class="content"><p class="lg-etq"><b>Etiquette.</b> This is a popular family spot, so keep noise down near the play areas and pack out any barbecue rubbish — bins are limited beyond the entrance.</p></div></div></details>
     <section class="lg-kin lg-rise" id="tee" data-match="kin">
-      <a class="lg-kin-img" href="/products/hajar-mountains-regular/" tabindex="-1" aria-hidden="true"><img src="/shirts/hajar-regular-back.webp" alt="" loading="lazy" decoding="async" width="400" height="500"></a>
+      <a class="lg-kin-img" href="/products/hajar-mountains-regular/" tabindex="-1" aria-hidden="true"><img src="/shirts/hajar-dune-back.webp" alt="" loading="lazy" decoding="async" width="400" height="500"></a>
       <div class="lg-kin-t"><span class="lg-eye"><svg class="lg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4l-5 3 2 4 3-1.5V20h8V9.5l3 1.5 2-4-5-3a4 4 0 0 1-8 0z"/></svg> Wear the place</span>
         <h2>Hajar Mountains — Regular</h2>
         <p>The peaks printed on the Hajar Mountains tee rise above Wadi Naqab, further north in the same Hajar range.</p>
         <p class="lg-kin-m"><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span> <span class="sb-aed-only">&middot; 230gsm cotton &middot; any 2 tees AED 359</span><span class="sb-aed-alt">&middot; 230gsm cotton</span></p>
         <a class="btn" href="/products/hajar-mountains-regular/">See the tee &rarr;</a>
       </div></section><div class="gbar" id="gbar" hidden data-handle="hajar-mountains-regular" data-name="Hajar Mountains — Regular" data-aed="199">
-    <a class="gbar-img" href="/products/hajar-mountains-regular/" tabindex="-1" aria-hidden="true"><img src="/shirts/hajar-regular-back.webp" alt="" width="40" height="50" loading="lazy" decoding="async"></a>
+    <a class="gbar-img" href="/products/hajar-mountains-regular/" tabindex="-1" aria-hidden="true"><img src="/shirts/hajar-dune-back.webp" alt="" width="40" height="50" loading="lazy" decoding="async"></a>
     <div class="gbar-t"><b>Hajar Mountains</b><span><span class="sb-price" data-handle="hajar-mountains-regular" data-aed="199">AED 199</span><span class="sb-ship-uae"> &middot; next-day UAE</span></span></div>
     <button type="button" class="gbar-btn" id="gbarOpen">Pick size</button>
   </div>
@@ -1915,7 +1915,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=7e1d3f5e" defer></script>
+<script src="/assets/sahra-cart.js?v=c4d6c7c1" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;

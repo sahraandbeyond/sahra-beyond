@@ -11,10 +11,10 @@
   "theme2": "#6B4A18",
   "accent": "#C0702E",
   "scene": "dunes",
-  "imgMain": "/shirts/emptyquarter-regular-front.jpg",
+  "imgMain": "/shirts/emptyquarter-dune-front.jpg",
   "heroShot": "/shirts/emptyquarter-dune-front.jpg",
-  "imgFront": "/shirts/emptyquarter-regular-front.jpg",
-  "imgBack": "/shirts/emptyquarter-regular-back.jpg",
+  "imgFront": "/shirts/emptyquarter-dune-front.jpg",
+  "imgBack": "/shirts/emptyquarter-dune-back.jpg",
   "imgCard": [
     "/shirts/emptyquarter-dune-front.jpg",
     "/shirts/emptyquarter-dune-back.jpg"
@@ -111,8 +111,6 @@
   "colourPantone": "14-1118 TCX",
   "colourHex": "#D5BA98",
   "decoration": "Embroidered throughout — no print",
-  "imgCompare": "/shirts/emptyquarter-fit-comparison.jpg",
-  "altCompare": "Empty Quarter — Regular — regular fit and oversized fit shown side by side",
   "fitLabel": "Regular fit",
   "modelShots": [
     {
