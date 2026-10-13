@@ -87,7 +87,12 @@ function guideLink(p){ const g = GUIDE_BY_PLACE[p.placeSlug]; return g ? `<a hre
 /* 1 Oct 2026 (handover item 23): gallery images get an 800w card version via srcset, and the
    thumbnails load the small card image instead of the full 1536px photo. */
 function cardOf(src){ const b = String(src).replace(/\.(jpe?g|png)$/i, '.webp').split('/').pop(); return require('fs').existsSync(require('path').join(__dirname, 'shirts', 'card', b)) ? '/shirts/card/' + b : ''; }
-function cardSrcset(src){ const c = cardOf(src); if (!c) return ''; const full = String(src).replace(/\.(jpe?g|png)$/i, '.webp'); return ` srcset="${c} 800w, ${full} 1536w" sizes="(max-width:760px) 100vw, 640px"`; }
+/* 13 Oct 2026: srcset widths are read from the files. The descriptors said 800w and 1536w
+   for every photo, but portrait cards are 534px wide and most masters 1080px, so phones
+   were told the wrong sizes and fetched the master. */
+function webpW(rel){ try { const b = require('fs').readFileSync(require('path').join(__dirname, rel.replace(/^\//, ''))); const t = b.toString('ascii', 12, 16);
+  if (t === 'VP8X') return 1 + b.readUIntLE(24, 3); if (t === 'VP8L') return 1 + (b.readUInt16LE(21) & 0x3FFF); if (t === 'VP8 ') return b.readUInt16LE(26) & 0x3FFF; } catch (e) {} return 0; }
+function cardSrcset(src){ const c = cardOf(src); if (!c) return ''; const full = String(src).replace(/\.(jpe?g|png)$/i, '.webp'); const cw = webpW(c) || 800, fw = webpW(full) || 1536; return fw > cw ? ` srcset="${c} ${cw}w, ${full} ${fw}w" sizes="(max-width:700px) 100vw, 640px"` : ` srcset="${c} ${cw}w" sizes="(max-width:700px) 100vw, 640px"`; }
 function ogOf(p, SITE){ return require('fs').existsSync(require('path').join(__dirname, 'uploads', 'og', 'products', p.id + '.jpg')) ? `${SITE}/uploads/og/products/${p.id}.jpg` : SITE + p.imgMain; }
 function productH1(p){
   if (p.h1) return p.h1;
@@ -156,17 +161,32 @@ function related(p, all){
 function designHandles(p) {
   return p.siblingOf ? [p.siblingOf + '-regular', p.siblingOf + '-oversized'] : [p.id];
 }
+/* 13 Oct 2026 (retention audit, rank 1): paid visitors arrive from a video of a person
+   in a landscape and used to land on a ghost-mannequin studio shot. heroShot names the
+   worn photograph that opens the gallery; the studio shots follow it. */
 function galShots(p) {
-  const raw = [
-    [p.imgMain, p.altMain, 'View'],
-    [p.imgFront, p.altFront, 'View front'],
-    [p.imgBack, p.altBack, 'View back'],
-    ...((p.modelShots || []).map(function (m, i) { return [m.src, m.alt, 'View worn photo ' + (i + 1), 'worn', m.tag || '']; })),
-    [p.imgCompare, p.altCompare, 'Compare regular and oversized fit', 'compare']
-  ].filter(x => x[0]);
+  const hero = p.heroShot ? (p.modelShots || []).find(m => m.src === p.heroShot) : null;
+  const worn = (p.modelShots || []).map(function (m, i) { return [m.src, m.alt, 'View worn photo ' + (i + 1), 'worn', m.tag || '']; });
+  const studio = [[p.imgMain, p.altMain, 'View'], [p.imgFront, p.altFront, 'View front'], [p.imgBack, p.altBack, 'View back']];
+  /* 13 Oct 2026, second pass (art-direction and continuity review): with a heroShot the worn
+     photographs come first and the ghost-mannequin studio frames after them - one swipe from
+     the opener used to land on the mannequin and break the scene the ad had set */
+  const raw = (hero
+    ? [[hero.src, hero.alt, 'View worn photo', 'worn', hero.tag || ''], ...worn, ...studio]
+    : [...studio, ...worn]).concat([[p.imgCompare, p.altCompare, 'Compare regular and oversized fit', 'compare']]).filter(x => x[0]);
   const seen = new Set(), out = [];
   for (const s of raw) { if (seen.has(s[0])) continue; seen.add(s[0]); out.push(s); }
   return out;
+}
+
+/* 13 Oct 2026 (retention audit, rank 9): the other two places in the same cut, under the
+   buy button. Any 2 tees are AED 359, so a second tee costs AED 160 - the arithmetic of
+   the live bundle, not a new offer. */
+function pairStrip(p, all){
+  if (p.garment !== 'tee') return '';
+  const others = all.filter(x => x.garment === 'tee' && x.fit === p.fit && x.siblingOf && x.siblingOf !== p.siblingOf).slice(0, 2);
+  if (!others.length) return '';
+  return `<div class="pdp-pair"><p class="pdp-pair-h"><b>Pair it with another place</b> &middot; any 2 tees AED 359, so the second is AED 160</p><div class="pdp-pair-row">${others.map(x => { const im = x.heroShot || x.imgMain; return `<a class="pdp-pair-c" href="/products/${x.id}/"><img src="${cardOf(im) || im}" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>${esc(String(x.name).split(' — ')[0])}</b><small>${esc(x.placeName || '')}</small></span></a>`; }).join('')}</div></div>`;
 }
 
 function page(p, all, SITE, SHOP_URL, LAUNCHED){
@@ -223,6 +243,8 @@ ${require('./ga4.js').GA4_HEAD}
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+${/* 13 Oct 2026 (speed review): the font files and the live-stock request each paid a fresh connection on slow 4G */''}<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://sahra-beyond.myshopify.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <!-- Product JSON-LD. aggregateRating ONLY from the reviews of this design that the page itself shows (never store-wide, never invented). Shipping and returns match policies.html. -->
 <script type="application/ld+json">
@@ -328,7 +350,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
   font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
   text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.82);
   padding:8px 12px;border-radius:2px;pointer-events:none}
-@media(max-width:700px){.gal-fit{left:10px;bottom:46px;font-size:10px;padding:7px 10px;max-width:calc(100% - 20px)}}  /* above the zoom hint: the model badge is a full sentence now (8 Sep) */
+@media(max-width:700px){.gal-fit{left:10px;top:10px;bottom:auto;font-size:9px;letter-spacing:1px;padding:5px 8px;max-width:calc(100% - 20px)}}   /* 13 Oct 2026: top-left on phones, off the print */  /* above the zoom hint: the model badge is a full sentence now (8 Sep) */
 .gal-thumbs{display:flex;gap:10px;margin-top:13px}
 .gal-thumbs button{width:74px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--edge,rgba(42,32,22,.58));background:none;cursor:pointer;padding:0;opacity:.78;transition:opacity .3s,border-color .3s,transform .3s}
 .gal-thumbs button:hover{transform:translateY(-3px)}
@@ -536,6 +558,20 @@ body.dark-bg .wl-ok{color:#A9C99A}
 #buybar .btn{background:var(--gold);color:#181109;padding:13px 26px;flex:none}
 #buybar .btn:hover{background:#fff}
 @media(max-width:620px){.bb-thumb,.bb-sub{display:none}.bb-inner{padding:10px 16px;gap:12px}#buybar .btn{padding:12px 18px;font-size:12px}}
+/* 13 Oct 2026, second pass (mobile UX review): on phones the size row sat below the first
+   screen, so the bar now carries the four sizes itself. A tap selects the real size button
+   above (same stock, same messages); the button then adds to the bag. */
+.bb-sizes{display:none}
+.bb-sizes.pulse button:not(:disabled){animation:pdpPulse .5s ease 2}
+@media(max-width:620px){
+  #buybar.has-sizes .bb-txt{display:none}
+  #buybar.has-sizes .bb-sizes{display:flex;gap:6px;flex:none}
+  .bb-sizes button{width:40px;height:44px;border-radius:9px;border:1px solid rgba(244,239,230,.38);background:transparent;color:#F4EFE6;font:600 13px/1 'Jost',system-ui,sans-serif;cursor:pointer;padding:0}
+  .bb-sizes button[aria-pressed="true"]{background:#F4EFE6;color:#181109;border-color:#F4EFE6}
+  .bb-sizes button:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+  .bb-sizes button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  #buybar.has-sizes .btn{flex:1;min-width:0;padding:12px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
 
 /* ---------- sections ---------- */
 .sec{padding:96px 0;position:relative}
@@ -954,6 +990,13 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 .pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#5A5046)}
 .pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(51,39,27,.22);border-radius:5px;background:#fff;color:#33271B;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
 .pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
+.pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:var(--txt-soft,#5A5046);margin:0 0 8px}.pdp-pair-h b{color:var(--txt,#2B2620);font-weight:600}
+.pdp-pair-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pdp-pair-c{display:flex;gap:9px;align-items:center;padding:6px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--txt,#2B2620);min-width:0}
+.pdp-pair-c img{width:44px;height:55px;border-radius:7px;object-fit:cover;flex:none}
+.pdp-pair-c span{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.25}.pdp-pair-c small{font-size:11.5px;color:var(--txt-soft,#5A5046)}
+.pdp-pair-c:hover{border-color:var(--accent)}
+body.dark-bg .pdp-pair-h b,body.dark-bg .pdp-pair-c{color:#F4EFE6}body.dark-bg .pdp-pair-h,body.dark-bg .pdp-pair-c small{color:rgba(244,239,230,.72)}
 .pdp-tote img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none}.pdp-tote b{color:var(--txt,#2B2620);font-weight:600}.pdp-tote a{color:var(--clay-deep,#9C521B)}
 .pdp-why{margin:12px 0 0;display:grid;gap:8px}.pdp-why div{display:grid;gap:2px}.pdp-why dt{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-soft,#5A5046)}.pdp-why dd{margin:0;font-size:13.5px;line-height:1.45;color:var(--txt,#2B2620)}.pdp-why a{color:var(--clay-deep,#9C521B)}
 .pdp-add.pulse .pdp-add-l{animation:none}.pdp-sizes.pulse .pdp-size{animation:pdpPulse .5s ease 2}@keyframes pdpPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06);border-color:var(--clay-deep,#9C521B)}}
@@ -961,6 +1004,21 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 .pdp-sizehelp{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;margin:8px 0 12px;font-size:14px}
 .pdp-sizehelp a{color:var(--clay-deep,#9C521B);text-decoration:underline;text-underline-offset:3px}
 .pdp-sizehelp .pdp-other{color:var(--txt-soft,#5A5046)}
+/* 13 Oct 2026: phone gallery count and dots (desktop keeps the thumbnails) */
+.gal-dots{display:none;position:absolute;left:0;right:0;bottom:10px;z-index:3;align-items:center;justify-content:center;gap:10px;pointer-events:none}
+.gal-n{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;color:#fff;background:rgba(24,17,9,.82);padding:3px 8px;border-radius:20px}
+.gal-n b{font-weight:400}
+.gal-sw{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;color:#2B2620;background:rgba(255,246,232,.92);padding:3px 9px;border-radius:20px;transition:opacity .4s}
+.gal-main[data-seen] .gal-sw{opacity:0}
+h1 .nw{white-space:nowrap}
+/* 13 Oct 2026: phones - a long title is set on two lines once the serif arrives; reserving them stops the price and sizes jumping (CLS 0.09 on Hajar) */
+@media(max-width:700px){.buy-head h1.h1-2l{min-height:2.3em}}
+/* one nudge, 1.8 s after the photo is up, so the first frame says there is more to swipe */
+@media(max-width:700px) and (prefers-reduced-motion:no-preference){.gal-main.gal-nudge img.on{animation:galNudge .7s cubic-bezier(.3,0,.2,1) both}}
+@keyframes galNudge{0%,100%{transform:scale(1.06)}40%{transform:scale(1.06) translateX(-12px)}}   /* scaled, so the edge of the frame never shows the empty slot behind it */
+/* the opening photograph settles in once (2.4 s), then nudges once: real photo, no autoplay (25 Sep) */
+@media(max-width:700px) and (prefers-reduced-motion:no-preference){.gal-main img.on.gal-drift{animation:galDrift 2.4s cubic-bezier(.2,.6,.3,1) both}}
+@keyframes galDrift{from{transform:scale(1.07)}to{transform:scale(1)}}
 /* ==== 25 Sep 2026 (Faheem): "the moment users land on a product page they need to see all
    the essential information before needing to scroll down." Phones, first screen:
    title, price and rating; the photo with its thumbnails down the side; sizes, the size
@@ -968,8 +1026,11 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 @media(max-width:700px){
   .pdp{flex-direction:row!important;flex-wrap:wrap;align-items:flex-start;gap:8px 8px!important;padding:8px 0 40px!important}
   .pdp>.buy>*,.pdp>.media>*{width:100%}
-  .buy-head .buy-top{display:none}
-  .buy-head{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:10px 14px!important}
+  /* 13 Oct 2026 (retention audit): the place line is the link between the ad and this page, so it shows on phones; the "limited" chip stays on desktop */
+  .buy-head .buy-top{display:block;order:0;flex:1 0 100%;margin:0 0 2px!important}
+  .buy-head .buy-top .limited{display:none}
+  .buy-head .buy-top .plink{font-size:10.5px;letter-spacing:1.1px;white-space:normal;line-height:1.5}
+  .buy-head{order:2;display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:10px 14px!important}
   .buy-head h1{flex:1 0 100%;font-size:23px!important;line-height:1.15!important;margin:0!important}
   .buy-head .price-row{order:2;margin:0!important}
   .buy-head .pdp-rating{display:flex!important;order:3;flex:1 1 0;min-width:0;margin:0!important;font-size:12px}
@@ -979,11 +1040,17 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
   .pdp-subm{order:4!important}
   /* the photo takes whatever height is left once the buy box fits: about 480px of the screen
      is title, sizes, button and delivery line, so the rest is photo (never under 260px tall) */
-  .gal-main{--ph:max(260px, calc(100vh - 500px));--ph:max(260px, calc(100svh - 500px));order:2;width:min(calc(100% - 54px), calc(var(--ph) * .8))!important;flex:0 0 min(calc(100% - 54px), calc(var(--ph) * .8));aspect-ratio:4/5;height:auto!important;border-radius:12px;margin-left:auto}
-  .gal-thumbs{order:2;width:46px!important;flex:0 0 46px;display:flex!important;flex-direction:column;flex-wrap:nowrap;gap:6px;margin:0!important;
-    overflow-x:hidden;overflow-y:auto;max-height:min(calc((100vw - 82px) * 1.25), max(260px, calc(100svh - 500px)));scrollbar-width:none;margin-right:auto!important}
-  .gal-thumbs::-webkit-scrollbar{display:none}
-  .gal-thumbs button{width:46px!important;height:58px;flex:0 0 58px;border-radius:8px}
+  /* 13 Oct 2026 (retention audit, ranks 1 and 6; reverses the 24-25 Sep phone layout): the
+     visitor arrives from a full-screen video, so the first screen is the worn photograph,
+     full width, with the place, name and price under it. The thumbnail rail gives way to a
+     count and dots; the sticky bar keeps Add to cart in reach whenever the button is not. */
+  .crumb{display:none}
+  .gal-main{order:1;width:100%!important;flex:0 0 100%;height:clamp(300px, calc(100vh - 350px), 125vw)!important;height:clamp(300px, calc(100svh - 350px), 125vw)!important;aspect-ratio:auto!important;border-radius:14px;margin:0!important}
+  .gal-main img{object-fit:cover;object-position:50% 30%}
+  .gal-main img.fit-contain{object-fit:contain}
+  .gal-thumbs{display:none!important}
+  .gal-dots{display:flex!important}
+  .gal-hint{display:none!important}
   .gal-model{display:none!important}   /* the photo's own tag already says who wears what */
   .buy-body{order:3;padding:12px 14px 14px!important}
   .pdp-buy .pdp-sizes-label{display:none}
@@ -1003,6 +1070,7 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
+${(function(){ const g = galShots(p)[0]; if (!g) return ''; const ss = cardSrcset(g[0]).match(/srcset="([^"]+)" sizes="([^"]+)"/); return ss ? `<link rel="preload" as="image" href="${g[0]}" imagesrcset="${ss[1]}" imagesizes="${ss[2]}" fetchpriority="high">` : `<link rel="preload" as="image" href="${g[0]}" fetchpriority="high">`; })()}
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 </head>
 <body class="buy-page">
@@ -1028,8 +1096,10 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
         <span class="gal-hint">Click to zoom</span>
         <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
 ${galShots(p).map((s,i)=>`
-        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''}${s[4]?` data-tag="${esc(s[4])}"`:''}${i===0?' fetchpriority="high"':' loading="lazy" fetchpriority="low" decoding="async"'} src="../..${s[0]}"${cardSrcset(s[0])} alt="${esc(s[1]||'')}">`).join('')}
+        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''}${s[4]?` data-tag="${esc(s[4])}"`:''}${i===0?` fetchpriority="high"${p.heroPos ? ` style="object-position:${esc(p.heroPos)}"` : ''} src="../..${s[0]}"${cardSrcset(s[0])}`:` decoding="async" data-src="../..${s[0]}"${cardSrcset(s[0]).replace(' srcset=',' data-srcset=').replace(' sizes=',' data-sizes=')}`} alt="${esc(s[1]||'')}">`).join('')}
+        ${/* 13 Oct 2026 (speed): the other photos sit in the viewport at opacity 0, so loading="lazy" never held them back and all of them raced the first one. They now get their sources after the page has loaded, or at the first swipe or thumbnail tap. */''}<noscript><style>.gal-main img[data-src]{display:none}</style></noscript>
         ${p.fitLabel ? `<span class="gal-fit" aria-hidden="true">${esc(p.fitLabel)}</span>` : ''}
+        ${/* 13 Oct 2026 (retention audit): on phones the thumbnail rail gives way to a full-width photo, so the count and dots say there is more to swipe */''}<div class="gal-dots" aria-hidden="true"><span class="gal-n"><b>1</b> / ${galShots(p).length}</span><span class="gal-sw">Swipe &rsaquo;</span></div>
       </div>
       <div class="gal-thumbs" id="thumbs">
 ${galShots(p).map((s,i)=>`
@@ -1048,8 +1118,8 @@ ${galShots(p).map((s,i)=>`
 
     <div class="buy">
       <div class="buy-head">
-      <div class="buy-top">${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}<span class="limited">✦ Limited first run</span></div>
-      <h1>${esc(productH1(p))}</h1>
+      <div class="buy-top">${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate === 'RAK' ? 'Ras Al Khaimah' : p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}<span class="limited">✦ Limited first run</span></div>
+      <h1${productH1(p).length > 26 ? ' class="h1-2l"' : ''}>${esc(productH1(p)).replace('T-Shirt', '<span class="nw">T-Shirt</span>')}</h1>
       ${/* Faheem, 10 Sep: "we're not highlighting that this is 100% 230gsm heavyweight cotton. This info should be right below the title" */''}
       <p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>
       ${/* 15 Sep audit: this product's rating sat 6,600px below its price. A compact line
@@ -1104,6 +1174,7 @@ ${galShots(p).map((s,i)=>`
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         ${/* 4 Oct 2026 (CRO panel, ideas 5 and 6): the gift and the two objections, answered where the thumb is */''}
         <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
+        ${pairStrip(p, all)}
         <dl class="pdp-why">
           <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? '240 GSM piqué cotton, embroidered, in a small first run.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? '230 GSM combed cotton, pre-washed, embroidered rather than printed, in a small first run.' : '230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark, in a small first run.')} Designed in the UAE.</dd></div>
           <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
@@ -1124,7 +1195,7 @@ ${galShots(p).map((s,i)=>`
            One better than the benchmark: the visitor's own shipping card is
            highlighted and ordered first via data-market on <html>. -->
       <div class="pdp-answers">
-        <details class="pdp-ans pdp-ans-story">
+        ${/* 13 Oct 2026 (retention audit, rank 8): the story is why people clicked the ad, so it starts open */''}<details class="pdp-ans pdp-ans-story" open>
           <summary>The story behind the ${p.garment === 'polo' ? 'polo' : 'tee'}</summary>
           <p class="lede">${p.lede}</p>
           <p class="occasion">✦ ${p.occasion}</p>
@@ -1340,7 +1411,7 @@ ${related(p, all)}
   <div class="bb-inner">
     <img class="bb-thumb" loading="lazy" decoding="async" src="../..${p.imgMain}" alt="">
     <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> · Limited first run</div></div>
-    ${LAUNCHED ? `<button class="btn" id="bbAdd" type="button">Add to cart</button>` : `<a class="btn" href="${SHOP_URL}#prod-${p.shopAnchor}">View in shop</a>`}
+    ${LAUNCHED ? `<div class="bb-sizes" id="bbSizes" role="group" aria-label="Choose a size">${['S','M','L','XL'].map(z => `<button type="button" data-z="${z}" aria-pressed="false">${z}</button>`).join('')}</div><button class="btn" id="bbAdd" type="button">Add to cart</button>` : `<a class="btn" href="${SHOP_URL}#prod-${p.shopAnchor}">View in shop</a>`}
   </div>
 </div>
 
@@ -1369,9 +1440,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     if(a.classList.contains('shoplink'))track('select_item',{item_id:'${p.id}',from:'pdp'});
     else if(a.href&&a.href.indexOf('/locations/')>=0)track('place_click',{item_id:'${p.id}'});
     else if(a.classList.contains('rel'))track('related_click',{from:'${p.id}'});
+    else if(a.classList.contains('pdp-pair-c'))track('pair_click',{from:'${p.id}',to:a.getAttribute('href')});
   },true);
   /* how far people actually read — the whole point of the long-form page */
-  var marks=[25,50,75,100],hit={};
+  var marks=[10,25,50,75,100],hit={};   /* 10: added 13 Oct 2026 - most paid visits never reached 25 */
   addEventListener('scroll',function(){
     var d=document.documentElement,max=d.scrollHeight-innerHeight;
     if(max<=0)return;
@@ -1470,10 +1542,21 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     var im=imgs[cur];
     modelNote.classList.toggle('gal-model-off',!(im&&im.hasAttribute('data-worn')));
   }
+  var hydrated=false;
+  function hydrate(){ if(hydrated)return; hydrated=true;
+    imgs.forEach(function(im){ var d=im.getAttribute('data-src'); if(!d||im.getAttribute('src'))return;
+      if(im.getAttribute('data-srcset')){ im.setAttribute('sizes',im.getAttribute('data-sizes')||'100vw'); im.setAttribute('srcset',im.getAttribute('data-srcset')); }
+      im.setAttribute('src',d); }); }
+  if(document.readyState==='complete') setTimeout(hydrate,400); else addEventListener('load',function(){ setTimeout(hydrate,400); });
+  setTimeout(hydrate,6000);   /* a slow third-party request can hold the load event for ever */
+  ['touchstart','mouseenter','focus'].forEach(function(k){ main.addEventListener(k,hydrate,{passive:true,once:true}); });
   function show(i){
+    hydrate();
     cur=(i%imgs.length+imgs.length)%imgs.length;
     imgs.forEach(function(im,k){im.classList.toggle('on',k===cur);});
     thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===cur);});
+    var dn=main.querySelector('.gal-n b'); if(dn) dn.textContent=cur+1;
+    if(cur) main.setAttribute('data-seen','1');
     /* the caption changes at the middle of the crossfade, not before it - otherwise
        "She wears M" sat over the outgoing photo of him (Faheem's screenshot, 24 Sep) */
     clearTimeout(show.t); show.t=setTimeout(function(){ syncBadge(); syncModel(); },130);
@@ -1489,12 +1572,20 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
      changed every second under a shopper trying to read the size row. Phones get a
      swipe instead; the thumbnails still work, and the pause button is not needed. */
   var phoneG=!!(window.matchMedia&&matchMedia('(max-width:700px)').matches);
+  var swipes=0;
   if(phoneG){ userPaused=true;
     var pb0=document.getElementById('galPause'); if(pb0){ pb0.hidden=true; pb0.style.display='none'; }
     var sx=null, sy=null;
     main.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY;},{passive:true});
     main.addEventListener('touchend',function(e){ if(sx===null) return; var t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy; sx=null;
-      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3){ show((cur+(dx<0?1:-1)+imgs.length)%imgs.length); main.dataset.swiped='1'; setTimeout(function(){delete main.dataset.swiped;},650); } },{passive:true}); }
+      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3){ show((cur+(dx<0?1:-1)+imgs.length)%imgs.length); main.dataset.swiped='1'; setTimeout(function(){delete main.dataset.swiped;},650);
+        /* 13 Oct 2026: swipes were invisible in GA4, so a visitor who looked at five photos read as a bounce */
+        swipes++; if(window.track) track('gallery_swipe',{item_id:'${p.id}',index:cur,count:swipes,ad:window.SB_AD?1:0}); } },{passive:true});
+    if(imgs[0]&&!red){
+      /* 13 Oct 2026, second pass: the drift and the nudge both animate transform, so the opener
+         drifts first and the nudge comes once the drift has settled, unless they swiped already */
+      setTimeout(function(){ if(!swipes&&cur===0){ imgs[0].classList.remove('gal-drift'); main.classList.add('gal-nudge'); setTimeout(function(){ main.classList.remove('gal-nudge'); },800); } },2600);
+      imgs[0].classList.add('gal-drift'); } }
   function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
   function startAuto(){stopAuto();if(red||userPaused||imgs.length<2)return;
     timer=setInterval(function(){
@@ -1525,7 +1616,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var main=document.querySelector('.gal-main'),lb=document.getElementById('lightbox');
   /* pause taps must not open the zoom */
   if(!main||!lb)return;
-  var imgs=[].slice.call(main.querySelectorAll('img')),srcs=imgs.map(function(i){return i.src;}),cur=0;
+  var imgs=[].slice.call(main.querySelectorAll('img')),srcs=imgs.map(function(i){return i.getAttribute('data-src')||i.src;}),cur=0;
   var el=document.getElementById('lbImg');
   function show(i){cur=(i%srcs.length+srcs.length)%srcs.length;el.src=srcs[cur];el.alt=imgs[cur].alt||'';}
   function open(){var on=main.querySelector('img.on');show(Math.max(0,imgs.indexOf(on)));lb.classList.add('open');
@@ -1533,6 +1624,24 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   function close(){lb.classList.remove('open');document.body.style.overflow='';}
   main.addEventListener('click',function(){ if(main.dataset.swiped) return; open();});
   main.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+
+/* ---------- sticky bar sizes (phones, 13 Oct 2026) ---------- */
+(function(){
+  var bar=document.getElementById('buybar'), bs=document.getElementById('bbSizes'), real=document.getElementById('pdpSizes');
+  if(!bar||!bs||!real) return;
+  function find(z){ return [].filter.call(real.querySelectorAll('.pdp-size'),function(b){ return ((b.firstChild&&b.firstChild.nodeValue)||'').trim()===z; })[0]; }
+  function mirror(){
+    var any=false;
+    [].forEach.call(bs.querySelectorAll('button'),function(b){ var r=find(b.getAttribute('data-z'));
+      b.hidden=!r; if(!r) return; any=true;
+      b.disabled=!!(r.disabled||r.getAttribute('aria-disabled')==='true'&&/sold/i.test(r.textContent));
+      b.setAttribute('aria-pressed', r.getAttribute('aria-pressed')==='true'||r.classList.contains('sel') ? 'true' : 'false'); });
+    bar.classList.toggle('has-sizes',any);
+  }
+  bs.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b||b.disabled) return; var r=find(b.getAttribute('data-z')); if(r){ r.click(); setTimeout(mirror,30); } });
+  if(window.MutationObserver) new MutationObserver(mirror).observe(real,{subtree:true,childList:true,attributes:true,attributeFilter:['class','disabled','aria-pressed','aria-disabled']});
+  mirror();
+})();
 
 /* ---------- sticky bar: buy, do not navigate away ----------
    It used to be a link to /shop/. It carries the photo, name, price and one
@@ -1544,6 +1653,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var bb=document.getElementById('bbAdd'); if(!bb) return;
   bb.addEventListener('click',function(){
     var add=document.getElementById('pdpAdd'), buy=document.getElementById('pdpBuy');
+    var bsz=document.getElementById('bbSizes'), bar=document.getElementById('buybar');
+    if(add && add.getAttribute('aria-disabled')==='true' && bsz && bar && bar.classList.contains('has-sizes') && getComputedStyle(bsz).display!=='none'){ bsz.classList.remove('pulse'); void bsz.offsetWidth; bsz.classList.add('pulse'); return; }
     if(add && !add.disabled){ add.click(); return; }
     if(buy){
       buy.scrollIntoView({behavior:'smooth',block:'center'});
@@ -1556,7 +1667,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   if(add && window.MutationObserver){
     /* 23 Sep 2026: phones hide the bar's price line, so the price rides in the button */
     var pr=document.querySelector('.price .sb-price'),narrow=matchMedia('(max-width:620px)');
-    var sync=function(){ var t=add.getAttribute('aria-disabled')==='true' ? 'Choose a size' : (/sold out/i.test(add.textContent) ? 'Sold out' : 'Add to cart'); if(narrow.matches&&pr&&pr.textContent.trim()) t+=' \u00b7 '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
+    var sync=function(){ var hs=bar0&&bar0.classList.contains('has-sizes')&&narrow.matches; var t=add.getAttribute('aria-disabled')==='true' ? (hs ? 'Pick a size' : 'Choose a size') : (/sold out/i.test(add.textContent) ? 'Sold out' : 'Add to cart'); if(narrow.matches&&!hs&&pr&&pr.textContent.trim()) t+=' \u00b7 '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
+    var bar0=document.getElementById('buybar'); if(bar0&&window.MutationObserver) new MutationObserver(function(){ sync(); }).observe(bar0,{attributes:true,attributeFilter:['class']});
     new MutationObserver(sync).observe(add,{attributes:true,attributeFilter:['disabled','aria-disabled'],childList:true,subtree:true,characterData:true});
     if(pr) new MutationObserver(sync).observe(pr,{childList:true,characterData:true,subtree:true});
     sync();
@@ -1716,7 +1828,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 
 /* ---------- living canvas backdrop ---------- */
 (function(){
-  var cv=document.getElementById('fx');if(!cv||REDUCED)return;
+  /* 13 Oct 2026 (retention audit, speed): not inside the TikTok, Instagram and Facebook in-app
+     browsers, where paid visitors land on mid-range phones and every frame of this canvas is
+     main-thread time taken from the first tap */
+  var cv=document.getElementById('fx');if(!cv||REDUCED||/musical_ly|trill_|BytedanceWebview|TikTok|Instagram|FBAN|FBAV|FB_IAB/i.test(navigator.userAgent||''))return;
   var ctx=cv.getContext('2d',{alpha:true});if(!ctx)return;
   var DPR=Math.min(devicePixelRatio||1,TOUCH?1.2:1.5),W=0,H=0,t=0,vis=true;
   function size(){W=cv.width=Math.floor(innerWidth*DPR);H=cv.height=Math.floor(innerHeight*DPR);
@@ -1875,6 +1990,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   /* 23 Sep 2026: S-XL are in the HTML so the picker is there on first paint.
      A tap before live stock arrives is remembered and applied when it does. */
   var pending=null, live=false;
+  /* 13 Oct 2026 (retention audit): a size tap is the clearest sign of intent short of the bag, and it was not measured */
+  sizesEl.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('.pdp-size'); if(b&&window.track) track('size_select',{item_id:handle,size:(b.firstChild&&b.firstChild.nodeValue||'').trim(),ad:window.SB_AD?1:0}); });
   sizesEl.querySelectorAll('.pdp-size-wait').forEach(function(b){
     b.addEventListener('click',function(){ if(live) return;
       sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});

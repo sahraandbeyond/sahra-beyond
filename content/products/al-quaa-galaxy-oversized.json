@@ -12,6 +12,7 @@
   "accent": "#E9B978",
   "scene": "galaxy",
   "imgMain": "/shirts/alquaa-oversized-back.jpg",
+  "heroShot": "/shirts/alquaa-model-back.jpg",
   "imgFront": "/shirts/alquaa-oversized-front.jpg",
   "imgBack": "/shirts/alquaa-oversized-back.jpg",
   "imgCard": [
@@ -153,7 +154,7 @@
     },
     {
       "src": "/shirts/alquaa-female-1.jpg",
-      "alt": "The Al Quaa Galaxy tee worn in the Hajar mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit.",
+      "alt": "The Al Quaa Galaxy tee worn in the mountains — the embroidered mark on the chest. Female model wears M in the Oversized fit.",
       "tag": "She wears M · Oversized fit",
       "model": "female"
     },

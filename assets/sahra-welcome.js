@@ -125,6 +125,25 @@
       '<span class="sbw-go">' + t('Get the code &rarr;', 'احصل على الرمز &larr;') + '</span>' +
     '</span>';
 
+  /* 13 Oct 2026 (retention audit, Faheem: "show the code on ad visits"). A visitor who came
+     from a paid ad sees the code itself in the bar, not an email ask: a tap copies it. The
+     session flag is set in the page head (ga4.js) so it follows them from page to page.
+     Everyone else keeps the email offer. */
+  var ADV = false;
+  try { ADV = !!window.SB_AD || /[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search || '') || sessionStorage.getItem('sb_ad') === '1'; } catch (e) {}
+  if (ADV) {
+    bar.removeAttribute('aria-haspopup');
+    bar.classList.add('sbw-bar-code');
+    bar.setAttribute('aria-label', t('Copy code ' + OFFER.code + ': ' + OFFER.amount + ' off a first order over AED ' + OFFER.min, 'انسخ الرمز ' + OFFER.code));
+    bar.innerHTML = '<span class="sbw-sheen"></span><span class="sbw-bar-in">' +
+      '<span class="sbw-dot" aria-hidden="true"></span>' +
+      '<span class="sbw-amt">' + t('<span class="sbw-hide-sm">Code </span><b class="sbw-code-t">' + OFFER.code + '</b>', '<span class="sbw-hide-sm">الرمز </span><b class="sbw-code-t">' + OFFER.code + '</b>') + '</span>' +
+      '<span class="sbw-sep" aria-hidden="true">·</span>' +
+      '<span class="sbw-amt">' + t(OFFER.amount + ' off<span class="sbw-hide-sm"> your first order</span> &middot; min ' + '<span class="sbw-hide-sm">AED </span>' + OFFER.min, 'خصم ' + N + ' درهمًا على طلبك الأول<span class="sbw-hide-sm"> فوق ' + OFFER.min + ' درهم</span>') + '</span>' +
+      '<span class="sbw-go sbw-bcopy">' + t('Copy', 'نسخ') + '</span>' +
+    '</span>';
+  }
+
   /* No dismiss control. It lived at the right edge INSIDE the bar people tap to
      open the offer, so aiming for the bar and hitting dismiss was the likely
      outcome, not an edge case — and it wrote a permanent flag with no way back.
@@ -261,7 +280,20 @@
     try { back.focus(); } catch (e) {}
   }
 
-  bar.addEventListener('click', function () { open('bar'); });
+  bar.addEventListener('click', function () {
+    if (!ADV) { open('bar'); return; }
+    var lab = bar.querySelector('.sbw-bcopy');
+    function done(ok) { if (lab) { lab.textContent = ok ? t('Copied \u2713', 'تم النسخ') : OFFER.code; } bar.classList.toggle('sbw-copied', !!ok);
+      /* the condition, where a phone has room for it: once copied, the line says where it goes and what it needs */
+      var amts = bar.querySelectorAll('.sbw-amt');
+      if (ok && amts[1]) { amts[0].innerHTML = '<b class="sbw-code-t">' + OFFER.code + '</b>'; amts[1].innerHTML = t('<span class="sbw-hide-sm">Paste at checkout &middot; </span>Min order AED ' + OFFER.min, 'الحد الأدنى للطلب ' + OFFER.min + ' درهم'); } ev('ad_code_copy', { ok: ok ? 1 : 0, page: location.pathname }); }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(OFFER.code).then(function () { done(true); }, function () { done(fallback()); });
+      else done(fallback());
+    } catch (e) { done(false); }
+    /* in-app browsers (TikTok, Instagram) often refuse the clipboard API */
+    function fallback() { try { var ta = document.createElement('textarea'); ta.value = OFFER.code; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:-99px;opacity:0'; document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, 99); var ok = document.execCommand('copy'); ta.remove(); return ok; } catch (e) { return false; } }
+  });
   m.addEventListener('click', function (e) { if (e.target.hasAttribute('data-sbw-close')) close(); });
   document.addEventListener('keydown', function (e) {
     if (m.hidden) return;
@@ -422,7 +454,8 @@
      and the category pages, where search and ad visitors land, opened with the card over the first
      screen; every entry now gets the small teaser after the first scroll or 20 s, and the card opens
      only when it is tapped. The top bar still carries the offer from the first paint. */
-  if (!st.won && !openedThisSession && !STORY) teaser();
+  /* ad visitors already have the code in the bar: no second ask (13 Oct 2026) */
+  if (!st.won && !openedThisSession && !STORY && !ADV) teaser();
 
   function teaser() {
     /* 12 Oct 2026: the timer was named t, shadowing the t() translation helper, so show() threw

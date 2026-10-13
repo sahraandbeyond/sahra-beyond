@@ -87,6 +87,7 @@
 .sb-wa.lift{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 /* the drawer is a modal; a floating button over it is just clutter */
 .sb-wa.away{opacity:0;pointer-events:none;transform:scale(.85);visibility:hidden}
+.sb-wa.pre{opacity:0;pointer-events:none;transform:scale(.85);visibility:hidden}
 /* visibility:hidden, not opacity alone - a transparent link is still in the
    tab order, so a keyboard user could focus an invisible button behind the
    open drawer. */

@@ -1023,6 +1023,13 @@
     /* Phones (24 Sep): out of the way while the reader is scrolling through copy,
        back as soon as they stop - it was sitting on words, table cells and headings. */
     if (window.matchMedia && matchMedia('(max-width:700px)').matches) {
+      /* 13 Oct 2026 (retention audit): not in the first screen. It sat on the photograph a
+         paid visitor had just arrived for; it appears after the first real scroll. */
+      if ((window.pageYOffset || 0) < 200) {
+        a.classList.add('pre');
+        var firstScroll = function () { if ((window.pageYOffset || 0) >= 200) { a.classList.remove('pre'); window.removeEventListener('scroll', firstScroll); } };
+        window.addEventListener('scroll', firstScroll, { passive: true });
+      }
       var idle = null, lastY = window.pageYOffset;
       window.addEventListener('scroll', function () {
         var y = window.pageYOffset;

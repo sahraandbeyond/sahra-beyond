@@ -14,6 +14,8 @@
   if (document.getElementById('skyfield')) return;                 // homepage already has the full scene
   if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   if (navigator.connection && navigator.connection.saveData) return;
+  /* 13 Oct 2026 (retention audit, speed): off in the TikTok, Instagram and Facebook in-app browsers */
+  if (/musical_ly|trill_|BytedanceWebview|TikTok|Instagram|FBAN|FBAV|FB_IAB/i.test(navigator.userAgent || '')) return;
 
   var STOPS = [[20,16,42],[58,41,90],[122,79,99],[192,112,46],[233,185,120],[92,64,92]];
   function ramp(p) {

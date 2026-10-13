@@ -12,6 +12,7 @@
   "accent": "#C0702E",
   "scene": "mountains",
   "imgMain": "/shirts/hajar-oversized-back.jpg",
+  "heroShot": "/shirts/hajar-lake-back-her.jpg",
   "imgFront": "/shirts/hajar-oversized-front.jpg",
   "imgBack": "/shirts/hajar-oversized-back.jpg",
   "imgCard": [
@@ -142,7 +143,7 @@
     },
     {
       "src": "/shirts/hajar-female-1.jpg",
-      "alt": "The Hajar Mountains tee worn in the Hajar themselves — the contour-line mountain mark on the chest. Female model wears M in the Oversized fit.",
+      "alt": "The Hajar Mountains tee worn in the mountains — the contour-line mountain mark on the chest. Female model wears M in the Oversized fit.",
       "tag": "She wears M · Oversized fit",
       "model": "female"
     },

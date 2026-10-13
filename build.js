@@ -182,6 +182,16 @@ for (const f of ['policies.html', 'commitment.html']) {
   const h = fs.readFileSync(fp, 'utf8'); const G = require('./ga4.js');
   if (h.indexOf(G.GA4_ID) < 0 && h.indexOf('<head>') >= 0) fs.writeFileSync(fp, h.replace('<head>', '<head>\n' + G.GA4_HEAD));
 }
+/* 13 Oct 2026 (retention re-score, analytics): the hand-maintained pages carried an older
+   pasted copy of the GA4 block, so the homepage - where two ads land and the only revenue came
+   from - had no ad-session flag, no first_interaction and no visit_end. Swap any pasted copy
+   for the shared one (idempotent: the shared block matches the same pattern). */
+for (const f of ['index.html', 'homepage-preview.html', 'classic/index.html', 'policies.html', 'commitment.html']) {
+  const fp = path.join(ROOT, f); if (!fs.existsSync(fp)) continue;
+  const h = fs.readFileSync(fp, 'utf8'); const G = require('./ga4.js');
+  const re = /<!-- Google Analytics 4 -->\s*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=[^"]+"><\/script>\s*<script>[\s\S]*?<\/script>(?:\s*<script defer src="\/_vercel\/insights\/script\.js"><\/script>)?(?:\s*<script defer src="\/_vercel\/speed-insights\/script\.js"><\/script>)?/;
+  if (re.test(h)) { const n = h.replace(re, () => G.GA4_HEAD); if (n !== h) fs.writeFileSync(fp, n); }
+}
 /* footer guide list into the hand-maintained pages (see footer-guides.js) */
 for (const f of ['index.html', 'shop-preview.html']) {
   const fp = path.join(ROOT, f); if (!fs.existsSync(fp)) continue;
@@ -320,6 +330,27 @@ function shopBlock(l) {
     <p>${line}</p>
     ${cta}</section>`;
 }
+/* 13 Oct 2026 (retention audit, rank 10): /t-shirts/ opened on a heading band and a grid of
+   studio shots. Ad visitors arrive from a person in a landscape, so the first thing under the
+   heading is the three places, each worn on a model; a tap goes to that design. Photos were
+   taken on location shoots, not at the named places, so the captions name what the design is
+   drawn from, never where the photo was taken. */
+function placeRow() {
+  const REG = PRODUCTS_ALL.filter(p => p.garment === 'tee' && p.fit !== 'oversized').sort((a,b)=>(a.order||0)-(b.order||0)).slice(0, 3);
+  if (REG.length < 2) return '';
+  const card = function (src) { const b = String(src).replace(/\.(jpe?g|png)$/i, '.webp').split('/').pop(); return fs.existsSync(path.join(__dirname, 'shirts', 'card', b)) ? '/shirts/card/' + b : src; };
+  return `<section class="prow" aria-labelledby="prowH"><h2 id="prowH" class="prow-h">Pick your place</h2><div class="prow-g">${REG.map((p, i) => `<a class="prow-c" href="/products/${p.id}/"><img src="${card(p.heroShot || p.imgMain)}" alt="${esc(String(p.name).split(' — ')[0])} t-shirt, worn" width="400" height="500"${i ? ' loading="lazy"' : ' fetchpriority="high"'} decoding="async"><span><b>${esc(p.placeName || '')}</b><small><span class="prow-d">${esc(String(p.name).split(' — ')[0])} &middot; </span><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></small></span></a>`).join('')}</div></section>
+  <style>.prow{max-width:1100px;margin:0 auto;padding:18px 16px 22px}
+  @media(max-width:700px){.loc-hero.lh-tight{padding:12px 16px 30px!important}.loc-hero.lh-tight h1{font-size:26px!important;line-height:1.08}.loc-hero.lh-tight h1::after{margin-top:6px}.loc-hero.lh-tight .lede{display:none}.loc-hero.lh-tight .loc-emoji{display:none}.loc-hero.lh-tight .dune-far,.loc-hero.lh-tight .dune-near{height:34px}.prow{padding-top:14px}}
+  .pcta-eyebrow{display:none}.prow-h{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin:0 0 10px;color:#2B2620}
+  .prow-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.prow-c{position:relative;display:block;border-radius:12px;overflow:hidden;aspect-ratio:4/5;background:#E8DCC8;text-decoration:none}
+  .prow-c img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}.prow-c:hover img{transform:scale(1.04)}
+  .prow-c>span{position:absolute;left:0;right:0;bottom:0;padding:22px 8px 8px;background:linear-gradient(transparent,rgba(24,17,9,.85));color:#FFF6E8;display:flex;flex-direction:column;gap:2px;line-height:1.2}
+  .prow-c b,.prow-c small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .prow-c b{font-size:13.5px;font-weight:600;line-height:1.15}@media(max-width:700px){.prow-d{display:none}.prow-c>span{padding:26px 7px 7px}.prow-c b{font-size:13px}}@media(max-width:380px){.prow-c b{font-size:12px;letter-spacing:-.1px}}.prow-c small{font-size:11px;color:rgba(255,246,232,.88)}
+  @media(min-width:760px){.prow{padding-top:28px}.prow-g{gap:14px}.prow-h{font-size:30px}.prow-c b{font-size:16px}.prow-c small{font-size:12.5px}}</style>`;
+}
+
 function collectionBlock(ctxName, allFits) {
   if (!PRODUCTS_ALL.length) return shopBlock(null);
   const lead = ctxName
@@ -3181,7 +3212,7 @@ COMMERCE.forEach(P => {
   const faqHtml = (P.faqs && P.faqs.length)
     ? `<section class="faq"><h2>Frequently asked questions</h2>${P.faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
   const body = `
-  <section class="loc-hero" style="--hero-grad:${CAT_BG[P.cat]}">
+  <section class="loc-hero${P.slug === 't-shirts' ? ' lh-tight' : ''}" style="--hero-grad:${CAT_BG[P.cat]}">
     <div class="glow"></div><svg class="dune-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#8B4E63" d="M0,220 C300,150 560,250 820,200 C1080,150 1300,220 1440,190 L1440,320 L0,320 Z"/></svg><svg class="dune-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"><path fill="#3A241C" d="M0,270 C320,210 620,290 940,250 C1180,220 1330,270 1440,255 L1440,320 L0,320 Z"/></svg><div class="grain"></div><div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(P.h1)}</span></nav>
       <div class="loc-emoji">${P.emoji}</div>
@@ -3190,6 +3221,7 @@ COMMERCE.forEach(P => {
     </div>
   </section>
   <main>
+    ${P.slug === 't-shirts' ? placeRow() : ''}
     ${P.catNav || Array.isArray(P.items) ? '' : `<div class="content">${paras(P.intro)}</div>`}
     ${/* 12 Oct 2026 (SEO and UX pass): on /t-shirts/ the five fit and theme tiles sat above the grid, so the first price was at 1,240 px on a phone. The grid now comes first. */''}${collectionBlock(null, P.slug === 't-shirts')}
     ${P.catNav ? `<nav class="catnav" aria-label="Shop by category">

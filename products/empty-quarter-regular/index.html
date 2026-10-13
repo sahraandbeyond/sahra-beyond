@@ -25,17 +25,32 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  window.track=window.track||function(n,p){try{gtag('event',n,p||{});}catch(e){}};
+  (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
+    window.SB_AD=!!ad;if(ad)document.documentElement.classList.add('sb-ad');
+    gtag('set',{ad_session:ad?1:0,site_build:'r50'});
+    var done=0,first=0;function fi(e){if(done)return;done=1;first=Math.round(performance.now());['pointerdown','keydown','scroll','touchstart'].forEach(function(k){removeEventListener(k,fi,true);});
+      window.track('first_interaction',{ms:first,kind:e.type,ad:ad?1:0});}
+    ['pointerdown','keydown','scroll','touchstart'].forEach(function(k){addEventListener(k,fi,{capture:true,passive:true});});
+    var maxs=0;addEventListener('scroll',function(){var d=document.documentElement,m=d.scrollHeight-innerHeight;if(m>0)maxs=Math.max(maxs,Math.round(scrollY/m*100));},{passive:true});
+    var sent=0;function ve(){if(sent)return;sent=1;window.track('visit_end',{ms:Math.round(performance.now()),max_scroll:maxs,touched:done?1:0,first_ms:first,ad:ad?1:0,transport_type:'beacon'});}
+    addEventListener('pagehide',ve);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')ve();else sent=0;});addEventListener('pageshow',function(e){if(e.persisted)sent=0;});
+    var CID='';if(ad&&CID){document.addEventListener('DOMContentLoaded',function(){[].forEach.call(document.querySelectorAll('form,input,textarea,select,[contenteditable]'),function(x){x.setAttribute('data-clarity-mask','True');});});(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script',CID);}
+  })();
   gtag('js',new Date());gtag('config','G-5NVFDWT29F');
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});
-  window.track=window.track||function(n,p){try{gtag('event',n,p||{});}catch(e){}};
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
 <script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://sahra-beyond.myshopify.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <!-- Product JSON-LD. aggregateRating ONLY from the reviews of this design that the page itself shows (never store-wide, never invented). Shipping and returns match policies.html. -->
 <script type="application/ld+json">
@@ -144,7 +159,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
   font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
   text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.82);
   padding:8px 12px;border-radius:2px;pointer-events:none}
-@media(max-width:700px){.gal-fit{left:10px;bottom:46px;font-size:10px;padding:7px 10px;max-width:calc(100% - 20px)}}  /* above the zoom hint: the model badge is a full sentence now (8 Sep) */
+@media(max-width:700px){.gal-fit{left:10px;top:10px;bottom:auto;font-size:9px;letter-spacing:1px;padding:5px 8px;max-width:calc(100% - 20px)}}   /* 13 Oct 2026: top-left on phones, off the print */  /* above the zoom hint: the model badge is a full sentence now (8 Sep) */
 .gal-thumbs{display:flex;gap:10px;margin-top:13px}
 .gal-thumbs button{width:74px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--edge,rgba(42,32,22,.58));background:none;cursor:pointer;padding:0;opacity:.78;transition:opacity .3s,border-color .3s,transform .3s}
 .gal-thumbs button:hover{transform:translateY(-3px)}
@@ -352,6 +367,20 @@ body.dark-bg .wl-ok{color:#A9C99A}
 #buybar .btn{background:var(--gold);color:#181109;padding:13px 26px;flex:none}
 #buybar .btn:hover{background:#fff}
 @media(max-width:620px){.bb-thumb,.bb-sub{display:none}.bb-inner{padding:10px 16px;gap:12px}#buybar .btn{padding:12px 18px;font-size:12px}}
+/* 13 Oct 2026, second pass (mobile UX review): on phones the size row sat below the first
+   screen, so the bar now carries the four sizes itself. A tap selects the real size button
+   above (same stock, same messages); the button then adds to the bag. */
+.bb-sizes{display:none}
+.bb-sizes.pulse button:not(:disabled){animation:pdpPulse .5s ease 2}
+@media(max-width:620px){
+  #buybar.has-sizes .bb-txt{display:none}
+  #buybar.has-sizes .bb-sizes{display:flex;gap:6px;flex:none}
+  .bb-sizes button{width:40px;height:44px;border-radius:9px;border:1px solid rgba(244,239,230,.38);background:transparent;color:#F4EFE6;font:600 13px/1 'Jost',system-ui,sans-serif;cursor:pointer;padding:0}
+  .bb-sizes button[aria-pressed="true"]{background:#F4EFE6;color:#181109;border-color:#F4EFE6}
+  .bb-sizes button:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+  .bb-sizes button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  #buybar.has-sizes .btn{flex:1;min-width:0;padding:12px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
 
 /* ---------- sections ---------- */
 .sec{padding:96px 0;position:relative}
@@ -829,6 +858,13 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 .pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#5A5046)}
 .pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(51,39,27,.22);border-radius:5px;background:#fff;color:#33271B;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
 .pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
+.pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:var(--txt-soft,#5A5046);margin:0 0 8px}.pdp-pair-h b{color:var(--txt,#2B2620);font-weight:600}
+.pdp-pair-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pdp-pair-c{display:flex;gap:9px;align-items:center;padding:6px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--txt,#2B2620);min-width:0}
+.pdp-pair-c img{width:44px;height:55px;border-radius:7px;object-fit:cover;flex:none}
+.pdp-pair-c span{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.25}.pdp-pair-c small{font-size:11.5px;color:var(--txt-soft,#5A5046)}
+.pdp-pair-c:hover{border-color:var(--accent)}
+body.dark-bg .pdp-pair-h b,body.dark-bg .pdp-pair-c{color:#F4EFE6}body.dark-bg .pdp-pair-h,body.dark-bg .pdp-pair-c small{color:rgba(244,239,230,.72)}
 .pdp-tote img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none}.pdp-tote b{color:var(--txt,#2B2620);font-weight:600}.pdp-tote a{color:var(--clay-deep,#9C521B)}
 .pdp-why{margin:12px 0 0;display:grid;gap:8px}.pdp-why div{display:grid;gap:2px}.pdp-why dt{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-soft,#5A5046)}.pdp-why dd{margin:0;font-size:13.5px;line-height:1.45;color:var(--txt,#2B2620)}.pdp-why a{color:var(--clay-deep,#9C521B)}
 .pdp-add.pulse .pdp-add-l{animation:none}.pdp-sizes.pulse .pdp-size{animation:pdpPulse .5s ease 2}@keyframes pdpPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06);border-color:var(--clay-deep,#9C521B)}}
@@ -836,6 +872,21 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 .pdp-sizehelp{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;margin:8px 0 12px;font-size:14px}
 .pdp-sizehelp a{color:var(--clay-deep,#9C521B);text-decoration:underline;text-underline-offset:3px}
 .pdp-sizehelp .pdp-other{color:var(--txt-soft,#5A5046)}
+/* 13 Oct 2026: phone gallery count and dots (desktop keeps the thumbnails) */
+.gal-dots{display:none;position:absolute;left:0;right:0;bottom:10px;z-index:3;align-items:center;justify-content:center;gap:10px;pointer-events:none}
+.gal-n{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;color:#fff;background:rgba(24,17,9,.82);padding:3px 8px;border-radius:20px}
+.gal-n b{font-weight:400}
+.gal-sw{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;color:#2B2620;background:rgba(255,246,232,.92);padding:3px 9px;border-radius:20px;transition:opacity .4s}
+.gal-main[data-seen] .gal-sw{opacity:0}
+h1 .nw{white-space:nowrap}
+/* 13 Oct 2026: phones - a long title is set on two lines once the serif arrives; reserving them stops the price and sizes jumping (CLS 0.09 on Hajar) */
+@media(max-width:700px){.buy-head h1.h1-2l{min-height:2.3em}}
+/* one nudge, 1.8 s after the photo is up, so the first frame says there is more to swipe */
+@media(max-width:700px) and (prefers-reduced-motion:no-preference){.gal-main.gal-nudge img.on{animation:galNudge .7s cubic-bezier(.3,0,.2,1) both}}
+@keyframes galNudge{0%,100%{transform:scale(1.06)}40%{transform:scale(1.06) translateX(-12px)}}   /* scaled, so the edge of the frame never shows the empty slot behind it */
+/* the opening photograph settles in once (2.4 s), then nudges once: real photo, no autoplay (25 Sep) */
+@media(max-width:700px) and (prefers-reduced-motion:no-preference){.gal-main img.on.gal-drift{animation:galDrift 2.4s cubic-bezier(.2,.6,.3,1) both}}
+@keyframes galDrift{from{transform:scale(1.07)}to{transform:scale(1)}}
 /* ==== 25 Sep 2026 (Faheem): "the moment users land on a product page they need to see all
    the essential information before needing to scroll down." Phones, first screen:
    title, price and rating; the photo with its thumbnails down the side; sizes, the size
@@ -843,8 +894,11 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 @media(max-width:700px){
   .pdp{flex-direction:row!important;flex-wrap:wrap;align-items:flex-start;gap:8px 8px!important;padding:8px 0 40px!important}
   .pdp>.buy>*,.pdp>.media>*{width:100%}
-  .buy-head .buy-top{display:none}
-  .buy-head{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:10px 14px!important}
+  /* 13 Oct 2026 (retention audit): the place line is the link between the ad and this page, so it shows on phones; the "limited" chip stays on desktop */
+  .buy-head .buy-top{display:block;order:0;flex:1 0 100%;margin:0 0 2px!important}
+  .buy-head .buy-top .limited{display:none}
+  .buy-head .buy-top .plink{font-size:10.5px;letter-spacing:1.1px;white-space:normal;line-height:1.5}
+  .buy-head{order:2;display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:10px 14px!important}
   .buy-head h1{flex:1 0 100%;font-size:23px!important;line-height:1.15!important;margin:0!important}
   .buy-head .price-row{order:2;margin:0!important}
   .buy-head .pdp-rating{display:flex!important;order:3;flex:1 1 0;min-width:0;margin:0!important;font-size:12px}
@@ -854,11 +908,17 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
   .pdp-subm{order:4!important}
   /* the photo takes whatever height is left once the buy box fits: about 480px of the screen
      is title, sizes, button and delivery line, so the rest is photo (never under 260px tall) */
-  .gal-main{--ph:max(260px, calc(100vh - 500px));--ph:max(260px, calc(100svh - 500px));order:2;width:min(calc(100% - 54px), calc(var(--ph) * .8))!important;flex:0 0 min(calc(100% - 54px), calc(var(--ph) * .8));aspect-ratio:4/5;height:auto!important;border-radius:12px;margin-left:auto}
-  .gal-thumbs{order:2;width:46px!important;flex:0 0 46px;display:flex!important;flex-direction:column;flex-wrap:nowrap;gap:6px;margin:0!important;
-    overflow-x:hidden;overflow-y:auto;max-height:min(calc((100vw - 82px) * 1.25), max(260px, calc(100svh - 500px)));scrollbar-width:none;margin-right:auto!important}
-  .gal-thumbs::-webkit-scrollbar{display:none}
-  .gal-thumbs button{width:46px!important;height:58px;flex:0 0 58px;border-radius:8px}
+  /* 13 Oct 2026 (retention audit, ranks 1 and 6; reverses the 24-25 Sep phone layout): the
+     visitor arrives from a full-screen video, so the first screen is the worn photograph,
+     full width, with the place, name and price under it. The thumbnail rail gives way to a
+     count and dots; the sticky bar keeps Add to cart in reach whenever the button is not. */
+  .crumb{display:none}
+  .gal-main{order:1;width:100%!important;flex:0 0 100%;height:clamp(300px, calc(100vh - 350px), 125vw)!important;height:clamp(300px, calc(100svh - 350px), 125vw)!important;aspect-ratio:auto!important;border-radius:14px;margin:0!important}
+  .gal-main img{object-fit:cover;object-position:50% 30%}
+  .gal-main img.fit-contain{object-fit:contain}
+  .gal-thumbs{display:none!important}
+  .gal-dots{display:flex!important}
+  .gal-hint{display:none!important}
   .gal-model{display:none!important}   /* the photo's own tag already says who wears what */
   .buy-body{order:3;padding:12px 14px 14px!important}
   .pdp-buy .pdp-sizes-label{display:none}
@@ -877,10 +937,11 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 }
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=01d588de">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=ba70b3d1">
+<link rel="preload" as="image" href="/shirts/emptyquarter-dune-front.webp" imagesrcset="/shirts/card/emptyquarter-dune-front.webp 800w, /shirts/emptyquarter-dune-front.webp 1080w" imagesizes="(max-width:700px) 100vw, 640px" fetchpriority="high">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=f6446576">
-<script src="/assets/sahra-welcome.js?v=1e7f8e80" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=ffda6b40">
+<script src="/assets/sahra-welcome.js?v=44d9e685" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=bfddf479">
 <script src="/assets/sahra-nav.js?v=7dd0b525" data-sbn defer></script>
 <style data-legib>
@@ -1451,25 +1512,27 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <span class="gal-hint">Click to zoom</span>
         <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
 
-        <img class="on" fetchpriority="high" src="../../shirts/emptyquarter-regular-front.webp" srcset="/shirts/card/emptyquarter-regular-front.webp 800w, /shirts/emptyquarter-regular-front.webp 1536w" sizes="(max-width:760px) 100vw, 640px" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" width="1536" height="1536">
-        <img class="" loading="lazy" fetchpriority="low" decoding="async" src="../../shirts/emptyquarter-regular-back.webp" srcset="/shirts/card/emptyquarter-regular-back.webp 800w, /shirts/emptyquarter-regular-back.webp 1536w" sizes="(max-width:760px) 100vw, 640px" alt="Empty Quarter — Regular, regular fit, back view" width="1536" height="1536">
-        <img class="" data-worn="1" loading="lazy" fetchpriority="low" decoding="async" src="../../shirts/emptyquarter-dune-front.webp" srcset="/shirts/card/emptyquarter-dune-front.webp 800w, /shirts/emptyquarter-dune-front.webp 1536w" sizes="(max-width:760px) 100vw, 640px" alt="The Empty Quarter tee worn in the dunes at sunset — the tonal embroidered dunes, sun and صحراء on the chest" width="1080" height="1350">
-        <img class="" data-worn="1" loading="lazy" fetchpriority="low" decoding="async" src="../../shirts/emptyquarter-dune-chest.webp" srcset="/shirts/card/emptyquarter-dune-chest.webp 800w, /shirts/emptyquarter-dune-chest.webp 1536w" sizes="(max-width:760px) 100vw, 640px" alt="The Empty Quarter tee, chest close in the dunes — the tonal embroidery catching the low sun" width="1080" height="1350">
-        <img class="" data-worn="1" loading="lazy" fetchpriority="low" decoding="async" src="../../shirts/emptyquarter-dune-detail.webp" srcset="/shirts/card/emptyquarter-dune-detail.webp 800w, /shirts/emptyquarter-dune-detail.webp 1536w" sizes="(max-width:760px) 100vw, 640px" alt="The Empty Quarter tee, the embroidered chest at an angle — thread on thread, sand on sand" width="1080" height="1350">
-        <img class="" data-worn="1" loading="lazy" fetchpriority="low" decoding="async" src="../../shirts/emptyquarter-dune-back.webp" srcset="/shirts/card/emptyquarter-dune-back.webp 800w, /shirts/emptyquarter-dune-back.webp 1536w" sizes="(max-width:760px) 100vw, 640px" alt="The Empty Quarter tee from behind in the dunes — plain across the back" width="1080" height="1350">
-        <img class="" data-worn="1" loading="lazy" fetchpriority="low" decoding="async" src="../../shirts/emptyquarter-dune-neck.webp" srcset="/shirts/card/emptyquarter-dune-neck.webp 800w, /shirts/emptyquarter-dune-neck.webp 1536w" sizes="(max-width:760px) 100vw, 640px" alt="The Empty Quarter tee, back neck close — the printed collar label below the collar seam" width="1080" height="1350">
-        <img class=" fit-contain" loading="lazy" fetchpriority="low" decoding="async" src="../../shirts/emptyquarter-fit-comparison.webp" srcset="/shirts/card/emptyquarter-fit-comparison.webp 800w, /shirts/emptyquarter-fit-comparison.webp 1536w" sizes="(max-width:760px) 100vw, 640px" alt="Empty Quarter — Regular — regular fit and oversized fit shown side by side" width="1536" height="1536">
+        <img class="on" data-worn="1" fetchpriority="high" src="../../shirts/emptyquarter-dune-front.webp" srcset="/shirts/card/emptyquarter-dune-front.webp 800w, /shirts/emptyquarter-dune-front.webp 1080w" sizes="(max-width:700px) 100vw, 640px" alt="The Empty Quarter tee worn in the dunes at sunset — the tonal embroidered dunes, sun and صحراء on the chest" width="1080" height="1350">
+        <img class="" data-worn="1" decoding="async" data-src="../../shirts/emptyquarter-dune-chest.webp" data-srcset="/shirts/card/emptyquarter-dune-chest.webp 800w, /shirts/emptyquarter-dune-chest.webp 1080w" data-sizes="(max-width:700px) 100vw, 640px" alt="The Empty Quarter tee, chest close in the dunes — the tonal embroidery catching the low sun" width="1080" height="1350">
+        <img class="" data-worn="1" decoding="async" data-src="../../shirts/emptyquarter-dune-detail.webp" data-srcset="/shirts/card/emptyquarter-dune-detail.webp 800w, /shirts/emptyquarter-dune-detail.webp 1080w" data-sizes="(max-width:700px) 100vw, 640px" alt="The Empty Quarter tee, the embroidered chest at an angle — thread on thread, sand on sand" width="1080" height="1350">
+        <img class="" data-worn="1" decoding="async" data-src="../../shirts/emptyquarter-dune-back.webp" data-srcset="/shirts/card/emptyquarter-dune-back.webp 800w, /shirts/emptyquarter-dune-back.webp 1080w" data-sizes="(max-width:700px) 100vw, 640px" alt="The Empty Quarter tee from behind in the dunes — plain across the back" width="1080" height="1350">
+        <img class="" data-worn="1" decoding="async" data-src="../../shirts/emptyquarter-dune-neck.webp" data-srcset="/shirts/card/emptyquarter-dune-neck.webp 800w, /shirts/emptyquarter-dune-neck.webp 1080w" data-sizes="(max-width:700px) 100vw, 640px" alt="The Empty Quarter tee, back neck close — the printed collar label below the collar seam" width="1080" height="1350">
+        <img class="" decoding="async" data-src="../../shirts/emptyquarter-regular-front.webp" data-srcset="/shirts/card/emptyquarter-regular-front.webp 800w, /shirts/emptyquarter-regular-front.webp 1536w" data-sizes="(max-width:700px) 100vw, 640px" alt="Empty Quarter t-shirt, an embroidered desert tee in the regular fit — a tonal sun over the dunes on the chest" width="1536" height="1536">
+        <img class="" decoding="async" data-src="../../shirts/emptyquarter-regular-back.webp" data-srcset="/shirts/card/emptyquarter-regular-back.webp 800w, /shirts/emptyquarter-regular-back.webp 1536w" data-sizes="(max-width:700px) 100vw, 640px" alt="Empty Quarter — Regular, regular fit, back view" width="1536" height="1536">
+        <img class=" fit-contain" decoding="async" data-src="../../shirts/emptyquarter-fit-comparison.webp" data-srcset="/shirts/card/emptyquarter-fit-comparison.webp 800w, /shirts/emptyquarter-fit-comparison.webp 1536w" data-sizes="(max-width:700px) 100vw, 640px" alt="Empty Quarter — Regular — regular fit and oversized fit shown side by side" width="1536" height="1536">
+        <noscript><style>.gal-main img[data-src]{display:none}</style></noscript>
         <span class="gal-fit" aria-hidden="true">Regular fit</span>
+        <div class="gal-dots" aria-hidden="true"><span class="gal-n"><b>1</b> / 8</span><span class="gal-sw">Swipe &rsaquo;</span></div>
       </div>
       <div class="gal-thumbs" id="thumbs">
 
-        <button class="on" data-i="0" aria-label="View"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-regular-front.webp" alt="" width="800" height="800"></button>
-        <button data-i="1" aria-label="View back"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-regular-back.webp" alt="" width="800" height="800"></button>
-        <button data-i="2" aria-label="View worn photo 1"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-front.webp" alt="" width="800" height="1000"></button>
-        <button data-i="3" aria-label="View worn photo 2"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-chest.webp" alt="" width="800" height="1000"></button>
-        <button data-i="4" aria-label="View worn photo 3"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-detail.webp" alt="" width="800" height="1000"></button>
-        <button data-i="5" aria-label="View worn photo 4"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-back.webp" alt="" width="800" height="1000"></button>
-        <button data-i="6" aria-label="View worn photo 5"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-neck.webp" alt="" width="800" height="1000"></button>
+        <button class="on" data-i="0" aria-label="View worn photo"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-front.webp" alt="" width="800" height="1000"></button>
+        <button data-i="1" aria-label="View worn photo 2"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-chest.webp" alt="" width="800" height="1000"></button>
+        <button data-i="2" aria-label="View worn photo 3"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-detail.webp" alt="" width="800" height="1000"></button>
+        <button data-i="3" aria-label="View worn photo 4"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-back.webp" alt="" width="800" height="1000"></button>
+        <button data-i="4" aria-label="View worn photo 5"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-dune-neck.webp" alt="" width="800" height="1000"></button>
+        <button data-i="5" aria-label="View"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-regular-front.webp" alt="" width="800" height="800"></button>
+        <button data-i="6" aria-label="View back"><img loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-regular-back.webp" alt="" width="800" height="800"></button>
         <button data-i="7" aria-label="Compare regular and oversized fit"><img class="fit-contain" loading="lazy" decoding="async" src="../../shirts/card/emptyquarter-fit-comparison.webp" alt="" width="800" height="800"></button>
       </div>
       
@@ -1482,7 +1545,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <div class="buy">
       <div class="buy-head">
       <div class="buy-top"><a class="eyebrow plink" href="/locations/liwa/">Inspired by Liwa · Abu Dhabi &rarr;</a><span class="limited">✦ Limited first run</span></div>
-      <h1>Empty Quarter T-Shirt, Regular Fit</h1>
+      <h1 class="h1-2l">Empty Quarter <span class="nw">T-Shirt</span>, Regular Fit</h1>
       
       <p class="fabric-line"><b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed</p>
       
@@ -1524,6 +1587,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         
         <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
+        <div class="pdp-pair"><p class="pdp-pair-h"><b>Pair it with another place</b> &middot; any 2 tees AED 359, so the second is AED 160</p><div class="pdp-pair-row"><a class="pdp-pair-c" href="/products/al-quaa-galaxy-regular/"><img src="/shirts/card/alquaa-dune-back.webp" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>Al Quaa Galaxy</b><small>Al Quaa</small></span></a><a class="pdp-pair-c" href="/products/hajar-mountains-regular/"><img src="/shirts/card/hajar-dune-back.webp" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>Hajar Mountains</b><small>Wadi Naqab</small></span></a></div></div>
         <dl class="pdp-why">
           <div><dt>Why <span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></dt><dd>230 GSM combed cotton, pre-washed, embroidered rather than printed, in a small first run. Designed in the UAE.</dd></div>
           <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
@@ -1540,7 +1604,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
            One better than the benchmark: the visitor's own shipping card is
            highlighted and ordered first via data-market on <html>. -->
       <div class="pdp-answers">
-        <details class="pdp-ans pdp-ans-story">
+        <details class="pdp-ans pdp-ans-story" open>
           <summary>The story behind the tee</summary>
           <p class="lede">A clean, straight cut — it sits on the shoulder and falls straight. The version to buy if you layer. A tonal embroidered sun setting over the dune ridges of Liwa, with <span lang="ar">صحراء</span> beneath — where the Empty Quarter begins and the dunes turn to mountains of sand.</p>
           <p class="occasion">✦ Made for dune drives &amp; long evenings in the Empty Quarter</p>
@@ -1827,7 +1891,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
   <div class="bb-inner">
     <img class="bb-thumb" loading="lazy" decoding="async" src="../../shirts/emptyquarter-regular-front.webp" alt="" width="1536" height="1536">
     <div class="bb-txt"><div class="bb-name">Empty Quarter — Regular</div><div class="bb-sub"><span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span> · Limited first run</div></div>
-    <button class="btn" id="bbAdd" type="button">Add to cart</button>
+    <div class="bb-sizes" id="bbSizes" role="group" aria-label="Choose a size"><button type="button" data-z="S" aria-pressed="false">S</button><button type="button" data-z="M" aria-pressed="false">M</button><button type="button" data-z="L" aria-pressed="false">L</button><button type="button" data-z="XL" aria-pressed="false">XL</button></div><button class="btn" id="bbAdd" type="button">Add to cart</button>
   </div>
 </div>
 
@@ -1927,9 +1991,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     if(a.classList.contains('shoplink'))track('select_item',{item_id:'empty-quarter-regular',from:'pdp'});
     else if(a.href&&a.href.indexOf('/locations/')>=0)track('place_click',{item_id:'empty-quarter-regular'});
     else if(a.classList.contains('rel'))track('related_click',{from:'empty-quarter-regular'});
+    else if(a.classList.contains('pdp-pair-c'))track('pair_click',{from:'empty-quarter-regular',to:a.getAttribute('href')});
   },true);
   /* how far people actually read — the whole point of the long-form page */
-  var marks=[25,50,75,100],hit={};
+  var marks=[10,25,50,75,100],hit={};   /* 10: added 13 Oct 2026 - most paid visits never reached 25 */
   addEventListener('scroll',function(){
     var d=document.documentElement,max=d.scrollHeight-innerHeight;
     if(max<=0)return;
@@ -2028,10 +2093,21 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     var im=imgs[cur];
     modelNote.classList.toggle('gal-model-off',!(im&&im.hasAttribute('data-worn')));
   }
+  var hydrated=false;
+  function hydrate(){ if(hydrated)return; hydrated=true;
+    imgs.forEach(function(im){ var d=im.getAttribute('data-src'); if(!d||im.getAttribute('src'))return;
+      if(im.getAttribute('data-srcset')){ im.setAttribute('sizes',im.getAttribute('data-sizes')||'100vw'); im.setAttribute('srcset',im.getAttribute('data-srcset')); }
+      im.setAttribute('src',d); }); }
+  if(document.readyState==='complete') setTimeout(hydrate,400); else addEventListener('load',function(){ setTimeout(hydrate,400); });
+  setTimeout(hydrate,6000);   /* a slow third-party request can hold the load event for ever */
+  ['touchstart','mouseenter','focus'].forEach(function(k){ main.addEventListener(k,hydrate,{passive:true,once:true}); });
   function show(i){
+    hydrate();
     cur=(i%imgs.length+imgs.length)%imgs.length;
     imgs.forEach(function(im,k){im.classList.toggle('on',k===cur);});
     thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===cur);});
+    var dn=main.querySelector('.gal-n b'); if(dn) dn.textContent=cur+1;
+    if(cur) main.setAttribute('data-seen','1');
     /* the caption changes at the middle of the crossfade, not before it - otherwise
        "She wears M" sat over the outgoing photo of him (Faheem's screenshot, 24 Sep) */
     clearTimeout(show.t); show.t=setTimeout(function(){ syncBadge(); syncModel(); },130);
@@ -2047,12 +2123,20 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
      changed every second under a shopper trying to read the size row. Phones get a
      swipe instead; the thumbnails still work, and the pause button is not needed. */
   var phoneG=!!(window.matchMedia&&matchMedia('(max-width:700px)').matches);
+  var swipes=0;
   if(phoneG){ userPaused=true;
     var pb0=document.getElementById('galPause'); if(pb0){ pb0.hidden=true; pb0.style.display='none'; }
     var sx=null, sy=null;
     main.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY;},{passive:true});
     main.addEventListener('touchend',function(e){ if(sx===null) return; var t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy; sx=null;
-      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3){ show((cur+(dx<0?1:-1)+imgs.length)%imgs.length); main.dataset.swiped='1'; setTimeout(function(){delete main.dataset.swiped;},650); } },{passive:true}); }
+      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3){ show((cur+(dx<0?1:-1)+imgs.length)%imgs.length); main.dataset.swiped='1'; setTimeout(function(){delete main.dataset.swiped;},650);
+        /* 13 Oct 2026: swipes were invisible in GA4, so a visitor who looked at five photos read as a bounce */
+        swipes++; if(window.track) track('gallery_swipe',{item_id:'empty-quarter-regular',index:cur,count:swipes,ad:window.SB_AD?1:0}); } },{passive:true});
+    if(imgs[0]&&!red){
+      /* 13 Oct 2026, second pass: the drift and the nudge both animate transform, so the opener
+         drifts first and the nudge comes once the drift has settled, unless they swiped already */
+      setTimeout(function(){ if(!swipes&&cur===0){ imgs[0].classList.remove('gal-drift'); main.classList.add('gal-nudge'); setTimeout(function(){ main.classList.remove('gal-nudge'); },800); } },2600);
+      imgs[0].classList.add('gal-drift'); } }
   function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
   function startAuto(){stopAuto();if(red||userPaused||imgs.length<2)return;
     timer=setInterval(function(){
@@ -2083,7 +2167,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var main=document.querySelector('.gal-main'),lb=document.getElementById('lightbox');
   /* pause taps must not open the zoom */
   if(!main||!lb)return;
-  var imgs=[].slice.call(main.querySelectorAll('img')),srcs=imgs.map(function(i){return i.src;}),cur=0;
+  var imgs=[].slice.call(main.querySelectorAll('img')),srcs=imgs.map(function(i){return i.getAttribute('data-src')||i.src;}),cur=0;
   var el=document.getElementById('lbImg');
   function show(i){cur=(i%srcs.length+srcs.length)%srcs.length;el.src=srcs[cur];el.alt=imgs[cur].alt||'';}
   function open(){var on=main.querySelector('img.on');show(Math.max(0,imgs.indexOf(on)));lb.classList.add('open');
@@ -2091,6 +2175,24 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   function close(){lb.classList.remove('open');document.body.style.overflow='';}
   main.addEventListener('click',function(){ if(main.dataset.swiped) return; open();});
   main.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+
+/* ---------- sticky bar sizes (phones, 13 Oct 2026) ---------- */
+(function(){
+  var bar=document.getElementById('buybar'), bs=document.getElementById('bbSizes'), real=document.getElementById('pdpSizes');
+  if(!bar||!bs||!real) return;
+  function find(z){ return [].filter.call(real.querySelectorAll('.pdp-size'),function(b){ return ((b.firstChild&&b.firstChild.nodeValue)||'').trim()===z; })[0]; }
+  function mirror(){
+    var any=false;
+    [].forEach.call(bs.querySelectorAll('button'),function(b){ var r=find(b.getAttribute('data-z'));
+      b.hidden=!r; if(!r) return; any=true;
+      b.disabled=!!(r.disabled||r.getAttribute('aria-disabled')==='true'&&/sold/i.test(r.textContent));
+      b.setAttribute('aria-pressed', r.getAttribute('aria-pressed')==='true'||r.classList.contains('sel') ? 'true' : 'false'); });
+    bar.classList.toggle('has-sizes',any);
+  }
+  bs.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b||b.disabled) return; var r=find(b.getAttribute('data-z')); if(r){ r.click(); setTimeout(mirror,30); } });
+  if(window.MutationObserver) new MutationObserver(mirror).observe(real,{subtree:true,childList:true,attributes:true,attributeFilter:['class','disabled','aria-pressed','aria-disabled']});
+  mirror();
+})();
 
 /* ---------- sticky bar: buy, do not navigate away ----------
    It used to be a link to /shop/. It carries the photo, name, price and one
@@ -2102,6 +2204,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var bb=document.getElementById('bbAdd'); if(!bb) return;
   bb.addEventListener('click',function(){
     var add=document.getElementById('pdpAdd'), buy=document.getElementById('pdpBuy');
+    var bsz=document.getElementById('bbSizes'), bar=document.getElementById('buybar');
+    if(add && add.getAttribute('aria-disabled')==='true' && bsz && bar && bar.classList.contains('has-sizes') && getComputedStyle(bsz).display!=='none'){ bsz.classList.remove('pulse'); void bsz.offsetWidth; bsz.classList.add('pulse'); return; }
     if(add && !add.disabled){ add.click(); return; }
     if(buy){
       buy.scrollIntoView({behavior:'smooth',block:'center'});
@@ -2114,7 +2218,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   if(add && window.MutationObserver){
     /* 23 Sep 2026: phones hide the bar's price line, so the price rides in the button */
     var pr=document.querySelector('.price .sb-price'),narrow=matchMedia('(max-width:620px)');
-    var sync=function(){ var t=add.getAttribute('aria-disabled')==='true' ? 'Choose a size' : (/sold out/i.test(add.textContent) ? 'Sold out' : 'Add to cart'); if(narrow.matches&&pr&&pr.textContent.trim()) t+=' · '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
+    var sync=function(){ var hs=bar0&&bar0.classList.contains('has-sizes')&&narrow.matches; var t=add.getAttribute('aria-disabled')==='true' ? (hs ? 'Pick a size' : 'Choose a size') : (/sold out/i.test(add.textContent) ? 'Sold out' : 'Add to cart'); if(narrow.matches&&!hs&&pr&&pr.textContent.trim()) t+=' · '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
+    var bar0=document.getElementById('buybar'); if(bar0&&window.MutationObserver) new MutationObserver(function(){ sync(); }).observe(bar0,{attributes:true,attributeFilter:['class']});
     new MutationObserver(sync).observe(add,{attributes:true,attributeFilter:['disabled','aria-disabled'],childList:true,subtree:true,characterData:true});
     if(pr) new MutationObserver(sync).observe(pr,{childList:true,characterData:true,subtree:true});
     sync();
@@ -2274,7 +2379,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 
 /* ---------- living canvas backdrop ---------- */
 (function(){
-  var cv=document.getElementById('fx');if(!cv||REDUCED)return;
+  /* 13 Oct 2026 (retention audit, speed): not inside the TikTok, Instagram and Facebook in-app
+     browsers, where paid visitors land on mid-range phones and every frame of this canvas is
+     main-thread time taken from the first tap */
+  var cv=document.getElementById('fx');if(!cv||REDUCED||/musical_ly|trill_|BytedanceWebview|TikTok|Instagram|FBAN|FBAV|FB_IAB/i.test(navigator.userAgent||''))return;
   var ctx=cv.getContext('2d',{alpha:true});if(!ctx)return;
   var DPR=Math.min(devicePixelRatio||1,TOUCH?1.2:1.5),W=0,H=0,t=0,vis=true;
   function size(){W=cv.width=Math.floor(innerWidth*DPR);H=cv.height=Math.floor(innerHeight*DPR);
@@ -2433,6 +2541,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   /* 23 Sep 2026: S-XL are in the HTML so the picker is there on first paint.
      A tap before live stock arrives is remembered and applied when it does. */
   var pending=null, live=false;
+  /* 13 Oct 2026 (retention audit): a size tap is the clearest sign of intent short of the bag, and it was not measured */
+  sizesEl.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('.pdp-size'); if(b&&window.track) track('size_select',{item_id:handle,size:(b.firstChild&&b.firstChild.nodeValue||'').trim(),ad:window.SB_AD?1:0}); });
   sizesEl.querySelectorAll('.pdp-size-wait').forEach(function(b){
     b.addEventListener('click',function(){ if(live) return;
       sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
@@ -2612,8 +2722,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   if(location.hash){ var t=document.getElementById(location.hash.slice(1)); if(t){ openFor(t); setTimeout(function(){ t.scrollIntoView(); },50); } }
 })();
 </script>
-<script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
-<script src="/assets/sahra-cart.js?v=2d674c09" defer></script>
+<script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
+<script src="/assets/sahra-cart.js?v=7e1d3f5e" defer></script>
 <script src="/assets/sahra-sizefinder.js?v=170093b1" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){
