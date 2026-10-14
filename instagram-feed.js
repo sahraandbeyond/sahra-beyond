@@ -93,7 +93,7 @@ function card(p, opts = {}) {
     ${hasSlides ? `<div class="ig-seg" aria-hidden="true">${slides.map((s, i) => `<i${i === 0 ? ' class="on"' : ''}></i>`).join('')}</div>` : ''}
     ${open}
     ${hasSlides ? `<button class="ig-tap ig-prev" type="button" aria-label="Previous slide" hidden></button><button class="ig-tap ig-next" type="button" aria-label="Next slide" hidden></button><span class="ig-sr" aria-live="polite"></span>` : ''}
-    <span class="ig-kind">${esc(kindLabel(p))}</span>
+    <span class="ig-kind">${esc(kindLabel(p))}</span>${p.mock ? '<span class="ig-mock">Mock-up</span>' : ''}
   </div>
   <div class="ig-txt">
     ${p.date ? `<span class="ig-ago" data-date="${p.date.toISOString()}">${esc(ago(p.date))}</span>` : ''}
@@ -124,7 +124,7 @@ function footerRowHtml() {
   if (posts.length < 4) return '';
   const last = all().filter(p => p.date).sort((a, b) => b.date - a.date)[0];
   return `<div class="ig-foot ig-dark" role="navigation" aria-label="More from our Instagram">
-  <div class="ig-foot-row">${posts.map(p => `<a class="ig-foot-card" href="${esc(postUrl(p))}" target="_blank" rel="noopener" data-slide="${esc(p.slides[0] || '')}"><img src="/uploads/ig/${p.id}-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>${esc(p.label)}</span></span></a>`).join('')}</div>
+  <div class="ig-foot-row">${posts.map(p => `<a class="ig-foot-card" href="${esc(postUrl(p))}" target="_blank" rel="noopener" data-slide="${esc(p.slides[0] || '')}"><img src="/uploads/ig/${p.id}-540.webp" width="540" height="675" loading="lazy" decoding="async" alt="">${p.mock ? '<span class="ig-mock">Mock-up</span>' : ''}<span class="ig-foot-cap"><span>${esc(p.label)}</span></span></a>`).join('')}</div>
   <p class="ig-foot-line"><a href="${IG_URL}${DATA.accounts.house}/" target="_blank" rel="noopener">Instagram &mdash; @${DATA.accounts.house}</a>${last ? ` <span class="ig-foot-last">· last post ${esc(shortDate(last.date))}</span>` : ''} · <a href="/feed/">all posts</a></p>
 </div>`;
 }
@@ -170,6 +170,8 @@ const CSS = `
 .ig-card{flex:0 0 62vw;max-width:252px;min-width:0;scroll-snap-align:center;background:var(--ig-fill);border:1px solid var(--ig-line);border-radius:14px;overflow:hidden;position:relative;transition:transform .25s ease,border-color .25s ease}
 @media(min-width:761px){.ig-card{flex-basis:calc((100% - 60px)/6);max-width:none}.ig-rail-short .ig-card{flex-basis:220px}.ig-card:hover{transform:translateY(-6px);border-color:var(--ig-ink)}}
 .ig-media{position:relative;aspect-ratio:4/5;background:#181109;overflow:hidden}
+/* 13 Oct 2026 (Faheem): posts whose cover shows pre-production renders say so on the image */
+.ig-mock{position:absolute;top:10px;right:10px;z-index:3;padding:3px 8px;border-radius:999px;background:rgba(10,16,22,.78);color:#F6ECDD;font:600 10px/1.2 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
 .ig-media img,.ig-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .ig-media video{opacity:0;transition:opacity .6s ease;pointer-events:none}
 .ig-media video.on{opacity:1}

@@ -1,5 +1,5 @@
 {
-  "_readme": "Curated Instagram feed for the site (4 Oct 2026). One object per post. 'id' is the Instagram shortcode; the post date is decoded from it at build time (Instagram media ids carry their timestamp), so there is no date field to keep in sync. 'label' is OUR wording for the site, never a copy of the caption (some older captions predate the brand rules). 'src' is the folder in Social Media/ that holds the slides, for covers and the on-site step-through; a post with no src gets its cover from uploads/ig/<id>.webp only. Covers: uploads/ig/<id>.webp (1080x1350) and <id>-540.webp. Slides: uploads/ig/s/<id>/NN.mp4. A post whose cover file is missing is skipped by the build, so the site never shows an empty card. To add a post: add an object at the top, drop its cover (and slides) in, rebuild.",
+  "_readme": "Curated Instagram feed for the site (4 Oct 2026; refreshed weekly from 13 Oct). 'mock': true marks a post whose cover shows pre-production renders; the card carries a Mock-up label. One object per post. 'id' is the Instagram shortcode; the post date is decoded from it at build time (Instagram media ids carry their timestamp), so there is no date field to keep in sync. 'label' is OUR wording for the site, never a copy of the caption (some older captions predate the brand rules). 'src' is the folder in Social Media/ that holds the slides, for covers and the on-site step-through; a post with no src gets its cover from uploads/ig/<id>.webp only. Covers: uploads/ig/<id>.webp (1080x1350) and <id>-540.webp. Slides: uploads/ig/s/<id>/NN.mp4. A post whose cover file is missing is skipped by the build, so the site never shows an empty card. To add a post: add an object at the top, drop its cover (and slides) in, rebuild.",
   "accounts": {
     "house": "sahraandbeyond.ae",
     "trail": "sahratrail"
@@ -32,6 +32,145 @@
       ],
       "src": "CAROUSELS-28Sep-10Oct/D01-28sep-regular-or-oversized",
       "srcNote": "Step-through uses the 28 Sep rebuild of the guide (no slim-fit wording); the pinned 11 Sep post is the older cut of the same guide."
+    },
+    {
+      "id": "DeYZZw8IGOJ",
+      "kind": "reel",
+      "label": "Meet the locals: Sahel, teaser 3",
+      "topic": "sahel",
+      "wear": [
+        "/sahel/",
+        "Sahel"
+      ],
+      "src": "SAHEL-TEASER/SahelTeaser_T3_TheLocals_v3_1080x1920.mp4"
+    },
+    {
+      "id": "DeXIoslI-X6",
+      "kind": "reel",
+      "label": "Wear the wild side of the UAE: the launch film",
+      "topic": "brand",
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ],
+      "src": "LAUNCH/launch-video-30s-11oct"
+    },
+    {
+      "id": "DeTnkCFCGE9",
+      "kind": "carousel",
+      "label": "Any two tees, AED 359: mix designs and fits",
+      "topic": "shop",
+      "products": [
+        "al-quaa-galaxy-regular",
+        "empty-quarter-regular",
+        "hajar-mountains-regular",
+        "al-quaa-galaxy-oversized",
+        "empty-quarter-oversized",
+        "hajar-mountains-oversized"
+      ],
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ],
+      "src": "WEEKLY-PACKS/10oct-any-two-tees"
+    },
+    {
+      "id": "DeRJH_SiBH0",
+      "account": "trail",
+      "kind": "carousel",
+      "label": "Six rules for the Hajar, before your next climb",
+      "topic": "trail",
+      "guides": [
+        "/hiking/",
+        "/trail/"
+      ],
+      "wear": [
+        "/trail/",
+        "Sahra Trail"
+      ],
+      "src": "CAROUSELS-28Sep-10Oct/D09-trail-six-rules-for-the-hajar-v4"
+    },
+    {
+      "id": "DePhP7oIVno",
+      "kind": "reel",
+      "label": "A few metres out, the reef begins: Sahel, teaser 2",
+      "topic": "sahel",
+      "wear": [
+        "/sahel/",
+        "Sahel"
+      ],
+      "src": "SAHEL-TEASER/SahelTeaser_T2_TheReef_v4_1080x1920.mp4"
+    },
+    {
+      "id": "DeN8_Hdo3uB",
+      "account": "trail",
+      "kind": "reel",
+      "mock": true,
+      "label": "Sahra Trail revealed: the Tee and the 2-in-1 Shorts",
+      "topic": "trail",
+      "guides": [
+        "/trail/"
+      ],
+      "wear": [
+        "/trail/",
+        "Sahra Trail"
+      ],
+      "src": "SAHRA-TRAIL-reels/T5-R1-reveal/SahraTrail_R1_reveal_v5.mp4"
+    },
+    {
+      "id": "DeM3UXvCDd6",
+      "kind": "carousel",
+      "label": "What's your UAE? Tell us yours",
+      "topic": "community",
+      "wear": [
+        "/places/",
+        "Places"
+      ],
+      "src": "WEEKLY-PACKS/07oct-your-uae-01"
+    },
+    {
+      "id": "DeKJkltiEJL",
+      "kind": "carousel",
+      "label": "A mountain, in lines: the Hajar Mountains Tee",
+      "topic": "product",
+      "products": [
+        "hajar-mountains-regular",
+        "hajar-mountains-oversized"
+      ],
+      "places": [
+        "wadi-naqab"
+      ],
+      "wear": [
+        "/products/hajar-mountains-regular/",
+        "The Hajar Mountains Tee"
+      ],
+      "src": "WEEKLY-PACKS/04oct-hajar-decoded-2-v2"
+    },
+    {
+      "id": "DeHgf7NI1_O",
+      "kind": "reel",
+      "label": "Every desert ends at a shore: Sahel, teaser 1",
+      "topic": "sahel",
+      "wear": [
+        "/sahel/",
+        "Sahel"
+      ],
+      "src": "SAHEL-TEASER/SahelTeaser_T1_TheShore_1080x1920.mp4"
+    },
+    {
+      "id": "DeGRlJJocK6",
+      "account": "trail",
+      "kind": "reel",
+      "label": "Two ridges, two layers: Sahra Trail, episode 4",
+      "topic": "trail",
+      "guides": [
+        "/trail/"
+      ],
+      "wear": [
+        "/trail/",
+        "Sahra Trail"
+      ],
+      "src": "SAHRA-TRAIL-reels/T4-EP04-two-in-one/SahraTrail_EP04_TwoRidges_1080x1920.mp4"
     },
     {
       "id": "DeCehfniGGo",
