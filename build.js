@@ -1602,7 +1602,7 @@ const LANDINGS = [
       "TODO for Faheem: the Hatta page says no official campsites or permit rules; Khaleej Times (26 Oct 2025) lists Hatta designated campsites with BBQ pits. Reconcile.",
       "TODO for Faheem: no official page found for Sharjah, Fujairah, RAK or Abu Dhabi camping permits and fine schedules; the table relies on press and law-firm summaries. Ajman has no sourced rules. Ask the municipalities if you want official wording.",
       "TODO for Faheem: Al Wathba Lake Camp picnic sites: Visit Abu Dhabi says 24, Gulf News (21 Nov 2023) says 25; text uses 24.",
-      "TODO for lead: add the Shuweihat Hoodie and Ras Al Khor Hoodie links to the 'What to wear on cold desert nights' section when they are live (no product link added).",
+      "TODO for lead: add the Barr & Bahr Hoodie and Ras Al Khor Hoodie links to the 'What to wear on cold desert nights' section when they are live (no product link added).",
       "TODO for Faheem: Zawya reports a Dh500 bonfire fine at Jebel Jais and Dh2,000 elsewhere (2022, undated); not used in the table because the date and authority are unclear.",
       "TODO for Faheem: the title now says 2026–27, so it needs updating each season."
     ]
@@ -3299,7 +3299,7 @@ COMMERCE.forEach(P => {
 })();
 
 /* ---------- /hoodies/ (DRAFT, 1 Oct 2026; SEO handover item 19) -------------
-   Collection page for the two Sahel hoodies (named 5 Oct 2026: the Shuweihat Hoodie in Salute and
+   Collection page for the two Sahel hoodies (named 5 Oct 2026; the Salute one renamed the Barr & Bahr Hoodie on 14 Oct:
    the Ras Al Khor Hoodie in Estate Blue), built to report 02 section 6.1. It is a
    DRAFT: written to _drafts/hoodies/ locally only (never on Vercel, never in the
    sitemap) until Faheem confirms the fabric weight and the products exist in
@@ -3309,7 +3309,7 @@ const HOODIES = {
   draft: true,
   slug: 'hoodies',
   title: 'Hoodies in Dubai & UAE — Embroidered Coastline | Sahra & Beyond',
-  desc: 'The Shuweihat Hoodie and the Ras Al Khor Hoodie: 400 GSM brushed-back cotton fleece, a relaxed drop-shoulder cut and the UAE coastline embroidered on the back.',
+  desc: 'The Barr & Bahr Hoodie and the Ras Al Khor Hoodie: 400 GSM brushed-back cotton fleece, a relaxed drop-shoulder cut and the UAE coastline embroidered on the back.',
   h1: 'Hoodies in Dubai & the UAE',
   todo: [
     'TODO for Faheem: product photos (not mockups) and the Shopify product URLs, so the grid and ItemList schema can go in.',
@@ -3330,15 +3330,15 @@ if (!process.env.VERCEL) {
     <div class="loc-hero-inner">
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(H.h1)}</span></nav>
       <h1>${esc(H.h1)}</h1>
-      <p class="lede">The Shuweihat Hoodie and the Ras Al Khor Hoodie: the UAE coastline, embroidered</p>
+      <p class="lede">The Barr &amp; Bahr Hoodie and the Ras Al Khor Hoodie: the UAE coastline, embroidered</p>
     </div>
   </section>
   <main>
     ${H.todo.map(todoBox).join('')}
-    <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE: 400 GSM brushed-back fleece in 100% cotton, in a relaxed oversized cut with a dropped shoulder, the UAE coastline embroidered across the back in sand thread, and a printed scene on the lower back. There are two: the Shuweihat Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each in S to XL, at AED 229. Delivery is free and next-day across the UAE, with free 14-day exchanges. See the <a href="/size-guide/">size guide</a> and <a href="/fabric/">how we choose our fabrics</a>.</p></div>
-    ${todoBox('Product grid goes here once the Shuweihat Hoodie and the Ras Al Khor Hoodie exist in Shopify as two products (CollectionPage + ItemList schema then).')}
+    <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE: 400 GSM brushed-back fleece in 100% cotton, in a relaxed oversized cut with a dropped shoulder, the UAE coastline embroidered across the back in sand thread, and a printed scene on the lower back. There are two: the Barr &amp; Bahr Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each in S to XL, at AED 229. Delivery is free and next-day across the UAE, with free 14-day exchanges. See the <a href="/size-guide/">size guide</a> and <a href="/fabric/">how we choose our fabrics</a>.</p></div>
+    ${todoBox('Product grid goes here once the Barr & Bahr Hoodie and the Ras Al Khor Hoodie exist in Shopify as two products (CollectionPage + ItemList schema then).')}
     <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed oversized pullover with a dropped shoulder and a hip-length body, sized S to XL. The neck label reads the size and the fit, for example "M – OVERSIZED", and is printed rather than sewn in, so there is no tag to scratch.</p></div></section>
-    <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the UAE coastline, embroidered in sand thread, with &quot;ساحل · SAHEL&quot;. The Sahra mark is embroidered at the centre of the chest. On the lower back, each hoodie carries its own printed scene. The Shuweihat Hoodie has contour lines where the dunes meet the sea, inspired by <a href="/locations/shuweihat-island/">Shuweihat Island</a>. The Ras Al Khor Hoodie has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>.</p></div></section>
+    <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the UAE coastline, embroidered in sand thread, with &quot;ساحل · SAHEL&quot;. The Sahra mark is embroidered at the centre of the chest. On the lower back, each hoodie carries its own printed scene. The Barr &amp; Bahr Hoodie carries the crossing between the two: contour-line dunes running down into a stream and a wave (in the Gulf, barr is the open land and bahr is the sea). The Ras Al Khor Hoodie has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>.</p></div></section>
     <section class="guide-sec"><h2>For cold desert and mountain nights</h2><div class="content"><p>Winter nights in the desert and up in the mountains get properly cold: Jebel Jais has recorded temperatures below freezing. If you are camping this season, our <a href="/camping/">camping guide</a> covers the rules by emirate, and the <a href="/stargazing/">stargazing guide</a> the darkest nights; the <a href="/locations/jebel-jais/">Jebel Jais guide</a> has the month-by-month temperatures.</p></div></section>
     <section class="guide-sec"><h2>Care</h2><div class="content"><p>Wash cold and inside out, no bleach. Tumble dry low, and iron inside out.</p></div></section>
     ${newsletterBlock()}

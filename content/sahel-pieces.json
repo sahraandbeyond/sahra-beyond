@@ -1,5 +1,5 @@
 {
-  "_note": "Sahel product names, places and map pins. Source: MASTER_BRIEF Decision Log 2026-10-05 'Sahel product names now carry a place' and HANDOFF-2026-10-05-sahel-product-names.md. 'Snoopy' never appears in a garment name (Peanuts trademark); it stays only as the place name. Tees take the short design name on cards and pins and add 'Tee' where the name stands alone. Before the reveal sahel-page.js prints the name and the type only (Faheem, 6 Oct); colour, place and price wait for STATE 'reveal'. Arabic product names are not written yet (they need Faheem's read).",
+  "_note": "Sahel product names, places and map pins. Source: MASTER_BRIEF Decision Log 2026-10-05 'Sahel product names now carry a place' and HANDOFF-2026-10-05-sahel-product-names.md. 'Snoopy' never appears in a garment name (Peanuts trademark); it stays only as the place name. Tees take the short design name on cards and pins and add 'Tee' where the name stands alone. Before the reveal sahel-page.js prints the name and the type only (Faheem, 6 Oct); colour, place and price wait for STATE 'reveal'. Arabic product names are not written yet (they need Faheem's read). 14 Oct 2026 (Faheem, HANDOFF-2026-10-14-sahel-names-colour-stories-for-site): shuweihat-hoodie is now the Barr & Bahr Hoodie (an idea name, so no place pin) and sahel-logo-tee is now the Shams Tee; the ids are kept so links and builds stay stable. Al Aqah Reef's colour is Lagoon (#0EAAAE on screen). 'story' is the story-card text (print set v6) for the product pages; it is data only and is not printed in the teaser state. The Arabic names (البر والبحر, شمس) wait for Faheem's native read and are not stored here.",
   "pieces": [
     {
       "id": "khor-fakkan-bay",
@@ -15,7 +15,8 @@
       ],
       "placeName": "Khor Fakkan",
       "placeSlug": "khor-fakkan-beach",
-      "was": "Khor Fakkan tee"
+      "was": "Khor Fakkan tee",
+      "story": "On Sharjah's east coast the Hajar Mountains come straight down to the Gulf of Oman. Khor Fakkan sits in the curve between two headlands, and its name is usually read as 'the creek of the two jaws'. We drew the bay the way it holds you: bare ridges, one sweep of pale sand and a dhow resting on still water."
     },
     {
       "id": "al-hamra-pearl-diver",
@@ -31,7 +32,8 @@
       ],
       "placeName": "Al Jazirah Al Hamra",
       "placeSlug": "al-jazirah-al-hamra",
-      "was": "Pearl Diver tee"
+      "was": "Pearl Diver tee",
+      "story": "Al Jazirah Al Hamra, the Red Island, is a coral-stone pearling town on the Ras Al Khaimah coast, left empty around 1970. Every summer the boats of this coast sailed for the big dive, from June to the end of September. A diver went down on a stone weight, filled his basket with oysters and tugged the rope to be hauled up."
     },
     {
       "id": "al-aqah-reef",
@@ -39,7 +41,7 @@
       "name": "Al Aqah Reef Tee",
       "type": "tee",
       "label": "Tee",
-      "colour": "Deep Teal",
+      "colour": "Lagoon",
       "price": 199,
       "fits": [
         "Regular",
@@ -47,12 +49,14 @@
       ],
       "placeName": "Snoopy Island, Al Aqah",
       "placeSlug": "snoopy-island",
-      "was": "Snoopy Island tee"
+      "was": "Snoopy Island tee",
+      "colourHex": "#0EAAAE",
+      "story": "A small rock island sits a few hundred metres off Al Aqah beach, on Fujairah's northern coast. Most people know it as Snoopy Island. You don't need a boat: people swim, wade or paddle out to snorkel the reef around it, where turtles, blacktip reef sharks and parrotfish are reported. We drew both worlds at once, the rock above the waterline and the reef beneath it."
     },
     {
       "id": "sahel-logo-tee",
-      "design": "Sahel Logo Tee",
-      "name": "Sahel Logo Tee",
+      "design": "Shams Tee",
+      "name": "Shams Tee",
       "type": "tee",
       "label": "Tee",
       "colour": "Jet Set",
@@ -63,7 +67,8 @@
       ],
       "placeName": null,
       "placeSlug": null,
-      "was": "Plain Logo Tee"
+      "was": "Sahel Logo Tee (14 Oct); before that Plain Logo Tee",
+      "story": "Shams is the sun, and in this country it decides everything: when to walk, when to rest, when the dunes turn gold. Sahra & Beyond began with nights in the desert and a camera, waiting for it to rise. Our mark keeps that moment, the sun resting on a dune crest with sahra written beneath it, stitched in sand thread on the left chest."
     },
     {
       "id": "sahel-polo",
@@ -75,20 +80,21 @@
       "price": null,
       "placeName": null,
       "placeSlug": null,
-      "was": "Black polo"
+      "was": "Black polo",
+      "story": "After dark on Dubai Creek, the lights of the abras and dhows spill gold onto black water. This polo is cut from that view: black mercerised piqué, three buttons, and our mark in antique-gold thread on the left chest. It's the one piece in Sahel made for evenings."
     },
     {
       "id": "shuweihat-hoodie",
-      "design": "Shuweihat Hoodie",
-      "name": "Shuweihat Hoodie",
+      "design": "Barr & Bahr Hoodie",
+      "name": "Barr & Bahr Hoodie",
       "type": "hoodie",
       "label": "Hoodie",
       "colour": "Salute",
       "price": 229,
-      "placeName": "Shuweihat Island",
-      "placeSlug": "shuweihat-island",
-      "inspiredBy": true,
-      "was": "Sahel Hoodie, Salute"
+      "placeName": null,
+      "placeSlug": null,
+      "was": "Shuweihat Hoodie (14 Oct); before that Sahel Hoodie, Salute",
+      "story": "In the Gulf, barr is the open land, the desert, and bahr is the sea. People say them together because life here has always moved between the two. The lower back carries that crossing: contour-line dunes running down into a stream and a wave. Above it, one line of sand thread traces the whole UAE coast."
     },
     {
       "id": "ras-al-khor-hoodie",
@@ -100,7 +106,8 @@
       "price": 229,
       "placeName": "Ras Al Khor Wildlife Sanctuary",
       "placeSlug": "ras-al-khor",
-      "was": "Sahel Hoodie, Estate Blue"
+      "was": "Sahel Hoodie, Estate Blue",
+      "story": "Ras Al Khor means the head of the creek: a protected wetland where Dubai Creek ends, in the middle of the city. Low on the back, greater flamingos wade there at dusk, with the mangroves behind them. Above them runs the whole UAE coast in a single line of sand thread, with Sahel written beneath it in Arabic and English."
     }
   ]
 }

@@ -39,7 +39,7 @@ const STATE = 'teaser';   // 'teaser' | 'reveal'
    teaser state the name and the type are printed; colour, place and price wait for the reveal. */
 const SAHEL = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sahel-pieces.json'), 'utf8'));
 const PIECES = SAHEL.pieces.map(p => ({
-  k: p.type, type: p.label, name: p.name, design: p.design,
+  k: p.type, type: p.label, name: p.name, design: p.design.replace(/&/g, '&amp;'),   /* 14 Oct 2026: 'Barr & Bahr' */
   price: p.price ? `AED ${p.price}` : null,
   place: p.placeName, placeSlug: p.placeSlug, inspiredBy: !!p.inspiredBy
 }));
