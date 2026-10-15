@@ -194,3 +194,14 @@ html[data-price-cur]:not([data-price-cur="AED"]) .pdp-bundle{display:none}
 .sb-q:disabled{opacity:.45;cursor:not-allowed}
 .sb-cap{font-size:11px;color:#9C521B;margin-left:8px;white-space:nowrap}
 .sb-left{display:block;font-size:12px;font-weight:600;color:#7E4114;margin-top:4px}
+/* 15 Oct 2026: Tabby (pay in 4). One quiet line, never louder than the price; UAE market only (Tabby is set up for AED orders). */
+.sb-tabby{font-size:12.5px;line-height:1.45;color:var(--txt-soft,#5A5046);margin:4px 0 0;min-height:18px}
+.sb-tabby b{font-weight:700;color:var(--txt,#33271B)}
+.sb-tabby.is-widget{min-height:0}
+/* Product page: the plain line sits in a box the same size as Tabby's widget card (about 89px), so the
+   swap after page load barely moves the sizes below it. If Tabby's script is blocked, the box stays. */
+.sb-tabby-pdp,.sb-tabby-cart{box-sizing:border-box;min-height:89px;border:1px solid rgba(51,39,27,.18);border-radius:8px;padding:14px 16px;display:flex;align-items:center;background:transparent}
+.sb-tabby-pdp.is-widget,.sb-tabby-cart.is-widget{border:0;padding:0;min-height:0;display:block}
+.sb-tabby-cart{font-size:12px;margin:0 0 8px;text-align:left}
+.sb-tabby-cart b{color:inherit}
+html[data-market="gcc"] .sb-tabby,html[data-market="intl"] .sb-tabby{display:none!important}

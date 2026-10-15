@@ -328,6 +328,7 @@
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
+          '<div class="sb-tabby sb-tabby-cart" id="sbTabbyCart" data-tabby-source="cart" hidden></div>' +
           '<p class="sb-note"><span class="sb-note-d sb-ship-uae"><span data-sb-clock>Free next-day UAE delivery — order by 2 pm</span>, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
           /* 25 Sep 2026 (Faheem, persona review): a gift option. The message travels on the
              Shopify order as its note, with a Gift attribute, so it shows on the order in Admin. */
@@ -506,6 +507,9 @@
 
     document.getElementById('sbSub').textContent =
       money(CART.cost.subtotalAmount.amount, CART.cost.subtotalAmount.currencyCode);
+    /* 15 Oct 2026: Tabby under the subtotal, on the real total after the pair price and any code shown in the bag */
+    (function () { var tb = document.getElementById('sbTabbyCart'); if (!tb || !window.SB_TABBY) return;
+      if (CART.cost.subtotalAmount.currencyCode === 'AED') window.SB_TABBY.set(tb, parseFloat(CART.cost.subtotalAmount.amount) || 0); else tb.hidden = true; })();
     document.getElementById('sbGo').href = CART.checkoutUrl;
     (function () {
       var el = document.getElementById('sbBundle');
@@ -1131,4 +1135,80 @@
   if (mq && mq.addEventListener) mq.addEventListener('change', sync);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
   else build();
+})();
+
+/* ==========================================================================
+   Tabby (15 Oct 2026). Tabby is live at the Shopify checkout. Faheem chose Tabby's
+   official on-site widget (TabbyPromo) after three marketing experts agreed on the
+   placements: one quiet line under the price on product pages, a Tabby chip with the
+   payment chips, a line under the cart subtotal, and an FAQ answer. Nothing in the top
+   bar, on the homepage or on shop cards.
+
+   TABBY_PUBLIC_KEY / TABBY_MERCHANT_CODE: Faheem's PUBLIC key (pk_...) and merchant
+   code from the Tabby merchant dashboard. Never the secret key. While either is empty,
+   every slot keeps the plain line written into the page ("Pay in 4 with Tabby: 4
+   interest-free payments of AED 49.75"), with the same maths the widget uses.
+   Tabby is a UAE (AED) payment method here, so the slots are hidden for visitors on
+   the GCC or international market (sahra-cart.css).
+   ========================================================================== */
+(function () {
+  var TABBY_PUBLIC_KEY = 'pk_01a13f6c-8f17-7de2-8a9c-3a8416dd149a';   /* public key (pk_), safe in page code; never the secret sk_ key */
+  var TABBY_MERCHANT_CODE = 'default';   /* Tabby's own Shopify snippet uses "default" for AED stores; replace it if Tabby issued a store-specific code */
+  var SCRIPT = 'https://checkout.tabby.ai/tabby-promo.js';
+  var ready = null, n = 0;
+
+  function aed(p) { var v = Math.round(p * 100) / 100; return 'AED ' + (v % 1 === 0 ? v.toFixed(0) : v.toFixed(2)); }
+  function staticLine(el, price) {
+    if (!(price > 0)) { el.hidden = true; return; }
+    el.hidden = false;
+    if (el.getAttribute('data-tabby-lang') === 'ar') { el.hidden = true; return; }   /* Arabic copy comes from Tabby's widget only, never our translation */
+    el.innerHTML = '<span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of ' + aed(price / 4) + '</span>';
+  }
+  function load() {
+    if (ready) return ready;
+    ready = new Promise(function (res, rej) {
+      var s = document.createElement('script'); s.src = SCRIPT; s.async = true;
+      s.onload = function () { window.TabbyPromo ? res() : rej(); }; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+    return ready;
+  }
+  function widget(el, price) {
+    if (!TABBY_PUBLIC_KEY || !TABBY_MERCHANT_CODE || !(price > 0)) return;
+    load().then(function () {
+      if (!el.id) el.id = 'sbTabby' + (++n);
+      var box = document.createElement('div'); box.id = el.id + 'w'; box.className = 'sb-tabby-w';
+      el.innerHTML = ''; el.appendChild(box);
+      try {
+        new window.TabbyPromo({ selector: '#' + box.id, currency: 'AED', price: price.toFixed(2),
+          lang: el.getAttribute('data-tabby-lang') === 'ar' ? 'ar' : 'en', source: el.getAttribute('data-tabby-source') || 'product',
+          shouldInheritBg: true, publicKey: TABBY_PUBLIC_KEY, merchantCode: TABBY_MERCHANT_CODE });
+        el.hidden = false; el.classList.add('is-widget');
+      } catch (e) { staticLine(el, price); }
+    }, function () { /* script blocked or offline: the plain line stays */ });
+  }
+  function set(el, price) {
+    if (el.classList.contains('is-widget') && el.getAttribute('data-tabby-price') === String(price)) { el.hidden = false; return; }   /* same total: keep the widget, no flicker */
+    el.classList.remove('is-widget');
+    el.setAttribute('data-tabby-price', String(price));
+    staticLine(el, price);
+    widget(el, price);
+  }
+  window.SB_TABBY = { set: set };
+  function init() {
+    [].forEach.call(document.querySelectorAll('.sb-tabby[data-tabby-price]'), function (el) {
+      var p = parseFloat(el.getAttribute('data-tabby-price'));
+      if (el.getAttribute('data-tabby-lang') === 'ar' && !TABBY_PUBLIC_KEY) { el.hidden = true; return; }
+      /* the widget waits for the page to finish loading, so it never competes with the first photo */
+      if (TABBY_PUBLIC_KEY && TABBY_MERCHANT_CODE) {
+        var go = function () { setTimeout(function () { widget(el, p); }, 300); };
+        if (document.readyState === 'complete') go(); else addEventListener('load', go);
+      }
+    });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('.sb-tabby');
+      if (t && window.track) track('tabby_click', { source: t.getAttribute('data-tabby-source') || '', price: t.getAttribute('data-tabby-price') || '' });
+    }, true);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

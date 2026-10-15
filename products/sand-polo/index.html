@@ -900,6 +900,7 @@ h1 .nw{white-space:nowrap}
   .buy-head{order:2;display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:10px 14px!important}
   .buy-head h1{flex:1 0 100%;font-size:23px!important;line-height:1.15!important;margin:0!important}
   .buy-head .price-row{order:2;margin:0!important}
+  .buy-head .sb-tabby{order:4;flex:1 0 100%;margin:1px 0 0;font-size:12px}
   .buy-head .pdp-rating{display:flex!important;order:3;flex:1 1 0;min-width:0;margin:0!important;font-size:12px}
   .buy-head .pdp-rating .rv-stars{font-size:12px}
   .buy-head .pdp-rating-n{font-size:12px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -936,7 +937,7 @@ h1 .nw{white-space:nowrap}
 }
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=ba70b3d1">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=55a1bcc5">
 <link rel="preload" as="image" href="/shirts/polo-dune-front.webp" imagesrcset="/shirts/card/polo-dune-front.webp 800w, /shirts/polo-dune-front.webp 1080w" imagesizes="(max-width:700px) 100vw, 640px" fetchpriority="high">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=ffda6b40">
@@ -1552,6 +1553,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       <a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n"><span class="rl-f">5.0 &middot; 2 reviews of this design &rarr;</span><span class="rl-s" aria-label="5.0 out of 5, 2 reviews">5.0 (2)</span></span></a>
       
       <div class="price-row"><div class="price"><span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></div><span data-sb-curslot></span></div>
+      <div class="sb-tabby sb-tabby-pdp" data-tabby-price="229" data-tabby-source="product"><span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of AED 57.25</span></div>
       </div>
       <div class="buy-body">
       
@@ -1582,7 +1584,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <button class="btn pdp-add" id="pdpAdd" type="button" aria-disabled="true"><span class="pdp-add-l">Choose your size</span><span class="pdp-add-p"> &middot; <span class="sb-price" data-handle="sand-polo" data-aed="229">AED 229</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
-        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
+        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw sb-ship-uae">Tabby</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         
         <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
@@ -1756,6 +1758,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       <details><summary>What size should I order?</summary><p>The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL — so it takes the same letter as your Regular tee. Check the size chart on this page before you order: measure a shirt you like flat, pit to pit, and match the number.</p></details>
       <details><summary>Why such a small run?</summary><p>It is the first polo we have made and we would rather make a small number properly than guess at demand. There is no plan to restock this run.</p></details>
       <details><summary>Will it be restocked?</summary><p>This is a limited first run. We may make polos again, but not this one, and we will not promise otherwise.</p></details>
+      <details class="sb-ship-uae"><summary>Can I pay with Tabby?</summary><p>Yes. Choose Tabby at checkout to split your purchase into 4 interest-free payments, with no fees when you pay on time. The first payment is taken when you order and the rest every two weeks. If you return something, we refund it through Tabby and your payment plan is updated.</p></details>
     </div>
   </section>
 
@@ -1948,7 +1951,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
   <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 12 Oct</span> · <a href="/feed/">all posts</a></p>
 </div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
-  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay</div>
+  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
 
@@ -2700,7 +2703,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=c4d6c7c1" defer></script>
+<script src="/assets/sahra-cart.js?v=61dd4f71" defer></script>
 <script src="/assets/sahra-sizefinder.js?v=170093b1" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){

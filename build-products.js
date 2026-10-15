@@ -115,6 +115,10 @@ function cards(list){
 function careList(list){
   return (list||[]).map(function(c){return '      <li>'+c+'</li>';}).join('\n');
 }
+/* 15 Oct 2026: Tabby (pay in 4) is live at checkout for UAE orders. Shared answer on every product page; hidden for GCC and international visitors.
+   Copy follows Tabby's guidelines: "payments", never "instalments"; no credit or loan language; interest named only to say there is none. */
+const TABBY_FAQ = '      <details class="sb-ship-uae"><summary>Can I pay with Tabby?</summary><p>Yes. Choose Tabby at checkout to split your purchase into 4 interest-free payments, with no fees when you pay on time. The first payment is taken when you order and the rest every two weeks. If you return something, we refund it through Tabby and your payment plan is updated.</p></details>';
+function tabbyQ(price){ var v = Math.round(Number(price) * 25) / 100; return v % 1 === 0 ? v.toFixed(0) : v.toFixed(2); }
 function faqList(list){
   return (list||[]).map(function(f){
     return '      <details><summary>'+esc(f.q)+'</summary><p>'+esc(f.a)+'</p></details>';
@@ -1033,6 +1037,7 @@ h1 .nw{white-space:nowrap}
   .buy-head{order:2;display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:10px 14px!important}
   .buy-head h1{flex:1 0 100%;font-size:23px!important;line-height:1.15!important;margin:0!important}
   .buy-head .price-row{order:2;margin:0!important}
+  .buy-head .sb-tabby{order:4;flex:1 0 100%;margin:1px 0 0;font-size:12px}
   .buy-head .pdp-rating{display:flex!important;order:3;flex:1 1 0;min-width:0;margin:0!important;font-size:12px}
   .buy-head .pdp-rating .rv-stars{font-size:12px}
   .buy-head .pdp-rating-n{font-size:12px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1129,6 +1134,7 @@ ${galShots(p).map((s,i)=>`
       ${RV.ratingLine(designHandles(p))}
       ${RV.fitVerdict(designHandles(p))}
       <div class="price-row"><div class="price"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div><span data-sb-curslot></span></div>
+      ${/* 15 Oct 2026: Tabby is live at checkout. One quiet line under the price (marketing panel); sahra-cart.js swaps in Tabby's own widget once the public key is set. UAE market only. */''}<div class="sb-tabby sb-tabby-pdp" data-tabby-price="${esc(String(p.price))}" data-tabby-source="product"><span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of AED ${esc(tabbyQ(p.price))}</span></div>
       </div>
       <div class="buy-body">
       ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-d"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits &mdash; applied automatically in your bag</p>` : ''}
@@ -1170,7 +1176,7 @@ ${galShots(p).map((s,i)=>`
         <button class="btn pdp-add" id="pdpAdd" type="button" aria-disabled="true"><span class="pdp-add-l">Choose your size</span><span class="pdp-add-p"> &middot; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
-        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
+        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw sb-ship-uae">Tabby</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         ${/* 4 Oct 2026 (CRO panel, ideas 5 and 6): the gift and the two objections, answered where the thumb is */''}
         <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
@@ -1384,6 +1390,7 @@ ${careList(p.care)}
     <h2>Before you <em>order</em></h2>
     <div class="faq">
 ${faqList(p.faq)}
+${TABBY_FAQ}
     </div>
   </section>
 
@@ -1420,7 +1427,7 @@ ${related(p, all)}
   ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}${IG.CSS}.foot-pay{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:6px 0 10px}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}body.dark-bg .ig-prod .ig-rail-sec{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}</style>
   ${IG.footerRowHtml()}
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
-  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay</div>
+  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
 

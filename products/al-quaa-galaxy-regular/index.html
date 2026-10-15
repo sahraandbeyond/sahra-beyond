@@ -901,6 +901,7 @@ h1 .nw{white-space:nowrap}
   .buy-head{order:2;display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:10px 14px!important}
   .buy-head h1{flex:1 0 100%;font-size:23px!important;line-height:1.15!important;margin:0!important}
   .buy-head .price-row{order:2;margin:0!important}
+  .buy-head .sb-tabby{order:4;flex:1 0 100%;margin:1px 0 0;font-size:12px}
   .buy-head .pdp-rating{display:flex!important;order:3;flex:1 1 0;min-width:0;margin:0!important;font-size:12px}
   .buy-head .pdp-rating .rv-stars{font-size:12px}
   .buy-head .pdp-rating-n{font-size:12px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -937,7 +938,7 @@ h1 .nw{white-space:nowrap}
 }
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=ba70b3d1">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=55a1bcc5">
 <link rel="preload" as="image" href="/shirts/alquaa-dune-back.webp" imagesrcset="/shirts/card/alquaa-dune-back.webp 800w, /shirts/alquaa-dune-back.webp 1080w" imagesizes="(max-width:700px) 100vw, 640px" fetchpriority="high">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=ffda6b40">
@@ -1549,6 +1550,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       <a class="pdp-rating" href="#reviews"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pdp-rating-n"><span class="rl-f">5.0 &middot; 7 reviews of this design &rarr;</span><span class="rl-s" aria-label="5.0 out of 5, 7 reviews">5.0 (7)</span></span></a>
       
       <div class="price-row"><div class="price"><span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></div><span data-sb-curslot></span></div>
+      <div class="sb-tabby sb-tabby-pdp" data-tabby-price="199" data-tabby-source="product"><span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of AED 49.75</span></div>
       </div>
       <div class="buy-body">
       <p class="pdp-bundle pdp-bundle-d"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits &mdash; applied automatically in your bag</p>
@@ -1579,7 +1581,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <button class="btn pdp-add" id="pdpAdd" type="button" aria-disabled="true"><span class="pdp-add-l">Choose your size</span><span class="pdp-add-p"> &middot; <span class="sb-price" data-handle="al-quaa-galaxy-regular" data-aed="199">AED 199</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
-        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
+        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw sb-ship-uae">Tabby</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         
         <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
@@ -1772,6 +1774,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       <details><summary>Is 230gsm heavy for UAE weather?</summary><p>It's a heavyweight tee, so it's more substantial than a thin fast-fashion shirt — that's what gives it structure and longevity. It's 100% cotton and the DTG print keeps the fabric breathable rather than sealing it, so it stays wearable. What governs how a cotton shirt wears in the heat is airflow rather than weight: cloth held slightly off the skin lets air move underneath it, cloth pulled taut against the skin does not. So for peak summer the looser cut helps more than a lighter cloth would — the Oversized fit sits further off the body than the Regular.</p></details>
       <details><summary>What if I order the wrong size?</summary><p>Exchanges within the UAE are free, subject to stock, within 14 days of delivery — as long as it's unworn, unwashed and still has tags. Email hello@sahraandbeyond.ae with your order number and we'll arrange it.</p></details>
       <details><summary>Will this design be restocked?</summary><p>This is a limited first run. We may make more of a design later, but we don't promise it — when a size sells out in this run, treat it as gone.</p></details>
+      <details class="sb-ship-uae"><summary>Can I pay with Tabby?</summary><p>Yes. Choose Tabby at checkout to split your purchase into 4 interest-free payments, with no fees when you pay on time. The first payment is taken when you order and the rest every two weeks. If you return something, we refund it through Tabby and your payment plan is updated.</p></details>
     </div>
   </section>
 
@@ -1786,7 +1789,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 7 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-10T08:07:48.195Z">Posted 4 days ago</span>
+    <span class="ig-ago" data-date="2026-10-10T08:07:48.195Z">Posted 5 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DeTnkCFCGE9/" target="_blank" rel="noopener" aria-label="Any two tees, AED 359: mix designs and fits on @sahraandbeyond.ae, opens on Instagram">Any two tees, AED 359: mix designs and fits</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -2023,7 +2026,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
   <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 12 Oct</span> · <a href="/feed/">all posts</a></p>
 </div>
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
-  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay</div>
+  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
 
@@ -2775,7 +2778,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=c4d6c7c1" defer></script>
+<script src="/assets/sahra-cart.js?v=61dd4f71" defer></script>
 <script src="/assets/sahra-sizefinder.js?v=170093b1" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){

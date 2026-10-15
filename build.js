@@ -1015,7 +1015,7 @@ function footerHtml() {
   ${FG.guidesHtml(null, AR_CORE_PUBLIC)}
   ${IG.footerRowHtml()}
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
-  <div class="links" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.75">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay</div>
+  <div class="links" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.75">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
 }
