@@ -44,7 +44,8 @@ const NOTICE = {
   'hidden-oasis': 'Open status not confirmed, and trail works are reported at the oasis itself. On 8 October 2026 the operator said the trails were open while another source said they were closed. Confirm with Visit Jebel Jais before you go.'
 };
 
-module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
+module.exports = function buildTrailHikes({ shell, write, SITE, esc, root, notOperator }) {
+  const NOTOP = notOperator ? notOperator('hike') : '';
   const dir = path.join(root, 'content', 'hikes');
   const H = ORDER.map((slug, i) => {
     const d = JSON.parse(fs.readFileSync(path.join(dir, slug + '.json'), 'utf8'));
@@ -171,6 +172,7 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
     <div class="hk-stat"><small>Typical time</small><b>${esc(d.facts.time)}</b></div>
     <div class="hk-stat"><small>Shape</small><b>${esc(d.facts.shape)}</b></div>
   </div>
+  ${NOTOP}
   ${!d.n && d.page.status ? `<div class="hk-notice" role="note"><b>${d.official ? 'Route status' : 'Unmarked route'}</b>${esc(d.page.status)}</div>` : ''}
   ${NOTICE[d.slug] ? `<div class="hk-notice" role="note"><b>Check before you go</b>${esc(NOTICE[d.slug])}</div>` : ''}
   <p class="hk-intro">${esc(d.intro)}</p>
@@ -270,6 +272,7 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root }) {
   <p class="hk-where">Two easy, two moderate and two difficult routes in Sharjah, Fujairah and Ras Al Khaimah. Each page gives the distance, the climb, the time, the trailhead and the sources behind every figure.</p>
 </div></section>
 <main class="hk-main">
+  ${NOTOP}
   <section class="hk-sec" style="margin-top:26px"><p class="hk-intro">These are the routes on the cards that come with Sahra Trail orders. Each one is a specific walk from a named start, not a general area. Where no source gives a figure, the page says so.</p></section>
   ${['Easy', 'Moderate', 'Difficult'].map(g => `<section class="hk-sec"><h2>${g}</h2><div class="hk-list">${H.filter(d => d.grade === g).map(card).join('')}</div></section>`).join('')}
   <section class="hk-sec" id="more-rak"><h2>More hikes in Ras Al Khaimah</h2>

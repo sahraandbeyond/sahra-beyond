@@ -1428,6 +1428,7 @@ ${related(p, all)}
   ${IG.footerRowHtml()}
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
+  <div class="foot-notop" style="font-size:12px;line-height:1.5;max-width:520px;margin:4px auto 10px;opacity:.8">Sahra &amp; Beyond is a UAE clothing brand. Our place guides are free and independent: we don&rsquo;t run, sell or book tours, trips or transport.</div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
 </footer>
 

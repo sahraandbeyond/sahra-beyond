@@ -999,6 +999,10 @@
 (function () {
   var NUM = '971585449946';
   if (document.getElementById('sbWa')) return;
+  /* 16 Oct 2026 (Faheem): no WhatsApp button on guide pages (places, topic guides, hikes). Visitors read it
+     as a tour desk and wrote in to book trips; the guides now say we are a clothing brand instead. */
+  var de = document.documentElement;
+  if (de && de.hasAttribute && de.hasAttribute('data-guide')) return;
 
   function build() {
     if (document.getElementById('sbWa')) return;

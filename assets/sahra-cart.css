@@ -205,3 +205,5 @@ html[data-price-cur]:not([data-price-cur="AED"]) .pdp-bundle{display:none}
 .sb-tabby-cart{font-size:12px;margin:0 0 8px;text-align:left}
 .sb-tabby-cart b{color:inherit}
 html[data-market="gcc"] .sb-tabby,html[data-market="intl"] .sb-tabby{display:none!important}
+/* 16 Oct 2026: no WhatsApp link on guide pages (they read as a tour desk) */
+html[data-guide] .ft-wa{display:none}

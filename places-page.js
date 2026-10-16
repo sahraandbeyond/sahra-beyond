@@ -322,7 +322,7 @@ function renderPlace(l, ctx) {
     ${Array.isArray(l.quick) && l.quick.length ? `<section class="lg-quick" aria-labelledby="lg-quick-h"><h2 id="lg-quick-h">Quick answers</h2><dl>${l.quick.map(q => `<div><dt>${esc(q[0])}</dt><dd>${esc(q[1])}</dd></div>`).join('')}</dl></section>` : ''}
     <section id="overview" class="lg-over lg-rise">
       <div class="content">${ctx.withProductLink(paras(l.body || l.desc), exact ? l.productLink : null)}</div>
-      <p class="lg-checked">${icon('eye')} Last checked ${fmtDate(l.lastChecked || '2026-09-27')}. Facts on this page come from the sources listed at the bottom. <a href="https://wa.me/971585449946?text=${encodeURIComponent('Something on the ' + l.name + ' page looks out of date: ')}" target="_blank" rel="noopener">Spotted something out of date?</a></p>
+      <p class="lg-checked">${icon('eye')} Last checked ${fmtDate(l.lastChecked || '2026-09-27')}. Facts on this page come from the sources listed at the bottom. <a href="mailto:hello@sahraandbeyond.ae?subject=${encodeURIComponent(l.name + ' guide: something out of date')}">Spotted something out of date?</a></p>
     </section>
     ${Array.isArray(l.sections) ? l.sections.map((x, i) => fold(x.id || ('guide-' + (i + 1)), 'scroll', esc(x.h2), teaserOf(x.body, 90), `<div class="content">${paras(x.body)}</div>${tableHtml(x.table)}`, !!x.open)).join('') : ''}
     ${fold('getting-there', 'route', 'Getting there', teaserOf(g.gettingThere, 90),

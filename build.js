@@ -388,6 +388,26 @@ function teeFor(placeSlug, ctxName, lead) {
 }
 /* 4 Oct 2026 (CRO panel, idea 3): where no tee is honest (the coast), ask which place
    should be drawn next instead of forcing a match. One tap to WhatsApp, nothing to fill in. */
+/* 16 Oct 2026 (Faheem: someone WhatsApped asking to book a tour; "We need to make this very
+   clear" that we are a clothing company and the places are inspiration). One band at the top of
+   every place guide, topic guide and hike page. Faheem chose: a clear band at the top, the green
+   WhatsApp button hidden on guide pages (html[data-guide], see shell + sahra-cart.js), and tour
+   wording out of page titles and snippets. */
+const NOTOP_CSS = `<style id="sb-notop-css">.sb-notop{box-sizing:border-box;max-width:1180px;margin:18px auto 4px;display:flex;gap:12px;align-items:flex-start;padding:13px 16px;border:1px solid rgba(156,82,27,.28);border-radius:12px;background:#F6EBDD;color:#3A2E22;font-size:14.5px;line-height:1.5;text-align:left}
+.sb-notop svg{flex:0 0 22px;width:22px;height:22px;margin-top:1px;color:#9C521B}
+.sb-notop p{margin:0!important;max-width:none!important;font-size:inherit!important;line-height:inherit!important;color:inherit!important}
+.sb-notop b{font-weight:700;color:#2B2520}
+.sb-notop a{color:#9C521B;font-weight:600;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+.sb-notop-w{position:relative;z-index:3;background:#FAF6EF;padding:16px 16px 6px}.sb-notop-w .sb-notop{margin:0 auto}
+@media(max-width:700px){.sb-notop{font-size:13.5px;padding:12px 14px;margin-top:14px}.sb-notop-w{padding:14px 14px 4px}}</style>`;
+const NOTOP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 3.5 4 5.8 2.5 10l3.3 1.4V20.5h12.4V11.4l3.3-1.4L20 5.8l-4.5-2.3c-.6 1.5-1.9 2.4-3.5 2.4s-2.9-.9-3.5-2.4Z"/></svg>';
+function notOperator(kind, wrap) {
+  const text = kind === 'hike'
+    ? '<b>We make clothes, not trips.</b> Sahra Trail is the activewear line of Sahra &amp; Beyond, a UAE clothing brand. These route notes are free. We don&rsquo;t organise, guide or book hikes, tours or transport.'
+    : '<b>We make clothes, not trips.</b> Sahra &amp; Beyond is a UAE clothing brand, and this is a free guide to places that inspire our designs. We don&rsquo;t run, sell or book tours, trips or transport; any prices here are charged by the sites and operators named.';
+  const band = `${NOTOP_CSS}<aside class="sb-notop" role="note" aria-label="About Sahra &amp; Beyond">${NOTOP_ICON}<p>${text} <a href="/shop/" data-track="notop_shop">See the clothes &rarr;</a></p></aside>`;
+  return wrap ? `<div class="sb-notop-w">${band}</div>` : band;
+}
 function askBlock(name, category) {
   /* 6 Oct 2026: the coast IS being drawn (Sahel, the Coast Edition), so coast pages no longer ask
      'which place next' or offer 'a Snoopy Island tee' ('Snoopy' may not name a garment: Peanuts
@@ -395,8 +415,9 @@ function askBlock(name, category) {
      before the reveal. */
   if (category === 'Coast') return `<section class="askcta askcta-sahel"><span class="teecta-eyebrow">The coast is next</span><h2>Sahel, the Coast Edition</h2><p>Our next edition is drawn from the coast of the UAE. It is launching soon.</p><p class="askcta-row"><a class="btn" href="/sahel/#first-to-know" data-track="place_sahel">Be first to know &rarr;</a><a class="btn ghost" href="/sahel/">See the page</a></p></section>`;
   const generic = /^the /.test(name);
-  const msg = encodeURIComponent(generic ? `I'd wear a tee drawn from ${name}` : `I'd wear a ${name} tee`);
-  return `<section class="askcta"><span class="teecta-eyebrow">Not drawn yet</span><h2>Which place should be next?</h2><p>Every Sahra &amp; Beyond tee is drawn from one real place in the Emirates. ${generic ? 'Nothing from ' + esc(name) + ' yet.' : esc(name) + ' is not one of them yet.'} If it should be, say so: one tap, no form.</p><p class="askcta-row"><a class="btn" href="https://wa.me/971585449946?text=${msg}" target="_blank" rel="noopener">${generic ? 'Draw ' + esc(name) + ' next' : `I'd wear a ${esc(name)} tee`}</a><a class="btn ghost" href="/t-shirts/">See the places we have drawn &rarr;</a></p></section>`;
+  const an = /^[aeiou]/i.test(name) ? 'an' : 'a';   /* 16 Oct 2026: "an Al Rams Beach tee", not "a Al" */
+  const msg = encodeURIComponent(generic ? `I'd wear a tee drawn from ${name}` : `I'd wear ${an} ${name} tee`);
+  return `<section class="askcta"><span class="teecta-eyebrow">Not drawn yet</span><h2>Which place should be next?</h2><p>Every Sahra &amp; Beyond tee is drawn from one real place in the Emirates. ${generic ? 'Nothing from ' + esc(name) + ' yet.' : esc(name) + ' is not one of them yet.'} If it should be, say so: one tap, no form.</p><p class="askcta-row"><a class="btn" href="https://wa.me/971585449946?text=${msg}" target="_blank" rel="noopener">${generic ? 'Draw ' + esc(name) + ' next' : `I'd wear ${an} ${esc(name)} tee`}</a><a class="btn ghost" href="/t-shirts/">See the places we have drawn &rarr;</a></p></section>`;
 }
 /* 4 Oct 2026 (CRO panel, idea 2): a slim buy bar for guides and place pages. It appears
    once the top product strip has scrolled away, and a tap opens a size sheet that adds
@@ -1016,7 +1037,8 @@ function footerHtml() {
   ${IG.footerRowHtml()}
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
   <div class="links" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.75">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
-  <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> <span class="ft-wa"> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></span></div>
+  <div class="links ft-notop" style="font-size:12.5px;max-width:520px;margin:8px auto 10px;opacity:.85">Sahra &amp; Beyond is a UAE clothing brand. Our place guides are free and independent: we don&rsquo;t run, sell or book tours, trips or transport.</div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · ${LAUNCHED ? '<a href="/shop/" style="color:#9C521B;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#9C521B;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
 }
 
@@ -1033,7 +1055,10 @@ function navKeyFor(slug) {
   return 'none';   // guides, gifts, fabric, size guide: nothing highlighted
 }
 function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'none', bodyClass = '',
-                 lang = 'en', altHref = null, noindex = false }) {
+                 lang = 'en', altHref = null, noindex = false, guide = false }) {
+  /* 16 Oct 2026: guide pages (places, topic guides, hikes) carry data-guide on <html>: the green WhatsApp
+     button and the footer WhatsApp link are hidden there, because visitors read them as a tour desk. */
+  if (/\/(locations|places|trail\/hikes)\//.test(String(canonical || ''))) guide = true;
   /* Arabic (21 Sep). One shell, two languages - a forked copy would drift within a
      week. `lang` flips the html attributes, the font request, the nav labels and an
      RTL layer; `altHref` is this page's counterpart in the other language and drives
@@ -1059,7 +1084,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
       + nav('/ar/contact/', '\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627', 'contact')
     : nav('/#collection', 'Collection', 'collection') /* the homepage ring (8 Sep) */ + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about') + nav('/contact/', 'Contact', 'contact');
   return `<!doctype html>
-<html lang="${lang}"${AR ? ' dir="rtl"' : ''} data-market="uae">
+<html lang="${lang}"${AR ? ' dir="rtl"' : ''} data-market="uae"${guide ? ' data-guide' : ''}>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1460,7 +1485,7 @@ const renderLocationPage = l => {
   ];
   const packItems = PLACES.packFor(l, PACKING);
   const r = PLACES.renderPlace(l, PLACE_CTX);
-  const body = r.hero + r.main + PLACES.clientScript(l, PLACE_CTX, packItems);
+  const body = r.hero + notOperator('guide', true) + r.main + PLACES.clientScript(l, PLACE_CTX, packItems);
   const draft = !!l.draft;
   write(`${draft ? '_drafts/' : ''}locations/${l.id}/index.html`, shell({ activeNav: 'places', title, desc, canonical, jsonld, bodyHtml: body, image: ogImage, bodyClass: 'lg-page', noindex: draft }));
 };
@@ -1626,7 +1651,7 @@ const LANDINGS = [
     productLink: { slug: 'al-quaa-galaxy-regular', anchor: 'the Al Quaa Galaxy tee',
       sentence: 'That view is the one printed on {{link}} — the core as it rises over Al Quaa, mapped rather than illustrated.' },
     title: 'Milky Way in the UAE: 8 Spots & 2026–27 Dates | Sahra & Beyond',
-    desc: 'Where and when to see the Milky Way in the UAE: 8 dark spots near the cities, new-moon dates to Sep 2027, the Geminids, and tours versus going alone.',
+    desc: 'Where and when to see the Milky Way in the UAE: 8 dark spots near the cities, new-moon dates to Sep 2027, the Geminids, and how to plan a night out on your own.',
     pick: ['al-quaa-desert', 'mleiha-desert', 'desert-camping-lake-view', 'crescent-moon-lake', 'wadi-showka', 'liwa'].map(id => locations.find(l => l.id === id)).filter(Boolean),
     intro: "The Milky Way is overhead every night of the year in the UAE; what changes is whether its bright core is above the horizon after dark. That is only roughly May to October, and only on nights when the moon is out of the way. Everything else, from the spot you choose to the date you go, follows from those two facts.\n\nThis guide lists eight dark places within reach of the cities, a moon calendar to September 2027, the next meteor showers, and what a tour costs against going on your own. Go on a moonless night, bring a red-light torch, and give your eyes twenty minutes to adjust before judging the sky.",
     sections: [
@@ -1999,8 +2024,8 @@ const LANDINGS = [
   },
   {
     slug: 'desert-safari', h1: 'Desert Safari & Best Dune Spots in the UAE',
-    title: 'Desert Safari in the UAE: Best Dune Spots, DIY or Tour',
-    desc: 'Where the best dunes are for a UAE desert safari, from Liwa to Big Red, plus self-drive safety, the season and when a guided tour makes more sense.',
+    title: 'Desert Safari in the UAE: Best Dune Spots and Self-Drive Safety',
+    desc: 'The best dune spots in the UAE, from Liwa to Big Red, with self-drive safety and the best season for the sand.',
     pick: locations.filter(l => l.category === 'Dunes'),
     intro: "Rolling golden dunes are the classic image of the UAE, and there is no better way to experience them than out in the desert itself — whether on a guided safari or a self-drive adventure. From the towering dunes of Liwa to the accessible sands closer to the cities, the spots below are where the desert is at its most spectacular.\n\nThis guide covers what to expect, whether to self-drive or book a tour, dune-driving safety and the best season to go.",
     sections: [
@@ -2203,6 +2228,7 @@ LANDINGS.forEach(L => {
     </div>
   </section>
   <main>
+    ${notOperator('guide')}
     ${miniTee(GUIDE_TEE[L.slug])}
     <div class="content">${withProductLink(paras(L.intro), L.productLink)}</div>
     ${L.pick.length ? `<h2>Our top picks</h2><div class="cards">${L.pick.map(locCard).join('')}</div>` : ''}
@@ -2217,14 +2243,15 @@ LANDINGS.forEach(L => {
     ${newsletterBlock()}
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
   </main>`;
-  write(`${L.slug}/index.html`, shell({ title: L.title, desc: L.desc, canonical, jsonld, bodyHtml: body }));
+  write(`${L.slug}/index.html`, shell({ title: L.title, desc: L.desc, canonical, jsonld, bodyHtml: body, guide: true }));
 });
 
 // The three ways to reach us, shared by /contact/ and the foot of /about/ so the
 // two can never disagree (Faheem, 14 Sep: contact info at the bottom of About too).
 const WA_URL = 'https://wa.me/971585449946';
 function contactWays() {
-  return `<div class="ct-ways">
+  return `<p class="ct-notop" style="font-size:14.5px;line-height:1.55;margin:18px 0 0;padding:12px 16px;background:#F6EBDD;border:1px solid rgba(156,82,27,.28);border-radius:12px"><b>We&rsquo;re a clothing brand.</b> We can help with orders, sizes, delivery, returns and our designs. We don&rsquo;t run, sell or book tours, trips or transport to the places in our guides.</p>
+    <div class="ct-ways">
       <a class="ct-way" href="${WA_URL}" target="_blank" rel="noopener">
         <span class="ct-lab">WhatsApp &middot; fastest</span>
         <span class="ct-val">+971 58 544 9946</span>
@@ -2833,6 +2860,7 @@ body.tote-page main{max-width:1180px}
     </div>
   </section>
   <main>
+    ${notOperator('guide')}
     <div class="content"><p>This is the map behind the brand: every desert, dune field, wadi, mountain trail and beach we have explored across the UAE. Each place has its own guide: how to get there, when to go, what it costs, the real risks, and a packing list matched to the trip, with the sources for every fact.</p></div>
     ${PLACES.hubExplorer(locations, { tees: Object.fromEntries(Object.entries(PRODUCT_BY_PLACE).filter(([, p]) => p.fit === 'regular').map(([k, p]) => [k, { name: String(p.name || '').replace(/\s+[—-]\s+Regular$/, ''), url: '/products/' + p.id + '/' }])), hikes: fs.readdirSync(path.join(ROOT, 'content/hikes')).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ROOT, 'content/hikes', f), 'utf8'))).map(h => ({ slug: h.slug, name: h.name, grade: h.grade, lat: h.trailhead.lat, lng: h.trailhead.lng })) })}
     ${secs}
@@ -4467,7 +4495,7 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
 require('./sahel-page.js')({ shell, write, SITE });
 
 /* Sahra Trail hikes for the QR cards (6 Oct 2026): six routes, an index and the /h/<n>/ short addresses. PERMANENT URLS. */
-require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname });
+require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOperator });
 
 /* hreflang from the ENGLISH side. Google needs the pairing declared BOTH ways or
    it ignores it, and the Arabic pages cannot declare it alone. Injected rather
