@@ -46,7 +46,7 @@ function all() {
 }
 function byId(id) { const p = DATA.posts.find(x => x.id === id); if (!p) return null; return { ...p, date: p.site ? null : dateOf(p.id), slides: slidesOf(p), account: p.account === 'trail' ? DATA.accounts.trail : DATA.accounts.house }; }
 function newest(n, skip = []) { return all().filter(p => !p.pin && !skip.includes(p.id)).slice(0, n); }
-/* the home strip: the pinned buying-question post(s) first, then the newest */
+/* the home strip: any pinned post (pin: 1) first, then the newest. Nothing is pinned since 17 Oct 2026 (Faheem). */
 function strip(n = 6) { const pins = all().filter(p => p.pin === 1); return pins.concat(newest(n - pins.length, pins.map(p => p.id))); }
 function footerRow(n = 4) { const s = strip().map(p => p.id); return newest(n, s); }
 function forProduct(handle, n = 2) { return all().filter(p => (p.products || []).includes(handle)).slice(0, n); }
