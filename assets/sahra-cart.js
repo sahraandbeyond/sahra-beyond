@@ -313,7 +313,7 @@
         var b = document.createElement('button');
         b.id = 'sbCartBtn'; b.className = 'sb-cart-btn'; b.type = 'button';
         b.setAttribute('aria-label', 'Open cart');
-        b.innerHTML = '<span aria-hidden="true">&#128722;</span>' +
+        b.innerHTML = '<svg class="sb-cart-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.5-1.2L20.5 8H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>' +
           '<span class="sb-cart-count" id="sbCartCount" aria-live="polite" style="display:none">0</span>';
         hdr.appendChild(b);
         b.addEventListener('click', open);
@@ -323,7 +323,7 @@
     var wrap = document.createElement('div');
     wrap.innerHTML =
       '<div class="sb-ov" id="sbOv"></div>' +
-      '<aside class="sb-drawer" id="sbDrawer" role="dialog" aria-modal="true" aria-label="Cart" aria-hidden="true">' +
+      '<aside class="sb-drawer" id="sbDrawer" role="dialog" aria-modal="true" aria-label="Cart" aria-hidden="true" inert>' +
         '<div class="sb-dh"><h3>Your cart</h3><button class="sb-x" id="sbX" aria-label="Close cart">&#10005;</button></div>' +
         '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
@@ -388,6 +388,7 @@
     document.getElementById('sbDrawer').classList.add('on');
     document.getElementById('sbOv').classList.add('on');
     document.getElementById('sbDrawer').setAttribute('aria-hidden', 'false');
+    try { document.getElementById('sbDrawer').inert = false; } catch (e) {}
     document.body.style.overflow = 'hidden';
     var mainEl = document.querySelector('main'); if (mainEl) mainEl.setAttribute('aria-hidden','true');
     /* Bug 1: the drawer must be painted from current state every time it is
@@ -400,6 +401,7 @@
     if (!d) return;
     d.classList.remove('on');
     d.setAttribute('aria-hidden', 'true');
+    try { d.inert = true; } catch (e) {}   /* 18 Oct 2026: the closed drawer was still reachable by keyboard off-screen */
     document.getElementById('sbOv').classList.remove('on');
     document.body.style.overflow = '';
     var mEl = document.querySelector('main'); if (mEl) mEl.removeAttribute('aria-hidden');

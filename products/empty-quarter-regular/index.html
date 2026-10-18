@@ -853,18 +853,21 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 .pdp-fit:not(.on):hover{background:rgba(43,37,32,.05)}
 body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg .pdp-fit.on b{color:#2B2620}
 .pdp-model{color:var(--txt-soft,#5A5046)}
+.pdp-exch{font-size:12.5px;line-height:1.4;color:var(--txt-soft,#5A5046);margin:6px 0 0}
 .pdp-wallets{font-size:12px;color:var(--txt-soft,#5A5046);text-align:center;margin:8px 0 0;letter-spacing:.2px}
 .pdp-wallets{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 6px;max-width:215px;margin-left:auto;margin-right:auto}
 .pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#5A5046)}
 .pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(51,39,27,.22);border-radius:5px;background:#fff;color:#33271B;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
 .pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
-.pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:var(--txt-soft,#5A5046);margin:0 0 8px}.pdp-pair-h b{color:var(--txt,#2B2620);font-weight:600}
+.pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:#5A5046;margin:0 0 8px}.pdp-pair-h b{color:#2B2620;font-weight:600}
+/* 18 Oct 2026 (conversion panel): the strip sits on the light buy card, so its colours never follow body.dark-bg */
+body.dark-bg .pdp-pair-h{color:#5A5046}body.dark-bg .pdp-pair-h b,body.dark-bg .pdp-pair-c{color:#2B2620}body.dark-bg .pdp-pair-c small{color:#5A5046}body.dark-bg .pdp-pair-c{border-color:rgba(43,38,32,.16)}
 .pdp-pair-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pdp-pair-c{display:flex;gap:9px;align-items:center;padding:6px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--txt,#2B2620);min-width:0}
+.pdp-pair-c{display:flex;gap:9px;align-items:center;padding:6px;border:1px solid rgba(43,38,32,.16);border-radius:12px;text-decoration:none;color:#2B2620;min-width:0}
 .pdp-pair-c img{width:44px;height:55px;border-radius:7px;object-fit:cover;flex:none}
-.pdp-pair-c span{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.25}.pdp-pair-c small{font-size:11.5px;color:var(--txt-soft,#5A5046)}
+.pdp-pair-c span{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.25}.pdp-pair-c small{font-size:11.5px;color:#5A5046}
 .pdp-pair-c:hover{border-color:var(--accent)}
-body.dark-bg .pdp-pair-h b,body.dark-bg .pdp-pair-c{color:#F4EFE6}body.dark-bg .pdp-pair-h,body.dark-bg .pdp-pair-c small{color:rgba(244,239,230,.72)}
+/* 18 Oct 2026: the old dark-bg cream rule for the pair strip is gone; the strip sits on the pale buy card, which never darkens */
 .pdp-tote img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none}.pdp-tote b{color:var(--txt,#2B2620);font-weight:600}.pdp-tote a{color:var(--clay-deep,#9C521B)}
 .pdp-why{margin:12px 0 0;display:grid;gap:8px}.pdp-why div{display:grid;gap:2px}.pdp-why dt{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-soft,#5A5046)}.pdp-why dd{margin:0;font-size:13.5px;line-height:1.45;color:var(--txt,#2B2620)}.pdp-why a{color:var(--clay-deep,#9C521B)}
 .pdp-add.pulse .pdp-add-l{animation:none}.pdp-sizes.pulse .pdp-size{animation:pdpPulse .5s ease 2}@keyframes pdpPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06);border-color:var(--clay-deep,#9C521B)}}
@@ -938,11 +941,11 @@ h1 .nw{white-space:nowrap}
 }
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=fec91420">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=39dbeecb">
 <link rel="preload" as="image" href="/shirts/emptyquarter-dune-front.webp" imagesrcset="/shirts/card/emptyquarter-dune-front.webp 800w, /shirts/emptyquarter-dune-front.webp 1080w" imagesizes="(max-width:700px) 100vw, 640px" fetchpriority="high">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=ffda6b40">
-<script src="/assets/sahra-welcome.js?v=44d9e685" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=e04acaf8" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=c83cd3f7">
 <script src="/assets/sahra-nav.js?v=7dd0b525" data-sbn defer></script>
 <style data-legib>
@@ -1573,6 +1576,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         
         
         
+        <p class="pdp-exch sb-ship-uae">Free 14-day exchange. If your size has gone, a full refund.</p>
         <p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;</a><span class="pdp-model">Model wears XL</span></p>
         <p class="pdp-stock" id="pdpStock" hidden></p>
         <p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix and match</p>
@@ -1582,7 +1586,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw sb-ship-uae">Tabby</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         
-        <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
+        <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every Founding Edition order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
         <div class="pdp-pair"><p class="pdp-pair-h"><b>Pair it with another place</b> &middot; any 2 tees AED 359, so the second is AED 160</p><div class="pdp-pair-row"><a class="pdp-pair-c" href="/products/al-quaa-galaxy-regular/"><img src="/shirts/card/alquaa-dune-back.webp" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>Al Quaa Galaxy</b><small>Al Quaa</small></span></a><a class="pdp-pair-c" href="/products/hajar-mountains-regular/"><img src="/shirts/card/hajar-dune-back.webp" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>Hajar Mountains</b><small>Wadi Naqab</small></span></a></div></div>
         <dl class="pdp-why">
           <div><dt>Why <span class="sb-price" data-handle="empty-quarter-regular" data-aed="199">AED 199</span></dt><dd>230 GSM combed cotton, pre-washed, embroidered rather than printed, in a small first run. Designed in the UAE.</dd></div>
@@ -1680,7 +1684,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
       <p>Home to some of the largest sand dunes on earth — an otherworldly landscape of mega-dunes and silence. At sunset the ridges turn gold and the whole horizon goes quiet.</p>
       <div class="pmeta">
         <a href="https://www.google.com/maps/search/?api=1&amp;query=23.1339,53.7785" target="_blank" rel="noopener">📍 23.1339, 53.7785</a>
-        <span>✦ dark-sky · deep-desert dark sky</span>
+        <span>✦ Deep-desert dark sky</span>
       </div>
       <a class="btn" href="/locations/liwa/">Read the place story</a>
       <p class="pguide" style="margin-top:12px;font-size:14.5px">Planning a trip? <a href="/desert-safari/">The best dunes in the UAE</a> &rarr;</p>
@@ -1788,7 +1792,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 6 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-17T06:43:38.633Z">Posted today</span>
+    <span class="ig-ago" data-date="2026-10-17T06:43:38.633Z">Posted yesterday</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DelffwYCH42/" target="_blank" rel="noopener" aria-label="Pay in 4 with Tabby, now at checkout on @sahraandbeyond.ae, opens on Instagram">Pay in 4 with Tabby, now at checkout</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1801,7 +1805,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 5 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-15T10:15:15.077Z">Posted 2 days ago</span>
+    <span class="ig-ago" data-date="2026-10-15T10:15:15.077Z">Posted 3 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DeguH3WCIOa/" target="_blank" rel="noopener" aria-label="Pick an emoji: we already know which shirt is yours on @sahraandbeyond.ae, opens on Instagram">Pick an emoji: we already know which shirt is yours</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1964,7 +1968,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 .ig-big{max-width:420px;margin:0 auto}
 .ig-big .ig-label{font-size:20px}
 @media(prefers-reduced-motion:reduce){.ig-card,.ig-seg i::after,.ig-media video,.ig-card.ig-new .ig-media::before{transition:none;animation:none!important}.ig-card.active .ig-seg i.on::after{transform:scaleX(1)}}
-.foot-pay{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:6px 0 10px}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}body.dark-bg .ig-prod .ig-rail-sec{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}</style>
+.foot-pay{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:6px 0 10px}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}</style>
   <div class="ig-foot ig-dark" role="navigation" aria-label="More from our Instagram">
   <div class="ig-foot-row"><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/DeTnkCFCGE9/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DeTnkCFCGE9/01.mp4"><img src="/uploads/ig/DeTnkCFCGE9-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Any two tees, AED 359: mix designs and fits</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahratrail/p/DeRJH_SiBH0/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DeRJH_SiBH0/01.mp4"><img src="/uploads/ig/DeRJH_SiBH0-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Six rules for the Hajar, before your next climb</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/DePhP7oIVno/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DePhP7oIVno-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>A few metres out, the reef begins: Sahel, teaser 2</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahratrail/reel/DeN8_Hdo3uB/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DeN8_Hdo3uB-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-mock">Mock-up</span><span class="ig-foot-cap"><span>Sahra Trail revealed: the Tee and the 2-in-1 Shorts</span></span></a></div>
   <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 17 Oct</span> · <a href="/feed/">all posts</a></p>
@@ -2703,6 +2707,9 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     var body=box.querySelector('.pdp-acc-b');
     secs.forEach(function(x){ body.appendChild(x); });
     var h=box.querySelector('.pdp-acc-h');
+    /* 18 Oct 2026 (conversion panel): r50 marked the story <details> open, but this phone script folds it into
+       the first accordion, so it rendered at 0 px. The story group now starts open; the place is why people clicked. */
+    if(gi===0){ h.setAttribute('aria-expanded','true'); body.hidden=false; body.querySelectorAll('.reveal,.stagger').forEach(function(r){r.classList.add('in','vis','shown');}); }
     h.addEventListener('click',function(){ var open=h.getAttribute('aria-expanded')!=='true';
       h.setAttribute('aria-expanded',open?'true':'false'); body.hidden=!open;
       if(open){ body.querySelectorAll('.reveal,.stagger').forEach(function(r){r.classList.add('in','vis','shown');}); } });
@@ -2723,7 +2730,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=481ab519" defer></script>
+<script src="/assets/sahra-cart.js?v=5257bc82" defer></script>
 <script src="/assets/sahra-sizefinder.js?v=170093b1" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){

@@ -207,3 +207,6 @@ html[data-price-cur]:not([data-price-cur="AED"]) .pdp-bundle{display:none}
 html[data-market="gcc"] .sb-tabby,html[data-market="intl"] .sb-tabby{display:none!important}
 /* 16 Oct 2026: no WhatsApp link on guide pages (they read as a tour desk) */
 html[data-guide] .ft-wa{display:none}
+
+/* 18 Oct 2026: SVG cart icon instead of the emoji (which rendered as blue clip-art on Android) */
+.sb-cart-btn .sb-cart-ic{width:24px;height:24px;display:block}

@@ -989,18 +989,21 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 .pdp-fit:not(.on):hover{background:rgba(43,37,32,.05)}
 body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg .pdp-fit.on b{color:#2B2620}
 .pdp-model{color:var(--txt-soft,#5A5046)}
+.pdp-exch{font-size:12.5px;line-height:1.4;color:var(--txt-soft,#5A5046);margin:6px 0 0}
 .pdp-wallets{font-size:12px;color:var(--txt-soft,#5A5046);text-align:center;margin:8px 0 0;letter-spacing:.2px}
 .pdp-wallets{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 6px;max-width:215px;margin-left:auto;margin-right:auto}
 .pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#5A5046)}
 .pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(51,39,27,.22);border-radius:5px;background:#fff;color:#33271B;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
 .pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
-.pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:var(--txt-soft,#5A5046);margin:0 0 8px}.pdp-pair-h b{color:var(--txt,#2B2620);font-weight:600}
+.pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:#5A5046;margin:0 0 8px}.pdp-pair-h b{color:#2B2620;font-weight:600}
+/* 18 Oct 2026 (conversion panel): the strip sits on the light buy card, so its colours never follow body.dark-bg */
+body.dark-bg .pdp-pair-h{color:#5A5046}body.dark-bg .pdp-pair-h b,body.dark-bg .pdp-pair-c{color:#2B2620}body.dark-bg .pdp-pair-c small{color:#5A5046}body.dark-bg .pdp-pair-c{border-color:rgba(43,38,32,.16)}
 .pdp-pair-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pdp-pair-c{display:flex;gap:9px;align-items:center;padding:6px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--txt,#2B2620);min-width:0}
+.pdp-pair-c{display:flex;gap:9px;align-items:center;padding:6px;border:1px solid rgba(43,38,32,.16);border-radius:12px;text-decoration:none;color:#2B2620;min-width:0}
 .pdp-pair-c img{width:44px;height:55px;border-radius:7px;object-fit:cover;flex:none}
-.pdp-pair-c span{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.25}.pdp-pair-c small{font-size:11.5px;color:var(--txt-soft,#5A5046)}
+.pdp-pair-c span{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.25}.pdp-pair-c small{font-size:11.5px;color:#5A5046}
 .pdp-pair-c:hover{border-color:var(--accent)}
-body.dark-bg .pdp-pair-h b,body.dark-bg .pdp-pair-c{color:#F4EFE6}body.dark-bg .pdp-pair-h,body.dark-bg .pdp-pair-c small{color:rgba(244,239,230,.72)}
+/* 18 Oct 2026: the old dark-bg cream rule for the pair strip is gone; the strip sits on the pale buy card, which never darkens */
 .pdp-tote img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none}.pdp-tote b{color:var(--txt,#2B2620);font-weight:600}.pdp-tote a{color:var(--clay-deep,#9C521B)}
 .pdp-why{margin:12px 0 0;display:grid;gap:8px}.pdp-why div{display:grid;gap:2px}.pdp-why dt{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-soft,#5A5046)}.pdp-why dd{margin:0;font-size:13.5px;line-height:1.45;color:var(--txt,#2B2620)}.pdp-why a{color:var(--clay-deep,#9C521B)}
 .pdp-add.pulse .pdp-add-l{animation:none}.pdp-sizes.pulse .pdp-size{animation:pdpPulse .5s ease 2}@keyframes pdpPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06);border-color:var(--clay-deep,#9C521B)}}
@@ -1170,6 +1173,7 @@ ${galShots(p).map((s,i)=>`
              is why nothing ever put them side by side. */''}
         ${/* 25 Sep 2026 (Faheem): no fit warnings - one line that sends people to the chart,
              with the design's other fit beside it where there is one */''}
+        ${/* 18 Oct 2026 (conversion panel): sold-out sizes dead-ended; this is the existing 14-day policy, said where the chips are */''}<p class="pdp-exch sb-ship-uae">Free 14-day exchange. If your size has gone, a full refund.</p>
         <p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;</a>${p.modelInfo && /wears (S|M|L|XL)/.test(p.modelInfo) ? `<span class="pdp-model">Model wears ${p.modelInfo.match(/wears (S|M|L|XL)/)[1]}</span>` : ''}</p>
         <p class="pdp-stock" id="pdpStock" hidden></p>
         ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix and match</p>` : ''}
@@ -1179,7 +1183,7 @@ ${galShots(p).map((s,i)=>`
         <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw sb-ship-uae">Tabby</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         ${/* 4 Oct 2026 (CRO panel, ideas 5 and 6): the gift and the two objections, answered where the thumb is */''}
-        <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
+        <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every Founding Edition order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
         ${pairStrip(p, all)}
         <dl class="pdp-why">
           <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? '240 GSM piqué cotton, embroidered, in a small first run.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? '230 GSM combed cotton, pre-washed, embroidered rather than printed, in a small first run.' : '230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark, in a small first run.')} Designed in the UAE.</dd></div>
@@ -1321,7 +1325,7 @@ ${LEAN ? `<div class="wrap lean-first">${FIT_HTML.replace('04 — Size &amp; fit
       <p>${esc(p.placeBlurb)}</p>
       <div class="pmeta">
         <a href="https://www.google.com/maps/search/?api=1&amp;query=${p.lat},${p.lng}" target="_blank" rel="noopener">📍 ${p.lat}, ${p.lng}</a>
-        <span>✦ ${esc(p.skyLine)}</span>
+        <span>✦ ${esc(String(p.skyLine || '').replace(/^~?dark-sky\s*·\s*/, '').replace(/^./, function (c) { return c.toUpperCase(); }))}</span>
       </div>
       <a class="btn" href="/locations/${p.placeSlug}/">Read the place story</a>
       ${guideLink(p) ? `<p class="pguide" style="margin-top:12px;font-size:14.5px">Planning a trip? ${guideLink(p)} &rarr;</p>` : ''}
@@ -1424,7 +1428,7 @@ ${related(p, all)}
 
 <footer>
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/contact/">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
-  ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}${IG.CSS}.foot-pay{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:6px 0 10px}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}body.dark-bg .ig-prod .ig-rail-sec{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}</style>
+  ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}${IG.CSS}.foot-pay{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:6px 0 10px}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}</style>
   ${IG.footerRowHtml()}
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
@@ -2160,6 +2164,9 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     var body=box.querySelector('.pdp-acc-b');
     secs.forEach(function(x){ body.appendChild(x); });
     var h=box.querySelector('.pdp-acc-h');
+    /* 18 Oct 2026 (conversion panel): r50 marked the story <details> open, but this phone script folds it into
+       the first accordion, so it rendered at 0 px. The story group now starts open; the place is why people clicked. */
+    if(gi===0){ h.setAttribute('aria-expanded','true'); body.hidden=false; body.querySelectorAll('.reveal,.stagger').forEach(function(r){r.classList.add('in','vis','shown');}); }
     h.addEventListener('click',function(){ var open=h.getAttribute('aria-expanded')!=='true';
       h.setAttribute('aria-expanded',open?'true':'false'); body.hidden=!open;
       if(open){ body.querySelectorAll('.reveal,.stagger').forEach(function(r){r.classList.add('in','vis','shown');}); } });

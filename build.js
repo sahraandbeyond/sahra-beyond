@@ -507,14 +507,14 @@ function newsletterBlock() {
      shopBlock it never had a LAUNCHED branch. It now sells what is live and
      captures email for the NEXT drop, with the old wording kept for rollback. */
   const eyebrow = LAUNCHED
-    ? 'Sahra &amp; Beyond &middot; Drop 01 out now'
+    ? 'Sahra &amp; Beyond &middot; Founding Edition, live now'
     : 'Sahra &amp; Beyond &middot; First drop coming';
   const blurb = LAUNCHED
-    ? 'Original tees drawn from real places across the Emirates — the first drop is live now. Join the list and you will hear about the next one first.'
+    ? 'Original tees drawn from real places across the Emirates. Next up: Sahel, the Coast Edition, and Sahra Trail. Join the list and you hear first.'
     : 'The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.';
-  const btn = LAUNCHED ? 'Notify me about Drop 02' : 'Join the waitlist';
+  const btn = LAUNCHED ? 'Get first access' : 'Join the waitlist';
   const ok = LAUNCHED
-    ? 'You&rsquo;re on the list. We&rsquo;ll email you before the next drop. &#10022;'
+    ? 'You&rsquo;re on the list. You&rsquo;ll hear before Sahel and Sahra Trail open. &#10022;'
     : 'You&rsquo;re on the list. See you at the drop. &#10022;';
   const shopCta = LAUNCHED
     ? `<a class="btn news-shop" href="/shop/">Shop the collection &rarr;</a>`
@@ -2950,7 +2950,7 @@ const COMMERCE = [
     title: 'T-Shirts in Dubai & the UAE — 230 GSM Graphic Tees',
     desc: 'Graphic t-shirts from real UAE places: Liwa, Al Quaa, the Hajar. 230 GSM heavyweight cotton, AED 199. Free next-day delivery in Dubai and the UAE.',
     catNav: true,
-    intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm combed ring-spun cotton, and made in limited runs.\n\nThree designs, two fits. Al Quaa Galaxy and Hajar Mountains are printed direct to garment, so the ink sits in the cotton rather than on top of it; Empty Quarter is embroidered. Each comes in a straight Regular fit or a drop-shoulder Oversized, S to XL. If you are buying in Dubai, Abu Dhabi or anywhere in the UAE, delivery is free and arrives the next working day on orders placed by 2 pm.",
+    intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm combed ring-spun cotton, and limited runs.\n\nThree designs, two fits. Al Quaa Galaxy and Hajar Mountains are printed direct to garment, so the ink sits in the cotton rather than on top of it; Empty Quarter is embroidered. Each comes in a straight Regular fit or a drop-shoulder Oversized, S to XL. If you are buying in Dubai, Abu Dhabi or anywhere in the UAE, delivery is free and arrives the next working day on orders placed by 2 pm.",
     sections: [
       { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over one of the darkest accessible skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
       { h2: 'The fabric, plainly', body: "All our t-shirts are 230gsm, 100% combed ring-spun cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.\n\nEvery piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere." },
@@ -3005,7 +3005,7 @@ const COMMERCE = [
     items: ["al-quaa-galaxy-regular", "al-quaa-galaxy-oversized", "hajar-mountains-regular", "hajar-mountains-oversized", "empty-quarter-regular", "empty-quarter-oversized", "sand-polo"],
     h1: 'Gifts from the UAE',
     foldsTitle: 'Choosing and giving',
-    title: "UAE Souvenirs & Gifts for Him That Aren't Touristy",
+    title: "UAE Souvenirs & Gifts That Aren't Touristy",
     desc: 'A gift from the UAE that is not a fridge magnet. Original t-shirts tied to real Emirati places — for someone leaving, visiting, or missing the desert.',
     intro: "Buying a gift from the UAE usually means choosing between a fridge magnet, a camel keyring, or a t-shirt with the Dubai skyline printed across the front. All of them say the same thing: I went to a shop at the airport.\n\nA Sahra & Beyond t-shirt says something more specific. Each one is tied to a real place in the Emirates — somewhere the person you are buying for has probably actually been. That is a very different gift from a souvenir.",
     sections: [
@@ -3019,7 +3019,7 @@ const COMMERCE = [
     faqs: [
       ['What is a good leaving gift for an expat in the UAE?', 'Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.'],
       ['Can I exchange it if the size is wrong?', 'Yes. Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the item is unworn, unwashed and still has its tags.'],
-      ['How much do they cost?', 'Every t-shirt in the collection is AED 199. The Sahra Polo is AED 229. Delivery is calculated at checkout.'],
+      ['How much do they cost?', 'Every t-shirt is AED 199, any two are AED 359, and the Sahra Polo is AED 229. UAE delivery is free and every Founding Edition order includes a free Sahra Tote.'],
       ['Do you ship outside the UAE?', 'Yes — worldwide, from Dubai. GCC orders (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait) arrive in 3–5 working days at AED 50, free over AED 390. The rest of the world is 7–14 working days at AED 80. Any import duties are payable on arrival.']
     ]
   },

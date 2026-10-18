@@ -122,7 +122,7 @@
         '<span class="sbw-ri">' + TOTE + '</span>' +
         '<span class="sbw-ri">' + SHIP + '</span>' +
       '</span>' +
-      '<span class="sbw-go">' + t('Get the code &rarr;', 'احصل على الرمز &larr;') + '</span>' +
+      '<span class="sbw-go">' + t('Get AED 50 off &rarr;', 'احصل على خصم 50 درهمًا &larr;') + '</span>' +
     '</span>';
 
   /* 13 Oct 2026 (retention audit, Faheem: "show the code on ad visits"). A visitor who came
@@ -335,7 +335,7 @@
       m.classList.add('is-won');
       var c = m.querySelector('.sbw-copy'); if (c) { try { c.focus(); } catch (_) {} }
       ev('welcome_offer_signup', { source: 'welcome_bar', code: code || OFFER.code });
-      try { if (window.sbMeta && window.sbMeta.track) window.sbMeta.track('Lead', { content_name: code || OFFER.code }); } catch (_) {}
+      try { if (typeof window.sbMeta === 'function') window.sbMeta('Lead', { content_name: code || OFFER.code }); } catch (_) {}
     };
     subscribe(email, 'welcome-bar').then(win, function (e) {
       if (e && e.message === 'email') {
@@ -458,6 +458,11 @@
   if (!st.won && !openedThisSession && !STORY && !ADV) teaser();
 
   function teaser() {
+    /* 18 Oct 2026 (conversion panel): the pill sat on the guide buy bar and, with WhatsApp and the sticky bar,
+       took 21% of a 640 px product screen. The top bar carries the offer; the pill now shows only where
+       nothing else owns the bottom of the screen (home, about, size guide and the like). */
+    var bc = document.body.className || '';
+    if (document.documentElement.hasAttribute('data-guide') || /\b(buy-page|sahel-page|trail-page)\b/.test(bc)) return;
     /* 12 Oct 2026: the timer was named t, shadowing the t() translation helper, so show() threw
        "t is not a function" and the teaser never appeared (product pages, guides, ad visits). */
     var shown = false, tmr = null;

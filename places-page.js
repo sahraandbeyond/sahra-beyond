@@ -430,7 +430,7 @@ function clientScript(l, ctx, packItems) {
     var save=function(){try{var w=JSON.parse(localStorage.getItem('sbw.v2')||'{}')||{};w.won=1;w.seen=1;localStorage.setItem('sbw.v2',JSON.stringify(w));}catch(err){}var tz=document.querySelector('.sbw-teaser');if(tz)tz.remove();};
     var clean=function(c){return String(c||'GOBEYOND50').replace(/[^A-Z0-9-]/gi,'');};
     var win=function(code){code=clean(code);save();cap.classList.add('won');msg.innerHTML='You are on the list. Your code: <b>'+code+'</b>, AED 50 off your first order over AED 150, one use per customer.';tg('guide_signup',{source:'guide-pack',location:${JSON.stringify(l.id)}});
-      try{if(window.sbMeta&&window.sbMeta.track)window.sbMeta.track('Lead',{content_name:code});}catch(err){}};
+      try{if(typeof window.sbMeta==='function')window.sbMeta('Lead',{content_name:code});}catch(err){}};
     /* the request failed: be honest that nothing was saved, but keep the promised code (same rule as the offer pop-up) */
     var soft=function(){var code=clean();save();cap.classList.add('won');msg.innerHTML='We could not add you just now, so please try again later. Your code still works: <b>'+code+'</b>, AED 50 off your first order over AED 150, one use per customer.';};
     fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'guide-pack-'+${JSON.stringify(l.id)}})}).then(function(r){if(r.status===400)throw new Error('email');if(!r.ok)throw new Error('server');return r.json().catch(function(){return {};}).then(function(j){if(j&&j.stored===false)throw new Error('server');return j&&j.code;});})
