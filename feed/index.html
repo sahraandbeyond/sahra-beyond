@@ -65,6 +65,8 @@ a{color:#9C521B}
 .brand-text{display:flex;flex-direction:column;line-height:1}
 .brand-sahra{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:15px;font-weight:600;letter-spacing:3px;color:#33271B;text-transform:uppercase}
 .brand-beyond{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;color:#A25A20;text-transform:uppercase;margin-top:2px}
+.logo .sb-house,.brand .sb-house{display:none}
+@media(min-width:1280px){.logo .sb-house,.brand .sb-house{display:block;margin:5px 0 -15px;font-family:'Space Mono',monospace;font-size:8px;font-size-adjust:none;letter-spacing:.3px;text-transform:none;font-weight:400;line-height:1.2;white-space:nowrap;opacity:.82}}
 .hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:18px;margin:0 0 24px}
 .book{margin:26px 0;padding:20px 22px;border:1px solid rgba(192,112,46,.3);background:rgba(255,247,237,.7);border-radius:16px}
 .book h2{margin:0 0 6px;font-size:18px}
@@ -377,7 +379,7 @@ h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;f
 .ftr .links a{margin:0 8px;color:#6B6256;text-decoration:none;font-size:12px}
 .ftr 
 /* premium brand layer */
-.ftr-tagline{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-style:italic;font-size:17px;color:#9C521B;margin-bottom:14px}
+.ftr-tagline{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:17px;color:#9C521B;margin-bottom:14px}
 .ftr .legal{margin-top:10px;font-weight:600}
 .ftr .legal a{text-decoration:underline;text-underline-offset:3px}
 .loc-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 46%,transparent 62%);background-size:240% 100%;animation:heroSweep 9s ease-in-out infinite;pointer-events:none}
@@ -635,6 +637,41 @@ html.sb-gbar.sb-fcart-on .sb-wa{bottom:calc(150px + env(safe-area-inset-bottom,0
 .fitpair-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(247,239,226,.8);cursor:pointer;line-height:1.2}
 .fitpair-sw button.on{background:#F7EFE2;color:#2B2620;font-weight:600}
 .fitpair-sw button:focus-visible{outline:2px solid #E9B978;outline-offset:1px}
+/* 20 Oct 2026 (Faheem: on phones the photos were smaller than the rest of the card; "the focus
+   must be product photos"). Two-up product cards on phones: a taller 3:4 photo, and a compact
+   body (one-line place, smaller name, the four quick-add sizes on one row, no "Quick add" label,
+   no spec chips or "Full details" link, since the photo and name already open the product). */
+@media(max-width:560px){
+  .collection .card-img,.pcard-img{aspect-ratio:3/4!important}
+  .collection .card-img img,.pcard-img img{object-fit:cover;object-position:50% 25%}
+  .collection .card-body{padding:10px 11px 12px!important}
+  .collection .card-place{font-size:9.5px!important;letter-spacing:.06em!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .collection .card-name{font-size:16px!important;line-height:1.2!important;margin:4px 0 3px!important}
+  .collection .card-price,.collection .card-price .sb-price{font-size:14px!important}
+  .pcard-b{padding:10px 11px 12px!important;gap:4px!important}
+  .pcard-t,body.buy-page .pcard-t{font-size:16px!important;line-height:1.2!important}
+  .pcard .pcard-spec,.pcard .pcard-place,.pcard .pcard-col,.pcard .pcard-bundle,.pcard .pcard-cta{display:none!important}
+  .pcards>*,.pcards>.fitpair>.pcard,.collection .grid>*{min-width:0}
+  .pcard-rv{display:flex;align-items:center;white-space:nowrap;overflow:hidden;font-size:11px!important}
+  .pcard-rv .rv-stars{display:none!important}
+  .pcard-rv-n{font-size:11px!important;letter-spacing:0!important}
+  .pcard-rv-n::before{content:"\2605\00a0";color:#9C6B12}
+  .pcard-foot{margin-top:2px!important;padding-top:6px!important;row-gap:6px!important}
+  .pcard-p,body.buy-page .pcard-p{font-size:15px!important}
+  .collection .card .qa,.pcard .qa{margin-top:8px!important;padding-top:8px!important;gap:0!important}
+  .collection .card .qa-l,.pcard .qa-l{display:none!important}
+  .collection .card .qa-s,.pcard .qa-s{flex-wrap:nowrap!important;gap:4px!important;width:100%;min-height:0!important}
+  .collection .card .qa-b,.pcard .qa-b{flex:1 1 0!important;min-width:0!important;width:auto!important;height:36px!important;min-height:36px!important;padding:0!important;font-size:12px!important;letter-spacing:0!important}
+  html body .pcard .qa-open,html body.buy-page .pcard .qa-open{min-height:38px!important;height:38px;font-size:12px!important;letter-spacing:.1em!important;padding:0 8px!important}
+  html body .pcard .pcard-rv{margin:0!important}
+  html body .pcard .pcard-rv-n,html body.buy-page .pcard .pcard-rv-n{font-size:11.5px!important;letter-spacing:0!important}
+  html body .pcard .pcard-foot{row-gap:6px!important}
+  html body .pcard .qa{margin-top:0!important;padding-top:0!important;border-top:0!important}
+  html body .pcard .qa-sizes{flex-wrap:nowrap!important;gap:4px!important;margin-top:6px!important}
+  html body .pcard .qa-sz{flex:1 1 0;min-width:0!important;min-height:38px!important;padding:0!important;font-size:12.5px!important}
+  .fitpair-sw{top:8px!important;left:8px!important}
+  .fitpair-sw button{font-size:11px!important;padding:5px 9px!important}
+}
 /* ---- Mobile polish --------------------------------------------------------
    Measured at 390px on the live site: footer links were 15-21px tall, filter
    chips 38px, the waitlist input 20px, gallery arrows 38px. Apple/Google both
@@ -1298,7 +1335,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 </style>
 </head>
 <body class="buy-page feed-page">
-<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav"><a href="/#collection">Collection</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span><span class="brand-sahra sb-house">Designed in the UAE for everyone who loves it.</span></span></a><nav class="hdr-nav"><a href="/#collection">Collection</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
 
   <main class="feed-main" style="max-width:1180px;margin:0 auto;padding:28px clamp(16px,4vw,40px) 60px">
     <nav class="crumbs" style="margin-bottom:14px"><a href="/">Home</a> &rsaquo; <span>From our Instagram</span></nav>
@@ -1318,7 +1355,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 6 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-17T06:43:38.633Z">Posted yesterday</span>
+    <span class="ig-ago" data-date="2026-10-17T06:43:38.633Z">Posted 3 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DelffwYCH42/" target="_blank" rel="noopener" aria-label="Pay in 4 with Tabby, now at checkout on @sahraandbeyond.ae, opens on Instagram">Pay in 4 with Tabby, now at checkout</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1331,7 +1368,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 4 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-16T16:55:49.965Z">Posted 2 days ago</span>
+    <span class="ig-ago" data-date="2026-10-16T16:55:49.965Z">Posted 4 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DekAwr6CO-O/" target="_blank" rel="noopener" aria-label="We kept driving back to the Hajar Mountains on @sahraandbeyond.ae, opens on Instagram">We kept driving back to the Hajar Mountains</a></h3>
     <a class="ig-wear" href="/products/hajar-mountains-regular/">The Hajar Mountains Tee &rarr;</a>
   </div>
@@ -1344,7 +1381,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 5 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-15T10:15:15.077Z">Posted 3 days ago</span>
+    <span class="ig-ago" data-date="2026-10-15T10:15:15.077Z">Posted 5 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DeguH3WCIOa/" target="_blank" rel="noopener" aria-label="Pick an emoji: we already know which shirt is yours on @sahraandbeyond.ae, opens on Instagram">Pick an emoji: we already know which shirt is yours</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1357,7 +1394,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 3 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-14T04:46:43.824Z">Posted 4 days ago</span>
+    <span class="ig-ago" data-date="2026-10-14T04:46:43.824Z">Posted 6 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/Dedju1LiFtj/" target="_blank" rel="noopener" aria-label="Who first took you there? Tell us who it was on @sahraandbeyond.ae, opens on Instagram">Who first took you there? Tell us who it was</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1370,7 +1407,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Reel</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-12T04:40:16.209Z">Posted 6 days ago</span>
+    <span class="ig-ago" data-date="2026-10-12T04:40:16.209Z">Posted 1 week ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeYZZw8IGOJ/" target="_blank" rel="noopener" aria-label="Meet the locals: Sahel, teaser 3, a Reel on @sahraandbeyond.ae, opens on Instagram">Meet the locals: Sahel, teaser 3</a></h3>
     <a class="ig-wear" href="/sahel/">Sahel &rarr;</a>
   </div>
@@ -1384,7 +1421,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
   </div>
   <div class="ig-txt">
     <span class="ig-ago" data-date="2026-10-11T16:54:31.203Z">Posted 1 week ago</span>
-    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeXIoslI-X6/" target="_blank" rel="noopener" aria-label="Wear the wild side of the UAE: the launch film, a Reel on @sahraandbeyond.ae, opens on Instagram">Wear the wild side of the UAE: the launch film</a></h3>
+    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeXIoslI-X6/" target="_blank" rel="noopener" aria-label="Our launch film, a Reel on @sahraandbeyond.ae, opens on Instagram">Our launch film</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
 </article></div><div class="ig-cell" data-topic="sizing-ordering"><article class="ig-card has-slides" data-id="DeTnkCFCGE9" data-date="2026-10-10T08:07:48.195Z" data-slides="/uploads/ig/s/DeTnkCFCGE9/01.mp4|/uploads/ig/s/DeTnkCFCGE9/02.mp4|/uploads/ig/s/DeTnkCFCGE9/03.mp4|/uploads/ig/s/DeTnkCFCGE9/04.mp4|/uploads/ig/s/DeTnkCFCGE9/05.mp4|/uploads/ig/s/DeTnkCFCGE9/06.mp4|/uploads/ig/s/DeTnkCFCGE9/07.mp4">
@@ -1461,7 +1498,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 8 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-06T15:52:34.228Z">Posted 1 week ago</span>
+    <span class="ig-ago" data-date="2026-10-06T15:52:34.228Z">Posted 2 weeks ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DeKJkltiEJL/" target="_blank" rel="noopener" aria-label="A mountain, in lines: the Hajar Mountains Tee on @sahraandbeyond.ae, opens on Instagram">A mountain, in lines: the Hajar Mountains Tee</a></h3>
     <a class="ig-wear" href="/products/hajar-mountains-regular/">The Hajar Mountains Tee &rarr;</a>
   </div>
@@ -1474,7 +1511,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Reel</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-05T15:15:11.347Z">Posted 1 week ago</span>
+    <span class="ig-ago" data-date="2026-10-05T15:15:11.347Z">Posted 2 weeks ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeHgf7NI1_O/" target="_blank" rel="noopener" aria-label="Every desert ends at a shore: Sahel, teaser 1, a Reel on @sahraandbeyond.ae, opens on Instagram">Every desert ends at a shore: Sahel, teaser 1</a></h3>
     <a class="ig-wear" href="/sahel/">Sahel &rarr;</a>
   </div>
@@ -1487,7 +1524,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Reel</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-05T03:45:35.340Z">Posted 1 week ago</span>
+    <span class="ig-ago" data-date="2026-10-05T03:45:35.340Z">Posted 2 weeks ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahratrail/reel/DeGRlJJocK6/" target="_blank" rel="noopener" aria-label="Two ridges, two layers: Sahra Trail, episode 4, a Reel on @sahratrail, opens on Instagram">Two ridges, two layers: Sahra Trail, episode 4</a></h3>
     <a class="ig-wear" href="/trail/">Sahra Trail &rarr;</a>
   </div>
@@ -1578,7 +1615,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 7 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-09-29T18:11:37.676Z">Posted 2 weeks ago</span>
+    <span class="ig-ago" data-date="2026-09-29T18:11:37.676Z">Posted 3 weeks ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/Dd4X685iH0k/" target="_blank" rel="noopener" aria-label="Everything out here is vast. So is the fit: the Empty Quarter Tee, oversized on @sahraandbeyond.ae, opens on Instagram">Everything out here is vast. So is the fit: the Empty Quarter Tee, oversized</a></h3>
     <a class="ig-wear" href="/products/empty-quarter-oversized/">Empty Quarter Oversized T-Shirt &rarr;</a>
   </div>
@@ -1591,7 +1628,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Reel</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-09-29T13:40:04.794Z">Posted 2 weeks ago</span>
+    <span class="ig-ago" data-date="2026-09-29T13:40:04.794Z">Posted 3 weeks ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahratrail/reel/Dd342EwoQho/" target="_blank" rel="noopener" aria-label="Sunrise hike: Sahra Trail, episode 1, a Reel on @sahratrail, opens on Instagram">Sunrise hike: Sahra Trail, episode 1</a></h3>
     <a class="ig-wear" href="/hiking/">Hiking guide &rarr;</a>
   </div>
@@ -1696,7 +1733,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
   </div>
   <div class="ig-txt">
     <span class="ig-ago" data-date="2026-09-15T16:20:40.238Z">Posted 15 Sep</span>
-    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DdUIGBqiPoF/" target="_blank" rel="noopener" aria-label="Founding Edition: forty were made on @sahraandbeyond.ae, opens on Instagram">Founding Edition: forty were made</a></h3>
+    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DdUIGBqiPoF/" target="_blank" rel="noopener" aria-label="Founding Edition: the first run on @sahraandbeyond.ae, opens on Instagram">Founding Edition: the first run</a></h3>
     <a class="ig-wear" href="/products/al-quaa-galaxy-oversized/">Al Quaa Galaxy Oversized T-Shirt &rarr;</a>
   </div>
 </article></div><div class="ig-cell" data-topic="the-pieces"><article class="ig-card" data-id="DdO1bElCPmE" data-date="2026-09-13T15:01:19.011Z">
@@ -1740,7 +1777,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     </div>
     <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>
   </main>
-<footer class="ftr"><div class="ftr-tagline">Wear the wild side of the UAE</div>
+<footer class="ftr"><div class="ftr-tagline">Designed in the UAE for everyone who loves it.</div>
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>
   <div class="foot-guides" role="navigation" aria-label="Guides and more"><div><b>Guides:</b> <a href="/places/">All places</a> · <a href="/camping/">Camping in the UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/wadis/">Wadis in the UAE</a> · <a href="/hiking/">Hiking in the UAE</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta day trip</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/fujairah-beaches/">Fujairah beaches</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a></div><div><b>More:</b> <a href="/national-day/">National Day t-shirts</a> · <a href="/gifts/">Gift ideas</a> · <a href="/trail/">Sahra Trail</a> · <a href="/sahel/">Sahel: The Coast Edition</a> · <a href="/tote/">Canvas tote</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric</a> · <a href="/size-guide/">Size guide</a> · <a href="/ar/" hreflang="ar" lang="ar">العربية</a></div></div>

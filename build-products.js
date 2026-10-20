@@ -321,6 +321,8 @@ nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-con
 .logo-a{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:14px;font-weight:600;letter-spacing:4px;text-transform:uppercase}
 .logo-b{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--clay);text-transform:uppercase}
 body.dark-bg .logo-b{color:var(--gold)}
+.logo .sb-house,.brand .sb-house{display:none}
+@media(min-width:1280px){.logo .sb-house,.brand .sb-house{display:block;margin:5px 0 -15px;font-family:'Space Mono',monospace;font-size:8px;font-size-adjust:none;letter-spacing:.3px;text-transform:none;font-weight:400;line-height:1.2;white-space:nowrap;opacity:.82}}
 .nav-links{display:flex;align-items:center;gap:26px;font-size:13px;font-weight:500}
 .nav-links a{position:relative}
 .nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:100% 50%;transition:transform .35s}
@@ -1089,7 +1091,7 @@ ${(function(){ const g = galShots(p)[0]; if (!g) return ''; const ss = cardSrcse
 
 <div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition<span class="note-x"> &nbsp;·&nbsp; a limited first run</span> &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav>
-  <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div></div></a>
+  <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div><div class="logo-a sb-house">Designed in the UAE for everyone who loves it.</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
@@ -1433,7 +1435,7 @@ ${related(p, all)}
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
   <div class="foot-notop" style="font-size:12px;line-height:1.5;max-width:520px;margin:4px auto 10px;opacity:.8">Sahra &amp; Beyond is a UAE clothing brand. Our place guides are free and independent: we don&rsquo;t run, sell or book tours, trips or transport.</div>
-  <div class="foot-copy">© 2026 Sahra &amp; Beyond · Designed in the UAE</div>
+  <div class="foot-copy">Designed in the UAE for everyone who loves it.<br>© 2026 Sahra &amp; Beyond</div>
 </footer>
 
 <script>

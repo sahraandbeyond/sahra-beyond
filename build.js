@@ -16,7 +16,15 @@ const SITE = 'https://www.sahraandbeyond.ae';
 // Clean previously-generated output so deleted locations don't leave orphan pages
 ['locations', '_drafts', 'about', 'shop', 'places', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do', 'hiking', 'fujairah-beaches', 'feed', 'q'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
 
-const TAGLINE = 'Wear the wild side of the UAE';
+/* Brand line system (Faheem, 19 Oct 2026, round 6 System A, go live now):
+   house line under the wordmark (header and footer), campaign line for the home hero,
+   descriptor for meta and collection pages. Never stack house under campaign; no
+   quantity in any line; no Arabic version until an Emirati reader approves one. */
+const TAGLINE = 'Designed in the UAE for everyone who loves it.';
+const CAMPAIGN = 'Wear what you love about the UAE';
+const DESCRIPTOR = 'Premium tees, polos and hoodies.';
+const HOUSE_CSS = `.logo .sb-house,.brand .sb-house{display:none}
+@media(min-width:1280px){.logo .sb-house,.brand .sb-house{display:block;margin:5px 0 -15px;font-family:'Space Mono',monospace;font-size:8px;font-size-adjust:none;letter-spacing:.3px;text-transform:none;font-weight:400;line-height:1.2;white-space:nowrap;opacity:.82}}`;
 // Pre-launch mode: the site opens on the coming-soon experience.
 // Flip to true on drop day — enables /shop/, the Shop nav link and shop CTAs everywhere.
 const LAUNCHED = true;
@@ -166,7 +174,42 @@ const FITPAIR_CSS = `.fitpair{position:relative;display:flex;flex-direction:colu
 .fitpair-sw{position:absolute;top:10px;left:10px;z-index:3;display:inline-flex;padding:3px;border-radius:999px;background:rgba(20,15,34,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);gap:2px}
 .fitpair-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(247,239,226,.8);cursor:pointer;line-height:1.2}
 .fitpair-sw button.on{background:#F7EFE2;color:#2B2620;font-weight:600}
-.fitpair-sw button:focus-visible{outline:2px solid #E9B978;outline-offset:1px}`;
+.fitpair-sw button:focus-visible{outline:2px solid #E9B978;outline-offset:1px}
+/* 20 Oct 2026 (Faheem: on phones the photos were smaller than the rest of the card; "the focus
+   must be product photos"). Two-up product cards on phones: a taller 3:4 photo, and a compact
+   body (one-line place, smaller name, the four quick-add sizes on one row, no "Quick add" label,
+   no spec chips or "Full details" link, since the photo and name already open the product). */
+@media(max-width:560px){
+  .collection .card-img,.pcard-img{aspect-ratio:3/4!important}
+  .collection .card-img img,.pcard-img img{object-fit:cover;object-position:50% 25%}
+  .collection .card-body{padding:10px 11px 12px!important}
+  .collection .card-place{font-size:9.5px!important;letter-spacing:.06em!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .collection .card-name{font-size:16px!important;line-height:1.2!important;margin:4px 0 3px!important}
+  .collection .card-price,.collection .card-price .sb-price{font-size:14px!important}
+  .pcard-b{padding:10px 11px 12px!important;gap:4px!important}
+  .pcard-t,body.buy-page .pcard-t{font-size:16px!important;line-height:1.2!important}
+  .pcard .pcard-spec,.pcard .pcard-place,.pcard .pcard-col,.pcard .pcard-bundle,.pcard .pcard-cta{display:none!important}
+  .pcards>*,.pcards>.fitpair>.pcard,.collection .grid>*{min-width:0}
+  .pcard-rv{display:flex;align-items:center;white-space:nowrap;overflow:hidden;font-size:11px!important}
+  .pcard-rv .rv-stars{display:none!important}
+  .pcard-rv-n{font-size:11px!important;letter-spacing:0!important}
+  .pcard-rv-n::before{content:"\\2605\\00a0";color:#9C6B12}
+  .pcard-foot{margin-top:2px!important;padding-top:6px!important;row-gap:6px!important}
+  .pcard-p,body.buy-page .pcard-p{font-size:15px!important}
+  .collection .card .qa,.pcard .qa{margin-top:8px!important;padding-top:8px!important;gap:0!important}
+  .collection .card .qa-l,.pcard .qa-l{display:none!important}
+  .collection .card .qa-s,.pcard .qa-s{flex-wrap:nowrap!important;gap:4px!important;width:100%;min-height:0!important}
+  .collection .card .qa-b,.pcard .qa-b{flex:1 1 0!important;min-width:0!important;width:auto!important;height:36px!important;min-height:36px!important;padding:0!important;font-size:12px!important;letter-spacing:0!important}
+  html body .pcard .qa-open,html body.buy-page .pcard .qa-open{min-height:38px!important;height:38px;font-size:12px!important;letter-spacing:.1em!important;padding:0 8px!important}
+  html body .pcard .pcard-rv{margin:0!important}
+  html body .pcard .pcard-rv-n,html body.buy-page .pcard .pcard-rv-n{font-size:11.5px!important;letter-spacing:0!important}
+  html body .pcard .pcard-foot{row-gap:6px!important}
+  html body .pcard .qa{margin-top:0!important;padding-top:0!important;border-top:0!important}
+  html body .pcard .qa-sizes{flex-wrap:nowrap!important;gap:4px!important;margin-top:6px!important}
+  html body .pcard .qa-sz{flex:1 1 0;min-width:0!important;min-height:38px!important;padding:0!important;font-size:12.5px!important}
+  .fitpair-sw{top:8px!important;left:8px!important}
+  .fitpair-sw button{font-size:11px!important;padding:5px 9px!important}
+}`;
 const FITPAIR_JS = `(function(){var pairs=[].slice.call(document.querySelectorAll('.fitpair'));if(!pairs.length)return;var saved=null;try{saved=localStorage.getItem('sb_fit');}catch(e){}
 function set(fit,remember){pairs.forEach(function(w){w.setAttribute('data-fit',fit);[].forEach.call(w.querySelectorAll('.fitpair-sw button'),function(b){var on=b.getAttribute('data-fit')===fit;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});});if(remember){try{localStorage.setItem('sb_fit',fit);}catch(e){}}}
 if(saved==='oversized')set('oversized',false);
@@ -561,6 +604,7 @@ a{color:#9C521B}
 .brand-text{display:flex;flex-direction:column;line-height:1}
 .brand-sahra{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:15px;font-weight:600;letter-spacing:3px;color:#33271B;text-transform:uppercase}
 .brand-beyond{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2.5px;color:#A25A20;text-transform:uppercase;margin-top:2px}
+${HOUSE_CSS}
 .hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:18px;margin:0 0 24px}
 .book{margin:26px 0;padding:20px 22px;border:1px solid rgba(192,112,46,.3);background:rgba(255,247,237,.7);border-radius:16px}
 .book h2{margin:0 0 6px;font-size:18px}
@@ -873,7 +917,7 @@ h2{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;f
 .ftr .links a{margin:0 8px;color:#6B6256;text-decoration:none;font-size:12px}
 .ftr 
 /* premium brand layer */
-.ftr-tagline{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-style:italic;font-size:17px;color:#9C521B;margin-bottom:14px}
+.ftr-tagline{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:17px;color:#9C521B;margin-bottom:14px}
 .ftr .legal{margin-top:10px;font-weight:600}
 .ftr .legal a{text-decoration:underline;text-underline-offset:3px}
 .loc-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 46%,transparent 62%);background-size:240% 100%;animation:heroSweep 9s ease-in-out infinite;pointer-events:none}
@@ -1028,9 +1072,9 @@ main,.ftr{position:relative;z-index:1}
 /* One robots meta for every page (handover item 25): indexable pages allow large image
    previews and full snippets; gated pages (unreviewed Arabic, drafts) are noindex,follow. */
 function robotsMeta(noindex) { return `<meta name="robots" content="${noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large,max-snippet:-1'}">`; }
-function footerHtml() {
+function footerHtml(ar) {
   const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
-  return `<div class="ftr-tagline">${esc(TAGLINE)}</div>
+  return `${ar ? '' : `<div class="ftr-tagline">${esc(TAGLINE)}</div>`}
   <div class="soc">${soc}</div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>
   ${FG.guidesHtml(null, AR_CORE_PUBLIC)}
@@ -1349,9 +1393,9 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 </style>` : ''}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span></span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
+<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span>${AR ? '' : `<span class="brand-sahra sb-house">${esc(TAGLINE)}</span>`}</span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
 ${bodyHtml}
-<footer class="ftr">${footerHtml()}</footer>
+<footer class="ftr">${footerHtml(AR)}</footer>
 
 <script>
 /* Scroll-linked tint. The main pages blend section colours as you scroll; this is
@@ -2224,7 +2268,7 @@ LANDINGS.forEach(L => {
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(L.h1)}</span></nav>
       <div class="loc-emoji">${hub.e}</div>
       <h1>${esc(L.h1)}</h1>
-      <p class="lede">Inspired by the landscapes of the UAE &mdash; wear the wild side of it</p>
+      <p class="lede">The places that inspire our designs, and what to know before you go</p>
     </div>
   </section>
   <main>
@@ -2282,7 +2326,7 @@ function contactWays() {
 (function () {
   const MARK = require('./mark-paths.js');
   const canonical = `${SITE}/about/`;
-  const title = 'About Sahra & Beyond — Wear the Wild Side of the UAE';
+  const title = 'About Sahra & Beyond — A UAE Clothing Brand';
   const desc = 'The story behind Sahra & Beyond — a UAE apparel brand built around real places: a dark-sky desert, the first dunes of the Empty Quarter, a red-rock wadi in the Hajar. Heavyweight cotton, printed and embroidered designs, a limited first run.';
   const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
   const jsonld = [
@@ -2335,7 +2379,7 @@ function contactWays() {
       <nav class="crumbs ab-copy c1"><a href="/">Home</a> &rsaquo; <span>About</span></nav>
       <div class="ab-mark">${markSvg}</div>
       <p class="ab-eyebrow ab-copy c1">Sahra &amp; Beyond</p>
-      <h1 class="ab-copy c2">Wear the wild side of the UAE</h1>
+      <h1 class="ab-copy c2">${CAMPAIGN}</h1>
       <p class="lede ab-copy c3">Sahra means desert. Beyond is everything the Emirates hold once the tarmac ends &mdash; the dark-sky south, the first dunes of the Empty Quarter, the red rock of the Hajar. We put those places on heavyweight cotton &mdash; and tell you exactly where to find them.</p>
       <p class="ab-copy c4"><a class="ab-cta" href="/shop/">See the collection &rarr;</a></p>
     </div>
@@ -2363,7 +2407,7 @@ function contactWays() {
         <div class="ab-fact"><b>The cloth</b><p>230&nbsp;gsm combed ring-spun cotton for the tees, 240&nbsp;gsm piqu&eacute; for the polo. Pre-washed, cut in two fits &mdash; Regular and Oversized.</p></div>
         <div class="ab-fact"><b>The artwork</b><p>Al Quaa and the Hajar are printed direct-to-garment, so the graphic sits in the cotton rather than on top of it. The Empty Quarter and the polo are embroidered &mdash; thread, not ink.</p></div>
         <div class="ab-fact"><b>The details</b><p>Collar labels are printed, not sewn in, so there is nothing to scratch. The mark on every chest is embroidered.</p></div>
-        <div class="ab-fact"><b>Founding Edition</b><p>The first run is deliberately small: forty of each design. When they are gone, the Founding Edition is closed.</p></div>
+        <div class="ab-fact"><b>Founding Edition</b><p>The first run is deliberately small. When it is gone, the Founding Edition is closed.</p></div>
       </div>
     </section>
 
@@ -2437,7 +2481,7 @@ if (LAUNCHED || REVEALED) (function () {
     html = html.replace(/(['"])shirts\//g, '$1/shirts/');
     html = html.replace('<a class="logo" href="#">', '<a class="logo" href="/">');
     html = html.replace('<div class="nav-links"><a href="#">Shop</a><a href="#">Places</a><a href="#">About</a>', '<div class="nav-links"><a href="/shop/">Shop</a><a href="/">Places</a><a href="/about/">About</a>');
-    html = html.replace(/<footer>© \d{4} Sahra &amp; Beyond · Made in the UAE<\/footer>/, `<footer>${esc(TAGLINE)} · © ${new Date().getFullYear()} Sahra &amp; Beyond · Made in the UAE</footer>`);
+    html = html.replace(/<footer>© \d{4} Sahra &amp; Beyond · Made in the UAE<\/footer>/, `<footer>${esc(TAGLINE)} · © ${new Date().getFullYear()} Sahra &amp; Beyond</footer>`);
     /* ---- static product grid, so /shop/ is not empty before JS runs ----
        The served HTML shipped `<main id="products"><div class="loading">Loading
        the collection…</div></main>` and nothing else: no product names, no
@@ -3201,7 +3245,7 @@ CATEGORIES.forEach(C => {
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <a href="/t-shirts/">T-Shirts</a> &rsaquo; <span>${esc(C.h1)}</span></nav>
       <div class="loc-emoji">${C.emoji}</div>
       <h1>${esc(C.h1)}</h1>
-      <p class="lede">Inspired by the landscapes of the UAE &mdash; wear the wild side of it</p>
+      <p class="lede">${DESCRIPTOR.replace(/\.$/, '')}, inspired by the landscapes of the UAE</p>
     </div>
   </section>
   <main>
@@ -3254,7 +3298,7 @@ COMMERCE.forEach(P => {
       <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(P.h1)}</span></nav>
       <div class="loc-emoji">${P.emoji}</div>
       <h1>${esc(P.h1).replace(/(\S+-\S+)/g, '<span style="white-space:nowrap">$1</span>')}</h1>
-      <p class="lede">${P.lede ? esc(P.lede) : 'Inspired by the landscapes of the UAE &mdash; wear the wild side of it'}</p>
+      <p class="lede">${P.lede ? esc(P.lede) : DESCRIPTOR.replace(/\.$/, '') + ', inspired by the landscapes of the UAE'}</p>
     </div>
   </section>
   <main>
