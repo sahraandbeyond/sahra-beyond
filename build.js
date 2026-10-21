@@ -1393,7 +1393,7 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 </style>` : ''}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
-<header class="hdr"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span>${AR ? '' : `<span class="brand-sahra sb-house">${esc(TAGLINE)}</span>`}</span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
+<header class="hdr sb-top"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span>${AR ? '' : `<span class="brand-sahra sb-house">${esc(TAGLINE)}</span>`}</span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
 ${bodyHtml}
 <footer class="ftr">${footerHtml(AR)}</footer>
 

@@ -132,25 +132,22 @@
     }
     function mh(t) { var s = document.createElement('span'); s.className = 'sbn-mh'; s.textContent = t; return s; }
     var frag = document.createDocumentFragment();
+    /* 21 Oct 2026 (r62, phone navigation panel): one Shop group with the two new lines in it,
+       Places as a first-class group of guides (the Google traffic lands there), and the
+       near-empty fit, Gifts and Accessories links dropped (7 products; fit is a filter on /shop/). */
     frag.appendChild(mh('Shop'));
     frag.appendChild(ma('/shop/', 'All products'));
     frag.appendChild(ma('/t-shirts/', 'T-shirts', true));
     frag.appendChild(ma('/polos/', 'Polo', true));
-    frag.appendChild(ma('/tote/', 'Accessories', true));
-    frag.appendChild(ma('/shop/?fit=regular', 'Regular fit', true));
-    frag.appendChild(ma('/shop/?fit=oversized', 'Oversized fit', true));
-    frag.appendChild(ma('/gifts/', 'Gifts', true));
-    frag.appendChild(mh('Sahra Trail · activewear'));
-    frag.appendChild(ma('/trail/', 'Tee AED 139 · Shorts AED 169 · Kit AED 249'));
-    frag.appendChild(mh('Sahel · The Coast Edition'));
-    frag.appendChild(ma('/sahel/', 'Launching soon'));
+    frag.appendChild(ma('/sahel/', 'Sahel \u00b7 The Coast Edition', true));
+    frag.appendChild(ma('/trail/', 'Sahra Trail \u00b7 activewear', true));
     frag.appendChild(mh('Places'));
     frag.appendChild(ma('/places/', 'All places'));
-    frag.appendChild(ma('/shop/?place=al-quaa-desert', 'Al Quaa', true));
-    frag.appendChild(ma('/shop/?place=liwa', 'Liwa · Empty Quarter', true));
-    frag.appendChild(ma('/shop/?place=wadi-naqab', 'Wadi Naqab', true));
+    frag.appendChild(ma('/camping/', 'Camping', true));
+    frag.appendChild(ma('/hiking/', 'Hiking', true));
+    frag.appendChild(ma('/stargazing/', 'Stargazing', true));
+    frag.appendChild(ma('/best-beaches/', 'Beaches', true));
     frag.appendChild(mh('More'));
-    frag.appendChild(ma('/#collection', 'The Founding Edition'));
     frag.appendChild(ma('/size-guide/', 'Size guide'));
     frag.appendChild(ma('/about/', 'About'));
     frag.appendChild(ma('/contact/', 'Contact'));
@@ -263,4 +260,80 @@
     mn.appendChild(b);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(place, 0); }); else setTimeout(place, 0);
+})();
+
+/* Smart header and navigation tracking (21 Oct 2026, r62, phone navigation panel).
+   Phones and small tablets: the header tucks away while you scroll down and returns on any
+   scroll up, so the menu and the bag are one small flick away on every page. It never hides
+   near the top, while the menu, the cart drawer or the shop panel is open, while something in
+   the header has focus, or while a form field is being typed in. Place pages: the sticky tabs
+   follow it (--lg-hdr). Desktop keeps the plain sticky header. GA4 events: menu_open,
+   menu_link, header_cart, header_reveal (once per page). */
+(function () {
+  'use strict';
+  var hdr = document.querySelector('header.sb-top, nav.sb-top') || document.getElementById('nav');
+  if (!hdr) return;
+  var de = document.documentElement, mq = window.matchMedia('(max-width:900px)');
+  var path = location.pathname;
+  function tr(n, p) { try { if (window.track) window.track(n, p); } catch (e) {} }
+  hdr.classList.add('sb-smart');
+  var hidden = false, last = Math.max(0, window.scrollY || 0), acc = 0, ticking = false, revealed = false, wasHidden = false;
+  var tabs = document.querySelector('.lg-tabs');
+  var hold = 0;   /* after an in-page jump, keep the header (and the tabs under it) still while the page settles */
+  function hh() { return Math.round(hdr.getBoundingClientRect().height); }
+  function syncTabs() {
+    if (!tabs) return;
+    var ps = getComputedStyle(hdr).position;
+    de.style.setProperty('--lg-hdr', (hidden || (ps !== 'sticky' && ps !== 'fixed')) ? '0px' : hh() + 'px');
+  }
+  function busy() {
+    if (document.querySelector('.m-panel.open, #sbDrawer.on, .sbn-open')) return true;
+    var a = document.activeElement;
+    /* header focus counts only when it is keyboard focus: a tap on the cart leaves focus on the
+       cart button after the drawer closes, which used to pin the header open (r62 review) */
+    if (a && a !== document.body && ((hdr.contains(a) && a.matches && a.matches(':focus-visible')) || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))) return true;
+    if (Date.now() < hold) return true;
+    return false;
+  }
+  function set(h) {
+    if (h === hidden) return;
+    hidden = h;
+    hdr.classList.toggle('sb-hide', h);
+    if (h) wasHidden = true;
+    else if (wasHidden && !revealed) { revealed = true; tr('header_reveal', { path: path }); }
+    syncTabs();
+  }
+  function update() {
+    ticking = false;
+    var max = Math.max(0, de.scrollHeight - window.innerHeight);
+    var y = Math.min(max, Math.max(0, window.scrollY || 0));   /* clamp iOS rubber-banding */
+    var dy = y - last; last = y;
+    hdr.classList.toggle('sb-stuck', y > 8);
+    if (!mq.matches || y < hh() + 60 || busy()) { acc = 0; set(false); return; }
+    if (dy > 0) { acc = acc > 0 ? acc + dy : dy; if (acc > 14 && y > 140) set(true); }
+    else if (dy < 0) { acc = acc < 0 ? acc + dy : dy; if (acc < -8) set(false); }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', function () { syncTabs(); update(); }, { passive: true });
+  hdr.addEventListener('focusin', function () { set(false); });
+  document.addEventListener('focusin', function (e) { if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) set(false); });
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href*="#"]'); if (!a) return;
+    try { var u = new URL(a.href, location.href); if (u.pathname !== location.pathname || !u.hash) return; } catch (x) { return; }
+    hold = Date.now() + 900; set(false);
+  }, true);
+  /* the page's own scripts may set --lg-hdr once at load; keep ours in charge after that */
+  setTimeout(syncTabs, 0);
+
+  /* tracking: did people use the menu and the bag, and from how far down the page */
+  function depth() { var y = window.scrollY || 0; return y < 300 ? 'top' : (y < 1500 ? 'near' : 'deep'); }
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target : null; if (!t) return;
+    var b = t.closest('.mnav');
+    if (b) { setTimeout(function () { if (b.getAttribute('aria-expanded') === 'true') tr('menu_open', { path: path, depth: depth(), revealed: wasHidden }); }, 0); return; }
+    var a = t.closest('#mobileNav a, .sbn-panel a');
+    if (a) { tr('menu_link', { path: path, to: a.getAttribute('href') || '', label: (a.textContent || '').trim().slice(0, 60), menu: a.closest('#mobileNav') ? 'phone' : 'desktop' }); return; }
+    var c = t.closest('#sbCartBtn, #cartBtn, .cart-btn, .sb-cart-btn');
+    if (c && hdr.contains(c)) tr('header_cart', { path: path, depth: depth(), revealed: wasHidden });
+  }, true);
 })();

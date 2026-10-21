@@ -88,6 +88,8 @@ body.dark-bg{--txt:#F4EFE6;--txt-soft:rgba(244,239,230,.62);--line:rgba(255,255,
 html{overflow-x:hidden;scroll-behavior:smooth}
 body{font-family:Jost,system-ui,sans-serif;color:var(--txt);background:var(--sand);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
   transition:color .5s ease}
+/* 21 Oct 2026 (r62): clip, not hidden. overflow-x:hidden on html and body turns body into a scroll container, which silently disabled the sticky header on every product page (the shell pages got the same fix on 30 Sep). */
+@supports(overflow:clip){html,body{overflow-x:clip}}
 a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
 .wrap{max-width:1200px;margin:0 auto;padding:0 26px;position:relative;z-index:2}
 .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--clay-deep);transition:color .5s}
@@ -547,6 +549,7 @@ img,svg,video{max-width:100%;height:auto}
 #hero-canvas,.hero canvas,.shophero canvas,canvas.fill{width:100%!important;height:100%!important;max-width:none}
 @media(max-width:820px){
   html,body{overflow-x:hidden}
+  @supports(overflow:clip){html,body{overflow-x:clip}}
   /* comfortable, thumb-sized targets */
   .foot-links a,.links a,.foot-soc a,.soc a,.crumbs a,.back a,.catnav a,
   .eyebrow.plink,.pm-gps,.read-place,.fitswap,.size-guide-link,.tag-invite a{
@@ -947,8 +950,8 @@ h1 .nw{white-space:nowrap}
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=ffda6b40">
 <script src="/assets/sahra-welcome.js?v=e04acaf8" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=c83cd3f7">
-<script src="/assets/sahra-nav.js?v=7dd0b525" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=63a7fcc7">
+<script src="/assets/sahra-nav.js?v=581557f2" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1501,7 +1504,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <div id="progress"><i></i></div>
 
 <div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition<span class="note-x"> &nbsp;·&nbsp; a limited first run</span> &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
-<nav>
+<nav class="sb-top">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div><div class="logo-a sb-house">Designed in the UAE for everyone who loves it.</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="/shop/" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
@@ -1779,7 +1782,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 6 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-17T06:43:38.633Z">Posted 3 days ago</span>
+    <span class="ig-ago" data-date="2026-10-17T06:43:38.633Z">Posted 4 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DelffwYCH42/" target="_blank" rel="noopener" aria-label="Pay in 4 with Tabby, now at checkout on @sahraandbeyond.ae, opens on Instagram">Pay in 4 with Tabby, now at checkout</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1792,7 +1795,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <span class="ig-kind">Carousel · 8 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-09-23T13:19:50.243Z">Posted 3 weeks ago</span>
+    <span class="ig-ago" data-date="2026-09-23T13:19:50.243Z">Posted 23 Sep</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DdoZwkFCCf-/" target="_blank" rel="noopener" aria-label="09:00 desk. 18:34 dune. The Sahra Polo on @sahraandbeyond.ae, opens on Instagram">09:00 desk. 18:34 dune. The Sahra Polo</a></h3>
     <a class="ig-wear" href="/products/sand-polo/">The Sahra Polo Shirt &rarr;</a>
   </div>

@@ -284,6 +284,8 @@ body.dark-bg{--txt:#F4EFE6;--txt-soft:rgba(244,239,230,.62);--line:rgba(255,255,
 html{overflow-x:hidden;scroll-behavior:smooth}
 body{font-family:Jost,system-ui,sans-serif;color:var(--txt);background:var(--sand);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
   transition:color .5s ease}
+/* 21 Oct 2026 (r62): clip, not hidden. overflow-x:hidden on html and body turns body into a scroll container, which silently disabled the sticky header on every product page (the shell pages got the same fix on 30 Sep). */
+@supports(overflow:clip){html,body{overflow-x:clip}}
 a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
 .wrap{max-width:1200px;margin:0 auto;padding:0 26px;position:relative;z-index:2}
 .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--clay-deep);transition:color .5s}
@@ -743,6 +745,7 @@ img,svg,video{max-width:100%;height:auto}
 #hero-canvas,.hero canvas,.shophero canvas,canvas.fill{width:100%!important;height:100%!important;max-width:none}
 @media(max-width:820px){
   html,body{overflow-x:hidden}
+  @supports(overflow:clip){html,body{overflow-x:clip}}
   /* comfortable, thumb-sized targets */
   .foot-links a,.links a,.foot-soc a,.soc a,.crumbs a,.back a,.catnav a,
   .eyebrow.plink,.pm-gps,.read-place,.fitswap,.size-guide-link,.tag-invite a{
@@ -1090,7 +1093,7 @@ ${(function(){ const g = galShots(p)[0]; if (!g) return ''; const ss = cardSrcse
 <div id="progress"><i></i></div>
 
 <div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition<span class="note-x"> &nbsp;·&nbsp; a limited first run</span> &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
-<nav>
+<nav class="sb-top">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div><div class="logo-a sb-house">Designed in the UAE for everyone who loves it.</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>

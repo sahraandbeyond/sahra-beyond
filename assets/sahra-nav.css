@@ -130,3 +130,29 @@
 .sbn-panel a.sbn-trailcard,.sbn-panel .sbn-trailcard small{color:#D9C3A5!important}
 .sbn-panel .sbn-trailcard b{color:#F3E7D3!important}
 .sbn-panel .sbn-foot,.sbn-panel .sbn-foot a{color:#6B5B48!important}
+
+/* 21 Oct 2026 (r62, phone navigation panel): the header is reachable on every page again.
+   assets/sahra-sky.css flattens header/.hdr/nav to position:relative (18 Aug), which silently
+   un-stuck the sticky header on every template that loads the sky (everything except the home
+   page and /shop/, whose headers are position:fixed). .sb-top marks the shell header and the
+   product-page header; this restores them (0,1,1 beats the sky's 0,1,0 and 0,0,1).
+   On phones and small tablets the header tucks away while you scroll down and comes back the
+   moment you scroll up (assets/sahra-nav.js adds .sb-smart / .sb-hide). Desktop keeps it fixed. */
+header.sb-top,nav.sb-top{position:sticky;top:0;z-index:60}
+@media(max-width:900px){
+  /* hidden by clipping, and made unfocusable once it has gone: focusing a link in the hidden
+     header made the browser scroll the page ~450px to bring it into view (r62 review) */
+  .sb-smart{clip-path:inset(0 0 -24px 0);transition:clip-path .22s ease,background .3s,box-shadow .3s,padding .3s,visibility 0s}
+  .sb-smart.sb-hide{clip-path:inset(0 0 100% 0);pointer-events:none;box-shadow:none;visibility:hidden;transition:clip-path .22s ease,background .3s,box-shadow .3s,padding .3s,visibility 0s .22s}
+  html:has(.sb-smart) .lg-tabs{transition:top .22s ease}
+  /* once stuck over the page, the header goes solid so body text never ghosts through it */
+  header.sb-top.sb-stuck{background:#FAF6EF}
+  nav.sb-top.sb-stuck{background:var(--nav-bg,#FAF6EF)}
+  #nav.sb-smart.sb-stuck.solid{background:#FAF6EF}
+  /* the dark Trail and Sahel headers likewise */
+  body.trail-page header.sb-top.sb-stuck{background:#0A0F17}
+  body.sahel-page header.sb-top.sb-stuck{background:#0E1A2E}
+}
+@media(prefers-reduced-motion:reduce){.sb-smart,html:has(.sb-smart) .lg-tabs{transition:none}}
+/* anchor jumps land below the header (place pages set their own, with the tabs) */
+html:has(.sb-top):not(:has(.lg-tabs)){scroll-padding-top:76px}
