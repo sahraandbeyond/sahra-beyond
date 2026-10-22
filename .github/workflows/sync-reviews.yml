@@ -48,7 +48,13 @@ jobs:
       - name: Decide whether anything actually changed
         id: check
         run: |
-          if git diff --quiet -- content/reviews; then
+          # Stage first. A product's FIRST review creates a brand-new file, and
+          # plain `git diff` ignores untracked files, so until 22 Oct 2026 a
+          # first review (Hajar Mountains Oversized, 15 Oct) was reported as
+          # "No review changes" and never published. Comparing the index
+          # catches new files, edits and deletions alike.
+          git add -A -- content/reviews
+          if git diff --cached --quiet -- content/reviews; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No review changes."
             exit 0
@@ -56,10 +62,11 @@ jobs:
           # sync-reviews.js stamps syncedAt with today's date, so the files
           # differ every day even when no review did. Committing that would
           # mean a pointless commit and a pointless deploy daily, forever.
-          SUBSTANTIVE=$(git diff -U0 -- content/reviews \
+          SUBSTANTIVE=$(git diff --cached -U0 -- content/reviews \
             | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' \
             | grep -v '"syncedAt"' | wc -l)
           if [ "$SUBSTANTIVE" -eq 0 ]; then
+            git reset -q -- content/reviews
             git checkout -- content/reviews
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Only syncedAt moved - nothing worth publishing."
