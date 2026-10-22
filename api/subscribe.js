@@ -1,7 +1,9 @@
 // Sahra & Beyond — email capture -> Shopify customer with marketing consent
 // -----------------------------------------------------------------------
 // Replaces the Kit (ConvertKit) capture. Everything that takes an email on the
-// site now posts here: the AED 50 welcome modal and every [data-waitlist] form.
+// site now posts here: every [data-waitlist] form and the place-guide packing list.
+// 22 Oct 2026 (Faheem): the old first-order code is retired (expired in Shopify). This
+// endpoint no longer hands out any code, and the 'welcome-50' tag is no longer written.
 //
 // Why server-side: the Storefront API has no way to subscribe someone to
 // marketing without creating a password-backed account, so consent has to be
@@ -21,7 +23,6 @@
 //                           admin-created custom app. If set it is used as-is and
 //                           no token exchange happens. Shopify no longer lets you
 //                           CREATE these, so this only covers an existing one.
-//   WELCOME_CODE            discount code to hand back (default GOBEYOND50)
 //
 // Why a client id/secret and not a token (20 Sep 2026): Shopify has retired
 // admin-created custom apps - Settings > Apps > App development now only offers
@@ -38,15 +39,15 @@
 // list. That is a Shopify-side fix, not a code one.
 //
 // Consent recorded as SINGLE_OPT_IN with a server timestamp: the visitor typed
-// their address and submitted it to get the code, which is the explicit,
+// their address and submitted it to join the list, which is the explicit,
 // specific act UAE PDPL asks for. If you ever want a confirmation step, switch
 // marketingState to PENDING and send a confirm email — CONFIRMED_OPT_IN here
 // without that email would be a false record.
 //
 // Fails soft on purpose: if the env vars are missing or Shopify errors, the
-// response still carries the code so the offer never breaks in front of a
-// customer. `stored:false` in the payload is the signal that consent was NOT
-// written — watch it in the Vercel logs.
+// response is still 200. `stored:false` in the payload is the signal that consent
+// was NOT written (the site then says so and asks the visitor to try again) —
+// watch it in the Vercel logs.
 
 /* 2026-07 is the latest SUPPORTED version. 2026-10 exists but publicApiVersions
    reports it as the release candidate with supported:false - callable today, but
@@ -54,7 +55,6 @@
    soft, a version that breaks does not raise anything a customer or we would see:
    it just returns stored:false and the address is gone. Pin to stable. */
 const API_VERSION = '2026-07';
-const DEFAULT_CODE = 'GOBEYOND50';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 
 /* Tokens live 24h. Cache in module scope: Vercel reuses a warm container across
@@ -135,8 +135,6 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') { res.setHeader('Allow', 'POST'); return res.status(204).end(); }
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ ok: false, reason: 'method' }); }
 
-  const CODE = process.env.WELCOME_CODE || DEFAULT_CODE;
-
   let body = req.body;
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
   body = body || {};
@@ -155,13 +153,14 @@ module.exports = async (req, res) => {
     console.error('[subscribe] not configured - need SHOPIFY_STORE_DOMAIN plus either ' +
                   'SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET or a legacy SHOPIFY_ADMIN_TOKEN. ' +
                   'Consent NOT stored.');
-    return res.status(200).json({ ok: true, stored: false, reason: 'not_configured', code: CODE });
+    return res.status(200).json({ ok: true, stored: false, reason: 'not_configured' });
   }
 
-  /* 8 Oct 2026 (Faheem): 'welcome-50' only for the AED 50 welcome offer. Early-access lists get their own
-     tag so a send aimed at one list never reaches the other. */
+  /* Each list gets its own tag so a send aimed at one list never reaches the other. 22 Oct 2026: the
+     'welcome-50' tag (the retired first-order offer) is no longer written. The early-access-* tag names
+     stay, because Shopify segments already use them; those lists are now told the evening before a
+     release opens, with no head start. */
   const tags = ['site-signup', 'src-' + source];
-  if (/^welcome/.test(source)) tags.push('welcome-50');
   if (source === 'trail') tags.push('early-access-trail');
   if (source === 'sahel') tags.push('early-access-sahel');
   /* 4 Oct 2026: optional fields (e.g. tee_size, short_size from /trail/) become tags such as
@@ -197,7 +196,7 @@ module.exports = async (req, res) => {
       const errs = up.customerEmailMarketingConsentUpdate.userErrors;
       if (errs && errs.length) throw new Error('consent: ' + errs[0].message);
       await shopify(domain, token, ADD_TAGS, { id: node.id, tags }).catch(() => {});
-      return res.status(200).json({ ok: true, stored: true, created: false, code: CODE });
+      return res.status(200).json({ ok: true, stored: true, created: false });
     }
 
     const made = await shopify(domain, token, CREATE, {
@@ -213,11 +212,11 @@ module.exports = async (req, res) => {
         const again = await shopify(domain, token, FIND, { q: `email:"${escapeQuery(email)}"` }).catch(() => null);
         const n = again && again.customers && again.customers.edges[0] && again.customers.edges[0].node;
         if (n) await shopify(domain, token, ADD_TAGS, { id: n.id, tags }).catch(() => {});
-        return res.status(200).json({ ok: true, stored: !!n, created: false, code: CODE });
+        return res.status(200).json({ ok: true, stored: !!n, created: false });
       }
       throw new Error('create: ' + msg);
     }
-    return res.status(200).json({ ok: true, stored: true, created: true, code: CODE });
+    return res.status(200).json({ ok: true, stored: true, created: true });
   }
 
   try {
@@ -237,6 +236,6 @@ module.exports = async (req, res) => {
     const msg = err && err.message ? err.message : String(err);
     console.error('[subscribe] failed:', msg, '- consent NOT stored');
     const reason = /^token_http_/.test(msg) ? 'auth_failed' : 'shopify_error';
-    return res.status(200).json({ ok: true, stored: false, reason: reason, code: CODE });
+    return res.status(200).json({ ok: true, stored: false, reason: reason });
   }
 };

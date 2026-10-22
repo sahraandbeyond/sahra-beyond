@@ -553,18 +553,18 @@ function newsletterBlock() {
     ? 'Sahra &amp; Beyond &middot; Founding Edition, live now'
     : 'Sahra &amp; Beyond &middot; First drop coming';
   const blurb = LAUNCHED
-    ? 'Original tees drawn from real places across the Emirates. Next up: Sahel, the Coast Edition, and Sahra Trail. Join the list and you hear first.'
+    ? 'Original tees drawn from real places across the Emirates. Next up: Sahel, the Coast Edition, and Sahra Trail. Join the list. We tell you about each release the evening before it opens.'
     : 'The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.';
-  const btn = LAUNCHED ? 'Get first access' : 'Join the waitlist';
+  const btn = LAUNCHED ? 'Join the list' : 'Join the waitlist';
   const ok = LAUNCHED
-    ? 'You&rsquo;re on the list. You&rsquo;ll hear before Sahel and Sahra Trail open. &#10022;'
+    ? 'You&rsquo;re on the list. We tell you about each release the evening before it opens.'
     : 'You&rsquo;re on the list. See you at the drop. &#10022;';
   const shopCta = LAUNCHED
     ? `<a class="btn news-shop" href="/shop/">Shop the collection &rarr;</a>`
     : '';
   return `<section class="news"><div class="news-stars"></div><div class="news-in">
     <span class="news-eyebrow">${eyebrow}</span>
-    <h2>Be first to see the next drop</h2><p>${esc(blurb)}</p>
+    <h2>${LAUNCHED ? 'Hear about the next drop' : 'Be first to see the next drop'}</h2><p>${esc(blurb)}</p>
     ${shopCta}
     <form class="news-form" action="${esc(MON.newsletterAction)}" method="post">
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
@@ -2530,7 +2530,7 @@ if (LAUNCHED || REVEALED) (function () {
       @media(max-width:700px){.sp-trail{grid-template-columns:1fr;width:calc(100% - 32px);margin:36px auto 72px}.sp-trail>div{padding:22px 18px 20px}}
     </style>`;
 
-    const TRAIL_BAND = '<section class="sp-trail" aria-labelledby="spTrailH"><span class="sp-trail-im"><img src="/assets/trail/reveal/trail-kit-720.webp" width="720" height="547" alt="The Sahra Trail Kit: the Tee and the 2-in-1 Shorts, a pre-production render" loading="lazy" decoding="async"><span class="sp-mock">Mock-up</span></span><div><p class="sp-trail-k">Sahra Trail &middot; the first run</p><h2 id="spTrailH">Trail and run wear, revealed</h2><ul><li><span>Sahra Trail Tee</span><b>AED 139</b></li><li><span>Sahra Trail 2-in-1 Shorts</span><b>AED 169</b></li><li><span>The Kit, Tee + Shorts</span><b>AED 249</b></li></ul><p class="sp-trail-s">Not on sale yet. The early-access list can buy 24 hours before everyone else.</p><a class="sp-trail-a" href="/trail/">See Sahra Trail &rarr;</a><p class="sp-trail-r">Pre-production renders</p></div></section>';
+    const TRAIL_BAND = '<section class="sp-trail" aria-labelledby="spTrailH"><span class="sp-trail-im"><img src="/assets/trail/reveal/trail-kit-720.webp" width="720" height="547" alt="The Sahra Trail Kit: the Tee and the 2-in-1 Shorts, a pre-production render" loading="lazy" decoding="async"><span class="sp-mock">Mock-up</span></span><div><p class="sp-trail-k">Sahra Trail &middot; the first run</p><h2 id="spTrailH">Trail and run wear, revealed</h2><ul><li><span>Sahra Trail Tee</span><b>AED 139</b></li><li><span>Sahra Trail 2-in-1 Shorts</span><b>AED 169</b></li><li><span>The Kit, Tee + Shorts</span><b>AED 249</b></li></ul><p class="sp-trail-s">Not on sale yet. Pre-order opens Wed 28 Oct.</p><a class="sp-trail-a" href="/trail/">See Sahra Trail &rarr;</a><p class="sp-trail-r">Pre-production renders</p></div></section>';
     html = html.replace(
       '<main id="products"><div class="loading">Loading the collection&hellip;</div></main>',
       gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>' + TRAIL_BAND
@@ -4215,7 +4215,7 @@ const AR_PDP_NOINDEX = true;
       eyebrow: 'A new line from Sahra &amp; Beyond',
       kicker: 'Running &amp; trail kit &middot; first run, this season',
       h1: 'Choose the climb.',   /* the Sahra Trail tagline (Faheem, 6 Oct 2026): exactly this, with the full stop */
-      cta: 'Get first access',
+      cta: 'Join the list',
       scroll: 'Scroll to climb',
       elev: 'Elev', time: 'Time',
       ch: [
@@ -4232,13 +4232,14 @@ const AR_PDP_NOINDEX = true;
         short: { name: 'Sahra Trail 2-in-1 Shorts', price: 'AED 169', line: 'Wave-inspired graphic.', feats: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'], alt: 'Sahra Trail 2-in-1 Shorts in charcoal with the wave-inspired graphic, front and back' },
         kit: { name: 'The Kit', price: 'AED 249', line: 'The Tee and the 2-in-1 Shorts together.', save: 'Save AED 59', alt: 'The Sahra Trail Kit: the Tee and the 2-in-1 Shorts' },
         renders: 'Pre-production renders', mock: 'Mock-up', film: 'The reveal', filmAlt: 'Sahra Trail reveal film, muted: the Tee and the 2-in-1 Shorts and their details', pause: 'Pause film', play: 'Play film',
-        cta: 'Get early access', ctaSub: 'The list can buy 24 hours before everyone else.'
+        cta: 'Join the list', ctaSub: 'We tell you about each release the evening before it opens.'
       },
       tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Shorts', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
-      joinH: 'Buy 24 hours before everyone else', joinP: 'Leave your email and your sizes. When Sahra Trail opens, this list can buy a full day before everyone else: the running tee, the 2-in-1 short and the kit.',
-      ph: 'you@email.com', btn: 'Get early access', fine: 'Sizes help us plan the run. You will also hear about new places and drops now and then. Unsubscribe any time.',
+      /* 22 Oct 2026 (Faheem): the 24-hour head start is withdrawn. The list is told the evening before each release opens, nothing more. */
+      joinH: 'Join the list.', joinP: 'We tell you about each release the evening before it opens. Add your sizes if you know them.',
+      ph: 'you@email.com', btn: 'Join the list', fine: 'Sizes help us plan the run. You will also hear about new places and drops now and then. Unsubscribe any time.',
       sizeTee: 'Tee size', sizeShort: 'Short size', sizeAny: 'Not sure yet',
-      ok: 'You are on the list. You can buy 24 hours before everyone else.',
+      ok: 'You are on the list. We will tell you the evening before it opens.',
       err: 'Please enter a valid email address.',
       back: 'Meanwhile, the Founding Edition is in the shop &rarr;', backHref: '/shop/',
       hikes: 'Six UAE hikes, by grade &rarr;'
@@ -4265,13 +4266,14 @@ const AR_PDP_NOINDEX = true;
         short: { name: 'شورت صحراء تريل 2 في 1', price: '169 درهمًا', line: 'رسمة مستوحاة من الأمواج.', feats: ['شورتان في واحد، مع بطانة داخلية مخفية', 'جيب للهاتف ملتصق بالبطانة', 'جيب بسحّاب للمفاتيح والبطاقات', 'رباط داخلي', 'شعار القمّتين العاكس'], alt: 'شورت صحراء تريل 2 في 1 باللون الفحمي برسمة مستوحاة من الأمواج، من الأمام والخلف' },
         kit: { name: 'الطقم', price: '249 درهمًا', line: 'التيشيرت والشورت 2 في 1 معًا.', save: 'وفّر 59 درهمًا', alt: 'طقم صحراء تريل: التيشيرت والشورت 2 في 1' },
         renders: 'صور تصميم قبل الإنتاج', mock: 'تصميم تجريبي', film: 'فيلم الكشف', filmAlt: 'فيلم الكشف عن صحراء تريل بلا صوت: التيشيرت والشورت 2 في 1 وتفاصيلهما', pause: 'إيقاف الفيلم', play: 'تشغيل الفيلم',
-        cta: 'انضم إلى القائمة', ctaSub: 'يستطيع المسجّلون الشراء قبل الجميع بـ24 ساعة.'
+        cta: 'انضم إلى القائمة', ctaSub: ''   /* 22 Oct 2026: 24-hour promise removed; no replacement until an Emirati reader approves one */
       },
       tee: 'تيشيرت صحراء تريل', short: 'شورت صحراء تريل 2 في 1', reveal: 'يُكشف عنه عند الإطلاق', teeNote: 'شعار القمّتين العاكس أسفل الياقة', shortNote: 'شعار القمّتين العاكس على الساق اليسرى', flashHint: 'انقر للوميض',
-      joinH: 'اشترِ قبل الجميع بـ24 ساعة', joinP: 'اترك بريدك الإلكتروني ومقاساتك. عند افتتاح صحراء تريل، يستطيع المسجّلون في هذه القائمة الشراء قبل الجميع بيوم كامل: تيشيرت الجري، والشورت 2 في 1، والطقم.',
+      /* 22 Oct 2026: the 24-hour promise is cut, not rewritten: these are phrases already on this page. New Arabic waits for an Emirati reader. */
+      joinH: 'انضم إلى القائمة', joinP: 'اترك بريدك الإلكتروني ومقاساتك.',
       sizeTee: 'مقاس التيشيرت', sizeShort: 'مقاس الشورت', sizeAny: 'لست متأكدًا بعد',
       ph: 'you@email.com', btn: 'انضم إلى القائمة', fine: 'وستصلك أيضًا أخبار الأماكن والإصدارات الجديدة من حين لآخر. يمكنك إلغاء الاشتراك في أي وقت.',
-      ok: 'تمّت إضافتك. ستتمكن من الشراء قبل الجميع بـ24 ساعة.',
+      ok: 'تمّت إضافتك.',
       err: 'يرجى إدخال بريد إلكتروني صحيح.',
       back: 'حتى ذلك الحين، الإصدار التأسيسي متوفر في المتجر ←', backHref: '/ar/shop/'
     }
@@ -4490,7 +4492,7 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
         <div class="tr-cards">
           ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${r.price}</p></div><p class="tr-line">${r.line}</p><ul>${r.feats.map(f => `<li>${f}</li>`).join('')}</ul></article>`; }).join('')}
           <article class="tr-card tr-kit"><img src="/assets/trail/reveal/trail-kit-720.webp" srcset="/assets/trail/reveal/trail-kit-720.webp 720w, /assets/trail/reveal/trail-kit.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${t.rv.kit.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${t.rv.kit.name}</h3><p class="tr-price">${t.rv.kit.price}</p></div><p class="tr-line">${t.rv.kit.line} <b>${t.rv.kit.save}</b></p>
-            <a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a><p class="tr-cta-sub">${t.rv.ctaSub}</p></article>
+            <a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a>${t.rv.ctaSub ? `<p class="tr-cta-sub">${t.rv.ctaSub}</p>` : ''}</article>
           <p class="tr-renders">${t.rv.renders}</p>
         </div>
       </div>
@@ -4501,7 +4503,7 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
       <h2 id="${id}join">${t.joinH}</h2>
       <p>${t.joinP}</p>
       <form class="tr-form tr-form-sizes" data-waitlist data-source="trail" novalidate>
-        ${/* 4 Oct 2026 (CRO panel, idea 17): sizes travel with the address as customer tags; 7 Oct 2026: Faheem approved a 24-hour head start for this list (demand strategy); no dates in the promise */''}
+        ${/* 4 Oct 2026 (CRO panel, idea 17): sizes travel with the address as customer tags; 7 Oct 2026: 22 Oct 2026: the 24-hour head start is withdrawn (Faheem); the list is told the evening before */''}
         <div class="tr-sizes"><label><span>${t.sizeTee}</span><select name="tee_size"><option value="">${t.sizeAny}</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label><label><span>${t.sizeShort}</span><select name="short_size"><option value="">${t.sizeAny}</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label></div>
         <div class="tr-row"><input type="email" name="email" placeholder="${t.ph}" aria-label="Email address" autocomplete="email" required dir="ltr">
         <button type="submit">${t.btn}</button></div>

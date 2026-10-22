@@ -67,16 +67,16 @@ const T = {
   ],
   piecesNum: 'The Seabed',
   piecesH: 'Seven pieces, still in the dark',
-  piecesP: 'The Founding Edition came from the desert and the mountains. Sahel is the coast. Designed in the UAE. Limited first run.',
+  piecesP: 'The Founding Edition came from the desert and the mountains. Sahel is the coast. Designed in the UAE.',
   reveal: 'Revealed soon',
   hint: 'Tap a piece to bring the light',
-  /* 7 Oct 2026 (Faheem, demand strategy): the list buys 24 hours before everyone else. Promise only, no dates. */
-  joinH: 'Buy 24 hours before everyone else',
-  joinP: 'Leave your email and we will write to you when Sahel is revealed. When it opens, this list can buy a full day before everyone else.',
+  /* 22 Oct 2026 (Faheem): the 24-hour head start is withdrawn. The list is told the evening before each release opens. */
+  joinH: 'Join the list.',
+  joinP: 'We tell you about each release the evening before it opens.',
   size: 'Your size (optional)', sizeAny: 'Not sure yet',
-  ph: 'you@email.com', btn: 'Get early access',
+  ph: 'you@email.com', btn: 'Join the list',
   fine: 'You will also hear about new places and drops now and then. Unsubscribe any time.',
-  ok: 'You are on the list. You can buy 24 hours before everyone else.',
+  ok: 'You are on the list. We will tell you the evening before it opens.',
   err: 'Please enter a valid email address.',
   back: 'Meanwhile, the Founding Edition is in the shop &rarr;', backHref: '/shop/',
   trail: 'Running kit? Sahra Trail &rarr;', trailHref: '/trail/'

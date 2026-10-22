@@ -1079,10 +1079,10 @@ body.dark-bg .rv-stars{color:#E9B978}
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=39dbeecb">
 
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=ffda6b40">
-<script src="/assets/sahra-welcome.js?v=e04acaf8" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=91557a3b">
+<script src="/assets/sahra-welcome.js?v=d4769219" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=63a7fcc7">
-<script src="/assets/sahra-nav.js?v=581557f2" data-sbn defer></script>
+<script src="/assets/sahra-nav.js?v=26a77aff" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1753,8 +1753,8 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
           <button type="button" class="btn alt" id="pk-copy">Copy</button>
         </div>
         <form class="lg-cap" id="pk-cap" novalidate>
-          <label for="pk-email">Emails about new places, drops and offers, and AED 50 off your first order over AED 150. Unsubscribe any time.</label>
-          <div class="lg-cap-r"><input type="email" id="pk-email" name="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required><button type="submit" class="btn">Send my code</button></div>
+          <label for="pk-email">Join the list. We tell you about each release the evening before it opens. You will also hear about new places. Unsubscribe any time.</label>
+          <div class="lg-cap-r"><input type="email" id="pk-email" name="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required><button type="submit" class="btn">Join the list</button></div>
           <p class="lg-cap-m" aria-live="polite"></p>
         </form>
       </div>
@@ -1804,13 +1804,13 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(em)){msg.textContent='That email does not look right. Try again?';inp.focus();return;}
     btn.disabled=true;btn.textContent='Sending…';
     var save=function(){try{var w=JSON.parse(localStorage.getItem('sbw.v2')||'{}')||{};w.won=1;w.seen=1;localStorage.setItem('sbw.v2',JSON.stringify(w));}catch(err){}var tz=document.querySelector('.sbw-teaser');if(tz)tz.remove();};
-    var clean=function(c){return String(c||'GOBEYOND50').replace(/[^A-Z0-9-]/gi,'');};
-    var win=function(code){code=clean(code);save();cap.classList.add('won');msg.innerHTML='You are on the list. Your code: <b>'+code+'</b>, AED 50 off your first order over AED 150, one use per customer.';tg('guide_signup',{source:'guide-pack',location:"hatta"});
-      try{if(typeof window.sbMeta==='function')window.sbMeta('Lead',{content_name:code});}catch(err){}};
-    /* the request failed: be honest that nothing was saved, but keep the promised code (same rule as the offer pop-up) */
-    var soft=function(){var code=clean();save();cap.classList.add('won');msg.innerHTML='We could not add you just now, so please try again later. Your code still works: <b>'+code+'</b>, AED 50 off your first order over AED 150, one use per customer.';};
-    fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'guide-pack-'+"hatta"})}).then(function(r){if(r.status===400)throw new Error('email');if(!r.ok)throw new Error('server');return r.json().catch(function(){return {};}).then(function(j){if(j&&j.stored===false)throw new Error('server');return j&&j.code;});})
-      .then(win,function(err){if(err&&err.message==='email'){msg.textContent='That email does not look right. Try again?';btn.disabled=false;btn.textContent='Send my code';return;}soft();});});
+    /* 22 Oct 2026 (Faheem): the first-order code is retired; this form now only joins the list */
+    var win=function(){save();cap.classList.add('won');msg.textContent='You are on the list.';tg('guide_signup',{source:'guide-pack',location:"hatta"});
+      try{if(typeof window.sbMeta==='function')window.sbMeta('Lead',{content_name:'guide-pack'});}catch(err){}};
+    /* the request failed: say plainly that nothing was saved, and let them try again */
+    var soft=function(){btn.disabled=false;btn.textContent='Join the list';msg.textContent='We could not add you just now. Please try again, or message us on WhatsApp: +971 58 544 9946.';};
+    fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,source:'guide-pack-'+"hatta"})}).then(function(r){if(r.status===400)throw new Error('email');if(!r.ok)throw new Error('server');return r.json().catch(function(){return {};}).then(function(j){if(j&&j.stored===false)throw new Error('server');return j;});})
+      .then(win,function(err){if(err&&err.message==='email'){msg.textContent='That email does not look right. Try again?';btn.disabled=false;btn.textContent='Join the list';return;}soft();});});
   /* tabs: open the fold you jump to, and follow the reader */
   var hdr=document.querySelector('.hdr,#nav');function hh(){var ps=hdr?getComputedStyle(hdr).position:'';var h=(hdr&&(ps==='sticky'||ps==='fixed'))?hdr.getBoundingClientRect().height:0;document.documentElement.style.setProperty('--lg-hdr',Math.max(0,Math.round(h))+'px');}hh();addEventListener('resize',hh,{passive:true});
   function openTo(id){var t=document.getElementById(id);if(!t)return;if(t.tagName==='DETAILS'&&!t.open){t.open=true;}}

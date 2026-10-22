@@ -1,4 +1,6 @@
-/* sahra-welcome.css — AED 50 first-order offer bar + email capture modal.
+/* sahra-welcome.css — the gold announcement bar (22 Oct 2026: the first-order offer,
+   its pop-up and its corner teaser are retired; the modal and teaser rules below are
+   now unused and kept only so an old cached script still renders sanely).
    Sits ABOVE .sb-topbar so the geo-aware delivery rotator in sahra-market.js
    is untouched. sahra-welcome.js owns --topbar-h and sets it to the SUM of
    both bars, because body.has-topbar nav{top:var(--topbar-h)} positions the
@@ -348,3 +350,19 @@ html[lang="ar"] .sbw-code b{font-family:var(--mono,'Space Mono',monospace)!impor
   .sbw-bar-code .sbw-amt{letter-spacing:.6px;white-space:nowrap}
   .sbw-bar-code .sbw-code-t{letter-spacing:.6px;padding:1px 4px}
 }
+
+/* 22 Oct 2026 (Faheem): the bar is an announcement now (release dates in stages, see
+   sahra-welcome.js STAGES), a plain link, with no offer, code or pill. The stage line
+   is the message; the delivery line rides beside it only where both fit on one line.
+   Phones get two lines rather than an ellipsis: the stage wording is Faheem's and is
+   never cut. */
+a.sbw-bar,a.sbw-bar:visited{text-decoration:none;color:#33271B}
+.sbw-msg{font-weight:700;letter-spacing:1.6px}
+@media(max-width:1239px){.sbw-wrap .sbw-shipwrap{display:none!important}}
+@media(max-width:620px){
+  :root{--sbw-h:40px}
+  .sbw-note .sbw-bar-in{justify-content:center;flex-wrap:nowrap;gap:8px}
+  .sbw-note .sbw-msg{white-space:normal;text-align:center;letter-spacing:.5px;line-height:1.3;font-size:10px}
+  .sbw-note .sbw-dot{flex:0 0 auto}
+}
+html[lang="ar"] .sbw-note .sbw-msg{font-family:var(--mono,'Space Mono',monospace)!important;text-transform:uppercase!important}

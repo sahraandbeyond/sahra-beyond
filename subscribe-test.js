@@ -47,7 +47,7 @@ async function run(name, env, plan, expect, email) {
 
 (async () => {
   await run('nothing configured', {}, {token:[],gql:[]},
-    { stored:false, reason:'not_configured', code:'GOBEYOND50', calls:'' });
+    { stored:false, reason:'not_configured', code:'undefined', calls:'' });
 
   await run('domain only, no creds', {SHOPIFY_STORE_DOMAIN:'s.myshopify.com'}, {token:[],gql:[]},
     { stored:false, reason:'not_configured', calls:'' });
@@ -65,7 +65,7 @@ async function run(name, env, plan, expect, email) {
   await run('shop_not_permitted -> auth_failed',
     {SHOPIFY_STORE_DOMAIN:'s.myshopify.com', SHOPIFY_CLIENT_ID:'id', SHOPIFY_CLIENT_SECRET:'sec'},
     {token:[{ok:false,status:401,body:{error:'shop_not_permitted'}}], gql:[]},
-    { stored:false, reason:'auth_failed', code:'GOBEYOND50', calls:'TOKEN' });
+    { stored:false, reason:'auth_failed', code:'undefined', calls:'TOKEN' });
 
   await run('401 mid-flight retries once with fresh token',
     {SHOPIFY_STORE_DOMAIN:'s.myshopify.com', SHOPIFY_CLIENT_ID:'id', SHOPIFY_CLIENT_SECRET:'sec'},

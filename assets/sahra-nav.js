@@ -81,9 +81,9 @@
     '<div class="sbn-col sbn-trail-col"><span class="sbn-h">Sahra Trail · activewear</span>' +
     '<a class="sbn-trailcard" href="/trail/"><svg viewBox="6 10.76 88 78.48" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="' + TRAIL_SYM + '"/></svg>' +
     '<span><b>The first run, revealed</b><small>Trail and run wear, designed in the UAE</small></span></a>' +
-    /* 8 Oct 2026: prices public after the reveal; not on sale until the early-access opening */
+    /* 8 Oct 2026: prices public after the reveal. 22 Oct 2026: pre-order opens Wed 28 Oct for everyone (no head start) */
     row(['/trail/', 'Sahra Trail Tee', 'AED 139']) + row(['/trail/', 'Sahra Trail 2-in-1 Shorts', 'AED 169']) + row(['/trail/', 'The Kit, Tee + Shorts', 'AED 249']) +
-    row(['/trail/#first-access', 'Get early access', '', 'sbn-all']) +
+    row(['/trail/#first-access', 'Join the list', '', 'sbn-all']) +
     /* Sahel, the Coast Edition (6 Oct 2026): a teaser row until the reveal */
     '<span class="sbn-h sbn-h2">Sahel · The Coast Edition</span>' + row(['/sahel/', 'Sahel \u0633\u0627\u062d\u0644', 'launching soon']) + '</div>' +
     '<div class="sbn-foot"><span>' + esc(FOOT[0]) + '</span><span>' + esc(FOOT[1]) + '</span></div>';
