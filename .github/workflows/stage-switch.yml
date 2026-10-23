@@ -1,0 +1,59 @@
+# Sahel + Sahra Trail stages: redeploy the site just after each boundary.
+#
+# WHY (22 Oct 2026, Faheem: pre-order opens Wed 28 Oct 08:00 UAE, 20% off until
+# Thu 29 Oct 23:59, full price from Fri 30 Oct 00:00). Visitors' browsers switch
+# the staged wording to the second by themselves (preorder-page.js stageHead, the
+# top bar, the menu). This job makes the page SOURCE match too: Vercel runs
+# `node build.js` on every deploy, and the build reads the clock, so a commit just
+# after each boundary rebuilds the pages (noindex comes off the pre-order pages,
+# they join the sitemap, and from Fri 30 Oct no "20%" or "off" wording is left in
+# the HTML at all).
+#
+# GitHub may start a scheduled job some minutes late; that only delays the page
+# source, not what visitors see. "Run workflow" does the same by hand.
+# Safe to delete after 31 Oct 2026.
+
+name: Sahel and Trail stage switch
+
+on:
+  schedule:
+    - cron: '2 4 28 10 *'    # Wed 28 Oct 04:02 UTC = 08:02 UAE (pre-order opens)
+    - cron: '2 20 29 10 *'   # Thu 29 Oct 20:02 UTC = Fri 30 Oct 00:02 UAE (full price)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stage-switch
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Rebuild for the current stage
+        run: node build.js
+
+      - name: Run the repo's own gate before publishing
+        run: node prepush.js
+
+      - name: Commit and push if anything changed
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git config user.name  "sahra-reviews-bot"
+          git config user.email "noreply@sahraandbeyond.ae"
+          git commit -m "Stage switch: Sahel and Sahra Trail
+
+          Automated by .github/workflows/stage-switch.yml."
+          git push

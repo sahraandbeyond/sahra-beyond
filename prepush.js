@@ -77,7 +77,9 @@ const localIds = fs.existsSync(prodDir)
   ? fs.readdirSync(prodDir).filter(f => f.endsWith('.json')).map(f => f.replace('.json', '')).sort() : [];
 const builtDirs = fs.existsSync(path.join(ROOT, 'products'))
   ? fs.readdirSync(path.join(ROOT, 'products'), { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name).sort() : [];
-const orphans = builtDirs.filter(d => !localIds.includes(d));
+/* 22 Oct 2026: the Sahel and Sahra Trail pre-order pages are defined in preorder-page.js, not content/products */
+const preIds = (() => { try { return require('./preorder-page.js').handles(); } catch (e) { return []; } })();
+const orphans = builtDirs.filter(d => !localIds.includes(d) && !preIds.includes(d));
 console.log(`\n  ${C.b}Products defined here:${C.off} ${localIds.join(', ') || '(none)'}`);
 if (orphans.length) {
   console.log(`  ${C.bad}✗ stale build output with no source JSON: ${orphans.join(', ')}${C.off}`);

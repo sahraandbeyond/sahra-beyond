@@ -1,3 +1,10 @@
+/* 22 Oct 2026: Sahel and Sahra Trail stages (same instants as preorder-page.js and the top bar):
+   0 until Wed 28 Oct 08:00 UAE, 1 pre-order open, 2 from Fri 30 Oct 00:00 UAE. ?sbstage=N previews. */
+function sbStage() {
+  var n = Date.now(), s = n >= Date.UTC(2026, 9, 29, 20) ? 2 : n >= Date.UTC(2026, 9, 28, 4) ? 1 : 0;
+  try { var m = /[?&]sbstage=([012])/.exec(location.search || ''); if (m) s = +m[1]; } catch (e) {}
+  return s;
+}
 /* Shop mega-menu (18 Sep 2026) — see assets/sahra-nav.css.
    Runs deferred, after each page's own inline mobile-menu builder, so it can
    (1) turn the existing "Shop" link into the trigger with a caret button,
@@ -82,10 +89,13 @@
     '<a class="sbn-trailcard" href="/trail/"><svg viewBox="6 10.76 88 78.48" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="' + TRAIL_SYM + '"/></svg>' +
     '<span><b>The first run, revealed</b><small>Trail and run wear, designed in the UAE</small></span></a>' +
     /* 8 Oct 2026: prices public after the reveal. 22 Oct 2026: pre-order opens Wed 28 Oct for everyone (no head start) */
-    row(['/trail/', 'Sahra Trail Tee', 'AED 139']) + row(['/trail/', 'Sahra Trail 2-in-1 Shorts', 'AED 169']) + row(['/trail/', 'The Kit, Tee + Shorts', 'AED 249']) +
-    row(['/trail/#first-access', 'Join the list', '', 'sbn-all']) +
+    (sbStage() >= 1
+      ? row(['/products/sahra-trail-tee/', 'Sahra Trail Tee', 'AED 139']) + row(['/products/sahra-trail-2-in-1-short/', 'Sahra Trail 2-in-1 Short', 'AED 169']) + row(['/products/sahra-trail-kit/', 'The Kit, Tee + Short', 'AED 249']) +
+        row(['/new/#trail', sbStage() === 1 ? 'Pre-order Sahra Trail' : 'Shop Sahra Trail', '', 'sbn-all'])
+      : row(['/trail/', 'Sahra Trail Tee', 'AED 139']) + row(['/trail/', 'Sahra Trail 2-in-1 Shorts', 'AED 169']) + row(['/trail/', 'The Kit, Tee + Shorts', 'AED 249']) +
+        row(['/trail/#first-access', 'Join the list', '', 'sbn-all'])) +
     /* Sahel, the Coast Edition (6 Oct 2026): a teaser row until the reveal */
-    '<span class="sbn-h sbn-h2">Sahel · The Coast Edition</span>' + row(['/sahel/', 'Sahel \u0633\u0627\u062d\u0644', 'launching soon']) + '</div>' +
+    '<span class="sbn-h sbn-h2">Sahel · The Coast Edition</span>' + (sbStage() >= 1 ? row(['/new/#sahel', 'Sahel, seven pieces', sbStage() === 1 ? 'pre-order open' : 'out now']) : row(['/sahel/', 'Sahel \u0633\u0627\u062d\u0644', 'launching soon'])) + '</div>' +
     '<div class="sbn-foot"><span>' + esc(FOOT[0]) + '</span><span>' + esc(FOOT[1]) + '</span></div>';
   var pos = getComputedStyle(host).position;
   if (pos === 'static') host.style.position = 'relative';
@@ -218,7 +228,9 @@
   var a = document.createElement('a');
   a.className = 'sbn-trail'; a.href = ar ? '/ar/trail/' : '/trail/';
   if (/^\/(ar\/)?trail\/?$/.test(location.pathname)) { a.classList.add('active'); a.setAttribute('aria-current', 'page'); }
-  a.innerHTML = 'Sahra Trail<span class="sbn-soon">' + (ar ? '\u0642\u0631\u064a\u0628\u064b\u0627' : 'Soon') + '</span>';
+  /* 22 Oct 2026: the badge follows the release stage; on Arabic pages it simply goes once pre-order opens (no new Arabic copy yet) */
+  var STG = sbStage(), BADGE = STG === 0 ? 'Soon' : STG === 1 ? 'Pre-order' : 'New';
+  a.innerHTML = 'Sahra Trail' + (ar ? (STG === 0 ? '<span class="sbn-soon">\u0642\u0631\u064a\u0628\u064b\u0627</span>' : '') : '<span class="sbn-soon">' + BADGE + '</span>');
   var after = row.querySelector('.sbn-trig') || row.querySelector('a[href="/shop/"], a[href="/ar/shop/"]');
   if (after && after.parentNode === row) row.insertBefore(a, after.nextSibling); else row.insertBefore(a, row.firstChild);
   var mn = document.getElementById('mobileNav');
@@ -232,7 +244,7 @@
     var s = document.createElement('a');
     s.className = 'sbn-trail sbn-sahel'; s.href = '/sahel/';
     if (/^\/sahel\/?$/.test(location.pathname)) { s.classList.add('active'); s.setAttribute('aria-current', 'page'); }
-    s.innerHTML = 'Sahel<span class="sbn-soon">Soon</span>';
+    s.innerHTML = 'Sahel<span class="sbn-soon">' + BADGE + '</span>';
     row.insertBefore(s, a.nextSibling);
     if (mn && !mn.querySelector('a[href$="/sahel/"]')) {
       var ms = s.cloneNode(true); ms.classList.remove('active');

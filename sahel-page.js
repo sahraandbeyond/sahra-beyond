@@ -101,6 +101,7 @@ module.exports = function buildSahel({ shell, write, SITE }) {
     </div>
   </section>`).join('');
 
+  const ST = require('./preorder-page.js');
   const pieces = PIECES.map((p, i) => {
     const n = String(i + 1).padStart(2, '0'), d = DIM[p.k];
     const reveal = STATE === 'reveal' && p.name;
@@ -112,10 +113,10 @@ module.exports = function buildSahel({ shell, write, SITE }) {
     const href = reveal ? (p.href || (p.placeSlug ? `/locations/${p.placeSlug}/` : null)) : null;
     const tag = href ? 'a' : 'button';
     const attrs = href ? ` href="${href}"` : ' type="button"';
-    return `<${tag}${attrs} class="sh-piece sh-piece-${p.k}" aria-label="Piece ${n}: ${label}. ${reveal ? '' : T.reveal}">
+    return `<${tag}${attrs} class="sh-piece sh-piece-${p.k}" aria-label="Piece ${n}: ${label}.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-${p.k}.webp);aspect-ratio:${d[0]}/${d[1]}"><img src="${reveal && p.img ? p.img : `/assets/sahel/sahel-${p.k}.webp`}" width="${d[0]}" height="${d[1]}" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">${T.mock || 'Mock-up'}</span>
-        <span class="sh-n">${n}</span><b>${label}</b><small>${reveal ? [p.place ? (p.inspiredBy ? 'Inspired by ' : '') + p.place : null, p.price].filter(Boolean).join(' · ') || p.type : (typed ? T.reveal : `${p.type} &middot; ${T.reveal}`)}</small>
+        <span class="sh-n">${n}</span><b>${label}</b><small>${reveal ? [p.place ? (p.inspiredBy ? 'Inspired by ' : '') + p.place : null, p.price].filter(Boolean).join(' · ') || p.type : (typed ? '' : `${p.type} &middot; `) + ST.inc('st0', `<span class="st0">${T.reveal}</span>`) + ST.inc('st1', '<span class="st1">Pre-order</span>') + '<span class="st2">Out now</span>'}</small>
       </${tag}>`;
   }).join('\n      ');
 
@@ -249,7 +250,7 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
 </style>
 <noscript><style>#shGL{background:#0B1526 url(/assets/sahel/sahel-shore-m.webp) 50% 50%/cover no-repeat}.sh-rv{opacity:1;transform:none}.sh-eyebrow,.sh-kicker,.sh-hero h1,.sh-btn,.sh-la,.sh-ar{opacity:1;animation:none}.sh-hud,.sh-cue,.sh-hint{display:none}</style></noscript>`;
 
-  const body = `${css}
+  const body = `${ST.stageHead()}${css}
 <canvas id="shGL" aria-hidden="true"></canvas>
 <div class="sh-veil" aria-hidden="true"></div>
 <main class="sh" id="sahel">
@@ -260,8 +261,10 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
       <h1>${T.h1}</h1>
     </div>
     <div class="sh-bot">
-      <p class="sh-kicker">${T.kicker}</p>
-      <a class="sh-btn" href="#first-to-know">${T.cta} <span aria-hidden="true">&darr;</span></a>
+      <p class="sh-kicker">${ST.inc('st0', `<span class="st0">${T.kicker}</span>`)}${ST.inc('st1', '<span class="st1">Pre-order open</span>')}<span class="st2">Out now</span></p>
+      ${ST.inc('st0', `<a class="sh-btn st0" href="#first-to-know">${T.cta} <span aria-hidden="true">&darr;</span></a>`)}
+      ${ST.inc('st1', `<a class="sh-btn st1" href="/new/#sahel">Pre-order Sahel <span aria-hidden="true">&rarr;</span></a>`)}
+      <a class="sh-btn st2" href="/new/#sahel">Shop Sahel <span aria-hidden="true">&rarr;</span></a>
     </div>
     <div class="sh-cue" aria-hidden="true">${T.scroll}<i></i></div>
   </section>
@@ -269,12 +272,15 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
   <section class="sh-pieces" data-plate="5" data-stop="The Seabed" aria-labelledby="shPieces">
     <div class="sh-rv">
       <p class="sh-num"><span>06</span>&mdash; ${T.piecesNum}</p>
-      <h2 id="shPieces">${T.piecesH}</h2>
+      <h2 id="shPieces">${ST.inc('st0', `<span class="st0">${T.piecesH}</span>`)}${ST.inc('st1', '<span class="st1">Seven pieces, on pre-order</span>')}<span class="st2">Seven pieces, out now</span></h2>
       <p class="sh-sub">${T.piecesP}</p>
       <div class="sh-grid">
       ${pieces}
       </div>
-      ${STATE === 'teaser' ? `<p class="sh-hint" aria-hidden="true">${T.hint}</p>` : ''}
+      ${STATE === 'teaser' ? ST.inc('st0', `<p class="sh-hint st0" aria-hidden="true">${T.hint}</p>`) : ''}
+      ${ST.inc('st1', `<p class="st1" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces and pre-order <span aria-hidden="true">&rarr;</span></a></p>
+      <p class="st1 sh-sub">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
+      <p class="st2" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
     </div>
   </section>
   <section class="sh-join" id="first-to-know" data-plate="5" data-stop="The Seabed" aria-labelledby="shJoin">
@@ -292,15 +298,16 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
       <div class="sh-links"><a class="sh-back" href="${T.backHref}">${T.back}</a><a class="sh-back" href="${T.trailHref}">${T.trail}</a></div>
     </div>
   </section>
-  <div class="sh-hud"><div class="sh-hud-t" aria-hidden="true"><small>${T.hud}</small><b id="shStop">The Shore</b><i><b id="shBar"></b></i></div><a class="sh-pill" href="#first-to-know">${T.cta}</a></div>
+  <div class="sh-hud"><div class="sh-hud-t" aria-hidden="true"><small>${T.hud}</small><b id="shStop">The Shore</b><i><b id="shBar"></b></i></div>${ST.inc('st0', `<a class="sh-pill st0" href="#first-to-know">${T.cta}</a>`)}${ST.inc('st1', '<a class="sh-pill st1" href="/new/#sahel">Pre-order Sahel</a>')}<a class="sh-pill st2" href="/new/#sahel">Shop Sahel</a></div>
 </main>
 <script src="/assets/sahra-sahel.js" defer></script>`;
 
   const canonical = `${SITE}/sahel/`;
+  const DESC = ST.stageNow() >= 1 ? 'Sahel (ساحل) is the Coast Edition from Sahra & Beyond: seven pieces designed in the UAE and drawn from the coast. ' + (ST.stageNow() === 1 ? 'Pre-order open.' : 'Out now.') : T.desc;
   write('sahel/index.html', shell({
-    title: T.title, desc: T.desc, canonical, bodyClass: 'sahel-page', activeNav: 'sahel',
+    title: T.title, desc: DESC, canonical, bodyClass: 'sahel-page', activeNav: 'sahel',
     image: `${SITE}/assets/sahel/sahel-og.jpg`,
-    jsonld: { '@context': 'https://schema.org', '@type': 'WebPage', name: 'Sahel: The Coast Edition', description: T.desc, url: canonical,
+    jsonld: { '@context': 'https://schema.org', '@type': 'WebPage', name: 'Sahel: The Coast Edition', description: DESC, url: canonical,
       isPartOf: { '@type': 'WebSite', name: 'Sahra & Beyond', url: SITE + '/' } },
     bodyHtml: body
   }));

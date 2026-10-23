@@ -782,12 +782,12 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=39dbeecb">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=5754defc">
 
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=91557a3b">
-<script src="/assets/sahra-welcome.js?v=d4769219" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=a801650a" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=63a7fcc7">
-<script src="/assets/sahra-nav.js?v=26a77aff" data-sbn defer></script>
+<script src="/assets/sahra-nav.js?v=29bcd553" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1335,7 +1335,10 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 </head>
 <body class="sahel-page">
 <header class="hdr sb-top"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span><span class="brand-sahra sb-house">Designed in the UAE for everyone who loves it.</span></span></a><nav class="hdr-nav"><a href="/#collection">Collection</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
-
+<style>html[data-stage="0"] .st1,html[data-stage="0"] .st2,html[data-stage="0"] .st12,html[data-stage="1"] .st0,html[data-stage="1"] .st2,html[data-stage="2"] .st0,html[data-stage="2"] .st1,html[data-stage="2"] .st01,html:not([data-stage]) .st1,html:not([data-stage]) .st2,html:not([data-stage]) .st12{display:none!important}</style>
+<script>(function(){var d=document.documentElement,T1=1793160000000,T2=1793304000000;function k(){var n=Date.now(),s=n>=T2?2:n>=T1?1:0;try{var m=/[?&]sbstage=([012])/.exec(location.search||'');if(m)s=+m[1];}catch(e){}return s;}
+function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttribute('data-stage',String(s));try{document.dispatchEvent(new CustomEvent('sb:stage',{detail:{stage:s}}));}catch(e){}}}
+set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}})();</script>
 <style>
 body.sahel-page{background:#0B1526;color:#F4ECDF}
 body.sahel-page .hdr{background:rgba(11,21,38,.55);border-bottom-color:rgba(217,195,165,.14);color:#F4ECDF}
@@ -1478,8 +1481,10 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
       <h1>Beyond the desert, there is a coast</h1>
     </div>
     <div class="sh-bot">
-      <p class="sh-kicker">Launching soon</p>
-      <a class="sh-btn" href="#first-to-know">Be first to know <span aria-hidden="true">&darr;</span></a>
+      <p class="sh-kicker"><span class="st0">Launching soon</span><span class="st1">Pre-order open</span><span class="st2">Out now</span></p>
+      <a class="sh-btn st0" href="#first-to-know">Be first to know <span aria-hidden="true">&darr;</span></a>
+      <a class="sh-btn st1" href="/new/#sahel">Pre-order Sahel <span aria-hidden="true">&rarr;</span></a>
+      <a class="sh-btn st2" href="/new/#sahel">Shop Sahel <span aria-hidden="true">&rarr;</span></a>
     </div>
     <div class="sh-cue" aria-hidden="true">Scroll to dive<i></i></div>
   </section>
@@ -1522,46 +1527,49 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
   <section class="sh-pieces" data-plate="5" data-stop="The Seabed" aria-labelledby="shPieces">
     <div class="sh-rv">
       <p class="sh-num"><span>06</span>&mdash; The Seabed</p>
-      <h2 id="shPieces">Seven pieces, still in the dark</h2>
+      <h2 id="shPieces"><span class="st0">Seven pieces, still in the dark</span><span class="st1">Seven pieces, on pre-order</span><span class="st2">Seven pieces, out now</span></h2>
       <p class="sh-sub">The Founding Edition came from the desert and the mountains. Sahel is the coast. Designed in the UAE.</p>
       <div class="sh-grid">
-      <button type="button" class="sh-piece sh-piece-tee" aria-label="Piece 01: Khor Fakkan Bay. Revealed soon">
+      <button type="button" class="sh-piece sh-piece-tee" aria-label="Piece 01: Khor Fakkan Bay.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-tee.webp);aspect-ratio:715/720"><img src="/assets/sahel/sahel-tee.webp" width="715" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">01</span><b>Khor Fakkan Bay</b><small>Tee &middot; Revealed soon</small>
+        <span class="sh-n">01</span><b>Khor Fakkan Bay</b><small>Tee &middot; <span class="st0">Revealed soon</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </button>
-      <button type="button" class="sh-piece sh-piece-tee" aria-label="Piece 02: Al Hamra Pearl Diver. Revealed soon">
+      <button type="button" class="sh-piece sh-piece-tee" aria-label="Piece 02: Al Hamra Pearl Diver.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-tee.webp);aspect-ratio:715/720"><img src="/assets/sahel/sahel-tee.webp" width="715" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">02</span><b>Al Hamra Pearl Diver</b><small>Tee &middot; Revealed soon</small>
+        <span class="sh-n">02</span><b>Al Hamra Pearl Diver</b><small>Tee &middot; <span class="st0">Revealed soon</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </button>
-      <button type="button" class="sh-piece sh-piece-tee" aria-label="Piece 03: Al Aqah Reef. Revealed soon">
+      <button type="button" class="sh-piece sh-piece-tee" aria-label="Piece 03: Al Aqah Reef.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-tee.webp);aspect-ratio:715/720"><img src="/assets/sahel/sahel-tee.webp" width="715" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">03</span><b>Al Aqah Reef</b><small>Tee &middot; Revealed soon</small>
+        <span class="sh-n">03</span><b>Al Aqah Reef</b><small>Tee &middot; <span class="st0">Revealed soon</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </button>
-      <button type="button" class="sh-piece sh-piece-tee" aria-label="Piece 04: Shams Tee. Revealed soon">
+      <button type="button" class="sh-piece sh-piece-tee" aria-label="Piece 04: Shams Tee.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-tee.webp);aspect-ratio:715/720"><img src="/assets/sahel/sahel-tee.webp" width="715" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">04</span><b>Shams Tee</b><small>Revealed soon</small>
+        <span class="sh-n">04</span><b>Shams Tee</b><small><span class="st0">Revealed soon</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </button>
-      <button type="button" class="sh-piece sh-piece-polo" aria-label="Piece 05: The Sahel Polo. Revealed soon">
+      <button type="button" class="sh-piece sh-piece-polo" aria-label="Piece 05: The Sahel Polo.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-polo.webp);aspect-ratio:587/720"><img src="/assets/sahel/sahel-polo.webp" width="587" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">05</span><b>The Sahel Polo</b><small>Revealed soon</small>
+        <span class="sh-n">05</span><b>The Sahel Polo</b><small><span class="st0">Revealed soon</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </button>
-      <button type="button" class="sh-piece sh-piece-hoodie" aria-label="Piece 06: Barr &amp; Bahr Hoodie. Revealed soon">
+      <button type="button" class="sh-piece sh-piece-hoodie" aria-label="Piece 06: Barr &amp; Bahr Hoodie.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-hoodie.webp);aspect-ratio:547/720"><img src="/assets/sahel/sahel-hoodie.webp" width="547" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">06</span><b>Barr &amp; Bahr Hoodie</b><small>Revealed soon</small>
+        <span class="sh-n">06</span><b>Barr &amp; Bahr Hoodie</b><small><span class="st0">Revealed soon</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </button>
-      <button type="button" class="sh-piece sh-piece-hoodie" aria-label="Piece 07: Ras Al Khor Hoodie. Revealed soon">
+      <button type="button" class="sh-piece sh-piece-hoodie" aria-label="Piece 07: Ras Al Khor Hoodie.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-hoodie.webp);aspect-ratio:547/720"><img src="/assets/sahel/sahel-hoodie.webp" width="547" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">07</span><b>Ras Al Khor Hoodie</b><small>Revealed soon</small>
+        <span class="sh-n">07</span><b>Ras Al Khor Hoodie</b><small><span class="st0">Revealed soon</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </button>
       </div>
-      <p class="sh-hint" aria-hidden="true">Tap a piece to bring the light</p>
+      <p class="sh-hint st0" aria-hidden="true">Tap a piece to bring the light</p>
+      <p class="st1" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces and pre-order <span aria-hidden="true">&rarr;</span></a></p>
+      <p class="st1 sh-sub">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>
+      <p class="st2" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
     </div>
   </section>
   <section class="sh-join" id="first-to-know" data-plate="5" data-stop="The Seabed" aria-labelledby="shJoin">
@@ -1579,7 +1587,7 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
       <div class="sh-links"><a class="sh-back" href="/shop/">Meanwhile, the Founding Edition is in the shop &rarr;</a><a class="sh-back" href="/trail/">Running kit? Sahra Trail &rarr;</a></div>
     </div>
   </section>
-  <div class="sh-hud"><div class="sh-hud-t" aria-hidden="true"><small>Al Aqah &middot; Fujairah</small><b id="shStop">The Shore</b><i><b id="shBar"></b></i></div><a class="sh-pill" href="#first-to-know">Be first to know</a></div>
+  <div class="sh-hud"><div class="sh-hud-t" aria-hidden="true"><small>Al Aqah &middot; Fujairah</small><b id="shStop">The Shore</b><i><b id="shBar"></b></i></div><a class="sh-pill st0" href="#first-to-know">Be first to know</a><a class="sh-pill st1" href="/new/#sahel">Pre-order Sahel</a><a class="sh-pill st2" href="/new/#sahel">Shop Sahel</a></div>
 </main>
 <script src="/assets/sahra-sahel.js?v=76097db0" defer></script>
 <footer class="ftr"><div class="ftr-tagline">Designed in the UAE for everyone who loves it.</div>
@@ -1663,7 +1671,7 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=5257bc82" defer></script>
+<script src="/assets/sahra-cart.js?v=d2cf7fd4" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;

@@ -210,3 +210,6 @@ html[data-guide] .ft-wa{display:none}
 
 /* 18 Oct 2026: SVG cart icon instead of the emoji (which rendered as blue clip-art on Android) */
 .sb-cart-btn .sb-cart-ic{width:24px;height:24px;display:block}
+/* 22 Oct 2026: pre-order lines (Sahel, Sahra Trail) say when they ship; the pre-order price is named, never struck through */
+.sb-line .sb-pre{display:block;font-size:12.5px;line-height:1.4;color:#7E4114;margin:2px 0}
+.sb-lp small{font-size:11.5px;color:#6B5B48;font-weight:400}

@@ -71,9 +71,9 @@
   var STAGES = [
     { from: 0, href: '/sahel/',
       en: 'Sahel and Sahra Trail pre-order opens Wed 28 Oct.' },
-    { from: Date.UTC(2026, 9, 28, 4, 0, 0), href: '/sahel/',
+    { from: Date.UTC(2026, 9, 28, 4, 0, 0), href: '/new/',
       en: 'Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.' },
-    { from: Date.UTC(2026, 9, 29, 20, 0, 0), href: '/sahel/',
+    { from: Date.UTC(2026, 9, 29, 20, 0, 0), href: '/new/',
       en: 'Sahel and Sahra Trail are out. Designed in the UAE for everyone who loves it.' }
   ];
   /* ?sbstage=0|1|2 previews a stage (for checking before the date; nothing is stored) */
@@ -106,8 +106,9 @@
       '<span class="sbw-bar-in">' +
         '<span class="sbw-dot" aria-hidden="true"></span>' +
         '<span class="sbw-msg"' + (AR ? ' dir="ltr" lang="en"' : '') + '>' + esc(S.en) + '</span>' +
-        '<span class="sbw-sep sbw-hide-sm sbw-shipwrap" aria-hidden="true">&middot;</span>' +
-        '<span class="sbw-hide-sm sbw-ship sbw-shipwrap"' + (AR ? ' dir="ltr" lang="en"' : '') + '>' + SHIP + '</span>' +
+        /* no next-day promise beside the pre-order stage: those pieces ship from Fri 30 Oct */
+        (k === 1 ? '' : '<span class="sbw-sep sbw-hide-sm sbw-shipwrap" aria-hidden="true">&middot;</span>' +
+        '<span class="sbw-hide-sm sbw-ship sbw-shipwrap"' + (AR ? ' dir="ltr" lang="en"' : '') + '>' + SHIP + '</span>') +
       '</span>';
   }
   render();

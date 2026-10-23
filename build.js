@@ -456,7 +456,11 @@ function askBlock(name, category) {
      'which place next' or offer 'a Snoopy Island tee' ('Snoopy' may not name a garment: Peanuts
      trademark, Decision Log 5 Oct). Every coast page gets the same line, so none is singled out
      before the reveal. */
-  if (category === 'Coast') return `<section class="askcta askcta-sahel"><span class="teecta-eyebrow">The coast is next</span><h2>Sahel, the Coast Edition</h2><p>Our next edition is drawn from the coast of the UAE. It is launching soon.</p><p class="askcta-row"><a class="btn" href="/sahel/#first-to-know" data-track="place_sahel">Be first to know &rarr;</a><a class="btn ghost" href="/sahel/">See the page</a></p></section>`;
+  /* 22 Oct 2026: staged with the Sahel pre-order (preorder-page.js): before Wed 28 Oct 08:00 UAE the teaser, then pre-order, then out */
+  if (category === 'Coast') { const PO = require('./preorder-page.js');
+    return PO.stageHead() + `<section class="askcta askcta-sahel">` +
+      PO.inc('st0', `<div class="st0"><span class="teecta-eyebrow">The coast is next</span><h2>Sahel, the Coast Edition</h2><p>Our next edition is drawn from the coast of the UAE. Pre-order opens Wed 28 Oct.</p><p class="askcta-row"><a class="btn" href="/sahel/#first-to-know" data-track="place_sahel">Join the list &rarr;</a><a class="btn ghost" href="/sahel/">See the page</a></p></div>`) +
+      `<div class="st12"><span class="teecta-eyebrow">From the coast</span><h2>Sahel, the Coast Edition</h2><p>Seven pieces drawn from the coast of the UAE. Designed in the UAE.</p><p class="askcta-row"><a class="btn" href="/new/#sahel" data-track="place_sahel">` + PO.inc('st1', '<span class="st1">Pre-order Sahel</span>') + `<span class="st2">Shop Sahel</span> &rarr;</a><a class="btn ghost" href="/sahel/">See the page</a></p></div></section>`; }
   const generic = /^the /.test(name);
   const an = /^[aeiou]/i.test(name) ? 'an' : 'a';   /* 16 Oct 2026: "an Al Rams Beach tee", not "a Al" */
   const msg = encodeURIComponent(generic ? `I'd wear a tee drawn from ${name}` : `I'd wear ${an} ${name} tee`);
@@ -2530,7 +2534,7 @@ if (LAUNCHED || REVEALED) (function () {
       @media(max-width:700px){.sp-trail{grid-template-columns:1fr;width:calc(100% - 32px);margin:36px auto 72px}.sp-trail>div{padding:22px 18px 20px}}
     </style>`;
 
-    const TRAIL_BAND = '<section class="sp-trail" aria-labelledby="spTrailH"><span class="sp-trail-im"><img src="/assets/trail/reveal/trail-kit-720.webp" width="720" height="547" alt="The Sahra Trail Kit: the Tee and the 2-in-1 Shorts, a pre-production render" loading="lazy" decoding="async"><span class="sp-mock">Mock-up</span></span><div><p class="sp-trail-k">Sahra Trail &middot; the first run</p><h2 id="spTrailH">Trail and run wear, revealed</h2><ul><li><span>Sahra Trail Tee</span><b>AED 139</b></li><li><span>Sahra Trail 2-in-1 Shorts</span><b>AED 169</b></li><li><span>The Kit, Tee + Shorts</span><b>AED 249</b></li></ul><p class="sp-trail-s">Not on sale yet. Pre-order opens Wed 28 Oct.</p><a class="sp-trail-a" href="/trail/">See Sahra Trail &rarr;</a><p class="sp-trail-r">Pre-production renders</p></div></section>';
+    const TRAIL_BAND = require('./preorder-page.js').stageHead() + '<section class="sp-trail" aria-labelledby="spTrailH"><span class="sp-trail-im"><img src="/assets/trail/reveal/trail-kit-720.webp" width="720" height="547" alt="The Sahra Trail Kit: the Tee and the 2-in-1 Shorts, a pre-production render" loading="lazy" decoding="async"><span class="sp-mock">Mock-up</span></span><div><p class="sp-trail-k">Sahra Trail &middot; the first run</p><h2 id="spTrailH">Trail and run wear, revealed</h2><ul><li><span>Sahra Trail Tee</span><b>AED 139</b></li><li><span>Sahra Trail 2-in-1 Shorts</span><b>AED 169</b></li><li><span>The Kit, Tee + Shorts</span><b>AED 249</b></li></ul>' + require('./preorder-page.js').inc('st0', '<p class="sp-trail-s st0">Not on sale yet. Pre-order opens Wed 28 Oct.</p>') + require('./preorder-page.js').inc('st1', '<p class="sp-trail-s st1">Pre-order is open. Ships from Fri 30 Oct.</p>') + require('./preorder-page.js').inc('st0', '<a class="sp-trail-a st0" href="/trail/">See Sahra Trail &rarr;</a>') + '<a class="sp-trail-a st12" href="/new/#trail">Shop Sahra Trail &rarr;</a><p class="sp-trail-r">Pre-production renders</p></div></section>';
     html = html.replace(
       '<main id="products"><div class="loading">Loading the collection&hellip;</div></main>',
       gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>' + TRAIL_BAND
@@ -3616,6 +3620,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])
   .concat(['', ...require('./trail-hikes.js').ORDER.concat(require('./trail-hikes.js').EXTRA).map(x => x + '/')].map(x => ({ u: `${SITE}/trail/hikes/${x}`, m: buildDate, p: '0.7' })))   /* Sahra Trail hikes for the QR cards (6 Oct 2026) */
   .concat([{ u: `${SITE}/sahel/`, m: buildDate, p: '0.8' }])   /* Sahel teaser page (6 Oct 2026) */
+  .concat(require('./preorder-page.js').stageNow() >= 1 ? [`${SITE}/new/`].concat(require('./preorder-page.js').urls(SITE)).map(u => ({ u, m: buildDate, p: '0.9' })) : [])   /* pre-order pages join the sitemap once pre-order opens (22 Oct 2026) */
   .concat(fs.existsSync(path.join(ROOT, 'feed', 'index.html')) ? [{ u: `${SITE}/feed/`, m: buildDate, p: '0.5' }] : [])   /* every Instagram post with where it lives on the site (4 Oct 2026); /q/ pages are noindex */
   /* SEO handover item 11: the three live Arabic pages join the sitemap only once Faheem confirms
      they count as reviewed (he asked on 2 Oct that Arabic stays noindex until he has reviewed it). */
@@ -4207,6 +4212,7 @@ const AR_PDP_NOINDEX = true;
    The scene lives in assets/sahra-trail.js. The lockup below is the locked
    master's own outlines (print-files/sahra-trail/lockup), never retyped. */
 (function buildTrail() {
+  const PO = require('./preorder-page.js');
   const L = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sahra-trail-lockup.json'), 'utf8'));
   const T = {
     en: {
@@ -4467,6 +4473,7 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
   .tr-flash,.tr-sweep,.tr-cue i{animation:none}
 }
 </style>
+${require('./preorder-page.js').stageHead()}
 <canvas id="trGL" aria-hidden="true"></canvas>
 <div class="tr-veil" aria-hidden="true"></div>
 <main class="tr" id="trail">
@@ -4476,7 +4483,7 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
     ${t.tag ? `<p class="tr-tagline" lang="en" dir="ltr">${t.tag}</p>` : `<h1 class="tr-tagline">${t.h1}</h1>`}
     <p class="tr-kicker">${t.kicker}</p>
     ${t.tag ? `<h1>${t.h1}</h1>` : ''}
-    <a class="tr-btn" href="#first-access">${t.cta} <span aria-hidden="true">&darr;</span></a>
+    ${lang === 'ar' ? `<a class="tr-btn" href="#first-access">${t.cta} <span aria-hidden="true">&darr;</span></a>` : PO.inc('st0', `<a class="tr-btn st0" href="#first-access">${t.cta} <span aria-hidden="true">&darr;</span></a>`) + PO.inc('st1', `<a class="tr-btn st1" href="/new/#trail">Pre-order Sahra Trail <span aria-hidden="true">&rarr;</span></a>`) + `<a class="tr-btn st2" href="/new/#trail">Shop Sahra Trail <span aria-hidden="true">&rarr;</span></a>` + PO.inc('st1', `<p class="tr-cta-sub st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
     <div class="tr-cue" aria-hidden="true">${t.scroll}<i></i></div>
   </section>
   ${chapters}
@@ -4490,9 +4497,9 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
           <button type="button" class="tr-film-btn" data-play="${t.rv.play}" data-pause="${t.rv.pause}" aria-controls="${id}film">${t.rv.play}</button>
           <figcaption>${t.rv.film} &middot; ${t.rv.renders}</figcaption></figure>
         <div class="tr-cards">
-          ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${r.price}</p></div><p class="tr-line">${r.line}</p><ul>${r.feats.map(f => `<li>${f}</li>`).join('')}</ul></article>`; }).join('')}
+          ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${r.price}</p></div><p class="tr-line">${r.line}</p><ul>${r.feats.map(f => `<li>${f}</li>`).join('')}</ul>${lang === 'ar' ? '' : `<span class="st12"><a class="tr-btn tr-btn-sm" href="/products/sahra-trail-${k === 'tee' ? 'tee' : '2-in-1-short'}/">` + PO.inc('st1', '<span class="st1">Pre-order</span>') + `<span class="st2">Shop</span> <span aria-hidden="true">&rarr;</span></a></span>`}</article>`; }).join('')}
           <article class="tr-card tr-kit"><img src="/assets/trail/reveal/trail-kit-720.webp" srcset="/assets/trail/reveal/trail-kit-720.webp 720w, /assets/trail/reveal/trail-kit.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${t.rv.kit.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${t.rv.kit.name}</h3><p class="tr-price">${t.rv.kit.price}</p></div><p class="tr-line">${t.rv.kit.line} <b>${t.rv.kit.save}</b></p>
-            <a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a>${t.rv.ctaSub ? `<p class="tr-cta-sub">${t.rv.ctaSub}</p>` : ''}</article>
+            ${lang === 'ar' ? `<a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a>${t.rv.ctaSub ? `<p class="tr-cta-sub">${t.rv.ctaSub}</p>` : ''}` : PO.inc('st0', `<span class="st0"><a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a>${t.rv.ctaSub ? `<p class="tr-cta-sub">${t.rv.ctaSub}</p>` : ''}</span>`) + `<span class="st12"><a class="tr-btn tr-btn-sm" href="/products/sahra-trail-kit/">` + PO.inc('st1', '<span class="st1">Pre-order the kit</span>') + `<span class="st2">Shop the kit</span> <span aria-hidden="true">&rarr;</span></a></span>`}</article>
           <p class="tr-renders">${t.rv.renders}</p>
         </div>
       </div>
@@ -4539,6 +4546,8 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
 
 /* Sahel · The Coast Edition (6 Oct 2026): the page lives in sahel-page.js */
 require('./sahel-page.js')({ shell, write, SITE });
+/* Sahel + Sahra Trail pre-order and launch (22 Oct 2026): 14 product pages and /new/, staged by time (see preorder-page.js) */
+require('./preorder-page.js')({ shell, write, SITE });
 
 /* Sahra Trail hikes for the QR cards (6 Oct 2026): six routes, an index and the /h/<n>/ short addresses. PERMANENT URLS. */
 require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOperator });

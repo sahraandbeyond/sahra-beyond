@@ -44,6 +44,14 @@
       identical to a successful one. Failures now surface in the drawer.
    ========================================================================== */
 (function () {
+  /* 22 Oct 2026: Sahel and Sahra Trail pre-order pieces. Their bag image is the site's labelled studio mock-up
+     (Shopify holds no images for them yet). A pre-order line says when it ships, shows the pre-order price
+     without a struck-through list price, and never shows a remaining count (no scarcity wording). */
+  var PRE = { 'khor-fakkan-bay-tee-regular': 'kfb-back', 'khor-fakkan-bay-tee-oversized': 'kfb-back', 'al-hamra-pearl-diver-tee-regular': 'pearl-back', 'al-hamra-pearl-diver-tee-oversized': 'pearl-back',
+    'al-aqah-reef-tee-regular': 'reef-back', 'al-aqah-reef-tee-oversized': 'reef-back', 'shams-tee-regular': 'shams-front', 'shams-tee-oversized': 'shams-front', 'the-sahel-polo': '',
+    'barr-and-bahr-hoodie': 'barr-back', 'ras-al-khor-hoodie': 'rakh-back', 'sahra-trail-tee': 'trail-tee-front', 'sahra-trail-2-in-1-short': 'trail-short-front', 'sahra-trail-kit': 'trail-kit-front' };
+  var PRE_IN_HAND = false;   /* set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
+  function isPre(l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; return !!h && Object.prototype.hasOwnProperty.call(PRE, h); }
   var CART_REAL = { 'al-quaa-galaxy-regular': '/shirts/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/emptyquarter-model-stand.webp', 'hajar-mountains-regular': '/shirts/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/hajar-lake-back-her.webp', 'sand-polo': '/shirts/polo-dune-front.webp' };
   var S = { domain: 'sahra-beyond.myshopify.com', token: 'cc42ba8e74eb27c4f3c062d93f893fa0', v: '2024-10' };
 
@@ -93,6 +101,8 @@
   function linePrice(l) {
     var m = l.merchandise, off = lineSaving(l);
     if (!off) return '<span>' + money(m.price.amount, m.price.currencyCode) + '</span>';
+    /* the pre-order 20%: the price paid, named, with no struck-through list price (Faheem, 22 Oct 2026) */
+    if (isPre(l)) return '<span class="sb-lp"><b>' + money(parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1), l.cost.totalAmount.currencyCode) + '</b> <small>pre-order price</small></span>';
     var unit = parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1);
     return '<span class="sb-lp"><s>' + money(m.price.amount, m.price.currencyCode) + '</s> ' +
       '<b>' + money(unit, l.cost.totalAmount.currencyCode) + '</b></span>';
@@ -140,10 +150,11 @@
     var t = clockText(); if (!t) return;
     [].forEach.call(document.querySelectorAll('[data-sb-clock]'), function (e) { if (e.textContent !== t) e.textContent = t; });
   }
+  /* 22 Oct 2026: "Any 2 tees for AED 359" covers the six Founding Edition tees only (the Shopify discount's own
+     product list). Sahel tees share the T-Shirt product type, so the type is no longer enough. */
   function isTee(l) {
-    var m = l && l.merchandise;
-    return !!(m && m.product && /t-?shirt/i.test(m.product.productType || '')) ||
-      !!(m && m.product && /^(hajar|empty-quarter|al-quaa)/.test(m.product.handle || ''));
+    var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle;
+    return !!h && TEES.some(function (t) { return t.h === h; });
   }
   function money(a, c) {
     var n = parseFloat(a || 0);
@@ -254,7 +265,8 @@
      include a purchased tote. */
   function giftEarningQty() {
     var n = 0;
-    cartNodes().forEach(function (l) { if (!isGift(l) && !isTote(l)) n += (l.quantity || 0); });
+    /* 22 Oct 2026: the free tote is a Founding Edition gift; Sahel and Sahra Trail pre-order pieces do not earn it */
+    cartNodes().forEach(function (l) { if (!isGift(l) && !isTote(l) && !isPre(l)) n += (l.quantity || 0); });
     return n;
   }
 
@@ -459,7 +471,7 @@
     body.innerHTML = err + lines.map(function (l) {
       var m = l.merchandise;
       /* 13 Oct 2026: Shopify's product images are studio renders; the bag shows the real photograph */
-      var hh = m.product && m.product.handle, real = (window.SB_IMGS && SB_IMGS[hh] && SB_IMGS[hh][0]) || CART_REAL[hh];
+      var hh = m.product && m.product.handle, real = (window.SB_IMGS && SB_IMGS[hh] && SB_IMGS[hh][0]) || CART_REAL[hh] || (PRE[hh] ? '/assets/preorder/' + PRE[hh] + '-720.webp' : '');
       var img = real ? real.replace('/shirts/', '/shirts/card/') : ((m.product && m.product.featuredImage) ? m.product.featuredImage.url : '');
       var q = l.quantity;
       /* The gift has no product page (headless-only), so no link; and no
@@ -489,19 +501,21 @@
              : '<span class="sb-noimg"></span>') +
         '<div class="sb-lt">' +
           '<a href="/products/' + esc(m.product.handle) + '/">' + esc(m.product.title) + '</a>' +
-          '<span>Size ' + esc(m.title) + '</span>' +
+          (hh === 'sahra-trail-kit' && / \/ /.test(m.title) ? '<span>Tee ' + esc(m.title.split(' / ')[0]) + ', Short ' + esc(m.title.split(' / ')[1]) + '</span>' : '<span>Size ' + esc(m.title) + '</span>') +
+          (isPre(l) && !PRE_IN_HAND ? '<span class="sb-pre">Pre-order. Ships from Fri 30 Oct.</span>' : '') +
           linePrice(l) +
           /* Bug 2 + 3: quantity is visible AND adjustable */
           '<span class="sb-qty">' +
             '<button type="button" class="sb-q" data-act="dec" data-line="' + esc(l.id) + '" data-qty="' + q + '" aria-label="Decrease quantity">&minus;</button>' +
             '<span class="sb-qn" aria-label="Quantity">' + q + '</span>' +
             (function () { var qa = l.merchandise && l.merchandise.quantityAvailable; var capped = (typeof qa === 'number') && q >= qa;
+              if (isPre(l)) return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" aria-label="Increase quantity (no more available in this size)"' : ' aria-label="Increase quantity"') + '>+</button>';
               return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" title="Only ' + qa + ' left" aria-label="Increase quantity (only ' + qa + ' left)"' : ' aria-label="Increase quantity"') + '>+</button>' +
                 (capped && !(qa > 0 && qa <= 3) ? '<span class="sb-cap">Only ' + qa + ' left</span>' : ''); })() +
           '</span>' +
           /* 7 Oct 2026: live remaining count, 3 or fewer only; never the run size */
           (function () { var qa = l.merchandise && l.merchandise.quantityAvailable;
-            return (typeof qa === 'number' && qa > 0 && qa <= 3) ? '<span class="sb-left">Only ' + qa + ' left in ' + esc(m.title) + '</span>' : ''; })() +
+            return (!isPre(l) && typeof qa === 'number' && qa > 0 && qa <= 3) ? '<span class="sb-left">Only ' + qa + ' left in ' + esc(m.title) + '</span>' : ''; })() +
         '</div>' +
         '<button class="sb-rm" data-act="rm" data-line="' + esc(l.id) + '" aria-label="Remove ' + esc(m.product.title) + '">&#10005;</button>' +
       '</div>';
@@ -632,7 +646,9 @@
          of rendering a meter that is always full. GCC keeps its AED 390 meter. */
       if (mkt !== 'gcc') {
         el.hidden = false;
-        el.innerHTML = '<span class="sb-free-t sb-free-ok">\u2713 Free next-day delivery \u00b7 order by 2 pm</span>' +
+        /* 22 Oct 2026: a bag holding pre-order pieces does not promise next-day delivery for them */
+        var anyPre = !PRE_IN_HAND && cartNodes().some(isPre);
+        el.innerHTML = '<span class="sb-free-t sb-free-ok">' + (anyPre ? '\u2713 Free UAE delivery \u00b7 pre-order pieces ship from Fri 30 Oct' : '\u2713 Free next-day delivery \u00b7 order by 2 pm') + '</span>' +
           '<span class="sb-free-bar"><span style="width:100%"></span></span>';
         return;
       }
@@ -647,6 +663,16 @@
         el.innerHTML = '<span class="sb-free-t">AED ' + leftTxt + ' away from free delivery</span>' +
           '<span class="sb-free-bar"><span style="width:' + Math.max(6, Math.round(n / th * 100)) + '%"></span></span>';
       }
+    })();
+    /* 22 Oct 2026: pre-order pieces and Sahra Trail (no size chart until the pieces are measured) */
+    (function () {
+      var note = foot.querySelector('.sb-note'); if (!note) return;
+      var nodes = cartNodes(), anyPre = !PRE_IN_HAND && nodes.some(isPre);
+      var trail = nodes.some(function (n) { var h = n.merchandise && n.merchandise.product && n.merchandise.product.handle || ''; return /^sahra-trail-/.test(h); });
+      var d = note.querySelector('.sb-note-d'); if (d) d.style.display = anyPre ? 'none' : '';
+      var a = note.querySelector('a[href="/size-guide/"]');
+      if (a && trail && !note.getAttribute('data-trail')) { note.setAttribute('data-trail', '1'); a.setAttribute('href', 'https://wa.me/971585449946'); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); a.textContent = 'message us'; }
+      else if (a && !trail && note.getAttribute('data-trail')) { note.removeAttribute('data-trail'); a.setAttribute('href', '/size-guide/'); a.removeAttribute('target'); a.removeAttribute('rel'); a.textContent = 'check the chart'; }
     })();
     foot.hidden = false;
   }
@@ -676,7 +702,7 @@
         (CART.lines && CART.lines.edges || []).forEach(function (e) { if (e.node.id === lineId) got = e.node; });
         if (q > 0 && got && got.quantity < q) {
           var m = got.merchandise || {}, nm = (m.product && m.product.title) || 'this item';
-          lastError = got.quantity === 1
+          lastError = isPre(got) ? 'That is as many as we can take in ' + (m.title || 'that size') + ' for now, so it stays at ' + got.quantity + '.' : got.quantity === 1
             ? 'Only one ' + nm + (m.title ? ' in ' + m.title : '') + ' is left, so it stays at 1.'
             : 'Only ' + got.quantity + ' of ' + nm + (m.title ? ' in ' + m.title : '') + ' are left, so it stays at ' + got.quantity + '.';
           pending[lineId] = got.quantity;
