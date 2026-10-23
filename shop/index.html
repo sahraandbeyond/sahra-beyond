@@ -252,7 +252,10 @@ body.shop-page .fold-b .fit-note{margin:0 0 8px;line-height:1.6}
   body.shop-page .pthumbs{max-height:44vh!important}
 }
 @media(max-width:560px){
-  .sring{--sring-w:136px;--sring-h:350px;padding-top:12px}
+  .sring{--sring-w:136px;--sring-h:400px;padding-top:12px}
+  /* 23 Oct 2026: the front card (photo, two-line name, price, size buttons) is ~300px tall and was
+     cut off at the bottom of the old 350px stage; centre it in a 400px stage instead */
+  .sring-card{margin-top:calc(var(--sring-w) * -1.08)}
   .sring-head p{display:none}
   .sring-head h2{font-size:24px}
 }
@@ -2498,7 +2501,23 @@ function draw(){
    spins on drag / flick / arrows / arrow keys, and a tap turns the card to the front
    and then scrolls the page to that product's panel. */
 function shopRing(){
-  var st=document.getElementById('shopRing'); if(!st||!window.gsap) return;
+  var st=document.getElementById('shopRing'); if(!st) return;
+  /* 23 Oct 2026 (Faheem, phone screenshot: "Spin the collection is not working on phone"): phones never
+     load gsap (13 Sep performance audit), and this used to return here, so the ring sat as a pile of
+     unplaced cards with dead arrows. The ring needs only three things from gsap - set a transform, tween
+     one number, tick each frame - so without it a small local stand-in does the same jobs. */
+  var gsap=window.gsap||(function(){
+    var ease=function(t){return 1-Math.pow(1-t,3);};   /* power3.out */
+    return {
+      set:function(el,v){el.style.transform='translate3d('+(v.x||0)+'px,0,'+(v.z||0)+'px) rotateY('+(v.rotateY||0)+'deg) scale('+(v.scale==null?1:v.scale)+')';
+        if(v.opacity!=null)el.style.opacity=v.opacity; if(v.zIndex!=null)el.style.zIndex=v.zIndex;},
+      to:function(obj,v){var from=obj.a,to=v.a,dur=(v.duration||0.5)*1000,t0=performance.now(),dead=false;
+        (function f(now){if(dead)return;var k=Math.min(1,(now-t0)/dur);obj.a=from+(to-from)*ease(k);if(v.onUpdate)v.onUpdate();
+          if(k<1)requestAnimationFrame(f);else if(v.onComplete)v.onComplete();})(t0);
+        return {kill:function(){dead=true;}};},
+      ticker:{add:function(fn){var last=performance.now();(function f(now){var dt=now-last;last=now;fn(now/1000,dt);requestAnimationFrame(f);})(last);}}
+    };
+  })();
   var stage=st.querySelector('.sring-stage'),cards=[].slice.call(st.querySelectorAll('.sring-card')),n=cards.length; if(n<2) return;
   var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var S={a:0},R=0,stepA=Math.PI*2/n,cap=st.querySelector('.sring-cap'),tw=null,front=-1,inView=false,lastTouch=performance.now(),seen=false;
