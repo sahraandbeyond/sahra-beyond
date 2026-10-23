@@ -1633,9 +1633,9 @@ html body .folds summary h2,html body .fold summary h2{font-size:22px!important;
 html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
 </style>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=91557a3b">
-<script src="/assets/sahra-welcome.js?v=a801650a" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=c7cdb84f" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=63a7fcc7">
-<script src="/assets/sahra-nav.js?v=29bcd553" data-sbn defer></script>
+<script src="/assets/sahra-nav.js?v=60690f2f" data-sbn defer></script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/">
 <link rel="alternate" hreflang="x-default" href="https://www.sahraandbeyond.ae/">
@@ -1690,6 +1690,36 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <a class="hx-tr hx-all" href="/t-shirts/" data-track="hero_shop">Shop all tees &rarr;</a>
 </div>
 
+<!-- 23 Oct 2026: Sahel + Sahra Trail launch band, filled by build.js from preorder-page.js homeBand() -->
+<!--LAUNCH:START--><style>html[data-stage="0"] .st1,html[data-stage="0"] .st2,html[data-stage="0"] .st12,html[data-stage="1"] .st0,html[data-stage="1"] .st2,html[data-stage="2"] .st0,html[data-stage="2"] .st1,html[data-stage="2"] .st01,html:not([data-stage]) .st1,html:not([data-stage]) .st2,html:not([data-stage]) .st12{display:none!important}</style>
+<script>(function(){var d=document.documentElement,T1=1793160000000,T2=1793304000000;function k(){var n=Date.now(),s=n>=T2?2:n>=T1?1:0;try{var m=/[?&]sbstage=([012])/.exec(location.search||'');if(m)s=+m[1];}catch(e){}return s;}
+function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttribute('data-stage',String(s));try{document.dispatchEvent(new CustomEvent('sb:stage',{detail:{stage:s}}));}catch(e){}}}
+set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
+/* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
+function days(){try{var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).split('-'),n=Math.round((Date.UTC(2026,9,28)-Date.UTC(+t[0],t[1]-1,+t[2]))/864e5),x=n>1?'That is in '+n+' days.':n===1?'That is tomorrow.':n===0?'That is today.':'';[].forEach.call(document.querySelectorAll('[data-days]'),function(e){e.textContent=x;});}catch(e){}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><style>
+.lb{background:#0E1A2E;color:#F4ECDF;padding:46px 20px 50px;position:relative;z-index:1}
+.lb-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:34px;align-items:center}
+.lb-k{font:12px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#D9C3A5;margin:0 0 10px}
+.lb h2{font:600 clamp(30px,3.6vw,46px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 12px;color:#F4ECDF;letter-spacing:-.01em}
+.lb p{font:16px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#E9DFCF;max-width:44ch}
+.lb-d{color:#D9C3A5!important}
+.lb-a{display:inline-block;margin-top:12px;background:#F4ECDF;color:#0E1A2E;font:600 15px Jost,system-ui,sans-serif;padding:14px 26px;border-radius:999px;text-decoration:none}
+.lb-a:focus-visible,.lb-c:focus-visible{outline:3px solid #D9C3A5;outline-offset:3px}
+.lb-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.lb-c{display:block;color:#F4ECDF;text-decoration:none}
+.lb-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#1B2A40}
+.lb-c img{width:100%;height:100%;object-fit:cover;display:block}
+.lb-c i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(244,236,223,.92);color:#0E1A2E}
+.lb-c b{display:block;font:500 15px/1.3 Jost,system-ui,sans-serif;margin:8px 0 1px}
+.lb-c small{font:13px Jost,system-ui,sans-serif;color:#C9BBA6}
+@media(max-width:860px){.lb{padding:34px 16px 38px}.lb-in{grid-template-columns:1fr;gap:20px}.lb-g{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px}.lb-c{flex:0 0 42%;scroll-snap-align:start}}
+</style><section class="lb" id="s-launch" aria-labelledby="lbH"><div class="lb-in"><div>
+    <p class="lb-k">Sahel &middot; The Coast Edition &nbsp;+&nbsp; Sahra Trail</p>
+    <h2 id="lbH"><span class="st01">Sahel and Sahra Trail</span><span class="st2">Sahel and Sahra Trail are out</span></h2>
+    <p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone.</p><p class="st0 lb-d" data-days></p><p class="st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p><p class="st2">Designed in the UAE for everyone who loves it.</p>
+    <a class="lb-a" href="/new/"><span class="st0">See the pieces</span><span class="st1">Pre-order now</span><span class="st2">Shop the new pieces</span> &rarr;</a>
+  </div><div class="lb-g"><a class="lb-c" href="/products/khor-fakkan-bay-tee-oversized/"><span><img src="/assets/preorder/kfb-back-720.webp" width="720" height="900" alt="Khor Fakkan Bay Tee, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Khor Fakkan Bay Tee</b><small>AED 199</small></a><a class="lb-c" href="/products/al-aqah-reef-tee-oversized/"><span><img src="/assets/preorder/reef-back-720.webp" width="720" height="900" alt="Al Aqah Reef Tee, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Al Aqah Reef Tee</b><small>AED 199</small></a><a class="lb-c" href="/products/barr-and-bahr-hoodie/"><span><img src="/assets/preorder/barr-back-720.webp" width="720" height="900" alt="Barr & Bahr Hoodie, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Barr &amp; Bahr Hoodie</b><small>AED 229</small></a><a class="lb-c" href="/products/sahra-trail-kit/"><span><img src="/assets/preorder/trail-kit-front-720.webp" width="720" height="900" alt="Sahra Trail Kit, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Sahra Trail Kit</b><small>AED 249</small></a></div></div></section><!--LAUNCH:END-->
 <!-- 4b - THE COLLECTION RING. Moved out of the hero 21 Sep so the model
      slideshow owns the first screen. Same markup, same script hooks - the ring
      script finds it by id, not by position. -->
@@ -1950,7 +1980,59 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <h2 id="ig-strip-h" class="ig-eyebrow">From our Instagram</h2>
     <a class="ig-follow" href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">@sahraandbeyond.ae &#8599;</a>
   </div>
-  <div class="ig-rail" data-newest="DelffwYCH42"><article class="ig-card has-slides" data-id="DelffwYCH42" data-date="2026-10-17T06:43:38.633Z" data-slides="/uploads/ig/s/DelffwYCH42/01.mp4|/uploads/ig/s/DelffwYCH42/02.mp4|/uploads/ig/s/DelffwYCH42/03.mp4|/uploads/ig/s/DelffwYCH42/04.mp4|/uploads/ig/s/DelffwYCH42/05.mp4|/uploads/ig/s/DelffwYCH42/06.mp4">
+  <div class="ig-rail" data-newest="DeuWeEaopUF"><article class="ig-card" data-id="DeuWeEaopUF" data-date="2026-10-20T17:17:56.110Z">
+  <div class="ig-media">
+    <img class="ig-cover" src="/uploads/ig/DeuWeEaopUF-540.webp" srcset="/uploads/ig/DeuWeEaopUF-540.webp 540w, /uploads/ig/DeuWeEaopUF.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
+    
+    <a class="ig-open" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeuWeEaopUF/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>
+    
+    <span class="ig-kind">Reel</span>
+  </div>
+  <div class="ig-txt">
+    <span class="ig-ago" data-date="2026-10-20T17:17:56.110Z">Posted 3 days ago</span>
+    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeuWeEaopUF/" target="_blank" rel="noopener" aria-label="Quiet, from above: one figure on the dunes, a Reel on @sahraandbeyond.ae, opens on Instagram">Quiet, from above: one figure on the dunes</a></h3>
+    <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
+  </div>
+</article><article class="ig-card" data-id="DeuWOz6oxJx" data-date="2026-10-20T17:15:51.118Z">
+  <div class="ig-media">
+    <img class="ig-cover" src="/uploads/ig/DeuWOz6oxJx-540.webp" srcset="/uploads/ig/DeuWOz6oxJx-540.webp 540w, /uploads/ig/DeuWOz6oxJx.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
+    
+    <a class="ig-open" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeuWOz6oxJx/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>
+    
+    <span class="ig-kind">Reel</span>
+  </div>
+  <div class="ig-txt">
+    <span class="ig-ago" data-date="2026-10-20T17:15:51.118Z">Posted 3 days ago</span>
+    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeuWOz6oxJx/" target="_blank" rel="noopener" aria-label="The Hajar Mountains Tee, worn: the print on your back, a Reel on @sahraandbeyond.ae, opens on Instagram">The Hajar Mountains Tee, worn: the print on your back</a></h3>
+    <a class="ig-wear" href="/products/hajar-mountains-regular/">The Hajar Mountains Tee &rarr;</a>
+  </div>
+</article><article class="ig-card has-slides" data-id="DetklxWiAL5" data-date="2026-10-20T10:02:04.806Z" data-slides="/uploads/ig/s/DetklxWiAL5/01.mp4|/uploads/ig/s/DetklxWiAL5/02.mp4|/uploads/ig/s/DetklxWiAL5/03.mp4|/uploads/ig/s/DetklxWiAL5/04.mp4|/uploads/ig/s/DetklxWiAL5/05.mp4|/uploads/ig/s/DetklxWiAL5/06.mp4|/uploads/ig/s/DetklxWiAL5/07.mp4">
+  <div class="ig-media">
+    <img class="ig-cover" src="/uploads/ig/DetklxWiAL5-540.webp" srcset="/uploads/ig/DetklxWiAL5-540.webp 540w, /uploads/ig/DetklxWiAL5.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
+    <div class="ig-seg" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <a class="ig-open" href="https://www.instagram.com/sahraandbeyond.ae/p/DetklxWiAL5/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>
+    <button class="ig-tap ig-prev" type="button" aria-label="Previous slide" hidden></button><button class="ig-tap ig-next" type="button" aria-label="Next slide" hidden></button><span class="ig-sr" aria-live="polite"></span>
+    <span class="ig-kind">Carousel · 7 slides</span>
+  </div>
+  <div class="ig-txt">
+    <span class="ig-ago" data-date="2026-10-20T10:02:04.806Z">Posted 3 days ago</span>
+    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DetklxWiAL5/" target="_blank" rel="noopener" aria-label="Desk at 3:03 PM, dune by 6:08 PM: the Sahra Polo on @sahraandbeyond.ae, opens on Instagram">Desk at 3:03 PM, dune by 6:08 PM: the Sahra Polo</a></h3>
+    <a class="ig-wear" href="/products/sand-polo/">The Sahra Polo Shirt &rarr;</a>
+  </div>
+</article><article class="ig-card" data-id="DeoTa47I0gK" data-date="2026-10-18T08:55:50.607Z">
+  <div class="ig-media">
+    <img class="ig-cover" src="/uploads/ig/DeoTa47I0gK-540.webp" srcset="/uploads/ig/DeoTa47I0gK-540.webp 540w, /uploads/ig/DeoTa47I0gK.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
+    
+    <a class="ig-open" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeoTa47I0gK/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>
+    
+    <span class="ig-kind">Reel</span>
+  </div>
+  <div class="ig-txt">
+    <span class="ig-ago" data-date="2026-10-18T08:55:50.607Z">Posted 5 days ago</span>
+    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeoTa47I0gK/" target="_blank" rel="noopener" aria-label="For the One Who, episode 1: whoever gets the group out, a Reel on @sahraandbeyond.ae, opens on Instagram">For the One Who, episode 1: whoever gets the group out</a></h3>
+    <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
+  </div>
+</article><article class="ig-card has-slides" data-id="DelffwYCH42" data-date="2026-10-17T06:43:38.633Z" data-slides="/uploads/ig/s/DelffwYCH42/01.mp4|/uploads/ig/s/DelffwYCH42/02.mp4|/uploads/ig/s/DelffwYCH42/03.mp4|/uploads/ig/s/DelffwYCH42/04.mp4|/uploads/ig/s/DelffwYCH42/05.mp4|/uploads/ig/s/DelffwYCH42/06.mp4">
   <div class="ig-media">
     <img class="ig-cover" src="/uploads/ig/DelffwYCH42-540.webp" srcset="/uploads/ig/DelffwYCH42-540.webp 540w, /uploads/ig/DelffwYCH42.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
     <div class="ig-seg" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -1959,7 +2041,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <span class="ig-kind">Carousel · 6 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-17T06:43:38.633Z">Posted 5 days ago</span>
+    <span class="ig-ago" data-date="2026-10-17T06:43:38.633Z">Posted 6 days ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DelffwYCH42/" target="_blank" rel="noopener" aria-label="Pay in 4 with Tabby, now at checkout on @sahraandbeyond.ae, opens on Instagram">Pay in 4 with Tabby, now at checkout</a></h3>
     <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
@@ -1972,61 +2054,9 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
     <span class="ig-kind">Carousel · 4 slides</span>
   </div>
   <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-16T16:55:49.965Z">Posted 6 days ago</span>
+    <span class="ig-ago" data-date="2026-10-16T16:55:49.965Z">Posted 1 week ago</span>
     <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DekAwr6CO-O/" target="_blank" rel="noopener" aria-label="We kept driving back to the Hajar Mountains on @sahraandbeyond.ae, opens on Instagram">We kept driving back to the Hajar Mountains</a></h3>
     <a class="ig-wear" href="/products/hajar-mountains-regular/">The Hajar Mountains Tee &rarr;</a>
-  </div>
-</article><article class="ig-card has-slides" data-id="DeguH3WCIOa" data-date="2026-10-15T10:15:15.077Z" data-slides="/uploads/ig/s/DeguH3WCIOa/01.mp4|/uploads/ig/s/DeguH3WCIOa/02.mp4|/uploads/ig/s/DeguH3WCIOa/03.mp4|/uploads/ig/s/DeguH3WCIOa/04.mp4|/uploads/ig/s/DeguH3WCIOa/05.mp4">
-  <div class="ig-media">
-    <img class="ig-cover" src="/uploads/ig/DeguH3WCIOa-540.webp" srcset="/uploads/ig/DeguH3WCIOa-540.webp 540w, /uploads/ig/DeguH3WCIOa.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
-    <div class="ig-seg" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
-    <a class="ig-open" href="https://www.instagram.com/sahraandbeyond.ae/p/DeguH3WCIOa/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>
-    <button class="ig-tap ig-prev" type="button" aria-label="Previous slide" hidden></button><button class="ig-tap ig-next" type="button" aria-label="Next slide" hidden></button><span class="ig-sr" aria-live="polite"></span>
-    <span class="ig-kind">Carousel · 5 slides</span>
-  </div>
-  <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-15T10:15:15.077Z">Posted 1 week ago</span>
-    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/DeguH3WCIOa/" target="_blank" rel="noopener" aria-label="Pick an emoji: we already know which shirt is yours on @sahraandbeyond.ae, opens on Instagram">Pick an emoji: we already know which shirt is yours</a></h3>
-    <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
-  </div>
-</article><article class="ig-card has-slides" data-id="Dedju1LiFtj" data-date="2026-10-14T04:46:43.824Z" data-slides="/uploads/ig/s/Dedju1LiFtj/01.mp4|/uploads/ig/s/Dedju1LiFtj/02.mp4|/uploads/ig/s/Dedju1LiFtj/03.mp4">
-  <div class="ig-media">
-    <img class="ig-cover" src="/uploads/ig/Dedju1LiFtj-540.webp" srcset="/uploads/ig/Dedju1LiFtj-540.webp 540w, /uploads/ig/Dedju1LiFtj.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
-    <div class="ig-seg" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
-    <a class="ig-open" href="https://www.instagram.com/sahraandbeyond.ae/p/Dedju1LiFtj/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>
-    <button class="ig-tap ig-prev" type="button" aria-label="Previous slide" hidden></button><button class="ig-tap ig-next" type="button" aria-label="Next slide" hidden></button><span class="ig-sr" aria-live="polite"></span>
-    <span class="ig-kind">Carousel · 3 slides</span>
-  </div>
-  <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-14T04:46:43.824Z">Posted 1 week ago</span>
-    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/p/Dedju1LiFtj/" target="_blank" rel="noopener" aria-label="Who first took you there? Tell us who it was on @sahraandbeyond.ae, opens on Instagram">Who first took you there? Tell us who it was</a></h3>
-    <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
-  </div>
-</article><article class="ig-card" data-id="DeYZZw8IGOJ" data-date="2026-10-12T04:40:16.209Z">
-  <div class="ig-media">
-    <img class="ig-cover" src="/uploads/ig/DeYZZw8IGOJ-540.webp" srcset="/uploads/ig/DeYZZw8IGOJ-540.webp 540w, /uploads/ig/DeYZZw8IGOJ.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
-    
-    <a class="ig-open" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeYZZw8IGOJ/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>
-    
-    <span class="ig-kind">Reel</span>
-  </div>
-  <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-12T04:40:16.209Z">Posted 1 week ago</span>
-    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeYZZw8IGOJ/" target="_blank" rel="noopener" aria-label="Meet the locals: Sahel, teaser 3, a Reel on @sahraandbeyond.ae, opens on Instagram">Meet the locals: Sahel, teaser 3</a></h3>
-    <a class="ig-wear" href="/sahel/">Sahel &rarr;</a>
-  </div>
-</article><article class="ig-card" data-id="DeXIoslI-X6" data-date="2026-10-11T16:54:31.203Z">
-  <div class="ig-media">
-    <img class="ig-cover" src="/uploads/ig/DeXIoslI-X6-540.webp" srcset="/uploads/ig/DeXIoslI-X6-540.webp 540w, /uploads/ig/DeXIoslI-X6.webp 1080w" sizes="(max-width:760px) 62vw, 240px" width="540" height="675" loading="lazy" decoding="async" alt="">
-    
-    <a class="ig-open" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeXIoslI-X6/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>
-    
-    <span class="ig-kind">Reel</span>
-  </div>
-  <div class="ig-txt">
-    <span class="ig-ago" data-date="2026-10-11T16:54:31.203Z">Posted 1 week ago</span>
-    <h3 class="ig-label"><a href="https://www.instagram.com/sahraandbeyond.ae/reel/DeXIoslI-X6/" target="_blank" rel="noopener" aria-label="Our launch film, a Reel on @sahraandbeyond.ae, opens on Instagram">Our launch film</a></h3>
-    <a class="ig-wear" href="/t-shirts/">The tees &rarr;</a>
   </div>
 </article></div>
   <p class="ig-more"><a href="/feed/">Every post, and where it lives on the site &rarr;</a></p>
@@ -2290,8 +2320,8 @@ if('IntersectionObserver' in window&&window.gtag){var io=new IntersectionObserve
   .fitpair-sw{top:8px!important;left:8px!important}
   .fitpair-sw button{font-size:11px!important;padding:5px 9px!important}
 }</style><div class="ig-foot ig-dark" role="navigation" aria-label="More from our Instagram">
-  <div class="ig-foot-row"><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/DeTnkCFCGE9/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DeTnkCFCGE9/01.mp4"><img src="/uploads/ig/DeTnkCFCGE9-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Any two tees, AED 359: mix designs and fits</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahratrail/p/DeRJH_SiBH0/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DeRJH_SiBH0/01.mp4"><img src="/uploads/ig/DeRJH_SiBH0-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Six rules for the Hajar, before your next climb</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/DePhP7oIVno/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DePhP7oIVno-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>A few metres out, the reef begins: Sahel, teaser 2</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahratrail/reel/DeN8_Hdo3uB/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DeN8_Hdo3uB-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-mock">Mock-up</span><span class="ig-foot-cap"><span>Sahra Trail revealed: the Tee and the 2-in-1 Shorts</span></span></a></div>
-  <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 17 Oct</span> · <a href="/feed/">all posts</a></p>
+  <div class="ig-foot-row"><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/DeguH3WCIOa/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DeguH3WCIOa/01.mp4"><img src="/uploads/ig/DeguH3WCIOa-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Pick an emoji: we already know which shirt is yours</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/Dedju1LiFtj/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/Dedju1LiFtj/01.mp4"><img src="/uploads/ig/Dedju1LiFtj-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Who first took you there? Tell us who it was</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeYZZw8IGOJ/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DeYZZw8IGOJ-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Meet the locals: Sahel, teaser 3</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeXIoslI-X6/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DeXIoslI-X6-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Our launch film</span></span></a></div>
+  <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 20 Oct</span> · <a href="/feed/">all posts</a></p>
 </div><!--/IG:FOOT-->
   <div class="foot-soc" style="font-size:13px;font-family:'Space Mono',monospace;letter-spacing:1px"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener" aria-label="Instagram">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-copy">© 2026 Sahra &amp; Beyond</div>

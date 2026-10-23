@@ -18,6 +18,60 @@
   },
   "posts": [
     {
+      "id": "DeuWeEaopUF",
+      "kind": "reel",
+      "label": "Quiet, from above: one figure on the dunes",
+      "topic": "brand",
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ],
+      "src": "TRIAL-REELS/20-24-Oct-2026/3-TUE-20-OCT/5_2230_T24_drone-type-2.mp4"
+    },
+    {
+      "id": "DeuWOz6oxJx",
+      "kind": "reel",
+      "label": "The Hajar Mountains Tee, worn: the print on your back",
+      "topic": "product",
+      "products": [
+        "hajar-mountains-regular",
+        "hajar-mountains-oversized"
+      ],
+      "places": [
+        "hajar-mountains"
+      ],
+      "wear": [
+        "/products/hajar-mountains-regular/",
+        "The Hajar Mountains Tee"
+      ],
+      "src": "TRIAL-REELS/20-24-Oct-2026/3-TUE-20-OCT/1_0830_T07_hajar-on-your-back.mp4"
+    },
+    {
+      "id": "DetklxWiAL5",
+      "kind": "carousel",
+      "label": "Desk at 3:03 PM, dune by 6:08 PM: the Sahra Polo",
+      "topic": "product",
+      "products": [
+        "sand-polo"
+      ],
+      "wear": [
+        "/products/sand-polo/",
+        "The Sahra Polo Shirt"
+      ],
+      "src": "CAROUSEL-DESK-TO-DUNE-19-Oct-2026"
+    },
+    {
+      "id": "DeoTa47I0gK",
+      "kind": "reel",
+      "label": "For the One Who, episode 1: whoever gets the group out",
+      "topic": "community",
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ],
+      "src": "WEEKLY-PACKS/18oct-for-the-one-who-01/v5/ForTheOneWho_01_v5_TrailerDrums.mp4"
+    },
+    {
       "id": "DelffwYCH42",
       "kind": "carousel",
       "label": "Pay in 4 with Tabby, now at checkout",

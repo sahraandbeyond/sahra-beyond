@@ -69,7 +69,7 @@
      The switch uses the visitor's own clock, so it happens to the second wherever they are;
      an open page also switches by itself (see schedule() below). */
   var STAGES = [
-    { from: 0, href: '/sahel/',
+    { from: 0, href: '/new/',
       en: 'Sahel and Sahra Trail pre-order opens Wed 28 Oct.' },
     { from: Date.UTC(2026, 9, 28, 4, 0, 0), href: '/new/',
       en: 'Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.' },

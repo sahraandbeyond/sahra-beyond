@@ -89,13 +89,11 @@ function sbStage() {
     '<a class="sbn-trailcard" href="/trail/"><svg viewBox="6 10.76 88 78.48" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="' + TRAIL_SYM + '"/></svg>' +
     '<span><b>The first run, revealed</b><small>Trail and run wear, designed in the UAE</small></span></a>' +
     /* 8 Oct 2026: prices public after the reveal. 22 Oct 2026: pre-order opens Wed 28 Oct for everyone (no head start) */
-    (sbStage() >= 1
-      ? row(['/products/sahra-trail-tee/', 'Sahra Trail Tee', 'AED 139']) + row(['/products/sahra-trail-2-in-1-short/', 'Sahra Trail 2-in-1 Short', 'AED 169']) + row(['/products/sahra-trail-kit/', 'The Kit, Tee + Short', 'AED 249']) +
-        row(['/new/#trail', sbStage() === 1 ? 'Pre-order Sahra Trail' : 'Shop Sahra Trail', '', 'sbn-all'])
-      : row(['/trail/', 'Sahra Trail Tee', 'AED 139']) + row(['/trail/', 'Sahra Trail 2-in-1 Shorts', 'AED 169']) + row(['/trail/', 'The Kit, Tee + Shorts', 'AED 249']) +
-        row(['/trail/#first-access', 'Join the list', '', 'sbn-all'])) +
+    /* 23 Oct 2026: the product pages are live before pre-order opens, so the rows link to them at every stage */
+    row(['/products/sahra-trail-tee/', 'Sahra Trail Tee', 'AED 139']) + row(['/products/sahra-trail-2-in-1-short/', 'Sahra Trail 2-in-1 Short', 'AED 169']) + row(['/products/sahra-trail-kit/', 'The Kit, Tee + Short', 'AED 249']) +
+      row(['/new/#trail', sbStage() === 0 ? 'See the pieces' : sbStage() === 1 ? 'Pre-order Sahra Trail' : 'Shop Sahra Trail', '', 'sbn-all']) +
     /* Sahel, the Coast Edition (6 Oct 2026): a teaser row until the reveal */
-    '<span class="sbn-h sbn-h2">Sahel · The Coast Edition</span>' + (sbStage() >= 1 ? row(['/new/#sahel', 'Sahel, seven pieces', sbStage() === 1 ? 'pre-order open' : 'out now']) : row(['/sahel/', 'Sahel \u0633\u0627\u062d\u0644', 'launching soon'])) + '</div>' +
+    '<span class="sbn-h sbn-h2">Sahel · The Coast Edition</span>' + row(['/new/#sahel', 'Sahel, seven pieces', sbStage() === 0 ? 'pre-order Wed 28 Oct' : sbStage() === 1 ? 'pre-order open' : 'out now']) + '</div>' +
     '<div class="sbn-foot"><span>' + esc(FOOT[0]) + '</span><span>' + esc(FOOT[1]) + '</span></div>';
   var pos = getComputedStyle(host).position;
   if (pos === 'static') host.style.position = 'relative';

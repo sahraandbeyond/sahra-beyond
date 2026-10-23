@@ -166,7 +166,12 @@ module.exports = async (req, res) => {
   /* 4 Oct 2026: optional fields (e.g. tee_size, short_size from /trail/) become tags such as
      f-tee_size-m. Keys and values are whitelisted and capped so nothing odd reaches Shopify. */
   const fields = body.fields && typeof body.fields === 'object' ? body.fields : {};
-  const ALLOWED = { tee_size: ['s', 'm', 'l', 'xl'], short_size: ['s', 'm', 'l', 'xl'] };
+  /* 23 Oct 2026: "Tell me when it opens" on the Sahel and Sahra Trail product pages sends the piece's handle, so the
+     evening-before email can name the piece each person asked about (tag f-piece-<handle>). */
+  const PIECES = ['khor-fakkan-bay-tee-regular', 'khor-fakkan-bay-tee-oversized', 'al-hamra-pearl-diver-tee-regular', 'al-hamra-pearl-diver-tee-oversized',
+    'al-aqah-reef-tee-regular', 'al-aqah-reef-tee-oversized', 'shams-tee-regular', 'shams-tee-oversized', 'the-sahel-polo', 'barr-and-bahr-hoodie',
+    'ras-al-khor-hoodie', 'sahra-trail-tee', 'sahra-trail-2-in-1-short', 'sahra-trail-kit'];
+  const ALLOWED = { tee_size: ['s', 'm', 'l', 'xl'], short_size: ['s', 'm', 'l', 'xl'], piece: PIECES };
   Object.keys(ALLOWED).forEach(key => {
     const val = String(fields[key] || '').trim().toLowerCase();
     if (ALLOWED[key].includes(val)) tags.push('f-' + key + '-' + val);

@@ -59,7 +59,10 @@ function stageHead() {
   return `<style>${rules},${noJs}{display:none!important}</style>
 <script>(function(){var d=document.documentElement,T1=${T1},T2=${T2};function k(){var n=Date.now(),s=n>=T2?2:n>=T1?1:0;try{var m=/[?&]sbstage=([012])/.exec(location.search||'');if(m)s=+m[1];}catch(e){}return s;}
 function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttribute('data-stage',String(s));try{document.dispatchEvent(new CustomEvent('sb:stage',{detail:{stage:s}}));}catch(e){}}}
-set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}})();</script>`;
+set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
+/* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
+function days(){try{var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).split('-'),n=Math.round((Date.UTC(2026,9,28)-Date.UTC(+t[0],t[1]-1,+t[2]))/864e5),x=n>1?'That is in '+n+' days.':n===1?'That is tomorrow.':n===0?'That is today.':'';[].forEach.call(document.querySelectorAll('[data-days]'),function(e){e.textContent=x;});}catch(e){}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script>`;
 }
 
 const SIZES = ['S', 'M', 'L', 'XL'];
@@ -173,6 +176,14 @@ const CSS = `
 .po-go:disabled{background:#8C8172;cursor:not-allowed}
 .po-msg{font:14px/1.5 Jost,system-ui,sans-serif;color:#7E4114;min-height:1.5em;margin:0 0 8px}
 .po-closed{font:500 16px/1.5 Jost,system-ui,sans-serif;background:#F0E7D8;border-radius:10px;padding:14px 16px;margin:6px 0 16px}
+.po-wait{margin:0 0 18px}
+.po-wait label{display:block;font:12px 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;color:#3E3326}
+.po-wait-r{display:flex;gap:8px;flex-wrap:wrap}
+.po-wait-r input[type=email]{flex:1 1 200px;min-height:50px;border-radius:999px;border:1px solid rgba(42,32,22,.35);padding:0 18px;font:16px Jost,system-ui,sans-serif;background:#FFFDF9;color:#2A2016}
+.po-wait-r button{min-height:50px;padding:0 24px;border:0;border-radius:999px;background:#2A2016;color:#FAF6EF;font:600 15px Jost,system-ui,sans-serif;cursor:pointer}
+.po-wait-ok,.po-wait-err{display:none;font:15px/1.5 Jost,system-ui,sans-serif;margin:10px 0 0}
+.po-wait-err{color:#9b3a25}
+.po-wait.done .po-wait-f,.po-wait.done .po-small{display:none}.po-wait.done .po-wait-ok{display:block}.po-wait.err .po-wait-err{display:block}.po-wait.loading button{opacity:.6}
 .po-ask{font:15px/1.5 Jost,system-ui,sans-serif;margin:6px 0 14px}
 .po-ask a,.po-small a{color:#7E4114}
 .po-small{font:14px/1.55 Jost,system-ui,sans-serif;color:#3E3326;margin:0 0 6px}
@@ -206,12 +217,21 @@ function buyBox(p, stage) {
   return `<div class="po-buy" id="poBuy" data-handle="${p.handle}" data-kit="${p.kit ? 1 : 0}">
       <p class="po-eyebrow">${p.line === 'sahel' ? 'Sahel &middot; The Coast Edition' : 'Sahra Trail'}</p>
       <h1>${p.title}</h1>
-      ${IN_HAND ? '' : `<p class="po-line st12">Pre-order. Ships from Fri 30 Oct.</p>` + inc('st0', `<p class="po-line st0">Pre-order opens Wed 28 Oct, 8 AM.</p>`)}
+      ${IN_HAND ? '' : `<p class="po-line st12">Pre-order. Ships from Fri 30 Oct.</p>`}
       <p class="po-price">${money(p.price)}</p>
       ${inc('st1', `<p class="po-note st1">Pre-order price, 20% off, until Thu 29 Oct, 23:59. Full price from Fri 30 Oct.</p>`)}
       ${p.colour ? `<p class="po-colour">Colour: ${p.colour}${p.fit ? ` &middot; ${p.fit} fit` : ''}</p>` : ''}
       ${p.sibling ? `<p class="po-sib">Also in <a href="/products/${p.sibling}/">${p.siblingFit} fit &rarr;</a></p>` : ''}
-      ${inc('st0', `<div class="st0"><p class="po-closed">Pre-order opens Wed 28 Oct at 8 AM, UAE time. <a href="/sahel/#first-to-know">Join the list</a> and we tell you the evening before.</p></div>`)}
+      ${inc('st0', `<div class="st0 po-wait" data-waitlist-wrap>
+        <p class="po-closed">Pre-order opens Wed 28 Oct at 8 AM, UAE time. <span data-days></span></p>
+        <form class="po-wait-f" data-waitlist data-source="${p.line === 'sahel' ? 'sahel' : 'trail'}" novalidate>
+          <label for="poWaitEmail">Tell me when it opens</label>
+          <div class="po-wait-r"><input id="poWaitEmail" type="email" name="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required><input type="hidden" name="piece" value="${p.handle}"><button type="submit">Notify me</button></div>
+        </form>
+        <p class="po-wait-ok" role="status">You are on the list. We will email you the evening before it opens.</p>
+        <p class="po-wait-err" data-err role="alert">Please enter a valid email address.</p>
+        <p class="po-small">You will also hear about each new release the evening before it opens. Unsubscribe any time.</p>
+      </div>`)}
       <div class="st12">
         ${sizes}
         ${p.line === 'trail' ? `<p class="po-ask">Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>` : ''}
@@ -309,7 +329,7 @@ function collectionPage(all) {
     <p class="po-eyebrow">Sahel &middot; Sahra Trail</p>
     ${inc('st01', `<h1 class="st01">Sahel and Sahra Trail</h1>`)}
     <h1 class="st2">Sahel and Sahra Trail are out</h1>
-    ${inc('st0', `<p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone. <a href="/sahel/#first-to-know">Join the list</a> and we tell you the evening before.</p>`)}
+    ${inc('st0', `<p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone. <span data-days></span> Open any piece to be told when it opens.</p>`)}
     ${inc('st1', `<p class="st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
     ${IN_HAND ? '' : '<p class="st2">Pre-order. Ships from Fri 30 Oct.</p>'}
     <p>Designed in the UAE for everyone who loves it. The studio images are mock-ups until the real pieces are photographed.</p>
@@ -317,6 +337,40 @@ function collectionPage(all) {
   ${sec('sahel', 'Sahel &middot; The Coast Edition', all.filter(p => p.line === 'sahel'))}
   ${sec('trail', 'Sahra Trail', all.filter(p => p.line === 'trail'))}
 </main>`;
+}
+
+/* 23 Oct 2026 (Faheem chose "Launch band, no ticker"): a band near the top of the homepage. The day line
+   ("That is in 5 days") updates once per visit by the UAE calendar; there is no ticking countdown (22 Oct no-timer rule). */
+function homeBand() {
+  const pick = [['khor-fakkan-bay-tee-oversized', 'kfb-back', 'Khor Fakkan Bay Tee', 199], ['al-aqah-reef-tee-oversized', 'reef-back', 'Al Aqah Reef Tee', 199],
+    ['barr-and-bahr-hoodie', 'barr-back', 'Barr &amp; Bahr Hoodie', 229], ['sahra-trail-kit', 'trail-kit-front', 'Sahra Trail Kit', 249]];
+  const css = `<style>
+.lb{background:#0E1A2E;color:#F4ECDF;padding:46px 20px 50px;position:relative;z-index:1}
+.lb-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:34px;align-items:center}
+.lb-k{font:12px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#D9C3A5;margin:0 0 10px}
+.lb h2{font:600 clamp(30px,3.6vw,46px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 12px;color:#F4ECDF;letter-spacing:-.01em}
+.lb p{font:16px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#E9DFCF;max-width:44ch}
+.lb-d{color:#D9C3A5!important}
+.lb-a{display:inline-block;margin-top:12px;background:#F4ECDF;color:#0E1A2E;font:600 15px Jost,system-ui,sans-serif;padding:14px 26px;border-radius:999px;text-decoration:none}
+.lb-a:focus-visible,.lb-c:focus-visible{outline:3px solid #D9C3A5;outline-offset:3px}
+.lb-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.lb-c{display:block;color:#F4ECDF;text-decoration:none}
+.lb-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#1B2A40}
+.lb-c img{width:100%;height:100%;object-fit:cover;display:block}
+.lb-c i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(244,236,223,.92);color:#0E1A2E}
+.lb-c b{display:block;font:500 15px/1.3 Jost,system-ui,sans-serif;margin:8px 0 1px}
+.lb-c small{font:13px Jost,system-ui,sans-serif;color:#C9BBA6}
+@media(max-width:860px){.lb{padding:34px 16px 38px}.lb-in{grid-template-columns:1fr;gap:20px}.lb-g{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px}.lb-c{flex:0 0 42%;scroll-snap-align:start}}
+</style>`;
+  return stageHead() + css + `<section class="lb" id="s-launch" aria-labelledby="lbH"><div class="lb-in"><div>
+    <p class="lb-k">Sahel &middot; The Coast Edition &nbsp;+&nbsp; Sahra Trail</p>
+    <h2 id="lbH">` + inc('st01', '<span class="st01">Sahel and Sahra Trail</span>') + `<span class="st2">Sahel and Sahra Trail are out</span></h2>
+    ` + inc('st0', '<p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone.</p><p class="st0 lb-d" data-days></p>') +
+    inc('st1', '<p class="st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
+    `<p class="st2">Designed in the UAE for everyone who loves it.</p>
+    <a class="lb-a" href="/new/">` + inc('st0', '<span class="st0">See the pieces</span>') + inc('st1', '<span class="st1">Pre-order now</span>') + `<span class="st2">Shop the new pieces</span> &rarr;</a>
+  </div><div class="lb-g">` + pick.map(([h, k, n, pr]) => `<a class="lb-c" href="/products/${h}/"><span><img src="/assets/preorder/${k}-720.webp" width="720" height="900" alt="${n.replace(/&amp;/g, '&')}, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>${n}</b><small>${money(pr)}</small></a>`).join('') +
+  `</div></div></section>`;
 }
 
 module.exports = function buildPreorder({ shell, write, SITE }) {
@@ -328,7 +382,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
     const img = p.images.length ? `${SITE}/assets/preorder/${p.images[0].k}-1200.webp` : undefined;
     write(`products/${p.handle}/index.html`, shell({
       title: `${p.plain} | Sahra & Beyond`, desc, canonical: url, image: img, bodyClass: 'po-page', activeNav: p.line === 'sahel' ? 'sahel' : 'trail',
-      noindex: stage < 1,
+      noindex: false,   /* 23 Oct 2026 (Faheem): the pages go live before pre-order opens, so they can be found and shared */
       jsonld: { '@context': 'https://schema.org', '@type': 'Product', name: p.plain, description: desc, url, image: img ? [img] : undefined,
         brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' },
         offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'AED', url,
@@ -338,7 +392,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
   });
   write('new/index.html', shell({
     title: 'Sahel and Sahra Trail | Sahra & Beyond', desc: 'Sahel, the Coast Edition, and Sahra Trail from Sahra & Beyond. Designed in the UAE.',
-    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: stage < 1,
+    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false,
     jsonld: { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahel and Sahra Trail', url: `${SITE}/new/` },
     bodyHtml: collectionPage(all)
   }));
@@ -347,6 +401,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
 module.exports.stageNow = stageNow;
 module.exports.stageHead = stageHead;
 module.exports.inc = inc;
+module.exports.homeBand = homeBand;
 module.exports.urls = urls;
 module.exports.handles = () => products().map(p => p.handle);
 module.exports.T1 = T1; module.exports.T2 = T2;

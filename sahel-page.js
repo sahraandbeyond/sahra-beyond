@@ -116,7 +116,7 @@ module.exports = function buildSahel({ shell, write, SITE }) {
     return `<${tag}${attrs} class="sh-piece sh-piece-${p.k}" aria-label="Piece ${n}: ${label}.">
         <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-${p.k}.webp);aspect-ratio:${d[0]}/${d[1]}"><img src="${reveal && p.img ? p.img : `/assets/sahel/sahel-${p.k}.webp`}" width="${d[0]}" height="${d[1]}" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
         <span class="sh-mock">${T.mock || 'Mock-up'}</span>
-        <span class="sh-n">${n}</span><b>${label}</b><small>${reveal ? [p.place ? (p.inspiredBy ? 'Inspired by ' : '') + p.place : null, p.price].filter(Boolean).join(' · ') || p.type : (typed ? '' : `${p.type} &middot; `) + ST.inc('st0', `<span class="st0">${T.reveal}</span>`) + ST.inc('st1', '<span class="st1">Pre-order</span>') + '<span class="st2">Out now</span>'}</small>
+        <span class="sh-n">${n}</span><b>${label}</b><small>${reveal ? [p.place ? (p.inspiredBy ? 'Inspired by ' : '') + p.place : null, p.price].filter(Boolean).join(' · ') || p.type : (typed ? '' : `${p.type} &middot; `) + ST.inc('st0', '<span class="st0">Pre-order 28 Oct</span>') + ST.inc('st1', '<span class="st1">Pre-order</span>') + '<span class="st2">Out now</span>'}</small>
       </${tag}>`;
   }).join('\n      ');
 
@@ -272,12 +272,14 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
   <section class="sh-pieces" data-plate="5" data-stop="The Seabed" aria-labelledby="shPieces">
     <div class="sh-rv">
       <p class="sh-num"><span>06</span>&mdash; ${T.piecesNum}</p>
-      <h2 id="shPieces">${ST.inc('st0', `<span class="st0">${T.piecesH}</span>`)}${ST.inc('st1', '<span class="st1">Seven pieces, on pre-order</span>')}<span class="st2">Seven pieces, out now</span></h2>
+      <h2 id="shPieces">${ST.inc('st0', '<span class="st0">Seven pieces, on pre-order from 28 Oct</span>')}${ST.inc('st1', '<span class="st1">Seven pieces, on pre-order</span>')}<span class="st2">Seven pieces, out now</span></h2>
       <p class="sh-sub">${T.piecesP}</p>
       <div class="sh-grid">
       ${pieces}
       </div>
       ${STATE === 'teaser' ? ST.inc('st0', `<p class="sh-hint st0" aria-hidden="true">${T.hint}</p>`) : ''}
+      ${ST.inc('st0', `<p class="st0" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
+      <p class="st0 sh-sub">Pre-order opens Wed 28 Oct at 8 AM. <span data-days></span></p>`)}
       ${ST.inc('st1', `<p class="st1" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces and pre-order <span aria-hidden="true">&rarr;</span></a></p>
       <p class="st1 sh-sub">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
       <p class="st2" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
