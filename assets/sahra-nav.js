@@ -37,7 +37,7 @@ function sbStage() {
       ['/polos/', 'Polos', 'Sahra and Sahel'],
       ['/hoodies/', 'Hoodies', 'Two from Sahel'],
       ['/trail/', 'Running', 'Sahra Trail'],
-      ['/tote/', 'Accessories', 'The Sahra Tote'],
+      ['/tote/', 'Accessories', 'Tote · Trailhead Bag'],
       ['/gifts/', 'Gifts', ''],
       ['/shop/', 'All products', '', 'sbn-all']
     ]},
@@ -94,7 +94,7 @@ function sbStage() {
     /* 8 Oct 2026: prices public after the reveal. 22 Oct 2026: pre-order opens Wed 28 Oct for everyone (no head start) */
     /* 23 Oct 2026: the product pages are live before pre-order opens, so the rows link to them at every stage */
     /* 23 Oct 2026: in the pre-order window the price shown is the pre-order price (Faheem: "Show AED 159.20") */
-    row(['/products/sahra-trail-tee/', 'Sahra Trail Tee', sbStage() === 1 ? 'AED 111.20' : 'AED 139']) + row(['/products/sahra-trail-2-in-1-short/', 'Sahra Trail 2-in-1 Short', sbStage() === 1 ? 'AED 135.20' : 'AED 169']) + row(['/products/sahra-trail-kit/', 'The Kit, Tee + Short', sbStage() === 1 ? 'AED 199.20' : 'AED 249']) +
+    row(['/products/sahra-trail-tee/', 'Sahra Trail Tee', sbStage() === 1 ? 'AED 111.20' : 'AED 139']) + row(['/products/sahra-trail-2-in-1-short/', 'Sahra Trail 2-in-1 Short', sbStage() === 1 ? 'AED 135.20' : 'AED 169']) + row(['/products/sahra-trail-kit/', 'The Kit, Tee + Short', sbStage() === 1 ? 'AED 199.20' : 'AED 249']) + row(['/products/trailhead-bag/', 'The Trailhead Bag', 'AED 50']) +
       row(['/new/#trail', sbStage() === 0 ? 'See the pieces' : sbStage() === 1 ? 'Pre-order Sahra Trail' : 'Shop Sahra Trail', '', 'sbn-all']) +
     /* Sahel, the Coast Edition (6 Oct 2026): a teaser row until the reveal */
     '<span class="sbn-h sbn-h2">Sahel · The Coast Edition</span>' + row(['/new/#sahel', 'Sahel, seven pieces', sbStage() === 0 ? 'pre-order Wed 28 Oct' : sbStage() === 1 ? 'pre-order open' : 'out now']) + '</div>' +
@@ -153,6 +153,8 @@ function sbStage() {
     frag.appendChild(ma('/t-shirts/', 'T-shirts', true));
     frag.appendChild(ma('/polos/', 'Polos', true));
     frag.appendChild(ma('/hoodies/', 'Hoodies', true));
+    /* 23 Oct 2026 (Faheem: "Why's accessories missing"): back in the phone menu. The Sahra Trail drawstring bag joins /tote/'s row once it has a product page. */
+    frag.appendChild(ma('/tote/', 'Accessories', true));
     frag.appendChild(ma('/sahel/', 'Sahel \u00b7 The Coast Edition', true));
     frag.appendChild(ma('/trail/', 'Sahra Trail \u00b7 activewear', true));
     frag.appendChild(mh('Places'));

@@ -2549,7 +2549,7 @@ if (LAUNCHED || REVEALED) (function () {
        skips their handles (PRE_HANDLES). Replaces the 8 Oct Trail band. */
     const TRAIL_BAND = '<div class="sp-new" data-bg="#FAF6EF">'
       + PO.newBlock({ list: PO.pickNew(p => p.line === 'sahel', true), heading: 'Sahel, the Coast Edition', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'The story of Sahel' })
-      + PO.newBlock({ list: PO.pickNew(p => p.line === 'trail'), heading: 'Sahra Trail: running tee, 2-in-1 shorts and kit', kicker: 'New &middot; Sahra Trail', more: '/trail/', moreText: 'About Sahra Trail' })
+      + PO.newBlock({ list: PO.pickNew(p => p.line === 'trail'), heading: 'Sahra Trail: running tee, 2-in-1 shorts, kit and the Trailhead Bag', kicker: 'New &middot; Sahra Trail', more: '/trail/', moreText: 'About Sahra Trail' })
       + '</div>';
     html = html.replace('/*PRE_HANDLES*/[]', JSON.stringify(PO.handles()));
     /* 23 Oct 2026: the Sahel places on the /shop/ map (Regular fit links for the tees) */
@@ -2745,9 +2745,10 @@ body.tote-page main{max-width:1180px}
         <p class="tt-price"><span class="tt-n"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></span></p>
         <div class="tt-gift">
           <b>You do not have to buy one</b>
-          <p>A tote comes free with every order &mdash; add any piece to your bag and it is added at no charge. This page is for anyone who wants a second one, or the tote on its own. <a href="/shop/">Shop the collection &rarr;</a></p>
+          <p>A tote comes free with every order of clothing &mdash; add any tee, polo, hoodie or Sahra Trail piece to your bag and it is added at no charge. This page is for anyone who wants a second one, or the tote on its own. <a href="/shop/">Shop the collection &rarr;</a></p>
         </div>
         <button class="btn tt-add" id="toteAdd" type="button" disabled>Loading&hellip;</button>
+        <p class="tt-also" style="margin:14px 0 0;font-size:15px">Also in canvas: <a href="/products/trailhead-bag/">The Trailhead Bag</a>, the Sahra Trail drawstring bag, AED 50.</p>
         <p class="tt-msg" id="toteMsg" role="status" aria-live="polite"></p>
         <div class="tt-ship">
           <div><b>Next working day, all seven emirates</b>Order by 2 pm UAE time. Free, no minimum order.</div>
@@ -2757,7 +2758,7 @@ body.tote-page main{max-width:1180px}
           <li><b>Natural canvas</b> &mdash; undyed, so it wears in rather than out.</li>
           <li><b>The mark, printed in terracotta</b> &mdash; the same lockup as the collar labels.</li>
           <li><b>Long handles</b>, cut to sit on the shoulder rather than the forearm.</li>
-          <li><b>Free with every order</b>, pre-orders included.</li>
+          <li><b>Free with every clothing order</b>, pre-orders included.</li>
         </ul>
       </div>
     </div>

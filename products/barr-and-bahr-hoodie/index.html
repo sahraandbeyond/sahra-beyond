@@ -782,12 +782,12 @@ body.dark-bg .rv-stars{color:#E9B978}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=5754defc">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=4c0c7c31">
 
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=cdd516cd">
 <script src="/assets/sahra-welcome.js?v=48c151f1" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=63a7fcc7">
-<script src="/assets/sahra-nav.js?v=e152eafc" data-sbn defer></script>
+<script src="/assets/sahra-nav.js?v=f005b7c4" data-sbn defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1412,7 +1412,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <p class="po-crumb"><a href="/">Home</a> / <a href="/new/#sahel">Sahel</a> / Barr &amp; Bahr Hoodie</p>
   <div class="po-grid">
     <div class="po-gal"><figure class="po-fig"><img src="/assets/preorder/barr-back-720.webp" srcset="/assets/preorder/barr-back-720.webp 720w, /assets/preorder/barr-back-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 50vw" width="720" height="900" alt="Barr &amp; Bahr Hoodie, back" fetchpriority="high" decoding="async"><figcaption class="po-mock">Mock-up</figcaption></figure><figure class="po-fig"><img src="/assets/preorder/barr-front-720.webp" srcset="/assets/preorder/barr-front-720.webp 720w, /assets/preorder/barr-front-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 50vw" width="720" height="900" alt="Barr &amp; Bahr Hoodie, front" loading="lazy" decoding="async"><figcaption class="po-mock">Mock-up</figcaption></figure></div>
-    <div class="po-buy" id="poBuy" data-handle="barr-and-bahr-hoodie" data-kit="0">
+    <div class="po-buy" id="poBuy" data-handle="barr-and-bahr-hoodie" data-kit="0" data-one="0" data-now="0" data-gift="1">
       <p class="po-eyebrow">Sahel &middot; The Coast Edition</p>
       <h1>Barr &amp; Bahr Hoodie</h1>
       <p class="po-line st12">Pre-order. Ships from Fri 30 Oct.</p>
@@ -1453,22 +1453,23 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script>
 (function(){
   var box=document.getElementById('poBuy');if(!box)return;
-  var handle=box.getAttribute('data-handle'),kit=box.getAttribute('data-kit')==='1',go=document.getElementById('poGo'),msg=document.getElementById('poMsg');
-  var IN_HAND=false,VS=null,sel={};
+  var handle=box.getAttribute('data-handle'),kit=box.getAttribute('data-kit')==='1',one=box.getAttribute('data-one')==='1',go=document.getElementById('poGo'),msg=document.getElementById('poMsg');
+  var IN_HAND=box.getAttribute('data-now')==='1',VS=null,sel={};
   function stage(){return +(document.documentElement.getAttribute('data-stage')||0);}
   function label(){return IN_HAND?'Add to bag':'Pre-order';}
   function pick(){
     if(!VS)return null;
+    if(one)return VS[0]||null;
     var want=kit?(sel.tee&&sel['short']?sel.tee+' / '+sel['short']:null):sel.size;
     if(!want)return null;
     for(var i=0;i<VS.length;i++)if(VS[i].title===want)return VS[i];
     return null;
   }
   function paint(){
-    var v=pick(),ready=kit?(sel.tee&&sel['short']):sel.size;
-    if(!VS){go.disabled=true;go.textContent='Loading sizes';return;}
+    var v=pick(),ready=one||(kit?(sel.tee&&sel['short']):sel.size);
+    if(!VS){go.disabled=true;go.textContent=one?'Loading':'Loading sizes';return;}
     if(!ready){go.disabled=true;go.textContent=kit?'Choose both sizes':'Choose a size';return;}
-    if(!v||!v.availableForSale){go.disabled=true;go.textContent='Sold out in that size';return;}
+    if(!v||!v.availableForSale){go.disabled=true;go.textContent=one?'Sold out':'Sold out in that size';return;}
     go.disabled=false;go.textContent=label();
   }
   /* a size is disabled only when no variant using it can be bought */
@@ -1486,7 +1487,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   box.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.po-sizes button');if(!b||b.disabled)return;
     var g=b.closest('.po-sizes').getAttribute('data-group'),s=b.getAttribute('data-size');sel[g]=sel[g]===s?null:s;msg.textContent='';sizes();paint();});
   go.addEventListener('click',function(){var v=pick();if(!v||!window.SahraCart)return;go.disabled=true;go.textContent='Adding';
-    window.SahraCart.add(v.id).then(function(){go.textContent=label();go.disabled=false;msg.textContent='';
+    window.SahraCart.add(v.id,1,box.getAttribute('data-gift')==='0'?{gift:false}:undefined).then(function(){go.textContent=label();go.disabled=false;msg.textContent='';
       try{if(window.track)track('add_to_cart',{item_id:handle,size:v.title,via:'preorder'});}catch(e){}},
       function(){go.disabled=false;go.textContent=label();msg.textContent='That did not go into your bag. Please try again, or message us on WhatsApp.';});});
   var tries=0;
@@ -1583,7 +1584,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=bba0f4c2" defer></script>
+<script src="/assets/sahra-cart.js?v=910c7b5d" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;

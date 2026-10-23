@@ -52,7 +52,7 @@
     'barr-and-bahr-hoodie': 'barr-back', 'ras-al-khor-hoodie': 'rakh-back', 'sahra-trail-tee': 'trail-tee-front', 'sahra-trail-2-in-1-short': 'trail-short-front', 'sahra-trail-kit': 'trail-kit-front' };
   var PRE_IN_HAND = false;   /* set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
   function isPre(l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; return !!h && Object.prototype.hasOwnProperty.call(PRE, h); }
-  var CART_REAL = { 'al-quaa-galaxy-regular': '/shirts/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/emptyquarter-model-stand.webp', 'hajar-mountains-regular': '/shirts/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/hajar-lake-back-her.webp', 'sand-polo': '/shirts/polo-dune-front.webp' };
+  var CART_REAL = { 'al-quaa-galaxy-regular': '/shirts/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/emptyquarter-model-stand.webp', 'hajar-mountains-regular': '/shirts/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/hajar-lake-back-her.webp', 'sand-polo': '/shirts/polo-dune-front.webp', 'trailhead-bag': '/assets/preorder/trail-bag-front-720.webp' };
   var S = { domain: 'sahra-beyond.myshopify.com', token: 'cc42ba8e74eb27c4f3c062d93f893fa0', v: '2024-10' };
 
   /* quantity is part of this fragment and MUST stay rendered - see bug 2 */
@@ -272,7 +272,8 @@
     var n = 0;
     /* 23 Oct 2026 (Faheem: "Every order"): the free tote comes with every order, pre-orders included
        (reverses the 22 Oct Founding-only default) */
-    cartNodes().forEach(function (l) { if (!isGift(l) && !isTote(l)) n += (l.quantity || 0); });
+    /* 23 Oct 2026 (Faheem): the Trailhead Bag on its own does not earn the tote either ("No tote with bag-only orders") */
+    cartNodes().forEach(function (l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; if (!isGift(l) && !isTote(l) && h !== 'trailhead-bag') n += (l.quantity || 0); });
     return n;
   }
 
@@ -507,7 +508,7 @@
              : '<span class="sb-noimg"></span>') +
         '<div class="sb-lt">' +
           '<a href="/products/' + esc(m.product.handle) + '/">' + esc(m.product.title) + '</a>' +
-          (hh === 'sahra-trail-kit' && / \/ /.test(m.title) ? '<span>Tee ' + esc(m.title.split(' / ')[0]) + ', Short ' + esc(m.title.split(' / ')[1]) + '</span>' : '<span>Size ' + esc(m.title) + '</span>') +
+          (hh === 'sahra-trail-kit' && / \/ /.test(m.title) ? '<span>Tee ' + esc(m.title.split(' / ')[0]) + ', Short ' + esc(m.title.split(' / ')[1]) + '</span>' : (m.title === 'Default Title' ? '' : '<span>Size ' + esc(m.title) + '</span>')) +
           (isPre(l) && !PRE_IN_HAND ? '<span class="sb-pre">Pre-order. Ships from Fri 30 Oct.</span>' : '') +
           linePrice(l) +
           /* Bug 2 + 3: quantity is visible AND adjustable */

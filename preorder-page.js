@@ -68,7 +68,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 const SIZES = ['S', 'M', 'L', 'XL'];
 const FITS = [['regular', 'Regular'], ['oversized', 'Oversized']];
 const mock = (k, alt) => ({ k, alt, mock: true });
-const real = (k, alt) => ({ k, alt, mock: false });
+const real = (k, alt, cap) => ({ k, alt, mock: false, cap });
 
 /* Story paragraphs: the approved card stories (14 Oct handover; content/sahel-pieces.json). */
 const SAHEL = [
@@ -110,7 +110,17 @@ const TRAIL = [
     lede: 'The Sahra Trail Tee and the Sahra Trail 2-in-1 Short together. Tee, AED 139. Short, AED 169. Together, the kit: AED 249.',
     details: ['The Sahra Trail Tee', 'The Sahra Trail 2-in-1 Short', 'Choose a size for each'],
     images: [mock('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), mock('trail-kit-back', 'Sahra Trail Kit, back'),
-      real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-shortsymbol', 'The Two Ridges symbol on the short, close up')] }
+      real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-shortsymbol', 'The Two Ridges symbol on the short, close up')] },
+  /* 23 Oct 2026 (Faheem): the canvas drawstring bag, 100 in hand, AED 50, on sale with Trail from Wed 28 Oct 08:00 UAE.
+     Name chosen for Faheem ("come up with an innovative on brand name"): The Trailhead Bag, what you take to the trailhead.
+     In hand, so it is not a pre-order: no 20% pre-order price (the Shopify discount covers the 14 pre-order products only),
+     ships next working day, one size. On its own it does not earn the free tote (Faheem, 23 Oct; assets/sahra-cart.js).
+     The image is Faheem's photo of the real bag, cut out onto the studio backdrop: a real photo, captioned as one. */
+  { handle: 'trailhead-bag', name: 'The Trailhead Bag', seo: 'Canvas Drawstring Bag, The Trailhead Bag', kind: 'Canvas drawstring bag', md: 'natural canvas with the Two Ridges mark and SAHRA TRAIL DUBAI printed in sand, rope drawstrings that close the top and carry it on your back', price: 50,
+    inHand: true, oneSize: true, noTote: true,
+    lede: 'A natural canvas drawstring bag with the Two Ridges mark and SAHRA TRAIL DUBAI printed on the front in sand. Rope drawstrings close the top and carry it on your back. Sized for what you take to the trailhead: a layer, water, keys.',
+    details: ['Natural canvas', 'Two Ridges mark and SAHRA TRAIL DUBAI printed in sand', 'Rope drawstrings, worn as shoulder straps', 'One size'],
+    images: [real('trail-bag-front', 'The Trailhead Bag: natural canvas drawstring bag with the Sahra Trail Two Ridges mark', 'The real bag')] }
 ];
 
 /* the flat list of product pages */
@@ -124,7 +134,7 @@ function products() {
       colour: p.colour, price: p.price, story: p.story, details: [`${F} fit`].concat(p.details), images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md }));
     else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md });
   });
-  TRAIL.forEach(p => out.push({ line: 'trail', handle: p.handle, title: p.name, plain: p.name, name: p.name, price: p.price, story: p.lede, details: p.details, images: p.images, kit: !!p.kit, key: p.handle, seo: p.seo, kind: p.kind, md: p.md }));
+  TRAIL.forEach(p => out.push({ line: 'trail', handle: p.handle, title: p.name, plain: p.name, name: p.name, price: p.price, story: p.lede, details: p.details, images: p.images, kit: !!p.kit, key: p.handle, seo: p.seo, kind: p.kind, md: p.md, inHand: !!p.inHand, oneSize: !!p.oneSize, noTote: !!p.noTote }));
   return out;
 }
 function urls(SITE) { return products().map(p => `${SITE}/products/${p.handle}/`); }
@@ -134,14 +144,14 @@ const money = n => 'AED ' + (Math.round(n * 100) % 100 === 0 ? String(Math.round
 const pre = n => Math.round(n * 80) / 100;   /* the 20% pre-order price, to the fils, as Shopify computes it */
 /* 23 Oct 2026 (Faheem: "Show AED 159.20"): in the pre-order window the price shown IS the pre-order price.
    No strike-through and no compare-at price; the full price is named in words beside it. */
-const cardPrice = (n, tag) => inc('st1', `<${tag} class="st1">${money(pre(n))}, pre-order price</${tag}>`) + `<${tag} class="st02">${money(n)}</${tag}>`;
+const cardPrice = (n, tag, full) => full ? `<${tag}>${money(n)}</${tag}>` : inc('st1', `<${tag} class="st1">${money(pre(n))}, pre-order price</${tag}>`) + `<${tag} class="st02">${money(n)}</${tag}>`;
 
 function picture(im, eager, sizes) {
   return `<img src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-720.webp 720w, /assets/preorder/${im.k}-1200.webp 1200w" sizes="${sizes || '(max-width: 900px) 100vw, 50vw'}" width="720" height="900" alt="${esc(im.alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
 }
 function gallery(p) {
   if (!p.images.length) return `<div class="po-gal"><figure class="po-ph"><div><b>${p.title}</b><span>Photo to follow</span></div></figure></div>`;
-  return `<div class="po-gal">${p.images.map((im, i) => `<figure class="po-fig">${picture(im, i === 0)}<figcaption class="${im.mock ? 'po-mock' : 'po-real'}">${im.mock ? 'Mock-up' : 'Close-up of the sample'}</figcaption></figure>`).join('')}</div>`;
+  return `<div class="po-gal">${p.images.map((im, i) => `<figure class="po-fig">${picture(im, i === 0)}<figcaption class="${im.mock ? 'po-mock' : 'po-real'}">${im.mock ? 'Mock-up' : (im.cap || 'Close-up of the sample')}</figcaption></figure>`).join('')}</div>`;
 }
 
 const CSS = `
@@ -215,18 +225,19 @@ const CSS = `
 /* the buy box: static shell; the script below fills sizes from Shopify */
 function buyBox(p, stage) {
   const sizeGroup = (id, label) => `<fieldset class="po-sizes" data-group="${id}"><legend>${label}</legend><div class="po-sz">${SIZES.map(s => `<button type="button" data-size="${s}" aria-pressed="false" disabled>${s}</button>`).join('')}</div></fieldset>`;
-  const sizes = p.kit ? sizeGroup('tee', 'Tee size') + sizeGroup('short', 'Short size') : sizeGroup('size', 'Size');
+  const sizes = p.oneSize ? '' : p.kit ? sizeGroup('tee', 'Tee size') + sizeGroup('short', 'Short size') : sizeGroup('size', 'Size');
+  const now = IN_HAND || p.inHand;   /* in hand: sold, not pre-ordered */
   const tab = (price) => `Pay in 4 with<img src="/assets/tabby-badge.svg" alt="Tabby" width="51" height="20">: 4 interest-free payments of ${money(price / 4)}.`;
-  return `<div class="po-buy" id="poBuy" data-handle="${p.handle}" data-kit="${p.kit ? 1 : 0}">
+  return `<div class="po-buy" id="poBuy" data-handle="${p.handle}" data-kit="${p.kit ? 1 : 0}" data-one="${p.oneSize ? 1 : 0}" data-now="${now ? 1 : 0}" data-gift="${p.noTote ? 0 : 1}">
       <p class="po-eyebrow">${p.line === 'sahel' ? 'Sahel &middot; The Coast Edition' : 'Sahra Trail'}</p>
       <h1>${p.title}</h1>
-      ${IN_HAND ? '' : `<p class="po-line st12">Pre-order. Ships from Fri 30 Oct.</p>`}
-      ${inc('st1', `<p class="po-price st1">${money(pre(p.price))}</p>`)}<p class="po-price st02">${money(p.price)}</p>
-      ${inc('st1', `<p class="po-note st1">Pre-order price: 20% off the ${money(p.price)} full price, until Thu 29 Oct, 23:59. Full price from Fri 30 Oct.</p>`)}
+      ${now ? `<p class="po-line st12">In stock. Order by 2 pm for next-working-day delivery in the UAE.</p>` : `<p class="po-line st12">Pre-order. Ships from Fri 30 Oct.</p>`}
+      ${p.inHand ? `<p class="po-price">${money(p.price)}</p>` : `${inc('st1', `<p class="po-price st1">${money(pre(p.price))}</p>`)}<p class="po-price st02">${money(p.price)}</p>
+      ${inc('st1', `<p class="po-note st1">Pre-order price: 20% off the ${money(p.price)} full price, until Thu 29 Oct, 23:59. Full price from Fri 30 Oct.</p>`)}`}
       <p class="po-colour">${p.kind}${p.colour ? ` &middot; Colour: ${p.colour}` : ''}${p.fit ? ` &middot; ${p.fit} fit` : ''}</p>
       ${p.sibling ? `<p class="po-sib">Also in <a href="/products/${p.sibling}/">${p.siblingFit} fit &rarr;</a></p>` : ''}
       ${inc('st0', `<div class="st0 po-wait" data-waitlist-wrap>
-        <p class="po-closed">Pre-order opens Wed 28 Oct at 8 AM, UAE time. <span data-days></span></p>
+        <p class="po-closed">${p.inHand ? 'On sale from Wed 28 Oct at 8 AM, UAE time, with Sahra Trail.' : 'Pre-order opens Wed 28 Oct at 8 AM, UAE time.'} <span data-days></span></p>
         <form class="po-wait-f" data-waitlist data-source="${p.line === 'sahel' ? 'sahel' : 'trail'}" novalidate>
           <label for="poWaitEmail">Tell me when it opens</label>
           <div class="po-wait-r"><input id="poWaitEmail" type="email" name="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required><input type="hidden" name="piece" value="${p.handle}"><button type="submit">Notify me</button></div>
@@ -237,37 +248,38 @@ function buyBox(p, stage) {
       </div>`)}
       <div class="st12">
         ${sizes}
-        <p class="po-ask">No size chart for this piece yet. Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>
-        <button type="button" class="po-go" id="poGo" disabled>${IN_HAND ? 'Choose a size' : 'Choose a size'}</button>
+        ${p.oneSize ? '' : `<p class="po-ask">No size chart for this piece yet. Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>`}
+        <button type="button" class="po-go" id="poGo" disabled>${p.oneSize ? 'Add to bag' : 'Choose a size'}</button>
         <p class="po-msg" id="poMsg" role="status" aria-live="polite"></p>
-        ${IN_HAND ? '' : '<p class="po-small">You pay today and we email you when it ships.</p>'}
-        ${inc('st1', `<p class="po-tabby sb-ship-uae st1">${tab(pre(p.price))}</p>`)}
-        <p class="po-tabby sb-ship-uae st2">${tab(p.price)}</p>
+        ${now ? '' : '<p class="po-small">You pay today and we email you when it ships.</p>'}
+        ${p.inHand ? `<p class="po-tabby sb-ship-uae">${tab(p.price)}</p>` : `${inc('st1', `<p class="po-tabby sb-ship-uae st1">${tab(pre(p.price))}</p>`)}
+        <p class="po-tabby sb-ship-uae st2">${tab(p.price)}</p>`}
         <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>
       </div>
-      <p class="po-small">Free delivery across the UAE, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock. You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
+      <p class="po-small">${p.noTote ? 'Free delivery across the UAE. Returns within 14 days of delivery.' : 'Free delivery across the UAE, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
     </div>`;
 }
 
 const CLIENT = `<script>
 (function(){
   var box=document.getElementById('poBuy');if(!box)return;
-  var handle=box.getAttribute('data-handle'),kit=box.getAttribute('data-kit')==='1',go=document.getElementById('poGo'),msg=document.getElementById('poMsg');
-  var IN_HAND=${IN_HAND ? 'true' : 'false'},VS=null,sel={};
+  var handle=box.getAttribute('data-handle'),kit=box.getAttribute('data-kit')==='1',one=box.getAttribute('data-one')==='1',go=document.getElementById('poGo'),msg=document.getElementById('poMsg');
+  var IN_HAND=box.getAttribute('data-now')==='1',VS=null,sel={};
   function stage(){return +(document.documentElement.getAttribute('data-stage')||0);}
   function label(){return IN_HAND?'Add to bag':'Pre-order';}
   function pick(){
     if(!VS)return null;
+    if(one)return VS[0]||null;
     var want=kit?(sel.tee&&sel['short']?sel.tee+' / '+sel['short']:null):sel.size;
     if(!want)return null;
     for(var i=0;i<VS.length;i++)if(VS[i].title===want)return VS[i];
     return null;
   }
   function paint(){
-    var v=pick(),ready=kit?(sel.tee&&sel['short']):sel.size;
-    if(!VS){go.disabled=true;go.textContent='Loading sizes';return;}
+    var v=pick(),ready=one||(kit?(sel.tee&&sel['short']):sel.size);
+    if(!VS){go.disabled=true;go.textContent=one?'Loading':'Loading sizes';return;}
     if(!ready){go.disabled=true;go.textContent=kit?'Choose both sizes':'Choose a size';return;}
-    if(!v||!v.availableForSale){go.disabled=true;go.textContent='Sold out in that size';return;}
+    if(!v||!v.availableForSale){go.disabled=true;go.textContent=one?'Sold out':'Sold out in that size';return;}
     go.disabled=false;go.textContent=label();
   }
   /* a size is disabled only when no variant using it can be bought */
@@ -285,7 +297,7 @@ const CLIENT = `<script>
   box.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.po-sizes button');if(!b||b.disabled)return;
     var g=b.closest('.po-sizes').getAttribute('data-group'),s=b.getAttribute('data-size');sel[g]=sel[g]===s?null:s;msg.textContent='';sizes();paint();});
   go.addEventListener('click',function(){var v=pick();if(!v||!window.SahraCart)return;go.disabled=true;go.textContent='Adding';
-    window.SahraCart.add(v.id).then(function(){go.textContent=label();go.disabled=false;msg.textContent='';
+    window.SahraCart.add(v.id,1,box.getAttribute('data-gift')==='0'?{gift:false}:undefined).then(function(){go.textContent=label();go.disabled=false;msg.textContent='';
       try{if(window.track)track('add_to_cart',{item_id:handle,size:v.title,via:'preorder'});}catch(e){}},
       function(){go.disabled=false;go.textContent=label();msg.textContent='That did not go into your bag. Please try again, or message us on WhatsApp.';});});
   var tries=0;
@@ -304,7 +316,7 @@ const CLIENT = `<script>
 
 function productPage(p, all, SITE, stage) {
   const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 220px')}<figcaption class="po-mock">Mock-up</figcaption></div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span')}</a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 220px')}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
   return `${stageHead()}<style>${CSS}</style>
 <main class="po-wrap">
@@ -316,7 +328,7 @@ function productPage(p, all, SITE, stage) {
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
-      <p class="po-small" style="margin-top:12px">${p.images.some(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : 'Photos of the real piece will be added when it arrives.'} Designed in the UAE.</p></div>
+      <p class="po-small" style="margin-top:12px">${p.images.some(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : 'Photos of the real piece will be added when it arrives.'} Designed in the UAE.</p></div>
   </section>
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
 </main>
@@ -324,7 +336,7 @@ ${CLIENT}`;
 }
 
 function collectionPage(all) {
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 280px')}<figcaption class="po-mock">Mock-up</figcaption></div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span')}</a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 280px')}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
   const sec = (id, h, list) => `<section class="po-more" id="${id}"><h2>${h}</h2><div class="po-cards">${list.map(card).join('')}</div></section>`;
   return `${stageHead()}<style>${CSS}.po-head h1{font:600 clamp(34px,5vw,56px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 10px}.po-head p{font:17px/1.55 Jost,system-ui,sans-serif;max-width:60ch;margin:0 0 8px}</style>
 <main class="po-wrap">
@@ -369,9 +381,11 @@ const NB_CSS = `<style>
 </style>`;
 function newCard(p, fitsLabel) {
   const im = p.images[0];
-  const fig = im ? `<span class="nb-f"><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="${esc(im.alt)}, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span>` : '';
+  const fig = im ? `<span class="nb-f"><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="${esc(im.alt)}${im.mock ? ', studio mock-up' : ''}" loading="lazy" decoding="async">${im.mock ? '<i>Mock-up</i>' : ''}</span>` : '';
   const sub = fitsLabel && p.fit ? `${p.kind} &middot; Regular or Oversized` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
   const href = `/products/${p.handle}/`;
+  if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', true)}</small>`
+    + inc('st0', `<small class="st0">On sale from Wed 28 Oct</small>`) + `<small class="st12">In stock, ships next working day</small></a>`;
   return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span')}</small>`
     + inc('st0', `<small class="st0">Pre-order opens Wed 28 Oct</small>`) + inc('st1', `<small class="st1">Pre-order, ships from Fri 30 Oct</small>`)
     + (IN_HAND ? '' : `<small class="st2">Pre-order, ships from Fri 30 Oct</small>`) + `</a>`;
@@ -459,19 +473,19 @@ function homeBand() {
 const LINE = { sahel: 'Sahel, the Coast Edition', trail: 'Sahra Trail' };
 function seoTitle(p) { return `${p.seo}${p.fit ? `, ${p.fit} Fit` : ''} | Sahra & Beyond`; }
 function seoDesc(p, stage) {
-  const ship = IN_HAND ? '' : stage === 0 ? ' Pre-order opens Wed 28 Oct; ships from Fri 30 Oct.' : ' Pre-order; ships from Fri 30 Oct.';
+  const ship = p.inHand ? (stage === 0 ? ' On sale from Wed 28 Oct.' : ' In stock.') : IN_HAND ? '' : stage === 0 ? ' Pre-order opens Wed 28 Oct; ships from Fri 30 Oct.' : ' Pre-order; ships from Fri 30 Oct.';
   return `${p.plain}: ${p.md}. ${LINE[p.line]}, designed in the UAE. ${money(p.price)}, free delivery across the UAE.${ship}`;
 }
 const RETURNS = { '@type': 'MerchantReturnPolicy', applicableCountry: 'AE', returnPolicyCountry: 'AE', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
   merchantReturnDays: 14, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn' };
 const SHIP_UAE = { '@type': 'OfferShippingDetails', shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'AED' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' } };
 function productLd(p, url, img, desc, stage, SITE) {
-  const inWindow = stage === 1;
+  const inWindow = stage === 1 && !p.inHand;
   const prod = { '@context': 'https://schema.org', '@type': 'Product', name: p.plain, sku: p.handle, description: desc, url, image: img ? [img] : undefined,
     brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' }, color: p.colour || undefined,
     offers: { '@type': 'Offer', price: (inWindow ? pre(p.price) : p.price).toFixed(2), priceCurrency: 'AED', url,
       priceValidUntil: inWindow ? '2026-10-29' : `${new Date(now()).getUTCFullYear() + 1}-12-31`, itemCondition: 'https://schema.org/NewCondition',
-      availability: IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE], hasMerchantReturnPolicy: RETURNS } };
+      availability: p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE], hasMerchantReturnPolicy: RETURNS } };
   if (p.fit) { prod.inProductGroupWithID = p.key;
     prod.isVariantOf = { '@type': 'ProductGroup', productGroupID: p.key, name: p.name.replace(/&amp;/g, '&'), url: `${SITE}/products/${p.key}-regular/`, variesBy: ['https://schema.org/size'] }; }
   const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
