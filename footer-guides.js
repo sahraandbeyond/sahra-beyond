@@ -28,6 +28,8 @@ const SHOP_LINKS = [
   ['/t-shirts/oversized/', 'Oversized t-shirts'],
   ['/polos/', 'Polos'],
   ['/hoodies/', 'Hoodies'],
+  ['/activewear/', 'Activewear'],
+  ['/accessories/', 'Accessories'],
   ['/national-day/', 'National Day t-shirts'],
   ['/gifts/', 'Gift ideas'],
   ['/trail/', 'Sahra Trail'],

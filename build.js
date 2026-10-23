@@ -3354,6 +3354,7 @@ COMMERCE.forEach(P => {
       <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
       <a href="/polos/"><b>Polos</b><span>The Sahra Polo &middot; The Sahel Polo</span></a>
       <a href="/hoodies/"><b>Hoodies</b><span>Two from Sahel, the Coast Edition</span></a>
+      <a href="/activewear/"><b>Activewear</b><span>Sahra Trail</span></a>
       <a href="/mountain-t-shirts/"><b>Mountain t-shirts</b><span>The Hajar range, printed</span></a>
       <a href="/desert-t-shirts/"><b>Desert t-shirts</b><span>Liwa dunes &middot; Al Quaa night sky</span></a>
     </nav>` : ''}
@@ -3461,6 +3462,57 @@ COMMERCE.forEach(P => {
     <p class="back"><a href="/new/">Everything new: Sahel and Sahra Trail &rarr;</a></p>
   </main>`;
   write('hoodies/index.html', shell({ title: H.title, desc: H.desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page', image: `${SITE}/assets/preorder/og/barr-back-og.jpg` }));
+})();
+
+/* ---------- /accessories/ and /activewear/ (23 Oct 2026) -------------------
+   Faheem: "The trailhead bag should also be listed on accessories page. Also all products sub menu should
+   also have active wear category leading to trail products." Two small category pages, the cards drawn by
+   preorder-page.js so prices and the 28 Oct stages match everywhere else. */
+(function buildAccessoriesActivewear() {
+  const PO = require('./preorder-page.js');
+  const page = ({ slug, h1, title, desc, lede, grad, block, body, items }) => {
+    const canonical = `${SITE}/${slug}/`;
+    const jsonld = [
+      { "@context": "https://schema.org", "@type": "CollectionPage", "name": h1, "description": desc, "url": canonical },
+      { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": items.map((x, i) => ({ "@type": "ListItem", "position": i + 1, "name": x[0], "url": SITE + x[1] })) },
+      { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+        { "@type": "ListItem", "position": 2, "name": h1, "item": canonical } ] } ];
+    const html = `
+  <section class="loc-hero" style="--hero-grad:${CAT_BG[grad]}">
+    <div class="loc-hero-inner">
+      <nav class="crumbs"><a href="/">Home</a> &rsaquo; <span>${esc(h1)}</span></nav>
+      <h1>${esc(h1)}</h1>
+      <p class="lede">${lede}</p>
+    </div>
+  </section>
+  <main>
+    ${block}
+    ${body}
+    ${newsletterBlock()}
+    <p class="back"><a href="/shop/">All products &rarr;</a></p>
+  </main>`;
+    write(`${slug}/index.html`, shell({ title, desc, canonical, jsonld, bodyHtml: html, activeNav: 'none', bodyClass: 'buy-page' }));
+  };
+  /* Accessories: the Sahra Tote (its own page, /tote/) and the Trailhead Bag */
+  const bag = PO.pickNew(p => p.handle === 'trailhead-bag');
+  const toteCard = `<a class="nb-c" href="/tote/"><span class="nb-f"><img src="/shirts/card/tote-model.webp" width="720" height="900" alt="The Sahra Tote in natural canvas, carried over the shoulder" loading="lazy" decoding="async"></span><b>The Sahra Tote</b><small>Canvas tote</small><small class="nb-p"><span>AED 50</span></small><small>Free with every clothing order</small></a>`;
+  page({ slug: 'accessories', h1: 'Accessories', grad: 'Dunes',
+    title: 'Accessories: Canvas Tote and Drawstring Bag | Sahra & Beyond',
+    desc: 'The Sahra Tote and the Trailhead Bag from Sahra Trail: natural canvas bags designed in the UAE, AED 50 each. Free delivery across the UAE.',
+    lede: 'Two canvas bags: the Sahra Tote and the Trailhead Bag',
+    block: PO.newBlock({ list: bag, pre: toteCard, heading: 'Canvas bags', kicker: 'Accessories', more: '/shop/', moreText: 'All products' }),
+    body: `<div class="content"><p>The Sahra Tote is natural canvas with our mark and wordmark printed in terracotta, flat-bottomed with long shoulder handles. It comes free with every clothing order, and you can buy a second one here. The Trailhead Bag is the Sahra Trail drawstring bag: natural canvas with the Two Ridges mark printed in sand, and rope drawstrings that carry it on your back. It is on sale from Wed 28 Oct, with Sahra Trail.</p></div>`,
+    items: [['The Sahra Tote', '/tote/'], ['The Trailhead Bag', '/products/trailhead-bag/']] });
+  /* Activewear: every Sahra Trail piece */
+  const trail = PO.pickNew(p => p.line === 'trail');
+  page({ slug: 'activewear', h1: 'Activewear: Sahra Trail', grad: 'Mountains',
+    title: 'Activewear in Dubai & the UAE: Running Tee, 2-in-1 Shorts | Sahra Trail',
+    desc: 'Sahra Trail, trail and run wear designed in the UAE: the Sahra Trail Tee, the 2-in-1 Short, the Kit and the Trailhead Bag. Free delivery across the UAE.',
+    lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE',
+    block: PO.newBlock({ list: trail, heading: 'Sahra Trail', kicker: 'Activewear', lede: PO.newLede(), more: '/trail/', moreText: 'About Sahra Trail' }),
+    body: `<div class="content"><p>Sahra Trail is for the trails, wadis and ridges of the UAE. The Sahra Trail Tee has raglan sleeves, mesh side panels and covered seams, with the reflective Two Ridges symbol under the collar. The 2-in-1 Short has a hidden inner liner with a bonded phone pocket, a zip pocket for keys and cards, and an internal drawcord. The Kit is the two together. There is no size chart for these yet, so <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about Sahra Trail before I order.')}" target="_blank" rel="noopener">message us</a> if you are unsure of your size.</p></div>`,
+    items: trail.map(p => [p.plain, `/products/${p.handle}/`]) });
 })();
 
 const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, arCorePublic: AR_CORE_PUBLIC, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });
@@ -3662,6 +3714,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(['', ...require('./trail-hikes.js').ORDER.concat(require('./trail-hikes.js').EXTRA).map(x => x + '/')].map(x => ({ u: `${SITE}/trail/hikes/${x}`, m: buildDate, p: '0.7' })))   /* Sahra Trail hikes for the QR cards (6 Oct 2026) */
   .concat([{ u: `${SITE}/sahel/`, m: buildDate, p: '0.8' }])   /* Sahel teaser page (6 Oct 2026) */
   .concat([{ u: `${SITE}/hoodies/`, m: buildDate, p: '0.9' }])   /* /hoodies/ live from 23 Oct 2026 */
+  .concat(['accessories', 'activewear'].map(x => ({ u: `${SITE}/${x}/`, m: buildDate, p: '0.8' })))   /* 23 Oct 2026 */
   .concat([`${SITE}/new/`].concat(require('./preorder-page.js').urls(SITE)).map(u => ({ u, m: buildDate, p: '0.9' })))   /* Sahel and Sahra Trail pages: in the sitemap from 23 Oct (Faheem: live before pre-order opens) */
   .concat(fs.existsSync(path.join(ROOT, 'feed', 'index.html')) ? [{ u: `${SITE}/feed/`, m: buildDate, p: '0.5' }] : [])   /* every Instagram post with where it lives on the site (4 Oct 2026); /q/ pages are noindex */
   /* SEO handover item 11: the three live Arabic pages join the sitemap only once Faheem confirms

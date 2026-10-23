@@ -390,11 +390,11 @@ function newCard(p, fitsLabel) {
     + inc('st0', `<small class="st0">Pre-order opens Wed 28 Oct</small>`) + inc('st1', `<small class="st1">Pre-order, ships from Fri 30 Oct</small>`)
     + (IN_HAND ? '' : `<small class="st2">Pre-order, ships from Fri 30 Oct</small>`) + `</a>`;
 }
-function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', moreText = 'See every new piece' }) {
-  if (!list.length) return '';
+function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', moreText = 'See every new piece', pre = '' }) {
+  if (!list.length && !pre) return '';
   return stageHead() + NB_CSS + `<section class="nb" aria-label="${esc(String(heading).replace(/&[a-z]+;/g, ' '))}">
   <p class="nb-k">${kicker || 'New &middot; Sahel and Sahra Trail'}</p><h2>${heading}</h2>${lede ? `<p class="nb-l">${lede}</p>` : ''}
-  <div class="nb-g">${list.map(p => newCard(p, fitsLabel)).join('')}</div>
+  <div class="nb-g">${pre}${list.map(p => newCard(p, fitsLabel)).join('')}</div>
   ${more ? `<a class="nb-a" href="${more}">${moreText} &rarr;</a>` : ''}
 </section>`;
 }

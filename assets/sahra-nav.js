@@ -36,8 +36,8 @@ function sbStage() {
       ['/t-shirts/', 'T-shirts', 'Regular & Oversized'],
       ['/polos/', 'Polos', 'Sahra and Sahel'],
       ['/hoodies/', 'Hoodies', 'Two from Sahel'],
-      ['/trail/', 'Running', 'Sahra Trail'],
-      ['/tote/', 'Accessories', 'Tote · Trailhead Bag'],
+      ['/activewear/', 'Activewear', 'Sahra Trail'],
+      ['/accessories/', 'Accessories', 'Tote · Trailhead Bag'],
       ['/gifts/', 'Gifts', ''],
       ['/shop/', 'All products', '', 'sbn-all']
     ]},
@@ -154,9 +154,10 @@ function sbStage() {
     frag.appendChild(ma('/polos/', 'Polos', true));
     frag.appendChild(ma('/hoodies/', 'Hoodies', true));
     /* 23 Oct 2026 (Faheem: "Why's accessories missing"): back in the phone menu. The Sahra Trail drawstring bag joins /tote/'s row once it has a product page. */
-    frag.appendChild(ma('/tote/', 'Accessories', true));
+    frag.appendChild(ma('/activewear/', 'Activewear', true));
+    frag.appendChild(ma('/accessories/', 'Accessories', true));
     frag.appendChild(ma('/sahel/', 'Sahel \u00b7 The Coast Edition', true));
-    frag.appendChild(ma('/trail/', 'Sahra Trail \u00b7 activewear', true));
+    frag.appendChild(ma('/trail/', 'Sahra Trail', true));
     frag.appendChild(mh('Places'));
     frag.appendChild(ma('/places/', 'All places'));
     frag.appendChild(ma('/camping/', 'Camping', true));
