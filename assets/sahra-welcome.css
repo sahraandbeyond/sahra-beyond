@@ -366,3 +366,18 @@ a.sbw-bar,a.sbw-bar:visited{text-decoration:none;color:#33271B}
   .sbw-note .sbw-dot{flex:0 0 auto}
 }
 html[lang="ar"] .sbw-note .sbw-msg{font-family:var(--mono,'Space Mono',monospace)!important;text-transform:uppercase!important}
+
+/* 23 Oct 2026 (Faheem: "The font on top bar and 'free next day delivery' line is not approved. It's
+   inconsistent with rest of the site"). The bar carries sentences, so it is set like the rest of the
+   site's UI text: Jost, sentence case, normal tracking (MASTER_BRIEF typography, 18 Sep 2026: Jost for
+   body and UI; Space Mono only for short eyebrows and labels). */
+.sbw-bar,.sbw-bar .sbw-msg,.sbw-bar .sbw-amt,.sbw-bar .sbw-go,.sbw-bar .sbw-shipwrap,.sbw-bar .sbw-shipwrap *,
+html[lang="ar"] .sbw-note .sbw-msg,.sb-topbar,.sb-topbar *{
+  font-family:var(--sans,Jost,system-ui,sans-serif)!important;text-transform:none!important;letter-spacing:.01em!important}
+.sbw-bar{font-size:14px;line-height:1.4}
+.sbw-bar .sbw-msg{font-weight:600}
+@media(max-width:620px){.sbw-bar{font-size:12.5px}.sbw-note .sbw-msg{font-size:12.5px!important;letter-spacing:0!important}}
+/* the same for the other delivery / trust lines that were set in Space Mono capitals (/shop/ trust row,
+   the no-JS delivery note) */
+.trust-row div,body>.note,body>.note *{font-family:var(--sans,Jost,system-ui,sans-serif)!important;text-transform:none!important;letter-spacing:.01em!important}
+.trust-row div{font-size:14px!important;font-weight:500}

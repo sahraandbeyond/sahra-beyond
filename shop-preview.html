@@ -445,6 +445,11 @@ body.shop-page .fold-b .fit-note{margin:0 0 8px;line-height:1.6}
 .leaflet-popup-tip{background:#fff}
 .mp-pop{display:flex;text-align:left}
 .mp-pop>img{width:92px;height:118px;object-fit:cover;flex:0 0 auto;background:#EFEAE0}
+/* 23 Oct 2026: Sahel pins. A drawn dot, not the mock-up photo (a 44px circle has no room for the Mock-up label); the popup image carries the label */
+.mp-dot.mp-sahel{width:32px;height:32px;background:#0E1A2E;box-shadow:0 5px 12px rgba(0,0,0,.3),inset 0 0 0 7px #0E1A2E,inset 0 0 0 10px #D9C3A5}
+.mp-fig{position:relative;flex:0 0 auto}.mp-fig img{display:block;width:92px;height:118px;object-fit:cover;background:#EFEAE0}
+.mp-fig i{position:absolute;left:4px;top:4px;font:8px/1 'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:3px 4px;border-radius:3px;background:rgba(250,246,239,.94);color:#2A2016}
+.mp-pre{font-size:11px;color:#6b6357;line-height:1.35}
 .mp-info{padding:12px 14px;display:flex;flex-direction:column;gap:3px}
 .mp-place{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#9C521B}
 .mp-info strong{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:17px;color:#2A2016;line-height:1.15}
@@ -1253,7 +1258,7 @@ html body .folds summary h2,html body .fold summary h2{font-size:22px!important;
 /* the Al Quaa place band set its H2 in Jost bold; every H2 is Cormorant */
 html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=91557a3b">
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=cdd516cd">
 <script src="/assets/sahra-welcome.js?v=48c151f1" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=63a7fcc7">
 <script src="/assets/sahra-nav.js?v=e152eafc" data-sbn defer></script>
@@ -1295,8 +1300,8 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <section class="storemap" id="storemap">
   <div class="sm-inner">
     <span class="eyebrow">Shop the map</span>
-    <h2>Every tee is a place</h2>
-    <p class="sm-sub">The collection is a growing map of the UAE. Tap a pin to see the place — and the tee it inspired.</p>
+    <h2>The places behind the pieces</h2>
+    <p class="sm-sub">The collection is a growing map of the UAE. Tap a pin to see the place, and the piece it inspired.</p>
     <div id="uae-map" role="application" aria-label="Map of the UAE showing each design's place"></div>
     <p class="sm-note">As we add places, the map grows with them.</p>
   </div>
@@ -2717,6 +2722,9 @@ function loadLeaflet(cb){
 function buildMap(products){
   var el=document.getElementById('uae-map');if(!el||el._built)return;
   var _seenMap={};var pts=(products||[]).map(function(p){var pi=placeInfo(p);return pi?{p:p,slug:pi.slug,lat:pi.data.lat,lng:pi.data.lng}:null;}).filter(Boolean).filter(function(x){if(_seenMap[x.slug])return false;_seenMap[x.slug]=1;return true;});
+  /* 23 Oct 2026 (Faheem: "The map on shop page only shows 3 pins"): the Sahel pieces that carry a place join the map. Filled by build.js from preorder-page.js */
+  var EXTRA=/*SHOP_MAP_EXTRA*/[];
+  EXTRA.forEach(function(x){if(_seenMap[x.slug])return;_seenMap[x.slug]=1;pts.push({p:x,slug:x.slug,lat:x.lat,lng:x.lng,sahel:true});});
   if(!pts.length){el.style.display='none';return;}
   var start=function(){if(el._built)return;loadLeaflet(function(){renderMap(el,pts);});};
   if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.disconnect();start();}});},{rootMargin:'400px'});io.observe(el);}
@@ -2730,14 +2738,15 @@ function renderMap(el,pts){
   L.tileLayer('https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png?key=cb1_2ycd_1_4c8f950b148540b12724e889',{maxZoom:12,minZoom:6,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
   var markers=[];
   pts.forEach(function(o){
-    var icon=L.divIcon({className:'mp-pin',html:'<span class="mp-dot"'+(o.p.img?' style="background-image:url(\''+sz(o.p.img,120)+'\')"':'')+'></span>',iconSize:[44,44],iconAnchor:[22,22],popupAnchor:[0,-18]});
+    var icon=L.divIcon({className:'mp-pin',html:o.sahel?'<span class="mp-dot mp-sahel"></span>':'<span class="mp-dot"'+(o.p.img?' style="background-image:url(\''+sz(o.p.img,120)+'\')"':'')+'></span>',iconSize:o.sahel?[32,32]:[44,44],iconAnchor:o.sahel?[16,16]:[22,22],popupAnchor:[0,-18]});
     var m=L.marker([o.lat,o.lng],{icon:icon,title:o.p.title+' · '+o.p.place}).addTo(map);
-    var pop='<div class="mp-pop">'+(o.p.img?'<img src="'+sz(o.p.img,240)+'" alt="'+o.p.title+'">':'')+'<div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+money(o.p.price,o.p.cur)+'</span><a class="mp-shop" href="#prod-'+o.p.placeSlug+'">Shop this tee &rarr;</a></div></div>';
+    var st=+(document.documentElement.getAttribute('data-stage')||0);
+    var pop=o.sahel?'<div class="mp-pop"><span class="mp-fig"><img src="'+o.p.img+'" alt="'+o.p.title+', studio mock-up"><i>Mock-up</i></span><div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+(st===1?'AED '+(Math.round(o.p.price*80)/100).toFixed(2)+', pre-order price':'AED '+o.p.price)+'</span><span class="mp-pre">'+(st===0?'Sahel. Pre-order opens Wed 28 Oct.':'Sahel. Pre-order, ships from Fri 30 Oct.')+'</span><a class="mp-go" href="'+o.p.href+'" style="margin-top:7px;font-size:12px;font-weight:600;color:#2A2016;border-bottom:1px solid currentColor;align-self:flex-start;text-decoration:none">'+o.p.cta+' &rarr;</a></div></div>':'<div class="mp-pop">'+(o.p.img?'<img src="'+sz(o.p.img,240)+'" alt="'+o.p.title+'">':'')+'<div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+money(o.p.price,o.p.cur)+'</span><a class="mp-shop" href="#prod-'+o.p.placeSlug+'">Shop this tee &rarr;</a></div></div>';
     m.bindPopup(pop,{closeButton:true,offset:[0,-4],maxWidth:260});
     m.on('mouseover',function(){m.openPopup();});
     markers.push(m);
   });
-  if(markers.length>1){map.fitBounds(L.featureGroup(markers).getBounds().pad(0.45));}
+  if(markers.length>1){map.fitBounds(L.featureGroup(markers).getBounds().pad(0.25));}
   else{map.setView([pts[0].lat,pts[0].lng],8);}
   // popup "Shop this tee" → smooth-scroll to that product section, then close map popup
   el.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('.mp-shop');if(!a)return;var id=a.getAttribute('href');var t=id&&document.querySelector(id);if(t){e.preventDefault();map.closePopup();(window.__lenis?window.__lenis.scrollTo(t,{offset:-40}):t.scrollIntoView({behavior:'smooth'}));}});

@@ -2552,6 +2552,12 @@ if (LAUNCHED || REVEALED) (function () {
       + PO.newBlock({ list: PO.pickNew(p => p.line === 'trail'), heading: 'Sahra Trail: running tee, 2-in-1 shorts and kit', kicker: 'New &middot; Sahra Trail', more: '/trail/', moreText: 'About Sahra Trail' })
       + '</div>';
     html = html.replace('/*PRE_HANDLES*/[]', JSON.stringify(PO.handles()));
+    /* 23 Oct 2026: the Sahel places on the /shop/ map (Regular fit links for the tees) */
+    const SHOP_MAP_EXTRA = PO.products().filter(p => p.place && (!p.fit || p.fit === 'Regular')).map(p => {
+      const l = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/locations', p.place[1] + '.json'), 'utf8'));
+      return { slug: p.place[1], lat: l.lat, lng: l.lng, place: p.place[0], title: p.name.replace(/&amp;/g, '&'), price: p.price, href: `/products/${p.handle}/`,
+        img: `/assets/preorder/${p.images[0].k}-720.webp`, cta: /hoodie/i.test(p.kind) ? 'See the hoodie' : 'See the tee' }; });
+    html = html.replace('/*SHOP_MAP_EXTRA*/[]', JSON.stringify(SHOP_MAP_EXTRA));
     html = html.replace(
       '<main id="products"><div class="loading">Loading the collection&hellip;</div></main>',
       gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>' + TRAIL_BAND

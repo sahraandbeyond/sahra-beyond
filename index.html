@@ -993,54 +993,54 @@ footer{position:relative;z-index:2}
    are written against #s-hero.hx so the older #s-hero rules above cannot reach in. */
 html body #s-hero.hx{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;
   padding:0!important;margin:0!important;height:calc(100vh - var(--hx-bar,44px));height:calc(100svh - var(--hx-bar,44px));min-height:560px!important;max-height:1180px;
-  background:#120E0A!important;color:#F7EFE2;overflow:hidden;text-align:center}
+  background:#FAF6EF!important;color:#2A2016;overflow:hidden;text-align:center}   /* 23 Oct 2026 (Faheem chose a light hero after the panel review): cream, like the page below */
 html body #s-hero.hx::before,html body #s-hero.hx::after{content:none!important;display:none!important}
 #s-hero.hx .hx-top{flex:none;padding:calc(var(--hx-nav,76px) + 18px) 20px 20px}
 html.hx-in #rail{opacity:0!important;pointer-events:none!important}
 #rail{transition:opacity .4s}
 html body #s-hero.hx h1{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:500;font-size:clamp(21px,2.1vw,30px)!important;
-  line-height:1.15!important;letter-spacing:.2px;margin:0!important;padding:0!important;color:#F7EFE2!important;text-shadow:none!important;
+  line-height:1.15!important;letter-spacing:.2px;margin:0!important;padding:0!important;color:#2A2016!important;text-shadow:none!important;
   max-width:none!important;width:auto!important;text-align:center!important;text-wrap:balance;opacity:1!important;transform:none!important}
 #s-hero.hx .hx-slides{position:relative;flex:1 1 auto;min-height:0;width:100%;overflow:hidden}
 #s-hero.hx .hx-s{position:absolute;inset:0;display:block;opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s;
   color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
 #s-hero.hx .hx-s.is-on{opacity:1;visibility:visible;transition:opacity .9s ease,visibility 0s;z-index:1}
-#s-hero.hx .hx-s:focus-visible{outline:2px solid #F2C98C;outline-offset:-4px}
-#s-hero.hx .hx-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:minmax(0,1fr);gap:3px;width:100%;height:100%;background:#120E0A}
-#s-hero.hx .hx-t{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--x,50%) var(--y,22%);min-height:0;background:#2A2018;
+#s-hero.hx .hx-s:focus-visible{outline:2px solid #9C521B;outline-offset:-4px}
+#s-hero.hx .hx-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:minmax(0,1fr);gap:3px;width:100%;height:100%;background:#FAF6EF}
+#s-hero.hx .hx-t{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--x,50%) var(--y,22%);min-height:0;background:#E9DFCF;
   transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
 #s-hero.hx .hx-t:not([src]){visibility:hidden}
 @media(hover:hover){#s-hero.hx .hx-s:hover .hx-lead{transform:scale(1.025)}}
-#s-hero.hx .hx-bot{flex:none;position:relative;z-index:2;background:#120E0A;padding:18px 20px max(8px,env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:4px}
+#s-hero.hx .hx-bot{flex:none;position:relative;z-index:2;background:#FAF6EF;padding:18px 20px max(8px,env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:4px}
 #s-hero.hx .hx-names{display:grid;width:100%;justify-items:center}
-#s-hero.hx .hx-n{grid-area:1/1;display:flex;flex-direction:column;align-items:center;gap:5px;color:#F7EFE2;text-decoration:none;
+#s-hero.hx .hx-n{grid-area:1/1;display:flex;flex-direction:column;align-items:center;gap:5px;color:#2A2016;text-decoration:none;
   opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s linear .6s;padding:2px 12px}
 #s-hero.hx .hx-n.is-on{opacity:1;visibility:visible;transition:opacity .6s ease .15s,visibility 0s}
-#s-hero.hx .hx-place{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:#F2C98C;margin-right:-.28em}
+#s-hero.hx .hx-place{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8A4716;margin-right:-.16em}
 #s-hero.hx .hx-name{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-weight:600;font-size:clamp(30px,2.7vw,56px);line-height:1.05;letter-spacing:.3px}
-#s-hero.hx .hx-cta{display:inline-flex;align-items:center;gap:12px;min-height:42px;padding:0 26px;margin-top:7px;background:#F2C98C;color:#241B12;
+#s-hero.hx .hx-cta{display:inline-flex;align-items:center;gap:12px;min-height:42px;padding:0 26px;margin-top:7px;background:#2A2016;color:#FAF6EF;
   font-size:13.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;border-radius:2px;transition:background .25s,transform .25s}
 #s-hero.hx .hx-cta .sb-price{color:inherit;font:inherit;letter-spacing:inherit}
-#s-hero.hx .hx-cta i{width:1px;height:13px;background:rgba(36,27,18,.4)}
-#s-hero.hx .hx-n:hover .hx-cta,#s-hero.hx .hx-slides:hover~.hx-bot .hx-n.is-on .hx-cta{background:#FBE0B4}
-#s-hero.hx .hx-n:focus-visible{outline:2px solid #F2C98C;outline-offset:6px;border-radius:2px}
+#s-hero.hx .hx-cta i{width:1px;height:13px;background:rgba(250,246,239,.45)}
+#s-hero.hx .hx-n:hover .hx-cta,#s-hero.hx .hx-slides:hover~.hx-bot .hx-n.is-on .hx-cta{background:#4A3B2A}
+#s-hero.hx .hx-n:focus-visible{outline:2px solid #9C521B;outline-offset:6px;border-radius:2px}
 #s-hero.hx .hx-dots{display:flex;gap:2px;justify-content:center;align-items:center}
-#s-hero.hx .hx-dot,#s-hero.hx .hx-pause{appearance:none;-webkit-appearance:none;border:0;background:none;width:40px;height:28px;padding:0;cursor:pointer;position:relative;color:#F7EFE2}
-#s-hero.hx .hx-dot::before{content:"";position:absolute;left:4px;right:4px;top:50%;margin-top:-1.5px;height:3px;border-radius:2px;background:rgba(247,239,226,.5);transition:background .3s}
-#s-hero.hx .hx-dot:hover::before{background:rgba(247,239,226,.8)}
-#s-hero.hx .hx-dot.is-on::before{background:#F2C98C}
-#s-hero.hx .hx-dot:focus-visible,#s-hero.hx .hx-pause:focus-visible{outline:2px solid #F2C98C;outline-offset:-2px}
+#s-hero.hx .hx-dot,#s-hero.hx .hx-pause{appearance:none;-webkit-appearance:none;border:0;background:none;width:40px;height:28px;padding:0;cursor:pointer;position:relative;color:#2A2016}
+#s-hero.hx .hx-dot::before{content:"";position:absolute;left:4px;right:4px;top:50%;margin-top:-1.5px;height:3px;border-radius:2px;background:rgba(42,32,22,.28);transition:background .3s}
+#s-hero.hx .hx-dot:hover::before{background:rgba(42,32,22,.55)}
+#s-hero.hx .hx-dot.is-on::before{background:#9C521B}
+#s-hero.hx .hx-dot:focus-visible,#s-hero.hx .hx-pause:focus-visible{outline:2px solid #9C521B;outline-offset:-2px}
 #s-hero.hx .hx-pause{width:32px;margin-left:6px;opacity:.7;transition:opacity .25s}
 #s-hero.hx .hx-pause:hover{opacity:1}
 #s-hero.hx .hx-pause span{position:absolute;left:50%;top:50%;width:8px;height:10px;margin:-5px 0 0 -4px;border-left:2.5px solid currentColor;border-right:2.5px solid currentColor;box-sizing:border-box}
 #s-hero.hx .hx-pause[aria-pressed="true"] span{width:0;height:0;margin:-6px 0 0 -3px;border:0;border-left:9px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
 html.hx-in nav.on-hero{background:rgba(18,14,10,.94)!important}
-.hx-trust{position:relative;z-index:2;background:#1B150F;border-top:1px solid rgba(247,239,226,.08);border-bottom:1px solid rgba(242,201,140,.3);color:rgba(247,239,226,.9);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
-  gap:6px 28px;padding:13px 20px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;line-height:1.5;text-align:center}
+.hx-trust{position:relative;z-index:2;background:#F1E8D9;border-top:1px solid rgba(42,32,22,.08);border-bottom:1px solid rgba(42,32,22,.1);color:#2A2016;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:6px 28px;padding:13px 20px;font-family:'Jost',system-ui,sans-serif;font-size:14px;font-weight:500;letter-spacing:.01em;text-transform:none;line-height:1.5;text-align:center}   /* 23 Oct 2026 (Faheem): Jost like the rest of the site's UI text, not Space Mono capitals */
 .hx-trust .hx-tr{white-space:nowrap}
-.hx-trust .hero-stars{color:#F2C98C;letter-spacing:1px;font-weight:400}
-.hx-trust .hx-all{color:#F2C98C;text-decoration:none;border-bottom:1px solid rgba(242,201,140,.55)}
-.hx-trust .hx-all:hover{border-color:#F2C98C}
+.hx-trust .hero-stars{color:#9C521B;letter-spacing:1px;font-weight:400}
+.hx-trust .hx-all{color:#8A4716;text-decoration:none;border-bottom:1px solid rgba(138,71,22,.5)}
+.hx-trust .hx-all:hover{border-color:#8A4716}
 @media(min-width:1100px) and (max-height:780px){
   #s-hero.hx .hx-top{padding:calc(var(--hx-nav,76px) + 10px) 20px 12px}
   html body #s-hero.hx h1{font-size:21px!important}
@@ -1071,7 +1071,7 @@ html.hx-in nav.on-hero{background:rgba(18,14,10,.94)!important}
   #s-hero.hx .hx-cta{margin-top:6px;font-size:13px;padding:0 20px}
   #s-hero.hx .hx-dot{width:44px;height:36px}
   #s-hero.hx .hx-pause{height:36px;width:36px}
-  .hx-trust{font-size:10.5px;letter-spacing:1px;gap:5px 16px;padding:13px 14px}
+  .hx-trust{font-size:13px;letter-spacing:0;gap:5px 16px;padding:13px 14px}
   .hx-trust .hx-tr-d{display:none}
 }
 @media(max-width:380px){
@@ -1632,7 +1632,7 @@ html body .folds summary h2,html body .fold summary h2{font-size:22px!important;
 /* the Al Quaa place band set its H2 in Jost bold; every H2 is Cormorant */
 html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=91557a3b">
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=cdd516cd">
 <script src="/assets/sahra-welcome.js?v=48c151f1" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=63a7fcc7">
 <script src="/assets/sahra-nav.js?v=e152eafc" data-sbn defer></script>
@@ -1645,7 +1645,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <a class="skip-link" href="#s-collection">Skip to the collection</a>
 <div class="sb-topbar"><span class="sb-ship-uae">Free next-day delivery across the UAE &nbsp;&middot;&nbsp; order by 2 pm</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 working days &nbsp;&middot;&nbsp; free over AED 390</span><span class="sb-ship-intl">Worldwide delivery in 7&ndash;14 working days</span></div>
 <button id="ambient" class="ambient-btn" aria-label="Toggle ambient desert sound" aria-pressed="false" title="Ambient desert sound"><span class="amb-ic">♪</span></button>
-<nav id="nav" class="on-hero">
+<nav id="nav" class="solid">
   <a class="logo" href="/" aria-label="Sahra &amp; Beyond — home"><img class="mark mark-l" src="/logo/mark-light.png" alt="" width="300" height="40"><img class="mark mark-d" src="/logo/mark-dark.png" alt="" width="300" height="40"><div class="logo-text"><span class="logo-a">Sahra</span><span class="logo-b">&amp; Beyond</span><span class="logo-a sb-house">Designed in the UAE for everyone who loves it.</span></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection" data-ring-jump>Collection</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
@@ -3227,7 +3227,7 @@ if('IntersectionObserver' in window&&window.gtag){var io=new IntersectionObserve
      stop - a plain scroll listener, so it also works without GSAP */
   (function paperNav() {
     var nv = document.getElementById('nav'); if (!nv) return;
-    var paperStops = ['s-collection', 's-reviews'].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    var paperStops = ['s-hero', 's-collection', 's-reviews'].map(   /* 23 Oct 2026: the hero is cream now, so the nav is the cream (solid) one over it */function (id) { return document.getElementById(id); }).filter(Boolean);
     var last = null;
     function check() {
       var y = nv.getBoundingClientRect().bottom, paper = false;
