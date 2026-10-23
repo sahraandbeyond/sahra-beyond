@@ -20,7 +20,7 @@
 
    Claims: only what is safe to say. Snoopy Island, Al Aqah, Fujairah's east
    coast, Gulf of Oman. No depths, species, visibility or fees. "A turtle".
-   "Designed in the UAE" and "limited first run" are the house lines.
+   "Designed in the UAE" is the house line (no scarcity wording, 22-23 Oct 2026).
 
    The wordmark is the hoodie embroidery master's own outlines
    (docs/supplier-specs/hoodie/embroidery), never retyped. The coastline in
@@ -51,10 +51,10 @@ const DIM = { tee: [715, 720], polo: [587, 720], hoodie: [547, 720] };
 
 const T = {
   title: 'Sahel: The Coast Edition | Sahra & Beyond',
-  desc: 'Sahel (ساحل) is the Coast Edition from Sahra & Beyond, designed in the UAE and drawn from Fujairah\'s east coast. Launching soon. Be first to know.',
+  desc: 'Sahel (ساحل) is the Coast Edition from Sahra & Beyond, designed in the UAE and drawn from Fujairah\'s east coast. Pre-order opens Wed 28 Oct.',
   eyebrow: '<span>The Coast Edition</span><i aria-hidden="true"> &middot; </i><span>by Sahra &amp; Beyond</span>',
   h1: 'Beyond the desert, there is a coast',
-  kicker: 'Launching soon',
+  kicker: 'Pre-order opens Wed 28 Oct',
   cta: 'Be first to know',
   scroll: 'Scroll to dive',
   hud: 'Al Aqah &middot; Fujairah',
@@ -109,8 +109,9 @@ module.exports = function buildSahel({ shell, write, SITE }) {
        prints, places or prices. Tees take the short design name with 'Tee' on the line below. */
     const label = p.design;
     const typed = new RegExp('\\b' + p.type + '\\b', 'i').test(p.design);
-    /* at the reveal a piece with a pin opens its place page; on 29 Oct set p.href to the product page */
-    const href = reveal ? (p.href || (p.placeSlug ? `/locations/${p.placeSlug}/` : null)) : null;
+    /* 23 Oct 2026 (site review): every piece opens its own product page, which is live from 23 Oct */
+    const prod = ST.products().find(x => x.name.replace(/&amp;/g, '&') === p.name);
+    const href = prod ? `/products/${prod.handle}/` : (reveal ? (p.href || (p.placeSlug ? `/locations/${p.placeSlug}/` : null)) : null);
     const tag = href ? 'a' : 'button';
     const attrs = href ? ` href="${href}"` : ' type="button"';
     return `<${tag}${attrs} class="sh-piece sh-piece-${p.k}" aria-label="Piece ${n}: ${label}.">
@@ -277,7 +278,6 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
       <div class="sh-grid">
       ${pieces}
       </div>
-      ${STATE === 'teaser' ? ST.inc('st0', `<p class="sh-hint st0" aria-hidden="true">${T.hint}</p>`) : ''}
       ${ST.inc('st0', `<p class="st0" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
       <p class="st0 sh-sub">Pre-order opens Wed 28 Oct at 8 AM. <span data-days></span></p>`)}
       ${ST.inc('st1', `<p class="st1" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces and pre-order <span aria-hidden="true">&rarr;</span></a></p>

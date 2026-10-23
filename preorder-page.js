@@ -53,7 +53,7 @@ function inc(cls, html) {
    very top of the body so data-stage is set before anything below paints. */
 function stageHead() {
   const b = stageNow();
-  const hideFor = { 0: ['st1', 'st2', 'st12'], 1: ['st0', 'st2'], 2: ['st0', 'st1', 'st01'] };
+  const hideFor = { 0: ['st1', 'st2', 'st12'], 1: ['st0', 'st2', 'st02'], 2: ['st0', 'st1', 'st01'] };   /* st02: shown before and after the 20% window, e.g. the full price */
   const rules = [0, 1, 2].map(k => hideFor[k].map(c => `html[data-stage="${k}"] .${c}`).join(',')).join(',');
   const noJs = hideFor[b].map(c => `html:not([data-stage]) .${c}`).join(',');
   return `<style>${rules},${noJs}{display:none!important}</style>
@@ -72,41 +72,41 @@ const real = (k, alt) => ({ k, alt, mock: false });
 
 /* Story paragraphs: the approved card stories (14 Oct handover; content/sahel-pieces.json). */
 const SAHEL = [
-  { key: 'khor-fakkan-bay-tee', name: 'Khor Fakkan Bay Tee', colour: 'Jet Set', price: 199, fits: true, img: 'kfb', place: ['Khor Fakkan', 'khor-fakkan-beach'],
+  { key: 'khor-fakkan-bay-tee', name: 'Khor Fakkan Bay Tee', seo: 'Khor Fakkan Bay Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Jet Set, DTG printed front and back', colour: 'Jet Set', price: 199, fits: true, img: 'kfb', place: ['Khor Fakkan', 'khor-fakkan-beach'],
     story: "On Sharjah's east coast the Hajar Mountains come straight down to the Gulf of Oman. Khor Fakkan sits in the curve between two headlands, and its name is usually read as 'the creek of the two jaws'. We drew the bay the way it holds you: bare ridges, one sweep of pale sand and a dhow resting on still water.",
     details: ['230gsm cotton', 'DTG printed front and back', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'al-hamra-pearl-diver-tee', name: 'Al Hamra Pearl Diver Tee', colour: 'Estate Blue', price: 199, fits: true, img: 'pearl', place: ['Al Jazirah Al Hamra', 'al-jazirah-al-hamra'],
+  { key: 'al-hamra-pearl-diver-tee', name: 'Al Hamra Pearl Diver Tee', seo: 'Al Hamra Pearl Diver Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Estate Blue, DTG printed', colour: 'Estate Blue', price: 199, fits: true, img: 'pearl', place: ['Al Jazirah Al Hamra', 'al-jazirah-al-hamra'],
     story: 'Al Jazirah Al Hamra, the Red Island, is a coral-stone pearling town on the Ras Al Khaimah coast, left empty around 1970. Every summer the boats of this coast sailed for the big dive, from June to the end of September. A diver went down on a stone weight, filled his basket with oysters and tugged the rope to be hauled up.',
     details: ['230gsm cotton', 'DTG printed', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'al-aqah-reef-tee', name: 'Al Aqah Reef Tee', colour: 'Lagoon', price: 199, fits: true, img: 'reef', place: ['Al Aqah', 'snoopy-island'],
+  { key: 'al-aqah-reef-tee', name: 'Al Aqah Reef Tee', seo: 'Al Aqah Reef Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Lagoon, DTG printed front and back', colour: 'Lagoon', price: 199, fits: true, img: 'reef', place: ['Al Aqah', 'snoopy-island'],
     story: "A small rock island sits a few hundred metres off Al Aqah beach, on Fujairah's northern coast. You don't need a boat: people swim, wade or paddle out to snorkel the reef around it, where turtles, blacktip reef sharks and parrotfish are reported. We drew both worlds at once, the rock above the waterline and the reef beneath it.",
     details: ['230gsm cotton', 'DTG printed front and back', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'shams-tee', name: 'Shams Tee', colour: 'Jet Set', price: 139, fits: true, img: 'shams', front: true,
+  { key: 'shams-tee', name: 'Shams Tee', seo: 'Shams Embroidered T-Shirt', kind: 'Embroidered T-shirt', md: '230gsm cotton in Jet Set, our mark embroidered in sand thread on the left chest', colour: 'Jet Set', price: 139, fits: true, img: 'shams', front: true,
     story: 'Shams is the sun, and in this country it decides everything: when to walk, when to rest, when the dunes turn gold. Sahra &amp; Beyond began with nights in the desert and a camera, waiting for it to rise. Our mark keeps that moment, the sun resting on a dune crest with sahra written beneath it, stitched in sand thread on the left chest.',
     details: ['230gsm cotton', 'Our mark embroidered in sand thread on the left chest', 'Back plain', 'Printed neck label'] },
-  { key: 'the-sahel-polo', name: 'The Sahel Polo', colour: 'Black', price: 229, img: null,
+  { key: 'the-sahel-polo', name: 'The Sahel Polo', seo: 'The Sahel Polo, Black Piqu\u00e9 Polo Shirt', kind: 'Polo shirt', md: 'black mercerised piqu\u00e9, three buttons, antique-gold tipping and our mark in antique-gold thread', colour: 'Black', price: 229, img: 'polo', front: true,
     story: "After dark on Dubai Creek, the lights of the abras and dhows spill gold onto black water. This polo is cut from that view: black mercerised piqu&eacute;, three buttons, and our mark in antique-gold thread on the left chest. It's the one piece in Sahel made for evenings.",
-    details: ['Black mercerised piqu&eacute;', 'Three buttons', 'Our mark in antique-gold thread on the left chest', 'Printed neck label'] },
-  { key: 'barr-and-bahr-hoodie', name: 'Barr &amp; Bahr Hoodie', plain: 'Barr & Bahr Hoodie', colour: 'Salute', price: 229, img: 'barr',
+    details: ['Black mercerised piqu&eacute;', 'Three buttons', 'Antique-gold tipping on the collar and cuffs', 'Our mark in antique-gold thread on the left chest', 'Printed neck label'] },
+  { key: 'barr-and-bahr-hoodie', name: 'Barr &amp; Bahr Hoodie', seo: 'Barr & Bahr Hoodie, Embroidered UAE Coastline', kind: 'Hoodie', md: 'the UAE coastline embroidered in sand thread across the back, in Salute', plain: 'Barr & Bahr Hoodie', colour: 'Salute', price: 229, img: 'barr',
     story: 'In the Gulf, barr is the open land, the desert, and bahr is the sea. People say them together because life here has always moved between the two. The lower back carries that crossing: contour-line dunes running down into a stream and a wave. Above it, one line of sand thread traces the whole UAE coast.',
     details: ['The UAE coastline embroidered in sand thread across the back', 'Lower-back artwork DTG printed', 'Printed neck label'] },
-  { key: 'ras-al-khor-hoodie', name: 'Ras Al Khor Hoodie', colour: 'Estate Blue', price: 229, img: 'rakh', place: ['Ras Al Khor', 'ras-al-khor'],
+  { key: 'ras-al-khor-hoodie', name: 'Ras Al Khor Hoodie', seo: 'Ras Al Khor Hoodie, Flamingos and the UAE Coast', kind: 'Hoodie', md: 'flamingos at Ras Al Khor low on the back and the UAE coastline in sand thread, in Estate Blue', colour: 'Estate Blue', price: 229, img: 'rakh', place: ['Ras Al Khor', 'ras-al-khor'],
     story: 'Ras Al Khor means the head of the creek: a protected wetland where Dubai Creek ends, in the middle of the city. Low on the back, greater flamingos wade there at dusk, with the mangroves behind them. Above them runs the whole UAE coast in a single line of sand thread, with Sahel written beneath it in Arabic and English.',
     details: ['The UAE coastline embroidered in sand thread across the back', 'Lower-back artwork DTG printed', 'Printed neck label'] }
 ];
 /* Trail features: the /trail/ page's own list (build.js, 8 Oct). No performance claims; "reflective", never "glows". */
 const TRAIL = [
-  { handle: 'sahra-trail-tee', name: 'Sahra Trail Tee', price: 139,
+  { handle: 'sahra-trail-tee', name: 'Sahra Trail Tee', seo: 'Sahra Trail Running T-Shirt', kind: 'Running T-shirt', md: 'raglan sleeves, mesh side panels, covered seams and a reflective Two Ridges symbol', price: 139,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Ocean-inspired print.',
     details: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'],
     images: [mock('trail-tee-front', 'Sahra Trail Tee, front'), mock('trail-tee-back', 'Sahra Trail Tee, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-mesh', 'The mesh side panel, close up'), real('trail-backsymbol', 'The Two Ridges symbol, close up')] },
-  { handle: 'sahra-trail-2-in-1-short', name: 'Sahra Trail 2-in-1 Short', price: 169,
+  { handle: 'sahra-trail-2-in-1-short', name: 'Sahra Trail 2-in-1 Short', seo: '2-in-1 Running Shorts, Sahra Trail', kind: '2-in-1 running shorts', md: 'a hidden inner liner, a bonded phone pocket, a zip pocket for keys and an internal drawcord', price: 169,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Wave-inspired graphic.',
     details: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'],
-    images: [mock('trail-short-front', 'Sahra Trail 2-in-1 Short, front'), mock('trail-short-back', 'Sahra Trail 2-in-1 Short, back'),
+    images: [mock('trail-short-front', 'Sahra Trail 2-in-1 running shorts, front'), mock('trail-short-back', 'Sahra Trail 2-in-1 running shorts, back'),
       real('trail-shortsymbol', 'The Two Ridges symbol and the name on the leg, close up'), real('trail-shortname', 'SAHRA TRAIL on the leg, close up')] },
-  { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', price: 249, kit: true,
+  { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', seo: 'Sahra Trail Running Kit: Tee and 2-in-1 Shorts', kind: 'Running kit', md: 'the Sahra Trail Tee and the Sahra Trail 2-in-1 Short together, with a size chosen for each', price: 249, kit: true,
     lede: 'The Sahra Trail Tee and the Sahra Trail 2-in-1 Short together. Tee, AED 139. Short, AED 169. Together, the kit: AED 249.',
     details: ['The Sahra Trail Tee', 'The Sahra Trail 2-in-1 Short', 'Choose a size for each'],
     images: [mock('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), mock('trail-kit-back', 'Sahra Trail Kit, back'),
@@ -121,10 +121,10 @@ function products() {
     const images = p.img ? (p.front ? [mock(p.img + '-front', plain + ', front'), mock(p.img + '-back', plain + ', back')] : [mock(p.img + '-back', plain + ', back'), mock(p.img + '-front', plain + ', front')]) : [];
     if (p.fits) FITS.forEach(([f, F]) => out.push({ line: 'sahel', handle: `${p.key}-${f}`, title: `${p.name} &mdash; ${F}`, plain: `${plain} — ${F}`, name: p.name, fit: F,
       sibling: `${p.key}-${f === 'regular' ? 'oversized' : 'regular'}`, siblingFit: f === 'regular' ? 'Oversized' : 'Regular',
-      colour: p.colour, price: p.price, story: p.story, details: [`${F} fit`].concat(p.details), images, place: p.place }));
-    else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place });
+      colour: p.colour, price: p.price, story: p.story, details: [`${F} fit`].concat(p.details), images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md }));
+    else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md });
   });
-  TRAIL.forEach(p => out.push({ line: 'trail', handle: p.handle, title: p.name, plain: p.name, name: p.name, price: p.price, story: p.lede, details: p.details, images: p.images, kit: !!p.kit }));
+  TRAIL.forEach(p => out.push({ line: 'trail', handle: p.handle, title: p.name, plain: p.name, name: p.name, price: p.price, story: p.lede, details: p.details, images: p.images, kit: !!p.kit, key: p.handle, seo: p.seo, kind: p.kind, md: p.md }));
   return out;
 }
 function urls(SITE) { return products().map(p => `${SITE}/products/${p.handle}/`); }
@@ -132,6 +132,9 @@ function urls(SITE) { return products().map(p => `${SITE}/products/${p.handle}/`
 const esc = s => String(s).replace(/&(?![a-z#0-9]+;)/gi, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const money = n => 'AED ' + (Math.round(n * 100) % 100 === 0 ? String(Math.round(n)) : (Math.round(n * 100) / 100).toFixed(2));
 const pre = n => Math.round(n * 80) / 100;   /* the 20% pre-order price, to the fils, as Shopify computes it */
+/* 23 Oct 2026 (Faheem: "Show AED 159.20"): in the pre-order window the price shown IS the pre-order price.
+   No strike-through and no compare-at price; the full price is named in words beside it. */
+const cardPrice = (n, tag) => inc('st1', `<${tag} class="st1">${money(pre(n))}, pre-order price</${tag}>`) + `<${tag} class="st02">${money(n)}</${tag}>`;
 
 function picture(im, eager, sizes) {
   return `<img src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-720.webp 720w, /assets/preorder/${im.k}-1200.webp 1200w" sizes="${sizes || '(max-width: 900px) 100vw, 50vw'}" width="720" height="900" alt="${esc(im.alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
@@ -218,9 +221,9 @@ function buyBox(p, stage) {
       <p class="po-eyebrow">${p.line === 'sahel' ? 'Sahel &middot; The Coast Edition' : 'Sahra Trail'}</p>
       <h1>${p.title}</h1>
       ${IN_HAND ? '' : `<p class="po-line st12">Pre-order. Ships from Fri 30 Oct.</p>`}
-      <p class="po-price">${money(p.price)}</p>
-      ${inc('st1', `<p class="po-note st1">Pre-order price, 20% off, until Thu 29 Oct, 23:59. Full price from Fri 30 Oct.</p>`)}
-      ${p.colour ? `<p class="po-colour">Colour: ${p.colour}${p.fit ? ` &middot; ${p.fit} fit` : ''}</p>` : ''}
+      ${inc('st1', `<p class="po-price st1">${money(pre(p.price))}</p>`)}<p class="po-price st02">${money(p.price)}</p>
+      ${inc('st1', `<p class="po-note st1">Pre-order price: 20% off the ${money(p.price)} full price, until Thu 29 Oct, 23:59. Full price from Fri 30 Oct.</p>`)}
+      <p class="po-colour">${p.kind}${p.colour ? ` &middot; Colour: ${p.colour}` : ''}${p.fit ? ` &middot; ${p.fit} fit` : ''}</p>
       ${p.sibling ? `<p class="po-sib">Also in <a href="/products/${p.sibling}/">${p.siblingFit} fit &rarr;</a></p>` : ''}
       ${inc('st0', `<div class="st0 po-wait" data-waitlist-wrap>
         <p class="po-closed">Pre-order opens Wed 28 Oct at 8 AM, UAE time. <span data-days></span></p>
@@ -234,7 +237,7 @@ function buyBox(p, stage) {
       </div>`)}
       <div class="st12">
         ${sizes}
-        ${p.line === 'trail' ? `<p class="po-ask">Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>` : ''}
+        <p class="po-ask">No size chart for this piece yet. Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>
         <button type="button" class="po-go" id="poGo" disabled>${IN_HAND ? 'Choose a size' : 'Choose a size'}</button>
         <p class="po-msg" id="poMsg" role="status" aria-live="polite"></p>
         ${IN_HAND ? '' : '<p class="po-small">You pay today and we email you when it ships.</p>'}
@@ -242,7 +245,7 @@ function buyBox(p, stage) {
         <p class="po-tabby sb-ship-uae st2">${tab(p.price)}</p>
         <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>
       </div>
-      <p class="po-small">Free delivery across the UAE. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock. You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
+      <p class="po-small">Free delivery across the UAE, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock. You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
     </div>`;
 }
 
@@ -301,11 +304,11 @@ const CLIENT = `<script>
 
 function productPage(p, all, SITE, stage) {
   const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 220px')}<figcaption class="po-mock">Mock-up</figcaption></div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b><span>${money(o.price)}</span></a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 220px')}<figcaption class="po-mock">Mock-up</figcaption></div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span')}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
   return `${stageHead()}<style>${CSS}</style>
 <main class="po-wrap">
-  <p class="po-crumb"><a href="/">Home</a> / <a href="/new/">${p.line === 'sahel' ? 'Sahel' : 'Sahra Trail'}</a> / ${p.title}</p>
+  <p class="po-crumb"><a href="/">Home</a> / <a href="/new/#${p.line}">${p.line === 'sahel' ? 'Sahel' : 'Sahra Trail'}</a> / ${p.title}</p>
   <div class="po-grid">
     ${gallery(p)}
     ${buyBox(p, stage)}
@@ -321,7 +324,7 @@ ${CLIENT}`;
 }
 
 function collectionPage(all) {
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 280px')}<figcaption class="po-mock">Mock-up</figcaption></div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b><span>${money(o.price)}</span></a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 280px')}<figcaption class="po-mock">Mock-up</figcaption></div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span')}</a>`;
   const sec = (id, h, list) => `<section class="po-more" id="${id}"><h2>${h}</h2><div class="po-cards">${list.map(card).join('')}</div></section>`;
   return `${stageHead()}<style>${CSS}.po-head h1{font:600 clamp(34px,5vw,56px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 10px}.po-head p{font:17px/1.55 Jost,system-ui,sans-serif;max-width:60ch;margin:0 0 8px}</style>
 <main class="po-wrap">
@@ -337,6 +340,83 @@ function collectionPage(all) {
   ${sec('sahel', 'Sahel &middot; The Coast Edition', all.filter(p => p.line === 'sahel'))}
   ${sec('trail', 'Sahra Trail', all.filter(p => p.line === 'trail'))}
 </main>`;
+}
+
+/* 23 Oct 2026 (site review): Sahel and Sahra Trail pieces on the category and buying pages
+   (/t-shirts/, /t-shirts/regular|oversized/, /polos/, /hoodies/, /gifts/, /national-day/, /shop/).
+   pickNew(filter) returns product entries; newBlock() renders them as cards with the Mock-up label,
+   the stage-aware price and the pre-order line. One card per design unless both fits are asked for. */
+function pickNew(test, perDesign) {
+  const list = products().filter(test);
+  return perDesign ? list.filter((p, i, a) => a.findIndex(x => x.name === p.name) === i) : list;
+}
+const NB_CSS = `<style>
+.nb{max-width:1180px;margin:0 auto;padding:34px 20px 10px}
+.nb-k{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;margin:0 0 8px}
+.nb h2{font:600 clamp(26px,3vw,36px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#2A2016}
+.nb-l{font:16px/1.55 Jost,system-ui,sans-serif;margin:0 0 16px;color:#3E3326;max-width:62ch}
+.nb-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.nb-c{display:block;text-decoration:none;color:#2A2016}
+.nb-f{display:block;position:relative;margin:0;background:#ECE4D6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
+.nb-f img{width:100%;height:100%;object-fit:cover;display:block}
+.nb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
+.nb-c b{display:block;font:500 16px/1.35 Jost,system-ui,sans-serif;margin:8px 0 2px}
+.nb-c small{display:block;font:13px/1.45 Jost,system-ui,sans-serif;color:#5C4E3C}
+.nb-c .nb-p{font:500 14px Jost,system-ui,sans-serif;color:#2A2016;margin-top:2px}
+.nb-c:focus-visible{outline:3px solid #A95A21;outline-offset:3px;border-radius:10px}
+.nb-a{display:inline-block;margin:16px 0 0;font:600 15px Jost,system-ui,sans-serif;color:#7E4114}
+@media(max-width:700px){.nb{padding:26px 16px 6px}.nb-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+</style>`;
+function newCard(p, fitsLabel) {
+  const im = p.images[0];
+  const fig = im ? `<span class="nb-f"><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="${esc(im.alt)}, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span>` : '';
+  const sub = fitsLabel && p.fit ? `${p.kind} &middot; Regular or Oversized` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
+  const href = `/products/${p.handle}/`;
+  return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span')}</small>`
+    + inc('st0', `<small class="st0">Pre-order opens Wed 28 Oct</small>`) + inc('st1', `<small class="st1">Pre-order, ships from Fri 30 Oct</small>`)
+    + (IN_HAND ? '' : `<small class="st2">Pre-order, ships from Fri 30 Oct</small>`) + `</a>`;
+}
+function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', moreText = 'See every new piece' }) {
+  if (!list.length) return '';
+  return stageHead() + NB_CSS + `<section class="nb" aria-label="${esc(String(heading).replace(/&[a-z]+;/g, ' '))}">
+  <p class="nb-k">${kicker || 'New &middot; Sahel and Sahra Trail'}</p><h2>${heading}</h2>${lede ? `<p class="nb-l">${lede}</p>` : ''}
+  <div class="nb-g">${list.map(p => newCard(p, fitsLabel)).join('')}</div>
+  ${more ? `<a class="nb-a" href="${more}">${moreText} &rarr;</a>` : ''}
+</section>`;
+}
+const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. The studio images are mock-ups.</span>`)
+  + inc('st1', `<span class="st1">Pre-order is open: 20% off these new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct. The studio images are mock-ups.</span>`)
+  + `<span class="st2">${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}The studio images are mock-ups.</span>`
+  + ' No size chart for these pieces yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
+
+/* 23 Oct 2026 (site review): a place guide whose place became a Sahel piece shows that piece
+   (Khor Fakkan, Al Jazirah Al Hamra, Al Aqah / Snoopy Island, Ras Al Khor), on the place page and on
+   the guides that name the place. Same stage rules as everywhere else. */
+function pieceFor(placeId) { return products().find(p => p.place && p.place[1] === placeId && (!p.fit || p.fit === 'Regular')) || null; }
+const PB_CSS = `<style>
+.spb{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:center;max-width:860px;margin:34px auto;padding:20px;border-radius:18px;background:#0E1A2E;color:#F4ECDF}
+.spb-f{position:relative;display:block;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#1B2A40}
+.spb-f img{width:100%;height:100%;object-fit:cover;display:block}
+.spb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(244,236,223,.92);color:#0E1A2E}
+.spb-k{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#D9C3A5;margin:0 0 8px}
+.spb h2{font:600 clamp(26px,3vw,34px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#F4ECDF}
+.spb p{font:15.5px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#E9DFCF}
+.spb-p{font-weight:600;color:#F4ECDF!important}
+.spb-a{display:inline-block;margin-top:6px;background:#F4ECDF;color:#0E1A2E;font:600 15px Jost,system-ui,sans-serif;padding:12px 22px;border-radius:999px;text-decoration:none}
+.spb-a:focus-visible{outline:3px solid #D9C3A5;outline-offset:3px}
+@media(max-width:640px){.spb{grid-template-columns:1fr;margin:26px 16px;padding:16px}.spb-f{max-width:240px}}
+</style>`;
+function pieceBlock(placeId, lead) {
+  const p = pieceFor(placeId); if (!p) return '';
+  const im = p.images[0], first = String(p.story).split(/(?<=\.)\s/)[0];
+  const isTee = !!p.fit, noun = isTee ? 'tee' : /hoodie/i.test(p.kind) ? 'hoodie' : 'piece';
+  return stageHead() + PB_CSS + `<section class="spb" id="tee" data-match="sahel" aria-label="${esc(p.name.replace(/&amp;/g, '&'))}">
+  ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true"><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="" loading="lazy" decoding="async"><i>Mock-up</i></a>` : ''}
+  <div><p class="spb-k">${lead || `The ${noun} drawn from this place`} &middot; Sahel</p><h2>${p.name}</h2><p>${first}</p>
+  <p class="spb-p">${cardPrice(p.price, 'span')}${isTee ? ' &middot; Regular or Oversized' : ''}</p>
+  <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}The image is a studio mock-up.</p>
+  <a class="spb-a" href="/products/${p.handle}/">See the ${noun} &rarr;</a></div>
+</section>`;
 }
 
 /* 23 Oct 2026 (Faheem chose "Launch band, no ticker"): a band near the top of the homepage. The day line
@@ -366,11 +446,39 @@ function homeBand() {
     <p class="lb-k">Sahel &middot; The Coast Edition &nbsp;+&nbsp; Sahra Trail</p>
     <h2 id="lbH">` + inc('st01', '<span class="st01">Sahel and Sahra Trail</span>') + `<span class="st2">Sahel and Sahra Trail are out</span></h2>
     ` + inc('st0', '<p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone.</p><p class="st0 lb-d" data-days></p>') +
-    inc('st1', '<p class="st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
+    inc('st1', '<p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
     `<p class="st2">Designed in the UAE for everyone who loves it.</p>
     <a class="lb-a" href="/new/">` + inc('st0', '<span class="st0">See the pieces</span>') + inc('st1', '<span class="st1">Pre-order now</span>') + `<span class="st2">Shop the new pieces</span> &rarr;</a>
-  </div><div class="lb-g">` + pick.map(([h, k, n, pr]) => `<a class="lb-c" href="/products/${h}/"><span><img src="/assets/preorder/${k}-720.webp" width="720" height="900" alt="${n.replace(/&amp;/g, '&')}, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>${n}</b><small>${money(pr)}</small></a>`).join('') +
+  </div><div class="lb-g">` + pick.map(([h, k, n, pr]) => `<a class="lb-c" href="/products/${h}/"><span><img src="/assets/preorder/${k}-720.webp" width="720" height="900" alt="${n.replace(/&amp;/g, '&')}, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>${n}</b>${cardPrice(pr, 'small')}</a>`).join('') +
   `</div></div></section>`;
+}
+
+/* 23 Oct 2026 (site review, buy-intent SEO): titles carry the product noun a buyer searches for
+   (T-Shirt, Polo Shirt, Hoodie, Running Shorts) and the fit; metas say what it is, the price and delivery.
+   Metas never carry the 20% wording, so nothing in a search snippet goes stale on Fri 30 Oct. */
+const LINE = { sahel: 'Sahel, the Coast Edition', trail: 'Sahra Trail' };
+function seoTitle(p) { return `${p.seo}${p.fit ? `, ${p.fit} Fit` : ''} | Sahra & Beyond`; }
+function seoDesc(p, stage) {
+  const ship = IN_HAND ? '' : stage === 0 ? ' Pre-order opens Wed 28 Oct; ships from Fri 30 Oct.' : ' Pre-order; ships from Fri 30 Oct.';
+  return `${p.plain}: ${p.md}. ${LINE[p.line]}, designed in the UAE. ${money(p.price)}, free delivery across the UAE.${ship}`;
+}
+const RETURNS = { '@type': 'MerchantReturnPolicy', applicableCountry: 'AE', returnPolicyCountry: 'AE', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+  merchantReturnDays: 14, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn' };
+const SHIP_UAE = { '@type': 'OfferShippingDetails', shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'AED' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' } };
+function productLd(p, url, img, desc, stage, SITE) {
+  const inWindow = stage === 1;
+  const prod = { '@context': 'https://schema.org', '@type': 'Product', name: p.plain, sku: p.handle, description: desc, url, image: img ? [img] : undefined,
+    brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' }, color: p.colour || undefined,
+    offers: { '@type': 'Offer', price: (inWindow ? pre(p.price) : p.price).toFixed(2), priceCurrency: 'AED', url,
+      priceValidUntil: inWindow ? '2026-10-29' : `${new Date(now()).getUTCFullYear() + 1}-12-31`, itemCondition: 'https://schema.org/NewCondition',
+      availability: IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE], hasMerchantReturnPolicy: RETURNS } };
+  if (p.fit) { prod.inProductGroupWithID = p.key;
+    prod.isVariantOf = { '@type': 'ProductGroup', productGroupID: p.key, name: p.name.replace(/&amp;/g, '&'), url: `${SITE}/products/${p.key}-regular/`, variesBy: ['https://schema.org/size'] }; }
+  const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: p.line === 'sahel' ? 'Sahel' : 'Sahra Trail', item: `${SITE}/new/` },
+    { '@type': 'ListItem', position: 3, name: p.plain, item: url }] };
+  return [prod, crumbs];
 }
 
 module.exports = function buildPreorder({ shell, write, SITE }) {
@@ -378,22 +486,21 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
   const all = products();
   all.forEach(p => {
     const url = `${SITE}/products/${p.handle}/`;
-    const desc = `${p.plain}, ${money(p.price)}. ${p.line === 'sahel' ? 'Sahel, the Coast Edition' : 'Sahra Trail'} from Sahra & Beyond. Designed in the UAE.`;
-    const img = p.images.length ? `${SITE}/assets/preorder/${p.images[0].k}-1200.webp` : undefined;
+    const desc = seoDesc(p, stage);
+    const img = p.images.length ? `${SITE}/assets/preorder/og/${p.images[0].k}-og.jpg` : undefined;   /* 23 Oct 2026: shares and search show the mock-up WITH its label baked in */
     write(`products/${p.handle}/index.html`, shell({
-      title: `${p.plain} | Sahra & Beyond`, desc, canonical: url, image: img, bodyClass: 'po-page', activeNav: p.line === 'sahel' ? 'sahel' : 'trail',
+      title: seoTitle(p), desc, canonical: url, image: img, bodyClass: 'po-page', activeNav: p.line === 'sahel' ? 'sahel' : 'trail',
       noindex: false,   /* 23 Oct 2026 (Faheem): the pages go live before pre-order opens, so they can be found and shared */
-      jsonld: { '@context': 'https://schema.org', '@type': 'Product', name: p.plain, description: desc, url, image: img ? [img] : undefined,
-        brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' },
-        offers: { '@type': 'Offer', price: String(p.price), priceCurrency: 'AED', url,
-          availability: IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder' } },
+      jsonld: productLd(p, url, img, desc, stage, SITE),
       bodyHtml: productPage(p, all, SITE, stage)
     }));
   });
   write('new/index.html', shell({
-    title: 'Sahel and Sahra Trail | Sahra & Beyond', desc: 'Sahel, the Coast Edition, and Sahra Trail from Sahra & Beyond. Designed in the UAE.',
-    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false,
-    jsonld: { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahel and Sahra Trail', url: `${SITE}/new/` },
+    title: 'Sahel & Sahra Trail: New Tees, Hoodies, Polo, Running Kit | Sahra & Beyond',
+    desc: 'Sahel, the Coast Edition (graphic tees, a polo and two hoodies) and Sahra Trail running wear (tee, 2-in-1 shorts and kit). Designed in the UAE. Free delivery across the UAE.',
+    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false, image: `${SITE}/assets/preorder/og/kfb-back-og.jpg`,
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahel and Sahra Trail', url: `${SITE}/new/` },
+      { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahel and Sahra Trail', itemListElement: all.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/products/${p.handle}/`, name: p.plain })) }],
     bodyHtml: collectionPage(all)
   }));
   console.log(`  ✓ pre-order: ${all.length} product pages + /new/ (stage ${stage}${IN_HAND ? ', in hand' : ''})`);
@@ -404,4 +511,14 @@ module.exports.inc = inc;
 module.exports.homeBand = homeBand;
 module.exports.urls = urls;
 module.exports.handles = () => products().map(p => p.handle);
+module.exports.products = products;
+module.exports.pickNew = pickNew;
+module.exports.pieceFor = pieceFor;
+module.exports.pieceBlock = pieceBlock;
+module.exports.newBlock = newBlock;
+module.exports.newLede = newLede;
+module.exports.IN_HAND = IN_HAND;
+module.exports.cardPrice = cardPrice;
+module.exports.money = money;
+module.exports.picture = picture;
 module.exports.T1 = T1; module.exports.T2 = T2;

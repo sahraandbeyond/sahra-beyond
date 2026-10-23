@@ -182,6 +182,9 @@ function barProduct(l, ctx) {
 function productPanel(l, ctx) {
   const exact = ctx.PRODUCT_BY_PLACE[l.id];
   if (exact) return ctx.teeBlock(l).replace('<section class="teecta"', '<section id="tee" data-match="exact" class="teecta"');
+  /* 23 Oct 2026 (site review): the four Sahel places show their own piece */
+  const sahel = require('./preorder-page.js').pieceBlock(l.id);
+  if (sahel) return sahel;
   const pl = l.productLink;
   const p = pl && pl.slug ? ctx.PRODUCTS_ALL.find(x => x.id === pl.slug) : null;
   if (p) {
@@ -814,7 +817,7 @@ function hubExplorer(locations, opts) {
   const pins = P.map((p, i) => {
     const l = p.l, x = p.x.toFixed(1), y = p.y.toFixed(1), off = Math.hypot(p.x - p.x0, p.y - p.y0) > 6;
     const t = TEES[l.id];
-    return `<a class="hx-pin${t ? ' hx-tee' : ''}" href="/locations/${l.id}/" data-id="${l.id}" data-cat="${esc(l.category)}"${t ? ` data-tee="${esc(t.name)}" data-shop="${esc(t.url)}"` : ''} style="--c:${CAT_COL[l.category] || '#7E4114'};--i:${i}" aria-label="${esc(l.name)}, ${esc(l.category)}">${off ? `<line x1="${p.x0.toFixed(1)}" y1="${p.y0.toFixed(1)}" x2="${x}" y2="${y}" class="hx-lead"/><circle cx="${p.x0.toFixed(1)}" cy="${p.y0.toFixed(1)}" r="4" class="hx-true"/>` : ''}<circle cx="${x}" cy="${y}" r="${D / 2 + 6}" class="hx-hit"/>${t ? `<circle cx="${x}" cy="${y}" r="22" class="hx-ring"/>` : ''}<circle cx="${x}" cy="${y}" r="14" class="hx-dot"/><title>${esc(l.name)} (${esc(l.category)})${t ? ' · ' + esc(t.name) + ' tee' : ''}</title></a>`;
+    return `<a class="hx-pin${t ? ' hx-tee' : ''}" href="/locations/${l.id}/" data-id="${l.id}" data-cat="${esc(l.category)}"${t ? ` data-tee="${esc(t.name)}" data-shop="${esc(t.url)}"` : ''} style="--c:${CAT_COL[l.category] || '#7E4114'};--i:${i}" aria-label="${esc(l.name)}, ${esc(l.category)}">${off ? `<line x1="${p.x0.toFixed(1)}" y1="${p.y0.toFixed(1)}" x2="${x}" y2="${y}" class="hx-lead"/><circle cx="${p.x0.toFixed(1)}" cy="${p.y0.toFixed(1)}" r="4" class="hx-true"/>` : ''}<circle cx="${x}" cy="${y}" r="${D / 2 + 6}" class="hx-hit"/>${t ? `<circle cx="${x}" cy="${y}" r="22" class="hx-ring"/>` : ''}<circle cx="${x}" cy="${y}" r="14" class="hx-dot"/><title>${esc(l.name)} (${esc(l.category)})${t ? ' · ' + esc(t.name) + (/(Tee|Hoodie|Polo)$/.test(t.name) ? '' : ' tee') : ''}</title></a>`;
   }).join('');
   /* hike trailheads: spread among themselves, drawn as small triangles, hidden until the Hikes chip is on */
   const HP = HIKES.filter(h => typeof h.lat === 'number').map(h => { const [x, y] = xy(h.lat, h.lng); return { h, x0: x, y0: y, x, y }; });
@@ -833,7 +836,7 @@ function hubExplorer(locations, opts) {
       <p class="lg-eye">Filter the places</p>
       <div class="hx-chips">${chip('all', '', 'All')}${cats.map(c => chip('cat', c, `<i style="background:${CAT_COL[c]}"></i>${c}`)).join('')}</div>
       <div class="hx-chips">${chip('month', '', 'Good this month')}${chip('car', '', 'Any car')}${chip('easy', '', 'Easy')}</div>
-      ${Object.keys(TEES).length || HP.length ? `<p class="lg-eye" style="margin-top:14px">On the map</p><div class="hx-chips">${Object.keys(TEES).length ? chip('tee', '', '<i class="hx-k-tee"></i>Places that became tees') : ''}${HP.length ? chip('hikes', '', '<i class="hx-k-hike"></i>Hike trailheads') : ''}</div>` : ''}
+      ${Object.keys(TEES).length || HP.length ? `<p class="lg-eye" style="margin-top:14px">On the map</p><div class="hx-chips">${Object.keys(TEES).length ? chip('tee', '', '<i class="hx-k-tee"></i>Places that became pieces') : ''}${HP.length ? chip('hikes', '', '<i class="hx-k-hike"></i>Hike trailheads') : ''}</div>` : ''}
       <p class="hx-count" aria-live="polite"></p>
     </div>
   </section>`;
@@ -854,7 +857,7 @@ function hubScript() {
     apply();if(window.gtag)gtag('event','places_filter',{filter:k,value:b.dataset.v||String(extra[k])});});});
   function show(p){if(!tip||!map)return;var c=cards.filter(function(x){return x.dataset.id===p.dataset.id;})[0];var r=p.querySelector('.hx-dot,.hx-tri').getBoundingClientRect(),m=map.getBoundingClientRect();
     if(p.dataset.hike){tip.innerHTML='<b>'+p.dataset.name+'</b><span>Hike &middot; '+p.dataset.grade+'</span><a href="'+p.getAttribute('href')+'">Open the hike guide &rarr;</a>';}
-    else{tip.innerHTML='<b>'+(c?c.querySelector('strong').textContent:'')+'</b><span>'+(c?c.dataset.cat+' &middot; '+c.dataset.em:'')+'</span>'+(p.dataset.tee?'<a href="'+p.dataset.shop+'" data-cta="shop">Shop the '+p.dataset.tee+' tee &rarr;</a><br>':'')+'<a href="'+p.getAttribute('href')+'">Open the guide &rarr;</a>';}
+    else{tip.innerHTML='<b>'+(c?c.querySelector('strong').textContent:'')+'</b><span>'+(c?c.dataset.cat+' &middot; '+c.dataset.em:'')+'</span>'+(p.dataset.tee?'<a href="'+p.dataset.shop+'" data-cta="shop">Shop the '+p.dataset.tee+(/(Tee|Hoodie|Polo)$/.test(p.dataset.tee)?'':' tee')+' &rarr;</a><br>':'')+'<a href="'+p.getAttribute('href')+'">Open the guide &rarr;</a>';}
     tip.hidden=false;if(window.gtag)gtag('event','map_pin_click',{place:p.dataset.id||p.dataset.hike,surface:'places'});
     var x=r.left-m.left+r.width/2,y=r.top-m.top;tip.style.left=Math.min(Math.max(x,90),m.width-90)+'px';tip.style.top=y+'px';}
   pins.forEach(function(p){p.addEventListener('mouseenter',function(){show(p);});p.addEventListener('focus',function(){show(p);});

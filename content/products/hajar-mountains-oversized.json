@@ -24,7 +24,7 @@
   "altBack": "Hajar Mountains — Oversized, oversized fit, back view",
   "seoTitle": "Hajar Mountains Oversized T-Shirt — Mountain Graphic Tee",
   "seoDesc": "A mountain t-shirt in an oversized drop-shoulder cut: the Hajar peaks in contour lines, red rock printed across the back. 230gsm cotton, S–XL. AED 199.",
-  "shareDesc": "Oversized fit. A topographic line drawing of the Hajar peaks. 230gsm combed cotton, made to layer. Limited first run.",
+  "shareDesc": "Oversized fit. A topographic line drawing of the Hajar peaks. 230gsm combed cotton, made to layer.",
   "lede": "A true drop-shoulder cut — the seam sits 2–3&Prime; below your natural shoulder. Width, not length, is what makes the silhouette. A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. Combed cotton, made to layer.",
   "ldDesc": "A topographic line drawing of the peaks on the front; the red rock of the Hajar Mountains across the back. 230gsm combed cotton, made to layer.",
   "printChip": "DTG print &middot; embroidered logo",
@@ -88,13 +88,9 @@
     {
       "q": "What if I order the wrong size?",
       "a": "Exchanges within the UAE are free, subject to stock, within 14 days of delivery — as long as it's unworn, unwashed and still has tags. Email hello@sahraandbeyond.ae with your order number and we'll arrange it."
-    },
-    {
-      "q": "Will this design be restocked?",
-      "a": "This is a limited first run. We may make more of a design later, but we don't promise it — when a size sells out in this run, treat it as gone."
     }
   ],
-  "edition": "Founding Edition · limited first run",
+  "edition": "Founding Edition",
   "fit": "oversized",
   "category": "oversized-tees",
   "garment": "tee",

@@ -9,8 +9,10 @@
    explorer of every place lives on /places/.
 
    Data-driven: one pin per place that has a tee (the Regular fit is the
-   product link). Sahel pieces are not on the map yet: nothing about them may
-   show before the 15 Oct reveal, so they are added after it.
+   product link). 23 Oct 2026 (Faheem: "Map only shows 3 pins"): the four Sahel
+   places join, from preorder-page.js (Khor Fakkan, Al Jazirah Al Hamra, Al Aqah,
+   Ras Al Khor). The north-east is crowded, so those labels carry their own
+   offsets (LAB), and the Dubai city dot is dropped: Ras Al Khor sits on it.
    ------------------------------------------------------------------------ */
 const fs = require('fs');
 const path = require('path');
@@ -23,15 +25,23 @@ const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g,
 const LINE = {
   'al-quaa-desert': 'One of the darkest accessible skies in the Emirates.',
   'liwa': 'Where the Empty Quarter begins.',
-  'wadi-naqab': 'Red rock, drawn in a single line.'
+  'wadi-naqab': 'Red rock, drawn in a single line.',
+  /* Sahel: from the approved story cards (preorder-page.js) */
+  'khor-fakkan-beach': 'Where the Hajar Mountains come straight down to the Gulf of Oman.',
+  'al-jazirah-al-hamra': 'A coral-stone pearling town on the Ras Al Khaimah coast.',
+  'snoopy-island': 'A rock island off Al Aqah beach, with a reef around it.',
+  'ras-al-khor': 'The wetland where Dubai Creek ends, in the middle of the city.'
 };
+/* label placement for crowded pins: [x offset, y offset, text-anchor], in map units */
+const LAB = { 'wadi-naqab': [79, -40, 'end'], 'al-jazirah-al-hamra': [-30, 9, 'end'], 'snoopy-island': [-31, -1, 'end'],
+  'khor-fakkan-beach': [-30, 9, 'end'], 'ras-al-khor': [-16, 39, 'end'] };
 /* hero tiles already on the home page (shirts/hs-<key>-a-720.webp) */
 const TILE = { 'al-quaa-desert': 'galaxy', 'liwa': 'eq', 'wadi-naqab': 'hajar' };
 /* orientation only: two cities, small and grey */
 /* the home page's place and guide links (kept from the 2 Oct SEO block: the home page links every guide) */
 const PLACE_LINKS = [["/locations/al-quaa-desert/", "Al Quaa Desert", "Abu Dhabi · Dark sky"], ["/locations/wadi-naqab/", "Wadi Naqab", "RAK · Hajar Mountains"], ["/locations/wadi-showka/", "Wadi Shawka", "RAK · Hajar foothills"], ["/locations/liwa/", "Liwa Dunes", "Abu Dhabi · Desert"], ["/locations/moreeb-dune/", "Moreeb Dune", "Abu Dhabi · Liwa"], ["/locations/empty-quarter/", "Empty Quarter", "Abu Dhabi · Rub' al Khali"], ["/locations/jebel-jais/", "Jebel Jais", "RAK · Mountains"], ["/locations/hajar-mountains/", "Hajar Mountains", "Northern Emirates · Range"], ["/locations/wadi-wurayah/", "Wadi Wurayah", "Fujairah · UNESCO"], ["/locations/khor-fakkan-beach/", "Khor Fakkan Beach", "Sharjah · East coast"]];
 const GUIDE_LINKS = [["/stargazing/", "Stargazing in the UAE", "Dark skies · Milky Way"], ["/camping-near-dubai/", "Camping near Dubai", "Desert · Lakes"], ["/wadis/", "Wadis in the UAE", "Hikes · Pools"], ["/best-beaches/", "Best beaches in the UAE", "Coast · Snorkelling"], ["/mountain-escapes/", "Mountain escapes", "Hajar · Jebel Hafeet"], ["/hatta-guide/", "Hatta day trip", "Wadi Hub · Heritage · Dam"], ["/hiking/", "Hiking in the UAE", "Trails · Season · Safety"], ["/fujairah-beaches/", "Fujairah beaches", "East coast · Snorkelling"]];
-const CITIES = [['Abu Dhabi', 24.4539, 54.3773], ['Dubai', 25.2048, 55.2708]];
+const CITIES = [['Abu Dhabi', 24.4539, 54.3773]];
 
 function pinsFrom(root) {
   const loc = id => { try { return JSON.parse(fs.readFileSync(path.join(root, 'content/locations', id + '.json'), 'utf8')); } catch (e) { return null; } };
@@ -48,6 +58,16 @@ function pinsFrom(root) {
       guide: `/locations/${p.placeSlug}/`, line: LINE[p.placeSlug] || '', img: TILE[p.placeSlug] ? `/shirts/hs-${TILE[p.placeSlug]}-a-720.webp` : (p.imgFront || '')
     });
   });
+  /* Sahel (23 Oct 2026): one pin per place, linking the Regular fit for the tees */
+  require('./preorder-page.js').products().forEach(p => {
+    if (!p.place || seen[p.place[1]] || (p.fit && p.fit !== 'Regular')) return;
+    const l = loc(p.place[1]); if (!l || typeof l.lat !== 'number') return;
+    seen[p.place[1]] = 1;
+    const im = p.images[0];
+    out.push({ id: p.place[1], place: p.place[0], emirate: l.emirate || '', lat: l.lat, lng: l.lng, tee: p.name.replace(/&amp;/g, '&'), price: p.price,
+      product: `/products/${p.handle}/`, guide: `/locations/${p.place[1]}/`, line: LINE[p.place[1]] || '', img: im ? `/assets/preorder/${im.k}-720.webp` : '',
+      sahel: true, fits: !!p.fit, kind: /hoodie/i.test(p.kind) ? 'hoodie' : 'tee' });
+  });
   /* west to east, so the cards read like the map */
   return out.sort((a, b) => a.lng - b.lng);
 }
@@ -57,11 +77,12 @@ function svg(pins) {
   const vx = 20, vy = 26, vw = 940, vh = 744;
   const dots = pins.map((p, i) => {
     const [x, y] = xy(p.lat, p.lng); const right = x < 700;
+    const L = LAB[p.id] || [right ? 30 : -30, 8, right ? 'start' : 'end'];
     return `<a class="pm-pin" href="${esc(p.product)}" data-pin="${esc(p.id)}" aria-label="${esc(p.place)}: ${esc(p.tee)}" style="--i:${i}">
       <circle class="pm-hit" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="44"/>
       <circle class="pm-ring" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="22"/>
       <circle class="pm-dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="11"/>
-      <text class="pm-lab" x="${(x + (right ? 30 : -30)).toFixed(1)}" y="${(y + 8).toFixed(1)}" text-anchor="${right ? 'start' : 'end'}">${esc(p.place)}</text></a>`;
+      <text class="pm-lab" x="${(x + L[0]).toFixed(1)}" y="${(y + L[1]).toFixed(1)}" text-anchor="${L[2]}">${esc(p.place)}</text></a>`;
   }).join('');
   const cities = CITIES.map(([n, la, lo]) => { const [x, y] = xy(la, lo); return `<circle class="pm-city" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5"/><text class="pm-cityl" x="${(x - 12).toFixed(1)}" y="${(y - 12).toFixed(1)}" text-anchor="end">${n}</text>`; }).join('');
   return `<svg viewBox="${vx} ${vy} ${vw} ${vh}" role="group" aria-label="Map of the UAE with the place behind each design">
@@ -125,12 +146,12 @@ if('IntersectionObserver' in window&&window.gtag){var io=new IntersectionObserve
 function homeBlock(root) {
   const placeLinks = PLACE_LINKS, guideLinks = GUIDE_LINKS;
   const pins = pinsFrom(root);
-  const cards = pins.map(p => `<article class="pm-card" data-pin="${esc(p.id)}"><img src="${esc(p.img)}" alt="${esc(p.tee)} tee" width="96" height="120" loading="lazy" decoding="async"><div><span class="pm-k">${esc(p.place)}${p.emirate ? ' · ' + esc(p.emirate) : ''}</span><h3>${esc(p.tee)}</h3><p>${esc(p.line)} AED ${esc(p.price)}, Regular or Oversized.</p><div class="pm-acts"><a class="pm-shop" href="${esc(p.product)}">Shop the tee</a><a class="pm-guide" href="${esc(p.guide)}">Read the place guide</a></div></div></article>`).join('');
+  const cards = pins.map(p => `<article class="pm-card" data-pin="${esc(p.id)}"><img src="${esc(p.img)}" alt="${esc(p.tee)}${p.sahel ? ', studio mock-up' : ' tee'}" width="96" height="120" loading="lazy" decoding="async"><div><span class="pm-k">${esc(p.place)}${p.emirate ? ' · ' + esc(p.emirate) : ''}</span><h3>${esc(p.tee)}</h3><p>${esc(p.line)} AED ${esc(p.price)}${p.sahel ? (p.fits ? ', Regular or Oversized' : '') + '. Sahel, the Coast Edition; pre-orders ship from Fri 30 Oct. Image: studio mock-up.' : ', Regular or Oversized.'}</p><div class="pm-acts"><a class="pm-shop" href="${esc(p.product)}">${p.kind === 'hoodie' ? 'See the hoodie' : 'See the tee'}</a><a class="pm-guide" href="${esc(p.guide)}">Read the place guide</a></div></div></article>`).join('');
   const chips = placeLinks.map(([href, name, sub]) => `<a href="${esc(href)}"><b>${esc(name)}</b><span>${esc(sub)}</span></a>`).join('');
   return `<style>${CSS}</style>
     <div class="pm rv">
       <figure class="pm-map">${svg(pins)}</figure>
-      <div class="pm-cards" aria-live="polite"><p class="pm-hint">${pins.length} designs, ${pins.length} places so far. Tap a pin to see the tee and the place behind it.</p>${cards}</div>
+      <div class="pm-cards" aria-live="polite"><p class="pm-hint">${pins.length} designs, ${pins.length} places so far. Tap a pin to see the piece and the place behind it.</p>${cards}</div>
     </div>
     <span class="j-eyebrow rv" style="display:block;margin-top:30px">More places we have explored</span>
     <div class="pm-chips" role="navigation" aria-label="Place guides">${chips}</div>

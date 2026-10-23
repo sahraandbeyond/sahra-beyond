@@ -22,6 +22,12 @@ const GUIDES = [
   ['/outdoor-things-to-do/', 'Things to do']
 ];
 const SHOP_LINKS = [
+  /* 23 Oct 2026 (site review): the new pages and the buying categories */
+  ['/new/', 'New: Sahel and Sahra Trail'],
+  ['/t-shirts/', 'T-shirts'],
+  ['/t-shirts/oversized/', 'Oversized t-shirts'],
+  ['/polos/', 'Polos'],
+  ['/hoodies/', 'Hoodies'],
   ['/national-day/', 'National Day t-shirts'],
   ['/gifts/', 'Gift ideas'],
   ['/trail/', 'Sahra Trail'],

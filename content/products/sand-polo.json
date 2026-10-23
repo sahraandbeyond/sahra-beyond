@@ -23,13 +23,13 @@
   "altMain": "The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
   "altFront": "The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
   "seoTitle": "The Sahra Polo — Embroidered 240gsm Cotton Polo",
-  "seoDesc": "The Sahra Polo — 240gsm piqué cotton, embroidered rather than printed, in sand. A limited first run. The scarcest piece in the drop. AED 229.",
-  "shareDesc": "240gsm embroidered piqué polo in sand. A limited first run.",
-  "lede": "A 240gsm piqué cotton polo in sand, embroidered rather than printed. A limited first run — it is the quietest thing we make and the hardest to get hold of.",
-  "ldDesc": "The Sahra Polo — 240gsm piqué cotton polo in sand, embroidered. A limited first run. AED 229.",
+  "seoDesc": "The Sahra Polo — 240gsm piqué cotton, embroidered rather than printed, in sand. AED 229.",
+  "shareDesc": "240gsm embroidered piqué polo in sand.",
+  "lede": "A 240gsm piqué cotton polo in sand, embroidered rather than printed. It is the quietest thing we make.",
+  "ldDesc": "The Sahra Polo — 240gsm piqué cotton polo in sand, embroidered. AED 229.",
   "printChip": "Embroidered",
   "occasion": "Made for evenings that start outdoors and end somewhere better",
-  "edition": "Founding Edition · limited first run",
+  "edition": "Founding Edition",
   "sizingApplies": true,
   "placeName": "",
   "placeEmirate": "",
@@ -44,10 +44,6 @@
     {
       "title": "240gsm, not 230",
       "body": "Ten grams heavier than the tees. On a polo that difference shows — the collar stands properly instead of curling after a season."
-    },
-    {
-      "title": "A limited run",
-      "body": "Made in a smaller run than the tees, and not restocked. When it is gone it is gone, and we would rather say that plainly than pretend otherwise."
     }
   ],
   "printCardTitle": "Embroidery",
@@ -66,7 +62,7 @@
   "faq": [
     {
       "q": "How is the polo different from the tees?",
-      "a": "Three ways. It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape. It is embroidered rather than printed. And it is made in a smaller run than the tees, counted on its own. Sizing is the same as the Regular fit tees."
+      "a": "It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape, and it is embroidered rather than printed. Sizing is the same as the Regular fit tees."
     },
     {
       "q": "Who is the polo cut for?",
@@ -75,14 +71,6 @@
     {
       "q": "What size should I order?",
       "a": "The polo is graded to the same specification as our Regular fit t-shirts — same chest, length, shoulder and sleeve measurements, S to XL — so it takes the same letter as your Regular tee. Check the size chart on this page before you order: measure a shirt you like flat, pit to pit, and match the number."
-    },
-    {
-      "q": "Why such a small run?",
-      "a": "It is the first polo we have made and we would rather make a small number properly than guess at demand. There is no plan to restock this run."
-    },
-    {
-      "q": "Will it be restocked?",
-      "a": "This is a limited first run. We may make polos again, but not this one, and we will not promise otherwise."
     }
   ],
   "category": "polos",

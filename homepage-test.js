@@ -873,7 +873,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   const page = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   const head = page.slice(0, page.indexOf('</head>'));
   check('index.html is indexable (no robots noindex)', !/name="robots"[^>]*noindex/.test(head));
-  check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond — UAE Clothing Brand, Desert &amp; Mountain Tees<\/title>/.test(page));
+  check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond — UAE Clothing Brand: Tees, Polos, Hoodies<\/title>/.test(page));   /* 23 Oct 2026: retitled for tees, polos and hoodies */
   check('index.html canonical is the root', /<link rel="canonical" href="https:\/\/www\.sahraandbeyond\.ae\/">/.test(head));
   check('index.html does not load Lenis (native scroll drives the journey)', !/lenis/i.test(head));
   check('the seven grid cards are real links (the missing-quote bug never returns)',
@@ -934,7 +934,7 @@ console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
   check('t-shirts: cards come before the review band, the band before the folded essays, the essays before the FAQ',
     at('<section class="pcta"') > 0 && at('<section class="pcta"') < at('class="reviews rv-band"') && at('class="reviews rv-band"') < at('<section class="folds"') && at('<section class="folds"') < at('<section class="faq"'));
   check('t-shirts: the review band is compact (3 shown, a Show-all button)', /rv-list rv-compact/.test(ts) && /class="rv-showall"/.test(ts));
-  check('t-shirts: four essays folded under their headings', (ts.match(/class="fold guide-sec"/g) || []).length === 4);
+  check('t-shirts: three essays folded under their headings', (ts.match(/class="fold guide-sec"/g) || []).length === 3);   /* 23 Oct 2026: the "Limited runs" essay is gone (no scarcity wording) */
   ['t-shirts/regular', 'polos'].forEach(p => { const h = fs.readFileSync(path.join(__dirname, p, 'index.html'), 'utf8'); check(p + ': products before the folded essays', h.indexOf('<section class="pcta"') > 0 && h.indexOf('<section class="pcta"') < h.indexOf('<section class="folds"')); });
   const sg = fs.readFileSync(path.join(__dirname, 'size-guide', 'index.html'), 'utf8');
   check('size guide keeps its essay open (no folds)', !/class="fold guide-sec"/.test(sg));

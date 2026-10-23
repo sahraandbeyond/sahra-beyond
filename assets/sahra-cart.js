@@ -146,7 +146,12 @@
       return 'Order now for free delivery ' + (tomorrow ? 'tomorrow (' + when + ')' : 'on ' + when);
     } catch (e) { return ''; }
   }
+  /* 23 Oct 2026 (Faheem: "Make it static"): no ticking "Order in 3h 12m" anywhere, under the no-timer
+     rule of 22 Oct. The [data-sb-clock] spans keep their static text ("Free next-day UAE delivery —
+     order by 2 pm"). clockText() stays for reference; set CLOCK_LIVE = true only on Faheem's say-so. */
+  var CLOCK_LIVE = false;
   function tickClocks() {
+    if (!CLOCK_LIVE) return;
     var t = clockText(); if (!t) return;
     [].forEach.call(document.querySelectorAll('[data-sb-clock]'), function (e) { if (e.textContent !== t) e.textContent = t; });
   }
@@ -265,8 +270,9 @@
      include a purchased tote. */
   function giftEarningQty() {
     var n = 0;
-    /* 22 Oct 2026: the free tote is a Founding Edition gift; Sahel and Sahra Trail pre-order pieces do not earn it */
-    cartNodes().forEach(function (l) { if (!isGift(l) && !isTote(l) && !isPre(l)) n += (l.quantity || 0); });
+    /* 23 Oct 2026 (Faheem: "Every order"): the free tote comes with every order, pre-orders included
+       (reverses the 22 Oct Founding-only default) */
+    cartNodes().forEach(function (l) { if (!isGift(l) && !isTote(l)) n += (l.quantity || 0); });
     return n;
   }
 
@@ -341,7 +347,7 @@
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
           '<div class="sb-tabby sb-tabby-cart" id="sbTabbyCart" data-tabby-source="cart" hidden></div>' +
-          '<p class="sb-note"><span class="sb-note-d sb-ship-uae"><span data-sb-clock>Free next-day UAE delivery — order by 2 pm</span>, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">check the chart</a>.</p>' +
+          '<p class="sb-note"><span class="sb-note-d sb-ship-uae"><span data-sb-clock>Free next-day UAE delivery — order by 2 pm</span>, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">Check the chart</a> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">message us</a>.</p>' +   /* 23 Oct 2026: the chart covers the Founding Edition; Sahel and Trail are not measured yet */
           /* 25 Sep 2026 (Faheem, persona review): a gift option. The message travels on the
              Shopify order as its note, with a Gift attribute, so it shows on the order in Admin. */
           '<div class="sb-giftopt"><label class="sb-giftl"><input type="checkbox" id="sbGiftChk"> This is a gift</label>' +
@@ -510,12 +516,10 @@
             '<span class="sb-qn" aria-label="Quantity">' + q + '</span>' +
             (function () { var qa = l.merchandise && l.merchandise.quantityAvailable; var capped = (typeof qa === 'number') && q >= qa;
               if (isPre(l)) return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" aria-label="Increase quantity (no more available in this size)"' : ' aria-label="Increase quantity"') + '>+</button>';
-              return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" title="Only ' + qa + ' left" aria-label="Increase quantity (only ' + qa + ' left)"' : ' aria-label="Increase quantity"') + '>+</button>' +
-                (capped && !(qa > 0 && qa <= 3) ? '<span class="sb-cap">Only ' + qa + ' left</span>' : ''); })() +
+              return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" title="No more in this size" aria-label="Increase quantity (no more in this size)"' : ' aria-label="Increase quantity"') + '>+</button>' +
+                (capped ? '<span class="sb-cap">No more in this size</span>' : ''); })() +
           '</span>' +
-          /* 7 Oct 2026: live remaining count, 3 or fewer only; never the run size */
-          (function () { var qa = l.merchandise && l.merchandise.quantityAvailable;
-            return (!isPre(l) && typeof qa === 'number' && qa > 0 && qa <= 3) ? '<span class="sb-left">Only ' + qa + ' left in ' + esc(m.title) + '</span>' : ''; })() +
+          /* 23 Oct 2026 (Faheem: no scarcity wording anywhere): the "Only N left" line is gone */
         '</div>' +
         '<button class="sb-rm" data-act="rm" data-line="' + esc(l.id) + '" aria-label="Remove ' + esc(m.product.title) + '">&#10005;</button>' +
       '</div>';
@@ -702,9 +706,7 @@
         (CART.lines && CART.lines.edges || []).forEach(function (e) { if (e.node.id === lineId) got = e.node; });
         if (q > 0 && got && got.quantity < q) {
           var m = got.merchandise || {}, nm = (m.product && m.product.title) || 'this item';
-          lastError = isPre(got) ? 'That is as many as we can take in ' + (m.title || 'that size') + ' for now, so it stays at ' + got.quantity + '.' : got.quantity === 1
-            ? 'Only one ' + nm + (m.title ? ' in ' + m.title : '') + ' is left, so it stays at 1.'
-            : 'Only ' + got.quantity + ' of ' + nm + (m.title ? ' in ' + m.title : '') + ' are left, so it stays at ' + got.quantity + '.';
+          lastError = 'That is as many of ' + nm + ' as we can take in ' + (m.title || 'that size') + ' for now, so it stays at ' + got.quantity + '.';
           pending[lineId] = got.quantity;
         }
         /* server has spoken - drop any pending intent it has now satisfied */

@@ -1092,7 +1092,7 @@ ${(function(){ const g = galShots(p)[0]; if (!g) return ''; const ss = cardSrcse
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition<span class="note-x"> &nbsp;·&nbsp; a limited first run</span> &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav class="sb-top">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div><div class="logo-a sb-house">Designed in the UAE for everyone who loves it.</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -1131,7 +1131,7 @@ ${galShots(p).map((s,i)=>`
 
     <div class="buy">
       <div class="buy-head">
-      <div class="buy-top">${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate === 'RAK' ? 'Ras Al Khaimah' : p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}<span class="limited">✦ Limited first run</span></div>
+      <div class="buy-top">${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate === 'RAK' ? 'Ras Al Khaimah' : p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}</div>
       <h1${productH1(p).length > 26 ? ' class="h1-2l"' : ''}>${esc(productH1(p)).replace('T-Shirt', '<span class="nw">T-Shirt</span>')}</h1>
       ${/* Faheem, 10 Sep: "we're not highlighting that this is 100% 230gsm heavyweight cotton. This info should be right below the title" */''}
       <p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>
@@ -1188,10 +1188,10 @@ ${galShots(p).map((s,i)=>`
         <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw sb-ship-uae">Tabby</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         ${/* 4 Oct 2026 (CRO panel, ideas 5 and 6): the gift and the two objections, answered where the thumb is */''}
-        <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every Founding Edition order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
+        <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
         ${pairStrip(p, all)}
         <dl class="pdp-why">
-          <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? '240 GSM piqué cotton, embroidered, in a small first run.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? '230 GSM combed cotton, pre-washed, embroidered rather than printed, in a small first run.' : '230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark, in a small first run.')} Designed in the UAE.</dd></div>
+          <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? '240 GSM piqué cotton, embroidered.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? '230 GSM combed cotton, pre-washed, embroidered rather than printed.' : '230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark.')} Designed in the UAE.</dd></div>
           <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
         </dl>
         ${RV.quotes(designHandles(p), 2)}
@@ -1293,7 +1293,7 @@ ${galShots(p).map((s,i)=>`
       ${LAUNCHED ? '' : `
       <div class="wl-band" id="notify" data-waitlist-wrap>
         <h3>Be first to get this one</h3>
-        <p class="wl-lead">This ${p.garment || 'tee'} is a limited first run. Join the list and we'll email you the moment it drops — before it goes public.</p>
+        <p class="wl-lead">Join the list and we'll email you the moment it drops — before it goes public.</p>
         <form class="wl-form" data-waitlist data-source="pdp-${p.id}" data-endpoint="https://app.kit.com/forms/9627814/subscriptions" novalidate>
           <input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required>
           <button type="submit" class="btn">Notify me</button>
@@ -1367,7 +1367,7 @@ ${cards(p.designCards)}
     <div class="cols stagger">
       <div class="item"><b>${esc(p.printCardTitle)}</b><span>${esc(p.printCardBody)}</span></div>
       <div class="item"><b>${p.fitsCardTitle || 'Unisex, two fits'}</b><span>${p.fitsCardBody || 'Regular (straight, set shoulder) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.'}</span></div>
-      <div class="item"><b>Limited first run</b><span>Small first batch. When a size sells out in this run, it's gone rather than quietly restocked.</span></div>
+      <div class="item"><b>Designed in the UAE</b><span>Original artwork, drawn from a real place in the Emirates.</span></div>
     </div>
     <div class="note-box">${(function(){
       var w = String((p.specChips && p.specChips[0]) || '230gsm combed cotton').match(/\d{3}\s*gsm/i);
@@ -1426,7 +1426,7 @@ ${related(p, all)}
 <div id="buybar">
   <div class="bb-inner">
     <img class="bb-thumb" loading="lazy" decoding="async" src="../..${p.imgMain}" alt="">
-    <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> · Limited first run</div></div>
+    <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div></div>
     ${LAUNCHED ? `<div class="bb-sizes" id="bbSizes" role="group" aria-label="Choose a size">${['S','M','L','XL'].map(z => `<button type="button" data-z="${z}" aria-pressed="false">${z}</button>`).join('')}</div><button class="btn" id="bbAdd" type="button">Add to cart</button>` : `<a class="btn" href="${SHOP_URL}#prod-${p.shopAnchor}">View in shop</a>`}
   </div>
 </div>
@@ -1753,11 +1753,11 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     var left=sizes.filter(function(sz){return seen[sz];}).length;
     /* Scarcity is worth saying; "Live from our store" is not - it tells the
        customer nothing and only appears where they expect a control. */
-    var msg = left===0 ? 'Fully sold out in this run.'
+    var msg = left===0 ? 'Sold out.'
       : (left<=2 ? (function(){ /* 25 Sep (persona review): name what has gone rather than count what is left - same fact, less pressure */
           var out=sizes.filter(function(sz){return !seen[sz];}); if(!out.length) return '';
           var t=out.length>1 ? out.slice(0,-1).join(', ')+' and '+out[out.length-1] : out[0];
-          return t+' ha'+(out.length>1?'ve':'s')+' sold out in this run.'; })() : '');
+          return t+' ha'+(out.length>1?'ve':'s')+' sold out.'; })() : '');
     if(note) note.textContent = msg || 'Live from our store.';
     if(box) box.hidden=false;
     var ps=document.getElementById('pdpStock');
@@ -2035,10 +2035,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
            greyed chip, tapped it, and nothing explained why. */
         b.setAttribute('aria-label', v.title+' — sold out');
         b.innerHTML = v.title+'<span class="sz-out">Sold out</span>'; }
-      else { var ql=v.quantityAvailable;
-        /* live Shopify count, read on page load; null (token cannot read stock) or above 3 shows nothing */
-        if(typeof ql==='number'&&ql>0&&ql<=3){ b.setAttribute('aria-label', v.title+', only '+ql+' left');
-          b.innerHTML = v.title+'<span class="sz-left">'+ql+' left</span>'; } }
+      /* 23 Oct 2026 (Faheem: no scarcity wording anywhere): the "N left" count under a size is gone */
       b.addEventListener('click',function(){
         sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
         b.classList.add('sel'); b.setAttribute('aria-pressed','true');
@@ -2049,9 +2046,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
            only at 3 or fewer, never invented. quantityAvailable can be null
            if the token cannot read inventory — then nothing is shown. */
         var st=document.getElementById('pdpStock');
-        if(st){ var q=v.quantityAvailable;
-          if(typeof q==='number'&&q>0&&q<=3){ st.textContent='Only '+q+' left in '+v.title; st.hidden=false; }
-          else st.hidden=true; }
+        if(st){ st.hidden=true; }   /* 23 Oct 2026 (Faheem): no remaining-stock counts anywhere */
         /* the number at the moment of choice - the whole fit-check idea */
         /* 25 Sep 2026: the measurement rides in the size-help line instead of a new row */
         var ch=box.querySelector('.pdp-chart');

@@ -351,7 +351,7 @@ function teeBlock(l, lead) {
         <span class="teecta-eyebrow">${lead ? esc(lead) + ' ' : ''}${lead && /Hatta|mountains|hike/i.test(lead) ? 'The tee drawn from these mountains' : 'The tee drawn from this place'}</span>
         <h2>${esc(p.name)}</h2>
         <p>${esc(p.shareDesc || p.lede || '')}</p>
-        <div class="teecta-meta"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span><span>${p.printChip || ''}</span><span>&#10022; Limited first run</span></div>
+        <div class="teecta-meta"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span><span>${p.printChip || ''}</span></div>
         <a class="btn" href="${href}">See the tee &rarr;</a>
         ${p.siblingOf ? `<p class="teecta-alt">Also in <a href="/products/${p.siblingOf}-oversized/">Oversized</a></p>` : ''}
         ${/^hajar-mountains-/.test(p.id) ? `<p class="teecta-alt">More <a href="/mountain-t-shirts/">mountain t-shirts</a></p>`
@@ -367,7 +367,7 @@ function miniTee(placeSlug) {
   const p = placeSlug ? PRODUCT_BY_PLACE[placeSlug] : null;
   if (!p) return `<aside class="minitee minitee-all"><div class="minitee-txt"><span class="minitee-eye">Sahra &amp; Beyond</span><b>T-shirts drawn from real UAE places</b><span class="minitee-sub">From AED 199 &middot; 230gsm cotton &middot; free next-day UAE delivery</span></div><a class="minitee-go" href="/t-shirts/">Shop t-shirts &rarr;</a></aside>`;
   const img = cardShots(p)[0];
-  return `<aside class="minitee"><a class="minitee-img" href="/products/${p.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" width="72" height="90" loading="lazy" decoding="async">` : ''}</a><div class="minitee-txt"><span class="minitee-eye">The tee drawn from this place</span><b>${esc(p.name)}</b><span class="minitee-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> &middot; limited first run</span></div><a class="minitee-go" href="/products/${p.id}/">See the tee &rarr;</a></aside>`;
+  return `<aside class="minitee"><a class="minitee-img" href="/products/${p.id}/" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img[0])}" alt="" width="72" height="90" loading="lazy" decoding="async">` : ''}</a><div class="minitee-txt"><span class="minitee-eye">The tee drawn from this place</span><b>${esc(p.name)}</b><span class="minitee-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></div><a class="minitee-go" href="/products/${p.id}/">See the tee &rarr;</a></aside>`;
 }
 function shopBlock(l) {
   const place = (l && l.name)
@@ -408,8 +408,8 @@ function placeRow() {
 function collectionBlock(ctxName, allFits) {
   if (!PRODUCTS_ALL.length) return shopBlock(null);
   const lead = ctxName
-    ? `Heading to ${esc(ctxName)}? Every t-shirt we make is drawn from a real place in the Emirates.`
-    : 'Every t-shirt we make is drawn from a real place in the Emirates \u2014 heavyweight combed cotton, limited runs.';
+    ? `Heading to ${esc(ctxName)}? Our tees are drawn from real places in the Emirates.`
+    : 'Our tees are drawn from real places in the Emirates \u2014 heavyweight 230 GSM combed cotton.';
   // Tees only. The polo is a different garment and this block's copy says
   // "every t-shirt we make" — listing it here was simply wrong.
   // allFits: the t-shirts page lists Regular AND Oversized (6 cards). Content
@@ -556,10 +556,10 @@ function newsletterBlock() {
      shopBlock it never had a LAUNCHED branch. It now sells what is live and
      captures email for the NEXT drop, with the old wording kept for rollback. */
   const eyebrow = LAUNCHED
-    ? 'Sahra &amp; Beyond &middot; Founding Edition, live now'
+    ? 'Sahra &amp; Beyond &middot; The list'
     : 'Sahra &amp; Beyond &middot; First drop coming';
   const blurb = LAUNCHED
-    ? 'Original tees drawn from real places across the Emirates. Next up: Sahel, the Coast Edition, and Sahra Trail. Join the list. We tell you about each release the evening before it opens.'
+    ? 'Tees, polos and hoodies designed in the UAE, many drawn from real places across the Emirates. Join the list. We tell you about each release the evening before it opens.'   /* 23 Oct 2026: no longer "Next up: Sahel", since the block now sits on pages selling Sahel */
     : 'The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.';
   const btn = LAUNCHED ? 'Join the list' : 'Join the waitlist';
   const ok = LAUNCHED
@@ -1132,7 +1132,7 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
       + ((LAUNCHED || REVEALED) ? nav('/ar/shop/', '\u0627\u0644\u0645\u062a\u062c\u0631', 'shop') : '')
       + nav('/ar/about/', '\u0645\u0646 \u0646\u062d\u0646', 'about')
       + nav('/ar/contact/', '\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627', 'contact')
-    : nav('/#collection', 'Collection', 'collection') /* the homepage ring (8 Sep) */ + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polo', 'polos') + nav('/about/', 'About', 'about') + nav('/contact/', 'Contact', 'contact');
+    : nav('/#collection', 'Collection', 'collection') /* the homepage ring (8 Sep) */ + ((LAUNCHED || REVEALED) ? nav('/shop/', 'Shop', 'shop') : '') + nav('/places/', 'Places', 'places') + nav('/t-shirts/', 'T-Shirts', 'tshirts') + nav('/polos/', 'Polos', 'polos') + nav('/about/', 'About', 'about') + nav('/contact/', 'Contact', 'contact');
   return `<!doctype html>
 <html lang="${lang}"${AR ? ' dir="rtl"' : ''} data-market="uae"${guide ? ' data-guide' : ''}>
 <head>
@@ -2225,6 +2225,8 @@ const GUIDE_TEE = {
 };
 /* coast guides: no tee is drawn from the sea yet, so the closer asks instead of forcing a match */
 const GUIDE_ASK = { 'best-beaches': 'the coast', snorkeling: 'Snoopy Island', 'fujairah-beaches': 'the Fujairah coast' };
+/* 23 Oct 2026 (site review): guides whose headline place became a Sahel piece show that piece instead of the general coast block */
+const GUIDE_PIECE = { snorkeling: ['snoopy-island', 'The tee drawn from Al Aqah'], 'fujairah-beaches': ['snoopy-island', 'The tee drawn from Al Aqah'] };
 /* the closer's first words, by guide (CRO panel, idea 3) */
 const GUIDE_LEAD = { stargazing: 'Back from the dark?', camping: 'Back from camp?', 'camping-near-dubai': 'Back from camp?', 'secluded-camping': 'Back from camp?', 'desert-camping-beginners': 'Back from the dunes?', 'desert-safari': 'Back from the dunes?', wadis: 'Back from the wadi?', 'mountain-escapes': 'Back from the mountains?', 'hatta-guide': 'Back from Hatta?', hiking: 'After the hike?', 'family-friendly-outdoors': 'Back from the dunes?' };
 LANDINGS.forEach(L => {
@@ -2288,7 +2290,7 @@ LANDINGS.forEach(L => {
     ${Array.isArray(L.related) && L.related.length ? `<section class="guide-sec"><h2>Related guides</h2><nav class="catnav" aria-label="Related guides">${L.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2] || '')}</span></a>`).join('')}</nav></section>` : ''}
     ${faqHtml}
     ${Array.isArray(L.sources) && L.sources.length ? `<section class="guide-sec guide-src"><h2>Sources</h2><ul>${L.sources.map(r => `<li><a href="${esc(r[1])}" target="_blank" rel="noopener nofollow">${esc(r[0])}</a></li>`).join('')}</ul></section>` : ''}
-    ${GUIDE_TEE[L.slug] ? teeFor(GUIDE_TEE[L.slug], L.h1, GUIDE_LEAD[L.slug]) : (GUIDE_ASK[L.slug] ? askBlock(GUIDE_ASK[L.slug], 'Coast') + collectionBlock(null) : collectionBlock(null))}
+    ${GUIDE_TEE[L.slug] ? teeFor(GUIDE_TEE[L.slug], L.h1, GUIDE_LEAD[L.slug]) : GUIDE_PIECE[L.slug] ? require('./preorder-page.js').pieceBlock(GUIDE_PIECE[L.slug][0], GUIDE_PIECE[L.slug][1]) + collectionBlock(null) : (GUIDE_ASK[L.slug] ? askBlock(GUIDE_ASK[L.slug], 'Coast') + collectionBlock(null) : collectionBlock(null))}
     ${guideBar(GUIDE_TEE[L.slug] ? PRODUCT_BY_PLACE[GUIDE_TEE[L.slug]] : null)}
     ${newsletterBlock()}
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
@@ -2333,7 +2335,7 @@ function contactWays() {
   const MARK = require('./mark-paths.js');
   const canonical = `${SITE}/about/`;
   const title = 'About Sahra & Beyond — A UAE Clothing Brand';
-  const desc = 'The story behind Sahra & Beyond — a UAE apparel brand built around real places: a dark-sky desert, the first dunes of the Empty Quarter, a red-rock wadi in the Hajar. Heavyweight cotton, printed and embroidered designs, a limited first run.';
+  const desc = 'The story behind Sahra & Beyond — a UAE apparel brand built around real places: a dark-sky desert, the first dunes of the Empty Quarter, a red-rock wadi in the Hajar. Tees, polos and hoodies, designed in the UAE.';
   const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
   const jsonld = [
     { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical },
@@ -2413,7 +2415,7 @@ function contactWays() {
         <div class="ab-fact"><b>The cloth</b><p>230&nbsp;gsm combed ring-spun cotton for the tees, 240&nbsp;gsm piqu&eacute; for the polo. Pre-washed, cut in two fits &mdash; Regular and Oversized.</p></div>
         <div class="ab-fact"><b>The artwork</b><p>Al Quaa and the Hajar are printed direct-to-garment, so the graphic sits in the cotton rather than on top of it. The Empty Quarter and the polo are embroidered &mdash; thread, not ink.</p></div>
         <div class="ab-fact"><b>The details</b><p>Collar labels are printed, not sewn in, so there is nothing to scratch. The mark on every chest is embroidered.</p></div>
-        <div class="ab-fact"><b>Founding Edition</b><p>The first run is deliberately small. When it is gone, the Founding Edition is closed.</p></div>
+        <div class="ab-fact"><b>Founding Edition</b><p>The three tees and the Sahra Polo the brand began with, each drawn from a real place.</p></div>
       </div>
     </section>
 
@@ -2441,8 +2443,10 @@ if (LAUNCHED || REVEALED) (function () {
     if (!LAUNCHED) html = html.replace('<head>', '<head>\n<script>window.__COMMERCE_OFF=true;</script>');
     const canonical = `${SITE}/shop/`;
     // 71 chars truncated in SERPs; 57 keeps the brand visible.
-    const title = 'Shop UAE T-Shirts & Polos — Limited Runs | Sahra & Beyond';
-    const desc = 'Shop UAE graphic t-shirts from real places. 230 GSM cotton, Regular or Oversized, AED 199 or any two for AED 359. Free next-day UAE delivery.';
+    /* 23 Oct 2026 (site review): no scarcity in the title; hoodies and running wear named */
+    const title = 'Shop UAE T-Shirts, Polos & Hoodies | Sahra & Beyond';
+    const desc = 'Graphic t-shirts, polos, hoodies and Sahra Trail running wear, designed in the UAE. Tees from AED 139; any two Founding Edition tees AED 359. Free UAE delivery.';
+    const PO = require('./preorder-page.js');
     // Driven off content/products/*.json — a hardcoded list here silently went stale
     // once the catalogue was restructured, and shipped the old AED 149 price to Google.
     const prod = p => ({
@@ -2472,8 +2476,11 @@ if (LAUNCHED || REVEALED) (function () {
         "itemListElement": PRODUCTS_ALL
           .slice().sort((a, b) => (a.order || 0) - (b.order || 0))
           .map((p, i) => ({ "@type": "ListItem", "position": i + 1, "item": prod(p) }))
+          /* the Sahel and Sahra Trail product pages, by URL (their own pages carry the full Product markup) */
+          .concat(PO.products().map((p, i) => ({ "@type": "ListItem", "position": PRODUCTS_ALL.length + i + 1, "url": `${SITE}/products/${p.handle}/`, "name": p.plain })))
       }
     ];
+    jsonld[2].numberOfItems = jsonld[2].itemListElement.length;
     const meta = `\n<meta name="description" content="${esc(desc)}">\n${robotsMeta(false)}\n<meta property="og:locale" content="en_AE">\n<link rel="canonical" href="${canonical}">\n<meta name="theme-color" content="#14102A">\n<meta property="og:type" content="website">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(desc)}">\n<meta property="og:url" content="${canonical}">\n<meta property="og:image" content="${SITE}/shirts/alquaa-dune-front.jpg">\n<meta property="og:site_name" content="Sahra & Beyond">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="${esc(title)}">\n<meta name="twitter:description" content="${esc(desc)}">\n<meta name="twitter:image" content="${SITE}/shirts/alquaa-dune-front.jpg">\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`;
     html = html.replace(/<meta name="robots"[^>]*><!--[^>]*-->\n?/, '');
     // shop-preview.html carries its own canonical/og:image so the preview page is
@@ -2534,9 +2541,17 @@ if (LAUNCHED || REVEALED) (function () {
       .sp-trail-a{display:inline-flex;align-items:center;min-height:46px;padding:0 20px;border-radius:999px;background:#D9C3A5;color:#10161d;font-weight:600;text-decoration:none}
       .sp-trail-r{margin:12px 0 0;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:#B9AC98}
       @media(max-width:700px){.sp-trail{grid-template-columns:1fr;width:calc(100% - 32px);margin:36px auto 72px}.sp-trail>div{padding:22px 18px 20px}}
+      .sp-new{position:relative;z-index:3;background:#FAF6EF;padding:10px 0 56px}
     </style>`;
 
-    const TRAIL_BAND = require('./preorder-page.js').stageHead() + '<section class="sp-trail" aria-labelledby="spTrailH"><span class="sp-trail-im"><img src="/assets/trail/reveal/trail-kit-720.webp" width="720" height="547" alt="The Sahra Trail Kit: the Tee and the 2-in-1 Shorts, a pre-production render" loading="lazy" decoding="async"><span class="sp-mock">Mock-up</span></span><div><p class="sp-trail-k">Sahra Trail &middot; the first run</p><h2 id="spTrailH">Trail and run wear, revealed</h2><ul><li><span>Sahra Trail Tee</span><b>AED 139</b></li><li><span>Sahra Trail 2-in-1 Shorts</span><b>AED 169</b></li><li><span>The Kit, Tee + Shorts</span><b>AED 249</b></li></ul>' + require('./preorder-page.js').inc('st0', '<p class="sp-trail-s st0">Not on sale yet. Pre-order opens Wed 28 Oct.</p>') + require('./preorder-page.js').inc('st1', '<p class="sp-trail-s st1">Pre-order is open. Ships from Fri 30 Oct.</p>') + require('./preorder-page.js').inc('st0', '<a class="sp-trail-a st0" href="/new/#trail">See the pieces &rarr;</a>') + '<a class="sp-trail-a st12" href="/new/#trail">Shop Sahra Trail &rarr;</a><p class="sp-trail-r">Pre-production renders</p></div></section>';
+    /* 23 Oct 2026 (Faheem: "Own cards in /shop/"): Sahel and Sahra Trail get their own cards under the
+       Founding grid, with the Mock-up label and the stage-aware price; the Shopify-driven template above
+       skips their handles (PRE_HANDLES). Replaces the 8 Oct Trail band. */
+    const TRAIL_BAND = '<div class="sp-new" data-bg="#FAF6EF">'
+      + PO.newBlock({ list: PO.pickNew(p => p.line === 'sahel', true), heading: 'Sahel, the Coast Edition', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'The story of Sahel' })
+      + PO.newBlock({ list: PO.pickNew(p => p.line === 'trail'), heading: 'Sahra Trail: running tee, 2-in-1 shorts and kit', kicker: 'New &middot; Sahra Trail', more: '/trail/', moreText: 'About Sahra Trail' })
+      + '</div>';
+    html = html.replace('/*PRE_HANDLES*/[]', JSON.stringify(PO.handles()));
     html = html.replace(
       '<main id="products"><div class="loading">Loading the collection&hellip;</div></main>',
       gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>' + TRAIL_BAND
@@ -2650,12 +2665,12 @@ if (LAUNCHED || REVEALED) (function () {
 (function () {
   const canonical = `${SITE}/tote/`;
   const title = 'The Sahra Tote — Natural Canvas Tote Bag | Sahra & Beyond';
-  const desc = 'The Sahra Tote in natural canvas, AED 50 — and free with every order while the Founding Edition lasts. Free next-day delivery across the UAE.';
+  const desc = 'The Sahra Tote in natural canvas, AED 50 — and free with every order. Free next-day delivery across the UAE.';
   const img = `${SITE}/shirts/tote-model.jpg`;
   const jsonld = [
     { "@context": "https://schema.org", "@type": "Product",
       "name": "The Sahra Tote", "image": [img], "brand": { "@type": "Brand", "name": "Sahra & Beyond" },
-      "description": 'A natural canvas tote carrying the Sahra & Beyond mark, printed in terracotta. Free with every order while the Founding Edition run lasts.',
+      "description": 'A natural canvas tote carrying the Sahra & Beyond mark, printed in terracotta. Free with every order.',
       "offers": Object.assign({ "@type": "Offer", "url": canonical, "priceCurrency": "AED", "price": "50", "priceValidUntil": `${new Date().getFullYear() + 1}-12-31`,
         "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition", "seller": { "@type": "Organization", "name": "Sahra & Beyond" } },
         JSON.parse('{' + buildProducts.LD_SHIP + '}')) },
@@ -2724,7 +2739,7 @@ body.tote-page main{max-width:1180px}
         <p class="tt-price"><span class="tt-n"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></span></p>
         <div class="tt-gift">
           <b>You do not have to buy one</b>
-          <p>A tote comes free with every order while the Founding Edition run lasts &mdash; add any tee or polo to your bag and it is added at no charge. This page is for anyone who wants a second one, or the tote on its own. <a href="/shop/">Shop the collection &rarr;</a></p>
+          <p>A tote comes free with every order &mdash; add any piece to your bag and it is added at no charge. This page is for anyone who wants a second one, or the tote on its own. <a href="/shop/">Shop the collection &rarr;</a></p>
         </div>
         <button class="btn tt-add" id="toteAdd" type="button" disabled>Loading&hellip;</button>
         <p class="tt-msg" id="toteMsg" role="status" aria-live="polite"></p>
@@ -2736,7 +2751,7 @@ body.tote-page main{max-width:1180px}
           <li><b>Natural canvas</b> &mdash; undyed, so it wears in rather than out.</li>
           <li><b>The mark, printed in terracotta</b> &mdash; the same lockup as the collar labels.</li>
           <li><b>Long handles</b>, cut to sit on the shoulder rather than the forearm.</li>
-          <li><b>Free with every order</b> while the Founding Edition run lasts.</li>
+          <li><b>Free with every order</b>, pre-orders included.</li>
         </ul>
       </div>
     </div>
@@ -2842,7 +2857,12 @@ body.tote-page main{max-width:1180px}
     ['liwa', 'Empty Quarter', '/shirts/card/emptyquarter-dune-front.jpg'],
     ['wadi-naqab', 'Hajar Mountains', '/shirts/card/hajar-dune-back.jpg']
   ].filter(([id]) => byId[id] && byId[id].productLink && byId[id].productLink.slug);
-  const tees = TEES.map(([id, tee, img]) => `<a class="pl-tee" href="/products/${esc(byId[id].productLink.slug)}/"><img src="${esc(img)}" alt="${esc(tee)} tee" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the tee &rarr;</i></span></a>`).join('');
+  /* 23 Oct 2026 (site review): the four Sahel places join the three Founding ones (mock-up images, labelled in the alt and the link text) */
+  const SAHEL_TEES = require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && byId[p.place[1]])
+    .map(p => [p.place[1], p.name.replace(/&amp;/g, '&'), `/assets/preorder/${p.images[0].k}-720.webp`, `/products/${p.handle}/`, /hoodie/i.test(p.kind) ? 'hoodie' : 'tee']);
+  const tees = TEES.map(([id, tee, img]) => `<a class="pl-tee" href="/products/${esc(byId[id].productLink.slug)}/"><img src="${esc(img)}" alt="${esc(tee)} tee" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the tee &rarr;</i></span></a>`).join('')
+    + SAHEL_TEES.map(([id, tee, img, href, noun]) => `<a class="pl-tee" href="${esc(href)}"><img src="${esc(img)}" alt="${esc(tee)}, studio mock-up" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the ${noun} (mock-up) &rarr;</i></span></a>`).join('');
+  const teeCount = TEES.length + SAHEL_TEES.length;
   const lede = `${locations.length} places, ${words[CATS.filter(catCount).length] || CATS.length} kinds of ground, ${words[emirates.size] || emirates.size} emirates` +
     (abroad.length ? ` and ${abroad.length === 1 ? 'one detour' : abroad.length + ' detours'} over the border` : '') +
     ` &mdash; each with a sourced guide: how to get there, when to go, the real risks and what to pack.`;
@@ -2906,13 +2926,14 @@ body.tote-page main{max-width:1180px}
         <p class="pl-lede">${lede}</p>
         <div class="pl-chips">${chips}</div>
       </div>
-      ${tees ? `<div class="pl-tees"><p class="pl-tees-h">Three of them became tees</p>${tees}</div>` : ''}
+      ${tees ? `<div class="pl-tees"><p class="pl-tees-h">${(words[teeCount] || String(teeCount)).replace(/^./, c => c.toUpperCase())} of them became pieces</p>${tees}</div>` : ''}
     </div>
   </section>
   <main>
     ${notOperator('guide')}
     <div class="content"><p>This is the map behind the brand: every desert, dune field, wadi, mountain trail and beach we have explored across the UAE. Each place has its own guide: how to get there, when to go, what it costs, the real risks, and a packing list matched to the trip, with the sources for every fact.</p></div>
-    ${PLACES.hubExplorer(locations, { tees: Object.fromEntries(Object.entries(PRODUCT_BY_PLACE).filter(([, p]) => p.fit === 'regular').map(([k, p]) => [k, { name: String(p.name || '').replace(/\s+[—-]\s+Regular$/, ''), url: '/products/' + p.id + '/' }])), hikes: fs.readdirSync(path.join(ROOT, 'content/hikes')).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ROOT, 'content/hikes', f), 'utf8'))).map(h => ({ slug: h.slug, name: h.name, grade: h.grade, lat: h.trailhead.lat, lng: h.trailhead.lng })) })}
+    ${PLACES.hubExplorer(locations, { tees: Object.assign(Object.fromEntries(Object.entries(PRODUCT_BY_PLACE).filter(([, p]) => p.fit === 'regular').map(([k, p]) => [k, { name: String(p.name || '').replace(/\s+[—-]\s+Regular$/, ''), url: '/products/' + p.id + '/' }])),
+      Object.fromEntries(require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular')).map(p => [p.place[1], { name: p.name.replace(/&amp;/g, '&'), url: '/products/' + p.handle + '/' }]))), hikes: fs.readdirSync(path.join(ROOT, 'content/hikes')).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ROOT, 'content/hikes', f), 'utf8'))).map(h => ({ slug: h.slug, name: h.name, grade: h.grade, lat: h.trailhead.lat, lng: h.trailhead.lng })) })}
     ${secs}
     ${restHtml}
     <section class="guide-sec" id="guides"><h2>Guides that pull these places together</h2><nav class="catnav" aria-label="Guides">${FG.GUIDES.filter(g => g[0] !== '/places/').map(g => `<a href="${g[0]}"><b>${esc(g[1])}</b><span>${esc((LANDINGS.find(L => '/' + L.slug + '/' === g[0]) || {}).desc ? (LANDINGS.find(L => '/' + L.slug + '/' === g[0]).pick || []).length + ' places' : '')}</span></a>`).join('')}</nav></section>
@@ -2994,25 +3015,25 @@ function gsmTableHtml() {
 const COMMERCE = [
   {
     slug: 't-shirts', emoji: '◈', cat: 'Dunes',
-    lede: 'Three designs from three UAE places · 230gsm heavyweight cotton · Regular or Oversized',
+    lede: 'Graphic tees from real UAE places · 230gsm heavyweight cotton · Regular or Oversized',
+    /* 23 Oct 2026 (site review): the Sahel tees, as their own cards (preorder-page.js) */
+    newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' && !!p.fit, true), newFits: true,
     items: ["al-quaa-galaxy-regular", "al-quaa-galaxy-oversized", "hajar-mountains-regular", "hajar-mountains-oversized", "empty-quarter-regular", "empty-quarter-oversized"],
     h1: 'T-Shirts in Dubai & the UAE',
     title: 'T-Shirts in Dubai & the UAE — 230 GSM Graphic Tees',
-    desc: 'Graphic t-shirts from real UAE places: Liwa, Al Quaa, the Hajar. 230 GSM heavyweight cotton, AED 199. Free next-day delivery in Dubai and the UAE.',
+    desc: 'Graphic t-shirts from real UAE places: the desert, the Hajar and the coast. 230 GSM cotton, Regular or Oversized, from AED 139. Free delivery in Dubai and the UAE.',
     catNav: true,
-    intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm combed ring-spun cotton, and limited runs.\n\nThree designs, two fits. Al Quaa Galaxy and Hajar Mountains are printed direct to garment, so the ink sits in the cotton rather than on top of it; Empty Quarter is embroidered. Each comes in a straight Regular fit or a drop-shoulder Oversized, S to XL. If you are buying in Dubai, Abu Dhabi or anywhere in the UAE, delivery is free and arrives the next working day on orders placed by 2 pm.",
+    intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm combed ring-spun cotton.\n\nThe Founding Edition is three designs in two fits. Al Quaa Galaxy and Hajar Mountains are printed direct to garment, so the ink sits in the cotton rather than on top of it; Empty Quarter is embroidered. Each comes in a straight Regular fit or a drop-shoulder Oversized, S to XL. If you are buying in Dubai, Abu Dhabi or anywhere in the UAE, delivery is free and arrives the next working day on orders placed by 2 pm.\n\nSahel, the Coast Edition, adds four tees, on pre-order from Wed 28 Oct and shipping from Fri 30 Oct: Khor Fakkan Bay, Al Hamra Pearl Diver and Al Aqah Reef, drawn from the east coast and the Ras Al Khaimah shore, and the Shams Tee, with our mark embroidered in sand thread on the chest. Each comes in Regular and Oversized.",
     sections: [
       { h2: 'What makes these different from a souvenir t-shirt', body: "A souvenir shirt is designed to be recognised by a tourist. Ours are designed to be recognised by someone who has been there.\n\nThe Al Quaa design maps the Milky Way as it actually rises over one of the darkest accessible skies in the Emirates, far enough south that no city glow reaches it. The Empty Quarter design is a tonal embroidered sun over the dune ridges of Liwa. The Hajar design reduces the peaks above Wadi Naqab to contour lines. If you know the place, the design reads instantly. If you do not, it still works as a graphic." },
-      { h2: 'The fabric, plainly', body: "All our t-shirts are 230gsm, 100% combed ring-spun cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.\n\nEvery piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere." },
-      { h2: 'Regular and oversized fits', body: "The t-shirts are cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL, and each design comes in both a Regular and an Oversized fit. The polo is a men's cut, S to XL, in one fit. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." },
-      { h2: 'Limited runs', body: "Each design is produced as a limited first run. When a size sells out, we may or may not make it again — and we will not promise that we will. We would rather make a small number of things properly than keep a warehouse full of everything." }
+      { h2: 'The fabric, plainly', body: "Our cotton t-shirts are all 230gsm, 100% combed ring-spun cotton. That is a heavyweight — noticeably more substantial than a standard 150–180gsm shirt — which is what gives it structure so it hangs properly instead of clinging.\n\nEvery piece has a ribbed crew neck that holds its shape, and taped collar and shoulder seams so the shirt survives washing. Printed graphics are direct-to-garment, which sits the ink into the cotton rather than laying a plastic panel across your back, so the fabric still breathes. The Al Quaa and Hajar designs pair that print with an embroidered logo, and the Empty Quarter design is embroidered throughout, with no print at all — so every piece in the range carries stitching somewhere." },
+      { h2: 'Regular and oversized fits', body: "The t-shirts are cut unisex — one cut worn by everyone, no separate men's and women's versions — in sizes S to XL, and each design comes in both a Regular and an Oversized fit. The polo is a men's cut, S to XL, in one fit. Regular is a classic straight cut that layers cleanly under a shacket or jacket. Oversized is a relaxed, wider cut with a dropped shoulder, designed to be worn on its own.\n\nFull flat-lay measurements for both fits are on our size guide." }
     ],
     related: [['/national-day/', 'UAE National Day t-shirts', 'For Eid Al Etihad, 2 December'], ['/gifts/', 'Gifts from the UAE', 'Leaving gifts that are not touristy']],
     faqs: [
       ['Where do you ship?', 'We ship worldwide from Dubai. In the UAE: free next-day delivery to all seven emirates, with no minimum order — order by 2 pm and it arrives the next working day. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 390. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.'],
-      ['What size should I order?', 'Every t-shirt design comes in Regular and Oversized fits, S to XL; the polo comes in one fit. Our size guide has full flat-lay measurements, plus a method for measuring a t-shirt you already own to find your match.'],
-      ['What is the cotton, exactly?', '100% combed ring-spun cotton at 230gsm, with no polyester. Combing strips out the short fibres and ring-spinning twists what remains into a smoother, stronger yarn — that is where the weight and the hand come from. We describe the yarn we actually buy and make no certification claims we cannot show you.'],
-      ['Will designs be restocked?', 'Each design is a limited run. We may make more of a design later, but we do not promise it. When a size sells out in a run, treat it as gone.']
+      ['What size should I order?', 'Every t-shirt design comes in Regular and Oversized fits, S to XL; the polos come in one fit. Our size guide has full flat-lay measurements for the Founding Edition tees, plus a method for measuring a t-shirt you already own to find your match. There is no size chart for the Sahel tees yet, so message us before you order one.'],
+      ['What is the cotton, exactly?', '100% combed ring-spun cotton at 230gsm, with no polyester. Combing strips out the short fibres and ring-spinning twists what remains into a smoother, stronger yarn — that is where the weight and the hand come from. We describe the yarn we actually buy and make no certification claims we cannot show you.']
     ]
   },
   {
@@ -3024,12 +3045,13 @@ const COMMERCE = [
     h1: 'UAE National Day 2026: Eid Al Etihad T-Shirts & Gifts',
     title: 'UAE National Day 2026 T-Shirts & Gifts — Eid Al Etihad',
     items: ['al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'hajar-mountains-regular', 'hajar-mountains-oversized', 'empty-quarter-regular', 'empty-quarter-oversized', 'sand-polo'],
+    newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' || p.handle === 'sahra-trail-kit', true), newFits: true, newHeading: 'From Sahel and Sahra Trail: shipping from Fri 30 Oct',
     desc: 'T-shirts for Eid Al Etihad drawn from real UAE places: the Al Quaa night sky, the Hajar peaks, the Liwa dunes. 230gsm cotton, free next-day UAE delivery.',
     lede: 'For Eid Al Etihad on 2 December: shirts drawn from the land itself',
     foldsTitle: 'Choosing, timing and gifting',
     intro: "A t-shirt drawn from a real place in the Emirates, to give or wear for Eid Al Etihad, UAE National Day, on Wednesday 2 December 2026.\n\nOn 2 December the UAE marks Eid Al Etihad, its National Day: the anniversary of the union of 1971, when six emirates came together as one country, with Ras Al Khaimah joining in February 1972. This year is the 55th.\n\nMost National Day t-shirts carry a slogan. Ours carry a place. Each design is drawn from somewhere real in the Emirates: the Milky Way rising over the desert at Al Quaa in Abu Dhabi, the Hajar peaks above Wadi Naqab in Ras Al Khaimah, and the dune ridges of Liwa at the edge of the Empty Quarter. They are shirts to wear on the day, and every weekend after it.",
     sections: [
-      { h2: 'Which design for which person', body: "Al Quaa Galaxy is the Milky Way over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back of a black tee. It suits the person who drives out of the city to look at the stars.\n\nHajar Mountains is a topographic line drawing of the Hajar peaks, printed on grey. It is the one for hikers and anyone who heads for Ras Al Khaimah when the weather turns.\n\nEmpty Quarter is a tonal sun setting over the dunes of Liwa, embroidered on beige with no print at all. It suits desert drivers and anyone who prefers a quieter shirt.\n\nThe Sahra Polo is 240gsm piqué with an embroidered mark, for someone who would rather wear a collar.\n\nEvery tee is 230gsm combed cotton, AED 199, in Regular or Oversized, sizes S to XL. Any two tees are AED 359." },
+      { h2: 'Which design for which person', body: "Al Quaa Galaxy is the Milky Way over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back of a black tee. It suits the person who drives out of the city to look at the stars.\n\nHajar Mountains is a topographic line drawing of the Hajar peaks, printed on grey. It is the one for hikers and anyone who heads for Ras Al Khaimah when the weather turns.\n\nEmpty Quarter is a tonal sun setting over the dunes of Liwa, embroidered on beige with no print at all. It suits desert drivers and anyone who prefers a quieter shirt.\n\nThe Sahra Polo is 240gsm piqué with an embroidered mark, for someone who would rather wear a collar.\n\nEvery tee is 230gsm combed cotton, in Regular or Oversized, sizes S to XL: AED 199, or AED 139 for the Shams Tee. Any two Founding Edition tees are AED 359." },
       { h2: 'Getting it in time for 2 December', body: "In the UAE, orders placed by 2 pm on a working day are dispatched the same day and delivered the next working day, free, with no minimum order. Public holidays are not working days, so order a few days before the National Day holiday rather than on the eve.\n\nGCC orders (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait) take 3 to 5 working days, at AED 50 or free over AED 390. The rest of the world takes 7 to 14 working days, at AED 80." },
       { h2: 'Giving it as a gift', body: "Tick 'This is a gift' in your bag and add a message: we include it with the order. Every order comes with the Sahra Tote, free. If the size is wrong, exchanges within the UAE are free within 14 days of delivery, as long as the shirt is unworn with its tags on." },
       { h2: 'Wear the place, then go there', body: "The National Day weekend falls in the cool season, the best time of year to see the places behind the designs. Each one has its own guide: how to get there, when to go, the real risks and what to pack." }
@@ -3043,16 +3065,17 @@ const COMMERCE = [
       ['/polos/', 'The Sahra Polo', '240gsm piqué, embroidered']
     ],
     faqs: [
-      ['Do you sell UAE National Day t-shirts?', "Yes, though not flag prints. Our tees are drawn from real places in the Emirates: the Al Quaa night sky, the Hajar peaks at Wadi Naqab and the Liwa dunes. Each is AED 199 in Regular or Oversized, sizes S to XL."],
+      ['Do you sell UAE National Day t-shirts?', "Yes, though not flag prints. Our tees are drawn from real places in the Emirates: the Al Quaa night sky, the Hajar peaks at Wadi Naqab and the Liwa dunes. The Founding Edition tees are AED 199 in Regular or Oversized, sizes S to XL; the Sahel tees are AED 199 and the Shams Tee AED 139."],
       ['Will my order arrive before 2 December?', "In the UAE, orders placed by 2 pm on a working day are delivered the next working day. Public holidays are not working days, so order a few days ahead of the National Day holiday. GCC orders take 3 to 5 working days."],
       ['Can I send it as a gift?', "Yes. Tick 'This is a gift' in your bag and add a message, and we include it with the order. Every order also comes with the Sahra Tote, free."],
-      ['How much do they cost?', "Every tee is AED 199, and any two tees are AED 359. The Sahra Polo is AED 229. UAE delivery is free with no minimum order."],
+      ['How much do they cost?', "The Founding Edition tees are AED 199, and any two of them are AED 359. The Sahel tees are AED 199, the Shams Tee AED 139, the polos and hoodies AED 229 and the Sahra Trail Kit AED 249. UAE delivery is free with no minimum order."],
       ['What is Eid Al Etihad?', "It is the name used for the UAE's National Day celebrations on 2 December, which mark the union of the emirates in 1971. Eid Al Etihad means the celebration of the union."]
     ]
   },
   {
     slug: 'gifts', emoji: '✦', cat: 'Camping',
     items: ["al-quaa-galaxy-regular", "al-quaa-galaxy-oversized", "hajar-mountains-regular", "hajar-mountains-oversized", "empty-quarter-regular", "empty-quarter-oversized", "sand-polo"],
+    newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' || p.handle === 'sahra-trail-kit', true), newFits: true, newHeading: 'New for gifting: Sahel and the Sahra Trail Kit',
     h1: 'Gifts from the UAE',
     foldsTitle: 'Choosing and giving',
     title: "UAE Souvenirs & Gifts That Aren't Touristy",
@@ -3062,14 +3085,14 @@ const COMMERCE = [
       { h2: 'For UAE National Day', body: "For Eid Al Etihad on 2 December, a shirt drawn from a real place in the Emirates says more than a flag print: the Al Quaa night sky, the Hajar peaks or the Liwa dunes. Order a few days before the National Day holiday, since UAE delivery runs on working days. Our National Day page has the designs side by side." },
       { h2: 'A leaving gift for someone moving away', body: "This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?\n\nA skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately." },
       { h2: 'For someone who loves the outdoors here', body: "If the person you are buying for spends their weekends camping, dune driving, stargazing or hiking, the design will land. Each of our t-shirts comes from a place they can drive to, and every product page tells the story of that place — including the coordinates.\n\nHeavyweight 230gsm combed cotton means it is a shirt they will actually keep wearing, not a novelty they wear once." },
-      { h2: 'For a visitor who wants something real', body: "Visitors often want something from the UAE that is not obviously made for visitors. A limited-run t-shirt from a small local brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat." },
-      { h2: 'Practical things', body: "All our t-shirts are AED 199 and come in Regular and Oversized fits. The Sahra Polo is AED 229 and comes in one fit. The t-shirts are cut unisex and the polo is a men's cut, all in S to XL. In the UAE, delivery is next working day to all seven emirates for orders placed by 2 pm, and free with no minimum order — and we now ship worldwide too. Exact delivery cost is always shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
+      { h2: 'For a visitor who wants something real', body: "Visitors often want something from the UAE that is not obviously made for visitors. A t-shirt from a small UAE brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat." },
+      { h2: 'Practical things', body: "By budget: the Sahra Tote is AED 50, the Shams Tee and the Sahra Trail Tee AED 139, the other tees AED 199 (any two Founding Edition tees AED 359), the polos and hoodies AED 229, and the Sahra Trail Kit AED 249. Every order comes with the Sahra Tote, free. The tees come in Regular and Oversized fits, cut unisex; the polos are a men's cut; everything is S to XL. In the UAE, delivery is next working day to all seven emirates for orders placed by 2 pm, and free with no minimum order — and we now ship worldwide too. Exact delivery cost is always shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
     ],
     related: [['/national-day/', 'UAE National Day t-shirts', 'Eid Al Etihad, 2 December']],
     faqs: [
       ['What is a good leaving gift for an expat in the UAE?', 'Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.'],
       ['Can I exchange it if the size is wrong?', 'Yes. Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the item is unworn, unwashed and still has its tags.'],
-      ['How much do they cost?', 'Every t-shirt is AED 199, any two are AED 359, and the Sahra Polo is AED 229. UAE delivery is free and every Founding Edition order includes a free Sahra Tote.'],
+      ['How much do they cost?', 'The tees are AED 199, apart from the Shams Tee at AED 139, and any two Founding Edition tees are AED 359. The polos and hoodies are AED 229 and the Sahra Trail Kit is AED 249. UAE delivery is free and every order includes a free Sahra Tote.'],
       ['Do you ship outside the UAE?', 'Yes — worldwide, from Dubai. GCC orders (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait) arrive in 3–5 working days at AED 50, free over AED 390. The rest of the world is 7–14 working days at AED 80. Any import duties are payable on arrival.']
     ]
   },
@@ -3096,7 +3119,7 @@ const COMMERCE = [
       { h2: 'Where it is made', body: "Our fabric is sourced from Pakistan, one of the world's major cotton-producing countries. The designs are created here in the UAE. We say designed in the UAE rather than made in the UAE, because that is the accurate description." }
     ],
     faqs: [
-      ['What is GSM on a t-shirt?', 'GSM is grams per square metre — what a square metre of the fabric weighs. It is a measure of weight, not of quality. Roughly: 150gsm is promotional and fast-fashion weight, 180gsm is the high-street standard, 230gsm is heavyweight, and 280gsm is approaching sweatshirt territory. The number tells you how much structure a shirt has and how long it will hold its shape. Our t-shirts are 230gsm and the polo is 240gsm piqué.'],
+      ['What is GSM on a t-shirt?', 'GSM is grams per square metre — what a square metre of the fabric weighs. It is a measure of weight, not of quality. Roughly: 150gsm is promotional and fast-fashion weight, 180gsm is the high-street standard, 230gsm is heavyweight, and 280gsm is approaching sweatshirt territory. The number tells you how much structure a shirt has and how long it will hold its shape. Our t-shirts are 230gsm and the Sahra Polo is 240gsm piqué.'],
       ['Is 230gsm too hot for the UAE?', 'It is a heavyweight tee, so it is more substantial than a thin fast-fashion shirt. But weight is not what governs how a cotton shirt wears in the heat — airflow is. Cloth held slightly off the skin lets air move underneath it; cloth pulled taut against the skin does not. So for peak summer the looser cut matters more than the lighter cloth, and our Oversized fit sits further off the body than the Regular. It is 100% cotton with no polyester in it, because a poly blend traps heat. No cotton t-shirt is a technical hot-weather garment, and we would rather say that than claim otherwise.'],
       ['What is the difference between 180gsm and 240gsm?', 'About a third more cotton, and it shows up in structure and lifespan rather than on day one. At 180gsm — the high-street default — the cloth follows the body, and in strong light you can often see what is underneath. At the 230–240gsm end it stands slightly away from you, the hem hangs straight instead of clinging, and the collar has enough material to keep its shape rather than going wavy. Neither is better in the abstract; 180gsm is lighter to wear and 240gsm lasts considerably longer.'],
       ['Does a higher GSM shrink more?', 'Not by itself. Shrinkage is determined by whether the cotton was pre-shrunk before cutting and by how you wash it, not by how much the fabric weighs. Our cotton is pre-shrunk before cutting, so you should see very little movement. What does cause shrinkage, at any weight, is a hot wash and a tumble dryer — heat is what makes untreated cotton fibres contract. Wash cold and hang dry and weight becomes irrelevant to the question.'],
@@ -3169,24 +3192,28 @@ const CATEGORIES = [
   { slug:'t-shirts/regular', cat:'regular-tees', emoji:'▭', catBg:'Dunes',
     h1:'Regular Fit T-Shirts',
     title:'Regular Fit T-Shirts — UAE Designs | Sahra & Beyond',
-    desc:'Our regular fit t-shirts — a straight, precise cut with a set shoulder. 230gsm combed cotton, original UAE designs, S–XL. Limited runs, delivered across the UAE.',
+    newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' && p.fit === 'Regular'),
+    desc:'Our regular fit t-shirts — a straight, precise cut with a set shoulder. 230gsm combed cotton, original UAE designs, S–XL. Free delivery across the UAE.',
     intro:"Regular is the fit to take if you layer. It sits on the shoulder and falls straight rather than hanging off it, with a 2″ chest step per size above M. Check the size chart before you order.\n\nEvery design in the collection comes in this fit, cut unisex, in sizes S to XL. Same 230gsm combed ring-spun cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette.",
     sections: [{"h2": "A straight cut, measured rather than felt", "body": "Letters mean different things at different brands, so go by the numbers. The Regular fit follows classic US/international grading: the shoulder seam sits at your natural shoulder point rather than dropped below it, and the body skims rather than hanging.\n\nMeasured flat, pit to pit: S is 19″, M is 20″, L is 22″ and XL is 24″ — a 2″ step per size above M. Those are garment measurements taken flat, not body measurements, and they come straight from the graded specification our manufacturer produced against. Every measurement holds a tolerance of ±0.5″; anything outside it is rejected at QC before it ships.\n\nThat precision is the point. If you know the flat chest measurement of a shirt you already like, you know your size here without guessing what a given brand means by Regular."}, {"h2": "How to use the measurements", "body": "Take a t-shirt you already own and wear happily. Lay it flat, smooth out the creases, and measure straight across from armhole seam to armhole seam, about an inch below the armhole. That single number is directly comparable to ours — do not double it. Our chart is flat garment measurements throughout, so 20″ on your shirt means our M.\n\nThe step is fixed and known: 2″ per size above M. If your measurement lands between two sizes, the ±0.5″ tolerance gives some room either way. Take the smaller size for a closer fit through the chest and shoulders, the larger for more ease.\n\nThe cut is unisex, S to XL. There is no separate men's or women's grade, and we do not produce an XXL — so the chart above is the whole range, not a subset of it."}, {"h2": "What the construction is doing", "body": "Every Regular tee is 230 GSM combed, ring-spun cotton. Combing removes the shorter fibres before spinning, which is what gives the cloth its smooth, dense hand instead of a looser, hairier surface.\n\nFrom there the details are about longevity rather than decoration. The shoulders carry woven shoulder taping — not cotton tape — which stops the seam stretching out under the weight of the garment over time. Seams are double-stitched. The body is side-seamed, built from front and back panels joined at the sides rather than a single tube, which holds its shape far better through repeated washing.\n\nThe cotton is pre-shrunk before cutting, so the fit you measure is close to the fit you keep. And the collar label is printed rather than woven, because a woven label against the back of the neck is a common source of irritation and we would rather you forget it is there."}, {"h2": "Layering", "body": "A true-to-size cut is a layering cut. Because the Regular fit follows the measurements rather than adding hidden room, it sits cleanly under an overshirt or light knit without bulking the silhouette — a base layer that disappears rather than competing with what is over it.\n\nIt works alone too. At 230 GSM there is enough substance to stand on its own through the warmer months without clinging or showing every seam beneath an open shirt.\n\nAnd because the grading is fixed and published, building a wardrobe from a few pieces stays simple. Your size in one Sahra & Beyond Regular tee is your size in all of them, and in the polo, which is graded to the same specification."}],
     faqs: [{"q": "How do I choose my Regular size?", "a": "Use the chart. Measured flat, pit to pit, M is 20″, L is 22″ and XL is 24″, with the shoulder seam at your natural shoulder point. Measure a shirt you like and match the number. Tolerance is ±0.5″."}, {"q": "How do I measure myself for the right size?", "a": "Do not measure yourself — measure a shirt. Lay a t-shirt you already like flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to our chart. Our figures are flat garment measurements, so there is no doubling involved."}, {"q": "My measurement falls between two sizes.", "a": "There is a ±0.5″ tolerance on every measurement, so you have some latitude. Take the smaller size to sit closer to the body, the larger for more ease through the chest. The shoulder seam position does not change between sizes."}, {"q": "What does the fabric feel like?", "a": "Dense and smooth rather than thin. It is 230 GSM combed, ring-spun cotton — combing strips out the shorter fibres before spinning, which is what produces that hand. Enough weight to hold its shape through a day without feeling heavy."}, {"q": "Will it shrink?", "a": "The cotton is pre-shrunk before cutting, so you should not see meaningful shrinkage. A cool wash and air drying will keep both the fabric and the shape at their best."}, {"q": "What are delivery and returns?", "a": "UAE: free next-day delivery to all seven emirates for orders placed by 2 pm, no minimum order. GCC: 3–5 working days, free over AED 390. Worldwide: 7–14 working days. Returns and exchanges are accepted for 14 days, unworn with tags attached — free within the UAE; international customers cover return shipping."}] },
   { slug:'t-shirts/oversized', related: [["/national-day/", "UAE National Day t-shirts", "Eid Al Etihad, 2 December"], ["/gifts/", "Gifts from the UAE", "For leaving gifts and visitors"]], cat:'oversized-tees', emoji:'▯', catBg:'Camping',
     h1:'Oversized T-Shirts in Dubai & the UAE',
     title:'Oversized T-Shirts Dubai & UAE — Heavyweight Tees',
-    desc:'Oversized drop-shoulder tees in 230 GSM cotton, S–XL. AED 199, or any two for AED 359. Free next-day delivery in Dubai and across the UAE.',
+    desc:'Oversized drop-shoulder tees in 230 GSM cotton, S–XL, from AED 139. Any two Founding Edition tees AED 359. Free delivery in Dubai and across the UAE.',
+    newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' && p.fit === 'Oversized'),
     intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nCut unisex, S to XL. Take your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XL.\n\nIt wears the way streetwear does, with straight or wide trousers and clean trainers, and the 230gsm cotton is heavy enough that the drop shoulder holds its line instead of collapsing.",
     sections: [{"h2": "What a real drop shoulder is", "body": "There is a meaningful difference between an oversized cut and simply buying your usual size up, and it comes down to where the shoulder seam sits.\n\nIn the Regular fit that seam stays at your natural shoulder point at every size. Going up a size adds width through the chest, but the shoulder does not move — you get a roomier version of the same silhouette. A true drop shoulder is a different pattern, not a larger copy of the same one. On the Oversized fit the seam is set 2–3″ below the natural shoulder point, out over the arm.\n\nThat is what creates the shape. Not extra fabric hanging off a standard cut, but a garment drafted from the start to sit differently on the body. It is why sizing up in a Regular and taking the Oversized in your usual size produce genuinely different results, even at a similar chest measurement."}, {"h2": "Width, not length", "body": "At M the Oversized measures 23.5″ across the chest against 20″ for the Regular — 3.5″ more at the same letter, measured flat, pit to pit. That difference is doing the work people often credit to length. The Oversized tee is not dramatically longer; it is wider, and width combined with the dropped seam is what builds the silhouette.\n\nThe full range, flat: S is 22.5″, M is 23.5″, L is 25″ and XL is 26.5″. Note that the step differs from the Regular fit — 1.5″ per size above M here, against 2″ there — so the two charts are not interchangeable and the gap between the fits narrows slightly as the sizes go up. Tolerance is ±0.5″ on every measurement.\n\nThe effect is a garment that sits away from the chest and shoulders rather than skimming them, with the sleeve opening set further along the arm."}, {"h2": "Why a looser cut wears cooler", "body": "In UAE heat, how cloth sits against skin matters as much as the cloth itself. The extra width through the chest and shoulders means the 230 GSM cotton is not pulled taut against the body — there is room for air to move between fabric and skin instead of the shirt sitting flush.\n\nThis is a function of the cut, not of anything special about the fabric. It is the same combed, ring-spun cotton used across the Regular fit and the polo, simply draped more loosely because of the drop shoulder and the wider chest. A looser garment also moves more independently of the body as you do, which is part of why an oversized silhouette tends to feel less close over a long day outdoors.\n\nA practical reason to choose the cut, alongside the look of it."}, {"h2": "Choosing your size", "body": "Because this fit is built on width rather than length, sizing comes down to how much room you want through the chest and shoulders rather than how tall you are.\n\nMeasure an oversized piece you already like the fit of: lay it flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to ours — S 22.5″, M 23.5″, L 25″, XL 26.5″. These are flat garment measurements, so there is no doubling involved.\n\nDo not assume your Regular fit letter carries across. The Oversized is a different pattern with a different grading step, so it is worth checking the number rather than defaulting to habit. Between two sizes, the smaller gives a defined drop shoulder and the larger pushes the silhouette looser still. The range is S to XL, unisex; we do not produce an XXL."}],
     faqs: [{"q": "How do I choose a size in the Oversized fit?", "a": "Compare flat chest measurements rather than assuming your usual letter carries across — this is a different pattern from the Regular, not the same shirt made larger. Measured flat, pit to pit: S 22.5″, M 23.5″, L 25″, XL 26.5″."}, {"q": "What is the difference between this and sizing up in the Regular fit?", "a": "Sizing up in the Regular adds chest width but keeps the shoulder seam at your natural shoulder point — a roomier version of the same silhouette. The Oversized sets that seam 2–3″ below it, on a pattern drafted for a drop shoulder. At M it is also 3.5″ wider in the chest. The two are not interchangeable."}, {"q": "Do the two fits use the same size steps?", "a": "No. Above M the Regular fit steps 2″ per size and the Oversized steps 1.5″, so the difference between the fits narrows slightly at the larger end. Read whichever chart applies to the fit you are buying."}, {"q": "Is the fabric different from the Regular tee?", "a": "No. Both are 230 GSM combed, ring-spun cotton with the same double-stitched seams and woven shoulder taping. The difference is entirely in the pattern — a wider chest and a dropped shoulder seam."}, {"q": "Does it need different care?", "a": "No. The cotton is pre-shrunk before cutting, so shrinkage should be minimal. A cool wash and air drying keeps the shape and the fabric at their best."}, {"q": "What are delivery and returns?", "a": "Free next-day delivery UAE-wide for orders placed by 2 pm, no minimum order. GCC in 3–5 working days, free over AED 390; worldwide in 7–14. Returns accepted for 14 days, unworn with tags on — free within the UAE, return postage on international orders is on the customer."}] },
   { slug:'polos', related: [["/national-day/", "UAE National Day t-shirts", "Eid Al Etihad, 2 December"], ["/gifts/", "Gifts from the UAE", "For leaving gifts and visitors"]], cat:'polos', emoji:'✦', catBg:'Dunes',
-    h1:'Embroidered Polo Shirts in Dubai & the UAE',
-    title:'Embroidered Polo Shirts, Dubai — 240 GSM Cotton',
-    desc:'The Sahra Polo — 240gsm cotton, embroidered rather than printed. A limited first run. The scarcest piece in the first drop.',
-    intro:"One polo, made in a limited run. It is 240gsm rather than the 230 we use on the tees — ten grams that show up in how the collar stands after a season rather than curling.\n\nEmbroidered instead of printed, and deliberately quiet. A men's cut, S to XL, sized to the same specification as the Regular fit tees. Made in a smaller run than the tees, counted on its own.",
-    sections: [{"h2": "What piqué actually does", "body": "The Sahra Polo is 240 GSM piqué, not the 230 GSM jersey we use for the tees. Piqué is a knit structure rather than a heavier version of the same cloth — the fine waffle texture comes from the way the yarn interlocks, not from anything applied afterwards. That structure is what gives a polo its particular hand: more body than a jersey tee, a little give across the chest, and a surface that sits away from the skin rather than clinging to it.\n\nThe extra ten grams matter as well. At 240 GSM the fabric holds a collar shape rather than curling after a season. Underneath the knit the construction is the same as the tees — woven shoulder taping rather than cotton tape, double-stitched seams, side seams rather than a single tube of fabric, and cotton pre-shrunk before it reaches the cutting table."}, {"h2": "Embroidered, not printed", "body": "The logo on the chest is embroidered. Thread built into the cloth has texture you can feel and won't crack or peel the way a print can. On a garment worn as often as a polo, that is the whole argument: the mark is meant to keep reading cleanly long after the fabric has softened.\n\nThe back is left plain. Not every piece in the range is decorated the same way — two of the tees carry a DTG graphic across the back and an embroidered logo at the front, while the Empty Quarter tee and this polo are embroidered at the front and plain behind. The technique follows the design rather than a house rule.\n\nThe collar label is a separate decision. Labels across the whole range are printed, never woven, because a woven label sitting against the back of the neck irritates skin over a full day. On a collared piece that sits higher and closer, it matters more than anywhere else."}, {"h2": "How it fits", "body": "The polo is graded to the same specification as the Regular fit tees, so if you know your size in one you know it in the other. The shoulder seam sits at the natural shoulder point, and the polo has a set-in sleeve with no drop shoulder — the oversized chart does not apply to it.\n\nMeasured flat, pit to pit: S is 19″, M is 20″, L is 22″ and XL is 24″. Every measurement carries a tolerance of ±0.5″, and anything outside that is rejected at QC rather than shipped.\n\nIt is a men's cut, and the range runs S to XL only — we do not produce an XXL. Choose by the chest measurement rather than by the letter you usually reach for."}, {"h2": "Looking after it", "body": "A piqué knit rewards a little care, mostly for the embroidery rather than the cloth. Turn it inside out before washing: that protects the stitching at the chest and stops the piqué texture flattening against everything else in the drum. Beyond that, treat it as any combed cotton piece — a cool, gentle wash is kinder to both the colour and the knit than a hot one.\n\nBecause the cotton is pre-shrunk before cutting, it should not pull in on itself after the first wash the way untreated cotton does. The double-stitched seams and woven shoulder taping are there to hold shape over repeated washing, and a printed collar label is soft and has no tag to scratch.\n\nAir drying keeps it looking right for longest. The construction is built for ordinary use, though — this is a polo meant to be worn, not preserved."}],
-    faqs: [{"q": "How is the polo different from the t-shirts?", "a": "It is 240 GSM piqué rather than 230 GSM jersey. The difference is structure as much as weight: piqué has a textured surface and holds its shape, jersey is smoother and softer against the skin. Both start from the same combed, ring-spun cotton."}, {"q": "What size polo should I order?", "a": "The polo is graded to the same specification as the Regular fit tees, S to XL. Measured flat, pit to pit, M is 20″ and L is 22″. If you already own a Sahra & Beyond Regular tee, take the same size."}, {"q": "How do I measure to find my size?", "a": "Take a polo or t-shirt you already own and like the fit of, lay it flat, and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to ours — do not double it. Our figures are flat garment measurements, not body measurements."}, {"q": "I am between two sizes. Which should I take?", "a": "Every measurement carries a ±0.5″ tolerance, so there is a little room either way. Take the smaller size for a closer fit through the chest, the larger one if you prefer more ease. The shoulder seam sits at the natural shoulder point in both."}, {"q": "Is the logo embroidered or printed?", "a": "Embroidered. The collar label is the deliberate exception — that is printed, because a woven label against the back of the neck irritates skin."}, {"q": "How should I wash it?", "a": "Inside out, cool and gentle, to protect the embroidery and the piqué texture. The cotton is pre-shrunk before cutting, so you should not see meaningful shrinkage. Air drying keeps it at its best."}] }
+    h1:'Polo Shirts in Dubai & the UAE',
+    title:'Polo Shirts in Dubai & the UAE — Embroidered Piqué',
+    desc:'Two embroidered polos, designed in the UAE: The Sahra Polo in sand (240gsm piqué) and The Sahel Polo in black mercerised piqué. AED 229. Free UAE delivery.',
+    shopText: 'Shop the Sahra Polo',
+    newList: () => require('./preorder-page.js').pickNew(p => p.handle === 'the-sahel-polo'), newHeading: 'The Sahel Polo',
+    intro:"Two polos, both embroidered rather than printed, both in sizes S to XL, both AED 229.\n\nThe Sahra Polo, from the Founding Edition, is sand-coloured piqué at 240gsm rather than the 230 we use on the tees: ten grams that show up in how the collar stands after a season rather than curling. It is sized to the same specification as the Regular fit tees.\n\nThe Sahel Polo, from Sahel, the Coast Edition, is black mercerised piqué with antique-gold tipping on the collar and cuffs and our mark in antique-gold thread on the left chest. It is on pre-order from Wed 28 Oct and ships from Fri 30 Oct. There is no size chart for it yet, so message us before you order if you are unsure of your size.",
+    sections: [{"h2": "What piqué actually does", "body": "The Sahra Polo is 240 GSM piqué, not the 230 GSM jersey we use for the tees. Piqué is a knit structure rather than a heavier version of the same cloth — the fine waffle texture comes from the way the yarn interlocks, not from anything applied afterwards. That structure is what gives a polo its particular hand: more body than a jersey tee, a little give across the chest, and a surface that sits away from the skin rather than clinging to it.\n\nThe extra ten grams matter as well. At 240 GSM the fabric holds a collar shape rather than curling after a season. Underneath the knit the construction is the same as the tees — woven shoulder taping rather than cotton tape, double-stitched seams, side seams rather than a single tube of fabric, and cotton pre-shrunk before it reaches the cutting table."}, {"h2": "Embroidered, not printed", "body": "The logo on the chest is embroidered. Thread built into the cloth has texture you can feel and won't crack or peel the way a print can. On a garment worn as often as a polo, that is the whole argument: the mark is meant to keep reading cleanly long after the fabric has softened.\n\nThe back is left plain. Not every piece in the range is decorated the same way — two of the tees carry a DTG graphic across the back and an embroidered logo at the front, while the Empty Quarter tee and this polo are embroidered at the front and plain behind. The technique follows the design rather than a house rule.\n\nThe collar label is a separate decision. Labels across the whole range are printed, never woven, because a woven label sitting against the back of the neck irritates skin over a full day. On a collared piece that sits higher and closer, it matters more than anywhere else."}, {"h2": "How the Sahra Polo fits", "body": "The Sahra Polo is graded to the same specification as the Regular fit tees, so if you know your size in one you know it in the other. The shoulder seam sits at the natural shoulder point, and the polo has a set-in sleeve with no drop shoulder — the oversized chart does not apply to it.\n\nMeasured flat, pit to pit: S is 19″, M is 20″, L is 22″ and XL is 24″. Every measurement carries a tolerance of ±0.5″, and anything outside that is rejected at QC rather than shipped.\n\nIt is a men's cut, and the range runs S to XL only — we do not produce an XXL. Choose by the chest measurement rather than by the letter you usually reach for."}, {"h2": "Looking after it", "body": "A piqué knit rewards a little care, mostly for the embroidery rather than the cloth. Turn it inside out before washing: that protects the stitching at the chest and stops the piqué texture flattening against everything else in the drum. Beyond that, treat it as any combed cotton piece — a cool, gentle wash is kinder to both the colour and the knit than a hot one.\n\nBecause the cotton is pre-shrunk before cutting, it should not pull in on itself after the first wash the way untreated cotton does. The double-stitched seams and woven shoulder taping are there to hold shape over repeated washing, and a printed collar label is soft and has no tag to scratch.\n\nAir drying keeps it looking right for longest. The construction is built for ordinary use, though — this is a polo meant to be worn, not preserved."}],
+    faqs: [{"q": "How is the Sahra Polo different from the t-shirts?", "a": "It is 240 GSM piqué rather than 230 GSM jersey. The difference is structure as much as weight: piqué has a textured surface and holds its shape, jersey is smoother and softer against the skin. Both start from the same combed, ring-spun cotton."}, {"q": "What size Sahra Polo should I order?", "a": "The Sahra Polo is graded to the same specification as the Regular fit tees, S to XL. Measured flat, pit to pit, M is 20″ and L is 22″. If you already own a Sahra & Beyond Regular tee, take the same size."}, {"q": "How do I measure to find my size?", "a": "Take a polo or t-shirt you already own and like the fit of, lay it flat, and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to ours — do not double it. Our figures are flat garment measurements, not body measurements."}, {"q": "I am between two sizes. Which should I take?", "a": "Every measurement carries a ±0.5″ tolerance, so there is a little room either way. Take the smaller size for a closer fit through the chest, the larger one if you prefer more ease. The shoulder seam sits at the natural shoulder point in both."}, {"q": "Is the logo embroidered or printed?", "a": "Embroidered. The collar label is the deliberate exception — that is printed, because a woven label against the back of the neck irritates skin."}, {"q": "How should I wash it?", "a": "Inside out, cool and gentle, to protect the embroidery and the piqué texture. The cotton is pre-shrunk before cutting, so you should not see meaningful shrinkage. Air drying keeps it at its best."}, {"q": "What about The Sahel Polo?", "a": "The Sahel Polo is black mercerised piqué with antique-gold tipping on the collar and cuffs and our mark in antique-gold thread on the left chest, AED 229. It is on pre-order from Wed 28 Oct and ships from Fri 30 Oct. There is no size chart for it yet: message us before you order and we will help you choose."}] }
 ];
 
 
@@ -3239,7 +3266,8 @@ CATEGORIES.forEach(C => {
   const canonical = `${SITE}/${C.slug}/`;
   const jsonld = [
     { "@context":"https://schema.org","@type":"CollectionPage","name":C.h1,"description":C.desc,"url":canonical },
-    { "@context":"https://schema.org","@type":"ItemList","itemListElement": items.map((p,i)=>({ "@type":"ListItem","position":i+1,"name":p.name,"url":`${SITE}/products/${p.id}/` })) },
+    { "@context":"https://schema.org","@type":"ItemList","itemListElement": items.map((p,i)=>({ "@type":"ListItem","position":i+1,"name":p.name,"url":`${SITE}/products/${p.id}/` }))
+      .concat(C.newList ? C.newList().map((p, i) => ({ "@type": "ListItem", "position": items.length + i + 1, "name": p.plain, "url": `${SITE}/products/${p.handle}/` })) : []) },
     { "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
       { "@type":"ListItem","position":1,"name":"Home","item":SITE+"/" },
       { "@type":"ListItem","position":2,"name":"T-Shirts","item":SITE+"/t-shirts/" },
@@ -3256,7 +3284,8 @@ CATEGORIES.forEach(C => {
   </section>
   <main>
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${C.h1}</span></div>${catCards(items)}
-      <a class="btn shoplink" href="${shopHref}">${C.pick ? 'Shop every t-shirt' : 'Shop ' + esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+      <a class="btn shoplink" href="${shopHref}">${C.shopText ? esc(C.shopText) : C.pick ? 'Shop every t-shirt' : 'Shop ' + esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
+    ${C.newList ? require('./preorder-page.js').newBlock({ list: C.newList(), heading: C.newHeading || ('Sahel, the Coast Edition: ' + (C.cat === 'oversized-tees' ? 'Oversized' : 'Regular') + ' fit'), lede: require('./preorder-page.js').newLede() }) : ''}
     <div class="content">${paras(C.intro)}</div>
     ${RV.homepageBand({ compact: true })}
     ${foldsBlock(C.sections, 'Fabric, cut and make')}
@@ -3281,7 +3310,8 @@ COMMERCE.forEach(P => {
   const canonical = `${SITE}/${P.slug}/`;
   const jsonld = [
     { "@context": "https://schema.org", "@type": "WebPage", "name": P.h1, "description": P.desc, "url": canonical },
-    ...(Array.isArray(P.items) ? [{ "@context": "https://schema.org", "@type": "ItemList", "name": P.h1, "itemListElement": P.items.map((id, i) => { const pr = PRODUCTS_ALL.find(x => x.id === id); return pr ? { "@type": "ListItem", "position": i + 1, "name": pr.name, "url": `${SITE}/products/${id}/` } : null; }).filter(Boolean) }] : []),
+    ...(Array.isArray(P.items) ? [{ "@context": "https://schema.org", "@type": "ItemList", "name": P.h1, "itemListElement": P.items.map((id, i) => { const pr = PRODUCTS_ALL.find(x => x.id === id); return pr ? { "@type": "ListItem", "position": i + 1, "name": pr.name, "url": `${SITE}/products/${id}/` } : null; }).filter(Boolean)
+      .concat(P.newList ? P.newList().map((p, i) => ({ "@type": "ListItem", "position": P.items.length + i + 1, "name": p.plain, "url": `${SITE}/products/${p.handle}/` })) : []) }] : []),
     { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
       { "@type": "ListItem", "position": 2, "name": P.h1, "item": canonical }
@@ -3311,10 +3341,12 @@ COMMERCE.forEach(P => {
     ${P.slug === 't-shirts' ? placeRow() : ''}
     ${P.catNav || Array.isArray(P.items) ? '' : `<div class="content">${paras(P.intro)}</div>`}
     ${/* 12 Oct 2026 (SEO and UX pass): on /t-shirts/ the five fit and theme tiles sat above the grid, so the first price was at 1,240 px on a phone. The grid now comes first. */''}${collectionBlock(null, P.slug === 't-shirts')}
+    ${P.newList ? require('./preorder-page.js').newBlock({ list: P.newList(), heading: P.newHeading || 'Sahel, the Coast Edition: four new tees', lede: require('./preorder-page.js').newLede(), fitsLabel: !!P.newFits }) : ''}
     ${P.catNav ? `<nav class="catnav" aria-label="Shop by category">
       <a href="/t-shirts/regular/"><b>Regular fit</b><span>Straight cut, set shoulder</span></a>
       <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
-      <a href="/polos/"><b>Polo</b><span>240gsm, embroidered &middot; limited run</span></a>
+      <a href="/polos/"><b>Polos</b><span>The Sahra Polo &middot; The Sahel Polo</span></a>
+      <a href="/hoodies/"><b>Hoodies</b><span>Two from Sahel, the Coast Edition</span></a>
       <a href="/mountain-t-shirts/"><b>Mountain t-shirts</b><span>The Hajar range, printed</span></a>
       <a href="/desert-t-shirts/"><b>Desert t-shirts</b><span>Liwa dunes &middot; Al Quaa night sky</span></a>
     </nav>` : ''}
@@ -3376,32 +3408,32 @@ COMMERCE.forEach(P => {
   console.log('  ✓ Instagram: ' + posts.length + ' post(s) with covers; strip ' + IG.strip().length + ', footer ' + IG.footerRow().length + (posts.length ? ', /feed/' : ''));
 })();
 
-/* ---------- /hoodies/ (DRAFT, 1 Oct 2026; SEO handover item 19) -------------
-   Collection page for the two Sahel hoodies (named 5 Oct 2026; the Salute one renamed the Barr & Bahr Hoodie on 14 Oct:
-   the Ras Al Khor Hoodie in Estate Blue), built to report 02 section 6.1. It is a
-   DRAFT: written to _drafts/hoodies/ locally only (never on Vercel, never in the
-   sitemap) until Faheem confirms the fabric weight and the products exist in
-   Shopify. Every fact here is from MASTER_BRIEF decisions; unsettled ones are
-   visible TODO boxes in the draft. To publish: set HOODIES.draft = false. */
-const HOODIES = {
-  draft: true,
-  slug: 'hoodies',
-  title: 'Hoodies in Dubai & UAE — Embroidered Coastline | Sahra & Beyond',
-  desc: 'The Barr & Bahr Hoodie and the Ras Al Khor Hoodie: 400 GSM brushed-back cotton fleece, a relaxed drop-shoulder cut and the UAE coastline embroidered on the back.',
-  h1: 'Hoodies in Dubai & the UAE',
-  todo: [
-    'TODO for Faheem: product photos (not mockups) and the Shopify product URLs, so the grid and ItemList schema can go in.',
-    'TODO for Faheem: launch date. Not final; 29 Oct is the likely on-sale date (Faheem, 1 Oct). Confirm the date, and whether the page goes up earlier as a waitlist.'
-  ]
-};
-if (!process.env.VERCEL) {
-  const H = HOODIES, canonical = `${SITE}/${H.slug}/`;
-  const todoBox = t => `<div style="border:2px dashed #C0392B;background:#FFF4F2;color:#7A1F14;border-radius:10px;padding:10px 14px;margin:12px 0;font-size:14px"><b>DRAFT TODO:</b> ${esc(t)}</div>`;
+/* ---------- /hoodies/ (live 23 Oct 2026; SEO handover item 19) --------------
+   Faheem, 23 Oct 2026 (site review): "Publish, no GSM". The page states no fabric weight.
+   Facts from MASTER_BRIEF (17 Sep 2026 hoodie spec and Decision Log): relaxed oversized
+   drop-shoulder pullover, hip length, no drawcord, the mark embroidered centre chest, the
+   UAE coastline embroidered across the back in sand thread, a printed lower-back scene,
+   printed neck label. Sizes are not measured yet, so no size chart: "message us". The grid
+   and the pre-order wording come from preorder-page.js, so they follow the same stages. */
+(function buildHoodies() {
+  const PO = require('./preorder-page.js');
+  const list = PO.pickNew(p => /hoodie/.test(p.handle));
+  const canonical = `${SITE}/hoodies/`;
+  const H = { h1: 'Hoodies in Dubai & the UAE',
+    title: 'Hoodies in Dubai & UAE: Embroidered Coastline | Sahra & Beyond',
+    desc: 'The Barr & Bahr Hoodie and the Ras Al Khor Hoodie from Sahel, the Coast Edition: the UAE coastline embroidered across the back. AED 229, designed in the UAE.' };
+  const faqs = [
+    ['How much are the hoodies?', 'Both are AED 229, in sizes S to XL. Delivery is free across the UAE.'],
+    ['When do they ship?', 'The hoodies are on pre-order from Wed 28 Oct at 8 AM, UAE time, and pre-orders ship from Fri 30 Oct. You can cancel free of charge any time before your order ships.'],
+    ['What size should I take?', 'There is no size chart for the hoodies yet. Message us on WhatsApp before you order and we will help you choose. Size exchanges within the UAE are free within 14 days of delivery, subject to stock.']
+  ];
   const jsonld = [
     { "@context": "https://schema.org", "@type": "CollectionPage", "name": H.h1, "description": H.desc, "url": canonical },
+    { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": list.map((p, i) => ({ "@type": "ListItem", "position": i + 1, "name": p.plain, "url": `${SITE}/products/${p.handle}/` })) },
     { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
-      { "@type": "ListItem", "position": 2, "name": H.h1, "item": canonical } ] }
+      { "@type": "ListItem", "position": 2, "name": H.h1, "item": canonical } ] },
+    { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } })) }
   ];
   const body = `
   <section class="loc-hero" style="--hero-grad:${CAT_BG.Coast}">
@@ -3412,17 +3444,17 @@ if (!process.env.VERCEL) {
     </div>
   </section>
   <main>
-    ${H.todo.map(todoBox).join('')}
-    <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE: 400 GSM brushed-back fleece in 100% cotton, in a relaxed oversized cut with a dropped shoulder, the UAE coastline embroidered across the back in sand thread, and a printed scene on the lower back. There are two: the Barr &amp; Bahr Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each in S to XL, at AED 229. Delivery is free and next-day across the UAE, with free 14-day exchanges. See the <a href="/size-guide/">size guide</a> and <a href="/fabric/">how we choose our fabrics</a>.</p></div>
-    ${todoBox('Product grid goes here once the Barr & Bahr Hoodie and the Ras Al Khor Hoodie exist in Shopify as two products (CollectionPage + ItemList schema then).')}
-    <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed oversized pullover with a dropped shoulder and a hip-length body, sized S to XL. The neck label reads the size and the fit, for example "M – OVERSIZED", and is printed rather than sewn in, so there is no tag to scratch.</p></div></section>
-    <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the UAE coastline, embroidered in sand thread, with &quot;ساحل · SAHEL&quot;. The Sahra mark is embroidered at the centre of the chest. On the lower back, each hoodie carries its own printed scene. The Barr &amp; Bahr Hoodie carries the crossing between the two: contour-line dunes running down into a stream and a wave (in the Gulf, barr is the open land and bahr is the sea). The Ras Al Khor Hoodie has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>.</p></div></section>
-    <section class="guide-sec"><h2>For cold desert and mountain nights</h2><div class="content"><p>Winter nights in the desert and up in the mountains get properly cold: Jebel Jais has recorded temperatures below freezing. If you are camping this season, our <a href="/camping/">camping guide</a> covers the rules by emirate, and the <a href="/stargazing/">stargazing guide</a> the darkest nights; the <a href="/locations/jebel-jais/">Jebel Jais guide</a> has the month-by-month temperatures.</p></div></section>
-    <section class="guide-sec"><h2>Care</h2><div class="content"><p>Wash cold and inside out, no bleach. Tumble dry low, and iron inside out.</p></div></section>
+    ${PO.newBlock({ list, heading: 'Two hoodies from Sahel, the Coast Edition', kicker: 'Sahel &middot; The Coast Edition', lede: PO.newLede(), more: '/new/#sahel', moreText: 'See all of Sahel' })}
+    <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE. There are two: the Barr &amp; Bahr Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each AED 229 in sizes S to XL. Both carry the UAE coastline embroidered across the back in sand thread, and each has its own scene printed on the lower back.</p></div>
+    <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed, oversized pullover with a dropped shoulder and a hip-length body. There is no drawcord and no hardware anywhere on it, so nothing crosses the mark embroidered at the centre of the chest. The neck label is printed rather than sewn in, so there is no tag to scratch.</p><p>There is no size chart for the hoodies yet. If you are unsure of your size, <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about the Sahel hoodies before I order.')}" target="_blank" rel="noopener">message us before you order</a>.</p></div></section>
+    <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the whole UAE coastline in a single line of sand thread, with Sahel written beneath it in Arabic and English. On the lower back, each hoodie carries its own printed scene. The <a href="/products/barr-and-bahr-hoodie/">Barr &amp; Bahr Hoodie</a> carries the crossing between land and sea: contour-line dunes running down into a stream and a wave (in the Gulf, barr is the open land and bahr is the sea). The <a href="/products/ras-al-khor-hoodie/">Ras Al Khor Hoodie</a> has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>, the wetland where Dubai Creek ends.</p></div></section>
+    <section class="guide-sec"><h2>For cool desert and mountain nights</h2><div class="content"><p>Winter nights in the desert and up in the mountains get properly cold: Jebel Jais has recorded temperatures below freezing. If you are camping this season, our <a href="/camping/">camping guide</a> covers the rules by emirate, and the <a href="/stargazing/">stargazing guide</a> the darkest nights; the <a href="/locations/jebel-jais/">Jebel Jais guide</a> has the month-by-month temperatures.</p></div></section>
+    <section class="faq"><h2>Frequently asked questions</h2>${faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>
     ${newsletterBlock()}
+    <p class="back"><a href="/new/">Everything new: Sahel and Sahra Trail &rarr;</a></p>
   </main>`;
-  write(`_drafts/hoodies/index.html`, shell({ title: H.title, desc: H.desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page', noindex: true }));
-}
+  write('hoodies/index.html', shell({ title: H.title, desc: H.desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page', image: `${SITE}/assets/preorder/og/barr-back-og.jpg` }));
+})();
 
 const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, arCorePublic: AR_CORE_PUBLIC, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });
 console.log('  \u2713 ' + PRODUCT_URLS.length + ' product pages');
@@ -3622,6 +3654,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])
   .concat(['', ...require('./trail-hikes.js').ORDER.concat(require('./trail-hikes.js').EXTRA).map(x => x + '/')].map(x => ({ u: `${SITE}/trail/hikes/${x}`, m: buildDate, p: '0.7' })))   /* Sahra Trail hikes for the QR cards (6 Oct 2026) */
   .concat([{ u: `${SITE}/sahel/`, m: buildDate, p: '0.8' }])   /* Sahel teaser page (6 Oct 2026) */
+  .concat([{ u: `${SITE}/hoodies/`, m: buildDate, p: '0.9' }])   /* /hoodies/ live from 23 Oct 2026 */
   .concat([`${SITE}/new/`].concat(require('./preorder-page.js').urls(SITE)).map(u => ({ u, m: buildDate, p: '0.9' })))   /* Sahel and Sahra Trail pages: in the sitemap from 23 Oct (Faheem: live before pre-order opens) */
   .concat(fs.existsSync(path.join(ROOT, 'feed', 'index.html')) ? [{ u: `${SITE}/feed/`, m: buildDate, p: '0.5' }] : [])   /* every Instagram post with where it lives on the site (4 Oct 2026); /q/ pages are noindex */
   /* SEO handover item 11: the three live Arabic pages join the sitemap only once Faheem confirms
@@ -4095,7 +4128,7 @@ const AR_PDP_NOINDEX = true;
         <button type="button" class="arp-now" id="arpNow">${esc(S.buyNow)}</button>
         <p class="arp-msg" id="arpMsg" role="status" aria-live="polite"></p>
         <p class="arp-reassure">${esc(S.reassure)} <a href="/policies.html#returns" hreflang="en">${esc(S.fullPolicy)}</a></p>
-        <p class="arp-trust"><span>${esc(S.trustReturns)}</span><span>${esc(S.trustDesigned)}</span><span>${esc(S.limited)}</span></p>
+        <p class="arp-trust"><span>${esc(S.trustReturns)}</span><span>${esc(S.trustDesigned)}</span></p>
       </div>
     </div>
   </section>
@@ -4221,7 +4254,7 @@ const AR_PDP_NOINDEX = true;
       title: 'Sahra Trail: Running Tee & 2-in-1 Shorts, Designed in the UAE',
       desc: 'Sahra Trail from Sahra & Beyond: the Trail Tee (AED 139), the 2-in-1 Shorts (AED 169) and the Kit (AED 249), designed in the UAE for its wadis and ridges.',
       eyebrow: 'A new line from Sahra &amp; Beyond',
-      kicker: 'Running &amp; trail kit &middot; first run, this season',
+      kicker: 'Running &amp; trail kit &middot; designed in the UAE',
       h1: 'Choose the climb.',   /* the Sahra Trail tagline (Faheem, 6 Oct 2026): exactly this, with the full stop */
       cta: 'Join the list',
       scroll: 'Scroll to climb',
@@ -4230,19 +4263,19 @@ const AR_PDP_NOINDEX = true;
         ['01', 'Night', 'Headlamps on', 'On UAE trails the day starts in the dark, ahead of the heat. The Two Ridges mark on the back is reflective, so it catches the light behind you.'],
         ['02', 'Climb', 'Wadi floor to ridge', 'Switchbacks, loose rock and the long pull out of the valley. Sahra Trail is for the <a href="/hiking/">trails</a>, <a href="/wadis/">wadis</a> and ridges of the UAE, from <a href="/locations/wadi-naqab/">Wadi Naqab</a> to <a href="/locations/jebel-jais/">Jebel Jais</a>.'],
         ['03', 'Run', 'Then you run it', 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE.'],
-        ['04', 'Dawn', 'First light on the ridge', 'The first run arrives this season: two pieces to start.']
+        ['04', 'Dawn', 'First light on the ridge', 'Two pieces to start, and the Kit that pairs them.']
       ],
-      firstH: 'The first run', firstSub: 'Two pieces and the Kit.',
+      firstH: 'The pieces', firstSub: 'Two pieces and the Kit.',
       /* 8 Oct 2026 (Faheem): the reveal is public with prices, so the page shows them. Held on the site until confirmed:
          the fabric line and "Lines from the seabed off Khor Fakkan" (both in the Reel). The site loop is cut without them. */
       rv: {
         tee: { name: 'Sahra Trail Tee', price: 'AED 139', line: 'Ocean-inspired print.', feats: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'], alt: 'Sahra Trail Tee in teal with the ocean-inspired print, front and back' },
-        short: { name: 'Sahra Trail 2-in-1 Shorts', price: 'AED 169', line: 'Wave-inspired graphic.', feats: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'], alt: 'Sahra Trail 2-in-1 Shorts in charcoal with the wave-inspired graphic, front and back' },
+        short: { name: 'Sahra Trail 2-in-1 Short', price: 'AED 169', line: 'Wave-inspired graphic.', feats: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'], alt: 'Sahra Trail 2-in-1 Shorts in charcoal with the wave-inspired graphic, front and back' },
         kit: { name: 'The Kit', price: 'AED 249', line: 'The Tee and the 2-in-1 Shorts together.', save: 'Save AED 59', alt: 'The Sahra Trail Kit: the Tee and the 2-in-1 Shorts' },
         renders: 'Pre-production renders', mock: 'Mock-up', film: 'The reveal', filmAlt: 'Sahra Trail reveal film, muted: the Tee and the 2-in-1 Shorts and their details', pause: 'Pause film', play: 'Play film',
         cta: 'Join the list', ctaSub: 'We tell you about each release the evening before it opens.'
       },
-      tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Shorts', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
+      tee: 'Sahra Trail Tee', short: 'Sahra Trail 2-in-1 Short', reveal: 'Revealed at launch', teeNote: 'Reflective Two Ridges mark under the collar', shortNote: 'Reflective Two Ridges mark on the left leg', flashHint: 'Tap to flash',
       /* 22 Oct 2026 (Faheem): the 24-hour head start is withdrawn. The list is told the evening before each release opens, nothing more. */
       joinH: 'Join the list.', joinP: 'We tell you about each release the evening before it opens. Add your sizes if you know them.',
       ph: 'you@email.com', btn: 'Join the list', fine: 'Sizes help us plan the run. You will also hear about new places and drops now and then. Unsubscribe any time.',
@@ -4499,8 +4532,8 @@ ${require('./preorder-page.js').stageHead()}
           <button type="button" class="tr-film-btn" data-play="${t.rv.play}" data-pause="${t.rv.pause}" aria-controls="${id}film">${t.rv.play}</button>
           <figcaption>${t.rv.film} &middot; ${t.rv.renders}</figcaption></figure>
         <div class="tr-cards">
-          ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${r.price}</p></div><p class="tr-line">${r.line}</p><ul>${r.feats.map(f => `<li>${f}</li>`).join('')}</ul>${lang === 'ar' ? '' : `<a class="tr-btn tr-btn-sm" href="/products/sahra-trail-${k === 'tee' ? 'tee' : '2-in-1-short'}/">` + PO.inc('st0', '<span class="st0">See the piece</span>') + PO.inc('st1', '<span class="st1">Pre-order</span>') + `<span class="st2">Shop</span> <span aria-hidden="true">&rarr;</span></a>`}</article>`; }).join('')}
-          <article class="tr-card tr-kit"><img src="/assets/trail/reveal/trail-kit-720.webp" srcset="/assets/trail/reveal/trail-kit-720.webp 720w, /assets/trail/reveal/trail-kit.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${t.rv.kit.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${t.rv.kit.name}</h3><p class="tr-price">${t.rv.kit.price}</p></div><p class="tr-line">${t.rv.kit.line} <b>${t.rv.kit.save}</b></p>
+          ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${lang === 'ar' ? r.price : PO.cardPrice(+String(r.price).replace(/[^0-9]/g, ''), 'span')}</p></div><p class="tr-line">${r.line}</p><ul>${r.feats.map(f => `<li>${f}</li>`).join('')}</ul>${lang === 'ar' ? '' : `<a class="tr-btn tr-btn-sm" href="/products/sahra-trail-${k === 'tee' ? 'tee' : '2-in-1-short'}/">` + PO.inc('st0', '<span class="st0">See the piece</span>') + PO.inc('st1', '<span class="st1">Pre-order</span>') + `<span class="st2">Shop</span> <span aria-hidden="true">&rarr;</span></a>`}</article>`; }).join('')}
+          <article class="tr-card tr-kit"><img src="/assets/trail/reveal/trail-kit-720.webp" srcset="/assets/trail/reveal/trail-kit-720.webp 720w, /assets/trail/reveal/trail-kit.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${t.rv.kit.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${t.rv.kit.name}</h3><p class="tr-price">${lang === 'ar' ? t.rv.kit.price : PO.cardPrice(+String(t.rv.kit.price).replace(/[^0-9]/g, ''), 'span')}</p></div><p class="tr-line">${t.rv.kit.line} <b>${t.rv.kit.save}</b></p>
             ${lang === 'ar' ? `<a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a>${t.rv.ctaSub ? `<p class="tr-cta-sub">${t.rv.ctaSub}</p>` : ''}` : PO.inc('st0', `<span class="st0"><a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a>${t.rv.ctaSub ? `<p class="tr-cta-sub">${t.rv.ctaSub}</p>` : ''}</span>`) + `<span class="st12"><a class="tr-btn tr-btn-sm" href="/products/sahra-trail-kit/">` + PO.inc('st1', '<span class="st1">Pre-order the kit</span>') + `<span class="st2">Shop the kit</span> <span aria-hidden="true">&rarr;</span></a></span>` + PO.inc('st0', '<p class="st0" style="margin-top:10px"><a class="tr-btn tr-btn-sm" href="/products/sahra-trail-kit/">See the kit <span aria-hidden="true">&rarr;</span></a></p>')}</article>
           <p class="tr-renders">${t.rv.renders}</p>
         </div>
