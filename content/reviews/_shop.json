@@ -1,9 +1,26 @@
 {
  "handle": "_shop",
- "count": 5,
+ "count": 6,
  "average": 5,
- "syncedAt": "2026-10-22",
+ "syncedAt": "2026-10-24",
  "reviews": [
+  {
+   "id": 1394138380,
+   "rating": 5,
+   "title": "",
+   "body": "Absolutely loved the black tee from Sahra & Beyond! The color is rich, the quality is amazing, and the cut is so flattering. Definitely a wardrobe staple!",
+   "name": "Sidrah Qureshi",
+   "date": "2026-10-24",
+   "verified": false,
+   "photos": [
+    "https://review-images.judgeme.com/sahra-beyond/1792862756__1792862749314-img_7031__original.jpeg?quality=80&width=1024"
+   ],
+   "handle": "judgeme-shop-reviews",
+   "externalId": 0,
+   "productTitle": "Judge.me Shop Reviews",
+   "reply": "",
+   "fit": null
+  },
   {
    "id": 1355832015,
    "rating": 5,
