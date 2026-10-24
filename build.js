@@ -4377,6 +4377,12 @@ const AR_PDP_NOINDEX = true;
         ['04', 'Dawn', 'First light on the ridge', 'Two pieces to start, and the Kit that pairs them.']
       ],
       firstH: 'The pieces', firstSub: 'Two pieces and the Kit.',
+      /* 24 Oct 2026 (buy-intent SEO follow-up): say what the pieces are in the words people search,
+         with no performance claims (MASTER_BRIEF Trail rule). English only: no new Arabic. */
+      about: { h: 'A running tee and <span style="white-space:nowrap">2-in-1</span> running shorts for UAE trails', p: [
+        'Sahra Trail is trail running and hiking wear designed in the UAE: the <a href="/products/sahra-trail-tee/">Sahra Trail Tee</a>, the <a href="/products/sahra-trail-2-in-1-short/">2-in-1 running shorts</a> and <a href="/products/sahra-trail-kit/">the Kit</a> that pairs them. It is made for the Hajar Mountains, the wadis of Ras Al Khaimah and Fujairah, and early runs in Dubai and Abu Dhabi before the heat.',
+        'The 2-in-1 running shorts have a hidden inner liner with a bonded phone pocket, a zip pocket for keys and cards, and an internal drawcord. The running tee has raglan sleeves, mesh side panels and covered seams. Both carry the reflective Two Ridges symbol, and both are cut for men, in sizes S to XL. Add <a href="/products/trailhead-bag/">the Trailhead Bag</a>, a canvas drawstring bag, to carry the rest. Delivery is free across the UAE. <a href="/activewear/">All activewear &rarr;</a>'
+      ] },
       /* 8 Oct 2026 (Faheem): the reveal is public with prices, so the page shows them. Held on the site until confirmed:
          the fabric line and "Lines from the seabed off Khor Fakkan" (both in the Reel). The site loop is cut without them. */
       rv: {
@@ -4527,6 +4533,11 @@ html body main.tr .tr-hero .tr-tagline{font-family:'Jost','Space Mono',system-ui
 .tr-rv{opacity:0;transform:translateY(34px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
 .tr-rv.in{opacity:1;transform:none}
 .tr-first{padding:18vh 20px 10vh;text-align:center}
+.tr-about{padding:6vh 20px 4vh}
+.tr-about>div{max-width:720px;margin:0 auto;padding:clamp(22px,3vw,34px);border-radius:18px;background:rgba(10,16,22,.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(217,195,165,.18)}
+.tr-about h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;color:#F4ECDF;margin:0 0 16px;text-wrap:balance}
+.tr-about p{font-size:17px;line-height:1.65;color:#E6D8C3;margin:0 0 14px}
+.tr-about a{color:#D9C3A5;text-underline-offset:3px}
 .tr-first h2,.tr-join h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(36px,5vw,64px);margin:0 0 8px;color:#1b1410}
 .tr-first>div>p,.tr-join p{color:#2a2016;font-size:17px}
 .tr-pieces{display:grid;grid-template-columns:repeat(2,minmax(0,340px));gap:28px;justify-content:center;margin-top:36px}
@@ -4651,6 +4662,7 @@ ${require('./preorder-page.js').stageHead()}
       </div>
     </div>
   </section>
+  ${t.about ? `<section class="tr-about" aria-labelledby="${id}about"><div class="tr-rv"><h2 id="${id}about">${t.about.h}</h2>${t.about.p.map(x => `<p>${x}</p>`).join('')}</div></section>` : ''}
   <section class="tr-join" id="first-access" aria-labelledby="${id}join">
     <div class="tr-rv" data-waitlist-wrap>
       <h2 id="${id}join">${t.joinH}</h2>

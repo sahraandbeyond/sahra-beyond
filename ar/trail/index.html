@@ -1572,6 +1572,11 @@ html body main.tr .tr-hero .tr-tagline{font-family:'Jost','Space Mono',system-ui
 .tr-rv{opacity:0;transform:translateY(34px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
 .tr-rv.in{opacity:1;transform:none}
 .tr-first{padding:18vh 20px 10vh;text-align:center}
+.tr-about{padding:6vh 20px 4vh}
+.tr-about>div{max-width:720px;margin:0 auto;padding:clamp(22px,3vw,34px);border-radius:18px;background:rgba(10,16,22,.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(217,195,165,.18)}
+.tr-about h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.1;color:#F4ECDF;margin:0 0 16px;text-wrap:balance}
+.tr-about p{font-size:17px;line-height:1.65;color:#E6D8C3;margin:0 0 14px}
+.tr-about a{color:#D9C3A5;text-underline-offset:3px}
 .tr-first h2,.tr-join h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(36px,5vw,64px);margin:0 0 8px;color:#1b1410}
 .tr-first>div>p,.tr-join p{color:#2a2016;font-size:17px}
 .tr-pieces{display:grid;grid-template-columns:repeat(2,minmax(0,340px));gap:28px;justify-content:center;margin-top:36px}
@@ -1747,6 +1752,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       </div>
     </div>
   </section>
+  
   <section class="tr-join" id="first-access" aria-labelledby="trajoin">
     <div class="tr-rv" data-waitlist-wrap>
       <h2 id="trajoin">انضم إلى القائمة</h2>
