@@ -371,6 +371,7 @@ const NB_CSS = `<style>
 .nb-c{display:block;text-decoration:none;color:#2A2016}
 .nb-f{display:block;position:relative;margin:0;background:#ECE4D6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
 .nb-f img{width:100%;height:100%;object-fit:cover;display:block}
+.nb-f .cut-b,.pcard-img .cut-b{position:absolute;left:8px;bottom:8px;z-index:2;font:600 10.5px/1 Jost,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:5px 8px;border-radius:999px;background:rgba(42,32,22,.82);color:#FAF6EF;pointer-events:none}
 .nb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .nb-c b{display:block;font:500 16px/1.35 Jost,system-ui,sans-serif;margin:8px 0 2px}
 .nb-c small{display:block;font:13px/1.45 Jost,system-ui,sans-serif;color:#5C4E3C}
@@ -379,9 +380,18 @@ const NB_CSS = `<style>
 .nb-a{display:inline-block;margin:16px 0 0;font:600 15px Jost,system-ui,sans-serif;color:#7E4114}
 @media(max-width:700px){.nb{padding:26px 16px 6px}.nb-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 </style>`;
+/* 24 Oct 2026 (Faheem, after the navigation panel): who each piece is cut for. Tees and the Sahel hoodies
+   are unisex; the Sahel Polo and the Sahra Trail pieces are men's; the bags are one size. Drives the card
+   badge and the /men/ and /women/ pages. */
+function cut(p) {
+  if (p.oneSize) return 'One size';
+  if (p.line === 'trail' || /polo/i.test(p.kind || '')) return 'Men\u2019s cut';
+  return 'Unisex';
+}
+const forWomen = p => cut(p) !== 'Men\u2019s cut';
 function newCard(p, fitsLabel) {
   const im = p.images[0];
-  const fig = im ? `<span class="nb-f"><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="${esc(im.alt)}${im.mock ? ', studio mock-up' : ''}" loading="lazy" decoding="async">${im.mock ? '<i>Mock-up</i>' : ''}</span>` : '';
+  const fig = im ? `<span class="nb-f"><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="${esc(im.alt)}${im.mock ? ', studio mock-up' : ''}" loading="lazy" decoding="async">${im.mock ? '<i>Mock-up</i>' : ''}<em class="cut-b">${cut(p)}</em></span>` : '';
   const sub = fitsLabel && p.fit ? `${p.kind} &middot; Regular or Oversized` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
   const href = `/products/${p.handle}/`;
   if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', true)}</small>`
@@ -531,6 +541,8 @@ module.exports.pieceFor = pieceFor;
 module.exports.pieceBlock = pieceBlock;
 module.exports.newBlock = newBlock;
 module.exports.newLede = newLede;
+module.exports.cut = cut;
+module.exports.forWomen = forWomen;
 module.exports.IN_HAND = IN_HAND;
 module.exports.cardPrice = cardPrice;
 module.exports.money = money;

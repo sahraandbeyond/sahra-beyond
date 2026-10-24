@@ -23,6 +23,8 @@ const GUIDES = [
 ];
 const SHOP_LINKS = [
   /* 23 Oct 2026 (site review): the new pages and the buying categories */
+  ['/men/', 'Men'],
+  ['/women/', 'Women'],
   ['/new/', 'New: Sahel and Sahra Trail'],
   ['/t-shirts/', 'T-shirts'],
   ['/t-shirts/oversized/', 'Oversized t-shirts'],
@@ -32,6 +34,7 @@ const SHOP_LINKS = [
   ['/accessories/', 'Accessories'],
   ['/national-day/', 'National Day t-shirts'],
   ['/gifts/', 'Gift ideas'],
+  ['/under-150/', 'Under AED 150'],
   ['/trail/', 'Sahra Trail'],
   ['/sahel/', 'Sahel: The Coast Edition'],
   ['/tote/', 'Canvas tote'],

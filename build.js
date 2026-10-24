@@ -1045,6 +1045,7 @@ main,.ftr{position:relative;z-index:1}
 .pcard-t:hover{color:var(--clay,#9C521B)}
 .pcard-place{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#6B6256}
 .pcard-spec{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.pcard-img .cut-b{position:absolute;left:8px;bottom:8px;z-index:2;font:600 10.5px/1 Jost,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:5px 8px;border-radius:999px;background:rgba(42,32,22,.82);color:#FAF6EF;pointer-events:none}
 .pcard-spec span{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;
   border:1px solid var(--line,rgba(43,37,32,.14));border-radius:999px;padding:3px 8px;opacity:1}
 .pcard-col{display:flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;opacity:1}
@@ -3246,6 +3247,7 @@ function productCard(p) {
         <a class="pcard-imglink" href="/products/${p.id}/" tabindex="-1" data-cycle>
           ${cycleImgs(p)}
         </a>
+        <em class="cut-b">${p.garment === 'polo' ? 'Men&rsquo;s cut' : 'Unisex'}</em>
         <button type="button" class="pcard-zoom" data-zoom="${esc(p.imgMain)}" aria-label="Zoom ${esc(p.name)}"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </span>
       <span class="pcard-b">
@@ -3499,7 +3501,7 @@ COMMERCE.forEach(P => {
   };
   /* Accessories: the Sahra Tote (its own page, /tote/) and the Trailhead Bag */
   const bag = PO.pickNew(p => p.handle === 'trailhead-bag');
-  const toteCard = `<a class="nb-c" href="/tote/"><span class="nb-f"><img src="/shirts/card/tote-model.webp" width="720" height="900" alt="The Sahra Tote in natural canvas, carried over the shoulder" loading="lazy" decoding="async"></span><b>The Sahra Tote</b><small>Canvas tote</small><small class="nb-p"><span>AED 50</span></small><small>Free with every clothing order</small></a>`;
+  const toteCard = `<a class="nb-c" href="/tote/"><span class="nb-f"><img src="/shirts/card/tote-model.webp" width="720" height="900" alt="The Sahra Tote in natural canvas, carried over the shoulder" loading="lazy" decoding="async"><em class="cut-b">One size</em></span><b>The Sahra Tote</b><small>Canvas tote</small><small class="nb-p"><span>AED 50</span></small><small>Free with every clothing order</small></a>`;
   page({ slug: 'accessories', h1: 'Accessories', grad: 'Dunes',
     title: 'Accessories: Canvas Tote and Drawstring Bag | Sahra & Beyond',
     desc: 'The Sahra Tote and the Trailhead Bag from Sahra Trail: natural canvas bags designed in the UAE, AED 50 each. Free delivery across the UAE.',
@@ -3516,6 +3518,51 @@ COMMERCE.forEach(P => {
     block: PO.newBlock({ list: trail, heading: 'Sahra Trail', kicker: 'Activewear', lede: PO.newLede(), more: '/trail/', moreText: 'About Sahra Trail' }),
     body: `<div class="content"><p>Sahra Trail is for the trails, wadis and ridges of the UAE. The Sahra Trail Tee has raglan sleeves, mesh side panels and covered seams, with the reflective Two Ridges symbol under the collar. The 2-in-1 Short has a hidden inner liner with a bonded phone pocket, a zip pocket for keys and cards, and an internal drawcord. The Kit is the two together. There is no size chart for these yet, so <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about Sahra Trail before I order.')}" target="_blank" rel="noopener">message us</a> if you are unsure of your size.</p></div>`,
     items: trail.map(p => [p.plain, `/products/${p.handle}/`]) });
+
+  /* 24 Oct 2026 (Faheem, after the navigation panel): shop by Men and Women, and Under AED 150.
+     No women's cuts exist, so the Women page is honest about it: the unisex tees, the Sahel hoodies
+     (unisex) and the bags, with a size note. The Sahra Polo, the Sahel Polo and Sahra Trail are men's
+     and appear on the Men page only (Faheem, 24 Oct; the polo rule of 23 Sep). PO.cut() is the source. */
+  const founding = PRODUCTS_ALL.slice().sort((a, b) => (a.order || 99) - (b.order || 99));
+  const foundingBlock = (list, h) => `<section class="nb" aria-label="The Founding Edition"><p class="nb-k">Founding Edition &middot; in stock</p><h2>${h}</h2><p class="nb-l">230 GSM tees in Regular and Oversized fits${list.some(p => p.garment === 'polo') ? ', and the 240 GSM Sahra Polo' : ''}. Ships next working day across the UAE.</p>${catCards(list)}</section>`;
+  const sizeNote = '<div class="content"><p><strong>About the fit.</strong> Our tees and hoodies are cut unisex, one cut worn by everyone, in sizes S to XL. Go by the chest measurement rather than the letter: lay a tee you already like flat and compare it with ours. <a href="/size-guide/">Find your size &rarr;</a></p></div>';
+  const fItems = list => list.map(p => [p.name, `/products/${p.id}/`]);
+  const nItems = list => list.map(p => [p.plain || p.name, `/products/${p.handle}/`]);
+  const sahelAll = PO.pickNew(p => p.line === 'sahel', true);
+  const trailWear = PO.pickNew(p => p.line === 'trail' && !p.oneSize);
+  const accBlock = PO.newBlock({ list: bag, pre: toteCard, heading: 'Canvas bags', kicker: 'Accessories &middot; one size', more: '/accessories/', moreText: 'Accessories' });
+  page({ slug: 'men', h1: 'Men\u2019s T-Shirts, Polos, Hoodies & Activewear', grad: 'Dunes',
+    title: 'Men\u2019s T-Shirts, Polos & Activewear in the UAE | Sahra & Beyond',
+    desc: 'Every Sahra & Beyond piece for men: unisex 230 GSM tees, the Sahra Polo and the Sahel Polo, two hoodies and Sahra Trail running wear. Designed in the UAE, free delivery across the UAE.',
+    lede: 'Every piece we make: the tees and hoodies, the polos and Sahra Trail',
+    block: foundingBlock(founding, 'Three places, three tees and the Sahra Polo')
+      + PO.newBlock({ list: sahelAll, heading: 'Sahel, the Coast Edition', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'About Sahel' })
+      + PO.newBlock({ list: trailWear, heading: 'Sahra Trail: activewear', kicker: 'New &middot; Sahra Trail', more: '/activewear/', moreText: 'All activewear' })
+      + accBlock,
+    body: '<div class="content"><p><strong>About the fit.</strong> Our tees and hoodies are cut unisex, worn by everyone. The polos and Sahra Trail are cut for men. Everything comes in sizes S to XL, so go by the chest measurement rather than the letter. <a href="/size-guide/">Find your size &rarr;</a></p></div>',
+    items: fItems(founding).concat(nItems(sahelAll), nItems(trailWear), [['The Sahra Tote', '/tote/']], nItems(bag)) });
+  /* the Women page leads each card with a photo of a woman wearing the tee where the shoot has one */
+  const herFirst = p => { const ms = p.modelShots || [], h = ms.find(m => /front-her/.test(m.src)) || ms.find(m => /-her\./.test(m.src));
+    return h ? Object.assign({}, p, { imgMain: h.src, altMain: h.alt || p.altMain }) : p; };
+  const wFounding = founding.filter(p => p.garment !== 'polo').map(herFirst);
+  const wSahel = PO.pickNew(p => p.line === 'sahel' && PO.forWomen(p), true);
+  page({ slug: 'women', h1: 'Women\u2019s T-Shirts & Hoodies', grad: 'Dunes',
+    title: 'Women\u2019s T-Shirts & Hoodies in the UAE | Sahra & Beyond',
+    desc: 'Sahra & Beyond tees and hoodies for women: 230 GSM cotton tees drawn from real UAE places, cut unisex in Regular and Oversized fits, two Sahel hoodies and canvas bags. Designed in the UAE.',
+    lede: 'Our tees and hoodies are cut unisex. Go by the chest measurement in the size guide.',
+    block: foundingBlock(wFounding, 'Three places, three tees')
+      + PO.newBlock({ list: wSahel, heading: 'Sahel, the Coast Edition: tees and hoodies', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'About Sahel' })
+      + accBlock,
+    body: sizeNote,
+    items: fItems(wFounding).concat(nItems(wSahel), [['The Sahra Tote', '/tote/']], nItems(bag)) });
+  const under = PO.pickNew(p => p.price < 150, true);
+  page({ slug: 'under-150', h1: 'Under AED 150', grad: 'Dunes',
+    title: 'Gifts and Tees Under AED 150 | Sahra & Beyond',
+    desc: 'Sahra & Beyond pieces under AED 150: the Shams Tee, the Sahra Trail Tee, the Sahra Tote and the Trailhead Bag. Designed in the UAE, free delivery across the UAE.',
+    lede: 'The Shams Tee, the Sahra Trail Tee and two canvas bags',
+    block: PO.newBlock({ list: under, pre: toteCard, heading: 'Under AED 150', kicker: 'Shop by price', lede: PO.newLede(), fitsLabel: true, more: '/shop/', moreText: 'All products' }),
+    body: '<div class="content"><p>The Sahra Tote comes free with every clothing order, so you only buy it here for a second one. The Trailhead Bag is in stock and ships next working day. <a href="/gifts/">More gift ideas &rarr;</a></p></div>',
+    items: [['The Sahra Tote', '/tote/']].concat(nItems(under)) });
 })();
 
 const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, arCorePublic: AR_CORE_PUBLIC, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });
@@ -3717,6 +3764,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(['', ...require('./trail-hikes.js').ORDER.concat(require('./trail-hikes.js').EXTRA).map(x => x + '/')].map(x => ({ u: `${SITE}/trail/hikes/${x}`, m: buildDate, p: '0.7' })))   /* Sahra Trail hikes for the QR cards (6 Oct 2026) */
   .concat([{ u: `${SITE}/sahel/`, m: buildDate, p: '0.8' }])   /* Sahel teaser page (6 Oct 2026) */
   .concat([{ u: `${SITE}/hoodies/`, m: buildDate, p: '0.9' }])   /* /hoodies/ live from 23 Oct 2026 */
+    .concat(['men', 'women', 'under-150'].map(x => ({ u: `${SITE}/${x}/`, m: buildDate, p: '0.8' })))   /* 24 Oct 2026 */
   .concat(['accessories', 'activewear'].map(x => ({ u: `${SITE}/${x}/`, m: buildDate, p: '0.8' })))   /* 23 Oct 2026 */
   .concat([`${SITE}/new/`].concat(require('./preorder-page.js').urls(SITE)).map(u => ({ u, m: buildDate, p: '0.9' })))   /* Sahel and Sahra Trail pages: in the sitemap from 23 Oct (Faheem: live before pre-order opens) */
   .concat(fs.existsSync(path.join(ROOT, 'feed', 'index.html')) ? [{ u: `${SITE}/feed/`, m: buildDate, p: '0.5' }] : [])   /* every Instagram post with where it lives on the site (4 Oct 2026); /q/ pages are noindex */
