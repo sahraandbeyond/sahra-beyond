@@ -1104,6 +1104,7 @@ function navKeyFor(slug) {
   if (s === 'shop') return 'shop';
   return 'none';   // guides, gifts, fabric, size guide: nothing highlighted
 }
+const HEROES = require('./heroes.js');
 function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'none', bodyClass = '',
                  lang = 'en', altHref = null, noindex = false, guide = false }) {
   /* 16 Oct 2026: guide pages (places, topic guides, hikes) carry data-guide on <html>: the green WhatsApp
@@ -1115,6 +1116,8 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
      hreflang both ways; `noindex` holds /ar/ out of the index until Faheem has read
      the Arabic. Everything else is shared. */
   const AR = lang === 'ar';
+  /* 23 Oct 2026: photo heroes replace the plain gradient banners (heroes.js) */
+  if (!AR && bodyHtml) { const hs = String(canonical || '').replace(SITE, '').replace(/^\/|\/$/g, ''); bodyHtml = HEROES.apply(hs, bodyHtml); }
   // SERPs truncate around 60 chars; the brand suffix is the first thing to go.
   if (title.length > 60 && / \| Sahra & Beyond$/.test(title)) title = title.replace(/ \| Sahra & Beyond$/, '');
 
