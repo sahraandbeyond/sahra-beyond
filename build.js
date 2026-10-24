@@ -265,6 +265,8 @@ for (const f of ['index.html', 'shop-preview.html']) {
   n = n.replace(/<!--IG:STRIP-->[\s\S]*?<!--\/IG:STRIP-->/, '<!--IG:STRIP-->' + IG.stripHtml() + '<!--/IG:STRIP-->')
        .replace(/<!--IG:FOOT-->[\s\S]*?<!--\/IG:FOOT-->/, '<!--IG:FOOT--><style>' + IG.CSS + FITPAIR_CSS + '</style>' + IG.footerRowHtml() + '<!--/IG:FOOT-->')
        .replace(/<!--IG:JS-->[\s\S]*?<!--\/IG:JS-->/, '<!--IG:JS--><script>' + IG.JS + '</script><script>' + FITPAIR_JS + '</script><!--/IG:JS-->');
+  /* 24 Oct 2026 (homepage SEO panel): intrinsic width and height on every home image, so the browser reserves the space (CLS) */
+  if (f === 'index.html') n = addImgDims(n, '.');
   if (n !== h0) fs.writeFileSync(fp, n);
 }
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);

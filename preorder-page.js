@@ -467,8 +467,8 @@ function homeBand() {
 @media(max-width:860px){.lb{padding:34px 16px 38px}.lb-in{grid-template-columns:1fr;gap:20px}.lb-g{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px}.lb-c{flex:0 0 42%;scroll-snap-align:start}}
 </style>`;
   return stageHead() + css + `<section class="lb" id="s-launch" aria-labelledby="lbH"><div class="lb-in"><div>
-    <p class="lb-k">Sahel &middot; The Coast Edition &nbsp;+&nbsp; Sahra Trail</p>
-    <h2 id="lbH">` + inc('st01', '<span class="st01">Sahel and Sahra Trail</span>') + `<span class="st2">Sahel and Sahra Trail are out</span></h2>
+    <p class="lb-k">New &middot; ` + inc('st01', '<span class="st01">on pre-order from Wed 28 Oct</span>') + `<span class="st2">out now</span></p>
+    <h2 id="lbH">Sahel, the Coast Edition, and Sahra Trail running wear</h2>
     ` + inc('st0', '<p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone.</p><p class="st0 lb-d" data-days></p>') +
     inc('st1', '<p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
     `<p class="st2">Designed in the UAE for everyone who loves it.</p>
