@@ -863,6 +863,7 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 .pdp-wallets{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 6px;max-width:215px;margin-left:auto;margin-right:auto}
 .pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#5A5046)}
 .pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(51,39,27,.22);border-radius:5px;background:#fff;color:#33271B;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
+.pdp-wallets.pdp-wallets-line{display:block;max-width:none;font-size:12.5px;line-height:1.5;color:var(--txt-soft,#5A5046);margin:10px 0 0;text-align:center}
 .pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
 .pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:#5A5046;margin:0 0 8px}.pdp-pair-h b{color:#2B2620;font-weight:600}
 /* 18 Oct 2026 (conversion panel): the strip sits on the light buy card, so its colours never follow body.dark-bg */
@@ -953,6 +954,7 @@ h1 .nw{white-space:nowrap}
 <script src="/assets/sahra-welcome.js?v=48c151f1" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=5ef305ef">
 <script src="/assets/sahra-nav.js?v=35ed85f7" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-system.css?v=06434312">
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1463,9 +1465,10 @@ html body .pdp-stock,html body .pdp-buy .pdp-stock{font-size:14px!important;font
 html body .guide-sec h3,html body.buy-page .guide-sec h3,html body section.policy h3{font-family:'Cormorant Garamond',Georgia,serif!important;
   font-size:21px!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important;line-height:1.25!important;color:#2A2016}
 html[dir="rtl"] body .guide-sec h3,html[dir="rtl"] body section.policy h3{font-family:inherit!important}
-/* - action buttons read as one set: uppercase Jost, 600, lightly tracked */
+/* - action buttons read as one set: Jost 600, sentence case (24 Oct 2026, aesthetic panel: was uppercase;
+     the shared button family in assets/sahra-system.css is sentence case) */
 html body .qa-open,html body .news-form button,html body .wl-form button,html body .tr-join form button{
-  text-transform:uppercase!important;font-family:Jost,system-ui,sans-serif!important;font-weight:600!important;letter-spacing:.06em!important}
+  text-transform:none!important;font-family:Jost,system-ui,sans-serif!important;font-weight:600!important;letter-spacing:.02em!important}
 html body .qa-open{font-size:13px!important}
 html[dir="rtl"] body .qa-open,html[dir="rtl"] body .news-form button,html[dir="rtl"] body .wl-form button,html[dir="rtl"] body .tr-join form button{text-transform:none!important;letter-spacing:0!important}
 
@@ -1596,11 +1599,11 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
         <button class="btn pdp-add" id="pdpAdd" type="button" aria-disabled="true"><span class="pdp-add-l">Choose your size</span><span class="pdp-add-p"> &middot; <span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
-        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw sb-ship-uae">Tabby</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
+        <p class="pdp-wallets pdp-wallets-line">Secure checkout &middot; Apple Pay, Google Pay, Shop Pay<span class="sb-ship-uae">, Tabby</span>, Visa, Mastercard</p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         
         <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
-        <div class="pdp-pair"><p class="pdp-pair-h"><b>Pair it with another place</b> &middot; any 2 tees AED 359, so the second is AED 160</p><div class="pdp-pair-row"><a class="pdp-pair-c" href="/products/al-quaa-galaxy-oversized/"><img src="/shirts/card/alquaa-model-back.webp" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>Al Quaa Galaxy</b><small>Al Quaa</small></span></a><a class="pdp-pair-c" href="/products/empty-quarter-oversized/"><img src="/shirts/card/emptyquarter-model-stand.webp" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>Empty Quarter</b><small>Liwa</small></span></a></div></div>
+        <div class="pdp-pair"><p class="pdp-pair-h"><b>Pair it with another place</b></p><div class="pdp-pair-row"><a class="pdp-pair-c" href="/products/al-quaa-galaxy-oversized/"><img src="/shirts/card/alquaa-model-back.webp" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>Al Quaa Galaxy</b><small>Al Quaa</small></span></a><a class="pdp-pair-c" href="/products/empty-quarter-oversized/"><img src="/shirts/card/emptyquarter-model-stand.webp" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>Empty Quarter</b><small>Liwa</small></span></a></div></div>
         <dl class="pdp-why">
           <div><dt>Why <span class="sb-price" data-handle="hajar-mountains-oversized" data-aed="199">AED 199</span></dt><dd>230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark. Designed in the UAE.</dd></div>
           <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
@@ -1927,10 +1930,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 .ig-big .ig-label{font-size:20px}
 @media(prefers-reduced-motion:reduce){.ig-card,.ig-seg i::after,.ig-media video,.ig-card.ig-new .ig-media::before{transition:none;animation:none!important}.ig-card.active .ig-seg i.on::after{transform:scaleX(1)}}
 .foot-pay{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:6px 0 10px}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}</style>
-  <div class="ig-foot ig-dark" role="navigation" aria-label="More from our Instagram">
-  <div class="ig-foot-row"><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/DeguH3WCIOa/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DeguH3WCIOa/01.mp4"><img src="/uploads/ig/DeguH3WCIOa-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Pick an emoji: we already know which shirt is yours</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/Dedju1LiFtj/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/Dedju1LiFtj/01.mp4"><img src="/uploads/ig/Dedju1LiFtj-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Who first took you there? Tell us who it was</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeYZZw8IGOJ/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DeYZZw8IGOJ-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Meet the locals: Sahel, teaser 3</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeXIoslI-X6/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DeXIoslI-X6-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Our launch film</span></span></a></div>
-  <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 20 Oct</span> · <a href="/feed/">all posts</a></p>
-</div>
+  
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
   <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
   <div class="foot-notop" style="font-size:12px;line-height:1.5;max-width:520px;margin:4px auto 10px;opacity:.8">Sahra &amp; Beyond is a UAE clothing brand. Our place guides are free and independent: we don&rsquo;t run, sell or book tours, trips or transport.</div>

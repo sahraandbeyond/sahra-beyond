@@ -4388,7 +4388,7 @@ const AR_PDP_NOINDEX = true;
       /* 8 Oct 2026 (Faheem): the reveal is public with prices, so the page shows them. Held on the site until confirmed:
          the fabric line and "Lines from the seabed off Khor Fakkan" (both in the Reel). The site loop is cut without them. */
       rv: {
-        tee: { name: 'Sahra Trail Tee', price: 'AED 139', line: 'Ocean-inspired print.', feats: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'], alt: 'Sahra Trail Tee in teal with the ocean-inspired print, front and back' },
+        tee: { name: 'Sahra Trail Tee', price: 'AED 139', line: 'Ocean-inspired print.', feats: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'], alt: 'Sahra Trail Tee in powder blue with the ocean-inspired print, front and back' },
         short: { name: 'Sahra Trail 2-in-1 Short', price: 'AED 169', line: 'Wave-inspired graphic.', feats: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'], alt: 'Sahra Trail 2-in-1 Shorts in charcoal with the wave-inspired graphic, front and back' },
         kit: { name: 'The Kit', price: 'AED 249', line: 'The Tee and the 2-in-1 Shorts together.', save: 'Save AED 59', alt: 'The Sahra Trail Kit: the Tee and the 2-in-1 Shorts' },
         renders: 'Pre-production renders', mock: 'Mock-up', film: 'The reveal', filmAlt: 'Sahra Trail reveal film, muted: the Tee and the 2-in-1 Shorts and their details', pause: 'Pause film', play: 'Play film',
@@ -4578,6 +4578,16 @@ html body main.tr .tr-card h3{font-family:'Cormorant Garamond',Georgia,serif;fon
 .tr-card ul{margin:10px 20px 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
 .tr-card li{font-size:13px;line-height:1.3;padding:6px 10px;border-radius:999px;border:1px solid rgba(217,195,165,.28);color:#EADBC4}
 .tr-kit .tr-btn-sm{margin:14px 20px 0;opacity:1;animation:none}
+/* 24 Oct 2026 (aesthetic panel): the piece cards use the shared cream card, ink type, the ink pill and the
+   shared badge, with Trail teal as the accent; the page around them stays dark */
+html body main.tr .tr-card{background:var(--sb-cream,#FAF6EF);color:var(--sb-ink-2,#4A4136);border:0;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:6px}
+html body main.tr .tr-card h3,html body main.tr .tr-card .tr-price{color:var(--sb-ink,#2A2016)}
+html body main.tr .tr-card .tr-line{color:#285C5C}html body main.tr .tr-card .tr-line b{color:var(--sb-copper,#9C521B)}
+html body main.tr .tr-card .tr-btn-sm{margin:14px 20px 0;opacity:1;animation:none;background:var(--sb-ink,#2A2016);color:var(--sb-cream,#FAF6EF);box-shadow:none}
+html body main.tr .tr-card .tr-btn-sm:hover{background:#285C5C}
+html body main.tr .tr-card .tr-cta-sub{color:var(--sb-ink-3,#6B6256)}
+html body main.tr .tr-form button{border-radius:999px;text-transform:none;letter-spacing:.02em;background:var(--sb-ink,#2A2016);color:var(--sb-cream,#FAF6EF)}
+html body main.tr .tr-form button:hover{background:#285C5C}
 .tr-cta-sub{margin:8px 20px 0;font-size:13.5px;color:#CDBEA8}
 .tr-renders{margin:0;text-align:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#CDBEA8}
 @media(max-width:820px){.tr-rvl{grid-template-columns:1fr;max-width:460px;margin-left:auto;margin-right:auto;gap:28px}.tr-film{position:relative;top:auto;max-width:300px;margin:0 auto}}
@@ -4656,7 +4666,7 @@ ${require('./preorder-page.js').stageHead()}
           <button type="button" class="tr-film-btn" data-play="${t.rv.play}" data-pause="${t.rv.pause}" aria-controls="${id}film">${t.rv.play}</button>
           <figcaption>${t.rv.film} &middot; ${t.rv.renders}</figcaption></figure>
         <div class="tr-cards">
-          ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${lang === 'ar' ? r.price : PO.cardPrice(+String(r.price).replace(/[^0-9]/g, ''), 'span')}</p></div><p class="tr-line">${r.line}</p><ul>${r.feats.map(f => `<li>${f}</li>`).join('')}</ul>${lang === 'ar' ? '' : `<a class="tr-btn tr-btn-sm" href="/products/sahra-trail-${k === 'tee' ? 'tee' : '2-in-1-short'}/">` + PO.inc('st0', '<span class="st0">See the piece</span>') + PO.inc('st1', '<span class="st1">Pre-order</span>') + `<span class="st2">Shop</span> <span aria-hidden="true">&rarr;</span></a>`}</article>`; }).join('')}
+          ${['tee', 'short'].map(k => { const r = t.rv[k]; return `<article class="tr-card"><img src="/assets/trail/reveal/trail-${k}-720.webp" srcset="/assets/trail/reveal/trail-${k}-720.webp 720w, /assets/trail/reveal/trail-${k}.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${r.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${r.name}</h3><p class="tr-price">${lang === 'ar' ? r.price : PO.cardPrice(+String(r.price).replace(/[^0-9]/g, ''), 'span')}</p></div><p class="tr-line">${r.line}</p>${/* 24 Oct 2026 (aesthetic panel): the feature-pill clusters are gone; the features live on each product page */''}${lang === 'ar' ? '' : `<a class="tr-btn tr-btn-sm" href="/products/sahra-trail-${k === 'tee' ? 'tee' : '2-in-1-short'}/">` + PO.inc('st0', '<span class="st0">See the piece</span>') + PO.inc('st1', '<span class="st1">Pre-order</span>') + `<span class="st2">Shop</span> <span aria-hidden="true">&rarr;</span></a>`}</article>`; }).join('')}
           <article class="tr-card tr-kit"><img src="/assets/trail/reveal/trail-kit-720.webp" srcset="/assets/trail/reveal/trail-kit-720.webp 720w, /assets/trail/reveal/trail-kit.webp 1080w" sizes="(max-width:700px) 92vw, 420px" width="1080" height="820" alt="${t.rv.kit.alt}" loading="lazy" decoding="async"><span class="mock-tag">${t.rv.mock}</span><div class="tr-card-t"><h3>${t.rv.kit.name}</h3><p class="tr-price">${lang === 'ar' ? t.rv.kit.price : PO.cardPrice(+String(t.rv.kit.price).replace(/[^0-9]/g, ''), 'span')}</p></div><p class="tr-line">${t.rv.kit.line} <b>${t.rv.kit.save}</b></p>
             ${lang === 'ar' ? `<a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a>${t.rv.ctaSub ? `<p class="tr-cta-sub">${t.rv.ctaSub}</p>` : ''}` : PO.inc('st0', `<span class="st0"><a class="tr-btn tr-btn-sm" href="#first-access">${t.rv.cta} <span aria-hidden="true">&darr;</span></a>${t.rv.ctaSub ? `<p class="tr-cta-sub">${t.rv.ctaSub}</p>` : ''}</span>`) + `<span class="st12"><a class="tr-btn tr-btn-sm" href="/products/sahra-trail-kit/">` + PO.inc('st1', '<span class="st1">Pre-order the kit</span>') + `<span class="st2">Shop the kit</span> <span aria-hidden="true">&rarr;</span></a></span>` + PO.inc('st0', '<p class="st0" style="margin-top:10px"><a class="tr-btn tr-btn-sm" href="/products/sahra-trail-kit/">See the kit <span aria-hidden="true">&rarr;</span></a></p>')}</article>
           <p class="tr-renders">${t.rv.renders}</p>
@@ -4800,6 +4810,30 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
     if (out !== src) { fs.writeFileSync(f, out); touched++; }
   }
   console.log(`  ✓ Shop menu on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} added)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
+})();
+
+(function applySystem() {
+  /* 24 Oct 2026 (aesthetic-coherence panel): the shared design system, last in <head> on every page */
+  const CSS = '<link rel="stylesheet" href="/assets/sahra-system.css">';
+  const SKIP = new Set(['coming-soon.html']);
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin', 'uploads'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html') && !SKIP.has(e.name)) pages.push(p);
+    }
+  })(__dirname);
+  let touched = 0;
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    if (!/<\/head>/i.test(src)) continue;
+    const stripped = src.replace(/<link rel="stylesheet" href="\/assets\/sahra-system\.css[^"]*">\n?/g, '');
+    const out = stripped.replace(/<\/head>/i, CSS + '\n</head>');
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  \u2713 Design system stylesheet on ${pages.length} page(s)` + (touched ? ` (${touched} updated)` : ''));
 })();
 
 /* ==========================================================================

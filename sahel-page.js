@@ -115,7 +115,11 @@ module.exports = function buildSahel({ shell, write, SITE }) {
     const tag = href ? 'a' : 'button';
     const attrs = href ? ` href="${href}"` : ' type="button"';
     return `<${tag}${attrs} class="sh-piece sh-piece-${p.k}" aria-label="Piece ${n}: ${label}.">
-        <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-${p.k}.webp);aspect-ratio:${d[0]}/${d[1]}"><img src="${reveal && p.img ? p.img : `/assets/sahel/sahel-${p.k}.webp`}" width="${d[0]}" height="${d[1]}" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        ${/* 24 Oct 2026 (aesthetic panel): the pieces are live on their product pages, so the grid shows the
+             same warm-stone studio mock-up as /new/ and the product pages, on a light panel where the black
+             tees read. The dark silhouette stays only as a fallback for a piece with no mock-up. */''}${prod && prod.images && prod.images[0]
+          ? `<span class="sh-photo"><img src="/assets/preorder/${prod.images[0].k}-720.webp" width="720" height="900" alt="${label.replace(/"/g, '')}, studio mock-up" loading="lazy" decoding="async"></span>`
+          : `<span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-${p.k}.webp);aspect-ratio:${d[0]}/${d[1]}"><img src="${reveal && p.img ? p.img : `/assets/sahel/sahel-${p.k}.webp`}" width="${d[0]}" height="${d[1]}" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>`}
         <span class="sh-mock">${T.mock || 'Mock-up'}</span>
         <span class="sh-n">${n}</span><b>${label}</b><small>${reveal ? [p.place ? (p.inspiredBy ? 'Inspired by ' : '') + p.place : null, p.price].filter(Boolean).join(' · ') || p.type : (typed ? '' : `${p.type} &middot; `) + ST.inc('st0', '<span class="st0">Pre-order 28 Oct</span>') + ST.inc('st1', '<span class="st1">Pre-order</span>') + '<span class="st2">Out now</span>'}</small>
       </${tag}>`;
@@ -242,6 +246,33 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
   .sh-hero{padding-bottom:104px}
 }
 @media(max-height:700px){.sh-hero{padding-top:92px}.sh-mark{width:min(300px,62vw);margin:14px 0 12px}.sh-hero h1{font-size:27px}}
+/* 24 Oct 2026 (aesthetic panel): the journey stays dark; the buying end of the page (pieces and the list)
+   sits on the shared cream ground with ink type, the shared buttons and badge, and a Lagoon accent
+   (the Al Aqah Reef colour, deepened for text). */
+.sh-pieces,.sh-join{position:relative;z-index:2;background:var(--sb-cream,#FAF6EF);color:var(--sb-ink,#2A2016)}
+.sh-pieces{min-height:0;padding:12vh 20px 4vh;border-top:4px solid #0FAAAF}
+.sh-join{padding:4vh 20px 12vh}
+.sh-pieces .sh-num{color:#0B6E72}.sh-pieces .sh-num span{color:var(--sb-copper,#9C521B)}
+.sh-pieces h2,.sh-join h2{color:var(--sb-ink,#2A2016);text-shadow:none}
+.sh-pieces .sh-sub,.sh-join p{color:var(--sb-ink-2,#4A4136);text-shadow:none}
+.sh-pieces .sh-rv,.sh-join .sh-rv{opacity:1;transform:none}
+.sh-photo{display:block;width:100%;max-width:250px;aspect-ratio:4/5;border-radius:4px;overflow:hidden;background:#E9E0D3;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.sh-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.sh-piece:hover .sh-photo{transform:translateY(-4px)}
+.sh-pieces .sh-mock{margin-top:10px;border:0;border-radius:4px;background:#EFE7DA;color:var(--sb-ink,#2A2016);font-size:10px;letter-spacing:.12em}
+.sh-pieces .sh-n{color:#0B6E72;margin-top:12px}
+.sh-pieces .sh-piece b{color:var(--sb-ink,#2A2016)}
+.sh-pieces .sh-piece small{font-family:'Jost',system-ui,sans-serif;font-size:13.5px;letter-spacing:.01em;text-transform:none;color:var(--sb-ink-3,#6B6256)}
+.sh-pieces .sh-btn,.sh-join .sh-form-el button{opacity:1;animation:none;background:var(--sb-ink,#2A2016);color:var(--sb-cream,#FAF6EF);box-shadow:none;border-radius:999px}
+.sh-pieces .sh-btn:hover,.sh-join .sh-form-el button:hover{background:#0B6E72}
+.sh-join>div{background:#fff;border:1px solid var(--sb-line,rgba(42,32,22,.14));box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.sh-join .sh-size span{color:var(--sb-ink-3,#6B6256)}
+.sh-join .sh-size select,.sh-join .sh-form-el input{background:#fff;border-color:rgba(42,32,22,.28);color:var(--sb-ink,#2A2016)}
+.sh-join .sh-fine{color:var(--sb-ink-3,#6B6256)}
+.sh-join .sh-back{color:var(--sb-ink,#2A2016);text-decoration-color:#0FAAAF}
+[data-waitlist-wrap].done .sh-ok{color:#0B6E72}
+[data-waitlist-wrap].err .sh-err{color:#A3341C}
+.sh-pieces .sh-btn:focus-visible,.sh-pieces .sh-piece:focus-visible,.sh-join .sh-back:focus-visible{outline-color:#0B6E72}
 @media(prefers-reduced-motion:reduce){
   .sh-eyebrow,.sh-kicker,.sh-hero h1,.sh-btn,.sh-cue{animation:none!important;opacity:1!important;transform:none!important}
   .sh-la,.sh-ar{animation:none!important;opacity:1!important;filter:none!important}

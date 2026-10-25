@@ -39,6 +39,7 @@ const HERO = {
   'outdoor-things-to-do':     ['uploads/places/jebel-hafeet.jpg', '50% 55%', '60% 55%', 'Guide · Outdoors'],
   'polos':                    ['shirts/polo-dune-sunset.jpg', '50% 52%', '60% 50%', 'Shop · Polos', 'split'],
   'secluded-camping':         ['uploads/places/empty-quarter.jpg', '50% 55%', '50% 55%', 'Guide · Camping'],
+  'shop':                     ['shirts/hero-print.webp', '50% 45%', '42% 45%', 'Shop · All pieces'],   /* used by the /shop/ hero (shop-preview.html), not apply() */
   'size-guide':               ['shirts/hero-making.webp', '50% 35%', '42% 35%', 'Size and fit'],
   'snorkeling':               ['uploads/unsorted-no-geotag_01.webp', '50% 45%', '50% 45%', 'Guide · Snorkelling'],
   'stargazing':               ['journey/plates/alquaa-night.webp', '50% 45%', '35% 45%', 'Guide · Stargazing'],

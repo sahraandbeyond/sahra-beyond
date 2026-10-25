@@ -539,9 +539,10 @@ html body .pdp-stock,html body .pdp-buy .pdp-stock{font-size:14px!important;font
 html body .guide-sec h3,html body.buy-page .guide-sec h3,html body section.policy h3{font-family:'Cormorant Garamond',Georgia,serif!important;
   font-size:21px!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important;line-height:1.25!important;color:#2A2016}
 html[dir="rtl"] body .guide-sec h3,html[dir="rtl"] body section.policy h3{font-family:inherit!important}
-/* - action buttons read as one set: uppercase Jost, 600, lightly tracked */
+/* - action buttons read as one set: Jost 600, sentence case (24 Oct 2026, aesthetic panel: was uppercase;
+     the shared button family in assets/sahra-system.css is sentence case) */
 html body .qa-open,html body .news-form button,html body .wl-form button,html body .tr-join form button{
-  text-transform:uppercase!important;font-family:Jost,system-ui,sans-serif!important;font-weight:600!important;letter-spacing:.06em!important}
+  text-transform:none!important;font-family:Jost,system-ui,sans-serif!important;font-weight:600!important;letter-spacing:.02em!important}
 html body .qa-open{font-size:13px!important}
 html[dir="rtl"] body .qa-open,html[dir="rtl"] body .news-form button,html[dir="rtl"] body .wl-form button,html[dir="rtl"] body .tr-join form button{text-transform:none!important;letter-spacing:0!important}
 

@@ -120,11 +120,14 @@ function stripHtml() {
 
 /* the footer row: four more posts, stills, no autoplay */
 function footerRowHtml() {
+  /* 24 Oct 2026: the footer's Instagram link already exists in every footer; the extra reel line is retired */
+  return '';
   const posts = footerRow(4);
   if (posts.length < 4) return '';
   const last = all().filter(p => p.date).sort((a, b) => b.date - a.date)[0];
-  return `<div class="ig-foot ig-dark" role="navigation" aria-label="More from our Instagram">
-  <div class="ig-foot-row">${posts.map(p => `<a class="ig-foot-card" href="${esc(postUrl(p))}" target="_blank" rel="noopener" data-slide="${esc(p.slides[0] || '')}"><img src="/uploads/ig/${p.id}-540.webp" width="540" height="675" loading="lazy" decoding="async" alt="">${p.mock ? '<span class="ig-mock">Mock-up</span>' : ''}<span class="ig-foot-cap"><span>${esc(p.label)}</span></span></a>`).join('')}</div>
+  /* 24 Oct 2026 (aesthetic-coherence panel): the four saturated reel covers were the loudest images on every
+     page, in the quietest place. The footer keeps one quiet line; the reels live on the homepage strip and /feed/. */
+  return `<div class="ig-foot" role="navigation" aria-label="More from our Instagram">
   <p class="ig-foot-line"><a href="${IG_URL}${DATA.accounts.house}/" target="_blank" rel="noopener">Instagram &mdash; @${DATA.accounts.house}</a>${last ? ` <span class="ig-foot-last">· last post ${esc(shortDate(last.date))}</span>` : ''} · <a href="/feed/">all posts</a></p>
 </div>`;
 }

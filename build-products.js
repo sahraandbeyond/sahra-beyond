@@ -190,7 +190,7 @@ function pairStrip(p, all){
   if (p.garment !== 'tee') return '';
   const others = all.filter(x => x.garment === 'tee' && x.fit === p.fit && x.siblingOf && x.siblingOf !== p.siblingOf).slice(0, 2);
   if (!others.length) return '';
-  return `<div class="pdp-pair"><p class="pdp-pair-h"><b>Pair it with another place</b> &middot; any 2 tees AED 359, so the second is AED 160</p><div class="pdp-pair-row">${others.map(x => { const im = x.heroShot || x.imgMain; return `<a class="pdp-pair-c" href="/products/${x.id}/"><img src="${cardOf(im) || im}" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>${esc(String(x.name).split(' — ')[0])}</b><small>${esc(x.placeName || '')}</small></span></a>`; }).join('')}</div></div>`;
+  return `<div class="pdp-pair"><p class="pdp-pair-h"><b>Pair it with another place</b></p><div class="pdp-pair-row">${others.map(x => { const im = x.heroShot || x.imgMain; return `<a class="pdp-pair-c" href="/products/${x.id}/"><img src="${cardOf(im) || im}" width="64" height="80" loading="lazy" decoding="async" alt=""><span><b>${esc(String(x.name).split(' — ')[0])}</b><small>${esc(x.placeName || '')}</small></span></a>`; }).join('')}</div></div>`;
 }
 
 function page(p, all, SITE, SHOP_URL, LAUNCHED){
@@ -999,6 +999,7 @@ body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg
 .pdp-wallets{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 6px;max-width:215px;margin-left:auto;margin-right:auto}
 .pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#5A5046)}
 .pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(51,39,27,.22);border-radius:5px;background:#fff;color:#33271B;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
+.pdp-wallets.pdp-wallets-line{display:block;max-width:none;font-size:12.5px;line-height:1.5;color:var(--txt-soft,#5A5046);margin:10px 0 0;text-align:center}
 .pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
 .pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:#5A5046;margin:0 0 8px}.pdp-pair-h b{color:#2B2620;font-weight:600}
 /* 18 Oct 2026 (conversion panel): the strip sits on the light buy card, so its colours never follow body.dark-bg */
@@ -1185,7 +1186,7 @@ ${galShots(p).map((s,i)=>`
         <button class="btn pdp-add" id="pdpAdd" type="button" aria-disabled="true"><span class="pdp-add-l">Choose your size</span><span class="pdp-add-p"> &middot; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
         <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
         <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
-        <p class="pdp-wallets"><span class="pw-lab">Secure checkout</span><span class="pw">Apple Pay</span><span class="pw">Google Pay</span><span class="pw">Shop Pay</span><span class="pw sb-ship-uae">Tabby</span><span class="pw">Visa</span><span class="pw">Mastercard</span></p>
+        ${/* 24 Oct 2026 (aesthetic panel): one quiet line instead of seven chips in the buy box; the offer is stated once, above */''}<p class="pdp-wallets pdp-wallets-line">Secure checkout &middot; Apple Pay, Google Pay, Shop Pay<span class="sb-ship-uae">, Tabby</span>, Visa, Mastercard</p>
         <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
         ${/* 4 Oct 2026 (CRO panel, ideas 5 and 6): the gift and the two objections, answered where the thumb is */''}
         <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>

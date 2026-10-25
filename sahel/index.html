@@ -789,6 +789,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 <script src="/assets/sahra-welcome.js?v=48c151f1" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=5ef305ef">
 <script src="/assets/sahra-nav.js?v=35ed85f7" data-sbn defer></script>
+<link rel="stylesheet" href="/assets/sahra-system.css?v=06434312">
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1299,9 +1300,10 @@ html body .pdp-stock,html body .pdp-buy .pdp-stock{font-size:14px!important;font
 html body .guide-sec h3,html body.buy-page .guide-sec h3,html body section.policy h3{font-family:'Cormorant Garamond',Georgia,serif!important;
   font-size:21px!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important;line-height:1.25!important;color:#2A2016}
 html[dir="rtl"] body .guide-sec h3,html[dir="rtl"] body section.policy h3{font-family:inherit!important}
-/* - action buttons read as one set: uppercase Jost, 600, lightly tracked */
+/* - action buttons read as one set: Jost 600, sentence case (24 Oct 2026, aesthetic panel: was uppercase;
+     the shared button family in assets/sahra-system.css is sentence case) */
 html body .qa-open,html body .news-form button,html body .wl-form button,html body .tr-join form button{
-  text-transform:uppercase!important;font-family:Jost,system-ui,sans-serif!important;font-weight:600!important;letter-spacing:.06em!important}
+  text-transform:none!important;font-family:Jost,system-ui,sans-serif!important;font-weight:600!important;letter-spacing:.02em!important}
 html body .qa-open{font-size:13px!important}
 html[dir="rtl"] body .qa-open,html[dir="rtl"] body .news-form button,html[dir="rtl"] body .wl-form button,html[dir="rtl"] body .tr-join form button{text-transform:none!important;letter-spacing:0!important}
 
@@ -1463,6 +1465,33 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
   .sh-hero{padding-bottom:104px}
 }
 @media(max-height:700px){.sh-hero{padding-top:92px}.sh-mark{width:min(300px,62vw);margin:14px 0 12px}.sh-hero h1{font-size:27px}}
+/* 24 Oct 2026 (aesthetic panel): the journey stays dark; the buying end of the page (pieces and the list)
+   sits on the shared cream ground with ink type, the shared buttons and badge, and a Lagoon accent
+   (the Al Aqah Reef colour, deepened for text). */
+.sh-pieces,.sh-join{position:relative;z-index:2;background:var(--sb-cream,#FAF6EF);color:var(--sb-ink,#2A2016)}
+.sh-pieces{min-height:0;padding:12vh 20px 4vh;border-top:4px solid #0FAAAF}
+.sh-join{padding:4vh 20px 12vh}
+.sh-pieces .sh-num{color:#0B6E72}.sh-pieces .sh-num span{color:var(--sb-copper,#9C521B)}
+.sh-pieces h2,.sh-join h2{color:var(--sb-ink,#2A2016);text-shadow:none}
+.sh-pieces .sh-sub,.sh-join p{color:var(--sb-ink-2,#4A4136);text-shadow:none}
+.sh-pieces .sh-rv,.sh-join .sh-rv{opacity:1;transform:none}
+.sh-photo{display:block;width:100%;max-width:250px;aspect-ratio:4/5;border-radius:4px;overflow:hidden;background:#E9E0D3;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.sh-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.sh-piece:hover .sh-photo{transform:translateY(-4px)}
+.sh-pieces .sh-mock{margin-top:10px;border:0;border-radius:4px;background:#EFE7DA;color:var(--sb-ink,#2A2016);font-size:10px;letter-spacing:.12em}
+.sh-pieces .sh-n{color:#0B6E72;margin-top:12px}
+.sh-pieces .sh-piece b{color:var(--sb-ink,#2A2016)}
+.sh-pieces .sh-piece small{font-family:'Jost',system-ui,sans-serif;font-size:13.5px;letter-spacing:.01em;text-transform:none;color:var(--sb-ink-3,#6B6256)}
+.sh-pieces .sh-btn,.sh-join .sh-form-el button{opacity:1;animation:none;background:var(--sb-ink,#2A2016);color:var(--sb-cream,#FAF6EF);box-shadow:none;border-radius:999px}
+.sh-pieces .sh-btn:hover,.sh-join .sh-form-el button:hover{background:#0B6E72}
+.sh-join>div{background:#fff;border:1px solid var(--sb-line,rgba(42,32,22,.14));box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.sh-join .sh-size span{color:var(--sb-ink-3,#6B6256)}
+.sh-join .sh-size select,.sh-join .sh-form-el input{background:#fff;border-color:rgba(42,32,22,.28);color:var(--sb-ink,#2A2016)}
+.sh-join .sh-fine{color:var(--sb-ink-3,#6B6256)}
+.sh-join .sh-back{color:var(--sb-ink,#2A2016);text-decoration-color:#0FAAAF}
+[data-waitlist-wrap].done .sh-ok{color:#0B6E72}
+[data-waitlist-wrap].err .sh-err{color:#A3341C}
+.sh-pieces .sh-btn:focus-visible,.sh-pieces .sh-piece:focus-visible,.sh-join .sh-back:focus-visible{outline-color:#0B6E72}
 @media(prefers-reduced-motion:reduce){
   .sh-eyebrow,.sh-kicker,.sh-hero h1,.sh-btn,.sh-cue{animation:none!important;opacity:1!important;transform:none!important}
   .sh-la,.sh-ar{animation:none!important;opacity:1!important;filter:none!important}
@@ -1535,37 +1564,37 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
       <p class="sh-sub">The Founding Edition came from the desert and the mountains. Sahel is the coast. Designed in the UAE.</p>
       <div class="sh-grid">
       <a href="/products/khor-fakkan-bay-tee-regular/" class="sh-piece sh-piece-tee" aria-label="Piece 01: Khor Fakkan Bay.">
-        <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-tee.webp);aspect-ratio:715/720"><img src="/assets/sahel/sahel-tee.webp" width="715" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        <span class="sh-photo"><img src="/assets/preorder/kfb-back-720.webp" width="720" height="900" alt="Khor Fakkan Bay, studio mock-up" loading="lazy" decoding="async"></span>
         <span class="sh-mock">Mock-up</span>
         <span class="sh-n">01</span><b>Khor Fakkan Bay</b><small>Tee &middot; <span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </a>
       <a href="/products/al-hamra-pearl-diver-tee-regular/" class="sh-piece sh-piece-tee" aria-label="Piece 02: Al Hamra Pearl Diver.">
-        <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-tee.webp);aspect-ratio:715/720"><img src="/assets/sahel/sahel-tee.webp" width="715" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        <span class="sh-photo"><img src="/assets/preorder/pearl-back-720.webp" width="720" height="900" alt="Al Hamra Pearl Diver, studio mock-up" loading="lazy" decoding="async"></span>
         <span class="sh-mock">Mock-up</span>
         <span class="sh-n">02</span><b>Al Hamra Pearl Diver</b><small>Tee &middot; <span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </a>
       <a href="/products/al-aqah-reef-tee-regular/" class="sh-piece sh-piece-tee" aria-label="Piece 03: Al Aqah Reef.">
-        <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-tee.webp);aspect-ratio:715/720"><img src="/assets/sahel/sahel-tee.webp" width="715" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        <span class="sh-photo"><img src="/assets/preorder/reef-back-720.webp" width="720" height="900" alt="Al Aqah Reef, studio mock-up" loading="lazy" decoding="async"></span>
         <span class="sh-mock">Mock-up</span>
         <span class="sh-n">03</span><b>Al Aqah Reef</b><small>Tee &middot; <span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </a>
       <a href="/products/shams-tee-regular/" class="sh-piece sh-piece-tee" aria-label="Piece 04: Shams Tee.">
-        <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-tee.webp);aspect-ratio:715/720"><img src="/assets/sahel/sahel-tee.webp" width="715" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        <span class="sh-photo"><img src="/assets/preorder/shams-front-720.webp" width="720" height="900" alt="Shams Tee, studio mock-up" loading="lazy" decoding="async"></span>
         <span class="sh-mock">Mock-up</span>
         <span class="sh-n">04</span><b>Shams Tee</b><small><span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </a>
       <a href="/products/the-sahel-polo/" class="sh-piece sh-piece-polo" aria-label="Piece 05: The Sahel Polo.">
-        <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-polo.webp);aspect-ratio:587/720"><img src="/assets/sahel/sahel-polo.webp" width="587" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        <span class="sh-photo"><img src="/assets/preorder/polo-front-720.webp" width="720" height="900" alt="The Sahel Polo, studio mock-up" loading="lazy" decoding="async"></span>
         <span class="sh-mock">Mock-up</span>
         <span class="sh-n">05</span><b>The Sahel Polo</b><small><span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </a>
       <a href="/products/barr-and-bahr-hoodie/" class="sh-piece sh-piece-hoodie" aria-label="Piece 06: Barr &amp; Bahr Hoodie.">
-        <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-hoodie.webp);aspect-ratio:547/720"><img src="/assets/sahel/sahel-hoodie.webp" width="547" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        <span class="sh-photo"><img src="/assets/preorder/barr-back-720.webp" width="720" height="900" alt="Barr &amp; Bahr Hoodie, studio mock-up" loading="lazy" decoding="async"></span>
         <span class="sh-mock">Mock-up</span>
         <span class="sh-n">06</span><b>Barr &amp; Bahr Hoodie</b><small><span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </a>
       <a href="/products/ras-al-khor-hoodie/" class="sh-piece sh-piece-hoodie" aria-label="Piece 07: Ras Al Khor Hoodie.">
-        <span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-hoodie.webp);aspect-ratio:547/720"><img src="/assets/sahel/sahel-hoodie.webp" width="547" height="720" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>
+        <span class="sh-photo"><img src="/assets/preorder/rakh-back-720.webp" width="720" height="900" alt="Ras Al Khor Hoodie, studio mock-up" loading="lazy" decoding="async"></span>
         <span class="sh-mock">Mock-up</span>
         <span class="sh-n">07</span><b>Ras Al Khor Hoodie</b><small><span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
       </a>
@@ -1599,10 +1628,7 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>
   <div class="foot-guides" role="navigation" aria-label="Guides and more"><div><b>Guides:</b> <a href="/places/">All places</a> · <a href="/camping/">Camping in the UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/wadis/">Wadis in the UAE</a> · <a href="/hiking/">Hiking in the UAE</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta day trip</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/fujairah-beaches/">Fujairah beaches</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a></div><div><b>More:</b> <a href="/men/">Men</a> · <a href="/women/">Women</a> · <a href="/new/">New: Sahel and Sahra Trail</a> · <a href="/t-shirts/">T-shirts</a> · <a href="/t-shirts/oversized/">Oversized t-shirts</a> · <a href="/polos/">Polos</a> · <a href="/hoodies/">Hoodies</a> · <a href="/activewear/">Activewear</a> · <a href="/accessories/">Accessories</a> · <a href="/national-day/">National Day t-shirts</a> · <a href="/gifts/">Gift ideas</a> · <a href="/under-150/">Under AED 150</a> · <a href="/trail/">Sahra Trail</a> · <a href="/sahel/">Sahel: The Coast Edition</a> · <a href="/tote/">Canvas tote</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric</a> · <a href="/size-guide/">Size guide</a> · <a href="/ar/" hreflang="ar" lang="ar">العربية</a></div></div>
-  <div class="ig-foot ig-dark" role="navigation" aria-label="More from our Instagram">
-  <div class="ig-foot-row"><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/DeguH3WCIOa/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/DeguH3WCIOa/01.mp4"><img src="/uploads/ig/DeguH3WCIOa-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Pick an emoji: we already know which shirt is yours</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/p/Dedju1LiFtj/" target="_blank" rel="noopener" data-slide="/uploads/ig/s/Dedju1LiFtj/01.mp4"><img src="/uploads/ig/Dedju1LiFtj-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Who first took you there? Tell us who it was</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeYZZw8IGOJ/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DeYZZw8IGOJ-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Meet the locals: Sahel, teaser 3</span></span></a><a class="ig-foot-card" href="https://www.instagram.com/sahraandbeyond.ae/reel/DeXIoslI-X6/" target="_blank" rel="noopener" data-slide=""><img src="/uploads/ig/DeXIoslI-X6-540.webp" width="540" height="675" loading="lazy" decoding="async" alt=""><span class="ig-foot-cap"><span>Our launch film</span></span></a></div>
-  <p class="ig-foot-line"><a href="https://www.instagram.com/sahraandbeyond.ae/" target="_blank" rel="noopener">Instagram &mdash; @sahraandbeyond.ae</a> <span class="ig-foot-last">· last post 20 Oct</span> · <a href="/feed/">all posts</a></p>
-</div>
+  
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
   <div class="links" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.75">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> <span class="ft-wa"> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></span></div>
