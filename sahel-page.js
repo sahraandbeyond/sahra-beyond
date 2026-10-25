@@ -102,6 +102,7 @@ module.exports = function buildSahel({ shell, write, SITE }) {
   </section>`).join('');
 
   const ST = require('./preorder-page.js');
+  const SHOP = ST.products().filter(p => p.line === 'sahel');   /* every product, each fit on its own card (Faheem, 25 Oct 2026) */
   const pieces = PIECES.map((p, i) => {
     const n = String(i + 1).padStart(2, '0'), d = DIM[p.k];
     const reveal = STATE === 'reveal' && p.name;
@@ -246,33 +247,28 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
   .sh-hero{padding-bottom:104px}
 }
 @media(max-height:700px){.sh-hero{padding-top:92px}.sh-mark{width:min(300px,62vw);margin:14px 0 12px}.sh-hero h1{font-size:27px}}
-/* 24 Oct 2026 (aesthetic panel): the journey stays dark; the buying end of the page (pieces and the list)
-   sits on the shared cream ground with ink type, the shared buttons and badge, and a Lagoon accent
-   (the Al Aqah Reef colour, deepened for text). */
-.sh-pieces,.sh-join{position:relative;z-index:2;background:var(--sb-cream,#FAF6EF);color:var(--sb-ink,#2A2016)}
-.sh-pieces{min-height:0;padding:12vh 20px 4vh;border-top:4px solid #0FAAAF}
-.sh-join{padding:4vh 20px 12vh}
-.sh-pieces .sh-num{color:#0B6E72}.sh-pieces .sh-num span{color:var(--sb-copper,#9C521B)}
-.sh-pieces h2,.sh-join h2{color:var(--sb-ink,#2A2016);text-shadow:none}
-.sh-pieces .sh-sub,.sh-join p{color:var(--sb-ink-2,#4A4136);text-shadow:none}
-.sh-pieces .sh-rv,.sh-join .sh-rv{opacity:1;transform:none}
-.sh-photo{display:block;width:100%;max-width:250px;aspect-ratio:4/5;border-radius:4px;overflow:hidden;background:#E9E0D3;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.sh-photo img{display:block;width:100%;height:100%;object-fit:cover}
-.sh-piece:hover .sh-photo{transform:translateY(-4px)}
-.sh-pieces .sh-mock{margin-top:10px;border:0;border-radius:4px;background:#EFE7DA;color:var(--sb-ink,#2A2016);font-size:10px;letter-spacing:.12em}
-.sh-pieces .sh-n{color:#0B6E72;margin-top:12px}
-.sh-pieces .sh-piece b{color:var(--sb-ink,#2A2016)}
-.sh-pieces .sh-piece small{font-family:'Jost',system-ui,sans-serif;font-size:13.5px;letter-spacing:.01em;text-transform:none;color:var(--sb-ink-3,#6B6256)}
-.sh-pieces .sh-btn,.sh-join .sh-form-el button{opacity:1;animation:none;background:var(--sb-ink,#2A2016);color:var(--sb-cream,#FAF6EF);box-shadow:none;border-radius:999px}
-.sh-pieces .sh-btn:hover,.sh-join .sh-form-el button:hover{background:#0B6E72}
-.sh-join>div{background:#fff;border:1px solid var(--sb-line,rgba(42,32,22,.14));box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
-.sh-join .sh-size span{color:var(--sb-ink-3,#6B6256)}
-.sh-join .sh-size select,.sh-join .sh-form-el input{background:#fff;border-color:rgba(42,32,22,.28);color:var(--sb-ink,#2A2016)}
-.sh-join .sh-fine{color:var(--sb-ink-3,#6B6256)}
-.sh-join .sh-back{color:var(--sb-ink,#2A2016);text-decoration-color:#0FAAAF}
-[data-waitlist-wrap].done .sh-ok{color:#0B6E72}
-[data-waitlist-wrap].err .sh-err{color:#A3341C}
-.sh-pieces .sh-btn:focus-visible,.sh-pieces .sh-piece:focus-visible,.sh-join .sh-back:focus-visible{outline-color:#0B6E72}
+/* 25 Oct 2026 (Faheem): a short intro over the waterline still, then every product on cream cards over the
+   reef. The cards are the same component as /new/ (preorder-page.js newCard), so price, stage lines, the
+   Mock-up label and the cut badge match the rest of the site. */
+.sh-intro{position:relative;z-index:2;min-height:78vh;display:flex;align-items:center;justify-content:center;padding:10vh 20px}
+.sh-intro>div{max-width:640px;padding:30px 32px;border-radius:16px;background:rgba(11,21,38,.66);border:1px solid rgba(217,195,165,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);text-align:start}
+.sh-intro h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.05;margin:0 0 14px;color:#F4ECDF;text-wrap:balance}
+.sh-intro .sh-num{color:#A9E0DA}
+.sh-shop{position:relative;z-index:2;padding:6vh 20px 14vh}
+.sh-shop-in{max-width:1180px;margin:0 auto}
+.sh-shop h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(32px,4vw,52px);line-height:1.05;margin:0 0 10px;color:#F4ECDF;text-align:center;text-shadow:0 2px 24px rgba(11,21,38,.7);text-wrap:balance}
+.sh-shop-l{max-width:62ch;margin:0 auto 26px;text-align:center;font-size:16px;line-height:1.55;color:#F1E7D6;text-shadow:0 1px 12px rgba(11,21,38,.85)}
+.sh-shop-l a{color:#F4ECDF;text-decoration-color:#0FAAAF;text-underline-offset:3px}
+.sh-shop-h{max-width:720px;margin:0 auto 26px;padding:22px 26px;border-radius:16px;background:rgba(11,21,38,.66);border:1px solid rgba(217,195,165,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.sh-shop-h .sh-shop-l{margin-bottom:0}
+.sh-grid2{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:1040px;margin:0 auto}
+.sh-grid2>.nb-c{width:calc(25% - 12px)}
+@media(max-width:1000px){.sh-grid2>.nb-c{width:calc(33.333% - 11px)}}
+.sh-shop .nb-c{background:var(--sb-cream,#FAF6EF);border-radius:14px;padding:10px 10px 14px;box-shadow:0 18px 40px rgba(3,8,16,.35);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.sh-shop .nb-c:hover{transform:translateY(-4px)}
+.sh-shop .nb-c b{padding:0 4px}.sh-shop .nb-c small{padding:0 4px}
+.sh-shop .nb-c:focus-visible{outline:3px solid #A9E0DA;outline-offset:3px}
+@media(max-width:700px){.sh-intro{min-height:70vh;padding:8vh 16px}.sh-intro>div{padding:22px 20px}.sh-shop{padding:4vh 12px 10vh}.sh-grid2{gap:10px}.sh-grid2>.nb-c{width:calc(50% - 5px)}.sh-shop .nb-c{padding:7px 7px 11px;border-radius:12px}}
 @media(prefers-reduced-motion:reduce){
   .sh-eyebrow,.sh-kicker,.sh-hero h1,.sh-btn,.sh-cue{animation:none!important;opacity:1!important;transform:none!important}
   .sh-la,.sh-ar{animation:none!important;opacity:1!important;filter:none!important}
@@ -282,7 +278,7 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
 </style>
 <noscript><style>#shGL{background:#0B1526 url(/assets/sahel/sahel-shore-m.webp) 50% 50%/cover no-repeat}.sh-rv{opacity:1;transform:none}.sh-eyebrow,.sh-kicker,.sh-hero h1,.sh-btn,.sh-la,.sh-ar{opacity:1;animation:none}.sh-hud,.sh-cue,.sh-hint{display:none}</style></noscript>`;
 
-  const body = `${ST.stageHead()}${css}
+  const body = `${ST.stageHead()}${ST.NB_CSS()}${css}
 <canvas id="shGL" aria-hidden="true"></canvas>
 <div class="sh-veil" aria-hidden="true"></div>
 <main class="sh" id="sahel">
@@ -294,44 +290,29 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
     </div>
     <div class="sh-bot">
       <p class="sh-kicker">${ST.inc('st0', `<span class="st0">${T.kicker}</span>`)}${ST.inc('st1', '<span class="st1">Pre-order open</span>')}<span class="st2">Out now</span></p>
-      ${ST.inc('st0', `<a class="sh-btn st0" href="#first-to-know">${T.cta} <span aria-hidden="true">&darr;</span></a>`)}
-      ${ST.inc('st1', `<a class="sh-btn st1" href="/new/#sahel">Pre-order Sahel <span aria-hidden="true">&rarr;</span></a>`)}
-      <a class="sh-btn st2" href="/new/#sahel">Shop Sahel <span aria-hidden="true">&rarr;</span></a>
+      ${/* 25 Oct 2026 (Faheem): the page is the collection now; every button goes to the pieces */''}${ST.inc('st0', `<a class="sh-btn st0" href="#pieces">See the pieces <span aria-hidden="true">&darr;</span></a>`)}
+      ${ST.inc('st1', `<a class="sh-btn st1" href="#pieces">Pre-order Sahel <span aria-hidden="true">&darr;</span></a>`)}
+      <a class="sh-btn st2" href="#pieces">Shop Sahel <span aria-hidden="true">&darr;</span></a>
     </div>
     <div class="sh-cue" aria-hidden="true">${T.scroll}<i></i></div>
   </section>
-  ${chapters}
-  <section class="sh-pieces" data-plate="5" data-stop="The Seabed" aria-labelledby="shPieces">
+  ${/* 25 Oct 2026 (Faheem: "A brief intro of the collection and then all the pieces. Background needs to
+       remain reef inspired."). The five scroll chapters, the waiting list and the "Be first to know" pill
+       are gone. The reef scene stays behind: the intro sits on the waterline still, the pieces on the reef. */''}
+  <section class="sh-intro" data-plate="1" data-stop="The Surface" aria-labelledby="shIntro">
     <div class="sh-rv">
-      <p class="sh-num"><span>06</span>&mdash; ${T.piecesNum}</p>
-      <h2 id="shPieces">${ST.inc('st0', '<span class="st0">Seven pieces, on pre-order from 28 Oct</span>')}${ST.inc('st1', '<span class="st1">Seven pieces, on pre-order</span>')}<span class="st2">Seven pieces, out now</span></h2>
-      <p class="sh-sub">${T.piecesP}</p>
-      <div class="sh-grid">
-      ${pieces}
-      </div>
-      ${ST.inc('st0', `<p class="st0" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
-      <p class="st0 sh-sub">Pre-order opens Wed 28 Oct at 8 AM. <span data-days></span></p>`)}
-      ${ST.inc('st1', `<p class="st1" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces and pre-order <span aria-hidden="true">&rarr;</span></a></p>
-      <p class="st1 sh-sub">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
-      <p class="st2" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
+      <p class="sh-num">The Coast Edition</p>
+      <h2 id="shIntro">Seven designs from the UAE coast</h2>
+      <p class="sh-lede">Sahel means the coast. The Founding Edition came from the desert and the mountains; Sahel follows the shoreline: the bay at Khor Fakkan, the pearling town of Al Jazirah Al Hamra, the reef off Al Aqah, the flamingos of Ras Al Khor, and the place where the desert meets the sea. Four tees in Regular and Oversized, a polo and two hoodies. Designed in the UAE.</p>
     </div>
   </section>
-  <section class="sh-join" id="first-to-know" data-plate="5" data-stop="The Seabed" aria-labelledby="shJoin">
-    <div class="sh-rv" data-waitlist-wrap>
-      <h2 id="shJoin">${T.joinH}</h2>
-      <p>${T.joinP}</p>
-      <form class="sh-form-el" data-waitlist data-source="sahel" novalidate>
-        <input type="email" name="email" placeholder="${T.ph}" aria-label="Email address" autocomplete="email" required>
-        <div class="sh-row"><label class="sh-size"><span>${T.size}</span><select name="tee_size"><option value="">${T.sizeAny}</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label>
-        <button type="submit">${T.btn}</button></div>
-      </form>
-      <p class="sh-fine">${T.fine}</p>
-      <p class="sh-ok" role="status">${T.ok}</p>
-      <p class="sh-err" role="alert">${T.err}</p>
-      <div class="sh-links"><a class="sh-back" href="${T.backHref}">${T.back}</a><a class="sh-back" href="${T.trailHref}">${T.trail}</a></div>
+  <section class="sh-shop" id="pieces" data-plate="2" data-stop="The Reef" aria-labelledby="shPieces">
+    <div class="sh-shop-in">
+      <div class="sh-shop-h"><h2 id="shPieces">${ST.inc('st0', '<span class="st0">All the pieces, on <span style="white-space:nowrap">pre-order</span> from Wed 28 Oct</span>')}${ST.inc('st1', '<span class="st1">All the pieces, on <span style="white-space:nowrap">pre-order</span> now</span>')}<span class="st2">All the pieces</span></h2>
+      <p class="sh-shop-l">${ST.newLede()}</p></div>
+      <div class="nb-g sh-grid2">${SHOP.map(p => ST.newCard(p)).join('')}</div>
     </div>
   </section>
-  <div class="sh-hud"><div class="sh-hud-t" aria-hidden="true"><small>${T.hud}</small><b id="shStop">The Shore</b><i><b id="shBar"></b></i></div>${ST.inc('st0', `<a class="sh-pill st0" href="#first-to-know">${T.cta}</a>`)}${ST.inc('st1', '<a class="sh-pill st1" href="/new/#sahel">Pre-order Sahel</a>')}<a class="sh-pill st2" href="/new/#sahel">Shop Sahel</a></div>
 </main>
 <script src="/assets/sahra-sahel.js" defer></script>`;
 

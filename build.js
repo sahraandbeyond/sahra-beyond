@@ -3032,9 +3032,10 @@ const COMMERCE = [
     /* 23 Oct 2026 (site review): the Sahel tees, as their own cards (preorder-page.js) */
     newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' && !!p.fit, true), newFits: true,
     items: ["al-quaa-galaxy-regular", "al-quaa-galaxy-oversized", "hajar-mountains-regular", "hajar-mountains-oversized", "empty-quarter-regular", "empty-quarter-oversized"],
-    h1: 'T-Shirts in Dubai & the UAE',
-    title: 'T-Shirts in Dubai & the UAE — 230 GSM Graphic Tees',
-    desc: 'Graphic t-shirts from real UAE places: the desert, the Hajar and the coast. 230 GSM cotton, Regular or Oversized, from AED 139. Free delivery in Dubai and the UAE.',
+    /* 25 Oct 2026 (Faheem: be found for "UAE t shirts"): the phrase leads the title, H1 and description; Dubai stays in the title */
+    h1: 'UAE T-Shirts, Drawn from Real Places',
+    title: 'UAE T-Shirts & Graphic Tees in Dubai | Sahra & Beyond',
+    desc: 'UAE t-shirts drawn from real places: the desert, the mountains and the coast. 230 GSM graphic tees, Regular or Oversized, from AED 139. Free next-day UAE delivery.',
     catNav: true,
     intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight 230gsm combed ring-spun cotton.\n\nThe Founding Edition is three designs in two fits. Al Quaa Galaxy and Hajar Mountains are printed direct to garment, so the ink sits in the cotton rather than on top of it; Empty Quarter is embroidered. Each comes in a straight Regular fit or a drop-shoulder Oversized, S to XL. If you are buying in Dubai, Abu Dhabi or anywhere in the UAE, delivery is free and arrives the next working day on orders placed by 2 pm.\n\nSahel, the Coast Edition, adds four tees, on pre-order from Wed 28 Oct and shipping from Fri 30 Oct: Khor Fakkan Bay, Al Hamra Pearl Diver and Al Aqah Reef, drawn from the east coast and the Ras Al Khaimah shore, and the Shams Tee, with our mark embroidered in sand thread on the chest. Each comes in Regular and Oversized.",
     sections: [
@@ -3044,6 +3045,7 @@ const COMMERCE = [
     ],
     related: [['/national-day/', 'UAE National Day t-shirts', 'For Eid Al Etihad, 2 December'], ['/gifts/', 'Gifts from the UAE', 'Leaving gifts that are not touristy']],
     faqs: [
+      ['Where can I buy UAE t-shirts online?', 'Here. Sahra & Beyond is a clothing brand designed in the UAE, and every t-shirt is drawn from a real place in the Emirates: the Al Quaa night sky, the Hajar peaks, the Liwa dunes and, in Sahel, the coast. They are 230 GSM cotton in Regular and Oversized fits, sizes S to XL, from AED 139, with free next-day delivery across the UAE when you order by 2 pm.'],
       ['Where do you ship?', 'We ship worldwide from Dubai. In the UAE: free next-day delivery to all seven emirates, with no minimum order — order by 2 pm and it arrives the next working day. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 390. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.'],
       ['What size should I order?', 'Every t-shirt design comes in Regular and Oversized fits, S to XL; the polos come in one fit. Our size guide has full flat-lay measurements for the Founding Edition tees, plus a method for measuring a t-shirt you already own to find your match. There is no size chart for the Sahel tees yet, so message us before you order one.'],
       ['What is the cotton, exactly?', '100% combed ring-spun cotton at 230gsm, with no polyester. Combing strips out the short fibres and ring-spinning twists what remains into a smoother, stronger yarn — that is where the weight and the hand come from. We describe the yarn we actually buy and make no certification claims we cannot show you.']
@@ -4588,6 +4590,27 @@ html body main.tr .tr-card .tr-btn-sm:hover{background:#285C5C}
 html body main.tr .tr-card .tr-cta-sub{color:var(--sb-ink-3,#6B6256)}
 html body main.tr .tr-form button{border-radius:999px;text-transform:none;letter-spacing:.02em;background:var(--sb-ink,#2A2016);color:var(--sb-cream,#FAF6EF)}
 html body main.tr .tr-form button:hover{background:#285C5C}
+/* 25 Oct 2026 (Faheem): a short intro, then every piece on cream cards beside the reveal film, over the mountain */
+.tr-intro{min-height:72vh;display:flex;align-items:center;justify-content:center;padding:10vh 20px}
+.tr-intro>div{max-width:680px;padding:30px 32px;border-radius:16px;background:rgba(10,16,22,.72);border:1px solid rgba(217,195,165,.2);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.tr-intro h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(32px,4.2vw,52px);line-height:1.06;margin:0 0 14px;color:#F6ECDD;text-wrap:balance}
+.tr-intro p{font-size:17px;line-height:1.65;color:#E6D8C3;margin:0}.tr-intro a{color:#D9C3A5;text-underline-offset:3px}
+.tr-intro .tr-num{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#9ED0CB;margin:0 0 12px}
+.tr-shop{padding:4vh 20px 14vh}
+.tr-shop-h{max-width:720px;margin:0 auto 28px;padding:22px 26px;border-radius:16px;background:rgba(10,16,22,.72);border:1px solid rgba(217,195,165,.2);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);text-align:center}
+.tr-shop-h h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(30px,3.8vw,48px);line-height:1.06;margin:0 0 10px;color:#F6ECDD;text-wrap:balance}
+.tr-shop-h p{font-size:15.5px;line-height:1.55;color:#E6D8C3;margin:0}.tr-shop-h a{color:#F6ECDD;text-underline-offset:3px}
+.tr-shop-g{display:grid;grid-template-columns:minmax(0,300px) minmax(0,560px);gap:28px;justify-content:center;align-items:start}
+.tr-shop .tr-film{top:110px}
+.tr-grid2{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.tr-shop .nb-c{background:var(--sb-cream,#FAF6EF);border-radius:14px;padding:10px 10px 14px;box-shadow:0 18px 40px rgba(0,0,0,.4);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.tr-shop .nb-c:hover{transform:translateY(-4px)}.tr-shop .nb-c b,.tr-shop .nb-c small{padding:0 4px}
+.tr-shop .nb-c:focus-visible{outline:3px solid #9ED0CB;outline-offset:3px}
+.tr-more{max-width:888px;margin:28px auto 0;padding:22px 26px;border-radius:16px;background:rgba(10,16,22,.72);border:1px solid rgba(217,195,165,.2)}
+.tr-more p{font-size:15.5px;line-height:1.65;color:#E6D8C3;margin:0}.tr-more a{color:#D9C3A5;text-underline-offset:3px}
+.tr-more .tr-more-a{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:14px;font-weight:600}
+@media(max-width:820px){.tr-shop-g{grid-template-columns:1fr;max-width:560px;margin:0 auto}.tr-shop .tr-film{position:relative;top:auto;max-width:260px;margin:0 auto}}
+@media(max-width:700px){main.tr .tr-hud{display:none}.tr-intro{min-height:64vh;padding:8vh 16px}.tr-intro>div{padding:22px 20px}.tr-shop{padding:4vh 12px 10vh}.tr-grid2{gap:10px}.tr-shop .nb-c{padding:7px 7px 11px;border-radius:12px}.tr-more{padding:18px}}
 .tr-cta-sub{margin:8px 20px 0;font-size:13.5px;color:#CDBEA8}
 .tr-renders{margin:0;text-align:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#CDBEA8}
 @media(max-width:820px){.tr-rvl{grid-template-columns:1fr;max-width:460px;margin-left:auto;margin-right:auto;gap:28px}.tr-film{position:relative;top:auto;max-width:300px;margin:0 auto}}
@@ -4642,7 +4665,7 @@ html body main.tr .tr-form button:hover{background:#285C5C}
   .tr-flash,.tr-sweep,.tr-cue i{animation:none}
 }
 </style>
-${require('./preorder-page.js').stageHead()}
+${require('./preorder-page.js').stageHead()}${lang === 'ar' ? '' : PO.NB_CSS()}
 <canvas id="trGL" aria-hidden="true"></canvas>
 <div class="tr-veil" aria-hidden="true"></div>
 <main class="tr" id="trail">
@@ -4652,10 +4675,10 @@ ${require('./preorder-page.js').stageHead()}
     ${t.tag ? `<p class="tr-tagline" lang="en" dir="ltr">${t.tag}</p>` : `<h1 class="tr-tagline">${t.h1}</h1>`}
     <p class="tr-kicker">${t.kicker}</p>
     ${t.tag ? `<h1>${t.h1}</h1>` : ''}
-    ${lang === 'ar' ? `<a class="tr-btn" href="#first-access">${t.cta} <span aria-hidden="true">&darr;</span></a>` : PO.inc('st0', `<a class="tr-btn st0" href="#first-access">${t.cta} <span aria-hidden="true">&darr;</span></a>`) + PO.inc('st1', `<a class="tr-btn st1" href="/new/#trail">Pre-order Sahra Trail <span aria-hidden="true">&rarr;</span></a>`) + `<a class="tr-btn st2" href="/new/#trail">Shop Sahra Trail <span aria-hidden="true">&rarr;</span></a>` + PO.inc('st1', `<p class="tr-cta-sub st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
+    ${lang === 'ar' ? `<a class="tr-btn" href="#first-access">${t.cta} <span aria-hidden="true">&darr;</span></a>` : /* 25 Oct 2026 (Faheem): every button goes to the pieces; the waiting list is gone */PO.inc('st0', `<a class="tr-btn st0" href="#pieces">See the pieces <span aria-hidden="true">&darr;</span></a>`) + PO.inc('st1', `<a class="tr-btn st1" href="#pieces">Pre-order Sahra Trail <span aria-hidden="true">&darr;</span></a>`) + `<a class="tr-btn st2" href="#pieces">Shop Sahra Trail <span aria-hidden="true">&darr;</span></a>` + PO.inc('st1', `<p class="tr-cta-sub st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
     <div class="tr-cue" aria-hidden="true">${t.scroll}<i></i></div>
   </section>
-  ${chapters}
+${lang === 'ar' ? `  ${chapters}
   <section class="tr-first" aria-labelledby="${id}first">
     <div class="tr-rv">
       <h2 id="${id}first">${t.firstH}</h2>
@@ -4691,6 +4714,18 @@ ${require('./preorder-page.js').stageHead()}
       <a class="tr-back" href="${t.backHref}">${t.back}</a>${t.hikes ? `<br><a class="tr-back" href="/trail/hikes/" style="margin-top:10px">${t.hikes}</a>` : ''}
     </div>
   </section>
+` : `  <section class="tr-intro" aria-labelledby="${id}about"><div class="tr-rv"><p class="tr-num">Sahra Trail</p><h2 id="${id}about">${t.about.h}</h2><p>${t.about.p[0]}</p></div></section>
+  <section class="tr-shop" id="pieces" aria-labelledby="${id}first">
+    <div class="tr-shop-h"><h2 id="${id}first">${PO.inc('st0', '<span class="st0">All the pieces, on <span style="white-space:nowrap">pre-order</span> from Wed 28 Oct</span>')}${PO.inc('st1', '<span class="st1">All the pieces, on <span style="white-space:nowrap">pre-order</span> now</span>')}<span class="st2">All the pieces</span></h2><p>${PO.newLede()}</p></div>
+    <div class="tr-shop-g">
+      <figure class="tr-film"><video id="${id}film" muted loop playsinline preload="none" poster="/assets/trail/reveal/trail-reveal-poster.jpg" width="720" height="1280" aria-label="${t.rv.filmAlt}"><source src="/assets/trail/reveal/trail-reveal-loop.mp4" type="video/mp4"></video><span class="mock-tag">${t.rv.mock}</span>
+        <button type="button" class="tr-film-btn" data-play="${t.rv.play}" data-pause="${t.rv.pause}" aria-controls="${id}film">${t.rv.play}</button>
+        <figcaption>${t.rv.film} &middot; ${t.rv.renders}</figcaption></figure>
+      <div class="nb-g tr-grid2">${PO.products().filter(p => p.line === 'trail').map(p => PO.newCard(p)).join('')}</div>
+    </div>
+    <div class="tr-more"><p>${t.about.p[1]}</p><p class="tr-more-a"><a href="/trail/hikes/">${t.hikes}</a><a href="/shop/">The Founding Edition &rarr;</a></p></div>
+  </section>
+`}
   <div class="tr-hud" aria-hidden="true"><div><small>${t.elev}</small><b id="trElev">190 m</b></div><i><b id="trBar"></b></i></div>
 </main>
 <script src="/assets/sahra-trail.js" defer></script>`;

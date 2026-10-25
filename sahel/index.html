@@ -1344,7 +1344,24 @@ function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttri
 set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
 /* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
 function days(){try{var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).split('-'),n=Math.round((Date.UTC(2026,9,28)-Date.UTC(+t[0],t[1]-1,+t[2]))/864e5),x=n>1?'That is in '+n+' days.':n===1?'That is tomorrow.':n===0?'That is today.':'';[].forEach.call(document.querySelectorAll('[data-days]'),function(e){e.textContent=x;});}catch(e){}}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script>
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><style>
+.nb{max-width:1180px;margin:0 auto;padding:34px 20px 10px}
+.nb-k{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;margin:0 0 8px}
+.nb h2{font:600 clamp(26px,3vw,36px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#2A2016}
+.nb-l{font:16px/1.55 Jost,system-ui,sans-serif;margin:0 0 16px;color:#3E3326;max-width:62ch}
+.nb-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.nb-c{display:block;text-decoration:none;color:#2A2016}
+.nb-f{display:block;position:relative;margin:0;background:#ECE4D6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
+.nb-f img{width:100%;height:100%;object-fit:cover;display:block}
+.nb-f .cut-b,.pcard-img .cut-b{position:absolute;left:8px;bottom:8px;z-index:2;font:600 10.5px/1 Jost,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:5px 8px;border-radius:999px;background:rgba(42,32,22,.82);color:#FAF6EF;pointer-events:none}
+.nb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
+.nb-c b{display:block;font:500 16px/1.35 Jost,system-ui,sans-serif;margin:8px 0 2px}
+.nb-c small{display:block;font:13px/1.45 Jost,system-ui,sans-serif;color:#5C4E3C}
+.nb-c .nb-p{font:500 14px Jost,system-ui,sans-serif;color:#2A2016;margin-top:2px}
+.nb-c:focus-visible{outline:3px solid #A95A21;outline-offset:3px;border-radius:10px}
+.nb-a{display:inline-block;margin:16px 0 0;font:600 15px Jost,system-ui,sans-serif;color:#7E4114}
+@media(max-width:700px){.nb{padding:26px 16px 6px}.nb-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+</style>
 <style>
 body.sahel-page{background:#0B1526;color:#F4ECDF}
 body.sahel-page .hdr{background:rgba(11,21,38,.55);border-bottom-color:rgba(217,195,165,.14);color:#F4ECDF}
@@ -1465,33 +1482,28 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
   .sh-hero{padding-bottom:104px}
 }
 @media(max-height:700px){.sh-hero{padding-top:92px}.sh-mark{width:min(300px,62vw);margin:14px 0 12px}.sh-hero h1{font-size:27px}}
-/* 24 Oct 2026 (aesthetic panel): the journey stays dark; the buying end of the page (pieces and the list)
-   sits on the shared cream ground with ink type, the shared buttons and badge, and a Lagoon accent
-   (the Al Aqah Reef colour, deepened for text). */
-.sh-pieces,.sh-join{position:relative;z-index:2;background:var(--sb-cream,#FAF6EF);color:var(--sb-ink,#2A2016)}
-.sh-pieces{min-height:0;padding:12vh 20px 4vh;border-top:4px solid #0FAAAF}
-.sh-join{padding:4vh 20px 12vh}
-.sh-pieces .sh-num{color:#0B6E72}.sh-pieces .sh-num span{color:var(--sb-copper,#9C521B)}
-.sh-pieces h2,.sh-join h2{color:var(--sb-ink,#2A2016);text-shadow:none}
-.sh-pieces .sh-sub,.sh-join p{color:var(--sb-ink-2,#4A4136);text-shadow:none}
-.sh-pieces .sh-rv,.sh-join .sh-rv{opacity:1;transform:none}
-.sh-photo{display:block;width:100%;max-width:250px;aspect-ratio:4/5;border-radius:4px;overflow:hidden;background:#E9E0D3;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.sh-photo img{display:block;width:100%;height:100%;object-fit:cover}
-.sh-piece:hover .sh-photo{transform:translateY(-4px)}
-.sh-pieces .sh-mock{margin-top:10px;border:0;border-radius:4px;background:#EFE7DA;color:var(--sb-ink,#2A2016);font-size:10px;letter-spacing:.12em}
-.sh-pieces .sh-n{color:#0B6E72;margin-top:12px}
-.sh-pieces .sh-piece b{color:var(--sb-ink,#2A2016)}
-.sh-pieces .sh-piece small{font-family:'Jost',system-ui,sans-serif;font-size:13.5px;letter-spacing:.01em;text-transform:none;color:var(--sb-ink-3,#6B6256)}
-.sh-pieces .sh-btn,.sh-join .sh-form-el button{opacity:1;animation:none;background:var(--sb-ink,#2A2016);color:var(--sb-cream,#FAF6EF);box-shadow:none;border-radius:999px}
-.sh-pieces .sh-btn:hover,.sh-join .sh-form-el button:hover{background:#0B6E72}
-.sh-join>div{background:#fff;border:1px solid var(--sb-line,rgba(42,32,22,.14));box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
-.sh-join .sh-size span{color:var(--sb-ink-3,#6B6256)}
-.sh-join .sh-size select,.sh-join .sh-form-el input{background:#fff;border-color:rgba(42,32,22,.28);color:var(--sb-ink,#2A2016)}
-.sh-join .sh-fine{color:var(--sb-ink-3,#6B6256)}
-.sh-join .sh-back{color:var(--sb-ink,#2A2016);text-decoration-color:#0FAAAF}
-[data-waitlist-wrap].done .sh-ok{color:#0B6E72}
-[data-waitlist-wrap].err .sh-err{color:#A3341C}
-.sh-pieces .sh-btn:focus-visible,.sh-pieces .sh-piece:focus-visible,.sh-join .sh-back:focus-visible{outline-color:#0B6E72}
+/* 25 Oct 2026 (Faheem): a short intro over the waterline still, then every product on cream cards over the
+   reef. The cards are the same component as /new/ (preorder-page.js newCard), so price, stage lines, the
+   Mock-up label and the cut badge match the rest of the site. */
+.sh-intro{position:relative;z-index:2;min-height:78vh;display:flex;align-items:center;justify-content:center;padding:10vh 20px}
+.sh-intro>div{max-width:640px;padding:30px 32px;border-radius:16px;background:rgba(11,21,38,.66);border:1px solid rgba(217,195,165,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);text-align:start}
+.sh-intro h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.05;margin:0 0 14px;color:#F4ECDF;text-wrap:balance}
+.sh-intro .sh-num{color:#A9E0DA}
+.sh-shop{position:relative;z-index:2;padding:6vh 20px 14vh}
+.sh-shop-in{max-width:1180px;margin:0 auto}
+.sh-shop h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(32px,4vw,52px);line-height:1.05;margin:0 0 10px;color:#F4ECDF;text-align:center;text-shadow:0 2px 24px rgba(11,21,38,.7);text-wrap:balance}
+.sh-shop-l{max-width:62ch;margin:0 auto 26px;text-align:center;font-size:16px;line-height:1.55;color:#F1E7D6;text-shadow:0 1px 12px rgba(11,21,38,.85)}
+.sh-shop-l a{color:#F4ECDF;text-decoration-color:#0FAAAF;text-underline-offset:3px}
+.sh-shop-h{max-width:720px;margin:0 auto 26px;padding:22px 26px;border-radius:16px;background:rgba(11,21,38,.66);border:1px solid rgba(217,195,165,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.sh-shop-h .sh-shop-l{margin-bottom:0}
+.sh-grid2{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:1040px;margin:0 auto}
+.sh-grid2>.nb-c{width:calc(25% - 12px)}
+@media(max-width:1000px){.sh-grid2>.nb-c{width:calc(33.333% - 11px)}}
+.sh-shop .nb-c{background:var(--sb-cream,#FAF6EF);border-radius:14px;padding:10px 10px 14px;box-shadow:0 18px 40px rgba(3,8,16,.35);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.sh-shop .nb-c:hover{transform:translateY(-4px)}
+.sh-shop .nb-c b{padding:0 4px}.sh-shop .nb-c small{padding:0 4px}
+.sh-shop .nb-c:focus-visible{outline:3px solid #A9E0DA;outline-offset:3px}
+@media(max-width:700px){.sh-intro{min-height:70vh;padding:8vh 16px}.sh-intro>div{padding:22px 20px}.sh-shop{padding:4vh 12px 10vh}.sh-grid2{gap:10px}.sh-grid2>.nb-c{width:calc(50% - 5px)}.sh-shop .nb-c{padding:7px 7px 11px;border-radius:12px}}
 @media(prefers-reduced-motion:reduce){
   .sh-eyebrow,.sh-kicker,.sh-hero h1,.sh-btn,.sh-cue{animation:none!important;opacity:1!important;transform:none!important}
   .sh-la,.sh-ar{animation:none!important;opacity:1!important;filter:none!important}
@@ -1515,113 +1527,27 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
     </div>
     <div class="sh-bot">
       <p class="sh-kicker"><span class="st0">Pre-order opens Wed 28 Oct</span><span class="st1">Pre-order open</span><span class="st2">Out now</span></p>
-      <a class="sh-btn st0" href="#first-to-know">Be first to know <span aria-hidden="true">&darr;</span></a>
-      <a class="sh-btn st1" href="/new/#sahel">Pre-order Sahel <span aria-hidden="true">&rarr;</span></a>
-      <a class="sh-btn st2" href="/new/#sahel">Shop Sahel <span aria-hidden="true">&rarr;</span></a>
+      <a class="sh-btn st0" href="#pieces">See the pieces <span aria-hidden="true">&darr;</span></a>
+      <a class="sh-btn st1" href="#pieces">Pre-order Sahel <span aria-hidden="true">&darr;</span></a>
+      <a class="sh-btn st2" href="#pieces">Shop Sahel <span aria-hidden="true">&darr;</span></a>
     </div>
     <div class="sh-cue" aria-hidden="true">Scroll to dive<i></i></div>
   </section>
   
-  <section class="sh-ch" data-plate="0" data-stop="The Shore" aria-labelledby="shc0">
+  <section class="sh-intro" data-plate="1" data-stop="The Surface" aria-labelledby="shIntro">
     <div class="sh-rv">
-      <p class="sh-num"><span>01</span>&mdash; The Shore</p>
-      <h2 id="shc0">Where the sand meets the sea</h2>
-      <p class="sh-lede">Filmed at Snoopy Island, Al Aqah, on Fujairah&rsquo;s east coast.</p>
+      <p class="sh-num">The Coast Edition</p>
+      <h2 id="shIntro">Seven designs from the UAE coast</h2>
+      <p class="sh-lede">Sahel means the coast. The Founding Edition came from the desert and the mountains; Sahel follows the shoreline: the bay at Khor Fakkan, the pearling town of Al Jazirah Al Hamra, the reef off Al Aqah, the flamingos of Ras Al Khor, and the place where the desert meets the sea. Four tees in Regular and Oversized, a polo and two hoodies. Designed in the UAE.</p>
     </div>
   </section>
-  <section class="sh-ch" data-plate="1" data-stop="The Surface" aria-labelledby="shc1">
-    <div class="sh-rv">
-      <p class="sh-num"><span>02</span>&mdash; The Surface</p>
-      <h2 id="shc1">The desert is only half the story</h2>
-      <p class="sh-lede">Cross the waterline. The island above, the reef below.</p>
+  <section class="sh-shop" id="pieces" data-plate="2" data-stop="The Reef" aria-labelledby="shPieces">
+    <div class="sh-shop-in">
+      <div class="sh-shop-h"><h2 id="shPieces"><span class="st0">All the pieces, on <span style="white-space:nowrap">pre-order</span> from Wed 28 Oct</span><span class="st1">All the pieces, on <span style="white-space:nowrap">pre-order</span> now</span><span class="st2">All the pieces</span></h2>
+      <p class="sh-shop-l"><span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. The studio images are mock-ups.</span><span class="st1">Pre-order is open: 20% off these new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct. The studio images are mock-ups.</span><span class="st2">Pre-orders ship from Fri 30 Oct. The studio images are mock-ups.</span> No size chart for these pieces yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.</p></div>
+      <div class="nb-g sh-grid2"><a class="nb-c" href="/products/khor-fakkan-bay-tee-regular/"><span class="nb-f"><img src="/assets/preorder/kfb-back-720.webp" width="720" height="900" alt="Khor Fakkan Bay Tee, back, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Khor Fakkan Bay Tee</b><small>Graphic T-shirt &middot; Regular fit</small><small class="nb-p"><span class="st1">AED 159.20, pre-order price</span><span class="st02">AED 199</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/khor-fakkan-bay-tee-oversized/"><span class="nb-f"><img src="/assets/preorder/kfb-back-720.webp" width="720" height="900" alt="Khor Fakkan Bay Tee, back, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Khor Fakkan Bay Tee</b><small>Graphic T-shirt &middot; Oversized fit</small><small class="nb-p"><span class="st1">AED 159.20, pre-order price</span><span class="st02">AED 199</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/al-hamra-pearl-diver-tee-regular/"><span class="nb-f"><img src="/assets/preorder/pearl-back-720.webp" width="720" height="900" alt="Al Hamra Pearl Diver Tee, back, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Al Hamra Pearl Diver Tee</b><small>Graphic T-shirt &middot; Regular fit</small><small class="nb-p"><span class="st1">AED 159.20, pre-order price</span><span class="st02">AED 199</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/al-hamra-pearl-diver-tee-oversized/"><span class="nb-f"><img src="/assets/preorder/pearl-back-720.webp" width="720" height="900" alt="Al Hamra Pearl Diver Tee, back, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Al Hamra Pearl Diver Tee</b><small>Graphic T-shirt &middot; Oversized fit</small><small class="nb-p"><span class="st1">AED 159.20, pre-order price</span><span class="st02">AED 199</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/al-aqah-reef-tee-regular/"><span class="nb-f"><img src="/assets/preorder/reef-back-720.webp" width="720" height="900" alt="Al Aqah Reef Tee, back, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Al Aqah Reef Tee</b><small>Graphic T-shirt &middot; Regular fit</small><small class="nb-p"><span class="st1">AED 159.20, pre-order price</span><span class="st02">AED 199</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/al-aqah-reef-tee-oversized/"><span class="nb-f"><img src="/assets/preorder/reef-back-720.webp" width="720" height="900" alt="Al Aqah Reef Tee, back, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Al Aqah Reef Tee</b><small>Graphic T-shirt &middot; Oversized fit</small><small class="nb-p"><span class="st1">AED 159.20, pre-order price</span><span class="st02">AED 199</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/shams-tee-regular/"><span class="nb-f"><img src="/assets/preorder/shams-front-720.webp" width="720" height="900" alt="Shams Tee, front, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Shams Tee</b><small>Embroidered T-shirt &middot; Regular fit</small><small class="nb-p"><span class="st1">AED 111.20, pre-order price</span><span class="st02">AED 139</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/shams-tee-oversized/"><span class="nb-f"><img src="/assets/preorder/shams-front-720.webp" width="720" height="900" alt="Shams Tee, front, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Shams Tee</b><small>Embroidered T-shirt &middot; Oversized fit</small><small class="nb-p"><span class="st1">AED 111.20, pre-order price</span><span class="st02">AED 139</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/the-sahel-polo/"><span class="nb-f"><img src="/assets/preorder/polo-front-720.webp" width="720" height="900" alt="The Sahel Polo, front, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Men’s cut</em></span><b>The Sahel Polo</b><small>Polo shirt</small><small class="nb-p"><span class="st1">AED 183.20, pre-order price</span><span class="st02">AED 229</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/barr-and-bahr-hoodie/"><span class="nb-f"><img src="/assets/preorder/barr-back-720.webp" width="720" height="900" alt="Barr &amp; Bahr Hoodie, back, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Barr &amp; Bahr Hoodie</b><small>Hoodie</small><small class="nb-p"><span class="st1">AED 183.20, pre-order price</span><span class="st02">AED 229</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a><a class="nb-c" href="/products/ras-al-khor-hoodie/"><span class="nb-f"><img src="/assets/preorder/rakh-back-720.webp" width="720" height="900" alt="Ras Al Khor Hoodie, back, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i><em class="cut-b">Unisex</em></span><b>Ras Al Khor Hoodie</b><small>Hoodie</small><small class="nb-p"><span class="st1">AED 183.20, pre-order price</span><span class="st02">AED 229</span></small><small class="st0">Pre-order opens Wed 28 Oct</small><small class="st1">Pre-order, ships from Fri 30 Oct</small><small class="st2">Pre-order, ships from Fri 30 Oct</small></a></div>
     </div>
   </section>
-  <section class="sh-ch" data-plate="2" data-stop="The Reef" aria-labelledby="shc2">
-    <div class="sh-rv">
-      <p class="sh-num"><span>03</span>&mdash; The Reef</p>
-      <h2 id="shc2">Below the coast, there is a reef</h2>
-      <p class="sh-lede">Blue shadows, teal water, warm light on the coral.</p>
-    </div>
-  </section>
-  <section class="sh-ch sh-ch-low" data-plate="3" data-stop="The Locals" aria-labelledby="shc3">
-    <div class="sh-rv">
-      <p class="sh-num"><span>04</span>&mdash; The Locals</p>
-      <h2 id="shc3">Some neighbours were here first</h2>
-      <p class="sh-lede">A turtle, gliding past. We only borrowed the view.</p>
-    </div>
-  </section>
-  <section class="sh-ch" data-plate="4" data-stop="The Light" aria-labelledby="shc4">
-    <div class="sh-rv">
-      <p class="sh-num"><span>05</span>&mdash; The Light</p>
-      <h2 id="shc4">Follow the light to the coast</h2>
-      <p class="sh-lede">It falls through the water and settles on the seabed.</p>
-    </div>
-  </section>
-  <section class="sh-pieces" data-plate="5" data-stop="The Seabed" aria-labelledby="shPieces">
-    <div class="sh-rv">
-      <p class="sh-num"><span>06</span>&mdash; The Seabed</p>
-      <h2 id="shPieces"><span class="st0">Seven pieces, on pre-order from 28 Oct</span><span class="st1">Seven pieces, on pre-order</span><span class="st2">Seven pieces, out now</span></h2>
-      <p class="sh-sub">The Founding Edition came from the desert and the mountains. Sahel is the coast. Designed in the UAE.</p>
-      <div class="sh-grid">
-      <a href="/products/khor-fakkan-bay-tee-regular/" class="sh-piece sh-piece-tee" aria-label="Piece 01: Khor Fakkan Bay.">
-        <span class="sh-photo"><img src="/assets/preorder/kfb-back-720.webp" width="720" height="900" alt="Khor Fakkan Bay, studio mock-up" loading="lazy" decoding="async"></span>
-        <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">01</span><b>Khor Fakkan Bay</b><small>Tee &middot; <span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
-      </a>
-      <a href="/products/al-hamra-pearl-diver-tee-regular/" class="sh-piece sh-piece-tee" aria-label="Piece 02: Al Hamra Pearl Diver.">
-        <span class="sh-photo"><img src="/assets/preorder/pearl-back-720.webp" width="720" height="900" alt="Al Hamra Pearl Diver, studio mock-up" loading="lazy" decoding="async"></span>
-        <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">02</span><b>Al Hamra Pearl Diver</b><small>Tee &middot; <span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
-      </a>
-      <a href="/products/al-aqah-reef-tee-regular/" class="sh-piece sh-piece-tee" aria-label="Piece 03: Al Aqah Reef.">
-        <span class="sh-photo"><img src="/assets/preorder/reef-back-720.webp" width="720" height="900" alt="Al Aqah Reef, studio mock-up" loading="lazy" decoding="async"></span>
-        <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">03</span><b>Al Aqah Reef</b><small>Tee &middot; <span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
-      </a>
-      <a href="/products/shams-tee-regular/" class="sh-piece sh-piece-tee" aria-label="Piece 04: Shams Tee.">
-        <span class="sh-photo"><img src="/assets/preorder/shams-front-720.webp" width="720" height="900" alt="Shams Tee, studio mock-up" loading="lazy" decoding="async"></span>
-        <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">04</span><b>Shams Tee</b><small><span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
-      </a>
-      <a href="/products/the-sahel-polo/" class="sh-piece sh-piece-polo" aria-label="Piece 05: The Sahel Polo.">
-        <span class="sh-photo"><img src="/assets/preorder/polo-front-720.webp" width="720" height="900" alt="The Sahel Polo, studio mock-up" loading="lazy" decoding="async"></span>
-        <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">05</span><b>The Sahel Polo</b><small><span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
-      </a>
-      <a href="/products/barr-and-bahr-hoodie/" class="sh-piece sh-piece-hoodie" aria-label="Piece 06: Barr &amp; Bahr Hoodie.">
-        <span class="sh-photo"><img src="/assets/preorder/barr-back-720.webp" width="720" height="900" alt="Barr &amp; Bahr Hoodie, studio mock-up" loading="lazy" decoding="async"></span>
-        <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">06</span><b>Barr &amp; Bahr Hoodie</b><small><span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
-      </a>
-      <a href="/products/ras-al-khor-hoodie/" class="sh-piece sh-piece-hoodie" aria-label="Piece 07: Ras Al Khor Hoodie.">
-        <span class="sh-photo"><img src="/assets/preorder/rakh-back-720.webp" width="720" height="900" alt="Ras Al Khor Hoodie, studio mock-up" loading="lazy" decoding="async"></span>
-        <span class="sh-mock">Mock-up</span>
-        <span class="sh-n">07</span><b>Ras Al Khor Hoodie</b><small><span class="st0">Pre-order 28 Oct</span><span class="st1">Pre-order</span><span class="st2">Out now</span></small>
-      </a>
-      </div>
-      <p class="st0" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
-      <p class="st0 sh-sub">Pre-order opens Wed 28 Oct at 8 AM. <span data-days></span></p>
-      <p class="st1" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces and pre-order <span aria-hidden="true">&rarr;</span></a></p>
-      <p class="st1 sh-sub">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>
-      <p class="st2" style="margin-top:22px"><a class="sh-btn" href="/new/#sahel">See the pieces <span aria-hidden="true">&rarr;</span></a></p>
-    </div>
-  </section>
-  <section class="sh-join" id="first-to-know" data-plate="5" data-stop="The Seabed" aria-labelledby="shJoin">
-    <div class="sh-rv" data-waitlist-wrap>
-      <h2 id="shJoin">Join the list.</h2>
-      <p>We tell you about each release the evening before it opens.</p>
-      <form class="sh-form-el" data-waitlist data-source="sahel" novalidate>
-        <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required>
-        <div class="sh-row"><label class="sh-size"><span>Your size (optional)</span><select name="tee_size"><option value="">Not sure yet</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label>
-        <button type="submit">Join the list</button></div>
-      </form>
-      <p class="sh-fine">You will also hear about new places and drops now and then. Unsubscribe any time.</p>
-      <p class="sh-ok" role="status">You are on the list. We will tell you the evening before it opens.</p>
-      <p class="sh-err" role="alert">Please enter a valid email address.</p>
-      <div class="sh-links"><a class="sh-back" href="/shop/">Meanwhile, the Founding Edition is in the shop &rarr;</a><a class="sh-back" href="/trail/">Running kit? Sahra Trail &rarr;</a></div>
-    </div>
-  </section>
-  <div class="sh-hud"><div class="sh-hud-t" aria-hidden="true"><small>Al Aqah &middot; Fujairah</small><b id="shStop">The Shore</b><i><b id="shBar"></b></i></div><a class="sh-pill st0" href="#first-to-know">Be first to know</a><a class="sh-pill st1" href="/new/#sahel">Pre-order Sahel</a><a class="sh-pill st2" href="/new/#sahel">Shop Sahel</a></div>
 </main>
 <script src="/assets/sahra-sahel.js?v=76097db0" defer></script>
 <footer class="ftr"><div class="ftr-tagline">Designed in the UAE for everyone who loves it.</div>

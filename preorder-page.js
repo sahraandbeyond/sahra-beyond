@@ -541,6 +541,8 @@ module.exports.pieceFor = pieceFor;
 module.exports.pieceBlock = pieceBlock;
 module.exports.newBlock = newBlock;
 module.exports.newLede = newLede;
+module.exports.newCard = newCard;
+module.exports.NB_CSS = () => NB_CSS;
 module.exports.cut = cut;
 module.exports.forWomen = forWomen;
 module.exports.IN_HAND = IN_HAND;
