@@ -1638,9 +1638,9 @@ html body .folds summary h2,html body .fold summary h2{font-size:22px!important;
 html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
 </style>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=cdd516cd">
-<script src="/assets/sahra-welcome.js?v=e2640317" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=d1ce2dee" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=5ef305ef">
-<script src="/assets/sahra-nav.js?v=35ed85f7" data-sbn defer></script>
+<script src="/assets/sahra-nav.js?v=addf8d34" data-sbn defer></script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/">
 <link rel="alternate" hreflang="x-default" href="https://www.sahraandbeyond.ae/">
@@ -1676,6 +1676,61 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 </script>
 
+<!-- 27 Oct 2026: Sahel pre-order hero, filled by build.js from preorder-page.js homeHero() (stage 1 only) -->
+<!--PREHERO:START--><style>html[data-stage="0"] .st1,html[data-stage="0"] .st2,html[data-stage="0"] .st12,html[data-stage="1"] .st0,html[data-stage="1"] .st2,html[data-stage="1"] .st02,html[data-stage="2"] .st0,html[data-stage="2"] .st1,html[data-stage="2"] .st01,html:not([data-stage]) .st0,html:not([data-stage]) .st2,html:not([data-stage]) .st02{display:none!important}</style>
+<script>(function(){var d=document.documentElement,T1=1793126700000,T2=1793304000000;function k(){var n=Date.now(),s=n>=T2?2:n>=T1?1:0;try{var m=/[?&]sbstage=([012])/.exec(location.search||'');if(m)s=+m[1];}catch(e){}return s;}
+function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttribute('data-stage',String(s));try{document.dispatchEvent(new CustomEvent('sb:stage',{detail:{stage:s}}));}catch(e){}}}
+set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
+/* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
+function days(){try{var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).split('-'),n=Math.round((Date.UTC(2026,9,28)-Date.UTC(+t[0],t[1]-1,+t[2]))/864e5),x=n>1?'That is in '+n+' days.':n===1?'That is tomorrow.':n===0?'That is today.':'';[].forEach.call(document.querySelectorAll('[data-days]'),function(e){e.textContent=x;});}catch(e){}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><style>
+.ph{position:relative;z-index:2;background:#0B1526;color:#F4ECDF;padding:calc(var(--nav-h,62px) + 18px) 0 0;overflow:hidden}
+.ph-in{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:min(78vh,760px)}
+.ph-t{display:flex;flex-direction:column;justify-content:center;padding:40px 48px 40px 24px}
+.ph-k{font:400 12px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#A9E0DA;margin:0 0 14px}
+.ph h2{font:500 clamp(42px,5.6vw,76px)/1.0 'Cormorant Garamond',Georgia,serif;margin:0 0 18px;color:#F4ECDF;letter-spacing:-.01em;text-wrap:balance}
+.ph-o{display:inline-block;align-self:flex-start;font:600 clamp(18px,2vw,22px)/1.3 Jost,system-ui,sans-serif;color:#0B1526;background:#E9B978;padding:10px 16px;border-radius:10px;margin:0 0 16px}
+.ph-s{font:17px/1.55 Jost,system-ui,sans-serif;color:#E9DFCF;margin:0 0 22px;max-width:40ch}
+.ph-a{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 28px;border-radius:999px;background:#F4ECDF;color:#0B1526;font:600 16px Jost,system-ui,sans-serif;text-decoration:none}
+.ph-a:hover{background:#FFFFFF}
+.ph-tr{margin:16px 0 0;font:15px/1.5 Jost,system-ui,sans-serif}
+.ph-tr a{color:#F4ECDF;text-decoration:underline;text-decoration-color:#0FAAAF;text-underline-offset:4px}
+.ph-a:focus-visible,.ph-tr a:focus-visible,.ph-c:focus-visible{outline:3px solid #A9E0DA;outline-offset:3px}
+.ph-img{position:relative;min-height:420px}
+.ph-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+.ph-g{max-width:1240px;margin:0 auto;padding:22px 24px 30px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
+.ph-c{display:block;color:#F4ECDF;text-decoration:none}
+.ph-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E9E0D3}
+.ph-c img{width:100%;height:100%;object-fit:cover;display:block}
+.ph-c i{position:absolute;left:6px;top:6px;font:400 9.5px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;font-style:normal;padding:4px 6px;border-radius:4px;background:rgba(250,246,239,.94);color:#2A2016}
+.ph-c b{display:block;font:500 14px/1.3 Jost,system-ui,sans-serif;margin:8px 0 2px}
+.ph-c small{display:block;font:13px/1.35 Jost,system-ui,sans-serif;color:#E9B978}
+@media(max-width:860px){
+  .ph{padding-top:calc(var(--nav-h,62px) + 4px)}
+  .ph-in{display:block;min-height:0;position:relative}
+  .ph-img{position:absolute;inset:0;min-height:0}
+  .ph-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(11,21,38,.1) 0%,rgba(11,21,38,.55) 34%,rgba(11,21,38,.92) 62%,#0B1526 100%)}
+  .ph-t{position:relative;z-index:1;min-height:calc(86vh - var(--nav-h,62px));justify-content:flex-end;padding:120px 18px 24px}
+  .ph h2{font-size:clamp(40px,11vw,52px)}
+  .ph-s{font-size:16px}
+  .ph-a{width:100%;justify-content:center}
+  .ph-g{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding:14px 18px 26px}
+  .ph-c{flex:0 0 38%;scroll-snap-align:start}
+}
+</style><section class="ph st1" id="s-preorder" aria-labelledby="phH">
+  <div class="ph-in">
+    <div class="ph-img"><picture><source media="(max-width:860px)" srcset="/assets/sahel/sahel-surface-m.webp"><img src="/assets/sahel/sahel-surface-d.webp" width="1296" height="2304" alt="Half above, half below the water: an island on the horizon, the sea underneath" fetchpriority="high" decoding="async"></picture></div>
+    <div class="ph-t">
+      <p class="ph-k">Sahel &middot; The Coast Edition</p>
+      <h2 id="phH">Sahel is on pre-order</h2>
+      <p class="ph-o">20% off until Thu 29 Oct, 23:59</p>
+      <p class="ph-s">Seven designs from the UAE coast: four tees, a polo and two hoodies. Designed in the UAE. Ships from Fri 30 Oct.</p>
+      <a class="ph-a" href="/sahel/#pieces" data-track="home_preorder_hero">Pre-order Sahel <span aria-hidden="true">&rarr;</span></a>
+      <p class="ph-tr"><a href="/trail/#pieces" data-track="home_preorder_trail">Sahra Trail running kit is on pre-order too &rarr;</a></p>
+    </div>
+  </div>
+  <div class="ph-g"><a class="ph-c" href="/products/khor-fakkan-bay-tee-regular/"><span><img src="/assets/preorder/kfb-back-720.webp" width="720" height="900" alt="Khor Fakkan Bay Tee, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Khor Fakkan Bay Tee</b><small>AED 159.20, pre-order price</small></a><a class="ph-c" href="/products/al-hamra-pearl-diver-tee-regular/"><span><img src="/assets/preorder/pearl-back-720.webp" width="720" height="900" alt="Al Hamra Pearl Diver Tee, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Al Hamra Pearl Diver Tee</b><small>AED 159.20, pre-order price</small></a><a class="ph-c" href="/products/al-aqah-reef-tee-regular/"><span><img src="/assets/preorder/reef-back-720.webp" width="720" height="900" alt="Al Aqah Reef Tee, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Al Aqah Reef Tee</b><small>AED 159.20, pre-order price</small></a><a class="ph-c" href="/products/shams-tee-regular/"><span><img src="/assets/preorder/shams-front-720.webp" width="720" height="900" alt="Shams Tee, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Shams Tee</b><small>AED 111.20, pre-order price</small></a><a class="ph-c" href="/products/the-sahel-polo/"><span><img src="/assets/preorder/polo-front-720.webp" width="720" height="900" alt="The Sahel Polo, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>The Sahel Polo</b><small>AED 183.20, pre-order price</small></a><a class="ph-c" href="/products/barr-and-bahr-hoodie/"><span><img src="/assets/preorder/barr-back-720.webp" width="720" height="900" alt="Barr &amp; Bahr Hoodie, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Barr &amp; Bahr Hoodie</b><small>AED 183.20, pre-order price</small></a><a class="ph-c" href="/products/ras-al-khor-hoodie/"><span><img src="/assets/preorder/rakh-back-720.webp" width="720" height="900" alt="Ras Al Khor Hoodie, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Ras Al Khor Hoodie</b><small>AED 183.20, pre-order price</small></a></div>
+</section><!--PREHERO:END-->
 <!-- 1 · HERO · Liwa at golden hour -->
 <section class="stop hx" id="s-hero" data-tod="dawn" data-bg="liwa" aria-roledescription="carousel" aria-label="The collection, one piece at a time">
   <!-- 5 Oct 2026 (Faheem): one shirt per slide, the whole slide opens that shirt's page.
@@ -1698,8 +1753,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </div>
 
 <!-- 23 Oct 2026: Sahel + Sahra Trail launch band, filled by build.js from preorder-page.js homeBand() -->
-<!--LAUNCH:START--><style>html[data-stage="0"] .st1,html[data-stage="0"] .st2,html[data-stage="0"] .st12,html[data-stage="1"] .st0,html[data-stage="1"] .st2,html[data-stage="1"] .st02,html[data-stage="2"] .st0,html[data-stage="2"] .st1,html[data-stage="2"] .st01,html:not([data-stage]) .st1,html:not([data-stage]) .st2,html:not([data-stage]) .st12{display:none!important}</style>
-<script>(function(){var d=document.documentElement,T1=1793160000000,T2=1793304000000;function k(){var n=Date.now(),s=n>=T2?2:n>=T1?1:0;try{var m=/[?&]sbstage=([012])/.exec(location.search||'');if(m)s=+m[1];}catch(e){}return s;}
+<!--LAUNCH:START--><style>html[data-stage="0"] .st1,html[data-stage="0"] .st2,html[data-stage="0"] .st12,html[data-stage="1"] .st0,html[data-stage="1"] .st2,html[data-stage="1"] .st02,html[data-stage="2"] .st0,html[data-stage="2"] .st1,html[data-stage="2"] .st01,html:not([data-stage]) .st0,html:not([data-stage]) .st2,html:not([data-stage]) .st02{display:none!important}</style>
+<script>(function(){var d=document.documentElement,T1=1793126700000,T2=1793304000000;function k(){var n=Date.now(),s=n>=T2?2:n>=T1?1:0;try{var m=/[?&]sbstage=([012])/.exec(location.search||'');if(m)s=+m[1];}catch(e){}return s;}
 function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttribute('data-stage',String(s));try{document.dispatchEvent(new CustomEvent('sb:stage',{detail:{stage:s}}));}catch(e){}}}
 set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
 /* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
@@ -1722,10 +1777,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 .lb-c small{font:13px Jost,system-ui,sans-serif;color:#C9BBA6}
 @media(max-width:860px){.lb{padding:34px 16px 38px}.lb-in{grid-template-columns:1fr;gap:20px}.lb-g{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px}.lb-c{flex:0 0 42%;scroll-snap-align:start}}
 </style><section class="lb" id="s-launch" aria-labelledby="lbH"><div class="lb-in"><div>
-    <p class="lb-k">New &middot; <span class="st01">on pre-order from Wed 28 Oct</span><span class="st2">out now</span></p>
+    <p class="lb-k">New &middot; <span class="st1">on pre-order now</span><span class="st2">out now</span></p>
     <h2 id="lbH">Sahel, the Coast Edition, and Sahra Trail running wear</h2>
-    <p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone.</p><p class="st0 lb-d" data-days></p><p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p><p class="st2">Designed in the UAE for everyone who loves it.</p>
-    <a class="lb-a" href="/new/"><span class="st0">See the pieces</span><span class="st1">Pre-order now</span><span class="st2">Shop the new pieces</span> &rarr;</a>
+    <p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p><p class="st2">Designed in the UAE for everyone who loves it.</p>
+    <a class="lb-a" href="/new/"><span class="st1">Pre-order now</span><span class="st2">Shop the new pieces</span> &rarr;</a>
   </div><div class="lb-g"><a class="lb-c" href="/products/khor-fakkan-bay-tee-oversized/"><span><img src="/assets/preorder/kfb-back-720.webp" width="720" height="900" alt="Khor Fakkan Bay Tee, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Khor Fakkan Bay Tee</b><small class="st1">AED 159.20, pre-order price</small><small class="st02">AED 199</small></a><a class="lb-c" href="/products/al-aqah-reef-tee-oversized/"><span><img src="/assets/preorder/reef-back-720.webp" width="720" height="900" alt="Al Aqah Reef Tee, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Al Aqah Reef Tee</b><small class="st1">AED 159.20, pre-order price</small><small class="st02">AED 199</small></a><a class="lb-c" href="/products/barr-and-bahr-hoodie/"><span><img src="/assets/preorder/barr-back-720.webp" width="720" height="900" alt="Barr & Bahr Hoodie, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Barr &amp; Bahr Hoodie</b><small class="st1">AED 183.20, pre-order price</small><small class="st02">AED 229</small></a><a class="lb-c" href="/products/sahra-trail-kit/"><span><img src="/assets/preorder/trail-kit-front-720.webp" width="720" height="900" alt="Sahra Trail Kit, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>Sahra Trail Kit</b><small class="st1">AED 199.20, pre-order price</small><small class="st02">AED 249</small></a></div></div></section><!--LAUNCH:END-->
 <!-- 24 Oct 2026 (homepage SEO panel, Faheem: "All of it"): what we sell, in plain words, and a way to shop each
      category. NOT class="stop": STOPS[] is indexed against .stop, so this section paints its own paper ground. -->

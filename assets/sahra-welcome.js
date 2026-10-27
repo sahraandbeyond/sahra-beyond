@@ -71,7 +71,7 @@
   var STAGES = [
     { from: 0, href: '/new/',
       en: 'Sahel and Sahra Trail pre-order opens Wed 28 Oct.' },
-    { from: Date.UTC(2026, 9, 28, 4, 0, 0), href: '/new/',
+    { from: Date.UTC(2026, 9, 27, 18, 45, 0), href: '/sahel/#pieces',   /* 27 Oct 2026: opened early (Faheem) */
       en: 'Sahel and Sahra Trail: pre-order open, 20% off until Thu 29 Oct, 23:59.' },   /* 23 Oct 2026: scoped to the new lines; the 20% is on them only */
     { from: Date.UTC(2026, 9, 29, 20, 0, 0), href: '/new/',
       en: 'Sahel and Sahra Trail are out. Designed in the UAE for everyone who loves it.' }

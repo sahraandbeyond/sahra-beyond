@@ -1,7 +1,7 @@
 /* 22 Oct 2026: Sahel and Sahra Trail stages (same instants as preorder-page.js and the top bar):
    0 until Wed 28 Oct 08:00 UAE, 1 pre-order open, 2 from Fri 30 Oct 00:00 UAE. ?sbstage=N previews. */
 function sbStage() {
-  var n = Date.now(), s = n >= Date.UTC(2026, 9, 29, 20) ? 2 : n >= Date.UTC(2026, 9, 28, 4) ? 1 : 0;
+  var n = Date.now(), s = n >= Date.UTC(2026, 9, 29, 20) ? 2 : n >= Date.UTC(2026, 9, 27, 18, 45) ? 1 : 0;   /* 27 Oct 2026: pre-order opened early */
   try { var m = /[?&]sbstage=([012])/.exec(location.search || ''); if (m) s = +m[1]; } catch (e) {}
   return s;
 }

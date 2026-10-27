@@ -33,7 +33,7 @@
    window.SahraCart.variants). A sold-out size is disabled; no counts are shown.
    ========================================================================== */
 'use strict';
-const T1 = Date.UTC(2026, 9, 28, 4, 0, 0);   /* Wed 28 Oct 08:00 UAE */
+const T1 = Date.UTC(2026, 9, 27, 18, 45, 0);   /* 27 Oct 2026 (Faheem: "Open now"): pre-order opened Tue 27 Oct 22:45 UAE, not Wed 28 Oct 08:00 */
 const T2 = Date.UTC(2026, 9, 29, 20, 0, 0);  /* Fri 30 Oct 00:00 UAE */
 const IN_HAND = false;
 const WA = 'https://wa.me/971585449946';
@@ -471,7 +471,7 @@ function homeBand() {
 @media(max-width:860px){.lb{padding:34px 16px 38px}.lb-in{grid-template-columns:1fr;gap:20px}.lb-g{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px}.lb-c{flex:0 0 42%;scroll-snap-align:start}}
 </style>`;
   return stageHead() + css + `<section class="lb" id="s-launch" aria-labelledby="lbH"><div class="lb-in"><div>
-    <p class="lb-k">New &middot; ` + inc('st01', '<span class="st01">on pre-order from Wed 28 Oct</span>') + `<span class="st2">out now</span></p>
+    <p class="lb-k">New &middot; ` + inc('st0', '<span class="st0">on pre-order from Wed 28 Oct</span>') + inc('st1', '<span class="st1">on pre-order now</span>') + `<span class="st2">out now</span></p>
     <h2 id="lbH">Sahel, the Coast Edition, and Sahra Trail running wear</h2>
     ` + inc('st0', '<p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone.</p><p class="st0 lb-d" data-days></p>') +
     inc('st1', '<p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
@@ -479,6 +479,63 @@ function homeBand() {
     <a class="lb-a" href="/new/">` + inc('st0', '<span class="st0">See the pieces</span>') + inc('st1', '<span class="st1">Pre-order now</span>') + `<span class="st2">Shop the new pieces</span> &rarr;</a>
   </div><div class="lb-g">` + pick.map(([h, k, n, pr]) => `<a class="lb-c" href="/products/${h}/"><span><img src="/assets/preorder/${k}-720.webp" width="720" height="900" alt="${n.replace(/&amp;/g, '&')}, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>${n}</b>${cardPrice(pr, 'small')}</a>`).join('') +
   `</div></div></section>`;
+}
+
+/* 27 Oct 2026 (Faheem: "We need to prominently publicize that Sahel pre-orders are live with 20% discount";
+   "Sahel takes the hero", "Sahel leads, Trail one line below"). The homepage's first screen while the 20%
+   runs (stage 1 only; the build leaves it out entirely from Fri 30 Oct). The Al Quaa hero follows it.
+   Image: the split-waterline still from the Sahel film (no place is named on it). */
+function homeHero() {
+  const designs = pickNew(p => p.line === 'sahel', true);
+  const css = `<style>
+.ph{position:relative;z-index:2;background:#0B1526;color:#F4ECDF;padding:calc(var(--nav-h,62px) + 18px) 0 0;overflow:hidden}
+.ph-in{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:min(78vh,760px)}
+.ph-t{display:flex;flex-direction:column;justify-content:center;padding:40px 48px 40px 24px}
+.ph-k{font:400 12px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#A9E0DA;margin:0 0 14px}
+.ph h2{font:500 clamp(42px,5.6vw,76px)/1.0 'Cormorant Garamond',Georgia,serif;margin:0 0 18px;color:#F4ECDF;letter-spacing:-.01em;text-wrap:balance}
+.ph-o{display:inline-block;align-self:flex-start;font:600 clamp(18px,2vw,22px)/1.3 Jost,system-ui,sans-serif;color:#0B1526;background:#E9B978;padding:10px 16px;border-radius:10px;margin:0 0 16px}
+.ph-s{font:17px/1.55 Jost,system-ui,sans-serif;color:#E9DFCF;margin:0 0 22px;max-width:40ch}
+.ph-a{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 28px;border-radius:999px;background:#F4ECDF;color:#0B1526;font:600 16px Jost,system-ui,sans-serif;text-decoration:none}
+.ph-a:hover{background:#FFFFFF}
+.ph-tr{margin:16px 0 0;font:15px/1.5 Jost,system-ui,sans-serif}
+.ph-tr a{color:#F4ECDF;text-decoration:underline;text-decoration-color:#0FAAAF;text-underline-offset:4px}
+.ph-a:focus-visible,.ph-tr a:focus-visible,.ph-c:focus-visible{outline:3px solid #A9E0DA;outline-offset:3px}
+.ph-img{position:relative;min-height:420px}
+.ph-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+.ph-g{max-width:1240px;margin:0 auto;padding:22px 24px 30px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
+.ph-c{display:block;color:#F4ECDF;text-decoration:none}
+.ph-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E9E0D3}
+.ph-c img{width:100%;height:100%;object-fit:cover;display:block}
+.ph-c i{position:absolute;left:6px;top:6px;font:400 9.5px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;font-style:normal;padding:4px 6px;border-radius:4px;background:rgba(250,246,239,.94);color:#2A2016}
+.ph-c b{display:block;font:500 14px/1.3 Jost,system-ui,sans-serif;margin:8px 0 2px}
+.ph-c small{display:block;font:13px/1.35 Jost,system-ui,sans-serif;color:#E9B978}
+@media(max-width:860px){
+  .ph{padding-top:calc(var(--nav-h,62px) + 4px)}
+  .ph-in{display:block;min-height:0;position:relative}
+  .ph-img{position:absolute;inset:0;min-height:0}
+  .ph-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(11,21,38,.1) 0%,rgba(11,21,38,.55) 34%,rgba(11,21,38,.92) 62%,#0B1526 100%)}
+  .ph-t{position:relative;z-index:1;min-height:calc(86vh - var(--nav-h,62px));justify-content:flex-end;padding:120px 18px 24px}
+  .ph h2{font-size:clamp(40px,11vw,52px)}
+  .ph-s{font-size:16px}
+  .ph-a{width:100%;justify-content:center}
+  .ph-g{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding:14px 18px 26px}
+  .ph-c{flex:0 0 38%;scroll-snap-align:start}
+}
+</style>`;
+  return stageHead() + inc('st1', css + `<section class="ph st1" id="s-preorder" aria-labelledby="phH">
+  <div class="ph-in">
+    <div class="ph-img"><picture><source media="(max-width:860px)" srcset="/assets/sahel/sahel-surface-m.webp"><img src="/assets/sahel/sahel-surface-d.webp" width="1296" height="2304" alt="Half above, half below the water: an island on the horizon, the sea underneath" fetchpriority="high" decoding="async"></picture></div>
+    <div class="ph-t">
+      <p class="ph-k">Sahel &middot; The Coast Edition</p>
+      <h2 id="phH">Sahel is on pre-order</h2>
+      <p class="ph-o">20% off until Thu 29 Oct, 23:59</p>
+      <p class="ph-s">Seven designs from the UAE coast: four tees, a polo and two hoodies. Designed in the UAE. Ships from Fri 30 Oct.</p>
+      <a class="ph-a" href="/sahel/#pieces" data-track="home_preorder_hero">Pre-order Sahel <span aria-hidden="true">&rarr;</span></a>
+      <p class="ph-tr"><a href="/trail/#pieces" data-track="home_preorder_trail">Sahra Trail running kit is on pre-order too &rarr;</a></p>
+    </div>
+  </div>
+  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="${esc(p.name.replace(/&amp;/g, '&'))}, studio mock-up" loading="lazy" decoding="async">${im.mock ? '<i>Mock-up</i>' : ''}</span><b>${p.name}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
+</section>`);
 }
 
 /* 23 Oct 2026 (site review, buy-intent SEO): titles carry the product noun a buyer searches for
@@ -537,6 +594,7 @@ module.exports.stageNow = stageNow;
 module.exports.stageHead = stageHead;
 module.exports.inc = inc;
 module.exports.homeBand = homeBand;
+module.exports.homeHero = homeHero;
 module.exports.urls = urls;
 module.exports.handles = () => products().map(p => p.handle);
 module.exports.products = products;
