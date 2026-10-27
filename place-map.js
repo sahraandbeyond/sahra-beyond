@@ -66,7 +66,7 @@ function pinsFrom(root) {
     const im = p.images[0];
     out.push({ id: p.place[1], place: p.place[0], emirate: l.emirate || '', lat: l.lat, lng: l.lng, tee: p.name.replace(/&amp;/g, '&'), price: p.price,
       product: `/products/${p.handle}/`, guide: `/locations/${p.place[1]}/`, line: LINE[p.place[1]] || '', img: im ? `/assets/preorder/${im.k}-720.webp` : '',
-      sahel: true, fits: !!p.fit, kind: /hoodie/i.test(p.kind) ? 'hoodie' : 'tee' });
+      sahel: true, mock: !im || im.mock, alt: im ? im.alt : '', tall: !!im && (im.h || 900) / (im.w || 720) > 1.4, fits: !!p.fit, kind: /hoodie/i.test(p.kind) ? 'hoodie' : 'tee' });
   });
   /* west to east, so the cards read like the map */
   return out.sort((a, b) => a.lng - b.lng);
@@ -146,7 +146,7 @@ if('IntersectionObserver' in window&&window.gtag){var io=new IntersectionObserve
 function homeBlock(root) {
   const placeLinks = PLACE_LINKS, guideLinks = GUIDE_LINKS;
   const pins = pinsFrom(root);
-  const cards = pins.map(p => `<article class="pm-card" data-pin="${esc(p.id)}"><img src="${esc(p.img)}" alt="${esc(p.tee)}${p.sahel ? ', studio mock-up' : ' tee'}" width="96" height="120" loading="lazy" decoding="async"><div><span class="pm-k">${esc(p.place)}${p.emirate ? ' · ' + esc(p.emirate) : ''}</span><h3>${esc(p.tee)}</h3><p>${esc(p.line)} AED ${esc(p.price)}${p.sahel ? (p.fits ? ', Regular or Oversized' : '') + '. Sahel, the Coast Edition; pre-orders ship from Fri 30 Oct. Image: studio mock-up.' : ', Regular or Oversized.'}</p><div class="pm-acts"><a class="pm-shop" href="${esc(p.product)}">${p.kind === 'hoodie' ? 'See the hoodie' : 'See the tee'}</a><a class="pm-guide" href="${esc(p.guide)}">Read the place guide</a></div></div></article>`).join('');
+  const cards = pins.map(p => `<article class="pm-card" data-pin="${esc(p.id)}"><img src="${esc(p.img)}" alt="${p.sahel && !p.mock ? esc(p.alt) : esc(p.tee) + (p.sahel ? ', studio mock-up' : ' tee')}" width="96" height="120" loading="lazy" decoding="async"${p.tall ? ' style="object-fit:contain"' : ''}><div><span class="pm-k">${esc(p.place)}${p.emirate ? ' · ' + esc(p.emirate) : ''}</span><h3>${esc(p.tee)}</h3><p>${esc(p.line)} AED ${esc(p.price)}${p.sahel ? (p.fits ? ', Regular or Oversized' : '') + '. Sahel, the Coast Edition; pre-orders ship from Fri 30 Oct.' + (p.mock ? ' Image: studio mock-up.' : '') : ', Regular or Oversized.'}</p><div class="pm-acts"><a class="pm-shop" href="${esc(p.product)}">${p.kind === 'hoodie' ? 'See the hoodie' : 'See the tee'}</a><a class="pm-guide" href="${esc(p.guide)}">Read the place guide</a></div></div></article>`).join('');
   const chips = placeLinks.map(([href, name, sub]) => `<a href="${esc(href)}"><b>${esc(name)}</b><span>${esc(sub)}</span></a>`).join('');
   return `<style>${CSS}</style>
     <div class="pm rv">

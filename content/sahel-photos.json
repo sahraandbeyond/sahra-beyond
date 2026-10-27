@@ -1,0 +1,361 @@
+{
+ "_note": "27 Oct 2026: Sahel product photos for the site (Faheem, shoot 27 Oct, edited 28 Oct; Product Photos/Sahel photos/2026-10-27/EDITED-for-site). Order: back, front, details. Real photos carry no Mock-up label; mock:true entries keep it (the Sahel Polo, not photographed yet; the Khor Fakkan Bay front was added on 27 Oct evening). Hoodie location photos are 2:3 and are shown whole (object-fit contain), never cropped. The hoodie photos were not taken at Ras Al Khor: alt text never names a place beyond the product name. w/h are the 720 file; lw/lh the large file (files are -720.webp and -1200.webp; the large file can be narrower to stay under 250 KB).",
+ "pieces": {
+  "khor-fakkan-bay-tee": [
+   {
+    "k": "ph-kfb-01-back",
+    "alt": "Khor Fakkan Bay Tee in Jet Set, back print",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-kfb-06-front",
+    "alt": "Khor Fakkan Bay Tee in Jet Set, front",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-kfb-02-detail-ridges",
+    "alt": "Khor Fakkan Bay Tee in Jet Set, close-up of the ridges in the print",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-kfb-03-detail-sand-and-dhow",
+    "alt": "Khor Fakkan Bay Tee in Jet Set, close-up of the sand and the dhow",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-kfb-04-detail-dhow",
+    "alt": "Khor Fakkan Bay Tee in Jet Set, close-up of the dhow",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1080,
+    "lh": 1350
+   },
+   {
+    "k": "ph-kfb-05-detail-neck-mark",
+    "alt": "Khor Fakkan Bay Tee in Jet Set, close-up of the embroidered mark at the back neck",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1080,
+    "lh": 1350
+   },
+   {
+    "k": "ph-kfb-07-detail-chest-headland",
+    "alt": "Khor Fakkan Bay Tee in Jet Set, close-up of the headland on the chest",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 720,
+    "lh": 900
+   }
+  ],
+  "al-hamra-pearl-diver-tee": [
+   {
+    "k": "ph-pearl-01-back",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, back print",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-pearl-02-front",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, front",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-pearl-03-detail-diver",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the diver",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-pearl-04-detail-oyster-beds",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the oyster beds",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-pearl-05-detail-dhow",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the dhow",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 840,
+    "lh": 1050
+   },
+   {
+    "k": "ph-pearl-06-detail-chest-oyster",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the oyster on the chest",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 840,
+    "lh": 1050
+   }
+  ],
+  "al-aqah-reef-tee": [
+   {
+    "k": "ph-reef-01-back",
+    "alt": "Al Aqah Reef Tee in Lagoon, back print",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-reef-02-front",
+    "alt": "Al Aqah Reef Tee in Lagoon, front",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-reef-03-detail-reef",
+    "alt": "Al Aqah Reef Tee in Lagoon, close-up of the reef print",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-reef-04-detail-chest-turtle",
+    "alt": "Al Aqah Reef Tee in Lagoon, close-up of the turtle on the chest",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 840,
+    "lh": 1050
+   },
+   {
+    "k": "ph-reef-05-detail-neck-mark",
+    "alt": "Al Aqah Reef Tee in Lagoon, close-up of the embroidered mark at the back neck",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 840,
+    "lh": 1050
+   }
+  ],
+  "shams-tee": [
+   {
+    "k": "ph-shams-01-front",
+    "alt": "Shams Tee in Jet Set, front",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-shams-02-detail-mark",
+    "alt": "Shams Tee in Jet Set, close-up of the embroidered mark",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-shams-03-detail-left-chest",
+    "alt": "Shams Tee in Jet Set, close-up of the left chest",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   }
+  ],
+  "barr-and-bahr-hoodie": [
+   {
+    "k": "ph-barr-01-back",
+    "alt": "Barr & Bahr Hoodie in Salute, back, worn",
+    "mock": false,
+    "w": 720,
+    "h": 1080,
+    "lw": 1200,
+    "lh": 1800
+   },
+   {
+    "k": "ph-barr-02-back-hood-down",
+    "alt": "Barr & Bahr Hoodie in Salute, back, worn with the hood down",
+    "mock": false,
+    "w": 720,
+    "h": 1080,
+    "lw": 1200,
+    "lh": 1800
+   },
+   {
+    "k": "ph-barr-03-back-hands",
+    "alt": "Barr & Bahr Hoodie in Salute, back, worn",
+    "mock": false,
+    "w": 720,
+    "h": 1080,
+    "lw": 1200,
+    "lh": 1800
+   },
+   {
+    "k": "ph-barr-04-front",
+    "alt": "Barr & Bahr Hoodie in Salute, front, worn",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-barr-05-detail-dunes-wave",
+    "alt": "Barr & Bahr Hoodie in Salute, close-up of the dunes and the wave",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-barr-06-detail-chest-mark",
+    "alt": "Barr & Bahr Hoodie in Salute, close-up of the chest mark",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-barr-07-detail-sleeve",
+    "alt": "Barr & Bahr Hoodie in Salute, close-up of the sleeve",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   }
+  ],
+  "ras-al-khor-hoodie": [
+   {
+    "k": "ph-rakh-01-back",
+    "alt": "Ras Al Khor Hoodie in Estate Blue, back, worn",
+    "mock": false,
+    "w": 720,
+    "h": 1080,
+    "lw": 1200,
+    "lh": 1800
+   },
+   {
+    "k": "ph-rakh-02-back-lake",
+    "alt": "Ras Al Khor Hoodie in Estate Blue, back, worn",
+    "mock": false,
+    "w": 720,
+    "h": 1080,
+    "lw": 1200,
+    "lh": 1800
+   },
+   {
+    "k": "ph-rakh-03-back-hood-down",
+    "alt": "Ras Al Khor Hoodie in Estate Blue, back, worn with the hood down",
+    "mock": false,
+    "w": 720,
+    "h": 1080,
+    "lw": 1200,
+    "lh": 1800
+   },
+   {
+    "k": "ph-rakh-05-front-model",
+    "alt": "Ras Al Khor Hoodie in Estate Blue, front, worn",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-rakh-06-front",
+    "alt": "Ras Al Khor Hoodie in Estate Blue, front, worn",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-rakh-04-detail-flamingos",
+    "alt": "Ras Al Khor Hoodie in Estate Blue, close-up of the flamingos",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-rakh-07-detail-chest-mark",
+    "alt": "Ras Al Khor Hoodie in Estate Blue, close-up of the chest mark",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph-rakh-08-detail-sleeve",
+    "alt": "Ras Al Khor Hoodie in Estate Blue, close-up of the sleeve",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   }
+  ],
+  "the-sahel-polo": [
+   {
+    "k": "polo-front",
+    "alt": "The Sahel Polo in Black, front",
+    "mock": true,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "polo-back",
+    "alt": "The Sahel Polo in Black, back",
+    "mock": true,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   }
+  ]
+ }
+}

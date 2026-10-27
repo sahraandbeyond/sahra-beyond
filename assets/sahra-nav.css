@@ -162,3 +162,7 @@ html:has(.sb-top):not(:has(.lg-tabs)){scroll-padding-top:76px}
 .m-panel .sbn-gender a{display:flex;align-items:center;justify-content:center;min-height:56px;border:1px solid rgba(237,227,210,.28);border-radius:12px;font-size:19px;color:#FAF6EF;padding:0;text-decoration:none}
 .m-panel .sbn-gender a[aria-current="page"]{background:#FAF6EF;color:#1E1712;border-color:#FAF6EF}
 @media(min-width:1101px){.sbn-panel .sbn-l{white-space:nowrap}}
+
+/* 27 Oct 2026: the new lines lead the phone menu */
+a.sbn-mnew{display:flex!important;align-items:center;min-height:48px;margin:4px 0 18px;padding:0 16px!important;border-radius:12px;background:#0E1A2E!important;color:#F4ECDF!important;font-weight:600;text-decoration:none}
+a.sbn-mnew::after{content:"\2192";margin-left:auto;padding-left:10px}

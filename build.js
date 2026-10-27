@@ -263,6 +263,9 @@ for (const f of ['index.html', 'shop-preview.html']) {
   if (f === 'index.html') n = n.replace(/<!--LAUNCH:START-->[\s\S]*?<!--LAUNCH:END-->/, () => '<!--LAUNCH:START-->' + require('./preorder-page.js').homeBand() + '<!--LAUNCH:END-->');
   /* 27 Oct 2026: the Sahel pre-order hero, first on the page while the 20% runs (preorder-page.js homeHero) */
   if (f === 'index.html') n = n.replace(/<!--PREHERO:START-->[\s\S]*?<!--PREHERO:END-->/, () => '<!--PREHERO:START-->' + require('./preorder-page.js').homeHero() + '<!--PREHERO:END-->');
+  /* 27 Oct 2026: Sahel in the collection ring, and every line under the Founding Edition grid (preorder-page.js) */
+  if (f === 'index.html') n = n.replace(/<!--RINGNEW:START-->[\s\S]*?<!--RINGNEW:END-->/, () => '<!--RINGNEW:START-->' + require('./preorder-page.js').homeRing() + '<!--RINGNEW:END-->')
+    .replace(/<!--HOMELINES:START-->[\s\S]*?<!--HOMELINES:END-->/, () => '<!--HOMELINES:START-->' + require('./preorder-page.js').homeLines() + '<!--HOMELINES:END-->');
   if (f === 'index.html') n = n.replace(/<!--PLACEMAP:START-->[\s\S]*?<!--PLACEMAP:END-->/, () => '<!--PLACEMAP:START-->' + require('./place-map.js').homeBlock(ROOT) + '<!--PLACEMAP:END-->');
   n = n.replace(/<!--IG:STRIP-->[\s\S]*?<!--\/IG:STRIP-->/, '<!--IG:STRIP-->' + IG.stripHtml() + '<!--/IG:STRIP-->')
        .replace(/<!--IG:FOOT-->[\s\S]*?<!--\/IG:FOOT-->/, '<!--IG:FOOT--><style>' + IG.CSS + FITPAIR_CSS + '</style>' + IG.footerRowHtml() + '<!--/IG:FOOT-->')
@@ -2559,9 +2562,26 @@ if (LAUNCHED || REVEALED) (function () {
     /* 23 Oct 2026 (Faheem: "Own cards in /shop/"): Sahel and Sahra Trail get their own cards under the
        Founding grid, with the Mock-up label and the stage-aware price; the Shopify-driven template above
        skips their handles (PRE_HANDLES). Replaces the 8 Oct Trail band. */
+    /* 27 Oct 2026 (Faheem: "/shop/ opens with pre-order"): the new lines sit first, under the shop header, with a row
+       of jump links to every line, so nothing we sell is hidden below the Founding Edition. */
+    const JUMP = `<style>
+      .sp-jump{position:relative;z-index:3;max-width:1180px;margin:22px auto 0;padding:0 20px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;font-family:Jost,system-ui,sans-serif}
+      .sp-jump b{font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;margin-right:4px}
+      .sp-jump a{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid rgba(42,32,22,.28);background:#FFFDF8;color:#2A2016;font-size:15px;font-weight:500;text-decoration:none}
+      .sp-jump a.on{background:#0E1A2E;border-color:#0E1A2E;color:#F4ECDF}
+      .sp-jump a:hover{border-color:#2A2016}
+      .sp-jump a:focus-visible{outline:3px solid #A95A21;outline-offset:2px}
+      .sp-anchor{scroll-margin-top:104px}
+      .sp-fe{max-width:1180px;margin:30px auto 6px;padding:0 20px;position:relative;z-index:3}
+      .sp-fe p{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;margin:0 0 8px}
+      .sp-fe h2{font:600 clamp(26px,3vw,36px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#2A2016}
+      .sp-fe span{display:block;font:16px/1.55 Jost,system-ui,sans-serif;color:#3E3326;max-width:62ch}
+      @media(max-width:700px){.sp-jump{padding:0 16px;margin-top:16px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.sp-jump::-webkit-scrollbar{display:none}.sp-jump a{flex:none;font-size:14px;padding:0 14px}.sp-jump b{flex:none}.sp-fe{padding:0 16px}}
+    </style><div class="sp-jump" role="navigation" aria-label="Jump to a line"><b>Jump to</b><a class="on" href="#shop-sahel">Sahel ${PO.inc('st1', '<span class="st1">&middot;&nbsp;20% off</span>')}</a><a href="#shop-trail">Sahra Trail</a><a href="#founding">Founding Edition tees</a><a href="/polos/">Polos</a><a href="/hoodies/">Hoodies</a><a href="/accessories/">Bags</a><a href="/size-guide/">Size guides</a></div>`;
+    const FE_HEAD = `<div class="sp-fe sp-anchor" id="founding"><p>The Founding Edition</p><h2>Al Quaa, Liwa and the Hajar</h2><span>The first three designs and the Sahra Polo, in stock and shipping next working day. Any two Founding Edition tees for AED 359.</span></div>`;
     const TRAIL_BAND = '<div class="sp-new" data-bg="#FAF6EF">'
-      + PO.newBlock({ list: PO.pickNew(p => p.line === 'sahel', true), heading: 'Sahel, the Coast Edition', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'The story of Sahel' })
-      + PO.newBlock({ list: PO.pickNew(p => p.line === 'trail'), heading: 'Sahra Trail: running tee, 2-in-1 shorts, kit and the Trailhead Bag', kicker: 'New &middot; Sahra Trail', more: '/trail/', moreText: 'About Sahra Trail' })
+      + '<div class="sp-anchor" id="shop-sahel"></div>' + PO.newBlock({ list: PO.pickNew(p => p.line === 'sahel', true), heading: 'Sahel, the Coast Edition', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'The story of Sahel' })
+      + '<div class="sp-anchor" id="shop-trail"></div>' + PO.newBlock({ list: PO.pickNew(p => p.line === 'trail'), heading: 'Sahra Trail: running tee, 2-in-1 shorts, kit and the Trailhead Bag', kicker: 'New &middot; Sahra Trail', more: '/trail/', moreText: 'About Sahra Trail' })
       + '</div>';
     html = html.replace('/*PRE_HANDLES*/[]', JSON.stringify(PO.handles()));
     /* 23 Oct 2026: the Sahel places on the /shop/ map (Regular fit links for the tees) */
@@ -2572,10 +2592,10 @@ if (LAUNCHED || REVEALED) (function () {
     html = html.replace('/*SHOP_MAP_EXTRA*/[]', JSON.stringify(SHOP_MAP_EXTRA));
     html = html.replace(
       '<main id="products"><div class="loading">Loading the collection&hellip;</div></main>',
-      gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>' + TRAIL_BAND
+      JUMP + TRAIL_BAND + FE_HEAD + gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>'
     ).replace(
       '<main id="products"><div class="loading">Loading the collection…</div></main>',
-      gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>' + TRAIL_BAND
+      JUMP + TRAIL_BAND + FE_HEAD + gridCss + '<main id="products"><div class="sp-grid">' + staticGrid + '</div></main>'
     );
 
     /* 9 Oct 2026: the shop template never had GA4; add the shared tag at the top of <head> */
@@ -2878,9 +2898,9 @@ body.tote-page main{max-width:1180px}
   ].filter(([id]) => byId[id] && byId[id].productLink && byId[id].productLink.slug);
   /* 23 Oct 2026 (site review): the four Sahel places join the three Founding ones (mock-up images, labelled in the alt and the link text) */
   const SAHEL_TEES = require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && byId[p.place[1]])
-    .map(p => [p.place[1], p.name.replace(/&amp;/g, '&'), `/assets/preorder/${p.images[0].k}-720.webp`, `/products/${p.handle}/`, /hoodie/i.test(p.kind) ? 'hoodie' : 'tee']);
+    .map(p => [p.place[1], p.name.replace(/&amp;/g, '&'), `/assets/preorder/${p.images[0].k}-720.webp`, `/products/${p.handle}/`, /hoodie/i.test(p.kind) ? 'hoodie' : 'tee', p.images[0]]);
   const tees = TEES.map(([id, tee, img]) => `<a class="pl-tee" href="/products/${esc(byId[id].productLink.slug)}/"><img src="${esc(img)}" alt="${esc(tee)} tee" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the tee &rarr;</i></span></a>`).join('')
-    + SAHEL_TEES.map(([id, tee, img, href, noun]) => `<a class="pl-tee" href="${esc(href)}"><img src="${esc(img)}" alt="${esc(tee)}, studio mock-up" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the ${noun} (mock-up) &rarr;</i></span></a>`).join('');
+    + SAHEL_TEES.map(([id, tee, img, href, noun, im]) => `<a class="pl-tee" href="${esc(href)}"><img src="${esc(img)}" alt="${esc(im && !im.mock ? im.alt : tee + ', studio mock-up')}" loading="lazy" width="120" height="150"${im && im.h / im.w > 1.4 ? ' style="object-fit:contain"' : ''}><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the ${noun} ${im && !im.mock ? '' : '(mock-up) '}&rarr;</i></span></a>`).join('');
   const teeCount = TEES.length + SAHEL_TEES.length;
   const lede = `${locations.length} places, ${words[CATS.filter(catCount).length] || CATS.length} kinds of ground, ${words[emirates.size] || emirates.size} emirates` +
     (abroad.length ? ` and ${abroad.length === 1 ? 'one detour' : abroad.length + ' detours'} over the border` : '') +
@@ -3480,7 +3500,7 @@ COMMERCE.forEach(P => {
     ${newsletterBlock()}
     <p class="back"><a href="/new/">Everything new: Sahel and Sahra Trail &rarr;</a></p>
   </main>`;
-  write('hoodies/index.html', shell({ title: H.title, desc: H.desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page', image: `${SITE}/assets/preorder/og/barr-back-og.jpg` }));
+  write('hoodies/index.html', shell({ title: H.title, desc: H.desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page', image: `${SITE}/assets/preorder/og/ph-barr-01-back-og.jpg` }));
 })();
 
 /* ---------- /accessories/ and /activewear/ (23 Oct 2026) -------------------

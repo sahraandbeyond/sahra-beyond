@@ -44,12 +44,13 @@
       identical to a successful one. Failures now surface in the drawer.
    ========================================================================== */
 (function () {
-  /* 22 Oct 2026: Sahel and Sahra Trail pre-order pieces. Their bag image is the site's labelled studio mock-up
+  /* 22 Oct 2026: Sahel and Sahra Trail pre-order pieces. Their bag image is the site's own image (27 Oct: the real Sahel
+     photos; the hoodies show the 4:5 front so the small square crop never cuts the back print; Trail still mock-ups)
      (Shopify holds no images for them yet). A pre-order line says when it ships, shows the pre-order price
      without a struck-through list price, and never shows a remaining count (no scarcity wording). */
-  var PRE = { 'khor-fakkan-bay-tee-regular': 'kfb-back', 'khor-fakkan-bay-tee-oversized': 'kfb-back', 'al-hamra-pearl-diver-tee-regular': 'pearl-back', 'al-hamra-pearl-diver-tee-oversized': 'pearl-back',
-    'al-aqah-reef-tee-regular': 'reef-back', 'al-aqah-reef-tee-oversized': 'reef-back', 'shams-tee-regular': 'shams-front', 'shams-tee-oversized': 'shams-front', 'the-sahel-polo': '',
-    'barr-and-bahr-hoodie': 'barr-back', 'ras-al-khor-hoodie': 'rakh-back', 'sahra-trail-tee': 'trail-tee-front', 'sahra-trail-2-in-1-short': 'trail-short-front', 'sahra-trail-kit': 'trail-kit-front' };
+  var PRE = { 'khor-fakkan-bay-tee-regular': 'ph-kfb-01-back', 'khor-fakkan-bay-tee-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-regular': 'ph-pearl-01-back', 'al-hamra-pearl-diver-tee-oversized': 'ph-pearl-01-back',
+    'al-aqah-reef-tee-regular': 'ph-reef-01-back', 'al-aqah-reef-tee-oversized': 'ph-reef-01-back', 'shams-tee-regular': 'ph-shams-01-front', 'shams-tee-oversized': 'ph-shams-01-front', 'the-sahel-polo': '',
+    'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'trail-tee-front', 'sahra-trail-2-in-1-short': 'trail-short-front', 'sahra-trail-kit': 'trail-kit-front' };
   var PRE_IN_HAND = false;   /* set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
   function isPre(l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; return !!h && Object.prototype.hasOwnProperty.call(PRE, h); }
   var CART_REAL = { 'al-quaa-galaxy-regular': '/shirts/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/emptyquarter-model-stand.webp', 'hajar-mountains-regular': '/shirts/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/hajar-lake-back-her.webp', 'sand-polo': '/shirts/polo-dune-front.webp', 'trailhead-bag': '/assets/preorder/trail-bag-front-720.webp' };
@@ -350,7 +351,7 @@
         '<div class="sb-df" id="sbFoot" hidden>' +
           '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
           '<div class="sb-tabby sb-tabby-cart" id="sbTabbyCart" data-tabby-source="cart" hidden></div>' +
-          '<p class="sb-note"><span class="sb-note-d sb-ship-uae"><span data-sb-clock>Free next-day UAE delivery — order by 2 pm</span>, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">Check the chart</a> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">message us</a>.</p>' +   /* 23 Oct 2026: the chart covers the Founding Edition; Sahel and Trail are not measured yet */
+          '<p class="sb-note"><span class="sb-note-d sb-ship-uae"><span data-sb-clock>Free next-day UAE delivery — order by 2 pm</span>, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">Check the chart</a><span data-sz-or> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">message us</a></span>.</p>' +   /* 23 Oct 2026: the chart covers the Founding Edition; Sahel and Trail are not measured yet */
           /* 25 Sep 2026 (Faheem, persona review): a gift option. The message travels on the
              Shopify order as its note, with a Gift attribute, so it shows on the order in Admin. */
           '<div class="sb-giftopt"><label class="sb-giftl"><input type="checkbox" id="sbGiftChk"> This is a gift</label>' +
@@ -570,7 +571,21 @@
           el.className = 'sb-bundle';
           el.innerHTML = 'Add a second tee \u2014 <b>' + deal + '</b>, applied automatically. <a href="/t-shirts/">Shop tees &rarr;</a>';
         }
-      } else { el.hidden = true; el.innerHTML = ''; el.className = 'sb-bundle'; }
+      } else {
+        /* 27 Oct 2026 (Faheem: "Cross-sell between lines"): a Sahra Trail cart without the bag is offered the
+           Trailhead Bag (one size, one tap); a cart with a single Sahel piece is shown the rest of Sahel. */
+        var hs = realLines.map(function (l) { return (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; });
+        var trailIn = hs.some(function (h) { return /^sahra-trail-/.test(h); }), bagIn = hs.indexOf('trailhead-bag') >= 0;
+        var sahelN = 0; realLines.forEach(function (l) { var h = (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; if (/^(khor-fakkan-bay|al-hamra-pearl-diver|al-aqah-reef|shams-tee|the-sahel-polo|barr-and-bahr|ras-al-khor)/.test(h)) sahelN += l.quantity; });
+        if (trailIn && !bagIn && cur === 'AED') {
+          el.hidden = false; el.className = 'sb-bundle sb-second';
+          el.innerHTML = '<img src="/assets/preorder/trail-bag-front-720.webp" alt="" width="44" height="55" loading="lazy"><span class="sb-second-t"><b>Add the Trailhead Bag, AED 50</b><br>Canvas drawstring bag for the trailhead, one size</span>' +
+            '<button type="button" class="sb-second-add" data-handle="trailhead-bag" data-size="">Add</button>';
+        } else if (sahelN === 1) {
+          el.hidden = false; el.className = 'sb-bundle';
+          el.innerHTML = 'Six more Sahel designs: tees, hoodies and a polo. <a href="/sahel/#pieces">See them all &rarr;</a>';
+        } else { el.hidden = true; el.innerHTML = ''; el.className = 'sb-bundle'; }
+      }
     })();
 
     /* Gift option: saved to the cart as you type (debounced) and once more, awaited for at
@@ -689,7 +704,9 @@
       var sahel = nodes.some(function (n) { var h = n.merchandise && n.merchandise.product && n.merchandise.product.handle || ''; return /^(khor-fakkan-bay|al-hamra-pearl-diver|al-aqah-reef|shams-tee|barr-and-bahr|ras-al-khor)/.test(h); });
       var a = note.querySelector('a[data-sz]') || note.querySelector('a[href^="/size-guide/"]'); if (a) a.setAttribute('data-sz', '1');
       if (a && !trail) { a.setAttribute('href', sahel ? '/size-guide/#sahel' : '/size-guide/'); a.textContent = sahel ? 'Check the Sahel chart (it differs from the Founding Edition)' : 'Check the chart'; }
-      if (a && trail && !note.getAttribute('data-trail')) { note.setAttribute('data-trail', '1'); a.setAttribute('href', 'https://wa.me/971585449946'); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); a.textContent = 'message us'; }
+      /* 27 Oct 2026: Sahra Trail has no chart yet, so the one link is the WhatsApp one (it read "message us or message us") */
+      var or = note.querySelector('[data-sz-or]'); if (or) or.hidden = !!trail;
+      if (a && trail && !note.getAttribute('data-trail')) { note.setAttribute('data-trail', '1'); a.setAttribute('href', 'https://wa.me/971585449946'); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); a.textContent = 'Sahra Trail has no chart yet: message us'; }
       else if (a && !trail && note.getAttribute('data-trail')) { note.removeAttribute('data-trail'); a.setAttribute('href', sahel ? '/size-guide/#sahel' : '/size-guide/'); a.removeAttribute('target'); a.removeAttribute('rel'); a.textContent = sahel ? 'Check the Sahel chart (it differs from the Founding Edition)' : 'Check the chart'; }
     })();
     foot.hidden = false;
@@ -961,9 +978,9 @@
     e.preventDefault(); b.disabled = true; b.textContent = 'Adding\u2026';
     var h = b.getAttribute('data-handle'), sz = b.getAttribute('data-size');
     variants(h).then(function (vs) {
-      var v = vs.filter(function (x) { return x.title === sz && x.availableForSale; })[0];
+      var v = vs.filter(function (x) { return (sz ? x.title === sz : true) && x.availableForSale; })[0];
       if (!v) { b.textContent = sz ? sz + ' sold out' : 'Sold out'; b.disabled = true; var l = b.parentNode && b.parentNode.querySelector('.sb-second-t'); if (l) l.innerHTML += '<br><a href="/products/' + h + '/">Other sizes &rarr;</a>'; return; }
-      return add(v.id, 1).then(function () { if (window.track) track('add_to_cart', { item_id: h, size: v.title, via: 'second-tee' }); });
+      return add(v.id, 1).then(function () { if (window.track) track('add_to_cart', { item_id: h, size: v.title, via: h === 'trailhead-bag' ? 'cart-trail-bag' : 'second-tee' }); });
     }).catch(function () { b.disabled = false; b.textContent = 'Add'; });
   });
   /* 25 Oct 2026 (retention audit): one begin_checkout and one attribute write for every route to

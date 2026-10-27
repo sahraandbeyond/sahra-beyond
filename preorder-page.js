@@ -69,6 +69,21 @@ const SIZES = ['S', 'M', 'L', 'XL'];
 const FITS = [['regular', 'Regular'], ['oversized', 'Oversized']];
 const SZ = require('./sahel-sizing.js');   /* 27 Oct 2026: the Sahel size charts */
 const mock = (k, alt) => ({ k, alt, mock: true });
+/* 27 Oct 2026 (Faheem: the Sahel photos from the 27 Oct shoot): the real photographs, per piece, in content/sahel-photos.json.
+   Back first, then front, then details. Real photos carry no Mock-up label (cap '' = no caption); the Sahel Polo stays a labelled mock-up until it is
+   photographed (the Khor Fakkan Bay front arrived on the evening of 27 Oct). Hoodie location photos are 2:3 and are always
+   shown whole (object-fit: contain), so the flamingo and dune prints are never cropped. */
+const PHOTOS = (function () { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'content', 'sahel-photos.json'), 'utf8')).pieces || {}; } catch (e) { return {}; } })();
+const photoList = key => (PHOTOS[key] || []).map(x => Object.assign({}, x, x.mock ? {} : { cap: '' }));
+/* one <img> for any pre-order image: its own width and height, the large file's real width in srcset, and contain for 2:3 */
+const isTall = im => (im.h || 900) / (im.w || 720) > 1.4;
+function imgTag(im, o = {}) {
+  const w = im.w || 720, h = im.h || 900, lw = im.lw || 1200;
+  const alt = o.alt != null ? o.alt : esc(im.alt) + (im.mock && o.mockAlt !== false ? ', studio mock-up' : '');
+  const fit = isTall(im) ? ` style="object-fit:contain;background:${o.bg || '#DCD5C8'}"` : '';
+  return `<img${o.cls ? ` class="${o.cls}"` : ''} src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-720.webp ${w}w, /assets/preorder/${im.k}-1200.webp ${lw}w" sizes="${o.sizes || '(max-width: 900px) 50vw, 300px'}" width="${w}" height="${h}" alt="${alt}"${o.eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${fit}>`;
+}
+const mockTag = (im, cls) => im && im.mock ? `<i${cls ? ` class="${cls}"` : ''}>Mock-up</i>` : '';
 const real = (k, alt, cap) => ({ k, alt, mock: false, cap });
 
 /* Story paragraphs: the approved card stories (14 Oct handover; content/sahel-pieces.json). */
@@ -129,7 +144,7 @@ function products() {
   const out = [];
   SAHEL.forEach(p => {
     const plain = p.plain || p.name;
-    const images = p.img ? (p.front ? [mock(p.img + '-front', plain + ', front'), mock(p.img + '-back', plain + ', back')] : [mock(p.img + '-back', plain + ', back'), mock(p.img + '-front', plain + ', front')]) : [];
+    const images = PHOTOS[p.key] ? photoList(p.key) : p.img ? (p.front ? [mock(p.img + '-front', plain + ', front'), mock(p.img + '-back', plain + ', back')] : [mock(p.img + '-back', plain + ', back'), mock(p.img + '-front', plain + ', front')]) : [];
     if (p.fits) FITS.forEach(([f, F]) => out.push({ line: 'sahel', handle: `${p.key}-${f}`, title: `${p.name} &mdash; ${F}`, plain: `${plain} — ${F}`, name: p.name, fit: F,
       sibling: `${p.key}-${f === 'regular' ? 'oversized' : 'regular'}`, siblingFit: f === 'regular' ? 'Oversized' : 'Regular',
       colour: p.colour, price: p.price, story: p.story, details: [`${F} fit`].concat(p.details), images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md }));
@@ -148,11 +163,11 @@ const pre = n => Math.round(n * 80) / 100;   /* the 20% pre-order price, to the 
 const cardPrice = (n, tag, full) => full ? `<${tag}>${money(n)}</${tag}>` : inc('st1', `<${tag} class="st1">${money(pre(n))}, pre-order price</${tag}>`) + `<${tag} class="st02">${money(n)}</${tag}>`;
 
 function picture(im, eager, sizes) {
-  return `<img src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-720.webp 720w, /assets/preorder/${im.k}-1200.webp 1200w" sizes="${sizes || '(max-width: 900px) 100vw, 50vw'}" width="720" height="900" alt="${esc(im.alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
+  return imgTag(im, { eager, sizes: sizes || '(max-width: 900px) 100vw, 50vw', mockAlt: false });
 }
 function gallery(p) {
   if (!p.images.length) return `<div class="po-gal"><figure class="po-ph"><div><b>${p.title}</b><span>Photo to follow</span></div></figure></div>`;
-  return `<div class="po-gal">${p.images.map((im, i) => `<figure class="po-fig">${picture(im, i === 0)}<figcaption class="${im.mock ? 'po-mock' : 'po-real'}">${im.mock ? 'Mock-up' : (im.cap || 'Close-up of the sample')}</figcaption></figure>`).join('')}</div>`;
+  return `<div class="po-gal">${p.images.map((im, i) => `<figure class="po-fig${isTall(im) ? ' po-tall' : ''}">${picture(im, i === 0)}${im.cap === '' ? '' : `<figcaption class="${im.mock ? 'po-mock' : 'po-real'}">${im.mock ? 'Mock-up' : (im.cap || 'Close-up of the sample')}</figcaption>`}</figure>`).join('')}</div>`;
 }
 
 const CSS = `${SZ.CSS}
@@ -166,6 +181,7 @@ const CSS = `${SZ.CSS}
 .po-gal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .po-fig{position:relative;margin:0;background:#ECE4D6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
 .po-fig:first-child{grid-column:1/-1}
+.po-fig.po-tall{aspect-ratio:2/3}.po-fig.po-tall img{object-fit:contain}
 .po-fig img{width:100%;height:100%;object-fit:cover;display:block}
 .po-fig figcaption{position:absolute;left:10px;top:10px;font:11px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .po-ph{margin:0;aspect-ratio:4/5;border-radius:10px;background:#1C1A18;color:#E9DFCF;display:flex;align-items:center;justify-content:center;text-align:center;grid-column:1/-1}
@@ -212,6 +228,7 @@ const CSS = `${SZ.CSS}
 .po-more{margin:46px 0 0}
 .po-more h2{font:600 26px/1.2 'Cormorant Garamond',Georgia,serif;margin:0 0 14px}
 .po-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+@media(max-width:700px){.po-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 .po-card{display:block;text-decoration:none;color:#2A2016}
 .po-card .po-fig{aspect-ratio:4/5}
 .po-card b{display:block;font:500 16px/1.35 Jost,system-ui,sans-serif;margin:8px 0 2px}
@@ -331,12 +348,32 @@ function productPage(p, all, SITE, stage) {
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
-      <p class="po-small" style="margin-top:12px">${p.images.some(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : 'Photos of the real piece will be added when it arrives.'} Designed in the UAE.</p></div>
+      <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.line === 'sahel' ? 'Photographed from the real piece.' : 'Photos of the real piece will be added when it arrives.'} Designed in the UAE.</p></div>
   </section>
   ${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
+  ${crossLines(p, card)}
 </main>
 ${CLIENT}`;
+}
+
+/* 27 Oct 2026 (Faheem: "Cross-sell between lines"): every Sahel and Sahra Trail page also shows the other new line
+   and the Founding Edition, which is in stock and ships next working day. */
+const FOUNDING = [['al-quaa-galaxy-regular', 'Al Quaa Galaxy Tee', 'alquaa-dune-back', 'Al Quaa Galaxy t-shirt in black, back print, worn', 199],
+  ['empty-quarter-regular', 'Empty Quarter Tee', 'emptyquarter-dune-front', 'Empty Quarter t-shirt in beige, front, worn', 199],
+  ['hajar-mountains-regular', 'Hajar Mountains Tee', 'hajar-dune-back', 'Hajar Mountains t-shirt, back print, worn', 199],
+  ['sand-polo', 'The Sahra Polo', 'polo-dune-front', 'The Sahra Polo in sand, worn', 229]];
+function crossLines(p, card) {
+  const other = pickNew(o => o.line !== p.line && o.line !== undefined && !o.inHand, true).slice(0, 4);
+  const fe = FOUNDING.map(([h, n, img, alt, pr]) => `<a class="po-card" href="/products/${h}/"><div class="po-fig"><img src="/shirts/card/${img}.webp" width="800" height="1000" alt="${alt}" loading="lazy" decoding="async"></div><b>${n}</b><span><span class="sb-price" data-handle="${h}" data-aed="${pr}">${money(pr)}</span> &middot; in stock</span></a>`).join('');
+  return `${other.length ? `<section class="po-more po-cross"><h2>${p.line === 'sahel' ? 'Also on pre-order: Sahra Trail' : 'Also on pre-order: Sahel'}</h2><div class="po-cards">${other.map(card).join('')}</div></section>` : ''}
+  <section class="po-more po-cross"><h2>The Founding Edition, in stock</h2><p class="po-small" style="margin:-4px 0 14px">Ships next working day. Any two Founding Edition tees for AED 359. These use the Founding Edition size chart.</p><div class="po-cards">${fe}</div></section>`;
+}
+/* the reverse row, for the Founding Edition product pages (build-products.js) */
+function foundingCross() {
+  const list = ['khor-fakkan-bay-tee-regular', 'al-aqah-reef-tee-regular', 'ras-al-khor-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean);
+  return newBlock({ list, heading: 'Also new: Sahel and Sahra Trail', kicker: inc('st1', '<span class="st1">On pre-order &middot; 20% off until Thu 29 Oct</span>') + '<span class="st02">New</span>',
+    lede: 'Sahel, the Coast Edition, and Sahra Trail running wear. Pre-orders ship from Fri 30 Oct. Sahel has <a href="/size-guide/#sahel">its own size chart</a>.', fitsLabel: true, more: '/new/', moreText: 'See every new piece' });
 }
 
 function collectionPage(all) {
@@ -351,7 +388,7 @@ function collectionPage(all) {
     ${inc('st0', `<p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone. <span data-days></span> Open any piece to be told when it opens.</p>`)}
     ${inc('st1', `<p class="st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
     ${IN_HAND ? '' : '<p class="st2">Pre-order. Ships from Fri 30 Oct.</p>'}
-    <p>Designed in the UAE for everyone who loves it. The studio images are mock-ups until the real pieces are photographed.</p>
+    <p>Designed in the UAE for everyone who loves it. Images marked Mock-up are studio mock-ups until those pieces are photographed.</p>
   </div>
   ${sec('sahel', 'Sahel &middot; The Coast Edition', all.filter(p => p.line === 'sahel'), 'Sahel has its own size chart, cut larger than the Founding Edition: <a href="/size-guide/#sahel">see the Sahel size chart</a>. No chart yet for the Sahel Polo.')}
   ${sec('trail', 'Sahra Trail', all.filter(p => p.line === 'trail'))}
@@ -395,7 +432,7 @@ function cut(p) {
 const forWomen = p => cut(p) !== 'Men\u2019s cut';
 function newCard(p, fitsLabel) {
   const im = p.images[0];
-  const fig = im ? `<span class="nb-f"><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="${esc(im.alt)}${im.mock ? ', studio mock-up' : ''}" loading="lazy" decoding="async">${im.mock ? '<i>Mock-up</i>' : ''}<em class="cut-b">${cut(p)}</em></span>` : '';
+  const fig = im ? `<span class="nb-f">${imgTag(im, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
   const sub = fitsLabel && p.fit ? `${p.kind} &middot; Regular or Oversized` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
   const href = `/products/${p.handle}/`;
   if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', true)}</small>`
@@ -412,9 +449,9 @@ function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', more
   ${more ? `<a class="nb-a" href="${more}">${moreText} &rarr;</a>` : ''}
 </section>`;
 }
-const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. The studio images are mock-ups.</span>`)
-  + inc('st1', `<span class="st1">Pre-order is open: 20% off these new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct. The studio images are mock-ups.</span>`)
-  + `<span class="st2">${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}The studio images are mock-ups.</span>`
+const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. Images marked Mock-up are studio mock-ups.</span>`)
+  + inc('st1', `<span class="st1">Pre-order is open: 20% off these new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct. Images marked Mock-up are studio mock-ups.</span>`)
+  + `<span class="st2">${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}Images marked Mock-up are studio mock-ups.</span>`
   + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. No chart yet for the Sahel Polo and Sahra Trail: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
 
 /* 23 Oct 2026 (site review): a place guide whose place became a Sahel piece shows that piece
@@ -439,10 +476,10 @@ function pieceBlock(placeId, lead) {
   const im = p.images[0], first = String(p.story).split(/(?<=\.)\s/)[0];
   const isTee = !!p.fit, noun = isTee ? 'tee' : /hoodie/i.test(p.kind) ? 'hoodie' : 'piece';
   return stageHead() + PB_CSS + `<section class="spb" id="tee" data-match="sahel" aria-label="${esc(p.name.replace(/&amp;/g, '&'))}">
-  ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true"><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="" loading="lazy" decoding="async"><i>Mock-up</i></a>` : ''}
+  ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true">${imgTag(im, { alt: '', sizes: '240px', bg: '#1B2A40' })}${mockTag(im)}</a>` : ''}
   <div><p class="spb-k">${lead || `The ${noun} drawn from this place`} &middot; Sahel</p><h2>${p.name}</h2><p>${first}</p>
   <p class="spb-p">${cardPrice(p.price, 'span')}${isTee ? ' &middot; Regular or Oversized' : ''}</p>
-  <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}The image is a studio mock-up.</p>
+  <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}${im && im.mock ? 'The image is a studio mock-up.' : 'Photographed from the real piece.'}</p>
   <a class="spb-a" href="/products/${p.handle}/">See the ${noun} &rarr;</a></div>
 </section>`;
 }
@@ -450,8 +487,7 @@ function pieceBlock(placeId, lead) {
 /* 23 Oct 2026 (Faheem chose "Launch band, no ticker"): a band near the top of the homepage. The day line
    ("That is in 5 days") updates once per visit by the UAE calendar; there is no ticking countdown (22 Oct no-timer rule). */
 function homeBand() {
-  const pick = [['khor-fakkan-bay-tee-oversized', 'kfb-back', 'Khor Fakkan Bay Tee', 199], ['al-aqah-reef-tee-oversized', 'reef-back', 'Al Aqah Reef Tee', 199],
-    ['barr-and-bahr-hoodie', 'barr-back', 'Barr &amp; Bahr Hoodie', 229], ['sahra-trail-kit', 'trail-kit-front', 'Sahra Trail Kit', 249]];
+  const pick = ['khor-fakkan-bay-tee-oversized', 'al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean);
   const css = `<style>
 .lb{background:#0E1A2E;color:#F4ECDF;padding:46px 20px 50px;position:relative;z-index:1}
 .lb-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:34px;align-items:center}
@@ -477,7 +513,7 @@ function homeBand() {
     inc('st1', '<p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
     `<p class="st2">Designed in the UAE for everyone who loves it.</p>
     <a class="lb-a" href="/new/">` + inc('st0', '<span class="st0">See the pieces</span>') + inc('st1', '<span class="st1">Pre-order now</span>') + `<span class="st2">Shop the new pieces</span> &rarr;</a>
-  </div><div class="lb-g">` + pick.map(([h, k, n, pr]) => `<a class="lb-c" href="/products/${h}/"><span><img src="/assets/preorder/${k}-720.webp" width="720" height="900" alt="${n.replace(/&amp;/g, '&')}, studio mock-up" loading="lazy" decoding="async"><i>Mock-up</i></span><b>${n}</b>${cardPrice(pr, 'small')}</a>`).join('') +
+  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span>${imgTag(p.images[0], { sizes: '(max-width: 860px) 42vw, 200px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small')}</a>`).join('') +
   `</div></div></section>`;
 }
 
@@ -534,8 +570,76 @@ function homeHero() {
       <p class="ph-tr"><a href="/trail/#pieces" data-track="home_preorder_trail">Sahra Trail running kit is on pre-order too &rarr;</a></p>
     </div>
   </div>
-  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span><img src="/assets/preorder/${im.k}-720.webp" width="720" height="900" alt="${esc(p.name.replace(/&amp;/g, '&'))}, studio mock-up" loading="lazy" decoding="async">${im.mock ? '<i>Mock-up</i>' : ''}</span><b>${p.name}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
+  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span>${imgTag(im, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#1B2A40' })}${mockTag(im)}</span><b>${p.name}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
 </section>`);
+}
+
+/* 27 Oct 2026 (Faheem: "only the Founding Edition section is there under the collection. Sahel needs to be
+   there too"; "Every line on the homepage"). Two homepage pieces, built from the same product data as the pre-order
+   pages so a price or a stage change reaches the homepage on the next build:
+   homeRing()  - one card per Sahel design for the 3D collection ring (after the Founding pieces); any mock-up is labelled;
+   homeLines() - under the Founding Edition grid: Sahel (seven designs), Sahra Trail (with the Trailhead Bag), and the
+                 free Sahra Tote, each with its own heading, so every line we sell is one scroll from the top. */
+function homeRing() {
+  return pickNew(p => p.line === 'sahel', true).map(p => {
+    const nm = p.name.replace(/&amp;/g, '&');
+    /* a real first photo cycles only with other real photos, so a mock-up never shows unlabelled */
+    const imgs = (p.images[0] && !p.images[0].mock ? p.images.filter(x => !x.mock) : p.images).slice(0, 2).map((im, i) => imgTag(im, { cls: i ? '' : 'on', sizes: '(max-width:760px) 46vw, 240px' })).join('');
+    const place = p.place ? p.place[0] : 'Sahel';
+    const fit = p.fit ? 'Regular or Oversized' : cut(p);
+    return `<a class="hring-card hring-new" href="/products/${p.handle}/" data-handle="${p.handle}" data-place="${esc(place)}"><span class="hring-img" data-cycle>${imgs}</span>${mockTag(p.images[0], 'hring-mk')}`
+      + `<span class="hring-body"><span class="hring-place">Sahel${p.place ? ' &middot; ' + esc(place) : ''}</span><span class="hring-name">${p.name}</span><span class="hring-fit">${fit}</span>`
+      + `<span class="hring-price">${cardPrice(p.price, 'span')}</span><span class="hring-go">` + inc('st1', '<span class="st1">Pre-order &rarr;</span>') + `<span class="st02">View the piece &rarr;</span></span></span></a>`;
+  }).join('');
+}
+function homeLines() {
+  const sahel = pickNew(p => p.line === 'sahel', true);
+  const trail = products().filter(p => p.line === 'trail');
+  const css = `<style>
+.hl{margin:46px 0 0;display:flex;flex-direction:column;gap:44px}
+.hl-sec{scroll-margin-top:90px}
+.hl .nb-k{margin:0 0 8px}
+.hl h3{font:600 clamp(26px,3vw,38px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#2A2016;text-wrap:balance}
+.hl .nb-l{margin:0 0 18px}
+.hl .nb-l a{color:#2A2016;text-decoration:underline;text-decoration-color:rgba(126,65,20,.45);text-underline-offset:3px}
+.hl-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.hl-all{display:flex;flex-direction:column;justify-content:flex-end;gap:6px;aspect-ratio:4/5;border-radius:10px;padding:18px;text-decoration:none;background:#0E1A2E;color:#F4ECDF}
+.hl-all b{font:600 24px/1.1 'Cormorant Garamond',Georgia,serif}
+.hl-all small{font:14px/1.45 Jost,system-ui,sans-serif;color:#D9C3A5}
+.hl-all span{font:600 15px Jost,system-ui,sans-serif;margin-top:6px}
+.hl-all.trail{background:#3B2A1C}
+.hl-all:focus-visible{outline:3px solid #A95A21;outline-offset:3px}
+.hl-tote{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:22px;align-items:center;padding:18px;border-radius:14px;background:#F1E8D9;color:#2A2016;text-decoration:none;max-width:760px}
+.hl-tote span{display:block;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E5DACA}
+.hl-tote img{width:100%;height:100%;object-fit:cover;display:block}
+.hl-tote b{display:block;font:600 24px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 6px}
+.hl-tote p{font:15.5px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#4A3E31}
+.hl-tote em{font:600 15px Jost,system-ui,sans-serif;font-style:normal;color:#7E4114}
+.hl-more{margin:14px 0 0!important}
+.hl-tote:focus-visible{outline:3px solid #A95A21;outline-offset:3px}
+@media(max-width:860px){.hl{gap:36px;margin-top:36px}.hl-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hl-all{padding:14px}.hl-all b{font-size:21px}.hl-tote{grid-template-columns:minmax(0,120px) minmax(0,1fr);gap:14px;padding:12px}.hl-tote b{font-size:21px}.hl-tote p{font-size:14.5px}}
+</style>`;
+  const k = (line) => line + ' &middot; ' + inc('st0', '<span class="st0">on pre-order from Wed 28 Oct</span>') + inc('st1', '<span class="st1">on pre-order, 20% off until Thu 29 Oct</span>') + '<span class="st2">new</span>';
+  return stageHead() + NB_CSS + css + `<div class="hl" id="lines">
+  <section class="hl-sec" id="home-sahel" aria-labelledby="hlS">
+    <p class="nb-k">${k('Sahel, the Coast Edition')}</p>
+    <h3 id="hlS">Sahel: seven designs from the UAE coast</h3>
+    <p class="nb-l">Four tees, two hoodies and a polo, drawn from Khor Fakkan, Al Aqah, Al Jazirah Al Hamra and Ras Al Khor. ${inc('st1', '<span class="st1">Ships from Fri 30 Oct. </span>')}Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. Photographed from the real pieces; the Sahel Polo is still a labelled mock-up.</p>
+    <div class="nb-g hl-g">${sahel.map(p => newCard(p, true)).join('')}<a class="hl-all" href="/sahel/#pieces" data-track="home_lines_sahel"><b>All of Sahel</b><small>Every piece, both fits, the story behind the coast.</small><span>${inc('st1', '<span class="st1">Pre-order Sahel</span>')}<span class="st02">Shop Sahel</span> &rarr;</span></a></div>
+  </section>
+  <section class="hl-sec" id="home-trail" aria-labelledby="hlT">
+    <p class="nb-k">${k('Sahra Trail running wear')}</p>
+    <h3 id="hlT">Sahra Trail: the tee, the 2-in-1 short and the kit</h3>
+    <p class="nb-l">Running wear marked with the Two Ridges, plus the Trailhead Bag. Men&rsquo;s cuts; the bag is one size. No size chart yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order. The studio images are mock-ups.</p>
+    <div class="nb-g hl-g">${trail.map(p => newCard(p)).join('')}</div>
+    <a class="nb-a" href="/trail/#pieces" data-track="home_lines_trail">Shop Sahra Trail &rarr;</a>
+  </section>
+  <section class="hl-sec" id="home-tote" aria-label="The Sahra Tote">
+    <a class="hl-tote" href="/tote/" data-track="home_lines_tote"><span><img src="/shirts/tote-model.webp" width="1080" height="1350" alt="The Sahra Tote in natural canvas, carried over the shoulder" loading="lazy" decoding="async"></span>
+    <div><p class="nb-k">Accessories</p><b>The Sahra Tote, free with every order</b><p>A natural canvas tote goes in with every order, whatever you buy.</p><em>About the tote &rarr;</em></div></a>
+    <p class="nb-l hl-more"><a href="/accessories/">Accessories</a> &middot; <a href="/gifts/">UAE gifts</a> &middot; <a href="/under-150/">Under AED 150</a> &middot; <a href="/shop/">Shop everything</a></p>
+  </section>
+</div>`;
 }
 
 /* 23 Oct 2026 (site review, buy-intent SEO): titles carry the product noun a buyer searches for
@@ -583,7 +687,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
   write('new/index.html', shell({
     title: 'Sahel & Sahra Trail: New Tees, Hoodies, Polo, Running Kit | Sahra & Beyond',
     desc: 'Sahel, the Coast Edition (graphic tees, a polo and two hoodies) and Sahra Trail running wear (tee, 2-in-1 shorts and kit). Designed in the UAE. Free delivery across the UAE.',
-    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false, image: `${SITE}/assets/preorder/og/kfb-back-og.jpg`,
+    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false, image: `${SITE}/assets/preorder/og/ph-kfb-01-back-og.jpg`,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahel and Sahra Trail', url: `${SITE}/new/` },
       { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahel and Sahra Trail', itemListElement: all.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/products/${p.handle}/`, name: p.plain })) }],
     bodyHtml: collectionPage(all)
@@ -595,6 +699,9 @@ module.exports.stageHead = stageHead;
 module.exports.inc = inc;
 module.exports.homeBand = homeBand;
 module.exports.homeHero = homeHero;
+module.exports.homeRing = homeRing;
+module.exports.foundingCross = foundingCross;
+module.exports.homeLines = homeLines;
 module.exports.urls = urls;
 module.exports.handles = () => products().map(p => p.handle);
 module.exports.products = products;

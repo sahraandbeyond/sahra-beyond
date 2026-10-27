@@ -119,9 +119,9 @@ module.exports = function buildSahel({ shell, write, SITE }) {
         ${/* 24 Oct 2026 (aesthetic panel): the pieces are live on their product pages, so the grid shows the
              same warm-stone studio mock-up as /new/ and the product pages, on a light panel where the black
              tees read. The dark silhouette stays only as a fallback for a piece with no mock-up. */''}${prod && prod.images && prod.images[0]
-          ? `<span class="sh-photo"><img src="/assets/preorder/${prod.images[0].k}-720.webp" width="720" height="900" alt="${label.replace(/"/g, '')}, studio mock-up" loading="lazy" decoding="async"></span>`
+          ? `<span class="sh-photo"><img src="/assets/preorder/${prod.images[0].k}-720.webp" width="${prod.images[0].w || 720}" height="${prod.images[0].h || 900}" alt="${prod.images[0].mock ? label.replace(/"/g, '') + ', studio mock-up' : prod.images[0].alt.replace(/"/g, '')}" loading="lazy" decoding="async"${(prod.images[0].h || 900) / (prod.images[0].w || 720) > 1.4 ? ' style="object-fit:contain"' : ''}></span>`
           : `<span class="sh-form" style="--sh-m:url(/assets/sahel/sahel-${p.k}.webp);aspect-ratio:${d[0]}/${d[1]}"><img src="${reveal && p.img ? p.img : `/assets/sahel/sahel-${p.k}.webp`}" width="${d[0]}" height="${d[1]}" alt="" loading="lazy" decoding="async"><i class="sh-ca" aria-hidden="true"></i></span>`}
-        <span class="sh-mock">${T.mock || 'Mock-up'}</span>
+        ${prod && prod.images && prod.images[0] && !prod.images[0].mock ? '' : `<span class="sh-mock">${T.mock || 'Mock-up'}</span>`}
         <span class="sh-n">${n}</span><b>${label}</b><small>${reveal ? [p.place ? (p.inspiredBy ? 'Inspired by ' : '') + p.place : null, p.price].filter(Boolean).join(' · ') || p.type : (typed ? '' : `${p.type} &middot; `) + ST.inc('st0', '<span class="st0">Pre-order 28 Oct</span>') + ST.inc('st1', '<span class="st1">Pre-order</span>') + '<span class="st2">Out now</span>'}</small>
       </${tag}>`;
   }).join('\n      ');

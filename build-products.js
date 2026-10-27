@@ -1415,6 +1415,7 @@ ${RV.productSection(p.id, p.name, designHandles(p))}
 ${related(p, all)}
     </div>
   </section>
+  ${/* 27 Oct 2026 (Faheem: "Cross-sell between lines"): the new lines on every Founding Edition page */''}<div class="po-x" style="position:relative;z-index:2;background:#FAF6EF;color:#2A2016;border-radius:16px;max-width:1180px;margin:40px auto;padding:6px 0 26px">${require('./preorder-page.js').foundingCross()}</div>
 </div>
 </main>
 
