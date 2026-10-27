@@ -9,7 +9,7 @@ const GA4_ID = 'G-5NVFDWT29F';
 const CLARITY_ID = '';
 /* 13 Oct 2026: sent with every GA4 event (with ad_session), so a release can be compared with
    the one before it. Bump it with each site release that changes the landing experience. */
-const SITE_BUILD = 'r50';
+const SITE_BUILD = 'r80';
 /* Runs in the head of every page, before anything else:
    - sb_ad: this session arrived from a paid ad (click IDs or utm tags on the landing
      URL). Kept for the session so the code bar and Clarity follow the visitor around.
@@ -35,7 +35,7 @@ const GA4_HEAD = `<!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=${GA4_ID}"></script>
 <script>
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-  window.track=window.track||function(n,p){try{gtag('event',n,p||{});}catch(e){}};
+  ${/* 25 Oct 2026 (retention audit): add_to_cart / view_item / remove_from_cart get GA4's standard items[], value and currency, so funnel reports work */''}window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
   ${ATTENTION}
   gtag('js',new Date());gtag('config','${GA4_ID}');
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);

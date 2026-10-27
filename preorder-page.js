@@ -67,6 +67,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 const SIZES = ['S', 'M', 'L', 'XL'];
 const FITS = [['regular', 'Regular'], ['oversized', 'Oversized']];
+const SZ = require('./sahel-sizing.js');   /* 27 Oct 2026: the Sahel size charts */
 const mock = (k, alt) => ({ k, alt, mock: true });
 const real = (k, alt, cap) => ({ k, alt, mock: false, cap });
 
@@ -154,7 +155,9 @@ function gallery(p) {
   return `<div class="po-gal">${p.images.map((im, i) => `<figure class="po-fig">${picture(im, i === 0)}<figcaption class="${im.mock ? 'po-mock' : 'po-real'}">${im.mock ? 'Mock-up' : (im.cap || 'Close-up of the sample')}</figcaption></figure>`).join('')}</div>`;
 }
 
-const CSS = `
+const CSS = `${SZ.CSS}
+.po-size{max-width:760px;margin:34px auto 0;padding:0 2px;scroll-margin-top:96px}.po-size h2{font:600 28px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 8px}
+
 .po-page{background:#FAF6EF;color:#2A2016}
 .po-wrap{max-width:1180px;margin:0 auto;padding:22px 20px 70px}
 .po-crumb{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5B48;margin:0 0 16px}
@@ -248,7 +251,7 @@ function buyBox(p, stage) {
       </div>`)}
       <div class="st12">
         ${sizes}
-        ${p.oneSize ? '' : `<p class="po-ask">No size chart for this piece yet. Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>`}
+        ${p.oneSize ? '' : SZ.keyFor(p) ? `<p class="po-ask">${/* 27 Oct 2026 */''}Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart &darr;</a> Still unsure? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us.</a></p>` : `<p class="po-ask">No size chart for this piece yet. Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>`}
         <button type="button" class="po-go" id="poGo" disabled>${p.oneSize ? 'Add to bag' : 'Choose a size'}</button>
         <p class="po-msg" id="poMsg" role="status" aria-live="polite"></p>
         ${now ? '' : '<p class="po-small">You pay today and we email you when it ships.</p>'}
@@ -330,6 +333,7 @@ function productPage(p, all, SITE, stage) {
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
       <p class="po-small" style="margin-top:12px">${p.images.some(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : 'Photos of the real piece will be added when it arrives.'} Designed in the UAE.</p></div>
   </section>
+  ${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
 </main>
 ${CLIENT}`;
@@ -337,7 +341,7 @@ ${CLIENT}`;
 
 function collectionPage(all) {
   const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 280px')}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
-  const sec = (id, h, list) => `<section class="po-more" id="${id}"><h2>${h}</h2><div class="po-cards">${list.map(card).join('')}</div></section>`;
+  const sec = (id, h, list, note) => `<section class="po-more" id="${id}"><h2>${h}</h2>${note ? `<p class="po-small" style="margin:-4px 0 14px">${note}</p>` : ''}<div class="po-cards">${list.map(card).join('')}</div></section>`;
   return `${stageHead()}<style>${CSS}.po-head h1{font:600 clamp(34px,5vw,56px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 10px}.po-head p{font:17px/1.55 Jost,system-ui,sans-serif;max-width:60ch;margin:0 0 8px}</style>
 <main class="po-wrap">
   <div class="po-head">
@@ -349,7 +353,7 @@ function collectionPage(all) {
     ${IN_HAND ? '' : '<p class="st2">Pre-order. Ships from Fri 30 Oct.</p>'}
     <p>Designed in the UAE for everyone who loves it. The studio images are mock-ups until the real pieces are photographed.</p>
   </div>
-  ${sec('sahel', 'Sahel &middot; The Coast Edition', all.filter(p => p.line === 'sahel'))}
+  ${sec('sahel', 'Sahel &middot; The Coast Edition', all.filter(p => p.line === 'sahel'), 'Sahel has its own size chart, cut larger than the Founding Edition: <a href="/size-guide/#sahel">see the Sahel size chart</a>. No chart yet for the Sahel Polo.')}
   ${sec('trail', 'Sahra Trail', all.filter(p => p.line === 'trail'))}
 </main>`;
 }
@@ -411,7 +415,7 @@ function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', more
 const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. The studio images are mock-ups.</span>`)
   + inc('st1', `<span class="st1">Pre-order is open: 20% off these new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct. The studio images are mock-ups.</span>`)
   + `<span class="st2">${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}The studio images are mock-ups.</span>`
-  + ' No size chart for these pieces yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
+  + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. No chart yet for the Sahel Polo and Sahra Trail: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
 
 /* 23 Oct 2026 (site review): a place guide whose place became a Sahel piece shows that piece
    (Khor Fakkan, Al Jazirah Al Hamra, Al Aqah / Snoopy Island, Ras Al Khor), on the place page and on

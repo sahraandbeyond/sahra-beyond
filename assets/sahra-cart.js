@@ -104,8 +104,10 @@
     /* the pre-order 20%: the price paid, named, with no struck-through list price (Faheem, 22 Oct 2026) */
     if (isPre(l)) return '<span class="sb-lp"><b>' + money(parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1), l.cost.totalAmount.currencyCode) + '</b> <small>pre-order price</small></span>';
     var unit = parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1);
-    return '<span class="sb-lp"><s>' + money(m.price.amount, m.price.currencyCode) + '</s> ' +
-      '<b>' + money(unit, l.cost.totalAmount.currencyCode) + '</b></span>';
+    /* 25 Oct 2026 (retention audit): the pair price, named like the pre-order price, with no struck-through
+       list price (brand rule: no strike-through prices) */
+    var pair = (l.discountAllocations || []).some(function (a) { return /2 tees|359|pair/i.test(a.title || ''); });
+    return '<span class="sb-lp"><b>' + money(unit, l.cost.totalAmount.currencyCode) + '</b> <small>' + (pair ? 'pair price' : 'after discount') + '</small></span>';
   }
   /* the six tees, for the second-tee card (handles, names and card images are stable) */
   var TEES = [
@@ -497,8 +499,7 @@
           '<div class="sb-lt">' +
             '<span class="sb-gift-t">The Sahra Tote &mdash; yours free</span>' +
             '<span class="sb-gift-p">' +
-              '<s class="sb-price" data-handle="' + TOTE_HANDLE + '" data-aed="' + TOTE_PRICE + '">AED ' + TOTE_PRICE + '</s>' +
-              ' <b>FREE</b>' +
+              '<b>Free</b> <small>with every order</small>' +   /* 25 Oct 2026: no struck-through AED 50 (brand rule) */
             '</span>' +
           '</div>' +
         '</div>';
@@ -581,24 +582,32 @@
       chk.__sbGift = 1;
       try { var g0 = JSON.parse(localStorage.getItem('sb_gift') || 'null');
         if (g0 && CART && g0.cart === CART.id) { chk.checked = !!g0.on; ta.value = g0.msg || ''; box.hidden = !g0.on; } } catch (e) {}
-      var t = null, last = null;
+      var t = null, last = null, pending = null, noteSet = false;
       function save() {
         if (!CART || !CART.id) return Promise.resolve();
         var on = chk.checked, msg = (ta.value || '').trim().slice(0, 250);
-        var key = on + '|' + msg; if (key === last) return Promise.resolve(); last = key;
+        /* 25 Oct 2026: a click during an in-flight save waits for that save instead of cancelling it */
+        var key = on + '|' + msg + '|' + CART.id; if (key === last) return pending || Promise.resolve(); last = key;
         try { localStorage.setItem('sb_gift', JSON.stringify({ cart: CART.id, on: on, msg: msg })); } catch (e) {}
         var note = on ? ('GIFT ORDER' + (msg ? ' - message: ' + msg : ' - no message')) : '';
-        var attrs = on ? [{ key: 'Gift', value: 'Yes' }] : [];
+        /* 25 Oct 2026: cartAttributesUpdate replaces the whole set, so the gift flag travels with the
+           attribution attributes from assets/sahra-measure.js (hidden "_" keys: source, campaign, landing) */
+        var attrs = (on ? [{ key: 'Gift', value: 'Yes' }] : []).concat(window.sbAttr ? window.sbAttr() : []);
         /* one after the other: sent together, the second write could restore the old note */
-        return sf('mutation($id:ID!,$n:String!){cartNoteUpdate(cartId:$id,note:$n){cart{id}userErrors{message}}}', { id: CART.id, n: note })
+        /* the note is only written once a gift has been ticked (an empty note on every checkout was a wasted round trip) */
+        var notep = (on || noteSet) ? sf('mutation($id:ID!,$n:String!){cartNoteUpdate(cartId:$id,note:$n){cart{id}userErrors{message}}}', { id: CART.id, n: note }) : Promise.resolve();
+        if (on) noteSet = true;
+        pending = notep
           .then(function () { return sf('mutation($id:ID!,$a:[AttributeInput!]!){cartAttributesUpdate(cartId:$id,attributes:$a){cart{id}userErrors{message}}}', { id: CART.id, a: attrs }); })
           .then(function () { if (on && window.track) try { track('gift_option', { with_message: !!msg }); } catch (e) {} })
           .catch(function () { last = null; });
+        return pending;
       }
       chk.addEventListener('change', function () { box.hidden = !chk.checked; if (chk.checked) try { ta.focus({ preventScroll: true }); } catch (e) {} save(); });
       ta.addEventListener('input', function () { clearTimeout(t); t = setTimeout(save, 700); });
       go.addEventListener('click', function (e) {
-        if (!chk.checked && last === null) return;
+        if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;   /* open-in-new-tab keeps working */
+        if (!chk.checked && last === null && !(window.sbAttr && window.sbAttr().length)) return;
         var href = go.href; if (!href || href.slice(-1) === '#') return;
         e.preventDefault(); clearTimeout(t);
         var done = false; function nav() { if (done) return; done = true; location.href = href; }
@@ -613,6 +622,7 @@
     if (_go && !_go.__sbMetaBound) {
       _go.__sbMetaBound = 1;
       _go.addEventListener('click', function () {
+        beginCheckout();   /* 25 Oct 2026 (retention audit): GA4 begin_checkout */
         try {
           if (!window.sbMeta || !CART || !CART.cost) return;
           var nodes = (CART.lines && CART.lines.edges || []).map(function (e) { return e.node; });
@@ -675,9 +685,12 @@
       var nodes = cartNodes(), anyPre = !PRE_IN_HAND && nodes.some(isPre);
       var trail = nodes.some(function (n) { var h = n.merchandise && n.merchandise.product && n.merchandise.product.handle || ''; return /^sahra-trail-/.test(h); });
       var d = note.querySelector('.sb-note-d'); if (d) d.style.display = anyPre ? 'none' : '';
-      var a = note.querySelector('a[href="/size-guide/"]');
+      /* 27 Oct 2026: a cart with Sahel pieces links straight to the Sahel chart (it differs from the Founding Edition) */
+      var sahel = nodes.some(function (n) { var h = n.merchandise && n.merchandise.product && n.merchandise.product.handle || ''; return /^(khor-fakkan-bay|al-hamra-pearl-diver|al-aqah-reef|shams-tee|barr-and-bahr|ras-al-khor)/.test(h); });
+      var a = note.querySelector('a[data-sz]') || note.querySelector('a[href^="/size-guide/"]'); if (a) a.setAttribute('data-sz', '1');
+      if (a && !trail) { a.setAttribute('href', sahel ? '/size-guide/#sahel' : '/size-guide/'); a.textContent = sahel ? 'Check the Sahel chart (it differs from the Founding Edition)' : 'Check the chart'; }
       if (a && trail && !note.getAttribute('data-trail')) { note.setAttribute('data-trail', '1'); a.setAttribute('href', 'https://wa.me/971585449946'); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); a.textContent = 'message us'; }
-      else if (a && !trail && note.getAttribute('data-trail')) { note.removeAttribute('data-trail'); a.setAttribute('href', '/size-guide/'); a.removeAttribute('target'); a.removeAttribute('rel'); a.textContent = 'check the chart'; }
+      else if (a && !trail && note.getAttribute('data-trail')) { note.removeAttribute('data-trail'); a.setAttribute('href', sahel ? '/size-guide/#sahel' : '/size-guide/'); a.removeAttribute('target'); a.removeAttribute('rel'); a.textContent = sahel ? 'Check the Sahel chart (it differs from the Founding Edition)' : 'Check the chart'; }
     })();
     foot.hidden = false;
   }
@@ -953,8 +966,38 @@
       return add(v.id, 1).then(function () { if (window.track) track('add_to_cart', { item_id: h, size: v.title, via: 'second-tee' }); });
     }).catch(function () { b.disabled = false; b.textContent = 'Add'; });
   });
+  /* 25 Oct 2026 (retention audit): one begin_checkout and one attribute write for every route to
+     checkout: the drawer button and the product pages' Buy now. */
+  function beginCheckout() {
+    try {
+      if (!window.track || !CART || !CART.cost) return;
+      var ns = (CART.lines && CART.lines.edges || []).map(function (e) { return e.node; });
+      window.track('begin_checkout', {
+        currency: CART.cost.subtotalAmount.currencyCode || 'AED',
+        value: Number(CART.cost.subtotalAmount.amount) || 0,
+        items: ns.map(function (l, i) { var m = l.merchandise || {}, pr = m.product || {};
+          return { item_id: pr.handle || m.id, item_name: pr.title || '', item_variant: m.title || '', index: i,
+            price: (Number(l.cost && l.cost.totalAmount && l.cost.totalAmount.amount) || 0) / (l.quantity || 1), quantity: l.quantity || 1 }; })
+      });
+    } catch (e) {}
+  }
+  function giftAttrs() {
+    try { var g = JSON.parse(localStorage.getItem('sb_gift') || 'null'); if (g && CART && g.cart === CART.id && g.on) return [{ key: 'Gift', value: 'Yes' }]; } catch (e) {}
+    return [];
+  }
+  function saveAttrs() {
+    var a = window.sbAttr ? window.sbAttr() : [];
+    if (!CART || !CART.id || !a.length) return Promise.resolve();
+    return sf('mutation($id:ID!,$a:[AttributeInput!]!){cartAttributesUpdate(cartId:$id,attributes:$a){cart{id}userErrors{message}}}', { id: CART.id, a: giftAttrs().concat(a) }).catch(function () {});
+  }
+  /* Buy now: attributes and begin_checkout, then checkout; never waits more than a second */
+  function goCheckout(url) {
+    beginCheckout();
+    var done = false; function nav() { if (done) return; done = true; location.href = url; }
+    saveAttrs().then(nav, nav); setTimeout(nav, 1000);
+  }
   window.SahraCart = {
-    add: add, open: open, close: close, variants: variants,
+    add: add, open: open, close: close, variants: variants, goCheckout: goCheckout,
     refresh: function () { return refresh().then(afterMutation); },
     setQty: setQty, remove: function (l) { return setQty(l, 0); },
     setCountry: setCountry,

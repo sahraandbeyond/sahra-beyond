@@ -207,12 +207,13 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
     ${/* 25 Sep 2026: size finder for people buying for someone else (assets/sahra-sizefinder.js) */''}<div class="sfind" data-sizefinder data-fit="${p.fit === 'oversized' ? 'oversized' : 'regular'}" data-chart='${JSON.stringify({ regular: (SIZING.regular || []).map(function (r) { return [r[0], r[2]]; }), oversized: (SIZING.oversized || []).map(function (r) { return [r[0], r[2]]; }) })}'></div>
     <div class="sz-wrap">
       <table class="sz">
-        <caption class="sz-cap">${p.fit === 'oversized' ? 'Oversized fit' : 'Regular fit'} &middot; garment measured flat</caption>
+        <caption class="sz-cap">Founding Edition &middot; ${p.fit === 'oversized' ? 'Oversized fit' : 'Regular fit'} &middot; garment measured flat</caption>
         <thead><tr><th>Size</th><th>Chest</th><th>Length</th><th>Shoulder</th><th>Sleeve</th></tr></thead>
         <tbody>${sizeRows(p.fit === 'oversized' ? SIZING.oversized : SIZING.regular)}</tbody>
       </table>
     </div>
     <p class="sz-note">${p.fit === 'oversized' ? SIZING.oversizedIntent : SIZING.regularIntent}</p>
+    ${/* 27 Oct 2026 (Faheem): the two lines size differently, and the page says so */''}<p class="sz-note"><strong>This chart is for the Founding Edition.</strong> Sahel pieces are cut on their own pattern and run larger, with <a href="/size-guide/#sahel">their own chart</a>.</p>
     ${p.garment === 'polo' ? '' : '<p class="sz-note">Compare the two cuts: <a href="/t-shirts/regular/">regular fit t-shirts</a> &middot; <a href="/t-shirts/oversized/">oversized t-shirts and the drop shoulder</a>.</p>'}
     <details class="sz-method"><summary>How these are measured</summary>
       <ul>${(SIZING.method||[]).map(function(m){return '<li>'+m+'</li>';}).join('')}</ul>
@@ -1167,7 +1168,7 @@ ${galShots(p).map((s,i)=>`
            they must sell directly instead of bouncing to /shop/ to start again. -->
       <div class="pdp-buy" id="pdpBuy" data-handle="${p.id}">
         ${/* 4 Oct 2026 (CRO panel, idea 8): the two fits of a design as one control, not a text link */''}${p.siblingOf && p.garment !== 'polo' ? `<div class="pdp-fits" role="group" aria-label="Fit"><a class="pdp-fit${p.fit !== 'oversized' ? ' on' : ''}" href="/products/${p.siblingOf}-regular/"${p.fit !== 'oversized' ? ' aria-current="page"' : ''}><b>Regular</b><span>Sits on the shoulder</span></a><a class="pdp-fit${p.fit === 'oversized' ? ' on' : ''}" href="/products/${p.siblingOf}-oversized/"${p.fit === 'oversized' ? ' aria-current="page"' : ''}><b>Oversized</b><span>Dropped shoulder, wider body</span></a></div>` : ''}
-        <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
+        <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/#founding">Size guide &rarr;</a></div>
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
           ${/* 23 Sep 2026: the four sizes paint with the page; live stock fills them in */''}${['S','M','L','XL'].map(z => `<button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">${z}</button>`).join('')}
         </div>
@@ -2076,7 +2077,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
            Shopify checkout, where Shop Pay / Google Pay sit at the top. */
         if(go){ var st=window.SahraCart.state&&window.SahraCart.state(); var u=(st&&st.checkoutUrl)||(cart&&cart.checkoutUrl);
           if(window.track) track('buy_now',{item_id:handle,size:v.title});
-          if(u){ location.href=u; return; } }
+          if(u){ if(window.SahraCart.goCheckout) window.SahraCart.goCheckout(u); else location.href=u; return; } }
         addEl.disabled=false; setAdd('Add another', true);
         msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
         if(window.track) track('add_to_cart',{item_id:handle,size:v.title});

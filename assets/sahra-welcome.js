@@ -184,6 +184,8 @@
       old.parentNode.replaceChild(f, old);
       var wrapEl = f.closest('[data-waitlist-wrap]') || f.parentNode;
       var src = f.getAttribute('data-source') || 'waitlist';
+      /* 25 Oct 2026: the shared newsletter block says data-source="news"; tag it with the page it sits on */
+      if (src === 'news') { var seg = (location.pathname || '/').split('/').filter(Boolean)[0] || 'home'; src = ('news-' + seg).slice(0, 24); }
       f.removeAttribute('data-endpoint');
       var inp = f.querySelector('input[type=email], input[name=email_address], input[name=email]');
       /* the error line goes back to its bad-email wording as soon as the visitor edits the address */
@@ -204,6 +206,10 @@
           wrapEl.classList.remove('loading', 'err');
           wrapEl.classList.add('done');
           ev('waitlist_signup', { source: src });
+          /* 25 Oct 2026 (retention audit): the standard lead events, so ads can learn from sign-ups.
+             Meta Lead is mirrored to TikTok SubmitForm by assets/tiktok-pixel.js. */
+          ev('generate_lead', { lead_source: src, currency: 'AED', value: 0 });
+          try { if (window.sbMeta) window.sbMeta('Lead', { content_name: src }); } catch (e) {}
         };
         /* 8 Oct 2026 (Faheem): the success line shows only once Shopify has the address. If saving fails
            we try once more, then say so plainly instead of pretending, so nobody thinks they are on a list

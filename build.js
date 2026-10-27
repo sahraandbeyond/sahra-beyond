@@ -570,17 +570,21 @@ function newsletterBlock() {
   const shopCta = LAUNCHED
     ? `<a class="btn news-shop" href="/shop/">Shop the collection &rarr;</a>`
     : '';
-  return `<section class="news"><div class="news-stars"></div><div class="news-in">
+  /* 25 Oct 2026 (retention audit): this form posted to the retired Kit account and showed success
+     whatever happened, so sign-ups from ~33 pages were lost. It is now a [data-waitlist] form, taken
+     over by assets/sahra-welcome.js: saved to Shopify with consent, success shown only once stored. */
+  return `<section class="news" data-waitlist-wrap><div class="news-stars"></div><div class="news-in">
     <span class="news-eyebrow">${eyebrow}</span>
     <h2>${LAUNCHED ? 'Hear about the next drop' : 'Be first to see the next drop'}</h2><p>${esc(blurb)}</p>
     ${shopCta}
-    <form class="news-form" action="${esc(MON.newsletterAction)}" method="post">
+    <form class="news-form" data-waitlist data-source="news" novalidate>
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
       <button type="submit">${btn}</button>
     </form>
+    <p class="news-err" data-err role="alert" style="display:none;margin:12px 0 0;font-size:15px">Please enter a valid email address.</p>
     <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:18px;color:#F7DFBE">${ok}</p>
     </div>
-    <script>(function(){var s=document.currentScript,sec=s.parentNode,f=sec.querySelector('.news-form');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();fetch(f.action,{method:'POST',body:new FormData(f),mode:'no-cors'}).finally(function(){f.style.display='none';var ok=sec.querySelector('.news-ok');if(ok)ok.style.display='block';});});})();</script></section>`;
+    </section>`;
 }
 // Category hero gradients — all within the brand's desert-night palette
 // (deep indigo Milky-Way sky melting to a category-tinted horizon)
@@ -2978,6 +2982,7 @@ const SIZING = (function(){
   if (xxl) throw new Error('FATAL: content/sizing.json contains XXL. We produce S–XL only. This usually means content/ did not reach the repo — check it is actually updated before deploying.');
   return d;
 })();
+const SAHEL_SZ = require('./sahel-sizing.js');   /* 27 Oct 2026: Sahel size charts */
 function sizeTableHtml() {
   if (!SIZING.regular || !SIZING.regular.length) return '';
   const cell = (i,c) => `<span class="sz-in">${i}&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">${c}&nbsp;cm</span>`;
@@ -2991,7 +2996,7 @@ function sizeTableHtml() {
     ? `<h3>The polo</h3><p class="sgnote">${SIZING.polo.note}</p>` : '';
   /* 25 Sep 2026: size finder (assets/sahra-sizefinder.js) - height and build to a starting size */
   const finder = `<div class="sfind" data-sizefinder data-fit="choose" data-chart='${JSON.stringify({ regular: SIZING.regular.map(r => [r[0], r[2]]), oversized: (SIZING.oversized || []).map(r => [r[0], r[2]]) })}'></div><script src="/assets/sahra-sizefinder.js" defer></script>`;
-  return finder + tbl('Regular fit','regular',SIZING.regularIntent||'') + tbl('Oversized fit','oversized',SIZING.oversizedIntent||'') + method + polo;
+  return finder + tbl('Founding Edition, Regular fit','regular',SIZING.regularIntent||'') + tbl('Founding Edition, Oversized fit','oversized',SIZING.oversizedIntent||'') + method + polo;
 }
 
 /* The GSM comparison table.
@@ -3047,7 +3052,7 @@ const COMMERCE = [
     faqs: [
       ['Where can I buy UAE t-shirts online?', 'Here. Sahra & Beyond is a clothing brand designed in the UAE, and every t-shirt is drawn from a real place in the Emirates: the Al Quaa night sky, the Hajar peaks, the Liwa dunes and, in Sahel, the coast. They are 230 GSM cotton in Regular and Oversized fits, sizes S to XL, from AED 139, with free next-day delivery across the UAE when you order by 2 pm.'],
       ['Where do you ship?', 'We ship worldwide from Dubai. In the UAE: free next-day delivery to all seven emirates, with no minimum order — order by 2 pm and it arrives the next working day. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 390. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.'],
-      ['What size should I order?', 'Every t-shirt design comes in Regular and Oversized fits, S to XL; the polos come in one fit. Our size guide has full flat-lay measurements for the Founding Edition tees, plus a method for measuring a t-shirt you already own to find your match. There is no size chart for the Sahel tees yet, so message us before you order one.'],
+      ['What size should I order?', 'Every t-shirt design comes in Regular and Oversized fits, S to XL; the polos come in one fit. Our size guide has full flat-lay measurements for both lines, plus a method for measuring a t-shirt you already own to find your match. The Founding Edition and Sahel are cut differently: Sahel runs larger, so use the Sahel chart for a Sahel tee rather than the size you took before.'],
       ['What is the cotton, exactly?', '100% combed ring-spun cotton at 230gsm, with no polyester. Combing strips out the short fibres and ring-spinning twists what remains into a smoother, stronger yarn — that is where the weight and the hand come from. We describe the yarn we actually buy and make no certification claims we cannot show you.']
     ]
   },
@@ -3145,10 +3150,11 @@ const COMMERCE = [
   },
   {
     slug: 'size-guide', emoji: '▱', cat: 'Coast',
-    h1: 'T-shirt size and fit guide',
-    title: 'T-Shirt Size Guide — Regular & Oversized Fit',
-    desc: 'Flat-lay measurements for every Sahra & Beyond t-shirt in Regular and Oversized fits, plus how to measure a t-shirt you already own to find your size.',
-    intro: "Our t-shirts are cut unisex — one cut worn by everyone, in sizes S to XL, with no separate men's or women's version — and each design comes in two fits, Regular and Oversized. The polo is a men's cut, S to XL, in one fit. Every figure below is a garment measurement taken flat, not a body measurement, and comes straight from the graded specification our manufacturer produced against. Both inches and centimetres are shown.",
+    /* 27 Oct 2026 (Faheem): Sahel has its own charts; the page says plainly that the two lines size differently */
+    h1: 'Size guide: Founding Edition and Sahel',
+    title: 'T-Shirt & Hoodie Size Guide: Founding Edition and Sahel',
+    desc: 'Flat-lay measurements for Sahra & Beyond tees and hoodies. The Founding Edition and Sahel are cut differently, so each has its own chart, in inches and centimetres.',
+    intro: "There are two charts on this page, because the two lines are cut differently. The Founding Edition (Al Quaa Galaxy, Hajar Mountains, Empty Quarter and the Sahra Polo) has one chart. Sahel, the Coast Edition, has its own, and runs larger: a Sahel Regular S is 22″ across the chest, a Founding Edition Regular S is 19″. Use the chart for the piece you are buying, and go by the measurement rather than the size you usually take.\n\nOur t-shirts and hoodies are cut unisex — one cut worn by everyone, in sizes S to XL, with no separate men's or women's version — and each tee design comes in two fits, Regular and Oversized. The polos are a men's cut, S to XL, in one fit. Every figure below is a garment measurement taken flat, not a body measurement. Both inches and centimetres are shown.",
     sizeTable: true,
     sections: [
       { h2: 'Regular or oversized?', body: "Regular is a classic straight cut with the shoulder seam at your natural shoulder, and it layers cleanly under a shacket or jacket. Check your size in the chart before you order: measure a shirt you like flat, pit to pit, and match the number.\n\nOversized is a deliberately wider cut with a dropped shoulder and more room through the body. It is designed to be worn on its own rather than layered. The oversized cut already adds width, so compare the chart rather than going by the letter." },
@@ -3158,7 +3164,7 @@ const COMMERCE = [
     faqs: [
       ['Are these unisex?', 'The t-shirts are: every tee is cut unisex, S to XL, with no separate men\'s or women\'s version. The polo is a men\'s cut. Because the tables above give the garment measured flat rather than a body size, measure a t-shirt you already like the fit of and match the numbers. Both fits are the same garment for everyone; the chart decides the letter.'],
       ['How do I measure my t-shirt size?', 'Lay a t-shirt you already own flat, measure straight across from armpit seam to armpit seam for the flat chest measurement, then from the top of the shoulder down to the hem for length. Compare both to the tables above.'],
-      ['How do I pick my size?', 'Use the size chart. Measure a t-shirt you already like flat, armpit to armpit, and pick the size with the closest number. The oversized cut already adds width and a dropped shoulder, so compare the numbers rather than the letter.'],
+      ['How do I pick my size?', 'Use the chart for the line you are buying, Founding Edition or Sahel. Measure a t-shirt you already like flat, armpit to armpit, and pick the size with the closest number. The oversized cut already adds width and a dropped shoulder, so compare the numbers rather than the letter.'],
       ['Are exchanges free?', 'Yes, within the UAE, within 14 days of delivery and subject to stock, as long as the item is unworn, unwashed and still has tags.']
     ]
   }
@@ -3209,7 +3215,7 @@ const CATEGORIES = [
     title:'Regular Fit T-Shirts — UAE Designs | Sahra & Beyond',
     newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' && p.fit === 'Regular'),
     desc:'Our regular fit t-shirts — a straight, precise cut with a set shoulder. 230gsm combed cotton, original UAE designs, S–XL. Free delivery across the UAE.',
-    intro:"Regular is the fit to take if you layer. It sits on the shoulder and falls straight rather than hanging off it, with a 2″ chest step per size above M. Check the size chart before you order.\n\nEvery design in the collection comes in this fit, cut unisex, in sizes S to XL. Same 230gsm combed ring-spun cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette.",
+    intro:"Regular is the fit to take if you layer. It sits on the shoulder and falls straight rather than hanging off it, with a 2″ chest step per size above M. Check the Founding Edition size chart before you order (Sahel tees have their own).\n\nEvery design in the collection comes in this fit, cut unisex, in sizes S to XL. Same 230gsm combed ring-spun cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette.",
     sections: [{"h2": "A straight cut, measured rather than felt", "body": "Letters mean different things at different brands, so go by the numbers. The Regular fit follows classic US/international grading: the shoulder seam sits at your natural shoulder point rather than dropped below it, and the body skims rather than hanging.\n\nMeasured flat, pit to pit: S is 19″, M is 20″, L is 22″ and XL is 24″ — a 2″ step per size above M. Those are garment measurements taken flat, not body measurements, and they come straight from the graded specification our manufacturer produced against. Every measurement holds a tolerance of ±0.5″; anything outside it is rejected at QC before it ships.\n\nThat precision is the point. If you know the flat chest measurement of a shirt you already like, you know your size here without guessing what a given brand means by Regular."}, {"h2": "How to use the measurements", "body": "Take a t-shirt you already own and wear happily. Lay it flat, smooth out the creases, and measure straight across from armhole seam to armhole seam, about an inch below the armhole. That single number is directly comparable to ours — do not double it. Our chart is flat garment measurements throughout, so 20″ on your shirt means our M.\n\nThe step is fixed and known: 2″ per size above M. If your measurement lands between two sizes, the ±0.5″ tolerance gives some room either way. Take the smaller size for a closer fit through the chest and shoulders, the larger for more ease.\n\nThe cut is unisex, S to XL. There is no separate men's or women's grade, and we do not produce an XXL — so the chart above is the whole range, not a subset of it."}, {"h2": "What the construction is doing", "body": "Every Regular tee is 230 GSM combed, ring-spun cotton. Combing removes the shorter fibres before spinning, which is what gives the cloth its smooth, dense hand instead of a looser, hairier surface.\n\nFrom there the details are about longevity rather than decoration. The shoulders carry woven shoulder taping — not cotton tape — which stops the seam stretching out under the weight of the garment over time. Seams are double-stitched. The body is side-seamed, built from front and back panels joined at the sides rather than a single tube, which holds its shape far better through repeated washing.\n\nThe cotton is pre-shrunk before cutting, so the fit you measure is close to the fit you keep. And the collar label is printed rather than woven, because a woven label against the back of the neck is a common source of irritation and we would rather you forget it is there."}, {"h2": "Layering", "body": "A true-to-size cut is a layering cut. Because the Regular fit follows the measurements rather than adding hidden room, it sits cleanly under an overshirt or light knit without bulking the silhouette — a base layer that disappears rather than competing with what is over it.\n\nIt works alone too. At 230 GSM there is enough substance to stand on its own through the warmer months without clinging or showing every seam beneath an open shirt.\n\nAnd because the grading is fixed and published, building a wardrobe from a few pieces stays simple. Your size in one Sahra & Beyond Regular tee is your size in all of them, and in the polo, which is graded to the same specification."}],
     faqs: [{"q": "How do I choose my Regular size?", "a": "Use the chart. Measured flat, pit to pit, M is 20″, L is 22″ and XL is 24″, with the shoulder seam at your natural shoulder point. Measure a shirt you like and match the number. Tolerance is ±0.5″."}, {"q": "How do I measure myself for the right size?", "a": "Do not measure yourself — measure a shirt. Lay a t-shirt you already like flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to our chart. Our figures are flat garment measurements, so there is no doubling involved."}, {"q": "My measurement falls between two sizes.", "a": "There is a ±0.5″ tolerance on every measurement, so you have some latitude. Take the smaller size to sit closer to the body, the larger for more ease through the chest. The shoulder seam position does not change between sizes."}, {"q": "What does the fabric feel like?", "a": "Dense and smooth rather than thin. It is 230 GSM combed, ring-spun cotton — combing strips out the shorter fibres before spinning, which is what produces that hand. Enough weight to hold its shape through a day without feeling heavy."}, {"q": "Will it shrink?", "a": "The cotton is pre-shrunk before cutting, so you should not see meaningful shrinkage. A cool wash and air drying will keep both the fabric and the shape at their best."}, {"q": "What are delivery and returns?", "a": "UAE: free next-day delivery to all seven emirates for orders placed by 2 pm, no minimum order. GCC: 3–5 working days, free over AED 390. Worldwide: 7–14 working days. Returns and exchanges are accepted for 14 days, unworn with tags attached — free within the UAE; international customers cover return shipping."}] },
   { slug:'t-shirts/oversized', related: [["/national-day/", "UAE National Day t-shirts", "Eid Al Etihad, 2 December"], ["/gifts/", "Gifts from the UAE", "For leaving gifts and visitors"]], cat:'oversized-tees', emoji:'▯', catBg:'Camping',
@@ -3369,7 +3375,9 @@ COMMERCE.forEach(P => {
     </nav>` : ''}
     ${P.catNav || Array.isArray(P.items) ? `<div class="content">${paras(P.intro)}</div>` : ''}
     ${P.slug === 't-shirts' ? RV.homepageBand({ compact: true }) : ''}
-    ${P.sizeTable ? `<section class="guide-sec"><h2>Measurements</h2>${sizeTableHtml()}</section>` : ''}
+    ${P.sizeTable ? `<nav class="sg-jump" aria-label="Size charts"><a href="#founding">Founding Edition chart</a><a href="#sahel">Sahel chart</a></nav>
+    <section class="guide-sec" id="founding"><h2>Founding Edition</h2><p class="sgintent">For Al Quaa Galaxy, Hajar Mountains, Empty Quarter and the Sahra Polo. Not for Sahel pieces, which have their own chart below.</p>${sizeTableHtml()}</section>
+    <section class="guide-sec" id="sahel"><h2>Sahel, the Coast Edition</h2><p class="sgintent">For the Khor Fakkan Bay, Al Hamra Pearl Diver, Al Aqah Reef and Shams tees and the Barr &amp; Bahr and Ras Al Khor hoodies. Sahel is cut on its own pattern and runs larger than the Founding Edition. The Sahel Polo and Sahra Trail have no chart yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size.</p>${SAHEL_SZ.block('teeRegular', { heading: true })}${SAHEL_SZ.block('teeOversized', { heading: true })}${SAHEL_SZ.block('hoodie', { heading: true })}<style>${SAHEL_SZ.CSS}.sg-jump{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 6px}.sg-jump a{display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border:1px solid #2A2016;border-radius:999px;color:#2A2016;text-decoration:none;font:500 14px Jost,system-ui,sans-serif}#founding,#sahel{scroll-margin-top:96px}</style></section>` : ''}
     ${P.gsmTable ? `<section class="guide-sec" id="gsm-table"><h2>Every t-shirt weight, compared</h2><p class="sgintent">GSM is grams per square metre &mdash; how much a square metre of the cloth weighs. It is the single most useful number on a t-shirt spec, and almost nobody selling t-shirts in the UAE explains it. Here is the whole scale.</p>${gsmTableHtml()}</section>` : ''}
     ${sectionsHtml}
     ${P.related ? `<nav class="catnav" aria-label="Related">${P.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2])}</span></a>`).join('')}</nav>` : ''}
@@ -3430,7 +3438,7 @@ COMMERCE.forEach(P => {
    Facts from MASTER_BRIEF (17 Sep 2026 hoodie spec and Decision Log): relaxed oversized
    drop-shoulder pullover, hip length, no drawcord, the mark embroidered centre chest, the
    UAE coastline embroidered across the back in sand thread, a printed lower-back scene,
-   printed neck label. Sizes are not measured yet, so no size chart: "message us". The grid
+   printed neck label. Size chart: the Sahel hoodie chart (sahel-sizing.js, 27 Oct 2026). The grid
    and the pre-order wording come from preorder-page.js, so they follow the same stages. */
 (function buildHoodies() {
   const PO = require('./preorder-page.js');
@@ -3442,7 +3450,7 @@ COMMERCE.forEach(P => {
   const faqs = [
     ['How much are the hoodies?', 'Both are AED 229, in sizes S to XL. Delivery is free across the UAE.'],
     ['When do they ship?', 'The hoodies are on pre-order from Wed 28 Oct at 8 AM, UAE time, and pre-orders ship from Fri 30 Oct. You can cancel free of charge any time before your order ships.'],
-    ['What size should I take?', 'There is no size chart for the hoodies yet. Message us on WhatsApp before you order and we will help you choose. Size exchanges within the UAE are free within 14 days of delivery, subject to stock.']
+    ['What size should I take?', 'Use the Sahel size chart on our size guide: the hoodies measure 23 inches across the chest at S, 24 at M, 25 at L and 26.5 at XL, laid flat. Measure a hoodie you like and match the number. Size exchanges within the UAE are free within 14 days of delivery, subject to stock.']
   ];
   const jsonld = [
     { "@context": "https://schema.org", "@type": "CollectionPage", "name": H.h1, "description": H.desc, "url": canonical },
@@ -3463,7 +3471,7 @@ COMMERCE.forEach(P => {
   <main>
     ${PO.newBlock({ list, heading: 'Two hoodies from Sahel, the Coast Edition', kicker: 'Sahel &middot; The Coast Edition', lede: PO.newLede(), more: '/new/#sahel', moreText: 'See all of Sahel' })}
     <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE. There are two: the Barr &amp; Bahr Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each AED 229 in sizes S to XL. Both carry the UAE coastline embroidered across the back in sand thread, and each has its own scene printed on the lower back.</p></div>
-    <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed, oversized pullover with a dropped shoulder and a hip-length body. There is no drawcord and no hardware anywhere on it, so nothing crosses the mark embroidered at the centre of the chest. The neck label is printed rather than sewn in, so there is no tag to scratch.</p><p>There is no size chart for the hoodies yet. If you are unsure of your size, <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about the Sahel hoodies before I order.')}" target="_blank" rel="noopener">message us before you order</a>.</p></div></section>
+    <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed, oversized pullover with a dropped shoulder and a hip-length body. There is no drawcord and no hardware anywhere on it, so nothing crosses the mark embroidered at the centre of the chest. The neck label is printed rather than sewn in, so there is no tag to scratch.</p><p>Both hoodies use the same chart, from 23&Prime; across the chest (S) to 26.5&Prime; (XL), measured flat. <a href="/size-guide/#sahel">See the Sahel size chart</a>. If you are still unsure of your size, <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about the Sahel hoodies before I order.')}" target="_blank" rel="noopener">message us before you order</a>.</p></div></section>
     <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the whole UAE coastline in a single line of sand thread, with Sahel written beneath it in Arabic and English. On the lower back, each hoodie carries its own printed scene. The <a href="/products/barr-and-bahr-hoodie/">Barr &amp; Bahr Hoodie</a> carries the crossing between land and sea: contour-line dunes running down into a stream and a wave (in the Gulf, barr is the open land and bahr is the sea). The <a href="/products/ras-al-khor-hoodie/">Ras Al Khor Hoodie</a> has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>, the wetland where Dubai Creek ends.</p></div></section>
     <section class="guide-sec"><h2>For cool desert and mountain nights</h2><div class="content"><p>Winter nights in the desert and up in the mountains get properly cold: Jebel Jais has recorded temperatures below freezing. If you are camping this season, our <a href="/camping/">camping guide</a> covers the rules by emirate, and the <a href="/stargazing/">stargazing guide</a> the darkest nights; the <a href="/locations/jebel-jais/">Jebel Jais guide</a> has the month-by-month temperatures.</p></div></section>
     <section class="faq"><h2>Frequently asked questions</h2>${faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>
@@ -4033,7 +4041,7 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
    to mirror AddToCart / InitiateCheckout). Idempotent: a page that already
    carries the tag is left alone. Runs BEFORE stampAssets so the tag gets its
    ?v= hash like every other asset. */
-(function applyTikTokPixel() {
+function applyTikTokPixel() {
   const TAG = '<script src="/assets/tiktok-pixel.js" data-ttq defer></script>';
   const META = /<script src="\/assets\/meta-pixel\.js(?:\?v=[0-9a-f]*)?"[^>]*><\/script>/i;
   const pages = [];
@@ -4061,7 +4069,8 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
     if (out !== src) { fs.writeFileSync(f, out); touched++; }
   }
   console.log(`  ✓ TikTok pixel on ${pages.length - missing.length} page(s)` + (touched ? ` (${touched} added)` : '') + (missing.length ? ` - no <head> in: ${missing.join(', ')}` : ''));
-})();
+}
+applyTikTokPixel();
 
 
 /* ==========================================================================
@@ -4299,7 +4308,7 @@ const AR_PDP_NOINDEX = true;
     add.disabled=true; add.textContent=S.adding;
     SahraCart.add(sel.id,1,toCheckout?{open:false}:undefined).then(function(){
       if(window.track) try{track(toCheckout?'buy_now':'add_to_cart',{item_id:handle,size:sel.title,lang:'ar'});}catch(e){}
-      if(toCheckout){ var st=SahraCart.state&&SahraCart.state(); if(st&&st.checkoutUrl){ location.href=st.checkoutUrl; return; } }
+      if(toCheckout){ var st=SahraCart.state&&SahraCart.state(); if(st&&st.checkoutUrl){ if(SahraCart.goCheckout) SahraCart.goCheckout(st.checkoutUrl); else location.href=st.checkoutUrl; return; } }
       add.disabled=false; add.textContent=S.add; say(S.added);
     }).catch(function(){ add.disabled=false; add.textContent=S.add; });
   }
@@ -4870,6 +4879,34 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
   }
   console.log(`  \u2713 Design system stylesheet on ${pages.length} page(s)` + (touched ? ` (${touched} updated)` : ''));
 })();
+(function applyMeasure() {
+  /* 25 Oct 2026 (retention audit): attribution into the cart, view_item_list, and view_item where a
+     product page has none (assets/sahra-measure.js). Deferred, before </head>, on every page. */
+  const TAG = '<script src="/assets/sahra-measure.js" defer></script>';
+  const SKIP = new Set(['coming-soon.html']);
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin', 'uploads'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html') && !SKIP.has(e.name)) pages.push(p);
+    }
+  })(__dirname);
+  let touched = 0;
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    if (!/<\/head>/i.test(src)) continue;
+    const stripped = src.replace(/<script src="\/assets\/sahra-measure\.js[^"]*" defer><\/script>\n?/g, '');
+    const out = stripped.replace(/<\/head>/i, TAG + '\n</head>');
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  \u2713 Measurement script on ${pages.length} page(s)` + (touched ? ` (${touched} updated)` : ''));
+})();
+/* 25 Oct 2026 (retention audit): /sahel/, /trail/, /new/ and the pre-order product pages are written
+   after the first pass above, so they had no TikTok pixel. A second pass catches every page. */
+applyTikTokPixel();
+
 
 /* ==========================================================================
    Asset cache-busting — computed, never hand-written.

@@ -104,3 +104,10 @@ html body .pdp-wallets-line .sb-ship-uae{font-size:inherit!important}
 /* footer link rows on phones: wrap as centred rows, not one link per line */
 @media(max-width:820px){html body > footer:not(#sbx) :is(.foot-links,.links){display:flex!important;flex-wrap:wrap;justify-content:center;gap:4px 14px}
   html body > footer:not(#sbx) :is(.foot-links,.links) a{width:auto!important}}
+
+/* 7. The shared newsletter block (25 Oct 2026): success and saving states from the sahra-welcome.js takeover */
+html body .news[data-waitlist-wrap].done .news-form{display:none!important}
+html body .news[data-waitlist-wrap].done .news-ok{display:block!important}
+html body .news[data-waitlist-wrap].loading .news-form button{opacity:.6}
+html body .news [data-err]{color:#F7DFBE!important}
+html body .news[data-waitlist-wrap].err [data-err]{display:block!important}

@@ -114,6 +114,7 @@
 .sb-gift-p s{color:#6B6256;text-decoration-thickness:1px;margin-right:6px}
 .sb-gift-p b{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
   font-weight:700;color:#7E4114}
+.sb-gift-p small{font-size:12px;color:#6B6256;margin-left:4px}
 
 /* Any 2 tees for AED 359 (23 Sep 2026) - saving shown on the line and above the subtotal */
 .sb-lp s{opacity:.55;margin-right:2px}

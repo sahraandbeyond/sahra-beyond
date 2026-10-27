@@ -25,10 +25,10 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-  window.track=window.track||function(n,p){try{gtag('event',n,p||{});}catch(e){}};
+  window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
   (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
     window.SB_AD=!!ad;if(ad)document.documentElement.classList.add('sb-ad');
-    gtag('set',{ad_session:ad?1:0,site_build:'r50'});
+    gtag('set',{ad_session:ad?1:0,site_build:'r80'});
     var done=0,first=0;function fi(e){if(done)return;done=1;first=Math.round(performance.now());['pointerdown','keydown','scroll','touchstart'].forEach(function(k){removeEventListener(k,fi,true);});
       window.track('first_interaction',{ms:first,kind:e.type,ad:ad?1:0});}
     ['pointerdown','keydown','scroll','touchstart'].forEach(function(k){addEventListener(k,fi,{capture:true,passive:true});});
@@ -947,14 +947,15 @@ h1 .nw{white-space:nowrap}
 }
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=4c0c7c31">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=7fe487e7">
 <link rel="preload" as="image" href="/shirts/emptyquarter-dune-front.webp" imagesrcset="/shirts/card/emptyquarter-dune-front.webp 800w, /shirts/emptyquarter-dune-front.webp 1080w" imagesizes="(max-width:700px) 100vw, 640px" fetchpriority="high">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=cdd516cd">
-<script src="/assets/sahra-welcome.js?v=48c151f1" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=e2640317" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=5ef305ef">
 <script src="/assets/sahra-nav.js?v=35ed85f7" data-sbn defer></script>
-<link rel="stylesheet" href="/assets/sahra-system.css?v=06434312">
+<link rel="stylesheet" href="/assets/sahra-system.css?v=773f6fe4">
+<script src="/assets/sahra-measure.js?v=2fa777cc" defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
@@ -1577,7 +1578,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
            they must sell directly instead of bouncing to /shop/ to start again. -->
       <div class="pdp-buy" id="pdpBuy" data-handle="empty-quarter-regular">
         <div class="pdp-fits" role="group" aria-label="Fit"><a class="pdp-fit on" href="/products/empty-quarter-regular/" aria-current="page"><b>Regular</b><span>Sits on the shoulder</span></a><a class="pdp-fit" href="/products/empty-quarter-oversized/"><b>Oversized</b><span>Dropped shoulder, wider body</span></a></div>
-        <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/">Size guide &rarr;</a></div>
+        <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/#founding">Size guide &rarr;</a></div>
         <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
           <button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">S</button><button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">M</button><button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">L</button><button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">XL</button>
         </div>
@@ -1740,12 +1741,13 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
     <div class="sfind" data-sizefinder data-fit="regular" data-chart='{"regular":[["S",48.3],["M",50.8],["L",55.9],["XL",61]],"oversized":[["S",57.1],["M",59.7],["L",63.5],["XL",67.3]]}'></div>
     <div class="sz-wrap">
       <table class="sz">
-        <caption class="sz-cap">Regular fit &middot; garment measured flat</caption>
+        <caption class="sz-cap">Founding Edition &middot; Regular fit &middot; garment measured flat</caption>
         <thead><tr><th>Size</th><th>Chest</th><th>Length</th><th>Shoulder</th><th>Sleeve</th></tr></thead>
         <tbody><tr><th scope="row">S</th><td><span class="sz-in">19&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">48.3&nbsp;cm</span></td><td><span class="sz-in">27.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">69.8&nbsp;cm</span></td><td><span class="sz-in">17&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">43.2&nbsp;cm</span></td><td><span class="sz-in">7.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">19.1&nbsp;cm</span></td></tr><tr><th scope="row">M</th><td><span class="sz-in">20&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">50.8&nbsp;cm</span></td><td><span class="sz-in">28.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">72.4&nbsp;cm</span></td><td><span class="sz-in">18&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">45.7&nbsp;cm</span></td><td><span class="sz-in">8&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">20.3&nbsp;cm</span></td></tr><tr><th scope="row">L</th><td><span class="sz-in">22&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">55.9&nbsp;cm</span></td><td><span class="sz-in">29.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">74.9&nbsp;cm</span></td><td><span class="sz-in">19&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">48.3&nbsp;cm</span></td><td><span class="sz-in">8.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">21.6&nbsp;cm</span></td></tr><tr><th scope="row">XL</th><td><span class="sz-in">24&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">61&nbsp;cm</span></td><td><span class="sz-in">30.5&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">77.5&nbsp;cm</span></td><td><span class="sz-in">20&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">50.8&nbsp;cm</span></td><td><span class="sz-in">9&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">22.9&nbsp;cm</span></td></tr></tbody>
       </table>
     </div>
     <p class="sz-note">A straight regular fit with a 2&Prime; chest step per size above M. The shoulder seam sits at your natural shoulder point. Measure a shirt you like flat, pit to pit, and match the number.</p>
+    <p class="sz-note"><strong>This chart is for the Founding Edition.</strong> Sahel pieces are cut on their own pattern and run larger, with <a href="/size-guide/#sahel">their own chart</a>.</p>
     <p class="sz-note">Compare the two cuts: <a href="/t-shirts/regular/">regular fit t-shirts</a> &middot; <a href="/t-shirts/oversized/">oversized t-shirts and the drop shoulder</a>.</p>
     <details class="sz-method"><summary>How these are measured</summary>
       <ul><li><strong>Chest</strong> &mdash; garment laid flat, measured straight across from armhole seam to armhole seam (pit&#8209;to&#8209;pit), 1&Prime; below the armhole.</li><li><strong>Length</strong> &mdash; from the highest point of the shoulder, at the collar seam, straight down to the bottom hem.</li><li><strong>Shoulder</strong> &mdash; seam to seam across the back, between the shoulder seam points.</li><li><strong>Sleeve</strong> &mdash; from the shoulder seam to the sleeve opening edge.</li></ul>
@@ -2617,7 +2619,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
            Shopify checkout, where Shop Pay / Google Pay sit at the top. */
         if(go){ var st=window.SahraCart.state&&window.SahraCart.state(); var u=(st&&st.checkoutUrl)||(cart&&cart.checkoutUrl);
           if(window.track) track('buy_now',{item_id:handle,size:v.title});
-          if(u){ location.href=u; return; } }
+          if(u){ if(window.SahraCart.goCheckout) window.SahraCart.goCheckout(u); else location.href=u; return; } }
         addEl.disabled=false; setAdd('Add another', true);
         msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
         if(window.track) track('add_to_cart',{item_id:handle,size:v.title});
@@ -2729,7 +2731,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=910c7b5d" defer></script>
+<script src="/assets/sahra-cart.js?v=7f0af748" defer></script>
 <script src="/assets/sahra-sizefinder.js?v=170093b1" defer></script>
 <script src="/assets/sahra-market.js?v=d80f89a9" defer></script>
 <script>(function(){
