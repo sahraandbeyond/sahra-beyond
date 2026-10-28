@@ -1,5 +1,5 @@
 {
- "_note": "27 Oct 2026: Sahel product photos for the site (Faheem, shoot 27 Oct, edited 28 Oct; Product Photos/Sahel photos/2026-10-27/EDITED-for-site). Order: back, front, details. Real photos carry no Mock-up label; mock:true entries keep it (the Sahel Polo, not photographed yet; the Khor Fakkan Bay front was added on 27 Oct evening). Hoodie location photos are 2:3 and are shown whole (object-fit contain), never cropped. The hoodie photos were not taken at Ras Al Khor: alt text never names a place beyond the product name. w/h are the 720 file; lw/lh the large file (files are -720.webp and -1200.webp; the large file can be narrower to stay under 250 KB). 28 Oct (Faheem): the front-and-back shots are photo 1 (card cover) for the four tees; Pearl Diver re-edited (sharper frames); Shams back added.",
+ "_note": "27 Oct 2026: Sahel product photos for the site (Faheem, shoot 27 Oct, edited 28 Oct; Product Photos/Sahel photos/2026-10-27/EDITED-for-site). Order: back, front, details. Real photos carry no Mock-up label; mock:true entries keep it (the Sahel Polo, not photographed yet; the Khor Fakkan Bay front was added on 27 Oct evening). Hoodie location photos are 2:3 and are shown whole (object-fit contain), never cropped. The hoodie photos were not taken at Ras Al Khor: alt text never names a place beyond the product name. w/h are the 720 file; lw/lh the large file (files are -720.webp and -1200.webp; the large file can be narrower to stay under 250 KB). 28 Oct (Faheem): the front-and-back shots are photo 1 (card cover) for the four tees; Pearl Diver re-edited (sharper frames); Shams back added. 28 Oct (Faheem, \"they look like baby clothes\"): the Reef, Pearl Diver and Shams front-and-back shots are rebuilt in the Khor Fakkan style, the two tees large and overlapping (ph3-*).",
  "pieces": {
   "khor-fakkan-bay-tee": [
    {
@@ -77,7 +77,7 @@
   ],
   "al-hamra-pearl-diver-tee": [
    {
-    "k": "ph2-pearl-00-front-and-back",
+    "k": "ph3-pearl-00-front-and-back",
     "alt": "Al Hamra Pearl Diver Tee in Estate Blue, front and back",
     "mock": false,
     "w": 720,
@@ -142,7 +142,7 @@
   ],
   "al-aqah-reef-tee": [
    {
-    "k": "ph2-reef-00-front-and-back",
+    "k": "ph3-reef-00-front-and-back",
     "alt": "Al Aqah Reef Tee in Lagoon, front and back",
     "mock": false,
     "w": 720,
@@ -198,7 +198,7 @@
   ],
   "shams-tee": [
    {
-    "k": "ph2-shams-00-front-and-back",
+    "k": "ph3-shams-00-front-and-back",
     "alt": "Shams Tee in Jet Set, front and back",
     "mock": false,
     "w": 720,
