@@ -4925,6 +4925,29 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
   }
   console.log(`  \u2713 Measurement script on ${pages.length} page(s)` + (touched ? ` (${touched} updated)` : ''));
 })();
+(function applyZoom() {
+  /* 28 Oct 2026 (Faheem: "every photo needs to be clickable and zoomable"): the shared photo viewer
+     (assets/sahra-zoom.js), deferred, on every page. It wires [data-zoom-gallery] blocks and serves the
+     product pages' and /shop/'s own "open the photo" calls. */
+  const TAG = '<script src="/assets/sahra-zoom.js" defer></script>';
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin', 'uploads'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html') && e.name !== 'coming-soon.html') pages.push(p);
+    }
+  })(__dirname);
+  let touched = 0;
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    if (!/<\/head>/i.test(src)) continue;
+    const out = src.replace(/<script src="\/assets\/sahra-zoom\.js[^"]*" defer><\/script>\n?/g, '').replace(/<\/head>/i, TAG + '\n</head>');
+    if (out !== src) { fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  \u2713 Photo viewer script on ${pages.length} page(s)` + (touched ? ` (${touched} updated)` : ''));
+})();
 /* 25 Oct 2026 (retention audit): /sahel/, /trail/, /new/ and the pre-order product pages are written
    after the first pass above, so they had no TikTok pixel. A second pass catches every page. */
 applyTikTokPixel();

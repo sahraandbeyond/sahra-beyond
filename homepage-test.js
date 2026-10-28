@@ -514,9 +514,9 @@ console.log('\n\x1b[1mhero -> cards on touch\x1b[0m');
   const eng = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-market.js'), 'utf8');
   const aheadSrc = (eng.match(/var ahead = new IntersectionObserver\([\s\S]*?\}, \{ rootMargin: '600px 0px' \}\);/) || [''])[0];
   check('the warm-up observer runs 600px ahead of the viewport', aheadSrc.length > 0);
-  check('...and it is the one that warms every frame and decodes the lead', /warm\)/.test(aheadSrc) && /lead\.decode\(\)/.test(aheadSrc));
+  check('...and it is the one that warms the next frames and decodes the lead (28 Oct 2026: next two only; the rest after 3 s on screen)', /warm\(/.test(aheadSrc) && /lead\.decode\(\)/.test(aheadSrc));
   check('the beat observer has no margin (cards only beat when actually on screen)',
-    /var io = new IntersectionObserver\(function \(es\) \{[\s\S]{0,400}\}\);\n\s+hosts\.forEach\(function \(h\) \{ io\.observe\(h\); \}\);/.test(eng) && !/io = new IntersectionObserver\([\s\S]{0,500}rootMargin/.test(eng));
+    /var io = new IntersectionObserver\(function \(es\) \{[\s\S]{0,1200}\}\);\n\s+hosts\.forEach\(function \(h\) \{ io\.observe\(h\); \}\);/.test(eng) && !/io = new IntersectionObserver\([\s\S]{0,500}rootMargin/.test(eng));
 }
 
 console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
@@ -537,7 +537,8 @@ console.log('\n\x1b[1massets/sahra-market.js — normCycle\x1b[0m');
   {
     check('the per-stack cadence is gone', src.indexOf('function framePeriod') < 0 && src.indexOf('(tick + n)') < 0,
       'framePeriod / phase offset still present - cards will not change together');
-    check('the beat is 1.5 seconds (3s until 4 Sep 2026)', /var BEAT = 1500\b/.test(src));
+    check('the beat is 2 seconds (expert timing, 28 Oct 2026; 1.5s from 4 Sep, 3s before)', /var BEAT = 2000\b/.test(src));
+    check('a card rests on its cover at least 1.2 s before joining the beat', /REST = 1200\b/.test(src));
     check('the grid waits at most 3 beats for a missing photo', /MAX_WAIT = 3\b/.test(src));
     const fr0 = src.indexOf('  function frameReady(img)');
     let eng = null;

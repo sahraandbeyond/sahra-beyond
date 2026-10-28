@@ -81,9 +81,20 @@ function imgTag(im, o = {}) {
   const w = im.w || 720, h = im.h || 900, lw = im.lw || 1200;
   const alt = o.alt != null ? o.alt : esc(im.alt) + (im.mock && o.mockAlt !== false ? ', studio mock-up' : '');
   const fit = isTall(im) ? ` style="object-fit:contain;background:${o.bg || '#DCD5C8'}"` : '';
-  return `<img${o.cls ? ` class="${o.cls}"` : ''} src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-720.webp ${w}w, /assets/preorder/${im.k}-1200.webp ${lw}w" sizes="${o.sizes || '(max-width: 900px) 50vw, 300px'}" width="${w}" height="${h}" alt="${alt}"${o.eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${fit}>`;
+  return `<img${o.cls ? ` class="${o.cls}"` : ''}${o.zoom ? ` data-zoom="/assets/preorder/${im.k}-1200.webp"` : ''} src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-480.webp 480w, /assets/preorder/${im.k}-720.webp ${w}w, /assets/preorder/${im.k}-1200.webp ${lw}w" sizes="${o.sizes || '(max-width: 900px) 50vw, 300px'}" width="${w}" height="${h}" alt="${alt}"${o.eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${fit}>`;
 }
 const mockTag = (im, cls) => im && im.mock ? `<i${cls ? ` class="${cls}"` : ''}>Mock-up</i>` : '';
+/* 28 Oct 2026 (Faheem: "All the product cards across the site need to have an auto slideshow"): a card shows every
+   photo of its piece as a [data-cycle] stack, run by the site's shared beat in assets/sahra-market.js (one timer, all
+   visible cards turn together, hover or a finger holds). Only photos of the same kind as the cover cycle, so a card
+   that opens on a real photo never fades into an unlabelled mock-up, and a mock-up card keeps its label throughout. */
+const cardSet = p => { const im = p.images || []; return im.length ? im.filter(x => !!x.mock === !!im[0].mock) : []; };
+const cycleImgs = (p, o = {}) => cardSet(p).map((im, i) => imgTag(im, Object.assign({}, o, { cls: i ? '' : 'on' }))).join('');
+const CYCLE_CSS = `[data-cycle]{position:relative}
+[data-cycle] img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s ease-in-out;z-index:1;object-fit:cover;object-position:center 30%;padding:0}
+[data-cycle] img.on{opacity:1;z-index:3;will-change:opacity}
+[data-cycle] img.was{opacity:1;transition:none;z-index:2;will-change:opacity}
+[data-cycle]>i,[data-cycle]>em,[data-cycle]>figcaption{z-index:5!important}`;
 const real = (k, alt, cap) => ({ k, alt, mock: false, cap });
 
 /* Story paragraphs: the approved card stories (14 Oct handover; content/sahel-pieces.json). */
@@ -162,12 +173,12 @@ const pre = n => Math.round(n * 80) / 100;   /* the 20% pre-order price, to the 
    No strike-through and no compare-at price; the full price is named in words beside it. */
 const cardPrice = (n, tag, full) => full ? `<${tag}>${money(n)}</${tag}>` : inc('st1', `<${tag} class="st1">${money(pre(n))}, pre-order price</${tag}>`) + `<${tag} class="st02">${money(n)}</${tag}>`;
 
-function picture(im, eager, sizes) {
-  return imgTag(im, { eager, sizes: sizes || '(max-width: 900px) 100vw, 50vw', mockAlt: false });
+function picture(im, eager, sizes, zoom) {
+  return imgTag(im, { eager, sizes: sizes || '(max-width: 900px) 100vw, 50vw', mockAlt: false, zoom });
 }
 function gallery(p) {
   if (!p.images.length) return `<div class="po-gal"><figure class="po-ph"><div><b>${p.title}</b><span>Photo to follow</span></div></figure></div>`;
-  return `<div class="po-gal">${p.images.map((im, i) => `<figure class="po-fig${isTall(im) ? ' po-tall' : ''}">${picture(im, i === 0)}${im.cap === '' ? '' : `<figcaption class="${im.mock ? 'po-mock' : 'po-real'}">${im.mock ? 'Mock-up' : (im.cap || 'Close-up of the sample')}</figcaption>`}</figure>`).join('')}</div>`;
+  return `<div class="po-gal" data-zoom-gallery>${p.images.map((im, i) => `<figure class="po-fig${isTall(im) ? ' po-tall' : ''}">${picture(im, i === 0, null, true)}${im.cap === '' ? '' : `<figcaption class="${im.mock ? 'po-mock' : 'po-real'}">${im.mock ? 'Mock-up' : (im.cap || 'Close-up of the sample')}</figcaption>`}</figure>`).join('')}</div>`;
 }
 
 const CSS = `${SZ.CSS}
@@ -181,8 +192,11 @@ const CSS = `${SZ.CSS}
 .po-gal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .po-fig{position:relative;margin:0;background:#ECE4D6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
 .po-fig:first-child{grid-column:1/-1}
-.po-fig.po-tall{aspect-ratio:2/3}.po-fig.po-tall img{object-fit:contain}
+.po-fig.po-tall{aspect-ratio:2/3}
+.po-gal .po-fig{cursor:zoom-in}.po-gal .po-fig:focus-visible{outline:3px solid #A95A21;outline-offset:3px}
+.po-zoomhint{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5B48;margin:8px 2px 0}.po-fig.po-tall img{object-fit:contain}
 .po-fig img{width:100%;height:100%;object-fit:cover;display:block}
+${CYCLE_CSS}
 .po-fig figcaption{position:absolute;left:10px;top:10px;font:11px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .po-ph{margin:0;aspect-ratio:4/5;border-radius:10px;background:#1C1A18;color:#E9DFCF;display:flex;align-items:center;justify-content:center;text-align:center;grid-column:1/-1}
 .po-ph b{display:block;font:600 30px/1.1 'Cormorant Garamond',Georgia,serif;margin-bottom:10px}
@@ -336,7 +350,7 @@ const CLIENT = `<script>
 
 function productPage(p, all, SITE, stage) {
   const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 220px')}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
   return `${stageHead()}<style>${CSS}</style>
 <main class="po-wrap">
@@ -363,9 +377,23 @@ const FOUNDING = [['al-quaa-galaxy-regular', 'Al Quaa Galaxy Tee', 'alquaa-dune-
   ['empty-quarter-regular', 'Empty Quarter Tee', 'emptyquarter-dune-front', 'Empty Quarter t-shirt in beige, front, worn', 199],
   ['hajar-mountains-regular', 'Hajar Mountains Tee', 'hajar-dune-back', 'Hajar Mountains t-shirt, back print, worn', 199],
   ['sand-polo', 'The Sahra Polo', 'polo-dune-front', 'The Sahra Polo in sand, worn', 229]];
+/* every photo of a Founding piece for its card (the same list build.js gives the run-time code as SB_IMGS),
+   using the 800px card copies where they exist */
+function foundingImgs(handle, img, alt) {
+  const fs = require('fs'), path = require('path');
+  let list = [];
+  try {
+    const fp = require('./build-products.js').loadProducts(__dirname).find(x => x.id === handle);
+    if (fp) { const seen = new Set(); for (const [src, a] of [[fp.imgMain, fp.altMain], [fp.imgFront, fp.altFront], [fp.imgBack, fp.altBack]].concat((fp.modelShots || []).map(m => [m.src, m.alt]))) {
+      if (!src) continue; const b = path.basename(String(src)).replace(/\.(jpe?g|png)$/i, '.webp'); if (seen.has(b)) continue; seen.add(b);
+      if (fs.existsSync(path.join(__dirname, 'shirts', 'card', b))) list.push([`/shirts/card/${b}`, a || alt]); } }
+  } catch (e) {}
+  if (!list.length) list = [[`/shirts/card/${img}.webp`, alt]];
+  return list.map(([src, a], i) => `<img${i ? '' : ' class="on"'} src="${src}" width="800" height="1000" alt="${esc(String(a || alt).replace(/&amp;/g, '&'))}" loading="lazy" decoding="async">`).join('');
+}
 function crossLines(p, card) {
   const other = pickNew(o => o.line !== p.line && o.line !== undefined && !o.inHand, true).slice(0, 4);
-  const fe = FOUNDING.map(([h, n, img, alt, pr]) => `<a class="po-card" href="/products/${h}/"><div class="po-fig"><img src="/shirts/card/${img}.webp" width="800" height="1000" alt="${alt}" loading="lazy" decoding="async"></div><b>${n}</b><span><span class="sb-price" data-handle="${h}" data-aed="${pr}">${money(pr)}</span> &middot; in stock</span></a>`).join('');
+  const fe = FOUNDING.map(([h, n, img, alt, pr]) => `<a class="po-card" href="/products/${h}/"><div class="po-fig" data-cycle>${foundingImgs(h, img, alt)}</div><b>${n}</b><span><span class="sb-price" data-handle="${h}" data-aed="${pr}">${money(pr)}</span> &middot; in stock</span></a>`).join('');
   return `${other.length ? `<section class="po-more po-cross"><h2>${p.line === 'sahel' ? 'Also on pre-order: Sahra Trail' : 'Also on pre-order: Sahel'}</h2><div class="po-cards">${other.map(card).join('')}</div></section>` : ''}
   <section class="po-more po-cross"><h2>The Founding Edition, in stock</h2><p class="po-small" style="margin:-4px 0 14px">Ships next working day. Any two Founding Edition tees for AED 359. These use the Founding Edition size chart.</p><div class="po-cards">${fe}</div></section>`;
 }
@@ -377,7 +405,7 @@ function foundingCross() {
 }
 
 function collectionPage(all) {
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig">${picture(o.images[0], false, '(max-width: 900px) 50vw, 280px')}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 280px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
   const sec = (id, h, list, note) => `<section class="po-more" id="${id}"><h2>${h}</h2>${note ? `<p class="po-small" style="margin:-4px 0 14px">${note}</p>` : ''}<div class="po-cards">${list.map(card).join('')}</div></section>`;
   return `${stageHead()}<style>${CSS}.po-head h1{font:600 clamp(34px,5vw,56px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 10px}.po-head p{font:17px/1.55 Jost,system-ui,sans-serif;max-width:60ch;margin:0 0 8px}</style>
 <main class="po-wrap">
@@ -412,6 +440,7 @@ const NB_CSS = `<style>
 .nb-c{display:block;text-decoration:none;color:#2A2016}
 .nb-f{display:block;position:relative;margin:0;background:#ECE4D6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
 .nb-f img{width:100%;height:100%;object-fit:cover;display:block}
+${CYCLE_CSS}
 .nb-f .cut-b,.pcard-img .cut-b{position:absolute;left:8px;bottom:8px;z-index:2;font:600 10.5px/1 Jost,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:5px 8px;border-radius:999px;background:rgba(42,32,22,.82);color:#FAF6EF;pointer-events:none}
 .nb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .nb-c b{display:block;font:500 16px/1.35 Jost,system-ui,sans-serif;margin:8px 0 2px}
@@ -432,7 +461,7 @@ function cut(p) {
 const forWomen = p => cut(p) !== 'Men\u2019s cut';
 function newCard(p, fitsLabel) {
   const im = p.images[0];
-  const fig = im ? `<span class="nb-f">${imgTag(im, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
+  const fig = im ? `<span class="nb-f" data-cycle>${cycleImgs(p, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
   const sub = fitsLabel && p.fit ? `${p.kind} &middot; Regular or Oversized` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
   const href = `/products/${p.handle}/`;
   if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', true)}</small>`
@@ -462,6 +491,7 @@ const PB_CSS = `<style>
 .spb{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:center;max-width:860px;margin:34px auto;padding:20px;border-radius:18px;background:#0E1A2E;color:#F4ECDF}
 .spb-f{position:relative;display:block;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#1B2A40}
 .spb-f img{width:100%;height:100%;object-fit:cover;display:block}
+${CYCLE_CSS}
 .spb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(244,236,223,.92);color:#0E1A2E}
 .spb-k{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#D9C3A5;margin:0 0 8px}
 .spb h2{font:600 clamp(26px,3vw,34px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#F4ECDF}
@@ -476,7 +506,7 @@ function pieceBlock(placeId, lead) {
   const im = p.images[0], first = String(p.story).split(/(?<=\.)\s/)[0];
   const isTee = !!p.fit, noun = isTee ? 'tee' : /hoodie/i.test(p.kind) ? 'hoodie' : 'piece';
   return stageHead() + PB_CSS + `<section class="spb" id="tee" data-match="sahel" aria-label="${esc(p.name.replace(/&amp;/g, '&'))}">
-  ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true">${imgTag(im, { alt: '', sizes: '240px', bg: '#1B2A40' })}${mockTag(im)}</a>` : ''}
+  ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true" data-cycle>${cardSet(p).map((x, i) => imgTag(x, { alt: '', sizes: '240px', bg: '#1B2A40', cls: i ? '' : 'on' })).join('')}${mockTag(im)}</a>` : ''}
   <div><p class="spb-k">${lead || `The ${noun} drawn from this place`} &middot; Sahel</p><h2>${p.name}</h2><p>${first}</p>
   <p class="spb-p">${cardPrice(p.price, 'span')}${isTee ? ' &middot; Regular or Oversized' : ''}</p>
   <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}${im && im.mock ? 'The image is a studio mock-up.' : 'Photographed from the real piece.'}</p>
@@ -501,6 +531,7 @@ function homeBand() {
 .lb-c{display:block;color:#F4ECDF;text-decoration:none}
 .lb-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#1B2A40}
 .lb-c img{width:100%;height:100%;object-fit:cover;display:block}
+${CYCLE_CSS}
 .lb-c i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(244,236,223,.92);color:#0E1A2E}
 .lb-c b{display:block;font:500 15px/1.3 Jost,system-ui,sans-serif;margin:8px 0 1px}
 .lb-c small{font:13px Jost,system-ui,sans-serif;color:#C9BBA6}
@@ -513,7 +544,7 @@ function homeBand() {
     inc('st1', '<p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
     `<p class="st2">Designed in the UAE for everyone who loves it.</p>
     <a class="lb-a" href="/new/">` + inc('st0', '<span class="st0">See the pieces</span>') + inc('st1', '<span class="st1">Pre-order now</span>') + `<span class="st2">Shop the new pieces</span> &rarr;</a>
-  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span>${imgTag(p.images[0], { sizes: '(max-width: 860px) 42vw, 200px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small')}</a>`).join('') +
+  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 42vw, 200px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small')}</a>`).join('') +
   `</div></div></section>`;
 }
 
@@ -542,6 +573,7 @@ function homeHero() {
 .ph-c{display:block;color:#F4ECDF;text-decoration:none}
 .ph-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E9E0D3}
 .ph-c img{width:100%;height:100%;object-fit:cover;display:block}
+${CYCLE_CSS}
 .ph-c i{position:absolute;left:6px;top:6px;font:400 9.5px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;font-style:normal;padding:4px 6px;border-radius:4px;background:rgba(250,246,239,.94);color:#2A2016}
 .ph-c b{display:block;font:500 14px/1.3 Jost,system-ui,sans-serif;margin:8px 0 2px}
 .ph-c small{display:block;font:13px/1.35 Jost,system-ui,sans-serif;color:#E9B978}
@@ -570,7 +602,7 @@ function homeHero() {
       <p class="ph-tr"><a href="/trail/#pieces" data-track="home_preorder_trail">Sahra Trail running kit is on pre-order too &rarr;</a></p>
     </div>
   </div>
-  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span>${imgTag(im, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#1B2A40' })}${mockTag(im)}</span><b>${p.name}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
+  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#1B2A40' })}${mockTag(im)}</span><b>${p.name}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
 </section>`);
 }
 
@@ -584,7 +616,7 @@ function homeRing() {
   return pickNew(p => p.line === 'sahel', true).map(p => {
     const nm = p.name.replace(/&amp;/g, '&');
     /* a real first photo cycles only with other real photos, so a mock-up never shows unlabelled */
-    const imgs = (p.images[0] && !p.images[0].mock ? p.images.filter(x => !x.mock) : p.images).slice(0, 2).map((im, i) => imgTag(im, { cls: i ? '' : 'on', sizes: '(max-width:760px) 46vw, 240px' })).join('');
+    const imgs = cardSet(p).map((im, i) => imgTag(im, { cls: i ? '' : 'on', sizes: '(max-width:760px) 46vw, 240px' })).join('');
     const place = p.place ? p.place[0] : 'Sahel';
     const fit = p.fit ? 'Regular or Oversized' : cut(p);
     return `<a class="hring-card hring-new" href="/products/${p.handle}/" data-handle="${p.handle}" data-place="${esc(place)}"><span class="hring-img" data-cycle>${imgs}</span>${mockTag(p.images[0], 'hring-mk')}`

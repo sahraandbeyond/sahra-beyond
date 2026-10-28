@@ -1611,8 +1611,9 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     timer=setInterval(function(){
       var lb=document.getElementById('lightbox');
       if(lb&&lb.classList.contains('open'))return;
+      if(document.querySelector('.szm.open'))return;   /* hold while the zoom viewer is open */
       show(cur+1);
-    },1000);}
+    },1500);}   /* 1.5s per photo since 28 Oct 2026 (expert timing; was 1s) */
   thumbs.addEventListener('click',function(e){
     var b=e.target.closest('button');if(!b)return;show(+b.dataset.i);startAuto();
   });
@@ -1639,7 +1640,10 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var imgs=[].slice.call(main.querySelectorAll('img')),srcs=imgs.map(function(i){return i.getAttribute('data-src')||i.src;}),cur=0;
   var el=document.getElementById('lbImg');
   function show(i){cur=(i%srcs.length+srcs.length)%srcs.length;el.src=srcs[cur];el.alt=imgs[cur].alt||'';}
-  function open(){var on=main.querySelector('img.on');show(Math.max(0,imgs.indexOf(on)));lb.classList.add('open');
+  function open(){var on=main.querySelector('img.on');
+    /* 28 Oct 2026: the shared zoomable viewer (assets/sahra-zoom.js); the old lightbox stays as the fallback */
+    if(window.SahraZoom){SahraZoom.open(srcs.map(function(s,k){return {src:s,alt:imgs[k].alt||''};}),Math.max(0,imgs.indexOf(on)));if(window.track)track('image_zoom',{item_id:'${p.id}'});return;}
+    show(Math.max(0,imgs.indexOf(on)));lb.classList.add('open');
     document.body.style.overflow='hidden';if(window.track)track('image_zoom',{item_id:'${p.id}'});}
   function close(){lb.classList.remove('open');document.body.style.overflow='';}
   main.addEventListener('click',function(){ if(main.dataset.swiped) return; open();});

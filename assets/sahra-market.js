@@ -401,7 +401,10 @@
           all the class changes land in one synchronous pass, i.e. in the same
           paint. Without this, seven decode() promises resolved tens of ms
           apart and seven fades started tens of ms apart - visibly ragged. */
-  var BEAT = 1500, MAX_WAIT = 3, HOLD = 720, DECODE_CAP = 1500;   /* 1.5s since 4 Sep 2026 (was 3s) */
+  var BEAT = 2000, MAX_WAIT = 3, HOLD = 720, DECODE_CAP = 1500;   /* 2.0s since 28 Oct 2026 (expert timing, Faheem chose it; was 1.5s from 4 Sep, 3s before) */
+  /* 28 Oct 2026 (expert timing): a card that has just come into view rests on its cover for at least REST ms before
+     it joins the beat, so the cover is always seen; it then turns with everyone else, so the grid stays in sync. */
+  var REST = 1200, FULL_WARM = 3000, PRESS = 350, RESUME = 600;
 
   function nextPair(im) {
     var i = 0, k;
@@ -572,7 +575,7 @@
     try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
     var hosts = all.filter(function (h) { return h.querySelectorAll('img').length > 1; });
     if (!hosts.length) return;
-    var seen = new Set(), beat = null;
+    var seen = new Set(), since = new Map(), beat = null;
     try {
       /* WARM-UP runs 600px ahead of the viewport so the photos are fetched
          and decoded while the visitor is still in the hero, not in the same
@@ -582,9 +585,12 @@
          for the real viewport: `seen` is a second observer with no margin. */
       var ahead = new IntersectionObserver(function (es) {
         es.forEach(function (e) {
-          /* start fetching the whole stack now, not when the cycle gets there */
+          /* fetch the next two frames now; the rest only once the card has been on screen for FULL_WARM ms
+             (28 Oct 2026: a whole 8-photo stack per card was about 0.5 MB too much on a phone's first screen) */
           if (!e.isIntersecting) return;
-          [].forEach.call(e.target.querySelectorAll('img'), warm);
+          (function (h) { var im = [].slice.call(h.querySelectorAll('img')), i = 0, k;
+            for (k = 0; k < im.length; k++) if (im[k].classList.contains('on')) i = k;
+            for (k = 1; k <= 2 && k < im.length; k++) warm(im[(i + k) % im.length]); })(e.target);
           /* and have the visible frame's pixels ready before it is on screen:
              decode() waits for the load, then decodes off the main thread */
           var lead = e.target.querySelector('img.on');
@@ -596,7 +602,10 @@
       hosts.forEach(function (h) { ahead.observe(h); });
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) {
-          if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target);
+          if (e.isIntersecting) { if (!seen.has(e.target)) { since.set(e.target, Date.now());
+              (function (h) { setTimeout(function () { if (seen.has(h)) [].forEach.call(h.querySelectorAll('img'), warm); }, FULL_WARM); })(e.target); }
+            seen.add(e.target); }
+          else { seen.delete(e.target); since.delete(e.target); }
         });
         /* a card that just scrolled in gets its next frame decoded now, so
            it can join the next beat on time (beat is assigned below; the
@@ -605,15 +614,21 @@
       });
       hosts.forEach(function (h) { io.observe(h); });
     } catch (e) { hosts.forEach(function (h) { seen.add(h); }); }
+    /* hover holds a card; it rejoins no sooner than RESUME ms after the pointer leaves. A finger holds a card only
+       after a still press of PRESS ms (a scrolling thumb used to freeze one card out of sync) */
     hosts.forEach(function (h) {
-      h.addEventListener('mouseenter', function () { h.setAttribute('data-hold', '1'); });
-      h.addEventListener('mouseleave', function () { h.removeAttribute('data-hold'); });
-      h.addEventListener('touchstart', function () { h.setAttribute('data-hold', '1'); }, { passive: true });
-      h.addEventListener('touchend', function () { h.removeAttribute('data-hold'); }, { passive: true });
+      var lt = null, pt = null;
+      h.addEventListener('mouseenter', function () { clearTimeout(lt); h.setAttribute('data-hold', '1'); });
+      h.addEventListener('mouseleave', function () { clearTimeout(lt); lt = setTimeout(function () { h.removeAttribute('data-hold'); }, RESUME); });
+      h.addEventListener('touchstart', function () { clearTimeout(pt); pt = setTimeout(function () { h.setAttribute('data-hold', '1'); }, PRESS); }, { passive: true });
+      var up = function () { clearTimeout(pt); h.removeAttribute('data-hold'); };
+      h.addEventListener('touchmove', up, { passive: true });
+      h.addEventListener('touchend', up, { passive: true });
+      h.addEventListener('touchcancel', up, { passive: true });
     });
     /* Still ONE shared timer, and now one BEAT: every visible stack that is
        not held under a finger advances in the same pass. */
-    beat = makeBeat(hosts, function (h) { return seen.has(h); });
+    beat = makeBeat(hosts, function (h) { return seen.has(h) && Date.now() - (since.get(h) || 0) >= REST; });
     setInterval(function () {
       if (document.hidden) return;
       beat.tick();
