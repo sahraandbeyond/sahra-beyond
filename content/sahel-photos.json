@@ -1,7 +1,16 @@
 {
- "_note": "27 Oct 2026: Sahel product photos for the site (Faheem, shoot 27 Oct, edited 28 Oct; Product Photos/Sahel photos/2026-10-27/EDITED-for-site). Order: back, front, details. Real photos carry no Mock-up label; mock:true entries keep it (the Sahel Polo, not photographed yet; the Khor Fakkan Bay front was added on 27 Oct evening). Hoodie location photos are 2:3 and are shown whole (object-fit contain), never cropped. The hoodie photos were not taken at Ras Al Khor: alt text never names a place beyond the product name. w/h are the 720 file; lw/lh the large file (files are -720.webp and -1200.webp; the large file can be narrower to stay under 250 KB).",
+ "_note": "27 Oct 2026: Sahel product photos for the site (Faheem, shoot 27 Oct, edited 28 Oct; Product Photos/Sahel photos/2026-10-27/EDITED-for-site). Order: back, front, details. Real photos carry no Mock-up label; mock:true entries keep it (the Sahel Polo, not photographed yet; the Khor Fakkan Bay front was added on 27 Oct evening). Hoodie location photos are 2:3 and are shown whole (object-fit contain), never cropped. The hoodie photos were not taken at Ras Al Khor: alt text never names a place beyond the product name. w/h are the 720 file; lw/lh the large file (files are -720.webp and -1200.webp; the large file can be narrower to stay under 250 KB). 28 Oct (Faheem): the front-and-back shots are photo 1 (card cover) for the four tees; Pearl Diver re-edited (sharper frames); Shams back added.",
  "pieces": {
   "khor-fakkan-bay-tee": [
+   {
+    "k": "ph2-kfb-00-front-and-back",
+    "alt": "Khor Fakkan Bay Tee in Jet Set, front and back",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
    {
     "k": "ph-kfb-01-back",
     "alt": "Khor Fakkan Bay Tee in Jet Set, back print",
@@ -68,7 +77,16 @@
   ],
   "al-hamra-pearl-diver-tee": [
    {
-    "k": "ph-pearl-01-back",
+    "k": "ph2-pearl-00-front-and-back",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, front and back",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph2-pearl-01-back",
     "alt": "Al Hamra Pearl Diver Tee in Estate Blue, back print",
     "mock": false,
     "w": 720,
@@ -77,7 +95,7 @@
     "lh": 1500
    },
    {
-    "k": "ph-pearl-02-front",
+    "k": "ph2-pearl-02-front",
     "alt": "Al Hamra Pearl Diver Tee in Estate Blue, front",
     "mock": false,
     "w": 720,
@@ -86,43 +104,52 @@
     "lh": 1500
    },
    {
-    "k": "ph-pearl-03-detail-diver",
-    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the diver",
-    "mock": false,
-    "w": 720,
-    "h": 900,
-    "lw": 1200,
-    "lh": 1500
-   },
-   {
-    "k": "ph-pearl-04-detail-oyster-beds",
-    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the oyster beds",
-    "mock": false,
-    "w": 720,
-    "h": 900,
-    "lw": 1200,
-    "lh": 1500
-   },
-   {
-    "k": "ph-pearl-05-detail-dhow",
+    "k": "ph2-pearl-03-detail-dhow",
     "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the dhow",
     "mock": false,
     "w": 720,
     "h": 900,
-    "lw": 840,
-    "lh": 1050
+    "lw": 1080,
+    "lh": 1350
    },
    {
-    "k": "ph-pearl-06-detail-chest-oyster",
+    "k": "ph2-pearl-04-detail-diver",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the diver",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1080,
+    "lh": 1350
+   },
+   {
+    "k": "ph2-pearl-05-detail-oyster-beds",
+    "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the oyster beds",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1080,
+    "lh": 1350
+   },
+   {
+    "k": "ph2-pearl-06-detail-chest-oyster",
     "alt": "Al Hamra Pearl Diver Tee in Estate Blue, close-up of the oyster on the chest",
     "mock": false,
     "w": 720,
     "h": 900,
-    "lw": 840,
-    "lh": 1050
+    "lw": 1200,
+    "lh": 1500
    }
   ],
   "al-aqah-reef-tee": [
+   {
+    "k": "ph2-reef-00-front-and-back",
+    "alt": "Al Aqah Reef Tee in Lagoon, front and back",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
    {
     "k": "ph-reef-01-back",
     "alt": "Al Aqah Reef Tee in Lagoon, back print",
@@ -171,8 +198,26 @@
   ],
   "shams-tee": [
    {
+    "k": "ph2-shams-00-front-and-back",
+    "alt": "Shams Tee in Jet Set, front and back",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
     "k": "ph-shams-01-front",
     "alt": "Shams Tee in Jet Set, front",
+    "mock": false,
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "ph2-shams-04-back",
+    "alt": "Shams Tee in Jet Set, back",
     "mock": false,
     "w": 720,
     "h": 900,

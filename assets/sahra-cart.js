@@ -48,7 +48,7 @@
      photos; the hoodies show the 4:5 front so the small square crop never cuts the back print; Trail still mock-ups)
      (Shopify holds no images for them yet). A pre-order line says when it ships, shows the pre-order price
      without a struck-through list price, and never shows a remaining count (no scarcity wording). */
-  var PRE = { 'khor-fakkan-bay-tee-regular': 'ph-kfb-01-back', 'khor-fakkan-bay-tee-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-regular': 'ph-pearl-01-back', 'al-hamra-pearl-diver-tee-oversized': 'ph-pearl-01-back',
+  var PRE = { 'khor-fakkan-bay-tee-regular': 'ph-kfb-01-back', 'khor-fakkan-bay-tee-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-regular': 'ph2-pearl-01-back', 'al-hamra-pearl-diver-tee-oversized': 'ph2-pearl-01-back',
     'al-aqah-reef-tee-regular': 'ph-reef-01-back', 'al-aqah-reef-tee-oversized': 'ph-reef-01-back', 'shams-tee-regular': 'ph-shams-01-front', 'shams-tee-oversized': 'ph-shams-01-front', 'the-sahel-polo': '',
     'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'trail-tee-front', 'sahra-trail-2-in-1-short': 'trail-short-front', 'sahra-trail-kit': 'trail-kit-front' };
   var PRE_IN_HAND = false;   /* set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
