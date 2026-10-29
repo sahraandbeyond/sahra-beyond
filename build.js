@@ -4943,7 +4943,9 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
   for (const f of pages) {
     const src = fs.readFileSync(f, 'utf8');
     if (!/<\/head>/i.test(src)) continue;
-    const out = src.replace(/<script src="\/assets\/sahra-zoom\.js[^"]*" defer><\/script>\n?/g, '').replace(/<\/head>/i, TAG + '\n</head>');
+    /* 28 Oct 2026 (conversion fixes): warm the connection to Shopify's checkout, so the tap on Checkout waits less */
+    const PRE = '<link rel="preconnect" href="https://checkout.sahraandbeyond.ae">';
+    const out = src.replace(/<script src="\/assets\/sahra-zoom\.js[^"]*" defer><\/script>\n?/g, '').replace(/<link rel="preconnect" href="https:\/\/checkout\.sahraandbeyond\.ae">\n?/g, '').replace(/<\/head>/i, PRE + '\n' + TAG + '\n</head>');
     if (out !== src) { fs.writeFileSync(f, out); touched++; }
   }
   console.log(`  \u2713 Photo viewer script on ${pages.length} page(s)` + (touched ? ` (${touched} updated)` : ''));

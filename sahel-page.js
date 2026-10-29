@@ -250,6 +250,17 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
 /* 25 Oct 2026 (Faheem): a short intro over the waterline still, then every product on cream cards over the
    reef. The cards are the same component as /new/ (preorder-page.js newCard), so price, stage lines, the
    Mock-up label and the cut badge match the rest of the site. */
+.sh-strip{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;align-self:stretch;box-sizing:border-box;min-width:0;max-width:980px;margin:0 auto 18px;padding:2px 4px 6px;scrollbar-width:none;text-align:left}
+.sh-strip::-webkit-scrollbar{display:none}
+.sh-hero .sh-bot{width:100%;max-width:100%;min-width:0}
+.sh-sc{flex:0 0 100px;scroll-snap-align:start;color:#F4ECDF;text-decoration:none}
+.sh-sc span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E9E0D3}
+.sh-sc img{width:100%;height:100%;object-fit:cover;display:block}
+.sh-sc i{position:absolute;left:5px;top:5px;font:400 8.5px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:3px 5px;border-radius:3px;background:rgba(250,246,239,.94);color:#2A2016}
+.sh-sc b{display:block;font:500 13px/1.25 Jost,system-ui,sans-serif;margin:6px 0 1px;color:#F4ECDF;text-shadow:0 1px 8px rgba(11,21,38,.6)}
+.sh-sc small{display:block;font:12px/1.3 Jost,system-ui,sans-serif;color:#E9B978;text-shadow:0 1px 8px rgba(11,21,38,.6)}
+.sh-sc:focus-visible{outline:3px solid #E9B978;outline-offset:3px;border-radius:10px}
+@media(min-width:900px){.sh-strip{justify-content:center}.sh-sc{flex-basis:118px}}
 .sh-intro{position:relative;z-index:2;min-height:78vh;display:flex;align-items:center;justify-content:center;padding:10vh 20px}
 .sh-intro>div{max-width:640px;padding:30px 32px;border-radius:16px;background:rgba(11,21,38,.66);border:1px solid rgba(217,195,165,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);text-align:start}
 .sh-intro h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.05;margin:0 0 14px;color:#F4ECDF;text-wrap:balance}
@@ -289,6 +300,7 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
       <h1>${T.h1}</h1>
     </div>
     <div class="sh-bot">
+      ${/* 28 Oct 2026 (conversion fixes): the pieces and their prices on the first screen, for visitors arriving from an ad */''}${ST.stageNow() >= 1 ? `<div class="sh-strip" role="list" aria-label="The Sahel pieces">${SHOP.filter((p, i, A) => A.findIndex(x => x.name === p.name) === i).map(p => { const im = p.images[0]; return `<a role="listitem" class="sh-sc" href="/products/${p.handle}/"><span><img src="/assets/preorder/${im.k}-480.webp" width="480" height="${Math.round(480 * (im.h || 900) / (im.w || 720))}" alt="${String(im.alt).replace(/"/g, '&quot;')}${im.mock ? ', studio mock-up' : ''}" loading="eager" decoding="async"${(im.h || 900) / (im.w || 720) > 1.4 ? ' style="object-fit:contain"' : ''}>${im.mock ? '<i>Mock-up</i>' : ''}</span><b>${p.name.replace(/ Tee$| Hoodie$/, '')}</b>${ST.cardPrice(p.price, 'small')}</a>`; }).join('')}</div>` : ''}
       <p class="sh-kicker">${ST.inc('st0', `<span class="st0">${T.kicker}</span>`)}${ST.inc('st1', '<span class="st1">Pre-order open</span>')}<span class="st2">Out now</span></p>
       ${/* 25 Oct 2026 (Faheem): the page is the collection now; every button goes to the pieces */''}${ST.inc('st0', `<a class="sh-btn st0" href="#pieces">See the pieces <span aria-hidden="true">&darr;</span></a>`)}
       ${ST.inc('st1', `<a class="sh-btn st1" href="#pieces">Pre-order Sahel <span aria-hidden="true">&darr;</span></a>`)}
