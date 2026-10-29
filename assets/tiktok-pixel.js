@@ -49,8 +49,11 @@
       ttq._i = ttq._i || {}; ttq._i[e] = []; ttq._i[e]._u = r;
       ttq._t = ttq._t || {}; ttq._t[e] = +new Date();
       ttq._o = ttq._o || {}; ttq._o[e] = n || {};
-      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = r + '?sdkid=' + e + '&lib=' + t;
-      var f = d.getElementsByTagName('script')[0]; f.parentNode.insertBefore(s, f);
+      /* 29 Oct 2026 (site speed): downloaded once the page has loaded (ga4.js sbLater); ttq queues until then */
+      (w.sbLater || function (g) { g(); })(function () {
+        var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = r + '?sdkid=' + e + '&lib=' + t;
+        var f = d.getElementsByTagName('script')[0]; f.parentNode.insertBefore(s, f);
+      });
     };
     ttq.load(PIXEL_ID);
     ttq.page();

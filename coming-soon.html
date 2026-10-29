@@ -33,11 +33,31 @@
 ]}
 </script>
 <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
+  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+    function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
+    if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
+    return function(f){if(ran){try{f()}catch(e){}}else q.push(f);};})();
+  sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F';document.head.appendChild(s);});
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
+  (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
+    window.SB_AD=!!ad;if(ad)document.documentElement.classList.add('sb-ad');
+    gtag('set',{ad_session:ad?1:0,site_build:'r80'});
+    var done=0,first=0;function fi(e){if(done)return;done=1;first=Math.round(performance.now());['pointerdown','keydown','scroll','touchstart'].forEach(function(k){removeEventListener(k,fi,true);});
+      window.track('first_interaction',{ms:first,kind:e.type,ad:ad?1:0});}
+    ['pointerdown','keydown','scroll','touchstart'].forEach(function(k){addEventListener(k,fi,{capture:true,passive:true});});
+    var maxs=0;addEventListener('scroll',function(){var d=document.documentElement,m=d.scrollHeight-innerHeight;if(m>0)maxs=Math.max(maxs,Math.round(scrollY/m*100));},{passive:true});
+    var sent=0;function ve(){if(sent)return;sent=1;window.track('visit_end',{ms:Math.round(performance.now()),max_scroll:maxs,touched:done?1:0,first_ms:first,ad:ad?1:0,transport_type:'beacon'});}
+    addEventListener('pagehide',ve);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')ve();else sent=0;});addEventListener('pageshow',function(e){if(e.persisted)sent=0;});
+    var CID='';if(ad&&CID){document.addEventListener('DOMContentLoaded',function(){[].forEach.call(document.querySelectorAll('form,input,textarea,select,[contenteditable]'),function(x){x.setAttribute('data-clarity-mask','True');});});(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script',CID);}
+  })();
   gtag('js',new Date());gtag('config','G-5NVFDWT29F');
+  var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
+  gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -801,7 +821,7 @@ html body .folds summary h2,html body .fold summary h2{font-size:22px!important;
 /* the Al Quaa place band set its H2 in Jost bold; every H2 is Cormorant */
 html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
 </style>
-<script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
+<script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 </head>
 <body>
 <div id="preload"><div class="pm"></div><div class="pt">Sahra &amp; Beyond</div></div>

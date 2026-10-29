@@ -31,8 +31,13 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
+  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+    function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
+    if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
+    ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
+    return function(f){if(ran){try{f()}catch(e){}}else q.push(f);};})();
+  sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F';document.head.appendChild(s);});
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
   window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
   (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
@@ -53,8 +58,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
-<script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
+<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"TouristAttraction","name":"Shuweihat Island","description":"Abu Dhabi's remote western coast holds Mars-like, mushroom-shaped rocks at Shuweihat Island — reachable by causeway, but public access is genuinely disputed near a military airfield.","url":"https://www.sahraandbeyond.ae/locations/shuweihat-island/","address":{"@type":"PostalAddress","addressRegion":"Abu Dhabi","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":24.110069,"longitude":52.433308},"hasMap":"https://www.google.com/maps/search/?api=1&query=24.110069,52.433308","alternateName":"جزيرة الشويهات","image":["https://www.sahraandbeyond.ae/uploads/unsorted-no-geotag_02.webp"]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"Places","item":"https://www.sahraandbeyond.ae/places/"},{"@type":"ListItem","position":3,"name":"Shuweihat Island","item":"https://www.sahraandbeyond.ae/locations/shuweihat-island/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Shuweihat Island open to the public?","acceptedAnswer":{"@type":"Answer","text":"Reports conflict. Some current visitor guides describe free access by road; others say the best-known viewpoint has been fenced off near a military airfield. Check recent visitor reports before you travel, and turn back at any fencing or signage."}},{"@type":"Question","name":"How do I get to Shuweihat Island?","acceptedAnswer":{"@type":"Answer","text":"Drive west from Abu Dhabi on the E11 past Ruwais. A paved causeway connects the mainland to the island, reachable in an ordinary car in around 2.5 hours from Abu Dhabi city."}},{"@type":"Question","name":"Is there an entry fee?","acceptedAnswer":{"@type":"Answer","text":"No fee is mentioned in any source we found, and no gate or ticket booth is reported."}},{"@type":"Question","name":"Are there toilets or shops on the island?","acceptedAnswer":{"@type":"Answer","text":"No. The nearest facilities are in Ruwais, about 20–30 minutes back along the E11."}},{"@type":"Question","name":"Is it safe to drive there?","acceptedAnswer":{"@type":"Answer","text":"The paved road and causeway are manageable in a standard car, but stay off the salt flats beside the route — they look solid but can trap a vehicle — and expect patchy phone signal."}},{"@type":"Question","name":"Can I camp on Shuweihat Island?","acceptedAnswer":{"@type":"Answer","text":"Some visitors describe overnight stays on the beach, but there are no facilities and no confirmed official camping status, so come fully self-sufficient and take all rubbish home."}}]}]</script>
 <style>
@@ -1940,8 +1945,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=e69e4c36" defer></script>
-<script src="/assets/sahra-market.js?v=ea3a9c2a" defer></script>
+<script src="/assets/sahra-cart.js?v=54550482" defer></script>
+<script src="/assets/sahra-market.js?v=a13b56be" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

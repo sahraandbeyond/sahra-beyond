@@ -180,6 +180,16 @@
   var BUYER_CC = 'AE';
 
   var CART = null;
+  /* 29 Oct 2026 (site speed handover: Checkout took 7-15 s on a phone). The attribution attributes
+     (sahra-measure.js sbAttr: source, campaign, landing) used to be written on the tap on Checkout, and the
+     tap waited for that write - about 0.8 s for every ad visitor, up to 1.5 s. They now travel inside
+     cartCreate, and ATTR_OK remembers which cart already carries which set, so the tap goes straight to
+     Shopify unless something has changed since. */
+  var ATTR_OK = '', CREATE_ATTR = [];
+  try { ATTR_OK = sessionStorage.getItem('sb_attr_ok') || ''; } catch (e) {}
+  function attrOk(v) { ATTR_OK = v; try { sessionStorage.setItem('sb_attr_ok', v); } catch (e) {} }
+  function attrNow() { try { return window.sbAttr ? window.sbAttr() : []; } catch (e) { return []; } }
+  function attrKey(cid, a) { return (cid || '') + '|' + JSON.stringify(a || []); }
   var lastError = null;
   /* line id -> quantity the customer has asked for but the server has not
      confirmed yet. Keeps rapid +/- taps accumulating correctly. */
@@ -305,13 +315,13 @@
          real item the customer had; otherwise fall back to the plain add. */
       var reals = cartNodes().filter(function (n) { return !isGift(n); })
         .map(function (n) { return { merchandiseId: n.merchandise.id, quantity: n.quantity }; });
-      return sf('mutation($l:[CartLineInput!]!,$cc:CountryCode!){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc}}){cart{' + CFRAG + '}userErrors{message}}}',
-                { l: [{ merchandiseId: GIFT_VARIANT, quantity: 1 }].concat(reals), cc: BUYER_CC })
+      return sf('mutation($l:[CartLineInput!]!,$cc:CountryCode!,$a:[AttributeInput!]){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc},attributes:$a}){cart{' + CFRAG + '}userErrors{message}}}',
+                { l: [{ merchandiseId: GIFT_VARIANT, quantity: 1 }].concat(reals), cc: BUYER_CC, a: (CREATE_ATTR = attrNow()) })
         .then(function (d) {
           var r = d && d.cartCreate, c = r && r.cart;
           var kept = c ? (c.lines.edges || []).reduce(function (n, e) { return n + (isGift(e.node) ? 0 : e.node.quantity); }, 0) : -1;
           if (!c || (r.userErrors && r.userErrors.length) || kept !== real || !giftIn(c)) return run();
-          CART = c; setCid(c.id); draw();
+          CART = c; setCid(c.id); attrOk(attrKey(c.id, CREATE_ATTR)); draw();
           return CART;
         }, run);
     });
@@ -404,8 +414,18 @@
   }
 
   var lastFocus = null;
+  /* 29 Oct 2026 (site speed): the tap on Checkout goes checkout.sahraandbeyond.ae -> shop.app (Shop Pay's
+     check) -> back, and the checkout page pulls fonts and photos from cdn.shopify.com. The drawer opening
+     is the moment a checkout becomes likely, so the connections to the other two are opened then. */
+  var warmed = false;
+  function warmCheckout() {
+    if (warmed) return; warmed = true;
+    try { ['https://shop.app', 'https://cdn.shopify.com'].forEach(function (h) { var l = document.createElement('link'); l.rel = 'preconnect'; l.href = h; l.crossOrigin = 'anonymous'; document.head.appendChild(l);
+      var l2 = document.createElement('link'); l2.rel = 'preconnect'; l2.href = h; document.head.appendChild(l2); }); } catch (e) {}
+  }
   function open() {
     ensureUI();
+    warmCheckout();
     lastFocus = document.activeElement;
     document.getElementById('sbDrawer').classList.add('on');
     document.getElementById('sbOv').classList.add('on');
@@ -614,6 +634,7 @@
         if (on) noteSet = true;
         pending = notep
           .then(function () { return sf('mutation($id:ID!,$a:[AttributeInput!]!){cartAttributesUpdate(cartId:$id,attributes:$a){cart{id}userErrors{message}}}', { id: CART.id, a: attrs }); })
+          .then(function (d) { var r = d && d.cartAttributesUpdate; if (!on && r && !(r.userErrors && r.userErrors.length)) attrOk(attrKey(CART.id, attrNow())); })
           .then(function () { if (on && window.track) try { track('gift_option', { with_message: !!msg }); } catch (e) {} })
           .catch(function () { last = null; });
         return pending;
@@ -623,6 +644,8 @@
       go.addEventListener('click', function (e) {
         if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;   /* open-in-new-tab keeps working */
         if (!chk.checked && last === null && !(window.sbAttr && window.sbAttr().length)) return;
+        /* 29 Oct 2026: no gift and the cart already carries these attributes (written by cartCreate) - go now */
+        if (!chk.checked && !noteSet && !pending && CART && ATTR_OK === attrKey(CART.id, attrNow())) return;
         var href = go.href; if (!href || href.slice(-1) === '#') return;
         e.preventDefault(); clearTimeout(t);
         var done = false; function nav() { if (done) return; done = true; location.href = href; }
@@ -825,12 +848,18 @@
            the gift listed first makes it the last line; everything added later
            lands above it. The gift can never break a real add: if Shopify
            refuses the pair (the tote is finite), the cart starts without it. */
-        var createWith = function (lines) {
-          return sf('mutation($l:[CartLineInput!]!,$cc:CountryCode!){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc}}){cart{' + CFRAG + '}userErrors{message}}}',
+        var createWith = function (lines, bare) {
+          var Q = 'mutation($l:[CartLineInput!]!,$cc:CountryCode!,$a:[AttributeInput!]){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc},attributes:$a}){cart{' + CFRAG + '}userErrors{message}}}';
+          return sf(Q,
                     /* read at send time, inside the queue — a country change
                        that already happened should win, and one still queued
                        behind us will re-point the cart when its turn comes */
-                    { l: lines, cc: BUYER_CC });
+                    { l: lines, cc: BUYER_CC, a: (CREATE_ATTR = bare ? [] : attrNow()) })
+            /* 29 Oct 2026: attribution must never cost a sale - if Shopify refuses the cart with the
+               attributes on it, the cart is created without them (they are then written at checkout) */
+            .then(function (d) { var r = d && d.cartCreate;
+              return (!bare && CREATE_ATTR.length && (!r || !r.cart || (r.userErrors && r.userErrors.length))) ? createWith(lines, true) : d; },
+              function (e) { if (bare || !CREATE_ATTR.length) throw e; return createWith(lines, true); });
         };
         var real = [{ merchandiseId: variantId, quantity: want }];
         /* Only seed the gift when the item being added actually earns one. This
@@ -861,6 +890,7 @@
             return r.cart;
           });
       }).then(function (c) {
+        if (!CART || CART.id !== c.id) attrOk(attrKey(c.id, CREATE_ATTR));
         CART = c; setCid(c.id); pending = {}; draw(); if (!(opts && opts.open === false)) open();
         return c;
       }).catch(function (e) {
@@ -1005,6 +1035,8 @@
   function saveAttrs() {
     var a = window.sbAttr ? window.sbAttr() : [];
     if (!CART || !CART.id || !a.length) return Promise.resolve();
+    /* 29 Oct 2026: already on the cart (cartCreate carried them) and no gift flag to add - nothing to wait for */
+    if (!giftAttrs().length && ATTR_OK === attrKey(CART.id, a)) return Promise.resolve();
     return sf('mutation($id:ID!,$a:[AttributeInput!]!){cartAttributesUpdate(cartId:$id,attributes:$a){cart{id}userErrors{message}}}', { id: CART.id, a: giftAttrs().concat(a) }).catch(function () {});
   }
   /* Buy now: attributes and begin_checkout, then checkout; never waits more than a second */

@@ -31,8 +31,13 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
+  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+    function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
+    if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
+    ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
+    return function(f){if(ran){try{f()}catch(e){}}else q.push(f);};})();
+  sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F';document.head.appendChild(s);});
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
   window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
   (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
@@ -53,8 +58,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
-<script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
+<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"TouristAttraction","name":"Love Lake","description":"Two heart-shaped artificial lakes in Dubai's Al Marmoom reserve, reached by paved road. A free photo, picnic and camping spot with resident birdlife.","url":"https://www.sahraandbeyond.ae/locations/love-lake/","address":{"@type":"PostalAddress","addressRegion":"Dubai","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":24.8381,"longitude":55.4048},"hasMap":"https://www.google.com/maps/search/?api=1&query=24.8381,55.4048","alternateName":"بحيرة الحب","isAccessibleForFree":true,"image":["https://www.sahraandbeyond.ae/uploads/places/love-lake.jpg"]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"Places","item":"https://www.sahraandbeyond.ae/places/"},{"@type":"ListItem","position":3,"name":"Love Lake","item":"https://www.sahraandbeyond.ae/locations/love-lake/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Love Lake in Dubai free to visit?","acceptedAnswer":{"@type":"Answer","text":"Yes — entry is free and the site is open 24 hours a day, seven days a week."}},{"@type":"Question","name":"Can I camp at Love Lake?","acceptedAnswer":{"@type":"Answer","text":"Yes, camping is allowed. Pitch well back from the lakeshore, keep off the vegetation, take all rubbish home, and check the signage on the day for the current rules on fires and barbecues."}},{"@type":"Question","name":"Do I need a 4x4 to reach Love Lake?","acceptedAnswer":{"@type":"Answer","text":"No. A paved road runs all the way to the car park by the lake, so a normal car is fine."}},{"@type":"Question","name":"How do I get to Love Lake without a car?","acceptedAnswer":{"@type":"Answer","text":"Bus route 67 serves the area, or take a taxi from Expo Metro Station, about 30 minutes away; there's no direct public transport right to the lakeside."}},{"@type":"Question","name":"What wildlife will I see at Love Lake?","acceptedAnswer":{"@type":"Answer","text":"Birdlife is the highlight. The wider Al Marmoom reserve supports flocks of flamingos, with more than 250 species recorded across the reserve, so waterbirds around the lake are a realistic sight, though the sources list no species specific to Love Lake itself."}},{"@type":"Question","name":"Can I fly a drone at Love Lake?","acceptedAnswer":{"@type":"Answer","text":"Drones reportedly need a permit inside the Al Marmoom reserve; check current rules before flying one, since requirements and enforcement can change."}}]}]</script>
 <style>
@@ -1953,8 +1958,8 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=e69e4c36" defer></script>
-<script src="/assets/sahra-market.js?v=ea3a9c2a" defer></script>
+<script src="/assets/sahra-cart.js?v=54550482" defer></script>
+<script src="/assets/sahra-market.js?v=a13b56be" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

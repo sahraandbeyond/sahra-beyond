@@ -77,11 +77,16 @@ const PHOTOS = (function () { try { return JSON.parse(require('fs').readFileSync
 const photoList = key => (PHOTOS[key] || []).map(x => Object.assign({}, x, x.mock ? {} : { cap: '' }));
 /* one <img> for any pre-order image: its own width and height, the large file's real width in srcset, and contain for 2:3 */
 const isTall = im => (im.h || 900) / (im.w || 720) > 1.4;
+/* 29 Oct 2026 (site speed): a card is about half a phone screen wide, and on a 3x phone that asked for the
+   720 px file (up to 240 KB for a detail crop). Phone card widths are given to the browser at two thirds, so
+   phones (up to 600 px) fetch the 480 px file: still about 2.5 device pixels per CSS pixel on the card.
+   Tablets, galleries (vw over 50) and desktop sizes are unchanged. */
+const capSizes = s => String(s).replace(/(\(max-width:\s*(\d+)px\)\s*)(\d+)vw/, (a, q, mw, v) => +v <= 50 && +mw > 600 ? '(max-width: 600px) ' + Math.round(v * 0.68) + 'vw, ' + a : a);
 function imgTag(im, o = {}) {
   const w = im.w || 720, h = im.h || 900, lw = im.lw || 1200;
   const alt = o.alt != null ? o.alt : esc(im.alt) + (im.mock && o.mockAlt !== false ? ', studio mock-up' : '');
   const fit = isTall(im) ? ` style="object-fit:contain;background:${o.bg || '#DCD5C8'}"` : '';
-  return `<img${o.cls ? ` class="${o.cls}"` : ''}${o.zoom ? ` data-zoom="/assets/preorder/${im.k}-1200.webp"` : ''} src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-480.webp 480w, /assets/preorder/${im.k}-720.webp ${w}w, /assets/preorder/${im.k}-1200.webp ${lw}w" sizes="${o.sizes || '(max-width: 900px) 50vw, 300px'}" width="${w}" height="${h}" alt="${alt}"${o.eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${fit}>`;
+  return `<img${o.cls ? ` class="${o.cls}"` : ''}${o.zoom ? ` data-zoom="/assets/preorder/${im.k}-1200.webp"` : ''} src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-480.webp 480w, /assets/preorder/${im.k}-720.webp ${w}w, /assets/preorder/${im.k}-1200.webp ${lw}w" sizes="${capSizes(o.sizes || '(max-width: 900px) 50vw, 300px')}" width="${w}" height="${h}" alt="${alt}"${o.eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${fit}>`;
 }
 const mockTag = (im, cls) => im && im.mock ? `<i${cls ? ` class="${cls}"` : ''}>Mock-up</i>` : '';
 /* 28 Oct 2026 (Faheem: "All the product cards across the site need to have an auto slideshow"): a card shows every

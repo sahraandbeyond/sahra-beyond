@@ -29,8 +29,13 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
+  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+    function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
+    if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
+    ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
+    return function(f){if(ran){try{f()}catch(e){}}else q.push(f);};})();
+  sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F';document.head.appendChild(s);});
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
   window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
   (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
@@ -51,8 +56,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
-<script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
+<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"CollectionPage","name":"Secluded Camping Spots in the UAE","description":"The most secluded camping spots in the UAE — quiet desert lakes and hidden corners away from the crowds, with GPS and access tips.","url":"https://www.sahraandbeyond.ae/secluded-camping/"},{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Al Quaa Desert","url":"https://www.sahraandbeyond.ae/locations/al-quaa-desert/"},{"@type":"ListItem","position":2,"name":"Al Rams Beach","url":"https://www.sahraandbeyond.ae/locations/al-rams-beach/"},{"@type":"ListItem","position":3,"name":"Crescent Moon Lake","url":"https://www.sahraandbeyond.ae/locations/crescent-moon-lake/"},{"@type":"ListItem","position":4,"name":"Al Qudra Desert Lake","url":"https://www.sahraandbeyond.ae/locations/desert-camping-lake-view/"},{"@type":"ListItem","position":5,"name":"Wadi Kub","url":"https://www.sahraandbeyond.ae/locations/wadi-kub/"},{"@type":"ListItem","position":6,"name":"Hatta","url":"https://www.sahraandbeyond.ae/locations/hatta/"},{"@type":"ListItem","position":7,"name":"Love Lake","url":"https://www.sahraandbeyond.ae/locations/love-lake/"},{"@type":"ListItem","position":8,"name":"Zakher Lake","url":"https://www.sahraandbeyond.ae/locations/zakher-lake/"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"Secluded Camping Spots in the UAE","item":"https://www.sahraandbeyond.ae/secluded-camping/"}]}]</script>
 <style>
@@ -1402,7 +1407,7 @@ html body .loc-hero.lh-ph.lh-ph .lede{font-size:clamp(17px,1.6vw,21px)!important
     
     <section class="teecta" style="--tee:#181109">
     <div class="teecta-inner">
-      <a class="teecta-img" href="/products/al-quaa-galaxy-regular/" aria-label="Al Quaa Galaxy — Regular" data-cycle><img class="on" src="/shirts/alquaa-dune-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-front.webp" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print.webp" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-print-2.webp" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-chest.webp" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" loading="lazy" width="1080" height="1350"><img src="/shirts/alquaa-dune-mark.webp" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" loading="lazy" width="1080" height="1350"></a>
+      <a class="teecta-img" href="/products/al-quaa-galaxy-regular/" aria-label="Al Quaa Galaxy — Regular" data-cycle><img class="on" src="/shirts/alquaa-dune-back.webp" alt="Al Quaa Galaxy t-shirt, a Milky Way desert tee in the regular fit — the galaxy printed across the back" loading="lazy" width="1080" height="1350"><img data-src="/shirts/alquaa-dune-front.webp" alt="Al Quaa Galaxy — Regular, regular fit, front view showing the set-in shoulder and classic cut" width="1080" height="1350"><img data-src="/shirts/alquaa-dune-print.webp" alt="The Al Quaa Galaxy tee, back print close — the gold stipple of the Milky Way over the dune line" width="1080" height="1350"><img data-src="/shirts/alquaa-dune-print-2.webp" alt="The Al Quaa Galaxy tee, the printed band at an angle — the grain of the stars across the shoulder" width="1080" height="1350"><img data-src="/shirts/alquaa-dune-chest.webp" alt="The Al Quaa Galaxy tee, chest close — the embroidered mark on black cotton" width="1080" height="1350"><img data-src="/shirts/alquaa-dune-mark.webp" alt="The Al Quaa Galaxy tee, the embroidered صحراء mark in gold, close" width="1080" height="1350"></a>
       <div class="teecta-txt">
         <span class="teecta-eyebrow">Back from camp? The tee drawn from this place</span>
         <h2>Al Quaa Galaxy — Regular</h2>
@@ -1521,8 +1526,8 @@ html body .loc-hero.lh-ph.lh-ph .lede{font-size:clamp(17px,1.6vw,21px)!important
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=e69e4c36" defer></script>
-<script src="/assets/sahra-market.js?v=ea3a9c2a" defer></script>
+<script src="/assets/sahra-cart.js?v=54550482" defer></script>
+<script src="/assets/sahra-market.js?v=a13b56be" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

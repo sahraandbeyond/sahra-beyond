@@ -323,9 +323,23 @@
   /* Every frame ships loading="lazy" - right for the page, wrong for a stack
      that is about to be cycled through. Once a card is on screen, ask for the
      rest of its photos now rather than when the cycle reaches them. */
+  /* 29 Oct 2026 (site speed): every frame after a card's cover now ships with data-src/data-srcset and no
+     src (build.js deferCycleFrames). Stacked frames all sit inside the browser's lazy-load distance, so
+     loading="lazy" alone fetched every photo of every card near the screen - about 3 MB on a phone's first
+     screen. A frame is fetched only when this asks for it: the next two once a card is near the screen,
+     the rest after it has been on screen for FULL_WARM. */
   function warm(img) {
-    try { if (img && img.loading === 'lazy') img.loading = 'eager'; } catch (e) {}
+    try {
+      if (!img) return;
+      var ds = img.getAttribute('data-srcset'), d = img.getAttribute('data-src');
+      if (ds || d) {
+        img.loading = 'eager';
+        if (ds) { img.setAttribute('srcset', ds); img.removeAttribute('data-srcset'); }
+        if (d) { img.setAttribute('src', d); img.removeAttribute('data-src'); }
+      } else if (img.loading === 'lazy') img.loading = 'eager';
+    } catch (e) {}
   }
+  if (typeof window !== 'undefined') window.SahraWarm = warm;
 
   /* Single-stack advance. The homepage grid no longer calls this (it flips
      every stack together via beatPlan/decodeAll/flipAll below); it stays as
@@ -523,6 +537,9 @@
       visibleStacks().forEach(function (im) {
         var p = nextPair(im);
         if (frameReady(p.nxt) && !isPrimed(p.nxt)) next.push(p.nxt); else warm(p.nxt);
+        /* 29 Oct 2026 (site speed): a rolling look-ahead - the frame after next is fetched now, so it is
+           there by its turn, and nothing further ahead is fetched until the slideshow gets close to it */
+        for (var k2 = 0; k2 < im.length; k2++) if (im[k2] === p.nxt) { warm(im[(k2 + 1) % im.length]); break; }
       });
       if (!next.length) return;
       /* a prime still in flight when the grid flips or resets is stale:
@@ -585,8 +602,9 @@
          for the real viewport: `seen` is a second observer with no margin. */
       var ahead = new IntersectionObserver(function (es) {
         es.forEach(function (e) {
-          /* fetch the next two frames now; the rest only once the card has been on screen for FULL_WARM ms
-             (28 Oct 2026: a whole 8-photo stack per card was about 0.5 MB too much on a phone's first screen) */
+          /* fetch the next two frames now (28 Oct 2026: a whole 8-photo stack per card was about 0.5 MB too much
+             on a phone's first screen); from then on prime() keeps two frames ahead as the slideshow turns
+             (29 Oct 2026: the old "every frame after FULL_WARM on screen" fetched whole stacks again) */
           if (!e.isIntersecting) return;
           (function (h) { var im = [].slice.call(h.querySelectorAll('img')), i = 0, k;
             for (k = 0; k < im.length; k++) if (im[k].classList.contains('on')) i = k;
@@ -603,7 +621,7 @@
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) {
           if (e.isIntersecting) { if (!seen.has(e.target)) { since.set(e.target, Date.now());
-              (function (h) { setTimeout(function () { if (seen.has(h)) [].forEach.call(h.querySelectorAll('img'), warm); }, FULL_WARM); })(e.target); }
+              (function (h) { setTimeout(function () { if (!seen.has(h)) return; var im = h.querySelectorAll('img'), i = 0, k; for (k = 0; k < im.length; k++) if (im[k].classList.contains('on')) i = k; for (k = 1; k <= 2 && k < im.length; k++) warm(im[(i + k) % im.length]); }, FULL_WARM); })(e.target); }
             seen.add(e.target); }
           else { seen.delete(e.target); since.delete(e.target); }
         });

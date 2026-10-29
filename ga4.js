@@ -31,9 +31,21 @@ const ATTENTION = `(function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|
     addEventListener('pagehide',ve);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')ve();else sent=0;});addEventListener('pageshow',function(e){if(e.persisted)sent=0;});
     var CID='${CLARITY_ID}';if(ad&&CID){document.addEventListener('DOMContentLoaded',function(){[].forEach.call(document.querySelectorAll('form,input,textarea,select,[contenteditable]'),function(x){x.setAttribute('data-clarity-mask','True');});});(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script',CID);}
   })();`;
+/* 29 Oct 2026 (site speed handover): the tag libraries (gtag 190 KB, Meta 270 KB, TikTok 150 KB) were fetched
+   while the first screen was still loading on a phone. Their queues (dataLayer, fbq, ttq) exist from the first
+   line as before; only the download of the libraries waits for sbLater: the visitor's first touch, scroll or
+   key, or the page's load event plus an idle moment (at most 2.5 s), or 8 s, whichever comes first. The cost:
+   a visitor who leaves within about 3 s without touching the page is no longer seen by GA4 or TikTok (Meta
+   still gets its server-side copy through /api/meta-capi). */
+const LATER = `window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+    function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
+    if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
+    ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
+    return function(f){if(ran){try{f()}catch(e){}}else q.push(f);};})();
+  sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${GA4_ID}';document.head.appendChild(s);});`;
 const GA4_HEAD = `<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=${GA4_ID}"></script>
 <script>
+  ${LATER}
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
   ${/* 25 Oct 2026 (retention audit): add_to_cart / view_item / remove_from_cart get GA4's standard items[], value and currency, so funnel reports work */''}window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
   ${ATTENTION}

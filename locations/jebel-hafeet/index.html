@@ -31,8 +31,13 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
+  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+    function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
+    if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
+    ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
+    return function(f){if(ran){try{f()}catch(e){}}else q.push(f);};})();
+  sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F';document.head.appendChild(s);});
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
   window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
   (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
@@ -53,8 +58,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
-<script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
+<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"TouristAttraction","name":"Jebel Hafeet","description":"The only mountain in Abu Dhabi emirate, about 1,249m, straddling the Oman border above Al Ain. A paved road climbs 1,200m through 60 hairpin bends to a summit hotel, with hot springs and Bronze Age tombs at the base.","url":"https://www.sahraandbeyond.ae/locations/jebel-hafeet/","address":{"@type":"PostalAddress","addressRegion":"Abu Dhabi","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":24.0586,"longitude":55.7775},"hasMap":"https://www.google.com/maps/search/?api=1&query=24.0586,55.7775","alternateName":"جبل حفيت","isAccessibleForFree":true,"image":["https://www.sahraandbeyond.ae/uploads/places/jebel-hafeet.jpg"]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"Places","item":"https://www.sahraandbeyond.ae/places/"},{"@type":"ListItem","position":3,"name":"Jebel Hafeet","item":"https://www.sahraandbeyond.ae/locations/jebel-hafeet/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the Jebel Hafeet road free to drive?","acceptedAnswer":{"@type":"Answer","text":"Yes — there's no toll or entry fee for the mountain road itself. Green Mubazzarah park at the base is also free to enter; only the hot-spring pools charge a small fee."}},{"@type":"Question","name":"Do I need a 4x4 for Jebel Hafeet?","acceptedAnswer":{"@type":"Answer","text":"No. The entire 11.7km summit road is paved and well maintained — any regular car handles it without difficulty."}},{"@type":"Question","name":"Is Jebel Hafeet in Abu Dhabi or Al Ain?","acceptedAnswer":{"@type":"Answer","text":"Both are correct at different levels: Al Ain is the city, and it sits within the Abu Dhabi emirate. Jebel Hafeet itself straddles the Abu Dhabi–Oman border."}},{"@type":"Question","name":"Where are the hot springs at Jebel Hafeet?","acceptedAnswer":{"@type":"Answer","text":"At Green Mubazzarah, a free public park at the mountain's base, with geothermal pools, a small lake and picnic areas."}},{"@type":"Question","name":"Can I camp on Jebel Hafeet?","acceptedAnswer":{"@type":"Answer","text":"Yes — Jebel Hafeet Desert Park offers several tiers, from a basic bring-your-own-gear pitch to serviced Bedouin-style tents and air-conditioned glamping, and Green Mubazzarah has overnight chalets."}},{"@type":"Question","name":"What's the best time to visit Jebel Hafeet?","acceptedAnswer":{"@type":"Answer","text":"October to April, ideally early morning or shortly before sunset. November to March is the busiest period, with heavier weekend traffic and cyclists on the road."}}]}]</script>
 <style>
@@ -1964,8 +1969,8 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=e69e4c36" defer></script>
-<script src="/assets/sahra-market.js?v=ea3a9c2a" defer></script>
+<script src="/assets/sahra-cart.js?v=54550482" defer></script>
+<script src="/assets/sahra-market.js?v=a13b56be" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

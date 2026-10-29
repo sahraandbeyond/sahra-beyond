@@ -232,7 +232,7 @@ for (const f of ['policies.html', 'commitment.html']) {
 for (const f of ['index.html', 'homepage-preview.html', 'classic/index.html', 'policies.html', 'commitment.html']) {
   const fp = path.join(ROOT, f); if (!fs.existsSync(fp)) continue;
   const h = fs.readFileSync(fp, 'utf8'); const G = require('./ga4.js');
-  const re = /<!-- Google Analytics 4 -->\s*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=[^"]+"><\/script>\s*<script>[\s\S]*?<\/script>(?:\s*<script defer src="\/_vercel\/insights\/script\.js"><\/script>)?(?:\s*<script defer src="\/_vercel\/speed-insights\/script\.js"><\/script>)?/;
+  const re = /<!-- Google Analytics 4 -->\s*(?:<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=[^"]+"><\/script>\s*)?<script>[\s\S]*?<\/script>(?:\s*<script defer src="\/_vercel\/insights\/script\.js"><\/script>)?(?:\s*<script defer src="\/_vercel\/speed-insights\/script\.js"><\/script>)?/;
   if (re.test(h)) { const n = h.replace(re, () => G.GA4_HEAD); if (n !== h) fs.writeFileSync(fp, n); }
 }
 /* footer guide list into the hand-maintained pages (see footer-guides.js) */
@@ -4949,6 +4949,52 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
     if (out !== src) { fs.writeFileSync(f, out); touched++; }
   }
   console.log(`  \u2713 Photo viewer script on ${pages.length} page(s)` + (touched ? ` (${touched} updated)` : ''));
+})();
+(function deferCycleFrames() {
+  /* 29 Oct 2026 (site speed handover: homepage 5.2 MB, /sahel/ 4.3 MB on a phone, about 3.3 MB of it card
+     photos). A card's slideshow is a stack of <img> in one spot, so every frame of every card near the screen
+     sat inside the browser's lazy-load distance and was fetched at once. Every frame after the cover now
+     carries data-src/data-srcset instead of src/srcset; assets/sahra-market.js (warm) fetches it when the
+     slideshow is about to need it. The timing of the slideshow itself is unchanged. Idempotent; inline
+     scripts are left alone (frames a script builds keep their src and still work). Also swaps any older
+     pasted copy of the GA4 block for the shared one (ga4.js), on every page. */
+  const G = require('./ga4.js');
+  const GA_RE = /<!-- Google Analytics 4 -->\s*(?:<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=[^"]+"><\/script>\s*)?<script>[\s\S]*?<\/script>(?:\s*<script defer src="\/_vercel\/insights\/script\.js"><\/script>)?(?:\s*<script defer src="\/_vercel\/speed-insights\/script\.js"><\/script>)?/;
+  const pages = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '.vercel', 'assets', 'admin', 'uploads'].includes(e.name)) continue;
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html')) pages.push(p);
+    }
+  })(__dirname);
+  function stacks(seg) {
+    const open = /<(a|span|div|figure)\b[^>]*\sdata-cycle\b[^>]*>/gi; let out = '', last = 0, m;
+    while ((m = open.exec(seg))) {
+      const tag = m[1].toLowerCase(), start = m.index + m[0].length;
+      const tre = new RegExp('<(/?)' + tag + '\\b[^>]*>', 'gi'); tre.lastIndex = start; let depth = 1, end = -1, t;
+      while ((t = tre.exec(seg))) { depth += t[1] ? -1 : 1; if (depth === 0) { end = t.index; break; } }
+      if (end < 0) continue;
+      let n = 0;
+      const inner = seg.slice(start, end).replace(/<img\b[^>]*>/gi, img => {
+        n++;
+        if (n === 1 || /\sdata-src(set)?=/.test(img) || /\sclass="[^"]*\bon\b/.test(img)) return img;
+        return img.replace(/\ssrcset="/, ' data-srcset="').replace(/\ssrc="/, ' data-src="').replace(/\sloading="lazy"/, '');
+      });
+      out += seg.slice(last, start) + inner; last = end; open.lastIndex = end;
+    }
+    return out + seg.slice(last);
+  }
+  let touched = 0, frames = 0;
+  for (const f of pages) {
+    const src = fs.readFileSync(f, 'utf8');
+    let out = src;
+    if (out.indexOf('data-cycle') >= 0) out = out.split(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>)/i).map((seg, i) => i % 2 ? seg : stacks(seg)).join('');
+    if (/<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js/.test(out)) out = out.replace(GA_RE, () => G.GA4_HEAD);
+    if (out !== src) { frames += (out.match(/\sdata-src="/g) || []).length; fs.writeFileSync(f, out); touched++; }
+  }
+  console.log(`  ✓ Card slideshow frames deferred on ${touched} page(s)`);
 })();
 /* 25 Oct 2026 (retention audit): /sahel/, /trail/, /new/ and the pre-order product pages are written
    after the first pass above, so they had no TikTok pixel. A second pass catches every page. */

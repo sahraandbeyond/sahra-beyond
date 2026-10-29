@@ -31,8 +31,13 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F"></script>
 <script>
+  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+    function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
+    if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
+    ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
+    return function(f){if(ran){try{f()}catch(e){}}else q.push(f);};})();
+  sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F';document.head.appendChild(s);});
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
   window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
   (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
@@ -53,8 +58,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=ddbe0c80" defer></script>
-<script src="/assets/tiktok-pixel.js?v=bcd0b568" data-ttq defer></script>
+<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"TouristAttraction","name":"Jebel Yanas","description":"A rugged Ras Al Khaimah summit reached via the Wadi Naqab road — sunset ridge views, an old mountain village and a checkpoint you pass free of charge.","url":"https://www.sahraandbeyond.ae/locations/jabal-yanas/","address":{"@type":"PostalAddress","addressRegion":"Ras Al Khaimah","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":25.7326,"longitude":56.1129},"hasMap":"https://www.google.com/maps/search/?api=1&query=25.7326,56.1129","isAccessibleForFree":true,"image":["https://www.sahraandbeyond.ae/uploads/unsorted-no-geotag_03.webp"]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"Places","item":"https://www.sahraandbeyond.ae/places/"},{"@type":"ListItem","position":3,"name":"Jebel Yanas","item":"https://www.sahraandbeyond.ae/locations/jabal-yanas/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Jebel Yanas in Sharjah or Ras Al Khaimah?","acceptedAnswer":{"@type":"Answer","text":"Ras Al Khaimah. It sits on the same mountain that Wadi Naqab cuts into, and is reached via the Wadi Naqab road."}},{"@type":"Question","name":"Do I need to pay to enter Jebel Yanas?","acceptedAnswer":{"@type":"Answer","text":"No — there's a checkpoint on the way up, but visitors are waved through without a fee or paperwork."}},{"@type":"Question","name":"Do I need a 4x4?","acceptedAnswer":{"@type":"Answer","text":"Strongly recommended. The unpaved summit road is steep and loose in places with real drop-offs; a careful driver may get a sedan up, but it isn't the safe default."}},{"@type":"Question","name":"How difficult is the hike?","acceptedAnswer":{"@type":"Answer","text":"The drive is the hard part. Once you're on the summit ridge, walking is comparatively easy, though sections are exposed to full sun."}},{"@type":"Question","name":"Can I camp at Jebel Yanas?","acceptedAnswer":{"@type":"Answer","text":"Flat ground on the ridge is a well-known sunset camping spot, though there are no facilities — bring everything you need and pack it all out."}},{"@type":"Question","name":"What's at the top?","acceptedAnswer":{"@type":"Answer","text":"Sweeping views over Wadi Naqab and toward the coast, plus the ruins of an old stone-built settlement near the summit."}}]}]</script>
 <style>
@@ -1964,8 +1969,8 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=e69e4c36" defer></script>
-<script src="/assets/sahra-market.js?v=ea3a9c2a" defer></script>
+<script src="/assets/sahra-cart.js?v=54550482" defer></script>
+<script src="/assets/sahra-market.js?v=a13b56be" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
