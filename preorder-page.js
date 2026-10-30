@@ -448,10 +448,13 @@ function cut(p) {
   return 'Unisex';
 }
 const forWomen = p => cut(p) !== 'Men\u2019s cut';
+/* Sahel Oversized paused (30 Oct 2026): a Sahel tee whose Oversized twin is withdrawn is sold as Regular only */
+const ovPaused = p => !!(p && p.handle && require('./specimen.js').PAUSED[p.handle.replace(/-regular$/, '-oversized')]);
+const bothFits = p => ovPaused(p) ? 'Regular fit' : 'Regular or Oversized';
 function newCard(p, fitsLabel) {
   const im = p.images[0];
   const fig = im ? `<span class="nb-f" data-cycle>${cycleImgs(p, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
-  const sub = fitsLabel && p.fit ? `${p.kind} &middot; Regular or Oversized` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
+  const sub = fitsLabel && p.fit ? `${p.kind} &middot; ${bothFits(p)}` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
   const href = `/products/${p.handle}/`;
   if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', true, p.handle)}</small>`
     + inc('st0', `<small class="st0">On sale from Wed 28 Oct</small>`) + `<small class="st12">In stock, ships next working day</small></a>`;
@@ -497,7 +500,7 @@ function pieceBlock(placeId, lead) {
   return stageHead() + PB_CSS + `<section class="spb" id="tee" data-match="sahel" aria-label="${esc(p.name.replace(/&amp;/g, '&'))}">
   ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true" data-cycle>${cardSet(p).map((x, i) => imgTag(x, { alt: '', sizes: '240px', bg: '#1B2A40', cls: i ? '' : 'on' })).join('')}${mockTag(im)}</a>` : ''}
   <div><p class="spb-k">${lead || `The ${noun} drawn from this place`} &middot; Sahel</p><h2>${p.name}</h2><p>${first}</p>
-  <p class="spb-p">${cardPrice(p.price, 'span', false, p.handle)}${isTee ? ' &middot; Regular or Oversized' : ''}</p>
+  <p class="spb-p">${cardPrice(p.price, 'span', false, p.handle)}${isTee ? ' &middot; ' + bothFits(p) : ''}</p>
   <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}${im && im.mock ? 'The image is a studio mock-up.' : 'Photographed from the real piece.'}</p>
   <a class="spb-a" href="/products/${p.handle}/">See the ${noun} &rarr;</a></div>
 </section>`;
@@ -607,7 +610,7 @@ function homeRing() {
     /* a real first photo cycles only with other real photos, so a mock-up never shows unlabelled */
     const imgs = cardSet(p).map((im, i) => imgTag(im, { cls: i ? '' : 'on', sizes: '(max-width:760px) 46vw, 240px' })).join('');
     const place = p.place ? p.place[0] : 'Sahel';
-    const fit = p.fit ? 'Regular or Oversized' : cut(p);
+    const fit = p.fit ? bothFits(p) : cut(p);
     return `<a class="hring-card hring-new" href="/products/${p.handle}/" data-handle="${p.handle}" data-place="${esc(place)}"><span class="hring-img" data-cycle>${imgs}</span>${mockTag(p.images[0], 'hring-mk')}`
       + `<span class="hring-body"><span class="hring-place">Sahel${p.place ? ' &middot; ' + esc(place) : ''}</span><span class="hring-name">${p.name}</span><span class="hring-fit">${fit}</span>`
       + `<span class="hring-price">${cardPrice(p.price, 'span', false, p.handle)}</span><span class="hring-go">` + inc('st1', '<span class="st1">Pre-order &rarr;</span>') + `<span class="st02">View the piece &rarr;</span></span></span></a>`;
@@ -681,7 +684,7 @@ function productLd(p, url, img, desc, stage, SITE) {
     brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' }, color: p.colour || undefined,
     offers: { '@type': 'Offer', price: (inWindow ? pre(p.price) : p.price).toFixed(2), priceCurrency: 'AED', url,
       priceValidUntil: inWindow ? '2026-10-29' : `${new Date(now()).getUTCFullYear() + 1}-12-31`, itemCondition: 'https://schema.org/NewCondition',
-      availability: p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE], hasMerchantReturnPolicy: RETURNS } };
+      availability: require('./specimen.js').PAUSED[p.handle] ? 'https://schema.org/OutOfStock' : p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE], hasMerchantReturnPolicy: RETURNS } };
   if (p.fit) { prod.inProductGroupWithID = p.key;
     prod.isVariantOf = { '@type': 'ProductGroup', productGroupID: p.key, name: p.name.replace(/&amp;/g, '&'), url: `${SITE}/products/${p.key}-regular/`, variesBy: ['https://schema.org/size'] }; }
   const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [

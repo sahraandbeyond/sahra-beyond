@@ -181,6 +181,7 @@
       });
     });
     if (busy) return;
+    if (buy && buy.getAttribute('data-paused') === '1') return;
     if (VS && !VS.some(function (v) { return v.availableForSale; })) { add.disabled = true; add.textContent = 'Sold out'; return; }
     add.disabled = false;
     var v = pick();
@@ -221,6 +222,8 @@
   });
   var waitAdd = false, tries = 0;
   function load() {
+    /* paused piece (30 Oct 2026): not for sale while the fit is adjusted; nothing to load */
+    if (buy && buy.getAttribute('data-paused') === '1') { add.disabled = true; [].forEach.call(buy.querySelectorAll('[data-size]'), function (b) { b.disabled = true; }); return; }
     if (!window.SahraCart || !window.SahraCart.variants) { if (tries++ < 60) { setTimeout(load, 150); return; } say('Sizes are not loading. Refresh the page, or message us on WhatsApp.'); return; }
     var t = setTimeout(function () { if (!live) say('Sizes are taking a while. Refresh the page, or message us on WhatsApp.'); }, 9000);
     window.SahraCart.variants(handle).then(function (vs) {

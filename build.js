@@ -4817,6 +4817,63 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
   console.log(`  ✓ hreflang pairs declared from ${n} English page(s)`);
 })();
 
+/* Sahel Oversized tees withdrawn from sale (30 Oct 2026, Faheem: "Let's stop the sale of all new
+   oversized t shirts immediately"). The stock is being altered back to the original Oversized size.
+   Their Shopify products are Draft; specimen.js PAUSED gives their own pages a plain "back soon" state.
+   Here: product cards that link to them elsewhere are removed when the page already shows the Regular
+   card of the same design, otherwise pointed at the Regular fit; ItemList structured data drops them.
+   To undo: empty specimen.js PAUSED. Generated pages come back by themselves; index.html is a hand-edited
+   source this step rewrote in place, so also point its two lookbook cards (Khor Fakkan Bay, Al Aqah Reef)
+   back to the -oversized handles and re-add the four Oversized rows to its ItemList. Runs before the Arabic
+   mirror so /ar/ follows. */
+(function pauseSahelOversizedCards() {
+  const PAUSED = Object.keys(require('./specimen.js').PAUSED);
+  if (!PAUSED.length) return;
+  const own = new Set(PAUSED.map(h => path.join('products', h, 'index.html')));
+  const files = [];
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (e.name.startsWith('.') || e.name === 'node_modules' || (d === '.' && e.name === 'ar')) continue;
+      const f = path.join(d, e.name);
+      if (e.isDirectory()) walk(f); else if (e.name === 'index.html' && !own.has(path.normalize(f))) files.push(f);
+    }
+  })('.');
+  const rx = new RegExp('<a class="(po-card|nb-c|lb-c)" href="/products/(' + PAUSED.join('|') + ')/">[\\s\\S]*?</a>', 'g');
+  let removed = 0, moved = 0, lists = 0, pages = 0;
+  for (const f of files) {
+    let html = fs.readFileSync(f, 'utf8');
+    if (!PAUSED.some(h => html.includes('/products/' + h + '/'))) continue;
+    const before = html;
+    html = html.replace(rx, (card, cls, h) => {
+      const reg = h.replace(/-oversized$/, '-regular');
+      if (html.includes('class="' + cls + '" href="/products/' + reg + '/"') || /t-shirts[\\/]oversized/.test(f)) { removed++; return ''; }
+      moved++;
+      return card.split(h).join(reg).replace(/Oversized fit/g, 'Regular fit').replace(/&mdash; Oversized/g, '&mdash; Regular');
+    });
+    /* the Sahel block on the Oversized category page is left with no cards: say why instead */
+    html = html.replace(/<div class="nb-g"><\/div>/g, '<p class="nb-l nb-paused">Our Sahel Oversized tees are being adjusted back to our original Oversized size and will be back soon. <a href="/sahel/">The Sahel Regular fit is available now</a>.</p>');
+    html = html.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g, (tag, body) => {
+      if (!PAUSED.some(h => body.includes('/products/' + h + '/'))) return tag;
+      let j; try { j = JSON.parse(body); } catch (e) { return tag; }
+      let hit = false;
+      (function fix(o) {
+        if (!o || typeof o !== 'object') return;
+        if (Array.isArray(o)) return o.forEach(fix);
+        if (o['@type'] === 'ItemList' && Array.isArray(o.itemListElement)) {
+          const keep = o.itemListElement.filter(it => !PAUSED.some(h => JSON.stringify(it).includes('/products/' + h + '/')));
+          if (keep.length !== o.itemListElement.length) { hit = true; keep.forEach((it, i) => { if (it.position != null) it.position = i + 1; }); o.itemListElement = keep; if (o.numberOfItems != null) o.numberOfItems = keep.length; }
+        }
+        Object.values(o).forEach(fix);
+      })(j);
+      if (!hit) return tag;
+      lists++;
+      return '<script type="application/ld+json">' + JSON.stringify(j) + '</script>';
+    });
+    if (html !== before) { fs.writeFileSync(f, html); pages++; }
+  }
+  console.log(`  ✓ Sahel Oversized paused: ${removed} card(s) removed, ${moved} pointed at Regular, ${lists} ItemList(s) trimmed, on ${pages} page(s)`);
+})();
+
 /* Arabic mirror of every other indexable page (30 Oct 2026, Faheem: "create Arabic pages for all
    our site ... make them live"). See ar-mirror.js. Runs before the site-wide walkers below so the
    Arabic pages get the same bar, nav, pixels, asset hashes, WebP and legibility layer. */

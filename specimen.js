@@ -229,12 +229,18 @@ function fitSwitch(s, cls) {
   const copy = FIT_COPY[s.line] || FIT_COPY.sahel;
   return `<div class="${cls}" role="group" aria-label="Fit">${['Regular', 'Oversized'].map(f => `<a href="${s.fits[f]}" class="${s.fit === f ? 'on' : ''}"${s.fit === f ? ' aria-current="page"' : ''}><b>${f}</b>${cls === 'ss-fits' ? `<span>${copy[f]}</span>` : ''}</a>`).join('')}</div>`;
 }
+/* 30 Oct 2026 (Faheem: "Let's stop the sale of all new oversized t shirts immediately"). The Sahel
+   Oversized tees ran a size large; the stock is being altered back to the original (Founding Edition)
+   Oversized measurements. Their Shopify products are set to Draft, so nothing can be bought; the page
+   says so plainly and points to the Regular fit. Remove a handle from this list to sell it again. */
+const PAUSED = { 'khor-fakkan-bay-tee-oversized': 1, 'al-aqah-reef-tee-oversized': 1, 'al-hamra-pearl-diver-tee-oversized': 1, 'shams-tee-oversized': 1 };
 function sheet(s) {
   const btn = z => `<button type="button" data-size="${z}" aria-pressed="false">${z}</button>`;
   const group = (g, label, show) => `<div class="ssb-sz" role="group" aria-label="${label}" data-group="${g}">${show ? `<span class="ssb-gl">${show}</span>` : ''}${['S', 'M', 'L', 'XL'].map(btn).join('')}</div>`;
   const sizes = s.oneSize ? `<span class="ssb-one">One size</span>` : s.kit ? `<div class="ssb-kit">${group('tee', 'Tee size', 'Tee')}${group('short', 'Short size', 'Short')}</div>` : group('size', 'Size');
-  return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}">
-      <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd">Add to bag</button></div>
+  return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}>
+      <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd"${PAUSED[s.handle] ? ' disabled' : ''}>${PAUSED[s.handle] ? 'Back soon' : 'Add to bag'}</button></div>${PAUSED[s.handle] ? `
+      <p class="ssb-paused">We are adjusting this Oversized fit back to our original Oversized size. It will be back soon.${s.fits && s.fits.Regular ? ` <a href="${s.fits.Regular}">The Regular fit is available now</a>` : ''}</p>` : ''}
       <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with Tabby</span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
       <p class="ssb-msg" id="ssMsg" role="status" aria-live="polite"></p>
     </div>`;
@@ -244,7 +250,7 @@ function top(s, o = {}) {
   const altBase = s.name.replace(/&amp;/g, '&') + (s.colour ? ` in ${s.colour}` : '');
   const eyebrow = `<p class="ss-eb"><span>${LINES[s.line]}</span>${s.place ? ` · <a href="${s.place[2]}">Drawn from ${esc(s.place[0])}${s.place[1] ? ', ' + esc(s.place[1]) : ''}</a>` : ''}</p>`;
   const kind = [s.kind, s.colour ? `Colour: ${esc(s.colour)}` : '', s.cut].filter(Boolean).join(' · ');
-  const status = `<p class="ss-stat"><span class="sb-ship-uae">In stock. Order by 2 pm for next-working-day delivery in the UAE.</span><span class="sb-ship-gcc">In stock. GCC delivery in 3–5 working days.</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7–14 working days.</span></p>`;
+  const status = PAUSED[s.handle] ? `<p class="ss-stat">Not available to order while we adjust this fit. Back soon.</p>` : `<p class="ss-stat"><span class="sb-ship-uae">In stock. Order by 2 pm for next-working-day delivery in the UAE.</span><span class="sb-ship-gcc">In stock. GCC delivery in 3–5 working days.</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7–14 working days.</span></p>`;
   return `<section class="ss ss-${s.line}" data-ss style="--ss-top:${s.line === 'founding' ? 151 : 135}px">
   <div class="ss-media">
     ${o.crumb || ''}
@@ -296,4 +302,4 @@ function preload(s) {
   return `<link rel="preload" as="image" href="${v.src}" imagesrcset="${v.srcset}" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high">`;
 }
 
-module.exports = { fromFounding, fromPreorder, top, sheet, nextPiece, preload, HEAD, SCRIPT, NOTES, LINES, money };
+module.exports = { PAUSED, fromFounding, fromPreorder, top, sheet, nextPiece, preload, HEAD, SCRIPT, NOTES, LINES, money };
