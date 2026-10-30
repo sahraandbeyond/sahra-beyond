@@ -103,12 +103,12 @@
     var m = l.merchandise, off = lineSaving(l);
     if (!off) return '<span>' + money(m.price.amount, m.price.currencyCode) + '</span>';
     /* the pre-order 20%: the price paid, named, with no struck-through list price (Faheem, 22 Oct 2026) */
-    if (isPre(l)) return '<span class="sb-lp"><b>' + money(parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1), l.cost.totalAmount.currencyCode) + '</b> <small>pre-order price</small></span>';
+    if (isPre(l)) return '<span class="sb-lp"><b>' + money(parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1), l.cost.totalAmount.currencyCode) + '</b> <small>' + T('prePrice') + '</small></span>';
     var unit = parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1);
     /* 25 Oct 2026 (retention audit): the pair price, named like the pre-order price, with no struck-through
        list price (brand rule: no strike-through prices) */
     var pair = (l.discountAllocations || []).some(function (a) { return /2 tees|359|pair/i.test(a.title || ''); });
-    return '<span class="sb-lp"><b>' + money(unit, l.cost.totalAmount.currencyCode) + '</b> <small>' + (pair ? 'pair price' : 'after discount') + '</small></span>';
+    return '<span class="sb-lp"><b>' + money(unit, l.cost.totalAmount.currencyCode) + '</b> <small>' + (pair ? T('pairPrice') : T('afterDiscount')) + '</small></span>';
   }
   /* the six tees, for the second-tee card (handles, names and card images are stable) */
   var TEES = [
@@ -165,6 +165,8 @@
     return !!h && TEES.some(function (t) { return t.h === h; });
   }
   function money(a, c) {
+    /* Arabic pages: "199 درهم", through the market layer's own formatter (30 Oct 2026) */
+    try { if (AR && window.SahraMarket && window.SahraMarket.fmt) return window.SahraMarket.fmt(a, c || 'AED'); } catch (e) {}
     var n = parseFloat(a || 0);
     var cur = c || 'AED';
     var d = DECIMALS[cur] != null ? DECIMALS[cur] : 2;
@@ -220,7 +222,18 @@
   /* opts.gift === false: this item does not earn the free tote (it IS a tote).
      Only affects the empty-cart path, which has to decide before a cart exists;
      syncGift() is still the authority on every cart that already has lines. */
-  function add(variantId, qty, opts) { return addRaw(variantId, qty, opts).then(afterMutation); }
+  /* 30 Oct 2026 (Fold and Drop): an add from a page folds the photo it came from (opts.from, or the photo
+     nearest the tap) into the bag icon while Shopify answers, then the peek rises. An add made inside the open
+     bag (Undo, the second tee) just redraws it; opts.open === false adds silently (Buy now). */
+  function add(variantId, qty, opts) {
+    opts = opts || {};
+    var foldP = null;
+    if (opts.open !== false && !isOpen()) { try { foldP = fold(opts.from || guessSrc() || mainImg(), opts.at || (lastTap && lastTap.closest && lastTap.closest('button,a'))); } catch (e) { foldP = null; } }
+    return addRaw(variantId, qty, opts).then(afterMutation).then(function (c) {
+      if (opts._peek) (foldP || Promise.resolve()).then(function () { showPeek(variantId); });
+      return c;
+    });
+  }
   function setQty(lineId, qty) {
     var r = setQtyRaw(lineId, qty);
     return (r && r.then) ? r.then(afterMutation) : r;
@@ -327,24 +340,134 @@
     });
   }
 
+  /* ==========================================================================
+     THE BAG (30 Oct 2026, Faheem approved the Fold and Drop bag from the design-review
+     prototype). A bottom sheet on phones and a drawer on desktop, in English or Arabic
+     (document lang "ar": every label from STR.ar, prices through sahra-market.js fmt,
+     the layout mirrored for RTL). In it: back-art thumbnails, the size changed in place,
+     Remove with Undo, quantity, a fit note on Sahel tee lines, the free tote (no
+     strike-through), the pair price stated plainly when it applies (never "save"), the
+     total, delivery, returns, a gift row (message, hide prices on the packing slip; no
+     postcard) and ONE Checkout button that never scrolls away. The cross-sell is one
+     compact row. An add from a page folds the product photo into the bag icon and a
+     short peek sheet rises with the item, the total and Checkout.
+     DOM contract kept for cart-test.js: #sbBody (lines, .sb-qn, .sb-gift last),
+     #sbFoot (hidden when empty), #sbSub (total), #sbFree (delivery), #sbGo.
+     ========================================================================== */
+  var AR = (function () { try { var d = document.documentElement; return !!(d && d.getAttribute && /^ar/i.test(d.getAttribute('lang') || '')); } catch (e) { return false; } })();
+  /* "go on" arrows point the way the page reads (RTL QA S6) */
+  var ARR = AR ? '&larr;' : '&rarr;';
+  var STR = {
+    en: {
+      bag: 'Bag', yourBag: 'Your bag', close: 'Close bag', empty: 'Your bag is empty.', emptySub: 'Every piece is drawn from a real place in the UAE.', shop: 'Shop all pieces',
+      piece1: '1 piece', pieces: '{n} pieces', size: 'Size {s}', changeSize: 'Change size, now {s}', loadingSizes: 'Loading sizes…', soldOut: 'sold out',
+      teeShort: 'Tee {a} · Short {b}', oneSize: 'One size', remove: 'Remove', removeA: 'Remove {t}', removed: 'Removed {t}', undo: 'Undo',
+      dec: 'One fewer', inc: 'One more', qty: 'Quantity', capped: 'No more in this size',
+      tote: 'The Sahra Tote', yoursFree: 'yours free', toteSub: 'Free with every order', free: 'Free',
+      pairPrice: 'pair price', afterDiscount: 'price applied', prePrice: 'pre-order price',
+      applied: 'Pair price applied: any two Founding Edition tees for AED 359', appliedX: 'Pair price applied: the two-tee price',
+      sahelFit: 'Sahel runs larger than the Founding Edition.', sahelChart: 'Sahel size chart', trailFit: 'No size chart yet.', trailAsk: 'Message us about your size',
+      total: 'Total', delivery: 'Delivery', returns: 'Returns', tabby: 'Tabby',
+      dUae: 'Free, next working day', dGcc: 'AED 50, free over AED 390', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
+      away: 'AED {n} away from free delivery', unlocked: 'Free delivery unlocked',
+      rUae: 'Free for 14 days', rX: 'Within 14 days', rX14: '14-day returns', dUaeLine: 'Free delivery, next working day \u00b7 free 14-day returns', appliedN: 'Pair price applied to all {n} Founding Edition tees', tabbyRow: '4 payments of {p}, no interest',
+      checkout: 'Checkout', payUae: 'Apple Pay, Google Pay, Shop Pay, card or Tabby at checkout', payX: 'Apple Pay, Google Pay, Shop Pay or card at checkout',
+      gift: 'This is a gift', giftMsg: 'Gift message (optional)', giftPh: 'Happy birthday, from all of us', giftHide: 'Hide prices on the packing slip', giftNote: 'We’ll include your message with the order.',
+      added: 'Added to your bag', viewBag: 'View bag', closePeek: 'Close',
+      second: 'Add a second: the pair is AED 359', secondIn: '{n} in {s}, {f}', addBtn: 'Add', adding: 'Adding…', other: 'Other sizes', regular: 'regular', oversized: 'oversized',
+      bagT: 'Add the Trailhead Bag, AED 50', bagSub: 'Canvas drawstring bag, one size', sahelMore: 'Six more Sahel designs: tees, hoodies and a polo.', seeAll: 'See them all', secondX: 'Add a second tee for the two-tee price, applied automatically.', shopTees: 'Shop tees',
+      errUpdate: 'We could not update your bag. ', errAdd: 'We could not add that to your bag. Please try again, or message us on WhatsApp.', errSwap: 'We could not change the size. Your bag is unchanged.',
+      expired: 'Your previous bag expired, so we started a new one. Please check the items below.', capMsg: 'That is as many of {t} as we can take in {s} for now, so it stays at {q}.',
+      errCur: 'We could not switch your bag’s currency. Your bag is unchanged. Please try again.'
+    },
+    ar: {
+      bag: 'السلة', yourBag: 'سلّتك', close: 'إغلاق السلة', empty: 'سلّتك فارغة.', emptySub: 'كل قطعة مستوحاة من مكان حقيقي في الإمارات.', shop: 'تسوّق كل القطع',
+      piece1: 'قطعة واحدة', piece2: 'قطعتان', pieces: '{n} قطع', piecesMany: '{n} قطعة',
+      size: 'المقاس {s}', changeSize: 'تغيير المقاس، الآن {s}', loadingSizes: 'جارٍ تحميل المقاسات…', soldOut: 'نفد',
+      teeShort: 'التيشيرت {a} · الشورت {b}', oneSize: 'مقاس واحد', remove: 'إزالة', removeA: 'إزالة {t}', removed: 'أُزيل: {t}', undo: 'تراجع',
+      dec: 'إنقاص الكمية', inc: 'زيادة الكمية', qty: 'الكمية', capped: 'لا مزيد بهذا المقاس',
+      tote: 'حقيبة صحراء القماشية', yoursFree: 'هدية مجانية', toteSub: 'مجانًا مع كل طلب', free: 'مجانًا',
+      pairPrice: 'سعر القطعتين', afterDiscount: 'السعر المطبّق', prePrice: 'سعر الطلب المسبق',
+      applied: 'طُبّق سعر القطعتين: أي تيشيرتين من الإصدار التأسيسي مقابل 359 درهمًا', appliedX: 'طُبّق سعر القطعتين',
+      sahelFit: 'مقاسات ساحل أوسع من الإصدار التأسيسي.', sahelChart: 'جدول مقاسات ساحل', trailFit: 'لا يوجد جدول مقاسات بعد.', trailAsk: 'راسلنا بشأن مقاسك',
+      total: 'المجموع', delivery: 'التوصيل', returns: 'الإرجاع', tabby: 'تابي',
+      dUae: 'مجاني، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 390 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
+      away: 'يبقى {n} درهمًا للتوصيل المجاني', unlocked: 'التوصيل مجاني لهذا الطلب',
+      rUae: 'مجانًا خلال 14 يومًا', rX: 'خلال 14 يومًا', rX14: 'إرجاع خلال 14 يومًا', dUaeLine: 'توصيل مجاني في يوم العمل التالي · إرجاع مجاني خلال 14 يومًا', appliedN: 'طُبّق سعر القطعتين على التيشيرتات {n} من الإصدار التأسيسي', tabbyRow: '4 دفعات بدون فوائد، كل دفعة {p}',
+      checkout: 'إتمام الشراء', payUae: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay، البطاقة أو تابي', payX: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay أو البطاقة',
+      gift: 'هذا الطلب هدية', giftMsg: 'رسالة الهدية (اختياري)', giftPh: 'كل عام وأنتم بخير', giftHide: 'إخفاء الأسعار في قسيمة التغليف', giftNote: 'سنرفق رسالتك مع الطلب.',
+      added: 'أُضيفت إلى سلّتك', viewBag: 'عرض السلة', closePeek: 'إغلاق',
+      second: 'أضف تيشيرتًا ثانيًا: القطعتان بـ 359 درهمًا', secondIn: '{n}، المقاس {s}، {f}', addBtn: 'أضف', adding: 'جارٍ الإضافة…', other: 'مقاسات أخرى', regular: 'ريجولر', oversized: 'أوفرسايز',
+      bagT: 'أضف حقيبة ترايلهيد، 50 درهمًا', bagSub: 'حقيبة قماشية برباط، مقاس واحد', sahelMore: 'ستة تصاميم أخرى من ساحل: تيشيرتات وهودي وبولو.', seeAll: 'شاهدها كلها', secondX: 'أضف تيشيرتًا ثانيًا بسعر القطعتين، يُطبّق تلقائيًا.', shopTees: 'تسوّق التيشيرتات',
+      errUpdate: 'تعذّر تحديث سلّتك. ', errAdd: 'تعذّرت الإضافة إلى سلّتك. حاول مرة أخرى أو راسلنا على واتساب.', errSwap: 'تعذّر تغيير المقاس. سلّتك كما هي.',
+      expired: 'انتهت صلاحية سلّتك السابقة، فبدأنا سلة جديدة. تحقق من القطع أدناه.', capMsg: 'هذا أقصى ما يمكننا توفيره من {t} بمقاس {s} حاليًا، فتبقى الكمية {q}.',
+      errCur: 'تعذّر تغيير عملة سلّتك. سلّتك كما هي، حاول مرة أخرى.'
+    }
+  };
+  /* QA S4 (30 Oct 2026): Arabic names for the bag, the peek and the cross-sell, reusing the names already on the site
+     (content/products-ar for the Founding Edition; the Sahel and Trail names from the coordinator, for an Emirati reader to check) */
+  var AR_NAME = { 'al-quaa-galaxy-regular': 'مجرّة القوع — ريجولر', 'al-quaa-galaxy-oversized': 'مجرّة القوع — أوفرسايز', 'empty-quarter-regular': 'الربع الخالي — ريجولر', 'empty-quarter-oversized': 'الربع الخالي — أوفرسايز',
+    'hajar-mountains-regular': 'جبال الحجر — ريجولر', 'hajar-mountains-oversized': 'جبال الحجر — أوفرسايز', 'sand-polo': 'بولو صحراء',
+    'khor-fakkan-bay-tee': 'تيشيرت خليج خورفكان', 'al-aqah-reef-tee': 'تيشيرت شعاب العقة', 'al-hamra-pearl-diver-tee': 'تيشيرت غوّاص اللؤلؤ في الحمرا', 'shams-tee': 'تيشيرت شمس',
+    'barr-and-bahr-hoodie': 'هودي برّ وبحر', 'ras-al-khor-hoodie': 'هودي رأس الخور', 'the-sahel-polo': 'بولو ساحل', 'sahra-trail-tee': 'تيشيرت صحراء تريل',
+    'sahra-trail-2-in-1-short': 'شورت صحراء تريل 2 في 1', 'sahra-trail-kit': 'طقم صحراء تريل', 'trailhead-bag': 'حقيبة ترايلهيد', 'sahra-tote': 'حقيبة صحراء القماشية' };
+  /* the name a shopper reads: Arabic on Arabic pages, else Shopify's title; short drops the fit */
+  function nameOf(h, title, short) {
+    h = h || '';
+    if (AR) {
+      if (AR_NAME[h]) return short ? AR_NAME[h].replace(/ — .*$/, '') : AR_NAME[h];
+      var m = /^(.*)-(regular|oversized)$/.exec(h);
+      if (m && AR_NAME[m[1]]) return AR_NAME[m[1]] + (short ? '' : ' — ' + (m[2] === 'regular' ? 'ريجولر' : 'أوفرسايز'));
+    }
+    var t = String(title || '');
+    return short ? t.replace(/\s+[\u2014-]\s+(Regular|Oversized)$/, '') : t;
+  }
+  function T(k, a) {
+    var s = (AR && STR.ar[k] != null) ? STR.ar[k] : (STR.en[k] != null ? STR.en[k] : k);
+    if (a) for (var x in a) s = s.split('{' + x + '}').join(a[x]);
+    return s;
+  }
+  function piecesT(n) {
+    if (!AR) return n === 1 ? T('piece1') : T('pieces', { n: n });
+    return n === 1 ? T('piece1') : n === 2 ? T('piece2') : (n <= 10 ? T('pieces', { n: n }) : T('piecesMany', { n: n }));
+  }
+  /* back-art thumbnails: the art side of each piece, the same photo that opens its page */
+  var THUMB = { 'al-quaa-galaxy-regular': '/shirts/card/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/card/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/card/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/card/emptyquarter-model-stand.webp',
+    'hajar-mountains-regular': '/shirts/card/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/card/hajar-model-back.webp', 'sand-polo': '/shirts/card/polo-dune-front.webp',
+    'barr-and-bahr-hoodie': 'ph-barr-01-back', 'ras-al-khor-hoodie': 'ph-rakh-01-back', 'the-sahel-polo': 'polo-front', 'trailhead-bag': 'trail-bag-front' };
+  var MOCKS = { 'the-sahel-polo': 1, 'sahra-trail-tee': 1, 'sahra-trail-2-in-1-short': 1, 'sahra-trail-kit': 1 };
+  function thumbOf(h, m) {
+    var t = THUMB[h] || PRE[h];
+    if (t) return t.charAt(0) === '/' ? t : '/assets/preorder/' + t + '-480.webp';
+    var real = (window.SB_IMGS && SB_IMGS[h] && SB_IMGS[h][0]) || CART_REAL[h];
+    if (real) return real.replace('/shirts/', '/shirts/card/').replace(/\.(jpe?g|png)$/i, '.webp');
+    return (m && m.product && m.product.featuredImage) ? m.product.featuredImage.url : '';
+  }
+  var SAHEL_TEE = /^(khor-fakkan-bay-tee|al-hamra-pearl-diver-tee|al-aqah-reef-tee|shams-tee)-/;
+  function $(id) { return document.getElementById(id); }
+  function reducedMotion() { try { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; } }
+  function raf(fn) { return (window.requestAnimationFrame || function (f) { return setTimeout(f, 16); })(fn); }
+  function isOpen() { var d = $('sbDrawer'); return !!(d && d.classList && d.classList.contains('on')); }
+  function market() { try { return (window.SahraMarket && window.SahraMarket.market) ? window.SahraMarket.market() : (document.documentElement && document.documentElement.getAttribute ? (document.documentElement.getAttribute('data-market') || 'uae') : 'uae'); } catch (e) { return 'uae'; } }
+
   function ensureUI() {
-    if (document.getElementById('sbDrawer')) return;
+    if ($('sbDrawer')) return;
 
     /* ADOPT an existing cart button rather than adding a second one.
        /shop/ ships its own #cartBtn in the nav. This module also ran there and
        appended #sbCartBtn, so that page carried TWO cart buttons and TWO
        drawers over one storage key — add via one, open the other, and the cart
        looks empty while the badge shows items. Adopt, never duplicate. */
-    var existing = document.getElementById('cartBtn');
+    var existing = $('cartBtn');
     if (existing && !existing.dataset.sbBound) {
       existing.dataset.sbBound = '1';
       existing.addEventListener('click', function (e) { e.preventDefault(); open(); });
-    } else if (!existing && !document.getElementById('sbCartBtn')) {
+    } else if (!existing && !$('sbCartBtn')) {
       var hdr = document.querySelector('.hdr') || document.querySelector('nav');
       if (hdr) {
         var b = document.createElement('button');
         b.id = 'sbCartBtn'; b.className = 'sb-cart-btn'; b.type = 'button';
-        b.setAttribute('aria-label', 'Open cart');
+        b.setAttribute('aria-label', AR ? T('bag') : 'Open cart');
         b.innerHTML = '<svg class="sb-cart-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.5-1.2L20.5 8H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>' +
           '<span class="sb-cart-count" id="sbCartCount" aria-live="polite" style="display:none">0</span>';
         hdr.appendChild(b);
@@ -355,52 +478,68 @@
     var wrap = document.createElement('div');
     wrap.innerHTML =
       '<div class="sb-ov" id="sbOv"></div>' +
-      '<aside class="sb-drawer" id="sbDrawer" role="dialog" aria-modal="true" aria-label="Cart" aria-hidden="true" inert>' +
-        '<div class="sb-dh"><h3>Your cart</h3><button class="sb-x" id="sbX" aria-label="Close cart">&#10005;</button></div>' +
-        '<div class="sb-db" id="sbBody"><p class="sb-empty">Your cart is empty.</p></div>' +
-        '<div class="sb-df" id="sbFoot" hidden>' +
-          '<div class="sb-sub"><span>Subtotal</span><span id="sbSub">AED 0</span></div>' +
-          '<div class="sb-tabby sb-tabby-cart" id="sbTabbyCart" data-tabby-source="cart" hidden></div>' +
-          '<p class="sb-note"><span class="sb-note-d sb-ship-uae"><span data-sb-clock>Free next-day UAE delivery — order by 2 pm</span>, no minimum. </span>Not sure of your size? <a href="/size-guide/" style="color:inherit;text-decoration:underline">Check the chart</a><span data-sz-or> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">message us</a></span>.</p>' +   /* 23 Oct 2026: the chart covers the Founding Edition; Sahel and Trail are not measured yet */
-          /* 25 Sep 2026 (Faheem, persona review): a gift option. The message travels on the
-             Shopify order as its note, with a Gift attribute, so it shows on the order in Admin. */
-          '<div class="sb-giftopt"><label class="sb-giftl"><input type="checkbox" id="sbGiftChk"> This is a gift</label>' +
-            '<div class="sb-giftbox" id="sbGiftBox" hidden><label class="sb-giftml" for="sbGiftMsg">Gift message (optional)</label>' +
-            '<textarea id="sbGiftMsg" rows="3" maxlength="250" placeholder="Happy birthday, from all of us"></textarea>' +
-            '<p class="sb-gifth">We&rsquo;ll include your message with the order.</p></div></div>' +
-          '<a class="sb-go" id="sbGo" href="#">Checkout</a>' +
-          /* 23 Sep 2026: the store's gateway lists Shop Pay, Apple Pay and Google Pay (Admin API paymentSettings) */
-          '<p class="sb-pay">Express checkout with Shop Pay, Apple Pay or Google Pay</p>' +
+      '<aside class="sb-drawer" id="sbDrawer" role="dialog" aria-modal="true" aria-label="' + T('yourBag') + '" aria-hidden="true" inert' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' +
+        '<div class="sb-grab" id="sbGrab" aria-hidden="true"><i></i></div>' +
+        '<div class="sb-dh" id="sbHead"><h3>' + T('yourBag') + ' <small id="sbCountT"></small></h3><button class="sb-x" id="sbX" type="button" aria-label="' + T('close') + '">&#10005;</button></div>' +
+        '<div class="sb-db" id="sbScroll">' +
+          '<div class="sb-lines" id="sbBody"><p class="sb-empty">' + T('empty') + '</p></div>' +
+          '<p class="sb-applied" id="sbApplied" hidden></p>' +
+          '<div class="sb-bundle" id="sbBundle" hidden></div>' +
+          /* the gift row: the message travels on the Shopify order as its note, with Gift (and Hide prices) attributes */
+          '<div class="sb-giftopt" id="sbGiftRow" hidden><label class="sb-giftl"><input type="checkbox" id="sbGiftChk"> <span>' + T('gift') + '</span></label>' +
+            '<div class="sb-giftbox" id="sbGiftBox" hidden><label class="sb-giftml" for="sbGiftMsg">' + T('giftMsg') + '</label>' +
+            '<textarea id="sbGiftMsg" rows="2" maxlength="250" placeholder="' + T('giftPh') + '"></textarea>' +
+            '<label class="sb-gifthide"><input type="checkbox" id="sbGiftHide"> <span>' + T('giftHide') + '</span></label>' +
+            '<p class="sb-gifth">' + T('giftNote') + '</p></div></div>' +
         '</div>' +
-      '</aside>';
+        '<div class="sb-undo" id="sbUndo" role="status" aria-live="polite" hidden><span id="sbUndoT"></span><button type="button" id="sbUndoB">' + T('undo') + '</button></div>' +
+        '<div class="sb-df" id="sbFoot" hidden>' +
+          '<div class="sb-sum">' +
+            '<div class="sb-row sb-tot"><span>' + T('total') + '</span><b id="sbSub">AED 0</b></div>' +
+            '<div class="sb-free" id="sbFree"></div>' +
+          '</div>' +
+          '<a class="sb-go" id="sbGo" href="#">' + T('checkout') + '</a>' +
+          '<p class="sb-pay"><span class="sb-pay-uae">' + T('payUae') + '</span><span class="sb-pay-x">' + T('payX') + '</span></p>' +
+        '</div>' +
+      '</aside>' +
+      /* the peek: rises after an add from a page; a tap opens the whole bag */
+      '<div class="sb-peek" id="sbPeek" role="region" aria-label="' + T('added') + '" hidden' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' +
+        '<button type="button" class="sb-pk-main" id="sbPkOpen"><span class="sb-pk-i"><img id="sbPkImg" alt="" width="48" height="60"></span>' +
+          '<span class="sb-pk-t"><small>\u2713 ' + T('added') + '</small><b id="sbPkName" dir="auto"></b><span id="sbPkMeta"></span></span>' +
+          '<span class="sb-pk-view">' + T('viewBag') + '</span></button>' +
+        '<button type="button" class="sb-pk-x" id="sbPkX" aria-label="' + T('closePeek') + '">&#10005;</button>' +
+        '<div class="sb-pk-f"><span class="sb-pk-tot"><small>' + T('total') + '</small><b id="sbPkTot"></b></span><a class="sb-pk-go" id="sbPkGo" href="#">' + T('checkout') + '</a></div>' +
+      '</div>';
     while (wrap.firstChild) document.body.appendChild(wrap.firstChild);
     try { tickClocks(); } catch (e) {}
 
-    document.getElementById('sbX').addEventListener('click', close);
-    document.getElementById('sbOv').addEventListener('click', close);
+    $('sbX').addEventListener('click', close);
+    $('sbOv').addEventListener('click', close);
     addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { close(); return; }
+      if (e.key === 'Escape') { hidePeek(); close(); return; }
       if (e.key !== 'Tab') return;
-      var d = document.getElementById('sbDrawer');
+      var d = $('sbDrawer');
       if (!d || !d.classList.contains('on')) return;
       /* Real focus trap. aria-modal="true" was already on the element, which
          tells a screen reader the rest of the page is inert - it was not, so
          Tab landed the user on invisible content behind the overlay. */
-      var f = d.querySelectorAll('a[href],button:not([disabled]),input,[tabindex]:not([tabindex="-1"])');
+      var f = d.querySelectorAll('a[href],button:not([disabled]),input,textarea,[tabindex]:not([tabindex="-1"])');
       if (!f.length) return;
       var first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
 
-    /* One delegated listener on the drawer body. The old code re-bound a
-       listener per button on every draw, which leaked handlers each redraw. */
-    document.getElementById('sbBody').addEventListener('click', function (e) {
+    /* One delegated listener on the lines. The old code re-bound a listener per
+       button on every draw, which leaked handlers each redraw. */
+    $('sbBody').addEventListener('click', function (e) {
       var el = e.target.closest && e.target.closest('[data-act]');
       if (!el) return;
       var line = el.getAttribute('data-line');
       var act = el.getAttribute('data-act');
-      if (act === 'rm') { pending[line] = 0; setQty(line, 0); return; }
+      if (act === 'rm') { remember(line); pending[line] = 0; setQty(line, 0); return; }
+      if (act === 'size') { editLine = editLine === line ? null : line; if (editLine) loadSizes(line); draw(); return; }
+      if (act === 'swap') { if (el.disabled || el.getAttribute('aria-pressed') === 'true') { editLine = null; draw(); return; } editLine = null; swap(line, el.getAttribute('data-vid')); return; }
       /* Read from `pending`, not from the DOM. data-qty is only refreshed when
          draw() re-renders after a mutation resolves, so three quick taps on +
          all read the same stale 1 and each asked the server for 2 — the
@@ -408,12 +547,39 @@
       var base = (pending[line] != null) ? pending[line] : +el.getAttribute('data-qty');
       var next = act === 'inc' ? base + 1 : base - 1;
       if (next < 0) next = 0;
+      if (next === 0) remember(line);
       pending[line] = next;
       setQty(line, next);
     });
+    $('sbUndoB').addEventListener('click', undo);
+    /* the peek */
+    $('sbPkOpen').addEventListener('click', function () { hidePeek(); open(); });
+    $('sbPkX').addEventListener('click', hidePeek);
+    $('sbPkGo').addEventListener('click', function (e) {
+      if (!CART || !CART.checkoutUrl) return;
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault(); metaInit(); goCheckout(CART.checkoutUrl);   /* goCheckout sends begin_checkout once (QA S1) */
+    });
+    var pk = $('sbPeek');
+    pk.addEventListener('mouseenter', function () { clearTimeout(peekT); });
+    pk.addEventListener('focusin', function () { clearTimeout(peekT); });
+    pk.addEventListener('mouseleave', function () { clearTimeout(peekT); peekT = setTimeout(hidePeek, 3000); });
+    /* drag the sheet down to close it (phones) */
+    (function () {
+      var d = $('sbDrawer'), y0 = null, dy = 0;
+      [$('sbGrab'), $('sbHead')].forEach(function (h) {
+        if (!h) return;
+        h.addEventListener('pointerdown', function (e) { if (e.target.closest && e.target.closest('button')) return; if (!(window.matchMedia && matchMedia('(max-width:700px)').matches)) return; y0 = e.clientY; dy = 0; d.classList.add('drag'); try { h.setPointerCapture(e.pointerId); } catch (x) {} });
+        h.addEventListener('pointermove', function (e) { if (y0 == null) return; dy = Math.max(0, e.clientY - y0); d.style.transform = 'translateY(' + dy + 'px)'; });
+        var up = function () { if (y0 == null) return; y0 = null; d.classList.remove('drag'); d.style.transform = ''; if (dy > 90) close(); };
+        h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
+      });
+    })();
+    /* the photo that folds into the bag: whatever the visitor tapped near */
+    document.addEventListener('pointerdown', function (e) { lastTap = e.target; }, true);
   }
 
-  var lastFocus = null;
+  var lastFocus = null, lastTap = null, editLine = null, sizeCache = {}, undoT = null, undoInfo = null, peekT = null;
   /* 29 Oct 2026 (site speed): the tap on Checkout goes checkout.sahraandbeyond.ae -> shop.app (Shop Pay's
      check) -> back, and the checkout page pulls fonts and photos from cdn.shopify.com. The drawer opening
      is the moment a checkout becomes likely, so the connections to the other two are opened then. */
@@ -426,42 +592,47 @@
   function open() {
     ensureUI();
     warmCheckout();
+    hidePeek();
     lastFocus = document.activeElement;
-    document.getElementById('sbDrawer').classList.add('on');
-    document.getElementById('sbOv').classList.add('on');
-    document.getElementById('sbDrawer').setAttribute('aria-hidden', 'false');
-    try { document.getElementById('sbDrawer').inert = false; } catch (e) {}
+    /* opened from the peek (which then hides) or from nowhere: focus returns to the bag button (QA nice 8) */
+    if (!lastFocus || lastFocus === document.body || (lastFocus.closest && lastFocus.closest('#sbPeek'))) lastFocus = $('sbCartBtn') || $('cartBtn') || document.querySelector('.sb-cart-btn');
+    var d = $('sbDrawer');
+    d.classList.add('on');
+    $('sbOv').classList.add('on');
+    d.setAttribute('aria-hidden', 'false');
+    try { d.inert = false; } catch (e) {}
     document.body.style.overflow = 'hidden';
-    var mainEl = document.querySelector('main'); if (mainEl) mainEl.setAttribute('aria-hidden','true');
+    var mainEl = document.querySelector('main'); if (mainEl) mainEl.setAttribute('aria-hidden', 'true');
     /* Bug 1: the drawer must be painted from current state every time it is
        opened, not only after an add. */
     draw();
-    var x = document.getElementById('sbX'); if (x) x.focus();
+    var x = $('sbX'); if (x) try { x.focus({ preventScroll: true }); } catch (e) { x.focus(); }
   }
   function close() {
-    var d = document.getElementById('sbDrawer');
+    var d = $('sbDrawer');
     if (!d) return;
     d.classList.remove('on');
     d.setAttribute('aria-hidden', 'true');
     try { d.inert = true; } catch (e) {}   /* 18 Oct 2026: the closed drawer was still reachable by keyboard off-screen */
-    document.getElementById('sbOv').classList.remove('on');
+    $('sbOv').classList.remove('on');
     document.body.style.overflow = '';
     var mEl = document.querySelector('main'); if (mEl) mEl.removeAttribute('aria-hidden');
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    editLine = null;
+    if (lastFocus && lastFocus.focus) try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
   }
 
   /* Update EVERY count element on the page. A page may carry its own #cartCount
      (as /shop/ does) as well as ours; if only one is updated the other keeps a
      stale number, which is precisely the phantom badge customers reported. */
   function badge(n) {
-    var els = [document.getElementById('sbCartCount'), document.getElementById('cartCount')];
+    var els = [$('sbCartCount'), $('cartCount')];
     els.forEach(function (c) {
       if (!c) return;
       c.textContent = n || 0;
       c.style.display = n ? 'flex' : 'none';
     });
-    [document.getElementById('sbCartBtn'), document.getElementById('cartBtn')].forEach(function (btn) {
-      if (btn) btn.setAttribute('aria-label', n ? 'Open cart, ' + n + ' item' + (n === 1 ? '' : 's') : 'Open cart');
+    [$('sbCartBtn'), $('cartBtn')].forEach(function (btn) {
+      if (btn) btn.setAttribute('aria-label', AR ? T('bag') + (n ? ', ' + piecesT(n) : '') : (n ? 'Open cart, ' + n + ' item' + (n === 1 ? '' : 's') : 'Open cart'));
     });    /* the floating phone cart button listens for this (24 Sep 2026) */
     try { document.dispatchEvent(new CustomEvent('sb:cartcount', { detail: n || 0 })); } catch (e) {}
   }
@@ -471,9 +642,188 @@
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  /* ---- Fold and Drop ------------------------------------------------------
+     The product photo folds like a shop-folded tee (its lower half turns up behind
+     it), then drops along a short arc into the bag icon, which bumps. Transform and
+     opacity only, about 500 ms; prefers-reduced-motion skips straight to the bump. */
+  function dropTarget() {
+    var list = ['#sbFcart.on', '#sbCartBtn', '#cartBtn', '.sb-cart-btn'];
+    for (var i = 0; i < list.length; i++) {
+      var el = document.querySelector(list[i]); if (!el || !el.getBoundingClientRect) continue;
+      if (el.closest && el.closest('.sb-hide')) continue;
+      var r = el.getBoundingClientRect();
+      if (r.width > 0 && r.top >= 0 && r.bottom <= innerHeight && getComputedStyle(el).visibility !== 'hidden') return el;
+    }
+    return null;
+  }
+  function bump() {
+    try {
+      [dropTarget(), $('sbCartCount'), $('cartCount')].forEach(function (el) {
+        if (el && el.animate && !reducedMotion()) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.22)' }, { transform: 'scale(1)' }], { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+      });
+    } catch (e) {}
+  }
+  /* the page's main product photo, used when nothing near the tap is on screen (S10) */
+  function mainImg() {
+    try { return document.querySelector('[data-fold-src], .ss-v.on img, .arp-main img.on, .arp-main img, .gal-main img.on'); } catch (e) { return null; }
+  }
+  function guessSrc() {
+    try {
+      var el = lastTap;
+      for (var k = 0; el && k < 8; k++, el = el.parentElement) {
+        if (!el.querySelectorAll) continue;
+        var best = null, area = 0;
+        [].forEach.call(el.querySelectorAll('img'), function (im) {
+          var r = im.getBoundingClientRect(); if (r.width < 60 || r.bottom < 0 || r.top > innerHeight) return;
+          if (getComputedStyle(im).opacity === '0') return;
+          if (r.width * r.height > area) { area = r.width * r.height; best = im; }
+        });
+        if (best) return best;
+      }
+    } catch (e) {}
+    return null;
+  }
+  /* from: the photo; at: the control tapped. When the photo is off-screen (scrolled to the story, or the Arabic
+     page's buy box under the photo), a small copy of it folds from the button instead (QA S10). */
+  function fold(img, at) {
+    return new Promise(function (res) {
+      try {
+        if (!img || !img.getBoundingClientRect || reducedMotion() || !document.body.animate) { bump(); res(); return; }
+        var r = img.getBoundingClientRect();
+        if (r.width < 40 || r.bottom < 0 || r.top > innerHeight) {
+          var ar = at && at.getBoundingClientRect ? at.getBoundingClientRect() : null;
+          if (!ar || ar.bottom < 0 || ar.top > innerHeight) { bump(); res(); return; }
+          var ww = 104, hh = 130, acx = ar.left + ar.width / 2, acy = Math.max(hh / 2 + 8, ar.top - hh / 2 - 8);
+          r = { left: acx - ww / 2, top: acy - hh / 2, right: acx + ww / 2, bottom: acy + hh / 2, width: ww, height: hh };
+        }
+        var t = dropTarget(), rtl = AR || getComputedStyle(document.documentElement).direction === 'rtl';
+        var tr = t ? t.getBoundingClientRect() : { left: rtl ? 16 : innerWidth - 40, top: 18, width: 24, height: 24 };
+        var vt = Math.max(r.top, 0), vb = Math.min(r.bottom, innerHeight);
+        var w = Math.min(r.width, 200), h = Math.round(w * 1.25), cx = r.left + r.width / 2, cy = (vt + vb) / 2;
+        var left = cx - w / 2, top = cy - h / 2;
+        var cs = getComputedStyle(img), nw = img.naturalWidth || 4, nh = img.naturalHeight || 5;
+        var contain = cs.objectFit === 'contain', s = contain ? Math.min(w / nw, h / nh) : Math.max(w / nw, h / nh);
+        var bw = nw * s, bh = nh * s, pos = String(cs.objectPosition || '50% 50%').split(' ');
+        var px = parseFloat(pos[0]) / 100, py = parseFloat(pos[1] || pos[0]) / 100; if (isNaN(px)) px = .5; if (isNaN(py)) py = .5;
+        var bx = (w - bw) * px, by = (h - bh) * py, src = img.currentSrc || img.src, bg = '#E9E1D3';
+        var fx = document.createElement('div'); fx.className = 'sb-fold'; fx.setAttribute('aria-hidden', 'true');
+        fx.style.left = left + 'px'; fx.style.top = top + 'px'; fx.style.width = w + 'px'; fx.style.height = h + 'px';
+        fx.innerHTML = '<div class="sb-fold-y"><div class="sb-fold-p"><div class="sb-fold-top"></div><div class="sb-fold-bot"><i class="sb-f1"></i><i class="sb-f2"></i></div></div></div>';
+        var paint = function (el, oy) { el.style.backgroundImage = 'url("' + src + '")'; el.style.backgroundSize = bw + 'px ' + bh + 'px'; el.style.backgroundPosition = bx + 'px ' + (by - oy) + 'px'; el.style.backgroundColor = bg; };
+        paint(fx.querySelector('.sb-fold-top'), 0); paint(fx.querySelector('.sb-f1'), h / 2); paint(fx.querySelector('.sb-f2'), h / 2);
+        document.body.appendChild(fx);
+        var dx = (tr.left + tr.width / 2) - (left + w / 2), dy = (tr.top + tr.height / 2) - (top + h / 4);
+        try { img.animate([{ opacity: 1 }, { opacity: .45, offset: .2 }, { opacity: .45, offset: .7 }, { opacity: 1 }], { duration: 760, easing: 'ease-out' }); } catch (e) {}
+        fx.querySelector('.sb-fold-bot').animate([{ transform: 'rotateX(0deg)' }, { transform: 'rotateX(178deg)' }], { duration: 220, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+        fx.querySelector('.sb-fold-p').animate([{ transform: 'scale(1,1)' }, { transform: 'scale(.66,1)' }], { duration: 230, easing: 'ease-out', fill: 'forwards' });
+        var done = false; function end() { if (done) return; done = true; try { fx.remove(); } catch (e) {} bump(); res(); }
+        setTimeout(function () {
+          try {
+            fx.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(' + dx + 'px)' }], { duration: 300, easing: 'cubic-bezier(.45,0,.55,1)', fill: 'forwards' });
+            fx.querySelector('.sb-fold-y').animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(' + Math.min(-30, dy * .2 - 40) + 'px) scale(.45)', offset: .4 }, { transform: 'translateY(' + dy + 'px) scale(.08)' }], { duration: 300, easing: 'cubic-bezier(.4,0,.8,.6)', fill: 'forwards' });
+            var fade = fx.animate([{ opacity: 1 }, { opacity: 1, offset: .75 }, { opacity: 0 }], { duration: 310, fill: 'forwards' });
+            fade.onfinish = end;
+          } catch (e) { end(); }
+        }, 200);
+        setTimeout(end, 900);
+      } catch (e) { bump(); res(); }
+    });
+  }
+
+  /* ---- the peek ---------------------------------------------------------- */
+  function lineFor(vid) { var hit = null; cartNodes().forEach(function (n) { if (!hit && n.merchandise && n.merchandise.id === vid) hit = n; }); return hit; }
+  function sizeText(m) {
+    var hh = m.product && m.product.handle, t = m.title || '';
+    if (hh === 'sahra-trail-kit' && / \/ /.test(t)) return T('teeShort', { a: esc(t.split(' / ')[0]), b: esc(t.split(' / ')[1]) });
+    if (t === 'Default Title') return T('oneSize');
+    return T('size', { s: '<span dir="ltr">' + esc(t) + '</span>' });
+  }
+  function showPeek(vid) {
+    try {
+      ensureUI();
+      var pk = $('sbPeek'); if (!pk || !CART || isOpen()) return;
+      var l = lineFor(vid); if (!l) return;
+      var m = l.merchandise, h = m.product && m.product.handle;
+      var im = $('sbPkImg'), src = thumbOf(h, m); if (im) { if (src) im.setAttribute('src', src); else im.removeAttribute('src'); }
+      $('sbPkName').textContent = nameOf(h, (m.product && m.product.title) || '');
+      var pki = pk.querySelector('.sb-pk-i'), mt = pki && pki.querySelector('i');
+      if (pki) { if (MOCKS[h] && !mt) { mt = document.createElement('i'); mt.textContent = 'Mock-up'; pki.appendChild(mt); } else if (!MOCKS[h] && mt) mt.parentNode.removeChild(mt); }
+      $('sbPkMeta').innerHTML = sizeText(m);
+      $('sbPkTot').textContent = money(CART.cost.subtotalAmount.amount, CART.cost.subtotalAmount.currencyCode);
+      $('sbPkGo').href = coUrl(CART.checkoutUrl);
+      pk.hidden = false; pk.classList.remove('on');
+      raf(function () { raf(function () { pk.classList.add('on'); }); });
+      warmCheckout();
+      clearTimeout(peekT); peekT = setTimeout(hidePeek, 6000);
+    } catch (e) {}
+  }
+  function hidePeek() {
+    clearTimeout(peekT);
+    var pk = $('sbPeek'); if (!pk || pk.hidden) return;
+    pk.classList.remove('on');
+    setTimeout(function () { if (!pk.classList.contains('on')) pk.hidden = true; }, reducedMotion() ? 0 : 320);
+  }
+
+  /* ---- Remove with Undo: the line goes at once; Undo puts the same variant back ---- */
+  function remember(lineId) {
+    var l = null; cartNodes().forEach(function (n) { if (n.id === lineId) l = n; });
+    if (!l || isGift(l)) return;
+    var lh = l.merchandise.product && l.merchandise.product.handle;
+    undoInfo = { vid: l.merchandise.id, qty: l.quantity || 1, title: nameOf(lh, (l.merchandise.product && l.merchandise.product.title) || '', true) };
+    var u = $('sbUndo'), t = $('sbUndoT'); if (!u || !t) return;
+    t.textContent = T('removed', { t: undoInfo.title }); u.hidden = false;
+    clearTimeout(undoT); undoT = setTimeout(function () { u.hidden = true; undoInfo = null; }, 5000);
+  }
+  function undo() {
+    var u = $('sbUndo'); if (u) u.hidden = true; clearTimeout(undoT);
+    var x = undoInfo; undoInfo = null; if (!x) return;
+    add(x.vid, x.qty, { open: false }).catch(function () {});
+  }
+
+  /* ---- size changed in place ---------------------------------------------- */
+  function handleOf(lineId) { var h = ''; cartNodes().forEach(function (n) { if (n.id === lineId) h = n.merchandise && n.merchandise.product && n.merchandise.product.handle || ''; }); return h; }
+  function loadSizes(lineId) {
+    var h = handleOf(lineId); if (!h || sizeCache[h]) return;
+    sizeCache[h] = 'loading';
+    variants(h).then(function (vs) { sizeCache[h] = vs || []; draw(); }, function () { delete sizeCache[h]; draw(); });
+  }
+  function swap(lineId, vid) {
+    if (!CART || !lineId || !vid) return Promise.resolve(null);
+    return queue(function () {
+      lastError = null;
+      var line = null; cartNodes().forEach(function (n) { if (n.id === lineId) line = n; });
+      if (!line) return CART;
+      var q = line.quantity || 1;
+      return sf('mutation($id:ID!,$l:[CartLineUpdateInput!]!){cartLinesUpdate(cartId:$id,lines:$l){cart{' + CFRAG + '}userErrors{message}}}', { id: CART.id, l: [{ id: lineId, merchandiseId: vid, quantity: q }] })
+        .then(function (d) {
+          var r = d && d.cartLinesUpdate;
+          if (r && r.cart && !(r.userErrors && r.userErrors.length)) return r.cart;
+          /* fallback: add the new size, then take the old line out */
+          return sf('mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{' + CFRAG + '}userErrors{message}}}', { id: CART.id, l: [{ merchandiseId: vid, quantity: q }] })
+            .then(function (d2) {
+              var r2 = d2 && d2.cartLinesAdd; if (!r2 || !r2.cart || (r2.userErrors && r2.userErrors.length)) throw new Error((r2 && r2.userErrors && r2.userErrors[0] && r2.userErrors[0].message) || 'swap');
+              return sf('mutation($id:ID!,$l:[ID!]!){cartLinesRemove(cartId:$id,lineIds:$l){cart{' + CFRAG + '}userErrors{message}}}', { id: CART.id, l: [lineId] })
+                .then(function (d3) { var r3 = d3 && d3.cartLinesRemove; return (r3 && r3.cart) || r2.cart; });
+            });
+        })
+        .then(function (c) { CART = c; draw(); try { if (window.track) track('bag_size_change', { item_id: handleOf(lineId) }); } catch (e) {} return CART; })
+        .catch(function () { lastError = T('errSwap'); draw(); return CART; });
+    }).then(afterMutation);
+  }
+
+  function metaCheckout() { beginCheckout(); metaInit(); }   /* 25 Oct 2026 (retention audit): GA4 begin_checkout */
+  function metaInit() {
+    try {
+      if (!window.sbMeta || !CART || !CART.cost) return;
+      var nodes = (CART.lines && CART.lines.edges || []).map(function (e) { return e.node; });
+      window.sbMeta('InitiateCheckout', { value: Number(CART.cost.subtotalAmount.amount) || 0, currency: CART.cost.subtotalAmount.currencyCode || 'AED',
+        num_items: CART.totalQuantity || nodes.length, content_type: 'product', content_ids: nodes.map(function (l) { return (l && l.merchandise && l.merchandise.id) || ''; }).filter(Boolean) });
+    } catch (e) {}
+  }
+
   function draw() {
     ensureUI();
-    var body = document.getElementById('sbBody'), foot = document.getElementById('sbFoot');
+    var body = $('sbBody'), foot = $('sbFoot');
     if (!body || !foot) return;
 
     var lines = (CART && CART.lines && CART.lines.edges)
@@ -492,160 +842,175 @@
        Shopify also refuses it (the UAE rate needs TOTAL_PRICE >= 1), but the
        UI must not offer what the server will reject. */
     var realLines = lines.filter(function (l) { return !isGift(l); });
+    var gifts = lines.filter(isGift);
+    var cnt = $('sbCountT'), gr = $('sbGiftRow'), bu = $('sbBundle');
     if (!realLines.length) {
-      body.innerHTML = err + '<p class="sb-empty">Your cart is empty.</p>';
+      body.innerHTML = err + '<div class="sb-empty"><p>' + T('empty') + '</p><small>' + T('emptySub') + '</small><a href="' + (AR ? '/ar/shop/' : '/shop/') + '">' + T('shop') + '</a></div>';
       foot.hidden = true;
+      if (cnt) cnt.textContent = '';
+      if (gr) gr.hidden = true;
+      if (bu) { bu.hidden = true; bu.innerHTML = ''; }
       return;
     }
+    if (cnt) cnt.textContent = piecesT(realQty());
 
-    body.innerHTML = err + lines.map(function (l) {
-      var m = l.merchandise;
-      /* 13 Oct 2026: Shopify's product images are studio renders; the bag shows the real photograph */
-      var hh = m.product && m.product.handle, real = (window.SB_IMGS && SB_IMGS[hh] && SB_IMGS[hh][0]) || CART_REAL[hh] || (PRE[hh] ? '/assets/preorder/' + PRE[hh] + '-720.webp' : '');
-      var img = real ? real.replace('/shirts/', '/shirts/card/') : ((m.product && m.product.featuredImage) ? m.product.featuredImage.url : '');
+    /* the tote is listed last, whatever order Shopify returns */
+    body.innerHTML = err + realLines.concat(gifts).map(function (l) {
+      var m = l.merchandise, hh = m.product && m.product.handle, img = thumbOf(hh, m);
       var q = l.quantity;
       /* The gift has no product page (headless-only), so no link; and no
          quantity or remove controls - it is not the customer's to manage. */
       if (isGift(l)) {
-        /* The value has to be visible where it lands, not only on the offer
-           card: the same tote is listed at AED 50, so the line shows that price
-           struck through beside FREE (Faheem, 19 Sep). money() formats but does
-           NOT convert, so the struck figure is rendered as a .sb-price node
-           carrying the handle — sahra-market.js rewrites those into the
-           visitor's currency, and its MutationObserver catches this drawer
-           because it is drawn long after that module boots. */
         return '<div class="sb-line sb-gift">' +
-          (img ? '<img src="' + esc(img) + '" alt="" width="60" height="75" loading="lazy">'
-               : '<span class="sb-noimg"></span>') +
+          '<span class="sb-th"><img src="/shirts/tote-band.webp" alt="" width="64" height="64" loading="lazy"></span>' +
           '<div class="sb-lt">' +
-            '<span class="sb-gift-t">The Sahra Tote &mdash; yours free</span>' +
-            '<span class="sb-gift-p">' +
-              '<b>Free</b> <small>with every order</small>' +   /* 25 Oct 2026: no struck-through AED 50 (brand rule) */
-            '</span>' +
+            '<span class="sb-gift-t">' + T('tote') + ' &mdash; ' + T('yoursFree') + '</span>' +
+            '<span class="sb-gift-p"><small>' + T('toteSub') + '</small></span>' +   /* 25 Oct 2026: no struck-through AED 50 (brand rule) */
           '</div>' +
         '</div>';
       }
-      return '<div class="sb-line">' +
-        (img ? '<img src="' + esc(img) + '" alt="" width="60" height="75" loading="lazy">'
-             : '<span class="sb-noimg"></span>') +
+      var title = nameOf(hh, (m.product && m.product.title) || ''), href = (AR && /^(al-quaa|empty-quarter|hajar|sand-polo)/.test(hh) ? '/ar' : '') + '/products/' + esc(hh) + '/';
+      var kit = hh === 'sahra-trail-kit' && / \/ /.test(m.title), one = m.title === 'Default Title';
+      var editing = editLine === l.id && !kit && !one;
+      var sizeCtl = (kit || one) ? '<span class="sb-sz0">' + sizeText(m) + '</span>'
+        : '<button type="button" class="sb-szb" data-act="size" data-line="' + esc(l.id) + '" aria-expanded="' + editing + '" aria-label="' + esc(T('changeSize', { s: m.title })) + '">' + sizeText(m) + ' <i aria-hidden="true">&#9662;</i></button>';
+      var chips = '';
+      if (editing) {
+        var vs = sizeCache[hh];
+        chips = '<div class="sb-chips" role="group" aria-label="' + esc(T('changeSize', { s: m.title })) + '">' + (vs === 'loading' || !vs ? '<span class="sb-ld">' + T('loadingSizes') + '</span>'
+          : vs.map(function (v) { var on = v.id === m.id, ok = v.availableForSale;
+              return '<button type="button" data-act="swap" data-line="' + esc(l.id) + '" data-vid="' + esc(v.id) + '" aria-pressed="' + on + '"' + (ok || on ? '' : ' disabled aria-label="' + esc(v.title + ', ' + T('soldOut')) + '"') + ' dir="ltr">' + esc(v.title) + '</button>'; }).join('')) + '</div>';
+      }
+      var note = SAHEL_TEE.test(hh || '') ? '<span class="sb-fitn">' + T('sahelFit') + ' <a href="/size-guide/#sahel">' + T('sahelChart') + '</a></span>'
+        : /^sahra-trail-(tee|2-in-1-short|kit)$/.test(hh || '') ? '<span class="sb-fitn">' + T('trailFit') + ' <a href="https://wa.me/971585449946" target="_blank" rel="noopener">' + T('trailAsk') + '</a></span>' : '';
+      var qa = m.quantityAvailable, capped = (typeof qa === 'number') && q >= qa;
+      return '<div class="sb-line" data-lid="' + esc(l.id) + '">' +
+        '<a class="sb-th" href="' + href + '" tabindex="-1" aria-hidden="true">' + (img ? '<img src="' + esc(img) + '" alt="" width="64" height="80" loading="lazy">' : '<span class="sb-noimg"></span>') + (MOCKS[hh] ? '<i>Mock-up</i>' : '') + '</a>' +
         '<div class="sb-lt">' +
-          '<a href="/products/' + esc(m.product.handle) + '/">' + esc(m.product.title) + '</a>' +
-          (hh === 'sahra-trail-kit' && / \/ /.test(m.title) ? '<span>Tee ' + esc(m.title.split(' / ')[0]) + ', Short ' + esc(m.title.split(' / ')[1]) + '</span>' : (m.title === 'Default Title' ? '' : '<span>Size ' + esc(m.title) + '</span>')) +
+          '<a class="sb-nm" dir="auto" href="' + href + '">' + esc(title) + '</a>' +
+          '<div class="sb-meta">' + sizeCtl + '</div>' + chips +
           (isPre(l) && !PRE_IN_HAND ? '<span class="sb-pre">Pre-order. Ships from Fri 30 Oct.</span>' : '') +
-          linePrice(l) +
-          /* Bug 2 + 3: quantity is visible AND adjustable */
-          '<span class="sb-qty">' +
-            '<button type="button" class="sb-q" data-act="dec" data-line="' + esc(l.id) + '" data-qty="' + q + '" aria-label="Decrease quantity">&minus;</button>' +
-            '<span class="sb-qn" aria-label="Quantity">' + q + '</span>' +
-            (function () { var qa = l.merchandise && l.merchandise.quantityAvailable; var capped = (typeof qa === 'number') && q >= qa;
-              if (isPre(l)) return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" aria-label="Increase quantity (no more available in this size)"' : ' aria-label="Increase quantity"') + '>+</button>';
-              return '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" title="No more in this size" aria-label="Increase quantity (no more in this size)"' : ' aria-label="Increase quantity"') + '>+</button>' +
-                (capped ? '<span class="sb-cap">No more in this size</span>' : ''); })() +
-          '</span>' +
-          /* 23 Oct 2026 (Faheem: no scarcity wording anywhere): the "Only N left" line is gone */
+          note +
+          '<div class="sb-lr">' +
+            /* Bug 2 + 3: quantity is visible AND adjustable */
+            '<span class="sb-qty">' +
+              '<button type="button" class="sb-q" data-act="dec" data-line="' + esc(l.id) + '" data-qty="' + q + '" aria-label="' + T('dec') + '">&minus;</button>' +
+              '<span class="sb-qn" aria-label="' + T('qty') + '">' + q + '</span>' +
+              '<button type="button" class="sb-q" data-act="inc" data-line="' + esc(l.id) + '" data-qty="' + q + '"' + (capped ? ' disabled aria-disabled="true" aria-label="' + T('inc') + ' (' + T('capped') + ')"' : ' aria-label="' + T('inc') + '"') + '>+</button>' +
+            '</span>' +
+            '<button type="button" class="sb-rm" data-act="rm" data-line="' + esc(l.id) + '" aria-label="' + esc(T('removeA', { t: title })) + '">' + T('remove') + '</button>' +
+            linePrice(l) +
+          '</div>' +
+          /* 23 Oct 2026 (Faheem: no scarcity wording anywhere): no "Only N left" line, no count */
         '</div>' +
-        '<button class="sb-rm" data-act="rm" data-line="' + esc(l.id) + '" aria-label="Remove ' + esc(m.product.title) + '">&#10005;</button>' +
       '</div>';
     }).join('');
 
-    document.getElementById('sbSub').textContent =
-      money(CART.cost.subtotalAmount.amount, CART.cost.subtotalAmount.currencyCode);
-    /* 15 Oct 2026: Tabby under the subtotal, on the real total after the pair price and any code shown in the bag */
-    (function () { var tb = document.getElementById('sbTabbyCart'); if (!tb || !window.SB_TABBY) return;
-      if (CART.cost.subtotalAmount.currencyCode === 'AED') window.SB_TABBY.set(tb, parseFloat(CART.cost.subtotalAmount.amount) || 0); else tb.hidden = true; })();
-    document.getElementById('sbGo').href = CART.checkoutUrl;
+    var cur = CART.cost.subtotalAmount.currencyCode, amt = parseFloat(CART.cost.subtotalAmount.amount) || 0;
+    $('sbSub').textContent = money(CART.cost.subtotalAmount.amount, cur);
+    $('sbGo').href = coUrl(CART.checkoutUrl);
+    var mkt = market();
+
+    /* the pair price, stated plainly; the one-tap second tee and the line cross-sells, as one compact row */
     (function () {
-      var el = document.getElementById('sbBundle');
-      if (!el) {
-        el = document.createElement('p');
-        el.id = 'sbBundle'; el.className = 'sb-bundle';
-        var sub = document.querySelector('#sbFoot .sb-sub');
-        if (sub && sub.parentNode) sub.parentNode.insertBefore(el, sub);
-      }
-      /* only the bundle's own allocations count as the bundle saving - any other
-         automatic discount is not credited to it (review, 23 Sep) */
-      var saved = 0, tees = 0, cur = CART.cost.subtotalAmount.currencyCode;
-      var deal = cur === 'AED' ? 'any two Founding Edition tees for AED 359' : 'the two-tee price';
+      var ap = $('sbApplied'), el = bu;
+      /* only the bundle's own allocations count - any other automatic discount is not credited to it (review, 23 Sep) */
+      var saved = 0, tees = 0;
       realLines.forEach(function (l) {
-        (l.discountAllocations || []).forEach(function (a) {
-          if (/2 tees|359/i.test(a.title || '')) saved += parseFloat((a.discountedAmount || {}).amount) || 0;
-        });
+        (l.discountAllocations || []).forEach(function (a) { if (/2 tees|359/i.test(a.title || '')) saved += parseFloat((a.discountedAmount || {}).amount) || 0; });
         if (isTee(l)) tees += l.quantity;
       });
-      if (saved > 0.004) {
-        el.hidden = false; el.className = 'sb-bundle';
-        el.innerHTML = '\u2713 Pair price applied: ' + deal + '.';   /* 30 Oct 2026 (Faheem): no "you save" wording */
-      } else if (tees === 1) {
-        /* 4 Oct 2026 (CRO panel, idea 14): one tap adds a second design in the same size.
-           The pair price is Shopify's own automatic discount (AED 19.50 off each of the
-           six tees at two or more); the bag names the pair price, never a saving (30 Oct 2026). */
+      if (ap) { ap.hidden = !(saved > 0.004); ap.innerHTML = saved > 0.004 ? '✓ ' + (tees >= 3 ? T('appliedN', { n: tees }) : cur === 'AED' ? T('applied') : T('appliedX')) : ''; }   /* 30 Oct 2026 (Faheem): no "you save" wording */
+      if (!el) return;
+      var show = function (h) { el.hidden = false; el.innerHTML = h; }, hide = function () { el.hidden = true; el.innerHTML = ''; el.className = 'sb-bundle'; };
+      if (saved > 0.004) { hide(); return; }
+      if (tees === 1) {
+        /* 4 Oct 2026 (CRO panel, idea 14): one tap adds a second design in the same size. The pair price is
+           Shopify's own automatic discount on the six Founding Edition tees at two or more. */
         var have = realLines.filter(isTee)[0], hm = have && have.merchandise, hh = hm && hm.product && hm.product.handle || '';
         var fit = /oversized/.test(hh) ? 'oversized' : 'regular', size = hm && hm.title || '';
-        var pick = TEES.filter(function (t) { return t.h !== hh && t.fit === fit; })[0] || TEES.filter(function (t) { return t.h !== hh; })[0];
-        el.hidden = false;
+        var pick = TEES.filter(function (t) { return t.h !== hh && t.fit === fit && t.name !== (TEES.filter(function (x) { return x.h === hh; })[0] || {}).name; })[0] || TEES.filter(function (t) { return t.h !== hh; })[0];
         if (pick && cur === 'AED') {
           el.className = 'sb-bundle sb-second';
-          el.innerHTML = '<img src="' + pick.img + '" alt="" width="44" height="55" loading="lazy"><span class="sb-second-t"><b>Add a second: the pair is AED 359</b><br>' + esc(pick.name) + (size ? ' in ' + esc(size) : '') + ', ' + fit + '</span>' +
-            '<button type="button" class="sb-second-add" data-handle="' + pick.h + '" data-size="' + esc(size) + '">Add</button>';
-        } else {
-          el.className = 'sb-bundle';
-          el.innerHTML = 'Add a second tee \u2014 <b>' + deal + '</b>, applied automatically. <a href="/t-shirts/">Shop tees &rarr;</a>';
-        }
-      } else {
-        /* 27 Oct 2026 (Faheem: "Cross-sell between lines"): a Sahra Trail cart without the bag is offered the
-           Trailhead Bag (one size, one tap); a cart with a single Sahel piece is shown the rest of Sahel. */
-        var hs = realLines.map(function (l) { return (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; });
-        var trailIn = hs.some(function (h) { return /^sahra-trail-/.test(h); }), bagIn = hs.indexOf('trailhead-bag') >= 0;
-        var sahelN = 0; realLines.forEach(function (l) { var h = (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; if (/^(khor-fakkan-bay|al-hamra-pearl-diver|al-aqah-reef|shams-tee|the-sahel-polo|barr-and-bahr|ras-al-khor)/.test(h)) sahelN += l.quantity; });
-        if (trailIn && !bagIn && cur === 'AED') {
-          el.hidden = false; el.className = 'sb-bundle sb-second';
-          el.innerHTML = '<img src="/assets/preorder/trail-bag-front-720.webp" alt="" width="44" height="55" loading="lazy"><span class="sb-second-t"><b>Add the Trailhead Bag, AED 50</b><br>Canvas drawstring bag for the trailhead, one size</span>' +
-            '<button type="button" class="sb-second-add" data-handle="trailhead-bag" data-size="">Add</button>';
-        } else if (sahelN === 1) {
-          el.hidden = false; el.className = 'sb-bundle';
-          el.innerHTML = 'Six more Sahel designs: tees, hoodies and a polo. <a href="/sahel/#pieces">See them all &rarr;</a>';
-        } else { el.hidden = true; el.innerHTML = ''; el.className = 'sb-bundle'; }
+          show('<img src="' + pick.img + '" alt="" width="40" height="50" loading="lazy"><span class="sb-second-t"><b>' + T('second') + '</b><br>' + T('secondIn', { n: esc(nameOf(pick.h, pick.name, true)), s: '<span dir="ltr">' + esc(size) + '</span>', f: T(fit) }) + '</span>' +
+            '<button type="button" class="sb-second-add" data-handle="' + pick.h + '" data-size="' + esc(size) + '">' + T('addBtn') + '</button>');
+        } else { el.className = 'sb-bundle'; show(T('secondX') + ' <a href="/t-shirts/">' + T('shopTees') + ' ' + ARR + '</a>'); }
+        return;
       }
+      /* 27 Oct 2026 (Faheem: "Cross-sell between lines"): a Sahra Trail bag without the Trailhead Bag is offered
+         it (one size, one tap); a bag with a single Sahel piece is shown the rest of Sahel. */
+      var hs = realLines.map(function (l) { return (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; });
+      var trailIn = hs.some(function (h) { return /^sahra-trail-/.test(h); }), bagIn = hs.indexOf('trailhead-bag') >= 0;
+      var sahelN = 0; realLines.forEach(function (l) { var h = (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; if (/^(khor-fakkan-bay|al-hamra-pearl-diver|al-aqah-reef|shams-tee|the-sahel-polo|barr-and-bahr|ras-al-khor)/.test(h)) sahelN += l.quantity; });
+      if (trailIn && !bagIn && cur === 'AED') {
+        el.className = 'sb-bundle sb-second';
+        show('<img src="/assets/preorder/trail-bag-front-480.webp" alt="" width="40" height="50" loading="lazy"><span class="sb-second-t"><b>' + T('bagT') + '</b><br>' + T('bagSub') + '</span>' +
+          '<button type="button" class="sb-second-add" data-handle="trailhead-bag" data-size="">' + T('addBtn') + '</button>');
+      } else if (sahelN === 1) { el.className = 'sb-bundle'; show(T('sahelMore') + ' <a href="/sahel/#pieces">' + T('seeAll') + ' ' + ARR + '</a>'); }
+      else hide();
+    })();
+
+    /* Delivery and returns, by market. Honest maths only: the one remaining threshold (GCC AED 390) is in AED,
+       so it is only counted down on a bag priced in AED. UAE delivery is free with no minimum (1 Sep 2026). */
+    (function () {
+      var el = $('sbFree'); if (!el) return;
+      var x = '';
+      if (mkt === 'gcc') {
+        if (cur !== 'AED') x = T('dGccX');
+        else if (amt >= 390) x = T('dGccFree') + ' \u00b7 ' + T('unlocked');
+        else { var left = 390 - amt, lt = left % 1 === 0 ? left.toFixed(0) : left.toFixed(2);
+          x = T('dGcc') + '<span class="sb-free-t">' + T('away', { n: lt }) + '</span><span class="sb-free-bar"><span style="width:' + Math.max(6, Math.round(amt / 390 * 100)) + '%"></span></span>'; }
+        el.className = 'sb-free sb-x-mkt';
+        el.innerHTML = T('delivery') + ': ' + x.replace(/(<span class="sb-free-t">)/, ' \u00b7 ' + T('rX14') + '$1') + (x.indexOf('sb-free-t') < 0 ? ' \u00b7 ' + T('rX14') : '');
+      } else if (mkt === 'intl') { el.className = 'sb-free sb-x-mkt'; el.innerHTML = T('delivery') + ': ' + T('dIntl') + ' \u00b7 ' + T('rX14'); }
+      else {
+        /* 22 Oct 2026: a bag holding pre-order pieces does not promise next-day delivery for them */
+        var anyPre = !PRE_IN_HAND && cartNodes().some(isPre);
+        el.className = 'sb-free';
+        el.innerHTML = '\u2713 ' + (anyPre ? 'Free UAE delivery, pre-order pieces ship from Fri 30 Oct' : T('dUaeLine'));
+      }
+      el.hidden = false;
     })();
 
     /* Gift option: saved to the cart as you type (debounced) and once more, awaited for at
        most 1.5 s, on the click through to checkout - so a fast tap cannot lose the message. */
     (function () {
-      var chk = document.getElementById('sbGiftChk'), box = document.getElementById('sbGiftBox'),
-          ta = document.getElementById('sbGiftMsg'), go = document.getElementById('sbGo');
+      var chk = $('sbGiftChk'), box = $('sbGiftBox'), ta = $('sbGiftMsg'), hideP = $('sbGiftHide'), go = $('sbGo');
+      if (gr) gr.hidden = false;
       if (!chk || !ta || !go || chk.__sbGift) return;
       chk.__sbGift = 1;
       try { var g0 = JSON.parse(localStorage.getItem('sb_gift') || 'null');
-        if (g0 && CART && g0.cart === CART.id) { chk.checked = !!g0.on; ta.value = g0.msg || ''; box.hidden = !g0.on; } } catch (e) {}
-      var t = null, last = null, pending = null, noteSet = false;
+        if (g0 && CART && g0.cart === CART.id) { chk.checked = !!g0.on; ta.value = g0.msg || ''; if (hideP) hideP.checked = !!g0.hide; box.hidden = !g0.on; } } catch (e) {}
+      if (gr && gr.classList) gr.classList.toggle('on', !!chk.checked);
+      var t = null, last = null, pend = null, noteSet = false;
       function save() {
         if (!CART || !CART.id) return Promise.resolve();
-        var on = chk.checked, msg = (ta.value || '').trim().slice(0, 250);
+        var on = chk.checked, msg = (ta.value || '').trim().slice(0, 250), hp = !!(on && hideP && hideP.checked);
         /* 25 Oct 2026: a click during an in-flight save waits for that save instead of cancelling it */
-        var key = on + '|' + msg + '|' + CART.id; if (key === last) return pending || Promise.resolve(); last = key;
-        try { localStorage.setItem('sb_gift', JSON.stringify({ cart: CART.id, on: on, msg: msg })); } catch (e) {}
-        var note = on ? ('GIFT ORDER' + (msg ? ' - message: ' + msg : ' - no message')) : '';
-        /* 25 Oct 2026: cartAttributesUpdate replaces the whole set, so the gift flag travels with the
+        var key = on + '|' + hp + '|' + msg + '|' + CART.id; if (key === last) return pend || Promise.resolve(); last = key;
+        try { localStorage.setItem('sb_gift', JSON.stringify({ cart: CART.id, on: on, msg: msg, hide: hp })); } catch (e) {}
+        var note = on ? ('GIFT ORDER' + (hp ? ' - hide prices on the packing slip' : '') + (msg ? ' - message: ' + msg : ' - no message')) : '';
+        /* 25 Oct 2026: cartAttributesUpdate replaces the whole set, so the gift flags travel with the
            attribution attributes from assets/sahra-measure.js (hidden "_" keys: source, campaign, landing) */
-        var attrs = (on ? [{ key: 'Gift', value: 'Yes' }] : []).concat(window.sbAttr ? window.sbAttr() : []);
+        var attrs = (on ? [{ key: 'Gift', value: 'Yes' }] : []).concat(hp ? [{ key: 'Hide prices', value: 'Yes' }] : []).concat(window.sbAttr ? window.sbAttr() : []);
         /* one after the other: sent together, the second write could restore the old note */
-        /* the note is only written once a gift has been ticked (an empty note on every checkout was a wasted round trip) */
         var notep = (on || noteSet) ? sf('mutation($id:ID!,$n:String!){cartNoteUpdate(cartId:$id,note:$n){cart{id}userErrors{message}}}', { id: CART.id, n: note }) : Promise.resolve();
         if (on) noteSet = true;
-        pending = notep
+        pend = notep
           .then(function () { return sf('mutation($id:ID!,$a:[AttributeInput!]!){cartAttributesUpdate(cartId:$id,attributes:$a){cart{id}userErrors{message}}}', { id: CART.id, a: attrs }); })
           .then(function (d) { var r = d && d.cartAttributesUpdate; if (!on && r && !(r.userErrors && r.userErrors.length)) attrOk(attrKey(CART.id, attrNow())); })
-          .then(function () { if (on && window.track) try { track('gift_option', { with_message: !!msg }); } catch (e) {} })
+          .then(function () { if (on && window.track) try { track('gift_option', { with_message: !!msg, hide_prices: hp }); } catch (e) {} })
           .catch(function () { last = null; });
-        return pending;
+        return pend;
       }
-      chk.addEventListener('change', function () { box.hidden = !chk.checked; if (chk.checked) try { ta.focus({ preventScroll: true }); } catch (e) {} save(); });
+      chk.addEventListener('change', function () { box.hidden = !chk.checked; if (gr && gr.classList) gr.classList.toggle('on', chk.checked); if (chk.checked) try { ta.focus({ preventScroll: true }); } catch (e) {} save(); });
+      if (hideP) hideP.addEventListener('change', save);
       ta.addEventListener('input', function () { clearTimeout(t); t = setTimeout(save, 700); });
       go.addEventListener('click', function (e) {
         if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;   /* open-in-new-tab keeps working */
         if (!chk.checked && last === null && !(window.sbAttr && window.sbAttr().length)) return;
         /* 29 Oct 2026: no gift and the cart already carries these attributes (written by cartCreate) - go now */
-        if (!chk.checked && !noteSet && !pending && CART && ATTR_OK === attrKey(CART.id, attrNow())) return;
+        if (!chk.checked && !noteSet && !pend && CART && ATTR_OK === attrKey(CART.id, attrNow())) return;
         var href = go.href; if (!href || href.slice(-1) === '#') return;
         e.preventDefault(); clearTimeout(t);
         var done = false; function nav() { if (done) return; done = true; location.href = href; }
@@ -653,85 +1018,10 @@
       });
     })();
 
-    /* Meta InitiateCheckout — fires on the click through to Shopify checkout.
-       Purchase itself is tracked on the Shopify side by the Meta sales channel,
-       because this site never sees the thank-you page. */
-    var _go = document.getElementById('sbGo');
-    if (_go && !_go.__sbMetaBound) {
-      _go.__sbMetaBound = 1;
-      _go.addEventListener('click', function () {
-        beginCheckout();   /* 25 Oct 2026 (retention audit): GA4 begin_checkout */
-        try {
-          if (!window.sbMeta || !CART || !CART.cost) return;
-          var nodes = (CART.lines && CART.lines.edges || []).map(function (e) { return e.node; });
-          var ids = nodes.map(function (l) {
-            return (l && l.merchandise && l.merchandise.id) || '';
-          }).filter(Boolean);
-          window.sbMeta('InitiateCheckout', {
-            value: Number(CART.cost.subtotalAmount.amount) || 0,
-            currency: CART.cost.subtotalAmount.currencyCode || 'AED',
-            num_items: CART.totalQuantity || nodes.length,
-            content_type: 'product',
-            content_ids: ids
-          });
-        } catch (e) {}
-      });
-    }
-    /* Free-delivery progress (Rastah benchmark, 29 Aug 2026). Honest maths
-       only: the one remaining threshold is defined in AED (390 GCC — UAE is now
-       free with no minimum), so the meter renders ONLY when the cart itself is
-       priced in AED; converting a threshold into SAR client-side would drift
-       from what checkout actually charges. Non-AED and worldwide carts see no
-       meter rather than a wrong one. */
-    (function () {
-      var el = document.getElementById('sbFree');
-      if (!el) {
-        el = document.createElement('div');
-        el.id = 'sbFree'; el.className = 'sb-free';
-        var sub = document.querySelector('#sbFoot .sb-sub');
-        if (sub && sub.parentNode) sub.parentNode.insertBefore(el, sub.nextSibling);
-      }
-      var mkt = (window.SahraMarket && window.SahraMarket.market) ? window.SahraMarket.market() : 'uae';
-      var cost = CART.cost.subtotalAmount;
-      if (cost.currencyCode !== 'AED' || mkt === 'intl') { el.hidden = true; return; }
-      /* UAE next-day delivery is free on every order with no minimum (1 Sep 2026).
-         There is no threshold left to progress toward, so state the fact instead
-         of rendering a meter that is always full. GCC keeps its AED 390 meter. */
-      if (mkt !== 'gcc') {
-        el.hidden = false;
-        /* 22 Oct 2026: a bag holding pre-order pieces does not promise next-day delivery for them */
-        var anyPre = !PRE_IN_HAND && cartNodes().some(isPre);
-        el.innerHTML = '<span class="sb-free-t sb-free-ok">' + (anyPre ? '\u2713 Free UAE delivery \u00b7 pre-order pieces ship from Fri 30 Oct' : '\u2713 Free next-day delivery \u00b7 order by 2 pm') + '</span>' +
-          '<span class="sb-free-bar"><span style="width:100%"></span></span>';
-        return;
-      }
-      var th = 390;
-      var n = parseFloat(cost.amount || 0);
-      el.hidden = false;
-      if (n >= th) {
-        el.innerHTML = '<span class="sb-free-t sb-free-ok">\u2713 Free delivery unlocked</span><span class="sb-free-bar"><span style="width:100%"></span></span>';
-      } else {
-        var left = th - n;
-        var leftTxt = (left % 1 === 0) ? left.toFixed(0) : left.toFixed(2);
-        el.innerHTML = '<span class="sb-free-t">AED ' + leftTxt + ' away from free delivery</span>' +
-          '<span class="sb-free-bar"><span style="width:' + Math.max(6, Math.round(n / th * 100)) + '%"></span></span>';
-      }
-    })();
-    /* 22 Oct 2026: pre-order pieces and Sahra Trail (no size chart until the pieces are measured) */
-    (function () {
-      var note = foot.querySelector('.sb-note'); if (!note) return;
-      var nodes = cartNodes(), anyPre = !PRE_IN_HAND && nodes.some(isPre);
-      var trail = nodes.some(function (n) { var h = n.merchandise && n.merchandise.product && n.merchandise.product.handle || ''; return /^sahra-trail-/.test(h); });
-      var d = note.querySelector('.sb-note-d'); if (d) d.style.display = anyPre ? 'none' : '';
-      /* 27 Oct 2026: a cart with Sahel pieces links straight to the Sahel chart (it differs from the Founding Edition) */
-      var sahel = nodes.some(function (n) { var h = n.merchandise && n.merchandise.product && n.merchandise.product.handle || ''; return /^(khor-fakkan-bay|al-hamra-pearl-diver|al-aqah-reef|shams-tee|barr-and-bahr|ras-al-khor)/.test(h); });
-      var a = note.querySelector('a[data-sz]') || note.querySelector('a[href^="/size-guide/"]'); if (a) a.setAttribute('data-sz', '1');
-      if (a && !trail) { a.setAttribute('href', sahel ? '/size-guide/#sahel' : '/size-guide/'); a.textContent = sahel ? 'Check the Sahel chart (it differs from the Founding Edition)' : 'Check the chart'; }
-      /* 27 Oct 2026: Sahra Trail has no chart yet, so the one link is the WhatsApp one (it read "message us or message us") */
-      var or = note.querySelector('[data-sz-or]'); if (or) or.hidden = !!trail;
-      if (a && trail && !note.getAttribute('data-trail')) { note.setAttribute('data-trail', '1'); a.setAttribute('href', 'https://wa.me/971585449946'); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); a.textContent = 'Sahra Trail has no chart yet: message us'; }
-      else if (a && !trail && note.getAttribute('data-trail')) { note.removeAttribute('data-trail'); a.setAttribute('href', sahel ? '/size-guide/#sahel' : '/size-guide/'); a.removeAttribute('target'); a.removeAttribute('rel'); a.textContent = sahel ? 'Check the Sahel chart (it differs from the Founding Edition)' : 'Check the chart'; }
-    })();
+    /* Meta InitiateCheckout + GA4 begin_checkout on the click through to Shopify checkout. Purchase itself is
+       tracked on the Shopify side by the Meta sales channel, because this site never sees the thank-you page. */
+    var _go = $('sbGo');
+    if (_go && !_go.__sbMetaBound) { _go.__sbMetaBound = 1; _go.addEventListener('click', metaCheckout); }
     foot.hidden = false;
   }
 
@@ -760,7 +1050,7 @@
         (CART.lines && CART.lines.edges || []).forEach(function (e) { if (e.node.id === lineId) got = e.node; });
         if (q > 0 && got && got.quantity < q) {
           var m = got.merchandise || {}, nm = (m.product && m.product.title) || 'this item';
-          lastError = 'That is as many of ' + nm + ' as we can take in ' + (m.title || 'that size') + ' for now, so it stays at ' + got.quantity + '.';
+          lastError = T('capMsg', { t: nm, s: m.title || '', q: got.quantity });
           pending[lineId] = got.quantity;
         }
         /* server has spoken - drop any pending intent it has now satisfied */
@@ -771,7 +1061,7 @@
         draw();
         return CART;
       }).catch(function (e) {
-        lastError = 'We could not update your cart. ' + (e.message || '') ;
+        lastError = T('errUpdate') + (e.message || '');
         draw();
         throw e;
       });
@@ -836,7 +1126,7 @@
            shown. Preserve the cart on any other error. */
         if (e.message !== 'STALE' && e.message !== 'NOCART') throw e;
         if (e.message === 'STALE' && CART && CART.totalQuantity) {
-          lastError = 'Your previous cart expired, so we started a new one. Please check the items below.';
+          lastError = T('expired');
         }
         CART = null;
         setCid(null);
@@ -891,14 +1181,15 @@
           });
       }).then(function (c) {
         if (!CART || CART.id !== c.id) attrOk(attrKey(c.id, CREATE_ATTR));
-        CART = c; setCid(c.id); pending = {}; draw(); if (!(opts && opts.open === false)) open();
+        CART = c; setCid(c.id); pending = {}; draw();
+        if (opts && opts.open !== false && !isOpen()) opts._peek = true;
         return c;
       }).catch(function (e) {
         /* Shopify's own wording is more useful than ours when it is telling
            the customer something specific, like "only 2 left". */
         lastError = e && e.userError
           ? e.message
-          : 'We could not add that to your cart. Please try again, or message us on WhatsApp.';
+          : T('errAdd');
         draw(); if (!(opts && opts.open === false)) open();
         throw e;
       });
@@ -981,7 +1272,7 @@
              visibly changed and the page repainted, so a silently unswitched
              cart would contradict everything around it. Say so. (This file
              already paid once for swallowing errors — bug 7.) */
-          lastError = 'We could not switch your cart’s currency. Your cart is unchanged — please try again.';
+          lastError = T('errCur');
           draw();
           return CART;
         });
@@ -1005,13 +1296,13 @@
   tickClocks(); setInterval(tickClocks, 15000);
   document.addEventListener('click', function (e) {
     var b = e.target && e.target.closest && e.target.closest('.sb-second-add'); if (!b) return;
-    e.preventDefault(); b.disabled = true; b.textContent = 'Adding\u2026';
+    e.preventDefault(); b.disabled = true; b.textContent = T('adding');
     var h = b.getAttribute('data-handle'), sz = b.getAttribute('data-size');
     variants(h).then(function (vs) {
       var v = vs.filter(function (x) { return (sz ? x.title === sz : true) && x.availableForSale; })[0];
-      if (!v) { b.textContent = sz ? sz + ' sold out' : 'Sold out'; b.disabled = true; var l = b.parentNode && b.parentNode.querySelector('.sb-second-t'); if (l) l.innerHTML += '<br><a href="/products/' + h + '/">Other sizes &rarr;</a>'; return; }
-      return add(v.id, 1).then(function () { if (window.track) track('add_to_cart', { item_id: h, size: v.title, via: h === 'trailhead-bag' ? 'cart-trail-bag' : 'second-tee' }); });
-    }).catch(function () { b.disabled = false; b.textContent = 'Add'; });
+      if (!v) { b.textContent = (sz ? sz + ' ' : '') + T('soldOut'); b.disabled = true; var l = b.parentNode && b.parentNode.querySelector('.sb-second-t'); if (l) l.innerHTML += ' <a href="/products/' + h + '/">' + T('other') + ' ' + ARR + '</a>'; return; }
+      return add(v.id, 1, { open: false }).then(function () { if (window.track) track('add_to_cart', { item_id: h, size: v.title, via: h === 'trailhead-bag' ? 'cart-trail-bag' : 'second-tee' }); });
+    }).catch(function () { b.disabled = false; b.textContent = T('addBtn'); });
   });
   /* 25 Oct 2026 (retention audit): one begin_checkout and one attribute write for every route to
      checkout: the drawer button and the product pages' Buy now. */
@@ -1029,7 +1320,7 @@
     } catch (e) {}
   }
   function giftAttrs() {
-    try { var g = JSON.parse(localStorage.getItem('sb_gift') || 'null'); if (g && CART && g.cart === CART.id && g.on) return [{ key: 'Gift', value: 'Yes' }]; } catch (e) {}
+    try { var g = JSON.parse(localStorage.getItem('sb_gift') || 'null'); if (g && CART && g.cart === CART.id && g.on) return [{ key: 'Gift', value: 'Yes' }].concat(g.hide ? [{ key: 'Hide prices', value: 'Yes' }] : []); } catch (e) {}
     return [];
   }
   function saveAttrs() {
@@ -1040,13 +1331,21 @@
     return sf('mutation($id:ID!,$a:[AttributeInput!]!){cartAttributesUpdate(cartId:$id,attributes:$a){cart{id}userErrors{message}}}', { id: CART.id, a: giftAttrs().concat(a) }).catch(function () {});
   }
   /* Buy now: attributes and begin_checkout, then checkout; never waits more than a second */
+  /* 30 Oct 2026 (RTL QA S11): from an Arabic page, ask Shopify for the Arabic checkout. Shopify
+     serves it when Arabic is published in the store's languages; otherwise it falls back to the
+     default language, so the parameter is harmless either way. */
+  function coUrl(url) {
+    if (!AR || !url || /[?&]locale=/.test(url)) return url;
+    return url + (url.indexOf('?') === -1 ? '?' : '&') + 'locale=ar';
+  }
   function goCheckout(url) {
+    url = coUrl(url);
     beginCheckout();
     var done = false; function nav() { if (done) return; done = true; location.href = url; }
     saveAttrs().then(nav, nav); setTimeout(nav, 1000);
   }
   window.SahraCart = {
-    add: add, open: open, close: close, variants: variants, goCheckout: goCheckout,
+    add: add, open: open, close: close, variants: variants, goCheckout: goCheckout, swap: swap, peek: showPeek,
     refresh: function () { return refresh().then(afterMutation); },
     setQty: setQty, remove: function (l) { return setQty(l, 0); },
     setCountry: setCountry,

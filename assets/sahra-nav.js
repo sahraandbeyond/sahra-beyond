@@ -253,7 +253,8 @@ function sbStage() {
   if (/^\/(ar\/)?trail\/?$/.test(location.pathname)) { a.classList.add('active'); a.setAttribute('aria-current', 'page'); }
   /* 22 Oct 2026: the badge follows the release stage; on Arabic pages it simply goes once pre-order opens (no new Arabic copy yet) */
   var STG = sbStage(), BADGE = STG === 0 ? 'Soon' : STG === 1 ? 'Pre-order' : 'New';
-  a.innerHTML = 'Sahra Trail' + (ar ? (STG === 0 ? '<span class="sbn-soon">\u0642\u0631\u064a\u0628\u064b\u0627</span>' : '') : '<span class="sbn-soon">' + BADGE + '</span>');
+  /* 30 Oct 2026 (RTL QA S3): the Arabic house name in the Arabic header; the Latin wordmark stays on the logo only */
+  a.innerHTML = (ar ? '\u0635\u062d\u0631\u0627\u0621 \u062a\u0631\u064a\u0644' : 'Sahra Trail') + (ar ? (STG === 0 ? '<span class="sbn-soon">\u0642\u0631\u064a\u0628\u064b\u0627</span>' : '') : '<span class="sbn-soon">' + BADGE + '</span>');
   var after = row.querySelector('.sbn-trig') || row.querySelector('a[href="/shop/"], a[href="/ar/shop/"]');
   if (after && after.parentNode === row) row.insertBefore(a, after.nextSibling); else row.insertBefore(a, row.firstChild);
   var mn = document.getElementById('mobileNav');

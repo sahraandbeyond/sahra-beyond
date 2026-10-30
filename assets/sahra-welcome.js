@@ -52,9 +52,9 @@
       });
     });
   }
-  /* Arabic pages: the form messages below keep their existing Arabic. The bar itself is
-     English on /ar/ too (set left-to-right), because no new Arabic copy goes live until an
-     Emirati reader has checked it. */
+  /* Arabic pages: the form messages below keep their existing Arabic. 30 Oct 2026 (RTL QA B5):
+     the bar now has its own Arabic (the same wording the Arabic site's dictionary already used),
+     reads right-to-left with lang="ar", and links to the Arabic page. */
   var AR = /^ar\b/i.test(document.documentElement.getAttribute('lang') || '') || /^\/ar\//.test(location.pathname || '');
   function t(en, ar) { return AR ? ar : en; }
   var RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
@@ -70,11 +70,14 @@
      an open page also switches by itself (see schedule() below). */
   var STAGES = [
     { from: 0, href: '/new/',
-      en: 'Sahel and Sahra Trail pre-order opens Wed 28 Oct.' },
+      en: 'Sahel and Sahra Trail pre-order opens Wed 28 Oct.',
+      ar: 'يبدأ الطلب المسبق لساحل وصحراء تريل يوم الأربعاء 28 أكتوبر.' },
     { from: Date.UTC(2026, 9, 27, 18, 45, 0), href: '/sahel/#pieces',   /* 27 Oct 2026: opened early (Faheem) */
-      en: 'Sahel and Sahra Trail: pre-order open, 20% off until Thu 29 Oct, 23:59.' },   /* 23 Oct 2026: scoped to the new lines; the 20% is on them only */
+      en: 'Sahel and Sahra Trail: pre-order open, 20% off until Thu 29 Oct, 23:59.',   /* 23 Oct 2026: scoped to the new lines; the 20% is on them only */
+      ar: 'ساحل وصحراء تريل: الطلب المسبق متاح بخصم 20% حتى الخميس 29 أكتوبر، 23:59.' },
     { from: Date.UTC(2026, 9, 29, 20, 0, 0), href: '/new/',
-      en: 'Sahel and Sahra Trail are out. Designed in the UAE for everyone who loves it.' }
+      en: 'Sahel and Sahra Trail are out. Designed in the UAE for everyone who loves it.',
+      ar: 'ساحل وصحراء تريل متوفران الآن. صُمّما في الإمارات لكل من يحبّها.' }
   ];
   /* ?sbstage=0|1|2 previews a stage (for checking before the date; nothing is stored) */
   var forced = null;
@@ -86,7 +89,9 @@
     return k;
   }
 
-  var SHIP = '<span class="sb-ship-uae">Free next-day UAE delivery</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days</span><span class="sb-ship-intl">Worldwide delivery</span>';
+  var SHIP = AR
+    ? '<span class="sb-ship-uae">توصيل مجاني في اليوم التالي داخل الإمارات</span><span class="sb-ship-gcc">التوصيل إلى دول الخليج خلال 3&ndash;5 أيام</span><span class="sb-ship-intl">توصيل دولي</span>'
+    : '<span class="sb-ship-uae">Free next-day UAE delivery</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days</span><span class="sb-ship-intl">Worldwide delivery</span>';
   function esc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
   /* ---------------------------------------------------------------- bar */
@@ -99,16 +104,16 @@
     if (k === current) return;
     current = k;
     var S = STAGES[k];
-    bar.setAttribute('href', S.href);
+    bar.setAttribute('href', AR ? '/ar' + S.href : S.href);
     bar.setAttribute('data-stage', String(k));
     bar.innerHTML =
       '<span class="sbw-sheen"></span>' +
       '<span class="sbw-bar-in">' +
         '<span class="sbw-dot" aria-hidden="true"></span>' +
-        '<span class="sbw-msg"' + (AR ? ' dir="ltr" lang="en"' : '') + '>' + esc(S.en) + '</span>' +
+        '<span class="sbw-msg"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + esc(AR ? S.ar : S.en) + '</span>' +
         /* no next-day promise beside the pre-order stage: those pieces ship from Fri 30 Oct */
         (k === 1 ? '' : '<span class="sbw-sep sbw-hide-sm sbw-shipwrap" aria-hidden="true">&middot;</span>' +
-        '<span class="sbw-hide-sm sbw-ship sbw-shipwrap"' + (AR ? ' dir="ltr" lang="en"' : '') + '>' + SHIP + '</span>') +
+        '<span class="sbw-hide-sm sbw-ship sbw-shipwrap"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + SHIP + '</span>') +
       '</span>';
   }
   render();
@@ -218,7 +223,7 @@
           wrapEl.classList.remove('loading'); wrapEl.classList.add('err');
           if (b) { b.disabled = false; b.textContent = label; }
           var msg = badEmail ? (errEl && errEl.getAttribute('data-bad-email')) :
-            t('That did not save. Please try again, or message us on WhatsApp: +971 58 544 9946.', 'لم يُحفظ طلبك. يُرجى المحاولة مرة أخرى، أو راسلنا على واتساب: ‎+971 58 544 9946');
+            t('That did not save. Please try again, or message us on WhatsApp: +971 58 544 9946.', 'لم يتم حفظ بياناتك. يُرجى المحاولة مرة أخرى، أو راسلنا على واتساب: ‎+971 58 544 9946');
           if (errEl) errEl.textContent = msg;
           else { errEl = document.createElement('p'); errEl.setAttribute('data-err', ''); errEl.setAttribute('role', 'alert'); errEl.style.cssText = 'margin:12px 0 0;color:#9b3a25;font-size:15px'; errEl.textContent = msg; f.parentNode.insertBefore(errEl, f.nextSibling); }
           if (errEl.hasAttribute('data-err')) errEl.style.display = 'block';

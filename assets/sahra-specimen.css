@@ -1,0 +1,250 @@
+/* ==========================================================================
+   sahra-specimen.css: the Specimen Sheet product page (30 Oct 2026)
+   ==========================================================================
+   One look for the Founding Edition, Sahel and Sahra Trail pages (specimen.js
+   writes the markup, assets/sahra-specimen.js runs it). Phone first: on a
+   phone the page reads photo, tabs, name and price, the annotated artwork,
+   then delivery and fit, with ONE buy sheet fixed to the bottom of the screen.
+   From 900px the photo and its notes sit left and the name, price and buy
+   sheet sit right in a column that stays in view.
+   Prefixed html body where the older page styles (legibility layer, the shared
+   system, the Founding template's own rules) would otherwise win.
+   ========================================================================== */
+.ss{--ss-ink:#2A2016;--ss-ink2:#4A4136;--ss-ink3:#6B6256;--ss-cream:#FAF6EF;--ss-paper:#FFFFFF;--ss-sand:#EFE4D2;--ss-copper:#9C521B;--ss-copper-d:#7E4114;--ss-line:rgba(42,32,22,.14);--ss-line2:rgba(42,32,22,.08);
+  position:relative;z-index:4;box-sizing:border-box;width:100%;max-width:1180px;margin:0 auto;padding:6px 16px 8px;color:var(--ss-ink);font-family:Jost,system-ui,-apple-system,'Segoe UI',sans-serif;font-size:16px;line-height:1.5;
+  display:flex;flex-direction:column;gap:12px}
+.ss *,.ss *::before,.ss *::after{box-sizing:border-box}
+.ss-media,.ss-info{display:contents}
+.ss-crumb{order:0}.ss-stage{order:1}.ss-tabs{order:2}.ss-note{order:3}.ss-head{order:4}.ss-art{order:5}.ss-body{order:6}
+.ss a{color:inherit}
+html body .ss h1,html body .ss h2{max-width:none}
+
+/* breadcrumb: one quiet line */
+html body .ss .ss-crumb{position:static;display:block;padding:4px 0 0;margin:0;background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;z-index:auto;
+  font:500 13px/1.5 Jost,system-ui,sans-serif!important;letter-spacing:.01em!important;text-transform:none!important;color:var(--ss-ink3)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html body .ss .ss-crumb a{color:var(--ss-ink2)!important;text-decoration:none}
+html body .ss .ss-crumb a:hover{color:var(--ss-copper-d)!important;text-decoration:underline}
+html body .ss .ss-crumb span{color:var(--ss-ink3)!important}
+.ss-crumb i{font-style:normal;margin:0 6px;color:var(--ss-ink3)}
+
+/* ---- the stage ---- */
+.ss-stage{position:relative;align-self:center;width:min(100%,max(280px,calc((100svh - var(--ss-h,112px) - 120px) * .8)));aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:#E9E1D3;cursor:zoom-in;isolation:isolate;-webkit-tap-highlight-color:transparent;box-shadow:0 18px 40px -26px rgba(42,32,22,.55)}
+.ss-stage:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:3px}
+.ss-v{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .32s ease;z-index:1}
+.ss-v.on{opacity:1;z-index:2}
+html body .ss-stage .ss-img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;z-index:1}
+.ss-v.tall .ss-img{object-fit:contain!important}
+.ss-blur{position:absolute;inset:-8%;background-size:cover;background-position:center;filter:blur(22px) saturate(1.05);opacity:.9;transform:scale(1.04);z-index:0}
+.ss-mock{position:absolute;z-index:6;left:12px;top:12px;font:400 10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;padding:5px 8px;border-radius:4px;background:rgba(250,246,239,.94);color:var(--ss-ink);pointer-events:none}
+.ss-cap{position:absolute;z-index:6;left:12px;bottom:12px;max-width:calc(100% - 24px);font:500 12.5px/1.35 Jost,system-ui,sans-serif;letter-spacing:.01em;padding:6px 10px;border-radius:999px;background:rgba(250,246,239,.93);color:var(--ss-ink);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ss-stage.art-on .ss-cap{bottom:auto;top:12px}
+.ss-mock[hidden],.ss-cap[hidden],.ss-note[hidden]{display:none!important}
+/* numbered pins on the Art photo */
+.ss-pins{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;transition:opacity .25s ease}
+.ss-stage.art-on .ss-pins{opacity:1;pointer-events:auto}
+.ss-pin{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center;font:600 13px/1 Jost,system-ui,sans-serif;color:var(--ss-ink)}
+.ss-pin::before{content:"";position:absolute;inset:8px;border-radius:50%;background:#FFFDF8;box-shadow:0 0 0 4px rgba(250,246,239,.38),0 4px 12px rgba(0,0,0,.32);transition:transform .25s cubic-bezier(.25,1.35,.4,1),background .2s}
+.ss-pin{z-index:1}
+.ss-pin>*{position:relative}
+.ss-pin{isolation:isolate}
+.ss-pin::before{z-index:-1}
+.ss-pin.on{color:#fff}
+.ss-pin.on::before{background:var(--ss-copper);transform:scale(1.14)}
+.ss-pin:focus-visible{outline:2px solid #fff;outline-offset:-4px;border-radius:50%}
+@media(prefers-reduced-motion:no-preference){.ss-stage.art-on .ss-pin::before{animation:ssPin .45s cubic-bezier(.25,1.35,.4,1) both}.ss-stage.art-on .ss-pin:nth-child(2)::before{animation-delay:.07s}.ss-stage.art-on .ss-pin:nth-child(3)::before{animation-delay:.14s}.ss-stage.art-on .ss-pin:nth-child(4)::before{animation-delay:.21s}}
+@keyframes ssPin{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+/* the note for the pin you tapped, right under the photo */
+.ss-note{display:flex;gap:10px;align-items:flex-start;margin:-2px 0 0;padding:10px 12px;border-radius:14px;background:var(--ss-paper);border:1px solid var(--ss-line2);font-size:14.5px;line-height:1.45;color:var(--ss-ink)}
+.ss-note b{flex:0 0 24px;height:24px;border-radius:50%;background:var(--ss-copper);color:#fff;display:grid;place-items:center;font:600 12px/1 Jost,system-ui,sans-serif}
+/* tabs: Back . Front . Art . Worn */
+.ss-tabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--ss-sand)}
+.ss-tab{flex:1;min-height:42px;border:0;border-radius:999px;background:transparent;color:var(--ss-ink2);font:500 14px/1 Jost,system-ui,sans-serif;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s;padding:0 6px}
+.ss-tab.on{background:var(--ss-paper);color:var(--ss-ink);box-shadow:0 1px 4px rgba(42,32,22,.14)}
+.ss-tab:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:1px}
+
+/* ---- name, price ---- */
+.ss-head{padding:2px 2px 0}
+.ss-eb{margin:0 0 4px;font:400 11.5px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ss-copper-d)}
+.ss-sahel .ss-eb{color:#0B6E72}
+.ss-trail .ss-eb{color:#2F5E78}
+.ss-eb a{text-decoration:underline;text-decoration-color:rgba(126,65,20,.35);text-underline-offset:3px}
+html body .ss .ss-h1{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:clamp(30px,8vw,52px);line-height:1.04;letter-spacing:-.01em;margin:0 0 6px;color:var(--ss-ink);text-wrap:balance}
+.ss-h1 .nw{white-space:nowrap}
+.ss-head .pdp-rating,.ss-head .po-rate{display:inline-flex;align-items:center;gap:8px;margin:0 0 6px;font-size:14px;color:var(--ss-ink2);text-decoration:none}
+.ss-pr{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 2px}
+html body .ss .ss-price .sb-price{font:600 24px/1.2 Jost,system-ui,sans-serif!important;letter-spacing:0!important;color:var(--ss-ink)}
+.ss-pair{font-size:14px;color:var(--ss-ink2)}
+.ss-kind{margin:0;font-size:14.5px;color:var(--ss-ink3)}
+
+/* ---- the annotated artwork ---- */
+.ss-art{padding:8px 2px 4px}
+.ss-k{margin:0 0 2px;font:400 11.5px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ss-copper-d)}
+html body .ss .ss-art h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:28px;line-height:1.1;margin:0 0 6px;color:var(--ss-ink)}
+.ss-notes{list-style:none;margin:0;padding:0}
+.ss-notes li{margin:0;padding:0;border-bottom:1px solid var(--ss-line2)}
+.ss-notes button{display:flex;gap:12px;align-items:flex-start;width:100%;min-height:48px;padding:10px 0;border:0;background:none;text-align:start;cursor:pointer;color:var(--ss-ink);font:400 15px/1.45 Jost,system-ui,sans-serif}
+.ss-notes b{flex:0 0 26px;height:26px;border-radius:50%;border:1.5px solid var(--ss-copper);color:var(--ss-copper-d);display:grid;place-items:center;font:600 12px/1 Jost,system-ui,sans-serif;transition:background .2s,color .2s}
+.ss-notes button.on b{background:var(--ss-copper);color:#fff}
+.ss-notes button:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:2px;border-radius:8px}
+.ss-spec{margin:10px 0 0;font-size:14px;line-height:1.55;color:var(--ss-ink2)}
+.ss-spec i{font-style:normal;color:var(--ss-ink3)}
+
+/* ---- delivery, fit, help ---- */
+.ss-body{padding:0 2px}
+.ss-stat{margin:0 0 10px;font-size:15px;color:var(--ss-ink)}
+.ss-fits{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ss-line);border-radius:14px;overflow:hidden;margin:0 0 10px;background:var(--ss-paper)}
+.ss-fits a{display:flex;flex-direction:column;gap:1px;padding:10px 12px;text-decoration:none;color:var(--ss-ink3);min-height:48px}
+.ss-fits a b{font-weight:600;font-size:15px;color:var(--ss-ink)}
+.ss-fits a span{font-size:12.5px;line-height:1.3}
+.ss-fits a.on{background:var(--ss-ink);color:rgba(250,246,239,.78)}
+.ss-fits a.on b{color:#FAF6EF}
+.ss-fits a:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:-3px}
+.ss-help{margin:0 0 10px;font-size:14.5px;line-height:1.5;color:var(--ss-ink2)}
+.ss-help a{color:var(--ss-copper-d);text-decoration:underline;text-underline-offset:3px}
+.ss-help .po-match{margin:6px 0 0;font-size:14px}
+html body .ss .ss-tabby.sb-tabby-pdp{margin:4px 0 10px}
+.ss-promise{list-style:none;margin:0 0 6px;padding:0;font-size:14.5px;line-height:1.45;color:var(--ss-ink2)}
+.ss-promise li{position:relative;padding:7px 0 7px 22px;border-top:1px solid var(--ss-line2)}
+.ss-promise li::before{content:"";position:absolute;left:3px;top:13px;width:10px;height:5px;border-left:1.6px solid #2F6B45;border-bottom:1.6px solid #2F6B45;transform:rotate(-45deg)}
+.ss-promise a{color:var(--ss-copper-d)}
+
+/* ---- the buy sheet: fixed to the bottom of a phone, a card in the column on a desktop ---- */
+.ssb{--ink:#2A2016;position:fixed;z-index:100;left:0;right:0;bottom:0;margin:0 auto;width:100%;max-width:560px;padding:10px 14px calc(8px + env(safe-area-inset-bottom,0px));
+  background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid rgba(42,32,22,.12);border-radius:20px 20px 0 0;
+  box-shadow:0 -12px 30px -18px rgba(42,32,22,.4);color:#2A2016;font-family:Jost,system-ui,sans-serif}
+@media(prefers-reduced-motion:no-preference){.ssb{animation:ssbIn .45s cubic-bezier(.2,.8,.2,1) both}}
+@keyframes ssbIn{from{transform:translateY(100%)}to{transform:none}}
+.ssb-r1{display:flex;gap:8px;align-items:center}
+.ssb-sz{display:flex;gap:6px;flex:0 0 auto;border-radius:999px;transition:background .3s}
+.ssb-sz button{min-width:44px;height:44px;padding:0 6px;border:1px solid rgba(42,32,22,.32);border-radius:999px;background:#fff;color:#2A2016;font:500 15px/1 Jost,system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.ssb-sz button[aria-pressed="true"]{background:#2A2016;color:#FAF6EF;border-color:#2A2016}
+html body .ssb .ssb-sz button:disabled{background:#F1ECE4!important;color:#6B6256!important;border-style:dashed!important;cursor:not-allowed;text-decoration:none!important}
+.ssb-sz button:focus-visible,.ssb-add:focus-visible,.ssb-fit a:focus-visible{outline:2px solid #9C521B;outline-offset:2px}
+.ssb-sz.flash{animation:ssbFlash 1.1s ease}
+@keyframes ssbFlash{0%,100%{background:transparent;box-shadow:none}25%,60%{background:rgba(233,185,120,.4);box-shadow:0 0 0 4px rgba(233,185,120,.4)}}
+.ssb-gl{display:inline-flex;align-items:center;min-width:40px;font-size:12.5px;color:#6B6256}
+.ssb-kit{display:grid;gap:6px;flex:0 0 auto}
+.ssb-kit .ssb-sz button{height:40px;min-width:40px}
+.ssb-one{flex:0 0 auto;font-size:14px;color:#4A4136;padding:0 4px}
+html body .ssb .ssb-add{flex:1;min-width:0;height:48px;border:0;border-radius:999px;background:#2A2016;color:#FAF6EF;font:600 15.5px/1 Jost,system-ui,sans-serif!important;letter-spacing:.01em!important;text-transform:none!important;cursor:pointer;padding:0 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .2s,transform .15s}
+html body .ssb .ssb-add:active{transform:scale(.98)}
+html body .ssb .ssb-add:disabled{background:#8C8172;cursor:not-allowed}
+.ssb.kit .ssb-r1{align-items:stretch}.ssb.kit .ssb-add{height:auto;min-height:86px}
+.ssb-r2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.ssb-meta{margin:0;min-width:0;flex:1 1 auto;font-size:12.5px;line-height:1.4;color:#4A4136}
+.ssb-l1,.ssb-dl{display:block}
+html body .ssb .ssb-meta :is(.sb-ship-uae,.sb-ship-gcc,.sb-ship-intl){font-size:inherit!important;letter-spacing:inherit!important}
+html body .ssb .ssb-p .sb-price{font:600 14.5px/1.2 Jost,system-ui,sans-serif!important;letter-spacing:0!important;color:#2A2016}
+.ssb-fit{display:flex;flex:0 0 auto;padding:3px;border-radius:999px;background:#EFE4D2}
+.ssb-fit a{display:inline-flex;align-items:center;min-height:32px;padding:0 10px;border-radius:999px;font-size:12.5px;text-decoration:none;color:#4A4136}
+.ssb-fit a b{font-weight:500}
+.ssb-fit a.on{background:#fff;color:#2A2016;box-shadow:0 1px 3px rgba(42,32,22,.15)}
+.ssb-msg{margin:6px 0 0;font-size:13.5px;line-height:1.4;color:#7E4114}
+.ssb-msg:empty{display:none}
+@media(max-width:359px){.ssb{padding-left:10px;padding-right:10px}.ssb-sz{gap:4px}.ssb-sz button{min-width:40px}}
+@media(max-width:899px){
+  /* nothing at the end of the page hides behind the sheet */
+  html.ss-page body{padding-bottom:calc(var(--ss-h,112px) + 4px)}
+  /* the floating bag button and WhatsApp sit above the sheet */
+  html.ss-page .sb-fcart.on,html.ss-page .sb-fcart{bottom:calc(var(--ss-h,112px) + 12px)}
+  html.ss-page .sb-wa{display:none!important}
+  html body:has(.m-panel.open) .ssb{transform:translateY(130%);visibility:hidden}
+}
+/* the in-flow copy of the sheet's facts is not needed beside it on a phone */
+@media(max-width:899px){.ss-body .ss-tabby{display:none!important}}
+
+/* ---- next piece ---- */
+.ss-next{max-width:1180px;margin:18px auto 26px;padding:0 16px;position:relative;z-index:4}
+.ss-next a{display:flex;align-items:center;gap:14px;padding:12px;border-radius:18px;background:#fff;border:1px solid rgba(42,32,22,.1);text-decoration:none;color:#2A2016;box-shadow:0 10px 30px -22px rgba(42,32,22,.5);transition:transform .2s,box-shadow .2s}
+.ss-next a:hover{transform:translateY(-2px);box-shadow:0 16px 34px -20px rgba(42,32,22,.5)}
+.ss-next-i{position:relative;flex:0 0 72px;width:72px;height:90px;border-radius:12px;overflow:hidden;background:#E9E1D3}
+.ss-next-i img{width:100%;height:100%;object-fit:cover;display:block}
+.ss-next-i i{position:absolute;left:4px;bottom:4px;font:400 8.5px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:3px 4px;border-radius:3px;background:rgba(250,246,239,.94);color:#2A2016}
+.ss-next-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.ss-next-t small{font:400 11.5px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#7E4114}
+.ss-next-t b{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:24px;line-height:1.1}
+.ss-next-t span{font-size:13.5px;color:#6B6256}
+.ss-next-a{font-size:22px;color:#7E4114;padding:0 6px}
+.ss-next a:focus-visible{outline:2px solid #7E4114;outline-offset:3px}
+
+/* ---- desktop: photo and notes left, name and buy sheet right ---- */
+@media(min-width:900px){
+  .ss{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:28px 48px;align-items:start;padding:20px 32px 36px}
+  .ss-media,.ss-info{display:flex;flex-direction:column;gap:12px;min-width:0}
+  .ss-info{position:sticky;top:84px}
+  .ss-stage{width:100%;max-width:620px;align-self:stretch}
+  .ss-tabs{max-width:620px;width:100%}
+  .ss-note{max-width:620px}
+  .ss-art{max-width:620px;padding-top:12px}
+  html body .ss .ss-h1{font-size:clamp(40px,4vw,56px)}
+  .ss-head{padding-top:6px}
+  .ss-price .sb-price{font-size:26px!important}
+  .ssb{position:relative;left:auto;right:auto;bottom:auto;max-width:none;margin:2px 0 12px;border:1px solid rgba(42,32,22,.12);border-radius:20px;box-shadow:0 18px 40px -26px rgba(42,32,22,.45);animation:none;padding:14px 16px 12px}
+  .ssb-sz button{min-width:48px;height:48px}
+  html body .ssb .ssb-add{height:50px}
+  .ss-next{padding:0 32px}
+  .ss-next a{max-width:560px;margin-left:auto}
+  /* docked once the card has scrolled away: the same sheet, one row, bottom of the screen */
+  html body .ssb.float{position:fixed;left:50%;right:auto;bottom:16px;width:min(820px,calc(100% - 48px));margin:0;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:18px;padding:10px 12px 10px 16px;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s}
+  html body .ssb.float .ssb-r2{order:-1;margin:0;flex:1 1 auto;min-width:0;flex-direction:column;align-items:flex-start;gap:4px}
+  html body .ssb.float .ssb-r1{flex:0 1 auto}
+  html body .ssb.float .ssb-add{min-width:170px}
+  html body .ssb.float .ssb-msg{position:absolute;left:16px;bottom:100%;margin:0 0 8px;padding:6px 10px;border-radius:10px;background:#fff;box-shadow:0 6px 18px -10px rgba(42,32,22,.4)}
+  html body .ssb.float.away{transform:translate(-50%,150%);opacity:0;pointer-events:none}
+  @media(prefers-reduced-motion:no-preference){html body .ssb.float{animation:ssbDock .35s cubic-bezier(.2,.8,.2,1) backwards}}
+}
+@keyframes ssbDock{from{opacity:0;transform:translate(-50%,40px)}to{opacity:1;transform:translateX(-50%)}}
+.ssb-ph{height:0}
+@media(prefers-reduced-motion:reduce){.ss-v,.ss-pins,.ss-tab,.ss-pin::before{transition:none!important;animation:none!important}}
+/* the legibility layer sets every product-page <p> to 15px on phones; these are sized on purpose */
+html body .ss p.ss-eb,html body .ss p.ss-k{font-size:11.5px!important;line-height:1.5!important}
+html body .ss p.ss-kind,html body .ss p.ss-help{font-size:14.5px!important;line-height:1.5!important}
+html body .ss p.ss-stat{font-size:15px!important;line-height:1.5!important}
+html body .ss p.ss-spec{font-size:14px!important;line-height:1.55!important}
+html body .ss p.ss-note{font-size:14.5px!important;line-height:1.45!important}
+html body .ss p.ss-pr{line-height:1.3!important}
+html body .ssb p.ssb-meta{font-size:12.5px!important;line-height:1.4!important}
+html body .ssb p.ssb-msg{font-size:13.5px!important;line-height:1.4!important}
+html body .ss :is(.sb-ship-uae,.sb-ship-gcc,.sb-ship-intl){font-size:inherit!important;letter-spacing:inherit!important}
+html body .ssb p.ssb-meta{font-size:12px!important}
+html body .ssb .ssb-p .sb-price{font-size:14px!important}
+.ssb-l1{white-space:nowrap}
+.ssb-fit a{padding:0 9px}
+@media(max-width:374px){.ssb-l1{white-space:normal}}
+/* the Sahel and Sahra Trail pages sit in the shell's 820px <main>; the Specimen Sheet needs the full width */
+html body main.po-main{max-width:1240px;margin:0 auto;padding:0 0 8px}
+html body .ssb.kit .ssb-add{border-radius:18px}
+
+/* ==== QA round, 30 Oct 2026 (REVIEW-specimen-bag.md) ==== */
+/* B1: the photo never runs under the buy sheet; the tabs ride on the photo, top; the caption stays on the photo, clear of the sheet */
+.ss-stage{width:min(100%,max(240px,calc((100svh - var(--ss-top,150px) - var(--ss-h,116px) - 10px) * .8)))}
+.ss-stage .ss-tabs{position:absolute;z-index:7;top:10px;left:10px;right:10px;margin:0;padding:3px;gap:2px;border-radius:999px;background:rgba(250,246,239,.88);-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);box-shadow:0 6px 18px -8px rgba(24,17,9,.45)}
+.ss-stage .ss-tab{min-height:40px;font-size:14px;padding:0 4px}
+.ss-stage.has-tabs .ss-mock{top:62px}
+.ss-stage.art-on .ss-cap{top:62px;bottom:auto}
+/* the annotated photo, whole, between the tabs and the note */
+.ss-v.boxed .ss-artbox{position:absolute;z-index:1;top:58px;height:calc(100% - 130px);aspect-ratio:4/5;left:50%;transform:translateX(-50%);border-radius:12px;overflow:hidden;box-shadow:0 12px 28px -12px rgba(0,0,0,.65)}
+html body .ss-stage .ss-v.boxed .ss-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ss-v.boxed .ss-blur{opacity:.75}
+.ss-artbox .ss-pin{width:40px;height:40px;margin:-20px 0 0 -20px;font-size:12px}
+.ss-artbox .ss-pin::before{inset:8px}
+.ss-stage .ss-note{position:absolute;z-index:7;left:10px;right:10px;bottom:10px;margin:0;min-height:52px;align-items:center;background:rgba(255,253,248,.96);border:0;box-shadow:0 8px 22px -10px rgba(24,17,9,.5)}
+html body .ss .ss-stage p.ss-note{font-size:13.5px!important;line-height:1.38!important}
+@media(min-width:900px){
+  .ss-stage{width:min(100%,calc((100vh - var(--ss-top,150px) - 46px) * .8));align-self:center}
+  .ss-media>.ss-art{max-width:620px;width:100%;align-self:center}
+}
+/* S2: the AED-only lines step aside when prices show in another currency (the Founding template had no rule for it) */
+html[data-price-cur]:not([data-price-cur="AED"]) .sb-aed-only{display:none!important}
+/* S6: the kit's Add to bag takes its own row on narrow phones */
+@media(max-width:374px){.ssb.kit .ssb-r1{flex-wrap:wrap}.ssb.kit .ssb-kit{flex:1 0 100%}html body .ssb.kit .ssb-add{flex:1 0 100%;min-height:46px;height:46px}}
+/* S7: tap targets of 40-44px (hit areas, so the layout does not move) */
+.ssb-fit a{position:relative}.ssb-fit a::after{content:"";position:absolute;left:0;right:0;top:-7px;bottom:-7px}
+html body .ss .ss-crumb{padding:10px 0;margin:-6px 0 -8px}
+.ss-crumb a,.ss-help a,.ss-promise a,.ss-eb a,.ss-body .po-small a,.ss-body .po-ask a,.ss-next-t a{padding:10px 0}
+#size-chart summary,.po-size summary{display:flex;align-items:center;min-height:44px}
+/* S11: the payment trust line */
+.ss-trust{margin:4px 0 8px;font-size:13px;line-height:1.45;color:var(--ss-ink3)}
+html body .ss p.ss-trust{font-size:13px!important;line-height:1.45!important}
+html body .ss-stage .ss-tabs{width:auto;max-width:none}

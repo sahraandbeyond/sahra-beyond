@@ -214,3 +214,174 @@ html[data-guide] .ft-wa{display:none}
 /* 22 Oct 2026: pre-order lines (Sahel, Sahra Trail) say when they ship; the pre-order price is named, never struck through */
 .sb-line .sb-pre{display:block;font-size:12.5px;line-height:1.4;color:#7E4114;margin:2px 0}
 .sb-lp small{font-size:11.5px;color:#6B5B48;font-weight:400}
+
+/* ==========================================================================
+   THE BAG (30 Oct 2026, Faheem approved the Fold and Drop bag). A bottom sheet on
+   phones, a drawer on desktop; mirrored for Arabic (dir="rtl" on the sheet).
+   These rules come last and replace the older drawer look above.
+   ========================================================================== */
+.sb-drawer{--bg:#FAF6EF;--ink:#2A2016;--ink2:#4A4136;--ink3:#6B6256;--line:rgba(42,32,22,.12);background:var(--bg);color:var(--ink);width:min(440px,94vw);font-family:Jost,system-ui,-apple-system,'Segoe UI',sans-serif;box-shadow:-24px 0 60px -20px rgba(24,17,9,.35)}
+[dir="rtl"].sb-drawer{right:auto;left:0;transform:translateX(-102%);box-shadow:24px 0 60px -20px rgba(24,17,9,.35)}
+[dir="rtl"].sb-drawer.on{transform:none}
+.sb-ov{background:rgba(42,32,22,.34);-webkit-backdrop-filter:none;backdrop-filter:none}
+.sb-grab{display:none}
+.sb-dh{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px 10px;border-bottom:1px solid var(--line)}
+html body .sb-dh h3{margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:28px;line-height:1.1;color:var(--ink)}
+.sb-dh h3 small{font:400 13.5px/1 Jost,system-ui,sans-serif;color:var(--ink3);margin-inline-start:6px;letter-spacing:0}
+.sb-x{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:15px;flex:none;display:grid;place-items:center;padding:0}
+.sb-db{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:0 18px 14px;-webkit-overflow-scrolling:touch}
+.sb-lines{display:block}
+.sb-empty{text-align:center;padding:34px 0 24px;color:var(--ink2)}
+.sb-empty p{margin:0 0 4px;font:600 24px/1.2 'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;color:var(--ink)}
+.sb-empty small{display:block;font-size:14px;color:var(--ink3);margin-bottom:16px}
+.sb-empty a{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border-radius:999px;background:var(--ink);color:#FAF6EF;text-decoration:none;font-weight:600;font-size:15px}
+.sb-drawer .sb-line{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
+.sb-th{position:relative;display:block;width:64px;height:80px;border-radius:10px;overflow:hidden;background:#E9E1D3}
+html body .sb-drawer .sb-th img{width:100%;height:100%;object-fit:cover;border-radius:0;display:block}
+.sb-th i{position:absolute;left:3px;bottom:3px;font:400 8px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:3px 3px;border-radius:3px;background:rgba(250,246,239,.94);color:#2A2016}
+.sb-drawer .sb-lt{display:flex;flex-direction:column;gap:5px;min-width:0;font-size:14px}
+html body .sb-drawer .sb-nm{font:600 15px/1.3 Jost,system-ui,sans-serif;color:var(--ink);text-decoration:none}
+.sb-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sb-szb{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border:1px solid rgba(42,32,22,.28);border-radius:999px;background:#fff;color:var(--ink);font:500 13.5px/1 Jost,system-ui,sans-serif;cursor:pointer}
+.sb-szb i{font-style:normal;font-size:10px;color:var(--ink3);transition:transform .2s}
+.sb-szb[aria-expanded="true"]{border-color:var(--ink)}
+.sb-szb[aria-expanded="true"] i{transform:rotate(180deg)}
+.sb-sz0{font-size:13.5px;color:var(--ink2)}
+.sb-chips{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0}
+.sb-chips button{min-width:42px;height:40px;padding:0 8px;border-radius:999px;border:1px solid rgba(42,32,22,.3);background:#fff;color:var(--ink);font:500 14px/1 Jost,system-ui,sans-serif;cursor:pointer}
+.sb-chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#FAF6EF}
+html body .sb-chips button:disabled{background:#F1ECE4;color:#6B6256;border-style:dashed;cursor:not-allowed;text-decoration:none}
+.sb-ld{font-size:13px;color:var(--ink3)}
+.sb-fitn{font-size:12.5px;line-height:1.4;color:var(--ink2)}
+html body .sb-drawer .sb-fitn a{color:#7E4114;text-decoration:underline;text-underline-offset:2px;font-weight:400}
+.sb-lr{display:flex;align-items:center;gap:6px;margin-top:2px}
+.sb-drawer .sb-qty{display:inline-flex;align-items:center;gap:0;margin:0;border:1px solid rgba(42,32,22,.28);border-radius:999px;background:#fff;overflow:hidden}
+html body .sb-drawer .sb-q{width:38px;height:38px;min-width:38px;min-height:38px;border:0;border-radius:0;background:transparent;font:400 18px/1 Jost,system-ui,sans-serif;color:var(--ink)}
+.sb-drawer .sb-q:hover{background:#F4EEE3}
+.sb-drawer .sb-qn{min-width:22px;font:600 14px/1 Jost,system-ui,sans-serif}
+html body .sb-drawer .sb-rm{min-width:0;min-height:40px;padding:0 6px;border:0;background:none;font:400 13px/1 Jost,system-ui,sans-serif;color:var(--ink2);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.sb-drawer .sb-lp,.sb-lr>span:last-child{margin-inline-start:auto;text-align:end;font:600 15px/1.2 Jost,system-ui,sans-serif;white-space:nowrap}
+.sb-drawer .sb-lp small{display:block;font-weight:400;font-size:11.5px;color:#2F6B45}
+.sb-drawer .sb-gift{grid-template-columns:64px minmax(0,1fr);align-items:center}
+.sb-drawer .sb-gift .sb-th{height:64px;background:#F1E7D6}
+.sb-drawer .sb-gift-t{font:600 14.5px/1.3 Jost,system-ui,sans-serif}
+.sb-drawer .sb-gift-t::after{display:none}
+.sb-drawer .sb-gift-p b{font:600 13px/1 Jost,system-ui,sans-serif;letter-spacing:0;color:#2F6B45}
+.sb-drawer .sb-gift-p small{font-size:13px;color:var(--ink3);margin-inline-start:4px}
+/* the cross-sell: one compact row, never more than about a fifth of the sheet */
+.sb-drawer .sb-bundle{margin:12px 0 0;padding:8px 10px;border-radius:14px;background:#F3EBDD;font-size:13px;line-height:1.4;color:var(--ink2);max-height:76px;overflow:hidden}
+.sb-drawer .sb-second{display:flex;align-items:center;gap:10px}
+.sb-drawer .sb-second img{width:40px;height:50px;border-radius:8px;object-fit:cover;flex:none}
+.sb-drawer .sb-second-t{flex:1;min-width:0;font-size:12.5px;line-height:1.35}
+.sb-drawer .sb-second-t b{color:var(--ink);font-weight:600}
+html body .sb-drawer .sb-second-add{flex:none;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--ink);background:#fff;color:var(--ink);font:600 13.5px/1 Jost,system-ui,sans-serif}
+.sb-drawer .sb-bundle a{color:#7E4114}
+/* gift row */
+.sb-drawer .sb-giftopt{margin:12px 0 0;padding:0 12px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.sb-drawer .sb-giftl,.sb-drawer .sb-gifthide{display:flex;align-items:center;gap:10px;min-height:46px;font:500 14.5px/1.3 Jost,system-ui,sans-serif;color:var(--ink);cursor:pointer}
+.sb-drawer .sb-gifthide{min-height:42px;font-weight:400;font-size:14px}
+.sb-drawer .sb-giftopt input[type=checkbox]{width:20px;height:20px;margin:0;accent-color:#2A2016;flex:none}
+.sb-drawer .sb-giftbox{padding:0 0 12px}
+.sb-drawer .sb-giftml{display:block;font-size:12.5px;color:var(--ink3);margin:0 0 6px}
+html body .sb-drawer .sb-giftbox textarea{min-height:64px;font-size:16px;border-radius:10px;background:#FAF6EF}
+.sb-drawer .sb-gifth{margin:2px 0 0;font-size:12px;color:var(--ink3)}
+/* undo */
+.sb-undo{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 14px 8px;padding:8px 8px 8px 14px;border-radius:14px;background:#2A2016;color:#FAF6EF;font-size:13.5px;line-height:1.3}
+[dir="rtl"] .sb-undo{padding:8px 14px 8px 8px}
+.sb-undo[hidden]{display:none}
+.sb-undo span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-undo button{flex:none;min-height:38px;padding:0 14px;border:0;border-radius:999px;background:#E9B978;color:#2A2016;font:600 14px/1 Jost,system-ui,sans-serif;cursor:pointer}
+@media(prefers-reduced-motion:no-preference){.sb-undo:not([hidden]){animation:sbUp .28s cubic-bezier(.2,.8,.2,1) both}}
+@keyframes sbUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* the summary and the one Checkout button, always in view */
+.sb-drawer .sb-df{padding:10px 18px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:#FFFDF9;box-shadow:0 -10px 24px -18px rgba(42,32,22,.35)}
+.sb-applied{margin:0 0 8px;padding:7px 10px;border-radius:10px;background:#EEF3EC;color:#2F6B45;font-size:12.5px;line-height:1.35}
+.sb-applied[hidden]{display:none}
+.sb-sum{display:grid;gap:3px;margin:0 0 10px}
+.sb-drawer .sb-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13.5px;line-height:1.35;color:var(--ink2);margin:0}
+.sb-drawer .sb-row[hidden]{display:none}
+.sb-drawer .sb-row span:last-child{text-align:end}
+.sb-drawer .sb-tot{font-size:17px;color:var(--ink);font-weight:600;padding-bottom:2px}
+.sb-drawer .sb-tot b{font-weight:700;font-variant-numeric:tabular-nums}
+.sb-drawer .sb-ok{color:#2F6B45}
+.sb-drawer .sb-free{flex-wrap:wrap;margin:0}
+.sb-drawer .sb-free .sb-free-t{flex:1 0 100%;margin:2px 0 3px;font-size:12.5px}
+.sb-drawer .sb-free .sb-free-bar{flex:1 0 100%}
+html body .sb-drawer .sb-go{display:flex;align-items:center;justify-content:center;min-height:54px;border-radius:999px;background:#2A2016;color:#FAF6EF;font:600 16.5px/1 Jost,system-ui,sans-serif;letter-spacing:.01em;padding:0 20px}
+html body .sb-drawer .sb-go:hover{background:#7E4114}
+.sb-drawer .sb-go:focus-visible{outline:2px solid #7E4114;outline-offset:3px}
+.sb-drawer .sb-pay{margin:7px 0 0;font-size:12px;line-height:1.4;color:var(--ink3);text-align:center}
+.sb-pay-x{display:none}
+html[data-market="gcc"] .sb-pay-uae,html[data-market="intl"] .sb-pay-uae{display:none}
+html[data-market="gcc"] .sb-pay-x,html[data-market="intl"] .sb-pay-x{display:inline}
+.sb-drawer .sb-err{margin:12px 0 0}
+@media(max-width:700px){
+  /* a bottom sheet: the handle drags it closed */
+  .sb-drawer,[dir="rtl"].sb-drawer{top:auto!important;left:0;right:0;bottom:0;width:100%;max-height:88vh;max-height:88svh;border-radius:22px 22px 0 0;transform:translateY(104%);transition:transform .42s cubic-bezier(.2,.8,.2,1);box-shadow:0 -20px 50px -20px rgba(24,17,9,.45)}
+  .sb-drawer.on,[dir="rtl"].sb-drawer.on{transform:none}
+  .sb-drawer.drag{transition:none}
+  .sb-grab{display:flex;justify-content:center;padding:8px 0 0;touch-action:none;cursor:grab}
+  .sb-grab i{width:40px;height:4px;border-radius:2px;background:rgba(42,32,22,.22)}
+  .sb-dh{padding:4px 16px 8px;touch-action:none}
+  html body .sb-dh h3{font-size:26px}
+  .sb-db{padding:0 16px 12px}
+  .sb-drawer .sb-df{padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+}
+
+/* ---- the peek: rises after an add; a tap opens the whole bag ---- */
+.sb-peek{position:fixed;z-index:997;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));margin:0 auto;max-width:460px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 4px;padding:10px 10px 10px 12px;border-radius:22px;background:#fff;color:#2A2016;font-family:Jost,system-ui,sans-serif;
+  box-shadow:0 22px 50px -18px rgba(24,17,9,.5),0 0 0 1px rgba(42,32,22,.08);transform:translateY(140%);opacity:0;transition:transform .42s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.sb-peek.on{transform:none;opacity:1}
+.sb-peek[hidden]{display:none}
+.sb-pk-main{min-width:0;display:flex;align-items:center;gap:12px;padding:0;border:0;background:none;color:inherit;text-align:start;cursor:pointer;font:inherit}
+.sb-pk-i{flex:none;width:48px;height:60px;border-radius:10px;overflow:hidden;background:#E9E1D3}
+.sb-pk-i img{width:100%;height:100%;object-fit:cover;display:block}
+.sb-pk-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sb-pk-t small{font-size:12.5px;line-height:1.2;color:#2F6B45;font-weight:500}
+.sb-pk-t b{font-size:15px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-pk-t span{font-size:13px;line-height:1.2;color:#6B6256}
+.sb-pk-view{flex:none;font-size:13px;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
+.sb-pk-x{width:36px;height:36px;padding:0;border:0;border-radius:50%;background:#F4EEE3;color:#4A4136;font-size:12px;cursor:pointer;align-self:start}
+.sb-pk-f{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding-top:8px;border-top:1px solid rgba(42,32,22,.08)}
+.sb-pk-tot{flex:1;display:flex;align-items:baseline;gap:8px}
+.sb-pk-tot small{font-size:13px;color:#6B6256}
+.sb-pk-tot b{font-size:16px;font-weight:700;white-space:nowrap}
+html body .sb-pk-go{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:46px;min-width:150px;padding:0 20px;border-radius:999px;background:#2A2016;color:#FAF6EF;text-decoration:none;font:600 15.5px/1 Jost,system-ui,sans-serif}
+.sb-pk-main:focus-visible,.sb-pk-go:focus-visible,.sb-pk-x:focus-visible{outline:2px solid #7E4114;outline-offset:2px;border-radius:12px}
+@media(prefers-reduced-motion:reduce){.sb-peek,.sb-drawer{transition:none!important}}
+
+/* ---- Fold and Drop: the photo folds like a shop-folded tee and drops into the bag ---- */
+.sb-fold{position:fixed;z-index:1001;pointer-events:none;perspective:900px}
+.sb-fold-y,.sb-fold-p{position:absolute;inset:0}
+.sb-fold-y{transform-origin:50% 25%}
+.sb-fold-p{transform-style:preserve-3d}
+.sb-fold-top,.sb-fold-bot{position:absolute;left:0;width:100%;height:50%}
+.sb-fold-top{top:0;border-radius:12px 12px 2px 2px;background-repeat:no-repeat;box-shadow:0 10px 30px -12px rgba(24,17,9,.5)}
+.sb-fold-bot{top:50%;transform-origin:50% 0;transform-style:preserve-3d}
+.sb-fold-bot i{position:absolute;inset:0;background-repeat:no-repeat;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:2px 2px 12px 12px}
+.sb-fold-bot .sb-f2{transform:rotateX(180deg);filter:brightness(.72)}
+/* the product pages' legibility layer sets every <p> to 15px on phones; the bag's lines are sized on purpose */
+html body .sb-drawer p.sb-pay{font-size:12px!important;line-height:1.4!important}
+html body .sb-drawer p.sb-applied{font-size:12.5px!important;line-height:1.35!important}
+html body .sb-drawer p.sb-gifth{font-size:12px!important;line-height:1.4!important}
+html body .sb-drawer .sb-empty p{font-size:24px!important;line-height:1.2!important}
+html body .sb-drawer p.sb-err{font-size:13.5px!important;line-height:1.45!important}
+.sb-drawer .sb-row{font-size:13px;line-height:1.3}
+.sb-drawer .sb-tot{font-size:16.5px}
+.sb-pk-t b{unicode-bidi:plaintext}
+@media(max-width:700px){.sb-drawer .sb-df{padding-top:8px}.sb-sum{margin-bottom:8px}html body .sb-drawer .sb-go{min-height:52px}}
+/* QA round, 30 Oct 2026: tap targets of 40-44px in the bag and the peek */
+.sb-pk-x{position:relative}.sb-pk-x::after{content:"";position:absolute;inset:-4px}
+.sb-szb{min-height:40px}
+html body .sb-drawer .sb-q{width:40px;height:40px;min-width:40px;min-height:40px}
+.sb-chips button{min-width:44px}
+html body .sb-drawer .sb-fitn a,html body .sb-drawer .sb-bundle a,html body .sb-drawer .sb-sum a{padding:10px 0}
+/* S8: mock-ups are labelled in the peek too */
+.sb-pk-i{position:relative}
+.sb-pk-i i{position:absolute;left:3px;bottom:3px;font:400 7.5px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:2px 3px;border-radius:3px;background:rgba(250,246,239,.94);color:#2A2016}
+/* S3: one compact summary: the pair line scrolls with the lines; the foot is total, delivery and returns, Checkout */
+.sb-drawer .sb-lines + .sb-applied,.sb-db .sb-applied{margin:12px 0 0}
+.sb-drawer .sb-free{display:block;font-size:12.5px;line-height:1.4;color:#2F6B45}
+.sb-drawer .sb-free.sb-x-mkt{color:var(--ink2)}
+.sb-drawer .sb-free .sb-free-t{display:block;margin:2px 0 3px;color:var(--ink2)}
+.sb-pk-t b{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}

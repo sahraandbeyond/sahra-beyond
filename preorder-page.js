@@ -67,7 +67,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 const SIZES = ['S', 'M', 'L', 'XL'];
 const FITS = [['regular', 'Regular'], ['oversized', 'Oversized']];
-const SZ = require('./sahel-sizing.js');   /* 27 Oct 2026: the Sahel size charts */
+const SZ = require('./sahel-sizing.js');
+const SP = require('./specimen.js');   /* 30 Oct 2026: the Specimen Sheet (product pages) */   /* 27 Oct 2026: the Sahel size charts */
 /* 30 Oct 2026 (Faheem: size note for repeat buyers). The Founding Edition and Sahel charts do not line up
    (a Founding Regular L is a Sahel Regular S), so a Sahel tee page translates the customer's Founding size by
    chest, using both real charts. Hoodies and the polo have no Founding equivalent, so they get no note. */
@@ -319,141 +320,44 @@ ${CYCLE_CSS}
 @media(prefers-reduced-motion:reduce){#buybar.po-bar{transition:none}.po-sizes.flash{animation:none;background:rgba(233,185,120,.3)}}
 `;
 
-/* the buy box: static shell; the script below fills sizes from Shopify */
-function buyBox(p, stage) {
-  const sizeGroup = (id, label) => `<fieldset class="po-sizes" data-group="${id}"><legend>${label}</legend><div class="po-sz">${SIZES.map(s => `<button type="button" data-size="${s}" aria-pressed="false" disabled>${s}</button>`).join('')}</div></fieldset>`;
-  const sizes = p.oneSize ? '' : p.kit ? sizeGroup('tee', 'Tee size') + sizeGroup('short', 'Short size') : sizeGroup('size', 'Size');
-  const now = IN_HAND || p.inHand;   /* in hand: sold, not pre-ordered */
-  const tab = (price) => `Pay in 4 with<img src="/assets/tabby-badge.svg" alt="Tabby" width="51" height="20">: 4 interest-free payments of ${money(price / 4)}.`;
-  return `<div class="po-buy" id="poBuy" data-handle="${p.handle}" data-kit="${p.kit ? 1 : 0}" data-one="${p.oneSize ? 1 : 0}" data-now="${now ? 1 : 0}" data-gift="${p.noTote ? 0 : 1}">
-      <p class="po-eyebrow">${p.line === 'sahel' ? 'Sahel &middot; The Coast Edition' : 'Sahra Trail'}</p>
-      <h1>${p.title}</h1>
-      ${RATING ? `<a class="po-rate" href="/#s-reviews"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>${RATING}</span></a>` : ''}
-      ${now ? `<p class="po-line st12">In stock. Order by 2 pm for next-working-day delivery in the UAE.</p>` : `<p class="po-line st12">Pre-order. Ships from Fri 30 Oct.</p>`}
-      ${p.inHand ? `<p class="po-price sb-price"${priceAttrs(p.price, p.handle)}>${money(p.price)}</p>` : `${inc('st1', `<p class="po-price st1">${money(pre(p.price))}</p>`)}<p class="po-price st02 sb-price"${priceAttrs(p.price, p.handle)}>${money(p.price)}</p>
-      ${inc('st1', `<p class="po-note st1">Pre-order price: 20% off the ${money(p.price)} full price, until Thu 29 Oct, 23:59. Full price from Fri 30 Oct.</p>`)}`}
-      <p class="po-colour">${p.kind}${p.colour ? ` &middot; Colour: ${p.colour}` : ''}${p.fit ? ` &middot; ${p.fit} fit` : ''}</p>
-      ${p.sibling ? `<p class="po-sib">Also in <a href="/products/${p.sibling}/">${p.siblingFit} fit &rarr;</a></p>` : ''}
-      ${inc('st0', `<div class="st0 po-wait" data-waitlist-wrap>
-        <p class="po-closed">${p.inHand ? 'On sale from Wed 28 Oct at 8 AM, UAE time, with Sahra Trail.' : 'Pre-order opens Wed 28 Oct at 8 AM, UAE time.'} <span data-days></span></p>
-        <form class="po-wait-f" data-waitlist data-source="${p.line === 'sahel' ? 'sahel' : 'trail'}" novalidate>
-          <label for="poWaitEmail">Tell me when it opens</label>
-          <div class="po-wait-r"><input id="poWaitEmail" type="email" name="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required><input type="hidden" name="piece" value="${p.handle}"><button type="submit">Notify me</button></div>
-        </form>
-        <p class="po-wait-ok" role="status">You are on the list. We will email you the evening before it opens.</p>
-        <p class="po-wait-err" data-err role="alert">Please enter a valid email address.</p>
-        <p class="po-small">You will also hear about each new release the evening before it opens. Unsubscribe any time.</p>
-      </div>`)}
-      <div class="st12">
-        ${sizes}
-        ${p.oneSize ? '' : SZ.keyFor(p) ? `<p class="po-ask">${/* 27 Oct 2026 */''}Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart &darr;</a> Still unsure? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us.</a></p>${foundingMatch(SZ.keyFor(p))}` : `<p class="po-ask">No size chart for this piece yet. Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>`}
-        <ul class="po-assure">${now
-          ? '<li>In stock. Order by 2 pm for next-working-day delivery, free across the UAE.</li>'
-          : '<li>Pay today. Ships from Fri 30 Oct, with free delivery across the UAE.</li><li>Cancel free of charge any time before it ships.</li>'}<li>Free 14-day returns and size exchanges in the UAE.</li></ul>
-        ${p.inHand ? `<p class="po-tabby sb-ship-uae sb-aed-only">${tab(p.price)}</p>` : `${inc('st1', `<p class="po-tabby sb-ship-uae sb-aed-only st1">${tab(pre(p.price))}</p>`)}
-        <p class="po-tabby sb-ship-uae sb-aed-only st2">${tab(p.price)}</p>`}
-        <button type="button" class="po-go" id="poGo" disabled>${p.oneSize ? 'Add to bag' : 'Choose a size'}</button>
-        <p class="po-msg" id="poMsg" role="status" aria-live="polite"></p>
-        <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>
-      </div>
-      <div id="buybar" class="po-bar st12" role="region" aria-label="Buy ${esc(p.plain)}"><span class="pb-txt"><span class="pb-p">${p.inHand ? `<span class="sb-price"${priceAttrs(p.price, p.handle)}>${money(p.price)}</span>` : inc('st1', `<span class="st1">${money(pre(p.price))}</span>`) + `<span class="st02 sb-price"${priceAttrs(p.price, p.handle)}>${money(p.price)}</span>`}</span><span class="pb-s">${now ? 'In stock, free UAE delivery' : 'Pre-order, ships from Fri 30 Oct'}</span></span>${!p.oneSize && !p.kit ? `<span class="pb-sz" role="group" aria-label="Size">${SIZES.map(z => `<button type="button" data-bsize="${z}" aria-pressed="false" disabled>${z}</button>`).join('')}</span>` : ''}<button type="button" class="pb-go" id="pbGo">${p.oneSize ? 'Add to bag' : now ? 'Add to bag' : 'Pre-order'}</button></div>
-      <p class="po-small">${p.noTote ? 'Free delivery across the UAE. Returns within 14 days of delivery.' : 'Free delivery across the UAE, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
-    </div>`;
-}
-
+/* 30 Oct 2026: the old buy box (buyBox) and its script (CLIENT) gave way to the Specimen Sheet: specimen.js + assets/sahra-specimen.js */
 /* the shop's real review total (Judge.me, content/reviews), for the line under the product name. Sahel and Sahra Trail
    have no reviews of their own yet, so it says whose they are. */
 const RATING = (function () { try { const a = require('./reviews-render.js').loadAll(); let n = 0, t = 0; a.forEach(d => { n += d.count; t += d.average * d.count; });
   return n >= 5 ? `${(t / n).toFixed(1)} from ${n} customer reviews of our Founding Edition` : ''; } catch (e) { return ''; } })();
-const CLIENT = `<script>
-(function(){
-  var box=document.getElementById('poBuy');if(!box)return;
-  var handle=box.getAttribute('data-handle'),kit=box.getAttribute('data-kit')==='1',one=box.getAttribute('data-one')==='1',go=document.getElementById('poGo'),msg=document.getElementById('poMsg');
-  var IN_HAND=box.getAttribute('data-now')==='1',VS=null,sel={};
-  function stage(){return +(document.documentElement.getAttribute('data-stage')||0);}
-  function label(){return IN_HAND?'Add to bag':'Pre-order';}
-  function pick(){
-    if(!VS)return null;
-    if(one)return VS[0]||null;
-    var want=kit?(sel.tee&&sel['short']?sel.tee+' / '+sel['short']:null):sel.size;
-    if(!want)return null;
-    for(var i=0;i<VS.length;i++)if(VS[i].title===want)return VS[i];
-    return null;
-  }
-  function paint(){
-    var v=pick(),ready=one||(kit?(sel.tee&&sel['short']):sel.size);
-    if(!VS){go.disabled=true;go.textContent=one?'Loading':'Loading sizes';return;}
-    if(!ready){go.disabled=false;go.setAttribute('data-need','1');go.textContent=kit?'Choose both sizes':'Choose a size';bar();return;}
-    go.removeAttribute('data-need');
-    if(!v||!v.availableForSale){go.disabled=true;go.textContent=one?'Sold out':'Sold out in that size';bar();return;}
-    go.disabled=false;go.textContent=label();bar();
-  }
-  /* 28 Oct 2026: a size is needed: say so, take them to the sizes and light them up, rather than a dead button */
-  function needSize(){var fs=box.querySelector('.po-sizes');msg.textContent=kit?'Choose a size for the tee and the short first.':'Choose your size first.';
-    if(fs){fs.scrollIntoView({behavior:'smooth',block:'center'});fs.classList.remove('flash');void fs.offsetWidth;fs.classList.add('flash');var b=fs.querySelector('button:not(:disabled)');if(b)try{b.focus({preventScroll:true});}catch(e){}}}
-  /* the phone's sticky bar mirrors the size buttons and the main button */
-  var bb=document.getElementById('buybar'),bgo=document.getElementById('pbGo');
-  function bar(){if(!bb)return;var ready=one||(kit?(sel.tee&&sel['short']):sel.size);
-    [].forEach.call(bb.querySelectorAll('[data-bsize]'),function(b){var z=b.getAttribute('data-bsize');b.disabled=!(VS&&avail('size',z));b.setAttribute('aria-pressed',sel.size===z?'true':'false');});
-    if(bb.querySelector('[data-bsize]'))bb.classList.add('pb-has-sz');
-    bgo.disabled=!!(VS&&ready&&go.disabled);bgo.textContent=!VS?'Loading':(!ready?(kit?'Choose sizes':(bb.querySelector('[data-bsize]')?label():'Choose a size')):go.textContent);}
-  /* a size is disabled only when no variant using it can be bought */
-  function avail(group,size){
-    return VS.some(function(v){if(!v.availableForSale)return false;var t=v.title.split(' / ');
-      if(!kit)return t[0]===size;
-      if(group==='tee')return t[0]===size&&(!sel['short']||t[1]===sel['short']);
-      return t[1]===size&&(!sel.tee||t[0]===sel.tee);});
-  }
-  function sizes(){
-    [].forEach.call(box.querySelectorAll('.po-sizes'),function(fs){var g=fs.getAttribute('data-group');
-      [].forEach.call(fs.querySelectorAll('button'),function(b){var s=b.getAttribute('data-size'),ok=VS&&avail(g,s);
-        b.disabled=!ok;b.setAttribute('aria-pressed',sel[g]===s?'true':'false');b.setAttribute('aria-label',s+(ok?'':', sold out'));});});
-  }
-  box.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.po-sizes button');if(!b||b.disabled)return;
-    var g=b.closest('.po-sizes').getAttribute('data-group'),s=b.getAttribute('data-size');sel[g]=s;msg.textContent='';sizes();paint();});
-  if(bb){bb.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-bsize]');if(!b||b.disabled)return;sel.size=b.getAttribute('data-bsize');msg.textContent='';sizes();paint();});
-    bgo.addEventListener('click',function(){if(go.getAttribute('data-need')){needSize();return;}go.click();});
-    /* show the bar once the main button has scrolled out of view */
-    try{new IntersectionObserver(function(es){bb.classList.toggle('on',!es[0].isIntersecting);},{rootMargin:'0px 0px -40px 0px'}).observe(go);}catch(e){bb.classList.add('on');}}
-  go.addEventListener('click',function(){if(go.getAttribute('data-need')){needSize();return;}var v=pick();if(!v||!window.SahraCart)return;go.disabled=true;go.textContent='Adding';
-    window.SahraCart.add(v.id,1,box.getAttribute('data-gift')==='0'?{gift:false}:undefined).then(function(){go.textContent=label();go.disabled=false;msg.textContent='';
-      try{if(window.track)track('add_to_cart',{item_id:handle,size:v.title,via:'preorder'});}catch(e){}},
-      function(){go.disabled=false;go.textContent=label();msg.textContent='That did not go into your bag. Please try again, or message us on WhatsApp.';});});
-  var tries=0;
-  function load(){
-    if(stage()<1)return;
-    if(!window.SahraCart){if(tries++<40){setTimeout(load,150);return;}msg.textContent='Sizes are not loading. Refresh the page, or message us on WhatsApp.';return;}
-    window.SahraCart.variants(handle).then(function(vs){
-      if(!vs||!vs.length){VS=null;go.disabled=true;go.textContent='Unavailable just now';msg.textContent='Sizes are not loading. Refresh the page in a minute, or message us on WhatsApp.';return;}
-      VS=vs;sizes();paint();
-    },function(){msg.textContent='Sizes are not loading. Refresh the page, or message us on WhatsApp.';});
-  }
-  document.addEventListener('sb:stage',load);
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load);else load();
-})();
-</script>`;
 
 function productPage(p, all, SITE, stage) {
   const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
   const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
-  return `${stageHead()}<style>${CSS}</style>
-<main class="po-wrap">
-  <p class="po-crumb"><a href="/">Home</a> / <a href="/new/#${p.line}">${p.line === 'sahel' ? 'Sahel' : 'Sahra Trail'}</a> / ${p.title}</p>
-  <div class="po-grid">
-    ${gallery(p)}
-    ${buyBox(p, stage)}
-  </div>
+  /* 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top and buy sheet as the Founding Edition pages (specimen.js) */
+  const S = SP.fromPreorder(p);
+  const ask = `<a href="${WA}?text=${encodeURIComponent('Hi, a size question about ' + (/^The /.test(p.plain) ? p.plain : 'the ' + p.plain) + ' before I order.')}" target="_blank" rel="noopener">`;
+  const help = p.oneSize ? '' : SZ.keyFor(p) ? `<p class="ss-help">Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart</a>. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
+  return `${stageHead()}${SP.preload(S)}${SP.HEAD}<style>${CSS}</style>
+<main class="po-main">
+  ${SP.top(S, {
+    crumb: `<nav class="ss-crumb" aria-label="Breadcrumb"><a href="/">Home</a><i aria-hidden="true">/</i><a href="/new/#${p.line}">${p.line === 'sahel' ? 'Sahel' : 'Sahra Trail'}</a><i aria-hidden="true">/</i><span aria-current="page">${p.title}</span></nav>`,
+    h1: p.title,
+    tabby: false,   /* the Sahel and Trail pages never loaded Tabby's widget; the sheet carries the Tabby line */
+    rating: RATING ? `<a class="po-rate" href="/#s-reviews"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>${RATING}</span></a>` : '',
+    help,
+    extra: `<p class="po-small">${p.noTote ? 'Free delivery across the UAE. Returns within 14 days of delivery.' : 'Free delivery across the UAE, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
+      <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>`
+  })}
+  <div class="po-wrap">
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
       <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.line === 'sahel' ? 'Photographed from the real piece.' : 'Photos of the real piece will be added when it arrives.'} Designed in the UAE.</p></div>
   </section>
-  ${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}
+  ${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
   ${crossLines(p, card)}
+  </div>
+  ${SP.nextPiece(S)}
 </main>
-${CLIENT}`;
+${SP.SCRIPT}`;
 }
 
 /* 27 Oct 2026 (Faheem: "Cross-sell between lines"): every Sahel and Sahra Trail page also shows the other new line

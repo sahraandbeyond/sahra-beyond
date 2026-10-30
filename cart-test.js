@@ -442,7 +442,8 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
     const html = String(env.byId.sbFree.innerHTML);
     check('UAE cart never shows a distance to free delivery',
       !/away from free delivery/.test(html), 'meter: ' + html.slice(0, 160));
-    check('UAE cart states delivery is free', /Free next-day delivery/.test(html),
+    /* 30 Oct 2026 (Fold and Drop bag, QA round): one line, "Free delivery, next working day · free 14-day returns" */
+    check('UAE cart states delivery is free', /Free delivery, next working day/.test(html),
       'meter: ' + html.slice(0, 160));
   }
 

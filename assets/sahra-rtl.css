@@ -1,0 +1,167 @@
+/* Shared RTL layer for Arabic pages. Copied from the shell CSS in build.js (21 Sep 2026 rules), so pages
+   that are not built through shell() get the same Arabic typography and bidi fixes. */
+[dir="rtl"]{
+  --serif:'Amiri', 'Cormorant Garamond', Georgia, serif;
+  --sans:'IBM Plex Sans Arabic', Jost, system-ui, sans-serif;
+  --mono:'IBM Plex Sans Arabic', Jost, system-ui, sans-serif;
+}
+/* the Latin wordmark (.brand-sahra/.brand-beyond in the header, .logo-a/.logo-b on the product
+   template) is excluded, so it keeps the face and tracking it has on the English page */
+[dir="rtl"] body,[dir="rtl"] p,[dir="rtl"] li,[dir="rtl"] a,[dir="rtl"] span:not(.brand-sahra):not(.brand-beyond),
+[dir="rtl"] div:not(.logo-a):not(.logo-b),[dir="rtl"] button,[dir="rtl"] input,[dir="rtl"] label,
+[dir="rtl"] td,[dir="rtl"] th,[dir="rtl"] .sb-house{
+  font-family:var(--sans);
+}
+[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,[dir="rtl"] h4,
+[dir="rtl"] .wordmark,[dir="rtl"] .logo{
+  font-family:var(--serif);
+}
+/* the four inheritance traps, cleared site-wide */
+/* html[dir=rtl], not [dir=rtl]: specificity (0,1,1) not (0,1,0). The legibility
+   layer is injected AFTER this block and pins .eyebrow/.card-place/.sb-price and
+   ~30 other classes to letter-spacing:.09em!important at (0,1,0). Equal
+   specificity + equal !important = source order wins, and it is later - so the
+   reset LOST. Measured: an .eyebrow holding Arabic computed to 1.17px tracking,
+   which pulls a connected script into loose disconnected glyphs. The three
+   current /ar/ pages dodge it only because they use .ar-* classes; it would have
+   bitten the moment Arabic reached the shop and product templates.
+   ::before/::after are included because bare * does not match generated content. */
+html[dir="rtl"] *:not(.brand-sahra):not(.brand-beyond):not(.logo-a):not(.logo-b),
+html[dir="rtl"] *:not(.brand-sahra):not(.brand-beyond):not(.logo-a):not(.logo-b)::before,
+html[dir="rtl"] *:not(.brand-sahra):not(.brand-beyond):not(.logo-a):not(.logo-b)::after,
+html[dir="rtl"] .sb-house{
+  letter-spacing:0!important;
+  font-size-adjust:none!important;
+  text-transform:none!important;
+  font-style:normal!important;
+  font-variant-ligatures:normal;
+}
+/* The reset above used to flatten the Latin wordmark too, and two fixed values (3px / 2.5px) put
+   tracking back - but the English pages track it 2.5px / 1.5px on phones and 4px / 2px on the
+   product template, so the Arabic wordmark looked different. Since 30 Oct the wordmark is simply
+   excluded from the reset and keeps whatever the page gives it, exactly as in English. */
+/* Latin-tuned underline offset collides with Arabic sub-baseline strokes and the
+   tanween in this copy (غرامًا). Relative, so it scales with the type. */
+[dir="rtl"] a{text-underline-offset:.15em}
+/* Arabic sits smaller than Latin at the same point size and needs more leading;
+   these are ratios, so every responsive size rule upstream still governs. */
+[dir="rtl"] body{font-size:1.06em;line-height:1.85}
+[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3{line-height:1.45}
+/* mirror the things that were pinned to a physical side */
+[dir="rtl"] .crumbs,[dir="rtl"] .back,[dir="rtl"] .eyebrow,
+[dir="rtl"] .prod-txt,[dir="rtl"] .foot-links,[dir="rtl"] .links{text-align:right}
+[dir="rtl"] .hdr-nav,[dir="rtl"] .nav-links{flex-direction:row-reverse}
+/* Latin fragments inside Arabic - prices, GSM, the wordmark, codes - must run
+   LTR inside the RTL flow or the digits and units reorder on screen. */
+/* Latin-only brand furniture must be ISOLATED from the RTL flow. Without this
+   the bidi algorithm reorders "SAHRA & BEYOND" to "Sahra / Beyond &" and the
+   copyright line to "2026 ©" \u2014 the ampersand and the symbol are neutral
+   characters, so they take the paragraph direction unless told otherwise.
+   isolate, not embed: these are self-contained runs, not quotes inside Arabic. */
+[dir="rtl"] .brand,[dir="rtl"] .brand-text,[dir="rtl"] .brand-sahra,
+[dir="rtl"] .brand-beyond,[dir="rtl"] .logo,[dir="rtl"] .wordmark,
+[dir="rtl"] .ftr-tagline,[dir="rtl"] .ftr small,[dir="rtl"] .ftr-legal{
+  direction:ltr;unicode-bidi:isolate;
+}
+/* the footer is still English in pass 1; keep it reading left-to-right as a
+   block rather than half-mirrored, which is harder to read than either. */
+[dir="rtl"] .ftr{direction:ltr;text-align:center}
+
+/* ---- Arabic mirror pages (ar-mirror.js, 30 Oct 2026) ----
+   On the mirrored pages the footer IS translated, so it reads right-to-left
+   like the rest of the page (the core pages keep their LTR English footer). */
+html[data-ar-mirror] .ftr{direction:rtl}
+html[data-ar-mirror] .crumbs,html[data-ar-mirror] .breadcrumbs,html[data-ar-mirror] nav[aria-label="Breadcrumb"]{text-align:right}
+/* Latin runs inside Arabic: prices, sizes, codes stay left-to-right as a unit */
+html[data-ar-mirror] .sb-price,html[data-ar-mirror] [data-size],html[data-ar-mirror] code{unicode-bidi:isolate}
+
+/* ==========================================================================
+   Fix round, 30 Oct 2026 - content/ar-mirror/_qa-rtl.md
+   Several site rules beat the plain [dir=rtl] overrides above: "html body :is(...)" and
+   "html body footer:not(#sbx)" rules in sahra-system.css (which loads AFTER this file) and the
+   "body.buy-page ..." / "html body .loc-hero.lh-ph.lh-ph ..." rules inside the pages. Rules in
+   this block carry :not(#sb-ar-a) (one ID's weight, (1,x,y)) so they win on specificity
+   whatever the load order, and !important where the rule they replace is !important.
+   ========================================================================== */
+
+/* S2. Letter-spacing pulls Arabic letters apart ("للـجنسين"). Two :not(#id) give (2,5,2), above
+   every tracking rule on the site; the Latin wordmark is excluded and keeps its English tracking. */
+html[lang="ar"] body *:not(.brand-sahra):not(.brand-beyond):not(.logo-a):not(.logo-b):not(#sb-ar-a):not(#sb-ar-b),
+html[lang="ar"] body *:not(.brand-sahra):not(.brand-beyond):not(.logo-a):not(.logo-b):not(#sb-ar-a):not(#sb-ar-b)::before,
+html[lang="ar"] body *:not(.brand-sahra):not(.brand-beyond):not(.logo-a):not(.logo-b):not(#sb-ar-a):not(#sb-ar-b)::after,
+html[lang="ar"] body .sb-house:not(#sb-ar-a):not(#sb-ar-b){letter-spacing:0!important}
+
+/* S5. The house line under the wordmark is Arabic inside a left-to-right Latin block: its own
+   direction (full stop on the left, at the end of the sentence), no tracking, an Arabic face. */
+html[dir="rtl"] .brand .sb-house:not(#sb-ar-a),html[dir="rtl"] .logo .sb-house:not(#sb-ar-a){
+  direction:rtl;unicode-bidi:isolate;text-align:right;font-family:var(--sans)!important;font-size:9px}
+
+/* B4. Desktop header: the Arabic labels are wider than the English ones and the link row
+   overflowed its box ("Engli"). Tighter pills, and the links read in Arabic order: the first link
+   beside the logo on the right, the language link last (the old row-reverse un-mirrored it). */
+html[dir="rtl"] .hdr-nav:not(#sb-ar-a),html[dir="rtl"] .nav-links:not(#sb-ar-a){flex-direction:row;direction:rtl}
+html[lang="ar"] .hdr-nav a:not(#sb-ar-a){padding-left:9px;padding-right:9px}
+html[lang="ar"] .hdr-nav:not(#sb-ar-a){gap:1px}
+
+/* S1. Hero blocks on guide, collection, location and trail pages start on the right. The gold
+   rule under the title fades towards the left. */
+html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a),
+html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) h1,
+html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) .lh-k,
+html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) .lede,
+html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) .lg-ar,
+html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) .crumbs{text-align:right!important}
+html[dir="rtl"] .loc-hero h1:not(#sb-ar-a)::after{background:linear-gradient(270deg,#E9B978,rgba(233,185,120,0))!important}
+html[dir="rtl"] .tr-hero .tr-tagline:not(#sb-ar-a){direction:rtl;unicode-bidi:isolate}
+
+/* S8. Tables, captions, the packing list, the guide disclaimer and the product accordion
+   headings were pinned text-align:left. */
+html[dir="rtl"] table.sg th:not(#sb-ar-a),html[dir="rtl"] table.sg td:not(#sb-ar-a),
+html[dir="rtl"] .sb-table th:not(#sb-ar-a),html[dir="rtl"] .sb-table td:not(#sb-ar-a),html[dir="rtl"] .sb-table caption:not(#sb-ar-a),
+html[dir="rtl"] table.ssz th:not(#sb-ar-a),html[dir="rtl"] table.ssz td:not(#sb-ar-a),html[dir="rtl"] table.ssz caption:not(#sb-ar-a),
+html[dir="rtl"] table.sz th:not(#sb-ar-a),html[dir="rtl"] table.sz td:not(#sb-ar-a),html[dir="rtl"] .sz-cap:not(#sb-ar-a),
+html[dir="rtl"] .size-table th:not(#sb-ar-a),html[dir="rtl"] .size-table td:not(#sb-ar-a),
+html[dir="rtl"] table.cmp th:not(#sb-ar-a),html[dir="rtl"] table.cmp td:not(#sb-ar-a),
+html[dir="rtl"] .pack-row:not(#sb-ar-a),html[dir="rtl"] .pack-row .pk-name:not(#sb-ar-a),
+html[dir="rtl"] .pack-row .pk-note:not(#sb-ar-a),html[dir="rtl"] .pack-row .pk-qty:not(#sb-ar-a),
+html[dir="rtl"] .sb-notop:not(#sb-ar-a),html[dir="rtl"] .sb-notop p:not(#sb-ar-a),
+html[dir="rtl"] .pdp-acc-h span:not(#sb-ar-a),html[dir="rtl"] .lg-ar:not(#sb-ar-a),
+html[dir="rtl"] .sh-sc:not(#sb-ar-a),html[dir="rtl"] .ig-foot-cap:not(#sb-ar-a){text-align:right!important}
+
+/* S7. The check marks on the product page's delivery and returns rows sit at the start of the
+   line (the right), not pinned to the left edge. */
+html[dir="rtl"] .ss-promise li:not(#sb-ar-a){padding:7px 22px 7px 0}
+html[dir="rtl"] .ss-promise li:not(#sb-ar-a)::before{left:auto;right:3px}
+
+/* S6. The shop ring and the card slideshows: "next" on the left, "previous" on the right (the
+   Arabic copy of the shop script also turns the ring the other way - see ar-mirror.js). */
+html[dir="rtl"] .sring-arrow.prev:not(#sb-ar-a){left:auto;right:max(8px,calc(50% - 47vw))}
+html[dir="rtl"] .sring-arrow.next:not(#sb-ar-a){right:auto;left:max(8px,calc(50% - 47vw))}
+@media(max-width:760px){
+  html[dir="rtl"] .sring-arrow.prev:not(#sb-ar-a){right:6px}
+  html[dir="rtl"] .sring-arrow.next:not(#sb-ar-a){left:6px}
+}
+html[dir="rtl"] .nav-arrow.prev:not(#sb-ar-a){left:auto;right:6px}
+html[dir="rtl"] .nav-arrow.next:not(#sb-ar-a){right:auto;left:6px}
+@media(min-width:861px){
+  html[dir="rtl"] .nav-arrow.prev:not(#sb-ar-a){right:12px}
+  html[dir="rtl"] .nav-arrow.next:not(#sb-ar-a){left:12px}
+}
+html[dir="rtl"] .slide-pause:not(#sb-ar-a){right:auto;left:10px}
+
+/* N1. Footer: the core pages' footer is Arabic now too (sahra-ar-ui.js), so it reads right to
+   left like the mirrored pages; the guide columns follow. */
+html[dir="rtl"] .ftr:not(#sb-ar-a),html[dir="rtl"] footer .foot-guides:not(#sb-ar-a){direction:rtl}
+/* N2. The bag's quantity stepper keeps the usual "− 1 +" order */
+html[dir="rtl"] .sb-qty:not(#sb-ar-a){direction:ltr}
+/* N3. Card and wallet names in the payment line stay whole Latin runs */
+html[dir="rtl"] .ss-trust:not(#sb-ar-a),html[dir="rtl"] .sb-pay-uae:not(#sb-ar-a){unicode-bidi:plaintext}
+/* N4. The gallery caption starts on the right and may take two lines in Arabic instead of an ellipsis */
+html[dir="rtl"] .ss-cap:not(#sb-ar-a){left:auto;right:12px;white-space:normal;text-overflow:clip;border-radius:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* N12. "· Pantone 19-4011 TCX": the code is a Latin run; the bullet stays in front of it */
+html[dir="rtl"] .cw-txt:not(#sb-ar-a){unicode-bidi:isolate}
+/* N10. The place-guide tab strip scrolls: a soft edge on the left says there is more */
+html[dir="rtl"] .lg-tabs:not(#sb-ar-a){-webkit-mask-image:linear-gradient(270deg,#000 85%,transparent);mask-image:linear-gradient(270deg,#000 85%,transparent)}
+/* S1 (shop): the shop hero pins its copy text-align:left!important at (0,4,2)/(0,4,3) */
+html[dir="rtl"] .shophero .hero-c:not(#sb-ar-a),html[dir="rtl"] .shophero .hero-c:not(#sb-ar-a) h1,
+html[dir="rtl"] .shophero .hero-c:not(#sb-ar-a) p,html[dir="rtl"] .shophero .hero-c:not(#sb-ar-a) .eyebrow{text-align:right!important}

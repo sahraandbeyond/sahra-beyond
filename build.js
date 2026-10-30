@@ -4817,6 +4817,11 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
   console.log(`  ✓ hreflang pairs declared from ${n} English page(s)`);
 })();
 
+/* Arabic mirror of every other indexable page (30 Oct 2026, Faheem: "create Arabic pages for all
+   our site ... make them live"). See ar-mirror.js. Runs before the site-wide walkers below so the
+   Arabic pages get the same bar, nav, pixels, asset hashes, WebP and legibility layer. */
+require('./ar-mirror.js').build();
+
 /* ==========================================================================
    AED 50 first-order offer — bar + email-capture modal on every page.
    ==========================================================================

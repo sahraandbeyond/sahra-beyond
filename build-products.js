@@ -6,6 +6,7 @@
    ========================================================================== */
 const fs = require('fs');
 const RV = require('./reviews-render.js');
+const SP = require('./specimen.js');   /* 30 Oct 2026: the Specimen Sheet and its buy sheet */
 const FG = require('./footer-guides.js');
 const IG = require('./instagram-feed.js');   /* 4 Oct 2026: 'Seen on our feed' rail and the footer row */
 let AR_CORE = false;   /* set by build.js from AR_CORE_PUBLIC */
@@ -194,6 +195,7 @@ function pairStrip(p, all){
 }
 
 function page(p, all, SITE, SHOP_URL, LAUNCHED){
+  const SPS = SP.fromFounding(p, all);
   /* 1 Oct 2026 (SEO handover item 22): the oversized pages shared 76-80% of their text with
      the regular pages. On an oversized page with a regular sibling, the fit leads and the
      shared story (place, design, fabric, care) is condensed with links to the full version. */
@@ -1085,7 +1087,8 @@ h1 .nw{white-space:nowrap}
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=4cd8d173">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=14054ff1">
-${(function(){ const g = galShots(p)[0]; if (!g) return ''; const ss = cardSrcset(g[0]).match(/srcset="([^"]+)" sizes="([^"]+)"/); return ss ? `<link rel="preload" as="image" href="${g[0]}" imagesrcset="${ss[1]}" imagesizes="${ss[2]}" fetchpriority="high">` : `<link rel="preload" as="image" href="${g[0]}" fetchpriority="high">`; })()}
+${SP.preload(SPS)}
+${SP.HEAD}
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 </head>
 <body class="buy-page">
@@ -1102,116 +1105,23 @@ ${(function(){ const g = galShots(p)[0]; if (!g) return ''; const ss = cardSrcse
 
 <main id="main">
 <!-- data-bg drives the scroll-linked background journey (same technique as the shop page) -->
-<div class="wrap" data-bg="#FAF6EF">
-  <nav class="crumb" aria-label="Breadcrumb">${crumbTrail(p).map(c => c[1] ? `<a href="${c[1]}">${esc(c[0])}</a>` : `<span aria-current="page">${esc(c[0])}</span>`).join('<span aria-hidden="true">/</span>')}</nav>
-
-  <section class="pdp">
-    <div class="media">
-      <div class="gal-main" tabindex="0" role="button" aria-label="Zoom product image">
-        <span class="gal-hint">Click to zoom</span>
-        <button class="gal-pause" id="galPause" type="button" aria-label="Pause slideshow" aria-pressed="false">&#10073;&#10073;</button>
-${galShots(p).map((s,i)=>`
-        <img class="${i===0?'on':''}${s[3]==='compare'?' fit-contain':''}"${s[3]==='worn'?' data-worn="1"':''}${s[4]?` data-tag="${esc(s[4])}"`:''}${i===0?` fetchpriority="high"${p.heroPos ? ` style="object-position:${esc(p.heroPos)}"` : ''} src="../..${s[0]}"${cardSrcset(s[0])}`:` decoding="async" data-src="../..${s[0]}"${cardSrcset(s[0]).replace(' srcset=',' data-srcset=').replace(' sizes=',' data-sizes=')}`} alt="${esc(s[1]||'')}">`).join('')}
-        ${/* 13 Oct 2026 (speed): the other photos sit in the viewport at opacity 0, so loading="lazy" never held them back and all of them raced the first one. They now get their sources after the page has loaded, or at the first swipe or thumbnail tap. */''}<noscript><style>.gal-main img[data-src]{display:none}</style></noscript>
-        ${p.fitLabel ? `<span class="gal-fit" aria-hidden="true">${esc(p.fitLabel)}</span>` : ''}
-        ${/* 13 Oct 2026 (retention audit): on phones the thumbnail rail gives way to a full-width photo, so the count and dots say there is more to swipe */''}<div class="gal-dots" aria-hidden="true"><span class="gal-n"><b>1</b> / ${galShots(p).length}</span><span class="gal-sw">Swipe &rsaquo;</span></div>
-      </div>
-      <div class="gal-thumbs" id="thumbs">
-${galShots(p).map((s,i)=>`
-        <button${i===0?' class="on"':''} data-i="${i}" aria-label="${esc(s[2])}"><img${s[3]==='compare'?' class="fit-contain"':''} loading="lazy" decoding="async" src="../..${cardOf(s[0]) || s[0]}" alt=""></button>`).join('')}
-      </div>
-      ${/* Audit 13 Sep: 4 of 11 personas read this caption on a Regular page, saw "Oversized fit", and lost trust. The same fit-aware wording already existed on the answer-list copy below; it was missing on the one people actually see. */''}
-      ${/* Faheem, 13 Sep: "Model wears XL" under the MODEL photos. On a single-cut garment
-           the note is a plain size credit, so it must not caption the two ghost-mannequin
-           studio frames that open the polo gallery - data-worn-only binds it to the frames
-           that actually show the model. The tees' note is a standing cross-fit warning about
-           the whole gallery and stays visible throughout, so it is deliberately not tagged. */''}
-      ${p.modelInfo ? `<p class="gal-model${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' && p.wornFitMatches !== true ? ' gal-model-alt' : ''}"${(p.garment === 'polo' || !p.fitLabel) ? ' data-worn-only="1"' : ''}>${/Oversized/.test(p.modelInfo) && p.fit !== 'oversized' && p.wornFitMatches !== true ? 'Photographed on the Oversized cut \u2014 this page is the ' + esc(p.fitLabel || 'Regular fit').replace(/ fit$/,'') + ' fit. ' : ''}${esc(p.modelInfo)}</p>` : ''}
-      ${/* 24 Sep 2026 (phone layout review): photo first. On phones the head card is eyebrow, title and price only; the fabric line and rating follow the photo here. */''}
-      <div class="pdp-subm"><p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>${RV.ratingLine(designHandles(p))}${RV.fitVerdict(designHandles(p))}</div>
-    </div>
-
-    <div class="buy">
-      <div class="buy-head">
-      <div class="buy-top">${p.placeSlug ? `<a class="eyebrow plink" href="/locations/${p.placeSlug}/">Inspired by ${esc(p.placeName)} · ${esc(p.placeEmirate === 'RAK' ? 'Ras Al Khaimah' : p.placeEmirate)} &rarr;</a>` : `<span class="eyebrow plink">${esc(p.eyebrow || 'Sahra &amp; Beyond')}</span>`}</div>
-      <h1${productH1(p).length > 26 ? ' class="h1-2l"' : ''}>${esc(productH1(p)).replace('T-Shirt', '<span class="nw">T-Shirt</span>')}</h1>
-      ${/* Faheem, 10 Sep: "we're not highlighting that this is 100% 230gsm heavyweight cotton. This info should be right below the title" */''}
-      <p class="fabric-line">${p.garment === 'polo' ? FABRIC_LINE.polo : FABRIC_LINE.tee}</p>
-      ${/* 15 Sep audit: this product's rating sat 6,600px below its price. A compact line
-           here, ONLY when this product has reviews, with ITS count - never the sitewide
-           pooled number - linking to its own reviews section. */''}
-      ${/* 23 Sep 2026: pooled per design, then store-wide, and always labelled as such (see reviews-render.js). */''}
-      ${RV.ratingLine(designHandles(p))}
-      ${RV.fitVerdict(designHandles(p))}
-      <div class="price-row"><div class="price"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div><span data-sb-curslot></span></div>
-      ${/* 15 Oct 2026: Tabby is live at checkout. One quiet line under the price (marketing panel); sahra-cart.js swaps in Tabby's own widget once the public key is set. UAE market only. */''}<div class="sb-tabby sb-tabby-pdp" data-tabby-price="${esc(String(p.price))}" data-tabby-source="product"><span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of AED ${esc(tabbyQ(p.price))}</span></div>
-      </div>
-      <div class="buy-body">
-      ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-d"><b>Any 2 tees for AED 359</b> &middot; mix designs and fits &mdash; applied automatically in your bag</p>` : ''}
-      <div class="vat"><span class="sb-ship-uae"></span><span class="sb-ship-gcc">14-day returns &middot; duties, if any, are paid on arrival</span><span class="sb-ship-intl">14-day returns &middot; duties, if any, are paid on arrival</span></div>
-      ${/* Faheem, 10 Sep: "move the size selection and add to cart right under the shirt title. Users should
-           be able to see the option and the photos at the same time." The lede, spec chips, colourway and
-           occasion now live in the two folds that open the answer list below the buy box. */''}
-      <!-- Live size availability, fetched from Shopify. Hidden until data arrives so we never
-           show stock we can't verify. -->
-      <!-- Pre-launch only. When the buy box is live it owns size selection, and a
-           second, non-clickable row of the same sizes above it read as a broken
-           control: a customer clicked it, nothing happened, and he assumed the
-           store was not open. The scarcity line survives inside the buy box. -->
-      ${LAUNCHED ? '' : `<div class="stock" id="stock" hidden>
-        <div class="stock-lab">Available sizes</div>
-        <div class="stock-row" id="stock-row"></div>
-        <div class="stock-note" id="stock-note"></div>
-      </div>`}
-      ${LAUNCHED ? `
-      <!-- Buy box. Product pages are where search and social traffic lands, so
-           they must sell directly instead of bouncing to /shop/ to start again. -->
-      <div class="pdp-buy" id="pdpBuy" data-handle="${p.id}">
-        ${/* 4 Oct 2026 (CRO panel, idea 8): the two fits of a design as one control, not a text link */''}${p.siblingOf && p.garment !== 'polo' ? `<div class="pdp-fits" role="group" aria-label="Fit"><a class="pdp-fit${p.fit !== 'oversized' ? ' on' : ''}" href="/products/${p.siblingOf}-regular/"${p.fit !== 'oversized' ? ' aria-current="page"' : ''}><b>Regular</b><span>Sits on the shoulder</span></a><a class="pdp-fit${p.fit === 'oversized' ? ' on' : ''}" href="/products/${p.siblingOf}-oversized/"${p.fit === 'oversized' ? ' aria-current="page"' : ''}><b>Oversized</b><span>Dropped shoulder, wider body</span></a></div>` : ''}
-        <div class="pdp-sizes-label">Size <a class="size-guide-link" href="/size-guide/#founding">Size guide &rarr;</a></div>
-        <div class="pdp-sizes" id="pdpSizes" role="group" aria-label="Choose a size">
-          ${/* 23 Sep 2026: the four sizes paint with the page; live stock fills them in */''}${['S','M','L','XL'].map(z => `<button type="button" class="pdp-size pdp-size-wait" aria-pressed="false">${z}</button>`).join('')}
-        </div>
-        ${/* the fit, explained where the decision happens (5 Sep 2026): a cold reader could not tell Regular from Oversized at the size picker */''}
-        ${/* the polo is graded to the Regular tee chart, and that chart runs slim. This line
-             used to say "One cut, true to size. Take your usual letter." - flatly contradicting
-             Fit at a glance, the size section and the FAQ, all of which say size up (Faheem,
-             13 Sep). The two blocks branch on different flags (garment vs sizingApplies), which
-             is why nothing ever put them side by side. */''}
-        ${/* 25 Sep 2026 (Faheem): no fit warnings - one line that sends people to the chart,
-             with the design's other fit beside it where there is one */''}
-        ${/* 18 Oct 2026 (conversion panel): sold-out sizes dead-ended; this is the existing 14-day policy, said where the chips are */''}<p class="pdp-exch sb-ship-uae">Free 14-day exchange. If your size has gone, a full refund.</p>
-        <p class="pdp-sizehelp"><a href="#fit" class="pdp-chart">Check your size &rarr;</a>${p.modelInfo && /wears (S|M|L|XL)/.test(p.modelInfo) ? `<span class="pdp-model">Model wears ${p.modelInfo.match(/wears (S|M|L|XL)/)[1]}</span>` : ''}</p>
-        <p class="pdp-stock" id="pdpStock" hidden></p>
-        ${p.garment === 'tee' ? `<p class="pdp-bundle pdp-bundle-m"><b>Any 2 tees for AED 359</b> &middot; mix and match</p>` : ''}
-        <button class="btn pdp-add" id="pdpAdd" type="button" aria-disabled="true"><span class="pdp-add-l">Choose your size</span><span class="pdp-add-p"> &middot; <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></span></button>
-        <div class="pdp-msg" id="pdpMsg" role="status" aria-live="polite"></div>
-        <button class="btn ghost pdp-now" id="pdpNow" type="button" hidden>Buy now</button>
-        ${/* 24 Oct 2026 (aesthetic panel): one quiet line instead of seven chips in the buy box; the offer is stated once, above */''}<p class="pdp-wallets pdp-wallets-line">Secure checkout &middot; Apple Pay, Google Pay, Shop Pay<span class="sb-ship-uae">, Tabby</span>, Visa, Mastercard</p>
-        <p class="pdp-trust-m"><span class="sb-ship-uae"><span class="sb-clock" data-sb-clock>Free next-day delivery</span> &middot; Free returns &amp; exchanges</span><span class="sb-ship-gcc">GCC delivery 3–5 days &middot; 14-day returns</span><span class="sb-ship-intl">Worldwide delivery &middot; 14-day returns</span></p>
-        ${/* 4 Oct 2026 (CRO panel, ideas 5 and 6): the gift and the two objections, answered where the thumb is */''}
-        <p class="pdp-tote"><img src="/shirts/tote-band.webp" width="44" height="44" loading="lazy" decoding="async" alt=""><span><b>A free Sahra Tote (<span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span>) comes with every order.</b> No code; it is added in your bag. <a href="/tote/">The tote &rarr;</a></span></p>
-        ${pairStrip(p, all)}
-        <dl class="pdp-why">
-          <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? '240 GSM piqué cotton, embroidered.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? '230 GSM combed cotton, pre-washed, embroidered rather than printed.' : '230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark.')} Designed in the UAE.</dd></div>
-          <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
-        </dl>
-        ${RV.quotes(designHandles(p), 2)}
-        ${/* 15 Sep audit: returns reassurance at the point of commitment. Every clause is
-             policies.html verbatim - unworn, unwashed, tags on, exchanges subject to stock. */''}
-        <p class="pdp-reassure">Need a different size? UAE returns and exchanges are free within 14 days of delivery &mdash; unworn, unwashed, tags on; exchanges subject to stock. <a href="/policies.html#returns">Full policy &rarr;</a></p>
-      </div>` : `
-      <div class="cta-row">
-        <a class="btn" href="#notify">Notify me when it drops</a><a class="btn ghost" href="#fit">Size &amp; fit</a>
-      </div>`}
-      <div class="buy-trust"><span class="bt-ship"><span class="sb-ship-uae">⚡ Free next-day delivery</span><span class="sb-ship-gcc">✈ GCC delivery 3–5 days</span><span class="sb-ship-intl">✈ Worldwide delivery</span></span><span>↺ Free UAE returns</span><span>✦ Designed in the UAE</span><span>✦ ${p.garment === 'polo' ? '240gsm piqué cotton' : '230gsm heavyweight cotton'}</span></div>
-
-      <!-- The answer cluster (Rastah benchmark, 29 Aug 2026): the questions a
-           buyer asks at the moment of hesitation — cost to ship, will it fit,
-           can I return it — answered UNDER the buy button, not in the footer.
-           One better than the benchmark: the visitor's own shipping card is
-           highlighted and ordered first via data-market on <html>. -->
-      <div class="pdp-answers">
+<!-- 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top on all 22 product pages (specimen.js) -->
+<div data-bg="#FAF6EF">
+${SP.top(SPS, {
+  crumb: `<nav class="ss-crumb" aria-label="Breadcrumb">${crumbTrail(p).map(c => c[1] ? `<a href="${c[1]}">${esc(c[0])}</a>` : `<span aria-current="page">${esc(c[0])}</span>`).join('<i aria-hidden="true">/</i>')}</nav>`,
+  h1: esc(productH1(p)).replace('T-Shirt', '<span class="nw">T-Shirt</span>'),
+  rating: RV.ratingLine(designHandles(p)),
+  help: `<p class="ss-help">${p.garment === 'polo' ? 'The polo is graded to the Regular tee chart. ' : ''}Not sure of your size? <a href="#fit" class="pdp-chart">See the size chart</a>. ${p.modelInfo ? esc(String(p.modelInfo).split(' \u00b7 ').slice(1).join('. ')) + '.' : ''}</p>`,
+  extra: `${pairStrip(p, all)}
+      <dl class="pdp-why">
+        <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? '240 GSM piqu\u00e9 cotton, embroidered.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? '230 GSM combed cotton, pre-washed, embroidered rather than printed.' : '230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark.')} Designed in the UAE.</dd></div>
+        <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
+      </dl>
+      ${RV.quotes(designHandles(p), 2)}`
+})}
+</div>
+<div class="wrap">
+      <section class="sec pdp-answers ss-answers" aria-label="Details">
         ${/* 13 Oct 2026 (retention audit, rank 8): the story is why people clicked the ad, so it starts open */''}<details class="pdp-ans pdp-ans-story" open>
           <summary>The story behind the ${p.garment === 'polo' ? 'polo' : 'tee'}</summary>
           <p class="lede">${p.lede}</p>
@@ -1288,25 +1198,7 @@ ${galShots(p).map((s,i)=>`
           ${p.faq.slice(0, 3).map(function (q) { return '<p class="pdp-ans-foot"><strong>' + esc(q.q) + '</strong><br>' + esc(q.a) + '</p>'; }).join('')}
           <p class="pdp-ans-foot"><a href="#faq">All questions &darr;</a></p>
         </details>` : ''}
-      </div>
-
-      <!-- Pre-launch capture: the shop isn't open yet, so give high-intent visitors a way to convert.
-           Remove (or leave — it still works as a restock list) once LAUNCHED. -->
-      ${LAUNCHED ? '' : `
-      <div class="wl-band" id="notify" data-waitlist-wrap>
-        <h3>Be first to get this one</h3>
-        <p class="wl-lead">Join the list and we'll email you the moment it drops — before it goes public.</p>
-        <form class="wl-form" data-waitlist data-source="pdp-${p.id}" data-endpoint="https://app.kit.com/forms/9627814/subscriptions" novalidate>
-          <input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required>
-          <button type="submit" class="btn">Notify me</button>
-        </form>
-        <p class="wl-msg">No spam — just the drop.</p>
-        <p class="wl-ok">You&rsquo;re on the list. We&rsquo;ll email you before it drops. &#10022;</p>
-      </div>
-`}
-      </div>
-    </div>
-  </section>
+      </section>
 </div>
 
 ${LEAN ? `<div class="wrap lean-first">${FIT_HTML.replace('04 — Size &amp; fit', '01 — The oversized fit')}
@@ -1417,22 +1309,8 @@ ${related(p, all)}
   </section>
   ${/* 27 Oct 2026 (Faheem: "Cross-sell between lines"): the new lines on every Founding Edition page */''}<div class="po-x" style="position:relative;z-index:2;background:#FAF6EF;color:#2A2016;border-radius:16px;max-width:1180px;margin:40px auto;padding:6px 0 26px">${require('./preorder-page.js').foundingCross()}</div>
 </div>
+${SP.nextPiece(SPS)}
 </main>
-
-<div class="lb" id="lightbox" aria-label="Photo viewer" role="dialog">
-  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">✕</button>
-  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">&#8249;</button>
-  <img id="lbImg" alt="">
-  <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">&#8250;</button>
-</div>
-
-<div id="buybar">
-  <div class="bb-inner">
-    <img class="bb-thumb" loading="lazy" decoding="async" src="../..${p.imgMain}" alt="">
-    <div class="bb-txt"><div class="bb-name">${esc(p.name)}</div><div class="bb-sub"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></div></div>
-    ${LAUNCHED ? `<div class="bb-sizes" id="bbSizes" role="group" aria-label="Choose a size">${['S','M','L','XL'].map(z => `<button type="button" data-z="${z}" aria-pressed="false">${z}</button>`).join('')}</div><button class="btn" id="bbAdd" type="button">Add to cart</button>` : `<a class="btn" href="${SHOP_URL}#prod-${p.shopAnchor}">View in shop</a>`}
-  </div>
-</div>
 
 <footer>
   <div class="foot-links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a><a href="/">Home</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/gifts/">Gift ideas</a><a href="/policies.html#shipping">Shipping &amp; returns</a><a href="/policies.html#privacy">Privacy</a><a href="/contact/">Contact &amp; business details</a><a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></div>
@@ -1509,268 +1387,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   });
 })();
 
-/* ---------- gallery ---------- */
-(function(){
-  var main=document.querySelector('.gal-main'),thumbs=document.getElementById('thumbs');
-  if(!main||!thumbs)return;
-  var imgs=main.querySelectorAll('img');
-  var cur=0,timer=null,red=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  /* THE FIT BADGE MUST NEVER LIE (Faheem, 30 Aug). The model photos show the
-     OVERSIZED cut; on a Regular (or polo) page the standing "REGULAR FIT"
-     badge over an oversized-worn photo would visually promise the roomy drape
-     the slim chart cannot deliver - the exact wrong-size path the runs-slim
-     work exists to close. While a data-worn image is active, the badge flips
-     to "PHOTO: OVERSIZED FIT" in the warning tone, then flips back. */
-  var isOver=${p.fit === 'oversized'};
-  /* ...but a product with only ONE cut has no other fit to warn about, and its worn
-     photos ARE that cut. The polo used to have no worn photos at all, so this never
-     came up; with the real shoot in (13 Sep) every detail frame is data-worn, and the
-     badge was stamping "PHOTO: OVERSIZED FIT" across a garment that has no oversized
-     version - inventing a fit the product does not have, on a garment with a single cut. */
-  var oneCut=${p.garment === 'polo' || !p.fitLabel};
-  /* ...and from 22 Sep the Regular pages have worn photos of their OWN cut (the
-     dune shoot), so the warning would now be the lie it exists to prevent - it was
-     stamping PHOTO: OVERSIZED FIT across a Regular-fit photograph. wornFitMatches
-     is set per product in the catalogue; warn only when the worn frames really do
-     show the other cut. */
-  var wornOther=!isOver && !oneCut && !${p.wornFitMatches === true};
-  var fitBadge=document.querySelector('.gal-fit');
-  if(!fitBadge && !isOver && !oneCut && main.querySelector('img[data-worn]')){
-    fitBadge=document.createElement('span'); fitBadge.className='gal-fit'; fitBadge.setAttribute('aria-hidden','true');
-    fitBadge.textContent='${esc(p.fitLabel || (p.sizingApplies === false ? 'POLO' : 'REGULAR FIT'))}';
-    main.appendChild(fitBadge);
-  }
-  function syncBadge(){
-    if(!fitBadge)return;
-    var im=imgs[cur], tag=im&&im.getAttribute('data-tag');
-    /* every worn photo names its model and size (Faheem, 8 Sep: "mention on the photos
-       that she's wearing Medium oversized"); on a Regular page it keeps the warning tone,
-       since the photo shows the other cut */
-    if(im && im.hasAttribute('data-worn') && !oneCut){
-      if(!fitBadge.dataset.orig) fitBadge.dataset.orig=fitBadge.textContent;
-      fitBadge.textContent=tag?(wornOther?'Photo: '+tag:tag):(wornOther?'PHOTO: OVERSIZED FIT':fitBadge.dataset.orig);
-      fitBadge.classList.toggle('warnfit',wornOther);
-    } else if(fitBadge.dataset.orig){
-      fitBadge.textContent=fitBadge.dataset.orig; fitBadge.classList.remove('warnfit');
-    }
-  }
-  /* the size credit belongs under the photographs of the model, not under the
-     ghost-mannequin studio frames (Faheem, 13 Sep) */
-  var modelNote=document.querySelector('.gal-model[data-worn-only]');
-  function syncModel(){
-    if(!modelNote)return;
-    var im=imgs[cur];
-    modelNote.classList.toggle('gal-model-off',!(im&&im.hasAttribute('data-worn')));
-  }
-  var hydrated=false;
-  function hydrate(){ if(hydrated)return; hydrated=true;
-    imgs.forEach(function(im){ var d=im.getAttribute('data-src'); if(!d||im.getAttribute('src'))return;
-      if(im.getAttribute('data-srcset')){ im.setAttribute('sizes',im.getAttribute('data-sizes')||'100vw'); im.setAttribute('srcset',im.getAttribute('data-srcset')); }
-      im.setAttribute('src',d); }); }
-  if(document.readyState==='complete') setTimeout(hydrate,400); else addEventListener('load',function(){ setTimeout(hydrate,400); });
-  setTimeout(hydrate,6000);   /* a slow third-party request can hold the load event for ever */
-  ['touchstart','mouseenter','focus'].forEach(function(k){ main.addEventListener(k,hydrate,{passive:true,once:true}); });
-  function show(i){
-    hydrate();
-    cur=(i%imgs.length+imgs.length)%imgs.length;
-    imgs.forEach(function(im,k){im.classList.toggle('on',k===cur);});
-    thumbs.querySelectorAll('button').forEach(function(x,k){x.classList.toggle('on',k===cur);});
-    var dn=main.querySelector('.gal-n b'); if(dn) dn.textContent=cur+1;
-    if(cur) main.setAttribute('data-seen','1');
-    /* the caption changes at the middle of the crossfade, not before it - otherwise
-       "She wears M" sat over the outgoing photo of him (Faheem's screenshot, 24 Sep) */
-    clearTimeout(show.t); show.t=setTimeout(function(){ syncBadge(); syncModel(); },130);
-  }
-  syncBadge(); syncModel();
-  /* Continuous 1s loop (Faheem, 29 Aug), same manners as the shop's slideshow:
-     pauses while the pointer is over the image or a finger is on it, pauses
-     while the zoom lightbox is open, restarts after any thumbnail choice, and
-     never runs for reduced-motion users. The cross-fade comes from the
-     existing .on transition - the same stack the prepush guard protects. */
-  var userPaused=false;
-  /* 25 Sep 2026 (Faheem, after the persona review): no autoplay on phones - the photo
-     changed every second under a shopper trying to read the size row. Phones get a
-     swipe instead; the thumbnails still work, and the pause button is not needed. */
-  var phoneG=!!(window.matchMedia&&matchMedia('(max-width:700px)').matches);
-  var swipes=0;
-  if(phoneG){ userPaused=true;
-    var pb0=document.getElementById('galPause'); if(pb0){ pb0.hidden=true; pb0.style.display='none'; }
-    var sx=null, sy=null;
-    main.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY;},{passive:true});
-    main.addEventListener('touchend',function(e){ if(sx===null) return; var t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy; sx=null;
-      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3){ show((cur+(dx<0?1:-1)+imgs.length)%imgs.length); main.dataset.swiped='1'; setTimeout(function(){delete main.dataset.swiped;},650);
-        /* 13 Oct 2026: swipes were invisible in GA4, so a visitor who looked at five photos read as a bounce */
-        swipes++; if(window.track) track('gallery_swipe',{item_id:'${p.id}',index:cur,count:swipes,ad:window.SB_AD?1:0}); } },{passive:true});
-    if(imgs[0]&&!red){
-      /* 13 Oct 2026, second pass: the drift and the nudge both animate transform, so the opener
-         drifts first and the nudge comes once the drift has settled, unless they swiped already */
-      setTimeout(function(){ if(!swipes&&cur===0){ imgs[0].classList.remove('gal-drift'); main.classList.add('gal-nudge'); setTimeout(function(){ main.classList.remove('gal-nudge'); },800); } },2600);
-      imgs[0].classList.add('gal-drift'); } }
-  function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
-  function startAuto(){stopAuto();if(red||userPaused||imgs.length<2)return;
-    timer=setInterval(function(){
-      var lb=document.getElementById('lightbox');
-      if(lb&&lb.classList.contains('open'))return;
-      if(document.querySelector('.szm.open'))return;   /* hold while the zoom viewer is open */
-      show(cur+1);
-    },1500);}   /* 1.5s per photo since 28 Oct 2026 (expert timing; was 1s) */
-  thumbs.addEventListener('click',function(e){
-    var b=e.target.closest('button');if(!b)return;show(+b.dataset.i);startAuto();
-  });
-  var pauseBtn=document.getElementById('galPause');
-  if(pauseBtn)pauseBtn.addEventListener('click',function(e){e.stopPropagation();
-    userPaused=!userPaused;
-    pauseBtn.setAttribute('aria-pressed',userPaused?'true':'false');
-    pauseBtn.setAttribute('aria-label',userPaused?'Play slideshow':'Pause slideshow');
-    pauseBtn.innerHTML=userPaused?'&#9654;':'&#10073;&#10073;';
-    if(userPaused)stopAuto();else startAuto();
-  });
-  main.addEventListener('mouseenter',stopAuto);
-  main.addEventListener('mouseleave',startAuto);
-  main.addEventListener('touchstart',stopAuto,{passive:true});
-  main.addEventListener('touchend',startAuto,{passive:true});
-  startAuto();
-})();
-
-/* ---------- lightbox zoom (same behaviour as the shop's viewer) ---------- */
-(function(){
-  var main=document.querySelector('.gal-main'),lb=document.getElementById('lightbox');
-  /* pause taps must not open the zoom */
-  if(!main||!lb)return;
-  var imgs=[].slice.call(main.querySelectorAll('img')),srcs=imgs.map(function(i){return i.getAttribute('data-src')||i.src;}),cur=0;
-  var el=document.getElementById('lbImg');
-  function show(i){cur=(i%srcs.length+srcs.length)%srcs.length;el.src=srcs[cur];el.alt=imgs[cur].alt||'';}
-  function open(){var on=main.querySelector('img.on');
-    /* 28 Oct 2026: the shared zoomable viewer (assets/sahra-zoom.js); the old lightbox stays as the fallback */
-    if(window.SahraZoom){SahraZoom.open(srcs.map(function(s,k){return {src:s,alt:imgs[k].alt||''};}),Math.max(0,imgs.indexOf(on)));if(window.track)track('image_zoom',{item_id:'${p.id}'});return;}
-    show(Math.max(0,imgs.indexOf(on)));lb.classList.add('open');
-    document.body.style.overflow='hidden';if(window.track)track('image_zoom',{item_id:'${p.id}'});}
-  function close(){lb.classList.remove('open');document.body.style.overflow='';}
-  main.addEventListener('click',function(){ if(main.dataset.swiped) return; open();});
-  main.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
-
-/* ---------- sticky bar sizes (phones, 13 Oct 2026) ---------- */
-(function(){
-  var bar=document.getElementById('buybar'), bs=document.getElementById('bbSizes'), real=document.getElementById('pdpSizes');
-  if(!bar||!bs||!real) return;
-  function find(z){ return [].filter.call(real.querySelectorAll('.pdp-size'),function(b){ return ((b.firstChild&&b.firstChild.nodeValue)||'').trim()===z; })[0]; }
-  function mirror(){
-    var any=false;
-    [].forEach.call(bs.querySelectorAll('button'),function(b){ var r=find(b.getAttribute('data-z'));
-      b.hidden=!r; if(!r) return; any=true;
-      b.disabled=!!(r.disabled||r.getAttribute('aria-disabled')==='true'&&/sold/i.test(r.textContent));
-      b.setAttribute('aria-pressed', r.getAttribute('aria-pressed')==='true'||r.classList.contains('sel') ? 'true' : 'false'); });
-    bar.classList.toggle('has-sizes',any);
-  }
-  bs.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b||b.disabled) return; var r=find(b.getAttribute('data-z')); if(r){ r.click(); setTimeout(mirror,30); } });
-  if(window.MutationObserver) new MutationObserver(mirror).observe(real,{subtree:true,childList:true,attributes:true,attributeFilter:['class','disabled','aria-pressed','aria-disabled']});
-  mirror();
-})();
-
-/* ---------- sticky bar: buy, do not navigate away ----------
-   It used to be a link to /shop/. It carries the photo, name, price and one
-   bold button, so it reads as a buy control - but tapping it threw away the
-   size the shopper had just chosen and dumped them on another page. It now
-   drives the real Add button, or sends them to the size picker if none is
-   chosen yet. */
-(function(){
-  var bb=document.getElementById('bbAdd'); if(!bb) return;
-  bb.addEventListener('click',function(){
-    var add=document.getElementById('pdpAdd'), buy=document.getElementById('pdpBuy');
-    var bsz=document.getElementById('bbSizes'), bar=document.getElementById('buybar');
-    if(add && add.getAttribute('aria-disabled')==='true' && bsz && bar && bar.classList.contains('has-sizes') && getComputedStyle(bsz).display!=='none'){ bsz.classList.remove('pulse'); void bsz.offsetWidth; bsz.classList.add('pulse'); return; }
-    if(add && !add.disabled){ add.click(); return; }
-    if(buy){
-      buy.scrollIntoView({behavior:'smooth',block:'center'});
-      var first=document.querySelector('#pdpSizes button:not([disabled])');
-      if(first) setTimeout(function(){ first.focus(); },420);
-    }
-  });
-  /* mirror the real button's state so it never promises what it cannot do */
-  var add=document.getElementById('pdpAdd');
-  if(add && window.MutationObserver){
-    /* 23 Sep 2026: phones hide the bar's price line, so the price rides in the button */
-    var pr=document.querySelector('.price .sb-price'),narrow=matchMedia('(max-width:620px)');
-    var sync=function(){ var hs=bar0&&bar0.classList.contains('has-sizes')&&narrow.matches; var t=add.getAttribute('aria-disabled')==='true' ? (hs ? 'Pick a size' : 'Choose a size') : (/sold out/i.test(add.textContent) ? 'Sold out' : 'Add to cart'); if(narrow.matches&&!hs&&pr&&pr.textContent.trim()) t+=' \u00b7 '+pr.textContent.trim(); if(bb.textContent!==t) bb.textContent=t; };
-    var bar0=document.getElementById('buybar'); if(bar0&&window.MutationObserver) new MutationObserver(function(){ sync(); }).observe(bar0,{attributes:true,attributeFilter:['class']});
-    new MutationObserver(sync).observe(add,{attributes:true,attributeFilter:['disabled','aria-disabled'],childList:true,subtree:true,characterData:true});
-    if(pr) new MutationObserver(sync).observe(pr,{childList:true,characterData:true,subtree:true});
-    sync();
-  }
-})();
-  document.getElementById('lbClose').addEventListener('click',close);
-  document.getElementById('lbPrev').addEventListener('click',function(e){e.stopPropagation();show(cur-1);});
-  document.getElementById('lbNext').addEventListener('click',function(e){e.stopPropagation();show(cur+1);});
-  lb.addEventListener('click',function(e){if(e.target===lb)close();});
-  addEventListener('keydown',function(e){
-    if(!lb.classList.contains('open'))return;
-    if(e.key==='Escape')close(); else if(e.key==='ArrowLeft')show(cur-1); else if(e.key==='ArrowRight')show(cur+1);
-  });
-})();
-
-/* ---------- size chart: one fit per product, so nothing to toggle.
-   Fire the analytics event when the chart is actually scrolled into view. */
-(function(){
-  var tbl=document.querySelector('table.sz');if(!tbl||!window.IntersectionObserver)return;
-  var io=new IntersectionObserver(function(en){
-    en.forEach(function(e){ if(e.isIntersecting){ if(window.track)track('size_guide_view',{fit:'${p.fit||""}',item_id:'${p.id}'}); io.disconnect(); } });
-  },{rootMargin:'0px 0px -25% 0px'});
-  io.observe(tbl);
-})();
-
-/* ---------- live per-size availability, straight from Shopify ----------
-   Keeps the product page honest: only renders once real variant data arrives,
-   so we never display stock we cannot verify. */
-(function(){
-  var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
-  var HANDLE='${p.id}', NAME=${J(p.name)};
-  var box=document.getElementById('stock'),row=document.getElementById('stock-row'),note=document.getElementById('stock-note');
-  var pdpStock=document.getElementById('pdpStock');
-  /* Pre-launch the #stock block exists; live it does not, and the scarcity
-     line goes in the buy box instead. Bail only if BOTH destinations are
-     absent - the old guard returned on !box and would have killed the
-     availability fetch the moment that block was removed. */
-  if(!box && !pdpStock) return;
-  var q='{products(first:24){edges{node{handle title variants(first:40){edges{node{availableForSale selectedOptions{name value}}}}}}}}';
-  fetch('https://'+SHOPIFY.domain+'/api/'+SHOPIFY.apiVersion+'/graphql.json',{
-    method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':SHOPIFY.token},
-    body:JSON.stringify({query:q})
-  }).then(function(r){return r.json();}).then(function(d){
-    var edges=(((d||{}).data||{}).products||{}).edges||[];
-    var node=null;
-    for(var i=0;i<edges.length;i++){
-      var n=edges[i].node;
-      if((n.handle||'').toLowerCase()===HANDLE||(n.title||'').toLowerCase()===NAME.toLowerCase()){node=n;break;}
-    }
-    if(!node)return;                      // product not published yet — stay hidden
-    var seen={},order=['S','M','L','XL'];
-    (node.variants.edges||[]).forEach(function(v){
-      var opts=v.node.selectedOptions||[];
-      var sz=(opts.filter(function(o){return o.name.toLowerCase()==='size';})[0]||{}).value;
-      if(!sz)return;
-      if(!(sz in seen))seen[sz]=false;
-      if(v.node.availableForSale)seen[sz]=true;
-    });
-    var sizes=Object.keys(seen);
-    if(!sizes.length)return;
-    sizes.sort(function(a,b){var ia=order.indexOf(a),ib=order.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib);});
-    if(row) row.innerHTML=sizes.map(function(sz){
-      return '<span class="sz-chip'+(seen[sz]?'':' out')+'">'+sz+(seen[sz]?'':' · sold out')+'</span>';
-    }).join('');
-    var left=sizes.filter(function(sz){return seen[sz];}).length;
-    /* Scarcity is worth saying; "Live from our store" is not - it tells the
-       customer nothing and only appears where they expect a control. */
-    var msg = left===0 ? 'Sold out.'
-      : (left<=2 ? (function(){ /* 25 Sep (persona review): name what has gone rather than count what is left - same fact, less pressure */
-          var out=sizes.filter(function(sz){return !seen[sz];}); if(!out.length) return '';
-          var t=out.length>1 ? out.slice(0,-1).join(', ')+' and '+out[out.length-1] : out[0];
-          return t+' ha'+(out.length>1?'ve':'s')+' sold out.'; })() : '');
-    if(note) note.textContent = msg || 'Live from our store.';
-    if(box) box.hidden=false;
-    var ps=document.getElementById('pdpStock');
-    if(ps && msg){ ps.textContent=msg; ps.hidden=false; }
-  }).catch(function(){/* offline or store not live — leave hidden */});
-})();
+/* 30 Oct 2026: the photo stage, sizes and Add to bag are assets/sahra-specimen.js (the Specimen Sheet) */
 
 /* ---------- reveals ---------- */
 (function(){
@@ -1787,26 +1404,6 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   function up(){raf=0;var d=document.documentElement,max=d.scrollHeight-innerHeight;
     bar.style.transform='scaleX('+(max>0?Math.min(1,scrollY/max):0)+')';}
   addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(up);},{passive:true});up();
-})();
-
-/* ---------- sticky buy bar ---------- */
-(function(){
-  var bar=document.getElementById('buybar'),hero=document.querySelector('.pdp'),foot=document.querySelector('footer');
-  if(!bar||!hero)return;
-  if(!('IntersectionObserver' in window)){return;}
-  var pastHero=false,atFoot=false;
-  function sync(){bar.classList.toggle('on',pastHero&&!atFoot);}
-  /* 23 Sep 2026: on phones the bar keeps a buy control in reach as soon as the
-     sizes and the Add button have scrolled out of view, instead of waiting for
-     the whole product section (6,000px of it) to pass. */
-  var ph=matchMedia('(max-width:700px)').matches,sz=document.getElementById('pdpSizes'),ad=document.getElementById('pdpAdd');
-  if(ph&&sz&&ad){
-    var vis={};
-    var io=new IntersectionObserver(function(en){en.forEach(function(e){vis[e.target.id]=e.isIntersecting;});pastHero=!vis.pdpSizes&&!vis.pdpAdd;sync();},{rootMargin:'-56px 0px -70px 0px'});
-    io.observe(sz);io.observe(ad);
-  } else
-  new IntersectionObserver(function(en){pastHero=!en[0].isIntersecting;sync();},{rootMargin:'-120px 0px 0px 0px'}).observe(hero);
-  if(foot)new IntersectionObserver(function(en){atFoot=en[0].isIntersecting;sync();}).observe(foot);
 })();
 
 /* ---------- scroll-linked background journey + auto contrast ----------
@@ -1972,164 +1569,6 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 
-<script>
-/* ============================================================
-   PDP → cart. Uses the same Storefront cart and the same
-   localStorage key ('sb_cart') as /shop/, so a cart started on a
-   product page is the same cart on the shop page and at checkout.
-   ============================================================ */
-(function(){
-  var box=document.getElementById('pdpBuy'); if(!box) return;
-  var SHOPIFY={domain:'sahra-beyond.myshopify.com',token:'cc42ba8e74eb27c4f3c062d93f893fa0',apiVersion:'2024-10'};
-  var handle=box.dataset.handle;
-  var sizesEl=document.getElementById('pdpSizes'),addEl=document.getElementById('pdpAdd'),msgEl=document.getElementById('pdpMsg');
-  /* the label and the price are separate spans: the market script converts the price,
-     so the button never says AED to a visitor whose page says SAR (15 Sep) */
-  var setAdd=function(label, showPrice){ var l=addEl.querySelector('.pdp-add-l'), pr=addEl.querySelector('.pdp-add-p');
-    if(l) l.textContent=label; else addEl.textContent=label; if(pr) pr.hidden=!showPrice; };
-  /* Fit-check data, baked at build time from content/sizing.json. SLIM is true
-     for the Regular tees and the polo (graded to the same chart); the
-     Oversized fit is the roomy one and gets no warning. */
-  var SLIM=${p.fit !== 'oversized'};
-  var MEAS=${JSON.stringify(Object.fromEntries(((p.fit === 'oversized' ? SIZING.oversized : SIZING.regular) || []).map(function (r) { return [String(r[0]), r[1] + '\u2033 / ' + r[2] + ' cm']; })))};
-  var variants=[],sel=null;
-
-  function sf(q,v){
-    return fetch('https://'+SHOPIFY.domain+'/api/'+SHOPIFY.apiVersion+'/graphql.json',{
-      method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':SHOPIFY.token},
-      body:JSON.stringify({query:q,variables:v||{}})
-    }).then(function(r){return r.json();}).then(function(j){
-      if(j.errors) throw new Error(j.errors[0]&&j.errors[0].message||'Storefront error');
-      return j.data;
-    });
-  }
-  function msg(t,cls){ if(msgEl){msgEl.textContent=t||''; msgEl.className='pdp-msg'+(cls?' '+cls:'');} }
-  function badge(n){
-    var c=document.querySelector('.hdr-cart .cart-count');
-    if(c){c.textContent=n; c.style.display=n?'flex':'none';}
-  }
-
-  /* A fetch that hangs never resolves or rejects, so the buy box sat on
-     "Loading sizes…" indefinitely on a poor connection. */
-  /* 23 Sep 2026: S-XL are in the HTML so the picker is there on first paint.
-     A tap before live stock arrives is remembered and applied when it does. */
-  var pending=null, live=false;
-  /* 13 Oct 2026 (retention audit): a size tap is the clearest sign of intent short of the bag, and it was not measured */
-  sizesEl.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('.pdp-size'); if(b&&window.track) track('size_select',{item_id:handle,size:(b.firstChild&&b.firstChild.nodeValue||'').trim(),ad:window.SB_AD?1:0}); });
-  sizesEl.querySelectorAll('.pdp-size-wait').forEach(function(b){
-    b.addEventListener('click',function(){ if(live) return;
-      sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
-      b.classList.add('sel'); b.setAttribute('aria-pressed','true'); pending=b.textContent; addEl.removeAttribute('aria-disabled');
-      setAdd('Checking stock\u2026', true); });
-  });
-  var sizeTimer=setTimeout(function(){
-    if(sizesEl && !live){ pending=null; setAdd('Choose your size', true);
-      sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a> or <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a>.</span>';
-    }
-  },9000);
-  sf('query($h:String!){product(handle:$h){title variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}',{h:handle})
-  .then(function(d){
-    if(!d.product){ live=true; pending=null; setAdd('Choose your size', true); sizesEl.innerHTML='<span class="pdp-loading">Sizes unavailable — <a href="/shop/">open the shop</a></span>'; return; }
-    variants=d.product.variants.edges.map(function(e){return e.node;});
-    live=true; clearTimeout(sizeTimer);
-    sizesEl.innerHTML='';
-    variants.forEach(function(v){
-      var b=document.createElement('button');
-      b.type='button'; b.className='pdp-size'; b.textContent=v.title;
-      b.setAttribute('aria-pressed','false');
-      if(!v.availableForSale){ b.disabled=true; b.title='Sold out';
-        /* title= is a hover tooltip and phones have no hover: the shopper saw a
-           greyed chip, tapped it, and nothing explained why. */
-        b.setAttribute('aria-label', v.title+' — sold out');
-        b.innerHTML = v.title+'<span class="sz-out">Sold out</span>'; }
-      /* 23 Oct 2026 (Faheem: no scarcity wording anywhere): the "N left" count under a size is gone */
-      b.addEventListener('click',function(){
-        sizesEl.querySelectorAll('.pdp-size').forEach(function(x){x.classList.remove('sel');x.setAttribute('aria-pressed','false');});
-        b.classList.add('sel'); b.setAttribute('aria-pressed','true');
-        sel=v; goCheckout=false; addEl.disabled=false; addEl.removeAttribute('aria-disabled'); setAdd('Add to cart', true); msg('');
-        /* Buy now appears once a size is chosen: one clear action before that (24 Sep 2026) */
-        var bn=document.getElementById('pdpNow'); if(bn) bn.hidden=false;
-        /* Honest scarcity (Rastah benchmark): shown ONLY from live inventory,
-           only at 3 or fewer, never invented. quantityAvailable can be null
-           if the token cannot read inventory — then nothing is shown. */
-        var st=document.getElementById('pdpStock');
-        if(st){ st.hidden=true; }   /* 23 Oct 2026 (Faheem): no remaining-stock counts anywhere */
-        /* the number at the moment of choice - the whole fit-check idea */
-        /* 25 Sep 2026: the measurement rides in the size-help line instead of a new row */
-        var ch=box.querySelector('.pdp-chart');
-        if(ch) ch.innerHTML=MEAS[v.title]? '<b>'+v.title+'</b>: '+MEAS[v.title]+' chest &middot; chart &rarr;' : 'Check your size &rarr;';
-      });
-      sizesEl.appendChild(b);
-    });
-    if(!variants.some(function(v){return v.availableForSale;})){ setAdd('Sold out', false); addEl.disabled=true; addEl.removeAttribute('aria-disabled'); var nw=document.getElementById('pdpNow'); if(nw) nw.hidden=true; }
-    if(pending){ var want=pending; pending=null;
-      var hit=[].filter.call(sizesEl.querySelectorAll('.pdp-size'),function(x){return x.firstChild&&x.firstChild.nodeValue===want;})[0];
-      if(hit&&!hit.disabled) hit.click();
-      else { setAdd('Choose your size', true); msg(want+' is sold out \u2014 please choose another size.'); } }
-  })
-  .catch(function(){ live=true; pending=null; setAdd('Choose your size', true); sizesEl.innerHTML='<span class="pdp-loading">Could not load sizes — <a href="/shop/">open the shop</a></span>'; });
-
-  var CFRAG='id checkoutUrl totalQuantity';
-  function fitOk(){ try{ return sessionStorage.getItem('sb_fitok')==='1'; }catch(e){ return true; } }
-  function setFitOk(){ try{ sessionStorage.setItem('sb_fitok','1'); }catch(e){} }
-  var goCheckout=false, nowClick=false;
-  function doAdd(v){
-    var go=goCheckout; goCheckout=false;
-    addEl.disabled=true; setAdd(go ? 'Going to checkout…' : 'Adding…', false); msg('');
-    if(window.SahraCart){
-      window.SahraCart.add(v.id, 1, go ? {open:false} : undefined).then(function(cart){
-        /* Buy now (23 Sep 2026): same add, then straight to
-           Shopify checkout, where Shop Pay / Google Pay sit at the top. */
-        if(go){ var st=window.SahraCart.state&&window.SahraCart.state(); var u=(st&&st.checkoutUrl)||(cart&&cart.checkoutUrl);
-          if(window.track) track('buy_now',{item_id:handle,size:v.title});
-          if(u){ if(window.SahraCart.goCheckout) window.SahraCart.goCheckout(u); else location.href=u; return; } }
-        addEl.disabled=false; setAdd('Add another', true);
-        msgEl.innerHTML='Added to your cart.'; msgEl.className='pdp-msg ok';
-        if(window.track) track('add_to_cart',{item_id:handle,size:v.title});
-      }).catch(function(){ addEl.disabled=false; setAdd('Add to cart', true);
-        msg('Could not add to cart. Please try again.','err'); });
-      return;
-    }
-    /* No local fallback by design. This block used to run a SECOND, independent
-       Shopify cart whenever SahraCart was missing - creating its own cart, its
-       own storage write and its own badge. Two engines over one storage key is
-       what made the badge and the drawer disagree. assets/sahra-cart.js loads
-       on every page, so its absence is a real fault: report it, never paper
-       over it with a duplicate implementation. */
-    addEl.disabled=false; setAdd('Add to cart', true);
-    msg('Cart is unavailable right now. Please refresh, or message us on WhatsApp.','err');
-  }
-  var nowEl=document.getElementById('pdpNow');
-  if(nowEl) nowEl.addEventListener('click',function(){
-    if(!sel){
-      msg('Choose a size first.','err');
-      var first=sizesEl.querySelector('.pdp-size:not([disabled])'); if(first) first.focus();
-      return;
-    }
-    goCheckout=true; nowClick=true; addEl.click(); nowClick=false;
-  });
-  addEl.addEventListener('click',function(e){
-    /* only the Buy now button makes an add a Buy now - never a tap on Add to cart,
-       and never the sticky bar, which clicks this button from script */
-    if(!nowClick) goCheckout=false;
-    if(!sel){ /* 4 Oct 2026: a tap before a size is chosen points at the chips instead of doing nothing */
-      sizesEl.classList.remove('pulse'); void sizesEl.offsetWidth; sizesEl.classList.add('pulse'); msg('Choose a size above.');
-      var f=sizesEl.querySelector('.pdp-size:not([disabled])'); if(f){ try{ f.focus({preventScroll:true}); }catch(e){} }
-      sizesEl.scrollIntoView({block:'center',behavior:'smooth'}); return; }
-    /* 25 Sep 2026 (Faheem): no fit-check pause - one tap adds to the cart. Size help
-       is the 'Check your size in the chart' link beside the size chips. */
-    doAdd(sel);
-  });
-
-  /* keep the header badge accurate on arrival */
-  (function(){
-    var cid=null; try{ cid=localStorage.getItem('sb_cart'); }catch(e){}
-    if(!cid) return;
-    sf('query($id:ID!){cart(id:$id){totalQuantity}}',{id:cid})
-      .then(function(d){ if(d.cart) badge(d.cart.totalQuantity); }).catch(function(){});
-  })();
-})();
-</script>
 
 <script>
 /* 24 Sep 2026 (phone layout review): on phones the long story sections fold into
@@ -2195,6 +1634,7 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 </script>
 <script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=124ea926" defer></script>
+${SP.SCRIPT}
 <script src="/assets/sahra-sizefinder.js" defer></script>
 <script src="/assets/sahra-market.js" defer></script>
 <script>${IG.JS}</script>
