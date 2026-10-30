@@ -35,7 +35,7 @@
 'use strict';
 const T1 = Date.UTC(2026, 9, 27, 18, 45, 0);   /* 27 Oct 2026 (Faheem: "Open now"): pre-order opened Tue 27 Oct 22:45 UAE, not Wed 28 Oct 08:00 */
 const T2 = Date.UTC(2026, 9, 29, 20, 0, 0);  /* Fri 30 Oct 00:00 UAE */
-const IN_HAND = false;
+const IN_HAND = true;   /* 30 Oct 2026 (Faheem: "In stock, ships next day") */
 const WA = 'https://wa.me/971585449946';
 
 function now() { const s = process.env.SB_NOW; const t = s ? Date.parse(s) : Date.now(); return isNaN(t) ? Date.now() : t; }
@@ -68,6 +68,30 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 const SIZES = ['S', 'M', 'L', 'XL'];
 const FITS = [['regular', 'Regular'], ['oversized', 'Oversized']];
 const SZ = require('./sahel-sizing.js');   /* 27 Oct 2026: the Sahel size charts */
+/* 30 Oct 2026 (Faheem: size note for repeat buyers). The Founding Edition and Sahel charts do not line up
+   (a Founding Regular L is a Sahel Regular S), so a Sahel tee page translates the customer's Founding size by
+   chest, using both real charts. Hoodies and the polo have no Founding equivalent, so they get no note. */
+const FSZ = require('./content/sizing.json');
+function foundingMatch(key) {
+  const fRows = key === 'teeOversized' ? FSZ.oversized : key === 'teeRegular' ? FSZ.regular : null;
+  if (!fRows || !SZ.D[key]) return '';
+  const sRows = SZ.D[key].rows, fit = key === 'teeOversized' ? 'Oversized' : 'Regular';
+  const minS = Math.min(...sRows.map(r => r[1]));
+  const exact = [], near = [], small = [];
+  fRows.forEach(([fz, fc]) => {
+    const best = sRows.slice().sort((a, b) => Math.abs(a[1] - fc) - Math.abs(b[1] - fc) || a[1] - b[1])[0];
+    if (best[1] === fc) exact.push(`Founding ${fz} (${fc}&Prime;) is a Sahel ${best[0]}`);
+    else if (fc < minS) small.push(fz);
+    else {
+      const tie = sRows.filter(r => r !== best && Math.abs(r[1] - fc) === Math.abs(best[1] - fc))[0];
+      near.push(tie ? `Founding ${fz} (${fc}&Prime;) sits between Sahel ${best[0]} (${best[1]}&Prime;) and ${tie[0]} (${tie[1]}&Prime;)` : `Founding ${fz} (${fc}&Prime;) is closest to Sahel ${best[0]} (${best[1]}&Prime;)`);
+    }
+  });
+  const smallest = sRows.slice().sort((a, b) => a[1] - b[1])[0];
+  const parts = exact.concat(near);
+  if (small.length) parts.push(`Founding ${small.join(' and ')} ${small.length > 1 ? 'are' : 'is'} smaller than any Sahel ${fit} size, so Sahel ${smallest[0]} (${smallest[1]}&Prime;) is the closest`);
+  return `<p class="po-ask po-match">Already wear our Founding Edition ${fit}? Go by the chest measurement, not the letter: ${parts.join('; ')}.</p>`;
+}
 const mock = (k, alt) => ({ k, alt, mock: true });
 /* 27 Oct 2026 (Faheem: the Sahel photos from the 27 Oct shoot): the real photographs, per piece, in content/sahel-photos.json.
    Back first, then front, then details. Real photos carry no Mock-up label (cap '' = no caption); the Sahel Polo stays a labelled mock-up until it is
@@ -176,7 +200,12 @@ const money = n => 'AED ' + (Math.round(n * 100) % 100 === 0 ? String(Math.round
 const pre = n => Math.round(n * 80) / 100;   /* the 20% pre-order price, to the fils, as Shopify computes it */
 /* 23 Oct 2026 (Faheem: "Show AED 159.20"): in the pre-order window the price shown IS the pre-order price.
    No strike-through and no compare-at price; the full price is named in words beside it. */
-const cardPrice = (n, tag, full) => full ? `<${tag}>${money(n)}</${tag}>` : inc('st1', `<${tag} class="st1">${money(pre(n))}, pre-order price</${tag}>`) + `<${tag} class="st02">${money(n)}</${tag}>`;
+/* 30 Oct 2026 (Faheem: "one currency per screen"): the full price carries .sb-price + the Shopify
+   handle, so sahra-market.js converts it with the Founding Edition prices beside it. Without a
+   handle (or for the pre-order figure) it stays AED. */
+const priceAttrs = (n, h) => h ? ` data-handle="${h}" data-aed="${n}"` : '';
+const pcls = (c, h) => h ? (c ? `${c} sb-price` : 'sb-price') : c;
+const cardPrice = (n, tag, full, h) => full ? `<${tag}${pcls('', h) ? ` class="${pcls('', h)}"` : ''}${priceAttrs(n, h)}>${money(n)}</${tag}>` : inc('st1', `<${tag} class="st1">${money(pre(n))}, pre-order price</${tag}>`) + `<${tag} class="${pcls('st02', h)}"${priceAttrs(n, h)}>${money(n)}</${tag}>`;
 
 function picture(im, eager, sizes, zoom) {
   return imgTag(im, { eager, sizes: sizes || '(max-width: 900px) 100vw, 50vw', mockAlt: false, zoom });
@@ -301,7 +330,7 @@ function buyBox(p, stage) {
       <h1>${p.title}</h1>
       ${RATING ? `<a class="po-rate" href="/#s-reviews"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>${RATING}</span></a>` : ''}
       ${now ? `<p class="po-line st12">In stock. Order by 2 pm for next-working-day delivery in the UAE.</p>` : `<p class="po-line st12">Pre-order. Ships from Fri 30 Oct.</p>`}
-      ${p.inHand ? `<p class="po-price">${money(p.price)}</p>` : `${inc('st1', `<p class="po-price st1">${money(pre(p.price))}</p>`)}<p class="po-price st02">${money(p.price)}</p>
+      ${p.inHand ? `<p class="po-price sb-price"${priceAttrs(p.price, p.handle)}>${money(p.price)}</p>` : `${inc('st1', `<p class="po-price st1">${money(pre(p.price))}</p>`)}<p class="po-price st02 sb-price"${priceAttrs(p.price, p.handle)}>${money(p.price)}</p>
       ${inc('st1', `<p class="po-note st1">Pre-order price: 20% off the ${money(p.price)} full price, until Thu 29 Oct, 23:59. Full price from Fri 30 Oct.</p>`)}`}
       <p class="po-colour">${p.kind}${p.colour ? ` &middot; Colour: ${p.colour}` : ''}${p.fit ? ` &middot; ${p.fit} fit` : ''}</p>
       ${p.sibling ? `<p class="po-sib">Also in <a href="/products/${p.sibling}/">${p.siblingFit} fit &rarr;</a></p>` : ''}
@@ -317,17 +346,17 @@ function buyBox(p, stage) {
       </div>`)}
       <div class="st12">
         ${sizes}
-        ${p.oneSize ? '' : SZ.keyFor(p) ? `<p class="po-ask">${/* 27 Oct 2026 */''}Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart &darr;</a> Still unsure? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us.</a></p>` : `<p class="po-ask">No size chart for this piece yet. Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>`}
+        ${p.oneSize ? '' : SZ.keyFor(p) ? `<p class="po-ask">${/* 27 Oct 2026 */''}Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart &darr;</a> Still unsure? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us.</a></p>${foundingMatch(SZ.keyFor(p))}` : `<p class="po-ask">No size chart for this piece yet. Unsure of your size? <a href="${WA}?text=${encodeURIComponent('Hi, a size question about the ' + p.plain + ' before I order.')}" target="_blank" rel="noopener">Message us before you order.</a></p>`}
         <ul class="po-assure">${now
           ? '<li>In stock. Order by 2 pm for next-working-day delivery, free across the UAE.</li>'
           : '<li>Pay today. Ships from Fri 30 Oct, with free delivery across the UAE.</li><li>Cancel free of charge any time before it ships.</li>'}<li>Free 14-day returns and size exchanges in the UAE.</li></ul>
-        ${p.inHand ? `<p class="po-tabby sb-ship-uae">${tab(p.price)}</p>` : `${inc('st1', `<p class="po-tabby sb-ship-uae st1">${tab(pre(p.price))}</p>`)}
-        <p class="po-tabby sb-ship-uae st2">${tab(p.price)}</p>`}
+        ${p.inHand ? `<p class="po-tabby sb-ship-uae sb-aed-only">${tab(p.price)}</p>` : `${inc('st1', `<p class="po-tabby sb-ship-uae sb-aed-only st1">${tab(pre(p.price))}</p>`)}
+        <p class="po-tabby sb-ship-uae sb-aed-only st2">${tab(p.price)}</p>`}
         <button type="button" class="po-go" id="poGo" disabled>${p.oneSize ? 'Add to bag' : 'Choose a size'}</button>
         <p class="po-msg" id="poMsg" role="status" aria-live="polite"></p>
         <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>
       </div>
-      <div id="buybar" class="po-bar st12" role="region" aria-label="Buy ${esc(p.plain)}"><span class="pb-txt"><span class="pb-p">${p.inHand ? money(p.price) : inc('st1', `<span class="st1">${money(pre(p.price))}</span>`) + `<span class="st02">${money(p.price)}</span>`}</span><span class="pb-s">${now ? 'In stock, free UAE delivery' : 'Pre-order, ships from Fri 30 Oct'}</span></span>${!p.oneSize && !p.kit ? `<span class="pb-sz" role="group" aria-label="Size">${SIZES.map(z => `<button type="button" data-bsize="${z}" aria-pressed="false" disabled>${z}</button>`).join('')}</span>` : ''}<button type="button" class="pb-go" id="pbGo">${p.oneSize ? 'Add to bag' : now ? 'Add to bag' : 'Pre-order'}</button></div>
+      <div id="buybar" class="po-bar st12" role="region" aria-label="Buy ${esc(p.plain)}"><span class="pb-txt"><span class="pb-p">${p.inHand ? `<span class="sb-price"${priceAttrs(p.price, p.handle)}>${money(p.price)}</span>` : inc('st1', `<span class="st1">${money(pre(p.price))}</span>`) + `<span class="st02 sb-price"${priceAttrs(p.price, p.handle)}>${money(p.price)}</span>`}</span><span class="pb-s">${now ? 'In stock, free UAE delivery' : 'Pre-order, ships from Fri 30 Oct'}</span></span>${!p.oneSize && !p.kit ? `<span class="pb-sz" role="group" aria-label="Size">${SIZES.map(z => `<button type="button" data-bsize="${z}" aria-pressed="false" disabled>${z}</button>`).join('')}</span>` : ''}<button type="button" class="pb-go" id="pbGo">${p.oneSize ? 'Add to bag' : now ? 'Add to bag' : 'Pre-order'}</button></div>
       <p class="po-small">${p.noTote ? 'Free delivery across the UAE. Returns within 14 days of delivery.' : 'Free delivery across the UAE, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
     </div>`;
 }
@@ -406,7 +435,7 @@ const CLIENT = `<script>
 
 function productPage(p, all, SITE, stage) {
   const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
   return `${stageHead()}<style>${CSS}</style>
 <main class="po-wrap">
@@ -450,18 +479,18 @@ function foundingImgs(handle, img, alt) {
 function crossLines(p, card) {
   const other = pickNew(o => o.line !== p.line && o.line !== undefined && !o.inHand, true).slice(0, 4);
   const fe = FOUNDING.map(([h, n, img, alt, pr]) => `<a class="po-card" href="/products/${h}/"><div class="po-fig" data-cycle>${foundingImgs(h, img, alt)}</div><b>${n}</b><span><span class="sb-price" data-handle="${h}" data-aed="${pr}">${money(pr)}</span> &middot; in stock</span></a>`).join('');
-  return `${other.length ? `<section class="po-more po-cross"><h2>${p.line === 'sahel' ? 'Also on pre-order: Sahra Trail' : 'Also on pre-order: Sahel'}</h2><div class="po-cards">${other.map(card).join('')}</div></section>` : ''}
-  <section class="po-more po-cross"><h2>The Founding Edition, in stock</h2><p class="po-small" style="margin:-4px 0 14px">Ships next working day. Any two Founding Edition tees for AED 359. These use the Founding Edition size chart.</p><div class="po-cards">${fe}</div></section>`;
+  return `${other.length ? `<section class="po-more po-cross"><h2>${p.line === 'sahel' ? (IN_HAND ? 'Also new: Sahra Trail' : 'Also on pre-order: Sahra Trail') : (IN_HAND ? 'Also new: Sahel' : 'Also on pre-order: Sahel')}</h2><div class="po-cards">${other.map(card).join('')}</div></section>` : ''}
+  <section class="po-more po-cross"><h2>The Founding Edition, in stock</h2><p class="po-small" style="margin:-4px 0 14px">Ships next working day.<span class="sb-aed-only"> Any two Founding Edition tees for AED 359.</span> These use the Founding Edition size chart.</p><div class="po-cards">${fe}</div></section>`;
 }
 /* the reverse row, for the Founding Edition product pages (build-products.js) */
 function foundingCross() {
   const list = ['khor-fakkan-bay-tee-regular', 'al-aqah-reef-tee-regular', 'ras-al-khor-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean);
   return newBlock({ list, heading: 'Also new: Sahel and Sahra Trail', kicker: inc('st1', '<span class="st1">On pre-order &middot; 20% off until Thu 29 Oct</span>') + '<span class="st02">New</span>',
-    lede: 'Sahel, the Coast Edition, and Sahra Trail running wear. Pre-orders ship from Fri 30 Oct. Sahel has <a href="/size-guide/#sahel">its own size chart</a>.', fitsLabel: true, more: '/new/', moreText: 'See every new piece' });
+    lede: 'Sahel, the Coast Edition, and Sahra Trail running wear.' + (IN_HAND ? ' In stock, shipping next working day.' : ' Pre-orders ship from Fri 30 Oct.') + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>.', fitsLabel: true, more: '/new/', moreText: 'See every new piece' });
 }
 
 function collectionPage(all) {
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 280px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span', o.inHand)}</a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 280px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
   const sec = (id, h, list, note) => `<section class="po-more" id="${id}"><h2>${h}</h2>${note ? `<p class="po-small" style="margin:-4px 0 14px">${note}</p>` : ''}<div class="po-cards">${list.map(card).join('')}</div></section>`;
   return `${stageHead()}<style>${CSS}.po-head h1{font:600 clamp(34px,5vw,56px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 10px}.po-head p{font:17px/1.55 Jost,system-ui,sans-serif;max-width:60ch;margin:0 0 8px}</style>
 <main class="po-wrap">
@@ -520,9 +549,9 @@ function newCard(p, fitsLabel) {
   const fig = im ? `<span class="nb-f" data-cycle>${cycleImgs(p, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
   const sub = fitsLabel && p.fit ? `${p.kind} &middot; Regular or Oversized` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
   const href = `/products/${p.handle}/`;
-  if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', true)}</small>`
+  if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', true, p.handle)}</small>`
     + inc('st0', `<small class="st0">On sale from Wed 28 Oct</small>`) + `<small class="st12">In stock, ships next working day</small></a>`;
-  return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span')}</small>`
+  return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', false, p.handle)}</small>`
     + inc('st0', `<small class="st0">Pre-order opens Wed 28 Oct</small>`) + inc('st1', `<small class="st1">Pre-order, ships from Fri 30 Oct</small>`)
     + (IN_HAND ? '' : `<small class="st2">Pre-order, ships from Fri 30 Oct</small>`) + `</a>`;
 }
@@ -564,7 +593,7 @@ function pieceBlock(placeId, lead) {
   return stageHead() + PB_CSS + `<section class="spb" id="tee" data-match="sahel" aria-label="${esc(p.name.replace(/&amp;/g, '&'))}">
   ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true" data-cycle>${cardSet(p).map((x, i) => imgTag(x, { alt: '', sizes: '240px', bg: '#1B2A40', cls: i ? '' : 'on' })).join('')}${mockTag(im)}</a>` : ''}
   <div><p class="spb-k">${lead || `The ${noun} drawn from this place`} &middot; Sahel</p><h2>${p.name}</h2><p>${first}</p>
-  <p class="spb-p">${cardPrice(p.price, 'span')}${isTee ? ' &middot; Regular or Oversized' : ''}</p>
+  <p class="spb-p">${cardPrice(p.price, 'span', false, p.handle)}${isTee ? ' &middot; Regular or Oversized' : ''}</p>
   <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}${im && im.mock ? 'The image is a studio mock-up.' : 'Photographed from the real piece.'}</p>
   <a class="spb-a" href="/products/${p.handle}/">See the ${noun} &rarr;</a></div>
 </section>`;
@@ -600,7 +629,7 @@ ${CYCLE_CSS}
     inc('st1', '<p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
     `<p class="st2">Designed in the UAE for everyone who loves it.</p>
     <a class="lb-a" href="/new/">` + inc('st0', '<span class="st0">See the pieces</span>') + inc('st1', '<span class="st1">Pre-order now</span>') + `<span class="st2">Shop the new pieces</span> &rarr;</a>
-  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 42vw, 200px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small')}</a>`).join('') +
+  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 42vw, 200px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', false, p.handle)}</a>`).join('') +
   `</div></div></section>`;
 }
 
@@ -677,7 +706,7 @@ function homeRing() {
     const fit = p.fit ? 'Regular or Oversized' : cut(p);
     return `<a class="hring-card hring-new" href="/products/${p.handle}/" data-handle="${p.handle}" data-place="${esc(place)}"><span class="hring-img" data-cycle>${imgs}</span>${mockTag(p.images[0], 'hring-mk')}`
       + `<span class="hring-body"><span class="hring-place">Sahel${p.place ? ' &middot; ' + esc(place) : ''}</span><span class="hring-name">${p.name}</span><span class="hring-fit">${fit}</span>`
-      + `<span class="hring-price">${cardPrice(p.price, 'span')}</span><span class="hring-go">` + inc('st1', '<span class="st1">Pre-order &rarr;</span>') + `<span class="st02">View the piece &rarr;</span></span></span></a>`;
+      + `<span class="hring-price">${cardPrice(p.price, 'span', false, p.handle)}</span><span class="hring-go">` + inc('st1', '<span class="st1">Pre-order &rarr;</span>') + `<span class="st02">View the piece &rarr;</span></span></span></a>`;
   }).join('');
 }
 function homeLines() {

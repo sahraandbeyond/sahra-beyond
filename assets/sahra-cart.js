@@ -51,7 +51,7 @@
   var PRE = { 'khor-fakkan-bay-tee-regular': 'ph-kfb-01-back', 'khor-fakkan-bay-tee-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-regular': 'ph2-pearl-01-back', 'al-hamra-pearl-diver-tee-oversized': 'ph2-pearl-01-back',
     'al-aqah-reef-tee-regular': 'ph-reef-01-back', 'al-aqah-reef-tee-oversized': 'ph-reef-01-back', 'shams-tee-regular': 'ph-shams-01-front', 'shams-tee-oversized': 'ph-shams-01-front', 'the-sahel-polo': '',
     'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'trail-tee-front', 'sahra-trail-2-in-1-short': 'trail-short-front', 'sahra-trail-kit': 'trail-kit-front' };
-  var PRE_IN_HAND = false;   /* set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
+  var PRE_IN_HAND = true;   /* 30 Oct 2026 (Faheem: "In stock, ships next day"). Was:  set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
   function isPre(l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; return !!h && Object.prototype.hasOwnProperty.call(PRE, h); }
   var CART_REAL = { 'al-quaa-galaxy-regular': '/shirts/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/emptyquarter-model-stand.webp', 'hajar-mountains-regular': '/shirts/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/hajar-lake-back-her.webp', 'sand-polo': '/shirts/polo-dune-front.webp', 'trailhead-bag': '/assets/preorder/trail-bag-front-720.webp' };
   var S = { domain: 'sahra-beyond.myshopify.com', token: 'cc42ba8e74eb27c4f3c062d93f893fa0', v: '2024-10' };
@@ -256,7 +256,7 @@
      otherwise ship two. Matched on handle, not variant id, so a reprice or a
      second colourway of the same product keeps working. (Faheem, 19 Sep.) */
   var TOTE_HANDLE = 'sahra-tote';
-  var TOTE_PRICE = '50';   /* shown struck through on the gift line; keep in step
+  var TOTE_PRICE = '50';   /* list price of the tote (not shown struck through since 25 Oct); keep in step
                               with the variant price and OFFER.toteValue. */
   function isTote(node) {
     var m = node && node.merchandise;
@@ -565,7 +565,7 @@
       /* only the bundle's own allocations count as the bundle saving - any other
          automatic discount is not credited to it (review, 23 Sep) */
       var saved = 0, tees = 0, cur = CART.cost.subtotalAmount.currencyCode;
-      var deal = cur === 'AED' ? 'any 2 tees for AED 359' : 'the 2-tee bundle price';
+      var deal = cur === 'AED' ? 'any two Founding Edition tees for AED 359' : 'the two-tee price';
       realLines.forEach(function (l) {
         (l.discountAllocations || []).forEach(function (a) {
           if (/2 tees|359/i.test(a.title || '')) saved += parseFloat((a.discountedAmount || {}).amount) || 0;
@@ -574,18 +574,18 @@
       });
       if (saved > 0.004) {
         el.hidden = false; el.className = 'sb-bundle';
-        el.innerHTML = '\u2713 Bundle applied: ' + deal + ' \u00b7 you save ' + esc(money(saved, cur));
+        el.innerHTML = '\u2713 Pair price applied: ' + deal + '.';   /* 30 Oct 2026 (Faheem): no "you save" wording */
       } else if (tees === 1) {
         /* 4 Oct 2026 (CRO panel, idea 14): one tap adds a second design in the same size.
            The pair price is Shopify's own automatic discount (AED 19.50 off each of the
-           six tees at two or more), so the saving shown is the real one. */
+           six tees at two or more); the bag names the pair price, never a saving (30 Oct 2026). */
         var have = realLines.filter(isTee)[0], hm = have && have.merchandise, hh = hm && hm.product && hm.product.handle || '';
         var fit = /oversized/.test(hh) ? 'oversized' : 'regular', size = hm && hm.title || '';
         var pick = TEES.filter(function (t) { return t.h !== hh && t.fit === fit; })[0] || TEES.filter(function (t) { return t.h !== hh; })[0];
         el.hidden = false;
         if (pick && cur === 'AED') {
           el.className = 'sb-bundle sb-second';
-          el.innerHTML = '<img src="' + pick.img + '" alt="" width="44" height="55" loading="lazy"><span class="sb-second-t"><b>Add a second, pair AED 359</b> \u00b7 saves AED 39<br>' + esc(pick.name) + (size ? ' in ' + esc(size) : '') + ', ' + fit + '</span>' +
+          el.innerHTML = '<img src="' + pick.img + '" alt="" width="44" height="55" loading="lazy"><span class="sb-second-t"><b>Add a second: the pair is AED 359</b><br>' + esc(pick.name) + (size ? ' in ' + esc(size) : '') + ', ' + fit + '</span>' +
             '<button type="button" class="sb-second-add" data-handle="' + pick.h + '" data-size="' + esc(size) + '">Add</button>';
         } else {
           el.className = 'sb-bundle';
