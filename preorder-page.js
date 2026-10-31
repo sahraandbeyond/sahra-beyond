@@ -388,7 +388,7 @@ function crossLines(p, card) {
 }
 /* the reverse row, for the Founding Edition product pages (build-products.js) */
 function foundingCross() {
-  const list = ['khor-fakkan-bay-tee-regular', 'al-aqah-reef-tee-regular', 'ras-al-khor-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean);
+  const list = ['khor-fakkan-bay-tee-regular', 'al-aqah-reef-tee-regular', 'ras-al-khor-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean).map(p => onSale(p) ? p : products().find(x => x.handle === 'the-sahel-polo')).filter(Boolean);
   return newBlock({ list, heading: 'Also new: Sahel and Sahra Trail', kicker: inc('st1', '<span class="st1">On pre-order &middot; 20% off until Thu 29 Oct</span>') + '<span class="st02">New</span>',
     lede: 'Sahel, the Coast Edition, and Sahra Trail running wear.' + (IN_HAND ? ' In stock, shipping next working day.' : ' Pre-orders ship from Fri 30 Oct.') + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>.', fitsLabel: true, more: '/new/', moreText: 'See every new piece' });
 }
@@ -416,8 +416,11 @@ function collectionPage(all) {
    (/t-shirts/, /t-shirts/regular|oversized/, /polos/, /hoodies/, /gifts/, /national-day/, /shop/).
    pickNew(filter) returns product entries; newBlock() renders them as cards with the Mock-up label,
    the stage-aware price and the pre-order line. One card per design unless both fits are asked for. */
-function pickNew(test, perDesign) {
-  const list = products().filter(test);
+/* paused pieces (specimen.js PAUSED, 30 Oct 2026) keep their own pages but are not listed for sale elsewhere;
+   pass keepPaused for a page about that piece itself (/hoodies/) */
+const onSale = p => !require('./specimen.js').PAUSED[p.handle];
+function pickNew(test, perDesign, keepPaused) {
+  const list = products().filter(p => test(p) && (keepPaused || onSale(p)));
   return perDesign ? list.filter((p, i, a) => a.findIndex(x => x.name === p.name) === i) : list;
 }
 const NB_CSS = `<style>
@@ -456,9 +459,9 @@ function newCard(p, fitsLabel) {
   const fig = im ? `<span class="nb-f" data-cycle>${cycleImgs(p, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
   const sub = fitsLabel && p.fit ? `${p.kind} &middot; ${bothFits(p)}` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
   const href = `/products/${p.handle}/`;
-  if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', true, p.handle)}</small>`
+  if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${onSale(p) ? cardPrice(p.price, 'span', true, p.handle) : 'Back soon'}</small>`
     + inc('st0', `<small class="st0">On sale from Wed 28 Oct</small>`) + `<small class="st12">In stock, ships next working day</small></a>`;
-  return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${cardPrice(p.price, 'span', false, p.handle)}</small>`
+  return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${onSale(p) ? cardPrice(p.price, 'span', false, p.handle) : 'Back soon'}</small>`
     + inc('st0', `<small class="st0">Pre-order opens Wed 28 Oct</small>`) + inc('st1', `<small class="st1">Pre-order, ships from Fri 30 Oct</small>`)
     + (IN_HAND ? '' : `<small class="st2">Pre-order, ships from Fri 30 Oct</small>`) + `</a>`;
 }
@@ -478,7 +481,7 @@ const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct
 /* 23 Oct 2026 (site review): a place guide whose place became a Sahel piece shows that piece
    (Khor Fakkan, Al Jazirah Al Hamra, Al Aqah / Snoopy Island, Ras Al Khor), on the place page and on
    the guides that name the place. Same stage rules as everywhere else. */
-function pieceFor(placeId) { return products().find(p => p.place && p.place[1] === placeId && (!p.fit || p.fit === 'Regular')) || null; }
+function pieceFor(placeId) { return products().find(p => p.place && p.place[1] === placeId && (!p.fit || p.fit === 'Regular') && onSale(p)) || null; }
 const PB_CSS = `<style>
 .spb{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:center;max-width:860px;margin:34px auto;padding:20px;border-radius:18px;background:#0E1A2E;color:#F4ECDF}
 .spb-f{position:relative;display:block;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#1B2A40}
@@ -509,7 +512,8 @@ function pieceBlock(placeId, lead) {
 /* 23 Oct 2026 (Faheem chose "Launch band, no ticker"): a band near the top of the homepage. The day line
    ("That is in 5 days") updates once per visit by the UAE calendar; there is no ticking countdown (22 Oct no-timer rule). */
 function homeBand() {
-  const pick = ['khor-fakkan-bay-tee-oversized', 'al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean);
+  const pick = ['khor-fakkan-bay-tee-oversized', 'al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean)
+    .map(p => onSale(p) ? p : products().find(x => x.handle === (p.sibling || 'the-sahel-polo'))).filter(Boolean);
   const css = `<style>
 .lb{background:#0E1A2E;color:#F4ECDF;padding:46px 20px 50px;position:relative;z-index:1}
 .lb-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:34px;align-items:center}
@@ -729,6 +733,7 @@ module.exports.homeLines = homeLines;
 module.exports.urls = urls;
 module.exports.handles = () => products().map(p => p.handle);
 module.exports.products = products;
+module.exports.onSale = onSale;
 module.exports.pickNew = pickNew;
 module.exports.pieceFor = pieceFor;
 module.exports.pieceBlock = pieceBlock;

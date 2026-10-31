@@ -102,7 +102,8 @@ module.exports = function buildSahel({ shell, write, SITE }) {
   </section>`).join('');
 
   const ST = require('./preorder-page.js');
-  const SHOP = ST.products().filter(p => p.line === 'sahel');   /* every product, each fit on its own card (Faheem, 25 Oct 2026) */
+  const SHOP = ST.products().filter(p => p.line === 'sahel' && ST.onSale(p));   /* paused pieces left out (30 Oct 2026) */
+  /* every product, each fit on its own card (Faheem, 25 Oct 2026) */
   const pieces = PIECES.map((p, i) => {
     const n = String(i + 1).padStart(2, '0'), d = DIM[p.k];
     const reveal = STATE === 'reveal' && p.name;
@@ -315,7 +316,7 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
     <div class="sh-rv">
       <p class="sh-num">The Coast Edition</p>
       <h2 id="shIntro">Seven designs from the UAE coast</h2>
-      <p class="sh-lede">Sahel means the coast. The Founding Edition came from the desert and the mountains; Sahel follows the shoreline: the bay at Khor Fakkan, the pearling town of Al Jazirah Al Hamra, the reef off Al Aqah, the flamingos of Ras Al Khor, and the place where the desert meets the sea. Four tees${Object.keys(require('./specimen.js').PAUSED).length ? ' in Regular (the Oversized fit is being adjusted and will be back soon)' : ' in Regular and Oversized'}, a polo and two hoodies. Designed in the UAE.</p>
+      <p class="sh-lede">Sahel means the coast. The Founding Edition came from the desert and the mountains; Sahel follows the shoreline: the bay at Khor Fakkan, the pearling town of Al Jazirah Al Hamra, the reef off Al Aqah, the flamingos of Ras Al Khor, and the place where the desert meets the sea. ${Object.keys(require('./specimen.js').PAUSED).length ? 'Four tees in Regular and a polo. The Oversized tees and the two hoodies are being adjusted and will be back soon.' : 'Four tees in Regular and Oversized, a polo and two hoodies.'} Designed in the UAE.</p>
     </div>
   </section>
   <section class="sh-shop" id="pieces" data-plate="2" data-stop="The Reef" aria-labelledby="shPieces">

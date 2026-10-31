@@ -233,14 +233,16 @@ function fitSwitch(s, cls) {
    Oversized tees ran a size large; the stock is being altered back to the original (Founding Edition)
    Oversized measurements. Their Shopify products are set to Draft, so nothing can be bought; the page
    says so plainly and points to the Regular fit. Remove a handle from this list to sell it again. */
-const PAUSED = { 'khor-fakkan-bay-tee-oversized': 1, 'al-aqah-reef-tee-oversized': 1, 'al-hamra-pearl-diver-tee-oversized': 1, 'shams-tee-oversized': 1 };
+const PAUSED = { 'khor-fakkan-bay-tee-oversized': 1, 'al-aqah-reef-tee-oversized': 1, 'al-hamra-pearl-diver-tee-oversized': 1, 'shams-tee-oversized': 1,
+  /* 30 Oct 2026 (Faheem: "Stop the sale of hoodies as well. Those are also oversized with same problem.") */
+  'barr-and-bahr-hoodie': 1, 'ras-al-khor-hoodie': 1 };
 function sheet(s) {
   const btn = z => `<button type="button" data-size="${z}" aria-pressed="false">${z}</button>`;
   const group = (g, label, show) => `<div class="ssb-sz" role="group" aria-label="${label}" data-group="${g}">${show ? `<span class="ssb-gl">${show}</span>` : ''}${['S', 'M', 'L', 'XL'].map(btn).join('')}</div>`;
   const sizes = s.oneSize ? `<span class="ssb-one">One size</span>` : s.kit ? `<div class="ssb-kit">${group('tee', 'Tee size', 'Tee')}${group('short', 'Short size', 'Short')}</div>` : group('size', 'Size');
   return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}>
       <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd"${PAUSED[s.handle] ? ' disabled' : ''}>${PAUSED[s.handle] ? 'Back soon' : 'Add to bag'}</button></div>${PAUSED[s.handle] ? `
-      <p class="ssb-paused">We are adjusting this Oversized fit back to our original Oversized size. It will be back soon.${s.fits && s.fits.Regular ? ` <a href="${s.fits.Regular}">The Regular fit is available now</a>` : ''}</p>` : ''}
+      <p class="ssb-paused">${/hoodie/.test(s.handle) ? 'We are adjusting the fit of this hoodie. It will be back soon. <a href="/sahel/">See what is available from Sahel</a>' : `We are adjusting this Oversized fit back to our original Oversized size. It will be back soon.${s.fits && s.fits.Regular ? ` <a href="${s.fits.Regular}">The Regular fit is available now</a>` : ''}`}</p>` : ''}
       <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with Tabby</span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
       <p class="ssb-msg" id="ssMsg" role="status" aria-live="polite"></p>
     </div>`;
@@ -286,9 +288,16 @@ function top(s, o = {}) {
 function nextPiece(s) {
   const list = ORDER[s.line] || [];
   const i = list.indexOf(s.key); if (i < 0) return '';
-  const nk = list[(i + 1) % list.length];
-  const fitted = FITTED.has(nk);
-  const suffix = fitted ? (s.fit === 'Oversized' ? '-oversized' : '-regular') : '';
+  /* skip pieces withdrawn from sale (PAUSED); a paused Oversized falls back to its Regular fit */
+  let nk = null, fitted = false, suffix = '';
+  for (let j = 1; j < list.length; j++) {
+    const k = list[(i + j) % list.length], f = FITTED.has(k);
+    let sx = f ? (s.fit === 'Oversized' ? '-oversized' : '-regular') : '';
+    if (PAUSED[k + sx] && f) sx = '-regular';
+    if (PAUSED[k + sx]) continue;
+    nk = k; fitted = f; suffix = sx; break;
+  }
+  if (!nk) return '';
   let im, mock = false;
   if (FOUNDING[nk]) { const D = FOUNDING[nk]; const set = D[suffix === '-oversized' ? 'oversized' : 'regular'] || D.regular; const a = set[D.face] || set.back; im = shirt(a[0], a[1]); }
   else { const D = PRE[nk]; im = pre(D[D.face] || D.front || D.back); mock = !!D.mock; }

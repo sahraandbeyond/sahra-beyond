@@ -2585,7 +2585,7 @@ if (LAUNCHED || REVEALED) (function () {
       + '</div>';
     html = html.replace('/*PRE_HANDLES*/[]', JSON.stringify(PO.handles()));
     /* 23 Oct 2026: the Sahel places on the /shop/ map (Regular fit links for the tees) */
-    const SHOP_MAP_EXTRA = PO.products().filter(p => p.place && (!p.fit || p.fit === 'Regular')).map(p => {
+    const SHOP_MAP_EXTRA = PO.products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && PO.onSale(p)).map(p => {
       const l = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/locations', p.place[1] + '.json'), 'utf8'));
       return { slug: p.place[1], lat: l.lat, lng: l.lng, place: p.place[0], title: p.name.replace(/&amp;/g, '&'), price: p.price, href: `/products/${p.handle}/`,
         img: `/assets/preorder/${p.images[0].k}-720.webp`, cta: /hoodie/i.test(p.kind) ? 'See the hoodie' : 'See the tee' }; });
@@ -2897,7 +2897,7 @@ body.tote-page main{max-width:1180px}
     ['wadi-naqab', 'Hajar Mountains', '/shirts/card/hajar-dune-back.jpg']
   ].filter(([id]) => byId[id] && byId[id].productLink && byId[id].productLink.slug);
   /* 23 Oct 2026 (site review): the four Sahel places join the three Founding ones (mock-up images, labelled in the alt and the link text) */
-  const SAHEL_TEES = require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && byId[p.place[1]])
+  const SAHEL_TEES = require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && byId[p.place[1]] && require('./preorder-page.js').onSale(p))
     .map(p => [p.place[1], p.name.replace(/&amp;/g, '&'), `/assets/preorder/${p.images[0].k}-720.webp`, `/products/${p.handle}/`, /hoodie/i.test(p.kind) ? 'hoodie' : 'tee', p.images[0]]);
   const tees = TEES.map(([id, tee, img]) => `<a class="pl-tee" href="/products/${esc(byId[id].productLink.slug)}/"><img src="${esc(img)}" alt="${esc(tee)} tee" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the tee &rarr;</i></span></a>`).join('')
     + SAHEL_TEES.map(([id, tee, img, href, noun, im]) => `<a class="pl-tee" href="${esc(href)}"><img src="${esc(img)}" alt="${esc(im && !im.mock ? im.alt : tee + ', studio mock-up')}" loading="lazy" width="120" height="150"${im && im.h / im.w > 1.4 ? ' style="object-fit:contain"' : ''}><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the ${noun} ${im && !im.mock ? '' : '(mock-up) '}&rarr;</i></span></a>`).join('');
@@ -2972,7 +2972,7 @@ body.tote-page main{max-width:1180px}
     ${notOperator('guide')}
     <div class="content"><p>This is the map behind the brand: every desert, dune field, wadi, mountain trail and beach we have explored across the UAE. Each place has its own guide: how to get there, when to go, what it costs, the real risks, and a packing list matched to the trip, with the sources for every fact.</p></div>
     ${PLACES.hubExplorer(locations, { tees: Object.assign(Object.fromEntries(Object.entries(PRODUCT_BY_PLACE).filter(([, p]) => p.fit === 'regular').map(([k, p]) => [k, { name: String(p.name || '').replace(/\s+[—-]\s+Regular$/, ''), url: '/products/' + p.id + '/' }])),
-      Object.fromEntries(require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular')).map(p => [p.place[1], { name: p.name.replace(/&amp;/g, '&'), url: '/products/' + p.handle + '/' }]))), hikes: fs.readdirSync(path.join(ROOT, 'content/hikes')).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ROOT, 'content/hikes', f), 'utf8'))).map(h => ({ slug: h.slug, name: h.name, grade: h.grade, lat: h.trailhead.lat, lng: h.trailhead.lng })) })}
+      Object.fromEntries(require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && require('./preorder-page.js').onSale(p)).map(p => [p.place[1], { name: p.name.replace(/&amp;/g, '&'), url: '/products/' + p.handle + '/' }]))), hikes: fs.readdirSync(path.join(ROOT, 'content/hikes')).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ROOT, 'content/hikes', f), 'utf8'))).map(h => ({ slug: h.slug, name: h.name, grade: h.grade, lat: h.trailhead.lat, lng: h.trailhead.lng })) })}
     ${secs}
     ${restHtml}
     <section class="guide-sec" id="guides"><h2>Guides that pull these places together</h2><nav class="catnav" aria-label="Guides">${FG.GUIDES.filter(g => g[0] !== '/places/').map(g => `<a href="${g[0]}"><b>${esc(g[1])}</b><span>${esc((LANDINGS.find(L => '/' + L.slug + '/' === g[0]) || {}).desc ? (LANDINGS.find(L => '/' + L.slug + '/' === g[0]).pick || []).length + ' places' : '')}</span></a>`).join('')}</nav></section>
@@ -3464,14 +3464,16 @@ COMMERCE.forEach(P => {
    and the pre-order wording come from preorder-page.js, so they follow the same stages. */
 (function buildHoodies() {
   const PO = require('./preorder-page.js');
-  const list = PO.pickNew(p => /hoodie/.test(p.handle));
+  const list = PO.pickNew(p => /hoodie/.test(p.handle), false, true);
+  /* 30 Oct 2026: both hoodies withdrawn from sale while the fit is adjusted (specimen.js PAUSED) */
+  const HPAUSED = list.some(p => !PO.onSale(p));
   const canonical = `${SITE}/hoodies/`;
   const H = { h1: 'Hoodies in Dubai & the UAE',
     title: 'Hoodies in Dubai & UAE: Embroidered Coastline | Sahra & Beyond',
     desc: 'The Barr & Bahr Hoodie and the Ras Al Khor Hoodie from Sahel, the Coast Edition: the UAE coastline embroidered across the back. AED 229, designed in the UAE.' };
   const faqs = [
     ['How much are the hoodies?', 'Both are AED 229, in sizes S to XL. Delivery is free across the UAE.'],
-    ['When do they ship?', 'Both hoodies are in stock and ship the next working day, with free delivery across the UAE.'],
+    HPAUSED ? ['Can I order one now?', 'Not just now. We are adjusting the fit of both hoodies, and they will be back soon. Message us on WhatsApp if you would like to hear when they return.'] : ['When do they ship?', 'Both hoodies are in stock and ship the next working day, with free delivery across the UAE.'],
     ['What size should I take?', 'Use the Sahel size chart on our size guide: the hoodies measure 23 inches across the chest at S, 24 at M, 25 at L and 26.5 at XL, laid flat. Measure a hoodie you like and match the number. Size exchanges within the UAE are free within 14 days of delivery, subject to stock.']
   ];
   const jsonld = [
@@ -3491,7 +3493,7 @@ COMMERCE.forEach(P => {
     </div>
   </section>
   <main>
-    ${PO.newBlock({ list, heading: 'Two hoodies from Sahel, the Coast Edition', kicker: 'Sahel &middot; The Coast Edition', lede: PO.newLede(), more: '/new/#sahel', moreText: 'See all of Sahel' })}
+    ${PO.newBlock({ list, heading: 'Two hoodies from Sahel, the Coast Edition', kicker: 'Sahel &middot; The Coast Edition', lede: HPAUSED ? 'We are adjusting the fit of both hoodies, so they are not on sale just now. They will be back soon.' : PO.newLede(), more: '/new/#sahel', moreText: 'See all of Sahel' })}
     <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE. There are two: the Barr &amp; Bahr Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each AED 229 in sizes S to XL. Both carry the UAE coastline embroidered across the back in sand thread, and each has its own scene printed on the lower back.</p></div>
     <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed, oversized pullover with a dropped shoulder and a hip-length body. There is no drawcord and no hardware anywhere on it, so nothing crosses the mark embroidered at the centre of the chest. The neck label is printed rather than sewn in, so there is no tag to scratch.</p><p>Both hoodies use the same chart, from 23&Prime; across the chest (S) to 26.5&Prime; (XL), measured flat. <a href="/size-guide/#sahel">See the Sahel size chart</a>. If you are still unsure of your size, <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about the Sahel hoodies before I order.')}" target="_blank" rel="noopener">message us before you order</a>.</p></div></section>
     <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the whole UAE coastline in a single line of sand thread, with Sahel written beneath it in Arabic and English. On the lower back, each hoodie carries its own printed scene. The <a href="/products/barr-and-bahr-hoodie/">Barr &amp; Bahr Hoodie</a> carries the crossing between land and sea: contour-line dunes running down into a stream and a wave (in the Gulf, barr is the open land and bahr is the sea). The <a href="/products/ras-al-khor-hoodie/">Ras Al Khor Hoodie</a> has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>, the wetland where Dubai Creek ends.</p></div></section>
@@ -4829,24 +4831,24 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
 (function pauseSahelOversizedCards() {
   const PAUSED = Object.keys(require('./specimen.js').PAUSED);
   if (!PAUSED.length) return;
-  const own = new Set(PAUSED.map(h => path.join('products', h, 'index.html')));
   const files = [];
   (function walk(d) {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
       if (e.name.startsWith('.') || e.name === 'node_modules' || (d === '.' && e.name === 'ar')) continue;
       const f = path.join(d, e.name);
-      if (e.isDirectory()) walk(f); else if (e.name === 'index.html' && !own.has(path.normalize(f))) files.push(f);
+      if (e.isDirectory()) walk(f); else if (e.name === 'index.html') files.push(f);   /* paused pages too: their rails must not list other paused pieces */
     }
   })('.');
-  const rx = new RegExp('<a class="(po-card|nb-c|lb-c)" href="/products/(' + PAUSED.join('|') + ')/">[\\s\\S]*?</a>', 'g');
+  const rx = new RegExp('<a (?:role="listitem" )?class="(po-card|nb-c|lb-c|sh-sc|hring-card hring-new|pl-tee)" href="/products/(' + PAUSED.join('|') + ')/"[^>]*>[\\s\\S]*?</a>', 'g');
   let removed = 0, moved = 0, lists = 0, pages = 0;
   for (const f of files) {
     let html = fs.readFileSync(f, 'utf8');
     if (!PAUSED.some(h => html.includes('/products/' + h + '/'))) continue;
     const before = html;
     html = html.replace(rx, (card, cls, h) => {
+      if (/^hoodies[\\/]/.test(f)) return card;   /* the hoodie page keeps its two cards (they open "Back soon") */
       const reg = h.replace(/-oversized$/, '-regular');
-      if (html.includes('class="' + cls + '" href="/products/' + reg + '/"') || /t-shirts[\\/]oversized/.test(f)) { removed++; return ''; }
+      if (reg === h || html.includes('class="' + cls + '" href="/products/' + reg + '/"') || /t-shirts[\\/]oversized/.test(f)) { removed++; return ''; }
       moved++;
       return card.split(h).join(reg).replace(/Oversized fit/g, 'Regular fit').replace(/&mdash; Oversized/g, '&mdash; Regular');
     });
@@ -4859,7 +4861,7 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
       (function fix(o) {
         if (!o || typeof o !== 'object') return;
         if (Array.isArray(o)) return o.forEach(fix);
-        if (o['@type'] === 'ItemList' && Array.isArray(o.itemListElement)) {
+        if (o['@type'] === 'ItemList' && Array.isArray(o.itemListElement) && !/^hoodies[\\/]/.test(f)) {
           const keep = o.itemListElement.filter(it => !PAUSED.some(h => JSON.stringify(it).includes('/products/' + h + '/')));
           if (keep.length !== o.itemListElement.length) { hit = true; keep.forEach((it, i) => { if (it.position != null) it.position = i + 1; }); o.itemListElement = keep; if (o.numberOfItems != null) o.numberOfItems = keep.length; }
         }
@@ -4871,7 +4873,7 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
     });
     if (html !== before) { fs.writeFileSync(f, html); pages++; }
   }
-  console.log(`  ✓ Sahel Oversized paused: ${removed} card(s) removed, ${moved} pointed at Regular, ${lists} ItemList(s) trimmed, on ${pages} page(s)`);
+  console.log(`  ✓ paused pieces (Sahel Oversized tees, hoodies): ${removed} card(s) removed, ${moved} pointed at Regular, ${lists} ItemList(s) trimmed, on ${pages} page(s)`);
 })();
 
 /* Arabic mirror of every other indexable page (30 Oct 2026, Faheem: "create Arabic pages for all

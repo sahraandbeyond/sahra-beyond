@@ -375,7 +375,7 @@
       gift: 'This is a gift', giftMsg: 'Gift message (optional)', giftPh: 'Happy birthday, from all of us', giftHide: 'Hide prices on the packing slip', giftNote: 'We’ll include your message with the order.',
       added: 'Added to your bag', viewBag: 'View bag', closePeek: 'Close',
       second: 'Add a second: the pair is AED 359', secondIn: '{n} in {s}, {f}', addBtn: 'Add', adding: 'Adding…', other: 'Other sizes', regular: 'regular', oversized: 'oversized',
-      bagT: 'Add the Trailhead Bag, AED 50', bagSub: 'Canvas drawstring bag, one size', sahelMore: 'Six more Sahel designs: tees, hoodies and a polo.', seeAll: 'See them all', secondX: 'Add a second tee for the two-tee price, applied automatically.', shopTees: 'Shop tees',
+      bagT: 'Add the Trailhead Bag, AED 50', bagSub: 'Canvas drawstring bag, one size', sahelMore: 'More from Sahel: the tees in Regular fit and the Sahel Polo.' /* 30 Oct 2026: hoodies and Oversized tees paused; was 'Six more Sahel designs: tees, hoodies and a polo.' */, seeAll: 'See them all', secondX: 'Add a second tee for the two-tee price, applied automatically.', shopTees: 'Shop tees',
       errUpdate: 'We could not update your bag. ', errAdd: 'We could not add that to your bag. Please try again, or message us on WhatsApp.', errSwap: 'We could not change the size. Your bag is unchanged.',
       expired: 'Your previous bag expired, so we started a new one. Please check the items below.', capMsg: 'That is as many of {t} as we can take in {s} for now, so it stays at {q}.',
       errCur: 'We could not switch your bag’s currency. Your bag is unchanged. Please try again.'
@@ -398,7 +398,7 @@
       gift: 'هذا الطلب هدية', giftMsg: 'رسالة الهدية (اختياري)', giftPh: 'كل عام وأنتم بخير', giftHide: 'إخفاء الأسعار في قسيمة التغليف', giftNote: 'سنرفق رسالتك مع الطلب.',
       added: 'أُضيفت إلى سلّتك', viewBag: 'عرض السلة', closePeek: 'إغلاق',
       second: 'أضف تيشيرتًا ثانيًا: القطعتان بـ 359 درهمًا', secondIn: '{n}، المقاس {s}، {f}', addBtn: 'أضف', adding: 'جارٍ الإضافة…', other: 'مقاسات أخرى', regular: 'ريجولر', oversized: 'أوفرسايز',
-      bagT: 'أضف حقيبة ترايلهيد، 50 درهمًا', bagSub: 'حقيبة قماشية برباط، مقاس واحد', sahelMore: 'ستة تصاميم أخرى من ساحل: تيشيرتات وهودي وبولو.', seeAll: 'شاهدها كلها', secondX: 'أضف تيشيرتًا ثانيًا بسعر القطعتين، يُطبّق تلقائيًا.', shopTees: 'تسوّق التيشيرتات',
+      bagT: 'أضف حقيبة ترايلهيد، 50 درهمًا', bagSub: 'حقيبة قماشية برباط، مقاس واحد', sahelMore: 'المزيد من ساحل: التيشيرتات بقصّة ريجولر وبولو ساحل.' /* was: ستة تصاميم أخرى من ساحل: تيشيرتات وهودي وبولو. */, seeAll: 'شاهدها كلها', secondX: 'أضف تيشيرتًا ثانيًا بسعر القطعتين، يُطبّق تلقائيًا.', shopTees: 'تسوّق التيشيرتات',
       errUpdate: 'تعذّر تحديث سلّتك. ', errAdd: 'تعذّرت الإضافة إلى سلّتك. حاول مرة أخرى أو راسلنا على واتساب.', errSwap: 'تعذّر تغيير المقاس. سلّتك كما هي.',
       expired: 'انتهت صلاحية سلّتك السابقة، فبدأنا سلة جديدة. تحقق من القطع أدناه.', capMsg: 'هذا أقصى ما يمكننا توفيره من {t} بمقاس {s} حاليًا، فتبقى الكمية {q}.',
       errCur: 'تعذّر تغيير عملة سلّتك. سلّتك كما هي، حاول مرة أخرى.'

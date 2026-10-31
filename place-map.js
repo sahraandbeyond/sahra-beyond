@@ -60,7 +60,7 @@ function pinsFrom(root) {
   });
   /* Sahel (23 Oct 2026): one pin per place, linking the Regular fit for the tees */
   require('./preorder-page.js').products().forEach(p => {
-    if (!p.place || seen[p.place[1]] || (p.fit && p.fit !== 'Regular')) return;
+    if (!p.place || seen[p.place[1]] || (p.fit && p.fit !== 'Regular') || require('./specimen.js').PAUSED[p.handle]) return;
     const l = loc(p.place[1]); if (!l || typeof l.lat !== 'number') return;
     seen[p.place[1]] = 1;
     const im = p.images[0];

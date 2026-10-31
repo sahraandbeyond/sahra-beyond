@@ -252,3 +252,4 @@ html body .ss-stage .ss-tabs{width:auto;max-width:none}
 .ssb-paused{margin:8px 0 0;font-size:13.5px;line-height:1.45;color:#5a4636}
 .ssb-paused a{color:inherit;text-decoration:underline;text-underline-offset:2px;font-weight:600}
 .ssb[data-paused] [data-size],.ssb[data-paused] .ssb-add{opacity:.55;cursor:not-allowed}
+.ssb[data-paused] .ssb-tb,.ssb[data-paused] .ssb-dl{display:none}
