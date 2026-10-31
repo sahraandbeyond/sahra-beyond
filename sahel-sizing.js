@@ -6,20 +6,45 @@ const fs = require('fs');
 const path = require('path');
 
 const D = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sahel-sizing.json'), 'utf8'));
-for (const k of ['teeRegular', 'teeOversized', 'hoodie']) {
+/* the charts in use (31 Oct 2026): teeOversized is kept in the file but not shown until the re-cut Oversized fit returns */
+for (const k of ['teeRegular', 'teeSuperOversized', 'hoodie']) {
   if (!D[k] || !D[k].rows || D[k].rows.length !== 4) throw new Error('FATAL: content/sahel-sizing.json ' + k + ' must have four rows, S to XL.');
   if (D[k].rows.some(r => !/^(S|M|L|XL)$/.test(r[0]))) throw new Error('FATAL: content/sahel-sizing.json ' + k + ': sizes are S, M, L and XL only.');
+  if (!D.compare || !D.compare[k]) throw new Error('FATAL: content/sahel-sizing.json compare.' + k + ' is missing.');
 }
 
-/* which chart a product uses, or null (the Sahel Polo, Sahra Trail, bags) */
+/* which chart a product uses, or null (the Sahel Polo, Sahra Trail, bags, and the paused Oversized fit, whose
+   chart is published when it returns: 31 Oct 2026) */
 function keyFor(p) {
   if (!p || p.line !== 'sahel') return null;
   const kind = String(p.kind || '');
-  if (/hoodie/i.test(kind)) return 'hoodie';
   if (/polo/i.test(kind)) return null;
-  return /oversized/i.test(p.fit || '') ? 'teeOversized' : 'teeRegular';
+  if (/hoodie/i.test(kind)) return p.fit === 'Super Oversized' || !p.fit ? 'hoodie' : null;
+  return p.fit === 'Super Oversized' ? 'teeSuperOversized' : p.fit === 'Regular' || !p.fit ? 'teeRegular' : null;
 }
 
+const FSZ = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sizing.json'), 'utf8'));   /* the Founding Edition chart */
+/* 31 Oct 2026 (Faheem: the Founding-to-Super size match). Super Oversized runs about one size bigger than our Founding
+   Edition Oversized, so a Founding Oversized size maps one size down, by chest: a match is within half an inch; two
+   equally close sizes give the smaller, with the larger "for a roomier fit"; a Founding size with no Super Oversized
+   size that close points to the closest Sahel Regular. From the real charts (content/sizing.json, content/sahel-sizing.json). */
+function superRows() {
+  const sup = D.teeSuperOversized.rows, reg = D.teeRegular.rows;
+  return FSZ.oversized.map(([fz, fc]) => {
+    const by = rows => rows.slice().sort((a, b) => Math.abs(a[1] - fc) - Math.abs(b[1] - fc) || a[1] - b[1]);
+    const best = by(sup)[0], d = Math.abs(best[1] - fc);
+    if (d > 0.5) { const r = by(reg)[0]; return { fz, fc, none: true, reg: r }; }
+    const tie = sup.find(r => r !== best && Math.abs(r[1] - fc) === d);
+    return { fz, fc, best, tie };
+  });
+}
+function foundingToSuper() {
+  if (!D.teeSuperOversized || !FSZ.oversized) return '';
+  const q = n => `${n}&Prime;`;
+  const rows = superRows().map(r => `<tr><th scope="row">${r.fz} <small>${q(r.fc)}</small></th><td>${r.none ? `No close match. The closest is Sahel Regular ${r.reg[0]} <small>${q(r.reg[1])}</small>` : `${r.best[0]} <small>${q(r.best[1])}</small>${r.tie ? `, or ${r.tie[0]} <small>${q(r.tie[1])}</small> for a roomier fit` : ''}`}</td></tr>`).join('');
+  return `<div class="po-match"><p class="po-ask">Already wear our Founding Edition Oversized? Super Oversized runs about one size bigger, so go one size down. By chest, measured flat:</p>
+  <div class="ssz-wrap"><table class="ssz ssz-match"><caption>Founding Edition Oversized to Sahel Super Oversized</caption><thead><tr><th scope="col">Founding Edition Oversized</th><th scope="col">Sahel Super Oversized</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
 const cell = (i, c) => `${i}&Prime;<small>${Number(c).toFixed(1)}&nbsp;cm</small>`;
 function table(key) {
   /* measurements down the side, sizes across (as on the supplied charts), so even the six-row hoodie
@@ -60,5 +85,7 @@ table.ssz td small{display:block;font-size:12px;color:#6B6256}
 .ssz-how summary{cursor:pointer;font-weight:600;color:#2A2016}
 .ssz-how ul{margin:8px 0 6px 18px;padding:0}
 .ssz-how li{margin-bottom:4px}
+table.ssz.ssz-match td small,table.ssz.ssz-match th small{display:inline;font-size:12.5px;font-weight:400}
+.po-match .po-ask,.ssz-match-l{font:15px/1.55 Jost,system-ui,sans-serif;margin:0 0 4px}
 `;
-module.exports = { D, keyFor, table, block, CSS };
+module.exports = { D, keyFor, table, block, CSS, foundingToSuper, superRows };

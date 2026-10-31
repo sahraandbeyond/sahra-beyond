@@ -2492,7 +2492,7 @@ if (LAUNCHED || REVEALED) (function () {
           .slice().sort((a, b) => (a.order || 0) - (b.order || 0))
           .map((p, i) => ({ "@type": "ListItem", "position": i + 1, "item": prod(p) }))
           /* the Sahel and Sahra Trail product pages, by URL (their own pages carry the full Product markup) */
-          .concat(PO.products().map((p, i) => ({ "@type": "ListItem", "position": PRODUCTS_ALL.length + i + 1, "url": `${SITE}/products/${p.handle}/`, "name": p.plain })))
+          .concat(PO.products().filter(PO.onSale).map((p, i) => ({ "@type": "ListItem", "position": PRODUCTS_ALL.length + i + 1, "url": `${SITE}/products/${p.handle}/`, "name": p.plain })))   /* on sale only (31 Oct 2026: the paused Oversized fits are left out) */
       }
     ];
     jsonld[2].numberOfItems = jsonld[2].itemListElement.length;
@@ -2585,7 +2585,7 @@ if (LAUNCHED || REVEALED) (function () {
       + '</div>';
     html = html.replace('/*PRE_HANDLES*/[]', JSON.stringify(PO.handles()));
     /* 23 Oct 2026: the Sahel places on the /shop/ map (Regular fit links for the tees) */
-    const SHOP_MAP_EXTRA = PO.products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && PO.onSale(p)).map(p => {
+    const SHOP_MAP_EXTRA = PO.products().filter(p => p.place && PO.primary(p)).map(p => {
       const l = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/locations', p.place[1] + '.json'), 'utf8'));
       return { slug: p.place[1], lat: l.lat, lng: l.lng, place: p.place[0], title: p.name.replace(/&amp;/g, '&'), price: p.price, href: `/products/${p.handle}/`,
         img: `/assets/preorder/${p.images[0].k}-720.webp`, cta: /hoodie/i.test(p.kind) ? 'See the hoodie' : 'See the tee' }; });
@@ -2897,7 +2897,7 @@ body.tote-page main{max-width:1180px}
     ['wadi-naqab', 'Hajar Mountains', '/shirts/card/hajar-dune-back.jpg']
   ].filter(([id]) => byId[id] && byId[id].productLink && byId[id].productLink.slug);
   /* 23 Oct 2026 (site review): the four Sahel places join the three Founding ones (mock-up images, labelled in the alt and the link text) */
-  const SAHEL_TEES = require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && byId[p.place[1]] && require('./preorder-page.js').onSale(p))
+  const SAHEL_TEES = require('./preorder-page.js').products().filter(p => p.place && byId[p.place[1]] && require('./preorder-page.js').primary(p))
     .map(p => [p.place[1], p.name.replace(/&amp;/g, '&'), `/assets/preorder/${p.images[0].k}-720.webp`, `/products/${p.handle}/`, /hoodie/i.test(p.kind) ? 'hoodie' : 'tee', p.images[0]]);
   const tees = TEES.map(([id, tee, img]) => `<a class="pl-tee" href="/products/${esc(byId[id].productLink.slug)}/"><img src="${esc(img)}" alt="${esc(tee)} tee" loading="lazy" width="120" height="150"><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the tee &rarr;</i></span></a>`).join('')
     + SAHEL_TEES.map(([id, tee, img, href, noun, im]) => `<a class="pl-tee" href="${esc(href)}"><img src="${esc(img)}" alt="${esc(im && !im.mock ? im.alt : tee + ', studio mock-up')}" loading="lazy" width="120" height="150"${im && im.h / im.w > 1.4 ? ' style="object-fit:contain"' : ''}><span><em>${esc(byId[id].name)}</em><b>${esc(tee)}</b><i>See the ${noun} ${im && !im.mock ? '' : '(mock-up) '}&rarr;</i></span></a>`).join('');
@@ -2972,7 +2972,7 @@ body.tote-page main{max-width:1180px}
     ${notOperator('guide')}
     <div class="content"><p>This is the map behind the brand: every desert, dune field, wadi, mountain trail and beach we have explored across the UAE. Each place has its own guide: how to get there, when to go, what it costs, the real risks, and a packing list matched to the trip, with the sources for every fact.</p></div>
     ${PLACES.hubExplorer(locations, { tees: Object.assign(Object.fromEntries(Object.entries(PRODUCT_BY_PLACE).filter(([, p]) => p.fit === 'regular').map(([k, p]) => [k, { name: String(p.name || '').replace(/\s+[—-]\s+Regular$/, ''), url: '/products/' + p.id + '/' }])),
-      Object.fromEntries(require('./preorder-page.js').products().filter(p => p.place && (!p.fit || p.fit === 'Regular') && require('./preorder-page.js').onSale(p)).map(p => [p.place[1], { name: p.name.replace(/&amp;/g, '&'), url: '/products/' + p.handle + '/' }]))), hikes: fs.readdirSync(path.join(ROOT, 'content/hikes')).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ROOT, 'content/hikes', f), 'utf8'))).map(h => ({ slug: h.slug, name: h.name, grade: h.grade, lat: h.trailhead.lat, lng: h.trailhead.lng })) })}
+      Object.fromEntries(require('./preorder-page.js').products().filter(p => p.place && require('./preorder-page.js').primary(p)).map(p => [p.place[1], { name: p.name.replace(/&amp;/g, '&'), url: '/products/' + p.handle + '/' }]))), hikes: fs.readdirSync(path.join(ROOT, 'content/hikes')).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ROOT, 'content/hikes', f), 'utf8'))).map(h => ({ slug: h.slug, name: h.name, grade: h.grade, lat: h.trailhead.lat, lng: h.trailhead.lng })) })}
     ${secs}
     ${restHtml}
     <section class="guide-sec" id="guides"><h2>Guides that pull these places together</h2><nav class="catnav" aria-label="Guides">${FG.GUIDES.filter(g => g[0] !== '/places/').map(g => `<a href="${g[0]}"><b>${esc(g[1])}</b><span>${esc((LANDINGS.find(L => '/' + L.slug + '/' === g[0]) || {}).desc ? (LANDINGS.find(L => '/' + L.slug + '/' === g[0]).pick || []).length + ' places' : '')}</span></a>`).join('')}</nav></section>
@@ -3057,7 +3057,7 @@ const COMMERCE = [
     slug: 't-shirts', emoji: '◈', cat: 'Dunes',
     lede: 'Graphic tees from real UAE places · 230gsm heavyweight cotton · Regular or Oversized',
     /* 23 Oct 2026 (site review): the Sahel tees, as their own cards (preorder-page.js) */
-    newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' && !!p.fit, true), newFits: true,
+    newList: () => require('./preorder-page.js').pickNew(p => require('./preorder-page.js').isTee(p), true), newFits: true,
     items: ["al-quaa-galaxy-regular", "al-quaa-galaxy-oversized", "hajar-mountains-regular", "hajar-mountains-oversized", "empty-quarter-regular", "empty-quarter-oversized"],
     /* 25 Oct 2026 (Faheem: be found for "UAE t shirts"): the phrase leads the title, H1 and description; Dubai stays in the title */
     h1: 'UAE T-Shirts, Drawn from Real Places',
@@ -3072,9 +3072,9 @@ const COMMERCE = [
     ],
     related: [['/national-day/', 'UAE National Day t-shirts', 'For Eid Al Etihad, 2 December'], ['/gifts/', 'Gifts from the UAE', 'Leaving gifts that are not touristy']],
     faqs: [
-      ['Where can I buy UAE t-shirts online?', 'Here. Sahra & Beyond is a clothing brand designed in the UAE, and every t-shirt is drawn from a real place in the Emirates: the Al Quaa night sky, the Hajar peaks, the Liwa dunes and, in Sahel, the coast. They are 230 GSM cotton in Regular and Oversized fits, sizes S to XL, from AED 139, with free next-day delivery across the UAE when you order by 2 pm.'],
+      ['Where can I buy UAE t-shirts online?', 'Here. Sahra & Beyond is a clothing brand designed in the UAE, and every t-shirt is drawn from a real place in the Emirates: the Al Quaa night sky, the Hajar peaks, the Liwa dunes and, in Sahel, the coast. They are 230 GSM cotton, sizes S to XL: the Founding Edition in Regular and Oversized fits, Sahel in Regular and Super Oversized, from AED 139, with free next-day delivery across the UAE when you order by 2 pm.'],
       ['Where do you ship?', 'We ship worldwide from Dubai. In the UAE: free next-day delivery to all seven emirates, with no minimum order — order by 2 pm and it arrives the next working day. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 390. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.'],
-      ['What size should I order?', 'Every t-shirt design comes in Regular and Oversized fits, S to XL; the polos come in one fit. Our size guide has full flat-lay measurements for both lines, plus a method for measuring a t-shirt you already own to find your match. The Founding Edition and Sahel are cut differently: Sahel runs larger, so use the Sahel chart for a Sahel tee rather than the size you took before.'],
+      ['What size should I order?', 'The Founding Edition tees come in Regular and Oversized fits and the Sahel tees in Regular and Super Oversized, S to XL; the polos come in one fit. Our size guide has full flat-lay measurements for both lines, plus a method for measuring a t-shirt you already own to find your match. The Founding Edition and Sahel are cut differently: Sahel runs larger, so use the Sahel chart for a Sahel tee rather than the size you took before.'],
       ['What is the cotton, exactly?', '100% combed ring-spun cotton at 230gsm, with no polyester. Combing strips out the short fibres and ring-spinning twists what remains into a smoother, stronger yarn — that is where the weight and the hand come from. We describe the yarn we actually buy and make no certification claims we cannot show you.']
     ]
   },
@@ -3176,7 +3176,7 @@ const COMMERCE = [
     h1: 'Size guide: Founding Edition and Sahel',
     title: 'T-Shirt & Hoodie Size Guide: Founding Edition and Sahel',
     desc: 'Flat-lay measurements for Sahra & Beyond tees and hoodies. The Founding Edition and Sahel are cut differently, so each has its own chart, in inches and centimetres.',
-    intro: "There are two charts on this page, because the two lines are cut differently. The Founding Edition (Al Quaa Galaxy, Hajar Mountains, Empty Quarter and the Sahra Polo) has one chart. Sahel, the Coast Edition, has its own, and runs larger: a Sahel Regular S is 22″ across the chest, a Founding Edition Regular S is 19″. Use the chart for the piece you are buying, and go by the measurement rather than the size you usually take.\n\nOur t-shirts and hoodies are cut unisex — one cut worn by everyone, in sizes S to XL, with no separate men's or women's version — and each tee design comes in two fits, Regular and Oversized. The polos are a men's cut, S to XL, in one fit. Every figure below is a garment measurement taken flat, not a body measurement. Both inches and centimetres are shown.",
+    intro: "There are two charts on this page, because the two lines are cut differently. The Founding Edition (Al Quaa Galaxy, Hajar Mountains, Empty Quarter and the Sahra Polo) has one chart. Sahel, the Coast Edition, has its own, and runs larger: a Sahel Regular S is 22″ across the chest, a Founding Edition Regular S is 19″. Use the chart for the piece you are buying, and go by the measurement rather than the size you usually take.\n\nOur t-shirts and hoodies are cut unisex — one cut worn by everyone, in sizes S to XL, with no separate men's or women's version — and the tees come in two fits: Regular and Oversized for the Founding Edition, Regular and Super Oversized (drop shoulder) for Sahel, whose Oversized fit is being re-cut and will be back soon. The polos are a men's cut, S to XL, in one fit. Every figure below is a garment measurement taken flat, not a body measurement. Both inches and centimetres are shown.",
     sizeTable: true,
     sections: [
       { h2: 'Regular or oversized?', body: "Regular is a classic straight cut with the shoulder seam at your natural shoulder, and it layers cleanly under a shacket or jacket. Check your size in the chart before you order: measure a shirt you like flat, pit to pit, and match the number.\n\nOversized is a deliberately wider cut with a dropped shoulder and more room through the body. It is designed to be worn on its own rather than layered. The oversized cut already adds width, so compare the chart rather than going by the letter." },
@@ -3244,7 +3244,7 @@ const CATEGORIES = [
     h1:'Oversized T-Shirts in Dubai & the UAE',
     title:'Oversized T-Shirts Dubai & UAE — Heavyweight Tees',
     desc:'Oversized drop-shoulder tees in 230 GSM cotton, S–XL, from AED 139. Any two Founding Edition tees AED 359. Free delivery in Dubai and across the UAE.',
-    newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' && p.fit === 'Oversized'),
+    newList: () => require('./preorder-page.js').pickNew(p => require('./preorder-page.js').isTee(p) && p.fit === 'Super Oversized'),   /* 31 Oct 2026: Sahel's Oversized is being re-cut; its Super Oversized tees are listed here */
     intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nCut unisex, S to XL. Take your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XL.\n\nIt wears the way streetwear does, with straight or wide trousers and clean trainers, and the 230gsm cotton is heavy enough that the drop shoulder holds its line instead of collapsing.",
     sections: [{"h2": "What a real drop shoulder is", "body": "There is a meaningful difference between an oversized cut and simply buying your usual size up, and it comes down to where the shoulder seam sits.\n\nIn the Regular fit that seam stays at your natural shoulder point at every size. Going up a size adds width through the chest, but the shoulder does not move — you get a roomier version of the same silhouette. A true drop shoulder is a different pattern, not a larger copy of the same one. On the Oversized fit the seam is set 2–3″ below the natural shoulder point, out over the arm.\n\nThat is what creates the shape. Not extra fabric hanging off a standard cut, but a garment drafted from the start to sit differently on the body. It is why sizing up in a Regular and taking the Oversized in your usual size produce genuinely different results, even at a similar chest measurement."}, {"h2": "Width, not length", "body": "At M the Oversized measures 23.5″ across the chest against 20″ for the Regular — 3.5″ more at the same letter, measured flat, pit to pit. That difference is doing the work people often credit to length. The Oversized tee is not dramatically longer; it is wider, and width combined with the dropped seam is what builds the silhouette.\n\nThe full range, flat: S is 22.5″, M is 23.5″, L is 25″ and XL is 26.5″. Note that the step differs from the Regular fit — 1.5″ per size above M here, against 2″ there — so the two charts are not interchangeable and the gap between the fits narrows slightly as the sizes go up. Tolerance is ±0.5″ on every measurement.\n\nThe effect is a garment that sits away from the chest and shoulders rather than skimming them, with the sleeve opening set further along the arm."}, {"h2": "Why a looser cut wears cooler", "body": "In UAE heat, how cloth sits against skin matters as much as the cloth itself. The extra width through the chest and shoulders means the 230 GSM cotton is not pulled taut against the body — there is room for air to move between fabric and skin instead of the shirt sitting flush.\n\nThis is a function of the cut, not of anything special about the fabric. It is the same combed, ring-spun cotton used across the Regular fit and the polo, simply draped more loosely because of the drop shoulder and the wider chest. A looser garment also moves more independently of the body as you do, which is part of why an oversized silhouette tends to feel less close over a long day outdoors.\n\nA practical reason to choose the cut, alongside the look of it."}, {"h2": "Choosing your size", "body": "Because this fit is built on width rather than length, sizing comes down to how much room you want through the chest and shoulders rather than how tall you are.\n\nMeasure an oversized piece you already like the fit of: lay it flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to ours — S 22.5″, M 23.5″, L 25″, XL 26.5″. These are flat garment measurements, so there is no doubling involved.\n\nDo not assume your Regular fit letter carries across. The Oversized is a different pattern with a different grading step, so it is worth checking the number rather than defaulting to habit. Between two sizes, the smaller gives a defined drop shoulder and the larger pushes the silhouette looser still. The range is S to XL, unisex; we do not produce an XXL."}],
     faqs: [{"q": "How do I choose a size in the Oversized fit?", "a": "Compare flat chest measurements rather than assuming your usual letter carries across — this is a different pattern from the Regular, not the same shirt made larger. Measured flat, pit to pit: S 22.5″, M 23.5″, L 25″, XL 26.5″."}, {"q": "What is the difference between this and sizing up in the Regular fit?", "a": "Sizing up in the Regular adds chest width but keeps the shoulder seam at your natural shoulder point — a roomier version of the same silhouette. The Oversized sets that seam 2–3″ below it, on a pattern drafted for a drop shoulder. At M it is also 3.5″ wider in the chest. The two are not interchangeable."}, {"q": "Do the two fits use the same size steps?", "a": "No. Above M the Regular fit steps 2″ per size and the Oversized steps 1.5″, so the difference between the fits narrows slightly at the larger end. Read whichever chart applies to the fit you are buying."}, {"q": "Is the fabric different from the Regular tee?", "a": "No. Both are 230 GSM combed, ring-spun cotton with the same double-stitched seams and woven shoulder taping. The difference is entirely in the pattern — a wider chest and a dropped shoulder seam."}, {"q": "Does it need different care?", "a": "No. The cotton is pre-shrunk before cutting, so shrinkage should be minimal. A cool wash and air drying keeps the shape and the fabric at their best."}, {"q": "What are delivery and returns?", "a": "Free next-day delivery UAE-wide for orders placed by 2 pm, no minimum order. GCC in 3–5 working days, free over AED 390; worldwide in 7–14. Returns accepted for 14 days, unworn with tags on — free within the UAE, return postage on international orders is on the customer."}] },
@@ -3329,7 +3329,7 @@ CATEGORIES.forEach(C => {
   <main>
     <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${C.h1}</span></div>${catCards(items)}
       <a class="btn shoplink" href="${shopHref}">${C.shopText ? esc(C.shopText) : C.pick ? 'Shop every t-shirt' : 'Shop ' + esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
-    ${C.newList ? require('./preorder-page.js').newBlock({ list: C.newList(), heading: C.newHeading || ('Sahel, the Coast Edition: ' + (C.cat === 'oversized-tees' ? 'Oversized' : 'Regular') + ' fit'), lede: require('./preorder-page.js').newLede() }) : ''}
+    ${C.newList ? require('./preorder-page.js').newBlock({ list: C.newList(), heading: C.newHeading || (C.cat === 'oversized-tees' ? 'Sahel, the Coast Edition: Super Oversized, drop shoulder' : 'Sahel, the Coast Edition: Regular fit'), lede: (C.cat === 'oversized-tees' ? 'The Sahel Oversized fit is being re-cut and will be back soon. ' : '') + require('./preorder-page.js').newLede() }) : ''}
     <div class="content">${paras(C.intro)}</div>
     ${RV.homepageBand({ compact: true })}
     ${foldsBlock(C.sections, 'Fabric, cut and make')}
@@ -3399,7 +3399,7 @@ COMMERCE.forEach(P => {
     ${P.slug === 't-shirts' ? RV.homepageBand({ compact: true }) : ''}
     ${P.sizeTable ? `<nav class="sg-jump" aria-label="Size charts"><a href="#founding">Founding Edition chart</a><a href="#sahel">Sahel chart</a></nav>
     <section class="guide-sec" id="founding"><h2>Founding Edition</h2><p class="sgintent">For Al Quaa Galaxy, Hajar Mountains, Empty Quarter and the Sahra Polo. Not for Sahel pieces, which have their own chart below.</p>${sizeTableHtml()}</section>
-    <section class="guide-sec" id="sahel"><h2>Sahel, the Coast Edition</h2><p class="sgintent">For the Khor Fakkan Bay, Al Hamra Pearl Diver, Al Aqah Reef and Shams tees and the Barr &amp; Bahr and Ras Al Khor hoodies. Sahel is cut on its own pattern and runs larger than the Founding Edition. The Sahel Polo and Sahra Trail have no chart yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size.</p>${SAHEL_SZ.block('teeRegular', { heading: true })}${SAHEL_SZ.block('teeOversized', { heading: true })}${SAHEL_SZ.block('hoodie', { heading: true })}<style>${SAHEL_SZ.CSS}.sg-jump{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 6px}.sg-jump a{display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border:1px solid #2A2016;border-radius:999px;color:#2A2016;text-decoration:none;font:500 14px Jost,system-ui,sans-serif}#founding,#sahel{scroll-margin-top:96px}</style></section>` : ''}
+    <section class="guide-sec" id="sahel"><h2>Sahel, the Coast Edition</h2><p class="sgintent">For the Khor Fakkan Bay, Al Hamra Pearl Diver, Al Aqah Reef and Shams tees and the Barr &amp; Bahr and Ras Al Khor hoodies. Sahel is cut on its own pattern and runs larger than the Founding Edition. The tees come in Regular and Super Oversized, the hoodies in Super Oversized; Super Oversized has a dropped shoulder. The Sahel Polo and Sahra Trail have no chart yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size.</p>${SAHEL_SZ.block('teeRegular', { heading: true })}${SAHEL_SZ.block('teeSuperOversized', { heading: true })}<h3 class="ssz-h">From the Founding Edition Oversized to Super Oversized</h3>${SAHEL_SZ.foundingToSuper()}${SAHEL_SZ.block('hoodie', { heading: true })}<p class="sgintent" style="margin-top:18px">The Sahel Oversized fit is being re-cut to our original Oversized size. Its chart will follow when it returns.</p><style>${SAHEL_SZ.CSS}.sg-jump{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 6px}.sg-jump a{display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border:1px solid #2A2016;border-radius:999px;color:#2A2016;text-decoration:none;font:500 14px Jost,system-ui,sans-serif}#founding,#sahel{scroll-margin-top:96px}</style></section>` : ''}
     ${P.gsmTable ? `<section class="guide-sec" id="gsm-table"><h2>Every t-shirt weight, compared</h2><p class="sgintent">GSM is grams per square metre &mdash; how much a square metre of the cloth weighs. It is the single most useful number on a t-shirt spec, and almost nobody selling t-shirts in the UAE explains it. Here is the whole scale.</p>${gsmTableHtml()}</section>` : ''}
     ${sectionsHtml}
     ${P.related ? `<nav class="catnav" aria-label="Related">${P.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2])}</span></a>`).join('')}</nav>` : ''}
@@ -3464,9 +3464,9 @@ COMMERCE.forEach(P => {
    and the pre-order wording come from preorder-page.js, so they follow the same stages. */
 (function buildHoodies() {
   const PO = require('./preorder-page.js');
-  const list = PO.pickNew(p => /hoodie/.test(p.handle), false, true);
-  /* 30 Oct 2026: both hoodies withdrawn from sale while the fit is adjusted (specimen.js PAUSED) */
-  const HPAUSED = list.some(p => !PO.onSale(p));
+  /* 31 Oct 2026: the two Super Oversized hoodies, on sale again; the Oversized hoodie fit is being re-cut (specimen.js PAUSED) */
+  const list = PO.pickNew(p => /hoodie/.test(p.handle));
+  const HPAUSED = !list.length;
   const canonical = `${SITE}/hoodies/`;
   const H = { h1: 'Hoodies in Dubai & the UAE',
     title: 'Hoodies in Dubai & UAE: Embroidered Coastline | Sahra & Beyond',
@@ -3474,7 +3474,7 @@ COMMERCE.forEach(P => {
   const faqs = [
     ['How much are the hoodies?', 'Both are AED 229, in sizes S to XL. Delivery is free across the UAE.'],
     HPAUSED ? ['Can I order one now?', 'Not just now. We are adjusting the fit of both hoodies, and they will be back soon. Message us on WhatsApp if you would like to hear when they return.'] : ['When do they ship?', 'Both hoodies are in stock and ship the next working day, with free delivery across the UAE.'],
-    ['What size should I take?', 'Use the Sahel size chart on our size guide: the hoodies measure 23 inches across the chest at S, 24 at M, 25 at L and 26.5 at XL, laid flat. Measure a hoodie you like and match the number. Size exchanges within the UAE are free within 14 days of delivery, subject to stock.']
+    ['What size should I take?', 'The hoodies are Super Oversized, with a dropped shoulder, and most people take one size down from their usual size. On the Sahel size chart in our size guide they measure 24.5 inches across the chest at S, 25.5 at M, 26.5 at L and 28 at XL, laid flat. Measure a hoodie you like and match the number. Size exchanges within the UAE are free within 14 days of delivery, subject to stock.']
   ];
   const jsonld = [
     { "@context": "https://schema.org", "@type": "CollectionPage", "name": H.h1, "description": H.desc, "url": canonical },
@@ -3495,7 +3495,7 @@ COMMERCE.forEach(P => {
   <main>
     ${PO.newBlock({ list, heading: 'Two hoodies from Sahel, the Coast Edition', kicker: 'Sahel &middot; The Coast Edition', lede: HPAUSED ? 'We are adjusting the fit of both hoodies, so they are not on sale just now. They will be back soon.' : PO.newLede(), more: '/new/#sahel', moreText: 'See all of Sahel' })}
     <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE. There are two: the Barr &amp; Bahr Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each AED 229 in sizes S to XL. Both carry the UAE coastline embroidered across the back in sand thread, and each has its own scene printed on the lower back.</p></div>
-    <section class="guide-sec"><h2>The cut</h2><div class="content"><p>A relaxed, oversized pullover with a dropped shoulder and a hip-length body. There is no drawcord and no hardware anywhere on it, so nothing crosses the mark embroidered at the centre of the chest. The neck label is printed rather than sewn in, so there is no tag to scratch.</p><p>Both hoodies use the same chart, from 23&Prime; across the chest (S) to 26.5&Prime; (XL), measured flat. <a href="/size-guide/#sahel">See the Sahel size chart</a>. If you are still unsure of your size, <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about the Sahel hoodies before I order.')}" target="_blank" rel="noopener">message us before you order</a>.</p></div></section>
+    <section class="guide-sec"><h2>The cut</h2><div class="content"><p>Super Oversized: a roomy pullover with a dropped shoulder and a long, loose body. Most people take one size down from their usual size. Our Oversized hoodie fit is being re-cut and will be back soon. There is no drawcord and no hardware anywhere on it, so nothing crosses the mark embroidered at the centre of the chest. The neck label is printed rather than sewn in, so there is no tag to scratch.</p><p>Both hoodies use the same chart, from 24.5&Prime; across the chest (S) to 28&Prime; (XL), measured flat. <a href="/size-guide/#sahel">See the Sahel size chart</a>. If you are still unsure of your size, <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about the Sahel hoodies before I order.')}" target="_blank" rel="noopener">message us before you order</a>.</p></div></section>
     <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the whole UAE coastline in a single line of sand thread, with Sahel written beneath it in Arabic and English. On the lower back, each hoodie carries its own printed scene. The <a href="/products/barr-and-bahr-hoodie/">Barr &amp; Bahr Hoodie</a> carries the crossing between land and sea: contour-line dunes running down into a stream and a wave (in the Gulf, barr is the open land and bahr is the sea). The <a href="/products/ras-al-khor-hoodie/">Ras Al Khor Hoodie</a> has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>, the wetland where Dubai Creek ends.</p></div></section>
     <section class="guide-sec"><h2>For cool desert and mountain nights</h2><div class="content"><p>Winter nights in the desert and up in the mountains get properly cold: Jebel Jais has recorded temperatures below freezing. If you are camping this season, our <a href="/camping/">camping guide</a> covers the rules by emirate, and the <a href="/stargazing/">stargazing guide</a> the darkest nights; the <a href="/locations/jebel-jais/">Jebel Jais guide</a> has the month-by-month temperatures.</p></div></section>
     <section class="faq"><h2>Frequently asked questions</h2>${faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>
@@ -4819,18 +4819,23 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
   console.log(`  ✓ hreflang pairs declared from ${n} English page(s)`);
 })();
 
-/* Sahel Oversized tees withdrawn from sale (30 Oct 2026, Faheem: "Let's stop the sale of all new
-   oversized t shirts immediately"). The stock is being altered back to the original Oversized size.
-   Their Shopify products are Draft; specimen.js PAUSED gives their own pages a plain "back soon" state.
-   Here: product cards that link to them elsewhere are removed when the page already shows the Regular
-   card of the same design, otherwise pointed at the Regular fit; ItemList structured data drops them.
-   To undo: empty specimen.js PAUSED. Generated pages come back by themselves; index.html is a hand-edited
-   source this step rewrote in place, so also point its two lookbook cards (Khor Fakkan Bay, Al Aqah Reef)
-   back to the -oversized handles and re-add the four Oversized rows to its ItemList. Runs before the Arabic
-   mirror so /ar/ follows. */
-(function pauseSahelOversizedCards() {
+/* Paused Oversized fits (specimen.js PAUSED). 30 Oct 2026: the Sahel Oversized tees and the hoodies were withdrawn.
+   31 Oct 2026 (Faheem: "Keep oversized as coming back soon and make super oversized drop shoulder fits live with our
+   current inventory"): the current stock is sold as Super Oversized (tees <design>-super-oversized, hoodies their
+   original handle); the six -oversized handles have no Shopify product until the re-cut Oversized fit returns, and
+   their own pages say "Back soon". Generated lists already leave them out (preorder-page.js onSale/primary); this
+   step is the safety net for any card left in a page (index.html is a hand-edited source that this step rewrites
+   in place): a card linking a paused handle is pointed at the design's Super Oversized (tee) or the hoodie's own
+   handle, or removed when that card is already on the page; ItemList structured data drops paused handles; a
+   Sahel grid left empty says why. The fit switches on the product pages are not cards and keep their link.
+   Runs before the Arabic mirror so /ar/ follows. To undo: empty specimen.js PAUSED. */
+(function pauseOversizedCards() {
+  const PO = require('./preorder-page.js');
   const PAUSED = Object.keys(require('./specimen.js').PAUSED);
   if (!PAUSED.length) return;
+  const all = PO.products();
+  const target = h => { const p = all.find(x => x.handle === h); if (!p || !p.fitsList) return null;
+    const f = p.fitsList.find(x => x.fit === 'Super Oversized' && x.onSale); return f ? f.handle : PO.primaryHandle(p); };
   const files = [];
   (function walk(d) {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -4846,14 +4851,14 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
     if (!PAUSED.some(h => html.includes('/products/' + h + '/'))) continue;
     const before = html;
     html = html.replace(rx, (card, cls, h) => {
-      if (/^hoodies[\\/]/.test(f)) return card;   /* the hoodie page keeps its two cards (they open "Back soon") */
-      const reg = h.replace(/-oversized$/, '-regular');
-      if (reg === h || html.includes('class="' + cls + '" href="/products/' + reg + '/"') || /t-shirts[\\/]oversized/.test(f)) { removed++; return ''; }
+      const to = target(h);
+      if (!to || html.includes('class="' + cls + '" href="/products/' + to + '/"')) { removed++; return ''; }
       moved++;
-      return card.split(h).join(reg).replace(/Oversized fit/g, 'Regular fit').replace(/&mdash; Oversized/g, '&mdash; Regular');
+      return card.split('/products/' + h + '/').join('/products/' + to + '/').split('data-handle="' + h + '"').join('data-handle="' + to + '"')
+        .replace(/(?<!Super )Oversized fit/g, 'Super Oversized fit').replace(/&mdash; Oversized/g, '&mdash; Super Oversized');
     });
-    /* the Sahel block on the Oversized category page is left with no cards: say why instead */
-    html = html.replace(/<div class="nb-g"><\/div>/g, '<p class="nb-l nb-paused">Our Sahel Oversized tees are being adjusted back to our original Oversized size and will be back soon. <a href="/sahel/">The Sahel Regular fit is available now</a>.</p>');
+    /* a Sahel block left with no cards: say why instead */
+    html = html.replace(/<div class="nb-g"><\/div>/g, '<p class="nb-l nb-paused">Our Sahel Oversized fit is being re-cut to our original Oversized size and will be back soon. <a href="/sahel/">See what is available from Sahel</a>.</p>');
     html = html.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g, (tag, body) => {
       if (!PAUSED.some(h => body.includes('/products/' + h + '/'))) return tag;
       let j; try { j = JSON.parse(body); } catch (e) { return tag; }
@@ -4861,7 +4866,7 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
       (function fix(o) {
         if (!o || typeof o !== 'object') return;
         if (Array.isArray(o)) return o.forEach(fix);
-        if (o['@type'] === 'ItemList' && Array.isArray(o.itemListElement) && !/^hoodies[\\/]/.test(f)) {
+        if (o['@type'] === 'ItemList' && Array.isArray(o.itemListElement)) {
           const keep = o.itemListElement.filter(it => !PAUSED.some(h => JSON.stringify(it).includes('/products/' + h + '/')));
           if (keep.length !== o.itemListElement.length) { hit = true; keep.forEach((it, i) => { if (it.position != null) it.position = i + 1; }); o.itemListElement = keep; if (o.numberOfItems != null) o.numberOfItems = keep.length; }
         }
@@ -4873,7 +4878,7 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
     });
     if (html !== before) { fs.writeFileSync(f, html); pages++; }
   }
-  console.log(`  ✓ paused pieces (Sahel Oversized tees, hoodies): ${removed} card(s) removed, ${moved} pointed at Regular, ${lists} ItemList(s) trimmed, on ${pages} page(s)`);
+  console.log(`  ✓ paused Oversized fits (Sahel tees and hoodies, being re-cut): ${removed} card(s) removed, ${moved} pointed at Super Oversized, ${lists} ItemList(s) trimmed, on ${pages} page(s)`);
 })();
 
 /* Arabic mirror of every other indexable page (30 Oct 2026, Faheem: "create Arabic pages for all

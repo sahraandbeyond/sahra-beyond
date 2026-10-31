@@ -170,7 +170,10 @@ module.exports = async (req, res) => {
      evening-before email can name the piece each person asked about (tag f-piece-<handle>). */
   const PIECES = ['khor-fakkan-bay-tee-regular', 'khor-fakkan-bay-tee-oversized', 'al-hamra-pearl-diver-tee-regular', 'al-hamra-pearl-diver-tee-oversized',
     'al-aqah-reef-tee-regular', 'al-aqah-reef-tee-oversized', 'shams-tee-regular', 'shams-tee-oversized', 'the-sahel-polo', 'barr-and-bahr-hoodie',
-    'ras-al-khor-hoodie', 'sahra-trail-tee', 'sahra-trail-2-in-1-short', 'sahra-trail-kit'];
+    'ras-al-khor-hoodie', 'sahra-trail-tee', 'sahra-trail-2-in-1-short', 'sahra-trail-kit',
+    /* 31 Oct 2026: the Super Oversized tees and the Oversized hoodies (paused, back soon) */
+    'khor-fakkan-bay-tee-super-oversized', 'al-hamra-pearl-diver-tee-super-oversized', 'al-aqah-reef-tee-super-oversized', 'shams-tee-super-oversized',
+    'barr-and-bahr-hoodie-oversized', 'ras-al-khor-hoodie-oversized'];
   const ALLOWED = { tee_size: ['s', 'm', 'l', 'xl'], short_size: ['s', 'm', 'l', 'xl'], piece: PIECES };
   Object.keys(ALLOWED).forEach(key => {
     const val = String(fields[key] || '').trim().toLowerCase();

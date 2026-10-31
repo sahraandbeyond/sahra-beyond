@@ -4,7 +4,7 @@
    from the design-review prototype; brief SPEC-BAG-BRIEF.md).
    ==========================================================================
    Used by build-products.js (Founding Edition, 7 pages) and preorder-page.js
-   (Sahel and Sahra Trail, 15 pages), so both page families open the same way:
+   (Sahel and Sahra Trail, 21 pages), so both page families open the same way:
 
      the art side first (the back for back-art pieces), with Back / Front / Art /
      Worn tabs for the photos that exist; numbered notes pinned to the artwork,
@@ -115,7 +115,17 @@ const NAMES = { 'al-quaa-galaxy': 'Al Quaa Galaxy Tee', 'empty-quarter': 'Empty 
   'barr-and-bahr-hoodie': 'Barr &amp; Bahr Hoodie', 'ras-al-khor-hoodie': 'Ras Al Khor Hoodie', 'the-sahel-polo': 'The Sahel Polo',
   'sahra-trail-tee': 'Sahra Trail Tee', 'sahra-trail-2-in-1-short': 'Sahra Trail 2-in-1 Short', 'sahra-trail-kit': 'Sahra Trail Kit', 'trailhead-bag': 'The Trailhead Bag' };
 const LINES = { founding: 'Founding Edition', sahel: 'Sahel, the Coast Edition', trail: 'Sahra Trail' };
-const FIT_COPY = { founding: { Regular: 'Sits on the shoulder', Oversized: 'Dropped shoulder, wider body' }, sahel: { Regular: 'A straight regular fit', Oversized: 'Looser, wider through the body' } };
+const FIT_COPY = { founding: { Regular: 'Sits on the shoulder', Oversized: 'Dropped shoulder, wider body' }, sahel: { Regular: 'A straight regular fit', Oversized: 'Looser, wider through the body', 'Super Oversized': 'Drop shoulder, our roomiest cut' } };
+/* 31 Oct 2026 (Faheem: Super Oversized with drop shoulder, a third fit): the handle suffix of each fit, per design.
+   Sahel tees: Regular, Oversized (paused, being re-cut) and Super Oversized (the current stock). Sahel hoodies:
+   Oversized (paused) and Super Oversized, which keeps the hoodie's original handle so its links keep working. */
+const HOODIES = new Set(['barr-and-bahr-hoodie', 'ras-al-khor-hoodie']);
+const FIT_ORDER = ['Regular', 'Oversized', 'Super Oversized'];
+function suffixes(k) {
+  if (HOODIES.has(k)) return { Oversized: '-oversized', 'Super Oversized': '' };
+  if (FITTED.has(k)) return FOUNDING[k] ? { Regular: '-regular', Oversized: '-oversized' } : { Regular: '-regular', Oversized: '-oversized', 'Super Oversized': '-super-oversized' };
+  return null;
+}
 
 /* Founding captions: the size of the person in the photo, from the product JSON (tags) or its modelInfo */
 let _ftags = null;
@@ -156,7 +166,7 @@ function fromFounding(p, all) {
   return {
     handle: p.id, key, line: 'founding', price: Number(p.price), name: short, h1: null,
     fit: tee ? (fitKey === 'oversized' ? 'Oversized' : 'Regular') : null,
-    fits: tee && p.siblingOf ? { Regular: `/products/${key}-regular/`, Oversized: `/products/${key}-oversized/` } : null,
+    fits: tee && p.siblingOf ? [{ fit: 'Regular', href: `/products/${key}-regular/`, onSale: true }, { fit: 'Oversized', href: `/products/${key}-oversized/`, onSale: true }] : null,
     kind: tee ? 'T-shirt' : 'Polo shirt', cut: tee ? 'Unisex' : 'Men’s cut', colour: p.colourName || '',
     place: p.placeSlug ? [p.placeName, p.placeEmirate === 'RAK' ? 'Ras Al Khaimah' : p.placeEmirate, `/locations/${p.placeSlug}/`] : null,
     face: D.face, views, notes: (NOTES[key] || []).map(n => ({ x: n[0], y: n[1], t: n[2] })), spec,
@@ -169,12 +179,13 @@ function fromPreorder(p) {
   const mk = (k, label, file, cap) => file ? Object.assign(pre(file, { mock: !!D.mock && k !== 'art' }), { k, label, cap: cap || '', name: file }) : null;
   const views = [mk('back', 'Back', D.back), mk('front', 'Front', D.front, D.frontCap), mk('art', 'Art', D.art, D.artCap), mk('worn', 'Worn', D.worn, D.wornCap)].filter(Boolean);
   views.forEach(v => { if (v.h / v.w > 1.35) v.tall = true; });
-  const fitted = !!p.fit;
+  const fitted = !!(p.fit && p.fitsList);
   const spec = (p.details || []).filter(d => !/ fit$/.test(d)).map(d => String(d).replace(/^(\d{3})gsm/i, '$1 GSM').replace(/^Our mark/, 'Mark'));
+  if (spec[0] === 'Drop shoulder' && spec.length > 1) spec.splice(0, 2, spec[1], spec[0]);   /* the cloth first, then the cut (31 Oct 2026) */
   return {
     handle: p.handle, key: p.key, line: p.line, price: Number(p.price), name: p.name, h1: p.title,
     fit: fitted ? p.fit : null,
-    fits: fitted ? { Regular: `/products/${p.key}-regular/`, Oversized: `/products/${p.key}-oversized/` } : null,
+    fits: fitted ? p.fitsList.slice().sort((a, b) => FIT_ORDER.indexOf(a.fit) - FIT_ORDER.indexOf(b.fit)).map(f => ({ fit: f.fit, href: `/products/${f.handle}/`, onSale: !PAUSED[f.handle] })) : null,
     kind: p.kind, cut: p.oneSize ? 'One size' : (p.line === 'trail' || /polo/i.test(p.kind || '') ? 'Men’s cut' : 'Unisex'), colour: p.colour || '',
     place: p.place ? [p.place[0], null, `/locations/${p.place[1]}/`] : null,
     face: D.face, views, notes: (NOTES[p.key] || []).map(n => ({ x: n[0], y: n[1], t: n[2] })), spec,
@@ -224,25 +235,40 @@ function artBlock(s) {
       ${spec}</section>`;
 }
 function priceSpan(s) { return `<span class="sb-price" data-handle="${s.handle}" data-aed="${s.price}">${money(s.price)}</span>`; }
+/* every fit of the design, in the order Regular, Oversized, Super Oversized (31 Oct 2026). On the page (ss-fits) a fit that is
+   not for sale stays listed with "Back soon" as its small line; the compact switch in the buy sheet (ssb-fit) shows only the
+   fits on sale, plus the page's own fit. */
+const fitHref = (s, f) => { const x = (s.fits || []).find(o => o.fit === f && o.onSale); return x ? x.href : ''; };
 function fitSwitch(s, cls) {
   if (!s.fits) return '';
   const copy = FIT_COPY[s.line] || FIT_COPY.sahel;
-  return `<div class="${cls}" role="group" aria-label="Fit">${['Regular', 'Oversized'].map(f => `<a href="${s.fits[f]}" class="${s.fit === f ? 'on' : ''}"${s.fit === f ? ' aria-current="page"' : ''}><b>${f}</b>${cls === 'ss-fits' ? `<span>${copy[f]}</span>` : ''}</a>`).join('')}</div>`;
+  const list = cls === 'ss-fits' ? s.fits : s.fits.filter(f => f.onSale || f.fit === s.fit);
+  if (list.length < 2) return '';
+  return `<div class="${cls}" role="group" aria-label="Fit"${list.length > 2 ? ' data-n="' + list.length + '"' : ''}>${list.map(({ fit: f, href, onSale }) => `<a href="${href}" class="${s.fit === f ? 'on' : ''}"${s.fit === f ? ' aria-current="page"' : ''}><b>${f}</b>${cls === 'ss-fits' ? `<span>${onSale ? copy[f] : 'Back soon'}</span>` : ''}</a>`).join('')}</div>`;
 }
-/* 30 Oct 2026 (Faheem: "Let's stop the sale of all new oversized t shirts immediately"). The Sahel
-   Oversized tees ran a size large; the stock is being altered back to the original (Founding Edition)
-   Oversized measurements. Their Shopify products are set to Draft, so nothing can be bought; the page
-   says so plainly and points to the Regular fit. Remove a handle from this list to sell it again. */
+/* Handles not for sale (their pages say "Back soon"). 30 Oct 2026: the Sahel Oversized tees and the hoodies ran
+   a size large and were withdrawn. 31 Oct 2026 (Faheem): "For all new oversized shirts and hoodies, let's rebrand
+   them as Super Oversized with drop shoulder ... Keep oversized as coming back soon and make super oversized drop
+   shoulder fits live with our current inventory." The current stock is unaltered and sold as Super Oversized
+   (tees: <design>-super-oversized; hoodies: their original handle). The Oversized fit returns later, in a new
+   production run cut to the original (Founding Edition) Oversized size; until then these six handles have no
+   Shopify product. Remove a handle from this list to sell it again. */
 const PAUSED = { 'khor-fakkan-bay-tee-oversized': 1, 'al-aqah-reef-tee-oversized': 1, 'al-hamra-pearl-diver-tee-oversized': 1, 'shams-tee-oversized': 1,
-  /* 30 Oct 2026 (Faheem: "Stop the sale of hoodies as well. Those are also oversized with same problem.") */
-  'barr-and-bahr-hoodie': 1, 'ras-al-khor-hoodie': 1 };
+  'barr-and-bahr-hoodie-oversized': 1, 'ras-al-khor-hoodie-oversized': 1 };
+/* the note on a paused Oversized page (31 Oct 2026): what is happening, and where the design can be bought now */
+function pausedNote(s) {
+  const sup = fitHref(s, 'Super Oversized'), reg = fitHref(s, 'Regular');
+  if (HOODIES.has(s.key)) return `Our Oversized hoodie is being re-cut and will be back soon. ${sup ? `This hoodie is available now in <a href="${sup}">Super Oversized</a>, with a dropped shoulder.` : '<a href="/sahel/">See what is available from Sahel</a>.'}`;
+  const now = [sup ? `<a href="${sup}">Super Oversized</a> (drop shoulder)` : '', reg ? `<a href="${reg}">Regular</a>` : ''].filter(Boolean);
+  return `Our Oversized fit is being re-cut to our original Oversized size and will be back soon.${now.length ? ` This design is available now in ${now.join(' and ')}.` : ''}`;
+}
 function sheet(s) {
   const btn = z => `<button type="button" data-size="${z}" aria-pressed="false">${z}</button>`;
   const group = (g, label, show) => `<div class="ssb-sz" role="group" aria-label="${label}" data-group="${g}">${show ? `<span class="ssb-gl">${show}</span>` : ''}${['S', 'M', 'L', 'XL'].map(btn).join('')}</div>`;
   const sizes = s.oneSize ? `<span class="ssb-one">One size</span>` : s.kit ? `<div class="ssb-kit">${group('tee', 'Tee size', 'Tee')}${group('short', 'Short size', 'Short')}</div>` : group('size', 'Size');
-  return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}>
+  return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}${(s.fits || []).some(f => f.fit === 'Super Oversized') ? ' data-fitwide="1"' : ''}>
       <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd"${PAUSED[s.handle] ? ' disabled' : ''}>${PAUSED[s.handle] ? 'Back soon' : 'Add to bag'}</button></div>${PAUSED[s.handle] ? `
-      <p class="ssb-paused">${/hoodie/.test(s.handle) ? 'We are adjusting the fit of this hoodie. It will be back soon. <a href="/sahel/">See what is available from Sahel</a>' : `We are adjusting this Oversized fit back to our original Oversized size. It will be back soon.${s.fits && s.fits.Regular ? ` <a href="${s.fits.Regular}">The Regular fit is available now</a>` : ''}`}</p>` : ''}
+      <p class="ssb-paused">${pausedNote(s)}</p>` : ''}
       <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with Tabby</span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
       <p class="ssb-msg" id="ssMsg" role="status" aria-live="polite"></p>
     </div>`;
@@ -252,7 +278,7 @@ function top(s, o = {}) {
   const altBase = s.name.replace(/&amp;/g, '&') + (s.colour ? ` in ${s.colour}` : '');
   const eyebrow = `<p class="ss-eb"><span>${LINES[s.line]}</span>${s.place ? ` · <a href="${s.place[2]}">Drawn from ${esc(s.place[0])}${s.place[1] ? ', ' + esc(s.place[1]) : ''}</a>` : ''}</p>`;
   const kind = [s.kind, s.colour ? `Colour: ${esc(s.colour)}` : '', s.cut].filter(Boolean).join(' · ');
-  const status = PAUSED[s.handle] ? `<p class="ss-stat">Not available to order while we adjust this fit. Back soon.</p>` : `<p class="ss-stat"><span class="sb-ship-uae">In stock. Order by 2 pm for next-working-day delivery in the UAE.</span><span class="sb-ship-gcc">In stock. GCC delivery in 3–5 working days.</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7–14 working days.</span></p>`;
+  const status = PAUSED[s.handle] ? `<p class="ss-stat">Not available to order while this fit is re-cut. Back soon.</p>` : `<p class="ss-stat"><span class="sb-ship-uae">In stock. Order by 2 pm for next-working-day delivery in the UAE.</span><span class="sb-ship-gcc">In stock. GCC delivery in 3–5 working days.</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7–14 working days.</span></p>`;
   return `<section class="ss ss-${s.line}" data-ss style="--ss-top:${s.line === 'founding' ? 151 : 135}px">
   <div class="ss-media">
     ${o.crumb || ''}
@@ -288,14 +314,15 @@ function top(s, o = {}) {
 function nextPiece(s) {
   const list = ORDER[s.line] || [];
   const i = list.indexOf(s.key); if (i < 0) return '';
-  /* skip pieces withdrawn from sale (PAUSED); a paused Oversized falls back to its Regular fit */
-  let nk = null, fitted = false, suffix = '';
+  /* skip pieces withdrawn from sale (PAUSED): the next design opens in the same fit where it has one on sale,
+     else in Super Oversized, else Regular (31 Oct 2026) */
+  let nk = null, suffix = '';
   for (let j = 1; j < list.length; j++) {
-    const k = list[(i + j) % list.length], f = FITTED.has(k);
-    let sx = f ? (s.fit === 'Oversized' ? '-oversized' : '-regular') : '';
-    if (PAUSED[k + sx] && f) sx = '-regular';
-    if (PAUSED[k + sx]) continue;
-    nk = k; fitted = f; suffix = sx; break;
+    const k = list[(i + j) % list.length], sx = suffixes(k);
+    const cands = sx ? [s.fit, 'Super Oversized', 'Regular', 'Oversized'].map(f => sx[f]).filter(x => x != null) : [''];
+    const ok = cands.find(x => !PAUSED[k + x]);
+    if (ok == null) continue;
+    nk = k; suffix = ok; break;
   }
   if (!nk) return '';
   let im, mock = false;

@@ -50,6 +50,9 @@
      without a struck-through list price, and never shows a remaining count (no scarcity wording). */
   var PRE = { 'khor-fakkan-bay-tee-regular': 'ph-kfb-01-back', 'khor-fakkan-bay-tee-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-regular': 'ph2-pearl-01-back', 'al-hamra-pearl-diver-tee-oversized': 'ph2-pearl-01-back',
     'al-aqah-reef-tee-regular': 'ph-reef-01-back', 'al-aqah-reef-tee-oversized': 'ph-reef-01-back', 'shams-tee-regular': 'ph-shams-01-front', 'shams-tee-oversized': 'ph-shams-01-front', 'the-sahel-polo': '',
+    /* 31 Oct 2026: the Super Oversized tees (the current stock) and the paused Oversized hoodies */
+    'khor-fakkan-bay-tee-super-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-super-oversized': 'ph2-pearl-01-back', 'al-aqah-reef-tee-super-oversized': 'ph-reef-01-back', 'shams-tee-super-oversized': 'ph-shams-01-front',
+    'barr-and-bahr-hoodie-oversized': 'ph-barr-04-front', 'ras-al-khor-hoodie-oversized': 'ph-rakh-06-front',
     'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'trail-tee-front', 'sahra-trail-2-in-1-short': 'trail-short-front', 'sahra-trail-kit': 'trail-kit-front' };
   var PRE_IN_HAND = true;   /* 30 Oct 2026 (Faheem: "In stock, ships next day"). Was:  set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
   function isPre(l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; return !!h && Object.prototype.hasOwnProperty.call(PRE, h); }
@@ -375,7 +378,7 @@
       gift: 'This is a gift', giftMsg: 'Gift message (optional)', giftPh: 'Happy birthday, from all of us', giftHide: 'Hide prices on the packing slip', giftNote: 'We’ll include your message with the order.',
       added: 'Added to your bag', viewBag: 'View bag', closePeek: 'Close',
       second: 'Add a second: the pair is AED 359', secondIn: '{n} in {s}, {f}', addBtn: 'Add', adding: 'Adding…', other: 'Other sizes', regular: 'regular', oversized: 'oversized',
-      bagT: 'Add the Trailhead Bag, AED 50', bagSub: 'Canvas drawstring bag, one size', sahelMore: 'More from Sahel: the tees in Regular fit and the Sahel Polo.' /* 30 Oct 2026: hoodies and Oversized tees paused; was 'Six more Sahel designs: tees, hoodies and a polo.' */, seeAll: 'See them all', secondX: 'Add a second tee for the two-tee price, applied automatically.', shopTees: 'Shop tees',
+      bagT: 'Add the Trailhead Bag, AED 50', bagSub: 'Canvas drawstring bag, one size', sahelMore: 'Six more Sahel designs: tees, hoodies and a polo.', seeAll: 'See them all', secondX: 'Add a second tee for the two-tee price, applied automatically.', shopTees: 'Shop tees',
       errUpdate: 'We could not update your bag. ', errAdd: 'We could not add that to your bag. Please try again, or message us on WhatsApp.', errSwap: 'We could not change the size. Your bag is unchanged.',
       expired: 'Your previous bag expired, so we started a new one. Please check the items below.', capMsg: 'That is as many of {t} as we can take in {s} for now, so it stays at {q}.',
       errCur: 'We could not switch your bag’s currency. Your bag is unchanged. Please try again.'
@@ -398,7 +401,7 @@
       gift: 'هذا الطلب هدية', giftMsg: 'رسالة الهدية (اختياري)', giftPh: 'كل عام وأنتم بخير', giftHide: 'إخفاء الأسعار في قسيمة التغليف', giftNote: 'سنرفق رسالتك مع الطلب.',
       added: 'أُضيفت إلى سلّتك', viewBag: 'عرض السلة', closePeek: 'إغلاق',
       second: 'أضف تيشيرتًا ثانيًا: القطعتان بـ 359 درهمًا', secondIn: '{n}، المقاس {s}، {f}', addBtn: 'أضف', adding: 'جارٍ الإضافة…', other: 'مقاسات أخرى', regular: 'ريجولر', oversized: 'أوفرسايز',
-      bagT: 'أضف حقيبة ترايلهيد، 50 درهمًا', bagSub: 'حقيبة قماشية برباط، مقاس واحد', sahelMore: 'المزيد من ساحل: التيشيرتات بقصّة ريجولر وبولو ساحل.' /* was: ستة تصاميم أخرى من ساحل: تيشيرتات وهودي وبولو. */, seeAll: 'شاهدها كلها', secondX: 'أضف تيشيرتًا ثانيًا بسعر القطعتين، يُطبّق تلقائيًا.', shopTees: 'تسوّق التيشيرتات',
+      bagT: 'أضف حقيبة ترايلهيد، 50 درهمًا', bagSub: 'حقيبة قماشية برباط، مقاس واحد', sahelMore: 'ستة تصاميم أخرى من ساحل: تيشيرتات وهودي وبولو.', seeAll: 'شاهدها كلها', secondX: 'أضف تيشيرتًا ثانيًا بسعر القطعتين، يُطبّق تلقائيًا.', shopTees: 'تسوّق التيشيرتات',
       errUpdate: 'تعذّر تحديث سلّتك. ', errAdd: 'تعذّرت الإضافة إلى سلّتك. حاول مرة أخرى أو راسلنا على واتساب.', errSwap: 'تعذّر تغيير المقاس. سلّتك كما هي.',
       expired: 'انتهت صلاحية سلّتك السابقة، فبدأنا سلة جديدة. تحقق من القطع أدناه.', capMsg: 'هذا أقصى ما يمكننا توفيره من {t} بمقاس {s} حاليًا، فتبقى الكمية {q}.',
       errCur: 'تعذّر تغيير عملة سلّتك. سلّتك كما هي، حاول مرة أخرى.'
@@ -409,18 +412,22 @@
   var AR_NAME = { 'al-quaa-galaxy-regular': 'مجرّة القوع — ريجولر', 'al-quaa-galaxy-oversized': 'مجرّة القوع — أوفرسايز', 'empty-quarter-regular': 'الربع الخالي — ريجولر', 'empty-quarter-oversized': 'الربع الخالي — أوفرسايز',
     'hajar-mountains-regular': 'جبال الحجر — ريجولر', 'hajar-mountains-oversized': 'جبال الحجر — أوفرسايز', 'sand-polo': 'بولو صحراء',
     'khor-fakkan-bay-tee': 'تيشيرت خليج خورفكان', 'al-aqah-reef-tee': 'تيشيرت شعاب العقة', 'al-hamra-pearl-diver-tee': 'تيشيرت غوّاص اللؤلؤ في الحمرا', 'shams-tee': 'تيشيرت شمس',
-    'barr-and-bahr-hoodie': 'هودي برّ وبحر', 'ras-al-khor-hoodie': 'هودي رأس الخور', 'the-sahel-polo': 'بولو ساحل', 'sahra-trail-tee': 'تيشيرت صحراء تريل',
+    'barr-and-bahr-hoodie': 'هودي برّ وبحر — سوبر أوفرسايز', 'ras-al-khor-hoodie': 'هودي رأس الخور — سوبر أوفرسايز', 'the-sahel-polo': 'بولو ساحل', 'sahra-trail-tee': 'تيشيرت صحراء تريل',
+    /* 31 Oct 2026: the Super Oversized fit (سوبر أوفرسايز); the hoodie's Super Oversized keeps the hoodie's own handle */
+    'khor-fakkan-bay-tee-super-oversized': 'تيشيرت خليج خورفكان — سوبر أوفرسايز', 'al-aqah-reef-tee-super-oversized': 'تيشيرت شعاب العقة — سوبر أوفرسايز',
+    'al-hamra-pearl-diver-tee-super-oversized': 'تيشيرت غوّاص اللؤلؤ في الحمرا — سوبر أوفرسايز', 'shams-tee-super-oversized': 'تيشيرت شمس — سوبر أوفرسايز',
+    'barr-and-bahr-hoodie-oversized': 'هودي برّ وبحر — أوفرسايز', 'ras-al-khor-hoodie-oversized': 'هودي رأس الخور — أوفرسايز',
     'sahra-trail-2-in-1-short': 'شورت صحراء تريل 2 في 1', 'sahra-trail-kit': 'طقم صحراء تريل', 'trailhead-bag': 'حقيبة ترايلهيد', 'sahra-tote': 'حقيبة صحراء القماشية' };
   /* the name a shopper reads: Arabic on Arabic pages, else Shopify's title; short drops the fit */
   function nameOf(h, title, short) {
     h = h || '';
     if (AR) {
       if (AR_NAME[h]) return short ? AR_NAME[h].replace(/ — .*$/, '') : AR_NAME[h];
-      var m = /^(.*)-(regular|oversized)$/.exec(h);
-      if (m && AR_NAME[m[1]]) return AR_NAME[m[1]] + (short ? '' : ' — ' + (m[2] === 'regular' ? 'ريجولر' : 'أوفرسايز'));
+      var m = /^(.*?)-(regular|super-oversized|oversized)$/.exec(h);
+      if (m && AR_NAME[m[1]]) return AR_NAME[m[1]].replace(/ — .*$/, '') + (short ? '' : ' — ' + (m[2] === 'regular' ? 'ريجولر' : m[2] === 'oversized' ? 'أوفرسايز' : 'سوبر أوفرسايز'));
     }
     var t = String(title || '');
-    return short ? t.replace(/\s+[\u2014-]\s+(Regular|Oversized)$/, '') : t;
+    return short ? t.replace(/\s+[\u2014-]\s+(Regular|Super Oversized|Oversized)$/, '') : t;
   }
   function T(k, a) {
     var s = (AR && STR.ar[k] != null) ? STR.ar[k] : (STR.en[k] != null ? STR.en[k] : k);
@@ -434,7 +441,8 @@
   /* back-art thumbnails: the art side of each piece, the same photo that opens its page */
   var THUMB = { 'al-quaa-galaxy-regular': '/shirts/card/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/card/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/card/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/card/emptyquarter-model-stand.webp',
     'hajar-mountains-regular': '/shirts/card/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/card/hajar-model-back.webp', 'sand-polo': '/shirts/card/polo-dune-front.webp',
-    'barr-and-bahr-hoodie': 'ph-barr-01-back', 'ras-al-khor-hoodie': 'ph-rakh-01-back', 'the-sahel-polo': 'polo-front', 'trailhead-bag': 'trail-bag-front' };
+    'barr-and-bahr-hoodie': 'ph-barr-01-back', 'ras-al-khor-hoodie': 'ph-rakh-01-back', 'the-sahel-polo': 'polo-front', 'trailhead-bag': 'trail-bag-front',
+    'barr-and-bahr-hoodie-oversized': 'ph-barr-01-back', 'ras-al-khor-hoodie-oversized': 'ph-rakh-01-back' };
   var MOCKS = { 'the-sahel-polo': 1, 'sahra-trail-tee': 1, 'sahra-trail-2-in-1-short': 1, 'sahra-trail-kit': 1 };
   function thumbOf(h, m) {
     var t = THUMB[h] || PRE[h];

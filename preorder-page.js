@@ -66,7 +66,15 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 }
 
 const SIZES = ['S', 'M', 'L', 'XL'];
-const FITS = [['regular', 'Regular'], ['oversized', 'Oversized']];
+/* 31 Oct 2026 (Faheem): "For all new oversized shirts and hoodies, let's rebrand them as Super Oversized with drop
+   shoulder. This becomes a third category on top of regular and oversized." Each Sahel tee has three fits and each
+   hoodie two; [handle suffix, fit name]. Oversized is paused (specimen.js PAUSED) until the new production run, cut to
+   the original Founding Edition Oversized size; Super Oversized is the current stock, unaltered. The Super Oversized
+   hoodie keeps the hoodie's original handle (no suffix), so its links, ads and search listings keep working.
+   The order here is the order of the product list (the first fit on sale is the one a one-card-per-design list shows). */
+const FITS = { tee: [['regular', 'Regular'], ['super-oversized', 'Super Oversized'], ['oversized', 'Oversized']],
+  hoodie: [['', 'Super Oversized'], ['oversized', 'Oversized']] };
+const FIT_DETAILS = { Regular: ['Regular fit'], Oversized: ['Oversized fit'], 'Super Oversized': ['Super Oversized fit', 'Drop shoulder'] };
 const SZ = require('./sahel-sizing.js');
 const SP = require('./specimen.js');   /* 30 Oct 2026: the Specimen Sheet (product pages) */   /* 27 Oct 2026: the Sahel size charts */
 /* 30 Oct 2026 (Faheem: size note for repeat buyers). The Founding Edition and Sahel charts do not line up
@@ -74,9 +82,10 @@ const SP = require('./specimen.js');   /* 30 Oct 2026: the Specimen Sheet (produ
    chest, using both real charts. Hoodies and the polo have no Founding equivalent, so they get no note. */
 const FSZ = require('./content/sizing.json');
 function foundingMatch(key) {
-  const fRows = key === 'teeOversized' ? FSZ.oversized : key === 'teeRegular' ? FSZ.regular : null;
+  if (key === 'teeSuperOversized') return SZ.foundingToSuper();
+  const fRows = key === 'teeRegular' ? FSZ.regular : null;
   if (!fRows || !SZ.D[key]) return '';
-  const sRows = SZ.D[key].rows, fit = key === 'teeOversized' ? 'Oversized' : 'Regular';
+  const sRows = SZ.D[key].rows, fit = 'Regular';
   const minS = Math.min(...sRows.map(r => r[1]));
   const exact = [], near = [], small = [];
   fRows.forEach(([fz, fc]) => {
@@ -129,25 +138,25 @@ const real = (k, alt, cap) => ({ k, alt, mock: false, cap });
 
 /* Story paragraphs: the approved card stories (14 Oct handover; content/sahel-pieces.json). */
 const SAHEL = [
-  { key: 'khor-fakkan-bay-tee', name: 'Khor Fakkan Bay Tee', seo: 'Khor Fakkan Bay Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Jet Set, DTG printed front and back', colour: 'Jet Set', price: 199, fits: true, img: 'kfb', place: ['Khor Fakkan', 'khor-fakkan-beach'],
+  { key: 'khor-fakkan-bay-tee', name: 'Khor Fakkan Bay Tee', seo: 'Khor Fakkan Bay Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Jet Set, DTG printed front and back', colour: 'Jet Set', price: 199, fits: 'tee', img: 'kfb', place: ['Khor Fakkan', 'khor-fakkan-beach'],
     story: "On Sharjah's east coast the Hajar Mountains come straight down to the Gulf of Oman. Khor Fakkan sits in the curve between two headlands, and its name is usually read as 'the creek of the two jaws'. We drew the bay the way it holds you: bare ridges, one sweep of pale sand and a dhow resting on still water.",
     details: ['230gsm cotton', 'DTG printed front and back', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'al-hamra-pearl-diver-tee', name: 'Al Hamra Pearl Diver Tee', seo: 'Al Hamra Pearl Diver Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Estate Blue, DTG printed', colour: 'Estate Blue', price: 199, fits: true, img: 'pearl', place: ['Al Jazirah Al Hamra', 'al-jazirah-al-hamra'],
+  { key: 'al-hamra-pearl-diver-tee', name: 'Al Hamra Pearl Diver Tee', seo: 'Al Hamra Pearl Diver Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Estate Blue, DTG printed', colour: 'Estate Blue', price: 199, fits: 'tee', img: 'pearl', place: ['Al Jazirah Al Hamra', 'al-jazirah-al-hamra'],
     story: 'Al Jazirah Al Hamra, the Red Island, is a coral-stone pearling town on the Ras Al Khaimah coast, left empty around 1970. Every summer the boats of this coast sailed for the big dive, from June to the end of September. A diver went down on a stone weight, filled his basket with oysters and tugged the rope to be hauled up.',
     details: ['230gsm cotton', 'DTG printed', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'al-aqah-reef-tee', name: 'Al Aqah Reef Tee', seo: 'Al Aqah Reef Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Lagoon, DTG printed front and back', colour: 'Lagoon', price: 199, fits: true, img: 'reef', place: ['Al Aqah', 'snoopy-island'],
+  { key: 'al-aqah-reef-tee', name: 'Al Aqah Reef Tee', seo: 'Al Aqah Reef Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Lagoon, DTG printed front and back', colour: 'Lagoon', price: 199, fits: 'tee', img: 'reef', place: ['Al Aqah', 'snoopy-island'],
     story: "A small rock island sits a few hundred metres off Al Aqah beach, on Fujairah's northern coast. You don't need a boat: people swim, wade or paddle out to snorkel the reef around it, where turtles, blacktip reef sharks and parrotfish are reported. We drew both worlds at once, the rock above the waterline and the reef beneath it.",
     details: ['230gsm cotton', 'DTG printed front and back', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'shams-tee', name: 'Shams Tee', seo: 'Shams Embroidered T-Shirt', kind: 'Embroidered T-shirt', md: '230gsm cotton in Jet Set, our mark embroidered in sand thread on the left chest', colour: 'Jet Set', price: 139, fits: true, img: 'shams', front: true,
+  { key: 'shams-tee', name: 'Shams Tee', seo: 'Shams Embroidered T-Shirt', kind: 'Embroidered T-shirt', md: '230gsm cotton in Jet Set, our mark embroidered in sand thread on the left chest', colour: 'Jet Set', price: 139, fits: 'tee', img: 'shams', front: true,
     story: 'Shams is the sun, and in this country it decides everything: when to walk, when to rest, when the dunes turn gold. Sahra &amp; Beyond began with nights in the desert and a camera, waiting for it to rise. Our mark keeps that moment, the sun resting on a dune crest with sahra written beneath it, stitched in sand thread on the left chest.',
     details: ['230gsm cotton', 'Our mark embroidered in sand thread on the left chest', 'Back plain', 'Printed neck label'] },
   { key: 'the-sahel-polo', name: 'The Sahel Polo', seo: 'The Sahel Polo, Black Piqu\u00e9 Polo Shirt', kind: 'Polo shirt', md: 'black mercerised piqu\u00e9, three buttons, antique-gold tipping and our mark in antique-gold thread', colour: 'Black', price: 229, img: 'polo', front: true,
     story: "After dark on Dubai Creek, the lights of the abras and dhows spill gold onto black water. This polo is cut from that view: black mercerised piqu&eacute;, three buttons, and our mark in antique-gold thread on the left chest. It's the one piece in Sahel made for evenings.",
     details: ['Black mercerised piqu&eacute;', 'Three buttons', 'Antique-gold tipping on the collar and cuffs', 'Our mark in antique-gold thread on the left chest', 'Printed neck label'] },
-  { key: 'barr-and-bahr-hoodie', name: 'Barr &amp; Bahr Hoodie', seo: 'Barr & Bahr Hoodie, Embroidered UAE Coastline', kind: 'Hoodie', md: 'the UAE coastline embroidered in sand thread across the back, in Salute', plain: 'Barr & Bahr Hoodie', colour: 'Salute', price: 229, img: 'barr',
+  { key: 'barr-and-bahr-hoodie', name: 'Barr &amp; Bahr Hoodie', seo: 'Barr & Bahr Hoodie, Embroidered UAE Coastline', kind: 'Hoodie', md: 'the UAE coastline embroidered in sand thread across the back, in Salute', plain: 'Barr & Bahr Hoodie', colour: 'Salute', price: 229, fits: 'hoodie', img: 'barr',
     story: 'In the Gulf, barr is the open land, the desert, and bahr is the sea. People say them together because life here has always moved between the two. The lower back carries that crossing: contour-line dunes running down into a stream and a wave. Above it, one line of sand thread traces the whole UAE coast.',
     details: ['The UAE coastline embroidered in sand thread across the back', 'Lower-back artwork DTG printed', 'Printed neck label'] },
-  { key: 'ras-al-khor-hoodie', name: 'Ras Al Khor Hoodie', seo: 'Ras Al Khor Hoodie, Flamingos and the UAE Coast', kind: 'Hoodie', md: 'flamingos at Ras Al Khor low on the back and the UAE coastline in sand thread, in Estate Blue', colour: 'Estate Blue', price: 229, img: 'rakh', place: ['Ras Al Khor', 'ras-al-khor'],
+  { key: 'ras-al-khor-hoodie', name: 'Ras Al Khor Hoodie', seo: 'Ras Al Khor Hoodie, Flamingos and the UAE Coast', kind: 'Hoodie', md: 'flamingos at Ras Al Khor low on the back and the UAE coastline in sand thread, in Estate Blue', colour: 'Estate Blue', price: 229, fits: 'hoodie', img: 'rakh', place: ['Ras Al Khor', 'ras-al-khor'],
     story: 'Ras Al Khor means the head of the creek: a protected wetland where Dubai Creek ends, in the middle of the city. Low on the back, greater flamingos wade there at dusk, with the mangroves behind them. Above them runs the whole UAE coast in a single line of sand thread, with Sahel written beneath it in Arabic and English.',
     details: ['The UAE coastline embroidered in sand thread across the back', 'Lower-back artwork DTG printed', 'Printed neck label'] }
 ];
@@ -186,9 +195,12 @@ function products() {
   SAHEL.forEach(p => {
     const plain = p.plain || p.name;
     const images = PHOTOS[p.key] ? photoList(p.key) : p.img ? (p.front ? [mock(p.img + '-front', plain + ', front'), mock(p.img + '-back', plain + ', back')] : [mock(p.img + '-back', plain + ', back'), mock(p.img + '-front', plain + ', front')]) : [];
-    if (p.fits) FITS.forEach(([f, F]) => out.push({ line: 'sahel', handle: `${p.key}-${f}`, title: `${p.name} &mdash; ${F}`, plain: `${plain} — ${F}`, name: p.name, fit: F,
-      sibling: `${p.key}-${f === 'regular' ? 'oversized' : 'regular'}`, siblingFit: f === 'regular' ? 'Oversized' : 'Regular',
-      colour: p.colour, price: p.price, story: p.story, details: [`${F} fit`].concat(p.details), images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md }));
+    if (p.fits) {
+      const fl = FITS[p.fits].map(([f, F]) => ({ fit: F, handle: f ? `${p.key}-${f}` : p.key }));
+      fl.forEach(x => { x.onSale = !SP.PAUSED[x.handle]; });
+      fl.forEach(({ fit: F, handle }) => out.push({ line: 'sahel', handle, title: `${p.name} &mdash; ${F}`, plain: `${plain} — ${F}`, name: p.name, fit: F, fitsList: fl,
+        colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md }));
+    }
     else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md });
   });
   TRAIL.forEach(p => out.push({ line: 'trail', handle: p.handle, title: p.name, plain: p.name, name: p.name, price: p.price, story: p.lede, details: p.details, images: p.images, kit: !!p.kit, key: p.handle, seo: p.seo, kind: p.kind, md: p.md, inHand: !!p.inHand, oneSize: !!p.oneSize, noTote: !!p.noTote }));
@@ -327,13 +339,19 @@ const RATING = (function () { try { const a = require('./reviews-render.js').loa
   return n >= 5 ? `${(t / n).toFixed(1)} from ${n} customer reviews of our Founding Edition` : ''; } catch (e) { return ''; } })();
 
 function productPage(p, all, SITE, stage) {
-  const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
+  const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name) && onSale(o)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
   const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
   /* 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top and buy sheet as the Founding Edition pages (specimen.js) */
   const S = SP.fromPreorder(p);
   const ask = `<a href="${WA}?text=${encodeURIComponent('Hi, a size question about ' + (/^The /.test(p.plain) ? p.plain : 'the ' + p.plain) + ' before I order.')}" target="_blank" rel="noopener">`;
-  const help = p.oneSize ? '' : SZ.keyFor(p) ? `<p class="ss-help">Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart</a>. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
+  /* 31 Oct 2026: the fit line by the sizes on a Super Oversized page; a paused Oversized page has no chart until the fit returns */
+  const fitLine = p.fit === 'Super Oversized' ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Roomy, with a dropped shoulder. Most people take one size down from their usual size.' : 'Super Oversized, drop shoulder: about one size bigger than our Founding Edition Oversized. If you know your Founding size, go one size down.'}</p>` : '';
+  const paused = !onSale(p);
+  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart</a>. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
+  const sup = (p.fitsList || []).find(f => f.fit === 'Super Oversized' && f.onSale), reg = (p.fitsList || []).find(f => f.fit === 'Regular' && f.onSale);
+  const pausedChart = paused && p.line === 'sahel' && p.fit === 'Oversized'
+    ? `<section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask">The Oversized chart will be published when the fit returns. Until then, see ${[sup ? `<a href="/products/${sup.handle}/#size-chart">Super Oversized</a>` : '', reg ? `<a href="/products/${reg.handle}/#size-chart">Regular</a>` : ''].filter(Boolean).join(' and ')}.</p><p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : '';
   return `${stageHead()}${SP.preload(S)}${SP.HEAD}<style>${CSS}</style>
 <main class="po-main">
   ${SP.top(S, {
@@ -351,7 +369,7 @@ function productPage(p, all, SITE, stage) {
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
       <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.line === 'sahel' ? 'Photographed from the real piece.' : 'Photos of the real piece will be added when it arrives.'} Designed in the UAE.</p></div>
   </section>
-  ${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}
+  ${pausedChart}${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
   ${crossLines(p, card)}
   </div>
@@ -407,8 +425,8 @@ function collectionPage(all) {
     ${IN_HAND ? '' : '<p class="st2">Pre-order. Ships from Fri 30 Oct.</p>'}
     <p>Designed in the UAE for everyone who loves it. Images marked Mock-up are studio mock-ups until those pieces are photographed.</p>
   </div>
-  ${sec('sahel', 'Sahel &middot; The Coast Edition', all.filter(p => p.line === 'sahel'), 'Sahel has its own size chart, cut larger than the Founding Edition: <a href="/size-guide/#sahel">see the Sahel size chart</a>. No chart yet for the Sahel Polo.')}
-  ${sec('trail', 'Sahra Trail', all.filter(p => p.line === 'trail'))}
+  ${sec('sahel', 'Sahel &middot; The Coast Edition', all.filter(p => p.line === 'sahel' && onSale(p)), 'Sahel has its own size chart, cut larger than the Founding Edition: <a href="/size-guide/#sahel">see the Sahel size chart</a>. Super Oversized has a dropped shoulder; our Oversized fit is being re-cut and will be back soon. No chart yet for the Sahel Polo.')}
+  ${sec('trail', 'Sahra Trail', all.filter(p => p.line === 'trail' && onSale(p)))}
 </main>`;
 }
 
@@ -419,6 +437,13 @@ function collectionPage(all) {
 /* paused pieces (specimen.js PAUSED, 30 Oct 2026) keep their own pages but are not listed for sale elsewhere;
    pass keepPaused for a page about that piece itself (/hoodies/) */
 const onSale = p => !require('./specimen.js').PAUSED[p.handle];
+/* 31 Oct 2026: the one product that stands for its design where a list shows one card per design or place (map pins,
+   place pages, /places/, the shop map): on sale, and the design's first fit on sale in the order Regular, Super
+   Oversized, Oversized (so a tee is its Regular, a hoodie its Super Oversized). Pieces with no fit stand for themselves. */
+const PRIMARY_ORDER = ['Regular', 'Super Oversized', 'Oversized'];
+const primaryHandle = p => { if (!p.fitsList) return p.handle; const f = PRIMARY_ORDER.map(F => p.fitsList.find(x => x.fit === F && x.onSale)).find(Boolean); return f ? f.handle : null; };
+const primary = p => onSale(p) && primaryHandle(p) === p.handle;
+const isTee = p => /T-shirt/.test(p.kind || '') && p.line === 'sahel';
 function pickNew(test, perDesign, keepPaused) {
   const list = products().filter(p => test(p) && (keepPaused || onSale(p)));
   return perDesign ? list.filter((p, i, a) => a.findIndex(x => x.name === p.name) === i) : list;
@@ -451,9 +476,13 @@ function cut(p) {
   return 'Unisex';
 }
 const forWomen = p => cut(p) !== 'Men\u2019s cut';
-/* Sahel Oversized paused (30 Oct 2026): a Sahel tee whose Oversized twin is withdrawn is sold as Regular only */
-const ovPaused = p => !!(p && p.handle && require('./specimen.js').PAUSED[p.handle.replace(/-regular$/, '-oversized')]);
-const bothFits = p => ovPaused(p) ? 'Regular fit' : 'Regular or Oversized';
+/* the fits a design is on sale in, for a one-card-per-design list (31 Oct 2026): "Regular or Super Oversized" for a Sahel
+   tee while its Oversized is being re-cut, "Super Oversized fit" for a hoodie */
+const FIT_LIST_ORDER = ['Regular', 'Oversized', 'Super Oversized'];
+const bothFits = p => {
+  const on = (p && p.fitsList ? p.fitsList.filter(f => f.onSale).map(f => f.fit) : [p && p.fit].filter(Boolean)).sort((a, b) => FIT_LIST_ORDER.indexOf(a) - FIT_LIST_ORDER.indexOf(b));
+  return !on.length ? '' : on.length === 1 ? `${on[0]} fit` : on.length === 2 ? on.join(' or ') : on.slice(0, -1).join(', ') + ' or ' + on[on.length - 1];
+};
 function newCard(p, fitsLabel) {
   const im = p.images[0];
   const fig = im ? `<span class="nb-f" data-cycle>${cycleImgs(p, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
@@ -481,7 +510,7 @@ const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct
 /* 23 Oct 2026 (site review): a place guide whose place became a Sahel piece shows that piece
    (Khor Fakkan, Al Jazirah Al Hamra, Al Aqah / Snoopy Island, Ras Al Khor), on the place page and on
    the guides that name the place. Same stage rules as everywhere else. */
-function pieceFor(placeId) { return products().find(p => p.place && p.place[1] === placeId && (!p.fit || p.fit === 'Regular') && onSale(p)) || null; }
+function pieceFor(placeId) { return products().find(p => p.place && p.place[1] === placeId && primary(p)) || null; }
 const PB_CSS = `<style>
 .spb{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:center;max-width:860px;margin:34px auto;padding:20px;border-radius:18px;background:#0E1A2E;color:#F4ECDF}
 .spb-f{position:relative;display:block;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#1B2A40}
@@ -499,11 +528,11 @@ ${CYCLE_CSS}
 function pieceBlock(placeId, lead) {
   const p = pieceFor(placeId); if (!p) return '';
   const im = p.images[0], first = String(p.story).split(/(?<=\.)\s/)[0];
-  const isTee = !!p.fit, noun = isTee ? 'tee' : /hoodie/i.test(p.kind) ? 'hoodie' : 'piece';
+  const tee = isTee(p), noun = tee ? 'tee' : /hoodie/i.test(p.kind) ? 'hoodie' : 'piece';
   return stageHead() + PB_CSS + `<section class="spb" id="tee" data-match="sahel" aria-label="${esc(p.name.replace(/&amp;/g, '&'))}">
   ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true" data-cycle>${cardSet(p).map((x, i) => imgTag(x, { alt: '', sizes: '240px', bg: '#1B2A40', cls: i ? '' : 'on' })).join('')}${mockTag(im)}</a>` : ''}
   <div><p class="spb-k">${lead || `The ${noun} drawn from this place`} &middot; Sahel</p><h2>${p.name}</h2><p>${first}</p>
-  <p class="spb-p">${cardPrice(p.price, 'span', false, p.handle)}${isTee ? ' &middot; ' + bothFits(p) : ''}</p>
+  <p class="spb-p">${cardPrice(p.price, 'span', false, p.handle)}${p.fitsList ? ' &middot; ' + bothFits(p) : ''}</p>
   <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}${im && im.mock ? 'The image is a studio mock-up.' : 'Photographed from the real piece.'}</p>
   <a class="spb-a" href="/products/${p.handle}/">See the ${noun} &rarr;</a></div>
 </section>`;
@@ -512,8 +541,8 @@ function pieceBlock(placeId, lead) {
 /* 23 Oct 2026 (Faheem chose "Launch band, no ticker"): a band near the top of the homepage. The day line
    ("That is in 5 days") updates once per visit by the UAE calendar; there is no ticking countdown (22 Oct no-timer rule). */
 function homeBand() {
-  const pick = ['khor-fakkan-bay-tee-oversized', 'al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean)
-    .map(p => onSale(p) ? p : products().find(x => x.handle === (p.sibling || 'the-sahel-polo'))).filter(Boolean);
+  const pick = ['khor-fakkan-bay-tee-super-oversized', 'al-aqah-reef-tee-super-oversized', 'barr-and-bahr-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean)
+    .map(p => onSale(p) ? p : products().find(x => x.handle === (primaryHandle(p) || 'the-sahel-polo'))).filter(Boolean);
   const css = `<style>
 .lb{background:#0E1A2E;color:#F4ECDF;padding:46px 20px 50px;position:relative;z-index:1}
 .lb-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:34px;align-items:center}
@@ -653,7 +682,7 @@ function homeLines() {
     <p class="nb-k">${k('Sahel, the Coast Edition')}</p>
     <h3 id="hlS">Sahel: seven designs from the UAE coast</h3>
     <p class="nb-l">Four tees, two hoodies and a polo, drawn from Khor Fakkan, Al Aqah, Al Jazirah Al Hamra and Ras Al Khor. ${inc('st1', '<span class="st1">Ships from Fri 30 Oct. </span>')}Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. Photographed from the real pieces; the Sahel Polo is still a labelled mock-up.</p>
-    <div class="nb-g hl-g">${sahel.map(p => newCard(p, true)).join('')}<a class="hl-all" href="/sahel/#pieces" data-track="home_lines_sahel"><b>All of Sahel</b><small>Every piece, both fits, the story behind the coast.</small><span>${inc('st1', '<span class="st1">Pre-order Sahel</span>')}<span class="st02">Shop Sahel</span> &rarr;</span></a></div>
+    <div class="nb-g hl-g">${sahel.map(p => newCard(p, true)).join('')}<a class="hl-all" href="/sahel/#pieces" data-track="home_lines_sahel"><b>All of Sahel</b><small>Every piece, every fit, the story behind the coast.</small><span>${inc('st1', '<span class="st1">Pre-order Sahel</span>')}<span class="st02">Shop Sahel</span> &rarr;</span></a></div>
   </section>
   <section class="hl-sec" id="home-trail" aria-labelledby="hlT">
     <p class="nb-k">${k('Sahra Trail running wear')}</p>
@@ -675,9 +704,10 @@ function homeLines() {
    Metas never carry the 20% wording, so nothing in a search snippet goes stale on Fri 30 Oct. */
 const LINE = { sahel: 'Sahel, the Coast Edition', trail: 'Sahra Trail' };
 function seoTitle(p) { return `${p.seo}${p.fit ? `, ${p.fit} Fit` : ''} | Sahra & Beyond`; }
+const fitPhrase = p => p.fit === 'Super Oversized' ? ', Super Oversized with a dropped shoulder' : '';
 function seoDesc(p, stage) {
   const ship = p.inHand ? (stage === 0 ? ' On sale from Wed 28 Oct.' : ' In stock.') : IN_HAND ? '' : stage === 0 ? ' Pre-order opens Wed 28 Oct; ships from Fri 30 Oct.' : ' Pre-order; ships from Fri 30 Oct.';
-  return `${p.plain}: ${p.md}. ${LINE[p.line]}, designed in the UAE. ${money(p.price)}, free delivery across the UAE.${ship}`;
+  return `${p.plain}: ${p.md}${fitPhrase(p)}. ${LINE[p.line]}, designed in the UAE. ${money(p.price)}, free delivery across the UAE.${ship}`;
 }
 const RETURNS = { '@type': 'MerchantReturnPolicy', applicableCountry: 'AE', returnPolicyCountry: 'AE', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
   merchantReturnDays: 14, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn' };
@@ -689,8 +719,8 @@ function productLd(p, url, img, desc, stage, SITE) {
     offers: { '@type': 'Offer', price: (inWindow ? pre(p.price) : p.price).toFixed(2), priceCurrency: 'AED', url,
       priceValidUntil: inWindow ? '2026-10-29' : `${new Date(now()).getUTCFullYear() + 1}-12-31`, itemCondition: 'https://schema.org/NewCondition',
       availability: require('./specimen.js').PAUSED[p.handle] ? 'https://schema.org/OutOfStock' : p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE], hasMerchantReturnPolicy: RETURNS } };
-  if (p.fit) { prod.inProductGroupWithID = p.key;
-    prod.isVariantOf = { '@type': 'ProductGroup', productGroupID: p.key, name: p.name.replace(/&amp;/g, '&'), url: `${SITE}/products/${p.key}-regular/`, variesBy: ['https://schema.org/size'] }; }
+  if (p.fitsList) { prod.inProductGroupWithID = p.key;
+    prod.isVariantOf = { '@type': 'ProductGroup', productGroupID: p.key, name: p.name.replace(/&amp;/g, '&'), url: `${SITE}/products/${primaryHandle(p) || p.handle}/`, variesBy: ['https://schema.org/size'] }; }
   const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
     { '@type': 'ListItem', position: 2, name: p.line === 'sahel' ? 'Sahel' : 'Sahra Trail', item: `${SITE}/new/` },
@@ -717,7 +747,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
     desc: 'Sahel, the Coast Edition (graphic tees, a polo and two hoodies) and Sahra Trail running wear (tee, 2-in-1 shorts and kit). Designed in the UAE. Free delivery across the UAE.',
     canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false, image: `${SITE}/assets/preorder/og/ph-kfb-01-back-og.jpg`,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahel and Sahra Trail', url: `${SITE}/new/` },
-      { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahel and Sahra Trail', itemListElement: all.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/products/${p.handle}/`, name: p.plain })) }],
+      { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahel and Sahra Trail', itemListElement: all.filter(onSale).map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/products/${p.handle}/`, name: p.plain })) }],
     bodyHtml: collectionPage(all)
   }));
   console.log(`  ✓ pre-order: ${all.length} product pages + /new/ (stage ${stage}${IN_HAND ? ', in hand' : ''})`);
@@ -734,6 +764,10 @@ module.exports.urls = urls;
 module.exports.handles = () => products().map(p => p.handle);
 module.exports.products = products;
 module.exports.onSale = onSale;
+module.exports.primary = primary;
+module.exports.primaryHandle = primaryHandle;
+module.exports.isTee = isTee;
+module.exports.bothFits = bothFits;
 module.exports.pickNew = pickNew;
 module.exports.pieceFor = pieceFor;
 module.exports.pieceBlock = pieceBlock;

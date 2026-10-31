@@ -248,6 +248,12 @@ html body .ss .ss-crumb{padding:10px 0;margin:-6px 0 -8px}
 .ss-trust{margin:4px 0 8px;font-size:13px;line-height:1.45;color:var(--ss-ink3)}
 html body .ss p.ss-trust{font-size:13px!important;line-height:1.45!important}
 html body .ss-stage .ss-tabs{width:auto;max-width:none}
+/* three fits (31 Oct 2026: Regular, Oversized, Super Oversized): one row of three on the page; in the buy sheet a long
+   fit switch lets the price line wrap instead of cutting off the Tabby line */
+.ss-fits[data-n="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ss-fits[data-n="3"] a{padding:10px 10px}
+.ss-fits[data-n="3"] a b{font-size:14.5px;line-height:1.25}
+.ssb[data-fitwide] .ssb-l1{white-space:normal}
 /* paused piece (30 Oct 2026) */
 .ssb-paused{margin:8px 0 0;font-size:13.5px;line-height:1.45;color:#5a4636}
 .ssb-paused a{color:inherit;text-decoration:underline;text-underline-offset:2px;font-weight:600}

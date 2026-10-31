@@ -1,5 +1,5 @@
 {
- "_note": "Sahel, the Coast Edition: garment measurements from the charts Faheem supplied on 27 Oct 2026. S to XL only (we do not make 2XL). Inches as supplied; cm = inches x 2.54, except the hoodie, whose cm figures are as supplied.",
+ "_note": "Sahel, the Coast Edition: garment measurements from the charts Faheem supplied on 27 Oct 2026. S to XL only (we do not make 2XL). Inches as supplied; cm = inches x 2.54, except the hoodie, whose cm figures are as supplied. 31 Oct 2026 (Faheem): the current stock is sold as Super Oversized with a dropped shoulder. teeSuperOversized carries the measurements of the current Sahel tee stock (the chart that was teeOversized); the Sahel Oversized tee fit is being re-cut to the original Founding Edition Oversized size and its chart will be published when it returns. The hoodie chart is now the Super Oversized hoodie chart: the 27 Oct chart with 1.5 inches added to chest, length, shoulder, sleeve and hem at every size (the cuff unchanged), cm = inches x 2.54 to one decimal for the changed values.",
  "teeRegular": {
   "label": "Sahel tees, Regular fit",
   "cols": [
@@ -47,6 +47,53 @@
   ],
   "intent": "A straight regular fit for everyday wear and a classic look."
  },
+ "teeSuperOversized": {
+  "label": "Sahel tees, Super Oversized fit (drop shoulder)",
+  "cols": [
+   "Chest (flat)",
+   "Length",
+   "Sleeve"
+  ],
+  "rows": [
+   [
+    "S",
+    24,
+    61.0,
+    28,
+    71.1,
+    10,
+    25.4
+   ],
+   [
+    "M",
+    25,
+    63.5,
+    29,
+    73.7,
+    10.5,
+    26.7
+   ],
+   [
+    "L",
+    26,
+    66.0,
+    30,
+    76.2,
+    11,
+    27.9
+   ],
+   [
+    "XL",
+    27,
+    68.6,
+    31,
+    78.7,
+    11.5,
+    29.2
+   ]
+  ],
+  "intent": "Our roomiest cut, with a dropped shoulder: wide and long through the body. It runs about one size bigger than our Founding Edition Oversized; for the classic oversized look, take one size down."
+ },
  "teeOversized": {
   "label": "Sahel tees, Oversized fit",
   "cols": [
@@ -92,10 +139,11 @@
     29.2
    ]
   ],
-  "intent": "A loose, relaxed cut, wider through the body than the Regular fit."
+  "intent": "A loose, relaxed cut, wider through the body than the Regular fit.",
+  "_status": "Not shown on the site since 31 Oct 2026. These figures belonged to the stock now sold as Super Oversized (teeSuperOversized). Replace with the re-cut Oversized chart when the fit returns."
  },
  "hoodie": {
-  "label": "Sahel hoodies",
+  "label": "Sahel hoodies, Super Oversized fit (drop shoulder)",
   "cols": [
    "Chest (flat)",
    "Length",
@@ -107,66 +155,66 @@
   "rows": [
    [
     "S",
-    23,
-    58.4,
-    27,
-    68.6,
-    22,
-    55.9,
-    23,
-    58.4,
-    19,
-    48.3,
+    24.5,
+    62.2,
+    28.5,
+    72.4,
+    23.5,
+    59.7,
+    24.5,
+    62.2,
+    20.5,
+    52.1,
     4,
     10.2
    ],
    [
     "M",
-    24,
-    61,
-    28,
-    71.1,
-    23,
-    58.4,
-    24,
-    61,
-    20,
-    50.8,
+    25.5,
+    64.8,
+    29.5,
+    74.9,
+    24.5,
+    62.2,
+    25.5,
+    64.8,
+    21.5,
+    54.6,
     4,
     10.2
    ],
    [
     "L",
-    25,
-    63.5,
-    29,
-    73.7,
-    24,
-    61,
-    24.5,
-    62.2,
-    21,
-    53.3,
+    26.5,
+    67.3,
+    30.5,
+    77.5,
+    25.5,
+    64.8,
+    26,
+    66.0,
+    22.5,
+    57.2,
     4.25,
     10.8
    ],
    [
     "XL",
+    28,
+    71.1,
+    31.5,
+    80.0,
     26.5,
     67.3,
-    30,
-    76.2,
-    25,
-    63.5,
-    25,
-    63.5,
-    22.5,
-    57.2,
+    26.5,
+    67.3,
+    24,
+    61.0,
     4.5,
     11.4
    ]
   ],
-  "intent": "A relaxed oversized fit, cut unisex: dropped shoulder, roomy chest, relaxed sleeves and a loose body."
+  "intent": "Super Oversized, cut unisex: a dropped shoulder, a roomy chest, relaxed sleeves and a long, loose body. Most people take one size down from their usual size."
  },
  "method": [
   "<strong>Chest</strong>: garment laid flat, measured straight across 1&Prime; below the armhole. Double it for the full chest.",
@@ -178,7 +226,8 @@
  "tolerance": "Measurements can vary by &plusmn;0.5&Prime; (&plusmn;1.3&nbsp;cm).",
  "compare": {
   "teeRegular": "Sahel is cut on its own pattern and runs larger than the Founding Edition: a Sahel Regular S is 22&Prime; across the chest, a Founding Edition Regular S is 19&Prime;. Go by the measurement, not the size you took before.",
+  "teeSuperOversized": "A Sahel Super Oversized S is 24&Prime; across the chest, between a Founding Edition Oversized M (23.5&Prime;) and L (25&Prime;), so Super Oversized runs about one size bigger than our Founding Edition Oversized.",
   "teeOversized": "Sahel is cut on its own pattern and runs larger than the Founding Edition: a Sahel Oversized S is 24&Prime; across the chest, a Founding Edition Oversized S is 22.5&Prime;. Go by the measurement, not the size you took before.",
-  "hoodie": "The hoodies are new to the range, so there is no Founding Edition size to compare with. Measure a hoodie you like flat and match the numbers."
+  "hoodie": "The hoodies are new to the range, so there is no Founding Edition hoodie to compare with; for reference, a Super Oversized hoodie S is 24.5&Prime; across the chest, a Founding Edition Oversized tee S is 22.5&Prime;."
  }
 }

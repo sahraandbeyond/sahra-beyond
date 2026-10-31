@@ -565,7 +565,17 @@
   "Wadi Shawka (Wadis)": "وادي شوكة (أودية)",
   "Wadi Wurayah (Wadis)": "وادي الوريعة (أودية)",
   "Zakher Lake (Camping)": "بحيرة زاخر (تخييم)",
-  "All Places — Deserts, Wadis, Mountains & Beaches, UAE": "كل الأماكن: صحارى وأودية وجبال وشواطئ في الإمارات"
+  "All Places — Deserts, Wadis, Mountains & Beaches, UAE": "كل الأماكن: صحارى وأودية وجبال وشواطئ في الإمارات",
+  "Adding…": "جارٍ الإضافة…",
+  "Checking stock…": "جارٍ التحقق من المخزون…",
+  "Unavailable just now": "غير متوفر حاليًا",
+  "Choose your size first.": "اختر مقاسك أولًا.",
+  "Choose a size for the tee and the short first.": "اختر مقاس التيشيرت ومقاس الشورت أولًا.",
+  "Sizes are not loading. Refresh the page in a minute, or message us on WhatsApp.": "لا يتم تحميل المقاسات. حدّث الصفحة بعد دقيقة، أو راسلنا على واتساب.",
+  "Sizes are not loading. Refresh the page, or message us on WhatsApp.": "لا يتم تحميل المقاسات. حدّث الصفحة، أو راسلنا على واتساب.",
+  "Sizes are taking a while. Refresh the page, or message us on WhatsApp.": "تحميل المقاسات يستغرق وقتًا. حدّث الصفحة، أو راسلنا على واتساب.",
+  "That did not go into your bag. Please try again, or message us on WhatsApp.": "لم تُضف القطعة إلى سلّتك. حاول مرة أخرى، أو راسلنا على واتساب.",
+  "The bag is not loading. Refresh the page, or message us on WhatsApp.": "لا يتم تحميل السلة. حدّث الصفحة، أو راسلنا على واتساب."
  },
  "patterns": [
   [
