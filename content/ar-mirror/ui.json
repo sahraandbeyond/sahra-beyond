@@ -575,7 +575,31 @@
   "Sizes are not loading. Refresh the page, or message us on WhatsApp.": "لا يتم تحميل المقاسات. حدّث الصفحة، أو راسلنا على واتساب.",
   "Sizes are taking a while. Refresh the page, or message us on WhatsApp.": "تحميل المقاسات يستغرق وقتًا. حدّث الصفحة، أو راسلنا على واتساب.",
   "That did not go into your bag. Please try again, or message us on WhatsApp.": "لم تُضف القطعة إلى سلّتك. حاول مرة أخرى، أو راسلنا على واتساب.",
-  "The bag is not loading. Refresh the page, or message us on WhatsApp.": "لا يتم تحميل السلة. حدّث الصفحة، أو راسلنا على واتساب."
+  "The bag is not loading. Refresh the page, or message us on WhatsApp.": "لا يتم تحميل السلة. حدّث الصفحة، أو راسلنا على واتساب.",
+  "@Pause the slides": "أوقف الشرائح مؤقتًا",
+  "@Play the slides": "شغّل الشرائح",
+  "@Map of the UAE with the place behind each design": "خريطة الإمارات مع المكان الذي ألهم كل تصميم",
+  "@Liwa: Empty Quarter": "ليوا: الربع الخالي",
+  "@Al Quaa: Al Quaa Galaxy": "القوع: مجرّة القوع",
+  "@Ras Al Khor: Ras Al Khor Hoodie": "رأس الخور: هودي رأس الخور",
+  "@Al Jazirah Al Hamra: Al Hamra Pearl Diver Tee": "الجزيرة الحمراء: تيشيرت غوّاص اللؤلؤ في الحمرا",
+  "@Wadi Naqab: Hajar Mountains": "وادي نقب: جبال الحجر",
+  "@Khor Fakkan: Khor Fakkan Bay Tee": "خورفكان: تيشيرت خليج خورفكان",
+  "@Al Aqah: Al Aqah Reef Tee": "العقة: تيشيرت شعاب العقة",
+  "@The Sahra & Beyond mark: three dune ridges under a rising sun, with صحراء beneath": "شعار صحراء وما بعدها: ثلاث حواف كثبان تحت شمس مشرقة، وتحتها كلمة صحراء",
+  "Inspired by Al Quaa": "مستوحى من القوع",
+  "Inspired by Liwa": "مستوحى من ليوا",
+  "Inspired by Wadi Naqab": "مستوحى من وادي نقب",
+  "Inspired by Khor Fakkan": "مستوحى من خورفكان",
+  "Inspired by Al Aqah": "مستوحى من العقة",
+  "Inspired by Al Jazirah Al Hamra": "مستوحى من الجزيرة الحمراء",
+  "Inspired by Ras Al Khor": "مستوحى من رأس الخور",
+  "Abu Dhabi": "أبوظبي",
+  "Ras Al Khor": "رأس الخور",
+  "Al Jazirah Al Hamra": "الجزيرة الحمراء",
+  "Khor Fakkan": "خورفكان",
+  "Al Aqah": "العقة",
+  "Sizes…": "المقاسات…"
  },
  "patterns": [
   [
@@ -769,6 +793,26 @@
   [
    "^Sat (\\d+)$",
    "السبت $1"
+  ],
+  [
+   "^([\\d.]+) from 1 review$",
+   "$1 · تقييم واحد"
+  ],
+  [
+   "^([\\d.]+) from 2 reviews$",
+   "$1 · تقييمان"
+  ],
+  [
+   "^([\\d.]+) from ([3-9]|10) reviews$",
+   "$1 · $2 تقييمات"
+  ],
+  [
+   "^([\\d.]+) from (\\d+) reviews$",
+   "$1 · $2 تقييمًا"
+  ],
+  [
+   "^@Stop (\\d+)$",
+   "المحطة $1"
   ]
  ]
 }

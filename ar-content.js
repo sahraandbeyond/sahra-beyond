@@ -1,4 +1,8 @@
-/* Arabic copy for the commercial core.
+/* RETIRED 31 Oct 2026: nothing builds from this file any more. /ar/, /ar/about/ and /ar/contact/ are
+   mirrors of the English pages (ar-mirror.js). Kept as the reviewed terminology source. The 21 Sep
+   tagline and the home h1 that carried it are blanked: that line is retired and must not reappear.
+
+   Arabic copy for the commercial core.
    Written 21 Sep 2026, revised the same day after five independent expert reviews.
    ------------------------------------------------------------------------------
    TRANSCREATED, not translated. The English voice is plain, concrete and
@@ -47,12 +51,12 @@
 module.exports = {
   brand: 'صحراء',
   brandFull: 'صحراء وما بعدها',
-  tagline: 'البس وجه الإمارات البرّي',
+  tagline: '',   /* retired 31 Oct 2026 */
 
   home: {
     title: 'تيشيرت إماراتي من أماكن حقيقية | صحراء وما بعدها',
     desc: 'تيشيرت إماراتي 230 غرامًا من قطن مُمشّط، مستوحى من أماكن حقيقية: سماء القوع، كثبان ليوا، وجبال الحجر. توصيل مجاني في الإمارات.',
-    h1: 'البس وجه الإمارات البرّي',
+    h1: '',   /* retired 31 Oct 2026 (was the retired tagline) */
     lede: 'تيشيرت ثقيل من قطن مُمشّط، 230 غرامًا. ثلاثة تصاميم من صحارى الإمارات وأوديتها وسماء لياليها. 199 درهمًا.',
     ctaShop: 'تسوّق المجموعة',
     ctaPlaces: 'قصة الأماكن',

@@ -277,6 +277,23 @@ try {
   console.log(`    ${C.dim}run: node homepage-test.js${C.off}`);
 }
 
+// ---- 2g. Arabic parity (hard rule, Faheem 31 Oct 2026) ----------------
+// "Ensure all updates are simultaneously made to Arabic pages as well. Keep this as a hard rule for each
+// push." Every mirrored English page must have its /ar/ page and every English string must be in the
+// Arabic dictionaries (content/ar-mirror/*.json); otherwise the push is blocked. Fix: node ar-mirror.js
+// extract, translate content/ar-mirror/_pending.json into t09.json, node build.js.
+let arOk = true;
+try {
+  const r = require('./ar-mirror.js').parity();
+  if (r.missingPages.length || r.pending.length) {
+    arOk = false;
+    console.log(`\n  ${C.bad}✗ Arabic pages are not in step with English — do not push:${C.off}`);
+    if (r.missingPages.length) console.log(`     ${C.bad}${r.missingPages.length} English page(s) without an Arabic page, e.g. ${r.missingPages.slice(0, 5).join(', ')}${C.off}`);
+    if (r.pending.length) console.log(`     ${C.bad}${r.pending.length} English string(s) with no Arabic, e.g. "${String(r.pending[0]).slice(0, 80)}"${C.off}`);
+    console.log(`    ${C.dim}run: node ar-mirror.js extract, translate content/ar-mirror/_pending.json into t09.json, then node build.js${C.off}`);
+  } else console.log(`  ${C.ok}✓${C.off} Arabic parity: ${r.pages} English page(s) mirrored, no untranslated strings`);
+} catch (e) { arOk = false; console.log(`\n  ${C.bad}✗ Arabic parity check could not run: ${e.message}${C.off}`); }
+
 // ---- 3. what will actually be committed --------------------------------
 // This used to list files by MTIME, which was actively misleading: `node
 // build.js` rewrites ~124 files with byte-identical content, so every build
@@ -318,4 +335,4 @@ if (usedGit) {
 }
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk || !journalOk || !marketTestOk || !homeTestOk) ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk || !journalOk || !marketTestOk || !homeTestOk || !arOk) ? 1 : 0);

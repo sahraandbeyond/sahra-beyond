@@ -4108,103 +4108,18 @@ applyTikTokPixel();
    Polo leave the desktop bar. Idempotent. Runs BEFORE stampAssets.
    ========================================================================== */
 /* ==========================================================================
-   Arabic commercial core — /ar/  (21 Sep 2026, Faheem)
+   Arabic commercial core — /ar/, /ar/about/, /ar/contact/
    ==========================================================================
-   Pass 1 is the commercial core only: home, about, contact (shop and the PDPs
-   follow). Copy lives in ar-content.js and is TRANSCREATED, not translated.
+   21 Sep 2026 - 31 Oct 2026 these three pages were hand-transcreated here from
+   ar-content.js (reviewed by five Arabic readers). RETIRED 31 Oct 2026 (Faheem,
+   hard rule: every site update must reach the Arabic pages in the same push):
+   they did not follow the English pages, so they are now mirrors of /, /about/
+   and /contact/ written by ar-mirror.js like every other Arabic page. Their
+   reviewed phrasing lives on as the terminology source of the mirror's
+   dictionaries; ar-content.js is kept for reference and nothing builds from it.
 
-   Held out of the index with noindex until Faheem has read the Arabic — the
-   brief's shipping gate is explicit about Arabic after the Arabic-card
-   incident, and a machine-checked page is not a read page. Flip AR_NOINDEX to
-   false to publish; hreflang is already wired both ways and starts working the
-   moment the noindex comes off.
-
-   The English pages point at their Arabic counterpart via altHref, so the
-   pairing is declared from both sides as Google requires. */
-const AR = require('./ar-content');
-/* LIVE 21 Sep 2026 after five independent Arabic reviews and the fixes recorded
-   in ar-content.js. Set back to true to pull /ar/ out of the index. */
+   AR_NOINDEX still gates the English-side hreflang pairs below. */
 const AR_NOINDEX = false;
-
-function arPage({ slug, title, desc, h1, bodyHtml, enHref, jsonld }) {
-  const canonical = `${SITE}/ar/${slug}`.replace(/\/$/, '') + '/';
-  write(`ar/${slug}${slug ? '/' : ''}index.html`.replace('//', '/'), shell({
-    lang: 'ar',
-    noindex: AR_NOINDEX,
-    altHref: enHref,
-    title, desc, canonical,
-    jsonld: jsonld || { '@context': 'https://schema.org', '@type': 'WebPage', name: title, inLanguage: 'ar', url: canonical },
-    bodyHtml,
-    activeNav: 'none'
-  }));
-}
-
-(function buildArabic() {
-  const H = AR.home, A = AR.about, C = AR.contact, U = AR.ui;
-
-  /* ---- home ---- */
-  const placeCards = AR.places.map(pl =>
-    `<article class="ar-place"><h3>${esc(pl.name)}</h3><p class="ar-emirate">${esc(pl.emirate)}</p><p>${esc(pl.text)}</p></article>`
-  ).join('');
-
-  arPage({
-    slug: '', enHref: `${SITE}/`,
-    title: H.title, desc: H.desc,
-    bodyHtml: `
-<main class="ar-main">
-  <section class="ar-hero">
-    <figure class="ar-hero-img"><img src="/shirts/hero-places-b.webp" alt="" width="1200" height="1800" fetchpriority="high" decoding="async"></figure>
-    <p class="ar-eyebrow">${esc(H.editionEyebrow)}</p>
-    <h1>${esc(H.h1)}</h1>
-    <p class="ar-lede">${esc(H.lede)}</p>
-    <p class="ar-cta"><a class="ar-btn" href="/ar/shop/">${esc(H.ctaShop)}</a></p>
-    <p class="ar-fine">${esc(U.deliveryLine)}</p>
-  </section>
-  <section class="ar-sec">
-    <h2>${esc(H.placesTitle)}</h2>
-    <p class="ar-lede">${esc(H.placesText)}</p>
-    <div class="ar-places">${placeCards}</div>
-  </section>
-  <section class="ar-sec ar-edition">
-    <p class="ar-eyebrow">${esc(H.editionEyebrow)}</p>
-    <h2>${esc(H.editionTitle)}</h2>
-    <p>${esc(H.editionText)}</p>
-    <p class="ar-fine">${esc(U.gsmTee)} &middot; ${esc(U.gsmPolo)} &middot; ${esc(U.labelPrinted)}</p>
-  </section>
-</main>`
-  });
-
-  /* ---- about ---- */
-  arPage({
-    slug: 'about', enHref: `${SITE}/about/`,
-    title: A.title, desc: A.desc,
-    bodyHtml: `
-<main class="ar-main">
-  <section class="ar-sec">
-    <h1>${esc(A.h1)}</h1>
-    ${A.body.map(t => `<p>${esc(t)}</p>`).join('\n    ')}
-    <p class="ar-fine">${esc(U.gsmTee)} &middot; ${esc(U.labelPrinted)}</p>
-  </section>
-</main>`
-  });
-
-  /* ---- contact ---- */
-  arPage({
-    slug: 'contact', enHref: `${SITE}/contact/`,
-    title: C.title, desc: C.desc,
-    bodyHtml: `
-<main class="ar-main">
-  <section class="ar-sec">
-    <h1>${esc(C.h1)}</h1>
-    <p class="ar-lede">${esc(C.lede)}</p>
-    <p><strong>${esc(C.emailLabel)}:</strong> <a href="mailto:hello@sahraandbeyond.ae" dir="ltr">hello@sahraandbeyond.ae</a></p>
-    <p class="ar-fine">${esc(U.deliveryLine)}<br>${esc(U.exchangeLine)}</p>
-  </section>
-</main>`
-  });
-
-  console.log('  ✓ Arabic core: /ar/, /ar/about/, /ar/contact/' + (AR_NOINDEX ? '  (noindex — awaiting review)' : ''));
-})();
 
 /* ==========================================================================
    Arabic product pages and shop — /ar/products/<id>/, /ar/shop/  (23 Sep 2026)
@@ -4224,6 +4139,12 @@ const AR_PDP_NOINDEX = true;
   if (!fs.existsSync(ARDIR)) return;
   const S = JSON.parse(fs.readFileSync(path.join(ARDIR, '_strings.json'), 'utf8'));
   const tpl = (t, o) => String(t).replace(/\{(\w+)\}/g, (m, k) => (o[k] != null ? o[k] : m));
+  /* 31 Oct 2026: the Arabic mirror (ar-mirror.js, runs later) writes /ar/<page> for every indexable English
+     page and so replaced every page this builder wrote; writing them here first only for the mirror to
+     overwrite them was wasted work and two sources for one URL. This builder now writes only the pages
+     the mirror does not (an English product page that is noindex or missing). */
+  const MIRRORED = new Set(require('./ar-mirror.js').englishPages().map(x => x.url));
+  let mirrored = 0;
   const T = PRODUCTS_ALL.map(p => {
     const f = path.join(ARDIR, p.id + '.json');
     return fs.existsSync(f) ? { p, a: JSON.parse(fs.readFileSync(f, 'utf8')) } : null;
@@ -4341,6 +4262,7 @@ const AR_PDP_NOINDEX = true;
 })();
 </script>`;
     const canonical = `${SITE}/ar/products/${p.id}/`;
+    if (MIRRORED.has(`/products/${p.id}/`)) { mirrored++; return; }
     write(`ar/products/${p.id}/index.html`, shell({
       lang: 'ar', noindex: AR_PDP_NOINDEX, altHref: `${SITE}/products/${p.id}/`,
       title: a.seoTitle || a.name, desc: a.seoDesc || a.lede, canonical,
@@ -4355,7 +4277,7 @@ const AR_PDP_NOINDEX = true;
     const img = (buildProducts.galShots(p)[0] || [])[0] || p.imgMain;
     return `<a class="arp-tile" href="/ar/products/${p.id}/"><span class="arp-tile-img"><img src="${esc(img)}" alt="${esc(a.altMain || a.name)}" loading="lazy" decoding="async"></span><span class="arp-tile-t">${esc(a.name)}</span><span class="arp-tile-p">${priceHtml(p)}</span>${p.garment !== 'polo' ? `<span class="arp-tile-b">${esc(S.bundle)}</span>` : ''}</a>`;
   }).join('');
-  write('ar/shop/index.html', shell({
+  if (MIRRORED.has('/shop/')) mirrored++; else write('ar/shop/index.html', shell({
     lang: 'ar', noindex: AR_PDP_NOINDEX, altHref: `${SITE}/shop/`,
     title: 'المتجر | صحراء وما بعدها', desc: S.fabricTee, canonical: `${SITE}/ar/shop/`,
     jsonld: { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'المتجر', inLanguage: 'ar', url: `${SITE}/ar/shop/` },
@@ -4368,7 +4290,7 @@ const AR_PDP_NOINDEX = true;
   <p class="arp-en"><a href="/shop/" hreflang="en" lang="en">English &larr;</a></p>
 </main>`, activeNav: 'shop'
   }));
-  console.log(`  ✓ Arabic product pages: ${T.length} + /ar/shop/` + (AR_PDP_NOINDEX ? '  (noindex — awaiting native review)' : ''));
+  console.log(`  ✓ Arabic product pages: ${T.length} + /ar/shop/; ${mirrored} left to the Arabic mirror` + (AR_PDP_NOINDEX ? '  (any written here are noindex — awaiting native review)' : ''));
 })();
 
 /* ==========================================================================

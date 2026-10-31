@@ -165,3 +165,37 @@ html[dir="rtl"] .lg-tabs:not(#sb-ar-a){-webkit-mask-image:linear-gradient(270deg
 /* S1 (shop): the shop hero pins its copy text-align:left!important at (0,4,2)/(0,4,3) */
 html[dir="rtl"] .shophero .hero-c:not(#sb-ar-a),html[dir="rtl"] .shophero .hero-c:not(#sb-ar-a) h1,
 html[dir="rtl"] .shophero .hero-c:not(#sb-ar-a) p,html[dir="rtl"] .shophero .hero-c:not(#sb-ar-a) .eyebrow{text-align:right!important}
+
+/* ---- Homepage mirrored to /ar/ (31 Oct 2026) ----
+   The hero slideshow runs right-to-left (its dots fill from the right and its swipe already reads the
+   page direction), so "next" sits on the left and "previous" on the right, chevrons pointing outwards.
+   The design ring (#s-ring) turns the other way on the Arabic copy (SCRIPT_PATCHES['/'] in ar-mirror.js);
+   its arrows swap sides like the shop ring's. Their ‹ › glyphs are bidi-mirrored, so they need no flip. */
+html[dir="rtl"] #s-hero.hx .hx-prev:not(#sb-ar-a){left:auto;right:18px}
+html[dir="rtl"] #s-hero.hx .hx-next:not(#sb-ar-a){right:auto;left:18px}
+html[dir="rtl"] #s-hero.hx .hx-arr:not(#sb-ar-a) svg{transform:scaleX(-1)}
+@media(max-width:699px){
+  html[dir="rtl"] #s-hero.hx .hx-prev:not(#sb-ar-a){right:10px}
+  html[dir="rtl"] #s-hero.hx .hx-next:not(#sb-ar-a){left:10px}
+}
+html[dir="rtl"] .hring-arrow.prev:not(#sb-ar-a){left:auto;right:8px}
+html[dir="rtl"] .hring-arrow.next:not(#sb-ar-a){right:auto;left:8px}
+@media(min-width:761px){
+  html[dir="rtl"] #s-ring .hring-arrow.prev:not(#sb-ar-a){right:14px}
+  html[dir="rtl"] #s-ring .hring-arrow.next:not(#sb-ar-a){left:14px}
+}
+/* Western digits in a heading face without Arabic (a Latin display serif on some sections) default to
+   old-style figures, so "2 في 1" read as "2 في I"; lining figures throughout */
+html[dir="rtl"] :is(h1,h2,h3,h4):not(#sb-ar-a){font-variant-numeric:lining-nums}
+/* Labels the English pages set in Space Mono (eyebrows, card tags, "View the tee" links, mock-up badges,
+   review meta). Space Mono has no Arabic, so the Arabic fell back to a monospaced face and read as
+   loose, disconnected letters (seen on the mirrored homepage, 31 Oct 2026). Arabic pages use the sans. */
+html[dir="rtl"] :is(.design-card .go,#s-hero.hx .hx-place,#s-hero.hx .hx-mk,.hring-card .hring-mk,.ig-eyebrow,.ig-follow,
+  .ig-mock,.ig-kind,.ig-ago,.ig-foot-line,.cut-b,.lh-k,.foot-guides b,.eyebrow,.card-tag,.card-place,.qa-l,.qa-w,.qa-b,
+  .fit-b,.ring-cue,.lb-k,.lb-c i,.hc-k,.hc-f i,.nb-k,.nb-f i,.pm-card .pm-k,.pm-chips a span,.minitee-eye,.pcard-bundle,
+  .rv-score,.rv-meta,.rv-chip,.rv-sort,.rv-sort select,.rv-more,.rv-about,.rv-src,.rv-showall,.sb-curhint,.sb-curpick,
+  .wl-msg,.hero-ship,.foot-tag,.pdp-quotes span,.ab-fact b,.ab-eyebrow,.ab-place-meta,.ab-place-go,.ct-lab,.folds-eyebrow,
+  .news-eyebrow,.teecta-eyebrow,.teecta-meta,.pcard-place,.pcard-col,.pcard-cta,.pcard-rv-n,.shopcta-eyebrow,.jkick,.jmeta,.jbyline,.gsm-key):not(#sb-ar-a){font-family:var(--sans)!important}
+
+/* 31 Oct 2026 (Emirati review): keep the review score "5.0 / 5" in reading order on Arabic pages */
+[dir="rtl"] .rv-score{direction:ltr;unicode-bidi:isolate}

@@ -5,8 +5,8 @@
    agent review them and make them live immediately."
 
    HOW IT WORKS
-   Every indexable English page (except the three hand-transcreated pages /ar/,
-   /ar/about/, /ar/contact/) is mirrored to /ar/<same path>. The page is cut
+   Every indexable English page, the homepage, About and Contact included (31 Oct
+   2026, see HAND below), is mirrored to /ar/<same path>. The page is cut
    into translation units: runs of text and inline markup between block-level
    tags. Each unit's tags are swapped for numbered placeholders (⟦1⟧, ⟦2⟧ ...)
    so translators never touch markup, and the unit is looked up in the
@@ -37,8 +37,12 @@ const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 const DICT_DIR = path.join(ROOT, 'content', 'ar-mirror');
 
-/* pages that have their own hand-transcreated Arabic (reviewed five times, live since 21 Sep) */
-const HAND = { '/': '/ar/', '/about/': '/ar/about/', '/contact/': '/ar/contact/' };
+/* English pages whose Arabic is NOT mirrored but hand-written elsewhere (English URL -> Arabic URL).
+   Empty since 31 Oct 2026 (Faheem, hard rule: "every site update must reach the Arabic pages in the
+   same push"): /ar/, /ar/about/ and /ar/contact/ were hand-transcreated (ar-content.js, 21 Sep) and
+   did not follow the English pages, so they are now mirrors of /, /about/ and /contact/ like every
+   other page. ar-content.js stays as the reviewed terminology source; nothing builds from it. */
+const HAND = {};
 const SKIP_DIRS = /^(node_modules|\.git|_backup|_drafts|admin|docs|ar|h|q|classic|api|netlify|tools|uploads|public|content|assets|shirts|fabric-img|logo|video|journey)$/;
 const SKIP_FILES = /^(coming-soon|commitment|homepage-preview|shop-preview)\.html$/;
 
@@ -68,7 +72,6 @@ function englishPages() {
       if (rel === '' && SKIP_FILES.test(e.name)) return;
       const url = '/' + rel + (e.name === 'index.html' ? '' : e.name);
       if (HAND[url]) return;
-      if (rel === '' && e.name === 'index.html') return;
       const src = fs.readFileSync(path.join(dir, e.name), 'utf8');
       if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(src)) return;
       if (/http-equiv="refresh"/i.test(src)) return;
@@ -285,6 +288,16 @@ function ldArabic(body, page, dict, has) {
    in a right-to-left page each already points outwards from the side it now sits on. The product
    slideshow on the cards cross-fades, so only its buttons swap sides. */
 const SCRIPT_PATCHES = {
+  /* the homepage's design ring (#s-ring, 31 Oct 2026, when / joined the mirror): same mirroring as the
+     shop ring, for both its flat (phone) and 3D layouts; sahra-rtl.css swaps the arrows */
+  '/': [
+    ['gsap.set(cards[k],{x:off*PITCH,', 'gsap.set(cards[k],{x:-off*PITCH,'],
+    ['rotateY:Math.max(-2,Math.min(2,off))*14', 'rotateY:-Math.max(-2,Math.min(2,off))*14'],
+    ['x:Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:Math.sin(a)*20', 'x:-Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:-Math.sin(a)*20'],
+    ["if(e.key==='ArrowLeft'){e.preventDefault();step(1,'key');} else if(e.key==='ArrowRight'){e.preventDefault();step(-1,'key');}", "if(e.key==='ArrowRight'){e.preventDefault();step(1,'key');} else if(e.key==='ArrowLeft'){e.preventDefault();step(-1,'key');}"],
+    ['S.a=drag.a+dx/stepPx*stepA;', 'S.a=drag.a-dx/stepPx*stepA;'],
+    ['fling=Math.abs(vel)>0.35?vel*260/stepPx*stepA:0', 'fling=Math.abs(vel)>0.35?-vel*260/stepPx*stepA:0']
+  ],
   '/shop/': [
     ['x:Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:Math.sin(a)*22', 'x:-Math.sin(a)*R,z:Math.cos(a)*R-R,rotateY:-Math.sin(a)*22'],
     ["if(e.key==='ArrowLeft'){e.preventDefault();step(1,'key');} else if(e.key==='ArrowRight'){e.preventDefault();step(-1,'key');}", "if(e.key==='ArrowRight'){e.preventDefault();step(1,'key');} else if(e.key==='ArrowLeft'){e.preventDefault();step(-1,'key');}"],
@@ -411,8 +424,7 @@ function build({ quiet } = {}) {
     if (addHreflangToEnglish(p.file, p)) h++;
   });
   const sm = addToSitemap(pages.map(p => arUrl(p.url)));
-  /* the hand-transcreated pages (/ar/, /ar/about/, /ar/contact/) keep their copy, but their links now
-     have Arabic pages to go to */
+  /* hand-written Arabic pages (none since 31 Oct 2026) keep their copy, but their links follow the mirror */
   Object.values(HAND).forEach(u => {
     const f = path.join(ROOT, u.replace(/^\//, ''), 'index.html');
     if (!fs.existsSync(f)) return;
@@ -426,7 +438,7 @@ function build({ quiet } = {}) {
   const links = {};
   [...set].sort().forEach(u => { links[u] = arUrl(u); });
   const uiN = writeUiRuntime(links);
-  /* every Arabic page, the hand-transcreated ones included, gets the runtime layer */
+  /* every Arabic page (mirrored or built by build.js) gets the runtime layer */
   let tagged = 0;
   (function walk(d) { fs.readdirSync(d, { withFileTypes: true }).forEach(e => { const f = path.join(d, e.name); if (e.isDirectory()) walk(f); else if (/\.html$/.test(e.name) && addUiTag(f)) tagged++; }); })(path.join(ROOT, 'ar'));
   if (!quiet) console.log(`  ✓ Arabic mirror: ${n} page(s), ${Object.keys(dict).length} dictionary entries; untranslated: ${missU.size} unit(s), ${missA.size} attribute(s)${bad.size ? `, ${bad.size} rejected (placeholder mismatch)` : ''}; hreflang added to ${h} English page(s); ${sm} sitemap url(s) added; UI layer ${uiN} string(s) on ${tagged} page(s)`);
@@ -444,7 +456,20 @@ function extract() {
   console.log(`pages ${englishPages().length}; unique strings ${keys.size}; pending ${pending.length} (${words} words) -> content/ar-mirror/_pending.json`);
 }
 
-module.exports = { build, extract, englishPages, arUrl };
+/* 31 Oct 2026 (Faheem, hard rule for every push: "Ensure all updates are simultaneously made to Arabic
+   pages as well"). Read-only parity check for prepush.js: every mirrored English page has its Arabic page,
+   and no English string is missing from the dictionaries (Vercel rebuilds /ar/ from them on deploy). */
+function parity() {
+  const dict = loadDict();
+  const keys = new Set();
+  const pages = englishPages();
+  const missingPages = pages.filter(p => !fs.existsSync(path.join(ROOT, 'ar', p.rel))).map(p => p.url);
+  pages.forEach(p => extractPage(fs.readFileSync(p.file, 'utf8'), k => keys.add(k)));
+  const pending = [...keys].filter(k => dict[k] == null || !validPlaceholders(k, dict[k]));
+  return { pages: pages.length, missingPages, pending };
+}
+
+module.exports = { build, extract, englishPages, arUrl, parity };
 if (require.main === module) {
   if (process.argv[2] === 'extract') extract();
   else if (process.argv[2] === 'list') englishPages().forEach(p => console.log(p.url));
