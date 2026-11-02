@@ -107,7 +107,12 @@ const mock = (k, alt) => ({ k, alt, mock: true });
    Back first, then front, then details. Real photos carry no Mock-up label (cap '' = no caption); the Sahel Polo stays a labelled mock-up until it is
    photographed (the Khor Fakkan Bay front arrived on the evening of 27 Oct). Hoodie location photos are 2:3 and are always
    shown whole (object-fit: contain), so the flamingo and dune prints are never cropped. */
-const PHOTOS = (function () { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'content', 'sahel-photos.json'), 'utf8')).pieces || {}; } catch (e) { return {}; } })();
+const PHOTOS_JSON = (function () { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'content', 'sahel-photos.json'), 'utf8')); } catch (e) { return {}; } })();
+const PHOTOS = PHOTOS_JSON.pieces || {};
+/* 2 Nov 2026 (Faheem approved every photo and its order): the model photos of the 1 Nov shoot, per product PAGE (site
+   handle), with the size the model wears. They are not part of p.images, so the cards, place pins and share images keep
+   the flat-lay; the product page shows them after its first photo (specimen.js onModel). Paused fits have none. */
+const ON_MODEL = PHOTOS_JSON.onModel || {};
 const photoList = key => (PHOTOS[key] || []).map(x => Object.assign({}, x, x.mock ? {} : { cap: '' }));
 /* one <img> for any pre-order image: its own width and height, the large file's real width in srcset, and contain for 2:3 */
 const isTall = im => (im.h || 900) / (im.w || 720) > 1.4;
@@ -199,9 +204,11 @@ function products() {
       const fl = FITS[p.fits].map(([f, F]) => ({ fit: F, handle: f ? `${p.key}-${f}` : p.key }));
       fl.forEach(x => { x.onSale = !SP.PAUSED[x.handle]; });
       fl.forEach(({ fit: F, handle }) => out.push({ line: 'sahel', handle, title: `${p.name} &mdash; ${F}`, plain: `${plain} — ${F}`, name: p.name, fit: F, fitsList: fl,
-        colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md }));
+        colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
+        onModel: !SP.PAUSED[handle] && ON_MODEL[handle] && ON_MODEL[handle].photos ? ON_MODEL[handle] : null }));
     }
-    else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md });
+    else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
+      onModel: ON_MODEL[p.key] && ON_MODEL[p.key].photos ? ON_MODEL[p.key] : null });
   });
   TRAIL.forEach(p => out.push({ line: 'trail', handle: p.handle, title: p.name, plain: p.name, name: p.name, price: p.price, story: p.lede, details: p.details, images: p.images, kit: !!p.kit, key: p.handle, seo: p.seo, kind: p.kind, md: p.md, inHand: !!p.inHand, oneSize: !!p.oneSize, noTote: !!p.noTote }));
   return out;

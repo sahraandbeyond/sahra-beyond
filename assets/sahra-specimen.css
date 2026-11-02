@@ -259,3 +259,29 @@ html body .ss-stage .ss-tabs{width:auto;max-width:none}
 .ssb-paused a{color:inherit;text-decoration:underline;text-underline-offset:2px;font-weight:600}
 .ssb[data-paused] [data-size],.ssb[data-paused] .ssb-add{opacity:.55;cursor:not-allowed}
 .ssb[data-paused] .ssb-tb,.ssb[data-paused] .ssb-dl{display:none}
+/* ==== On the model (2 Nov 2026): the Sahel model photos after the stage (specimen.js onModel) ====
+   Phones: after the name and price (order 5, before the annotated artwork), a row that scrolls sideways, one and a half
+   photos wide, bleeding to the screen edges. Desktop: under the photo in the left column, with arrow buttons. */
+.ss-om{order:5;min-width:0}
+.ss-om-hd{display:flex;align-items:baseline;gap:4px 12px;flex-wrap:wrap;margin:0 2px 8px}
+html body .ss .ss-om-h{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:26px;line-height:1.1;margin:0;color:var(--ss-ink)}
+.ss-om-sz{margin:0;font-size:14.5px;line-height:1.4;color:var(--ss-ink2)}
+.ss-om-sz bdi{font-weight:600;color:var(--ss-ink)}
+html body .ss p.ss-om-sz{font-size:14.5px!important;line-height:1.4!important}
+.ss-om-nav{display:none;margin-inline-start:auto;gap:6px}
+.ss-om-b{width:40px;height:40px;border-radius:50%;border:1px solid var(--ss-line);background:var(--ss-paper);color:var(--ss-ink);font:400 24px/1 Jost,system-ui,sans-serif;cursor:pointer;display:grid;place-items:center;padding:0 0 3px;transition:background .2s,opacity .2s}
+.ss-om-b:hover{background:var(--ss-sand)}
+.ss-om-b:disabled{opacity:.35;cursor:default}
+.ss-om-b:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:2px}
+.ss-om-row{list-style:none;display:flex;gap:8px;margin:0 -16px;padding:0 16px 4px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.ss-om-row::-webkit-scrollbar{display:none}
+.ss-om-row li{flex:0 0 62%;margin:0;padding:0;scroll-snap-align:start}
+.ss-om-f{display:block;width:100%;padding:0;border:0;border-radius:14px;overflow:hidden;background:#E9E1D3;aspect-ratio:4/5;cursor:zoom-in;position:relative}
+html body .ss .ss-om-img{display:block;width:100%;height:100%;max-width:none;object-fit:cover}
+.ss-om-f:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:2px}
+@media(min-width:900px){
+  .ss-media>.ss-om{max-width:620px;width:100%;align-self:center}
+  .ss-om-row{margin:0;padding:0 0 4px;scroll-padding:0}
+  .ss-om-row li{flex-basis:calc((100% - 16px) / 2.5)}
+}
+@media(min-width:900px) and (hover:hover){.ss-om-nav{display:flex}}

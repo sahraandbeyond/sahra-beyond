@@ -190,8 +190,16 @@ function fromPreorder(p) {
     place: p.place ? [p.place[0], null, `/locations/${p.place[1]}/`] : null,
     face: D.face, views, notes: (NOTES[p.key] || []).map(n => ({ x: n[0], y: n[1], t: n[2] })), spec,
     pair: false, gift: !p.noTote, chart: p.line === 'sahel' && !/polo/i.test(p.kind || '') ? '#size-chart' : null,
-    chartNote: null, model: '', kit: !!p.kit, oneSize: !!p.oneSize
+    chartNote: null, model: '', kit: !!p.kit, oneSize: !!p.oneSize,
+    onModel: onModelSet(p)
   };
+}
+/* 2 Nov 2026 (Faheem approved every photo and its order): the five model photos of a Sahel page (content/sahel-photos.json
+   onModel, per handle), with the size the model wears. The alt says what the photo shows, never where it was taken. */
+function onModelSet(p) {
+  const M = p.onModel; if (!M || !M.photos || !M.photos.length) return null;
+  const nm = String(p.name).replace(/&amp;/g, '&'), fit = p.fit && !HOODIES.has(p.key) ? ` in ${p.fit}` : '';
+  return { size: M.size || '', photos: M.photos.map(x => Object.assign(pre(x.k), { alt: `Model wearing the ${nm}${fit}, ${x.view}` })) };
 }
 
 /* ---- markup ---------------------------------------------------------------- */
@@ -225,6 +233,19 @@ function stage(s, altBase) {
       <span class="ss-cap"${first.cap ? '' : ' hidden'}>${esc(first.cap)}</span>
       ${notes ? `<p class="ss-note" id="ssNote" aria-live="polite" hidden></p>` : ''}
     </div>`;
+}
+/* 2 Nov 2026: "On the model", right after the stage (on phones after the name and price, so they stay on the first screen).
+   The stage keeps its first photo and its tabs; the model photos sit in their own row, in Faheem's order, each opening the
+   zoom viewer. Every photo carries data-src and is fetched only after the page has loaded and the row is near the screen
+   (assets/sahra-specimen.js), so it never competes with the first photo (LCP). The size worn is in Latin, isolated for Arabic. */
+function onModel(s) {
+  const M = s.onModel; if (!M) return '';
+  const sizes = '(max-width: 899px) calc(62vw - 20px), 250px';   /* 62% of the row inside its 16px gutters: a 3x phone takes the 720 file */
+  const figs = M.photos.map((v, i) => `<li><button type="button" class="ss-om-f" data-i="${i}" data-full="${v.full}"><img class="ss-om-img" data-src="${v.src}" data-srcset="${v.srcset}" data-sizes="${sizes}" width="${v.w}" height="${v.h}" alt="${esc(v.alt)}" loading="lazy" decoding="async"></button></li>`).join('');
+  return `<section class="ss-om" id="on-model" aria-labelledby="ssOmH" data-om>
+      <div class="ss-om-hd"><h2 class="ss-om-h" id="ssOmH">On the model</h2>${M.size ? `<p class="ss-om-sz">Model wears <bdi>${esc(M.size)}</bdi></p>` : ''}<span class="ss-om-nav"><button type="button" class="ss-om-b" data-d="-1" aria-label="Previous photo">&lsaquo;</button><button type="button" class="ss-om-b" data-d="1" aria-label="Next photo">&rsaquo;</button></span></div>
+      <ul class="ss-om-row">${figs}</ul>
+    </section>`;
 }
 function artBlock(s) {
   const hasArt = s.notes.length && s.views.some(v => v.k === 'art');
@@ -283,6 +304,7 @@ function top(s, o = {}) {
   <div class="ss-media">
     ${o.crumb || ''}
     ${stage(s, altBase)}
+    ${onModel(s)}
     ${artBlock(s)}
   </div>
   <div class="ss-info">

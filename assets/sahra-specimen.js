@@ -123,6 +123,55 @@
     tr('image_zoom', { item_id: handle });
   }
 
+  /* ---------------- On the model (2 Nov 2026) ----------------
+     The model photos load only after the page has loaded and once their row is near the screen (or at the first touch,
+     focus or arrow), so the stage's first photo keeps the bandwidth. A tap opens them in the zoom viewer. */
+  var om = document.querySelector('[data-om]');
+  if (om) (function () {
+    var row = om.querySelector('.ss-om-row'), cells = [].slice.call(om.querySelectorAll('.ss-om-f')), bs = [].slice.call(om.querySelectorAll('.ss-om-b'));
+    var done = false, armed = false;
+    function fill() {
+      if (done) return; done = true;
+      [].forEach.call(om.querySelectorAll('img[data-src]'), function (im) {
+        im.setAttribute('sizes', im.getAttribute('data-sizes') || '100vw'); im.setAttribute('srcset', im.getAttribute('data-srcset')); im.setAttribute('src', im.getAttribute('data-src'));
+        im.removeAttribute('data-src'); im.removeAttribute('data-srcset'); im.removeAttribute('data-sizes');
+      });
+    }
+    function arm() {
+      if (armed) return; armed = true;
+      if (!('IntersectionObserver' in window)) { fill(); return; }
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); fill(); } }, { rootMargin: '300px 0px' });
+      io.observe(om);
+    }
+    if (document.readyState === 'complete') setTimeout(arm, 300); else addEventListener('load', function () { setTimeout(arm, 300); });
+    setTimeout(arm, 8000);   /* a slow third-party request can hold the load event */
+    ['touchstart', 'focusin', 'mouseenter'].forEach(function (k) { om.addEventListener(k, fill, { passive: true, once: true }); });
+    cells.forEach(function (c, i) {
+      c.addEventListener('click', function () {
+        fill();
+        if (!window.SahraZoom) return;
+        var list = cells.map(function (x) { var im = x.querySelector('img'); return { src: x.getAttribute('data-full'), alt: (im && im.alt) || '' }; });
+        try { window.SahraZoom.open(list, i); } catch (e) { return; }
+        tr('image_zoom', { item_id: handle, from: 'on_model', index: i });
+      });
+    });
+    /* desktop arrows: one photo at a time; in Arabic the row runs right to left */
+    function rtl() { return getComputedStyle(row).direction === 'rtl'; }
+    function ends() {
+      var max = row.scrollWidth - row.clientWidth, x = Math.abs(row.scrollLeft);
+      if (bs[0]) bs[0].disabled = x <= 2; if (bs[1]) bs[1].disabled = x >= max - 2;
+    }
+    bs.forEach(function (b) {
+      b.addEventListener('click', function () {
+        fill();
+        var li = row.querySelector('li'), step = li ? li.getBoundingClientRect().width + 8 : row.clientWidth * .8;
+        row.scrollBy({ left: +b.getAttribute('data-d') * step * (rtl() ? -1 : 1), behavior: reduced ? 'auto' : 'smooth' });
+      });
+    });
+    row.addEventListener('scroll', function () { if (!raf2) raf2 = requestAnimationFrame(function () { raf2 = 0; ends(); }); }, { passive: true });
+    var raf2 = 0; ends(); addEventListener('resize', ends, { passive: true });
+  })();
+
   /* ---------------- the buy sheet ---------------- */
   if (!buy) return;
   var kit = buy.getAttribute('data-kit') === '1', one = buy.getAttribute('data-one') === '1';

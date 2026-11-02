@@ -402,5 +402,258 @@
     "lh": 1500
    }
   ]
+ },
+ "onModel": {
+  "_note": "2 Nov 2026 (Faheem approved every photo and its order on 2 Nov): the Sahel model photos from the 1 Nov shoot (one model, on the coast; natural edits only, no AI), per product PAGE (site handle), shown after the stage's first photo in this order. Source: Product Photos/Sahel photos/2026-11-01/SITE-model-photos/<folder>/ (the folders khor-fakkan-bay-tee, al-hamra-pearl-diver-tee, al-aqah-reef-tee and shams-tee are the -regular pages). The oversized tees photographed are the current stock, so they go on the -super-oversized pages; the paused -oversized pages get none. size: the size the model wears (no height, Faheem 1 Nov). view: what the photo shows, used in the alt text; never a place (the shoot was not at Khor Fakkan, Al Aqah, Al Hamra or Ras Al Khor). Files: assets/preorder/<k>-480/720/1200.webp, 4:5, metadata stripped. Ras Al Khor photo 1 is DSC07446.",
+  "khor-fakkan-bay-tee-regular": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-khor-fakkan-bay-tee-regular-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-regular-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-regular-03-side",
+     "view": "side view"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-regular-04-back-three-quarter",
+     "view": "back three-quarter view"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-regular-05-portrait-chest-mark",
+     "view": "portrait showing the chest mark"
+    }
+   ]
+  },
+  "khor-fakkan-bay-tee-super-oversized": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-03-back-three-quarter",
+     "view": "back three-quarter view"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-04-movement",
+     "view": "in movement"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-05-portrait-chest-mark",
+     "view": "portrait showing the chest mark"
+    }
+   ]
+  },
+  "al-hamra-pearl-diver-tee-regular": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-regular-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-regular-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-regular-03-back-three-quarter",
+     "view": "back three-quarter view"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-regular-04-arms-out-back",
+     "view": "back view with arms out"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-regular-05-portrait-chest-mark",
+     "view": "portrait showing the chest mark"
+    }
+   ]
+  },
+  "al-hamra-pearl-diver-tee-super-oversized": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-super-oversized-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-super-oversized-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-super-oversized-03-back-three-quarter",
+     "view": "back three-quarter view"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-super-oversized-04-movement",
+     "view": "in movement"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-super-oversized-05-portrait-chest-mark",
+     "view": "portrait showing the chest mark"
+    }
+   ]
+  },
+  "al-aqah-reef-tee-regular": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-al-aqah-reef-tee-regular-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-regular-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-regular-03-front-three-quarter",
+     "view": "front three-quarter view"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-regular-04-back-three-quarter",
+     "view": "back three-quarter view"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-regular-05-close-chest-mark",
+     "view": "close-up of the chest mark"
+    }
+   ]
+  },
+  "al-aqah-reef-tee-super-oversized": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-al-aqah-reef-tee-super-oversized-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-super-oversized-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-super-oversized-03-back-three-quarter",
+     "view": "back three-quarter view"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-super-oversized-04-movement",
+     "view": "in movement"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-super-oversized-05-portrait-chest-mark",
+     "view": "portrait showing the chest mark"
+    }
+   ]
+  },
+  "shams-tee-regular": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-shams-tee-regular-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-shams-tee-regular-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-shams-tee-regular-03-portrait",
+     "view": "portrait"
+    },
+    {
+     "k": "pm-shams-tee-regular-04-mark-close-up",
+     "view": "close-up of the chest mark"
+    },
+    {
+     "k": "pm-shams-tee-regular-05-sunset",
+     "view": "front view at sunset"
+    }
+   ]
+  },
+  "shams-tee-super-oversized": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-shams-tee-super-oversized-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-shams-tee-super-oversized-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-shams-tee-super-oversized-03-three-quarter",
+     "view": "three-quarter view"
+    },
+    {
+     "k": "pm-shams-tee-super-oversized-04-portrait-mark",
+     "view": "portrait showing the chest mark"
+    },
+    {
+     "k": "pm-shams-tee-super-oversized-05-close-mark",
+     "view": "close view showing the chest mark"
+    }
+   ]
+  },
+  "barr-and-bahr-hoodie": {
+   "size": "S",
+   "photos": [
+    {
+     "k": "pm-barr-and-bahr-hoodie-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-barr-and-bahr-hoodie-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-barr-and-bahr-hoodie-03-back-closer",
+     "view": "closer view of the back"
+    },
+    {
+     "k": "pm-barr-and-bahr-hoodie-04-portrait",
+     "view": "portrait"
+    },
+    {
+     "k": "pm-barr-and-bahr-hoodie-05-three-quarter-cuff",
+     "view": "three-quarter view showing the cuff"
+    }
+   ]
+  },
+  "ras-al-khor-hoodie": {
+   "size": "M",
+   "photos": [
+    {
+     "k": "pm-ras-al-khor-hoodie-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-ras-al-khor-hoodie-02-back",
+     "view": "back view"
+    },
+    {
+     "k": "pm-ras-al-khor-hoodie-03-relaxed-fit",
+     "view": "showing the relaxed fit"
+    },
+    {
+     "k": "pm-ras-al-khor-hoodie-04-back-art-close-up",
+     "view": "close-up of the back artwork"
+    },
+    {
+     "k": "pm-ras-al-khor-hoodie-05-full-length",
+     "view": "full-length view"
+    }
+   ]
+  }
  }
 }

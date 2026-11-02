@@ -18,6 +18,130 @@
   },
   "posts": [
     {
+      "id": "DfMNECViL2Z",
+      "kind": "carousel",
+      "label": "The Al Hamra Pearl Diver Tee: down the rope to the oyster beds",
+      "topic": "sahel",
+      "places": [
+        "al-jazirah-al-hamra"
+      ],
+      "wear": [
+        "/products/al-hamra-pearl-diver-tee-regular/",
+        "The Al Hamra Pearl Diver Tee"
+      ],
+      "src": "SAHEL-CAROUSELS-FULL-PRICE-31-Oct-2026/Sahel_Al-Hamra-Pearl-Diver-Tee_carousel"
+    },
+    {
+      "id": "DfKGm6OiHXA",
+      "kind": "carousel",
+      "label": "The Khor Fakkan Bay Tee, with the artwork explained",
+      "topic": "sahel",
+      "places": [
+        "khor-fakkan-beach"
+      ],
+      "wear": [
+        "/products/khor-fakkan-bay-tee-regular/",
+        "The Khor Fakkan Bay Tee"
+      ],
+      "src": "SAHEL-CAROUSELS-FULL-PRICE-31-Oct-2026/Sahel_Khor-Fakkan-Bay-Tee_carousel"
+    },
+    {
+      "id": "DfFQCoXiHhX",
+      "kind": "carousel",
+      "label": "The Al Aqah Reef Tee: the island above, the reef below",
+      "topic": "sahel",
+      "places": [
+        "snoopy-island"
+      ],
+      "guides": [
+        "/snorkeling/",
+        "/fujairah-beaches/"
+      ],
+      "wear": [
+        "/products/al-aqah-reef-tee-regular/",
+        "The Al Aqah Reef Tee"
+      ],
+      "src": "SAHEL-PREORDER-27-Oct-2026/3-piece-carousels/03-Al-Aqah-Reef-Tee-MOTION-FULL-PRICE",
+      "srcNote": "Step-through and cover use the full-price build of the same slides; the version posted on 29 Oct carried the pre-order price, which ended 29 Oct."
+    },
+    {
+      "id": "DfFHSN4iC1F",
+      "kind": "carousel",
+      "label": "The Shams Tee: the sun on a dune crest, stitched on the chest",
+      "topic": "sahel",
+      "wear": [
+        "/products/shams-tee-regular/",
+        "The Shams Tee"
+      ],
+      "src": "SAHEL-PREORDER-27-Oct-2026/3-piece-carousels/04-Shams-Tee-MOTION-FULL-PRICE",
+      "srcNote": "Step-through and cover use the full-price build of the same slides; the version posted on 29 Oct carried the pre-order price, which ended 29 Oct."
+    },
+    {
+      "id": "DfEn32qCNZU",
+      "kind": "carousel",
+      "label": "The Barr & Bahr Hoodie: land and sea in one line",
+      "topic": "sahel",
+      "wear": [
+        "/products/barr-and-bahr-hoodie/",
+        "The Barr & Bahr Hoodie"
+      ],
+      "src": "SAHEL-PREORDER-27-Oct-2026/3-piece-carousels/05-Barr-and-Bahr-Hoodie-MOTION-FULL-PRICE",
+      "srcNote": "Step-through and cover use the full-price build of the same slides; the version posted on 29 Oct carried the pre-order price, which ended 29 Oct."
+    },
+    {
+      "id": "DfEZ5CDiEF7",
+      "kind": "carousel",
+      "label": "The Khor Fakkan Bay Tee: where the mountains meet the sea",
+      "topic": "sahel",
+      "places": [
+        "khor-fakkan-beach"
+      ],
+      "wear": [
+        "/products/khor-fakkan-bay-tee-regular/",
+        "The Khor Fakkan Bay Tee"
+      ],
+      "src": "SAHEL-PREORDER-27-Oct-2026/3-piece-carousels/01-Khor-Fakkan-Bay-Tee-MOTION-FULL-PRICE",
+      "srcNote": "Step-through and cover use the full-price build of the same slides; the version posted on 29 Oct carried the pre-order price, which ended 29 Oct."
+    },
+    {
+      "id": "DfCta2-iPhW",
+      "kind": "carousel",
+      "label": "The Ras Al Khor Hoodie: flamingos at the head of the creek",
+      "topic": "sahel",
+      "places": [
+        "ras-al-khor"
+      ],
+      "wear": [
+        "/products/ras-al-khor-hoodie/",
+        "The Ras Al Khor Hoodie"
+      ],
+      "src": "SAHEL-PREORDER-27-Oct-2026/3-piece-carousels/06-Ras-Al-Khor-Hoodie-MOTION",
+      "srcNote": "The posted carousel has 10 slides; the site shows slides 2 to 9 and uses slide 3 as the cover, because slides 1 and 10 carry the pre-order price, which ended 29 Oct, and no full-price build is in the folder."
+    },
+    {
+      "id": "De6Hp7jIob8",
+      "kind": "reel",
+      "label": "For the One Who: the friend counting the days to the east coast",
+      "topic": "sahel",
+      "wear": [
+        "/sahel/",
+        "Sahel"
+      ],
+      "src": "LAUNCH-PREORDER-28-Oct-2026/25-Oct-Sun/FTOW_east-coast_option-C_SILENT.mp4",
+      "srcNote": "The folder file is the silent cut; the posted reel carries an Instagram library track. Cover only."
+    },
+    {
+      "id": "De14O_UIFS7",
+      "kind": "reel",
+      "label": "The Sahel date reel: under the water, then the shore",
+      "topic": "sahel",
+      "wear": [
+        "/sahel/",
+        "Sahel"
+      ],
+      "src": "LAUNCH-PREORDER-28-Oct-2026/23-Oct-Fri/Reel_28-Oct_v2_SILENT.mp4"
+    },
+    {
       "id": "DeuWeEaopUF",
       "kind": "reel",
       "label": "Quiet, from above: one figure on the dunes",
@@ -118,6 +242,25 @@
         "The tees"
       ],
       "src": "WEEKLY-PACKS/15oct-pick-an-emoji-carousel"
+    },
+    {
+      "id": "DegcOanoJB4",
+      "account": "trail",
+      "kind": "reel",
+      "label": "The Hajar at dawn: where the Sahra Trail mark comes from",
+      "topic": "trail",
+      "places": [
+        "hajar-mountains"
+      ],
+      "guides": [
+        "/trail/",
+        "/hiking/"
+      ],
+      "wear": [
+        "/trail/",
+        "Sahra Trail"
+      ],
+      "src": "SAHRA-TRAIL-reels/T6-hajar-at-dawn/SahraTrail_T6_HajarAtDawn_v2_1080x1920.mp4"
     },
     {
       "id": "Dedju1LiFtj",
