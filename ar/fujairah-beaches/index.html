@@ -1,13 +1,73 @@
 <!doctype html>
 <html data-market="uae" data-guide lang="ar" dir="rtl" data-ar-mirror>
-<head><!--sbs:head--><style>html[data-sale="0"] .sbs1,html[data-sale="1"] .sbs0,html:not([data-sale]) .sbs0{display:none!important}
+<head>
+<meta charset="UTF-8"><!--sbs:head--><style>html[data-sale="0"] .sbs1,html[data-sale="1"] .sbs0,html:not([data-sale]) .sbs0{display:none!important}
 html[data-sale="1"] .sbs-was{text-decoration:line-through;text-decoration-thickness:1px;font-weight:400!important}
 sbs-g{display:inline-block;max-width:100%;white-space:normal}
 html[data-sale="1"] sbs-g>.sb-price{display:inline!important;white-space:nowrap}
-sbs-t{display:inline-block;padding:1px 6px;border-radius:3px;background:#7E4114;color:#FAF6EF;font:600 11px/1.5 Jost,system-ui,sans-serif;letter-spacing:.04em;text-transform:none;white-space:nowrap;vertical-align:.1em}</style>
+sbs-t{display:inline-block;padding:1px 6px;border-radius:3px;background:#7E4114;color:#FAF6EF;font:600 11px/1.5 Jost,system-ui,sans-serif;letter-spacing:.04em;text-transform:none;white-space:nowrap;vertical-align:.1em}
+.sbf-off{display:none!important}
+.sbf{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:1180px;margin:18px auto 6px;padding:0 16px;font:500 14px/1.3 Jost,system-ui,sans-serif;color:#2A2016}
+.sbf-l{font:400 11px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;margin-right:4px}
+.sbf-c{min-height:38px;padding:0 15px;border:1px solid rgba(42,32,22,.35);border-radius:999px;background:#FAF6EF;color:#2A2016;font:inherit;cursor:pointer}
+.sbf-c:hover{border-color:#7E4114}
+.sbf-c[aria-pressed="true"]{background:#2A2016;border-color:#2A2016;color:#FAF6EF}
+.sbf-c:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.sbf-n{flex-basis:100%;text-align:center;font-size:13px;color:#5C4E3C;min-height:1em}
+.sbf-shop{margin:0;padding:0;max-width:none;width:100%;font-size:13px;letter-spacing:0;text-transform:none}
+.sbf-shop .sbf-c{min-height:34px;padding:0 13px;background:none;color:inherit;border-color:currentColor}
+.sbf-shop .sbf-c[aria-pressed="true"]{background:#2A2016;color:#FAF6EF;border-color:#2A2016}
+.sbf-shop .sbf-l{color:inherit;opacity:.8}</style>
 <script>(function(){var d=document.documentElement,E=1794772800000;function s(){var o=Date.now()<E;try{var m=/[?&]sbsale=([01])/.exec(location.search||'');if(m)o=m[1]==='1';}catch(e){}if(d.getAttribute('data-sale')!==(o?'1':'0')){d.setAttribute('data-sale',o?'1':'0');try{document.dispatchEvent(new CustomEvent('sb:sale',{detail:{on:o}}));}catch(e){}}}
-s();window.SB_SALE={end:E,on:function(){return d.getAttribute('data-sale')==='1';}};var n=Date.now();if(n<E&&E-n<864e5)setTimeout(s,E-n+300);})();</script><!--/sbs:head-->
-<meta charset="UTF-8">
+s();window.SB_SALE={end:E,on:function(){return d.getAttribute('data-sale')==='1';}};var n=Date.now();if(n<E&&E-n<864e5)setTimeout(s,E-n+300);})();</script><script>(function(){var d=document.documentElement,S=window.SB_SALE;if(!S)return;var P={"sand-polo":[229,68.7,70],"al-quaa-galaxy-regular":[199,99.5,50],"al-quaa-galaxy-oversized":[199,99.5,50],"empty-quarter-regular":[199,99.5,50],"empty-quarter-oversized":[199,99.5,50],"hajar-mountains-regular":[199,99.5,50],"hajar-mountains-oversized":[199,99.5,50],"khor-fakkan-bay-tee-regular":[199,179.1,10],"khor-fakkan-bay-tee-super-oversized":[199,179.1,10],"al-hamra-pearl-diver-tee-regular":[199,179.1,10],"al-hamra-pearl-diver-tee-super-oversized":[199,179.1,10],"al-aqah-reef-tee-regular":[199,179.1,10],"al-aqah-reef-tee-super-oversized":[199,179.1,10],"shams-tee-regular":[139,125.1,10],"shams-tee-super-oversized":[139,125.1,10],"the-sahel-polo":[229,206.1,10],"barr-and-bahr-hoodie":[229,206.1,10],"ras-al-khor-hoodie":[229,206.1,10]};
+S.prices=P;S.pct=function(h){return S.on()&&P[h]?P[h][2]:0;};
+function f(n){var c=Math.round(n*100);return c%100?(c/100).toFixed(2):String(c/100);}
+function txt(t,v,ar){return /\d/.test(t)?t.replace(/\d[\d,]*(\.\d+)?/,f(v)):(ar?f(v)+' درهمًا':'AED '+f(v));}
+function deco(){if(!S.on())return;var ar=/^ar/.test(d.getAttribute('lang')||'');
+var L=document.querySelectorAll('.sb-price[data-handle]:not(.sbs-now):not(.sbs-was)');
+for(var i=0;i<L.length;i++){var el=L[i],h=el.getAttribute('data-handle'),x=P[h];if(!x||(el.closest&&el.closest('.sbs-grp')))continue;
+var a=Math.round(parseFloat(el.getAttribute('data-aed'))*100);if(a!==Math.round(x[0]*100)&&a!==Math.round(x[1]*100))continue;
+var t=el.textContent,g=document.createElement('sbs-g');g.className='sbs-grp';
+var now=el.cloneNode(false);now.className=el.className+' sbs-now sbs1';now.setAttribute('data-aed',f(x[1]));now.textContent=txt(t,x[1],ar);
+var tag=document.createElement('sbs-t');tag.className='sbs-tag sbs1';tag.textContent=ar?'خصم '+x[2]+'%':x[2]+'% off';
+el.parentNode.insertBefore(g,el);el.className+=' sbs-was';el.setAttribute('data-sbsp','');el.setAttribute('data-aed',f(x[0]));el.textContent=txt(t,x[0],ar);
+g.appendChild(now);g.appendChild(document.createTextNode(' '));g.appendChild(el);g.appendChild(document.createTextNode(' '));g.appendChild(tag);}}
+S.deco=deco;
+/* 3 Nov 2026 (Faheem: "there should be a discount filter so users can filter things in accordance with discount %"):
+   on every product list (EN and /ar/), Discount: All, On sale, 10% off, 50% off, 70% off (only the tiers that the page
+   has). Cards are hidden with .sbf-off, never [hidden], so it never fights the /shop/ filters, where it is a row in the
+   Filter panel. ?discount=on|10|50|70 opens a page filtered. Gone at END with the sale. */
+var PG=/^\/(ar\/)?(shop|t-shirts|t-shirts\/regular|t-shirts\/oversized|polos|hoodies|sahel|new|gifts|under-150|national-day|desert-t-shirts|mountain-t-shirts)\/?$/,
+CARD='.pcard,.nb-c,.po-card,.sp-card,.prow-c,.sh-sc,.prod,.sidx-card',GRID='.prow-g,.pcards,.nb-g,.po-cards,.sp-grid',cur='all',bar=null;
+function hOf(c){var e=c.querySelector('.sb-price[data-handle]');return e?e.getAttribute('data-handle'):'';}
+function cards(){return [].slice.call(document.querySelectorAll(CARD)).filter(function(c){return !c.closest('.sring')&&c.querySelector('.sb-price[data-handle]');});}
+function okc(c){if(cur==='all')return true;var p=S.pct(hOf(c));return cur==='on'?p>0:p===+cur;}
+function apply(){var ar=/^ar/.test(d.getAttribute('lang')||''),n=0,all=cards();
+all.forEach(function(c){var v=okc(c);c.classList.toggle('sbf-off',!v);if(v)n++;});
+var secs=[];[].forEach.call(document.querySelectorAll(GRID),function(g){var sec=g.closest('section');if(!sec||sec.classList.contains('prod')||(bar&&sec.contains(bar))||!g.querySelector(CARD))return;
+var any=[].some.call(g.querySelectorAll(CARD),function(c){return !c.classList.contains('sbf-off');});var k=secs.indexOf(sec);if(k<0){secs.push(sec);secs.push(any);}else if(any)secs[k+1]=true;});
+for(var i=0;i<secs.length;i+=2)secs[i].classList.toggle('sbf-off',cur!=='all'&&!secs[i+1]);
+if(bar){var m=bar.querySelector('.sbf-n'),tx=cur==='all'?'':(n?(ar?'عدد القطع: '+n:n+(n===1?' piece':' pieces')):(ar?'لا شيء بهذا الخصم هنا':'Nothing at this discount here'));if(m&&m.textContent!==tx)m.textContent=tx;
+[].forEach.call(bar.querySelectorAll('.sbf-c'),function(b){b.setAttribute('aria-pressed',b.getAttribute('data-v')===cur?'true':'false');});}}
+function filt(){if(!S.on()||!PG.test(location.pathname))return;var ar=/^ar/.test(d.getAttribute('lang')||''),all=cards();if(!all.length)return;
+var tiers={};all.forEach(function(c){var p=S.pct(hOf(c));if(p)tiers[p]=1;});var T=Object.keys(tiers).map(Number).sort(function(a,b){return a-b;});if(!T.length)return;
+var panel=document.getElementById('filtPanel'),shop=/\/shop\/?$/.test(location.pathname),key=T.join(',');
+if(bar&&document.contains(bar)){if(bar.getAttribute('data-t')!==key)paint(ar,T,key);apply();return;}
+if(shop&&!panel)return;
+bar=document.createElement('div');bar.className='sbf'+(shop?' sbf-shop':'');bar.setAttribute('role','group');bar.setAttribute('aria-label',ar?'\u0627\u0644\u062a\u0635\u0641\u064a\u0629 \u062d\u0633\u0628 \u0627\u0644\u062e\u0635\u0645':'Filter by discount');
+paint(ar,T,key);
+bar.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.sbf-c');if(!b)return;cur=b.getAttribute('data-v');apply();try{if(window.track)track('sale_filter',{discount:cur});}catch(x){}});
+if(shop)panel.appendChild(bar);else{var g=document.querySelector('main '+GRID.split(',').join(',main '))||document.querySelector(GRID);if(!g){bar=null;return;}var sec=g.closest('section');(sec||g).parentNode.insertBefore(bar,sec||g);}
+try{var m=/[?&]discount=(on|\d+)/.exec(location.search||'');if(m&&(m[1]==='on'||tiers[m[1]])){cur=m[1];if(shop&&panel.hidden){var t=document.getElementById('filtToggle');if(t)t.click();}}}catch(x){}
+apply();}
+function paint(ar,T,key){if(cur!=='all'&&cur!=='on'&&T.indexOf(+cur)<0)cur='all';bar.setAttribute('data-t',key);
+var o=[['all',ar?'\u0627\u0644\u0643\u0644':'All'],['on',ar?'\u0639\u0644\u064a\u0647\u0627 \u062e\u0635\u0645':'On sale']].concat(T.map(function(p){return [String(p),ar?'\u062e\u0635\u0645 '+p+'%':p+'% off'];}));
+bar.innerHTML='<span class="sbf-l">'+(ar?'\u0627\u0644\u062e\u0635\u0645':'Discount')+'</span>'+o.map(function(x){return '<button type="button" class="sbf-c" data-v="'+x[0]+'" aria-pressed="false">'+x[1]+'</button>';}).join('')+'<span class="sbf-n" role="status" aria-live="polite"></span>';}
+var q=0;function later(){if(!q)q=requestAnimationFrame(function(){q=0;deco();filt();});}
+function boot(){deco();filt();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+document.addEventListener('sb:sale',function(){deco();if(!S.on()&&bar){cur='all';apply();bar.remove();bar=null;}});
+try{new MutationObserver(function(m){for(var i=0;i<m.length;i++)if(m[i].addedNodes.length){later();return;}}).observe(d,{childList:true,subtree:true});}catch(e){}})();</script><!--/sbs:head-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>/* Repeat visits: set the market before first paint so the shipping
 copy never flashes UAE-then-swaps. First visits paint the UAE default (which
@@ -1408,7 +1468,7 @@ html body .loc-hero.lh-ph.lh-ph .lede{font-size:clamp(17px,1.6vw,21px)!important
 .sb-notop a{color:#9C521B;font-weight:600;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
 .sb-notop-w{position:relative;z-index:3;background:#FAF6EF;padding:16px 16px 6px}.sb-notop-w .sb-notop{margin:0 auto}
 @media(max-width:700px){.sb-notop{font-size:13.5px;padding:12px 14px;margin-top:14px}.sb-notop-w{padding:14px 14px 4px}}</style><aside class="sb-notop" role="note" aria-label="عن صحراء وما بعدها"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 3.5 4 5.8 2.5 10l3.3 1.4V20.5h12.4V11.4l3.3-1.4L20 5.8l-4.5-2.3c-.6 1.5-1.9 2.4-3.5 2.4s-2.9-.9-3.5-2.4Z"/></svg><p><b>نصنع الملابس، لا الرحلات.</b> صحراء وما بعدها علامة ملابس إماراتية، وهذا دليل مجاني للأماكن التي تُلهم تصاميمنا. لا ننظّم الجولات أو الرحلات أو وسائل النقل، ولا نبيعها ولا نحجزها؛ وأي أسعار مذكورة هنا تحدّدها الجهات والمواقع المذكورة. <a href="/ar/shop/" data-track="notop_shop">شاهد الملابس &larr;</a></p></aside>
-    <aside class="minitee minitee-all"><div class="minitee-txt"><span class="minitee-eye">صحراء وما بعدها</span><b>تيشيرتات مستوحاة من أماكن حقيقية في الإمارات</b><span class="minitee-sub">ابتداءً من 199 درهمًا &middot; قطن 230 غرامًا &middot; توصيل مجاني في الإمارات في اليوم التالي</span></div><a class="minitee-go" href="/ar/t-shirts/">تسوّق التيشيرتات &larr;</a></aside>
+    <aside class="minitee minitee-all"><div class="minitee-txt"><span class="minitee-eye">صحراء وما بعدها</span><b>تيشيرتات مستوحاة من أماكن حقيقية في الإمارات</b><span class="minitee-sub"><!--sbs--><span class="sbs1">ابتداءً من 99.50 درهمًا <s class="sbs-s">199 درهمًا</s> <sbs-t class="sbs-tag">خصم 50%</sbs-t> &middot;</span><span class="sbs0"><!--/sbs-->ابتداءً من 199 درهمًا &middot;<!--sbs--></span><!--/sbs--> قطن 230 غرامًا &middot; توصيل مجاني في الإمارات في اليوم التالي</span></div><a class="minitee-go" href="/ar/t-shirts/">تسوّق التيشيرتات &larr;</a></aside>
     <div class="content"><p>يطل ساحل الفجيرة على خليج عُمان، وتعلو جبال الحجر قريبًا خلف الشاطئ. تمتد شواطئه من القرى حول دبا في الشمال، مرورًا بالعقة، إلى مدينة الفجيرة وما بعدها. معظمها شواطئ عامة مجانية، وبعضها خلف منتجعات تبيع تذاكر يومية، ويمكن الوصول إلى مكانين من أشهر أماكن السنوركلنغ من الرمل أو بقارب في رحلة قصيرة.</p><p>يرتّب هذا الدليل الساحل بحسب المنطقة، ويوضح أي الشواطئ في الفجيرة وأيها ليس فيها. تختلف قواعد التخييم وأرقام الطرق بين المصادر، فتحقق محليًا.</p><p>الاختيارات الثلاثة أعلاه بداية جيدة: صخرة دبا للسنوركلنغ برحلة قارب، وجزيرة سنوبي للسنوركلنغ سباحةً من شاطئ العقة، وخورفكان التي تقع على الساحل نفسه لكنها تتبع الشارقة لا الفجيرة.</p></div>
     <h2>اختياراتنا الأولى</h2><div class="cards"><a class="card" data-id="dibba" data-cat="Coast" data-em="Fujairah" data-v="boat" data-diff="Moderate" data-m="222100000122" href="/ar/locations/dibba/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/dibba.webp')" role="img" aria-label="مياه صافية وشاطئ صخري على ساحل دبا الفجيرة، حيث تنطلق القوارب إلى صخرة دبا"></span><span class="card-body"><strong>صخرة دبا</strong><em>الفجيرة · الساحل</em><span>نتوء صخري قبالة ساحل دبا في الفجيرة، يُوصَل إليه بقارب في رحلة قصيرة، فيه مياه صافية ومرجان وسلاحف. موقع موثوق للسنوركلنغ والغوص على الساحل الشرقي، وأفضل وقت له من أكتوبر إلى أبريل.</span></span></a><a class="card" data-id="snoopy-island" data-cat="Coast" data-em="Fujairah" data-v="on-foot" data-diff="Moderate" data-m="222210000122" href="/ar/locations/snoopy-island/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/snoopy-island.webp')" role="img" aria-label="غطّاس حر يسبح صعودًا عبر حلقة من الأسماك في مياه صافية قرب جزيرة سنوبي"></span><span class="card-body"><strong>جزيرة سنوبي</strong><em>الفجيرة · الساحل</em><span>جزيرة صخرية صغيرة قبالة شاطئ العقة في الفجيرة، تصلها سباحةً أو بالتجديف. السلاحف وأسماك القرش الشعابية وأسماك الشعاب تجعلها من أشهر مواقع السنوركلنغ من الشاطئ في الإمارات، وأفضل وقت لها من أكتوبر إلى مايو.</span></span></a><a class="card" data-id="khor-fakkan-beach" data-cat="Coast" data-em="Sharjah" data-v="2wd" data-diff="Easy" data-m="222100000122" href="/ar/locations/khor-fakkan-beach/"><span class="card-thumb" style="background-image:url('/uploads/thumbs/khor-fakkan-beach.webp')" role="img" aria-label="مياه خضراء صافية ورمال في شاطئ خورفكان، وجبال الحجر في آخر الخليج"></span><span class="card-body"><strong>شاطئ خورفكان</strong><em>الشارقة · الساحل</em><span>هلال رملي عام ومجاني على خليج عُمان، في أراضي الشارقة على الساحل الشرقي، وفيه كورنيش مجدَّد وملاعب أطفال ورحلات قوارب إلى جزيرة القرش وشلال مضاء بجانبه.</span></span></a></div>
     
