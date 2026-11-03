@@ -708,7 +708,10 @@ ${CYCLE_CSS}
   </div>
   <div class="ph-g">` + designs.map(p => `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', true, p.handle)}</a>`).join('') + `</div>
 </section>`;
-  if (stageNow() === 2) return stageHead() + css + outNow;
+  /* 3 Nov 2026 (Faheem: "Let's put the hero slides back on top of homepage. Sahel out now can have a narrow band below
+     it"): from stage 2 the full Sahel first screen is gone; the hero slideshow is first again and homeNowBand() sits
+     under it. outNow is kept for reference only. */
+  if (stageNow() === 2) return stageHead();
   return stageHead() + inc('st1', css + `<section class="ph st1" id="s-preorder" aria-labelledby="phH">
   <div class="ph-in">
     <div class="ph-img"><picture><source media="(max-width:860px)" srcset="/assets/sahel/sahel-surface-m.webp"><img src="/assets/sahel/sahel-surface-d.webp" width="1296" height="2304" alt="Half above, half below the water: an island on the horizon, the sea underneath" fetchpriority="high" decoding="async"></picture></div>
@@ -731,6 +734,36 @@ ${CYCLE_CSS}
    homeRing()  - one card per Sahel design for the 3D collection ring (after the Founding pieces); any mock-up is labelled;
    homeLines() - under the Founding Edition grid: Sahel (seven designs), Sahra Trail (with the Trailhead Bag), and the
                  free Sahra Tote, each with its own heading, so every line we sell is one scroll from the top. */
+/* 3 Nov 2026 (Faheem: "Sahel out now can have a narrow band below it"): a narrow band under the homepage hero slideshow,
+   stage 2 only. Small photos of the Sahel pieces that have real photographs (a mock-up is never shown without its label,
+   and a thumbnail is too small to carry one), the out-now line, Shop Sahel and the Sahra Trail link. */
+function homeNowBand() {
+  if (stageNow() !== 2) return '';
+  const real = pickNew(p => p.line === 'sahel', true).filter(p => p.images[0] && !p.images[0].mock);
+  return stageHead() + `<style>
+.pn{position:relative;z-index:2;background:#0B1526;color:#F4ECDF;padding:18px 20px;border-bottom:1px solid rgba(169,224,218,.2)}
+.pn-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px 28px;align-items:center}
+.pn-k{font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#A9E0DA;margin:0 0 4px}
+.pn h2{font:500 clamp(26px,2.6vw,34px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 4px;color:#F4ECDF}
+.pn-s{font:14.5px/1.45 Jost,system-ui,sans-serif;color:#E9DFCF;margin:0}
+.pn-g{display:flex;gap:8px;justify-content:center;min-width:0}
+.pn-c{display:block;flex:0 0 auto;width:64px;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:#1B2A40}
+.pn-c img{width:100%;height:100%;object-fit:cover;display:block}
+.pn-a{display:flex;flex-direction:column;align-items:flex-end;gap:8px}.pn-a p{margin:0}.pn-b{gap:8px}
+.pn-b{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;background:#F4ECDF;color:#0B1526;font:600 15px Jost,system-ui,sans-serif;text-decoration:none;white-space:nowrap}
+.pn-b:hover{background:#FFFFFF}
+.pn-tr{font:14px/1.4 Jost,system-ui,sans-serif;color:#F4ECDF;text-decoration:underline;text-decoration-color:#0FAAAF;text-underline-offset:4px}
+.pn-b:focus-visible,.pn-tr:focus-visible,.pn-c:focus-visible{outline:3px solid #A9E0DA;outline-offset:3px}
+/* phones: title and Shop Sahel on one row, the photos under them; the delivery line is already in the trust strip above, and Sahra Trail has its own band below */
+@media(max-width:860px){.pn{padding:14px 16px 16px}.pn-in{grid-template-columns:minmax(0,1fr) auto;gap:12px}.pn-in>div:first-child{grid-column:1;grid-row:1}.pn-a{grid-column:2;grid-row:1}.pn-g{grid-column:1/-1;grid-row:2;justify-content:space-between}.pn-c{width:calc((100% - 40px) / 6);max-width:64px}.pn-s,.pn-a p+p{display:none}.pn-k{display:none}.pn h2{font-size:27px;margin:0}.pn-b{min-height:44px;padding:0 18px;font-size:14.5px}}
+</style><section class="pn st2" id="s-sahel-now" aria-labelledby="pnH">
+  <div class="pn-in">
+    <div><p class="pn-k">Sahel &middot; The Coast Edition</p><h2 id="pnH">Sahel is out now</h2><p class="pn-s">Seven designs from the UAE coast. In stock, with free next-day UAE delivery.</p></div>
+    <div class="pn-g">` + real.map(p => `<a class="pn-c" href="/products/${p.handle}/" aria-label="${p.name}">${imgTag(p.images[0], { sizes: '64px', alt: '', bg: '#1B2A40' })}</a>`).join('') + `</div>
+    <div class="pn-a"><p><a class="pn-b" href="/sahel/#pieces" data-track="home_sahel_band">Shop Sahel <span aria-hidden="true">&rarr;</span></a></p><p><a class="pn-tr" href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p></div>
+  </div>
+</section>`;
+}
 function homeRing() {
   return pickNew(p => p.line === 'sahel', true).map(p => {
     const nm = p.name.replace(/&amp;/g, '&');
@@ -851,6 +884,7 @@ module.exports.stageHead = stageHead;
 module.exports.inc = inc;
 module.exports.homeBand = homeBand;
 module.exports.homeHero = homeHero;
+module.exports.homeNowBand = homeNowBand;
 module.exports.homeRing = homeRing;
 module.exports.foundingCross = foundingCross;
 module.exports.homeLines = homeLines;

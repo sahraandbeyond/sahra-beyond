@@ -267,6 +267,12 @@ for (const f of ['index.html', 'shop-preview.html']) {
   if (f === 'index.html') n = n.replace(/<!--LAUNCH:START-->[\s\S]*?<!--LAUNCH:END-->/, () => '<!--LAUNCH:START-->' + require('./preorder-page.js').homeBand() + '<!--LAUNCH:END-->');
   /* 27 Oct 2026: the Sahel pre-order hero, first on the page while the 20% runs (preorder-page.js homeHero) */
   if (f === 'index.html') n = n.replace(/<!--PREHERO:START-->[\s\S]*?<!--PREHERO:END-->/, () => '<!--PREHERO:START-->' + require('./preorder-page.js').homeHero() + '<!--PREHERO:END-->');
+  /* 3 Nov 2026 (Faheem: "Let's put the hero slides back on top of homepage. Sahel out now can have a narrow band below it"):
+     the band sits under the hero's trust strip (preorder-page.js homeNowBand); the markers are added once if missing */
+  if (f === 'index.html') {
+    if (n.indexOf('<!--NOWBAND:START-->') < 0) n = n.replace('<!-- 23 Oct 2026: Sahel + Sahra Trail launch band', '<!--NOWBAND:START--><!--NOWBAND:END-->\n\n<!-- 23 Oct 2026: Sahel + Sahra Trail launch band');
+    n = n.replace(/<!--NOWBAND:START-->[\s\S]*?<!--NOWBAND:END-->/, () => '<!--NOWBAND:START-->' + require('./preorder-page.js').homeNowBand() + '<!--NOWBAND:END-->');
+  }
   /* 27 Oct 2026: Sahel in the collection ring, and every line under the Founding Edition grid (preorder-page.js) */
   if (f === 'index.html') n = n.replace(/<!--RINGNEW:START-->[\s\S]*?<!--RINGNEW:END-->/, () => '<!--RINGNEW:START-->' + require('./preorder-page.js').homeRing() + '<!--RINGNEW:END-->')
     .replace(/<!--HOMELINES:START-->[\s\S]*?<!--HOMELINES:END-->/, () => '<!--HOMELINES:START-->' + require('./preorder-page.js').homeLines() + '<!--HOMELINES:END-->');
