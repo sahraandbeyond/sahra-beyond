@@ -622,6 +622,22 @@ ${CYCLE_CSS}
   .ph-c{flex:0 0 38%;scroll-snap-align:start}
 }
 </style>`;
+  /* 3 Nov 2026 (Faheem: "The homepage hero should say Sahel out now, the way it said Sahel on pre order before"):
+     the same first screen, back for stage 2 with the out-now wording: no discount, full prices, in stock. */
+  const outNow = `<section class="ph st2" id="s-sahel-now" aria-labelledby="phH2">
+  <div class="ph-in">
+    <div class="ph-img"><picture><source media="(max-width:860px)" srcset="/assets/sahel/sahel-surface-m.webp"><img src="/assets/sahel/sahel-surface-d.webp" width="1296" height="2304" alt="Half above, half below the water: an island on the horizon, the sea underneath" fetchpriority="high" decoding="async"></picture></div>
+    <div class="ph-t">
+      <p class="ph-k">Sahel &middot; The Coast Edition</p>
+      <h2 id="phH2">Sahel is out now</h2>
+      <p class="ph-s">Seven designs from the UAE coast: four tees, a polo and two hoodies. Designed in the UAE. In stock, with free next-day delivery across the UAE.</p>
+      <a class="ph-a" href="/sahel/#pieces" data-track="home_sahel_hero">Shop Sahel <span aria-hidden="true">&rarr;</span></a>
+      <p class="ph-tr"><a href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p>
+    </div>
+  </div>
+  <div class="ph-g">` + designs.map(p => `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', true, p.handle)}</a>`).join('') + `</div>
+</section>`;
+  if (stageNow() === 2) return stageHead() + css + outNow;
   return stageHead() + inc('st1', css + `<section class="ph st1" id="s-preorder" aria-labelledby="phH">
   <div class="ph-in">
     <div class="ph-img"><picture><source media="(max-width:860px)" srcset="/assets/sahel/sahel-surface-m.webp"><img src="/assets/sahel/sahel-surface-d.webp" width="1296" height="2304" alt="Half above, half below the water: an island on the horizon, the sea underneath" fetchpriority="high" decoding="async"></picture></div>
