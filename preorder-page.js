@@ -414,7 +414,7 @@ function crossLines(p, card) {
 /* the reverse row, for the Founding Edition product pages (build-products.js) */
 function foundingCross() {
   const list = ['khor-fakkan-bay-tee-regular', 'al-aqah-reef-tee-regular', 'ras-al-khor-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean).map(p => onSale(p) ? p : products().find(x => x.handle === 'the-sahel-polo')).filter(Boolean);
-  return newBlock({ list, heading: 'Also new: Sahel and Sahra Trail', kicker: inc('st1', '<span class="st1">On pre-order &middot; 20% off until Thu 29 Oct</span>') + '<span class="st02">New</span>',
+  return newBlock({ compact: true, list, heading: 'Also new: Sahel and Sahra Trail', kicker: inc('st1', '<span class="st1">On pre-order &middot; 20% off until Thu 29 Oct</span>') + '<span class="st02">New</span>',
     lede: 'Sahel, the Coast Edition, and Sahra Trail running wear.' + (IN_HAND ? ' In stock, shipping next working day.' : ' Pre-orders ship from Fri 30 Oct.') + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>.', fitsLabel: true, more: '/new/', moreText: 'See every new piece' });
 }
 
@@ -501,11 +501,82 @@ function newCard(p, fitsLabel) {
     + inc('st0', `<small class="st0">Pre-order opens Wed 28 Oct</small>`) + inc('st1', `<small class="st1">Pre-order, ships from Fri 30 Oct</small>`)
     + (IN_HAND ? '' : `<small class="st2">Pre-order, ships from Fri 30 Oct</small>`) + `</a>`;
 }
-function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', moreText = 'See every new piece', pre = '' }) {
+/* 3 Nov 2026 (Faheem: "Why don't Sahel items have similar cards. They're different and smaller. We need to highlight
+   all our products"): every list block (newBlock) draws Sahel and Sahra Trail pieces as the same product card as the
+   Founding Edition (build.js productCard, article.pcard): the photo with zoom, name, rating, "Inspired by", spec chips,
+   colour, price and Full details, plus quick add (sahra-cart.js binds to .pcard[data-handle]). The chips come from the
+   piece's own details, never assumed. Where a list shows one card per design (fitsLabel), the fits on sale sit behind a
+   Regular | Super Oversized switch (.sfp), the way the Founding Edition pairs Regular and Oversized; its own switch, so
+   choosing a Founding fit never changes a Sahel card. newCard() stays for the designed line pages (/sahel/, /trail/, the
+   home Lines band). Colour swatches: the Pantone TCX colours of the Sahel cloth (Lagoon as in content/sahel-pieces.json). */
+const RV = require('./reviews-render.js');
+const SWATCH = { 'Jet Set': '#262C2A', 'Estate Blue': '#233658', 'Lagoon': '#0EAAAE', 'Salute': '#282B34', 'Black': '#1B1B1B' };
+function specChips(p) {
+  const det = (p.details || []).filter(x => !/neck label/i.test(x)).join(' | ');
+  const c = [];
+  if (/230gsm/i.test(det)) c.push('230gsm cotton');
+  else if (/piqu/i.test(det)) c.push('Mercerised piqu&eacute;');
+  else if (/canvas/i.test(det)) c.push('Natural canvas');
+  else if (/mesh/i.test(det)) c.push('Mesh side panels');
+  else if (/liner/i.test(p.md || '')) c.push('Inner liner');
+  if (p.fit) c.push(`${p.fit} fit`);
+  const dtg = /DTG/i.test(det), emb = /embroider|thread/i.test(det);
+  if (dtg || emb) c.push(dtg && emb ? 'DTG + embroidery' : dtg ? 'DTG print' : 'Embroidered');
+  else if (/printed/i.test(det)) c.push('Printed');
+  if (p.oneSize) c.push('One size');
+  else if (/kit/i.test(p.handle)) c.push('Tee + short');
+  else c.push(cut(p) === 'Unisex' ? 'Unisex S&ndash;XL' : 'Men&rsquo;s S&ndash;XL');
+  return c;
+}
+function bigCard(p, i) {
+  const im = p.images[0], href = `/products/${p.handle}/`;
+  const zoom = `<button type="button" class="pcard-zoom" data-zoom="/assets/preorder/${im ? im.k : ''}-1200.webp" aria-label="Zoom ${esc(p.plain || p.name)}"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`;
+  const img = im ? `<span class="pcard-img" style="background:#ECE4D6"><a class="pcard-imglink" href="${href}" tabindex="-1" data-cycle>${cycleImgs(p, { sizes: '(max-width: 560px) 50vw, 300px' })}</a>${mockTag(im)}<em class="cut-b">${cut(p).replace('\u2019', '&rsquo;')}</em>${zoom}</span>` : '';
+  const place = p.place ? `Inspired by ${p.place[0]}` : p.line === 'trail' ? 'Sahra Trail' : 'Sahel &middot; the Coast Edition';
+  const hex = SWATCH[p.colour];
+  const colour = p.colour ? `<span class="pcard-col">${hex ? `<span class="pcard-sw" style="background:${hex}"></span>` : ''}${p.colour}</span>` : '';
+  const chips = specChips(p).map(c => `<span${/^(230gsm cotton|Unisex S&ndash;XL)$/.test(c) ? ' class="pc-same"' : ''}>${c}</span>`).join('');
+  const price = onSale(p) ? cardPrice(p.price, 'span', !!p.inHand, p.handle) : 'Back soon';
+  const stock = !onSale(p) ? '' : p.inHand
+    ? inc('st0', `<span class="pcard-st st0">On sale from Wed 28 Oct</span>`) + `<span class="pcard-st st12">In stock, ships next working day</span>`
+    : inc('st0', `<span class="pcard-st st0">Pre-order opens Wed 28 Oct</span>`) + inc('st1', `<span class="pcard-st st1">Pre-order, ships from Fri 30 Oct</span>`) + (IN_HAND ? '' : `<span class="pcard-st st2">Pre-order, ships from Fri 30 Oct</span>`);
+  const noqa = p.oneSize || /kit/i.test(p.handle) ? ' data-noqa' : '';   /* quick add would offer "Default Title", or 16 tee/short pairs */
+  return `<article class="pcard${i != null ? (i ? '' : ' on') : ''}" data-handle="${p.handle}"${i != null ? ` data-i="${i}"` : ''}${noqa}>${img}<span class="pcard-b"><a class="pcard-t" href="${href}">${p.name}</a>${RV.cardRating(p.handle)}<span class="pcard-place">${place}</span><span class="pcard-spec">${chips}</span>${colour}${stock}<span class="pcard-foot"><span class="pcard-p">${price}</span><a class="pcard-cta" href="${href}">Full details &rarr;</a></span></span></article>`;
+}
+/* one design: its fits on sale behind a switch, or the one card */
+function designCards(p, fitsLabel) {
+  if (!fitsLabel || !p.fitsList) return bigCard(p);
+  const all = products();
+  const fits = p.fitsList.filter(f => f.onSale).map(f => all.find(x => x.handle === f.handle)).filter(Boolean);
+  if (fits.length < 2) return bigCard(p);
+  return `<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit">${fits.map((f, i) => `<button type="button"${i ? '' : ' class="on"'} data-i="${i}" aria-pressed="${i ? 'false' : 'true'}">${f.fit}</button>`).join('')}</div>${fits.map((f, i) => bigCard(f, i)).join('')}</div>`;
+}
+const BIG_CSS = `<style>
+.nb .pcards.nb-pc{margin:6px 0 4px}
+.pcard-img>i{position:absolute;right:8px;top:8px;z-index:2;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016;pointer-events:none}
+.pcard-st{font:13px/1.4 Jost,system-ui,sans-serif;color:#3F6B3A}
+.sfp{position:relative;display:flex;flex-direction:column;min-width:0}.sfp>.pcard{display:none;flex:1}.sfp>.pcard.on{display:flex}
+.sfp:not(:has(>.pcard:not(.sbf-off))){display:none}
+.sfp-sw{position:absolute;top:10px;inset-inline-start:10px;z-index:3;display:inline-flex;padding:3px;border-radius:999px;background:rgba(20,15,34,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);gap:2px;max-width:calc(100% - 20px)}
+.sfp-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(247,239,226,.8);cursor:pointer;line-height:1.2;white-space:nowrap}
+.sfp-sw button.on{background:#F7EFE2;color:#2B2620;font-weight:600}
+.sfp-sw button:focus-visible{outline:2px solid #E9B978;outline-offset:1px}
+@media(max-width:560px){.sfp-sw{top:6px;inset-inline-start:6px;max-width:calc(100% - 12px);padding:2px}.sfp-sw button{font-size:10px;letter-spacing:0;padding:5px 6px}.pcard-st{font-size:12px}}
+</style><script>(function(){if(window.__sfp)return;window.__sfp=1;document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.sfp-sw button');if(!b)return;e.preventDefault();e.stopPropagation();var w=b.closest('.sfp'),i=b.getAttribute('data-i');
+[].forEach.call(w.querySelectorAll('.sfp-sw button'),function(x){var on=x.getAttribute('data-i')===i;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});
+[].forEach.call(w.children,function(c){if(c.classList.contains('pcard'))c.classList.toggle('on',c.getAttribute('data-i')===i);});
+if(window.track)track('fit_switch',{fit:b.textContent,line:'sahel'});},true);})();</script>`;
+function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', moreText = 'See every new piece', pre = '', compact = false }) {
   if (!list.length && !pre) return '';
-  return stageHead() + NB_CSS + `<section class="nb" aria-label="${esc(String(heading).replace(/&[a-z]+;/g, ' '))}">
+  /* compact: the small cross-sell cards, for the "Also new" rail on a Founding Edition product page (no product-card CSS there) */
+  if (compact) return stageHead() + NB_CSS + `<section class="nb" aria-label="${esc(String(heading).replace(/&[a-z]+;/g, ' '))}">
   <p class="nb-k">${kicker || 'New &middot; Sahel and Sahra Trail'}</p><h2>${heading}</h2>${lede ? `<p class="nb-l">${lede}</p>` : ''}
   <div class="nb-g">${pre}${list.map(p => newCard(p, fitsLabel)).join('')}</div>
+  ${more ? `<a class="nb-a" href="${more}">${moreText} &rarr;</a>` : ''}
+</section>`;
+  return stageHead() + NB_CSS + BIG_CSS + `<section class="nb" aria-label="${esc(String(heading).replace(/&[a-z]+;/g, ' '))}">
+  <p class="nb-k">${kicker || 'New &middot; Sahel and Sahra Trail'}</p><h2>${heading}</h2>${lede ? `<p class="nb-l">${lede}</p>` : ''}
+  <div class="pcards nb-pc">${pre}${list.map(p => designCards(p, fitsLabel)).join('')}</div>
   ${more ? `<a class="nb-a" href="${more}">${moreText} &rarr;</a>` : ''}
 </section>`;
 }
@@ -797,6 +868,7 @@ module.exports.pieceBlock = pieceBlock;
 module.exports.newBlock = newBlock;
 module.exports.newLede = newLede;
 module.exports.newCard = newCard;
+module.exports.bigCard = bigCard;
 module.exports.NB_CSS = () => NB_CSS;
 module.exports.cut = cut;
 module.exports.forWomen = forWomen;

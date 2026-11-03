@@ -2583,7 +2583,12 @@ if (LAUNCHED || REVEALED) (function () {
       @media(max-width:700px){.sp-jump{padding:0 16px;margin-top:16px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.sp-jump::-webkit-scrollbar{display:none}.sp-jump a{flex:none;font-size:14px;padding:0 14px}.sp-jump b{flex:none}.sp-fe{padding:0 16px}}
     </style><div class="sp-jump" role="navigation" aria-label="Jump to a line"><b>Jump to</b><a class="on" href="#shop-sahel">Sahel ${PO.inc('st1', '<span class="st1">&middot;&nbsp;20% off</span>')}</a><a href="#shop-trail">Sahra Trail</a><a href="#founding">Founding Edition tees</a><a href="/polos/">Polos</a><a href="/hoodies/">Hoodies</a><a href="/accessories/">Bags</a><a href="/size-guide/">Size guides</a></div>`;
     const FE_HEAD = `<div class="sp-fe sp-anchor" id="founding"><p>The Founding Edition</p><h2>Al Quaa, Liwa and the Hajar</h2><span>The first three designs and the Sahra Polo, in stock and shipping next working day.<span class="sb-aed-only"> Any two Founding Edition tees for AED 359.</span></span></div>`;
-    const TRAIL_BAND = '<div class="sp-new" data-bg="#FAF6EF">'
+    /* 3 Nov 2026: the Sahel and Sahra Trail blocks draw the site's product card (.pcard, PO.bigCard); /shop/ is its own
+       template without the site CSS, so it carries the product-card rules (and the phone two-up rules) here. No zoom
+       overlay on this page, so the zoom button is hidden; the photo and name open the product. */
+    const PCARD_CSS = CSS.slice(CSS.indexOf('/* ---- Product cards'), CSS.indexOf('@media(max-width:760px){.teecta-inner')) + FITPAIR_CSS.slice(FITPAIR_CSS.indexOf('@media(max-width:560px)'))
+      + '.sp-new .pcard-zoom{display:none!important}.sp-new .nb{max-width:1180px}';
+    const TRAIL_BAND = '<style>' + PCARD_CSS + '</style><div class="sp-new" data-bg="#FAF6EF">'
       + '<div class="sp-anchor" id="shop-sahel"></div>' + PO.newBlock({ list: PO.pickNew(p => p.line === 'sahel', true), heading: 'Sahel, the Coast Edition', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'The story of Sahel' })
       + '<div class="sp-anchor" id="shop-trail"></div>' + PO.newBlock({ list: PO.pickNew(p => p.line === 'trail'), heading: 'Sahra Trail: running tee, 2-in-1 shorts, kit and the Trailhead Bag', kicker: 'New &middot; Sahra Trail', more: '/trail/', moreText: 'About Sahra Trail' })
       + '</div>';
@@ -3541,7 +3546,8 @@ COMMERCE.forEach(P => {
   };
   /* Accessories: the Sahra Tote (its own page, /tote/) and the Trailhead Bag */
   const bag = PO.pickNew(p => p.handle === 'trailhead-bag');
-  const toteCard = `<a class="nb-c" href="/tote/"><span class="nb-f"><img src="/shirts/card/tote-model.webp" width="720" height="900" alt="The Sahra Tote in natural canvas, carried over the shoulder" loading="lazy" decoding="async"><em class="cut-b">One size</em></span><b>The Sahra Tote</b><small>Canvas tote</small><small class="nb-p"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></small><small>Free with every clothing order</small></a>`;
+  /* 3 Nov 2026: the tote as the same product card as every other piece (PO.bigCard / productCard) */
+  const toteCard = `<article class="pcard"><span class="pcard-img" style="background:#ECE4D6"><a class="pcard-imglink" href="/tote/" tabindex="-1"><img src="/shirts/card/tote-model.webp" width="720" height="900" alt="The Sahra Tote in natural canvas, carried over the shoulder" loading="lazy" decoding="async"></a><em class="cut-b">One size</em><button type="button" class="pcard-zoom" data-zoom="/shirts/card/tote-model.webp" aria-label="Zoom The Sahra Tote"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></span><span class="pcard-b"><a class="pcard-t" href="/tote/">The Sahra Tote</a><span class="pcard-place">Sahra &amp; Beyond</span><span class="pcard-spec"><span>Natural canvas</span><span>One size</span></span><span class="pcard-st">Free with every clothing order</span><span class="pcard-foot"><span class="pcard-p"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></span><a class="pcard-cta" href="/tote/">Full details &rarr;</a></span></span></article>`;
   page({ slug: 'accessories', h1: 'Accessories', grad: 'Dunes',
     title: 'Accessories: Canvas Tote and Drawstring Bag | Sahra & Beyond',
     desc: 'The Sahra Tote and the Trailhead Bag from Sahra Trail: natural canvas bags designed in the UAE, AED 50 each. Free delivery across the UAE.',
@@ -4771,6 +4777,7 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
     }
   })('.');
   const rx = new RegExp('<a (?:role="listitem" )?class="(po-card|nb-c|lb-c|sh-sc|hring-card hring-new|pl-tee)" href="/products/(' + PAUSED.join('|') + ')/"[^>]*>[\\s\\S]*?</a>', 'g');
+  const rxA = new RegExp('<article class="pcard(?: on)?" data-handle="(' + PAUSED.join('|') + ')"[^>]*>[\\s\\S]*?</article>', 'g');
   let removed = 0, moved = 0, lists = 0, pages = 0;
   for (const f of files) {
     let html = fs.readFileSync(f, 'utf8');
@@ -4783,8 +4790,16 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
       return card.split('/products/' + h + '/').join('/products/' + to + '/').split('data-handle="' + h + '"').join('data-handle="' + to + '"')
         .replace(/(?<!Super )Oversized fit/g, 'Super Oversized fit').replace(/&mdash; Oversized/g, '&mdash; Super Oversized');
     });
+    /* 3 Nov 2026: list blocks now draw .pcard articles (PO.bigCard); same rule: move to the fit on sale, or drop if it is already listed */
+    html = html.replace(rxA, (card, h) => {
+      const to = target(h);
+      if (!to || html.includes('data-handle="' + to + '"')) { removed++; return ''; }
+      moved++;
+      return card.split('/products/' + h + '/').join('/products/' + to + '/').split('data-handle="' + h + '"').join('data-handle="' + to + '"')
+        .replace(/(?<!Super )Oversized fit/g, 'Super Oversized fit');
+    });
     /* a Sahel block left with no cards: say why instead */
-    html = html.replace(/<div class="nb-g"><\/div>/g, '<p class="nb-l nb-paused">Our Sahel Oversized fit is being re-cut to our original Oversized size and will be back soon. <a href="/sahel/">See what is available from Sahel</a>.</p>');
+    html = html.replace(/<div class="(?:nb-g|pcards nb-pc)"><\/div>/g, '<p class="nb-l nb-paused">Our Sahel Oversized fit is being re-cut to our original Oversized size and will be back soon. <a href="/sahel/">See what is available from Sahel</a>.</p>');
     html = html.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g, (tag, body) => {
       if (!PAUSED.some(h => body.includes('/products/' + h + '/'))) return tag;
       let j; try { j = JSON.parse(body); } catch (e) { return tag; }

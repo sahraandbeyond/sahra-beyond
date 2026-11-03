@@ -1400,6 +1400,7 @@
     if (!cards.length) return;
     cards.forEach(function (card) {
       if (card.querySelector('.qa')) return;              /* never double-bind */
+      if (card.hasAttribute('data-noqa')) return;         /* one-size pieces and kits open their page instead (3 Nov 2026) */
       var handle = card.dataset.handle;
       var foot = card.querySelector('.pcard-foot') || card;
       var box = document.createElement('div');
