@@ -110,7 +110,8 @@ function boot(opts) {
       const data = {};
       (opts.prices || []).forEach((p, i) => {
         data['p' + i] = { handle: p.getAttribute('data-handle'),
-          priceRange: { minVariantPrice: { amount: String(opts.priceAmount || 54.5), currencyCode: opts.priceCurrency || 'AED' } } };
+          priceRange: { minVariantPrice: { amount: String(opts.priceAmount || 54.5), currencyCode: opts.priceCurrency || 'AED' } },
+          compareAtPriceRange: opts.compareAmount ? { minVariantPrice: { amount: String(opts.compareAmount), currencyCode: opts.priceCurrency || 'AED' } } : null };
       });
       return Promise.resolve({ json: () => Promise.resolve({ data }) });
     }
@@ -198,6 +199,19 @@ console.log('\nmarket-test — driving the real assets/sahra-market.js\n');
     await tick(); await tick();
     check('saved currency choice (USD) wins over geo default (SAR)',
       env.api.currency() === 'USD', 'currency: ' + env.api.currency());
+  }
+
+  /* 7 — 11.11 sale (r99, sale.js): the struck full price (.sbs-was) shows Shopify's compare-at price,
+     the sale price beside it Shopify's price, in the visitor's currency */
+  {
+    const now = mkPrice('sand-polo', 68.7), was = mkPrice('sand-polo', 229);
+    was.attrs['class'] = 'sb-price sbs-was';
+    const slot = mkSlot();
+    const env = boot({ geo: 'SA', currencies: { AED: 'AE', SAR: 'SA' }, priceCurrency: 'SAR',
+                       priceAmount: 70.15, compareAmount: 233.85, prices: [now, was], slots: [slot] });
+    await tick(); await tick();
+    check('sale: struck price shows the compare-at, sale price the price',
+      was.textContent === 'SAR 233.85' && now.textContent === 'SAR 70.15', now.textContent + ' | ' + was.textContent);
   }
 
   console.log('\n  ' + pass + ' passed, ' + fail + ' failed\n');

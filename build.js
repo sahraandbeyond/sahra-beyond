@@ -12,6 +12,10 @@ const buildProducts = require('./build-products');
 
 const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
+/* 11.11 sale (r99, 3 Nov 2026): take any earlier sale markup off every page before anything reads them;
+   the sale is added back after the Arabic mirror, while it runs (sale.js). */
+const SALE = require('./sale.js');
+SALE.stripAll(ROOT);
 
 // Clean previously-generated output so deleted locations don't leave orphan pages
 ['locations', '_drafts', 'about', 'shop', 'places', 'camping', 'secluded-camping', 'snorkeling', 'stargazing', 'camping-near-dubai', 'wadis', 'desert-camping-beginners', 'mountain-escapes', 'hatta-guide', 'best-beaches', 'desert-safari', 'family-friendly-outdoors', 'outdoor-things-to-do', 'hiking', 'fujairah-beaches', 'feed', 'q'].forEach(d => { try { fs.rmSync(path.join(ROOT, d), { recursive: true, force: true }); } catch (e) {} });
@@ -4807,6 +4811,13 @@ require('./trail-hikes.js')({ shell, write, SITE, esc, root: __dirname, notOpera
    our site ... make them live"). See ar-mirror.js. Runs before the site-wide walkers below so the
    Arabic pages get the same bar, nav, pixels, asset hashes, WebP and legibility layer. */
 require('./ar-mirror.js').build();
+
+/* 11.11 sale (r99, 3 Nov 2026, Faheem): until Sun 15 Nov 23:59 UAE every price of a sale product, EN and /ar/,
+   shows the sale price with the full price struck through, JSON-LD offers and Tabby follow the sale price, and
+   the "Any 2 tees for AED 359" wording is hidden. Runs after the mirror, so the Arabic dictionaries never see
+   sale wording; the Arabic comes from sale.js. After END this adds nothing. See sale.js. */
+{ const n = SALE.decorateAll(ROOT);
+  console.log(SALE.on() ? `  \u2713 11.11 sale on until ${new Date(SALE.END).toISOString()}: ${n} page(s) carry sale prices` : '  \u2713 11.11 sale over: full prices, no sale markup'); }
 
 /* ==========================================================================
    AED 50 first-order offer — bar + email-capture modal on every page.

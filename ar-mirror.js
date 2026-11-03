@@ -36,6 +36,8 @@ const path = require('path');
 const ROOT = __dirname;
 const SITE = 'https://www.sahraandbeyond.ae';
 const DICT_DIR = path.join(ROOT, 'content', 'ar-mirror');
+/* 11.11 sale (r99): English pages are read without the sale markup sale.js adds after this mirror has run */
+const readEn = f => require('./sale.js').strip(fs.readFileSync(f, 'utf8'));
 
 /* English pages whose Arabic is NOT mirrored but hand-written elsewhere (English URL -> Arabic URL).
    Empty since 31 Oct 2026 (Faheem, hard rule: "every site update must reach the Arabic pages in the
@@ -416,7 +418,7 @@ function build({ quiet } = {}) {
   const missU = new Set(), missA = new Set(), bad = new Set();
   let n = 0, h = 0;
   pages.forEach(p => {
-    const html = fs.readFileSync(p.file, 'utf8');
+    const html = readEn(p.file);
     const ar = mirrorPage(html, p, dict, has, missU, missA, bad);
     const dest = path.join(ROOT, 'ar', p.rel);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
@@ -448,7 +450,7 @@ function build({ quiet } = {}) {
 function extract() {
   const dict = loadDict();
   const keys = new Set();
-  englishPages().forEach(p => extractPage(fs.readFileSync(p.file, 'utf8'), k => keys.add(k)));
+  englishPages().forEach(p => extractPage(readEn(p.file), k => keys.add(k)));
   const pending = [...keys].filter(k => dict[k] == null || !validPlaceholders(k, dict[k]));
   fs.mkdirSync(DICT_DIR, { recursive: true });
   fs.writeFileSync(path.join(DICT_DIR, '_pending.json'), JSON.stringify(pending, null, 1));
@@ -464,7 +466,7 @@ function parity() {
   const keys = new Set();
   const pages = englishPages();
   const missingPages = pages.filter(p => !fs.existsSync(path.join(ROOT, 'ar', p.rel))).map(p => p.url);
-  pages.forEach(p => extractPage(fs.readFileSync(p.file, 'utf8'), k => keys.add(k)));
+  pages.forEach(p => extractPage(readEn(p.file), k => keys.add(k)));
   const pending = [...keys].filter(k => dict[k] == null || !validPlaceholders(k, dict[k]));
   return { pages: pages.length, missingPages, pending };
 }

@@ -77,9 +77,17 @@
       ar: 'ساحل وصحراء تريل: الطلب المسبق متاح بخصم 20% حتى الخميس 29 أكتوبر، 23:59.' },
     { from: Date.UTC(2026, 9, 29, 20, 0, 0), href: '/new/',
       en: 'Sahel and Sahra Trail are out. Designed in the UAE for everyone who loves it.',
+      ar: 'ساحل وصحراء تريل متوفران الآن. صُمّما في الإمارات لكل من يحبّها.' },
+    /* 3 Nov 2026 (Faheem, r99): the 11.11 sale, live from the push until Sun 15 Nov 23:59 UAE (sale.js END).
+       No timer, no urgency beyond the end date. At Mon 16 Nov 00:00 UAE the bar goes back to the stage-2 line. */
+    { from: Date.UTC(2026, 10, 2, 20, 0, 0), href: '/shop/',
+      en: '11.11 Sale: up to 70% off. Ends Sun 15 Nov.',
+      ar: 'تخفيضات 11.11: خصم يصل إلى 70%. ينتهي العرض الأحد 15 نوفمبر.' },
+    { from: Date.UTC(2026, 10, 15, 20, 0, 0), href: '/new/',
+      en: 'Sahel and Sahra Trail are out. Designed in the UAE for everyone who loves it.',
       ar: 'ساحل وصحراء تريل متوفران الآن. صُمّما في الإمارات لكل من يحبّها.' }
   ];
-  /* ?sbstage=0|1|2 previews a stage (for checking before the date; nothing is stored) */
+  /* ?sbstage=0|1|2|3|4 previews a stage (for checking before the date; nothing is stored) */
   var forced = null;
   try { var fm = /[?&]sbstage=(\d)/.exec(location.search || ''); if (fm && STAGES[+fm[1]]) forced = +fm[1]; } catch (e) {}
   function stageAt(now) {

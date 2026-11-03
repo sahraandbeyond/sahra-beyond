@@ -40,6 +40,8 @@ function all() {
   if (_all) return _all;
   _all = DATA.posts
     .filter(p => !p.hidden && fs.existsSync(coverFile(p)))
+    /* 11.11 sale (r99): the "Any two tees, AED 359" post is left off while the pair offer is paused (sale.js) */
+    .filter(p => !(/\b359\b/.test(p.label || '') && require('./sale.js').on()))
     .map(p => ({ ...p, date: p.site ? null : dateOf(p.id), slides: slidesOf(p), account: p.account === 'trail' ? DATA.accounts.trail : DATA.accounts.house }))
     .sort((a, b) => (a.pin || 99) - (b.pin || 99) || (b.date || 0) - (a.date || 0));
   return _all;

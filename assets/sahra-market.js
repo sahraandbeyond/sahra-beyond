@@ -83,6 +83,7 @@
   var cur = null;            // currency currently displayed
   var live = null;           // currencies Shopify will actually price in
   var priceCache = {};       // currency -> { handle: formattedPrice }
+  var wasCache = {};         // currency -> { handle: formatted compare-at price } (11.11 sale, r99)
 
   function store(k, v, sess) {
     try { (sess ? sessionStorage : localStorage).setItem(k, v); } catch (e) {}
@@ -141,10 +142,13 @@
   /* html[data-price-cur] says which currency the prices on screen are actually in,
      so AED-only copy (the "any 2 tees AED 359" bundle line) can step aside when the
      tee shows in USD beside it (places review, 28 Sep 2026). */
-  function paint(map) {
+  /* 11.11 sale (r99, sale.js): the struck full price (.sbs-was) shows Shopify's compare-at price, the sale
+     price beside it Shopify's price. Once the sale is over (no compare-at) both read the price. */
+  function paint(map, was) {
     document.documentElement.setAttribute('data-price-cur', cur || 'AED');
     document.querySelectorAll('.sb-price[data-handle]').forEach(function (el) {
-      var p = map[el.getAttribute('data-handle')];
+      var h = el.getAttribute('data-handle');
+      var p = (was && was[h] && /(^|\s)sbs-was(\s|$)/.test(el.getAttribute('class') || '') && was[h]) || map[h];
       if (p) el.textContent = p;
     });
   }
@@ -160,15 +164,15 @@
       });
       return;
     }
-    if (priceCache[cur]) { paint(priceCache[cur]); return; }
+    if (priceCache[cur]) { paint(priceCache[cur], wasCache[cur]); return; }
     var entry = null;
     for (var i = 0; i < CURRENCIES.length; i++) if (CURRENCIES[i].c === cur) entry = CURRENCIES[i];
     if (!entry) return;
     var q = 'query { ' + handles.map(function (h, i) {
-      return 'p' + i + ': product(handle: "' + h.replace(/[^a-z0-9-]/g, '') + '") { handle priceRange { minVariantPrice { amount currencyCode } } }';
+      return 'p' + i + ': product(handle: "' + h.replace(/[^a-z0-9-]/g, '') + '") { handle priceRange { minVariantPrice { amount currencyCode } } compareAtPriceRange { minVariantPrice { amount currencyCode } } }';
     }).join(' ') + ' }';
     gql('query @inContext(country: ' + entry.country + ') ' + q.slice(6), function (d) {
-      var map = {}, honoured = true;
+      var map = {}, was = {}, honoured = true;
       Object.keys(d).forEach(function (k) {
         var p = d[k];
         if (!p || !p.priceRange) return;
@@ -178,10 +182,12 @@
         // than a number checkout will contradict.
         if (mv.currencyCode !== cur) { honoured = false; return; }
         map[p.handle] = fmt(mv.amount, cur);
+        var cv = p.compareAtPriceRange && p.compareAtPriceRange.minVariantPrice;
+        if (cv && cv.currencyCode === cur && parseFloat(cv.amount) > parseFloat(mv.amount)) was[p.handle] = fmt(cv.amount, cur);
       });
       if (!honoured) return;
-      priceCache[cur] = map;
-      paint(map);
+      priceCache[cur] = map; wasCache[cur] = was;
+      paint(map, was);
     });
   }
 

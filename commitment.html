@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head><!--sbs:head--><style>html[data-sale="0"] .sbs1,html[data-sale="1"] .sbs0,html:not([data-sale]) .sbs0{display:none!important}
+html[data-sale="1"] .sbs-was{text-decoration:line-through;text-decoration-thickness:1px;font-weight:400!important}
+sbs-g{display:inline-block;max-width:100%;white-space:normal}
+html[data-sale="1"] sbs-g>.sb-price{display:inline!important;white-space:nowrap}
+sbs-t{display:inline-block;padding:1px 6px;border-radius:3px;background:#7E4114;color:#FAF6EF;font:600 11px/1.5 Jost,system-ui,sans-serif;letter-spacing:.04em;text-transform:none;white-space:nowrap;vertical-align:.1em}</style>
+<script>(function(){var d=document.documentElement,E=1794772800000;function s(){var o=Date.now()<E;try{var m=/[?&]sbsale=([01])/.exec(location.search||'');if(m)o=m[1]==='1';}catch(e){}if(d.getAttribute('data-sale')!==(o?'1':'0')){d.setAttribute('data-sale',o?'1':'0');try{document.dispatchEvent(new CustomEvent('sb:sale',{detail:{on:o}}));}catch(e){}}}
+s();window.SB_SALE={end:E,on:function(){return d.getAttribute('data-sale')==='1';}};var n=Date.now();if(n<E&&E-n<864e5)setTimeout(s,E-n+300);})();</script><!--/sbs:head-->
 <!-- Google Analytics 4 -->
 <script>
   window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
@@ -39,7 +45,7 @@
      deleted outright once the redirect is confirmed live. -->
 <script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=cdd516cd">
-<script src="/assets/sahra-welcome.js?v=020b0c7f" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=b02525c7" data-sbw defer></script>
 <style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every

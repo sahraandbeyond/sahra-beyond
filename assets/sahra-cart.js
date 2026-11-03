@@ -64,7 +64,7 @@
     'lines(first:100){edges{node{id quantity cost{totalAmount{amount currencyCode} subtotalAmount{amount currencyCode}} ' +
     'discountAllocations{discountedAmount{amount currencyCode} ... on CartAutomaticDiscountAllocation{title}} ' +
     'merchandise{... on ProductVariant{id title availableForSale quantityAvailable ' +
-    'price{amount currencyCode} product{title handle productType featuredImage{url}}}}}}}';
+    'price{amount currencyCode} compareAtPrice{amount currencyCode} product{title handle productType featuredImage{url}}}}}}}';
 
   function sf(q, vars) {
     return fetch('https://' + S.domain + '/api/' + S.v + '/graphql.json', {
@@ -102,8 +102,13 @@
       return st - t > 0.004 ? st - t : 0;
     } catch (e) { return 0; }
   }
+  /* 11.11 sale (r99, sale.js): while the sale runs, a sale piece shows Shopify's price with its compare-at
+     (full) price struck through beside it (Faheem reversed the no-strike-through rule for this sale only) */
+  function saleOn() { return !!(window.SB_SALE && window.SB_SALE.on && window.SB_SALE.on()); }
   function linePrice(l) {
     var m = l.merchandise, off = lineSaving(l);
+    var was = m.compareAtPrice && parseFloat(m.compareAtPrice.amount) > parseFloat(m.price.amount) && saleOn() ? m.compareAtPrice : null;
+    if (!off && was) return '<span class="sb-lp"><b>' + money(m.price.amount, m.price.currencyCode) + '</b> <s class="sb-lp-was">' + money(was.amount, was.currencyCode) + '</s></span>';
     if (!off) return '<span>' + money(m.price.amount, m.price.currencyCode) + '</span>';
     /* the pre-order 20%: the price paid, named, with no struck-through list price (Faheem, 22 Oct 2026) */
     if (isPre(l)) return '<span class="sb-lp"><b>' + money(parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1), l.cost.totalAmount.currencyCode) + '</b> <small>' + T('prePrice') + '</small></span>';
@@ -932,7 +937,7 @@
       if (!el) return;
       var show = function (h) { el.hidden = false; el.innerHTML = h; }, hide = function () { el.hidden = true; el.innerHTML = ''; el.className = 'sb-bundle'; };
       if (saved > 0.004) { hide(); return; }
-      if (tees === 1) {
+      if (tees === 1 && !saleOn()) {   /* 11.11 sale (r99): the pair offer is paused in Shopify, so no pair nudge */
         /* 4 Oct 2026 (CRO panel, idea 14): one tap adds a second design in the same size. The pair price is
            Shopify's own automatic discount on the six Founding Edition tees at two or more. */
         var have = realLines.filter(isTee)[0], hm = have && have.merchandise, hh = hm && hm.product && hm.product.handle || '';
@@ -1632,6 +1637,9 @@
   function init() {
     [].forEach.call(document.querySelectorAll('.sb-tabby[data-tabby-price]'), function (el) {
       var p = parseFloat(el.getAttribute('data-tabby-price'));
+      /* 11.11 sale (r99, sale.js): the page carries the sale price; once the sale is over, the full price */
+      var full = parseFloat(el.getAttribute('data-tabby-full'));
+      if (full > 0 && !(window.SB_SALE && window.SB_SALE.on && window.SB_SALE.on())) { p = full; el.setAttribute('data-tabby-price', String(full)); staticLine(el, full); }
       if (el.getAttribute('data-tabby-lang') === 'ar' && !TABBY_PUBLIC_KEY) { el.hidden = true; return; }
       /* the widget waits for the page to finish loading, so it never competes with the first photo */
       if (TABBY_PUBLIC_KEY && TABBY_MERCHANT_CODE) {
