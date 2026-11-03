@@ -2837,7 +2837,7 @@ body.tote-page main{max-width:1180px}
     }).catch(function(){
       btn.textContent='Add to bag'; btn.disabled=false; say('That did not go through. Try again, or message us on WhatsApp.');
     });
-    if(window.track)track('add_to_cart',{item:'sahra-tote'});
+    if(window.track)track('add_to_cart',{item_id:'sahra-tote',via:'tote-page'});
   });
 })();
 </script>`;

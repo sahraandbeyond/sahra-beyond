@@ -611,6 +611,8 @@
     if (!lastFocus || lastFocus === document.body || (lastFocus.closest && lastFocus.closest('#sbPeek'))) lastFocus = $('sbCartBtn') || $('cartBtn') || document.querySelector('.sb-cart-btn');
     var d = $('sbDrawer');
     d.classList.add('on');
+    try { if (window.track && CART && CART.lines && CART.lines.edges && CART.lines.edges.length && !d.__sbVc) { d.__sbVc = 1; setTimeout(function () { d.__sbVc = 0; }, 30000);
+      window.track('view_cart', { items: CART.lines.edges.map(function (e) { return gaItem(e.node); }), via: 'bag' }); } } catch (e) {}   /* 3 Nov 2026: GA4 view_cart, at most once in 30 s */
     $('sbOv').classList.add('on');
     d.setAttribute('aria-hidden', 'false');
     try { d.inert = false; } catch (e) {}
@@ -1041,11 +1043,21 @@
   /* ---- mutations ------------------------------------------------------ */
 
   /* qty 0 removes the line. One code path for -, + and x. */
+  /* 3 Nov 2026 (GA4 detail): a cart line as a GA4 item; ga4.js window.track fills in the rest from its catalogue */
+  function gaItem(l, qty) {
+    var m = (l && l.merchandise) || {}, pr = m.product || {};
+    var it = { item_id: pr.handle || m.id || '', item_name: pr.title || '', item_variant: m.title || '', quantity: qty == null ? (l.quantity || 1) : qty };
+    var unit = (Number(l && l.cost && l.cost.totalAmount && l.cost.totalAmount.amount) || 0) / ((l && l.quantity) || 1);
+    if (unit) it.price = Math.round(unit * 100) / 100;
+    return it;
+  }
+  function lineById(id) { var f = null; (CART && CART.lines && CART.lines.edges || []).forEach(function (e) { if (e.node.id === id) f = e.node; }); return f; }
   function setQtyRaw(lineId, qty) {
     if (!CART || !lineId) return Promise.resolve(null);
     return queue(function () {
       lastError = null;
       var q = Math.max(0, qty | 0);
+      var before = lineById(lineId), was = before ? before.quantity : 0;
       var op = q === 0
         ? { m: 'mutation($id:ID!,$l:[ID!]!){cartLinesRemove(cartId:$id,lineIds:$l){cart{' + CFRAG + '}userErrors{message}}}',
             v: { id: CART.id, l: [lineId] }, k: 'cartLinesRemove' }
@@ -1071,6 +1083,9 @@
           if (pending[e.node.id] === e.node.quantity) delete pending[e.node.id];
         });
         if (q === 0) delete pending[lineId];
+        try { if (window.track && before) { var now = (got && got.quantity) || 0;
+          if (now < was) window.track('remove_from_cart', { items: [gaItem(before, was - now)], via: 'bag' });
+          else if (now > was) window.track('add_to_cart', { items: [gaItem(got, now - was)], via: 'bag' }); } } catch (e) {}
         draw();
         return CART;
       }).catch(function (e) {

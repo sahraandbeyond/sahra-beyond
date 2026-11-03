@@ -80,7 +80,7 @@
       ar: 'ساحل وصحراء تريل متوفران الآن. صُمّما في الإمارات لكل من يحبّها.' },
     /* 3 Nov 2026 (Faheem, r99): the 11.11 sale, live from the push until Sun 15 Nov 23:59 UAE (sale.js END).
        No timer, no urgency beyond the end date. At Mon 16 Nov 00:00 UAE the bar goes back to the stage-2 line. */
-    { from: Date.UTC(2026, 10, 2, 20, 0, 0), href: '/shop/',
+    { from: Date.UTC(2026, 10, 2, 20, 0, 0), href: '/shop/', promo: ['sale-1111', '11.11 Sale'],   /* GA4 view_promotion / select_promotion */
       en: '11.11 Sale: up to 70% off. Ends Sun 15 Nov.',
       ar: 'تخفيضات 11.11: خصم يصل إلى 70%. ينتهي العرض الأحد 15 نوفمبر.' },
     { from: Date.UTC(2026, 10, 15, 20, 0, 0), href: '/new/',
@@ -133,7 +133,12 @@
     if (next === null || next - now > 864e5) return;
     setTimeout(function () { render(); measure(); schedule(); }, next - now + 500);
   })();
-  bar.addEventListener('click', function () { ev('topbar_click', { stage: current, page: location.pathname }); });
+  bar.addEventListener('click', function () { ev('topbar_click', { stage: current, page: location.pathname });
+    /* 3 Nov 2026 (GA4 detail): the sale bar as a GA4 promotion, so its clicks show in the Promotions report */
+    var P = STAGES[current] && STAGES[current].promo; if (P && window.track) try { window.track('select_promotion', { promotion_id: P[0], promotion_name: P[1], creative_slot: 'top_bar' }); } catch (e) {} });
+  (function () { var P = STAGES[current] && STAGES[current].promo; if (!P || !window.track) return;
+    try { if (sessionStorage.getItem('sb_vp_' + P[0])) return; sessionStorage.setItem('sb_vp_' + P[0], '1'); } catch (e) {}
+    try { window.track('view_promotion', { promotion_id: P[0], promotion_name: P[1], creative_slot: 'top_bar' }); } catch (e) {} })();
 
   var wrap = document.createElement('div');
   wrap.appendChild(bar);

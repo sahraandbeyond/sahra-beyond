@@ -9,7 +9,7 @@ const GA4_ID = 'G-5NVFDWT29F';
 const CLARITY_ID = '';
 /* 13 Oct 2026: sent with every GA4 event (with ad_session), so a release can be compared with
    the one before it. Bump it with each site release that changes the landing experience. */
-const SITE_BUILD = 'r80';
+const SITE_BUILD = 'r101';   /* 3 Nov 2026: GA4 item detail release */
 /* Runs in the head of every page, before anything else:
    - sb_ad: this session arrived from a paid ad (click IDs or utm tags on the landing
      URL). Kept for the session so the code bar and Clarity follow the visitor around.
@@ -43,11 +43,54 @@ const LATER = `window.sbLater=window.sbLater||(function(){var q=[],ran=0;functio
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
     return function(f){if(ran){try{f()}catch(e){}}else q.push(f);};})();
   sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${GA4_ID}';document.head.appendChild(s);});`;
+/* 3 Nov 2026: the product catalogue for analytics, {handle: [name, category, line, fit, full price]}, read from the
+   product files at build time (Founding Edition: content/products; Sahel and Sahra Trail: preorder-page.js). */
+const CATALOG = (function () {
+  const out = {};
+  const KIND = k => /T-shirt/i.test(k) ? 'T-shirt' : /polo/i.test(k) ? 'Polo' : /hoodie/i.test(k) ? 'Hoodie' : /short/i.test(k) ? 'Shorts' : /kit/i.test(k) ? 'Running kit' : /bag/i.test(k) ? 'Bag' : (k || 'Other');
+  try {
+    const fs = require('fs'), path = require('path'), dir = path.join(__dirname, 'content', 'products');
+    fs.readdirSync(dir).filter(f => f.endsWith('.json')).forEach(f => {
+      const p = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+      const polo = /polo/.test(p.category || '');
+      out[p.id] = [p.name, polo ? 'Polo' : 'T-shirt', 'Founding Edition', polo ? '' : (p.fit ? p.fit[0].toUpperCase() + p.fit.slice(1) : ''), Number(p.price)];
+    });
+  } catch (e) {}
+  try {
+    require('./preorder-page.js').products().forEach(p => {
+      out[p.handle] = [String(p.plain || p.name).replace(/&amp;/g, '&'), KIND(p.kind), p.line === 'sahel' ? 'Sahel' : 'Sahra Trail', p.fit || '', Number(p.price)];
+    });
+  } catch (e) {}
+  out['sahra-tote'] = ['The Sahra Tote', 'Bag', 'Accessories', '', 50];
+  out['sahra-tote-founding-edition-gift'] = ['The Sahra Tote (free gift)', 'Bag', 'Accessories', '', 0];
+  return out;
+})();
 const GA4_HEAD = `<!-- Google Analytics 4 -->
 <script>
   ${LATER}
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-  ${/* 25 Oct 2026 (retention audit): add_to_cart / view_item / remove_from_cart get GA4's standard items[], value and currency, so funnel reports work */''}window.track=window.track||function(n,p){try{p=p||{};var id=p.item_id||p.item_name;if((n==='view_item'||n==='add_to_cart'||n==='remove_from_cart')&&id&&!p.items){var el=p.item_id?document.querySelector('[data-handle="'+p.item_id+'"][data-aed]'):null,sp=(location.pathname.indexOf('/products/'+p.item_id)!==-1&&window.__SB_PRODUCT)||{};var pr=Number(p.price||(el&&el.getAttribute('data-aed'))||sp.price||0),q=Number(p.quantity||1);p.currency=p.currency||'AED';if(pr)p.value=pr*q;p.items=[{item_id:id,item_name:p.item_name||sp.name||id,item_variant:p.size||p.fit||undefined,price:pr||undefined,quantity:q}];}gtag('event',n,p);}catch(e){}};
+  ${/* 3 Nov 2026 (Faheem: "currently it says add to cart but we don't know which item was added"): every e-commerce
+     event (view_item, view_item_list, select_item, add_to_cart, remove_from_cart, view_cart, begin_checkout) carries GA4's
+     standard items[] with the same complete item details wherever it fires: item_id (Shopify handle), item_name,
+     item_brand, item_category (T-shirt, Polo, Hoodie, ...), item_category2 (line: Founding Edition, Sahel, Sahra Trail),
+     item_category3 (fit), item_category4 (sale tier, e.g. "50% off" or "Full price"), item_variant (size), price paid,
+     discount (AED off the full price), item_list_name (where it happened: specimen, shop, bag, ...), plus value and
+     currency. CAT is built from the product files at build time (below). */''}window.SB_CAT=${JSON.stringify(CATALOG).replace(/[\u007f-\uffff]/g, c => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'))};
+  window.track=window.track||function(n,p){try{p=p||{};var C=window.SB_CAT||{};
+    var ec=/^(view_item|view_item_list|select_item|add_to_cart|remove_from_cart|view_cart|begin_checkout|add_to_wishlist)$/.test(n);
+    if(ec){
+      if(!p.items){var id=p.item_id||p.item||p.item_name;if(id){var it={item_id:p.item_id||p.item||'',item_name:p.item_name||'',quantity:Number(p.quantity||1)};if(p.size)it.item_variant=String(p.size);if(p.price)it.price=Number(p.price);p.items=[it];}}
+      if(p.items&&p.items.length){var tot=0,lst=p.via||p.source||p.from||p.item_list_name;
+        p.items=p.items.map(function(o,i){o=o||{};var h=o.item_id;
+          if(!C[h]&&o.item_name){for(var k in C){if(C[k][0]===o.item_name){h=k;break;}}}
+          var c=C[h];if(c){o.item_id=h;o.item_name=c[0];o.item_category=c[1];o.item_category2=c[2];if(c[3])o.item_category3=c[3];
+            var pay=c[4];try{var S=window.SB_SALE;if(S&&S.on()&&S.prices&&S.prices[h])pay=S.prices[h][1];}catch(x){}
+            if(!o.price)o.price=pay;var off=Math.round((c[4]-Number(o.price))*100)/100;if(off>0.009){o.discount=off;o.item_category4=Math.round(off/c[4]*100)+'% off';}else o.item_category4='Full price';}
+          o.item_brand='Sahra & Beyond';if(o.quantity==null)o.quantity=1;if(o.index==null)o.index=i;if(lst&&!o.item_list_name)o.item_list_name=String(lst);
+          tot+=(Number(o.price)||0)*(Number(o.quantity)||1);return o;});
+        p.currency=p.currency||'AED';if(p.value==null&&tot)p.value=Math.round(tot*100)/100;}
+    }
+    gtag('event',n,p);}catch(e){}};
   ${ATTENTION}
   gtag('js',new Date());gtag('config','${GA4_ID}');
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
