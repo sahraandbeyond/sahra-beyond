@@ -18,6 +18,88 @@
   },
   "posts": [
     {
+      "id": "DfO1azECKBC",
+      "kind": "carousel",
+      "label": "The Al Aqah Reef Tee on the model: Regular and Super Oversized side by side",
+      "topic": "sahel",
+      "places": [
+        "snoopy-island"
+      ],
+      "guides": [
+        "/snorkeling/",
+        "/fujairah-beaches/"
+      ],
+      "wear": [
+        "/products/al-aqah-reef-tee-regular/",
+        "The Al Aqah Reef Tee"
+      ],
+      "src": "SAHEL-MODEL-CAROUSELS-2-Nov-2026/Al-Aqah-Reef-Tee"
+    },
+    {
+      "id": "DfO0_UkCE7J",
+      "kind": "carousel",
+      "label": "The Al Hamra Pearl Diver Tee on the model: Regular and Super Oversized side by side",
+      "topic": "sahel",
+      "places": [
+        "al-jazirah-al-hamra"
+      ],
+      "wear": [
+        "/products/al-hamra-pearl-diver-tee-regular/",
+        "The Al Hamra Pearl Diver Tee"
+      ],
+      "src": "SAHEL-MODEL-CAROUSELS-2-Nov-2026/Al-Hamra-Pearl-Diver-Tee"
+    },
+    {
+      "id": "DfO0jp3iEeG",
+      "kind": "carousel",
+      "label": "The Khor Fakkan Bay Tee on the model: Regular and Super Oversized side by side",
+      "topic": "sahel",
+      "places": [
+        "khor-fakkan-beach"
+      ],
+      "wear": [
+        "/products/khor-fakkan-bay-tee-regular/",
+        "The Khor Fakkan Bay Tee"
+      ],
+      "src": "SAHEL-MODEL-CAROUSELS-2-Nov-2026/Khor-Fakkan-Bay-Tee"
+    },
+    {
+      "id": "DfO0NOICEXM",
+      "kind": "carousel",
+      "label": "The Shams Tee on the model: Regular and Super Oversized side by side",
+      "topic": "sahel",
+      "wear": [
+        "/products/shams-tee-regular/",
+        "The Shams Tee"
+      ],
+      "src": "SAHEL-MODEL-CAROUSELS-2-Nov-2026/Shams-Tee"
+    },
+    {
+      "id": "DfOz8YECKIS",
+      "kind": "carousel",
+      "label": "The Ras Al Khor Hoodie on the model: the flamingos on the back",
+      "topic": "sahel",
+      "places": [
+        "ras-al-khor"
+      ],
+      "wear": [
+        "/products/ras-al-khor-hoodie/",
+        "The Ras Al Khor Hoodie"
+      ],
+      "src": "SAHEL-MODEL-CAROUSELS-2-Nov-2026/Ras-Al-Khor-Hoodie"
+    },
+    {
+      "id": "DfOzkotCHQ6",
+      "kind": "carousel",
+      "label": "The Barr & Bahr Hoodie on the model: land and sea across the back",
+      "topic": "sahel",
+      "wear": [
+        "/products/barr-and-bahr-hoodie/",
+        "The Barr & Bahr Hoodie"
+      ],
+      "src": "SAHEL-MODEL-CAROUSELS-2-Nov-2026/Barr-and-Bahr-Hoodie"
+    },
+    {
       "id": "DfMNECViL2Z",
       "kind": "carousel",
       "label": "The Al Hamra Pearl Diver Tee: down the rope to the oyster beds",
