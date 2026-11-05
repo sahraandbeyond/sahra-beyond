@@ -80,6 +80,7 @@ function freshDom() {
    server must model it as one - priced 0, with its own title - or every count
    and subtotal assertion in this file silently drifts once auto-add ships. */
 const GIFT = 'gid://shopify/ProductVariant/47389880615100';
+const CHEAP = 'gid://variant/CHEAP';   /* 5 Nov 2026: a line under the AED 100 UAE free-delivery threshold (68.70, the 11.11 Sahra Polo) */
 const isGiftNode = n => n && n.merchandise && n.merchandise.id === GIFT;
 /* What the customer thinks is in the basket: the gift is not their doing. */
 const realQty = env => (env.api.state()?.lines?.edges || [])
@@ -104,7 +105,7 @@ function makeServer() {
       buyerIdentity: { countryCode: c.cc || 'AE' },
       totalQuantity: c.lines.reduce((n, l) => n + l.quantity, 0),
       cost: { subtotalAmount: { amount: String(c.lines.reduce((n, l) =>
-        n + (l.vid === GIFT ? 0 : l.quantity * (c.cur === 'KWD' ? 16.55 : 149.5)), 0)), currencyCode: c.cur || 'AED' } },
+        n + (l.vid === GIFT ? 0 : l.quantity * (c.cur === 'KWD' ? 16.55 : l.vid === CHEAP ? 68.7 : 149.5)), 0)), currencyCode: c.cur || 'AED' } },
       lines: { edges: c.lines.map(l => ({ node: {
         id: l.id, quantity: l.quantity,
         merchandise: l.vid === GIFT
@@ -112,7 +113,7 @@ function makeServer() {
               price: { amount: '0.00', currencyCode: 'AED' },
               product: { title: 'Sahra Tote — Founding Edition gift', handle: 'sahra-tote-founding-edition-gift', featuredImage: null } }
           : { id: l.vid, title: 'M', availableForSale: true,
-              price: { amount: '149.50', currencyCode: 'AED' },
+              price: { amount: l.vid === CHEAP ? '68.70' : '149.50', currencyCode: 'AED' },
               product: { title: 'Empty Quarter Tee', handle: 'empty-quarter-regular', featuredImage: null } }
       } })) }
     });
@@ -434,17 +435,24 @@ console.log('\ncart-test — driving the real assets/sahra-cart.js\n');
       'calls: ' + env.server.calls.join(','));
   }
 
-  /* 28 — UAE delivery is free with NO minimum (1 Sep 2026). The meter must
-         never tell a UAE shopper they are short of a threshold. ------------ */
+  /* 28 — UAE delivery is free from AED 100, AED 15 below (5 Nov 2026; Shopify rate TOTAL_PRICE >= 100).
+         At or over AED 100 the bag says free; under it, it says AED 15 and counts down to AED 100. ----- */
   {
     const env = boot({ market: { market: () => 'uae', currency: () => 'AED' } });
-    await env.api.add('gid://variant/Z');            // 149.50 - under the OLD 150
+    await env.api.add('gid://variant/Z');            // 149.50: over AED 100
     const html = String(env.byId.sbFree.innerHTML);
-    check('UAE cart never shows a distance to free delivery',
+    check('UAE cart over AED 100 shows no distance to free delivery',
       !/away from free delivery/.test(html), 'meter: ' + html.slice(0, 160));
     /* 30 Oct 2026 (Fold and Drop bag, QA round): one line, "Free delivery, next working day · free 14-day returns" */
-    check('UAE cart states delivery is free', /Free delivery, next working day/.test(html),
+    check('UAE cart over AED 100 states delivery is free', /Free delivery, next working day/.test(html),
       'meter: ' + html.slice(0, 160));
+  }
+  {
+    const env = boot({ market: { market: () => 'uae', currency: () => 'AED' } });
+    await env.api.add(CHEAP);                        // 68.70: under AED 100
+    const html = String(env.byId.sbFree.innerHTML);
+    check('UAE cart under AED 100 says AED 15 and counts down to AED 100',
+      /AED 15, next working day/.test(html) && /AED 31\.30 away from free delivery/.test(html) && !/Free delivery, next working day/.test(html), 'meter: ' + html.slice(0, 200));
   }
 
   /* 29 — the GCC AED 390 threshold is untouched and still counts down ---- */

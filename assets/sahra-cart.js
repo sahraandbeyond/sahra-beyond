@@ -36,9 +36,9 @@
    6. MONEY WAS ROUNDED TO WHOLE DIRHAMS.
       `Math.round` displayed AED 149.50 as "AED 150" — directly misleading next
       to the old "Free UAE delivery over AED 150" copy, because Shopify would
-      still charge delivery. That UAE threshold was retired on 1 Sep 2026 (UAE
-      is free with no minimum); the GCC AED 390 threshold still makes this
-      load-bearing. Fils are shown whenever they are non-zero.
+      still charge delivery. That UAE threshold was retired on 1 Sep 2026 and a
+      new one came on 5 Nov 2026 (free from AED 100, AED 15 below); with the GCC
+      AED 390 threshold this stays load-bearing. Fils are shown whenever they are non-zero.
 
    7. EVERY ERROR WAS SWALLOWED by empty catch blocks, so a failed add looked
       identical to a successful one. Failures now surface in the drawer.
@@ -153,8 +153,8 @@
       var when = DAYS[arrive.getUTCDay()] + ' ' + arrive.getUTCDate() + ' ' + MONS[arrive.getUTCMonth()];
       var tomorrow = (arrive.getTime() - today.getTime()) === 864e5;
       if (before) { var mins = (14 * 60) - (n.h * 60 + n.mi), hh = Math.floor(mins / 60), mm = mins % 60;
-        return 'Order in ' + (hh ? hh + 'h ' : '') + mm + 'm for free delivery ' + (tomorrow ? 'tomorrow' : 'on ' + when) + (tomorrow ? ' (' + when + ')' : ''); }
-      return 'Order now for free delivery ' + (tomorrow ? 'tomorrow (' + when + ')' : 'on ' + when);
+        return 'Order in ' + (hh ? hh + 'h ' : '') + mm + 'm for delivery ' + (tomorrow ? 'tomorrow' : 'on ' + when) + (tomorrow ? ' (' + when + ')' : ''); }
+      return 'Order now for delivery ' + (tomorrow ? 'tomorrow (' + when + ')' : 'on ' + when);
     } catch (e) { return ''; }
   }
   /* 23 Oct 2026 (Faheem: "Make it static"): no ticking "Order in 3h 12m" anywhere, under the no-timer
@@ -376,7 +376,7 @@
       applied: 'Pair price applied: any two Founding Edition tees for AED 359', appliedX: 'Pair price applied: the two-tee price',
       sahelFit: 'Sahel runs larger than the Founding Edition.', sahelChart: 'Sahel size chart', trailFit: 'No size chart yet.', trailAsk: 'Message us about your size',
       total: 'Total', delivery: 'Delivery', returns: 'Returns', tabby: 'Tabby',
-      dUae: 'Free, next working day', dGcc: 'AED 50, free over AED 390', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
+      dUae: 'Free, next working day', dUae15: 'AED 15, next working day', dGcc: 'AED 50, free over AED 390', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
       away: 'AED {n} away from free delivery', unlocked: 'Free delivery unlocked',
       rUae: 'Free for 14 days', rX: 'Within 14 days', rX14: '14-day returns', dUaeLine: 'Free delivery, next working day \u00b7 free 14-day returns', appliedN: 'Pair price applied to all {n} Founding Edition tees', tabbyRow: '4 payments of {p}, no interest',
       checkout: 'Checkout', payUae: 'Apple Pay, Google Pay, Shop Pay, card or Tabby at checkout', payX: 'Apple Pay, Google Pay, Shop Pay or card at checkout',
@@ -399,7 +399,7 @@
       applied: 'طُبّق سعر القطعتين: أي تيشيرتين من الإصدار التأسيسي مقابل 359 درهمًا', appliedX: 'طُبّق سعر القطعتين',
       sahelFit: 'مقاسات ساحل أوسع من الإصدار التأسيسي.', sahelChart: 'جدول مقاسات ساحل', trailFit: 'لا يوجد جدول مقاسات بعد.', trailAsk: 'راسلنا بشأن مقاسك',
       total: 'المجموع', delivery: 'التوصيل', returns: 'الإرجاع', tabby: 'تابي',
-      dUae: 'مجاني، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 390 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
+      dUae: 'مجاني، في يوم العمل التالي', dUae15: '15 درهمًا، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 390 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
       away: 'يبقى {n} درهمًا للتوصيل المجاني', unlocked: 'التوصيل مجاني لهذا الطلب',
       rUae: 'مجانًا خلال 14 يومًا', rX: 'خلال 14 يومًا', rX14: 'إرجاع خلال 14 يومًا', dUaeLine: 'توصيل مجاني في يوم العمل التالي · إرجاع مجاني خلال 14 يومًا', appliedN: 'طُبّق سعر القطعتين على التيشيرتات {n} من الإصدار التأسيسي', tabbyRow: '4 دفعات بدون فوائد، كل دفعة {p}',
       checkout: 'إتمام الشراء', payUae: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay، البطاقة أو تابي', payX: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay أو البطاقة',
@@ -965,8 +965,9 @@
       else hide();
     })();
 
-    /* Delivery and returns, by market. Honest maths only: the one remaining threshold (GCC AED 390) is in AED,
-       so it is only counted down on a bag priced in AED. UAE delivery is free with no minimum (1 Sep 2026). */
+    /* Delivery and returns, by market. Honest maths only: the thresholds (UAE AED 100 from 5 Nov 2026, GCC AED 390)
+       are in AED, so they are only counted down on a bag priced in AED. */
+    var UAE_FREE = 100;
     (function () {
       var el = $('sbFree'); if (!el) return;
       var x = '';
@@ -982,7 +983,13 @@
         /* 22 Oct 2026: a bag holding pre-order pieces does not promise next-day delivery for them */
         var anyPre = !PRE_IN_HAND && cartNodes().some(isPre);
         el.className = 'sb-free';
-        el.innerHTML = '\u2713 ' + (anyPre ? 'Free UAE delivery, pre-order pieces ship from Fri 30 Oct' : T('dUaeLine'));
+        /* 5 Nov 2026 (Faheem: "Make it AED 100. Others under 100 pay AED 15"): UAE delivery is free from AED 100
+           (Shopify rate: TOTAL_PRICE >= 100), AED 15 below that, so a bag under AED 100 counts down to it */
+        if (!anyPre && cur === 'AED' && amt < UAE_FREE) {
+          var uLeft = UAE_FREE - amt, uLt = uLeft % 1 === 0 ? uLeft.toFixed(0) : uLeft.toFixed(2);
+          el.className = 'sb-free sb-x-mkt';
+          el.innerHTML = T('delivery') + ': ' + T('dUae15') + ' \u00b7 ' + T('rX14') + '<span class="sb-free-t">' + T('away', { n: uLt }) + '</span><span class="sb-free-bar"><span style="width:' + Math.max(6, Math.round(amt / UAE_FREE * 100)) + '%"></span></span>';
+        } else el.innerHTML = '\u2713 ' + (anyPre ? 'Free UAE delivery, pre-order pieces ship from Fri 30 Oct' : T('dUaeLine'));
       }
       el.hidden = false;
     })();

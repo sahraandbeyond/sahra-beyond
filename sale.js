@@ -258,7 +258,9 @@ function decorate(html, rel) {
         if (x['@type'] === 'Offer' && x.price != null) {
           const m = /\/products\/([a-z0-9-]+)\//.exec(String(x.url || ''));
           const h = m && m[1];
-          if (h && PRICES[h] && fils(x.price) === fils(PRICES[h][0])) { x.price = PRICES[h][1].toFixed(2); x.priceValidUntil = VALID_UNTIL; n++; }
+          if (h && PRICES[h] && fils(x.price) === fils(PRICES[h][0])) { x.price = PRICES[h][1].toFixed(2); x.priceValidUntil = VALID_UNTIL; n++;
+            /* 5 Nov 2026: UAE delivery is free from AED 100, AED 15 below, so the UAE rate follows the sale price */
+            (Array.isArray(x.shippingDetails) ? x.shippingDetails : []).forEach(sd => { const d = sd && sd.shippingDestination; if (d && d.addressCountry === 'AE' && sd.shippingRate) sd.shippingRate.value = +x.price < 100 ? '15' : '0'; }); }
         }
         Object.keys(x).forEach(k => walk(x[k]));
       };

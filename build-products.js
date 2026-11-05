@@ -1097,7 +1097,7 @@ ${SP.HEAD}
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Free next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; no minimum order</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; free over AED 100</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav class="sb-top">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div><div class="logo-a sb-house">Designed in the UAE for everyone who loves it.</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -1139,7 +1139,7 @@ ${SP.top(SPS, {
           </div>` : ''}
         </details>
         <details class="pdp-ans">
-          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">free next-day &middot; order by 2 pm</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 390</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
+          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">next-day &middot; free over AED 100</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 390</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
           <div class="shipcards">
             <!-- No regional-indicator (flag) emoji anywhere in these cards:
                  Windows renders them as bare letter codes, so the six-flag GCC string became
@@ -1148,7 +1148,7 @@ ${SP.top(SPS, {
                  SVG — identical on every OS — and the GCC card names its
                  countries in words. 🌍 is an ordinary emoji and is safe. -->
             <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#00732F"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> United Arab Emirates</b>
-              <span>Next working day, all seven emirates — order by 2 pm. <strong>Free, no minimum order</strong></span>
+              <span>Next working day, all seven emirates — order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
               <span>Free returns and exchanges within 14 days</span></div>
             <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
               <span>3–5 working days — AED 50, <strong>free over AED 390</strong></span>
@@ -1281,10 +1281,10 @@ ${careList(p.care)}
     </ul>
   </section>`}
 
-  ${LEAN ? `<section class="sec reveal" id="delivery"><span class="snum">04 — Delivery &amp; returns</span><h2>Free next-day UAE delivery and exchanges</h2><p>Free next-day delivery across the UAE on orders placed by 2 pm on a working day; free returns and size or fit exchanges within the UAE for 14 days. The detail is in our <a href="/policies.html#shipping">delivery and returns policy</a>.</p></section>` : `<section class="sec reveal" id="delivery">
+  ${LEAN ? `<section class="sec reveal" id="delivery"><span class="snum">04 — Delivery &amp; returns</span><h2>Next-day UAE delivery and free exchanges</h2><p>Next-day delivery across the UAE on orders placed by 2 pm on a working day, free on orders over AED 100 (AED 15 below that); free returns and size or fit exchanges within the UAE for 14 days. The detail is in our <a href="/policies.html#shipping">delivery and returns policy</a>.</p></section>` : `<section class="sec reveal" id="delivery">
     <span class="snum">06 — Delivery &amp; returns</span>
-    <h2>Free next-day UAE delivery and <em>exchanges</em></h2>
-    <p>Order before 2 pm UAE time on a working day and it ships the same day, arriving the next working day anywhere in the UAE. You'll get tracking by email as soon as it's on its way.</p>
+    <h2>Next-day UAE delivery and free <em>exchanges</em></h2>
+    <p>Order before 2 pm UAE time on a working day and it ships the same day, arriving the next working day anywhere in the UAE. Delivery is free on orders over AED 100 and AED 15 below that. You'll get tracking by email as soon as it's on its way.</p>
     <p>Returns are free within the UAE — you have 14 days from delivery to send something back unworn, unwashed and with tags on, and exchanges for a different size or fit are free too, subject to stock. Full detail is on the <a href="/policies.html#returns" style="border-bottom:1px solid currentColor">policies page</a>.</p>
   </section>`}
 

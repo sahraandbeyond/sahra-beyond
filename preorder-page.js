@@ -367,7 +367,7 @@ function productPage(p, all, SITE, stage) {
     tabby: false,   /* the Sahel and Trail pages never loaded Tabby's widget; the sheet carries the Tabby line */
     rating: RATING ? `<a class="po-rate" href="/#s-reviews"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>${RATING}</span></a>` : '',
     help,
-    extra: `<p class="po-small">${p.noTote ? 'Free delivery across the UAE. Returns within 14 days of delivery.' : 'Free delivery across the UAE, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
+    extra: `<p class="po-small">${p.noTote ? 'Free delivery across the UAE on orders over AED 100. Returns within 14 days of delivery.' : 'Free delivery across the UAE on orders over AED 100, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
       <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>`
   })}
   <div class="po-wrap">
@@ -701,7 +701,7 @@ ${CYCLE_CSS}
     <div class="ph-t">
       <p class="ph-k">Sahel &middot; The Coast Edition</p>
       <h2 id="phH2">Sahel is out now</h2>
-      <p class="ph-s">Seven designs from the UAE coast: four tees, a polo and two hoodies. Designed in the UAE. In stock, with free next-day delivery across the UAE.</p>
+      <p class="ph-s">Seven designs from the UAE coast: four tees, a polo and two hoodies. Designed in the UAE. In stock, with free next-day delivery across the UAE on orders over AED 100.</p>
       <a class="ph-a" href="/sahel/#pieces" data-track="home_sahel_hero">Shop Sahel <span aria-hidden="true">&rarr;</span></a>
       <p class="ph-tr"><a href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p>
     </div>
@@ -758,7 +758,7 @@ function homeNowBand() {
 @media(max-width:860px){.pn{padding:14px 16px 16px}.pn-in{grid-template-columns:minmax(0,1fr) auto;gap:12px}.pn-in>div:first-child{grid-column:1;grid-row:1}.pn-a{grid-column:2;grid-row:1}.pn-g{grid-column:1/-1;grid-row:2;justify-content:space-between}.pn-c{width:calc((100% - 40px) / 6);max-width:64px}.pn-s,.pn-a p+p{display:none}.pn-k{display:none}.pn h2{font-size:27px;margin:0}.pn-b{min-height:44px;padding:0 18px;font-size:14.5px}}
 </style><section class="pn st2" id="s-sahel-now" aria-labelledby="pnH">
   <div class="pn-in">
-    <div><p class="pn-k">Sahel &middot; The Coast Edition</p><h2 id="pnH">Sahel is out now</h2><p class="pn-s">Seven designs from the UAE coast. In stock, with free next-day UAE delivery.</p></div>
+    <div><p class="pn-k">Sahel &middot; The Coast Edition</p><h2 id="pnH">Sahel is out now</h2><p class="pn-s">Seven designs from the UAE coast. In stock, with free next-day UAE delivery over AED 100.</p></div>
     <div class="pn-g">` + real.map(p => `<a class="pn-c" href="/products/${p.handle}/" aria-label="${p.name}">${imgTag(p.images[0], { sizes: '64px', alt: '', bg: '#1B2A40' })}</a>`).join('') + `</div>
     <div class="pn-a"><p><a class="pn-b" href="/sahel/#pieces" data-track="home_sahel_band">Shop Sahel <span aria-hidden="true">&rarr;</span></a></p><p><a class="pn-tr" href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p></div>
   </div>
@@ -834,18 +834,19 @@ function seoTitle(p) { return `${p.seo}${p.fit ? `, ${p.fit} Fit` : ''} | Sahra 
 const fitPhrase = p => p.fit === 'Super Oversized' ? ', Super Oversized with a dropped shoulder' : '';
 function seoDesc(p, stage) {
   const ship = p.inHand ? (stage === 0 ? ' On sale from Wed 28 Oct.' : ' In stock.') : IN_HAND ? '' : stage === 0 ? ' Pre-order opens Wed 28 Oct; ships from Fri 30 Oct.' : ' Pre-order; ships from Fri 30 Oct.';
-  return `${p.plain}: ${p.md}${fitPhrase(p)}. ${LINE[p.line]}, designed in the UAE. ${money(p.price)}, free delivery across the UAE.${ship}`;
+  return `${p.plain}: ${p.md}${fitPhrase(p)}. ${LINE[p.line]}, designed in the UAE. ${money(p.price)}, free delivery across the UAE on orders over AED 100.${ship}`;
 }
 const RETURNS = { '@type': 'MerchantReturnPolicy', applicableCountry: 'AE', returnPolicyCountry: 'AE', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
   merchantReturnDays: 14, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn' };
-const SHIP_UAE = { '@type': 'OfferShippingDetails', shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'AED' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' } };
+/* 5 Nov 2026: UAE delivery is free from AED 100, AED 15 below (Shopify rate); the offer states the rate for its own price */
+const SHIP_UAE = price => ({ '@type': 'OfferShippingDetails', shippingRate: { '@type': 'MonetaryAmount', value: +price < 100 ? '15' : '0', currency: 'AED' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' } });
 function productLd(p, url, img, desc, stage, SITE) {
   const inWindow = stage === 1 && !p.inHand;
   const prod = { '@context': 'https://schema.org', '@type': 'Product', name: p.plain, sku: p.handle, description: desc, url, image: img ? [img] : undefined,
     brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' }, color: p.colour || undefined,
     offers: { '@type': 'Offer', price: (inWindow ? pre(p.price) : p.price).toFixed(2), priceCurrency: 'AED', url,
       priceValidUntil: inWindow ? '2026-10-29' : `${new Date(now()).getUTCFullYear() + 1}-12-31`, itemCondition: 'https://schema.org/NewCondition',
-      availability: require('./specimen.js').PAUSED[p.handle] ? 'https://schema.org/OutOfStock' : p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE], hasMerchantReturnPolicy: RETURNS } };
+      availability: require('./specimen.js').PAUSED[p.handle] ? 'https://schema.org/OutOfStock' : p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE(inWindow ? pre(p.price) : p.price)], hasMerchantReturnPolicy: RETURNS } };
   if (p.fitsList) { prod.inProductGroupWithID = p.key;
     prod.isVariantOf = { '@type': 'ProductGroup', productGroupID: p.key, name: p.name.replace(/&amp;/g, '&'), url: `${SITE}/products/${primaryHandle(p) || p.handle}/`, variesBy: ['https://schema.org/size'] }; }
   const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -871,7 +872,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
   });
   write('new/index.html', shell({
     title: 'Sahel & Sahra Trail: New Tees, Hoodies, Polo, Running Kit | Sahra & Beyond',
-    desc: 'Sahel, the Coast Edition (graphic tees, a polo and two hoodies) and Sahra Trail running wear (tee, 2-in-1 shorts and kit). Designed in the UAE. Free delivery across the UAE.',
+    desc: 'Sahel, the Coast Edition (graphic tees, a polo and two hoodies) and Sahra Trail running wear (tee, 2-in-1 shorts and kit). Designed in the UAE. Free delivery across the UAE on orders over AED 100.',
     canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false, image: `${SITE}/assets/preorder/og/ph-kfb-01-back-og.jpg`,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahel and Sahra Trail', url: `${SITE}/new/` },
       { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahel and Sahra Trail', itemListElement: all.filter(onSale).map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/products/${p.handle}/`, name: p.plain })) }],

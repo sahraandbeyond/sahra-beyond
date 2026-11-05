@@ -98,8 +98,8 @@
   }
 
   var SHIP = AR
-    ? '<span class="sb-ship-uae">توصيل مجاني في اليوم التالي داخل الإمارات</span><span class="sb-ship-gcc">التوصيل إلى دول الخليج خلال 3&ndash;5 أيام</span><span class="sb-ship-intl">توصيل دولي</span>'
-    : '<span class="sb-ship-uae">Free next-day UAE delivery</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days</span><span class="sb-ship-intl">Worldwide delivery</span>';
+    ? '<span class="sb-ship-uae">توصيل مجاني في اليوم التالي داخل الإمارات للطلبات فوق 100 درهم</span><span class="sb-ship-gcc">التوصيل إلى دول الخليج خلال 3&ndash;5 أيام</span><span class="sb-ship-intl">توصيل دولي</span>'
+    : '<span class="sb-ship-uae">Free next-day UAE delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days</span><span class="sb-ship-intl">Worldwide delivery</span>';
   function esc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
   /* ---------------------------------------------------------------- bar */

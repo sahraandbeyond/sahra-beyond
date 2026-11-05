@@ -431,7 +431,7 @@ console.log('\n\x1b[1mheader on phones - every built page\x1b[0m');
   /* the shop's announcement bar is one line on phones */
   const shop = fs.readFileSync(path.join(__dirname, 'shop-preview.html'), 'utf8');
   check('shop: the announcement extras are wrapped so phones can hide them',
-    /<span class=\\'note-x\\'> &nbsp;&middot;&nbsp; order by 2 pm &nbsp;&middot;&nbsp; no minimum order<\/span>/.test(shop) && /<span class=\\'note-x\\'> &nbsp;&middot;&nbsp; &#10022; Designed in the UAE/.test(shop) && /<span class="note-x"> &middot; order by 2 pm/.test(shop) && /@media\(max-width:560px\)\{\.note-x\{display:none\}/.test(shop));
+    /<span class=\\'note-x\\'> &nbsp;&middot;&nbsp; order by 2 pm &nbsp;&middot;&nbsp; free over AED 100<\/span>/.test(shop) && /<span class=\\'note-x\\'> &nbsp;&middot;&nbsp; &#10022; Designed in the UAE/.test(shop) && /<span class="note-x"> &middot; order by 2 pm/.test(shop) && /@media\(max-width:560px\)\{\.note-x\{display:none\}/.test(shop));
   const pdp = fs.readFileSync(path.join(__dirname, 'build-products.js'), 'utf8');
   check('product pages: the same one-line announcement on phones',
     /<span class="note-x"> &nbsp;·&nbsp; order by 2 pm/.test(pdp) && /@media\(max-width:560px\)\{\.note-x\{display:none\}/.test(pdp));

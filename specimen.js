@@ -290,7 +290,7 @@ function sheet(s) {
   return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}${(s.fits || []).some(f => f.fit === 'Super Oversized') ? ' data-fitwide="1"' : ''}>
       <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd"${PAUSED[s.handle] ? ' disabled' : ''}>${PAUSED[s.handle] ? 'Back soon' : 'Add to bag'}</button></div>${PAUSED[s.handle] ? `
       <p class="ssb-paused">${pausedNote(s)}</p>` : ''}
-      <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with Tabby</span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
+      <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with Tabby</span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
       <p class="ssb-msg" id="ssMsg" role="status" aria-live="polite"></p>
     </div>`;
 }
@@ -322,7 +322,7 @@ function top(s, o = {}) {
       ${sheet(s)}
       ${o.tabby === false ? '' : `<div class="sb-tabby sb-tabby-pdp ss-tabby sb-aed-only" data-tabby-price="${s.price}" data-tabby-source="product"><span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of AED ${quarter(s.price)}</span></div>`}
       <ul class="ss-promise">
-        <li><span class="sb-ship-uae">Free next-working-day delivery across the UAE, order by 2 pm.</span><span class="sb-ship-gcc">GCC delivery in 3–5 working days, free over AED 390.</span><span class="sb-ship-intl">Worldwide delivery in 7–14 working days.</span></li>
+        <li><span class="sb-ship-uae">Next-working-day delivery across the UAE, order by 2 pm. Free on orders over AED 100, AED 15 below that.</span><span class="sb-ship-gcc">GCC delivery in 3–5 working days, free over AED 390.</span><span class="sb-ship-intl">Worldwide delivery in 7–14 working days.</span></li>
         <li><span class="sb-ship-uae">Free 14-day returns and size exchanges in the UAE.${s.line === 'founding' ? ' If your size has gone, a full refund.' : ''}</span><span class="sb-ship-gcc">14-day returns; duties, if any, are paid on arrival.</span><span class="sb-ship-intl">14-day returns; duties, if any, are paid on arrival.</span></li>
         ${s.gift ? '<li>The <a href="/tote/">Sahra Tote</a>, free with every order.</li>' : ''}
       </ul>
