@@ -178,7 +178,12 @@ function fromFounding(p, all) {
 function fromPreorder(p) {
   const D = PRE[p.key]; if (!D) return null;
   const mk = (k, label, file, cap) => file ? Object.assign(pre(file, { mock: !!D.mock && k !== 'art' }), { k, label, cap: cap || '', name: file }) : null;
-  const views = [mk('back', 'Back', D.back), mk('front', 'Front', D.front, D.frontCap), mk('art', 'Art', D.art, D.artCap), mk('worn', 'Worn', D.worn, D.wornCap)].filter(Boolean);
+  /* 8 Nov 2026 (Faheem: "Replace front back and art with real model shots on all shirts"): a Sahel tee page with a `stage` in
+     content/sahel-photos.json shows model photos in its Back, Front and Art tabs (female model first); the flat-lays leave the
+     tabs. The alt is the model-photo alt. Art pins are not drawn on a model photo (stage(): v.model). */
+  const ST = p.onModel && p.onModel.stage;
+  const views = ST ? ['back', 'front', 'art'].filter(k => ST[k]).map(k => Object.assign(pre(ST[k].k), { k, label: k[0].toUpperCase() + k.slice(1), cap: '', name: ST[k].k, model: true, mAlt: modelAlt(p, ST[k].view) }))
+    : [mk('back', 'Back', D.back), mk('front', 'Front', D.front, D.frontCap), mk('art', 'Art', D.art, D.artCap), mk('worn', 'Worn', D.worn, D.wornCap)].filter(Boolean);
   if (D.face === 'worn' && views.some(v => v.k === 'worn')) views.unshift(views.splice(views.findIndex(v => v.k === 'worn'), 1)[0]);   /* the model photo is the first tab too */
   views.forEach(v => { if (v.h / v.w > 1.35) v.tall = true; });
   const fitted = !!(p.fit && p.fitsList);
@@ -198,10 +203,13 @@ function fromPreorder(p) {
 }
 /* 2 Nov 2026 (Faheem approved every photo and its order): the five model photos of a Sahel page (content/sahel-photos.json
    onModel, per handle), with the size the model wears. The alt says what the photo shows, never where it was taken. */
+function modelAlt(p, view) {
+  const nm = String(p.name).replace(/&amp;/g, '&').replace(/^The /, ''), fit = p.fit && !HOODIES.has(p.key) ? ` in ${p.fit}` : '';
+  return `Model wearing the ${nm}${fit}, ${view}`;
+}
 function onModelSet(p) {
   const M = p.onModel; if (!M || !M.photos || !M.photos.length) return null;
-  const nm = String(p.name).replace(/&amp;/g, '&').replace(/^The /, ''), fit = p.fit && !HOODIES.has(p.key) ? ` in ${p.fit}` : '';
-  return { size: M.size || '', photos: M.photos.map(x => Object.assign(pre(x.k), { alt: `Model wearing the ${nm}${fit}, ${x.view}` })) };
+  return { size: M.size || '', photos: M.photos.map(x => Object.assign(pre(x.k), { alt: modelAlt(p, x.view) })) };
 }
 
 /* ---- markup ---------------------------------------------------------------- */
@@ -218,12 +226,12 @@ function stage(s, altBase) {
   const order = s.views.slice();
   const first = order.find(v => v.k === s.face) || order[0];
   const on = first.k;
-  const notes = s.notes.length && s.views.some(v => v.k === 'art');
+  const notes = s.notes.length && s.views.some(v => v.k === 'art' && !v.model);   /* no pins on a model photo (8 Nov 2026) */
   /* 30 Oct 2026 (QA B1): the tabs sit ON the photo, at the top, so the buy sheet can never cover them */
   const tabs = s.views.length > 1 ? `<div class="ss-tabs" role="tablist" aria-label="Photos">${s.views.map(v => `<button type="button" role="tab" class="ss-tab${v.k === on ? ' on' : ''}" id="ssT-${v.k}" data-v="${v.k}" aria-selected="${v.k === on}" aria-controls="ssV-${v.k}">${v.label}</button>`).join('')}</div>` : '';
   const pins = notes ? `<div class="ss-pins" aria-label="Numbered notes on the artwork">${s.notes.map((n, i) => `<button type="button" class="ss-pin" data-i="${i}" style="left:${n.x}%;top:${n.y}%" aria-label="Note ${i + 1}: ${esc(n.t)}">${i + 1}</button>`).join('')}</div>` : '';
   const figs = s.views.map(v => {
-    v.alt = `${altBase}, ${v.k === 'art' ? 'close-up of the artwork' : v.k === 'worn' ? 'worn' : v.k}${v.mock ? ', studio mock-up' : ''}`;
+    v.alt = v.mAlt || `${altBase}, ${v.k === 'art' ? 'close-up of the artwork' : v.k === 'worn' ? 'worn' : v.k}${v.mock ? ', studio mock-up' : ''}`;
     const boxed = v.k === 'art' && notes;   /* the annotated photo sits between the tabs and the note, whole, so no pin hides under either */
     const blur = (v.tall || boxed) ? `<span class="ss-blur" aria-hidden="true"${v === first ? ` style="background-image:url(${v.src})"` : ` data-bg="${v.src}"`}></span>` : '';
     return `<figure class="ss-v${v.k === on ? ' on' : ''}${v.tall ? ' tall' : ''}${boxed ? ' boxed' : ''}" id="ssV-${v.k}"${s.views.length > 1 ? ` role="tabpanel" aria-labelledby="ssT-${v.k}"` : ''} data-v="${v.k}" data-cap="${esc(v.cap)}"${v.mock ? ' data-mock="1"' : ''} data-full="${v.full}">${blur}${boxed ? `<div class="ss-artbox">${imgTag(v, v === first)}${pins}</div>` : imgTag(v, v === first)}</figure>`;
