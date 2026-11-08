@@ -106,9 +106,11 @@ const mock = (k, alt) => ({ k, alt, mock: true });
 /* 8 Nov 2026 (Faheem: "Remove the mockup tag from trail and polo photos"): the Sahra Trail and Sahel Polo studio images carry no
    Mock-up label or alt note any more; `studio` only stops the copy claiming they were photographed from the real piece. */
 const studio = (k, alt) => ({ k, alt, mock: false, studio: true });
+/* 8 Nov 2026 (Faheem: "real photos first"): a male model photo leads the Trail cards and pages, before the studio images. No caption. */
+const model = (k, alt) => ({ k, alt, mock: false, cap: '' });
 /* 27 Oct 2026 (Faheem: the Sahel photos from the 27 Oct shoot): the real photographs, per piece, in content/sahel-photos.json.
-   Back first, then front, then details. Real photos carry no Mock-up label (cap '' = no caption); the Sahel Polo stays a labelled mock-up until it is
-   photographed (the Khor Fakkan Bay front arrived on the evening of 27 Oct). Hoodie location photos are 2:3 and are always
+   Back first, then front, then details. Real photos carry no Mock-up label (cap '' = no caption); (8 Nov 2026) the Sahel Polo now opens on
+   male model photos, then its studio images (the Khor Fakkan Bay front arrived on the evening of 27 Oct). Hoodie location photos are 2:3 and are always
    shown whole (object-fit: contain), so the flamingo and dune prints are never cropped. */
 const PHOTOS_JSON = (function () { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'content', 'sahel-photos.json'), 'utf8')); } catch (e) { return {}; } })();
 const PHOTOS = PHOTOS_JSON.pieces || {};
@@ -173,17 +175,17 @@ const TRAIL = [
   { handle: 'sahra-trail-tee', name: 'Sahra Trail Tee', seo: 'Sahra Trail Running T-Shirt', kind: 'Running T-shirt', md: 'raglan sleeves, mesh side panels, covered seams and a reflective Two Ridges symbol', price: 139,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Ocean-inspired print.',
     details: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'],
-    images: [studio('trail-tee-front', 'Sahra Trail Tee, front'), studio('trail-tee-back', 'Sahra Trail Tee, back'),
+    images: [model('pm-sahra-trail-tee-01-running-back', 'Model wearing the Sahra Trail Tee, running, back view'), studio('trail-tee-front', 'Sahra Trail Tee, front'), studio('trail-tee-back', 'Sahra Trail Tee, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-mesh', 'The mesh side panel, close up'), real('trail-backsymbol', 'The Two Ridges symbol, close up')] },
   { handle: 'sahra-trail-2-in-1-short', name: 'Sahra Trail 2-in-1 Short', seo: '2-in-1 Running Shorts, Sahra Trail', kind: '2-in-1 running shorts', md: 'a hidden inner liner, a bonded phone pocket, a zip pocket for keys and an internal drawcord', price: 169,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Wave-inspired graphic.',
     details: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'],
-    images: [studio('trail-short-front', 'Sahra Trail 2-in-1 running shorts, front'), studio('trail-short-back', 'Sahra Trail 2-in-1 running shorts, back'),
+    images: [model('pm-sahra-trail-2-in-1-short-01-leg-close-up', 'Model wearing the Sahra Trail 2-in-1 Short, close-up of the leg'), studio('trail-short-front', 'Sahra Trail 2-in-1 running shorts, front'), studio('trail-short-back', 'Sahra Trail 2-in-1 running shorts, back'),
       real('trail-shortsymbol', 'The Two Ridges symbol and the name on the leg, close up'), real('trail-shortname', 'SAHRA TRAIL on the leg, close up')] },
   { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', seo: 'Sahra Trail Running Kit: Tee and 2-in-1 Shorts', kind: 'Running kit', md: 'the Sahra Trail Tee and the Sahra Trail 2-in-1 Short together, with a size chosen for each', price: 308, kit: true,   /* 8 Nov 2026 (Faheem): no kit discount; the kit is the tee + short at their own prices (139 + 169) */
     lede: 'The Sahra Trail Tee and the Sahra Trail 2-in-1 Short together in one order, with a size chosen for each. Tee, AED 139. Short, AED 169.',
     details: ['The Sahra Trail Tee', 'The Sahra Trail 2-in-1 Short', 'Choose a size for each'],
-    images: [studio('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), studio('trail-kit-back', 'Sahra Trail Kit, back'),
+    images: [model('pm-sahra-trail-kit-01-running-side', 'Model wearing the Sahra Trail Kit, running, side view'), studio('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), studio('trail-kit-back', 'Sahra Trail Kit, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-shortsymbol', 'The Two Ridges symbol on the short, close up')] },
   /* 23 Oct 2026 (Faheem): the canvas drawstring bag, 100 in hand, AED 50, on sale with Trail from Wed 28 Oct 08:00 UAE.
      Name chosen for Faheem ("come up with an innovative on brand name"): The Trailhead Bag, what you take to the trailhead.
@@ -213,7 +215,8 @@ function products() {
     else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
       onModel: ON_MODEL[p.key] && ON_MODEL[p.key].photos ? ON_MODEL[p.key] : null });
   });
-  TRAIL.forEach(p => out.push({ line: 'trail', handle: p.handle, title: p.name, plain: p.name, name: p.name, price: p.price, story: p.lede, details: p.details, images: p.images, kit: !!p.kit, key: p.handle, seo: p.seo, kind: p.kind, md: p.md, inHand: !!p.inHand, oneSize: !!p.oneSize, noTote: !!p.noTote }));
+  TRAIL.forEach(p => out.push({ line: 'trail', handle: p.handle, title: p.name, plain: p.name, name: p.name, price: p.price, story: p.lede, details: p.details, images: p.images, kit: !!p.kit, key: p.handle, seo: p.seo, kind: p.kind, md: p.md, inHand: !!p.inHand, oneSize: !!p.oneSize, noTote: !!p.noTote,
+    onModel: ON_MODEL[p.handle] && ON_MODEL[p.handle].photos ? ON_MODEL[p.handle] : null }));
   return out;
 }
 function urls(SITE) { return products().map(p => `${SITE}/products/${p.handle}/`); }
@@ -377,7 +380,7 @@ function productPage(p, all, SITE, stage) {
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
-      <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.images.length && p.images[0].studio ? '' : p.line === 'sahel' ? 'Photographed from the real piece.' : ''} Designed in the UAE.</p></div>
+      <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.images.some(i => i.studio) ? '' : p.line === 'sahel' ? 'Photographed from the real piece.' : ''} Designed in the UAE.</p></div>
   </section>
   ${pausedChart}${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
@@ -811,13 +814,13 @@ function homeLines() {
   <section class="hl-sec" id="home-sahel" aria-labelledby="hlS">
     <p class="nb-k">${k('Sahel, the Coast Edition')}</p>
     <h3 id="hlS">Sahel: seven designs from the UAE coast</h3>
-    <p class="nb-l">Four tees, two hoodies and a polo, drawn from Khor Fakkan, Al Aqah, Al Jazirah Al Hamra and Ras Al Khor. ${inc('st1', '<span class="st1">Ships from Fri 30 Oct. </span>')}Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. Photographed from the real pieces; the Sahel Polo is still a labelled mock-up.</p>
+    <p class="nb-l">Four tees, two hoodies and a polo, drawn from Khor Fakkan, Al Aqah, Al Jazirah Al Hamra and Ras Al Khor. ${inc('st1', '<span class="st1">Ships from Fri 30 Oct. </span>')}Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. Photographed from the real pieces.</p>
     <div class="nb-g hl-g">${sahel.map(p => newCard(p, true)).join('')}<a class="hl-all" href="/sahel/#pieces" data-track="home_lines_sahel"><b>All of Sahel</b><small>Every piece, every fit, the story behind the coast.</small><span>${inc('st1', '<span class="st1">Pre-order Sahel</span>')}<span class="st02">Shop Sahel</span> &rarr;</span></a></div>
   </section>
   <section class="hl-sec" id="home-trail" aria-labelledby="hlT">
     <p class="nb-k">${k('Sahra Trail running wear')}</p>
     <h3 id="hlT">Sahra Trail: the tee, the 2-in-1 short and the kit</h3>
-    <p class="nb-l">Running wear marked with the Two Ridges, plus the Trailhead Bag. Men&rsquo;s cuts; the bag is one size. No size chart yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order. The studio images are mock-ups.</p>
+    <p class="nb-l">Running wear marked with the Two Ridges, plus the Trailhead Bag. Men&rsquo;s cuts; the bag is one size. No size chart yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.</p>
     <div class="nb-g hl-g">${trail.map(p => newCard(p)).join('')}</div>
     <a class="nb-a" href="/trail/#pieces" data-track="home_lines_trail">Shop Sahra Trail &rarr;</a>
   </section>

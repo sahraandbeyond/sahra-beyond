@@ -384,6 +384,22 @@
   ],
   "the-sahel-polo": [
    {
+    "k": "pm-the-sahel-polo-01-front",
+    "alt": "Model wearing the Sahel Polo in Black, front view",
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
+    "k": "pm-the-sahel-polo-02-back",
+    "alt": "Model wearing the Sahel Polo in Black, back view",
+    "w": 720,
+    "h": 900,
+    "lw": 1200,
+    "lh": 1500
+   },
+   {
     "k": "polo-front",
     "alt": "The Sahel Polo in Black, front",
     "studio": true,
@@ -452,6 +468,22 @@
     {
      "k": "pm-khor-fakkan-bay-tee-super-oversized-05-portrait-chest-mark",
      "view": "portrait showing the chest mark"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-06-front-chest-mark",
+     "view": "front view showing the chest mark"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-07-back-arm-raised",
+     "view": "back view with one arm raised"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-08-back-hands-on-hips",
+     "view": "back view, hands on hips"
+    },
+    {
+     "k": "pm-khor-fakkan-bay-tee-super-oversized-09-back-print-close-up",
+     "view": "close-up of the back print"
     }
    ]
   },
@@ -477,6 +509,18 @@
     {
      "k": "pm-al-hamra-pearl-diver-tee-regular-05-portrait-chest-mark",
      "view": "portrait showing the chest mark"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-regular-06-back-arms-raised",
+     "view": "back view with arms raised"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-regular-07-front-arms-raised",
+     "view": "front view with arms raised"
+    },
+    {
+     "k": "pm-al-hamra-pearl-diver-tee-regular-08-chest-mark",
+     "view": "front view showing the oyster on the chest"
     }
    ]
   },
@@ -527,6 +571,14 @@
     {
      "k": "pm-al-aqah-reef-tee-regular-05-close-chest-mark",
      "view": "close-up of the chest mark"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-regular-06-back-print",
+     "view": "close view of the back print"
+    },
+    {
+     "k": "pm-al-aqah-reef-tee-regular-07-turtle-close-up",
+     "view": "close-up of the turtle on the chest"
     }
    ]
   },
@@ -577,6 +629,18 @@
     {
      "k": "pm-shams-tee-regular-05-sunset",
      "view": "front view at sunset"
+    },
+    {
+     "k": "pm-shams-tee-regular-06-front",
+     "view": "front view, hands behind the back"
+    },
+    {
+     "k": "pm-shams-tee-regular-07-back",
+     "view": "back view, hands at the hem"
+    },
+    {
+     "k": "pm-shams-tee-regular-08-side",
+     "view": "side view"
     }
    ]
   },
@@ -654,6 +718,79 @@
      "view": "full-length view"
     }
    ]
-  }
+  },
+  "the-sahel-polo": {
+   "size": "M",
+   "photos": [
+    {
+     "k": "pm-the-sahel-polo-01-front",
+     "view": "front view"
+    },
+    {
+     "k": "pm-the-sahel-polo-02-back",
+     "view": "back view"
+    }
+   ]
+  },
+  "sahra-trail-tee": {
+   "size": "M",
+   "photos": [
+    {
+     "k": "pm-sahra-trail-tee-01-running-back",
+     "view": "running, back view"
+    },
+    {
+     "k": "pm-sahra-trail-tee-02-back",
+     "view": "back view, showing the Two Ridges mark"
+    },
+    {
+     "k": "pm-sahra-trail-tee-03-mesh-panel",
+     "view": "close-up of the mesh side panel"
+    },
+    {
+     "k": "pm-sahra-trail-kit-01-running-side",
+     "view": "running, side view"
+    }
+   ]
+  },
+  "sahra-trail-2-in-1-short": {
+   "size": "M",
+   "photos": [
+    {
+     "k": "pm-sahra-trail-2-in-1-short-01-leg-close-up",
+     "view": "close-up of the leg, showing the mark and the inner layer"
+    },
+    {
+     "k": "pm-sahra-trail-kit-01-running-side",
+     "view": "running, side view"
+    }
+   ]
+  },
+  "sahra-trail-kit": {
+   "size": "M",
+   "photos": [
+    {
+     "k": "pm-sahra-trail-kit-01-running-side",
+     "view": "running, side view"
+    },
+    {
+     "k": "pm-sahra-trail-tee-01-running-back",
+     "view": "running, back view"
+    },
+    {
+     "k": "pm-sahra-trail-2-in-1-short-01-leg-close-up",
+     "view": "close-up of the leg, showing the mark and the inner layer"
+    },
+    {
+     "k": "pm-sahra-trail-tee-02-back",
+     "view": "back view, showing the Two Ridges mark"
+    },
+    {
+     "k": "pm-sahra-trail-tee-03-mesh-panel",
+     "view": "close-up of the mesh side panel"
+    }
+   ]
+  },
+  "_note8": "8 Nov 2026 (Faheem): male model photos of the t-shirts, the Sahel Polo and Sahra Trail. He wears S Regular in the tees, S in the Khor Fakkan Bay Tee Super Oversized (the current oversized stock), M in the polo and M in the Trail tee and short. Appended after the 1 Nov photos on the tee pages (both models wear S). On the polo and Trail pages the model photos come first (Faheem: \"real photos first\"): the first one opens the product page (specimen.js PRE worn) and leads the cards (pieces / TRAIL images), then the studio images. Views say what is shown, never a place. Originals: Product Photos/Male model photos/2026-11-08/."
  }
 }

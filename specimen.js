@@ -97,10 +97,11 @@ const PRE = {
   'shams-tee': { face: 'front', back: 'ph2-shams-04-back', front: 'ph-shams-01-front', art: 'ph-shams-02-detail-mark' },
   'barr-and-bahr-hoodie': { face: 'back', back: 'ph-barr-01-back', front: 'ph-barr-04-front', art: 'ph-barr-05-detail-dunes-wave', worn: 'ph-barr-02-back-hood-down', wornCap: 'Worn with the hood down' },
   'ras-al-khor-hoodie': { face: 'back', back: 'ph-rakh-01-back', front: 'ph-rakh-06-front', art: 'ph-rakh-04-detail-flamingos', worn: 'ph-rakh-05-front-model' },
-  'the-sahel-polo': { face: 'front', back: 'polo-back', front: 'polo-front' },   /* 8 Nov 2026: no Mock-up label (Faheem) */
-  'sahra-trail-tee': { face: 'front', back: 'trail-tee-back', front: 'trail-tee-front', art: 'trail-chest', artCap: 'Close-up of the sample' },
-  'sahra-trail-2-in-1-short': { face: 'front', back: 'trail-short-back', front: 'trail-short-front', art: 'trail-shortsymbol', artCap: 'Close-up of the sample' },
-  'sahra-trail-kit': { face: 'front', back: 'trail-kit-back', front: 'trail-kit-front' },
+  /* 8 Nov 2026 (Faheem: "real photos first"): the polo and Trail pages open on a male model photo (the Worn view, shown first), then the studio images */
+  'the-sahel-polo': { face: 'worn', back: 'polo-back', front: 'polo-front', worn: 'pm-the-sahel-polo-01-front' },   /* 8 Nov 2026: no Mock-up label (Faheem) */
+  'sahra-trail-tee': { face: 'worn', back: 'trail-tee-back', front: 'trail-tee-front', art: 'trail-chest', artCap: 'Close-up of the sample', worn: 'pm-sahra-trail-tee-01-running-back' },
+  'sahra-trail-2-in-1-short': { face: 'worn', back: 'trail-short-back', front: 'trail-short-front', art: 'trail-shortsymbol', artCap: 'Close-up of the sample', worn: 'pm-sahra-trail-2-in-1-short-01-leg-close-up' },
+  'sahra-trail-kit': { face: 'worn', back: 'trail-kit-back', front: 'trail-kit-front', worn: 'pm-sahra-trail-kit-01-running-side' },
   'trailhead-bag': { face: 'front', front: 'trail-bag-front', frontCap: 'The real bag' }
 };
 /* "Next piece" runs through each line in the order of its collection page */
@@ -178,6 +179,7 @@ function fromPreorder(p) {
   const D = PRE[p.key]; if (!D) return null;
   const mk = (k, label, file, cap) => file ? Object.assign(pre(file, { mock: !!D.mock && k !== 'art' }), { k, label, cap: cap || '', name: file }) : null;
   const views = [mk('back', 'Back', D.back), mk('front', 'Front', D.front, D.frontCap), mk('art', 'Art', D.art, D.artCap), mk('worn', 'Worn', D.worn, D.wornCap)].filter(Boolean);
+  if (D.face === 'worn' && views.some(v => v.k === 'worn')) views.unshift(views.splice(views.findIndex(v => v.k === 'worn'), 1)[0]);   /* the model photo is the first tab too */
   views.forEach(v => { if (v.h / v.w > 1.35) v.tall = true; });
   const fitted = !!(p.fit && p.fitsList);
   const spec = (p.details || []).filter(d => !/ fit$/.test(d)).map(d => String(d).replace(/^(\d{3})gsm/i, '$1 GSM').replace(/^Our mark/, 'Mark'));
@@ -198,7 +200,7 @@ function fromPreorder(p) {
    onModel, per handle), with the size the model wears. The alt says what the photo shows, never where it was taken. */
 function onModelSet(p) {
   const M = p.onModel; if (!M || !M.photos || !M.photos.length) return null;
-  const nm = String(p.name).replace(/&amp;/g, '&'), fit = p.fit && !HOODIES.has(p.key) ? ` in ${p.fit}` : '';
+  const nm = String(p.name).replace(/&amp;/g, '&').replace(/^The /, ''), fit = p.fit && !HOODIES.has(p.key) ? ` in ${p.fit}` : '';
   return { size: M.size || '', photos: M.photos.map(x => Object.assign(pre(x.k), { alt: `Model wearing the ${nm}${fit}, ${x.view}` })) };
 }
 
