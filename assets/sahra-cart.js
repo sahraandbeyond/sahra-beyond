@@ -48,12 +48,13 @@
      photos; the hoodies show the 4:5 front so the small square crop never cuts the back print; Trail still mock-ups)
      (Shopify holds no images for them yet). A pre-order line says when it ships, shows the pre-order price
      without a struck-through list price, and never shows a remaining count (no scarcity wording). */
-  var PRE = { 'khor-fakkan-bay-tee-regular': 'ph-kfb-01-back', 'khor-fakkan-bay-tee-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-regular': 'ph2-pearl-01-back', 'al-hamra-pearl-diver-tee-oversized': 'ph2-pearl-01-back',
-    'al-aqah-reef-tee-regular': 'ph-reef-01-back', 'al-aqah-reef-tee-oversized': 'ph-reef-01-back', 'shams-tee-regular': 'ph-shams-01-front', 'shams-tee-oversized': 'ph-shams-01-front', 'the-sahel-polo': '',
+  var PRE = { 'khor-fakkan-bay-tee-regular': 'pm-khor-fakkan-bay-tee-regular-02-back', 'khor-fakkan-bay-tee-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-regular': 'pm-al-hamra-pearl-diver-tee-regular-02-back', 'al-hamra-pearl-diver-tee-oversized': 'ph2-pearl-01-back',
+    'al-aqah-reef-tee-regular': 'pm-al-aqah-reef-tee-regular-02-back', 'al-aqah-reef-tee-oversized': 'ph-reef-01-back', 'shams-tee-regular': 'pm-shams-tee-regular-01-front', 'shams-tee-oversized': 'ph-shams-01-front', 'the-sahel-polo': 'pm-the-sahel-polo-01-front',
     /* 31 Oct 2026: the Super Oversized tees (the current stock) and the paused Oversized hoodies */
-    'khor-fakkan-bay-tee-super-oversized': 'ph-kfb-01-back', 'al-hamra-pearl-diver-tee-super-oversized': 'ph2-pearl-01-back', 'al-aqah-reef-tee-super-oversized': 'ph-reef-01-back', 'shams-tee-super-oversized': 'ph-shams-01-front',
+    'khor-fakkan-bay-tee-super-oversized': 'pm-khor-fakkan-bay-tee-super-oversized-02-back', 'al-hamra-pearl-diver-tee-super-oversized': 'pm-al-hamra-pearl-diver-tee-super-oversized-02-back', 'al-aqah-reef-tee-super-oversized': 'pm-al-aqah-reef-tee-super-oversized-02-back', 'shams-tee-super-oversized': 'pm-shams-tee-super-oversized-01-front',
     'barr-and-bahr-hoodie-oversized': 'ph-barr-04-front', 'ras-al-khor-hoodie-oversized': 'ph-rakh-06-front',
-    'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'trail-tee-front', 'sahra-trail-2-in-1-short': 'trail-short-front', 'sahra-trail-kit': 'trail-kit-front' };
+    'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'pm-sahra-trail-tee-01-running-back', 'sahra-trail-2-in-1-short': 'pm-sahra-trail-2-in-1-short-01-leg-close-up', 'sahra-trail-kit': 'pm-sahra-trail-kit-01-running-side' };
+  /* 8 Nov 2026 (Faheem: "Everywhere should be models first"): the bag shows the model photo that opens each product page (paused fits keep the flat-lay) */
   var PRE_IN_HAND = true;   /* 30 Oct 2026 (Faheem: "In stock, ships next day"). Was:  set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
   function isPre(l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; return !!h && Object.prototype.hasOwnProperty.call(PRE, h); }
   var CART_REAL = { 'al-quaa-galaxy-regular': '/shirts/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/emptyquarter-model-stand.webp', 'hajar-mountains-regular': '/shirts/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/hajar-lake-back-her.webp', 'sand-polo': '/shirts/polo-dune-front.webp', 'trailhead-bag': '/assets/preorder/trail-bag-front-720.webp' };
@@ -446,7 +447,7 @@
   /* back-art thumbnails: the art side of each piece, the same photo that opens its page */
   var THUMB = { 'al-quaa-galaxy-regular': '/shirts/card/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/card/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/card/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/card/emptyquarter-model-stand.webp',
     'hajar-mountains-regular': '/shirts/card/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/card/hajar-model-back.webp', 'sand-polo': '/shirts/card/polo-dune-front.webp',
-    'barr-and-bahr-hoodie': 'ph-barr-01-back', 'ras-al-khor-hoodie': 'ph-rakh-01-back', 'the-sahel-polo': 'polo-front', 'trailhead-bag': 'trail-bag-front',
+    'barr-and-bahr-hoodie': 'ph-barr-01-back', 'ras-al-khor-hoodie': 'ph-rakh-01-back', 'the-sahel-polo': 'pm-the-sahel-polo-01-front', 'trailhead-bag': 'trail-bag-front',
     'barr-and-bahr-hoodie-oversized': 'ph-barr-01-back', 'ras-al-khor-hoodie-oversized': 'ph-rakh-01-back' };
   var MOCKS = {};   /* 8 Nov 2026 (Faheem): no Mock-up label on the Trail and Sahel Polo images */
   function thumbOf(h, m) {

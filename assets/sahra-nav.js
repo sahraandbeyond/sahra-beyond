@@ -63,7 +63,7 @@ function sbStage() {
   ];
   /* 27 Oct 2026 (Faheem: "Menu shows the pre-order"): the feature card is Sahel, with its real photograph. The Founding
      Edition stays first in the Collections column. */
-  var FEAT = { href: '/sahel/#pieces', img: '/assets/preorder/ph-reef-01-back-720.webp',
+  var FEAT = { href: '/sahel/#pieces', img: '/assets/preorder/pm-al-aqah-reef-tee-regular-02-back-720.webp',
     badge: sbStage() === 1 ? 'Pre-order \u00b7 20% off' : 'New',
     title: 'Sahel, the Coast Edition', text: 'Seven designs from the UAE coast: four tees, two hoodies and a polo.' };
   var FOOT = ['230 GSM tees · 240 GSM Sahra Polo · printed collar labels', 'Order by 2 pm UAE time → next working day, free'];

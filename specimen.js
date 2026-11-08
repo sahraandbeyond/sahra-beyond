@@ -359,7 +359,13 @@ function nextPiece(s) {
   if (!nk) return '';
   let im, mock = false;
   if (FOUNDING[nk]) { const D = FOUNDING[nk]; const set = D[suffix === '-oversized' ? 'oversized' : 'regular'] || D.regular; const a = set[D.face] || set.back; im = shirt(a[0], a[1]); }
-  else { const D = PRE[nk]; im = pre(D[D.face] || D.front || D.back); mock = !!D.mock; }
+  else {
+    const D = PRE[nk];
+    /* 8 Nov 2026 (Faheem: "Everywhere should be models first"): the next piece shows the model photo that opens its page */
+    let OM = {}; try { OM = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/sahel-photos.json'), 'utf8')).onModel || {}; } catch (e) {}
+    const ST = OM[nk + suffix] && OM[nk + suffix].stage, sk = ST && (ST[D.face] || ST.back || ST.front);
+    if (sk) im = pre(sk.k); else { im = pre(D[D.face] || D.front || D.back); mock = !!D.mock; }
+  }
   return `<div class="ss-next"><a href="/products/${nk}${suffix}/"><span class="ss-next-i"><img src="${im.src}" width="${im.w}" height="${im.h}" alt="" loading="lazy" decoding="async"${im.pos ? ` style="object-position:${im.pos}"` : ''}>${mock ? '<i>Mock-up</i>' : ''}</span><span class="ss-next-t"><small>Next piece</small><b>${NAMES[nk]}</b><span>${LINES[FOUNDING[nk] ? 'founding' : ORDER.sahel.includes(nk) ? 'sahel' : 'trail']}</span></span><span class="ss-next-a" aria-hidden="true">→</span></a></div>`;
 }
 const HEAD = '<link rel="stylesheet" href="/assets/sahra-specimen.css">';

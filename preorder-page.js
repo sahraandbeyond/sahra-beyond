@@ -199,6 +199,17 @@ const TRAIL = [
     images: [real('trail-bag-front', 'The Trailhead Bag: natural canvas drawstring bag with the Sahra Trail Two Ridges mark', 'The real bag')] }
 ];
 
+/* 8 Nov 2026 (Faheem: "Why are flat lays showing in other slides across the site. Everywhere should be models first"): a Sahel
+   tee page that has model photos for its Back, Front and Art tabs (content/sahel-photos.json onModel[handle].stage) leads its
+   images with them, the tab shown first leading, so every card, slideshow, place pin and share image opens on the model. The
+   flat-lays follow. Paused fits have no model photos and keep the flat-lays. Alts are the product-page alts. */
+function modelFirst(handle, nm, images) {
+  const M = !SP.PAUSED[handle] && ON_MODEL[handle], ST = M && M.stage; if (!ST) return images;
+  const face = /^shams-/.test(handle) ? 'front' : 'back';   /* as the product page: the print side first, the Shams mark from the front */
+  const order = [face].concat(['back', 'front', 'art'].filter(k => k !== face)).filter(k => ST[k]);
+  const lead = order.map(k => ({ k: ST[k].k, alt: `Model wearing the ${String(nm).replace(/&amp;/g, '&')}, ${ST[k].view}`, mock: false, cap: '', w: 720, h: 900, lw: 1200, lh: 1500 }));
+  return lead.concat(images);
+}
 /* the flat list of product pages */
 function products() {
   const out = [];
@@ -209,7 +220,7 @@ function products() {
       const fl = FITS[p.fits].map(([f, F]) => ({ fit: F, handle: f ? `${p.key}-${f}` : p.key }));
       fl.forEach(x => { x.onSale = !SP.PAUSED[x.handle]; });
       fl.forEach(({ fit: F, handle }) => out.push({ line: 'sahel', handle, title: `${p.name} &mdash; ${F}`, plain: `${plain} — ${F}`, name: p.name, fit: F, fitsList: fl,
-        colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
+        colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images: modelFirst(handle, `${p.name.replace(/^The /, '')} in ${F}`, images), place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
         onModel: !SP.PAUSED[handle] && ON_MODEL[handle] && ON_MODEL[handle].photos ? ON_MODEL[handle] : null }));
     }
     else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
@@ -879,7 +890,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
   write('new/index.html', shell({
     title: 'Sahel & Sahra Trail: New Tees, Hoodies, Polo, Running Kit | Sahra & Beyond',
     desc: 'Sahel, the Coast Edition (graphic tees, a polo and two hoodies) and Sahra Trail running wear (tee, 2-in-1 shorts and kit). Designed in the UAE. Free delivery across the UAE on orders over AED 100.',
-    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false, image: `${SITE}/assets/preorder/og/ph-kfb-01-back-og.jpg`,
+    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false, image: `${SITE}/assets/preorder/og/pm-khor-fakkan-bay-tee-super-oversized-02-back-og.jpg`,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahel and Sahra Trail', url: `${SITE}/new/` },
       { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahel and Sahra Trail', itemListElement: all.filter(onSale).map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/products/${p.handle}/`, name: p.plain })) }],
     bodyHtml: collectionPage(all)
