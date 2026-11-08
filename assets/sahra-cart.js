@@ -448,7 +448,7 @@
     'hajar-mountains-regular': '/shirts/card/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/card/hajar-model-back.webp', 'sand-polo': '/shirts/card/polo-dune-front.webp',
     'barr-and-bahr-hoodie': 'ph-barr-01-back', 'ras-al-khor-hoodie': 'ph-rakh-01-back', 'the-sahel-polo': 'polo-front', 'trailhead-bag': 'trail-bag-front',
     'barr-and-bahr-hoodie-oversized': 'ph-barr-01-back', 'ras-al-khor-hoodie-oversized': 'ph-rakh-01-back' };
-  var MOCKS = { 'the-sahel-polo': 1, 'sahra-trail-tee': 1, 'sahra-trail-2-in-1-short': 1, 'sahra-trail-kit': 1 };
+  var MOCKS = {};   /* 8 Nov 2026 (Faheem): no Mock-up label on the Trail and Sahel Polo images */
   function thumbOf(h, m) {
     var t = THUMB[h] || PRE[h];
     if (t) return t.charAt(0) === '/' ? t : '/assets/preorder/' + t + '-480.webp';

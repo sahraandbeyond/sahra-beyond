@@ -97,10 +97,10 @@ const PRE = {
   'shams-tee': { face: 'front', back: 'ph2-shams-04-back', front: 'ph-shams-01-front', art: 'ph-shams-02-detail-mark' },
   'barr-and-bahr-hoodie': { face: 'back', back: 'ph-barr-01-back', front: 'ph-barr-04-front', art: 'ph-barr-05-detail-dunes-wave', worn: 'ph-barr-02-back-hood-down', wornCap: 'Worn with the hood down' },
   'ras-al-khor-hoodie': { face: 'back', back: 'ph-rakh-01-back', front: 'ph-rakh-06-front', art: 'ph-rakh-04-detail-flamingos', worn: 'ph-rakh-05-front-model' },
-  'the-sahel-polo': { face: 'front', back: 'polo-back', front: 'polo-front', mock: true },
-  'sahra-trail-tee': { face: 'front', back: 'trail-tee-back', front: 'trail-tee-front', art: 'trail-chest', artCap: 'Close-up of the sample', mock: true },
-  'sahra-trail-2-in-1-short': { face: 'front', back: 'trail-short-back', front: 'trail-short-front', art: 'trail-shortsymbol', artCap: 'Close-up of the sample', mock: true },
-  'sahra-trail-kit': { face: 'front', back: 'trail-kit-back', front: 'trail-kit-front', mock: true },
+  'the-sahel-polo': { face: 'front', back: 'polo-back', front: 'polo-front' },   /* 8 Nov 2026: no Mock-up label (Faheem) */
+  'sahra-trail-tee': { face: 'front', back: 'trail-tee-back', front: 'trail-tee-front', art: 'trail-chest', artCap: 'Close-up of the sample' },
+  'sahra-trail-2-in-1-short': { face: 'front', back: 'trail-short-back', front: 'trail-short-front', art: 'trail-shortsymbol', artCap: 'Close-up of the sample' },
+  'sahra-trail-kit': { face: 'front', back: 'trail-kit-back', front: 'trail-kit-front' },
   'trailhead-bag': { face: 'front', front: 'trail-bag-front', frontCap: 'The real bag' }
 };
 /* "Next piece" runs through each line in the order of its collection page */

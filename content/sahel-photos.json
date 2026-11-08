@@ -386,7 +386,7 @@
    {
     "k": "polo-front",
     "alt": "The Sahel Polo in Black, front",
-    "mock": true,
+    "studio": true,
     "w": 720,
     "h": 900,
     "lw": 1200,
@@ -395,7 +395,7 @@
    {
     "k": "polo-back",
     "alt": "The Sahel Polo in Black, back",
-    "mock": true,
+    "studio": true,
     "w": 720,
     "h": 900,
     "lw": 1200,

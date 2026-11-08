@@ -797,7 +797,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=1da6b0e7">
-<script src="/assets/sahra-cart.js?v=f4871289" defer></script>
+<script src="/assets/sahra-cart.js?v=9310816d" defer></script>
 <script src="/assets/sahra-market.js?v=b44d27ab" defer></script>
 <style id="shop-phone-first">
 /* 25 Sep 2026 (Faheem, after the persona review): on phones the first screen showed no
@@ -2858,7 +2858,7 @@ function renderMap(el,pts){
     var icon=L.divIcon({className:'mp-pin',html:'<span class="mp-hit"><span class="mp-g'+(o.sahel?' mp-g-sahel':'')+'"></span></span>',iconSize:[40,40],iconAnchor:[20,20],popupAnchor:[0,-12]});
     var m=L.marker([o.lat,o.lng],{icon:icon,title:o.p.title+' · '+o.p.place}).addTo(map);
     var st=+(document.documentElement.getAttribute('data-stage')||0);
-    var pop=o.sahel?'<div class="mp-pop"><span class="mp-fig"><img src="'+o.p.img+'" alt="'+o.p.title+', studio mock-up"><i>Mock-up</i></span><div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+(st===1?'AED '+(Math.round(o.p.price*80)/100).toFixed(2)+', pre-order price':'AED '+o.p.price)+'</span><span class="mp-pre">'+(st===0?'Sahel. Pre-order opens Wed 28 Oct.':'Sahel. Pre-order, ships from Fri 30 Oct.')+'</span><a class="mp-go" href="'+o.p.href+'" style="margin-top:7px;font-size:12px;font-weight:600;color:#2A2016;border-bottom:1px solid currentColor;align-self:flex-start;text-decoration:none">'+o.p.cta+' &rarr;</a></div></div>':'<div class="mp-pop">'+(o.p.img?'<img src="'+sz(o.p.img,240)+'" alt="'+o.p.title+'">':'')+'<div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+money(o.p.price,o.p.cur)+'</span><a class="mp-shop" href="#prod-'+o.p.placeSlug+'">Shop this tee &rarr;</a></div></div>';
+    var pop=o.sahel?'<div class="mp-pop"><span class="mp-fig"><img src="'+o.p.img+'" alt="'+o.p.title+'"></span><div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+(st===1?'AED '+(Math.round(o.p.price*80)/100).toFixed(2)+', pre-order price':'AED '+o.p.price)+'</span><span class="mp-pre">'+(st===0?'Sahel. Pre-order opens Wed 28 Oct.':'Sahel. Pre-order, ships from Fri 30 Oct.')+'</span><a class="mp-go" href="'+o.p.href+'" style="margin-top:7px;font-size:12px;font-weight:600;color:#2A2016;border-bottom:1px solid currentColor;align-self:flex-start;text-decoration:none">'+o.p.cta+' &rarr;</a></div></div>':'<div class="mp-pop">'+(o.p.img?'<img src="'+sz(o.p.img,240)+'" alt="'+o.p.title+'">':'')+'<div class="mp-info"><span class="mp-place">Inspired by '+o.p.place+'</span><strong>'+o.p.title+'</strong><span class="mp-price">'+money(o.p.price,o.p.cur)+'</span><a class="mp-shop" href="#prod-'+o.p.placeSlug+'">Shop this tee &rarr;</a></div></div>';
     m.bindPopup(pop,{closeButton:true,offset:[0,-4],maxWidth:260});
     m.on('mouseover',function(){m.openPopup();});
     markers.push(m);
