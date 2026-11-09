@@ -1206,6 +1206,9 @@ html.hx-in nav.on-hero{background:rgba(18,14,10,.94)!important}
 #s-hero.hx .hx-cn .sbs-was{opacity:.75}
 #s-hero.hx .hx-cmk{position:absolute;left:8px;top:8px;z-index:3;font:400 10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;font-style:normal;
   padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.94);color:#2A2016;pointer-events:none;white-space:nowrap}
+/* 9 Nov 2026: computers unfold the crops in turn too (the auto loop opens one crop at a time) */
+@media(min-width:1100px){#s-hero.hx .hx-c.is-open{flex-grow:1.8;max-width:460px}#s-hero.hx .hx-c.is-open .hx-ci{transform:scale(1.03)}}
+@media(hover:hover) and (min-width:1100px){#s-hero.hx .hx-crops:hover .hx-c.is-open:not(:hover){flex-grow:1;max-width:340px}#s-hero.hx .hx-crops:hover .hx-c.is-open:not(:hover) .hx-ci{transform:none}}
 @media(hover:hover) and (min-width:1100px){
   #s-hero.hx .hx-c:hover{flex-grow:1.8;max-width:460px}
   #s-hero.hx .hx-c:hover .hx-ci{transform:scale(1.03)}
@@ -3814,8 +3817,19 @@ if('IntersectionObserver' in window&&window.gtag){var io=new IntersectionObserve
   }
   function slow(){ try{ var c=navigator.connection; return !!(c&&(c.saveData||/2g/.test(c.effectiveType||''))); }catch(e){ return false; } }
   function warm(n){ if(document.hidden||slow()) return; fill(n); }
-  function tick(){ if(held||over||document.hidden) return; show(i+1); warm(i+1); }
-  function start(){ if(still||held||timer) return; timer=setInterval(tick,6000); }
+  /* 9 Nov 2026 (Faheem: "The hero items should unfold after 1.5 seconds each on a loop for all categories"): every 1.5 s the
+     next crop of the showing category unfolds; after the last crop the next category comes in with its first crop open, and
+     after Activewear it starts again at T-shirts. Same stops as before: reduced motion, a hidden tab, a pointer resting on
+     the hero, and for good once someone taps a crop, a dot or an arrow. */
+  function crops(n){ return sl[n]?[].slice.call(sl[n].querySelectorAll('.hx-c')):[]; }
+  function unfold(cs,k){ cs.forEach(function(x,j){ x.classList.toggle('is-open',j===k); }); }
+  function tick(){
+    if(held||over||document.hidden) return;
+    var cs=crops(i),k=-1; cs.forEach(function(x,j){ if(x.classList.contains('is-open')) k=j; });
+    if(cs.length&&k<cs.length-1){ unfold(cs,k+1); return; }
+    unfold(crops((i+1)%sl.length),0); show(i+1); warm(i+1);
+  }
+  function start(){ if(still||held||timer) return; timer=setInterval(tick,1500); }
   function stop(){ if(timer){ clearInterval(timer); timer=null; } }
   var pb=hero.querySelector('.hx-pause');
   function mark(){ if(!pb) return; var p=held||still; pb.setAttribute('aria-pressed',p?'true':'false'); pb.setAttribute('aria-label',p?'Play the slides':'Pause the slides'); }
