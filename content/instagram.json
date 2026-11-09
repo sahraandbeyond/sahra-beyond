@@ -18,6 +18,32 @@
   },
   "posts": [
     {
+      "id": "DfedudpiIBB",
+      "account": "trail",
+      "kind": "carousel",
+      "label": "The Sahra Trail Tee, up close: six details for runs and the gym",
+      "topic": "trail",
+      "guides": [
+        "/trail/"
+      ],
+      "wear": [
+        "/products/sahra-trail-tee/",
+        "The Sahra Trail Tee"
+      ],
+      "src": "SAHRA-TRAIL-TEE-FEATURES-8-Nov-2026/carousel"
+    },
+    {
+      "id": "DfY5GnyiOcA",
+      "kind": "carousel",
+      "label": "Which two would you take? Nine pieces from the 11.11 sale",
+      "topic": "shop",
+      "wear": [
+        "/shop/",
+        "The shop"
+      ],
+      "src": "WHICH-TWO-1111-6-Nov-2026"
+    },
+    {
       "id": "DfO1azECKBC",
       "kind": "carousel",
       "label": "The Al Aqah Reef Tee on the model: Regular and Super Oversized side by side",
