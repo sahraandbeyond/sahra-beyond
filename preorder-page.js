@@ -148,18 +148,18 @@ const real = (k, alt, cap) => ({ k, alt, mock: false, cap });
 
 /* Story paragraphs: the approved card stories (14 Oct handover; content/sahel-pieces.json). */
 const SAHEL = [
-  { key: 'khor-fakkan-bay-tee', name: 'Khor Fakkan Bay Tee', seo: 'Khor Fakkan Bay Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Jet Set, DTG printed front and back', colour: 'Jet Set', price: 199, fits: 'tee', img: 'kfb', place: ['Khor Fakkan', 'khor-fakkan-beach'],
+  { key: 'khor-fakkan-bay-tee', name: 'Khor Fakkan Bay Tee', seo: 'Khor Fakkan Bay Graphic T-Shirt', kind: 'Graphic T-shirt', md: 'cotton in Jet Set, DTG printed front and back', colour: 'Jet Set', price: 199, fits: 'tee', img: 'kfb', place: ['Khor Fakkan', 'khor-fakkan-beach'],
     story: "On Sharjah's east coast the Hajar Mountains come straight down to the Gulf of Oman. Khor Fakkan sits in the curve between two headlands, and its name is usually read as 'the creek of the two jaws'. We drew the bay the way it holds you: bare ridges, one sweep of pale sand and a dhow resting on still water.",
-    details: ['230gsm cotton', 'DTG printed front and back', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'al-hamra-pearl-diver-tee', name: 'Al Hamra Pearl Diver Tee', seo: 'Al Hamra Pearl Diver Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Estate Blue, DTG printed', colour: 'Estate Blue', price: 199, fits: 'tee', img: 'pearl', place: ['Al Jazirah Al Hamra', 'al-jazirah-al-hamra'],
+    details: ['Cotton', 'DTG printed front and back', 'Our mark embroidered at the back neck', 'Printed neck label'] },
+  { key: 'al-hamra-pearl-diver-tee', name: 'Al Hamra Pearl Diver Tee', seo: 'Al Hamra Pearl Diver Graphic T-Shirt', kind: 'Graphic T-shirt', md: 'cotton in Estate Blue, DTG printed', colour: 'Estate Blue', price: 199, fits: 'tee', img: 'pearl', place: ['Al Jazirah Al Hamra', 'al-jazirah-al-hamra'],
     story: 'Al Jazirah Al Hamra, the Red Island, is a coral-stone pearling town on the Ras Al Khaimah coast, left empty around 1970. Every summer the boats of this coast sailed for the big dive, from June to the end of September. A diver went down on a stone weight, filled his basket with oysters and tugged the rope to be hauled up.',
-    details: ['230gsm cotton', 'DTG printed', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'al-aqah-reef-tee', name: 'Al Aqah Reef Tee', seo: 'Al Aqah Reef Graphic T-Shirt', kind: 'Graphic T-shirt', md: '230gsm cotton in Lagoon, DTG printed front and back', colour: 'Lagoon', price: 199, fits: 'tee', img: 'reef', place: ['Al Aqah', 'snoopy-island'],
+    details: ['Cotton', 'DTG printed', 'Our mark embroidered at the back neck', 'Printed neck label'] },
+  { key: 'al-aqah-reef-tee', name: 'Al Aqah Reef Tee', seo: 'Al Aqah Reef Graphic T-Shirt', kind: 'Graphic T-shirt', md: 'cotton in Lagoon, DTG printed front and back', colour: 'Lagoon', price: 199, fits: 'tee', img: 'reef', place: ['Al Aqah', 'snoopy-island'],
     story: "A small rock island sits a few hundred metres off Al Aqah beach, on Fujairah's northern coast. You don't need a boat: people swim, wade or paddle out to snorkel the reef around it, where turtles, blacktip reef sharks and parrotfish are reported. We drew both worlds at once, the rock above the waterline and the reef beneath it.",
-    details: ['230gsm cotton', 'DTG printed front and back', 'Our mark embroidered at the back neck', 'Printed neck label'] },
-  { key: 'shams-tee', name: 'Shams Tee', seo: 'Shams Embroidered T-Shirt', kind: 'Embroidered T-shirt', md: '230gsm cotton in Jet Set, our mark embroidered in sand thread on the left chest', colour: 'Jet Set', price: 139, fits: 'tee', img: 'shams', front: true,
+    details: ['Cotton', 'DTG printed front and back', 'Our mark embroidered at the back neck', 'Printed neck label'] },
+  { key: 'shams-tee', name: 'Shams Tee', seo: 'Shams Embroidered T-Shirt', kind: 'Embroidered T-shirt', md: 'cotton in Jet Set, our mark embroidered in sand thread on the left chest', colour: 'Jet Set', price: 139, fits: 'tee', img: 'shams', front: true,
     story: 'Shams is the sun, and in this country it decides everything: when to walk, when to rest, when the dunes turn gold. Sahra &amp; Beyond began with nights in the desert and a camera, waiting for it to rise. Our mark keeps that moment, the sun resting on a dune crest with sahra written beneath it, stitched in sand thread on the left chest.',
-    details: ['230gsm cotton', 'Our mark embroidered in sand thread on the left chest', 'Back plain', 'Printed neck label'] },
+    details: ['Cotton', 'Our mark embroidered in sand thread on the left chest', 'Back plain', 'Printed neck label'] },
   { key: 'the-sahel-polo', name: 'The Sahel Polo', seo: 'The Sahel Polo, Black Piqu\u00e9 Polo Shirt', kind: 'Polo shirt', md: 'black mercerised piqu\u00e9, three buttons, antique-gold tipping and our mark in antique-gold thread', colour: 'Black', price: 229, img: 'polo', front: true,
     story: "After dark on Dubai Creek, the lights of the abras and dhows spill gold onto black water. This polo is cut from that view: black mercerised piqu&eacute;, three buttons, and our mark in antique-gold thread on the left chest. It's the one piece in Sahel made for evenings.",
     details: ['Black mercerised piqu&eacute;', 'Three buttons', 'Antique-gold tipping on the collar and cuffs', 'Our mark in antique-gold thread on the left chest', 'Printed neck label'] },
@@ -175,17 +175,17 @@ const TRAIL = [
   { handle: 'sahra-trail-tee', name: 'Sahra Trail Tee', seo: 'Sahra Trail Running T-Shirt', kind: 'Running T-shirt', md: 'raglan sleeves, mesh side panels, covered seams and a reflective Two Ridges symbol', price: 139,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Ocean-inspired print.',
     details: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'],
-    images: [model('pm-sahra-trail-tee-01-running-back', 'Model wearing the Sahra Trail Tee, running, back view'), studio('trail-tee-front', 'Sahra Trail Tee, front'), studio('trail-tee-back', 'Sahra Trail Tee, back'),
+    images: [model('pm2-sahra-trail-kit-01-lunge', 'Model wearing the Sahra Trail Tee, stretching in a lunge, front view'), model('pm-sahra-trail-tee-01-running-back', 'Model wearing the Sahra Trail Tee, running, back view'), studio('trail-tee-front', 'Sahra Trail Tee, front'), studio('trail-tee-back', 'Sahra Trail Tee, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-mesh', 'The mesh side panel, close up'), real('trail-backsymbol', 'The Two Ridges symbol, close up')] },
   { handle: 'sahra-trail-2-in-1-short', name: 'Sahra Trail 2-in-1 Short', seo: '2-in-1 Running Shorts, Sahra Trail', kind: '2-in-1 running shorts', md: 'a hidden inner liner, a bonded phone pocket, a zip pocket for keys and an internal drawcord', price: 169,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Wave-inspired graphic.',
     details: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'],
-    images: [model('pm-sahra-trail-2-in-1-short-01-leg-close-up', 'Model wearing the Sahra Trail 2-in-1 Short, close-up of the leg'), studio('trail-short-front', 'Sahra Trail 2-in-1 running shorts, front'), studio('trail-short-back', 'Sahra Trail 2-in-1 running shorts, back'),
+    images: [model('pm2-sahra-trail-short-04-side', 'Model wearing the Sahra Trail 2-in-1 Short, side view, hand in the pocket'), model('pm-sahra-trail-2-in-1-short-01-leg-close-up', 'Model wearing the Sahra Trail 2-in-1 Short, close-up of the leg'), studio('trail-short-front', 'Sahra Trail 2-in-1 running shorts, front'), studio('trail-short-back', 'Sahra Trail 2-in-1 running shorts, back'),
       real('trail-shortsymbol', 'The Two Ridges symbol and the name on the leg, close up'), real('trail-shortname', 'SAHRA TRAIL on the leg, close up')] },
   { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', seo: 'Sahra Trail Running Kit: Tee and 2-in-1 Shorts', kind: 'Running kit', md: 'the Sahra Trail Tee and the Sahra Trail 2-in-1 Short together, with a size chosen for each', price: 308, kit: true,   /* 8 Nov 2026 (Faheem): no kit discount; the kit is the tee + short at their own prices (139 + 169) */
     lede: 'The Sahra Trail Tee and the Sahra Trail 2-in-1 Short together in one order, with a size chosen for each. Tee, AED 139. Short, AED 169.',
     details: ['The Sahra Trail Tee', 'The Sahra Trail 2-in-1 Short', 'Choose a size for each'],
-    images: [model('pm-sahra-trail-kit-01-running-side', 'Model wearing the Sahra Trail Kit, running, side view'), studio('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), studio('trail-kit-back', 'Sahra Trail Kit, back'),
+    images: [model('pm2-sahra-trail-kit-01-lunge', 'Model wearing the Sahra Trail Kit, stretching in a lunge, front view'), model('pm-sahra-trail-kit-01-running-side', 'Model wearing the Sahra Trail Kit, running, side view'), studio('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), studio('trail-kit-back', 'Sahra Trail Kit, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-shortsymbol', 'The Two Ridges symbol on the short, close up')] },
   /* 23 Oct 2026 (Faheem): the canvas drawstring bag, 100 in hand, AED 50, on sale with Trail from Wed 28 Oct 08:00 UAE.
      Name chosen for Faheem ("come up with an innovative on brand name"): The Trailhead Bag, what you take to the trailhead.
@@ -531,7 +531,7 @@ const SWATCH = { 'Jet Set': '#262C2A', 'Estate Blue': '#233658', 'Lagoon': '#0EA
 function specChips(p) {
   const det = (p.details || []).filter(x => !/neck label/i.test(x)).join(' | ');
   const c = [];
-  if (/230gsm/i.test(det)) c.push('230gsm cotton');
+  if (/(^| \| )Cotton( \| |$)/.test(det)) c.push('Cotton');
   else if (/piqu/i.test(det)) c.push('Mercerised piqu&eacute;');
   else if (/canvas/i.test(det)) c.push('Natural canvas');
   else if (/mesh/i.test(det)) c.push('Mesh side panels');
@@ -552,7 +552,7 @@ function bigCard(p, i) {
   const place = p.place ? `Inspired by ${p.place[0]}` : p.line === 'trail' ? 'Sahra Trail' : 'Sahel &middot; the Coast Edition';
   const hex = SWATCH[p.colour];
   const colour = p.colour ? `<span class="pcard-col">${hex ? `<span class="pcard-sw" style="background:${hex}"></span>` : ''}${p.colour}</span>` : '';
-  const chips = specChips(p).map(c => `<span${/^(230gsm cotton|Unisex S&ndash;XL)$/.test(c) ? ' class="pc-same"' : ''}>${c}</span>`).join('');
+  const chips = specChips(p).map(c => `<span${/^(Cotton|Unisex S&ndash;XL)$/.test(c) ? ' class="pc-same"' : ''}>${c}</span>`).join('');
   const price = onSale(p) ? cardPrice(p.price, 'span', !!p.inHand, p.handle) : 'Back soon';
   const stock = !onSale(p) ? '' : p.inHand
     ? inc('st0', `<span class="pcard-st st0">On sale from Wed 28 Oct</span>`) + `<span class="pcard-st st12">In stock, ships next working day</span>`

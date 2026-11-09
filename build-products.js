@@ -61,12 +61,12 @@ const path = require('path');
 
 /* ---- fabric facts shown on every product page (10 Sep 2026) ----------------
    Faheem: the cotton is combed ring-spun, NOT certified organic — "organic" is
-   gone from every page and from Shopify. Tees 230 gsm jersey, polo 240 gsm piqué.
+   gone from every page and from Shopify. Tees jersey, polo piqué.
    The bars are the four a shopper compares on (weight, softness, stretch,
    breathability), rated 1–4 and confirmed by Faheem 10 Sep. */
 const FABRIC_LINE = {
-  tee:  '<b>230 gsm</b> heavyweight &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed',
-  polo: '<b>240 gsm</b> heavyweight &middot; <b>100% cotton piqu&eacute;</b> &middot; pre-washed'
+  tee:  '<b>Heavyweight</b> &middot; <b>100% combed ring-spun cotton</b> &middot; pre-washed',
+  polo: '<b>Heavyweight</b> &middot; <b>100% cotton piqu&eacute;</b> &middot; pre-washed'
 };
 const FABRIC_BARS = {
   tee:  [['Weight', 4, 'Heavyweight'], ['Softness', 3, 'Soft'], ['Stretch', 1, 'Non-stretch'], ['Breathability', 3, 'Airy']],
@@ -1114,7 +1114,7 @@ ${SP.top(SPS, {
   help: `<p class="ss-help">${p.garment === 'polo' ? 'The polo is graded to the Regular tee chart. ' : ''}Not sure of your size? <a href="#fit" class="pdp-chart">See the size chart</a>. ${p.modelInfo ? esc(String(p.modelInfo).split(' \u00b7 ').slice(1).join('. ')) + '.' : ''}</p>`,
   extra: `${pairStrip(p, all)}
       <dl class="pdp-why">
-        <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? '240 GSM piqu\u00e9 cotton, embroidered.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? '230 GSM combed cotton, pre-washed, embroidered rather than printed.' : '230 GSM combed cotton, pre-washed, printed direct to the garment with an embroidered mark.')} Designed in the UAE.</dd></div>
+        <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? 'Piqu\u00e9 cotton, embroidered.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? 'Combed cotton, pre-washed, embroidered rather than printed.' : 'Combed cotton, pre-washed, printed direct to the garment with an embroidered mark.')} Designed in the UAE.</dd></div>
         <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
       </dl>
       ${RV.quotes(designHandles(p), 2)}`
@@ -1130,7 +1130,7 @@ ${SP.top(SPS, {
         <details class="pdp-ans pdp-ans-details">
           <summary>Details <span class="pdp-ans-hint">${p.colourName ? esc(p.colourName) + ' · ' : ''}${p.garment === 'polo' ? 'men&rsquo;s' : 'unisex'} S–XL</span></summary>
           <ul class="spec-strip">
-            <li><strong>${p.garment === 'polo' ? 'Men&rsquo;s cut' : 'Unisex'}</strong> &middot; S&ndash;XL</li>${(p.specChips || ['230gsm combed cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
+            <li><strong>${p.garment === 'polo' ? 'Men&rsquo;s cut' : 'Unisex'}</strong> &middot; S&ndash;XL</li>${(p.specChips || ['Combed cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
           </ul>
           ${p.colourHex ? `<div class="colourway">
             <span class="sw" style="background:${p.colourHex}" role="img" aria-label="Colour swatch: ${esc(p.colourName)}, Pantone ${esc(p.colourPantone)}"></span>
@@ -1175,12 +1175,12 @@ ${SP.top(SPS, {
              bars every heavyweight brand shows (weight / softness / stretch / breathability)
              and the two explainers he asked for, under the buy button with delivery and fit. */''}
         <details class="pdp-ans pdp-ans-cotton">
-          <summary>About the cotton <span class="pdp-ans-hint">${p.garment === 'polo' ? '240 gsm · piqué' : '230 gsm · combed ring-spun'}</span></summary>
+          <summary>About the cotton <span class="pdp-ans-hint">${p.garment === 'polo' ? 'Cotton piqué' : 'Combed ring-spun'}</span></summary>
           ${fabricBars(p.garment)}
           <p class="pdp-ans-foot">${p.garment === 'polo'
-            ? '240 gsm piqué — ten grams heavier than the tees, and a different knit. Piqué\'s fine waffle structure is what gives a polo its hand and lets the collar stand after a season instead of curling. 100% cotton, no polyester, pre-washed so it holds its size.'
-            : '230 gsm is a heavyweight — about a third more cotton than the 180 gsm shirt you probably own, which is what lets it hang straight instead of clinging. The yarn is combed and ring-spun: combing strips out the short fibres and ring-spinning twists what is left into a smoother, stronger thread, so the cloth is dense rather than fuzzy and softens with every wash without going thin. 100% cotton, no polyester — a poly blend traps heat, which is the wrong trade in the Gulf. Pre-washed, so it holds its size.'}
-            <a href="/fabric/">The GSM guide &rarr;</a></p>
+            ? 'Piqué is a different knit from the tees. Piqué\'s fine waffle structure is what gives a polo its hand and lets the collar stand after a season instead of curling. 100% cotton, no polyester, pre-washed so it holds its size.'
+            : 'It is a heavyweight cloth, more substantial than the high-street shirt you probably own, which is what lets it hang straight instead of clinging. The yarn is combed and ring-spun: combing strips out the short fibres and ring-spinning twists what is left into a smoother, stronger thread, so the cloth is dense rather than fuzzy and softens with every wash without going thin. 100% cotton, no polyester — a poly blend traps heat, which is the wrong trade in the Gulf. Pre-washed, so it holds its size.'}
+            <a href="/fabric/">The fabric guide &rarr;</a></p>
         </details>
         <details class="pdp-ans pdp-ans-print">
           <summary>${isDTG(p) ? 'About direct-to-garment print' : (p.garment === 'polo' ? 'About the embroidery' : 'About tonal embroidery')}</summary>
@@ -1212,9 +1212,9 @@ ${LEAN ? `<div class="wrap lean-first">${FIT_HTML.replace('04 — Size &amp; fit
   <section class="sec reveal" id="fabric">
     <span class="snum">03 — Fabric &amp; care</span>
     <h2>Same cloth, cut wider</h2>
-    <p>The same 230gsm combed ring-spun cotton as the regular fit, with the ${esc(p.printCardTitle || 'same decoration')}. ${esc(p.printCardBody || '')}</p>
+    <p>The same combed ring-spun cotton as the regular fit, with the ${esc(p.printCardTitle || 'same decoration')}. ${esc(p.printCardBody || '')}</p>
     <ul class="care">${careList(p.care)}</ul>
-    <p>Why 230gsm, and how it compares with the shirt you already own, is on our <a href="/fabric/">fabric page</a>.</p>
+    <p>How a heavyweight tee compares with the shirt you already own is on our <a href="/fabric/">fabric page</a>.</p>
   </section>
 </div>` : ''}${!LEAN && p.placeSlug ? `<section class="place-band" data-bg="${p.theme}">
   <div class="wrap place-inner">
@@ -1249,11 +1249,11 @@ ${cards(p.designCards)}
 
   <section class="sec reveal" id="fabric">
     <span class="snum">03 — Fabric &amp; construction</span>
-    <h2>${p.garment === 'polo' ? 'Heavyweight 240gsm piqué, built to be <em>worn again</em>' : 'Heavyweight 230gsm cotton, built to be <em>worn again</em>'}</h2>
+    <h2>${p.garment === 'polo' ? 'Heavyweight piqué, built to be <em>worn again</em>' : 'Heavyweight cotton, built to be <em>worn again</em>'}</h2>
     <p>${p.constructionIntro || 'A tee earns its place by surviving. Heavyweight combed ring-spun cotton, finished with the construction details that decide whether a shirt still looks right after a year.'}</p>
     <div class="cols stagger">
       ${(p.constructionCards || [
-        {t:'230gsm combed cotton', b:'Heavyweight 100% combed ring-spun cotton, pre-washed for minimal shrinkage. Substantial enough to hold its shape, breathable enough for UAE heat.'},
+        {t:'Combed cotton', b:'Heavyweight 100% combed ring-spun cotton, pre-washed for minimal shrinkage. Substantial enough to hold its shape, breathable enough for UAE heat.'},
         {t:'Ribbed crew neck', b:'A ribbed collar keeps its shape instead of stretching out and going wavy after a few washes.'},
         {t:'Taped collar &amp; shoulders', b:'Seam tape across the collar and shoulders reinforces the points that carry the most stress — the difference between one season and several.'}
       ]).map(function(c){return '<div class="item"><b>'+c.t+'</b><span>'+c.b+'</span></div>';}).join('')}
@@ -1264,9 +1264,7 @@ ${cards(p.designCards)}
       <div class="item"><b>Designed in the UAE</b><span>Original artwork, drawn from a real place in the Emirates.</span></div>
     </div>
     <div class="note-box">${(function(){
-      var w = String((p.specChips && p.specChips[0]) || '230gsm combed cotton').match(/\d{3}\s*gsm/i);
-      w = w ? w[0].toLowerCase().replace(/\s+/g,'') : '230gsm';
-      return 'Not sure what ' + w + ' means next to the 180gsm shirt you already own? We wrote the comparison out in full &mdash; the whole 150&ndash;280gsm scale, and which weight actually makes sense in a Gulf summer &mdash; on our <a href="/fabric/">fabric and GSM guide</a>.';
+      return 'Not sure how a heavyweight tee compares with the 180gsm shirt you already own? We wrote the comparison out in full &mdash; the whole 150&ndash;280gsm scale, and which weight actually makes sense in a Gulf summer &mdash; on our <a href="/fabric/">fabric and GSM guide</a>.';
     })()}</div>
   </section>`}
 

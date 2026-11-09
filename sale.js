@@ -156,7 +156,7 @@ const $ = h => `AED ${fmt(PRICES[h][1])} <s class="sbs-s">AED ${fmt(PRICES[h][0]
 const A = h => `${fmt(PRICES[h][1])} درهمًا <s class="sbs-s">${fmt(PRICES[h][0])} درهمًا</s> <sbs-t class="sbs-tag">خصم ${pct(h)}%</sbs-t>`;
 const FE = 'al-quaa-galaxy-regular', SH = 'khor-fakkan-bay-tee-regular', SM = 'shams-tee-regular', SP = 'sand-polo', SX = 'the-sahel-polo', HD = 'barr-and-bahr-hoodie', HJ = 'hajar-mountains-regular';
 const PROSE = () => [
-  ['From AED 199 &middot; 230gsm cotton', `From ${$(FE)} &middot; 230gsm cotton`],
+  ['From AED 199 &middot; cotton', `From ${$(FE)} &middot; cotton`],
   ['AED 199 each, in Regular or Oversized.', `${$(FE)} each, in Regular or Oversized.`],
   ['the Shams Tee and the Sahra Trail Tee AED 139, the other tees AED 199, the polos and hoodies AED 229,',
     `the Shams Tee ${$(SM)}, the Sahra Trail Tee AED 139, the Founding Edition tees ${$(FE)}, the other Sahel tees ${$(SH)}, the Sahra Polo ${$(SP)}, the Sahel Polo and the hoodies ${$(SX)},`],

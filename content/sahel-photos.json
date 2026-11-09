@@ -752,6 +752,21 @@
    "size": "M",
    "photos": [
     {
+     "k": "pm2-sahra-trail-kit-01-lunge",
+     "view": "stretching in a lunge, front view",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-tee-03-back-mark",
+     "view": "back view, showing the Two Ridges mark",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-kit-02-knee-hug",
+     "view": "stretching, holding one knee",
+     "size": "L"
+    },
+    {
      "k": "pm-sahra-trail-tee-01-running-back",
      "view": "running, back view"
     },
@@ -773,6 +788,26 @@
    "size": "M",
    "photos": [
     {
+     "k": "pm2-sahra-trail-short-04-side",
+     "view": "side view, hand in the pocket",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-short-05-liner-pocket",
+     "view": "close-up of the phone pocket in the liner",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-short-06-phone-pocket",
+     "view": "close-up of a phone in the liner pocket",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-kit-01-lunge",
+     "view": "stretching in a lunge, front view",
+     "size": "L"
+    },
+    {
      "k": "pm-sahra-trail-2-in-1-short-01-leg-close-up",
      "view": "close-up of the leg, showing the mark and the inner layer"
     },
@@ -785,6 +820,36 @@
   "sahra-trail-kit": {
    "size": "M",
    "photos": [
+    {
+     "k": "pm2-sahra-trail-kit-01-lunge",
+     "view": "stretching in a lunge, front view",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-kit-02-knee-hug",
+     "view": "stretching, holding one knee",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-tee-03-back-mark",
+     "view": "back view, showing the Two Ridges mark",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-short-04-side",
+     "view": "side view, hand in the pocket",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-short-05-liner-pocket",
+     "view": "close-up of the phone pocket in the liner",
+     "size": "L"
+    },
+    {
+     "k": "pm2-sahra-trail-short-06-phone-pocket",
+     "view": "close-up of a phone in the liner pocket",
+     "size": "L"
+    },
     {
      "k": "pm-sahra-trail-kit-01-running-side",
      "view": "running, side view"
@@ -808,6 +873,7 @@
    ]
   },
   "_note8": "8 Nov 2026 (Faheem): male model photos of the t-shirts, the Sahel Polo and Sahra Trail. He wears S Regular in the tees, S in the Khor Fakkan Bay Tee Super Oversized (the current oversized stock), M in the polo and M in the Trail tee and short. Appended after the 1 Nov photos on the tee pages (both models wear S). On the polo and Trail pages the model photos come first (Faheem: \"real photos first\"): the first one opens the product page (specimen.js PRE worn) and leads the cards (pieces / TRAIL images), then the studio images. Views say what is shown, never a place. Originals: Product Photos/Male model photos/2026-11-08/.",
-  "_note9": "8 Nov 2026 (Faheem, on the Al Aqah Reef page: \"Replace front back and art with real model shots on all shirts\"; answers: female model first, male only to fill a gap; flat-lays out of the tabs (they stay on cards and share images); hide the art pins, keep the notes list; T-shirts only, not hoodies). `stage` gives each Sahel tee page its Back, Front and Art model photos; those photos are not repeated in the On the model row. Paused Oversized pages have no model photos and keep the flat-lays."
+  "_note9": "8 Nov 2026 (Faheem, on the Al Aqah Reef page: \"Replace front back and art with real model shots on all shirts\"; answers: female model first, male only to fill a gap; flat-lays out of the tabs (they stay on cards and share images); hide the art pins, keep the notes list; T-shirts only, not hoodies). `stage` gives each Sahel tee page its Back, Front and Art model photos; those photos are not repeated in the On the model row. Paused Oversized pages have no model photos and keep the flat-lays.",
+  "_note10": "9 Nov 2026 (Faheem): a second Trail model, daylight shots, wears L in the tee and the short (the first Trail model wears M). Photos carry their own `size` where it differs from the page size; the On the model row then shows the size on each photo. The lunge photo opens the Kit and Tee pages, the side view of the short opens the Short page (Faheem: lead with these)."
  }
 }

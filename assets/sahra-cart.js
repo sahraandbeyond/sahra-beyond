@@ -53,7 +53,7 @@
     /* 31 Oct 2026: the Super Oversized tees (the current stock) and the paused Oversized hoodies */
     'khor-fakkan-bay-tee-super-oversized': 'pm-khor-fakkan-bay-tee-super-oversized-02-back', 'al-hamra-pearl-diver-tee-super-oversized': 'pm-al-hamra-pearl-diver-tee-super-oversized-02-back', 'al-aqah-reef-tee-super-oversized': 'pm-al-aqah-reef-tee-super-oversized-02-back', 'shams-tee-super-oversized': 'pm-shams-tee-super-oversized-01-front',
     'barr-and-bahr-hoodie-oversized': 'ph-barr-04-front', 'ras-al-khor-hoodie-oversized': 'ph-rakh-06-front',
-    'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'pm-sahra-trail-tee-01-running-back', 'sahra-trail-2-in-1-short': 'pm-sahra-trail-2-in-1-short-01-leg-close-up', 'sahra-trail-kit': 'pm-sahra-trail-kit-01-running-side' };
+    'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'pm2-sahra-trail-kit-01-lunge', 'sahra-trail-2-in-1-short': 'pm2-sahra-trail-short-04-side', 'sahra-trail-kit': 'pm2-sahra-trail-kit-01-lunge' };
   /* 8 Nov 2026 (Faheem: "Everywhere should be models first"): the bag shows the model photo that opens each product page (paused fits keep the flat-lay) */
   var PRE_IN_HAND = true;   /* 30 Oct 2026 (Faheem: "In stock, ships next day"). Was:  set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
   function isPre(l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; return !!h && Object.prototype.hasOwnProperty.call(PRE, h); }

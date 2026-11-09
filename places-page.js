@@ -194,7 +194,7 @@ function productPanel(l, ctx) {
       <div class="lg-kin-t"><span class="lg-eye">${icon('tee')} Wear the place</span>
         <h2>${esc(p.name)}</h2>
         <p>${esc(pl.sentence.replace('{{link}}', pl.anchor || p.name))}</p>
-        <p class="lg-kin-m"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> <span class="sb-aed-only">&middot; 230gsm cotton &middot; any 2 tees AED 359</span><span class="sb-aed-alt">&middot; 230gsm cotton</span></p>
+        <p class="lg-kin-m"><span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span> <span class="sb-aed-only">&middot; cotton &middot; any 2 tees AED 359</span><span class="sb-aed-alt">&middot; cotton</span></p>
         <a class="btn" href="/products/${p.id}/">See the tee &rarr;</a>
       </div></section>`;
   }
@@ -214,7 +214,7 @@ function productPanel(l, ctx) {
       <div class="lg-kin-t"><span class="lg-eye">${icon('tee')} Not this place, but the same kind of ground</span>
         <h2>${esc(near.name)}</h2>
         <p>${esc(NEAR[l.category][1])} We have not drawn ${esc(l.name)} yet.</p>
-        <p class="lg-kin-m"><span class="sb-price" data-handle="${esc(near.id)}" data-aed="${esc(String(near.price))}">AED ${esc(String(near.price))}</span> <span class="sb-aed-only">&middot; 230gsm cotton &middot; any 2 tees AED 359</span></p>
+        <p class="lg-kin-m"><span class="sb-price" data-handle="${esc(near.id)}" data-aed="${esc(String(near.price))}">AED ${esc(String(near.price))}</span> <span class="sb-aed-only">&middot; cotton &middot; any 2 tees AED 359</span></p>
         <a class="btn" href="/products/${near.id}/">See the tee &rarr;</a>
       </div></section>`;
   }

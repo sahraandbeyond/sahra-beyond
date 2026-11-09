@@ -20,13 +20,13 @@
     "/shirts/polo-dune-front.jpg",
     "/shirts/polo-dune-back.jpg"
   ],
-  "altMain": "The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
-  "altFront": "The Sahra Polo in sand, worn in the dunes at sunset — 240gsm cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
-  "seoTitle": "The Sahra Polo — Embroidered 240gsm Cotton Polo",
-  "seoDesc": "The Sahra Polo — 240gsm piqué cotton, embroidered rather than printed, in sand. AED 229.",
-  "shareDesc": "240gsm embroidered piqué polo in sand.",
-  "lede": "A 240gsm piqué cotton polo in sand, embroidered rather than printed. It is the quietest thing we make.",
-  "ldDesc": "The Sahra Polo — 240gsm piqué cotton polo in sand, embroidered. AED 229.",
+  "altMain": "The Sahra Polo in sand, worn in the dunes at sunset — cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
+  "altFront": "The Sahra Polo in sand, worn in the dunes at sunset — cotton piqué with a three-button placket and the embroidered صحراء mark on the chest",
+  "seoTitle": "The Sahra Polo — Embroidered Cotton Piqué Polo",
+  "seoDesc": "The Sahra Polo — piqué cotton, embroidered rather than printed, in sand. AED 229.",
+  "shareDesc": "embroidered piqué polo in sand.",
+  "lede": "A piqué cotton polo in sand, embroidered rather than printed. It is the quietest thing we make.",
+  "ldDesc": "The Sahra Polo — piqué cotton polo in sand, embroidered. AED 229.",
   "printChip": "Embroidered",
   "occasion": "Made for evenings that start outdoors and end somewhere better",
   "edition": "Founding Edition",
@@ -42,8 +42,8 @@
       "body": "The mark is stitched into the cloth rather than printed onto it. Tonal, raised, and something you notice by touch before you notice it by sight."
     },
     {
-      "title": "240gsm, not 230",
-      "body": "Ten grams heavier than the tees. On a polo that difference shows — the collar stands properly instead of curling after a season."
+      "title": "Piqué, not jersey",
+      "body": "A different knit from the tees. On a polo that difference shows — the collar stands properly instead of curling after a season."
     }
   ],
   "printCardTitle": "Embroidery",
@@ -62,7 +62,7 @@
   "faq": [
     {
       "q": "How is the polo different from the tees?",
-      "a": "It is 240gsm rather than 230, so it is a slightly heavier cloth and the collar holds its shape, and it is embroidered rather than printed. Sizing is the same as the Regular fit tees."
+      "a": "It is piqué rather than jersey, so the cloth has more structure and the collar holds its shape, and it is embroidered rather than printed. Sizing is the same as the Regular fit tees."
     },
     {
       "q": "Who is the polo cut for?",
@@ -78,15 +78,15 @@
   "fitHeading": "Sized like the <em>tees</em>",
   "fitWho": "The polo is graded to the same specification as our Regular fit t-shirts, so it takes the same letter as your Regular tee. Check the size chart below before you order. It has a set-in sleeve and sits at the natural shoulder — there is no oversized cut of the polo.",
   "specChips": [
-    "240gsm piqué cotton",
+    "Piqué cotton",
     "Ribbed collar &amp; placket",
     "Taped shoulder seams"
   ],
-  "constructionIntro": "A polo earns its place by surviving. Heavyweight 240gsm piqué cotton, finished with the construction details that decide whether a collar still stands after a year.",
+  "constructionIntro": "A polo earns its place by surviving. Heavyweight piqué cotton, finished with the construction details that decide whether a collar still stands after a year.",
   "constructionCards": [
     {
-      "t": "240gsm piqué cotton",
-      "b": "Heavyweight 100% cotton piqué, pre-washed for minimal shrinkage. Ten grams heavier than the tees — enough that the collar holds instead of curling."
+      "t": "Piqué cotton",
+      "b": "Heavyweight 100% cotton piqué, pre-washed for minimal shrinkage. A different knit from the tees, so the collar holds instead of curling."
     },
     {
       "t": "Ribbed collar &amp; placket",
@@ -139,5 +139,5 @@
   ],
   "imgBack": "/shirts/polo-dune-back.jpg",
   "modelInfo": "",
-  "altBack": "The Sahra Polo in sand, worn in the dunes, from behind — plain 240gsm cotton piqué, undecorated, with the ribbed collar and set-in sleeve seams"
+  "altBack": "The Sahra Polo in sand, worn in the dunes, from behind — plain cotton piqué, undecorated, with the ribbed collar and set-in sleeve seams"
 }

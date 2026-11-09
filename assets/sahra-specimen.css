@@ -278,6 +278,8 @@ html body .ss p.ss-om-sz{font-size:14.5px!important;line-height:1.4!important}
 .ss-om-row li{flex:0 0 62%;margin:0;padding:0;scroll-snap-align:start}
 .ss-om-f{display:block;width:100%;padding:0;border:0;border-radius:14px;overflow:hidden;background:#E9E1D3;aspect-ratio:4/5;cursor:zoom-in;position:relative}
 html body .ss .ss-om-img{display:block;width:100%;height:100%;max-width:none;object-fit:cover}
+.ss-om-tag{position:absolute;inset-inline-start:8px;top:8px;padding:3px 8px;border-radius:999px;background:rgba(28,22,16,.72);color:#fff;font-size:12px;line-height:1.3;letter-spacing:.01em;pointer-events:none}
+.ss-om-tag bdi{font-weight:600}
 .ss-om-f:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:2px}
 @media(min-width:900px){
   .ss-media>.ss-om{max-width:620px;width:100%;align-self:center}

@@ -15,7 +15,7 @@
 
    Rules kept here: mock-ups always carry a visible "Mock-up" label; no photo is
    captioned with a place; a model's height or size appears only where the site
-   already states it; tees 230 GSM, the Sahra Polo 240 GSM; neck labels printed.
+   already states it; no GSM figures (9 Nov 2026); neck labels printed.
    The drag-to-turn interaction of the prototype is deliberately not included.
    Client side: assets/sahra-specimen.js + assets/sahra-specimen.css.
    ========================================================================== */
@@ -99,9 +99,9 @@ const PRE = {
   'ras-al-khor-hoodie': { face: 'back', back: 'ph-rakh-01-back', front: 'ph-rakh-06-front', art: 'ph-rakh-04-detail-flamingos', worn: 'ph-rakh-05-front-model' },
   /* 8 Nov 2026 (Faheem: "real photos first"): the polo and Trail pages open on a male model photo (the Worn view, shown first), then the studio images */
   'the-sahel-polo': { face: 'worn', back: 'polo-back', front: 'polo-front', worn: 'pm-the-sahel-polo-01-front' },   /* 8 Nov 2026: no Mock-up label (Faheem) */
-  'sahra-trail-tee': { face: 'worn', back: 'trail-tee-back', front: 'trail-tee-front', art: 'trail-chest', artCap: 'Close-up of the sample', worn: 'pm-sahra-trail-tee-01-running-back' },
-  'sahra-trail-2-in-1-short': { face: 'worn', back: 'trail-short-back', front: 'trail-short-front', art: 'trail-shortsymbol', artCap: 'Close-up of the sample', worn: 'pm-sahra-trail-2-in-1-short-01-leg-close-up' },
-  'sahra-trail-kit': { face: 'worn', back: 'trail-kit-back', front: 'trail-kit-front', worn: 'pm-sahra-trail-kit-01-running-side' },
+  'sahra-trail-tee': { face: 'worn', back: 'trail-tee-back', front: 'trail-tee-front', art: 'trail-chest', artCap: 'Close-up of the sample', worn: 'pm2-sahra-trail-kit-01-lunge' },   /* 9 Nov 2026: the daylight model leads */
+  'sahra-trail-2-in-1-short': { face: 'worn', back: 'trail-short-back', front: 'trail-short-front', art: 'trail-shortsymbol', artCap: 'Close-up of the sample', worn: 'pm2-sahra-trail-short-04-side' },
+  'sahra-trail-kit': { face: 'worn', back: 'trail-kit-back', front: 'trail-kit-front', worn: 'pm2-sahra-trail-kit-01-lunge' },   /* 9 Nov 2026 (Faheem): the lunge photo is the kit's primary image */
   'trailhead-bag': { face: 'front', front: 'trail-bag-front', frontCap: 'The real bag' }
 };
 /* "Next piece" runs through each line in the order of its collection page */
@@ -161,7 +161,7 @@ function fromFounding(p, all) {
   const views = [view('back', 'Back', set.back), view('front', 'Front', set.front), view('art', 'Art', D.art), view('worn', 'Worn', D.worn)].filter(Boolean);
   const tee = p.garment !== 'polo';
   const deco = { 'al-quaa-galaxy': ['DTG printed back', 'Embroidered logo on the front'], 'empty-quarter': ['Embroidered throughout, no print'], 'hajar-mountains': ['DTG graphic, with the logo above it embroidered'], 'sand-polo': ['Embroidered mark'] }[key] || [];
-  const spec = (tee ? ['230 GSM', '100% combed ring-spun cotton, pre-washed'] : ['240 GSM', '100% cotton piqué, pre-washed']).concat(deco, ['Printed collar label']);   /* S11: the full fabric phrase, as FABRIC_LINE */
+  const spec = (tee ? ['Heavyweight', '100% combed ring-spun cotton, pre-washed'] : ['Heavyweight', '100% cotton piqué, pre-washed']).concat(deco, ['Printed collar label']);   /* S11: the full fabric phrase, as FABRIC_LINE */
   const short = String(p.name).replace(/\s+[—-]\s+(Regular|Oversized)$/, '');
   const mi = /wears (S|M|L|XL)\b/.exec(p.modelInfo || '');
   return {
@@ -209,7 +209,10 @@ function modelAlt(p, view) {
 }
 function onModelSet(p) {
   const M = p.onModel; if (!M || !M.photos || !M.photos.length) return null;
-  return { size: M.size || '', photos: M.photos.map(x => Object.assign(pre(x.k), { alt: modelAlt(p, x.view) })) };
+  /* 9 Nov 2026: a photo may carry its own size (two Trail models: L and M); the row then shows the size on each photo */
+  const photos = M.photos.map(x => Object.assign(pre(x.k), { alt: modelAlt(p, x.view), size: x.size || M.size || '' }));
+  const mixed = new Set(photos.map(x => x.size)).size > 1;
+  return { size: mixed ? '' : (M.size || ''), mixed, photos };
 }
 
 /* ---- markup ---------------------------------------------------------------- */
@@ -251,9 +254,9 @@ function stage(s, altBase) {
 function onModel(s) {
   const M = s.onModel; if (!M) return '';
   const sizes = '(max-width: 899px) calc(62vw - 20px), 250px';   /* 62% of the row inside its 16px gutters: a 3x phone takes the 720 file */
-  const figs = M.photos.map((v, i) => `<li><button type="button" class="ss-om-f" data-i="${i}" data-full="${v.full}"><img class="ss-om-img" data-src="${v.src}" data-srcset="${v.srcset}" data-sizes="${sizes}" width="${v.w}" height="${v.h}" alt="${esc(v.alt)}" loading="lazy" decoding="async"></button></li>`).join('');
+  const figs = M.photos.map((v, i) => `<li><button type="button" class="ss-om-f" data-i="${i}" data-full="${v.full}"><img class="ss-om-img" data-src="${v.src}" data-srcset="${v.srcset}" data-sizes="${sizes}" width="${v.w}" height="${v.h}" alt="${esc(v.alt)}" loading="lazy" decoding="async">${M.mixed && v.size ? `<span class="ss-om-tag">Wears <bdi>${esc(v.size)}</bdi></span>` : ''}</button></li>`).join('');
   return `<section class="ss-om" id="on-model" aria-labelledby="ssOmH" data-om>
-      <div class="ss-om-hd"><h2 class="ss-om-h" id="ssOmH">On the model</h2>${M.size ? `<p class="ss-om-sz">Model wears <bdi>${esc(M.size)}</bdi></p>` : ''}<span class="ss-om-nav"><button type="button" class="ss-om-b" data-d="-1" aria-label="Previous photo">&lsaquo;</button><button type="button" class="ss-om-b" data-d="1" aria-label="Next photo">&rsaquo;</button></span></div>
+      <div class="ss-om-hd"><h2 class="ss-om-h" id="ssOmH">On the model</h2>${M.size ? `<p class="ss-om-sz">Model wears <bdi>${esc(M.size)}</bdi></p>` : M.mixed ? '<p class="ss-om-sz">Size worn is on each photo</p>' : ''}<span class="ss-om-nav"><button type="button" class="ss-om-b" data-d="-1" aria-label="Previous photo">&lsaquo;</button><button type="button" class="ss-om-b" data-d="1" aria-label="Next photo">&rsaquo;</button></span></div>
       <ul class="ss-om-row">${figs}</ul>
     </section>`;
 }

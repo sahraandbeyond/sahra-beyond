@@ -45,7 +45,7 @@
    Reviewers asked for all three. None is a confirmed fact in the brief, and the
    substantiation rule says the default while a fact is open is silence.
 
-   Hard rules held: 230 GSM tees / 240 GSM polo; combed ring-spun, never organic;
+   Hard rules held: no GSM figures in copy (9 Nov 2026); combed ring-spun, never organic;
    no numbering; الإصدار التأسيسي, never "founding pricing". Western digits. */
 
 module.exports = {
@@ -55,9 +55,9 @@ module.exports = {
 
   home: {
     title: 'تيشيرت إماراتي من أماكن حقيقية | صحراء وما بعدها',
-    desc: 'تيشيرت إماراتي 230 غرامًا من قطن مُمشّط، مستوحى من أماكن حقيقية: سماء القوع، كثبان ليوا، وجبال الحجر. توصيل مجاني في الإمارات.',
+    desc: 'تيشيرت إماراتي من قطن مُمشّط ثقيل، مستوحى من أماكن حقيقية: سماء القوع، كثبان ليوا، وجبال الحجر. توصيل مجاني في الإمارات.',
     h1: '',   /* retired 31 Oct 2026 (was the retired tagline) */
-    lede: 'تيشيرت ثقيل من قطن مُمشّط، 230 غرامًا. ثلاثة تصاميم من صحارى الإمارات وأوديتها وسماء لياليها. 199 درهمًا.',
+    lede: 'تيشيرت ثقيل من قطن مُمشّط. ثلاثة تصاميم من صحارى الإمارات وأوديتها وسماء لياليها. 199 درهمًا.',
     ctaShop: 'تسوّق المجموعة',
     ctaPlaces: 'قصة الأماكن',
     editionEyebrow: 'الإصدار التأسيسي',
@@ -102,8 +102,8 @@ module.exports = {
     price: (n) => `${n} درهمًا`,
     deliveryLine: 'توصيل مجاني في الإمارات خلال يوم العمل التالي — اطلب قبل الساعة 2 ظهرًا.',
     exchangeLine: 'استبدال مجاني خلال 14 يومًا.',
-    gsmTee: 'قطن مُمشّط مغزول حلقيًا، 230 غرامًا',
-    gsmPolo: 'قطن بيكيه 240 غرامًا',
+    gsmTee: 'قطن مُمشّط مغزول حلقيًا، وزن ثقيل',
+    gsmPolo: 'قطن بيكيه',
     labelPrinted: 'بطاقة رقبة مطبوعة',
     switchToEn: 'English',
     switchToAr: 'العربية',

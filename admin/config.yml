@@ -84,7 +84,7 @@ collections:
         widget: "list"
         required: false
         field: { label: "Chip", name: "chip", widget: "string" }
-        hint: "Tees: 230gsm organic cotton / Ribbed crew neck / Taped collar &amp; shoulder seams. Polo differs — 240gsm, ribbed collar & placket, taped shoulder seams. 'Unisex · S–XL' is added automatically."
+        hint: "Tees: Combed cotton / Ribbed crew neck / Taped collar &amp; shoulder seams. Polo differs — piqué, ribbed collar & placket, taped shoulder seams. 'Unisex · S–XL' is added automatically."
       - { label: "Print/finish chip", name: "printChip", widget: "string", default: "DTG print · soft &amp; breathable", hint: "Small pill beside the fabric specs." }
       - { label: "Made for… (occasion)", name: "occasion", widget: "string", hint: "Where you'd actually wear it." }
 
@@ -113,7 +113,7 @@ collections:
         name: "constructionCards"
         widget: "list"
         required: false
-        hint: "Leave empty to use the tee defaults (230gsm / ribbed crew neck / taped collar & shoulders). The polo overrides all three."
+        hint: "Leave empty to use the tee defaults (Combed cotton / ribbed crew neck / taped collar & shoulders). The polo overrides all three."
         fields:
           - { label: "Title", name: "t", widget: "string" }
           - { label: "Body", name: "b", widget: "text" }
