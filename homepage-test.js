@@ -449,7 +449,29 @@ console.log('\n\x1b[1mshop page - the free tote is never listed\x1b[0m');
     check('a paid product stays', out.length === 1 && out[0].node.tags[0] === 'fit:regular', out.length + ' kept');
   }
   const built = path.join(__dirname, 'shop', 'index.html');
-  check('the built shop page carries the same guard', fs.existsSync(built) && /edges=edges\.filter\(function\(e\)\{/.test(fs.readFileSync(built, 'utf8')), 'run node build.js');
+  /* 10 Nov 2026 (r120): /shop/ is one grid built from the product files, not from Shopify's list, so the guard there is
+     structural: no Storefront product loop on the page, and the free gift tote's handle is nowhere in the grid */
+  const bs = fs.existsSync(built) ? fs.readFileSync(built, 'utf8') : '';
+  const grid = (bs.match(/<div class="pcards nb-pc" id="shopGrid">[\s\S]*?<p class="sx-none"/) || [''])[0];
+  check('the built shop page draws its grid from the product files (no Storefront loop)', !!grid && !/PRODUCTS=edges\.map\(/.test(bs), 'run node build.js');
+  check('the free gift tote is not in the shop grid', !!grid && !/gift-with-purchase|not-for-sale|free-tote|sahra-tote-gift/i.test(grid));
+  check('the only tote in the grid is the paid Sahra Tote (AED 50, linked to /tote/)', (grid.match(/data-handle="sahra-tote"/g) || []).length === 1 && /data-handle="sahra-tote" data-aed="50"/.test(grid));
+  console.log('\n\x1b[1mshop page - one grid with category chips (r120)\x1b[0m');
+  const items = grid.match(/<div class="sg-i" data-line="[a-z]+" data-kind="[a-z]+">/g) || [];
+  const nLine = l => items.filter(x => x.indexOf('data-line="' + l + '"') > -1).length;
+  check('16 pieces: 7 Sahel, 4 Founding Edition, 4 Sahra Trail and the tote', items.length === 16 && nLine('sahel') === 7 && nLine('founding') === 4 && nLine('trail') === 4 && nLine('extra') === 1, items.length + ' items');
+  check('Polos and hoodies picks out four pieces', items.filter(x => /data-kind="(polo|hoodie)"/.test(x)).length === 4);
+  check('five chips, All pressed first', (bs.match(/<button type="button" data-f="(all|sahel|founding|trail|polos-hoodies)"/g) || []).length === 5 && /data-f="all" aria-pressed="true"/.test(bs));
+  check('the count in the bar matches the grid', /<span class="sx-n" aria-live="polite">16 pieces<\/span>/.test(bs));
+  check('each Founding Edition tee is one card with a Regular / Oversized switch', (grid.match(/<div class="sg-i" data-line="founding" data-kind="tee"><div class="sfp">/g) || []).length === 3);
+  check('the chips bar sits inside main, so it stops sticking where the grid ends', bs.indexOf('<main class="sx-wrap" id="products">') > -1 && bs.indexOf('id="shopBar"') > bs.indexOf('<main class="sx-wrap"') && bs.indexOf('id="shopBar"') < bs.indexOf('</main>'));
+  check('the opener is a model photo of a product, one h1', /<section class="sx-open"[\s\S]*?<img src="\/assets\/open\/shop-720\.webp"[^>]*alt="Model wearing the Al Quaa Galaxy Tee/.test(bs) && (bs.match(/<h1[ >]/g) || []).length === 1);
+  check('no spin carousel and no per-product viewers', !/class="sring|id="shopRing|data-viewer=|class="pv-stage|id="filtPanel"|id="filtToggle"|<model-viewer/.test(bs));
+  check('the places map is the last block before the footer', bs.indexOf('id="s-places"') > bs.indexOf('</main>') && bs.indexOf('id="s-places"') > bs.indexOf('id="shopGrid"'));
+  check('old links still land: #shop-sahel and #shop-trail are mapped', /'shop-sahel':'sahel','shop-trail':'trail'/.test(bs));
+  check('no category row on the shop page (the chips do that job)', !/class="cat-row|class="op-cats/.test(bs));
+  const ars = fs.readFileSync(path.join(__dirname, 'ar', 'shop', 'index.html'), 'utf8');
+  check('/ar/shop/ is the same grid, in Arabic', (ars.match(/<div class="sg-i" /g) || []).length === 16 && /id="shopBar"/.test(ars) && !/UAE graphic|Polos and hoodies|16 pieces|Nothing in this range|Graphic t-shirts, polos/.test(ars));
 }
 
 /* ---- the hero->cards scroll freeze on a tablet (Faheem, 2 Sep 2026) -------
@@ -972,7 +994,8 @@ console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
   check('size guide keeps its essay open (no folds)', !/class="fold guide-sec"/.test(sg));
   const home = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   /* 24 Sep 2026 (Faheem, phone layout review): the homepage and shop bands are compact too - three cards, the rest behind Show more */
-  check('homepage and shop bands are compact (3 shown, a Show-more button)', /rv-list rv-compact/.test(home) && /rv-list rv-compact/.test(fs.readFileSync(path.join(__dirname, 'shop', 'index.html'), 'utf8')));
+  /* 10 Nov 2026 (r120): the one-grid shop carries no review band (the ratings are on the cards), so this is the homepage's check now */
+  check('the homepage review band is compact (3 shown, a Show-more button)', /rv-list rv-compact/.test(home));
   /* 25 Sep 2026 (Faheem): no fit warnings - the size chips are followed by a 'Check your size' link to the chart,
      with the design's other fit linked beside it (the polo has one cut, so no other-fit link) */
   /* 30 Oct 2026 (Specimen Sheet): the fit switch is a Regular | Oversized control on the page and in the buy sheet, the

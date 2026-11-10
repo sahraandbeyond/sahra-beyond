@@ -962,6 +962,8 @@ module.exports.newLede = newLede;
 module.exports.trailLede = trailLede;
 module.exports.newCard = newCard;
 module.exports.bigCard = bigCard;
+module.exports.designCards = designCards;
+module.exports.BIG_CSS = () => BIG_CSS;
 module.exports.NB_CSS = () => NB_CSS;
 module.exports.cut = cut;
 module.exports.forWomen = forWomen;

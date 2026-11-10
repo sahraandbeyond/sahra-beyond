@@ -1140,7 +1140,7 @@ const HEROES = require('./heroes.js');
    (body class buy-page). Not on product pages, the question pages or the range pages, which have their own way in. */
 const CAT_ROW = [['/t-shirts/', 'T-shirts'], ['/polos/', 'Polos'], ['/hoodies/', 'Hoodies'], ['/trail/', 'Sahra Trail'], ['/shop/', 'Shop all']];
 function catRow(bodyClass, canonical) {
-  if (!/\bbuy-page\b/.test(bodyClass || '') || /\b(q-page|feed-page)\b/.test(bodyClass || '')) return '';
+  if (!/\bbuy-page\b/.test(bodyClass || '') || /\b(q-page|feed-page|shop-page)\b/.test(bodyClass || '')) return '';
   const here = String(canonical || '').replace(/^https?:\/\/[^/]+/, '').replace(/^\/ar\//, '/');
   return `<nav class="sb-cats" aria-label="Shop by category">${CAT_ROW.map(([h, t]) => `<a href="${h}"${here === h ? ' aria-current="page"' : ''} data-track="cat_row">${t}</a>`).join('')}</nav>\n`;
 }
@@ -2478,7 +2478,11 @@ function contactWays() {
 })();
 
 // ---- Shop page (generated from shop-preview.html — single source of truth; pre-launch it stays hidden) ----
-if (LAUNCHED || REVEALED) (function () {
+/* 10 Nov 2026 (r120, Stage 2 of the landing-page audit; Faheem: "One grid with category chips", then "Do shop page as
+   well"): /shop/ is now built by shopOneGrid() further down, from the same product cards as every other listing page.
+   The template build below is kept, switched off, until the new page has been live for a while. */
+const SHOP_FROM_TEMPLATE = false;
+if (SHOP_FROM_TEMPLATE && (LAUNCHED || REVEALED)) (function () {
   try {
     let html = fs.readFileSync(path.join(ROOT, 'shop-preview.html'), 'utf8');
     // Revealed but not launched: the shop is browsable, nothing is purchasable.
@@ -3632,6 +3636,176 @@ COMMERCE.forEach(P => {
     block: PO.newBlock({ list: under, pre: toteCard, heading: 'Under AED 150', kicker: 'Shop by price', lede: PO.newLede(), fitsLabel: true, more: '/shop/', moreText: 'All products' }),
     body: '<div class="content"><p>The Sahra Tote comes free with every clothing order, so you only buy it here for a second one. The Trailhead Bag is in stock and ships next working day. <a href="/gifts/">More gift ideas &rarr;</a></p></div>',
     items: [['The Sahra Tote', '/tote/']].concat(nItems(under)) });
+
+  /* ======================================================================
+     /shop/ as one grid (r120, 10 Nov 2026)
+     The scorecard's lowest page: 21 phone screens, an opener with no product in it, the same pieces shown as cards, as a
+     spin widget and as embedded viewers, in three card styles. Now: a short opener with a model photo, one row of sticky
+     chips, ONE two-across grid with every piece once (the site's product card, the fit switch on the card), and the
+     places map as the last block. Chips filter the grid in place: All, Sahel, Founding Edition, Sahra Trail, Polos and
+     hoodies. #sahel, #founding, #trail and #polos-hoodies open the page filtered (so do the old #shop-sahel and
+     #shop-trail). The free tote is never listed: the grid is built from the product files, not from Shopify's list.
+     ====================================================================== */
+  if (LAUNCHED || REVEALED) (function shopOneGrid() {
+    const canonical = `${SITE}/shop/`;
+    const title = 'Shop UAE T-Shirts, Polos & Hoodies | Sahra & Beyond';
+    const desc = 'Graphic t-shirts, polos, hoodies and Sahra Trail running wear, designed in the UAE. Tees from AED 139; any two Founding Edition tees AED 359. Free UAE delivery over AED 100.';
+    const kindOf = p => /hoodie/i.test(p.kind || '') ? 'hoodie' : /polo/i.test(p.kind || '') ? 'polo' : p.oneSize ? 'bag' : p.kit ? 'kit' : /short/i.test(p.kind || '') ? 'short' : 'tee';
+    const wrap = (line, kind, html) => `<div class="sg-i" data-line="${line}" data-kind="${kind}">${html}</div>`;
+    /* Founding Edition: one card per design, Regular and Oversized on the card's own switch (the Sahel pattern) */
+    const designs = [];
+    founding.forEach(p => { const k = String(p.id).replace(/-(regular|oversized)$/, ''); let d = designs.find(x => x.k === k); if (!d) designs.push(d = { k, fits: [] }); d.fits.push(p); });
+    const fitName = p => /-oversized$/.test(p.id) ? 'Oversized' : 'Regular';
+    const fCard = (p, i, n) => productCard(p).replace('<article class="pcard" ', `<article class="pcard${n > 1 && i === 0 ? ' on' : ''}"${n > 1 ? ` data-i="${i}"` : ''} `);
+    const foundingCards = designs.map(d => { const fits = d.fits.slice().sort((a, b) => fitName(b).localeCompare(fitName(a)));   /* Regular first */
+      const n = fits.length;
+      const inner = n > 1 ? `<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit">${fits.map((f, i) => `<button type="button"${i ? '' : ' class="on"'} data-i="${i}" aria-pressed="${i ? 'false' : 'true'}">${fitName(f)}</button>`).join('')}</div>${fits.map((f, i) => fCard(f, i, n)).join('')}</div>` : fCard(fits[0], 0, 1);
+      return wrap('founding', fits[0].garment === 'polo' ? 'polo' : 'tee', inner); }).join('');
+    const sahelCards = sahelAll.map(p => wrap('sahel', kindOf(p), PO.designCards(p, true))).join('');
+    const trailAll = PO.pickNew(p => p.line === 'trail');
+    const trailCards = trailAll.map(p => wrap('trail', kindOf(p), PO.designCards(p, false))).join('');
+    /* the paid Sahra Tote closes the grid (16 pieces: no empty slot at two or four across); it shows under All only.
+       The free gift tote is a different Shopify product and is never listed. */
+    const extraCards = wrap('extra', 'bag', toteCard);
+    const total = ((sahelCards + foundingCards + trailCards + extraCards).match(/<div class="sg-i" /g) || []).length;
+    const CHIPS = [['all', 'All'], ['sahel', 'Sahel'], ['founding', 'Founding Edition'], ['trail', 'Sahra Trail'], ['polos-hoodies', 'Polos and hoodies']];
+    const prod = p => ({ '@type': 'Product', name: p.name, image: SITE + (p.imgMain || p.imgFront || '/shirts/alquaa-dune-back.jpg'), description: p.shareDesc || p.ldDesc || p.seoDesc || '', sku: p.sku || undefined,
+      brand: { '@type': 'Brand', name: 'Sahra & Beyond' }, url: `${SITE}/products/${p.id}/`,
+      offers: { '@type': 'Offer', priceCurrency: 'AED', price: String(p.price), availability: 'https://schema.org/InStock', url: `${SITE}/products/${p.id}/` } });
+    const list = founding.map((p, i) => ({ '@type': 'ListItem', position: i + 1, item: prod(p) }))
+      .concat(PO.products().filter(PO.onSale).map((p, i) => ({ '@type': 'ListItem', position: founding.length + i + 1, url: `${SITE}/products/${p.handle}/`, name: p.plain })));
+    const jsonld = [
+      { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description: desc, url: canonical },
+      { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Shop', item: canonical }] },
+      { '@context': 'https://schema.org', '@type': 'ItemList', numberOfItems: list.length, itemListElement: list }
+    ];
+    const css = `<style>
+/* the opener. On a phone (Faheem, 10 Nov 2026: "Photo full width, words over it") the photo runs edge to edge and the
+   words sit at the top, over the sky and sand, so the Milky Way print on the back stays in view; the one-line
+   description joins from 600px, where the words move beside the photo. */
+.sx-open{position:relative;display:block;overflow:hidden;background:#1C1610;color:#FAF6EF;height:min(100vw,440px)}
+.sx-open picture{position:absolute;inset:0;display:block}
+.sx-open img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 0}
+.sx-open::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(20,14,8,.72) 0,rgba(20,14,8,.5) 26%,rgba(20,14,8,0) 50%)}
+.sx-t{position:absolute;left:0;right:0;top:0;z-index:1;padding:18px 16px 0}
+.sx-k{margin:0 0 8px;font:400 11px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:#F3DDB8}
+html body .sx-open h1{margin:0;padding:0;max-width:17ch;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(26px,7.4vw,32px);line-height:1.08;letter-spacing:.2px;color:#FFFFFF;text-wrap:balance;text-shadow:0 1px 18px rgba(8,6,4,.6)}
+.sx-open h1 .nw{white-space:nowrap}
+/* Arabic sets wider: two full-width lines keep it up in the sky and sand, clear of the model */
+@media(max-width:599px){html[dir="rtl"] body .sx-open h1{max-width:none;font-size:clamp(23px,6.6vw,28px);line-height:1.25}}
+html body .sx-open .sx-d{display:none;margin:0;font:400 16px/1.5 Jost,system-ui,sans-serif;color:#4A3E31;max-width:40ch}
+@media(min-width:600px){
+  .sx-open{display:grid;grid-template-columns:minmax(0,1fr) 42%;height:auto;background:#FAF6EF;color:#2A2016}
+  .sx-open picture{position:relative;inset:auto;grid-column:2;grid-row:1;min-height:0;height:340px}
+  .sx-open img{object-position:50% 42%}
+  .sx-open::after{display:none}
+  .sx-t{position:relative;grid-column:1;grid-row:1;align-self:center;padding:0 clamp(24px,5vw,56px)}
+  .sx-k{color:#7E4114;margin-bottom:12px}
+  html body .sx-open h1{font-size:30px;color:#2A2016;text-shadow:none;margin-bottom:8px}
+  html body .sx-open .sx-d{display:block}
+}
+@media(min-width:900px){
+  .sx-open{grid-template-columns:minmax(0,54fr) minmax(0,46fr)}
+  .sx-open picture{height:420px}
+  .sx-open img{object-position:50% 30%}
+  .sx-t{padding:0 clamp(32px,6vw,110px)}
+  .sx-k{margin-bottom:14px}
+  html body .sx-open h1{font-size:clamp(40px,3.8vw,60px);max-width:15ch;margin-bottom:14px}
+  html body .sx-open .sx-d{font-size:18px}
+}
+.sx-bar{position:sticky;top:var(--sx-top,57px);z-index:40;background:rgba(250,246,239,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(43,37,32,.1)}
+/* the header tucks away on the way down (.sb-hide): the chips move up into its place, and come back down with it */
+.sx-bar{transition:top .22s ease}
+header.hdr.sb-hide~main .sx-bar{top:0}
+@media(prefers-reduced-motion:reduce){.sx-bar{transition:none}}
+/* the count sits outside the scrolling row; the row fades out at its far end, where more chips wait */
+.sx-in{display:flex;align-items:center;max-width:1240px;margin:0 auto}
+.sx-chips{position:relative;flex:1 1 auto;min-width:0;display:flex;gap:8px;align-items:center;padding:10px 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent)}
+[dir="rtl"] .sx-chips{-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(to left,#000 calc(100% - 22px),transparent)}
+.sx-chips::-webkit-scrollbar{display:none}
+html body .sx-chips button{flex:none;min-height:40px;padding:0 15px;border:1px solid rgba(42,32,22,.3);border-radius:999px;background:#FFFDF8;color:#2A2016;font:500 14.5px/1 Jost,system-ui,sans-serif!important;letter-spacing:0!important;text-transform:none!important;cursor:pointer;white-space:nowrap}
+html body .sx-chips button[aria-pressed="true"]{background:#2A2016;border-color:#2A2016;color:#FAF6EF}
+.sx-chips button:focus-visible{outline:2px solid #9C521B;outline-offset:2px}
+.sx-n{flex:none;padding-inline:6px 16px;font:400 13px/1 Jost,system-ui,sans-serif;color:#5C5148;white-space:nowrap}
+/* on a phone the chips need the width more than the count does: it stays for screen readers (aria-live) and is shown from 600px */
+@media(max-width:599px){.sx-n{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}}
+/* a plain cream ground: no living sky behind the grid, so the photos carry the colour */
+body.shop-page{background:#FAF6EF}
+body.shop-page::before,body.shop-page::after,body.shop-page #sb-sky{display:none!important}
+html body.shop-page main.sx-wrap{display:block;max-width:none;margin:0;padding:0;background:none;border-radius:0;box-shadow:none}
+.sx-main{max-width:1240px;margin:0 auto;padding:14px 16px 8px}
+.sx-after{padding-top:0}
+.sx-none{margin:8px 0 0;padding:28px 0;text-align:center;font:400 15px/1.5 Jost,system-ui,sans-serif;color:#5C5148}
+/* the 11.11 discount row (sale.js draws it; gone with the sale): one quiet scrolling line under the chips, its count folded into the chips' count */
+.shop-page .sbf{flex-wrap:nowrap;justify-content:flex-start;gap:6px;max-width:none;margin:0 -16px 8px;padding:0 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+/* its place is held from the first paint (the head script has set data-sale by then), so the cards do not jump when it arrives */
+html[data-sale="1"] .shop-page .sx-main .nb:not(:has(>.sbf))::before{content:"";display:block;height:48px}
+/* a chip tap hides cards above and below the fold: the browser must not re-anchor the scroll while that happens */
+body.shop-page,.sx-wrap,.sx-main{overflow-anchor:none}
+.shop-page .sbf::-webkit-scrollbar{display:none}
+.shop-page .sbf-l{flex:none}
+.shop-page .sbf-c{flex:none;min-height:40px;padding:0 13px;font-size:13.5px;background:none}
+.shop-page .sbf-c[aria-pressed="true"]{background:#2A2016}
+.shop-page .sbf-n{display:none}
+.sx-main .nb{margin:0;padding:0;max-width:none}
+.sx-main .pcards.nb-pc{margin:0}
+.sg-i{display:contents}
+.sg-i.sg-off{display:none}
+.sx-note{max-width:70ch;margin:22px 0 0;font:400 14.5px/1.6 Jost,system-ui,sans-serif;color:#4A4136}
+.sx-note a{color:#7E4114;text-underline-offset:3px}
+.sx-map{background:#14102A;color:#F7EFE2;padding:clamp(44px,7vh,84px) 16px clamp(40px,6vh,72px);margin-top:36px}
+.sx-map>.sx-mw{max-width:1180px;margin:0 auto}
+.sx-map .sx-mk{margin:0 0 10px;font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:#F2C98C}
+html body .sx-map h2{margin:0 0 20px;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(28px,3.1vw,44px);line-height:1.1;color:#FFFFFF;max-width:20ch}
+.sx-map .j-eyebrow{font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:#F2C98C}
+.sx-map .pm{display:grid;gap:22px;align-items:start}
+@media(min-width:900px){.sx-map .pm{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px}}
+</style>`;
+    const js = `<script>(function(){var bar=document.getElementById('shopBar'),grid=document.getElementById('shopGrid');if(!bar||!grid)return;
+var hdr=document.querySelector('header.hdr'),main=grid.closest('.sx-main'),row=bar.querySelector('.sx-chips');
+function hh(){return hdr?Math.round(hdr.getBoundingClientRect().height):0;}
+function setTop(){bar.style.setProperty('--sx-top',hh()+'px');}setTop();addEventListener('resize',setTop);addEventListener('load',setTop);
+var chips=[].slice.call(bar.querySelectorAll('button[data-f]')),items=[].slice.call(grid.querySelectorAll('.sg-i')),n=bar.querySelector('.sx-n'),none=document.getElementById('shopNone');
+var AR=/^ar/i.test(document.documentElement.lang||'');
+function count(){var s=0;items.forEach(function(e){if(e.classList.contains('sg-off'))return;var c=e.querySelectorAll('.pcard');for(var i=0;i<c.length;i++){if(!c[i].classList.contains('sbf-off')&&(!c[i].closest('.sfp')||c[i].classList.contains('on'))){s++;break;}}});
+var t=AR?('عدد القطع: '+s):(s+(s===1?' piece':' pieces'));if(n&&n.textContent!==t)n.textContent=t;if(none)none.hidden=s>0;}
+function ok(e,f){return f==='all'||(f==='polos-hoodies'?/^(polo|hoodie)$/.test(e.getAttribute('data-kind')):e.getAttribute('data-line')===f);}
+/* the top of the list (the discount row included) under the header and the chips */
+function goGrid(){requestAnimationFrame(function(){scrollTo(0,Math.max(0,Math.round(main.getBoundingClientRect().top+scrollY-bar.offsetHeight-hh())));});}
+/* bring the pressed chip into the middle of its row (the row scrolls sideways on a phone); never moves the page */
+function showChip(c){if(!row||!c||row.scrollWidth<=row.clientWidth)return;var x=c.offsetLeft-(row.clientWidth-c.offsetWidth)/2;try{row.scrollTo({left:x,behavior:'smooth'});}catch(e){row.scrollLeft=x;}}
+function set(f,user){if(!chips.some(function(c){return c.getAttribute('data-f')===f;}))f='all';
+var stuck=bar.getBoundingClientRect().top<=hh()+2;
+items.forEach(function(e){e.classList.toggle('sg-off',!ok(e,f));});
+chips.forEach(function(c){var on=c.getAttribute('data-f')===f;c.setAttribute('aria-pressed',on?'true':'false');if(on)showChip(c);});
+count();
+if(user){try{history.replaceState(null,'',f==='all'?location.pathname+location.search:'#'+f);}catch(e){}if(stuck)goGrid();}}
+chips.forEach(function(c){c.addEventListener('click',function(){set(c.getAttribute('data-f'),1);});});
+/* #sahel, #founding, #trail and #polos-hoodies open the page filtered; so do the old #shop-sahel and #shop-trail */
+var MAP={'shop-sahel':'sahel','shop-trail':'trail'};chips.forEach(function(c){var k=c.getAttribute('data-f');if(k!=='all')MAP[k]=k;});
+function fromHash(){var h=(location.hash||'').replace('#','');if(MAP[h]){set(MAP[h],0);goGrid();}}
+fromHash();addEventListener('hashchange',fromHash);
+/* the discount row (sale.js) hides cards with .sbf-off: recount after it has run, and when the sale ends */
+document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.sbf-c'))setTimeout(count,0);});document.addEventListener('sb:sale',function(){setTimeout(count,0);});document.addEventListener('DOMContentLoaded',function(){setTimeout(count,0);});addEventListener('load',function(){setTimeout(count,60);});})();</script>`;
+    const body = `${css}
+  <section class="sx-open" aria-labelledby="sxH">
+    <picture><source media="(max-width:599px)" srcset="/assets/open/shop-m-780.webp" width="780" height="936"><img src="/assets/open/shop-720.webp" srcset="/assets/open/shop-720.webp 720w, /assets/open/shop-1076.webp 1076w" sizes="(min-width:900px) 46vw, 42vw" width="1076" height="1345" alt="Model wearing the Al Quaa Galaxy Tee, the Milky Way printed across the back" fetchpriority="high" decoding="async"></picture>
+    <div class="sx-t"><p class="sx-k">Wear a place, not a logo</p><h1 id="sxH">UAE graphic <span class="nw">t-shirts,</span> drawn from real places</h1><p class="sx-d">T-shirts, polos, hoodies and running wear. Every design carries a place.</p></div>
+  </section>
+  <main class="sx-wrap" id="products">
+  <div class="sx-bar" id="shopBar"><div class="sx-in"><div class="sx-chips" role="group" aria-label="Show">${CHIPS.map(([k, t], i) => `<button type="button" data-f="${k}" aria-pressed="${i ? 'false' : 'true'}" data-track="shop_chip_${k.replace(/-/g, '_')}">${t}</button>`).join('')}</div><span class="sx-n" aria-live="polite">${total} pieces</span></div></div>
+  <div class="sx-main">
+    ${PO.stageHead()}${PO.NB_CSS()}${PO.BIG_CSS()}
+    <div class="nb"><div class="pcards nb-pc" id="shopGrid">${sahelCards}${foundingCards}${trailCards}${extraCards}</div><p class="sx-none" id="shopNone" hidden>Nothing in this range at that discount.</p></div>
+    <p class="sx-note">${PO.newLede()} The <a href="/tote/">Sahra Tote</a> comes free with every clothing order.</p>
+    <p class="sx-note">Giving a tee for Eid Al Etihad on 2 December? <a href="/national-day/">National Day t-shirts and gifts</a> &middot; <a href="/gifts/">Gift ideas</a></p>
+ </div>
+  </main>
+  <div class="sx-main sx-after">${newsletterBlock()}</div>
+  <section class="sx-map" id="s-places" aria-labelledby="sxMapH"><div class="sx-mw"><p class="sx-mk">The places</p><h2 id="sxMapH">Every piece has a pin on the map</h2>${require('./place-map.js').homeBlock(ROOT)}</div></section>
+  ${js}`;
+    write('shop/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor('shop'), bodyClass: 'buy-page shop-page', image: `${SITE}/assets/open/open-1080.webp` }));
+  })();
 })();
 
 const PRODUCT_URLS = buildProducts({ ROOT, SITE, write, arCorePublic: AR_CORE_PUBLIC, launched: LAUNCHED, shopUrl: (LAUNCHED || REVEALED) ? '/shop/' : '/shop-preview.html' });

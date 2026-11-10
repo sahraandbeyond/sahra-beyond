@@ -54,7 +54,7 @@ function filt(){if(!S.on()||!PG.test(location.pathname))return;var ar=/^ar/.test
 var tiers={};all.forEach(function(c){var p=S.pct(hOf(c));if(p)tiers[p]=1;});var T=Object.keys(tiers).map(Number).sort(function(a,b){return a-b;});if(!T.length)return;
 var panel=document.getElementById('filtPanel'),shop=/\/shop\/?$/.test(location.pathname),key=T.join(',');
 if(bar&&document.contains(bar)){if(bar.getAttribute('data-t')!==key)paint(ar,T,key);apply();return;}
-if(shop&&!panel)return;
+if(shop&&!panel)shop=false;   /* 10 Nov 2026 (r120): the rebuilt /shop/ is one grid like every other listing page, so the filter sits above it */
 bar=document.createElement('div');bar.className='sbf'+(shop?' sbf-shop':'');bar.setAttribute('role','group');bar.setAttribute('aria-label',ar?'\u0627\u0644\u062a\u0635\u0641\u064a\u0629 \u062d\u0633\u0628 \u0627\u0644\u062e\u0635\u0645':'Filter by discount');
 paint(ar,T,key);
 bar.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.sbf-c');if(!b)return;cur=b.getAttribute('data-v');apply();try{if(window.track)track('sale_filter',{discount:cur});}catch(x){}});
