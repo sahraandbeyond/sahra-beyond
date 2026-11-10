@@ -469,7 +469,7 @@ console.log('\n\x1b[1mshop page - the free tote is never listed\x1b[0m');
   check('no spin carousel and no per-product viewers', !/class="sring|id="shopRing|data-viewer=|class="pv-stage|id="filtPanel"|id="filtToggle"|<model-viewer/.test(bs));
   check('the places map is the last block before the footer', bs.indexOf('id="s-places"') > bs.indexOf('</main>') && bs.indexOf('id="s-places"') > bs.indexOf('id="shopGrid"'));
   check('old links still land: #shop-sahel and #shop-trail are mapped', /'shop-sahel':'sahel','shop-trail':'trail'/.test(bs));
-  check('no category row on the shop page (the chips do that job)', !/class="cat-row|class="op-cats/.test(bs));
+  check('no category row on the shop page (the chips do that job)', !/class="sb-cats"|class="op-cats"/.test(bs));
   const ars = fs.readFileSync(path.join(__dirname, 'ar', 'shop', 'index.html'), 'utf8');
   check('/ar/shop/ is the same grid, in Arabic', (ars.match(/<div class="sg-i" /g) || []).length === 16 && /id="shopBar"/.test(ars) && !/UAE graphic|Polos and hoodies|16 pieces|Nothing in this range|Graphic t-shirts, polos/.test(ars));
 }
@@ -943,6 +943,11 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
     /* 10 Nov 2026 (r119, site scorecard; Faheem: "Phone category row", "Lighter pages") */
     var tsh = rd('t-shirts/index.html'), shp = rd('shop/index.html');
     check('r119: a category row sits under the header on the listing pages and across the top of the homepage opener (phones only)', /<\/header>\s*<nav class="sb-cats" aria-label="Shop by category"><a href="\/t-shirts\/" aria-current="page"/.test(tsh) && /\.sb-cats\{display:none\}/.test(tsh) && /<nav class="op-cats" aria-label="Shop by category">/.test(page) && /\.op-cats\{display:none\}/.test(page) && !/class="sb-cats"/.test(kfb) && !/class="sb-cats"/.test(rd('sahel/index.html')));
+    /* 10 Nov 2026 (r121; Faheem, tablet screenshot: "The category menu gets cut off on tablet"): the homepage row is a <nav>, so it
+       inherited the site bar's top offset and sat part-way under the bar (52px on a phone, 66px from about 620px wide). It now
+       starts where the bar ends: a rule that outranks `body.has-topbar nav`, fed by the bar's measured height. */
+    { const hp = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), hpa = fs.readFileSync(path.join(__dirname, 'ar', 'index.html'), 'utf8');
+      [['/', hp], ['/ar/', hpa]].forEach(([u, h]) => check('r121 ' + u + ': the homepage category row starts below the site bar at every width', /html body nav\.op-cats\{top:var\(--op-nav,52px\)\}/.test(h) && /setProperty\('--op-nav',h\+'px'\)/.test(h) && /new ResizeObserver\(f\)\.observe\(n\)/.test(h))); }
     check('r119: the character-set tag is in the first 1,024 bytes of the shop page, and the unused wadi plate is no longer fetched', shp.search(/<meta charset=/i) > -1 && shp.search(/<meta charset=/i) < 1024 && !/var PLATES = \{[^}]*wadi/.test(page) && !/var DEPTHS = \{[^}]*wadi/.test(page));
   })();
   check('r115: the ring, map and story sections are off the homepage', !/id="s-ring"/.test(page) && !/id="s-places"/.test(page) && !/id="s-story"/.test(page));

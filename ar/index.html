@@ -1907,7 +1907,12 @@ html body #s-collection .j-wrap>h2.rv{font-size:clamp(28px,3.1vw,48px);line-heig
 /* 10 Nov 2026 (site scorecard; Faheem: "Phone category row"): the range, one tap away, across the top of the opening photo. Phones only: the desktop bar already lists it. */
 .op-cats{display:none}
 @media(max-width:899px){
-  .op-cats{position:absolute;z-index:2;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:4px;padding:2px 16px 18px;background:linear-gradient(to bottom,rgba(20,14,8,.62) 0,rgba(20,14,8,.34) 55%,rgba(20,14,8,0) 100%)}
+  /* 10 Nov 2026 (Faheem, tablet screenshot: "The category menu gets cut off on tablet"): the row is a <nav>, so it was
+     picking up the site bar's own rule (body.has-topbar nav{top:...}) and sat part-way under the bar; the bar is 52px
+     tall on a phone and grows to 66px from about 620px wide, which hid the words. The row now starts exactly where the
+     bar ends: --op-nav is the bar's measured height (script below), 52px until it has run. */
+  html body nav.op-cats{top:var(--op-nav,52px)}
+  .op-cats{position:absolute;z-index:2;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:4px;padding:0 16px 18px;background:linear-gradient(to bottom,rgba(20,14,8,.62) 0,rgba(20,14,8,.34) 55%,rgba(20,14,8,0) 100%)}
   html body .op-cats a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 2px;font:500 14.5px/1 Jost,system-ui,sans-serif!important;letter-spacing:.01em!important;text-transform:none!important;color:#FFFFFF;text-decoration:none;white-space:nowrap;text-shadow:0 1px 10px rgba(8,6,4,.55)}
   .op-cats a:focus-visible{outline:2px solid #FAF6EF;outline-offset:-2px}
 }
@@ -1923,6 +1928,7 @@ html body #s-collection .j-wrap>h2.rv{font-size:clamp(28px,3.1vw,48px);line-heig
 </style>
 <section class="op" id="s-open" aria-labelledby="opH">
   <nav class="op-cats" aria-label="تسوّق حسب الفئة"><a href="/ar/t-shirts/" data-track="cat_row">التيشيرتات</a><a href="/ar/polos/" data-track="cat_row">البولو</a><a href="/ar/hoodies/" data-track="cat_row">الهوديات</a><a href="/ar/trail/" data-track="cat_row">صحراء تريل</a><a href="/ar/shop/" data-track="cat_row">كل المنتجات</a></nav>
+  <script>(function(){var n=document.getElementById('nav'),o=document.getElementById('s-open');if(!n||!o)return;function f(){var h=Math.round(n.getBoundingClientRect().height);if(h)o.style.setProperty('--op-nav',h+'px');}f();addEventListener('resize',f);addEventListener('load',f);if(window.ResizeObserver){try{new ResizeObserver(f).observe(n);}catch(e){}}})();</script>
   <picture><img class="op-img" src="/assets/open/open-1080.webp" srcset="/assets/open/open-720.webp 720w, /assets/open/open-1080.webp 1080w, /assets/open/open-1600.webp 1600w" sizes="(min-width:900px) 54vw, 100vw" width="1080" height="1350" alt="عارضة ترتدي تيشيرت خليج خورفكان، والخليج وجباله مطبوعان على الظهر" fetchpriority="high" decoding="async" style="--op-x:50%;--op-y:30%"></picture>
   <div class="op-t">
     <p class="op-k">صحراء وما بعدها</p>
