@@ -601,7 +601,13 @@
   "Al Aqah": "العقة",
   "Sizes…": "المقاسات…",
   "↻ Next-day delivery across the UAE": "↻ توصيل في اليوم التالي في أنحاء الإمارات",
-  "· order by 2 pm · free over AED 100": "· اطلب قبل الساعة 2 ظهرًا · مجاني للطلبات فوق 100 درهم"
+  "· order by 2 pm · free over AED 100": "· اطلب قبل الساعة 2 ظهرًا · مجاني للطلبات فوق 100 درهم",
+  "Sold out: see the Regular fit": "نفدت الكمية: شاهد قصّة ريجولر",
+  "@Sold out: see the Regular fit": "نفدت الكمية: شاهد قصّة ريجولر",
+  "Sold out: see the Oversized fit": "نفدت الكمية: شاهد قصّة أوفرسايز",
+  "@Sold out: see the Oversized fit": "نفدت الكمية: شاهد قصّة أوفرسايز",
+  "Sold out: see the Super Oversized fit": "نفدت الكمية: شاهد قصّة سوبر أوفرسايز",
+  "@Sold out: see the Super Oversized fit": "نفدت الكمية: شاهد قصّة سوبر أوفرسايز"
  },
  "patterns": [
   [
@@ -703,6 +709,22 @@
   [
    "^@View (\\d+)$",
    "عرض الصورة $1"
+  ],
+  [
+   "^Posted today$",
+   "نُشر اليوم"
+  ],
+  [
+   "^Posted yesterday$",
+   "نُشر أمس"
+  ],
+  [
+   "^Posted 2 days ago$",
+   "نُشر قبل يومين"
+  ],
+  [
+   "^Posted ([3-6]) days ago$",
+   "نُشر قبل $1 أيام"
   ],
   [
    "^Posted 1 week ago$",

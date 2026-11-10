@@ -3565,7 +3565,7 @@ COMMERCE.forEach(P => {
     title: 'Activewear in Dubai & the UAE: Running Tee, 2-in-1 Shorts | Sahra Trail',
     desc: 'Sahra Trail, trail and run wear designed in the UAE: the Sahra Trail Tee, the 2-in-1 Short, the Kit and the Trailhead Bag. Free delivery across the UAE on orders over AED 100.',
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE',
-    block: PO.newBlock({ list: trail, heading: 'Sahra Trail', kicker: 'Activewear', lede: PO.newLede(), more: '/trail/', moreText: 'About Sahra Trail' }),
+    block: PO.newBlock({ list: trail, heading: 'Sahra Trail', kicker: 'Activewear', lede: PO.trailLede(), more: '/trail/', moreText: 'About Sahra Trail' }),
     body: `<div class="content"><p>Sahra Trail is for the trails, wadis and ridges of the UAE. The Sahra Trail Tee has raglan sleeves, mesh side panels and covered seams, with the reflective Two Ridges symbol under the collar. The 2-in-1 Short has a hidden inner liner with a bonded phone pocket, a zip pocket for keys and cards, and an internal drawcord. The Kit is the two together. There is no size chart for these yet, so <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about Sahra Trail before I order.')}" target="_blank" rel="noopener">message us</a> if you are unsure of your size.</p></div>`,
     items: trail.map(p => [p.plain, `/products/${p.handle}/`]) });
 
@@ -4686,7 +4686,7 @@ ${lang === 'ar' ? `  ${chapters}
   </section>
 ` : `  <section class="tr-intro" aria-labelledby="${id}about"><div class="tr-rv"><p class="tr-num">Sahra Trail</p><h2 id="${id}about">${t.about.h}</h2><p>${t.about.p[0]}</p></div></section>
   <section class="tr-shop" id="pieces" aria-labelledby="${id}first">
-    <div class="tr-shop-h"><h2 id="${id}first">${PO.inc('st0', '<span class="st0">All the pieces, on <span style="white-space:nowrap">pre-order</span> from Wed 28 Oct</span>')}${PO.inc('st1', '<span class="st1">All the pieces, on <span style="white-space:nowrap">pre-order</span> now</span>')}<span class="st2">All the pieces</span></h2><p>${PO.newLede()}</p></div>
+    <div class="tr-shop-h"><h2 id="${id}first">${PO.inc('st0', '<span class="st0">All the pieces, on <span style="white-space:nowrap">pre-order</span> from Wed 28 Oct</span>')}${PO.inc('st1', '<span class="st1">All the pieces, on <span style="white-space:nowrap">pre-order</span> now</span>')}<span class="st2">All the pieces</span></h2><p>${PO.trailLede()}</p></div>
     <div class="tr-shop-g">
       <figure class="tr-film"><video id="${id}film" muted loop playsinline preload="none" poster="/assets/trail/reveal/trail-reveal-poster.jpg" width="720" height="1280" aria-label="${t.rv.filmAlt}"><source src="/assets/trail/reveal/trail-reveal-loop.mp4" type="video/mp4"></video>${t.rv.mock ? `<span class="mock-tag">${t.rv.mock}</span>` : ''}
         <button type="button" class="tr-film-btn" data-play="${t.rv.play}" data-pause="${t.rv.pause}" aria-controls="${id}film">${t.rv.play}</button>

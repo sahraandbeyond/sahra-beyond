@@ -231,7 +231,17 @@
     });
     if (busy) return;
     if (buy && buy.getAttribute('data-paused') === '1') return;
-    if (VS && !VS.some(function (v) { return v.availableForSale; })) { add.disabled = true; add.textContent = 'Sold out'; return; }
+    if (VS && !VS.some(function (v) { return v.availableForSale; })) {
+      /* 10 Nov 2026 (landing-page audit): a fit with no size left was a dead end (a grey "Sold out" button). Where the piece has
+         another fit on sale, the button leads to it. It says only that this fit is sold out, never that the other is in stock. */
+      var alt = document.querySelector('.ssb-fit a:not(.on)[href]') || document.querySelector('.ss-fits a:not(.on)[href]');
+      var ah = alt ? (alt.getAttribute('href') || '').replace(/\?size=[A-Z]+$/, '') : '';
+      var an = /-super-oversized\/$/.test(ah) ? 'Sold out: see the Super Oversized fit' : /-oversized\/$/.test(ah) ? 'Sold out: see the Oversized fit' : /-regular\/$/.test(ah) ? 'Sold out: see the Regular fit' : '';
+      if (an) { add.disabled = false; add.textContent = an; add.setAttribute('data-alt', ah); add.classList.add('is-alt'); var bar = add.closest ? add.closest('.ssb') : null; if (bar) bar.classList.add('is-out'); }
+      else { add.disabled = true; add.textContent = 'Sold out'; }
+      return;
+    }
+    add.removeAttribute('data-alt'); add.classList.remove('is-alt'); var bar0 = add.closest ? add.closest('.ssb') : null; if (bar0) bar0.classList.remove('is-out');
     add.disabled = false;
     var v = pick();
     add.textContent = (v && !v.availableForSale) ? 'Sold out in that size' : 'Add to bag';
@@ -252,6 +262,7 @@
   function srcImg() { var f = figs[cur]; return f ? f.querySelector('img') : null; }
   add.addEventListener('click', function () {
     if (busy) return;
+    if (add.getAttribute('data-alt')) { tr('soldout_fit_switch', { item_id: handle }); location.href = add.getAttribute('data-alt'); return; }
     var ready = one || (kit ? (sel.tee && sel['short']) : sel.size);
     if (!ready) { needSize(); return; }
     if (!live) { busy = true; add.textContent = 'Checking stock…'; waitAdd = true; return; }
@@ -282,7 +293,7 @@
       /* a size tapped before stock arrived that has since sold out */
       ['size', 'tee', 'short'].forEach(function (g) { if (sel[g] && !avail(g, sel[g])) { say(sel[g] + ' is sold out. Please choose another size.'); delete sel[g]; } });
       var go = waitAdd; waitAdd = false; busy = false; paint();
-      if (go && pick()) add.click();
+      if (go && pick() && !add.getAttribute('data-alt')) add.click();   /* a tap made before stock loaded never becomes a redirect */
     }, function () { clearTimeout(t); say('Sizes are not loading. Refresh the page, or message us on WhatsApp.'); });
   }
   /* the Regular / Oversized links carry the chosen size, so switching fit keeps it (QA nice 10) */

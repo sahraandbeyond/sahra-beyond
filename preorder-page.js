@@ -602,6 +602,9 @@ const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct
   + `<span class="st2">${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct.'}</span>`
   + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. No chart yet for the Sahel Polo and Sahra Trail: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
 
+/* 10 Nov 2026 (landing-page audit): the Sahra Trail blocks carried the Sahel lede ("Sahel has its own size chart..."), which
+   is about another line. Trail gets its own line: the true state of its sizing, and nothing about Sahel. */
+const trailLede = () => 'No size chart yet for Sahra Trail: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
 /* 23 Oct 2026 (site review): a place guide whose place became a Sahel piece shows that piece
    (Khor Fakkan, Al Jazirah Al Hamra, Al Aqah / Snoopy Island, Ras Al Khor), on the place page and on
    the guides that name the place. Same stage rules as everywhere else. */
@@ -919,6 +922,7 @@ module.exports.pieceFor = pieceFor;
 module.exports.pieceBlock = pieceBlock;
 module.exports.newBlock = newBlock;
 module.exports.newLede = newLede;
+module.exports.trailLede = trailLede;
 module.exports.newCard = newCard;
 module.exports.bigCard = bigCard;
 module.exports.NB_CSS = () => NB_CSS;

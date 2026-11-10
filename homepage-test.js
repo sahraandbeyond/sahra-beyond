@@ -892,7 +892,12 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   check('the plates are referenced from /journey/plates/', /\/journey\/plates\/[a-z-]+\.(jpg|webp)/.test(page));
   check('the Storefront list is filtered before fill() (free tote never listed)', /\.filter\(forSale\);fill\(products\);/.test(page));
   check('the review band markers are present', /<!--REVIEWS:START-->/.test(page) && /<!--REVIEWS:END-->/.test(page));
-  check('the film is the live lazy video', /<video class="vband-v" id="brandVideo"/.test(page) && /data-src="\/video\/brand\.mp4/.test(page));
+  /* 10 Nov 2026 (r115, landing-page audit): the homepage went from 22 phone screens to a short page. The brand film, the ring
+     section, the place map and the story section left it; the Instagram strip stays in #s-film. */
+  check('the film has left the homepage (r115); the Instagram strip stays', !/id="brandVideo"/.test(page) && /<!--IG:STRIP-->/.test(page));
+  check('r115: one full-photo opener leads the page and holds the only h1', /<section class="op" id="s-open"/.test(page) && (page.match(/<h1[\s>]/g) || []).length === 1 && /<h1 id="opH">Wear what you love about the UAE<\/h1>/.test(page) && page.indexOf('id="s-open"') < page.indexOf('id="s-hero"'));
+  check('r115: the three place stories sit above the collection', page.indexOf('id="s-alquaa"') < page.indexOf('id="s-collection"') && page.indexOf('id="s-naqab"') < page.indexOf('id="s-collection"') && page.indexOf('id="s-alquaa"') > page.indexOf('<!--NOWBAND:END-->'));
+  check('r115: the ring, map and story sections are off the homepage', !/id="s-ring"/.test(page) && !/id="s-places"/.test(page) && !/id="s-story"/.test(page));
   check('the cart and market engines load', /\/assets\/sahra-cart\.js/.test(page) && /\/assets\/sahra-market\.js/.test(page));
   const classic = fs.readFileSync(path.join(__dirname, 'classic', 'index.html'), 'utf8');
   const chead = classic.slice(0, classic.indexOf('</head>'));
