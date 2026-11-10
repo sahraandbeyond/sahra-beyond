@@ -5,7 +5,8 @@
 html[data-sale="1"] .sbs-was{text-decoration:line-through;text-decoration-thickness:1px;font-weight:400!important}
 sbs-g{display:inline-block;max-width:100%;white-space:normal}
 html[data-sale="1"] sbs-g>.sb-price{display:inline!important;white-space:nowrap}
-sbs-t{display:inline-block;padding:1px 6px;border-radius:3px;background:#7E4114;color:#FAF6EF;font:600 11px/1.5 Jost,system-ui,sans-serif;letter-spacing:.04em;text-transform:none;white-space:nowrap;vertical-align:.1em}
+sbs-t{display:none;white-space:nowrap}
+html[data-sale="1"] .ss-price sbs-t.sbs-tag,html[data-sale="1"] .ssb-p sbs-t.sbs-tag{display:inline-block;padding:0;background:none;color:#7E4114;font:500 13px/1.5 Jost,system-ui,sans-serif;letter-spacing:.01em;text-transform:none;vertical-align:baseline}
 .sbf-off{display:none!important}
 .sbf{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:1180px;margin:18px auto 6px;padding:0 16px;font:500 14px/1.3 Jost,system-ui,sans-serif;color:#2A2016}
 .sbf-l{font:400 11px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;margin-right:4px}
@@ -147,6 +148,14 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 body{font-family:Jost,system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:scroll}
 a{color:#9C521B}
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
+.sb-cats{display:none}
+@media(max-width:760px){
+  .sb-cats{display:flex;justify-content:space-between;gap:4px;padding:0 14px;background:#FAF6EF;border-bottom:1px solid rgba(43,37,32,.1);overflow-x:auto;scrollbar-width:none}
+  .sb-cats::-webkit-scrollbar{display:none}
+  html body .sb-cats a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font:500 14.5px/1 Jost,system-ui,sans-serif!important;letter-spacing:.01em!important;text-transform:none!important;color:#2A2016;text-decoration:none;white-space:nowrap}
+  html body .sb-cats a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px}
+  .sb-cats a:focus-visible{outline:2px solid #9C521B;outline-offset:-2px}
+}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
 .brand img{display:block;height:26px;width:auto}
 .brand-text{display:flex;flex-direction:column;line-height:1}
@@ -880,7 +889,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 <link rel="stylesheet" href="/assets/sahra-rtl.css?v=a07d392e">
 <script src="/assets/sahra-ar-ui.js?v=96ac342d" defer></script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=cdd516cd">
-<script src="/assets/sahra-welcome.js?v=9a76eafe" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=ff321632" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=c9b24ad7">
 <script src="/assets/sahra-nav.js?v=c2bea5be" data-sbn defer></script>
 <link rel="stylesheet" href="/assets/sahra-system.css?v=773f6fe4">
@@ -1441,7 +1450,7 @@ function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttri
 set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
 /* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
 function days(){try{var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).split('-'),n=Math.round((Date.UTC(2026,9,28)-Date.UTC(+t[0],t[1]-1,+t[2]))/864e5),x=n>1?'That is in '+n+' days.':n===1?'That is tomorrow.':n===0?'That is today.':'';[].forEach.call(document.querySelectorAll('[data-days]'),function(e){e.textContent=x;});}catch(e){}}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><link rel="preload" as="image" href="/assets/preorder/ph-kfb-01-back-720.webp" imagesrcset="/assets/preorder/ph-kfb-01-back-480.webp 480w, /assets/preorder/ph-kfb-01-back-720.webp 720w, /assets/preorder/ph-kfb-01-back-1200.webp 1200w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high"><link rel="stylesheet" href="/assets/sahra-specimen.css?v=86ad5c13"><style>
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><link rel="preload" as="image" href="/assets/preorder/ph-kfb-01-back-720.webp" imagesrcset="/assets/preorder/ph-kfb-01-back-480.webp 480w, /assets/preorder/ph-kfb-01-back-720.webp 720w, /assets/preorder/ph-kfb-01-back-1200.webp 1200w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high"><link rel="stylesheet" href="/assets/sahra-specimen.css?v=f4a30e21"><style>
 .ssz-wrap{overflow-x:auto;border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#fff;margin:10px 0 0}
 table.ssz{width:100%;border-collapse:collapse;font-family:Jost,system-ui,sans-serif}
 table.ssz caption{caption-side:top;text-align:left;font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B6256;padding:10px 12px 4px}
@@ -1524,6 +1533,15 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
 .po-small{font:14px/1.55 Jost,system-ui,sans-serif;color:#3E3326;margin:0 0 6px}
 .po-sib{font:14px/1.5 Jost,system-ui,sans-serif;margin:0 0 14px}
 .po-sib a{color:#7E4114}
+.po-rv{max-width:760px;margin:30px auto 0;padding:18px 18px 14px;border:1px solid rgba(42,32,22,.14);border-radius:16px;background:#fff}
+.po-rv h2{font:600 24px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 4px;color:#2A2016}
+.po-rv-l{list-style:none;margin:12px 0 8px;padding:0;display:grid;gap:14px}
+.po-rv-l li{padding:12px 0 0;border-top:1px solid rgba(42,32,22,.12)}
+.po-rv-l p{margin:4px 0 6px;font:400 15.5px/1.55 Jost,system-ui,sans-serif;color:#2A2016}
+.po-rv-l span{display:block;font:400 13px/1.4 Jost,system-ui,sans-serif;color:#5C5148}
+.po-rv-l .po-rv-on{margin-top:2px}
+.po-rv-s{color:#9C521B;font-size:14px;letter-spacing:1px;font-weight:400}
+@media(min-width:900px){.po-rv-l{grid-template-columns:1fr 1fr;gap:22px}}
 .po-story{margin:44px 0 0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px}
 .po-story h2{font:600 28px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 12px}
 .po-story p{font:17px/1.65 Jost,system-ui,sans-serif;margin:0 0 12px;max-width:62ch}
@@ -1593,7 +1611,7 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
     <div class="ss-head">
       <p class="ss-eb"><span>ساحل، إصدار الساحل</span> · <a href="/ar/locations/khor-fakkan-beach/">مستوحى من خورفكان</a></p>
       <h1 class="ss-h1">تيشيرت خليج خورفكان &mdash; أوفرسايز</h1>
-      <a class="po-rate" href="/ar/#s-reviews"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>5.0 من 19 تقييمًا من عملاء الإصدار التأسيسي</span></a>
+      <a class="po-rate" href="#first-reviews"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>5.0 من 19 تقييمًا من عملاء الإصدار التأسيسي</span></a>
       <p class="ss-pr"><span class="ss-price"><span class="sb-price" data-handle="khor-fakkan-bay-tee-oversized" data-aed="199">AED 199</span></span></p>
       <p class="ss-kind">تيشيرت برسمة · اللون: جت ست · للجنسين</p>
     </div>
@@ -1620,6 +1638,10 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
   </div>
 </section>
   <div class="po-wrap">
+  <section class="po-rv" id="first-reviews" aria-labelledby="poRvH"><h2 id="poRvH">من مشتري قطعنا الأولى</h2>
+    <p class="po-small">هذه القطعة جديدة ولا تقييمات خاصة بها بعد. هذه تقييمات عملاء اشتروا من الإصدار التأسيسي.</p>
+    <ul class="po-rv-l"><li><b class="po-rv-s" aria-label="5 من 5 نجوم">&#9733;&#9733;&#9733;&#9733;&#9733;</b><p>التيشيرت بلون البشرة من صحراء وما بعدها قطعة أساسية جميلة جدًا. أعجبتني الجودة واللون المثالي والقصّة. يُلاحَظ أن تفكيرًا كثيرًا بُذل في التصميم. أتشوّق لأطلب المزيد.</p><span>Sidrah Qureshi · مشترٍ موثّق · أكتوبر 2026</span><span class="po-rv-on">القطعة المشتراة: جبال الحجر — ريجولر</span></li><li><b class="po-rv-s" aria-label="5 من 5 نجوم">&#9733;&#9733;&#9733;&#9733;&#9733;</b><p>أحببت جودة هذا البولو ولونه. القصّة أنيقة ومريحة. إضافة رائعة إلى خزانتي بلا شك.</p><span>Elmer Pinto · مشترٍ موثّق · أكتوبر 2026</span><span class="po-rv-on">القطعة المشتراة: بولو صحراء</span></li></ul>
+    <p class="po-small"><a href="/ar/#s-reviews">كل التقييمات الـ19 &larr;</a></p></section>
   <section class="po-story">
     <div><h2>القصة</h2><p>على الساحل الشرقي للشارقة تنحدر جبال الحجر مباشرة إلى خليج عُمان. وتقع خورفكان في انحناءة بين رأسين صخريين، ويُقرأ اسمها عادةً «خور الفكّين». رسمنا الخليج كما يحتضنك: حواف جبلية جرداء، وامتداد واحد من الرمل الفاتح، وسنبوك يرتاح على ماء ساكن.</p><p class="po-small">المكان: <a href="/ar/locations/khor-fakkan-beach/">خورفكان &larr;</a></p></div>
     <div><h2>التفاصيل</h2><ul><li>قصّة أوفرسايز</li><li>قطن</li><li>طباعة DTG على الأمام والخلف</li><li>شعارنا مطرّز عند الرقبة من الخلف</li><li>بطاقة رقبة مطبوعة</li></ul>

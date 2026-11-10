@@ -307,6 +307,15 @@ ${CYCLE_CSS}
 .po-small{font:14px/1.55 Jost,system-ui,sans-serif;color:#3E3326;margin:0 0 6px}
 .po-sib{font:14px/1.5 Jost,system-ui,sans-serif;margin:0 0 14px}
 .po-sib a{color:#7E4114}
+.po-rv{max-width:760px;margin:30px auto 0;padding:18px 18px 14px;border:1px solid rgba(42,32,22,.14);border-radius:16px;background:#fff}
+.po-rv h2{font:600 24px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 4px;color:#2A2016}
+.po-rv-l{list-style:none;margin:12px 0 8px;padding:0;display:grid;gap:14px}
+.po-rv-l li{padding:12px 0 0;border-top:1px solid rgba(42,32,22,.12)}
+.po-rv-l p{margin:4px 0 6px;font:400 15.5px/1.55 Jost,system-ui,sans-serif;color:#2A2016}
+.po-rv-l span{display:block;font:400 13px/1.4 Jost,system-ui,sans-serif;color:#5C5148}
+.po-rv-l .po-rv-on{margin-top:2px}
+.po-rv-s{color:#9C521B;font-size:14px;letter-spacing:1px;font-weight:400}
+@media(min-width:900px){.po-rv-l{grid-template-columns:1fr 1fr;gap:22px}}
 .po-story{margin:44px 0 0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px}
 .po-story h2{font:600 28px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 12px}
 .po-story p{font:17px/1.65 Jost,system-ui,sans-serif;margin:0 0 12px;max-width:62ch}
@@ -360,6 +369,28 @@ ${CYCLE_CSS}
 /* 30 Oct 2026: the old buy box (buyBox) and its script (CLIENT) gave way to the Specimen Sheet: specimen.js + assets/sahra-specimen.js */
 /* the shop's real review total (Judge.me, content/reviews), for the line under the product name. Sahel and Sahra Trail
    have no reviews of their own yet, so it says whose they are. */
+/* 10 Nov 2026 (site scorecard, six of eight reviewers: no customer voice near the decision on the Sahel pages). Sahel pieces
+   are new and have no reviews of their own, so the page shows two real reviews of the Founding Edition and says plainly
+   that is what they are, with the piece each buyer bought under each review. Never on Sahra Trail. Picked the same way on every build:
+   named, verified, five stars, a comment of 60 to 240 characters, newest first, two different designs. */
+function firstReviews() {
+  try {
+    const RV = require('./reviews-render.js');
+    const flat = [];
+    for (const d of RV.loadAll()) for (const r of d.reviews) flat.push(Object.assign({}, r, { product: d.handle }));
+    const total = flat.length;
+    const design = h => String(h).replace(/-(regular|oversized)$/, '');
+    const ok = flat.filter(r => r.product !== '_shop' && r.verified && r.name && !/^anonymous$/i.test(r.name.trim()) && Number(r.rating) === 5 && r.body && r.body.length >= 60 && r.body.length <= 240).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || String(a.name).localeCompare(String(b.name)) || String(a.product).localeCompare(String(b.product)));
+    const pick = [];
+    for (const r of ok) { if (pick.length < 2 && !pick.some(x => design(x.product) === design(r.product))) pick.push(r); }
+    if (pick.length < 2) return '';
+    const month = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' }); };
+    return `<section class="po-rv" id="first-reviews" aria-labelledby="poRvH"><h2 id="poRvH">From buyers of our first pieces</h2>
+    <p class="po-small">This piece is new and has no reviews of its own yet. These are from customers who bought the Founding Edition.</p>
+    <ul class="po-rv-l">${pick.map(r => `<li><b class="po-rv-s" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b><p>${esc(r.body)}</p><span>${esc(r.name.trim())} \u00b7 Verified buyer${month(r.date) ? ' \u00b7 ' + month(r.date) : ''}</span><span class="po-rv-on">Bought: ${esc(RV.productName(r.product) || 'a Founding Edition piece')}</span></li>`).join('')}</ul>
+    <p class="po-small"><a href="/#s-reviews">All ${total} reviews &rarr;</a></p></section>`;
+  } catch (e) { return ''; }
+}
 const RATING = (function () { try { const a = require('./reviews-render.js').loadAll(); let n = 0, t = 0; a.forEach(d => { n += d.count; t += d.average * d.count; });
   return n >= 5 ? `${(t / n).toFixed(1)} from ${n} customer reviews of our Founding Edition` : ''; } catch (e) { return ''; } })();
 
@@ -373,7 +404,10 @@ function productPage(p, all, SITE, stage) {
   /* 31 Oct 2026: the fit line by the sizes on a Super Oversized page; a paused Oversized page has no chart until the fit returns */
   const fitLine = p.fit === 'Super Oversized' ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Roomy, with a dropped shoulder. Most people take one size down from their usual size.' : 'Super Oversized, drop shoulder: about one size bigger than our Founding Edition Oversized. If you know your Founding size, go one size down.'}</p>` : '';
   const paused = !onSale(p);
-  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart</a>. Still unsure? ${ask}Message us.</a></p>` : TSZ.keyFor(p) ? `<p class="ss-help">Sahra Trail has its own size chart. <a href="#size-chart">See the ${p.kit ? 'size charts for the tee and the short' : 'Sahra Trail size chart'}</a>. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
+  /* 10 Nov 2026 (site scorecard, behavioural review: the fit answer sat four screens below the size buttons): the size the
+     model wears is said beside the size help, where every photo on the page is the same size */
+  const worn = S.onModel && S.onModel.size ? `The model wears ${S.onModel.size}. ` : '';
+  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">${worn}Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart</a>. Still unsure? ${ask}Message us.</a></p>` : TSZ.keyFor(p) ? `<p class="ss-help">Sahra Trail has its own size chart. <a href="#size-chart">See the ${p.kit ? 'size charts for the tee and the short' : 'Sahra Trail size chart'}</a>. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
   const sup = (p.fitsList || []).find(f => f.fit === 'Super Oversized' && f.onSale), reg = (p.fitsList || []).find(f => f.fit === 'Regular' && f.onSale);
   const pausedChart = paused && p.line === 'sahel' && p.fit === 'Oversized'
     ? `<section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask">The Oversized chart will be published when the fit returns. Until then, see ${[sup ? `<a href="/products/${sup.handle}/#size-chart">Super Oversized</a>` : '', reg ? `<a href="/products/${reg.handle}/#size-chart">Regular</a>` : ''].filter(Boolean).join(' and ')}.</p><p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : '';
@@ -383,12 +417,13 @@ function productPage(p, all, SITE, stage) {
     crumb: `<nav class="ss-crumb" aria-label="Breadcrumb"><a href="/">Home</a><i aria-hidden="true">/</i><a href="/new/#${p.line}">${p.line === 'sahel' ? 'Sahel' : 'Sahra Trail'}</a><i aria-hidden="true">/</i><span aria-current="page">${p.title}</span></nav>`,
     h1: p.title,
     tabby: false,   /* the Sahel and Trail pages never loaded Tabby's widget; the sheet carries the Tabby line */
-    rating: RATING ? `<a class="po-rate" href="/#s-reviews"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>${RATING}</span></a>` : '',
+    rating: RATING && p.line === 'sahel' ? `<a class="po-rate" href="${firstReviews() ? '#first-reviews' : '/#s-reviews'}"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>${RATING}</span></a>` : '',   /* 10 Nov 2026: not on Sahra Trail, whose running wear has no reviews of its own (Trail merge handoff, step 8) */
     help,
     extra: `<p class="po-small">${p.noTote ? 'Free delivery across the UAE on orders over AED 100. Returns within 14 days of delivery.' : 'Free delivery across the UAE on orders over AED 100, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
       <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>`
   })}
   <div class="po-wrap">
+  ${p.line === 'sahel' ? firstReviews() : ''}
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>

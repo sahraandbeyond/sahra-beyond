@@ -29,6 +29,11 @@
    SB_NOW=2026-11-16T01:00:00Z node build.js builds the after-sale site locally;
    ?sbsale=0|1 previews either state in the browser (nothing is stored).
    Safe to delete, with its hooks, after 16 Nov 2026.
+   10 Nov 2026 (site scorecard: price display scored 5.3 of 10, the lowest aspect; Faheem: "Quiet it today"): the filled
+   "% off" pill no longer shows on cards, crops, tiles or in sentences. The sale price and the struck full price stay
+   everywhere, so the saving is still plain. The percentage shows once per product page, beside its price, as plain text
+   (no fill). The discount filter on the listing pages is unchanged. The top-bar sale line shows on shopping pages only
+   (assets/sahra-welcome.js).
    ========================================================================== */
 'use strict';
 const END = Date.UTC(2026, 10, 15, 20, 0, 0);   /* Mon 16 Nov 00:00 UAE = Sun 15 Nov 23:59:59 + 1 s */
@@ -75,7 +80,8 @@ const HEAD = () => `<!--sbs:head--><style>html[data-sale="0"] .sbs1,html[data-sa
 html[data-sale="1"] .sbs-was{text-decoration:line-through;text-decoration-thickness:1px;font-weight:400!important}
 sbs-g{display:inline-block;max-width:100%;white-space:normal}
 html[data-sale="1"] sbs-g>.sb-price{display:inline!important;white-space:nowrap}
-sbs-t{display:inline-block;padding:1px 6px;border-radius:3px;background:#7E4114;color:#FAF6EF;font:600 11px/1.5 Jost,system-ui,sans-serif;letter-spacing:.04em;text-transform:none;white-space:nowrap;vertical-align:.1em}
+sbs-t{display:none;white-space:nowrap}
+html[data-sale="1"] .ss-price sbs-t.sbs-tag,html[data-sale="1"] .ssb-p sbs-t.sbs-tag{display:inline-block;padding:0;background:none;color:#7E4114;font:500 13px/1.5 Jost,system-ui,sans-serif;letter-spacing:.01em;text-transform:none;vertical-align:baseline}
 .sbf-off{display:none!important}
 .sbf{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:1180px;margin:18px auto 6px;padding:0 16px;font:500 14px/1.3 Jost,system-ui,sans-serif;color:#2A2016}
 .sbf-l{font:400 11px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;margin-right:4px}

@@ -626,6 +626,14 @@ const CSS = `
 body{font-family:Jost,system-ui,sans-serif;color:#2B2620;line-height:1.65;background:#FAF6EF;background-image:radial-gradient(1200px 600px at 50% -10%,rgba(192,112,46,.07),transparent 60%),radial-gradient(900px 500px at 100% 100%,rgba(58,36,28,.05),transparent 60%);background-attachment:scroll}
 a{color:#9C521B}
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(16px,calc((100% - 1240px)/2));border-bottom:1px solid rgba(43,37,32,.1);position:sticky;top:0;background:rgba(250,246,239,.9);backdrop-filter:blur(16px);z-index:50}
+.sb-cats{display:none}
+@media(max-width:760px){
+  .sb-cats{display:flex;justify-content:space-between;gap:4px;padding:0 14px;background:#FAF6EF;border-bottom:1px solid rgba(43,37,32,.1);overflow-x:auto;scrollbar-width:none}
+  .sb-cats::-webkit-scrollbar{display:none}
+  html body .sb-cats a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font:500 14.5px/1 Jost,system-ui,sans-serif!important;letter-spacing:.01em!important;text-transform:none!important;color:#2A2016;text-decoration:none;white-space:nowrap}
+  html body .sb-cats a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px}
+  .sb-cats a:focus-visible{outline:2px solid #9C521B;outline-offset:-2px}
+}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
 .brand img{display:block;height:26px;width:auto}
 .brand-text{display:flex;flex-direction:column;line-height:1}
@@ -1127,6 +1135,15 @@ function navKeyFor(slug) {
   return 'none';   // guides, gifts, fabric, size guide: nothing highlighted
 }
 const HEROES = require('./heroes.js');
+/* 10 Nov 2026 (site scorecard, navigation 5.6 of 10: on a phone nothing showed the range until the menu was opened;
+   Faheem: "Phone category row"). A row of category links under the header, phones only, on the listing and guide pages
+   (body class buy-page). Not on product pages, the question pages or the range pages, which have their own way in. */
+const CAT_ROW = [['/t-shirts/', 'T-shirts'], ['/polos/', 'Polos'], ['/hoodies/', 'Hoodies'], ['/trail/', 'Sahra Trail'], ['/shop/', 'Shop all']];
+function catRow(bodyClass, canonical) {
+  if (!/\bbuy-page\b/.test(bodyClass || '') || /\b(q-page|feed-page)\b/.test(bodyClass || '')) return '';
+  const here = String(canonical || '').replace(/^https?:\/\/[^/]+/, '').replace(/^\/ar\//, '/');
+  return `<nav class="sb-cats" aria-label="Shop by category">${CAT_ROW.map(([h, t]) => `<a href="${h}"${here === h ? ' aria-current="page"' : ''} data-track="cat_row">${t}</a>`).join('')}</nav>\n`;
+}
 function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'none', bodyClass = '',
                  lang = 'en', altHref = null, noindex = false, guide = false }) {
   /* 16 Oct 2026: guide pages (places, topic guides, hikes) carry data-guide on <html>: the green WhatsApp
@@ -1425,7 +1442,7 @@ html[dir="rtl"] .brand-beyond{letter-spacing:2.5px!important}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
 <header class="hdr sb-top"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span>${AR ? '' : `<span class="brand-sahra sb-house">${esc(TAGLINE)}</span>`}</span></a><nav class="hdr-nav">${navHtml}</nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
-${bodyHtml}
+${catRow(bodyClass, canonical)}${bodyHtml}
 <footer class="ftr">${footerHtml(AR)}</footer>
 
 <script>
@@ -5158,17 +5175,27 @@ applyTikTokPixel();
    Fails the build if any page ships more than one meta description, og:title,
    twitter:title or robots meta - the /shop/ bug that sat live for a week. */
 (function () {
-  const bad = [];
+  const bad = []; let moved = 0;
   const walk = d => fs.readdirSync(d, { withFileTypes: true }).forEach(e => {
     const f = path.join(d, e.name);
     if (e.isDirectory()) { if (!/^(node_modules|\.git|_backup|_drafts|admin|docs)$/.test(e.name)) walk(f); return; }
     if (!/\.html$/.test(e.name)) return;
-    const h = fs.readFileSync(f, 'utf8'); const head = h.split(/<\/head>/i)[0];
+    let h = fs.readFileSync(f, 'utf8');
+    /* 10 Nov 2026 (r119): the character-set tag is the first thing in <head> on every page. On /shop/ it sat 18 KB in,
+       behind the analytics and sale blocks; a browser only looks for it in the first 1,024 bytes. It did no harm while
+       the host sends the character set in its header, but the page should not depend on that. */
+    const cs = /<meta charset="[^"]*">\n?/i.exec(h);
+    if (cs && cs.index > 600 && cs.index < h.search(/<\/head>/i)) {
+      h = h.slice(0, cs.index) + h.slice(cs.index + cs[0].length);
+      h = h.replace(/<head(\s[^>]*)?>/i, m => m + cs[0].trim());
+      fs.writeFileSync(f, h); moved++;
+    }
+    const head = h.split(/<\/head>/i)[0];
     const n = re => (head.match(re) || []).length;
     const c = { description: n(/<meta\s+name="description"/gi), 'og:title': n(/<meta\s+property="og:title"/gi), 'twitter:title': n(/<meta\s+name="twitter:title"/gi), robots: n(/<meta\s+name="robots"/gi) };
     Object.keys(c).forEach(k => { if (c[k] > 1) bad.push(path.relative(ROOT, f) + ': ' + c[k] + ' x ' + k); });
   });
   walk(ROOT);
   if (bad.length) { console.error('\n✗ duplicate head tags:\n  ' + bad.join('\n  ')); process.exit(1); }
-  console.log('  ✓ head-tag guard: no duplicate description / og:title / twitter:title / robots');
+  console.log('  ✓ head-tag guard: no duplicate description / og:title / twitter:title / robots' + (moved ? `; character-set tag moved to the top of ${moved} page(s)` : ''));
 })();

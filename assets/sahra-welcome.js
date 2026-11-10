@@ -90,10 +90,15 @@
   /* ?sbstage=0|1|2|3|4 previews a stage (for checking before the date; nothing is stored) */
   var forced = null;
   try { var fm = /[?&]sbstage=(\d)/.exec(location.search || ''); if (fm && STAGES[+fm[1]]) forced = +fm[1]; } catch (e) {}
+  /* 10 Nov 2026 (site scorecard; Faheem: "Quiet it today"): the sale line shows only where there is something to buy
+     (home, the shop, the range and category pages, product pages). On every other page (About, the size guide, the place
+     guides, the journal, policies) the bar keeps the line it had before the sale. */
+  var SHOPPING = /^\/(ar\/?)?($|(shop|new|sahel|trail|t-shirts(\/(regular|oversized))?|polos|hoodies|activewear|accessories|men|women|gifts|under-150|national-day|desert-t-shirts|mountain-t-shirts)\/?$|products\/)/.test(location.pathname || '/');
   function stageAt(now) {
     if (forced !== null) return forced;
     var k = 0;
     for (var i = 0; i < STAGES.length; i++) if (now >= STAGES[i].from) k = i;
+    if (STAGES[k].promo && !SHOPPING) { for (var j = k - 1; j >= 0; j--) if (!STAGES[j].promo) { k = j; break; } }
     return k;
   }
 

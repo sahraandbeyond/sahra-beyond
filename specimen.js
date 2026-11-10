@@ -326,7 +326,8 @@ function top(s, o = {}) {
       <h1 class="ss-h1">${o.h1 || esc(s.name)}</h1>
       ${o.rating || ''}
       <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two Founding Edition tees, AED 359</span>` : ''}</p>
-      <p class="ss-kind">${kind}</p>
+      <p class="ss-kind">${kind}</p>${/* 10 Nov 2026: the phone buy bar is one row now, so the Tabby instalment it carried is said here on the pages that have no Tabby widget of their own (Sahel, Sahra Trail). Hidden on desktop, where the buy card still shows it. */''}${o.tabby === false && !PAUSED[s.handle] ? `
+      <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 × ${quarter(s.price)} with Tabby</span></p>` : ''}
     </div>
     <div class="ss-body">
       ${status}

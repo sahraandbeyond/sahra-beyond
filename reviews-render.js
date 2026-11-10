@@ -461,4 +461,4 @@ body.dark-bg .rv-stars{color:#E9B978}
 .pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
 `;
 
-module.exports = { load, loadAll, stars, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN, merge, pooled, ratingLine, quotes, fitVerdict, FIT_MIN };
+module.exports = { productName, load, loadAll, stars, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN, merge, pooled, ratingLine, quotes, fitVerdict, FIT_MIN };

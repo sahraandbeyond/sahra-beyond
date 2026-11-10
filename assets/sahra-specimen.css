@@ -151,8 +151,16 @@ html body .ssb .ssb-p .sb-price{font:600 14.5px/1.2 Jost,system-ui,sans-serif!im
   html.ss-page .sb-wa{display:none!important}
   html body:has(.m-panel.open) .ssb{transform:translateY(130%);visibility:hidden}
 }
-/* the in-flow copy of the sheet's facts is not needed beside it on a phone */
-@media(max-width:899px){.ss-body .ss-tabby{display:none!important}}
+/* 10 Nov 2026 (site scorecard, seven of eight reviewers; Faheem: "One-row buy bar"): on a phone the sheet is one row,
+   the sizes and the button. Its second row (price, Tabby, delivery and returns, the fit switch) repeated what the page
+   already says under the title and made the bar 144px tall, a sixth of the screen. The page keeps every one of those
+   facts, so the Tabby line that was hidden beside the sheet shows in the page again. */
+html body .ss p.ss-tbp{margin:2px 0 0;font-size:14px!important;line-height:1.4!important;color:var(--ss-ink2,#4A4136)}
+@media(min-width:900px){html body .ss p.ss-tbp{display:none}}
+@media(max-width:899px){
+  html body .ssb .ssb-r2{display:none}
+  html body .ssb{padding-top:9px;padding-bottom:calc(9px + env(safe-area-inset-bottom,0px))}
+}
 
 /* ---- next piece ---- */
 .ss-next{max-width:1180px;margin:18px auto 26px;padding:0 16px;position:relative;z-index:4}
