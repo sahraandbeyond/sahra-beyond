@@ -375,7 +375,7 @@
       tote: 'The Sahra Tote', yoursFree: 'yours free', toteSub: 'Free with every order', free: 'Free',
       pairPrice: 'pair price', afterDiscount: 'price applied', prePrice: 'pre-order price',
       applied: 'Pair price applied: any two Founding Edition tees for AED 359', appliedX: 'Pair price applied: the two-tee price',
-      sahelFit: 'Sahel runs larger than the Founding Edition.', sahelChart: 'Sahel size chart', trailFit: 'No size chart yet.', trailAsk: 'Message us about your size',
+      sahelFit: 'Sahel runs larger than the Founding Edition.', sahelChart: 'Sahel size chart', trailFit: 'Sahra Trail is its own pattern.', trailChart: 'Sahra Trail size chart',
       total: 'Total', delivery: 'Delivery', returns: 'Returns', tabby: 'Tabby',
       dUae: 'Free, next working day', dUae15: 'AED 15, next working day', dGcc: 'AED 50, free over AED 390', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
       away: 'AED {n} away from free delivery', unlocked: 'Free delivery unlocked',
@@ -398,7 +398,7 @@
       tote: 'حقيبة صحراء القماشية', yoursFree: 'هدية مجانية', toteSub: 'مجانًا مع كل طلب', free: 'مجانًا',
       pairPrice: 'سعر القطعتين', afterDiscount: 'السعر المطبّق', prePrice: 'سعر الطلب المسبق',
       applied: 'طُبّق سعر القطعتين: أي تيشيرتين من الإصدار التأسيسي مقابل 359 درهمًا', appliedX: 'طُبّق سعر القطعتين',
-      sahelFit: 'مقاسات ساحل أوسع من الإصدار التأسيسي.', sahelChart: 'جدول مقاسات ساحل', trailFit: 'لا يوجد جدول مقاسات بعد.', trailAsk: 'راسلنا بشأن مقاسك',
+      sahelFit: 'مقاسات ساحل أوسع من الإصدار التأسيسي.', sahelChart: 'جدول مقاسات ساحل', trailFit: 'لصحراء تريل نمط قصّ خاص بها.', trailChart: 'جدول مقاسات صحراء تريل',
       total: 'المجموع', delivery: 'التوصيل', returns: 'الإرجاع', tabby: 'تابي',
       dUae: 'مجاني، في يوم العمل التالي', dUae15: '15 درهمًا، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 390 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
       away: 'يبقى {n} درهمًا للتوصيل المجاني', unlocked: 'التوصيل مجاني لهذا الطلب',
@@ -898,7 +898,7 @@
               return '<button type="button" data-act="swap" data-line="' + esc(l.id) + '" data-vid="' + esc(v.id) + '" aria-pressed="' + on + '"' + (ok || on ? '' : ' disabled aria-label="' + esc(v.title + ', ' + T('soldOut')) + '"') + ' dir="ltr">' + esc(v.title) + '</button>'; }).join('')) + '</div>';
       }
       var note = SAHEL_TEE.test(hh || '') ? '<span class="sb-fitn">' + T('sahelFit') + ' <a href="/size-guide/#sahel">' + T('sahelChart') + '</a></span>'
-        : /^sahra-trail-(tee|2-in-1-short|kit)$/.test(hh || '') ? '<span class="sb-fitn">' + T('trailFit') + ' <a href="https://wa.me/971585449946" target="_blank" rel="noopener">' + T('trailAsk') + '</a></span>' : '';
+        : /^sahra-trail-(tee|2-in-1-short|kit)$/.test(hh || '') ? '<span class="sb-fitn">' + T('trailFit') + ' <a href="/size-guide/#trail">' + T('trailChart') + '</a></span>' : '';   /* 10 Nov 2026: the Trail charts are published; the bag points at them as it does for Sahel */
       var qa = m.quantityAvailable, capped = (typeof qa === 'number') && q >= qa;
       return '<div class="sb-line" data-lid="' + esc(l.id) + '">' +
         '<a class="sb-th" href="' + href + '" tabindex="-1" aria-hidden="true">' + (img ? '<img src="' + esc(img) + '" alt="" width="64" height="80" loading="lazy">' : '<span class="sb-noimg"></span>') + (MOCKS[hh] ? '<i>Mock-up</i>' : '') + '</a>' +

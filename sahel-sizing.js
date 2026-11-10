@@ -1,7 +1,7 @@
 /* Sahel size charts (27 Oct 2026, Faheem supplied the charts).
    Sahel is cut on its own pattern, larger than the Founding Edition, so it gets its own tables
    everywhere a Sahel piece is sold, and every chart says which line it belongs to.
-   Data: content/sahel-sizing.json (S to XL only). No chart yet: the Sahel Polo and Sahra Trail. */
+   Data: content/sahel-sizing.json (S to XL only). No chart yet: the Sahel Polo. Sahra Trail has its own (trail-sizing.js). */
 const fs = require('fs');
 const path = require('path');
 

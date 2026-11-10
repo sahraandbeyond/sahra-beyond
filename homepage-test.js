@@ -899,6 +899,20 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   check('r116: one row of seven places sits between the Sahel band and the collection', /<section class="p7" id="s-origin"/.test(page) && (page.match(/class="p7-t"/g) || []).length === 7 && page.indexOf('id="s-origin"') > page.indexOf('<!--NOWBAND:END-->') && page.indexOf('id="s-origin"') < page.indexOf('id="s-collection"') && !/id="s-alquaa"|id="s-liwa"|id="s-naqab"/.test(page));
   check('r116: place tiles carry no price and use the place photos, with the Commons credits on the page', (function () { var a = page.indexOf('id="s-origin"'), z = page.indexOf('</section>', a), sec = page.slice(a, z); return !/AED|sb-price|% off/.test(sec) && (sec.match(/\/assets\/places\/[a-z-]+-400\.webp" srcset/g) || []).length === 7 && /Kamyana/.test(sec) && /Karachun/.test(sec) && /Mohammed Abdul Haris/.test(sec) && /Xiaotong Gao/.test(sec) && /CC BY-SA 4\.0/.test(sec) && /CC BY-SA 3\.0/.test(sec); })());
   check('r116: data-track clicks are sent to GA4 by one listener in the shared head', /closest\('\[data-track\]'\)/.test(page));
+  /* 10 Nov 2026 (r117): Sahra Trail size charts, from the supplier spec (content/trail-sizing.json) */
+  (function () {
+    var rd = function (f) { return fs.readFileSync(path.join(__dirname, f), 'utf8'); };
+    var tee = rd('products/sahra-trail-tee/index.html'), sh = rd('products/sahra-trail-2-in-1-short/index.html'), kit = rd('products/sahra-trail-kit/index.html'), bag = rd('products/trailhead-bag/index.html'), sg = rd('size-guide/index.html');
+    var TS = JSON.parse(rd('content/trail-sizing.json'));
+    var has = function (h, k) { return TS[k].rows.every(function (r) { return r.slice(1).every(function (c) { return h.indexOf('>' + String(Math.round(c[0] * 10) / 10).replace(/\.0$/, '') + '&nbsp;cm<small dir="ltr">' + c[1] + '&Prime;</small>') > -1; }); }); };
+    check('r117: the Trail Tee page carries the tee chart and not the short chart', /id="size-chart"/.test(tee) && has(tee, 'tee') && !/Waist, relaxed/.test(tee));
+    check('r117: the Trail Short page carries the short chart and not the tee chart', /id="size-chart"/.test(sh) && has(sh, 'short') && !/Sleeve, from the neck/.test(sh));
+    check('r117: the Trail Kit page carries both charts; the one-size bag has none', has(kit, 'tee') && has(kit, 'short') && !/id="size-chart"/.test(bag));
+    check('r117: the size guide has a Sahra Trail section with both charts', /<section class="guide-sec" id="trail">/.test(sg) && has(sg, 'tee') && has(sg, 'short') && /href="#trail">Sahra Trail chart</.test(sg));
+    check('r117: no Trail page still says there is no size chart', [tee, sh, kit, rd('trail/index.html'), rd('activewear/index.html'), page].every(function (h) { return !/No size chart for this piece yet|No size chart yet|no size chart for these yet/.test(h); }) && !/Sahra Trail have no chart yet/.test(sg));
+    check('r117: Trail charts say allow 1 cm, carry no fabric weight and no XXL', /Allow <span dir="ltr">&plusmn;1<\/span>&nbsp;cm/.test(tee) && !/gsm/i.test(tee.slice(tee.indexOf('id="size-chart"'), tee.indexOf('id="size-chart"') + 6000)) && !/XXL|2XL/.test(JSON.stringify(TS.tee.sizes) + JSON.stringify(TS.short.sizes)));
+    check('r117: the bag no longer says Trail has no size chart; it links to the Trail chart', (function () { var c = rd('assets/sahra-cart.js'); return !/No size chart yet/.test(c) && /size-guide\/#trail/.test(c) && /trailChart/.test(c); })());
+  })();
   check('r115: the ring, map and story sections are off the homepage', !/id="s-ring"/.test(page) && !/id="s-places"/.test(page) && !/id="s-story"/.test(page));
   check('the cart and market engines load', /\/assets\/sahra-cart\.js/.test(page) && /\/assets\/sahra-market\.js/.test(page));
   const classic = fs.readFileSync(path.join(__dirname, 'classic', 'index.html'), 'utf8');

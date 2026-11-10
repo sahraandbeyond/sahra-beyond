@@ -1,0 +1,233 @@
+{
+ "_note": "Sahra Trail size charts (10 Nov 2026). Source: claude/HANDOFF-Trail-Tee-and-Short-size-charts-for-website-10-Nov-2026.md. Tee: master size chart v3.5, sheet 6 (23 Sep). Short: Supplier Pack v1.4, page 5 (9 Oct), which matches master v3.5 sheet 7. These are the finished garment measurements the supplier was given (the contract figures), in cm; inches are derived and rounded to a quarter inch. No washed bulk set has been measured yet; Faheem decided on 10 Nov to publish the supplier spec now. When a washed set is measured, check it against these and update any point that is out by more than the tolerance. Only the customer-facing rows are here: the internal points (across back, neck, vents, mesh width, back rise, liner leg opening, pocket sizes) stay off the site. body = the shared UAE bands from the Sizing Rule (master sheet 1); the whole-inch figures are those bands rounded. S to XL only (no XXL). No fabric weight and no performance claims in this copy.",
+ "tee": {
+  "label": "Sahra Trail Tee",
+  "intent": "Raglan sleeves to mid-bicep and a straight hem, in a relaxed athletic fit. It is not a compression fit.",
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "rows": [
+   [
+    "Chest (flat)",
+    [
+     54.0,
+     "21&frac14;"
+    ],
+    [
+     57.8,
+     "22&frac34;"
+    ],
+    [
+     61.6,
+     "24&frac14;"
+    ],
+    [
+     65.4,
+     "25&frac34;"
+    ]
+   ],
+   [
+    "Length",
+    [
+     71.0,
+     "28"
+    ],
+    [
+     73.5,
+     "29"
+    ],
+    [
+     76.0,
+     "30"
+    ],
+    [
+     78.5,
+     "31"
+    ]
+   ],
+   [
+    "Sleeve, from the neck",
+    [
+     30.0,
+     "11&frac34;"
+    ],
+    [
+     32.0,
+     "12&frac12;"
+    ],
+    [
+     34.0,
+     "13&frac12;"
+    ],
+    [
+     36.0,
+     "14&frac14;"
+    ]
+   ]
+  ],
+  "note": "The sleeve is measured from the neck to the cuff, because a raglan sleeve has no shoulder seam. It reads longer than the sleeve on a regular tee, but it ends at mid-bicep.",
+  "method": [
+   "<strong>Chest</strong>: garment laid flat, measured straight across 2.5&nbsp;cm below the armhole. Double it for the full chest.",
+   "<strong>Length</strong>: from the highest point of the shoulder down to the hem.",
+   "<strong>Sleeve</strong>: from the neck point to the cuff."
+  ],
+  "flat": "Measured flat, so the chest is half the way round. Double it to compare with your own."
+ },
+ "short": {
+  "label": "Sahra Trail 2-in-1 Short",
+  "intent": "The outer short has an 18&nbsp;cm (7&Prime;) inseam, and the hidden liner sits 6&nbsp;cm shorter. The waistband is elastic, with a drawcord inside.",
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "rows": [
+   [
+    "Waist, relaxed (flat)",
+    [
+     36.0,
+     "14&frac14;"
+    ],
+    [
+     39.0,
+     "15&frac14;"
+    ],
+    [
+     42.0,
+     "16&frac12;"
+    ],
+    [
+     45.0,
+     "17&frac34;"
+    ]
+   ],
+   [
+    "Waist, fully stretched (flat)",
+    [
+     48.0,
+     "19"
+    ],
+    [
+     51.0,
+     "20"
+    ],
+    [
+     54.0,
+     "21&frac14;"
+    ],
+    [
+     57.0,
+     "22&frac12;"
+    ]
+   ],
+   [
+    "Hip (flat)",
+    [
+     52.0,
+     "20&frac12;"
+    ],
+    [
+     55.5,
+     "21&frac34;"
+    ],
+    [
+     59.0,
+     "23&frac14;"
+    ],
+    [
+     62.5,
+     "24&frac12;"
+    ]
+   ],
+   [
+    "Inseam, outer short",
+    [
+     18.0,
+     "7"
+    ],
+    [
+     18.0,
+     "7"
+    ],
+    [
+     18.0,
+     "7"
+    ],
+    [
+     18.0,
+     "7"
+    ]
+   ]
+  ],
+  "note": "",
+  "method": [
+   "<strong>Waist</strong>: the waistband laid flat, measured straight across, once relaxed and once fully stretched. Double it for the full waist.",
+   "<strong>Hip</strong>: laid flat, measured straight across 2.5&nbsp;cm below the crotch.",
+   "<strong>Inseam</strong>: from the crotch seam down to the hem of the outer short."
+  ],
+  "flat": "Measured flat, so the waist and hip are half the way round. Double them to compare with your own."
+ },
+ "body": {
+  "rows": [
+   [
+    "S",
+    [
+     "91&ndash;96",
+     "36&ndash;38"
+    ],
+    [
+     "76&ndash;81",
+     "30&ndash;32"
+    ],
+    "168&ndash;176"
+   ],
+   [
+    "M",
+    [
+     "96&ndash;101",
+     "38&ndash;40"
+    ],
+    [
+     "81&ndash;86",
+     "32&ndash;34"
+    ],
+    "174&ndash;182"
+   ],
+   [
+    "L",
+    [
+     "101&ndash;106",
+     "40&ndash;42"
+    ],
+    [
+     "86&ndash;91",
+     "34&ndash;36"
+    ],
+    "178&ndash;186"
+   ],
+   [
+    "XL",
+    [
+     "106&ndash;111",
+     "42&ndash;44"
+    ],
+    [
+     "91&ndash;96",
+     "36&ndash;38"
+    ],
+    "182&ndash;190"
+   ]
+  ],
+  "how": {
+   "tee": "Measure your chest at its fullest point, with the tape level and snug. Height is a guide only.",
+   "short": "Measure your waist where the waistband sits, with the tape level and snug. Height is a guide only.",
+   "both": "Measure your chest at its fullest point and your waist where the waistband sits, with the tape level and snug. Height is a guide only."
+  }
+ },
+ "own": "Its sizes do not carry over from our Founding Edition or Sahel tees.",
+ "tolerance": "These are the finished measurements each piece is made to. Allow <span dir=\"ltr\">&plusmn;1</span>&nbsp;cm."
+}

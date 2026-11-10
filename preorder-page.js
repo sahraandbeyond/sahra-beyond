@@ -9,7 +9,7 @@
      - No strike-through, no compare-at price, no timer, no quantity wording.
      - Images are studio mock-ups, labelled "Mock-up" (13 Oct site rule), until
        the real pieces are photographed. Trail close-ups are real photographs.
-     - Trail: no size chart until the pieces are measured; no performance claims.
+     - Trail: its own size charts from 10 Nov 2026 (trail-sizing.js, the supplier spec); no performance claims.
 
    STAGES (UTC instants; the UAE is UTC+4 with no DST):
      0  until Wed 28 Oct 08:00 UAE   pages exist but are noindex and unlinked,
@@ -76,6 +76,7 @@ const FITS = { tee: [['regular', 'Regular'], ['super-oversized', 'Super Oversize
   hoodie: [['', 'Super Oversized'], ['oversized', 'Oversized']] };
 const FIT_DETAILS = { Regular: ['Regular fit'], Oversized: ['Oversized fit'], 'Super Oversized': ['Super Oversized fit', 'Drop shoulder'] };
 const SZ = require('./sahel-sizing.js');
+const TSZ = require('./trail-sizing.js');   /* 10 Nov 2026: Sahra Trail size charts (the Tee, the 2-in-1 Short, both on the Kit) */
 const SP = require('./specimen.js');   /* 30 Oct 2026: the Specimen Sheet (product pages) */   /* 27 Oct 2026: the Sahel size charts */
 /* 30 Oct 2026 (Faheem: size note for repeat buyers). The Founding Edition and Sahel charts do not line up
    (a Founding Regular L is a Sahel Regular S), so a Sahel tee page translates the customer's Founding size by
@@ -252,7 +253,7 @@ function gallery(p) {
   return `<div class="po-gal" data-zoom-gallery>${p.images.map((im, i) => `<figure class="po-fig${isTall(im) ? ' po-tall' : ''}">${picture(im, i === 0, null, true)}${im.cap === '' ? '' : `<figcaption class="${im.mock ? 'po-mock' : 'po-real'}">${im.mock ? 'Mock-up' : (im.cap || 'Close-up of the sample')}</figcaption>`}</figure>`).join('')}</div>`;
 }
 
-const CSS = `${SZ.CSS}
+const CSS = `${SZ.CSS}${TSZ.CSS}
 .po-size{max-width:760px;margin:34px auto 0;padding:0 2px;scroll-margin-top:96px}.po-size h2{font:600 28px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 8px}
 
 .po-page{background:#FAF6EF;color:#2A2016}
@@ -372,7 +373,7 @@ function productPage(p, all, SITE, stage) {
   /* 31 Oct 2026: the fit line by the sizes on a Super Oversized page; a paused Oversized page has no chart until the fit returns */
   const fitLine = p.fit === 'Super Oversized' ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Roomy, with a dropped shoulder. Most people take one size down from their usual size.' : 'Super Oversized, drop shoulder: about one size bigger than our Founding Edition Oversized. If you know your Founding size, go one size down.'}</p>` : '';
   const paused = !onSale(p);
-  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart</a>. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
+  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart</a>. Still unsure? ${ask}Message us.</a></p>` : TSZ.keyFor(p) ? `<p class="ss-help">Sahra Trail has its own size chart. <a href="#size-chart">See the ${p.kit ? 'size charts for the tee and the short' : 'Sahra Trail size chart'}</a>. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
   const sup = (p.fitsList || []).find(f => f.fit === 'Super Oversized' && f.onSale), reg = (p.fitsList || []).find(f => f.fit === 'Regular' && f.onSale);
   const pausedChart = paused && p.line === 'sahel' && p.fit === 'Oversized'
     ? `<section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask">The Oversized chart will be published when the fit returns. Until then, see ${[sup ? `<a href="/products/${sup.handle}/#size-chart">Super Oversized</a>` : '', reg ? `<a href="/products/${reg.handle}/#size-chart">Regular</a>` : ''].filter(Boolean).join(' and ')}.</p><p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : '';
@@ -393,7 +394,7 @@ function productPage(p, all, SITE, stage) {
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
       <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.images.some(i => i.studio) ? '' : p.line === 'sahel' ? 'Photographed from the real piece.' : ''} Designed in the UAE.</p></div>
   </section>
-  ${pausedChart}${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}
+  ${pausedChart}${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}${TSZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>${p.kit ? 'Size charts' : 'Size chart'}</h2>${TSZ.block(TSZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart: <a href="/size-guide/#trail">the size guide &rarr;</a></p></section>` : ''}
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
   ${crossLines(p, card)}
   </div>
@@ -600,11 +601,12 @@ function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', more
 const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time.</span>`)
   + inc('st1', `<span class="st1">Pre-order is open: 20% off these new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</span>`)
   + `<span class="st2">${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct.'}</span>`
-  + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. No chart yet for the Sahel Polo and Sahra Trail: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
+  + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. Sahra Trail has <a href="/size-guide/#trail">its own chart</a> too. No chart yet for the Sahel Polo: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
 
 /* 10 Nov 2026 (landing-page audit): the Sahra Trail blocks carried the Sahel lede ("Sahel has its own size chart..."), which
    is about another line. Trail gets its own line: the true state of its sizing, and nothing about Sahel. */
-const trailLede = () => 'No size chart yet for Sahra Trail: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
+/* 10 Nov 2026 (later): the Trail charts are published (trail-sizing.js), so the line points at them */
+const trailLede = () => 'Sahra Trail has <a href="/size-guide/#trail">its own size chart</a>. It is a separate pattern, so your size in our tees does not carry over.';
 /* 23 Oct 2026 (site review): a place guide whose place became a Sahel piece shows that piece
    (Khor Fakkan, Al Jazirah Al Hamra, Al Aqah / Snoopy Island, Ras Al Khor), on the place page and on
    the guides that name the place. Same stage rules as everywhere else. */
@@ -834,7 +836,7 @@ function homeLines() {
   <section class="hl-sec" id="home-trail" aria-labelledby="hlT">
     <p class="nb-k">${k('Sahra Trail running wear')}</p>
     <h3 id="hlT">Sahra Trail: the tee, the 2-in-1 short and the kit</h3>
-    <p class="nb-l">Running wear marked with the Two Ridges, plus the Trailhead Bag. Men&rsquo;s cuts; the bag is one size. No size chart yet: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.</p>
+    <p class="nb-l">Running wear marked with the Two Ridges, plus the Trailhead Bag. Men&rsquo;s cuts; the bag is one size. Sahra Trail has <a href="/size-guide/#trail">its own size chart</a>.</p>
     <div class="nb-g hl-g">${trail.map(p => newCard(p)).join('')}</div>
     <a class="nb-a" href="/trail/#pieces" data-track="home_lines_trail">Shop Sahra Trail &rarr;</a>
   </section>
