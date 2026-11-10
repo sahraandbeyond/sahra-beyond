@@ -92,6 +92,9 @@ const GA4_HEAD = `<!-- Google Analytics 4 -->
     }
     gtag('event',n,p);}catch(e){}};
   ${ATTENTION}
+  ${/* 10 Nov 2026: links and buttons across the site carry data-track="name", but nothing read it, so those clicks never
+     reached GA4 (found while assessing the homepage place stories: no click data existed). One listener sends each as a GA4
+     event named by the attribute, with the link it leads to. Sent by beacon so a click that leaves the page still counts. */''}document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-track]');if(!a)return;var n=String(a.getAttribute('data-track')||'').replace(/[^a-zA-Z0-9_]/g,'_').slice(0,40);if(/^[a-zA-Z]/.test(n))window.track(n,{link_url:a.getAttribute('href')||'',transport_type:'beacon'});},true);
   gtag('js',new Date());gtag('config','${GA4_ID}');
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});

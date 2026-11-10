@@ -879,8 +879,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   check('index.html does not load Lenis (native scroll drives the journey)', !/lenis/i.test(head));
   check('the seven grid cards are real links (the missing-quote bug never returns)',
     (page.match(/<a class="card" href="\/products\/[^"]+\/">/g) || []).length === 7 && !/class="card href/.test(page));
-  check('the three place cards carry a fit switch', (page.match(/data-fit-pick="regular"/g) || []).length === 3 && (page.match(/data-fit-pick="oversized"/g) || []).length === 3);
-  check('every fit on a place card has its own quick-add slot', (page.match(/<div class="qa" data-qa="/g) || []).length === 6);
+  check('r116: the place cards with their fit switch and quick-add slots left the homepage with the three stories', !/data-fit-pick="/.test(page) && !/<div class="qa" data-qa="/.test(page));
   check('the quick-add engine is on the page', /function quickAdd\(\)/.test(page) && /SahraCart\.variants\(handle\)/.test(page));
   check('the ring re-collects its cards and clears them once open', /cards = \[\]\.slice\.call\(grid\.querySelectorAll\('\.card'\)\);/.test(page) && /clearProps: 'transform,opacity,zIndex'/.test(page));
   check('the ring front card faces the viewer', /rotateY: Math\.sin\(a\) \* 22 \* \(1 - open\)/.test(page));
@@ -896,7 +895,10 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
      section, the place map and the story section left it; the Instagram strip stays in #s-film. */
   check('the film has left the homepage (r115); the Instagram strip stays', !/id="brandVideo"/.test(page) && /<!--IG:STRIP-->/.test(page));
   check('r115: one full-photo opener leads the page and holds the only h1', /<section class="op" id="s-open"/.test(page) && (page.match(/<h1[\s>]/g) || []).length === 1 && /<h1 id="opH">Wear what you love about the UAE<\/h1>/.test(page) && page.indexOf('id="s-open"') < page.indexOf('id="s-hero"'));
-  check('r115: the three place stories sit above the collection', page.indexOf('id="s-alquaa"') < page.indexOf('id="s-collection"') && page.indexOf('id="s-naqab"') < page.indexOf('id="s-collection"') && page.indexOf('id="s-alquaa"') > page.indexOf('<!--NOWBAND:END-->'));
+  /* 10 Nov 2026 (r116; Faheem: one screen, "and do the same for Sahel places"): the three full-screen stories are one row of seven places */
+  check('r116: one row of seven places sits between the Sahel band and the collection', /<section class="p7" id="s-origin"/.test(page) && (page.match(/class="p7-t"/g) || []).length === 7 && page.indexOf('id="s-origin"') > page.indexOf('<!--NOWBAND:END-->') && page.indexOf('id="s-origin"') < page.indexOf('id="s-collection"') && !/id="s-alquaa"|id="s-liwa"|id="s-naqab"/.test(page));
+  check('r116: place tiles carry no price and use the place photos, with the Commons credits on the page', (function () { var a = page.indexOf('id="s-origin"'), z = page.indexOf('</section>', a), sec = page.slice(a, z); return !/AED|sb-price|% off/.test(sec) && (sec.match(/\/assets\/places\/[a-z-]+-400\.webp" srcset/g) || []).length === 7 && /Kamyana/.test(sec) && /Karachun/.test(sec) && /Mohammed Abdul Haris/.test(sec) && /Xiaotong Gao/.test(sec) && /CC BY-SA 4\.0/.test(sec) && /CC BY-SA 3\.0/.test(sec); })());
+  check('r116: data-track clicks are sent to GA4 by one listener in the shared head', /closest\('\[data-track\]'\)/.test(page));
   check('r115: the ring, map and story sections are off the homepage', !/id="s-ring"/.test(page) && !/id="s-places"/.test(page) && !/id="s-story"/.test(page));
   check('the cart and market engines load', /\/assets\/sahra-cart\.js/.test(page) && /\/assets\/sahra-market\.js/.test(page));
   const classic = fs.readFileSync(path.join(__dirname, 'classic', 'index.html'), 'utf8');
