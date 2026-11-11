@@ -250,7 +250,8 @@
     var b = e.target.closest && e.target.closest('.ssb-sz button'); if (!b || b.disabled) return;
     var g = b.closest('.ssb-sz').getAttribute('data-group'), z = b.getAttribute('data-size');
     sel[g] = z; say(''); paint(); fitLinks();
-    tr('size_select', { item_id: handle, size: z, ad: window.SB_AD ? 1 : 0 });
+    var sp = { item_id: handle, size: z, via: 'specimen', ad: window.SB_AD ? 1 : 0 }; if (g !== 'size') sp.part = g;   /* the kit has two size rows: tee and short */
+    tr('size_select', sp);
   });
   function needSize() {
     say(kit ? 'Choose a size for the tee and the short first.' : 'Choose your size first.');
@@ -303,6 +304,11 @@
       a.setAttribute('href', sel.size ? h + '?size=' + sel.size : h);
     });
   }
+  /* 11 Nov 2026: a tap on the other fit is sent with the product it leads to (by beacon, since the page changes) */
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('.ssb-fit a[href], .ss-fits a[href]'); if (!a || a.classList.contains('on')) return;
+    var m = /\/products\/([a-z0-9-]+)/.exec(a.getAttribute('href') || ''); if (m) tr('fit_switch', { item_id: m[1], from_product: handle, via: 'specimen', transport_type: 'beacon' });
+  }, true);
   try { var q = /[?&]size=(S|M|L|XL)\b/.exec(location.search || ''); if (q && !kit && !one) { sel.size = q[1]; fitLinks(); } } catch (e) {}
   paint();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load); else load();

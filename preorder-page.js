@@ -614,7 +614,7 @@ const BIG_CSS = `<style>
 </style><script>(function(){if(window.__sfp)return;window.__sfp=1;document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.sfp-sw button');if(!b)return;e.preventDefault();e.stopPropagation();var w=b.closest('.sfp'),i=b.getAttribute('data-i');
 [].forEach.call(w.querySelectorAll('.sfp-sw button'),function(x){var on=x.getAttribute('data-i')===i;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});
 [].forEach.call(w.children,function(c){if(c.classList.contains('pcard'))c.classList.toggle('on',c.getAttribute('data-i')===i);});
-if(window.track)track('fit_switch',{fit:b.textContent,line:'sahel'});},true);})();</script>`;
+var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.getAttribute('data-handle')?{item_id:on.getAttribute('data-handle'),via:'card'}:{fit:b.textContent,via:'card'});},true);})();</script>`;
 function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', moreText = 'See every new piece', pre = '', compact = false }) {
   if (!list.length && !pre) return '';
   /* compact: the small cross-sell cards, for the "Also new" rail on a Founding Edition product page (no product-card CSS there) */

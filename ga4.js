@@ -9,7 +9,7 @@ const GA4_ID = 'G-5NVFDWT29F';
 const CLARITY_ID = '';
 /* 13 Oct 2026: sent with every GA4 event (with ad_session), so a release can be compared with
    the one before it. Bump it with each site release that changes the landing experience. */
-const SITE_BUILD = 'r101';   /* 3 Nov 2026: GA4 item detail release */
+const SITE_BUILD = 'r126';   /* 11 Nov 2026: standard product fields on every event; card Quick add reaches GA4 */
 /* Runs in the head of every page, before anything else:
    - sb_ad: this session arrived from a paid ad (click IDs or utm tags on the landing
      URL). Kept for the session so the code bar and Clarity follow the visitor around.
@@ -76,25 +76,44 @@ const GA4_HEAD = `<!-- Google Analytics 4 -->
      item_category3 (fit), item_category4 (sale tier, e.g. "50% off" or "Full price"), item_variant (size), price paid,
      discount (AED off the full price), item_list_name (where it happened: specimen, shop, bag, ...), plus value and
      currency. CAT is built from the product files at build time (below). */''}window.SB_CAT=${JSON.stringify(CATALOG).replace(/[\u007f-\uffff]/g, c => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'))};
+  window.SB_PAGE=function(){var s=location.pathname.split('/').filter(Boolean),ar=s[0]==='ar';if(ar)s.shift();var a=s[0]||'',b=document.body;
+    var t=!a?'home':a==='shop'?'shop':a==='products'?'product':((a==='trail'&&s[1]==='hikes')||a==='hiking')?'hikes':(a==='sahel'||a==='trail'||a==='new')?'range':(a==='locations'||a==='places')?'place':a==='journal'?'journal':a==='feed'?'instagram':(b&&(' '+b.className+' ').indexOf(' ls-page ')>=0)?'category':document.getElementById('gbar')?'guide':'other';
+    return{type:t,lang:ar?'ar':'en',product:a==='products'?(s[1]||''):''};};
+  ${/* a card's place among the cards showing in its grid, counted from 1 (a design with two fits is one place) */''}window.SB_POS=function(card){try{var g=card.closest('.pcards')||card.parentNode,seen=[],n=0,me=card.closest('.sfp')||card,cs=g.querySelectorAll('.pcard[data-handle],.card[data-handle],a.card');
+    for(var i=0;i<cs.length;i++){var s=cs[i].closest('.sfp')||cs[i];if(seen.indexOf(s)>=0)continue;seen.push(s);if(!s.offsetParent)continue;n++;if(s===me)return n;}}catch(e){}return 0;};
+  window.SB_PLACE={specimen:'Product page',pdp:'Product page','product-page':'Product page',card:'Product card',shop:'Shop page',bag:'Bag','second-tee':'Bag suggestion','cart-trail-bag':'Bag suggestion','guide-bar':'Guide page bar','tote-page':'Tote page',home:'Homepage card','journey-grid-quick-add':'Homepage card','journey-ring-quick-add':'Homepage ring','journey-place-quick-add':'Homepage place card','journey-place-card':'Homepage place card','hero-ring':'Homepage ring',related:'Related products',menu:'Menu',instagram:'Instagram block',link:'Text link'};
   window.track=window.track||function(n,p){try{p=p||{};var C=window.SB_CAT||{};
     var ec=/^(view_item|view_item_list|select_item|add_to_cart|remove_from_cart|view_cart|begin_checkout|add_to_wishlist)$/.test(n);
     if(ec){
-      if(!p.items){var id=p.item_id||p.item||p.item_name;if(id){var it={item_id:p.item_id||p.item||'',item_name:p.item_name||'',quantity:Number(p.quantity||1)};if(p.size)it.item_variant=String(p.size);if(p.price)it.price=Number(p.price);p.items=[it];}}
+      if(!p.items){var id=p.item_id||p.item||p.item_name;if(id){var it={item_id:p.item_id||p.item||'',item_name:p.item_name||'',quantity:Number(p.quantity||1)};if(p.size)it.item_variant=String(p.size);if(p.price)it.price=Number(p.price);if(p.position!=null)it.index=Number(p.position);p.items=[it];}}
       if(p.items&&p.items.length){var tot=0,lst=p.via||p.source||p.from||p.item_list_name;
         p.items=p.items.map(function(o,i){o=o||{};var h=o.item_id;
           if(!C[h]&&o.item_name){for(var k in C){if(C[k][0]===o.item_name){h=k;break;}}}
           var c=C[h];if(c){o.item_id=h;o.item_name=c[0];o.item_category=c[1];o.item_category2=c[2];if(c[3])o.item_category3=c[3];
             var pay=c[4];try{var S=window.SB_SALE;if(S&&S.on()&&S.prices&&S.prices[h])pay=S.prices[h][1];}catch(x){}
             if(!o.price)o.price=pay;var off=Math.round((c[4]-Number(o.price))*100)/100;if(off>0.009){o.discount=off;o.item_category4=Math.round(off/c[4]*100)+'% off';}else o.item_category4='Full price';}
-          o.item_brand='Sahra & Beyond';if(o.quantity==null)o.quantity=1;if(o.index==null)o.index=i;if(lst&&!o.item_list_name)o.item_list_name=String(lst);
+          o.item_brand='Sahra & Beyond';if(o.quantity==null)o.quantity=1;if(o.index==null)o.index=i+1;if(lst&&!o.item_list_name)o.item_list_name=String(lst);
           tot+=(Number(o.price)||0)*(Number(o.quantity)||1);return o;});
         p.currency=p.currency||'AED';if(p.value==null&&tot)p.value=Math.round(tot*100)/100;}
     }
+    ${/* 11 Nov 2026 (Faheem: "How can I see which product size select is done? Which product is added to cart? ... much more
+     structured data"): every event that concerns one product carries the same fields, whatever sent it and whatever it
+     named them: product (name), product_design (name without the fit), product_id (Shopify handle), product_line,
+     product_category, fit, size. An event with no product of its own, sent on a product page, takes that page's product (not the top bar, menu or header events).
+     Every event also carries page_type, site_lang and, where the sender said where it happened (via / source / from),
+     placement in plain words. The older fields (via, source, from, item_id) are still sent, so reports built on them keep working. */''}var pg=window.SB_PAGE(),one=p.items&&p.items.length===1?p.items[0]:null;
+    var h=p.item_id||p.item||(one&&one.item_id)||'';if(!C[h]&&!p.items&&C[pg.product]&&!/^(view_promotion|select_promotion|menu_|header_|language_switch)/.test(n))h=pg.product;
+    var c=C[h];if(c){p.product=c[0];p.product_design=c[0].split(' \\u2014 ')[0];p.product_id=h;p.product_category=c[1];p.product_line=c[2];
+      if(c[3]&&(!p.fit||n==='fit_switch'||n==='select_fit'))p.fit=c[3];}
+    if(typeof p.fit==='string'&&p.fit)p.fit=p.fit.charAt(0).toUpperCase()+p.fit.slice(1);
+    if(p.size==null&&one&&one.item_variant)p.size=String(one.item_variant);
+    var w=p.via||p.source||(p.from&&!C[p.from]?p.from:'');if(w&&!p.placement)p.placement=window.SB_PLACE[w]||String(w);
+    p.page_type=pg.type;p.site_lang=pg.lang;
     gtag('event',n,p);}catch(e){}};
   ${ATTENTION}
   ${/* 10 Nov 2026: links and buttons across the site carry data-track="name", but nothing read it, so those clicks never
      reached GA4 (found while assessing the homepage place stories: no click data existed). One listener sends each as a GA4
-     event named by the attribute, with the link it leads to. Sent by beacon so a click that leaves the page still counts. */''}document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-track]');if(!a)return;var n=String(a.getAttribute('data-track')||'').replace(/[^a-zA-Z0-9_]/g,'_').slice(0,40);if(/^[a-zA-Z]/.test(n))window.track(n,{link_url:a.getAttribute('href')||'',transport_type:'beacon'});},true);
+     event named by the attribute, with the link it leads to. Sent by beacon so a click that leaves the page still counts. */''}document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-track]');if(!a)return;var n=String(a.getAttribute('data-track')||'').replace(/[^a-zA-Z0-9_]/g,'_').slice(0,40);if(/^[a-zA-Z]/.test(n)&&window.track)window.track(n,{link_url:a.getAttribute('href')||'',transport_type:'beacon'});},true);
   gtag('js',new Date());gtag('config','${GA4_ID}');
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});

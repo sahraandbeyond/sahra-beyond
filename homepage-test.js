@@ -980,6 +980,48 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     check('the old Trail account is not named anywhere on the built site', ['index.html','feed/index.html','trail/index.html','hiking/index.html','ar/index.html','ar/feed/index.html','ar/trail/index.html','products/sahra-trail-tee/index.html','products/sahra-trail-kit/index.html','products/sahra-trail-2-in-1-short/index.html'].every(f => !/sahratrail/i.test(fs.readFileSync(path.join(__dirname, f), 'utf8'))));
     check('one Instagram account to follow: no "Follow @sahratrail" button on the site', !/Follow @sahratrail/.test(hpT) && !/Follow @sahratrail/.test(feed) && /Follow @sahraandbeyond\.ae/.test(hpT + feed));
   }
+  /* 11 Nov 2026 (r126): Google Analytics. Every product event carries the same product fields, and the card Quick add reaches GA4. */
+  {
+    const vm = require('vm');
+    const run = (file, pathname, bodyClass) => {
+      const html = fs.readFileSync(path.join(__dirname, file), 'utf8');
+      const src = (html.match(/<!-- Google Analytics 4 -->\s*<script>([\s\S]*?)<\/script>/) || [])[1] || '';
+      const noop = () => {};
+      const sb = { location: { pathname, search: '' }, performance: { now: () => 5 }, sessionStorage: { getItem: () => null, setItem: noop }, setTimeout: noop, addEventListener: noop, removeEventListener: noop, scrollY: 0, innerHeight: 800,
+        document: { body: { className: bodyClass }, readyState: 'complete', visibilityState: 'visible', referrer: '', addEventListener: noop, documentElement: { classList: { add: noop }, scrollHeight: 2000 }, createElement: () => ({}), head: { appendChild: noop }, querySelectorAll: () => [] } };
+      sb.window = sb; vm.createContext(sb);
+      let ok = true; try { vm.runInContext(src, sb); } catch (e) { ok = false; }
+      const send = (n, p) => { sb.track(n, p); const a = sb.dataLayer[sb.dataLayer.length - 1]; return a && a[1] === n ? a[2] : {}; };
+      return { ok, src, send };
+    };
+    const A = run('men/index.html', '/ar/men/', 'buy-page ls-page');
+    check('analytics: the head script runs and is plain ASCII', A.ok && A.src.length > 3000 && !/[^\x00-\x7f]/.test(A.src));
+    const add = A.send('add_to_cart', { item_id: 'hajar-mountains-regular', size: 'L', via: 'card', position: 3 });
+    check('analytics: an add from a card carries product, design, line, category, fit, size, placement, page type and language',
+      add.product === 'Hajar Mountains — Regular' && add.product_design === 'Hajar Mountains' && add.product_id === 'hajar-mountains-regular' && add.product_line === 'Founding Edition' && add.product_category === 'T-shirt' &&
+      add.fit === 'Regular' && add.size === 'L' && add.placement === 'Product card' && add.page_type === 'category' && add.site_lang === 'ar');
+    check('analytics: the same add carries GA4 items[] with the size as the variant and the card position', add.items && add.items.length === 1 && add.items[0].item_variant === 'L' && add.items[0].index === 3 && add.items[0].item_category2 === 'Founding Edition' && add.currency === 'AED' && add.value > 0);
+    const sz = A.send('size_select', { item_id: 'sahra-trail-tee', size: 'M', via: 'specimen' });
+    check('analytics: a size tap names its product', sz.product === 'Sahra Trail Tee' && sz.product_line === 'Sahra Trail' && sz.size === 'M' && sz.placement === 'Product page');
+    const fs2 = A.send('fit_switch', { item_id: 'al-quaa-galaxy-oversized', fit: 'whatever the button said', via: 'card' });
+    check('analytics: a fit switch takes its fit from the product it switched to, in English', fs2.fit === 'Oversized' && fs2.product_design === 'Al Quaa Galaxy');
+    const P = run('products/sahra-trail-kit/index.html', '/products/sahra-trail-kit/', 'buy-page');
+    const ve = P.send('size_finder', { size: 'M' });
+    check('analytics: an event with no product of its own takes the product page it happened on', ve.product === 'Sahra Trail Kit' && ve.page_type === 'product' && ve.site_lang === 'en');
+    const bc = P.send('begin_checkout', { items: [{ item_id: 'sahra-trail-tee', item_variant: 'M', index: 1 }, { item_id: 'sand-polo', item_variant: 'L', index: 2 }] });
+    check('analytics: an event about several products is not given one product', bc.product === undefined && bc.items.length === 2 && bc.items[1].item_name === 'The Sahra Polo');
+    const promo = P.send('view_promotion', { promotion_name: '11.11' }), end = P.send('visit_end', { ms: 9 });
+    check('analytics: top bar, menu and header events are not given the page product; time on page is', promo.product === undefined && end.product === 'Sahra Trail Kit');
+    const prodPage = fs.readFileSync(path.join(__dirname, 'products', 'al-quaa-galaxy-regular', 'index.html'), 'utf8');
+    check('analytics: related and pair clicks name the product clicked, not the page', /track\('related_click',\{item_id:\(\(a\.getAttribute\('href'\)/.test(prodPage) && /track\('pair_click',\{item_id:/.test(prodPage));
+    const cartJs = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-cart.js'), 'utf8'), measJs = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-measure.js'), 'utf8'), specJs = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-specimen.js'), 'utf8');
+    check('analytics: the card Quick add sends the open, the size tap and the add', /ga\('quick_add_open'\)/.test(cartJs) && /ga\('size_select', \{ size: v\.title \}\)/.test(cartJs) && /ga\('add_to_cart', \{ size: v\.title \}\)/.test(cartJs));
+    check('analytics: a click through to a product is sent as select_item from anywhere', /track\('select_item', o\)/.test(measJs) && /a\[href\*="\/products\/"\]/.test(measJs));
+    check('analytics: the product page names the kit part and sends the fit link tap', /sp\.part = g/.test(specJs) && /tr\('fit_switch', \{ item_id: m\[1\]/.test(specJs));
+    const menA = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
+    check('analytics: the card fit switch sends the product, not a fixed line', !/line:'sahel'/.test(menA) && /track\('fit_switch',on&&on\.getAttribute\('data-handle'\)/.test(menA));
+    check('analytics: this release is stamped on every event', /site_build:'r126'/.test(A.src));
+  }
   const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
   check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);
   ['size-guide', 'fabric'].forEach(k => check('/' + k + '/ is a reading page: no listing stylesheet', !/<style id="house">/.test(fs.readFileSync(path.join(__dirname, k, 'index.html'), 'utf8'))));

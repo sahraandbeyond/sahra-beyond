@@ -798,6 +798,7 @@
 
   /* ---- size changed in place ---------------------------------------------- */
   function handleOf(lineId) { var h = ''; cartNodes().forEach(function (n) { if (n.id === lineId) h = n.merchandise && n.merchandise.product && n.merchandise.product.handle || ''; }); return h; }
+  function sizeOf(vid) { var t = ''; cartNodes().forEach(function (n) { if (n.merchandise && n.merchandise.id === vid) t = n.merchandise.title || ''; }); return t; }
   function loadSizes(lineId) {
     var h = handleOf(lineId); if (!h || sizeCache[h]) return;
     sizeCache[h] = 'loading';
@@ -809,7 +810,7 @@
       lastError = null;
       var line = null; cartNodes().forEach(function (n) { if (n.id === lineId) line = n; });
       if (!line) return CART;
-      var q = line.quantity || 1;
+      var q = line.quantity || 1, swapHandle = handleOf(lineId);
       return sf('mutation($id:ID!,$l:[CartLineUpdateInput!]!){cartLinesUpdate(cartId:$id,lines:$l){cart{' + CFRAG + '}userErrors{message}}}', { id: CART.id, l: [{ id: lineId, merchandiseId: vid, quantity: q }] })
         .then(function (d) {
           var r = d && d.cartLinesUpdate;
@@ -822,7 +823,7 @@
                 .then(function (d3) { var r3 = d3 && d3.cartLinesRemove; return (r3 && r3.cart) || r2.cart; });
             });
         })
-        .then(function (c) { CART = c; draw(); try { if (window.track) track('bag_size_change', { item_id: handleOf(lineId) }); } catch (e) {} return CART; })
+        .then(function (c) { CART = c; draw(); try { if (window.track) track('bag_size_change', { item_id: swapHandle, size: sizeOf(vid), via: 'bag' }); } catch (e) {} return CART; })
         .catch(function () { lastError = T('errSwap'); draw(); return CART; });
     }).then(afterMutation);
   }
@@ -1350,7 +1351,7 @@
         currency: CART.cost.subtotalAmount.currencyCode || 'AED',
         value: Number(CART.cost.subtotalAmount.amount) || 0,
         items: ns.map(function (l, i) { var m = l.merchandise || {}, pr = m.product || {};
-          return { item_id: pr.handle || m.id, item_name: pr.title || '', item_variant: m.title || '', index: i,
+          return { item_id: pr.handle || m.id, item_name: pr.title || '', item_variant: m.title || '', index: i + 1,
             price: (Number(l.cost && l.cost.totalAmount && l.cost.totalAmount.amount) || 0) / (l.quantity || 1), quantity: l.quantity || 1 }; })
       });
     } catch (e) {}
@@ -1415,9 +1416,22 @@
       box.className = 'qa';
       box.innerHTML = '<button class="qa-open" type="button">Quick add</button><div class="qa-sizes" hidden></div>';
       foot.appendChild(box);
-      var openBtn = box.querySelector('.qa-open'), sizes = box.querySelector('.qa-sizes'), loaded = false;
+      var openBtn = box.querySelector('.qa-open'), sizes = box.querySelector('.qa-sizes'), loaded = false, loading = false;
+      /* 11 Nov 2026: the card's Quick add sent nothing to Google Analytics (Meta and TikTok got the add from add()).
+         It now sends the open, the size tapped and the add, each with the product and the card's place in its grid. */
+      function ga(n, extra) {
+        try {
+          if (!window.track) return;
+          var o = { item_id: handle, via: 'card' }, pos = window.SB_POS ? window.SB_POS(card) : 0;
+          if (pos) o.position = pos;
+          for (var k in (extra || {})) o[k] = extra[k];
+          window.track(n, o);
+        } catch (e) {}
+      }
       openBtn.addEventListener('click', function () {
-        if (loaded) { sizes.hidden = !sizes.hidden; return; }
+        if (loaded) { sizes.hidden = !sizes.hidden; if (!sizes.hidden) ga('quick_add_open'); return; }
+        if (!loading) ga('quick_add_open');   /* a second tap while the sizes load is the same open */
+        loading = true;
         openBtn.textContent = 'Loading…';
         window.SahraCart.variants(handle).then(function (vs) {
           loaded = true; openBtn.textContent = 'Quick add';
@@ -1430,14 +1444,15 @@
             b.addEventListener('click', function () {
               if (b.disabled) return;
               b.disabled = true; b.textContent = '…';
+              ga('size_select', { size: v.title });
               window.SahraCart.add(v.id)
-                .then(function () { b.textContent = v.title; b.disabled = false; })
+                .then(function () { b.textContent = v.title; b.disabled = false; ga('add_to_cart', { size: v.title }); })
                 .catch(function () { b.textContent = v.title; b.disabled = false; });
             });
             sizes.appendChild(b);
           });
           sizes.hidden = false;
-        }).catch(function () { openBtn.textContent = 'Quick add'; });
+        }).catch(function () { loading = false; openBtn.textContent = 'Quick add'; });
       });
     });
   }

@@ -1335,8 +1335,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     if(!a)return;
     if(a.classList.contains('shoplink'))track('select_item',{item_id:'${p.id}',from:'pdp'});
     else if(a.href&&a.href.indexOf('/locations/')>=0)track('place_click',{item_id:'${p.id}'});
-    else if(a.classList.contains('rel'))track('related_click',{from:'${p.id}'});
-    else if(a.classList.contains('pdp-pair-c'))track('pair_click',{from:'${p.id}',to:a.getAttribute('href')});
+    else if(a.classList.contains('rel'))track('related_click',{item_id:((a.getAttribute('href')||'').split('/products/')[1]||'').split('/')[0],from_product:'${p.id}',via:'related'});
+    else if(a.classList.contains('pdp-pair-c'))track('pair_click',{item_id:((a.getAttribute('href')||'').split('/products/')[1]||'').split('/')[0],from_product:'${p.id}',via:'related'});
   },true);
   /* how far people actually read — the whole point of the long-form page */
   var marks=[10,25,50,75,100],hit={};   /* 10: added 13 Oct 2026 - most paid visits never reached 25 */

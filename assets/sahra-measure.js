@@ -68,6 +68,22 @@
 
   function ready(fn) { if (document.readyState !== 'loading') setTimeout(fn, 0); else document.addEventListener('DOMContentLoaded', fn); }
 
+  /* 11 Nov 2026: a click through to a product, from a card, the menu, a related row or a text link, is sent as
+     select_item with the product it leads to and where the click was. Before this only two places sent it, so GA4
+     could not show which products get opened from the lists. Sent by beacon, since the page changes. */
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href*="/products/"]'); if (!a) return;
+    if (e.target.closest('.qa, .qa-open, .pcard-zoom, [data-zoom], .hring-card, .ssb-fit, .ss-fits')) return;   /* a button on the card, not the link; the homepage ring and the fit links send their own */
+    var m = /\/products\/([a-z0-9-]+)/.exec(a.getAttribute('href') || ''); if (!m) return;
+    var here = /\/products\/([a-z0-9-]+)/.exec(location.pathname || '');
+    if (here && here[1] === m[1]) return;                                             /* a link to the page they are on */
+    var card = a.closest('.pcard, .card[data-handle], a.card');
+    var via = card ? 'card' : a.closest('.ig-card') ? 'instagram' : a.closest('header, nav, #mobileNav, .sbn, .fg-d') ? 'menu' : a.closest('#sbDrawer, .sb-drawer') ? 'bag' : (a.classList.contains('rel') || a.classList.contains('pdp-pair-c') || a.closest('.rel, .po-more, .pdp-more, .ss-more')) ? 'related' : 'link';
+    var o = { item_id: m[1], via: via, transport_type: 'beacon' };
+    if (card && window.SB_POS) { var pos = window.SB_POS(card); if (pos) o.position = pos; }
+    track('select_item', o);
+  }, true);
+
   ready(function () {
     var path = location.pathname || '/';
     /* ------------------------------------------- view_item (product pages) */
@@ -103,7 +119,7 @@
       var el = document.querySelector('[data-handle="' + m[1] + '"][data-aed]');
       var nm = a.querySelector('b, h3, .nb-n, .pcard-name');
       items.push({ item_id: m[1], item_name: (nm && nm.textContent.trim()) || m[1],
-        price: el ? Number(el.getAttribute('data-aed')) || undefined : undefined, index: items.length, quantity: 1 });
+        price: el ? Number(el.getAttribute('data-aed')) || undefined : undefined, index: items.length + 1, quantity: 1 });
     });
     if (items.length >= 2) track('view_item_list', { item_list_id: path.slice(0, 60), item_list_name: (document.title || path).slice(0, 80), items: items });
   });

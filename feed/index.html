@@ -105,24 +105,38 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
   sbLater(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-5NVFDWT29F';document.head.appendChild(s);});
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
   window.SB_CAT={"al-quaa-galaxy-oversized":["Al Quaa Galaxy \u2014 Oversized","T-shirt","Founding Edition","Oversized",199],"al-quaa-galaxy-regular":["Al Quaa Galaxy \u2014 Regular","T-shirt","Founding Edition","Regular",199],"empty-quarter-oversized":["Empty Quarter \u2014 Oversized","T-shirt","Founding Edition","Oversized",199],"empty-quarter-regular":["Empty Quarter \u2014 Regular","T-shirt","Founding Edition","Regular",199],"hajar-mountains-oversized":["Hajar Mountains \u2014 Oversized","T-shirt","Founding Edition","Oversized",199],"hajar-mountains-regular":["Hajar Mountains \u2014 Regular","T-shirt","Founding Edition","Regular",199],"sand-polo":["The Sahra Polo","Polo","Founding Edition","",229],"khor-fakkan-bay-tee-regular":["Khor Fakkan Bay Tee \u2014 Regular","T-shirt","Sahel","Regular",199],"khor-fakkan-bay-tee-super-oversized":["Khor Fakkan Bay Tee \u2014 Super Oversized","T-shirt","Sahel","Super Oversized",199],"khor-fakkan-bay-tee-oversized":["Khor Fakkan Bay Tee \u2014 Oversized","T-shirt","Sahel","Oversized",199],"al-hamra-pearl-diver-tee-regular":["Al Hamra Pearl Diver Tee \u2014 Regular","T-shirt","Sahel","Regular",199],"al-hamra-pearl-diver-tee-super-oversized":["Al Hamra Pearl Diver Tee \u2014 Super Oversized","T-shirt","Sahel","Super Oversized",199],"al-hamra-pearl-diver-tee-oversized":["Al Hamra Pearl Diver Tee \u2014 Oversized","T-shirt","Sahel","Oversized",199],"al-aqah-reef-tee-regular":["Al Aqah Reef Tee \u2014 Regular","T-shirt","Sahel","Regular",199],"al-aqah-reef-tee-super-oversized":["Al Aqah Reef Tee \u2014 Super Oversized","T-shirt","Sahel","Super Oversized",199],"al-aqah-reef-tee-oversized":["Al Aqah Reef Tee \u2014 Oversized","T-shirt","Sahel","Oversized",199],"shams-tee-regular":["Shams Tee \u2014 Regular","T-shirt","Sahel","Regular",139],"shams-tee-super-oversized":["Shams Tee \u2014 Super Oversized","T-shirt","Sahel","Super Oversized",139],"shams-tee-oversized":["Shams Tee \u2014 Oversized","T-shirt","Sahel","Oversized",139],"the-sahel-polo":["The Sahel Polo","Polo","Sahel","",229],"barr-and-bahr-hoodie":["Barr & Bahr Hoodie \u2014 Super Oversized","Hoodie","Sahel","Super Oversized",229],"barr-and-bahr-hoodie-oversized":["Barr & Bahr Hoodie \u2014 Oversized","Hoodie","Sahel","Oversized",229],"ras-al-khor-hoodie":["Ras Al Khor Hoodie \u2014 Super Oversized","Hoodie","Sahel","Super Oversized",229],"ras-al-khor-hoodie-oversized":["Ras Al Khor Hoodie \u2014 Oversized","Hoodie","Sahel","Oversized",229],"sahra-trail-tee":["Sahra Trail Tee","T-shirt","Sahra Trail","",139],"sahra-trail-2-in-1-short":["Sahra Trail 2-in-1 Short","Shorts","Sahra Trail","",169],"sahra-trail-kit":["Sahra Trail Kit","Running kit","Sahra Trail","",308],"trailhead-bag":["The Trailhead Bag","Bag","Sahra Trail","",50],"sahra-tote":["The Sahra Tote","Bag","Accessories","",50],"sahra-tote-founding-edition-gift":["The Sahra Tote (free gift)","Bag","Accessories","",0]};
+  window.SB_PAGE=function(){var s=location.pathname.split('/').filter(Boolean),ar=s[0]==='ar';if(ar)s.shift();var a=s[0]||'',b=document.body;
+    var t=!a?'home':a==='shop'?'shop':a==='products'?'product':((a==='trail'&&s[1]==='hikes')||a==='hiking')?'hikes':(a==='sahel'||a==='trail'||a==='new')?'range':(a==='locations'||a==='places')?'place':a==='journal'?'journal':a==='feed'?'instagram':(b&&(' '+b.className+' ').indexOf(' ls-page ')>=0)?'category':document.getElementById('gbar')?'guide':'other';
+    return{type:t,lang:ar?'ar':'en',product:a==='products'?(s[1]||''):''};};
+  window.SB_POS=function(card){try{var g=card.closest('.pcards')||card.parentNode,seen=[],n=0,me=card.closest('.sfp')||card,cs=g.querySelectorAll('.pcard[data-handle],.card[data-handle],a.card');
+    for(var i=0;i<cs.length;i++){var s=cs[i].closest('.sfp')||cs[i];if(seen.indexOf(s)>=0)continue;seen.push(s);if(!s.offsetParent)continue;n++;if(s===me)return n;}}catch(e){}return 0;};
+  window.SB_PLACE={specimen:'Product page',pdp:'Product page','product-page':'Product page',card:'Product card',shop:'Shop page',bag:'Bag','second-tee':'Bag suggestion','cart-trail-bag':'Bag suggestion','guide-bar':'Guide page bar','tote-page':'Tote page',home:'Homepage card','journey-grid-quick-add':'Homepage card','journey-ring-quick-add':'Homepage ring','journey-place-quick-add':'Homepage place card','journey-place-card':'Homepage place card','hero-ring':'Homepage ring',related:'Related products',menu:'Menu',instagram:'Instagram block',link:'Text link'};
   window.track=window.track||function(n,p){try{p=p||{};var C=window.SB_CAT||{};
     var ec=/^(view_item|view_item_list|select_item|add_to_cart|remove_from_cart|view_cart|begin_checkout|add_to_wishlist)$/.test(n);
     if(ec){
-      if(!p.items){var id=p.item_id||p.item||p.item_name;if(id){var it={item_id:p.item_id||p.item||'',item_name:p.item_name||'',quantity:Number(p.quantity||1)};if(p.size)it.item_variant=String(p.size);if(p.price)it.price=Number(p.price);p.items=[it];}}
+      if(!p.items){var id=p.item_id||p.item||p.item_name;if(id){var it={item_id:p.item_id||p.item||'',item_name:p.item_name||'',quantity:Number(p.quantity||1)};if(p.size)it.item_variant=String(p.size);if(p.price)it.price=Number(p.price);if(p.position!=null)it.index=Number(p.position);p.items=[it];}}
       if(p.items&&p.items.length){var tot=0,lst=p.via||p.source||p.from||p.item_list_name;
         p.items=p.items.map(function(o,i){o=o||{};var h=o.item_id;
           if(!C[h]&&o.item_name){for(var k in C){if(C[k][0]===o.item_name){h=k;break;}}}
           var c=C[h];if(c){o.item_id=h;o.item_name=c[0];o.item_category=c[1];o.item_category2=c[2];if(c[3])o.item_category3=c[3];
             var pay=c[4];try{var S=window.SB_SALE;if(S&&S.on()&&S.prices&&S.prices[h])pay=S.prices[h][1];}catch(x){}
             if(!o.price)o.price=pay;var off=Math.round((c[4]-Number(o.price))*100)/100;if(off>0.009){o.discount=off;o.item_category4=Math.round(off/c[4]*100)+'% off';}else o.item_category4='Full price';}
-          o.item_brand='Sahra & Beyond';if(o.quantity==null)o.quantity=1;if(o.index==null)o.index=i;if(lst&&!o.item_list_name)o.item_list_name=String(lst);
+          o.item_brand='Sahra & Beyond';if(o.quantity==null)o.quantity=1;if(o.index==null)o.index=i+1;if(lst&&!o.item_list_name)o.item_list_name=String(lst);
           tot+=(Number(o.price)||0)*(Number(o.quantity)||1);return o;});
         p.currency=p.currency||'AED';if(p.value==null&&tot)p.value=Math.round(tot*100)/100;}
     }
+    var pg=window.SB_PAGE(),one=p.items&&p.items.length===1?p.items[0]:null;
+    var h=p.item_id||p.item||(one&&one.item_id)||'';if(!C[h]&&!p.items&&C[pg.product]&&!/^(view_promotion|select_promotion|menu_|header_|language_switch)/.test(n))h=pg.product;
+    var c=C[h];if(c){p.product=c[0];p.product_design=c[0].split(' \u2014 ')[0];p.product_id=h;p.product_category=c[1];p.product_line=c[2];
+      if(c[3]&&(!p.fit||n==='fit_switch'||n==='select_fit'))p.fit=c[3];}
+    if(typeof p.fit==='string'&&p.fit)p.fit=p.fit.charAt(0).toUpperCase()+p.fit.slice(1);
+    if(p.size==null&&one&&one.item_variant)p.size=String(one.item_variant);
+    var w=p.via||p.source||(p.from&&!C[p.from]?p.from:'');if(w&&!p.placement)p.placement=window.SB_PLACE[w]||String(w);
+    p.page_type=pg.type;p.site_lang=pg.lang;
     gtag('event',n,p);}catch(e){}};
   (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
     window.SB_AD=!!ad;if(ad)document.documentElement.classList.add('sb-ad');
-    gtag('set',{ad_session:ad?1:0,site_build:'r101'});
+    gtag('set',{ad_session:ad?1:0,site_build:'r126'});
     var done=0,first=0;function fi(e){if(done)return;done=1;first=Math.round(performance.now());['pointerdown','keydown','scroll','touchstart'].forEach(function(k){removeEventListener(k,fi,true);});
       window.track('first_interaction',{ms:first,kind:e.type,ad:ad?1:0});}
     ['pointerdown','keydown','scroll','touchstart'].forEach(function(k){addEventListener(k,fi,{capture:true,passive:true});});
@@ -131,7 +145,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
     addEventListener('pagehide',ve);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')ve();else sent=0;});addEventListener('pageshow',function(e){if(e.persisted)sent=0;});
     var CID='';if(ad&&CID){document.addEventListener('DOMContentLoaded',function(){[].forEach.call(document.querySelectorAll('form,input,textarea,select,[contenteditable]'),function(x){x.setAttribute('data-clarity-mask','True');});});(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script',CID);}
   })();
-  document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-track]');if(!a)return;var n=String(a.getAttribute('data-track')||'').replace(/[^a-zA-Z0-9_]/g,'_').slice(0,40);if(/^[a-zA-Z]/.test(n))window.track(n,{link_url:a.getAttribute('href')||'',transport_type:'beacon'});},true);
+  document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-track]');if(!a)return;var n=String(a.getAttribute('data-track')||'').replace(/[^a-zA-Z0-9_]/g,'_').slice(0,40);if(/^[a-zA-Z]/.test(n)&&window.track)window.track(n,{link_url:a.getAttribute('href')||'',transport_type:'beacon'});},true);
   gtag('js',new Date());gtag('config','G-5NVFDWT29F');
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});
@@ -890,7 +904,7 @@ body.dark-bg .rv-stars{color:#E9B978}
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=c9b24ad7">
 <script src="/assets/sahra-nav.js?v=c2bea5be" data-sbn defer></script>
 <link rel="stylesheet" href="/assets/sahra-system.css?v=773f6fe4">
-<script src="/assets/sahra-measure.js?v=2fa777cc" defer></script>
+<script src="/assets/sahra-measure.js?v=994865e3" defer></script>
 <link rel="preconnect" href="https://checkout.sahraandbeyond.ae">
 <script src="/assets/sahra-zoom.js?v=a7be317e" defer></script>
 <style data-legib>
@@ -2130,7 +2144,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
 <script src="/assets/sahra-sky.js?v=b0cd1c84" defer></script>
-<script src="/assets/sahra-cart.js?v=cbfc603d" defer></script>
+<script src="/assets/sahra-cart.js?v=803808dd" defer></script>
 <script src="/assets/sahra-market.js?v=b44d27ab" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
@@ -2210,7 +2224,7 @@ if(bottom&&bottom!==top)new IntersectionObserver(function(es){es.forEach(functio
 if(foot)new IntersectionObserver(function(es){es.forEach(function(e){footNear=e.isIntersecting;});sync();}).observe(foot);}catch(e){topGone=true;sync();}
 addEventListener('scroll',function(){if(top&&top.getBoundingClientRect().bottom<0!==topGone){topGone=top.getBoundingClientRect().bottom<0;sync();}},{passive:true});
 function msg(t){msgEl.textContent=t||'';}
-var lastFocus=null;function openSheet(){lastFocus=document.activeElement;sheet.hidden=false;document.body.style.overflow='hidden';document.body.classList.add('sb-gsheet-open');setTimeout(function(){var f=sheet.querySelector('.gsheet-size:not([disabled])')||document.getElementById('gsheetX');if(f)f.focus();},50);setTimeout(function(){if(!sheet.hidden&&sizes.querySelector('.gsheet-wait')&&!sizes.querySelector('.gsheet-size'))sizes.innerHTML='<span class="gsheet-wait">Sizes are taking a while. <a href="/products/'+handle+'/">Open the product page</a>.</span>';},9000);if(window.track)track('guide_bar_open',{item_id:handle});if(!loaded&&window.SahraCart&&SahraCart.variants){loaded=true;SahraCart.variants(handle).then(function(vs){sizes.innerHTML='';vs.forEach(function(v){var b=document.createElement('button');b.type='button';b.className='gsheet-size';b.textContent=v.title;b.setAttribute('aria-pressed','false');if(!v.availableForSale){b.disabled=true;b.setAttribute('aria-label',v.title+' sold out');}b.addEventListener('click',function(){[].forEach.call(sizes.children,function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');sel=v;addB.disabled=false;addB.textContent='Add to bag';msg('');});sizes.appendChild(b);});if(!vs.length)sizes.innerHTML='<span class="gsheet-wait">Sizes unavailable right now. <a href="/products/'+handle+'/">Open the product page</a>.</span>';}).catch(function(){loaded=false;sizes.innerHTML='<span class="gsheet-wait">Could not load sizes. <a href="/products/'+handle+'/">Open the product page</a>.</span>';});}}
+var lastFocus=null;function openSheet(){lastFocus=document.activeElement;sheet.hidden=false;document.body.style.overflow='hidden';document.body.classList.add('sb-gsheet-open');setTimeout(function(){var f=sheet.querySelector('.gsheet-size:not([disabled])')||document.getElementById('gsheetX');if(f)f.focus();},50);setTimeout(function(){if(!sheet.hidden&&sizes.querySelector('.gsheet-wait')&&!sizes.querySelector('.gsheet-size'))sizes.innerHTML='<span class="gsheet-wait">Sizes are taking a while. <a href="/products/'+handle+'/">Open the product page</a>.</span>';},9000);if(window.track)track('guide_bar_open',{item_id:handle});if(!loaded&&window.SahraCart&&SahraCart.variants){loaded=true;SahraCart.variants(handle).then(function(vs){sizes.innerHTML='';vs.forEach(function(v){var b=document.createElement('button');b.type='button';b.className='gsheet-size';b.textContent=v.title;b.setAttribute('aria-pressed','false');if(!v.availableForSale){b.disabled=true;b.setAttribute('aria-label',v.title+' sold out');}b.addEventListener('click',function(){[].forEach.call(sizes.children,function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');sel=v;addB.disabled=false;addB.textContent='Add to bag';msg('');if(window.track)track('size_select',{item_id:handle,size:v.title,via:'guide-bar'});});sizes.appendChild(b);});if(!vs.length)sizes.innerHTML='<span class="gsheet-wait">Sizes unavailable right now. <a href="/products/'+handle+'/">Open the product page</a>.</span>';}).catch(function(){loaded=false;sizes.innerHTML='<span class="gsheet-wait">Could not load sizes. <a href="/products/'+handle+'/">Open the product page</a>.</span>';});}}
 function closeSheet(opts){sheet.hidden=true;if(!(opts&&opts.keepLock))document.body.style.overflow='';document.body.classList.remove('sb-gsheet-open');if(lastFocus&&lastFocus.focus&&!(opts&&opts.keepLock)){try{lastFocus.focus();}catch(e){}}}
 sheet.addEventListener('keydown',function(e){if(e.key!=='Tab')return;var f=[].slice.call(sheet.querySelectorAll('button:not([disabled]),a[href],select,input')).filter(function(x){return x.offsetParent!==null;});if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
 document.getElementById('gbarOpen').addEventListener('click',openSheet);
@@ -2222,7 +2236,7 @@ addB.addEventListener('click',function(){if(!sel){msg('Choose a size first.');re
 <script>(function(){var pairs=[].slice.call(document.querySelectorAll('.fitpair'));if(!pairs.length)return;var saved=null;try{saved=localStorage.getItem('sb_fit');}catch(e){}
 function set(fit,remember){pairs.forEach(function(w){w.setAttribute('data-fit',fit);[].forEach.call(w.querySelectorAll('.fitpair-sw button'),function(b){var on=b.getAttribute('data-fit')===fit;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});});if(remember){try{localStorage.setItem('sb_fit',fit);}catch(e){}}}
 if(saved==='oversized')set('oversized',false);
-document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.fitpair-sw button');if(!b)return;e.preventDefault();e.stopPropagation();set(b.getAttribute('data-fit'),true);if(window.track)track('fit_switch',{fit:b.getAttribute('data-fit')});},true);
+document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.fitpair-sw button');if(!b)return;e.preventDefault();e.stopPropagation();set(b.getAttribute('data-fit'),true);if(window.track)track('fit_switch',{fit:b.getAttribute('data-fit'),via:'card'});},true);
 })();</script>
 </body>
 </html>
