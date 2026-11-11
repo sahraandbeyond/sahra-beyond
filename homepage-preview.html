@@ -43,7 +43,7 @@ S.deco=deco;
    on every product list (EN and /ar/), Discount: All, On sale, 10% off, 50% off, 70% off (only the tiers that the page
    has). Cards are hidden with .sbf-off, never [hidden], so it never fights the /shop/ filters, where it is a row in the
    Filter panel. ?discount=on|10|50|70 opens a page filtered. Gone at END with the sale. */
-var PG=/^\/(ar\/)?(shop|t-shirts|t-shirts\/regular|t-shirts\/oversized|polos|hoodies|sahel|new|gifts|under-150|national-day|desert-t-shirts|mountain-t-shirts)\/?$/,
+var PG=/^\/(ar\/)?(shop|t-shirts|t-shirts\/regular|t-shirts\/oversized|polos|hoodies|sahel|new|gifts|under-150|men|women|national-day|desert-t-shirts|mountain-t-shirts)\/?$/,
 CARD='.pcard,.nb-c,.po-card,.sp-card,.prow-c,.sh-sc,.prod,.sidx-card',GRID='.prow-g,.pcards,.nb-g,.po-cards,.sp-grid',cur='all',bar=null;
 function hOf(c){var e=c.querySelector('.sb-price[data-handle]');return e?e.getAttribute('data-handle'):'';}
 function cards(){return [].slice.call(document.querySelectorAll(CARD)).filter(function(c){return !c.closest('.sring')&&c.querySelector('.sb-price[data-handle]');});}
@@ -63,7 +63,7 @@ if(shop&&!panel)shop=false;   /* 10 Nov 2026 (r120): the rebuilt /shop/ is one g
 bar=document.createElement('div');bar.className='sbf'+(shop?' sbf-shop':'');bar.setAttribute('role','group');bar.setAttribute('aria-label',ar?'\u0627\u0644\u062a\u0635\u0641\u064a\u0629 \u062d\u0633\u0628 \u0627\u0644\u062e\u0635\u0645':'Filter by discount');
 paint(ar,T,key);
 bar.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.sbf-c');if(!b)return;cur=b.getAttribute('data-v');apply();try{if(window.track)track('sale_filter',{discount:cur});}catch(x){}});
-if(shop)panel.appendChild(bar);else{var g=document.querySelector('main '+GRID.split(',').join(',main '))||document.querySelector(GRID);if(!g){bar=null;return;}var sec=g.closest('section');(sec||g).parentNode.insertBefore(bar,sec||g);}
+if(shop)panel.appendChild(bar);else{var g=document.querySelector('main '+GRID.split(',').join(',main '))||document.querySelector(GRID);if(!g){bar=null;return;}var sec=g.closest('section');if(sec&&/\bsh-shop\b/.test(sec.className))sec=null;/* 10 Nov 2026 (Stage 3): on /sahel/ the row sits inside the cream pieces block, above its grid, not over the photo before it */(sec||g).parentNode.insertBefore(bar,sec||g);}
 try{var m=/[?&]discount=(on|\d+)/.exec(location.search||'');if(m&&(m[1]==='on'||tiers[m[1]])){cur=m[1];if(shop&&panel.hidden){var t=document.getElementById('filtToggle');if(t)t.click();}}}catch(x){}
 apply();}
 function paint(ar,T,key){if(cur!=='all'&&cur!=='on'&&T.indexOf(+cur)<0)cur='all';bar.setAttribute('data-t',key);

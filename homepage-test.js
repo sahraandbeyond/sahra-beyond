@@ -465,7 +465,7 @@ console.log('\n\x1b[1mshop page - the free tote is never listed\x1b[0m');
   check('the count in the bar matches the grid', /<span class="sx-n" aria-live="polite">16 pieces<\/span>/.test(bs));
   check('each Founding Edition tee is one card with a Regular / Oversized switch', (grid.match(/<div class="sg-i" data-line="founding" data-kind="tee"><div class="sfp">/g) || []).length === 3);
   check('the chips bar sits inside main, so it stops sticking where the grid ends', bs.indexOf('<main class="sx-wrap" id="products">') > -1 && bs.indexOf('id="shopBar"') > bs.indexOf('<main class="sx-wrap"') && bs.indexOf('id="shopBar"') < bs.indexOf('</main>'));
-  check('the opener is a model photo of a product, one h1', /<section class="sx-open"[\s\S]*?<img src="\/assets\/open\/shop-720\.webp"[^>]*alt="Model wearing the Al Quaa Galaxy Tee/.test(bs) && (bs.match(/<h1[ >]/g) || []).length === 1);
+  check('the opener is a model photo of a product, one h1', /<section class="ho ho-top"[\s\S]*?<img src="\/assets\/open\/shop-720\.webp"[^>]*alt="Model wearing the Al Quaa Galaxy Tee/.test(bs) && (bs.match(/<h1[ >]/g) || []).length === 1);
   check('no spin carousel and no per-product viewers', !/class="sring|id="shopRing|data-viewer=|class="pv-stage|id="filtPanel"|id="filtToggle"|<model-viewer/.test(bs));
   check('the places map is the last block before the footer', bs.indexOf('id="s-places"') > bs.indexOf('</main>') && bs.indexOf('id="s-places"') > bs.indexOf('id="shopGrid"'));
   check('old links still land: #shop-sahel and #shop-trail are mapped', /'shop-sahel':'sahel','shop-trail':'trail'/.test(bs));
@@ -916,7 +916,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   /* 10 Nov 2026 (r115, landing-page audit): the homepage went from 22 phone screens to a short page. The brand film, the ring
      section, the place map and the story section left it; the Instagram strip stays in #s-film. */
   check('the film has left the homepage (r115); the Instagram strip stays', !/id="brandVideo"/.test(page) && /<!--IG:STRIP-->/.test(page));
-  check('r115: one full-photo opener leads the page and holds the only h1', /<section class="op" id="s-open"/.test(page) && (page.match(/<h1[\s>]/g) || []).length === 1 && /<h1 id="opH">Wear what you love about the UAE<\/h1>/.test(page) && page.indexOf('id="s-open"') < page.indexOf('id="s-hero"'));
+  check('r115: one full-photo opener leads the page and holds the only h1', /<section class="op" id="s-open"/.test(page) && (page.match(/<h1[\s>]/g) || []).length === 1 && /<h1 id="opH">Wear a place, not a logo<\/h1>/.test(page) && page.indexOf('id="s-open"') < page.indexOf('id="s-hero"'));
   /* 10 Nov 2026 (r116; Faheem: one screen, "and do the same for Sahel places"): the three full-screen stories are one row of seven places */
   check('r116: one row of seven places sits between the Sahel band and the collection', /<section class="p7" id="s-origin"/.test(page) && (page.match(/class="p7-t"/g) || []).length === 7 && page.indexOf('id="s-origin"') > page.indexOf('<!--NOWBAND:END-->') && page.indexOf('id="s-origin"') < page.indexOf('id="s-collection"') && !/id="s-alquaa"|id="s-liwa"|id="s-naqab"/.test(page));
   check('r116: place tiles carry no price and use the place photos, with the Commons credits on the page', (function () { var a = page.indexOf('id="s-origin"'), z = page.indexOf('</section>', a), sec = page.slice(a, z); return !/AED|sb-price|% off/.test(sec) && (sec.match(/\/assets\/places\/[a-z-]+-400\.webp" srcset/g) || []).length === 7 && /Kamyana/.test(sec) && /Karachun/.test(sec) && /Mohammed Abdul Haris/.test(sec) && /Xiaotong Gao/.test(sec) && /CC BY-SA 4\.0/.test(sec) && /CC BY-SA 3\.0/.test(sec); })());
@@ -948,6 +948,37 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
        starts where the bar ends: a rule that outranks `body.has-topbar nav`, fed by the bar's measured height. */
     { const hp = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), hpa = fs.readFileSync(path.join(__dirname, 'ar', 'index.html'), 'utf8');
       [['/', hp], ['/ar/', hpa]].forEach(([u, h]) => check('r121 ' + u + ': the homepage category row starts below the site bar at every width', /html body nav\.op-cats\{top:var\(--op-nav,52px\)\}/.test(h) && /setProperty\('--op-nav',h\+'px'\)/.test(h) && /new ResizeObserver\(f\)\.observe\(n\)/.test(h))); }
+
+/* ---- Stage 3, the house look (10 Nov 2026; Faheem: "Execute stage 3") -------------------------------------------
+   Every listing page opens on the house opener (a real model photo of a piece sold there, heroes.js), carries the
+   house stylesheet (house.js: plain ground, one card, seven text sizes) and lists its products ONCE, in one grid. */
+console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
+{
+  const OPEN = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'openers.json'), 'utf8')); delete OPEN._;
+  const slugs = Object.keys(OPEN);
+  check('sixteen listing pages have an opener photo, each with alt text and a kicker', slugs.length === 16 && slugs.every(k => OPEN[k].alt && OPEN[k].kicker && fs.existsSync(path.join(__dirname, OPEN[k].src))), slugs.length + ' pages');
+  check('every opener image is built in three sizes', slugs.every(k => ['-m-780', '-720', '-1076'].every(x => fs.existsSync(path.join(__dirname, 'assets', 'open', k.replace(/\//g, '-') + x + '.webp')))));
+  check('no opener alt names a place the photo could not vouch for (it says what is worn)', slugs.every(k => /^(Model wearing|Runner stretching in|The Sahra Tote)/.test(OPEN[k].alt)));
+  slugs.forEach(k => {
+    const h = fs.readFileSync(path.join(__dirname, k, 'index.html'), 'utf8'), ar = fs.readFileSync(path.join(__dirname, 'ar', k, 'index.html'), 'utf8');
+    const main = h.slice(h.indexOf('<main'), h.indexOf('</main>'));
+    check('/' + k + '/: house opener, house stylesheet, one h1, no old hero', /<body[^>]*class="[^"]*\bls-page\b/.test(h) && /<section class="ho( ho-top)?" aria-labelledby=/.test(h) && /<style id="house">/.test(h) && (h.match(/<h1[\s>]/g) || []).length === 1 && !/class="loc-hero/.test(h));
+    check('/' + k + '/: products listed once, in one grid', (main.match(/<div class="pcards/g) || []).length === 1 && !/<section class="pcta"/.test(main) && (() => { const hs = (main.match(/<article[^>]*class="pcard[^"]*"[^>]*data-handle="([^"]+)"/g) || []).map(x => /data-handle="([^"]+)"/.exec(x)[1]); return hs.length > 0 && new Set(hs).size === hs.length; })());
+    check('/ar/' + k + '/: the same opener and grid in Arabic', /<section class="ho( ho-top)?" aria-labelledby=/.test(ar) && /<style id="house">/.test(ar) && (ar.match(/<div class="pcards/g) || []).length === 1);
+  });
+  const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
+  check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);
+  ['size-guide', 'fabric'].forEach(k => check('/' + k + '/ is a reading page: no listing stylesheet', !/<style id="house">/.test(fs.readFileSync(path.join(__dirname, k, 'index.html'), 'utf8'))));
+  const nw = fs.readFileSync(path.join(__dirname, 'new', 'index.html'), 'utf8');
+  check('/new/: #sahel and #trail still land', (nw.match(/id="sahel"/g) || []).length === 1 && (nw.match(/<article id="trail" class="pcard/g) || []).length === 1);
+  const sh = fs.readFileSync(path.join(__dirname, 'sahel', 'index.html'), 'utf8'), shop = sh.slice(sh.indexOf('<section class="sh-shop"'));
+  check('/sahel/: the pieces are the house card on a plain ground, one per design', /html body\.sahel-page \.sh-shop\{background:#FAF6EF/.test(sh) && (shop.match(/<div class="pcards nb-pc">/g) || []).length === 1 && !/class="nb-c"/.test(shop.slice(0, shop.indexOf('</section>'))) && (shop.match(/<div class="sfp">/g) || []).length === 4);
+  const HC = require('./house.js').CSS;
+  check('the house stylesheet names seven text sizes and eight text colours', ['--h-label:11px', '--h-small:13px', '--h-body:15px', '--h-lead:17px', '--h-h3:22px', '--h-h2:clamp('].every(x => HC.indexOf(x) > -1) && ['--h-ink', '--h-soft', '--h-mute', '--h-clay', '--h-green', '--h-gold', '--h-cream', '--h-sand'].every(x => HC.indexOf(x + ':') > -1));
+  check('the house card hides the spec chips and gives the fit switch a real tap target', /\.pcard-spec,html body\.ls-page \.pcard-col,html body\.ls-page \.pcard-bundle\{display:none!important\}/.test(HC) && /\.sfp-sw button\{position:relative;min-height:28px/.test(HC));
+  const hp = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  check('homepage: the lead line is "Wear a place, not a logo", and the Al Quaa tile is the night sky', /<h1 id="opH">Wear a place, not a logo<\/h1>/.test(hp) && /al-quaa-night-400\.webp"[^>]*alt="The Milky Way over the dunes at Al Quaa at night"/.test(hp));
+}
     check('r119: the character-set tag is in the first 1,024 bytes of the shop page, and the unused wadi plate is no longer fetched', shp.search(/<meta charset=/i) > -1 && shp.search(/<meta charset=/i) < 1024 && !/var PLATES = \{[^}]*wadi/.test(page) && !/var DEPTHS = \{[^}]*wadi/.test(page));
   })();
   check('r115: the ring, map and story sections are off the homepage', !/id="s-ring"/.test(page) && !/id="s-places"/.test(page) && !/id="s-story"/.test(page));
@@ -991,10 +1022,10 @@ console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
   const ts = fs.readFileSync(path.join(__dirname, 't-shirts', 'index.html'), 'utf8');
   const at = s => ts.indexOf(s);
   check('t-shirts: cards come before the review band, the band before the folded essays, the essays before the FAQ',
-    at('<section class="pcta"') > 0 && at('<section class="pcta"') < at('class="reviews rv-band"') && at('class="reviews rv-band"') < at('<section class="folds"') && at('<section class="folds"') < at('<section class="faq"'));
+    at('<section class="nb hg') > 0 && at('<section class="nb hg') < at('class="reviews rv-band"') && at('class="reviews rv-band"') < at('<section class="folds"') && at('<section class="folds"') < at('<section class="faq"'));
   check('t-shirts: the review band is compact (3 shown, a Show-all button)', /rv-list rv-compact/.test(ts) && /class="rv-showall"/.test(ts));
   check('t-shirts: three essays folded under their headings', (ts.match(/class="fold guide-sec"/g) || []).length === 3);   /* 23 Oct 2026: the "Limited runs" essay is gone (no scarcity wording) */
-  ['t-shirts/regular', 'polos'].forEach(p => { const h = fs.readFileSync(path.join(__dirname, p, 'index.html'), 'utf8'); check(p + ': products before the folded essays', h.indexOf('<section class="pcta"') > 0 && h.indexOf('<section class="pcta"') < h.indexOf('<section class="folds"')); });
+  ['t-shirts/regular', 'polos'].forEach(p => { const h = fs.readFileSync(path.join(__dirname, p, 'index.html'), 'utf8'); check(p + ': products before the folded essays', h.indexOf('<section class="nb hg') > 0 && h.indexOf('<section class="nb hg') < h.indexOf('<section class="folds"')); });   /* 10 Nov 2026 (Stage 3): the one grid of a listing page is section.nb.hg */
   const sg = fs.readFileSync(path.join(__dirname, 'size-guide', 'index.html'), 'utf8');
   check('size guide keeps its essay open (no folds)', !/class="fold guide-sec"/.test(sg));
   const home = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');

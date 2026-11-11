@@ -1,0 +1,163 @@
+{
+  "_": "House opener photos for the listing pages (Stage 3, 10 Nov 2026). One entry per page slug. src: a real model photo of a piece sold on that page. my / dy: where the phone (5:6) and desktop (4:5) crops start, 0 = top of the source, 1 = bottom. mpos / dpos: object-position inside the opener. words: top or bottom, whichever keeps the words off the print and the face. alt says what is shown, never a place the photo was not taken at. Run tools/make-open.py after changing src, my or dy.",
+  "shop": {
+    "src": "shirts/alquaa-model-back.jpg",
+    "my": 0,
+    "dy": 0.67,
+    "mpos": "50% 0",
+    "dpos": "50% 30%",
+    "words": "top",
+    "kicker": "Wear a place, not a logo",
+    "alt": "Model wearing the Al Quaa Galaxy Tee, the Milky Way printed across the back"
+  },
+  "t-shirts": {
+    "src": "assets/preorder/pm-al-aqah-reef-tee-regular-02-back-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 100%",
+    "dpos": "50% 40%",
+    "words": "bottom",
+    "kicker": "Shop · T-shirts",
+    "alt": "Model wearing the Al Aqah Reef Tee, the reef printed across the back"
+  },
+  "t-shirts/regular": {
+    "src": "assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 100%",
+    "dpos": "50% 40%",
+    "words": "bottom",
+    "kicker": "Shop · Regular fit",
+    "alt": "Model wearing the Al Hamra Pearl Diver Tee in Regular fit, seen from behind"
+  },
+  "t-shirts/oversized": {
+    "src": "assets/preorder/pm-khor-fakkan-bay-tee-super-oversized-08-back-hands-on-hips-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 100%",
+    "dpos": "50% 40%",
+    "words": "bottom",
+    "kicker": "Shop · Oversized fit",
+    "alt": "Model wearing the Khor Fakkan Bay Tee in Super Oversized fit, seen from behind"
+  },
+  "polos": {
+    "src": "shirts/polo-dune-look.jpg",
+    "my": 0.2,
+    "dy": 0.2,
+    "mpos": "50% 20%",
+    "dpos": "50% 6%",
+    "words": "bottom",
+    "kicker": "Shop · Polos",
+    "alt": "Model wearing the Sahra Polo in sand"
+  },
+  "hoodies": {
+    "src": "assets/preorder/pm-barr-and-bahr-hoodie-02-back-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 100%",
+    "dpos": "50% 40%",
+    "words": "bottom",
+    "kicker": "Sahel · Hoodies",
+    "alt": "Model wearing the Barr & Bahr Hoodie, the coastline embroidered across the back"
+  },
+  "activewear": {
+    "src": "assets/preorder/pm2-sahra-trail-kit-01-lunge-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 30%",
+    "dpos": "50% 40%",
+    "words": "bottom",
+    "kicker": "Sahra Trail · Activewear",
+    "alt": "Runner stretching in the Sahra Trail Tee and 2-in-1 Short"
+  },
+  "accessories": {
+    "src": "shirts/tote-model.jpg",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 100%",
+    "dpos": "50% 70%",
+    "words": "bottom",
+    "kicker": "Shop · Accessories",
+    "alt": "The Sahra Tote in natural canvas, carried over the shoulder"
+  },
+  "men": {
+    "src": "assets/preorder/pm-shams-tee-regular-06-front-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 60%",
+    "dpos": "50% 10%",
+    "words": "bottom",
+    "kicker": "Shop · Men",
+    "alt": "Model wearing the Shams Tee by the sea"
+  },
+  "women": {
+    "src": "assets/preorder/pm-al-hamra-pearl-diver-tee-super-oversized-03-back-three-quarter-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 80%",
+    "dpos": "50% 40%",
+    "words": "bottom",
+    "kicker": "Shop · Women",
+    "alt": "Model wearing the Al Hamra Pearl Diver Tee in Super Oversized fit, seen from behind"
+  },
+  "gifts": {
+    "src": "shirts/hajar-lake-back-her.jpg",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 100%",
+    "dpos": "50% 45%",
+    "words": "bottom",
+    "kicker": "Shop · Gifts",
+    "alt": "Model wearing the Hajar Mountains tee, the ridgeline printed across the back"
+  },
+  "under-150": {
+    "src": "assets/preorder/pm-shams-tee-regular-05-sunset-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 60%",
+    "dpos": "50% 22%",
+    "words": "bottom",
+    "kicker": "Shop by price",
+    "alt": "Model wearing the Shams Tee at sunset"
+  },
+  "national-day": {
+    "src": "shirts/alquaa-model-front.jpg",
+    "my": 0.15,
+    "dy": 0.15,
+    "mpos": "50% 60%",
+    "dpos": "50% 35%",
+    "words": "bottom",
+    "kicker": "Eid Al Etihad · 2 December",
+    "alt": "Model wearing the Al Quaa Galaxy Tee on the dunes"
+  },
+  "desert-t-shirts": {
+    "src": "shirts/emptyquarter-model-stand.jpg",
+    "my": 0.2,
+    "dy": 0.2,
+    "mpos": "50% 40%",
+    "dpos": "50% 36%",
+    "words": "bottom",
+    "kicker": "Shop · Desert t-shirts",
+    "alt": "Model wearing the Empty Quarter tee on the dunes, the dunes embroidered on the chest"
+  },
+  "mountain-t-shirts": {
+    "src": "shirts/hajar-model-back.jpg",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 100%",
+    "dpos": "50% 62%",
+    "words": "bottom",
+    "kicker": "Shop · Mountain t-shirts",
+    "alt": "Model wearing the Hajar Mountains tee, the ridgeline printed across the back"
+  },
+  "new": {
+    "src": "assets/preorder/pm-al-aqah-reef-tee-super-oversized-04-movement-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 60%",
+    "dpos": "50% 40%",
+    "words": "bottom",
+    "kicker": "Sahel · Sahra Trail",
+    "alt": "Model wearing the Al Aqah Reef Tee in Super Oversized fit by the sea"
+  }
+}

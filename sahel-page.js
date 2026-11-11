@@ -274,6 +274,22 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
 .sh-shop-h{max-width:720px;margin:0 auto 26px;padding:22px 26px;border-radius:16px;background:rgba(11,21,38,.66);border:1px solid rgba(217,195,165,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .sh-shop-h .sh-shop-l{margin-bottom:0}
 .sh-grid2{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:1040px;margin:0 auto}
+/* Stage 3 (10 Nov 2026): a plain ground behind the pieces */
+html body.sahel-page .sh-shop{background:#FAF6EF;padding:40px 16px 56px}
+html body.sahel-page .sh-shop-in{max-width:1240px}
+html body.sahel-page .sh-shop-h{max-width:none;margin:0 0 6px;padding:0;border:0;border-radius:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html body.sahel-page .sh-shop h2{margin:0 0 8px;font-size:clamp(24px,2.3vw,30px)!important;line-height:1.15!important;color:#2A2016;text-align:start;text-shadow:none}
+html body.sahel-page .sh-shop-l{max-width:70ch;margin:0;text-align:start;font-size:15px!important;line-height:1.6;color:#4A4136;text-shadow:none}
+html body.sahel-page .sh-shop-l a{color:#7E4114;text-decoration-color:currentColor}
+html body.sahel-page .sh-shop{color:#2A2016}
+/* the 11.11 discount row sits above the grid in this block (sale.js); its place is held from the first paint */
+html body.sahel-page .sh-shop .sbf{flex-wrap:nowrap;justify-content:flex-start;gap:6px;max-width:none;margin:14px -16px 0;padding:0 16px;overflow-x:auto;scrollbar-width:none;color:#2A2016}
+html body.sahel-page .sh-shop .sbf::-webkit-scrollbar{display:none}
+html body.sahel-page .sh-shop .sbf-l{flex:none;color:#7E4114}
+html body.sahel-page .sh-shop .sbf-c{flex:none;min-height:40px;padding:0 13px;font-size:13px;background:none;color:#2A2016}
+html body.sahel-page .sh-shop .sbf-c[aria-pressed="true"]{background:#2A2016;color:#FAF6EF}
+html body.sahel-page .sh-shop .sbf-n{flex:none;flex-basis:auto;align-self:center;font-size:13px;color:#6B6256;white-space:nowrap}
+html[data-sale="1"] body.sahel-page .sh-shop-in:not(:has(.sbf)) .pcards{margin-top:68px}
 .sh-grid2>.nb-c{width:calc(25% - 12px)}
 @media(max-width:1000px){.sh-grid2>.nb-c{width:calc(33.333% - 11px)}}
 .sh-shop .nb-c{background:var(--sb-cream,#FAF6EF);border-radius:14px;padding:10px 10px 14px;box-shadow:0 18px 40px rgba(3,8,16,.35);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
@@ -323,7 +339,10 @@ main.sh{position:relative;z-index:1;--sh-deep:0;max-width:none!important;margin:
     <div class="sh-shop-in">
       <div class="sh-shop-h"><h2 id="shPieces">${ST.inc('st0', '<span class="st0">All the pieces, on <span style="white-space:nowrap">pre-order</span> from Wed 28 Oct</span>')}${ST.inc('st1', '<span class="st1">All the pieces, on <span style="white-space:nowrap">pre-order</span> now</span>')}<span class="st2">All the pieces</span></h2>
       <p class="sh-shop-l">${ST.newLede()}</p></div>
-      <div class="nb-g sh-grid2">${SHOP.map(p => ST.newCard(p)).join('')}</div>
+      ${''/* 10 Nov 2026 (Stage 3, the house look): the pieces are the site's product card on a plain cream ground, one card
+         per design with its fits on the switch, as on every listing page. Until now each fit had its own small card
+         (25 Oct) and the cards sat on the reef photo, which the scorecard said competed with them. */}
+      ${ST.BIG_CSS()}${require('./house.js').scoped('body.sahel-page .sh-shop')}<div class="pcards nb-pc">${ST.pickNew(p => p.line === 'sahel', true).map(p => ST.designCards(p, true)).join('')}</div>
     </div>
   </section>
 </main>

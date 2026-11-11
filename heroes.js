@@ -94,4 +94,74 @@ function apply(slug, bodyHtml) {
   }).replace(/(<h1[^>]*>)([^<]*)<\/h1>/, (m, o, t) => o + t.replace(/\bT-Shirts\b/g, '<span style="white-space:nowrap">T-Shirts</span>') + '</h1>')
     .replace(/(<section class="loc-hero lh-ph[^"]*"[^>]*>(?:(?!<\/section>)[\s\S])*?)(<h1[ >])/, `$1<span class="lh-k">${h[3].replace(/&/g, '&amp;')}</span>$2`);
 }
-module.exports = { HERO, apply, key };
+
+/* ------------------------------------------------------------------------
+   THE HOUSE OPENER (Stage 3, 10 Nov 2026; Faheem: "Execute stage 3", after the audit decision "one house look on
+   every landing page"). Every listing page opens the same way: a real model photo of a piece sold on that page,
+   with the kicker and the title, on a dark ground at every width (his choices: "Photo full width, words over it"
+   for phones, "Dark photo, words over it" for desktop). From 600px the one-line description and the breadcrumb join. Photos and crops: content/openers.json, tools/make-open.py.
+   The place guides keep the photo hero above: they are reading pages, not shop pages.
+   ------------------------------------------------------------------------ */
+const fs = require('fs'), path = require('path');
+let OPEN = {}; try { OPEN = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'openers.json'), 'utf8')); delete OPEN._; } catch (e) {}
+const HOUSE_CSS = `<style>
+.ho{position:relative;display:block;overflow:hidden;background:#1C1610;color:#FAF6EF;height:min(104vw,460px)}
+.ho picture{position:absolute;inset:0;display:block}
+.ho img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--ho-m,50% 30%)}
+.ho::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(20,14,8,.86) 0,rgba(20,14,8,.7) 22%,rgba(20,14,8,.48) 38%,rgba(20,14,8,.16) 50%,rgba(20,14,8,0) 60%)}
+.ho.ho-top::after{background:linear-gradient(to bottom,rgba(20,14,8,.72) 0,rgba(20,14,8,.5) 26%,rgba(20,14,8,0) 50%)}
+.ho-t{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:0 16px 18px}
+.ho-top .ho-t{top:0;bottom:auto;padding:18px 16px 0}
+html body .ho .ho-k{display:block;margin:0 0 8px;font:400 11px/1.5 'Space Mono',ui-monospace,monospace!important;letter-spacing:.2em!important;text-transform:uppercase;color:#FFF1DC;text-shadow:0 1px 8px rgba(8,6,4,.75)}
+html body .ho h1{margin:0;padding:0;max-width:17ch;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(26px,7.4vw,32px)!important;line-height:1.08!important;letter-spacing:.2px;color:#FFFFFF;text-wrap:balance;text-shadow:0 1px 18px rgba(8,6,4,.6)}
+html body .ho h1::after{display:none}
+.ho h1 .nw{white-space:nowrap}
+html body .ho .ho-d{display:none;margin:0;font:400 16px/1.5 Jost,system-ui,sans-serif;color:#F6EDE0;max-width:40ch}
+html body .ho .ho-c{display:none;margin:0 0 14px;font:400 13px/1.5 Jost,system-ui,sans-serif;color:#F6EDE0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html body .ho .ho-c a{color:#F6EDE0;text-decoration:none}
+html body .ho .ho-c a:hover{text-decoration:underline}
+/* Arabic sets wider: full-width lines keep the words in their band, clear of the model */
+@media(max-width:599px){html[dir="rtl"] body .ho h1{max-width:none;font-size:clamp(23px,6.6vw,28px)!important;line-height:1.25!important}}
+/* From 600px (Faheem, 10 Nov 2026, shown both: "Dark photo, words over it"): the opener stays dark and full width. The
+   photo sits in the right-hand part and fades into the dark ground, and the words sit over the ground on the left,
+   so they never cross the model. The one-line description and the breadcrumb join here. */
+@media(min-width:600px){
+  .ho{height:clamp(360px,50vh,480px);background:#1C1510}
+  .ho picture{inset-block:0;inset-inline:auto 0;width:62%;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 42%);mask-image:linear-gradient(90deg,transparent 0,#000 42%)}
+  html[dir="rtl"] .ho picture{-webkit-mask-image:linear-gradient(270deg,transparent 0,#000 42%);mask-image:linear-gradient(270deg,transparent 0,#000 42%)}
+  .ho img{object-position:var(--ho-d,50% 40%)}
+  .ho::after,.ho.ho-top::after{background:linear-gradient(180deg,rgba(10,8,6,.22) 0,rgba(10,8,6,0) 30%,rgba(10,8,6,0) 62%,rgba(10,8,6,.45) 100%)}
+  /* the words start on the same line as the product grid below (a 1240px column with a 16px gutter) */
+  .ho-t,.ho-top .ho-t{top:auto;bottom:0;padding:0 32px clamp(28px,5vh,46px);padding-inline:max(32px,calc((100vw - 1208px)/2)) 32px}
+  html body .ho .ho-k{margin-bottom:12px}
+  html body .ho h1{max-width:18ch;font-size:clamp(34px,3.6vw,56px)!important;line-height:1.04!important;margin-bottom:12px;text-shadow:0 2px 26px rgba(8,6,4,.5)}
+  html[dir="rtl"] body .ho h1{line-height:1.2!important}
+  html body .ho .ho-d{display:block;max-width:44ch;font-size:clamp(16px,1.3vw,18px);color:rgba(255,255,255,.94);text-shadow:0 1px 12px rgba(8,6,4,.5)}
+  html body .ho .ho-c{display:block;max-width:50%;color:rgba(255,255,255,.82);text-shadow:0 1px 10px rgba(8,6,4,.5)}
+  html body .ho .ho-c a{color:rgba(255,255,255,.82)}
+  html body .ho .ho-c a:hover{color:#FFFFFF}
+}
+</style>`;
+const escA = s => String(s).replace(/&(?![a-z]+;|#\d+;)/gi, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+/* the opener for one page: h1 is HTML, line and crumbs are optional HTML */
+function house(slug, { h1, line = '', crumbs = '', id = 'hoH' }) {
+  const o = OPEN[slug]; if (!o) return '';
+  const k = key(slug);
+  return `${HOUSE_CSS}
+  <section class="ho${o.words === 'top' ? ' ho-top' : ''}" aria-labelledby="${id}" style="--ho-m:${o.mpos || '50% 30%'};--ho-d:${o.dpos || '50% 40%'}">
+    <picture><source media="(max-width:599px)" srcset="/assets/open/${k}-m-780.webp" width="780" height="936"><img src="/assets/open/${k}-720.webp" srcset="/assets/open/${k}-720.webp 720w, /assets/open/${k}-1076.webp 1076w" sizes="(min-width:600px) 62vw, 100vw" width="1076" height="1345" alt="${escA(o.alt)}" fetchpriority="high" decoding="async"></picture>
+    <div class="ho-t">${crumbs ? `<nav class="ho-c" aria-label="Breadcrumb">${crumbs}</nav>` : ''}<p class="ho-k">${escA(o.kicker)}</p><h1 id="${id}">${h1}</h1>${line ? `<p class="ho-d">${line}</p>` : ''}</div>
+  </section>`;
+}
+/* a listing page built with the old .loc-hero block: lift its breadcrumb, title and line into the house opener */
+function applyHouse(slug, bodyHtml) {
+  const m = /<section class="loc-hero[^"]*"[^>]*>[\s\S]*?<\/section>/.exec(bodyHtml); if (!m) return bodyHtml;
+  const sec = m[0];
+  const h1 = (/<h1[^>]*>([\s\S]*?)<\/h1>/.exec(sec) || [])[1]; if (!h1) return bodyHtml;
+  const crumbs = (/<nav class="crumbs"[^>]*>([\s\S]*?)<\/nav>/.exec(sec) || [])[1] || '';
+  const line = (/<p class="lede"[^>]*>([\s\S]*?)<\/p>/.exec(sec) || [])[1] || '';
+  return bodyHtml.replace(sec, house(slug, { h1: /</.test(h1) ? h1 : h1.replace(/\bT-Shirts\b/g, '<span style="white-space:nowrap">T-Shirts</span>'), line, crumbs }));
+}
+const applyOld = apply;
+module.exports = { HERO, OPEN, apply: (slug, bodyHtml) => OPEN[slug] ? applyHouse(slug, bodyHtml) : applyOld(slug, bodyHtml), house, key };
+

@@ -25,7 +25,7 @@ SALE.stripAll(ROOT);
    descriptor for meta and collection pages. Never stack house under campaign; no
    quantity in any line; no Arabic version until an Emirati reader approves one. */
 const TAGLINE = 'Designed in the UAE for everyone who loves it.';
-const CAMPAIGN = 'Wear what you love about the UAE';
+const CAMPAIGN = 'Wear a place, not a logo';   /* 10 Nov 2026 (Faheem, asked which is the one lead tagline: "Wear a place, not a logo"). Until then: 'Wear what you love about the UAE' (19 Oct). */
 const DESCRIPTOR = 'Premium tees, polos and hoodies.';
 const HOUSE_CSS = `.logo .sb-house,.brand .sb-house{display:none}
 @media(min-width:1280px){.logo .sb-house,.brand .sb-house{display:block;margin:5px 0 -15px;font-family:'Space Mono',monospace;font-size:8px;font-size-adjust:none;letter-spacing:.3px;text-transform:none;font-weight:400;line-height:1.2;white-space:nowrap;opacity:.82}}`;
@@ -1157,6 +1157,8 @@ function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'n
   const AR = lang === 'ar';
   /* 23 Oct 2026: photo heroes replace the plain gradient banners (heroes.js) */
   if (!AR && bodyHtml) { const hs = String(canonical || '').replace(SITE, '').replace(/^\/|\/$/g, ''); bodyHtml = HEROES.apply(hs, bodyHtml); }
+  /* 10 Nov 2026 (Stage 3): the house look for listing pages, after every other stylesheet (house.js) */
+  if (bodyHtml && /\bls-page\b/.test(bodyClass || '')) bodyHtml = require('./house.js').CSS + bodyHtml;
   // SERPs truncate around 60 chars; the brand suffix is the first thing to go.
   if (title.length > 60 && / \| Sahra & Beyond$/.test(title)) title = title.replace(/ \| Sahra & Beyond$/, '');
 
@@ -3328,6 +3330,31 @@ function productCard(p) {
       </span>
     </article>`;
 }
+/* ----------------------------------------------------------------------------
+   Stage 3 (10 Nov 2026; Faheem: "Execute stage 3"): ONE GRID per listing page. Until now a category page stacked a
+   Founding Edition block, a Sahel block and sometimes a Trail and a bags block, each with its own kicker, heading
+   and paragraph, and listed a design's Regular and Oversized as two cards. Now the opener carries the title and the
+   products follow at once in one grid: one card per design (both fits behind the switch on the card where the page
+   sells both), with one quiet line about sizes underneath.
+   founding: Founding Edition products (products.json);  news: Sahel and Trail products (preorder-page.js);
+   pre / post: ready-made cards (the tote);  fits: Sahel designs show their fits on a switch.
+   ---------------------------------------------------------------------------- */
+function houseGrid({ founding = [], news = [], pre = '', post = '', note = '', label = 'Products', fits = true }) {
+  const PO = require('./preorder-page.js'), SALE = require('./sale.js');
+  const designs = [];
+  founding.forEach(p => { const k = String(p.id).replace(/-(regular|oversized)$/, ''); let d = designs.find(x => x.k === k); if (!d) designs.push(d = { k, fits: [] }); d.fits.push(p); });
+  const fitName = p => /-oversized$/.test(p.id) ? 'Oversized' : 'Regular';
+  const fCard = (p, i, n) => productCard(p).replace('<article class="pcard" ', `<article class="pcard${n > 1 && i === 0 ? ' on' : ''}"${n > 1 ? ` data-i="${i}"` : ''} `);
+  const fHtml = designs.map(d => { const fl = d.fits.slice().sort((a, b) => fitName(b).localeCompare(fitName(a))), n = fl.length;   /* Regular first */
+    return n > 1 ? `<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit">${fl.map((f, i) => `<button type="button"${i ? '' : ' class="on"'} data-i="${i}" aria-pressed="${i ? 'false' : 'true'}">${fitName(f)}</button>`).join('')}</div>${fl.map((f, i) => fCard(f, i, n)).join('')}</div>` : fCard(fl[0], 0, 1); }).join('');
+  const nHtml = news.map(p => PO.designCards(p, fits)).join('');
+  if (!fHtml && !nHtml && !pre && !post) return '';
+  /* hg-sale: at least one piece here is in the 11.11 sale, so the Discount row will arrive; its place is held (house.js) */
+  const cut = h => SALE.PRICES[h] && SALE.PRICES[h][1] < SALE.PRICES[h][0];
+  const sale = SALE.on() && (founding.some(p => cut(p.id)) || news.some(p => cut(p.handle) || (p.fitsList || []).some(f => cut(f.handle))));
+  return `${PO.stageHead()}${PO.NB_CSS()}${PO.BIG_CSS()}<section class="nb hg${sale ? ' hg-sale' : ''}" aria-label="${esc(label)}"><div class="pcards nb-pc">${pre}${fHtml}${nHtml}${post}</div>${note ? `<p class="hg-note">${note}</p>` : ''}</section>`;
+}
+const HOUSE_SIZE_NOTE = 'Not sure of your size? <a href="/size-guide/">See the size guide</a>.';
 function catCards(list) {
   if (!list.length) return '<p>Nothing in this category yet.</p>';
   return `<div class="pcards">${list.map(productCard).join('')}</div>`;
@@ -3362,9 +3389,7 @@ CATEGORIES.forEach(C => {
     </div>
   </section>
   <main>
-    <section class="pcta"><div class="pcta-head"><span class="pcta-eyebrow">${C.h1}</span></div>${catCards(items)}
-      <a class="btn shoplink" href="${shopHref}">${C.shopText ? esc(C.shopText) : C.pick ? 'Shop every t-shirt' : 'Shop ' + esc(C.h1.replace(/ T-Shirts$/,'').replace(/^Polo Shirts$/,'the polo'))} &rarr;</a><a class="btn ghost" href="/size-guide/">Size &amp; fit guide &rarr;</a></section>
-    ${C.newList ? require('./preorder-page.js').newBlock({ list: C.newList(), heading: C.newHeading || (C.cat === 'oversized-tees' ? 'Sahel, the Coast Edition: Super Oversized, drop shoulder' : 'Sahel, the Coast Edition: Regular fit'), lede: (C.cat === 'oversized-tees' ? 'The Sahel Oversized fit is being re-cut and will be back soon. ' : '') + require('./preorder-page.js').newLede() }) : ''}
+    ${houseGrid({ founding: items, news: C.newList ? C.newList() : [], fits: false, label: C.h1, note: C.newList ? (C.cat === 'oversized-tees' ? 'The Sahel Oversized fit is being re-cut and will be back soon. ' : '') + require('./preorder-page.js').newLede() : HOUSE_SIZE_NOTE })}
     <div class="content">${paras(C.intro)}</div>
     ${RV.homepageBand({ compact: true })}
     ${foldsBlock(C.sections, 'Fabric, cut and make')}
@@ -3382,7 +3407,7 @@ CATEGORIES.forEach(C => {
         "mainEntity": C.faqs.map(q => ({ "@type": "Question", "name": q.q,
           "acceptedAnswer": { "@type": "Answer", "text": q.a } })) }])
     : jsonld;
-  write(`${C.slug}/index.html`, shell({ title: C.title, desc: C.desc, canonical, jsonld: catLd, bodyHtml: body, activeNav: navKeyFor(C.slug), bodyClass: 'buy-page' /* the buying-page type scale, legibility.js (10 Sep) */ }));
+  write(`${C.slug}/index.html`, shell({ title: C.title, desc: C.desc, canonical, jsonld: catLd, bodyHtml: body, activeNav: navKeyFor(C.slug), bodyClass: 'buy-page ls-page' /* the buying-page type scale, legibility.js (10 Sep); ls-page: the house look (house.js) */ }));
 });
 
 COMMERCE.forEach(P => {
@@ -3417,10 +3442,10 @@ COMMERCE.forEach(P => {
     </div>
   </section>
   <main>
-    ${P.slug === 't-shirts' ? placeRow() : ''}
+    ${''/* 10 Nov 2026 (Stage 3): the 'Pick your place' strip on /t-shirts/ showed the three Founding tees a second time, above the grid; the grid is now the first thing under the opener */}
     ${P.catNav || Array.isArray(P.items) ? '' : `<div class="content">${paras(P.intro)}</div>`}
-    ${/* 12 Oct 2026 (SEO and UX pass): on /t-shirts/ the five fit and theme tiles sat above the grid, so the first price was at 1,240 px on a phone. The grid now comes first. */''}${collectionBlock(null, P.slug === 't-shirts')}
-    ${P.newList ? require('./preorder-page.js').newBlock({ list: P.newList(), heading: P.newHeading || 'Sahel, the Coast Edition: four new tees', lede: require('./preorder-page.js').newLede(), fitsLabel: !!P.newFits }) : ''}
+    ${/* 12 Oct 2026 (SEO and UX pass): on /t-shirts/ the five fit and theme tiles sat above the grid, so the first price was at 1,240 px on a phone. The grid now comes first. */''}${HEROES.OPEN[P.slug] ? houseGrid({ founding: PRODUCTS_ALL.filter(p => p.garment !== 'polo').sort((a, b) => (a.order || 0) - (b.order || 0)), news: P.newList ? P.newList() : [], fits: true, label: P.h1, note: require('./preorder-page.js').newLede() }) : `${collectionBlock(null, P.slug === 't-shirts')}
+    ${P.newList ? require('./preorder-page.js').newBlock({ list: P.newList(), heading: P.newHeading || 'Sahel, the Coast Edition: four new tees', lede: require('./preorder-page.js').newLede(), fitsLabel: !!P.newFits }) : ''}`}
     ${P.catNav ? `<nav class="catnav" aria-label="Shop by category">
       <a href="/t-shirts/regular/"><b>Regular fit</b><span>Straight cut, set shoulder</span></a>
       <a href="/t-shirts/oversized/"><b>Oversized fit</b><span>True drop shoulder</span></a>
@@ -3443,7 +3468,7 @@ COMMERCE.forEach(P => {
     ${newsletterBlock()}
     <p class="back"><a href="/">Back to Sahra &amp; Beyond &rarr;</a></p>
   </main>`;
-  write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor(P.slug), bodyClass: 'buy-page' }));
+  write(`${P.slug}/index.html`, shell({ title: P.title, desc: P.desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor(P.slug), bodyClass: HEROES.OPEN[P.slug] ? 'buy-page ls-page' : 'buy-page' }));
 });
 
 /* ---------- /feed/ and /q/<slug>/ (4 Oct 2026) -------------------------------
@@ -3529,7 +3554,7 @@ COMMERCE.forEach(P => {
     </div>
   </section>
   <main>
-    ${PO.newBlock({ list, heading: 'Two hoodies from Sahel, the Coast Edition', kicker: 'Sahel &middot; The Coast Edition', lede: HPAUSED ? 'We are adjusting the fit of both hoodies, so they are not on sale just now. They will be back soon.' : PO.newLede(), more: '/new/#sahel', moreText: 'See all of Sahel' })}
+    ${houseGrid({ news: list, fits: false, label: H.h1, note: HPAUSED ? 'We are adjusting the fit of both hoodies, so they are not on sale just now. They will be back soon.' : PO.newLede() })}
     <div class="content"><p>The first hoodies from Sahra &amp; Beyond are part of Sahel, the Coast Edition, designed in the UAE. There are two: the Barr &amp; Bahr Hoodie in Salute and the Ras Al Khor Hoodie in Estate Blue, each AED 229 in sizes S to XL. Both carry the UAE coastline embroidered across the back in sand thread, and each has its own scene printed on the lower back.</p></div>
     <section class="guide-sec"><h2>The cut</h2><div class="content"><p>Super Oversized: a roomy pullover with a dropped shoulder and a long, loose body. Most people take one size down from their usual size. Our Oversized hoodie fit is being re-cut and will be back soon. There is no drawcord and no hardware anywhere on it, so nothing crosses the mark embroidered at the centre of the chest. The neck label is printed rather than sewn in, so there is no tag to scratch.</p><p>Both hoodies use the same chart, from 24.5&Prime; across the chest (S) to 28&Prime; (XL), measured flat. <a href="/size-guide/#sahel">See the Sahel size chart</a>. If you are still unsure of your size, <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about the Sahel hoodies before I order.')}" target="_blank" rel="noopener">message us before you order</a>.</p></div></section>
     <section class="guide-sec"><h2>The coastline on the back</h2><div class="content"><p>Across the upper back runs the whole UAE coastline in a single line of sand thread, with Sahel written beneath it in Arabic and English. On the lower back, each hoodie carries its own printed scene. The <a href="/products/barr-and-bahr-hoodie/">Barr &amp; Bahr Hoodie</a> carries the crossing between land and sea: contour-line dunes running down into a stream and a wave (in the Gulf, barr is the open land and bahr is the sea). The <a href="/products/ras-al-khor-hoodie/">Ras Al Khor Hoodie</a> has greater flamingos at dusk at <a href="/locations/ras-al-khor/">Ras Al Khor</a>, the wetland where Dubai Creek ends.</p></div></section>
@@ -3538,7 +3563,7 @@ COMMERCE.forEach(P => {
     ${newsletterBlock()}
     <p class="back"><a href="/new/">Everything new: Sahel and Sahra Trail &rarr;</a></p>
   </main>`;
-  write('hoodies/index.html', shell({ title: H.title, desc: H.desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page', image: `${SITE}/assets/preorder/og/ph-barr-01-back-og.jpg` }));
+  write('hoodies/index.html', shell({ title: H.title, desc: H.desc, canonical, jsonld, bodyHtml: body, activeNav: 'none', bodyClass: 'buy-page ls-page', image: `${SITE}/assets/preorder/og/ph-barr-01-back-og.jpg` }));
 })();
 
 /* ---------- /accessories/ and /activewear/ (23 Oct 2026) -------------------
@@ -3569,7 +3594,7 @@ COMMERCE.forEach(P => {
     ${newsletterBlock()}
     <p class="back"><a href="/shop/">All products &rarr;</a></p>
   </main>`;
-    write(`${slug}/index.html`, shell({ title, desc, canonical, jsonld, bodyHtml: html, activeNav: 'none', bodyClass: 'buy-page' }));
+    write(`${slug}/index.html`, shell({ title, desc, canonical, jsonld, bodyHtml: html, activeNav: 'none', bodyClass: 'buy-page ls-page' }));
   };
   /* Accessories: the Sahra Tote (its own page, /tote/) and the Trailhead Bag */
   const bag = PO.pickNew(p => p.handle === 'trailhead-bag');
@@ -3579,7 +3604,7 @@ COMMERCE.forEach(P => {
     title: 'Accessories: Canvas Tote and Drawstring Bag | Sahra & Beyond',
     desc: 'The Sahra Tote and the Trailhead Bag from Sahra Trail: natural canvas bags designed in the UAE, AED 50 each. Free delivery across the UAE on orders over AED 100.',
     lede: 'Two canvas bags: the Sahra Tote and the Trailhead Bag',
-    block: PO.newBlock({ list: bag, pre: toteCard, heading: 'Canvas bags', kicker: 'Accessories', more: '/shop/', moreText: 'All products' }),
+    block: houseGrid({ pre: toteCard, news: bag, fits: false, label: 'Canvas bags' }),
     body: `<div class="content"><p>The Sahra Tote is natural canvas with our mark and wordmark printed in terracotta, flat-bottomed with long shoulder handles. It comes free with every clothing order, and you can buy a second one here. The Trailhead Bag is the Sahra Trail drawstring bag: natural canvas with the Two Ridges mark printed in sand, and rope drawstrings that carry it on your back. It is on sale now, with Sahra Trail.</p></div>`,
     items: [['The Sahra Tote', '/tote/'], ['The Trailhead Bag', '/products/trailhead-bag/']] });
   /* Activewear: every Sahra Trail piece */
@@ -3588,7 +3613,7 @@ COMMERCE.forEach(P => {
     title: 'Activewear in Dubai & the UAE: Running Tee, 2-in-1 Shorts | Sahra Trail',
     desc: 'Sahra Trail, trail and run wear designed in the UAE: the Sahra Trail Tee, the 2-in-1 Short, the Kit and the Trailhead Bag. Free delivery across the UAE on orders over AED 100.',
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE',
-    block: PO.newBlock({ list: trail, heading: 'Sahra Trail', kicker: 'Activewear', lede: PO.trailLede(), more: '/trail/', moreText: 'About Sahra Trail' }),
+    block: houseGrid({ news: trail, fits: false, label: 'Sahra Trail', note: PO.trailLede() + ' <a href="/trail/">About Sahra Trail</a>.' }),
     body: `<div class="content"><p>Sahra Trail is for the trails, wadis and ridges of the UAE. The Sahra Trail Tee has raglan sleeves, mesh side panels and covered seams, with the reflective Two Ridges symbol under the collar. The 2-in-1 Short has a hidden inner liner with a bonded phone pocket, a zip pocket for keys and cards, and an internal drawcord. The Kit is the two together. Sahra Trail has <a href="/size-guide/#trail">its own size chart</a>; <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about Sahra Trail before I order.')}" target="_blank" rel="noopener">message us</a> if you are unsure of your size.</p></div>`,
     items: trail.map(p => [p.plain, `/products/${p.handle}/`]) });
 
@@ -3608,10 +3633,7 @@ COMMERCE.forEach(P => {
     title: 'Men\u2019s T-Shirts, Polos & Activewear in the UAE | Sahra & Beyond',
     desc: 'Every Sahra & Beyond piece for men: unisex tees, the Sahra Polo and the Sahel Polo, two hoodies and Sahra Trail running wear. Designed in the UAE, free delivery across the UAE on orders over AED 100.',
     lede: 'Every piece we make: the tees and hoodies, the polos and Sahra Trail',
-    block: foundingBlock(founding, 'Three places, three tees and the Sahra Polo')
-      + PO.newBlock({ list: sahelAll, heading: 'Sahel, the Coast Edition', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'About Sahel' })
-      + PO.newBlock({ list: trailWear, heading: 'Sahra Trail: activewear', kicker: 'New &middot; Sahra Trail', more: '/activewear/', moreText: 'All activewear' })
-      + accBlock,
+    block: houseGrid({ founding, news: sahelAll.concat(trailWear), post: toteCard + bag.map(p => PO.designCards(p, false)).join(''), label: 'Men', note: PO.newLede() }),
     body: '<div class="content"><p><strong>About the fit.</strong> Our tees and hoodies are cut unisex, worn by everyone. The polos and Sahra Trail are cut for men. Everything comes in sizes S to XL, so go by the chest measurement rather than the letter. <a href="/size-guide/">Find your size &rarr;</a></p></div>',
     items: fItems(founding).concat(nItems(sahelAll), nItems(trailWear), [['The Sahra Tote', '/tote/']], nItems(bag)) });
   /* the Women page leads each card with a photo of a woman wearing the tee where the shoot has one */
@@ -3623,9 +3645,7 @@ COMMERCE.forEach(P => {
     title: 'Women\u2019s T-Shirts & Hoodies in the UAE | Sahra & Beyond',
     desc: 'Sahra & Beyond tees and hoodies for women: cotton tees drawn from real UAE places, cut unisex in Regular and Oversized fits, two Sahel hoodies and canvas bags. Designed in the UAE.',
     lede: 'Our tees and hoodies are cut unisex. Go by the chest measurement in the size guide.',
-    block: foundingBlock(wFounding, 'Three places, three tees')
-      + PO.newBlock({ list: wSahel, heading: 'Sahel, the Coast Edition: tees and hoodies', kicker: 'New &middot; Sahel', lede: PO.newLede(), fitsLabel: true, more: '/sahel/', moreText: 'About Sahel' })
-      + accBlock,
+    block: houseGrid({ founding: wFounding, news: wSahel, post: toteCard + bag.map(p => PO.designCards(p, false)).join(''), label: 'Women', note: PO.newLede() }),
     body: sizeNote,
     items: fItems(wFounding).concat(nItems(wSahel), [['The Sahra Tote', '/tote/']], nItems(bag)) });
   const under = PO.pickNew(p => p.price < 150, true);
@@ -3633,7 +3653,7 @@ COMMERCE.forEach(P => {
     title: 'Gifts and Tees Under AED 150 | Sahra & Beyond',
     desc: 'Sahra & Beyond pieces under AED 150: the Shams Tee, the Sahra Trail Tee, the Sahra Tote and the Trailhead Bag. Designed in the UAE, free delivery across the UAE on orders over AED 100.',
     lede: 'The Shams Tee, the Sahra Trail Tee and two canvas bags',
-    block: PO.newBlock({ list: under, pre: toteCard, heading: 'Under AED 150', kicker: 'Shop by price', lede: PO.newLede(), fitsLabel: true, more: '/shop/', moreText: 'All products' }),
+    block: houseGrid({ news: under, post: toteCard, label: 'Under AED 150', note: PO.newLede() }),
     body: '<div class="content"><p>The Sahra Tote comes free with every clothing order, so you only buy it here for a second one. The Trailhead Bag is in stock and ships next working day. <a href="/gifts/">More gift ideas &rarr;</a></p></div>',
     items: [['The Sahra Tote', '/tote/']].concat(nItems(under)) });
 
@@ -3680,39 +3700,6 @@ COMMERCE.forEach(P => {
       { '@context': 'https://schema.org', '@type': 'ItemList', numberOfItems: list.length, itemListElement: list }
     ];
     const css = `<style>
-/* the opener. On a phone (Faheem, 10 Nov 2026: "Photo full width, words over it") the photo runs edge to edge and the
-   words sit at the top, over the sky and sand, so the Milky Way print on the back stays in view; the one-line
-   description joins from 600px, where the words move beside the photo. */
-.sx-open{position:relative;display:block;overflow:hidden;background:#1C1610;color:#FAF6EF;height:min(100vw,440px)}
-.sx-open picture{position:absolute;inset:0;display:block}
-.sx-open img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 0}
-.sx-open::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(20,14,8,.72) 0,rgba(20,14,8,.5) 26%,rgba(20,14,8,0) 50%)}
-.sx-t{position:absolute;left:0;right:0;top:0;z-index:1;padding:18px 16px 0}
-.sx-k{margin:0 0 8px;font:400 11px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:#F3DDB8}
-html body .sx-open h1{margin:0;padding:0;max-width:17ch;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(26px,7.4vw,32px);line-height:1.08;letter-spacing:.2px;color:#FFFFFF;text-wrap:balance;text-shadow:0 1px 18px rgba(8,6,4,.6)}
-.sx-open h1 .nw{white-space:nowrap}
-/* Arabic sets wider: two full-width lines keep it up in the sky and sand, clear of the model */
-@media(max-width:599px){html[dir="rtl"] body .sx-open h1{max-width:none;font-size:clamp(23px,6.6vw,28px);line-height:1.25}}
-html body .sx-open .sx-d{display:none;margin:0;font:400 16px/1.5 Jost,system-ui,sans-serif;color:#4A3E31;max-width:40ch}
-@media(min-width:600px){
-  .sx-open{display:grid;grid-template-columns:minmax(0,1fr) 42%;height:auto;background:#FAF6EF;color:#2A2016}
-  .sx-open picture{position:relative;inset:auto;grid-column:2;grid-row:1;min-height:0;height:340px}
-  .sx-open img{object-position:50% 42%}
-  .sx-open::after{display:none}
-  .sx-t{position:relative;grid-column:1;grid-row:1;align-self:center;padding:0 clamp(24px,5vw,56px)}
-  .sx-k{color:#7E4114;margin-bottom:12px}
-  html body .sx-open h1{font-size:30px;color:#2A2016;text-shadow:none;margin-bottom:8px}
-  html body .sx-open .sx-d{display:block}
-}
-@media(min-width:900px){
-  .sx-open{grid-template-columns:minmax(0,54fr) minmax(0,46fr)}
-  .sx-open picture{height:420px}
-  .sx-open img{object-position:50% 30%}
-  .sx-t{padding:0 clamp(32px,6vw,110px)}
-  .sx-k{margin-bottom:14px}
-  html body .sx-open h1{font-size:clamp(40px,3.8vw,60px);max-width:15ch;margin-bottom:14px}
-  html body .sx-open .sx-d{font-size:18px}
-}
 .sx-bar{position:sticky;top:var(--sx-top,57px);z-index:40;background:rgba(250,246,239,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(43,37,32,.1)}
 /* the header tucks away on the way down (.sb-hide): the chips move up into its place, and come back down with it */
 .sx-bar{transition:top .22s ease}
@@ -3788,10 +3775,7 @@ fromHash();addEventListener('hashchange',fromHash);
 /* the discount row (sale.js) hides cards with .sbf-off: recount after it has run, and when the sale ends */
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.sbf-c'))setTimeout(count,0);});document.addEventListener('sb:sale',function(){setTimeout(count,0);});document.addEventListener('DOMContentLoaded',function(){setTimeout(count,0);});addEventListener('load',function(){setTimeout(count,60);});})();</script>`;
     const body = `${css}
-  <section class="sx-open" aria-labelledby="sxH">
-    <picture><source media="(max-width:599px)" srcset="/assets/open/shop-m-780.webp" width="780" height="936"><img src="/assets/open/shop-720.webp" srcset="/assets/open/shop-720.webp 720w, /assets/open/shop-1076.webp 1076w" sizes="(min-width:900px) 46vw, 42vw" width="1076" height="1345" alt="Model wearing the Al Quaa Galaxy Tee, the Milky Way printed across the back" fetchpriority="high" decoding="async"></picture>
-    <div class="sx-t"><p class="sx-k">Wear a place, not a logo</p><h1 id="sxH">UAE graphic <span class="nw">t-shirts,</span> drawn from real places</h1><p class="sx-d">T-shirts, polos, hoodies and running wear. Every design carries a place.</p></div>
-  </section>
+  ${HEROES.house('shop', { h1: 'UAE graphic <span class="nw">t-shirts,</span> drawn from real places', line: 'T-shirts, polos, hoodies and running wear. Every design carries a place.', id: 'sxH' })}
   <main class="sx-wrap" id="products">
   <div class="sx-bar" id="shopBar"><div class="sx-in"><div class="sx-chips" role="group" aria-label="Show">${CHIPS.map(([k, t], i) => `<button type="button" data-f="${k}" aria-pressed="${i ? 'false' : 'true'}" data-track="shop_chip_${k.replace(/-/g, '_')}">${t}</button>`).join('')}</div><span class="sx-n" aria-live="polite">${total} pieces</span></div></div>
   <div class="sx-main">
@@ -3804,7 +3788,7 @@ document.addEventListener('click',function(e){if(e.target.closest&&e.target.clos
   <div class="sx-main sx-after">${newsletterBlock()}</div>
   <section class="sx-map" id="s-places" aria-labelledby="sxMapH"><div class="sx-mw"><p class="sx-mk">The places</p><h2 id="sxMapH">Every piece has a pin on the map</h2>${require('./place-map.js').homeBlock(ROOT)}</div></section>
   ${js}`;
-    write('shop/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor('shop'), bodyClass: 'buy-page shop-page', image: `${SITE}/assets/open/open-1080.webp` }));
+    write('shop/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor('shop'), bodyClass: 'buy-page ls-page shop-page', image: `${SITE}/assets/open/open-1080.webp` }));
   })();
 })();
 

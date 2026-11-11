@@ -472,21 +472,17 @@ function foundingCross() {
 }
 
 function collectionPage(all) {
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 280px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-fig po-ph"><div><b>${o.name}</b><span>Photo to follow</span></div></div>`}<b>${o.title}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
-  const sec = (id, h, list, note) => `<section class="po-more" id="${id}"><h2>${h}</h2>${note ? `<p class="po-small" style="margin:-4px 0 14px">${note}</p>` : ''}<div class="po-cards">${list.map(card).join('')}</div></section>`;
-  return `${stageHead()}<style>${CSS}.po-head h1{font:600 clamp(34px,5vw,56px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 10px}.po-head p{font:17px/1.55 Jost,system-ui,sans-serif;max-width:60ch;margin:0 0 8px}</style>
-<main class="po-wrap">
-  <div class="po-head">
-    <p class="po-eyebrow">Sahel &middot; Sahra Trail</p>
-    ${inc('st01', `<h1 class="st01">Sahel and Sahra Trail</h1>`)}
-    <h1 class="st2">Sahel and Sahra Trail are out</h1>
-    ${inc('st0', `<p class="st0">Pre-order opens Wed 28 Oct at 8 AM, UAE time, for everyone. <span data-days></span> Open any piece to be told when it opens.</p>`)}
-    ${inc('st1', `<p class="st1">Pre-order is open. 20% off until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>`)}
-    ${IN_HAND ? '' : '<p class="st2">Pre-order. Ships from Fri 30 Oct.</p>'}
-    <p>Designed in the UAE for everyone who loves it.</p>
-  </div>
-  ${sec('sahel', 'Sahel &middot; The Coast Edition', all.filter(p => p.line === 'sahel' && onSale(p)), 'Sahel has its own size chart, cut larger than the Founding Edition: <a href="/size-guide/#sahel">see the Sahel size chart</a>. Super Oversized has a dropped shoulder; our Oversized fit is being re-cut and will be back soon. No chart yet for the Sahel Polo.')}
-  ${sec('trail', 'Sahra Trail', all.filter(p => p.line === 'trail' && onSale(p)))}
+  /* 10 Nov 2026 (Stage 3, the house look): /new/ opens like every other listing page (heroes.js house()) and lists
+     Sahel and Sahra Trail in ONE grid of the site's product card, one card per design with its fits on the switch.
+     #sahel and #trail still land: on the grid, and on the first Sahra Trail card. The old page had its own heading
+     block, two headed sections and the small po-card (kept for the "More from" rails on product pages). */
+  const sahel = pickNew(p => p.line === 'sahel', true), trail = pickNew(p => p.line === 'trail');
+  const cards = sahel.map(p => designCards(p, true)).join('')
+    + trail.map((p, i) => { const h = designCards(p, false); return i ? h : h.replace('<article class="pcard', '<article id="trail" class="pcard'); }).join('');
+  return `${require('./heroes.js').house('new', { h1: 'Sahel and Sahra Trail are out', line: 'Designed in the UAE for everyone who loves it.', crumbs: '<a href="/">Home</a> &rsaquo; <span>New</span>' })}
+<main>
+  ${stageHead()}${NB_CSS}${BIG_CSS}<section class="nb hg${require('./sale.js').on() ? ' hg-sale' : ''}" id="sahel" aria-label="Sahel and Sahra Trail"><div class="pcards nb-pc">${cards}</div><p class="hg-note">${newLede()} Super Oversized has a dropped shoulder; our Oversized fit is being re-cut and will be back soon.</p></section>
+  <p class="back"><a href="/shop/">All products &rarr;</a></p>
 </main>`;
 }
 
@@ -930,7 +926,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
   write('new/index.html', shell({
     title: 'Sahel & Sahra Trail: New Tees, Hoodies, Polo, Running Kit | Sahra & Beyond',
     desc: 'Sahel, the Coast Edition (graphic tees, a polo and two hoodies) and Sahra Trail running wear (tee, 2-in-1 shorts and kit). Designed in the UAE. Free delivery across the UAE on orders over AED 100.',
-    canonical: `${SITE}/new/`, bodyClass: 'po-page', noindex: false, image: `${SITE}/assets/preorder/og/pm-khor-fakkan-bay-tee-super-oversized-02-back-og.jpg`,
+    canonical: `${SITE}/new/`, bodyClass: 'buy-page ls-page', noindex: false, image: `${SITE}/assets/preorder/og/pm-khor-fakkan-bay-tee-super-oversized-02-back-og.jpg`,
     jsonld: [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahel and Sahra Trail', url: `${SITE}/new/` },
       { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahel and Sahra Trail', itemListElement: all.filter(onSale).map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/products/${p.handle}/`, name: p.plain })) }],
     bodyHtml: collectionPage(all)
