@@ -1020,7 +1020,7 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     check('analytics: the product page names the kit part and sends the fit link tap', /sp\.part = g/.test(specJs) && /tr\('fit_switch', \{ item_id: m\[1\]/.test(specJs));
     const menA = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
     check('analytics: the card fit switch sends the product, not a fixed line', !/line:'sahel'/.test(menA) && /track\('fit_switch',on&&on\.getAttribute\('data-handle'\)/.test(menA));
-    check('analytics: this release is stamped on every event', /site_build:'r126'/.test(A.src));
+    check('analytics: the release and the ad-session flag are written onto every event and onto the page view', add.site_build === 'r127' && add.ad_session === 0 && sz.site_build === 'r127' && /gtag\('config','G-[A-Z0-9]+',\{site_build:'r127',ad_session:window\.SB_AD\?1:0\}\)/.test(A.src));
   }
   const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
   check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);

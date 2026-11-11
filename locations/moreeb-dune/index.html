@@ -135,10 +135,11 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
     if(p.size==null&&one&&one.item_variant)p.size=String(one.item_variant);
     var w=p.via||p.source||(p.from&&!C[p.from]?p.from:'');if(w&&!p.placement)p.placement=window.SB_PLACE[w]||String(w);
     p.page_type=pg.type;p.site_lang=pg.lang;
+    p.site_build='r127';p.ad_session=window.SB_AD?1:0;
     gtag('event',n,p);}catch(e){}};
   (function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|ttclid|utm_[a-z]+)=/i.test(location.search);if(ad)sessionStorage.setItem('sb_ad','1');ad=ad||sessionStorage.getItem('sb_ad')==='1';}catch(e){}
     window.SB_AD=!!ad;if(ad)document.documentElement.classList.add('sb-ad');
-    gtag('set',{ad_session:ad?1:0,site_build:'r126'});
+    gtag('set',{ad_session:ad?1:0,site_build:'r127'});
     var done=0,first=0;function fi(e){if(done)return;done=1;first=Math.round(performance.now());['pointerdown','keydown','scroll','touchstart'].forEach(function(k){removeEventListener(k,fi,true);});
       window.track('first_interaction',{ms:first,kind:e.type,ad:ad?1:0});}
     ['pointerdown','keydown','scroll','touchstart'].forEach(function(k){addEventListener(k,fi,{capture:true,passive:true});});
@@ -148,7 +149,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
     var CID='';if(ad&&CID){document.addEventListener('DOMContentLoaded',function(){[].forEach.call(document.querySelectorAll('form,input,textarea,select,[contenteditable]'),function(x){x.setAttribute('data-clarity-mask','True');});});(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script',CID);}
   })();
   document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-track]');if(!a)return;var n=String(a.getAttribute('data-track')||'').replace(/[^a-zA-Z0-9_]/g,'_').slice(0,40);if(/^[a-zA-Z]/.test(n)&&window.track)window.track(n,{link_url:a.getAttribute('href')||'',transport_type:'beacon'});},true);
-  gtag('js',new Date());gtag('config','G-5NVFDWT29F');
+  gtag('js',new Date());gtag('config','G-5NVFDWT29F',{site_build:'r127',ad_session:window.SB_AD?1:0});
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>

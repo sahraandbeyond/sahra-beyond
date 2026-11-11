@@ -9,7 +9,7 @@ const GA4_ID = 'G-5NVFDWT29F';
 const CLARITY_ID = '';
 /* 13 Oct 2026: sent with every GA4 event (with ad_session), so a release can be compared with
    the one before it. Bump it with each site release that changes the landing experience. */
-const SITE_BUILD = 'r126';   /* 11 Nov 2026: standard product fields on every event; card Quick add reaches GA4 */
+const SITE_BUILD = 'r127';   /* 11 Nov 2026: site_build and ad_session are now really sent (see track and config below) */
 /* Runs in the head of every page, before anything else:
    - sb_ad: this session arrived from a paid ad (click IDs or utm tags on the landing
      URL). Kept for the session so the code bar and Clarity follow the visitor around.
@@ -109,12 +109,15 @@ const GA4_HEAD = `<!-- Google Analytics 4 -->
     if(p.size==null&&one&&one.item_variant)p.size=String(one.item_variant);
     var w=p.via||p.source||(p.from&&!C[p.from]?p.from:'');if(w&&!p.placement)p.placement=window.SB_PLACE[w]||String(w);
     p.page_type=pg.type;p.site_lang=pg.lang;
+    ${/* 11 Nov 2026: gtag('set', ...) in the attention block never put site_build or ad_session on the events (checked on the live
+       site: the requests to Google carried neither), so the Site build and Ad session fields registered on 3 Nov stayed empty.
+       They are now written onto every event here, and onto the automatic page_view through the config call below. */''}p.site_build='${SITE_BUILD}';p.ad_session=window.SB_AD?1:0;
     gtag('event',n,p);}catch(e){}};
   ${ATTENTION}
   ${/* 10 Nov 2026: links and buttons across the site carry data-track="name", but nothing read it, so those clicks never
      reached GA4 (found while assessing the homepage place stories: no click data existed). One listener sends each as a GA4
      event named by the attribute, with the link it leads to. Sent by beacon so a click that leaves the page still counts. */''}document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-track]');if(!a)return;var n=String(a.getAttribute('data-track')||'').replace(/[^a-zA-Z0-9_]/g,'_').slice(0,40);if(/^[a-zA-Z]/.test(n)&&window.track)window.track(n,{link_url:a.getAttribute('href')||'',transport_type:'beacon'});},true);
-  gtag('js',new Date());gtag('config','${GA4_ID}');
+  gtag('js',new Date());gtag('config','${GA4_ID}',{site_build:'${SITE_BUILD}',ad_session:window.SB_AD?1:0});
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>
