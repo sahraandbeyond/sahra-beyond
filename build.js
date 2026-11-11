@@ -4890,6 +4890,46 @@ ${lang === 'ar' ? `  ${chapters}
 <script src="/assets/sahra-trail.js" defer></script>`;
   }
 
+  /* ======================================================================
+     11 Nov 2026: SAHRA TRAIL JOINS THE HOUSE BRAND on the site (Faheem, 10 Nov: "The trail merge will be done";
+     11 Nov: "Proceed with trail merge"; look rules in claude/HANDOFF-Trail-merge-into-house-brand-10-Nov-2026.md).
+     Sahra Trail is a range inside Sahra & Beyond, not a second brand, so /trail/ is now a range page in the house
+     look, like every listing page: the house header, the house opener on a real daylight photo, one grid of the
+     site's product card, and the range copy as reading text. What went:
+       - the Sahra Trail lockup as a brand logo, and "A new line from Sahra & Beyond";
+       - the night-sky scene and its rendered plates (assets/sahra-trail.js is no longer loaded here);
+       - the reveal film, the dark glass panels and the small tiles on a photo.
+     What stays: the range name, the Two Ridges as a small range mark beside the name, "Choose the climb." as the
+     range line, the prices, the hikes. /ar/trail/ is the automatic mirror of this page (ar-mirror.js), like every
+     other Arabic page; the range line stays in English there (his decision of 6 Oct).
+     The scene page above (page(), T) is kept in the file, switched off.
+     ====================================================================== */
+  const TRAIL_FROM_SCENE = false;
+  if (!TRAIL_FROM_SCENE) {
+    const canonical = `${SITE}/trail/`;
+    const trail = PO.pickNew(p => p.line === 'trail');
+    const mark = `<svg class="ho-mk" viewBox="31 31 205 183" aria-hidden="true" focusable="false"><path transform="${L.tr}" fill-rule="evenodd" d="${L.far}"/><path transform="${L.tr}" fill-rule="evenodd" d="${L.near}"/></svg>`;
+    const jsonld = [
+      { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahra Trail', description: T.en.desc, url: canonical, isPartOf: { '@type': 'WebSite', name: 'Sahra & Beyond', url: SITE + '/' } },
+      { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahra Trail', itemListElement: trail.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.plain, url: `${SITE}/products/${p.handle}/` })) },
+      { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Sahra Trail', item: canonical }] }
+    ];
+    const body = `${HEROES.house('trail', { h1: T.en.h1, line: 'Running and trail wear from Sahra &amp; Beyond, designed in the UAE.', crumbs: '<a href="/">Home</a> &rsaquo; <span>Sahra Trail</span>', kickerHtml: mark + 'Sahra Trail' })}
+  <main>
+    ${houseGrid({ news: trail, fits: false, label: 'Sahra Trail', note: PO.trailLede() }).replace('<section class="nb hg', '<section id="pieces" class="nb hg')}
+    <div class="content"><h2>${T.en.about.h}</h2><p>${T.en.about.p[0]}</p><p>${T.en.about.p[1]}</p></div>
+    <nav class="catnav" aria-label="More from Sahra Trail">
+      <a href="/trail/hikes/"><b>UAE hikes, by grade</b><span>Distance, climb, time and trailhead for each route</span></a>
+      <a href="/shop/"><b>The whole collection</b><span>Tees, polos and hoodies from Sahra &amp; Beyond</span></a>
+    </nav>
+    ${newsletterBlock()}
+    <p class="back"><a href="/shop/">All products &rarr;</a></p>
+  </main>`;
+    write('trail/index.html', shell({ title: T.en.title, desc: T.en.desc, canonical, jsonld, bodyHtml: body, activeNav: 'trail', bodyClass: 'buy-page ls-page',
+      image: `${SITE}/assets/preorder/og/pm2-sahra-trail-kit-01-lunge-og.jpg` }));
+    console.log('  ✓ Sahra Trail: /trail/ as a range page in the house look (/ar/trail/ is mirrored)');
+    return;
+  }
   const canonEn = `${SITE}/trail/`, canonAr = `${SITE}/ar/trail/`;
   write('trail/index.html', shell({
     title: T.en.title, desc: T.en.desc, canonical: canonEn, bodyClass: 'trail-page', activeNav: 'trail',

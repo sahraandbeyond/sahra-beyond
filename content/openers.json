@@ -159,5 +159,15 @@
     "words": "bottom",
     "kicker": "Sahel · Sahra Trail",
     "alt": "Model wearing the Al Aqah Reef Tee in Super Oversized fit by the sea"
+  },
+  "trail": {
+    "src": "assets/preorder/pm2-sahra-trail-kit-02-knee-hug-1200.webp",
+    "my": 0.3,
+    "dy": 0.3,
+    "mpos": "50% 40%",
+    "dpos": "50% 35%",
+    "words": "bottom",
+    "kicker": "Sahra Trail",
+    "alt": "Runner warming up in the Sahra Trail Tee and 2-in-1 Short"
   }
 }

@@ -40,6 +40,8 @@ function all() {
   if (_all) return _all;
   _all = DATA.posts
     .filter(p => !p.hidden && fs.existsSync(coverFile(p)))
+    /* 11 Nov 2026 (Faheem, Trail merge): posts that live on the old Trail account are left off the site. Only @sahraandbeyond.ae posts are shown. Nothing is deleted from content/instagram.json or /uploads/ig/. */
+    .filter(p => p.account !== 'trail')
     /* 11.11 sale (r99): the "Any two tees, AED 359" post is left off while the pair offer is paused (sale.js) */
     .filter(p => !(/\b359\b/.test(p.label || '') && require('./sale.js').on()))
     .map(p => ({ ...p, date: p.site ? null : dateOf(p.id), slides: slidesOf(p), account: p.account === 'trail' ? DATA.accounts.trail : DATA.accounts.house }))
@@ -71,8 +73,9 @@ function ago(d, now = new Date()) {
 }
 function postUrl(p) {
   if (p.site) return '';
-  const acct = p.account === DATA.accounts.trail ? 'sahratrail' : DATA.accounts.house;
-  return `${IG_URL}${acct}/${p.kind === 'reel' ? 'reel' : 'p'}/${p.id}/`;
+  /* 11 Nov 2026 (Trail merge): a post on the old Trail account is linked by its own address, without the handle */
+  if (p.account === DATA.accounts.trail) return `${IG_URL}${p.kind === 'reel' ? 'reel' : 'p'}/${p.id}/`;
+  return `${IG_URL}${DATA.accounts.house}/${p.kind === 'reel' ? 'reel' : 'p'}/${p.id}/`;
 }
 function kindLabel(p) {
   if (p.kind === 'reel') return 'Reel';
@@ -86,7 +89,8 @@ function card(p, opts = {}) {
   const slides = p.slides;
   const hasSlides = slides.length > 1;
   const sizes = opts.sizes || '(max-width:760px) 62vw, 240px';
-  const alt = `${p.label}${p.kind === 'reel' ? ', a Reel' : ''} on @${p.account}`;
+  /* 11 Nov 2026 (Trail merge): one account is named on the site. A post that lives on the old Trail account still opens there, without the handle. */
+  const alt = `${p.label}${p.kind === 'reel' ? ', a Reel' : ''}${p.account === DATA.accounts.house ? ` on @${p.account}` : ''}`;
   const wear = opts.wear !== false && p.wear ? `<a class="ig-wear" href="${esc(p.wear[0])}">${esc(p.wear[1])} &rarr;</a>` : '';
   const open = url ? `<a class="ig-open" href="${esc(url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"></a>` : '';
   return `<article class="ig-card${hasSlides ? ' has-slides' : ''}${opts.big ? ' ig-big' : ''}" data-id="${esc(p.id)}"${p.date ? ` data-date="${p.date.toISOString()}"` : ''}${hasSlides ? ` data-slides="${esc(slides.join('|'))}"` : (slides.length === 1 ? ` data-slides="${esc(slides[0])}"` : '')}>
@@ -151,10 +155,10 @@ function feedPageHtml() {
   for (const p of posts) { const t = topics[p.topic] || 'The brand'; if (!groups.includes(t)) groups.push(t); }
   const slug = s => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
   return `<div class="ig-feedhead">
-  <p class="ig-eyebrow">@${DATA.accounts.house} &middot; @${DATA.accounts.trail}</p>
+  <p class="ig-eyebrow">@${DATA.accounts.house}</p>
   <h1>From our Instagram</h1>
   <p class="lede">Every post, newest first, and where it lives on the site. Tap the sides of a card to step through its slides; tap the middle to open it on Instagram.</p>
-  <p class="ig-followrow"><a class="btn-ghost" href="${IG_URL}${DATA.accounts.house}/" target="_blank" rel="noopener">Follow @${DATA.accounts.house} &#8599;</a> <a class="btn-ghost" href="${IG_URL}sahratrail/" target="_blank" rel="noopener">Follow @${DATA.accounts.trail} &#8599;</a></p>
+  <p class="ig-followrow"><a class="btn-ghost" href="${IG_URL}${DATA.accounts.house}/" target="_blank" rel="noopener">Follow @${DATA.accounts.house} &#8599;</a></p>${''/* 11 Nov 2026 (Trail merge): one Instagram account. The "Follow @sahratrail" button is gone; Trail posts still link to where they were posted. */}
   <div class="ig-chips" role="group" aria-label="Filter posts"><button type="button" class="on" data-chip="all" aria-pressed="true">All</button>${groups.map(g => `<button type="button" data-chip="${slug(g)}" aria-pressed="false">${esc(g)}</button>`).join('')}</div>
 </div>
 <div class="ig-grid" data-newest="${esc((newest(1)[0] || {}).id || '')}">${posts.map(p => `<div class="ig-cell" data-topic="${slug(topics[p.topic] || 'The brand')}">${card(p, { sizes: '(max-width:760px) 46vw, 270px' })}</div>`).join('')}</div>

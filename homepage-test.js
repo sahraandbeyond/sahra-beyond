@@ -956,9 +956,9 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
 {
   const OPEN = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'openers.json'), 'utf8')); delete OPEN._;
   const slugs = Object.keys(OPEN);
-  check('sixteen listing pages have an opener photo, each with alt text and a kicker', slugs.length === 16 && slugs.every(k => OPEN[k].alt && OPEN[k].kicker && fs.existsSync(path.join(__dirname, OPEN[k].src))), slugs.length + ' pages');
+  check('seventeen listing and range pages have an opener photo, each with alt text and a kicker', slugs.length === 17 && slugs.every(k => OPEN[k].alt && OPEN[k].kicker && fs.existsSync(path.join(__dirname, OPEN[k].src))), slugs.length + ' pages');
   check('every opener image is built in three sizes', slugs.every(k => ['-m-780', '-720', '-1076'].every(x => fs.existsSync(path.join(__dirname, 'assets', 'open', k.replace(/\//g, '-') + x + '.webp')))));
-  check('no opener alt names a place the photo could not vouch for (it says what is worn)', slugs.every(k => /^(Model wearing|Runner stretching in|The Sahra Tote)/.test(OPEN[k].alt)));
+  check('no opener alt names a place the photo could not vouch for (it says what is worn)', slugs.every(k => /^(Model wearing|Runner stretching in|Runner warming up in|The Sahra Tote)/.test(OPEN[k].alt)));
   slugs.forEach(k => {
     const h = fs.readFileSync(path.join(__dirname, k, 'index.html'), 'utf8'), ar = fs.readFileSync(path.join(__dirname, 'ar', k, 'index.html'), 'utf8');
     const main = h.slice(h.indexOf('<main'), h.indexOf('</main>'));
@@ -966,6 +966,20 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     check('/' + k + '/: products listed once, in one grid', (main.match(/<div class="pcards/g) || []).length === 1 && !/<section class="pcta"/.test(main) && (() => { const hs = (main.match(/<article[^>]*class="pcard[^"]*"[^>]*data-handle="([^"]+)"/g) || []).map(x => /data-handle="([^"]+)"/.exec(x)[1]); return hs.length > 0 && new Set(hs).size === hs.length; })());
     check('/ar/' + k + '/: the same opener and grid in Arabic', /<section class="ho( ho-top)?" aria-labelledby=/.test(ar) && /<style id="house">/.test(ar) && (ar.match(/<div class="pcards/g) || []).length === 1);
   });
+  /* 11 Nov 2026 (the Trail merge; Faheem: "Proceed with trail merge"): Sahra Trail is a range inside the house brand */
+  {
+    const tr = fs.readFileSync(path.join(__dirname, 'trail', 'index.html'), 'utf8'), tar = fs.readFileSync(path.join(__dirname, 'ar', 'trail', 'index.html'), 'utf8');
+    check('/trail/: a range page in the house look, with the range line as its title', /<h1 id="hoH">Choose the climb\.<\/h1>/.test(tr) && /<body[^>]*class="[^"]*\bls-page\b/.test(tr) && !/\btrail-page\b/.test(tr));
+    check('/trail/: the Two Ridges is a small range mark beside the name, not a brand logo', /<p class="ho-k"><svg class="ho-mk" viewBox="31 31 205 183" aria-hidden="true"/.test(tr) && /<\/svg>Sahra Trail<\/p>/.test(tr) && !/class="tr-lockup|A new line from Sahra/.test(tr));
+    check('/trail/: no night scene, no reveal film, no rendered plates', !/sahra-trail\.js|tr-film|hajar-night|hajar-dawn|trail-reveal/.test(tr));
+    check('/trail/: the pieces are the house card, and #pieces still lands', /<section id="pieces" class="nb hg/.test(tr) && (tr.match(/<article[^>]*class="pcard/g) || []).length === 4);
+    check('/ar/trail/: the automatic mirror of the range page', /<section class="ho" aria-labelledby="hoH"/.test(tar) && /<style id="house">/.test(tar) && (tar.match(/<article[^>]*class="pcard/g) || []).length === 4 && !/sahra-trail\.js/.test(tar));
+    const hpT = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), feed = fs.readFileSync(path.join(__dirname, 'feed', 'index.html'), 'utf8');
+    check('/ar/trail/: the range line stays in English (Faheem, 6 Oct and 11 Nov 2026)', /<h1 id="hoH">Choose the climb\.\u200e<\/h1>/.test(tar) && !/اختر الصعود/.test(tar));
+    check('posts from the old Trail account are left off the site feed (Faheem, 11 Nov 2026)', (() => { const IGD = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'instagram.json'), 'utf8')); const ids = IGD.posts.filter(p => p.account === 'trail').map(p => p.id); return ids.length > 0 && ids.every(id => !feed.includes('data-id="' + id + '"') && !hpT.includes('data-id="' + id + '"')); })());
+    check('the old Trail account is not named anywhere on the built site', ['index.html','feed/index.html','trail/index.html','hiking/index.html','ar/index.html','ar/feed/index.html','ar/trail/index.html','products/sahra-trail-tee/index.html','products/sahra-trail-kit/index.html','products/sahra-trail-2-in-1-short/index.html'].every(f => !/sahratrail/i.test(fs.readFileSync(path.join(__dirname, f), 'utf8'))));
+    check('one Instagram account to follow: no "Follow @sahratrail" button on the site', !/Follow @sahratrail/.test(hpT) && !/Follow @sahratrail/.test(feed) && /Follow @sahraandbeyond\.ae/.test(hpT + feed));
+  }
   const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
   check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);
   ['size-guide', 'fabric'].forEach(k => check('/' + k + '/ is a reading page: no listing stylesheet', !/<style id="house">/.test(fs.readFileSync(path.join(__dirname, k, 'index.html'), 'utf8'))));

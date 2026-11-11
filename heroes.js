@@ -116,6 +116,8 @@ html body .ho .ho-k{display:block;margin:0 0 8px;font:400 11px/1.5 'Space Mono',
 html body .ho h1{margin:0;padding:0;max-width:17ch;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(26px,7.4vw,32px)!important;line-height:1.08!important;letter-spacing:.2px;color:#FFFFFF;text-wrap:balance;text-shadow:0 1px 18px rgba(8,6,4,.6)}
 html body .ho h1::after{display:none}
 .ho h1 .nw{white-space:nowrap}
+/* a range mark beside the kicker (Sahra Trail's Two Ridges): small, in the kicker's own colour */
+.ho-k .ho-mk{display:inline-block;width:2em;height:1.78em;margin-inline-end:.7em;vertical-align:-.5em;fill:currentColor}
 html body .ho .ho-d{display:none;margin:0;font:400 16px/1.5 Jost,system-ui,sans-serif;color:#F6EDE0;max-width:40ch}
 html body .ho .ho-c{display:none;margin:0 0 14px;font:400 13px/1.5 Jost,system-ui,sans-serif;color:#F6EDE0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html body .ho .ho-c a{color:#F6EDE0;text-decoration:none}
@@ -144,13 +146,14 @@ html body .ho .ho-c a:hover{text-decoration:underline}
 </style>`;
 const escA = s => String(s).replace(/&(?![a-z]+;|#\d+;)/gi, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 /* the opener for one page: h1 is HTML, line and crumbs are optional HTML */
-function house(slug, { h1, line = '', crumbs = '', id = 'hoH' }) {
+/* kickerHtml: a kicker with markup of its own (the Two Ridges range mark beside "Sahra Trail") */
+function house(slug, { h1, line = '', crumbs = '', id = 'hoH', kickerHtml = '' }) {
   const o = OPEN[slug]; if (!o) return '';
   const k = key(slug);
   return `${HOUSE_CSS}
   <section class="ho${o.words === 'top' ? ' ho-top' : ''}" aria-labelledby="${id}" style="--ho-m:${o.mpos || '50% 30%'};--ho-d:${o.dpos || '50% 40%'}">
     <picture><source media="(max-width:599px)" srcset="/assets/open/${k}-m-780.webp" width="780" height="936"><img src="/assets/open/${k}-720.webp" srcset="/assets/open/${k}-720.webp 720w, /assets/open/${k}-1076.webp 1076w" sizes="(min-width:600px) 62vw, 100vw" width="1076" height="1345" alt="${escA(o.alt)}" fetchpriority="high" decoding="async"></picture>
-    <div class="ho-t">${crumbs ? `<nav class="ho-c" aria-label="Breadcrumb">${crumbs}</nav>` : ''}<p class="ho-k">${escA(o.kicker)}</p><h1 id="${id}">${h1}</h1>${line ? `<p class="ho-d">${line}</p>` : ''}</div>
+    <div class="ho-t">${crumbs ? `<nav class="ho-c" aria-label="Breadcrumb">${crumbs}</nav>` : ''}<p class="ho-k">${kickerHtml || escA(o.kicker)}</p><h1 id="${id}">${h1}</h1>${line ? `<p class="ho-d">${line}</p>` : ''}</div>
   </section>`;
 }
 /* a listing page built with the old .loc-hero block: lift its breadcrumb, title and line into the house opener */
