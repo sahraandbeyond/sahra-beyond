@@ -3360,6 +3360,18 @@ function catCards(list) {
   return `<div class="pcards">${list.map(productCard).join('')}</div>`;
 }
 
+/* 11 Nov 2026 (Stage 3 on the homepage): the homepage's Sahel and Sahra Trail blocks now draw the site's product card.
+   index.html is hand-kept and has no product-card rules of its own, so they are filled in here, where the site
+   stylesheet exists (the HOMELINES splice near the top of this file runs before it does). */
+(function homeCardCss() {
+  const fp = path.join(ROOT, 'index.html'); if (!fs.existsSync(fp)) return;
+  const h = fs.readFileSync(fp, 'utf8');
+  if (h.indexOf('<!--HOMECARD:START-->') < 0) return;
+  const base = CSS.slice(CSS.indexOf('/* ---- Product cards'), CSS.indexOf('@media(max-width:760px){.teecta-inner')) + FITPAIR_CSS.slice(FITPAIR_CSS.indexOf('@media(max-width:560px)'));
+  const n = h.replace(/<!--HOMECARD:START-->[\s\S]*?<!--HOMECARD:END-->/, () => '<!--HOMECARD:START--><style>' + base + '</style><!--HOMECARD:END-->');
+  if (n !== h) fs.writeFileSync(fp, n);
+})();
+
 CATEGORIES.forEach(C => {
   const items = C.pick
     ? PRODUCTS_ALL.filter(C.pick).sort((a,b)=>(a.order||0)-(b.order||0))

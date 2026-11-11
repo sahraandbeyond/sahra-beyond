@@ -829,6 +829,48 @@ function homeRing() {
       + `<span class="hring-price">${cardPrice(p.price, 'span', false, p.handle)}</span><span class="hring-go">` + inc('st1', '<span class="st1">Pre-order &rarr;</span>') + `<span class="st02">View the piece &rarr;</span></span></span></a>`;
   }).join('');
 }
+/* 11 Nov 2026 (Stage 3 on the homepage; Faheem: "Bring it into the house look next"). The homepage's product blocks
+   join the house look without getting shorter:
+     - a plain cream ground behind the Founding Edition, Sahel and Sahra Trail blocks (the living sky no longer shows
+       through there);
+     - Sahel and Sahra Trail use the site's product card (house.js), one card per design with its fits on the switch
+       and Quick add, where they had small plain tiles;
+     - the Founding Edition cards keep their markup (the homepage grid and its photo beat are built and tested as they
+       are), restyled to the same card: radius, type sizes, price line, and the same Quick add button (his choice,
+       11 Nov: "Quick add button everywhere"; the script in index.html swaps it for the four sizes on a tap);
+     - the block heads use the house kicker and section-head sizes. */
+const HOME_HOUSE_CSS = `<style id="home-house">
+html body #s-collection{background:#FAF6EF}
+html body #s-collection .j-eyebrow,html body .hl .nb-k{font:400 11px/1.5 'Space Mono',ui-monospace,monospace!important;letter-spacing:.2em!important;text-transform:uppercase;color:#7E4114}
+html body #s-collection h2,html body .hl h3{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500!important;font-size:clamp(24px,2.3vw,30px)!important;line-height:1.15!important;color:#2A2016}
+html body #s-collection .lede,html body .hl .nb-l{font:400 15px/1.6 Jost,system-ui,sans-serif!important;color:#4A4136;max-width:70ch}
+html body .hl .nb-a{font:500 15px/1.4 Jost,system-ui,sans-serif!important;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
+/* no zoom overlay on the homepage: the photo and the name open the product */
+html body .hl .pcard-zoom{display:none!important}
+/* the "All of Sahel" tile fills its cell beside the cards */
+html body .hl .pcards .hl-all{aspect-ratio:auto;min-height:220px;border-radius:14px}
+/* the Founding Edition card, brought to the house card */
+html body .collection .card{display:flex;flex-direction:column;border:1px solid rgba(42,32,22,.14)!important;border-radius:14px!important;box-shadow:none!important;background:#FFFFFF;overflow:hidden}
+html body .collection .card:hover{transform:none;box-shadow:0 10px 26px rgba(43,37,32,.10)!important}
+html body .collection .card .card-body{display:flex;flex-direction:column;flex:1 1 auto;gap:6px;padding:12px 12px 14px!important}
+html body .collection .card .card-name{order:1;min-height:2.5em;margin:0!important;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:17px!important;line-height:1.25!important;color:#2A2016}
+html body .collection .card .card-rv,html body .collection .card .pcard-rv{order:2}
+html body .collection .card .card-place{order:3;display:none;margin:0!important;font:400 11px/1.5 'Space Mono',ui-monospace,monospace!important;letter-spacing:.12em!important;text-transform:uppercase;color:#6B6256;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html body .collection .card .card-price{order:4;margin:auto 0 0!important;padding-top:10px;border-top:1px solid rgba(42,32,22,.14);font:600 17px/1.3 Jost,system-ui,sans-serif!important;color:#2A2016}
+html body .collection .card .card-price .sb-price{font:600 17px/1.3 Jost,system-ui,sans-serif!important;letter-spacing:.01em!important;color:#2A2016;white-space:nowrap}
+html body .collection .card .card-price .sbs-was{font-weight:400!important;font-size:13px!important;color:#6B6256}
+html body .collection .card .card-price sbs-g{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px}
+html body .collection .card .qa{order:5;margin:0!important;padding:0!important;border:0!important}
+/* Quick add on the Founding Edition card: the same button as the product card; a tap swaps it for the four sizes */
+html body .collection .card .qa{display:block}
+html body .collection .card .qa-open{display:block;width:100%;height:40px;min-height:40px!important;padding:0 10px;border:1px solid rgba(42,32,22,.45);border-radius:999px;background:#FFFFFF;color:#2A2016;font:600 13px/1 Jost,system-ui,sans-serif!important;letter-spacing:.06em!important;text-transform:none!important;cursor:pointer}
+html body .collection .card .qa-open:hover{background:#2A2016;color:#FAF6EF;border-color:#2A2016}
+html body .collection .card .qa-open:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+html body .collection .card .qa-open[hidden],html body .collection .card .qa-s[hidden]{display:none!important}
+html body .collection .card .qa-s{display:flex;flex-wrap:nowrap!important;gap:4px!important;width:100%;min-height:40px!important}
+html body .collection .card .qa-b{flex:1 1 0;min-width:0!important;height:40px!important;min-height:40px!important;padding:0!important;border-radius:999px;font:600 13px/1 Jost,system-ui,sans-serif!important;letter-spacing:.02em!important}
+@media(min-width:700px){html body .collection .card .card-body{gap:7px;padding:14px 16px 16px!important}html body .collection .card .card-place{display:block}}
+</style>`;
 function homeLines() {
   const sahel = pickNew(p => p.line === 'sahel', true);
   const trail = products().filter(p => p.line === 'trail');
@@ -857,18 +899,20 @@ function homeLines() {
 @media(max-width:860px){.hl{gap:36px;margin-top:36px}.hl-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hl-all{padding:14px}.hl-all b{font-size:21px}.hl-tote{grid-template-columns:minmax(0,120px) minmax(0,1fr);gap:14px;padding:12px}.hl-tote b{font-size:21px}.hl-tote p{font-size:14.5px}}
 </style>`;
   const k = (line) => line + ' &middot; ' + inc('st0', '<span class="st0">on pre-order from Wed 28 Oct</span>') + inc('st1', '<span class="st1">on pre-order, 20% off until Thu 29 Oct</span>') + '<span class="st2">new</span>';
-  return stageHead() + NB_CSS + css + `<div class="hl" id="lines">
+  /* HOMECARD: build.js fills this with the site's base product-card rules once its stylesheet exists (the homepage is a
+     hand-kept page and does not carry them) */
+  return stageHead() + NB_CSS + '<!--HOMECARD:START--><!--HOMECARD:END-->' + BIG_CSS + require('./house.js').scoped('body .hl') + css + HOME_HOUSE_CSS + `<div class="hl" id="lines">
   <section class="hl-sec" id="home-sahel" aria-labelledby="hlS">
     <p class="nb-k">${k('Sahel, the Coast Edition')}</p>
     <h3 id="hlS">Sahel: seven designs from the UAE coast</h3>
     <p class="nb-l">Four tees, two hoodies and a polo, drawn from Khor Fakkan, Al Aqah, Al Jazirah Al Hamra and Ras Al Khor. ${inc('st1', '<span class="st1">Ships from Fri 30 Oct. </span>')}Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. Photographed from the real pieces.</p>
-    <div class="nb-g hl-g">${sahel.map(p => newCard(p, true)).join('')}<a class="hl-all" href="/sahel/#pieces" data-track="home_lines_sahel"><b>All of Sahel</b><small>Every piece, every fit, the story behind the coast.</small><span>${inc('st1', '<span class="st1">Pre-order Sahel</span>')}<span class="st02">Shop Sahel</span> &rarr;</span></a></div>
+    <div class="pcards nb-pc hl-g">${sahel.map(p => designCards(p, true)).join('')}<a class="hl-all" href="/sahel/#pieces" data-track="home_lines_sahel"><b>All of Sahel</b><small>Every piece, every fit, the story behind the coast.</small><span>${inc('st1', '<span class="st1">Pre-order Sahel</span>')}<span class="st02">Shop Sahel</span> &rarr;</span></a></div>
   </section>
   <section class="hl-sec" id="home-trail" aria-labelledby="hlT">
     <p class="nb-k">${k('Sahra Trail running wear')}</p>
     <h3 id="hlT">Sahra Trail: the tee, the 2-in-1 short and the kit</h3>
     <p class="nb-l">Running wear marked with the Two Ridges, plus the Trailhead Bag. Men&rsquo;s cuts; the bag is one size. Sahra Trail has <a href="/size-guide/#trail">its own size chart</a>.</p>
-    <div class="nb-g hl-g">${trail.map(p => newCard(p)).join('')}</div>
+    <div class="pcards nb-pc hl-g">${trail.filter(onSale).map(p => designCards(p, false)).join('')}</div>
     <a class="nb-a" href="/trail/#pieces" data-track="home_lines_trail">Shop Sahra Trail &rarr;</a>
   </section>
   <section class="hl-sec" id="home-tote" aria-label="The Sahra Tote">

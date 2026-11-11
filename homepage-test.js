@@ -977,6 +977,16 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
   check('the house stylesheet names seven text sizes and eight text colours', ['--h-label:11px', '--h-small:13px', '--h-body:15px', '--h-lead:17px', '--h-h3:22px', '--h-h2:clamp('].every(x => HC.indexOf(x) > -1) && ['--h-ink', '--h-soft', '--h-mute', '--h-clay', '--h-green', '--h-gold', '--h-cream', '--h-sand'].every(x => HC.indexOf(x + ':') > -1));
   check('the house card hides the spec chips and gives the fit switch a real tap target', /\.pcard-spec,html body\.ls-page \.pcard-col,html body\.ls-page \.pcard-bundle\{display:none!important\}/.test(HC) && /\.sfp-sw button\{position:relative;min-height:28px/.test(HC));
   const hp = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  /* 11 Nov 2026 (r123; Faheem: "Bring it into the house look next"): the homepage's product blocks */
+  {
+    const lines = hp.slice(hp.indexOf('<div class="hl" id="lines">'), hp.indexOf('id="s-reviews"'));
+    check('homepage: Sahel and Sahra Trail are the house product card, one per design, on a plain ground', (lines.match(/<div class="pcards nb-pc hl-g">/g) || []).length === 2 && !/class="nb-c"/.test(lines) && (lines.match(/<div class="sfp">/g) || []).length === 4 && /html body #s-collection\{background:#FAF6EF\}/.test(hp));
+    check('homepage: carries the base product-card rules and the house card', /<!--HOMECARD:START--><style>\/\* ---- Product cards/.test(hp) && /<style id="home-house">/.test(hp) && /html body \.hl \.pcard\{/.test(hp));
+    check('homepage: its size-chip script leaves the product card\'s Quick add alone', /forEach\(function \(r\) \{ if \(!r\.closest\('\.pcard'\)\) watch\(r\); \}\)/.test(hp));
+    check('homepage: the Founding Edition grid keeps its seven cards', (hp.match(/<a class="card" href="\/products\/[^"]+\/">/g) || []).length === 7);
+    /* r124 (Faheem: "Quick add button everywhere"): one button on the card; a tap swaps it for the sizes */
+    check('homepage: Founding Edition cards show one Quick add button that opens the sizes', /var SHELL = '<button class="qa-open" type="button">Quick add<\/button><span class="qa-s" hidden><\/span>';/.test(hp) && /if \(s\) s\.hidden = false; open\.hidden = true; fill\(row\);/.test(hp) && /html body \.collection \.card \.qa-open\{display:block;width:100%;height:40px/.test(hp) && !/Sizes…<\/span>/.test(hp));
+  }
   check('homepage: the lead line is "Wear a place, not a logo", and the Al Quaa tile is the night sky', /<h1 id="opH">Wear a place, not a logo<\/h1>/.test(hp) && /al-quaa-night-400\.webp"[^>]*alt="The Milky Way over the dunes at Al Quaa at night"/.test(hp));
 }
     check('r119: the character-set tag is in the first 1,024 bytes of the shop page, and the unused wadi plate is no longer fetched', shp.search(/<meta charset=/i) > -1 && shp.search(/<meta charset=/i) < 1024 && !/var PLATES = \{[^}]*wadi/.test(page) && !/var DEPTHS = \{[^}]*wadi/.test(page));
