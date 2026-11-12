@@ -171,6 +171,8 @@ a{color:#9C521B}
   html body .sb-cats a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px}
   .sb-cats a:focus-visible{outline:2px solid #9C521B;outline-offset:-2px}
 }
+/* 11 Nov 2026: the Arabic row is a little longer with the Activewear label; on the narrowest phones it steps down a size so all five fit */
+@media(max-width:380px){html[lang="ar"] body .sb-cats{padding:0 10px}html[lang="ar"] body .sb-cats a{font-size:13px!important;padding:0 2px}}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
 .brand img{display:block;height:26px;width:auto}
 .brand-text{display:flex;flex-direction:column;line-height:1}
@@ -1459,7 +1461,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 </head>
 <body class="buy-page hike-page">
 <header class="hdr sb-top"><a class="brand" href="/ar/"><img src="/logo/mark-dark.png" alt="صحراء وما بعدها" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span><span class="brand-sahra sb-house">صُمّم في الإمارات لكل من يحبّها.</span></span></a><nav class="hdr-nav"><a href="/ar/#collection">المجموعة</a><a href="/ar/shop/">المتجر</a><a href="/ar/places/">الأماكن</a><a href="/ar/t-shirts/">التيشيرتات</a><a href="/ar/polos/">البولو</a><a href="/ar/about/">من نحن</a><a href="/ar/contact/">تواصل معنا</a></nav><button class="mnav" type="button" aria-label="القائمة" aria-expanded="false"><span></span><span></span><span></span></button></header>
-<nav class="sb-cats" aria-label="تسوّق حسب الفئة"><a href="/ar/t-shirts/" data-track="cat_row">التيشيرتات</a><a href="/ar/polos/" data-track="cat_row">البولو</a><a href="/ar/hoodies/" data-track="cat_row">الهوديات</a><a href="/ar/trail/" data-track="cat_row">صحراء تريل</a><a href="/ar/shop/" data-track="cat_row">كل المنتجات</a></nav>
+<nav class="sb-cats" aria-label="تسوّق حسب الفئة"><a href="/ar/t-shirts/" data-track="cat_row">التيشيرتات</a><a href="/ar/polos/" data-track="cat_row">البولو</a><a href="/ar/hoodies/" data-track="cat_row">الهوديات</a><a href="/ar/trail/" data-track="cat_row">ملابس رياضية</a><a href="/ar/shop/" data-track="cat_row">كل المنتجات</a></nav>
 <style>
 .hk-hero{position:relative;background:#16110C;color:#F7EFE2;overflow:hidden}
 .hk-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62}

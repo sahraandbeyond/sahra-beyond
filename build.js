@@ -634,6 +634,8 @@ a{color:#9C521B}
   html body .sb-cats a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px}
   .sb-cats a:focus-visible{outline:2px solid #9C521B;outline-offset:-2px}
 }
+/* 11 Nov 2026: the Arabic row is a little longer with the Activewear label; on the narrowest phones it steps down a size so all five fit */
+@media(max-width:380px){html[lang="ar"] body .sb-cats{padding:0 10px}html[lang="ar"] body .sb-cats a{font-size:13px!important;padding:0 2px}}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
 .brand img{display:block;height:26px;width:auto}
 .brand-text{display:flex;flex-direction:column;line-height:1}
@@ -1138,11 +1140,14 @@ const HEROES = require('./heroes.js');
 /* 10 Nov 2026 (site scorecard, navigation 5.6 of 10: on a phone nothing showed the range until the menu was opened;
    Faheem: "Phone category row"). A row of category links under the header, phones only, on the listing and guide pages
    (body class buy-page). Not on product pages, the question pages or the range pages, which have their own way in. */
-const CAT_ROW = [['/t-shirts/', 'T-shirts'], ['/polos/', 'Polos'], ['/hoodies/', 'Hoodies'], ['/trail/', 'Sahra Trail'], ['/shop/', 'Shop all']];
+/* 11 Nov 2026 (Faheem: "In category row, Sahra trail should actually be activewear. Sahra trail is a sub brand, not a category"):
+   the fourth link is named for the category, Activewear. It still opens the Sahra Trail range page (Faheem, shown both: "Yes, but link to
+   the Trail page"), and it is underlined on that page and on the Activewear category page. */
+const CAT_ROW = [['/t-shirts/', 'T-shirts'], ['/polos/', 'Polos'], ['/hoodies/', 'Hoodies'], ['/trail/', 'Activewear'], ['/shop/', 'Shop all']];
 function catRow(bodyClass, canonical) {
   if (!/\bbuy-page\b/.test(bodyClass || '') || /\b(q-page|feed-page|shop-page)\b/.test(bodyClass || '')) return '';
   const here = String(canonical || '').replace(/^https?:\/\/[^/]+/, '').replace(/^\/ar\//, '/');
-  return `<nav class="sb-cats" aria-label="Shop by category">${CAT_ROW.map(([h, t]) => `<a href="${h}"${here === h ? ' aria-current="page"' : ''} data-track="cat_row">${t}</a>`).join('')}</nav>\n`;
+  return `<nav class="sb-cats" aria-label="Shop by category">${CAT_ROW.map(([h, t]) => `<a href="${h}"${here === h ? ' aria-current="page"' : (h === '/trail/' && here === '/activewear/') ? ' aria-current="true"' : ''} data-track="cat_row">${t}</a>`).join('')}</nav>\n`;
 }
 function shell({ title, desc, canonical, jsonld, bodyHtml, image, activeNav = 'none', bodyClass = '',
                  lang = 'en', altHref = null, noindex = false, guide = false }) {

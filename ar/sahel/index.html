@@ -171,6 +171,8 @@ a{color:#9C521B}
   html body .sb-cats a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px}
   .sb-cats a:focus-visible{outline:2px solid #9C521B;outline-offset:-2px}
 }
+/* 11 Nov 2026: the Arabic row is a little longer with the Activewear label; on the narrowest phones it steps down a size so all five fit */
+@media(max-width:380px){html[lang="ar"] body .sb-cats{padding:0 10px}html[lang="ar"] body .sb-cats a{font-size:13px!important;padding:0 2px}}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
 .brand img{display:block;height:26px;width:auto}
 .brand-text{display:flex;flex-direction:column;line-height:1}

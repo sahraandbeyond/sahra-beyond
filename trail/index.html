@@ -171,6 +171,8 @@ a{color:#9C521B}
   html body .sb-cats a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px}
   .sb-cats a:focus-visible{outline:2px solid #9C521B;outline-offset:-2px}
 }
+/* 11 Nov 2026: the Arabic row is a little longer with the Activewear label; on the narrowest phones it steps down a size so all five fit */
+@media(max-width:380px){html[lang="ar"] body .sb-cats{padding:0 10px}html[lang="ar"] body .sb-cats a{font-size:13px!important;padding:0 2px}}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
 .brand img{display:block;height:26px;width:auto}
 .brand-text{display:flex;flex-direction:column;line-height:1}
@@ -1456,7 +1458,7 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 </head>
 <body class="buy-page ls-page">
 <header class="hdr sb-top"><a class="brand" href="/"><img src="/logo/mark-dark.png" alt="Sahra &amp; Beyond" width="300" height="40"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span><span class="brand-sahra sb-house">Designed in the UAE for everyone who loves it.</span></span></a><nav class="hdr-nav"><a href="/#collection">Collection</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polos</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
-<nav class="sb-cats" aria-label="Shop by category"><a href="/t-shirts/" data-track="cat_row">T-shirts</a><a href="/polos/" data-track="cat_row">Polos</a><a href="/hoodies/" data-track="cat_row">Hoodies</a><a href="/trail/" aria-current="page" data-track="cat_row">Sahra Trail</a><a href="/shop/" data-track="cat_row">Shop all</a></nav>
+<nav class="sb-cats" aria-label="Shop by category"><a href="/t-shirts/" data-track="cat_row">T-shirts</a><a href="/polos/" data-track="cat_row">Polos</a><a href="/hoodies/" data-track="cat_row">Hoodies</a><a href="/trail/" aria-current="page" data-track="cat_row">Activewear</a><a href="/shop/" data-track="cat_row">Shop all</a></nav>
 <style id="house">
 body.ls-page{
   /* seven sizes */

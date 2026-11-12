@@ -942,6 +942,10 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
     check('r118: Sahel pages show two labelled Founding Edition reviews and the size the model wears; Sahra Trail pages show neither reviews nor a rating', /id="first-reviews"/.test(kfb) && /no reviews of its own yet/.test(kfb) && (kfb.match(/<li><b class="po-rv-s"/g) || []).length === 2 && /class="ss-help">The model wears S\. /.test(kfb) && !/id="first-reviews"/.test(tee) && !/<a class="po-rate"/.test(tee) && !/<a class="po-rate"/.test(kit));
     /* 10 Nov 2026 (r119, site scorecard; Faheem: "Phone category row", "Lighter pages") */
     var tsh = rd('t-shirts/index.html'), shp = rd('shop/index.html');
+    { const act = rd('activewear/index.html'), trl = rd('trail/index.html'), arh = rd('ar/index.html');
+      check('category row: the fourth link is named Activewear, a category, not the Sahra Trail sub-brand, and opens the Trail range page (Faheem, 11 Nov 2026)',
+        /<a href="\/trail\/" data-track="cat_row">Activewear<\/a><a href="\/shop\/" data-track="cat_row">Shop all<\/a><\/nav>/.test(page) && !/data-track="cat_row">Sahra Trail</.test(page + tsh + act + trl) &&
+        /<a href="\/trail\/" aria-current="true" data-track="cat_row">Activewear</.test(act) && /<a href="\/trail\/" aria-current="page" data-track="cat_row">Activewear</.test(trl) && /<a href="\/ar\/trail\/" data-track="cat_row">ملابس رياضية</.test(arh)); }
     check('r119: a category row sits under the header on the listing pages and across the top of the homepage opener (phones only)', /<\/header>\s*<nav class="sb-cats" aria-label="Shop by category"><a href="\/t-shirts\/" aria-current="page"/.test(tsh) && /\.sb-cats\{display:none\}/.test(tsh) && /<nav class="op-cats" aria-label="Shop by category">/.test(page) && /\.op-cats\{display:none\}/.test(page) && !/class="sb-cats"/.test(kfb) && !/class="sb-cats"/.test(rd('sahel/index.html')));
     /* 10 Nov 2026 (r121; Faheem, tablet screenshot: "The category menu gets cut off on tablet"): the homepage row is a <nav>, so it
        inherited the site bar's top offset and sat part-way under the bar (52px on a phone, 66px from about 620px wide). It now
