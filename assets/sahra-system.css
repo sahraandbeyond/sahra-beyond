@@ -14,14 +14,14 @@
   --sb-ink-3:#6B6256;     /* captions, meta */
   --sb-cream:#FAF6EF;     /* page and card ground */
   --sb-paper:#FFFFFF;
-  --sb-copper:#9C521B;    /* links and kickers on cream */
+  --sb-copper:#7E4114;    /* links and kickers on cream */
   --sb-copper-deep:#7E4114;
-  --sb-gold:#E9B978;      /* kickers and buttons on dark */
-  --sb-sand:#D9C3A5;      /* Sahel and Sahra Trail buttons on dark */
-  --sb-night:#14102A;
-  --sb-sahel:#233658;
-  --sb-trail:#285C5C;
-  --sb-on-dark:#F7EFE2;
+  --sb-gold:#F3DDB8;      /* kickers and buttons on dark */
+  --sb-sand:#F3DDB8;      /* Sahel and Sahra Trail buttons on dark */
+  --sb-night:#2A2016;
+  --sb-sahel:#2A2016;
+  --sb-trail:#2A2016;
+  --sb-on-dark:#FAF6EF;
   --sb-line:rgba(42,32,22,.14);
   --sb-radius:999px;
 }
@@ -109,5 +109,5 @@ html body .pdp-wallets-line .sb-ship-uae{font-size:inherit!important}
 html body .news[data-waitlist-wrap].done .news-form{display:none!important}
 html body .news[data-waitlist-wrap].done .news-ok{display:block!important}
 html body .news[data-waitlist-wrap].loading .news-form button{opacity:.6}
-html body .news [data-err]{color:#F7DFBE!important}
+html body .news [data-err]{color:#F3DDB8!important}
 html body .news[data-waitlist-wrap].err [data-err]{display:block!important}

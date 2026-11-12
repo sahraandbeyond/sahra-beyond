@@ -80,7 +80,7 @@ table.ssz tr:last-child th,table.ssz tr:last-child td{border-bottom:0}
 table.ssz td small{display:block;font-size:12px;color:#6B6256}
 .ssz-intent{font:15px/1.55 Jost,system-ui,sans-serif;color:#4A4136;margin:0}
 .ssz-h{font:600 22px/1.2 'Cormorant Garamond',Georgia,serif;margin:22px 0 6px;color:#2A2016}
-.ssz-diff{margin:14px 0 0;padding:12px 14px;border-left:3px solid #0FAAAF;background:rgba(15,170,175,.07);border-radius:0 10px 10px 0;font:14.5px/1.55 Jost,system-ui,sans-serif;color:#2A2016;max-width:62ch}
+.ssz-diff{margin:14px 0 0;padding:12px 14px;border-left:3px solid #2A2016;background:rgba(42,32,22,.07);border-radius:0 10px 10px 0;font:14.5px/1.55 Jost,system-ui,sans-serif;color:#2A2016;max-width:62ch}
 .ssz-how{margin:12px 0 0;font:14px/1.55 Jost,system-ui,sans-serif;color:#4A4136}
 .ssz-how summary{cursor:pointer;font-weight:600;color:#2A2016}
 .ssz-how ul{margin:8px 0 6px 18px;padding:0}

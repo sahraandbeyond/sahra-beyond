@@ -2,37 +2,37 @@
 .sb-cart-btn{position:relative;background:none;border:0;cursor:pointer;font-size:19px;padding:8px;
   line-height:1;color:inherit;min-width:44px;min-height:44px;flex:0 0 auto}
 .sb-cart-count{position:absolute;top:2px;right:0;min-width:18px;height:18px;border-radius:9px;
-  background:#E9B978;color:#2B2520;font-family:Jost,sans-serif;font-size:11px;font-weight:700;
+  background:#F3DDB8;color:#2A2016;font-family:Jost,sans-serif;font-size:11px;font-weight:700;
   display:none;align-items:center;justify-content:center;padding:0 4px}
-.sb-ov{position:fixed!important;inset:0;background:rgba(20,16,42,.5);opacity:0;pointer-events:none;
+.sb-ov{position:fixed!important;inset:0;background:rgba(42,32,22,.5);opacity:0;pointer-events:none;
   transition:opacity .3s;z-index:998;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
 .sb-ov.on{opacity:1;pointer-events:auto}
-.sb-drawer{position:fixed!important;top:0;right:0;bottom:0;width:min(400px,92vw);background:#FAF6EF;color:#33271B;
+.sb-drawer{position:fixed!important;top:0;right:0;bottom:0;width:min(400px,92vw);background:#FAF6EF;color:#2A2016;
   z-index:999;transform:translateX(102%);transition:transform .38s cubic-bezier(.4,0,.2,1);
   display:flex;flex-direction:column;box-shadow:-18px 0 50px rgba(0,0,0,.25)}
 .sb-drawer.on{transform:translateX(0)}
 .sb-dh{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 12px;
-  border-bottom:1px solid rgba(43,37,32,.12)}
+  border-bottom:1px solid rgba(42,32,22,.12)}
 .sb-dh h3{margin:0;font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:21px}
 .sb-x{background:none;border:0;font-size:19px;cursor:pointer;color:inherit;min-width:44px;min-height:44px}
 .sb-db{flex:1;overflow:auto;padding:14px 20px}
-.sb-empty{color:#4A3E31;font-size:14px;padding:28px 0;text-align:center}
-.sb-line{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(43,37,32,.08)}
-.sb-line img,.sb-noimg{width:60px;height:75px;object-fit:cover;border-radius:8px;background:#EFEAE0;flex:none}
+.sb-empty{color:#4A4136;font-size:14px;padding:28px 0;text-align:center}
+.sb-line{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(42,32,22,.08)}
+.sb-line img,.sb-noimg{width:60px;height:75px;object-fit:cover;border-radius:8px;background:#FAF6EF;flex:none}
 .sb-lt{flex:1;display:flex;flex-direction:column;gap:3px;font-size:13.5px}
 .sb-lt a{font-weight:600;text-decoration:none;color:inherit}
 .sb-lt span{opacity:1;font-size:12.5px}
 .sb-rm{background:none;border:0;cursor:pointer;opacity:1;font-size:14px;min-width:44px;min-height:44px}
 .sb-rm:hover{opacity:1}
-.sb-df{padding:16px 20px calc(20px + env(safe-area-inset-bottom));border-top:1px solid rgba(43,37,32,.12)}
+.sb-df{padding:16px 20px calc(20px + env(safe-area-inset-bottom));border-top:1px solid rgba(42,32,22,.12)}
 .sb-sub{display:flex;justify-content:space-between;font-weight:600;margin-bottom:6px}
 .sb-note{font-size:12px;opacity:1;margin:0 0 12px}
 .sb-free{margin:2px 0 10px}
-.sb-free-t{display:block;font-family:Jost,system-ui,sans-serif;font-size:13.5px;font-weight:500;letter-spacing:0;color:#5C5248;margin-bottom:6px}   /* 23 Oct 2026: Jost, like the rest of the delivery lines */
-.sb-free-ok{color:#3E6B4A}
+.sb-free-t{display:block;font-family:Jost,system-ui,sans-serif;font-size:13.5px;font-weight:500;letter-spacing:0;color:#6B6256;margin-bottom:6px}   /* 23 Oct 2026: Jost, like the rest of the delivery lines */
+.sb-free-ok{color:#3F6B3A}
 .sb-free-bar{display:block;height:4px;border-radius:2px;background:rgba(42,32,22,.12);overflow:hidden}
-.sb-free-bar span{display:block;height:100%;border-radius:2px;background:#A95A21;transition:width .4s ease}
-.sb-go{display:block;text-align:center;background:#33271B;color:#fff;text-decoration:none;
+.sb-free-bar span{display:block;height:100%;border-radius:2px;background:#7E4114;transition:width .4s ease}
+.sb-go{display:block;text-align:center;background:#2A2016;color:#fff;text-decoration:none;
   padding:15px;border-radius:10px;font-weight:600;min-height:52px;line-height:22px}
 /* quick add on cards */
 .qa{margin-top:10px}
@@ -42,7 +42,7 @@
 .qa-sz{min-width:44px;min-height:44px;border:1px solid rgba(42,32,22,.3);background:rgba(255,255,255,.6);
   border-radius:9px;cursor:pointer;font-size:13px;color:inherit}
 .qa-sz:disabled{opacity:.33;text-decoration:line-through;cursor:not-allowed}
-.qa-sz:hover:not(:disabled){background:#E9B978;border-color:#E9B978;color:#2B2520}
+.qa-sz:hover:not(:disabled){background:#F3DDB8;border-color:#F3DDB8;color:#2A2016}
 .qa-sizes a{font-size:13px;text-decoration:underline}
 
 /* --- quantity stepper + error state (added with the cart rewrite) ---------
@@ -53,12 +53,12 @@
 .sb-q{width:44px;height:44px;min-width:44px;min-height:44px;padding:0;cursor:pointer;
   border:1px solid rgba(42,32,22,.58);background:#fff;color:#2A2016;
   font-family:'Space Mono',monospace;font-size:15px;line-height:1;border-radius:2px}
-.sb-q:hover{background:#F4EEE3;border-color:#7E4114}
+.sb-q:hover{background:#FAF6EF;border-color:#7E4114}
 .sb-q:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
 .sb-qn{min-width:34px;text-align:center;font-family:'Space Mono',monospace;
   font-size:14px;color:#2A2016}
 .sb-err{margin:0 0 14px;padding:11px 13px;border-radius:2px;
-  background:#F6E8DF;border:1px solid #7E4114;color:#5C2F0E;
+  background:#FAF6EF;border:1px solid #7E4114;color:#7E4114;
   font-size:14px;line-height:1.5}
 
 /* --- floating WhatsApp contact -------------------------------------------
@@ -77,10 +77,10 @@
   width:52px;height:52px;min-width:52px;min-height:52px;
   display:flex;align-items:center;justify-content:center;
   border-radius:50%;border:0;cursor:pointer;text-decoration:none;
-  background:#7E4114;color:#FFF6E8;
-  box-shadow:0 6px 20px rgba(24,17,9,.28);
+  background:#7E4114;color:#FAF6EF;
+  box-shadow:0 6px 20px rgba(42,32,22,.28);
   transition:transform .25s ease,bottom .35s cubic-bezier(.4,0,.2,1),opacity .2s}
-.sb-wa:hover{background:#8E4A17;transform:translateY(-2px)}
+.sb-wa:hover{background:#7E4114;transform:translateY(-2px)}
 .sb-wa:focus-visible{outline:2px solid #7E4114;outline-offset:3px}
 .sb-wa svg{width:26px;height:26px;display:block;fill:currentColor}
 /* clear the sticky buy bar on product pages instead of sitting on top of it */
@@ -106,7 +106,7 @@
 .sb-gift .sb-lt{justify-content:center}
 .sb-gift-t{font-weight:600;display:block}
 .sb-gift-t::after{content:'GIFT';margin-left:8px;font-family:'Space Mono',monospace;font-size:9px;
-  letter-spacing:1.4px;padding:2px 6px;border-radius:999px;background:var(--gold,#F2C98C);color:#241B12;vertical-align:middle}
+  letter-spacing:1.4px;padding:2px 6px;border-radius:999px;background:var(--gold,#F3DDB8);color:#2A2016;vertical-align:middle}
 /* Quiet, but no longer silent about what it is worth: the same tote is listed
    at AED 50, so the line shows that price struck through beside FREE. A real
    list price, not an anchor invented for the cart (Faheem, 19 Sep). */
@@ -119,7 +119,7 @@
 /* Any 2 tees for AED 359 (23 Sep 2026) - saving shown on the line and above the subtotal */
 .sb-lp s{opacity:.55;margin-right:2px}
 .sb-lp b{font-weight:600}
-.sb-bundle{margin:0 0 10px;padding:9px 12px;border-radius:10px;background:rgba(192,112,46,.10);color:inherit;font-size:13px;line-height:1.45}
+.sb-bundle{margin:0 0 10px;padding:9px 12px;border-radius:10px;background:rgba(126,65,20,.10);color:inherit;font-size:13px;line-height:1.45}
 .sb-bundle a{color:inherit;text-decoration:underline;white-space:nowrap}
 .sb-bundle[hidden]{display:none}
 
@@ -137,7 +137,7 @@
     bottom:calc(14px + env(safe-area-inset-bottom,0px));
     width:54px;height:54px;border-radius:50%;border:0;padding:0;cursor:pointer;
     align-items:center;justify-content:center;
-    background:#2B2520;color:#F3E4CB;box-shadow:0 8px 24px rgba(24,17,9,.32);
+    background:#2A2016;color:#F3DDB8;box-shadow:0 8px 24px rgba(42,32,22,.32);
     opacity:0;visibility:hidden;transform:translateY(12px) scale(.9);
     transition:opacity .22s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility .22s,bottom .35s cubic-bezier(.4,0,.2,1)}
   .sb-fcart.on{opacity:1;visibility:visible;transform:none}
@@ -145,7 +145,7 @@
   .sb-fcart svg{width:25px;height:25px;display:block}
   .sb-fcart:focus-visible{outline:2px solid #7E4114;outline-offset:3px}
   .sb-fcart-n{position:absolute;top:-3px;right:-3px;min-width:22px;height:22px;padding:0 6px;border-radius:11px;
-    background:#9C521B;color:#fff;font:700 12px/22px system-ui,-apple-system,'Segoe UI',sans-serif;text-align:center;
+    background:#7E4114;color:#fff;font:700 12px/22px system-ui,-apple-system,'Segoe UI',sans-serif;text-align:center;
     box-shadow:0 0 0 2px #FAF6EF}
   .sb-fcart.bump{animation:sbFcBump .5s cubic-bezier(.3,1.6,.5,1)}
   @keyframes sbFcBump{0%{transform:scale(1)}35%{transform:scale(1.18)}100%{transform:scale(1)}}
@@ -172,12 +172,12 @@
 /* gift option (25 Sep 2026) */
 .sb-giftopt{margin:0 0 12px}
 .sb-giftl{display:flex;align-items:center;gap:10px;min-height:44px;font-size:15px;font-weight:500;color:#2A2016;cursor:pointer}
-.sb-giftl input{width:20px;height:20px;accent-color:#2B2520;margin:0}
+.sb-giftl input{width:20px;height:20px;accent-color:#2A2016;margin:0}
 .sb-giftbox{margin:2px 0 0}
 .sb-giftml{display:block;font-size:13px;color:#4A4136;margin:0 0 6px}
 .sb-giftbox textarea{box-sizing:border-box;width:100%;min-height:74px;padding:10px 12px;border:1px solid rgba(42,32,22,.3);border-radius:8px;
   background:#fff;color:#2A2016;font:16px/1.4 Jost,system-ui,sans-serif;resize:vertical}
-.sb-giftbox textarea:focus{outline:2px solid #9C521B;outline-offset:1px}
+.sb-giftbox textarea:focus{outline:2px solid #7E4114;outline-offset:1px}
 .sb-gifth{margin:6px 0 0;font-size:12.5px;color:#4A4136}
 @media(max-width:700px){.sb-giftopt{margin:0 0 8px}.sb-giftl{min-height:40px}}
 
@@ -193,15 +193,15 @@ html[data-price-cur]:not([data-price-cur="AED"]) .pdp-bundle{display:none}
 .sb-second-add:disabled{opacity:.6;cursor:default}
 /* 4 Oct 2026: the + stops at the last unit and says so */
 .sb-q:disabled{opacity:.45;cursor:not-allowed}
-.sb-cap{font-size:11px;color:#9C521B;margin-left:8px;white-space:nowrap}
+.sb-cap{font-size:11px;color:#7E4114;margin-left:8px;white-space:nowrap}
 .sb-left{display:block;font-size:12px;font-weight:600;color:#7E4114;margin-top:4px}
 /* 15 Oct 2026: Tabby (pay in 4). One quiet line, never louder than the price; UAE market only (Tabby is set up for AED orders). */
-.sb-tabby{font-size:12.5px;line-height:1.45;color:var(--txt-soft,#5A5046);margin:4px 0 0;min-height:18px}
-.sb-tabby b{font-weight:700;color:var(--txt,#33271B)}
+.sb-tabby{font-size:12.5px;line-height:1.45;color:var(--txt-soft,#6B6256);margin:4px 0 0;min-height:18px}
+.sb-tabby b{font-weight:700;color:var(--txt,#2A2016)}
 .sb-tabby.is-widget{min-height:0}
 /* Product page: the plain line sits in a box the same size as Tabby's widget card (about 89px), so the
    swap after page load barely moves the sizes below it. If Tabby's script is blocked, the box stays. */
-.sb-tabby-pdp,.sb-tabby-cart{box-sizing:border-box;min-height:89px;border:1px solid rgba(51,39,27,.18);border-radius:8px;padding:14px 16px;display:flex;align-items:center;background:transparent}
+.sb-tabby-pdp,.sb-tabby-cart{box-sizing:border-box;min-height:89px;border:1px solid rgba(42,32,22,.18);border-radius:8px;padding:14px 16px;display:flex;align-items:center;background:transparent}
 .sb-tabby-pdp.is-widget,.sb-tabby-cart.is-widget{border:0;padding:0;min-height:0;display:block}
 .sb-tabby-cart{font-size:12px;margin:0 0 8px;text-align:left}
 .sb-tabby-cart b{color:inherit}
@@ -213,15 +213,15 @@ html[data-guide] .ft-wa{display:none}
 .sb-cart-btn .sb-cart-ic{width:24px;height:24px;display:block}
 /* 22 Oct 2026: pre-order lines (Sahel, Sahra Trail) say when they ship; the pre-order price is named, never struck through */
 .sb-line .sb-pre{display:block;font-size:12.5px;line-height:1.4;color:#7E4114;margin:2px 0}
-.sb-lp small{font-size:11.5px;color:#6B5B48;font-weight:400}
+.sb-lp small{font-size:11.5px;color:#6B6256;font-weight:400}
 
 /* ==========================================================================
    THE BAG (30 Oct 2026, Faheem approved the Fold and Drop bag). A bottom sheet on
    phones, a drawer on desktop; mirrored for Arabic (dir="rtl" on the sheet).
    These rules come last and replace the older drawer look above.
    ========================================================================== */
-.sb-drawer{--bg:#FAF6EF;--ink:#2A2016;--ink2:#4A4136;--ink3:#6B6256;--line:rgba(42,32,22,.12);background:var(--bg);color:var(--ink);width:min(440px,94vw);font-family:Jost,system-ui,-apple-system,'Segoe UI',sans-serif;box-shadow:-24px 0 60px -20px rgba(24,17,9,.35)}
-[dir="rtl"].sb-drawer{right:auto;left:0;transform:translateX(-102%);box-shadow:24px 0 60px -20px rgba(24,17,9,.35)}
+.sb-drawer{--bg:#FAF6EF;--ink:#2A2016;--ink2:#4A4136;--ink3:#6B6256;--line:rgba(42,32,22,.12);background:var(--bg);color:var(--ink);width:min(440px,94vw);font-family:Jost,system-ui,-apple-system,'Segoe UI',sans-serif;box-shadow:-24px 0 60px -20px rgba(42,32,22,.35)}
+[dir="rtl"].sb-drawer{right:auto;left:0;transform:translateX(-102%);box-shadow:24px 0 60px -20px rgba(42,32,22,.35)}
 [dir="rtl"].sb-drawer.on{transform:none}
 .sb-ov{background:rgba(42,32,22,.34);-webkit-backdrop-filter:none;backdrop-filter:none}
 .sb-grab{display:none}
@@ -236,7 +236,7 @@ html body .sb-dh h3{margin:0;font-family:'Cormorant Garamond',Georgia,serif;font
 .sb-empty small{display:block;font-size:14px;color:var(--ink3);margin-bottom:16px}
 .sb-empty a{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border-radius:999px;background:var(--ink);color:#FAF6EF;text-decoration:none;font-weight:600;font-size:15px}
 .sb-drawer .sb-line{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
-.sb-th{position:relative;display:block;width:64px;height:80px;border-radius:10px;overflow:hidden;background:#E9E1D3}
+.sb-th{position:relative;display:block;width:64px;height:80px;border-radius:10px;overflow:hidden;background:#E5E1D9}
 html body .sb-drawer .sb-th img{width:100%;height:100%;object-fit:cover;border-radius:0;display:block}
 .sb-th i{position:absolute;left:3px;bottom:3px;font:400 8px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:3px 3px;border-radius:3px;background:rgba(250,246,239,.94);color:#2A2016}
 .sb-drawer .sb-lt{display:flex;flex-direction:column;gap:5px;min-width:0;font-size:14px}
@@ -250,26 +250,26 @@ html body .sb-drawer .sb-nm{font:600 15px/1.3 Jost,system-ui,sans-serif;color:va
 .sb-chips{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0}
 .sb-chips button{min-width:42px;height:40px;padding:0 8px;border-radius:999px;border:1px solid rgba(42,32,22,.3);background:#fff;color:var(--ink);font:500 14px/1 Jost,system-ui,sans-serif;cursor:pointer}
 .sb-chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#FAF6EF}
-html body .sb-chips button:disabled{background:#F1ECE4;color:#6B6256;border-style:dashed;cursor:not-allowed;text-decoration:none}
+html body .sb-chips button:disabled{background:#FAF6EF;color:#6B6256;border-style:dashed;cursor:not-allowed;text-decoration:none}
 .sb-ld{font-size:13px;color:var(--ink3)}
 .sb-fitn{font-size:12.5px;line-height:1.4;color:var(--ink2)}
 html body .sb-drawer .sb-fitn a{color:#7E4114;text-decoration:underline;text-underline-offset:2px;font-weight:400}
 .sb-lr{display:flex;align-items:center;gap:6px;margin-top:2px}
 .sb-drawer .sb-qty{display:inline-flex;align-items:center;gap:0;margin:0;border:1px solid rgba(42,32,22,.28);border-radius:999px;background:#fff;overflow:hidden}
 html body .sb-drawer .sb-q{width:38px;height:38px;min-width:38px;min-height:38px;border:0;border-radius:0;background:transparent;font:400 18px/1 Jost,system-ui,sans-serif;color:var(--ink)}
-.sb-drawer .sb-q:hover{background:#F4EEE3}
+.sb-drawer .sb-q:hover{background:#FAF6EF}
 .sb-drawer .sb-qn{min-width:22px;font:600 14px/1 Jost,system-ui,sans-serif}
 html body .sb-drawer .sb-rm{min-width:0;min-height:40px;padding:0 6px;border:0;background:none;font:400 13px/1 Jost,system-ui,sans-serif;color:var(--ink2);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .sb-drawer .sb-lp,.sb-lr>span:last-child{margin-inline-start:auto;text-align:end;font:600 15px/1.2 Jost,system-ui,sans-serif;white-space:nowrap}
-.sb-drawer .sb-lp small{display:block;font-weight:400;font-size:11.5px;color:#2F6B45}
+.sb-drawer .sb-lp small{display:block;font-weight:400;font-size:11.5px;color:#3F6B3A}
 .sb-drawer .sb-gift{grid-template-columns:64px minmax(0,1fr);align-items:center}
-.sb-drawer .sb-gift .sb-th{height:64px;background:#F1E7D6}
+.sb-drawer .sb-gift .sb-th{height:64px;background:#F3DDB8}
 .sb-drawer .sb-gift-t{font:600 14.5px/1.3 Jost,system-ui,sans-serif}
 .sb-drawer .sb-gift-t::after{display:none}
-.sb-drawer .sb-gift-p b{font:600 13px/1 Jost,system-ui,sans-serif;letter-spacing:0;color:#2F6B45}
+.sb-drawer .sb-gift-p b{font:600 13px/1 Jost,system-ui,sans-serif;letter-spacing:0;color:#3F6B3A}
 .sb-drawer .sb-gift-p small{font-size:13px;color:var(--ink3);margin-inline-start:4px}
 /* the cross-sell: one compact row, never more than about a fifth of the sheet */
-.sb-drawer .sb-bundle{margin:12px 0 0;padding:8px 10px;border-radius:14px;background:#F3EBDD;font-size:13px;line-height:1.4;color:var(--ink2);max-height:76px;overflow:hidden}
+.sb-drawer .sb-bundle{margin:12px 0 0;padding:8px 10px;border-radius:14px;background:#FAF6EF;font-size:13px;line-height:1.4;color:var(--ink2);max-height:76px;overflow:hidden}
 .sb-drawer .sb-second{display:flex;align-items:center;gap:10px}
 .sb-drawer .sb-second img{width:40px;height:50px;border-radius:8px;object-fit:cover;flex:none}
 .sb-drawer .sb-second-t{flex:1;min-width:0;font-size:12.5px;line-height:1.35}
@@ -290,12 +290,12 @@ html body .sb-drawer .sb-giftbox textarea{min-height:64px;font-size:16px;border-
 [dir="rtl"] .sb-undo{padding:8px 14px 8px 8px}
 .sb-undo[hidden]{display:none}
 .sb-undo span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sb-undo button{flex:none;min-height:38px;padding:0 14px;border:0;border-radius:999px;background:#E9B978;color:#2A2016;font:600 14px/1 Jost,system-ui,sans-serif;cursor:pointer}
+.sb-undo button{flex:none;min-height:38px;padding:0 14px;border:0;border-radius:999px;background:#F3DDB8;color:#2A2016;font:600 14px/1 Jost,system-ui,sans-serif;cursor:pointer}
 @media(prefers-reduced-motion:no-preference){.sb-undo:not([hidden]){animation:sbUp .28s cubic-bezier(.2,.8,.2,1) both}}
 @keyframes sbUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 /* the summary and the one Checkout button, always in view */
-.sb-drawer .sb-df{padding:10px 18px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:#FFFDF9;box-shadow:0 -10px 24px -18px rgba(42,32,22,.35)}
-.sb-applied{margin:0 0 8px;padding:7px 10px;border-radius:10px;background:#EEF3EC;color:#2F6B45;font-size:12.5px;line-height:1.35}
+.sb-drawer .sb-df{padding:10px 18px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:#FAF6EF;box-shadow:0 -10px 24px -18px rgba(42,32,22,.35)}
+.sb-applied{margin:0 0 8px;padding:7px 10px;border-radius:10px;background:#F2EDE6;color:#3F6B3A;font-size:12.5px;line-height:1.35}
 .sb-applied[hidden]{display:none}
 .sb-sum{display:grid;gap:3px;margin:0 0 10px}
 .sb-drawer .sb-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13.5px;line-height:1.35;color:var(--ink2);margin:0}
@@ -303,7 +303,7 @@ html body .sb-drawer .sb-giftbox textarea{min-height:64px;font-size:16px;border-
 .sb-drawer .sb-row span:last-child{text-align:end}
 .sb-drawer .sb-tot{font-size:17px;color:var(--ink);font-weight:600;padding-bottom:2px}
 .sb-drawer .sb-tot b{font-weight:700;font-variant-numeric:tabular-nums}
-.sb-drawer .sb-ok{color:#2F6B45}
+.sb-drawer .sb-ok{color:#3F6B3A}
 .sb-drawer .sb-free{flex-wrap:wrap;margin:0}
 .sb-drawer .sb-free .sb-free-t{flex:1 0 100%;margin:2px 0 3px;font-size:12.5px}
 .sb-drawer .sb-free .sb-free-bar{flex:1 0 100%}
@@ -317,7 +317,7 @@ html[data-market="gcc"] .sb-pay-x,html[data-market="intl"] .sb-pay-x{display:inl
 .sb-drawer .sb-err{margin:12px 0 0}
 @media(max-width:700px){
   /* a bottom sheet: the handle drags it closed */
-  .sb-drawer,[dir="rtl"].sb-drawer{top:auto!important;left:0;right:0;bottom:0;width:100%;max-height:88vh;max-height:88svh;border-radius:22px 22px 0 0;transform:translateY(104%);transition:transform .42s cubic-bezier(.2,.8,.2,1);box-shadow:0 -20px 50px -20px rgba(24,17,9,.45)}
+  .sb-drawer,[dir="rtl"].sb-drawer{top:auto!important;left:0;right:0;bottom:0;width:100%;max-height:88vh;max-height:88svh;border-radius:22px 22px 0 0;transform:translateY(104%);transition:transform .42s cubic-bezier(.2,.8,.2,1);box-shadow:0 -20px 50px -20px rgba(42,32,22,.45)}
   .sb-drawer.on,[dir="rtl"].sb-drawer.on{transform:none}
   .sb-drawer.drag{transition:none}
   .sb-grab{display:flex;justify-content:center;padding:8px 0 0;touch-action:none;cursor:grab}
@@ -330,18 +330,18 @@ html[data-market="gcc"] .sb-pay-x,html[data-market="intl"] .sb-pay-x{display:inl
 
 /* ---- the peek: rises after an add; a tap opens the whole bag ---- */
 .sb-peek{position:fixed;z-index:997;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));margin:0 auto;max-width:460px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 4px;padding:10px 10px 10px 12px;border-radius:22px;background:#fff;color:#2A2016;font-family:Jost,system-ui,sans-serif;
-  box-shadow:0 22px 50px -18px rgba(24,17,9,.5),0 0 0 1px rgba(42,32,22,.08);transform:translateY(140%);opacity:0;transition:transform .42s cubic-bezier(.2,.8,.2,1),opacity .2s}
+  box-shadow:0 22px 50px -18px rgba(42,32,22,.5),0 0 0 1px rgba(42,32,22,.08);transform:translateY(140%);opacity:0;transition:transform .42s cubic-bezier(.2,.8,.2,1),opacity .2s}
 .sb-peek.on{transform:none;opacity:1}
 .sb-peek[hidden]{display:none}
 .sb-pk-main{min-width:0;display:flex;align-items:center;gap:12px;padding:0;border:0;background:none;color:inherit;text-align:start;cursor:pointer;font:inherit}
-.sb-pk-i{flex:none;width:48px;height:60px;border-radius:10px;overflow:hidden;background:#E9E1D3}
+.sb-pk-i{flex:none;width:48px;height:60px;border-radius:10px;overflow:hidden;background:#E5E1D9}
 .sb-pk-i img{width:100%;height:100%;object-fit:cover;display:block}
 .sb-pk-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.sb-pk-t small{font-size:12.5px;line-height:1.2;color:#2F6B45;font-weight:500}
+.sb-pk-t small{font-size:12.5px;line-height:1.2;color:#3F6B3A;font-weight:500}
 .sb-pk-t b{font-size:15px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-pk-t span{font-size:13px;line-height:1.2;color:#6B6256}
 .sb-pk-view{flex:none;font-size:13px;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
-.sb-pk-x{width:36px;height:36px;padding:0;border:0;border-radius:50%;background:#F4EEE3;color:#4A4136;font-size:12px;cursor:pointer;align-self:start}
+.sb-pk-x{width:36px;height:36px;padding:0;border:0;border-radius:50%;background:#FAF6EF;color:#4A4136;font-size:12px;cursor:pointer;align-self:start}
 .sb-pk-f{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding-top:8px;border-top:1px solid rgba(42,32,22,.08)}
 .sb-pk-tot{flex:1;display:flex;align-items:baseline;gap:8px}
 .sb-pk-tot small{font-size:13px;color:#6B6256}
@@ -356,7 +356,7 @@ html body .sb-pk-go{flex:0 0 auto;display:inline-flex;align-items:center;justify
 .sb-fold-y{transform-origin:50% 25%}
 .sb-fold-p{transform-style:preserve-3d}
 .sb-fold-top,.sb-fold-bot{position:absolute;left:0;width:100%;height:50%}
-.sb-fold-top{top:0;border-radius:12px 12px 2px 2px;background-repeat:no-repeat;box-shadow:0 10px 30px -12px rgba(24,17,9,.5)}
+.sb-fold-top{top:0;border-radius:12px 12px 2px 2px;background-repeat:no-repeat;box-shadow:0 10px 30px -12px rgba(42,32,22,.5)}
 .sb-fold-bot{top:50%;transform-origin:50% 0;transform-style:preserve-3d}
 .sb-fold-bot i{position:absolute;inset:0;background-repeat:no-repeat;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:2px 2px 12px 12px}
 .sb-fold-bot .sb-f2{transform:rotateX(180deg);filter:brightness(.72)}
@@ -381,7 +381,7 @@ html body .sb-drawer .sb-fitn a,html body .sb-drawer .sb-bundle a,html body .sb-
 .sb-pk-i i{position:absolute;left:3px;bottom:3px;font:400 7.5px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:2px 3px;border-radius:3px;background:rgba(250,246,239,.94);color:#2A2016}
 /* S3: one compact summary: the pair line scrolls with the lines; the foot is total, delivery and returns, Checkout */
 .sb-drawer .sb-lines + .sb-applied,.sb-db .sb-applied{margin:12px 0 0}
-.sb-drawer .sb-free{display:block;font-size:12.5px;line-height:1.4;color:#2F6B45}
+.sb-drawer .sb-free{display:block;font-size:12.5px;line-height:1.4;color:#3F6B3A}
 .sb-drawer .sb-free.sb-x-mkt{color:var(--ink2)}
 .sb-drawer .sb-free .sb-free-t{display:block;margin:2px 0 3px;color:var(--ink2)}
 .sb-pk-t b{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}

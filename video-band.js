@@ -76,7 +76,7 @@ function band(opts = {}) {
    phone in portrait as well as a wide desktop. */
 const CSS = `
 /*VBAND-CSS-START*/
-.vband{position:relative;z-index:2;width:100%;margin:0;padding:0;background:#181109}
+.vband{position:relative;z-index:2;width:100%;margin:0;padding:0;background:#2A2016}
 .vband-frame{position:relative;width:100%;aspect-ratio:1080/608;overflow:hidden}
 /* WHOLE-FILM FRAMING on desktop (Faheem, 1 Sep 2026). The film is 1080x608;
    the band is full-bleed with object-fit:cover, so the complete frame is only
@@ -91,7 +91,7 @@ const CSS = `
    PHONES ARE DELIBERATELY NOT ON THIS RULE - see the media query below. */
 .vband-v{width:100%;height:100%;object-fit:cover;display:block}
 .vband-scrim{position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:linear-gradient(to bottom,rgba(24,17,9,0) 62%,rgba(24,17,9,.34) 100%)}
+  background:linear-gradient(to bottom,rgba(42,32,22,0) 62%,rgba(42,32,22,.34) 100%)}
 .vband-link{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;
   justify-content:flex-start;padding:0 0 22px 84px;text-decoration:none}
 /* Left inset is 84px, not 24px: the ambient-sound button is position:fixed at
@@ -102,14 +102,14 @@ const CSS = `
    keep 16px in the media query below - the band ends far above the fold there,
    so nothing overlaps. */
 .vband-cta{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.4px;
-  text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.74);
+  text-transform:uppercase;color:#FAF6EF;background:rgba(42,32,22,.74);
   padding:11px 16px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.vband-link:hover .vband-cta{background:rgba(24,17,9,.86)}
+.vband-link:hover .vband-cta{background:rgba(42,32,22,.86)}
 .vband-toggle{position:absolute;right:20px;bottom:22px;z-index:3;border:0;border-radius:999px;
   min-width:44px;min-height:44px;padding:0 16px;cursor:pointer;
   font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;
-  background:rgba(24,17,9,.72);color:#FFF6E8;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.vband-toggle:hover{background:rgba(24,17,9,.92)}
+  background:rgba(42,32,22,.72);color:#FAF6EF;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.vband-toggle:hover{background:rgba(42,32,22,.92)}
 @media(max-width:700px){
   .vband-frame{aspect-ratio:auto;height:clamp(260px,46vh,420px)}
   /* Phones keep the taller, side-cropped band by explicit choice (Faheem,

@@ -168,8 +168,8 @@ function feedPageHtml() {
 
 const CSS = `
 /* ---- Instagram blocks (instagram-feed.js) ---- */
-.ig-strip,.ig-rail-sec,.ig-foot,.ig-feedhead,.ig-grid{--ig-ink:#2B2620;--ig-soft:#5C5346;--ig-line:rgba(43,37,32,.14);--ig-fill:#fff;--ig-accent:#9C521B;--ig-seg:rgba(43,37,32,.25);--ig-segon:#9C521B}
-.ig-dark{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}
+.ig-strip,.ig-rail-sec,.ig-foot,.ig-feedhead,.ig-grid{--ig-ink:#2A2016;--ig-soft:#6B6256;--ig-line:rgba(42,32,22,.14);--ig-fill:#fff;--ig-accent:#7E4114;--ig-seg:rgba(42,32,22,.25);--ig-segon:#7E4114}
+.ig-dark{--ig-ink:#FAF6EF;--ig-soft:rgba(250,246,239,.72);--ig-line:rgba(250,246,239,.22);--ig-fill:#2A2016;--ig-accent:#F3DDB8;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}
 .ig-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 12px}
 .ig-eyebrow,.ig-head h2.ig-eyebrow,.sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;color:var(--ig-soft);font-weight:400;margin:0;max-width:none;line-height:1.5;font-style:normal;opacity:1;visibility:visible;transform:none}
 .ig-follow{font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ig-ink);text-decoration:none;border:1px solid var(--ig-line);border-radius:999px;padding:7px 12px;white-space:nowrap}
@@ -178,9 +178,9 @@ const CSS = `
 .ig-rail::-webkit-scrollbar{display:none}
 .ig-card{flex:0 0 62vw;max-width:252px;min-width:0;scroll-snap-align:center;background:var(--ig-fill);border:1px solid var(--ig-line);border-radius:14px;overflow:hidden;position:relative;transition:transform .25s ease,border-color .25s ease}
 @media(min-width:761px){.ig-card{flex-basis:calc((100% - 60px)/6);max-width:none}.ig-rail-short .ig-card{flex-basis:220px}.ig-card:hover{transform:translateY(-6px);border-color:var(--ig-ink)}}
-.ig-media{position:relative;aspect-ratio:4/5;background:#181109;overflow:hidden}
+.ig-media{position:relative;aspect-ratio:4/5;background:#2A2016;overflow:hidden}
 /* 13 Oct 2026 (Faheem): posts whose cover shows pre-production renders say so on the image */
-.ig-mock{position:absolute;top:10px;right:10px;z-index:3;padding:3px 8px;border-radius:999px;background:rgba(10,16,22,.78);color:#F6ECDD;font:600 10px/1.2 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.ig-mock{position:absolute;top:10px;right:10px;z-index:3;padding:3px 8px;border-radius:999px;background:rgba(42,32,22,.78);color:#FAF6EF;font:600 10px/1.2 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
 .ig-media img,.ig-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .ig-media video{opacity:0;transition:opacity .6s ease;pointer-events:none}
 .ig-media video.on{opacity:1}
@@ -196,8 +196,8 @@ const CSS = `
 .ig-prev{left:0}.ig-next{right:0}
 .ig-tap:focus-visible{outline:2px solid var(--ig-accent);outline-offset:-4px}
 .ig-kind{position:absolute;left:10px;bottom:10px;z-index:3;pointer-events:none;font-family:'Space Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.42);border-radius:999px;padding:4px 8px;backdrop-filter:blur(4px)}
-.ig-card.ig-new .ig-media::before{content:'';position:absolute;top:18px;right:12px;width:8px;height:8px;border-radius:50%;background:#C8703A;box-shadow:0 0 0 0 rgba(200,112,58,.6);z-index:4;animation:igPulse 1.6s ease-in-out 3}
-@keyframes igPulse{0%{box-shadow:0 0 0 0 rgba(200,112,58,.6)}70%{box-shadow:0 0 0 10px rgba(200,112,58,0)}100%{box-shadow:0 0 0 0 rgba(200,112,58,0)}}
+.ig-card.ig-new .ig-media::before{content:'';position:absolute;top:18px;right:12px;width:8px;height:8px;border-radius:50%;background:#7E4114;box-shadow:0 0 0 0 rgba(126,65,20,.6);z-index:4;animation:igPulse 1.6s ease-in-out 3}
+@keyframes igPulse{0%{box-shadow:0 0 0 0 rgba(126,65,20,.6)}70%{box-shadow:0 0 0 10px rgba(126,65,20,0)}100%{box-shadow:0 0 0 0 rgba(126,65,20,0)}}
 .ig-txt{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px}
 .ig-ago{font-family:'Space Mono',ui-monospace,monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ig-soft)}
 .ig-label{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:17px;line-height:1.2;margin:0;color:var(--ig-ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-width:none;letter-spacing:0}
@@ -212,7 +212,7 @@ const CSS = `
 .ig-foot{max-width:720px;margin:18px auto 10px;padding:0 16px;text-align:center}
 .ig-foot-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 @media(max-width:480px){.ig-foot-row{grid-template-columns:repeat(2,1fr)}}
-.ig-foot-card{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--ig-line);background:#181109}
+.ig-foot-card{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--ig-line);background:#2A2016}
 .ig-foot-card img,.ig-foot-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .ig-foot-card video{opacity:0;transition:opacity .6s}.ig-foot-card video.on{opacity:1}
 .ig-foot-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 8px 7px;font-size:11px;line-height:1.3;color:#fff;text-align:left;background:linear-gradient(transparent,rgba(0,0,0,.7))}.ig-foot-cap span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}

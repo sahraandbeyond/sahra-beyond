@@ -111,7 +111,7 @@ html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) .lh-k,
 html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) .lede,
 html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) .lg-ar,
 html[dir="rtl"] .loc-hero .loc-hero-inner:not(#sb-ar-a) .crumbs{text-align:right!important}
-html[dir="rtl"] .loc-hero h1:not(#sb-ar-a)::after{background:linear-gradient(270deg,#E9B978,rgba(233,185,120,0))!important}
+html[dir="rtl"] .loc-hero h1:not(#sb-ar-a)::after{background:linear-gradient(270deg,#F3DDB8,rgba(243,221,184,0))!important}
 html[dir="rtl"] .tr-hero .tr-tagline:not(#sb-ar-a){direction:rtl;unicode-bidi:isolate}
 
 /* S8. Tables, captions, the packing list, the guide disclaimer and the product accordion

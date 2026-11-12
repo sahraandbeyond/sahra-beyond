@@ -41,7 +41,7 @@ html{font-size-adjust:.5}
 /* ===== legibility layer: floors for size, weight and contrast (5 Sep 2026) ===== */
 :root{--txt-soft:#4A4136;--mist:#4A4136}
 /* the product pages flip these when the scroll reaches a dark background (body.dark-bg): keep that, brighter */
-body.dark-bg{--txt-soft:rgba(244,239,230,.86);--mist:rgba(244,239,230,.86)}
+body.dark-bg{--txt-soft:rgba(250,246,239,.86);--mist:rgba(250,246,239,.86)}
 html{-webkit-text-size-adjust:100%}
 body{font-size:16px;font-weight:400}
 p,li,dd,td,label,figcaption{font-weight:400}
@@ -53,7 +53,7 @@ p,li,dd,td,label,figcaption{font-weight:400}
 .pdp-ans-foot,.qual-item span,.card-body span,.tag-invite,.rv-count,.pk-note,.sgnote,.sz-cm,.crumb,.gal-model,.pm-sky{color:var(--txt-soft,#4A4136)}
 /* (.crumbs, .hero-ship and .meta sit on dark heroes and keep their cream) */
 .crumbs,.crumbs a{color:rgba(255,255,255,.95)!important}
-.hero-ship,.meta{color:rgba(247,239,226,.95)}
+.hero-ship,.meta{color:rgba(250,246,239,.95)}
 .pdp-ans-foot,.qual-item span,.tag-invite,.pk-note,.sgnote,.sz-cm,.gal-model{font-size:14px}
 .tag-invite a{color:var(--txt-soft,#4A4136)}
 
@@ -73,10 +73,10 @@ p,li,dd,td,label,figcaption{font-weight:400}
 .pcard-spec span{color:var(--ink,#2A2016)}
 
 /* dark panels (shop .prod.dark, the location tee band): secondary text in cream, never ink */
-.prod.dark .pm-sky,.prod.dark .pcard-rv-n,.prod.dark .rv-meta,.prod.dark .crumb,.prod.dark .pm-gps,.prod.dark .place-meta,.prod.dark .prod-specs li,.prod.dark .story,.prod.dark .pcard-place{color:rgba(247,239,226,.92)!important}
-.prod.dark .rv-stars,.prod.dark .pcard-rv .rv-stars{color:#E9B978!important}
-.teecta-txt a:not(.btn),.teecta-meta a:not(.btn),.teecta-meta span{color:#E9B978!important}
-.teecta-txt .sb-price{color:rgba(247,239,226,.95)!important}
+.prod.dark .pm-sky,.prod.dark .pcard-rv-n,.prod.dark .rv-meta,.prod.dark .crumb,.prod.dark .pm-gps,.prod.dark .place-meta,.prod.dark .prod-specs li,.prod.dark .story,.prod.dark .pcard-place{color:rgba(250,246,239,.92)!important}
+.prod.dark .rv-stars,.prod.dark .pcard-rv .rv-stars{color:#F3DDB8!important}
+.teecta-txt a:not(.btn),.teecta-meta a:not(.btn),.teecta-meta span{color:#F3DDB8!important}
+.teecta-txt .sb-price{color:rgba(250,246,239,.95)!important}
 
 /* top bar and hero delivery line: readable on phones */
 .sb-topbar{font-size:12px!important;letter-spacing:.12em!important;padding:9px 12px!important;line-height:1.35}
@@ -84,8 +84,8 @@ p,li,dd,td,label,figcaption{font-weight:400}
 
 /* footer links: dark footers (home, shop, product pages) at 88% cream, not 70%; the
    guides' cream footer (.ftr) in ink */
-.foot-links a,footer:not(.ftr) .links a,footer .foot-links a{color:rgba(247,239,226,.9)!important;font-size:13px!important;letter-spacing:.08em!important}
-.foot-copy,footer .foot-copy{color:rgba(247,239,226,.9)!important;font-size:13px}
+.foot-links a,footer:not(.ftr) .links a,footer .foot-links a{color:rgba(250,246,239,.9)!important;font-size:13px!important;letter-spacing:.08em!important}
+.foot-copy,footer .foot-copy{color:rgba(250,246,239,.9)!important;font-size:13px}
 .ftr{font-size:14px;color:#4A4136}
 .ftr .links a{color:#4A4136!important;font-size:13.5px!important}
 .m-panel a{font-size:20px}
@@ -95,7 +95,7 @@ nav .nav-links a,.hdr-nav a,.nav-links a{font-size:15px;font-weight:500}
 /* the review band's own style block sits in the body, after this layer: a body prefix outranks it,
    and the template's body.dark-bg .rv-stars (gold on dark) still outranks this */
 body .rv-stars,body .rv-band .rv-stars,body .pcard-rv .rv-stars{color:#8F6212}
-body.dark-bg .rv-stars,body.dark-bg .rv-band .rv-stars{color:#E9B978}
+body.dark-bg .rv-stars,body.dark-bg .rv-band .rv-stars{color:#F3DDB8}
 body .rv-text{font-size:16px;line-height:1.6}
 body .rv-count{font-size:14px}
 .rv-meta{font-size:12.5px!important}
@@ -106,19 +106,19 @@ body .rv-count{font-size:14px}
 .btn,button.btn,a.btn{font-size:14px;font-weight:600;letter-spacing:.08em}
 .pdp-add{font-size:16px;font-weight:700}
 /* disabled = outlined, not faded: still readable, still clearly not the filled button */
-.pdp-add:disabled{opacity:1;background:transparent;color:#5C5148;border:1.5px dashed #8A7F73;cursor:not-allowed}
-body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
+.pdp-add:disabled{opacity:1;background:transparent;color:#6B6256;border:1.5px dashed #6B6256;cursor:not-allowed}
+body.dark-bg .pdp-add:disabled{color:#F3DDB8;border-color:#6B6256}
 .qa-b{font-size:12.5px;font-weight:700}
 .fit-b{font-size:12px;font-weight:700}
 .filt{font-weight:700}
 
 /* homepage journey: copy over the plates */
 .lede{font-size:17px}
-.scroll-cue{color:rgba(247,239,226,.85)!important}
-.vband-cap,.vband-cap a{color:rgba(247,239,226,.9)!important}
+.scroll-cue{color:rgba(250,246,239,.85)!important}
+.vband-cap,.vband-cap a{color:rgba(250,246,239,.9)!important}
 .j-stats b{font-size:26px}
 .j-stats span{font-size:13px}
-.design-card p{font-size:15px;color:rgba(247,239,226,.92)}
+.design-card p{font-size:15px;color:rgba(250,246,239,.92)}
 .qual-item span{font-size:14px}
 
 /* ===== glass panels behind the text that sits on moving imagery (Faheem, 5 Sep) =====
@@ -126,20 +126,20 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
    scroll; a sheer frosted panel keeps the words on a steady ground. Dark stops
    only - the cream "paper" stops need none. */
 #s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{
-  background:rgba(16,12,30,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
+  background:rgba(42,32,22,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
   border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:30px 32px;box-shadow:0 24px 60px rgba(0,0,0,.28);
   box-sizing:border-box;max-width:660px}
 #s-hero .col{max-width:720px}
 @media(max-width:760px){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{padding:22px 18px;border-radius:18px}}
-@supports not (backdrop-filter:blur(1px)){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{background:rgba(16,12,30,.72)}}
+@supports not (backdrop-filter:blur(1px)){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{background:rgba(42,32,22,.72)}}
 /* the design card and waitlist box already carry their own glass: flatten them inside the panel */
 .stop .col .design-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);box-shadow:none}
 /* the shop hero */
-.hero-c{background:rgba(16,12,30,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
+.hero-c{background:rgba(42,32,22,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
   border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:34px 30px!important;box-shadow:0 24px 60px rgba(0,0,0,.28);
   width:fit-content;max-width:min(92vw,780px);margin:0 auto;box-sizing:border-box}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
-@supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
+@supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(42,32,22,.72)}}
 
 /* ===== homepage and shop: type one step larger (Faheem, 5 Sep: "still seems small") =====
    The two selling pages get a larger scale than the guides: copy 18-19px,
@@ -197,7 +197,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
    "Regular fit" and "Slim cut" ran together as one line of text */
 .catnav{display:grid;gap:10px;margin:18px 0 26px}
 @media(min-width:640px){.catnav{grid-template-columns:repeat(3,1fr)}}
-.catnav a{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border:1px solid rgba(43,37,32,.16);border-radius:12px;background:#fff;text-decoration:none;color:#2A2016}
+.catnav a{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#fff;text-decoration:none;color:#2A2016}
 .catnav a b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:19px;font-weight:600}
 .catnav a span{font-size:14px;color:#4A4136}
 /* size tables wider than a phone */
@@ -400,7 +400,7 @@ body.buy-page .pdp-add .sb-price,.pdp-add .sb-price{font-size:inherit!important;
    the price is the headline figure and the breadcrumb sits on the cream reading
    surface, so both are released for this page only (19 Sep). */
 body.tote-page .tt-price .sb-price{font-size:inherit!important;letter-spacing:.01em!important;font-weight:inherit!important}
-body.tote-page .crumbs,body.tote-page .crumbs a{color:#6B5B48!important}
+body.tote-page .crumbs,body.tote-page .crumbs a{color:#6B6256!important}
 body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
 .meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
@@ -418,7 +418,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
    file forbids everywhere else. The PDP already greys XL and says "Sold out";
    the shop grid showed no state at all to the eye. Same dashed-outline treatment
    the rest of the site uses for a disabled control. */
-.sring-qa-b:disabled,.sring-qa-b[disabled]{opacity:1!important;color:#6B6256!important;border:1.5px dashed #9A8F82!important;background:transparent!important;text-decoration:line-through!important;text-decoration-thickness:1.5px;cursor:not-allowed}
+.sring-qa-b:disabled,.sring-qa-b[disabled]{opacity:1!important;color:#6B6256!important;border:1.5px dashed #6B6256!important;background:transparent!important;text-decoration:line-through!important;text-decoration-thickness:1.5px;cursor:not-allowed}
 .sring-qa-b:disabled:hover,.sring-qa-b[disabled]:hover{background:transparent!important;color:#6B6256!important}
 /* footer social links were 134x16 - give them a real row to hit */
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
@@ -448,8 +448,8 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .pcard-bundle{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;color:#7E4114;font-weight:700}
 
 /* mini product strip at the top of location and guide pages (23 Sep 2026) */
-.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(43,37,32,.14);border-radius:14px;box-shadow:0 6px 20px rgba(43,37,32,.07);color:#2A2016}
-.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#EFEAE0;display:block}
+.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(42,32,22,.14);border-radius:14px;box-shadow:0 6px 20px rgba(42,32,22,.07);color:#2A2016}
+.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#FAF6EF;display:block}
 .minitee-img img{width:100%;height:100%;object-fit:cover;display:block}
 .minitee-txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
 .minitee-eye{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;font-weight:700}
@@ -573,6 +573,10 @@ html body .folds summary h2,html body .fold summary h2{font-size:22px!important;
 @media(max-width:700px){html body .folds summary h2,html body .fold summary h2{font-size:19px!important}}
 /* the Al Quaa place band set its H2 in Jost bold; every H2 is Cormorant */
 html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
+/* 12 Nov 2026 (brand palette): the Instagram page lost its dark sky, so its crumbs are muted ink, not white */
+body.feed-page .crumbs,body.feed-page .crumbs a{color:#6B6256!important}
+/* a focus ring on a dark page is sand, not clay (clay on ink measures 2:1) */
+body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3DDB8!important}
 `;
 
 module.exports = { CSS };

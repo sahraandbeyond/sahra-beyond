@@ -50,16 +50,16 @@ const HERO = {
 let SIZES = {}; try { SIZES = require('./assets/heroes/sizes.json'); } catch (e) {}
 const key = slug => slug.replace(/\//g, '-');
 const CSS = `
-html body .loc-hero.lh-ph.lh-ph{background:#120E0A!important;min-height:clamp(420px,58vh,620px);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(28px,4vw,48px) clamp(16px,5vw,48px) clamp(34px,5vw,64px)!important;animation:none!important}
+html body .loc-hero.lh-ph.lh-ph{background:#2A2016!important;min-height:clamp(420px,58vh,620px);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(28px,4vw,48px) clamp(16px,5vw,48px) clamp(34px,5vw,64px)!important;animation:none!important}
 html body .loc-hero.lh-ph.lh-ph::before{display:none!important}
-html body .loc-hero.lh-ph.lh-ph::after{background:linear-gradient(180deg,rgba(10,8,6,.40) 0%,rgba(10,8,6,.06) 20%,rgba(10,8,6,.30) 44%,rgba(10,8,6,.70) 70%,rgba(10,8,6,.88) 100%),linear-gradient(90deg,rgba(10,8,6,.55) 0%,rgba(10,8,6,.18) 50%,rgba(10,8,6,0) 75%)!important;z-index:1}
+html body .loc-hero.lh-ph.lh-ph::after{background:linear-gradient(180deg,rgba(42,32,22,.40) 0%,rgba(42,32,22,.06) 20%,rgba(42,32,22,.30) 44%,rgba(42,32,22,.70) 70%,rgba(42,32,22,.88) 100%),linear-gradient(90deg,rgba(42,32,22,.55) 0%,rgba(42,32,22,.18) 50%,rgba(42,32,22,0) 75%)!important;z-index:1}
 html body .loc-hero.lh-ph.lh-ph .lh-img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--lh-pos,50% 50%);z-index:0;transform:scale(1.02);animation:lhIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 @keyframes lhIn{from{transform:scale(1.07);opacity:.6}to{transform:scale(1.02);opacity:1}}
 html body .loc-hero.lh-ph.lh-ph .dune-far,html body .loc-hero.lh-ph.lh-ph .dune-near,html body .loc-hero.lh-ph.lh-ph .glow,html body .loc-hero.lh-ph.lh-ph .loc-emoji{display:none!important}
 html body .loc-hero.lh-ph.lh-ph .grain{opacity:.08}
 html body .loc-hero.lh-ph.lh-ph .loc-hero-inner{position:relative;z-index:3;width:100%;max-width:820px;margin:0 auto;padding:0 clamp(0px,2.2vw,32px);text-align:left}
 html body .loc-hero.lh-ph.lh-ph .crumbs{margin-bottom:18px}
-html body .loc-hero.lh-ph.lh-ph .lh-k{display:block;font:700 12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:#FFE0B0;margin:0 0 12px;text-shadow:0 1px 12px rgba(0,0,0,.7)}
+html body .loc-hero.lh-ph.lh-ph .lh-k{display:block;font:700 12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:#F3DDB8;margin:0 0 12px;text-shadow:0 1px 12px rgba(0,0,0,.7)}
 html body .loc-hero.lh-ph.lh-ph h1{font-size:clamp(40px,6.4vw,84px)!important;line-height:1.02!important;letter-spacing:-.01em;max-width:18ch;text-wrap:balance;margin:0 0 14px!important;text-shadow:0 2px 28px rgba(0,0,0,.45)}
 html body .loc-hero.lh-ph.lh-ph h1::after{margin-top:18px;width:64px}
 html body .loc-hero.lh-ph.lh-ph .lede{font-size:clamp(17px,1.6vw,21px)!important;line-height:1.5;max-width:52ch;margin:0!important;color:rgba(255,255,255,.95)}
@@ -68,9 +68,9 @@ html body .loc-hero.lh-ph.lh-ph .lede{font-size:clamp(17px,1.6vw,21px)!important
   html body .loc-hero.lh-ph.lh-ph+main{margin-top:-64px;position:relative;z-index:4}
 }
 @media(min-width:821px){
-  html body .loc-hero.lh-ph.lh-ph.lh-split{background:#1C1510!important}
+  html body .loc-hero.lh-ph.lh-ph.lh-split{background:#2A2016!important}
   html body .loc-hero.lh-ph.lh-ph.lh-split .lh-img{left:auto;right:0;width:60%;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%);mask-image:linear-gradient(90deg,transparent 0,#000 38%)}
-  html body .loc-hero.lh-ph.lh-ph.lh-split::after{background:linear-gradient(180deg,rgba(10,8,6,.25) 0%,rgba(10,8,6,0) 30%,rgba(10,8,6,0) 60%,rgba(10,8,6,.55) 100%)!important}
+  html body .loc-hero.lh-ph.lh-ph.lh-split::after{background:linear-gradient(180deg,rgba(42,32,22,.25) 0%,rgba(42,32,22,0) 30%,rgba(42,32,22,0) 60%,rgba(42,32,22,.55) 100%)!important}
 }
 @media(max-width:700px){
   html body .loc-hero.lh-ph.lh-ph .crumbs{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -105,22 +105,22 @@ function apply(slug, bodyHtml) {
 const fs = require('fs'), path = require('path');
 let OPEN = {}; try { OPEN = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'openers.json'), 'utf8')); delete OPEN._; } catch (e) {}
 const HOUSE_CSS = `<style>
-.ho{position:relative;display:block;overflow:hidden;background:#1C1610;color:#FAF6EF;height:min(104vw,460px)}
+.ho{position:relative;display:block;overflow:hidden;background:#2A2016;color:#FAF6EF;height:min(104vw,460px)}
 .ho picture{position:absolute;inset:0;display:block}
 .ho img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--ho-m,50% 30%)}
-.ho::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(20,14,8,.86) 0,rgba(20,14,8,.7) 22%,rgba(20,14,8,.48) 38%,rgba(20,14,8,.16) 50%,rgba(20,14,8,0) 60%)}
-.ho.ho-top::after{background:linear-gradient(to bottom,rgba(20,14,8,.72) 0,rgba(20,14,8,.5) 26%,rgba(20,14,8,0) 50%)}
+.ho::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(42,32,22,.86) 0,rgba(42,32,22,.7) 22%,rgba(42,32,22,.48) 38%,rgba(42,32,22,.16) 50%,rgba(42,32,22,0) 60%)}
+.ho.ho-top::after{background:linear-gradient(to bottom,rgba(42,32,22,.72) 0,rgba(42,32,22,.5) 26%,rgba(42,32,22,0) 50%)}
 .ho-t{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:0 16px 18px}
 .ho-top .ho-t{top:0;bottom:auto;padding:18px 16px 0}
-html body .ho .ho-k{display:block;margin:0 0 8px;font:400 11px/1.5 'Space Mono',ui-monospace,monospace!important;letter-spacing:.2em!important;text-transform:uppercase;color:#FFF1DC;text-shadow:0 1px 8px rgba(8,6,4,.75)}
-html body .ho h1{margin:0;padding:0;max-width:17ch;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(26px,7.4vw,32px)!important;line-height:1.08!important;letter-spacing:.2px;color:#FFFFFF;text-wrap:balance;text-shadow:0 1px 18px rgba(8,6,4,.6)}
+html body .ho .ho-k{display:block;margin:0 0 8px;font:400 11px/1.5 'Space Mono',ui-monospace,monospace!important;letter-spacing:.2em!important;text-transform:uppercase;color:#FAF6EF;text-shadow:0 1px 8px rgba(42,32,22,.75)}
+html body .ho h1{margin:0;padding:0;max-width:17ch;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:clamp(26px,7.4vw,32px)!important;line-height:1.08!important;letter-spacing:.2px;color:#FFFFFF;text-wrap:balance;text-shadow:0 1px 18px rgba(42,32,22,.6)}
 html body .ho h1::after{display:none}
 .ho h1 .nw{white-space:nowrap}
 /* a range mark beside the kicker (Sahra Trail's Two Ridges): small, in the kicker's own colour */
 .ho-k .ho-mk{display:inline-block;width:2em;height:1.78em;margin-inline-end:.7em;vertical-align:-.5em;fill:currentColor}
-html body .ho .ho-d{display:none;margin:0;font:400 16px/1.5 Jost,system-ui,sans-serif;color:#F6EDE0;max-width:40ch}
-html body .ho .ho-c{display:none;margin:0 0 14px;font:400 13px/1.5 Jost,system-ui,sans-serif;color:#F6EDE0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-html body .ho .ho-c a{color:#F6EDE0;text-decoration:none}
+html body .ho .ho-d{display:none;margin:0;font:400 16px/1.5 Jost,system-ui,sans-serif;color:#FAF6EF;max-width:40ch}
+html body .ho .ho-c{display:none;margin:0 0 14px;font:400 13px/1.5 Jost,system-ui,sans-serif;color:#FAF6EF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html body .ho .ho-c a{color:#FAF6EF;text-decoration:none}
 html body .ho .ho-c a:hover{text-decoration:underline}
 /* Arabic sets wider: full-width lines keep the words in their band, clear of the model */
 @media(max-width:599px){html[dir="rtl"] body .ho h1{max-width:none;font-size:clamp(23px,6.6vw,28px)!important;line-height:1.25!important}}
@@ -128,18 +128,18 @@ html body .ho .ho-c a:hover{text-decoration:underline}
    photo sits in the right-hand part and fades into the dark ground, and the words sit over the ground on the left,
    so they never cross the model. The one-line description and the breadcrumb join here. */
 @media(min-width:600px){
-  .ho{height:clamp(360px,50vh,480px);background:#1C1510}
+  .ho{height:clamp(360px,50vh,480px);background:#2A2016}
   .ho picture{inset-block:0;inset-inline:auto 0;width:62%;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 42%);mask-image:linear-gradient(90deg,transparent 0,#000 42%)}
   html[dir="rtl"] .ho picture{-webkit-mask-image:linear-gradient(270deg,transparent 0,#000 42%);mask-image:linear-gradient(270deg,transparent 0,#000 42%)}
   .ho img{object-position:var(--ho-d,50% 40%)}
-  .ho::after,.ho.ho-top::after{background:linear-gradient(180deg,rgba(10,8,6,.22) 0,rgba(10,8,6,0) 30%,rgba(10,8,6,0) 62%,rgba(10,8,6,.45) 100%)}
+  .ho::after,.ho.ho-top::after{background:linear-gradient(180deg,rgba(42,32,22,.22) 0,rgba(42,32,22,0) 30%,rgba(42,32,22,0) 62%,rgba(42,32,22,.45) 100%)}
   /* the words start on the same line as the product grid below (a 1240px column with a 16px gutter) */
   .ho-t,.ho-top .ho-t{top:auto;bottom:0;padding:0 32px clamp(28px,5vh,46px);padding-inline:max(32px,calc((100vw - 1208px)/2)) 32px}
   html body .ho .ho-k{margin-bottom:12px}
-  html body .ho h1{max-width:18ch;font-size:clamp(34px,3.6vw,56px)!important;line-height:1.04!important;margin-bottom:12px;text-shadow:0 2px 26px rgba(8,6,4,.5)}
+  html body .ho h1{max-width:18ch;font-size:clamp(34px,3.6vw,56px)!important;line-height:1.04!important;margin-bottom:12px;text-shadow:0 2px 26px rgba(42,32,22,.5)}
   html[dir="rtl"] body .ho h1{line-height:1.2!important}
-  html body .ho .ho-d{display:block;max-width:44ch;font-size:clamp(16px,1.3vw,18px);color:rgba(255,255,255,.94);text-shadow:0 1px 12px rgba(8,6,4,.5)}
-  html body .ho .ho-c{display:block;max-width:50%;color:rgba(255,255,255,.82);text-shadow:0 1px 10px rgba(8,6,4,.5)}
+  html body .ho .ho-d{display:block;max-width:44ch;font-size:clamp(16px,1.3vw,18px);color:rgba(255,255,255,.94);text-shadow:0 1px 12px rgba(42,32,22,.5)}
+  html body .ho .ho-c{display:block;max-width:50%;color:rgba(255,255,255,.82);text-shadow:0 1px 10px rgba(42,32,22,.5)}
   html body .ho .ho-c a{color:rgba(255,255,255,.82)}
   html body .ho .ho-c a:hover{color:#FFFFFF}
 }

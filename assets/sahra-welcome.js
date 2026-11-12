@@ -243,7 +243,7 @@
           var msg = badEmail ? (errEl && errEl.getAttribute('data-bad-email')) :
             t('That did not save. Please try again, or message us on WhatsApp: +971 58 544 9946.', 'لم يتم حفظ بياناتك. يُرجى المحاولة مرة أخرى، أو راسلنا على واتساب: ‎+971 58 544 9946');
           if (errEl) errEl.textContent = msg;
-          else { errEl = document.createElement('p'); errEl.setAttribute('data-err', ''); errEl.setAttribute('role', 'alert'); errEl.style.cssText = 'margin:12px 0 0;color:#9b3a25;font-size:15px'; errEl.textContent = msg; f.parentNode.insertBefore(errEl, f.nextSibling); }
+          else { errEl = document.createElement('p'); errEl.setAttribute('data-err', ''); errEl.setAttribute('role', 'alert'); errEl.style.cssText = 'margin:12px 0 0;color:#7E4114;font-size:15px'; errEl.textContent = msg; f.parentNode.insertBefore(errEl, f.nextSibling); }
           if (errEl.hasAttribute('data-err')) errEl.style.display = 'block';
           if (!badEmail) ev('waitlist_fail', { source: src });
         };

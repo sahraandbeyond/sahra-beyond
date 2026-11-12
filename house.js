@@ -54,7 +54,7 @@ html body.ls-page .pcards>.pcard:only-child{grid-column:auto;max-width:none;marg
 /* one card */
 html body.ls-page .pcard{position:relative;display:flex;flex-direction:column;min-width:0;background:#FFFFFF;border:1px solid var(--h-line);border-radius:14px;overflow:hidden;box-shadow:none;transition:box-shadow .25s}
 html body.ls-page .sfp>.pcard{display:none}html body.ls-page .sfp>.pcard.on{display:flex}
-html body.ls-page .pcard:hover{transform:none;box-shadow:0 10px 26px rgba(43,37,32,.10)}
+html body.ls-page .pcard:hover{transform:none;box-shadow:0 10px 26px rgba(42,32,22,.10)}
 html body.ls-page .pcard:hover .pcard-img img{transform:none}
 html body.ls-page .pcard-b{display:flex;flex-direction:column;flex:1 1 auto;gap:6px;padding:12px 12px 14px}
 html body.ls-page .pcard-t{display:block;min-height:2.5em;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:var(--h-lead)!important;line-height:1.25!important;color:var(--h-ink);text-decoration:none}

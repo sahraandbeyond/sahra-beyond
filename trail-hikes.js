@@ -74,65 +74,65 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root, notOp
   const mapUrl = d => `https://www.google.com/maps/search/?api=1&query=${d.trailhead.lat},${d.trailhead.lng}`;
 
   const CSS = `<style>
-.hk-hero{position:relative;background:#16110C;color:#F7EFE2;overflow:hidden}
+.hk-hero{position:relative;background:#2A2016;color:#FAF6EF;overflow:hidden}
 .hk-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62}
-.hk-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,17,12,.5),rgba(22,17,12,.2) 40%,rgba(22,17,12,.86))}
+.hk-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,32,22,.5),rgba(42,32,22,.2) 40%,rgba(42,32,22,.86))}
 .hk-hero-in{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:clamp(40px,7vw,84px) 20px clamp(26px,4vw,40px)}
-.hk-crumbs{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#EADBC4;margin:0 0 18px}
-.hk-crumbs a{color:#EADBC4;text-underline-offset:3px}
-.hk-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:6px 12px;border-radius:999px;color:#16110C}
-.hk-g-easy{background:#BFE3C0}.hk-g-moderate{background:#F2C98C}.hk-g-difficult{background:#F0A58C}
-.hk-hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:clamp(32px,5.2vw,58px);line-height:1.05;margin:14px 0 8px;color:#FFF8EC;text-wrap:balance}
-.hk-where{font-size:16.5px;line-height:1.5;color:#F3E7D3;margin:0;max-width:44em}
-.hk-credit{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 20px 12px;font-size:12px;color:#E2D3BC}
-.hk-credit a{color:#E2D3BC}
+.hk-crumbs{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#F3DDB8;margin:0 0 18px}
+.hk-crumbs a{color:#F3DDB8;text-underline-offset:3px}
+.hk-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:6px 12px;border-radius:999px;color:#2A2016}
+.hk-g-easy{background:#F2EDE6}.hk-g-moderate{background:#F3DDB8}.hk-g-difficult{background:#F3DDB8}
+.hk-hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:clamp(32px,5.2vw,58px);line-height:1.05;margin:14px 0 8px;color:#FAF6EF;text-wrap:balance}
+.hk-where{font-size:16.5px;line-height:1.5;color:#F3DDB8;margin:0;max-width:44em}
+.hk-credit{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 20px 12px;font-size:12px;color:#E5E1D9}
+.hk-credit a{color:#E5E1D9}
 .hk-main{max-width:980px;margin:0 auto;padding:0 20px 56px}
 .hk-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:-22px 0 26px;position:relative;z-index:2}
-.hk-stat{background:#FFFDF8;border:1px solid rgba(43,37,32,.14);border-radius:14px;padding:14px 16px;box-shadow:0 10px 26px rgba(43,37,32,.08)}
-.hk-stat small{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:#6B5A45;margin-bottom:5px}
-.hk-stat b{display:block;font-size:16px;line-height:1.35;color:#2B2018;font-weight:600}
-.hk-notice{border:1px solid #B8651B;background:#FFF4E3;color:#4A2A08;border-radius:14px;padding:14px 16px;margin:0 0 24px;font-size:15.5px;line-height:1.55}
+.hk-stat{background:#FAF6EF;border:1px solid rgba(42,32,22,.14);border-radius:14px;padding:14px 16px;box-shadow:0 10px 26px rgba(42,32,22,.08)}
+.hk-stat small{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:#6B6256;margin-bottom:5px}
+.hk-stat b{display:block;font-size:16px;line-height:1.35;color:#2A2016;font-weight:600}
+.hk-notice{border:1px solid #7E4114;background:#FAF6EF;color:#2A2016;border-radius:14px;padding:14px 16px;margin:0 0 24px;font-size:15.5px;line-height:1.55}
 .hk-notice b{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:4px;color:#7E4114}
-.hk-intro{font-size:18px;line-height:1.6;color:#2B2018;margin:0 0 8px}
+.hk-intro{font-size:18px;line-height:1.6;color:#2A2016;margin:0 0 8px}
 .hk-sec{margin:34px 0 0}
-.hk-sec h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:clamp(25px,3.2vw,32px);line-height:1.15;margin:0 0 12px;color:#2B2018}
-.hk-sec p,.hk-sec li{font-size:16.5px;line-height:1.65;color:#33271B}
+.hk-sec h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:clamp(25px,3.2vw,32px);line-height:1.15;margin:0 0 12px;color:#2A2016}
+.hk-sec p,.hk-sec li{font-size:16.5px;line-height:1.65;color:#2A2016}
 .hk-sec p{margin:0 0 12px}
 .hk-sec ul{margin:0 0 12px;padding-left:20px}
 .hk-sec li{margin:0 0 6px}
-.hk-dl{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:0;border-top:1px solid rgba(43,37,32,.14);margin:0 0 14px}
-.hk-dl dt,.hk-dl dd{padding:11px 0;border-bottom:1px solid rgba(43,37,32,.14);margin:0;font-size:16px;line-height:1.55}
-.hk-dl dt{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#6B5A45;padding-right:14px;padding-top:14px}
-.hk-dl dd{color:#33271B}
-.hk-na{color:#7A4A12;font-weight:600}
-.hk-map{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border-radius:999px;background:#285C5C;color:#FFF8EC;font-weight:600;font-size:15px;text-decoration:none;margin:2px 0 6px}
-.hk-map:hover{background:#1F4B4B}
-.hk-coord{font-family:'Space Mono',monospace;font-size:14px;color:#33271B}
+.hk-dl{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:0;border-top:1px solid rgba(42,32,22,.14);margin:0 0 14px}
+.hk-dl dt,.hk-dl dd{padding:11px 0;border-bottom:1px solid rgba(42,32,22,.14);margin:0;font-size:16px;line-height:1.55}
+.hk-dl dt{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#6B6256;padding-right:14px;padding-top:14px}
+.hk-dl dd{color:#2A2016}
+.hk-na{color:#7E4114;font-weight:600}
+.hk-map{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border-radius:999px;background:#2A2016;color:#FAF6EF;font-weight:600;font-size:15px;text-decoration:none;margin:2px 0 6px}
+.hk-map:hover{background:#2A2016}
+.hk-coord{font-family:'Space Mono',monospace;font-size:14px;color:#2A2016}
 .hk-two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-.hk-sos{background:#2B2018;color:#FFF8EC;border-radius:14px;padding:16px 18px;margin:14px 0 0;font-size:16px;line-height:1.55}
-.hk-sos b{color:#F2C98C}
+.hk-sos{background:#2A2016;color:#FAF6EF;border-radius:14px;padding:16px 18px;margin:14px 0 0;font-size:16px;line-height:1.55}
+.hk-sos b{color:#F3DDB8}
 .hk-src{font-size:14.5px;line-height:1.6;padding-left:20px}
 .hk-src li{font-size:14.5px;margin:0 0 4px}
 .hk-src a{color:#7E4114;word-break:break-word}
 .hk-doubts li{font-size:15px}
-.hk-foot{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.6px;color:#5C5148;margin:26px 0 0}
+.hk-foot{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.6px;color:#6B6256;margin:26px 0 0}
 .hk-next{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0 0}
-.hk-next a{display:block;border:1px solid rgba(43,37,32,.16);border-radius:14px;padding:16px;text-decoration:none;color:#2B2018;background:#FFFDF8}
-.hk-next a:hover{border-color:#A95A21}
+.hk-next a{display:block;border:1px solid rgba(42,32,22,.16);border-radius:14px;padding:16px;text-decoration:none;color:#2A2016;background:#FAF6EF}
+.hk-next a:hover{border-color:#7E4114}
 .hk-next small{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:#7E4114;margin-bottom:5px}
 .hk-next b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:21px;font-weight:600;line-height:1.15}
-.hk-next span{display:block;font-size:14px;line-height:1.45;color:#5C5148;margin-top:4px}
+.hk-next span{display:block;font-size:14px;line-height:1.45;color:#6B6256;margin-top:4px}
 .hk-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0 0}
-.hk-card{display:flex;flex-direction:column;border:1px solid rgba(43,37,32,.16);border-radius:16px;overflow:hidden;text-decoration:none;color:#2B2018;background:#FFFDF8}
-.hk-card:hover{border-color:#A95A21;box-shadow:0 12px 30px rgba(43,37,32,.1)}
-.hk-card-img{aspect-ratio:16/9;background:#2B2018 center/cover;display:block;width:100%;object-fit:cover}
-.hk-card-ph{aspect-ratio:16/9;background:linear-gradient(135deg,#3A2A1C,#6B4A2C);display:flex;align-items:flex-end;padding:14px;color:#F3E7D3;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}
+.hk-card{display:flex;flex-direction:column;border:1px solid rgba(42,32,22,.16);border-radius:16px;overflow:hidden;text-decoration:none;color:#2A2016;background:#FAF6EF}
+.hk-card:hover{border-color:#7E4114;box-shadow:0 12px 30px rgba(42,32,22,.1)}
+.hk-card-img{aspect-ratio:16/9;background:#2A2016 center/cover;display:block;width:100%;object-fit:cover}
+.hk-card-ph{aspect-ratio:16/9;background:linear-gradient(135deg,#2A2016,#4A4136);display:flex;align-items:flex-end;padding:14px;color:#F3DDB8;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}
 .hk-card-b{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px}
 .hk-card-b h3{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:25px;font-weight:600;line-height:1.12;margin:6px 0 0}
-.hk-card-b p{font-size:15px;line-height:1.5;color:#4A3D2F;margin:0}
-.hk-card-m{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.4px;color:#33271B}
+.hk-card-b p{font-size:15px;line-height:1.5;color:#4A4136;margin:0}
+.hk-card-m{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.4px;color:#2A2016}
 .hk-scale{margin:14px 0 0;padding:0;list-style:none}
-.hk-scale li{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:start;padding:10px 0;border-bottom:1px solid rgba(43,37,32,.12);font-size:16px;line-height:1.55}
+.hk-scale li{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:start;padding:10px 0;border-bottom:1px solid rgba(42,32,22,.12);font-size:16px;line-height:1.55}
 .hk-scale .hk-badge{justify-content:center}
 @media(max-width:760px){
   .hk-stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:-16px}
@@ -224,7 +224,7 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root, notOp
   <section class="hk-sec"><h2>Safety</h2>
     <div class="hk-two">
       <div><ul>${list(P.safety).map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
-      <div><h3 style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:#6B5A45;margin:0 0 8px">What to carry</h3><ul>${list(P.carry).map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div><h3 style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:#6B6256;margin:0 0 8px">What to carry</h3><ul>${list(P.carry).map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
     </div>
     <p>Tell someone your route and when you expect to be back. Turn around if the weather, the heat or the time is against you. We describe this route from published sources; we have not surveyed it, and nothing here is a statement that it is safe for you on the day.</p>
     <div class="hk-sos"><b>In an emergency</b><br>${esc(P.emergency)}</div>

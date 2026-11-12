@@ -313,7 +313,7 @@
      incoming went 0 -> 1 over the same .45s. Two half-transparent layers do not
      add up to one opaque one: at the midpoint the stack is only
      1 - (.5 * .5) = 75% covered, so 25% of the card's sand gradient
-     (#EFE7D8 -> #D6C4A9) bled through on EVERY transition. On the near-black Al
+     (#F2EDE6 -> #E5E1D9) bled through on EVERY transition. On the near-black Al
      Quaa tee that is a bright pulse, which is what "the slideshow looks
      flickery, not smooth" was (Faheem, 2 Sep 2026).
 

@@ -1026,6 +1026,15 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     check('analytics: the card fit switch sends the product, not a fixed line', !/line:'sahel'/.test(menA) && /track\('fit_switch',on&&on\.getAttribute\('data-handle'\)/.test(menA));
     check('analytics: the release and the ad-session flag are written onto every event and onto the page view', add.site_build === 'r127' && add.ad_session === 0 && sz.site_build === 'r127' && /gtag\('config','G-[A-Z0-9]+',\{site_build:'r127',ad_session:window\.SB_AD\?1:0\}\)/.test(A.src));
   }
+  /* 12 Nov 2026: one brand palette (Faheem: "B"). */
+  {
+    const PG = require('./palette-guard.js'); const sc = PG.scan();
+    check('palette: no colour outside the brand palette on any built page', sc.off.size === 0, [...sc.off.keys()].slice(0, 6).join(' '));
+    check('palette: the seven brand colours are the house-look values', PG.PALETTE.ink === '2A2016' && PG.PALETTE.cream === 'FAF6EF' && PG.PALETTE.sand === 'F3DDB8' && PG.PALETTE.clay === '7E4114' && PG.PALETTE.gold === '8F6212' && PG.PALETTE.soft === '4A4136' && PG.PALETTE.mute === '6B6256');
+    const ab = fs.readFileSync(path.join(__dirname, 'about', 'index.html'), 'utf8'), sh = fs.readFileSync(path.join(__dirname, 'sahel', 'index.html'), 'utf8');
+    check('palette: About and Sahel carry no navy or purple ground', !/#0E0A1F|#14102A|#39295A|#0E1A2E|#0B1526|rgba?\(20, ?16, ?42|rgba?\(14, ?26, ?46/i.test(ab + sh));
+    check('palette: the sign-up block is a solid ink ground', /\.news\{[^}]*#2A2016/.test(fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8')));
+  }
   const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
   check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);
   ['size-guide', 'fabric'].forEach(k => check('/' + k + '/ is a reading page: no listing stylesheet', !/<style id="house">/.test(fs.readFileSync(path.join(__dirname, k, 'index.html'), 'utf8'))));
@@ -1072,7 +1081,7 @@ console.log('\n\x1b[1mlegibility layer - every page\x1b[0m');
   check('legibility.js exports the CSS', typeof L.CSS === 'string' && L.CSS.length > 2000);
   check('body copy floor: 16px, weight 400', /body\{font-size:16px;font-weight:400\}/.test(L.CSS));
   check('mono labels floor: 12px', /\.eyebrow,[^{]*\{font-size:12px!important/.test(L.CSS));
-  check('secondary copy darker than #6B6256 (via --txt-soft)', /:root\{--txt-soft:#4A4136/.test(L.CSS) && /body\.dark-bg\{--txt-soft:rgba\(244,239,230,\.86\)/.test(L.CSS));
+  check('secondary copy darker than #6B6256 (via --txt-soft)', /:root\{--txt-soft:#4A4136/.test(L.CSS) && /body\.dark-bg\{--txt-soft:rgba\(250,246,239,\.86\)/.test(L.CSS));
   check('product page: grid column may shrink, thumbs wrap (the phone clipping)', /\.pdp>\*\{min-width:0\}/.test(L.CSS) && /\.gal-thumbs\{flex-wrap:wrap\}/.test(L.CSS));
   check('closed mobile menu is hidden (its shadow dimmed the top bar)', /\.m-panel:not\(\.open\)\{visibility:hidden\}/.test(L.CSS) && /\.m-panel\.open\{visibility:visible/.test(L.CSS));
   check('no text muted by opacity in the layer', !/opacity:0?\.[0-8]\d*/.test(L.CSS.replace(/\.pdp-add:disabled\{opacity:1/g, '')));

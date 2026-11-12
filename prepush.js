@@ -200,6 +200,19 @@ try {
   console.log(`    ${C.dim}run: node contrast-guard.js${C.off}`);
 }
 
+// 12 Nov 2026: one brand palette on every page (Faheem: "B", the website's set, for every surface).
+// palette-guard.js reads the CSS of every built page and fails on a colour outside the palette.
+let paletteOk = true;
+try {
+  require('child_process').execSync('node palette-guard.js', { cwd: ROOT, encoding: 'utf8' });
+  console.log(`  ${C.ok}✓${C.off} brand palette: every colour on every page is in the palette`);
+} catch (e) {
+  paletteOk = false;
+  console.log(`\n  ${C.bad}✗ colours outside the brand palette:${C.off}`);
+  String(e.stdout || '').split('\n').filter(l => l.trim().startsWith('✗')).slice(0, 8).forEach(l => console.log(`     ${C.bad}${l.trim()}${C.off}`));
+  console.log(`    ${C.dim}run: node palette-guard.js${C.off}`);
+}
+
 // ---- 2e. ONE cart engine, and it must still work ------------------------
 // The checkout shipped three independent cart implementations: the shared
 // module, an inline one on /shop/ with its own drawer and badge, and a
@@ -335,4 +348,4 @@ if (usedGit) {
 }
 console.log(`\n  ${changed.length} file(s).\n`);
 
-process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !cartOk || !cartTestOk || !journalOk || !marketTestOk || !homeTestOk || !arOk) ? 1 : 0);
+process.exit((ghostDirs.size || stackIssues.length || staleRefs.length || !contrastOk || !paletteOk || !cartOk || !cartTestOk || !journalOk || !marketTestOk || !homeTestOk || !arOk) ? 1 : 0);

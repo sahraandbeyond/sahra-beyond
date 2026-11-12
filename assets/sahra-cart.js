@@ -721,7 +721,7 @@
         var contain = cs.objectFit === 'contain', s = contain ? Math.min(w / nw, h / nh) : Math.max(w / nw, h / nh);
         var bw = nw * s, bh = nh * s, pos = String(cs.objectPosition || '50% 50%').split(' ');
         var px = parseFloat(pos[0]) / 100, py = parseFloat(pos[1] || pos[0]) / 100; if (isNaN(px)) px = .5; if (isNaN(py)) py = .5;
-        var bx = (w - bw) * px, by = (h - bh) * py, src = img.currentSrc || img.src, bg = '#E9E1D3';
+        var bx = (w - bw) * px, by = (h - bh) * py, src = img.currentSrc || img.src, bg = '#E5E1D9';
         var fx = document.createElement('div'); fx.className = 'sb-fold'; fx.setAttribute('aria-hidden', 'true');
         fx.style.left = left + 'px'; fx.style.top = top + 'px'; fx.style.width = w + 'px'; fx.style.height = h + 'px';
         fx.innerHTML = '<div class="sb-fold-y"><div class="sb-fold-p"><div class="sb-fold-top"></div><div class="sb-fold-bot"><i class="sb-f1"></i><i class="sb-f2"></i></div></div></div>';

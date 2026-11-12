@@ -797,9 +797,9 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 @media(max-width:820px){.sb-curwrap--hdr{display:none}}
 </style>
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=1da6b0e7">
-<script src="/assets/sahra-cart.js?v=803808dd" defer></script>
-<script src="/assets/sahra-market.js?v=b44d27ab" defer></script>
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=2a20f450">
+<script src="/assets/sahra-cart.js?v=cbb261ec" defer></script>
+<script src="/assets/sahra-market.js?v=be20a079" defer></script>
 <style id="shop-phone-first">
 /* 25 Sep 2026 (Faheem, after the persona review): on phones the first screen showed no
    product at all - only the hero card. The hero now holds the eyebrow and headline, and the
@@ -825,7 +825,7 @@ html{font-size-adjust:.5}
 /* ===== legibility layer: floors for size, weight and contrast (5 Sep 2026) ===== */
 :root{--txt-soft:#4A4136;--mist:#4A4136}
 /* the product pages flip these when the scroll reaches a dark background (body.dark-bg): keep that, brighter */
-body.dark-bg{--txt-soft:rgba(244,239,230,.86);--mist:rgba(244,239,230,.86)}
+body.dark-bg{--txt-soft:rgba(250,246,239,.86);--mist:rgba(250,246,239,.86)}
 html{-webkit-text-size-adjust:100%}
 body{font-size:16px;font-weight:400}
 p,li,dd,td,label,figcaption{font-weight:400}
@@ -837,7 +837,7 @@ p,li,dd,td,label,figcaption{font-weight:400}
 .pdp-ans-foot,.qual-item span,.card-body span,.tag-invite,.rv-count,.pk-note,.sgnote,.sz-cm,.crumb,.gal-model,.pm-sky{color:var(--txt-soft,#4A4136)}
 /* (.crumbs, .hero-ship and .meta sit on dark heroes and keep their cream) */
 .crumbs,.crumbs a{color:rgba(255,255,255,.95)!important}
-.hero-ship,.meta{color:rgba(247,239,226,.95)}
+.hero-ship,.meta{color:rgba(250,246,239,.95)}
 .pdp-ans-foot,.qual-item span,.tag-invite,.pk-note,.sgnote,.sz-cm,.gal-model{font-size:14px}
 .tag-invite a{color:var(--txt-soft,#4A4136)}
 
@@ -857,10 +857,10 @@ p,li,dd,td,label,figcaption{font-weight:400}
 .pcard-spec span{color:var(--ink,#2A2016)}
 
 /* dark panels (shop .prod.dark, the location tee band): secondary text in cream, never ink */
-.prod.dark .pm-sky,.prod.dark .pcard-rv-n,.prod.dark .rv-meta,.prod.dark .crumb,.prod.dark .pm-gps,.prod.dark .place-meta,.prod.dark .prod-specs li,.prod.dark .story,.prod.dark .pcard-place{color:rgba(247,239,226,.92)!important}
-.prod.dark .rv-stars,.prod.dark .pcard-rv .rv-stars{color:#E9B978!important}
-.teecta-txt a:not(.btn),.teecta-meta a:not(.btn),.teecta-meta span{color:#E9B978!important}
-.teecta-txt .sb-price{color:rgba(247,239,226,.95)!important}
+.prod.dark .pm-sky,.prod.dark .pcard-rv-n,.prod.dark .rv-meta,.prod.dark .crumb,.prod.dark .pm-gps,.prod.dark .place-meta,.prod.dark .prod-specs li,.prod.dark .story,.prod.dark .pcard-place{color:rgba(250,246,239,.92)!important}
+.prod.dark .rv-stars,.prod.dark .pcard-rv .rv-stars{color:#F3DDB8!important}
+.teecta-txt a:not(.btn),.teecta-meta a:not(.btn),.teecta-meta span{color:#F3DDB8!important}
+.teecta-txt .sb-price{color:rgba(250,246,239,.95)!important}
 
 /* top bar and hero delivery line: readable on phones */
 .sb-topbar{font-size:12px!important;letter-spacing:.12em!important;padding:9px 12px!important;line-height:1.35}
@@ -868,8 +868,8 @@ p,li,dd,td,label,figcaption{font-weight:400}
 
 /* footer links: dark footers (home, shop, product pages) at 88% cream, not 70%; the
    guides' cream footer (.ftr) in ink */
-.foot-links a,footer:not(.ftr) .links a,footer .foot-links a{color:rgba(247,239,226,.9)!important;font-size:13px!important;letter-spacing:.08em!important}
-.foot-copy,footer .foot-copy{color:rgba(247,239,226,.9)!important;font-size:13px}
+.foot-links a,footer:not(.ftr) .links a,footer .foot-links a{color:rgba(250,246,239,.9)!important;font-size:13px!important;letter-spacing:.08em!important}
+.foot-copy,footer .foot-copy{color:rgba(250,246,239,.9)!important;font-size:13px}
 .ftr{font-size:14px;color:#4A4136}
 .ftr .links a{color:#4A4136!important;font-size:13.5px!important}
 .m-panel a{font-size:20px}
@@ -879,7 +879,7 @@ nav .nav-links a,.hdr-nav a,.nav-links a{font-size:15px;font-weight:500}
 /* the review band's own style block sits in the body, after this layer: a body prefix outranks it,
    and the template's body.dark-bg .rv-stars (gold on dark) still outranks this */
 body .rv-stars,body .rv-band .rv-stars,body .pcard-rv .rv-stars{color:#8F6212}
-body.dark-bg .rv-stars,body.dark-bg .rv-band .rv-stars{color:#E9B978}
+body.dark-bg .rv-stars,body.dark-bg .rv-band .rv-stars{color:#F3DDB8}
 body .rv-text{font-size:16px;line-height:1.6}
 body .rv-count{font-size:14px}
 .rv-meta{font-size:12.5px!important}
@@ -890,19 +890,19 @@ body .rv-count{font-size:14px}
 .btn,button.btn,a.btn{font-size:14px;font-weight:600;letter-spacing:.08em}
 .pdp-add{font-size:16px;font-weight:700}
 /* disabled = outlined, not faded: still readable, still clearly not the filled button */
-.pdp-add:disabled{opacity:1;background:transparent;color:#5C5148;border:1.5px dashed #8A7F73;cursor:not-allowed}
-body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
+.pdp-add:disabled{opacity:1;background:transparent;color:#6B6256;border:1.5px dashed #6B6256;cursor:not-allowed}
+body.dark-bg .pdp-add:disabled{color:#F3DDB8;border-color:#6B6256}
 .qa-b{font-size:12.5px;font-weight:700}
 .fit-b{font-size:12px;font-weight:700}
 .filt{font-weight:700}
 
 /* homepage journey: copy over the plates */
 .lede{font-size:17px}
-.scroll-cue{color:rgba(247,239,226,.85)!important}
-.vband-cap,.vband-cap a{color:rgba(247,239,226,.9)!important}
+.scroll-cue{color:rgba(250,246,239,.85)!important}
+.vband-cap,.vband-cap a{color:rgba(250,246,239,.9)!important}
 .j-stats b{font-size:26px}
 .j-stats span{font-size:13px}
-.design-card p{font-size:15px;color:rgba(247,239,226,.92)}
+.design-card p{font-size:15px;color:rgba(250,246,239,.92)}
 .qual-item span{font-size:14px}
 
 /* ===== glass panels behind the text that sits on moving imagery (Faheem, 5 Sep) =====
@@ -910,20 +910,20 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
    scroll; a sheer frosted panel keeps the words on a steady ground. Dark stops
    only - the cream "paper" stops need none. */
 #s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{
-  background:rgba(16,12,30,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
+  background:rgba(42,32,22,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
   border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:30px 32px;box-shadow:0 24px 60px rgba(0,0,0,.28);
   box-sizing:border-box;max-width:660px}
 #s-hero .col{max-width:720px}
 @media(max-width:760px){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{padding:22px 18px;border-radius:18px}}
-@supports not (backdrop-filter:blur(1px)){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{background:rgba(16,12,30,.72)}}
+@supports not (backdrop-filter:blur(1px)){#s-hero .col,#s-alquaa .col,#s-liwa .col,#s-naqab .col,#s-news .col{background:rgba(42,32,22,.72)}}
 /* the design card and waitlist box already carry their own glass: flatten them inside the panel */
 .stop .col .design-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);box-shadow:none}
 /* the shop hero */
-.hero-c{background:rgba(16,12,30,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
+.hero-c{background:rgba(42,32,22,.42);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);
   border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:34px 30px!important;box-shadow:0 24px 60px rgba(0,0,0,.28);
   width:fit-content;max-width:min(92vw,780px);margin:0 auto;box-sizing:border-box}
 @media(max-width:760px){.hero-c{padding:26px 18px!important;border-radius:18px;max-width:94vw}}
-@supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(16,12,30,.72)}}
+@supports not (backdrop-filter:blur(1px)){.hero-c{background:rgba(42,32,22,.72)}}
 
 /* ===== homepage and shop: type one step larger (Faheem, 5 Sep: "still seems small") =====
    The two selling pages get a larger scale than the guides: copy 18-19px,
@@ -981,7 +981,7 @@ body.dark-bg .pdp-add:disabled{color:#E9D9C4;border-color:#9A8F82}
    "Regular fit" and "Slim cut" ran together as one line of text */
 .catnav{display:grid;gap:10px;margin:18px 0 26px}
 @media(min-width:640px){.catnav{grid-template-columns:repeat(3,1fr)}}
-.catnav a{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border:1px solid rgba(43,37,32,.16);border-radius:12px;background:#fff;text-decoration:none;color:#2A2016}
+.catnav a{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#fff;text-decoration:none;color:#2A2016}
 .catnav a b{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:19px;font-weight:600}
 .catnav a span{font-size:14px;color:#4A4136}
 /* size tables wider than a phone */
@@ -1184,7 +1184,7 @@ body.buy-page .pdp-add .sb-price,.pdp-add .sb-price{font-size:inherit!important;
    the price is the headline figure and the breadcrumb sits on the cream reading
    surface, so both are released for this page only (19 Sep). */
 body.tote-page .tt-price .sb-price{font-size:inherit!important;letter-spacing:.01em!important;font-weight:inherit!important}
-body.tote-page .crumbs,body.tote-page .crumbs a{color:#6B5B48!important}
+body.tote-page .crumbs,body.tote-page .crumbs a{color:#6B6256!important}
 body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .pdp-size:disabled .sz-out,.pdp-size[disabled] .sz-out{text-decoration:none}
 .meta .sb-ship-uae,.meta .sb-ship-gcc,.meta .sb-ship-intl,.meta .hero-rv-n,.hero-ship span,.sb-ship-intl{font-size:14px!important;letter-spacing:.04em!important}
@@ -1202,7 +1202,7 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
    file forbids everywhere else. The PDP already greys XL and says "Sold out";
    the shop grid showed no state at all to the eye. Same dashed-outline treatment
    the rest of the site uses for a disabled control. */
-.sring-qa-b:disabled,.sring-qa-b[disabled]{opacity:1!important;color:#6B6256!important;border:1.5px dashed #9A8F82!important;background:transparent!important;text-decoration:line-through!important;text-decoration-thickness:1.5px;cursor:not-allowed}
+.sring-qa-b:disabled,.sring-qa-b[disabled]{opacity:1!important;color:#6B6256!important;border:1.5px dashed #6B6256!important;background:transparent!important;text-decoration:line-through!important;text-decoration-thickness:1.5px;cursor:not-allowed}
 .sring-qa-b:disabled:hover,.sring-qa-b[disabled]:hover{background:transparent!important;color:#6B6256!important}
 /* footer social links were 134x16 - give them a real row to hit */
 .foot-soc a,.foot-links a{display:inline-block;padding:6px 0}
@@ -1232,8 +1232,8 @@ body.tote-page .crumbs a{text-decoration:underline;text-underline-offset:2px}
 .pcard-bundle{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;color:#7E4114;font-weight:700}
 
 /* mini product strip at the top of location and guide pages (23 Sep 2026) */
-.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(43,37,32,.14);border-radius:14px;box-shadow:0 6px 20px rgba(43,37,32,.07);color:#2A2016}
-.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#EFEAE0;display:block}
+.minitee{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:12px 14px;background:#fff;border:1px solid rgba(42,32,22,.14);border-radius:14px;box-shadow:0 6px 20px rgba(42,32,22,.07);color:#2A2016}
+.minitee-img{flex:0 0 72px;width:72px;height:90px;border-radius:9px;overflow:hidden;background:#FAF6EF;display:block}
 .minitee-img img{width:100%;height:100%;object-fit:cover;display:block}
 .minitee-txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
 .minitee-eye{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;font-weight:700}
@@ -1357,16 +1357,20 @@ html body .folds summary h2,html body .fold summary h2{font-size:22px!important;
 @media(max-width:700px){html body .folds summary h2,html body .fold summary h2{font-size:19px!important}}
 /* the Al Quaa place band set its H2 in Jost bold; every H2 is Cormorant */
 html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
+/* 12 Nov 2026 (brand palette): the Instagram page lost its dark sky, so its crumbs are muted ink, not white */
+body.feed-page .crumbs,body.feed-page .crumbs a{color:#6B6256!important}
+/* a focus ring on a dark page is sand, not clay (clay on ink measures 2:1) */
+body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3DDB8!important}
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=cdd516cd">
-<script src="/assets/sahra-welcome.js?v=ff321632" data-sbw defer></script>
-<link rel="stylesheet" href="/assets/sahra-nav.css?v=c9b24ad7">
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=4200651e">
+<script src="/assets/sahra-welcome.js?v=8ea7e9af" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-nav.css?v=b2e166cc">
 <script src="/assets/sahra-nav.js?v=c2bea5be" data-sbn defer></script>
 <!--SBIMGS:START--><script>window.SB_IMGS={"al-quaa-galaxy-regular":["/shirts/alquaa-dune-back.webp","/shirts/alquaa-dune-front.webp","/shirts/alquaa-dune-print.webp","/shirts/alquaa-dune-print-2.webp","/shirts/alquaa-dune-chest.webp","/shirts/alquaa-dune-mark.webp"],"al-quaa-galaxy-oversized":["/shirts/alquaa-model-back.webp","/shirts/alquaa-model-front.webp","/shirts/alquaa-lake-back-close.webp","/shirts/alquaa-lake-back-her.webp","/shirts/alquaa-lake-front.webp","/shirts/alquaa-lake-front-her.webp","/shirts/alquaa-lake-back.webp","/shirts/alquaa-female-1.webp","/shirts/alquaa-female-2.webp","/shirts/alquaa-model-dusk.webp","/shirts/alquaa-female-3.webp"],"empty-quarter-regular":["/shirts/emptyquarter-dune-front.webp","/shirts/emptyquarter-dune-back.webp","/shirts/emptyquarter-dune-chest.webp","/shirts/emptyquarter-dune-detail.webp","/shirts/emptyquarter-dune-neck.webp"],"empty-quarter-oversized":["/shirts/emptyquarter-model-stand.webp","/shirts/emptyquarter-model-sunset.webp","/shirts/emptyquarter-lake-front.webp","/shirts/emptyquarter-lake-side.webp","/shirts/emptyquarter-model-front.webp","/shirts/emptyquarter-female-1.webp","/shirts/emptyquarter-female-2.webp","/shirts/emptyquarter-female-3.webp","/shirts/emptyquarter-female-4.webp","/shirts/emptyquarter-female-5.webp","/shirts/emptyquarter-female-6.webp"],"hajar-mountains-regular":["/shirts/hajar-dune-back.webp","/shirts/hajar-dune-front.webp"],"hajar-mountains-oversized":["/shirts/hajar-lake-back-her.webp","/shirts/hajar-model-front.webp","/shirts/hajar-lake-back-kneel.webp","/shirts/hajar-lake-full.webp","/shirts/hajar-model-back.webp","/shirts/hajar-female-1.webp","/shirts/hajar-female-2.webp","/shirts/hajar-female-3.webp","/shirts/hajar-female-4.webp"],"sand-polo":["/shirts/polo-dune-front.webp","/shirts/polo-dune-back.webp","/shirts/polo-dune-three-quarter.webp","/shirts/polo-dune-side.webp","/shirts/polo-dune-look.webp","/shirts/polo-dune-collar.webp","/shirts/polo-dune-placket.webp","/shirts/polo-dune-sunset.webp"]};</script><!--SBIMGS:END-->
-<link rel="stylesheet" href="/assets/sahra-system.css?v=773f6fe4">
+<link rel="stylesheet" href="/assets/sahra-system.css?v=6125e2c4">
 <script src="/assets/sahra-measure.js?v=994865e3" defer></script>
 <link rel="preconnect" href="https://checkout.sahraandbeyond.ae">
-<script src="/assets/sahra-zoom.js?v=a7be317e" defer></script>
+<script src="/assets/sahra-zoom.js?v=4e07cdf6" defer></script>
 </head>
 <body class="shop-page">
 <a class="skip-link" href="#products">Skip to the collection</a>
@@ -1455,14 +1459,14 @@ html:not([dir="rtl"]) body .place-band h2{font-family:'Cormorant Garamond',Georg
 -->
 
 <!--RV_BAND:START--><style>
-.reviews{border-top:1px solid var(--line,rgba(43,37,32,.12))}
+.reviews{border-top:1px solid var(--line,rgba(42,32,22,.12))}
 .rv-aggregate{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:24px}
-.rv-stars{color:#A9761A;letter-spacing:2px;font-size:17px}
-body.dark-bg .rv-stars{color:#E9B978}
+.rv-stars{color:#8F6212;letter-spacing:2px;font-size:17px}
+body.dark-bg .rv-stars{color:#F3DDB8}
 .rv-score{font-family:'Space Mono',monospace;font-size:18px;font-weight:700}
 .rv-count{font-size:13px;color:var(--txt-soft,#6B6256)}
 .rv-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;list-style:none;padding:0;margin:0}
-.rv-card{border:1px solid var(--line,rgba(43,37,32,.12));border-radius:2px;padding:20px}
+.rv-card{border:1px solid var(--line,rgba(42,32,22,.12));border-radius:2px;padding:20px}
 .rv-card .rv-stars{font-size:14px;margin-bottom:8px;display:block}
 .rv-title{display:block;font-size:15px;margin-bottom:6px}
 .rv-text{font-size:14.5px;font-style:italic;line-height:1.65;margin:0 0 10px}
@@ -1470,49 +1474,49 @@ body.dark-bg .rv-stars{color:#E9B978}
 .rv-photo{width:72px;height:72px;object-fit:cover;border-radius:2px}
 .rv-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--txt-soft,#6B6256)}
 .rv-reply{font-size:13.5px;line-height:1.6;margin:12px 0 0;padding-left:12px;
-  border-left:2px solid var(--line,rgba(43,37,32,.12))}
+  border-left:2px solid var(--line,rgba(42,32,22,.12))}
 .pcard-rv{display:flex;align-items:center;gap:7px;margin:2px 0 8px}
 .pcard-rv .rv-stars{font-size:13px;letter-spacing:1px}
 .pcard-rv-n{font-family:'Space Mono',monospace;font-size:11px;color:var(--txt-soft,#6B6256)}
-.rv-band{background:#FAF6EF;color:#33271B;padding:60px 24px;border-top:1px solid rgba(42,32,22,.10)}
+.rv-band{background:#FAF6EF;color:#2A2016;padding:60px 24px;border-top:1px solid rgba(42,32,22,.10)}
 .rv-band .wrap{max-width:1100px;margin:0 auto}
-.rv-band .eyebrow{display:block;margin-bottom:14px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9C521B}
+.rv-band .eyebrow{display:block;margin-bottom:14px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#7E4114}
 .rv-band .rv-card{background:#fff;border:1px solid rgba(42,32,22,.14)}
-.rv-band .rv-stars{color:#A9761A}
-.rv-band .rv-score{color:#33271B}
+.rv-band .rv-stars{color:#8F6212}
+.rv-band .rv-score{color:#2A2016}
 .rv-band .rv-count,.rv-band .rv-meta{color:#6B6256}
 .rv-compact .rv-card:nth-child(n+4){display:none}
-.rv-showall{display:block;margin:6px auto 0;padding:12px 22px;border:1px solid #33271B;border-radius:999px;background:#fff;color:#33271B;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
-.rv-showall:hover{background:#33271B;color:#fff}
-.rv-band .rv-text{color:#33271B;font-style:italic}
+.rv-showall{display:block;margin:6px auto 0;padding:12px 22px;border:1px solid #2A2016;border-radius:999px;background:#fff;color:#2A2016;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+.rv-showall:hover{background:#2A2016;color:#fff}
+.rv-band .rv-text{color:#2A2016;font-style:italic}
 .rv-src{margin:18px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft,#6B6256)}
 .rv-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .rv-band .rv-src{color:#6B6256}
 .rv-filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0 0 16px}
 .rv-chips{display:flex;flex-wrap:wrap;gap:8px}
-.rv-chip{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;padding:9px 14px;min-height:40px;border:1px solid rgba(42,32,22,.58);border-radius:999px;background:#fff;color:#33271B;cursor:pointer}
-.rv-chip.on{background:#33271B;color:#fff;border-color:#33271B}
+.rv-chip{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;padding:9px 14px;min-height:40px;border:1px solid rgba(42,32,22,.58);border-radius:999px;background:#fff;color:#2A2016;cursor:pointer}
+.rv-chip.on{background:#2A2016;color:#fff;border-color:#2A2016}
 .rv-chip:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
 .rv-sort{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#6B6256}
-.rv-sort select{font-family:'Space Mono',monospace;font-size:12px;padding:8px 12px;min-height:40px;border:1px solid rgba(42,32,22,.58);border-radius:999px;background:#fff;color:#33271B;cursor:pointer}
+.rv-sort select{font-family:'Space Mono',monospace;font-size:12px;padding:8px 12px;min-height:40px;border:1px solid rgba(42,32,22,.58);border-radius:999px;background:#fff;color:#2A2016;cursor:pointer}
 .rv-more{display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
-.rv-more:hover{color:#33271B}
+.rv-more:hover{color:#2A2016}
 .rv-photo-a{display:inline-block;line-height:0;border-radius:2px;cursor:zoom-in;transition:transform .2s}
 .rv-photo-a:hover{transform:scale(1.04)}
 .rv-photo-a:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
 .rv-photo{width:84px;height:84px;object-fit:cover;border-radius:2px;border:1px solid rgba(42,32,22,.18)}
-#sbRvLB{position:fixed;inset:0;z-index:9999;background:rgba(20,14,8,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out}
+#sbRvLB{position:fixed;inset:0;z-index:9999;background:rgba(42,32,22,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out}
 #sbRvLB img{max-width:92vw;max-height:86vh;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 #sbRvLB button{position:absolute;top:16px;right:16px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:30px;line-height:1;cursor:pointer}
 #sbRvLB button:hover{background:rgba(255,255,255,.28)}
-#sbRvLB button:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
+#sbRvLB button:focus-visible{outline:2px solid #F3DDB8;outline-offset:2px}
 @media(max-width:760px){.rv-list{grid-template-columns:1fr}}
-.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#5C5148;margin:4px 0 2px}
+.rv-about{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#6B6256;margin:4px 0 2px}
 .rv-scope{font-size:14px;color:#4A4136;margin:-6px 0 14px}
 .pdp-quotes{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:8px}
-.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#C0702E);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
+.pdp-quotes li{font-size:14px;line-height:1.5;padding:10px 12px;border-left:2px solid var(--accent,#7E4114);background:rgba(255,255,255,.35);border-radius:0 10px 10px 0}
 .pdp-quotes q{font-style:italic}
-.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#5C5148;margin-top:4px;text-transform:uppercase}
+.pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#6B6256;margin-top:4px;text-transform:uppercase}
 </style>
   <section class="reviews rv-band" aria-labelledby="rvb-h">
     <div class="wrap">
@@ -1659,8 +1663,8 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   <!--GUIDES:START--><style>.foot-guides{position:static;display:block;max-width:980px;margin:14px auto 6px;padding:0 16px;font-size:13px;line-height:1.95;text-align:center}.foot-guides div{margin:2px 0}.foot-guides b{font-weight:600}.foot-guides a{text-decoration:none;white-space:nowrap}.foot-guides a:hover{text-decoration:underline}.foot-guides .fg-d{display:inline-block;vertical-align:top;margin:0 6px}.foot-guides .fg-d[open]{display:block;margin:0}.foot-guides summary{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;cursor:pointer;list-style:none;font-weight:600;letter-spacing:.04em}.foot-guides summary::-webkit-details-marker{display:none}.foot-guides summary::after{content:"+";font-weight:400;font-size:17px;line-height:1}.foot-guides .fg-d[open] summary::after{content:"\2212"}.foot-guides summary:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:4px}</style><div class="foot-guides" role="navigation" aria-label="Guides and more"><details class="fg-d"><summary>Guides</summary><div><a href="/places/">All places</a> · <a href="/camping/">Camping in the UAE</a> · <a href="/camping-near-dubai/">Camping near Dubai</a> · <a href="/desert-camping-beginners/">Camping for beginners</a> · <a href="/secluded-camping/">Secluded camping</a> · <a href="/stargazing/">Milky Way / stargazing</a> · <a href="/wadis/">Wadis in the UAE</a> · <a href="/hiking/">Hiking in the UAE</a> · <a href="/mountain-escapes/">Mountain escapes</a> · <a href="/hatta-guide/">Hatta day trip</a> · <a href="/best-beaches/">Best beaches</a> · <a href="/fujairah-beaches/">Fujairah beaches</a> · <a href="/snorkeling/">Snorkeling</a> · <a href="/desert-safari/">Desert safari</a> · <a href="/family-friendly-outdoors/">Family-friendly</a> · <a href="/outdoor-things-to-do/">Things to do</a></div></details><details class="fg-d"><summary>More</summary><div><a href="/men/">Men</a> · <a href="/women/">Women</a> · <a href="/new/">New: Sahel and Sahra Trail</a> · <a href="/t-shirts/">T-shirts</a> · <a href="/t-shirts/oversized/">Oversized t-shirts</a> · <a href="/polos/">Polos</a> · <a href="/hoodies/">Hoodies</a> · <a href="/activewear/">Activewear</a> · <a href="/accessories/">Accessories</a> · <a href="/national-day/">National Day t-shirts</a> · <a href="/gifts/">Gift ideas</a> · <a href="/under-150/">Under AED 150</a> · <a href="/trail/">Sahra Trail</a> · <a href="/sahel/">Sahel: The Coast Edition</a> · <a href="/tote/">Canvas tote</a> · <a href="/journal/">Journal</a> · <a href="/fabric/">Fabric</a> · <a href="/size-guide/">Size guide</a> · <a href="/ar/" hreflang="ar" lang="ar">العربية</a></div></details></div><!--GUIDES:END-->
   <!--IG:FOOT--><style>
 /* ---- Instagram blocks (instagram-feed.js) ---- */
-.ig-strip,.ig-rail-sec,.ig-foot,.ig-feedhead,.ig-grid{--ig-ink:#2B2620;--ig-soft:#5C5346;--ig-line:rgba(43,37,32,.14);--ig-fill:#fff;--ig-accent:#9C521B;--ig-seg:rgba(43,37,32,.25);--ig-segon:#9C521B}
-.ig-dark{--ig-ink:#F7EFE2;--ig-soft:rgba(247,239,226,.72);--ig-line:rgba(247,239,226,.22);--ig-fill:rgba(20,16,42,.6);--ig-accent:#E9B978;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}
+.ig-strip,.ig-rail-sec,.ig-foot,.ig-feedhead,.ig-grid{--ig-ink:#2A2016;--ig-soft:#6B6256;--ig-line:rgba(42,32,22,.14);--ig-fill:#fff;--ig-accent:#7E4114;--ig-seg:rgba(42,32,22,.25);--ig-segon:#7E4114}
+.ig-dark{--ig-ink:#FAF6EF;--ig-soft:rgba(250,246,239,.72);--ig-line:rgba(250,246,239,.22);--ig-fill:#2A2016;--ig-accent:#F3DDB8;--ig-seg:rgba(255,255,255,.35);--ig-segon:#fff}
 .ig-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 12px}
 .ig-eyebrow,.ig-head h2.ig-eyebrow,.sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;color:var(--ig-soft);font-weight:400;margin:0;max-width:none;line-height:1.5;font-style:normal;opacity:1;visibility:visible;transform:none}
 .ig-follow{font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ig-ink);text-decoration:none;border:1px solid var(--ig-line);border-radius:999px;padding:7px 12px;white-space:nowrap}
@@ -1669,9 +1673,9 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 .ig-rail::-webkit-scrollbar{display:none}
 .ig-card{flex:0 0 62vw;max-width:252px;min-width:0;scroll-snap-align:center;background:var(--ig-fill);border:1px solid var(--ig-line);border-radius:14px;overflow:hidden;position:relative;transition:transform .25s ease,border-color .25s ease}
 @media(min-width:761px){.ig-card{flex-basis:calc((100% - 60px)/6);max-width:none}.ig-rail-short .ig-card{flex-basis:220px}.ig-card:hover{transform:translateY(-6px);border-color:var(--ig-ink)}}
-.ig-media{position:relative;aspect-ratio:4/5;background:#181109;overflow:hidden}
+.ig-media{position:relative;aspect-ratio:4/5;background:#2A2016;overflow:hidden}
 /* 13 Oct 2026 (Faheem): posts whose cover shows pre-production renders say so on the image */
-.ig-mock{position:absolute;top:10px;right:10px;z-index:3;padding:3px 8px;border-radius:999px;background:rgba(10,16,22,.78);color:#F6ECDD;font:600 10px/1.2 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.ig-mock{position:absolute;top:10px;right:10px;z-index:3;padding:3px 8px;border-radius:999px;background:rgba(42,32,22,.78);color:#FAF6EF;font:600 10px/1.2 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
 .ig-media img,.ig-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .ig-media video{opacity:0;transition:opacity .6s ease;pointer-events:none}
 .ig-media video.on{opacity:1}
@@ -1687,8 +1691,8 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 .ig-prev{left:0}.ig-next{right:0}
 .ig-tap:focus-visible{outline:2px solid var(--ig-accent);outline-offset:-4px}
 .ig-kind{position:absolute;left:10px;bottom:10px;z-index:3;pointer-events:none;font-family:'Space Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.42);border-radius:999px;padding:4px 8px;backdrop-filter:blur(4px)}
-.ig-card.ig-new .ig-media::before{content:'';position:absolute;top:18px;right:12px;width:8px;height:8px;border-radius:50%;background:#C8703A;box-shadow:0 0 0 0 rgba(200,112,58,.6);z-index:4;animation:igPulse 1.6s ease-in-out 3}
-@keyframes igPulse{0%{box-shadow:0 0 0 0 rgba(200,112,58,.6)}70%{box-shadow:0 0 0 10px rgba(200,112,58,0)}100%{box-shadow:0 0 0 0 rgba(200,112,58,0)}}
+.ig-card.ig-new .ig-media::before{content:'';position:absolute;top:18px;right:12px;width:8px;height:8px;border-radius:50%;background:#7E4114;box-shadow:0 0 0 0 rgba(126,65,20,.6);z-index:4;animation:igPulse 1.6s ease-in-out 3}
+@keyframes igPulse{0%{box-shadow:0 0 0 0 rgba(126,65,20,.6)}70%{box-shadow:0 0 0 10px rgba(126,65,20,0)}100%{box-shadow:0 0 0 0 rgba(126,65,20,0)}}
 .ig-txt{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px}
 .ig-ago{font-family:'Space Mono',ui-monospace,monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ig-soft)}
 .ig-label{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:17px;line-height:1.2;margin:0;color:var(--ig-ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-width:none;letter-spacing:0}
@@ -1703,7 +1707,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 .ig-foot{max-width:720px;margin:18px auto 10px;padding:0 16px;text-align:center}
 .ig-foot-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 @media(max-width:480px){.ig-foot-row{grid-template-columns:repeat(2,1fr)}}
-.ig-foot-card{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--ig-line);background:#181109}
+.ig-foot-card{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:1px solid var(--ig-line);background:#2A2016}
 .ig-foot-card img,.ig-foot-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .ig-foot-card video{opacity:0;transition:opacity .6s}.ig-foot-card video.on{opacity:1}
 .ig-foot-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 8px 7px;font-size:11px;line-height:1.3;color:#fff;text-align:left;background:linear-gradient(transparent,rgba(0,0,0,.7))}.ig-foot-cap span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -1729,10 +1733,10 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 @media(prefers-reduced-motion:reduce){.ig-card,.ig-seg i::after,.ig-media video,.ig-card.ig-new .ig-media::before{transition:none;animation:none!important}.ig-card.active .ig-seg i.on::after{transform:scaleX(1)}}
 .fitpair{position:relative;display:flex;flex-direction:column}.fitpair>.card,.fitpair>.pcard{flex:1}
 .fitpair[data-fit="regular"]>[href*="-oversized/"],.fitpair[data-fit="regular"]>[data-handle$="-oversized"],.fitpair[data-fit="oversized"]>[href*="-regular/"],.fitpair[data-fit="oversized"]>[data-handle$="-regular"]{display:none}
-.fitpair-sw{position:absolute;top:10px;left:10px;z-index:3;display:inline-flex;padding:3px;border-radius:999px;background:rgba(20,15,34,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);gap:2px}
-.fitpair-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(247,239,226,.8);cursor:pointer;line-height:1.2}
-.fitpair-sw button.on{background:#F7EFE2;color:#2B2620;font-weight:600}
-.fitpair-sw button:focus-visible{outline:2px solid #E9B978;outline-offset:1px}
+.fitpair-sw{position:absolute;top:10px;left:10px;z-index:3;display:inline-flex;padding:3px;border-radius:999px;background:rgba(42,32,22,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);gap:2px}
+.fitpair-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(250,246,239,.8);cursor:pointer;line-height:1.2}
+.fitpair-sw button.on{background:#FAF6EF;color:#2A2016;font-weight:600}
+.fitpair-sw button:focus-visible{outline:2px solid #F3DDB8;outline-offset:1px}
 /* 20 Oct 2026 (Faheem: on phones the photos were smaller than the rest of the card; "the focus
    must be product photos"). Two-up product cards on phones: a taller 3:4 photo, and a compact
    body (one-line place, smaller name, the four quick-add sizes on one row, no "Quick add" label,
@@ -1751,7 +1755,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
   .pcard-rv{display:flex;align-items:center;white-space:nowrap;overflow:hidden;font-size:11px!important}
   .pcard-rv .rv-stars{display:none!important}
   .pcard-rv-n{font-size:11px!important;letter-spacing:0!important}
-  .pcard-rv-n::before{content:"\2605\00a0";color:#9C6B12}
+  .pcard-rv-n::before{content:"\2605\00a0";color:#8F6212}
   .pcard-foot{margin-top:2px!important;padding-top:6px!important;row-gap:6px!important}
   .pcard-p,body.buy-page .pcard-p{font-size:15px!important}
   .collection .card .qa,.pcard .qa{margin-top:8px!important;padding-top:8px!important;gap:0!important}

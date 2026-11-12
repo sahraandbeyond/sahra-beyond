@@ -9,7 +9,11 @@
    the hero and the page margins. Legibility can no longer depend on a class
    being remembered.
    ========================================================================== */
-#sb-sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+/* 12 Nov 2026 (one brand palette, Faheem: "B"): the living sky is off on every page. Its night-to-golden-hour ramp
+   (navy, purple, orange) is outside the palette, and the house look had already turned it off on the listing pages.
+   The page ground is plain cream; the script is no longer loaded (build.js, build-products.js). */
+#sb-sky{display:none!important}
+body::before,body::after{display:none!important}
 /* Was `body>*:not(#sb-sky)`. `:not(#id)` carries id-level specificity, so that
    selector scored (1,0,1) and overrode `.sb-drawer{position:fixed}` — the cart
    drawer and overlay became position:relative and rendered as a plain block at
@@ -17,14 +21,14 @@
    actual layout blocks at low specificity instead, and never the cart. */
 header,.hdr,main,.ftr,footer,section,.loc-hero,nav,.wrap{position:relative;z-index:1}
 
-/* the hero is the window onto the sky */
-.loc-hero{background-color:transparent!important}
+/* the hero was the window onto the sky; it is now a solid ink ground under its photo */
+.loc-hero{background-color:#2A2016!important}
 
 /* the reading column always has something solid under it */
 main{background:rgba(250,246,239,.972);border-radius:18px 18px 0 0;
-  box-shadow:0 22px 70px rgba(20,16,42,.16)}
+  box-shadow:0 22px 70px rgba(42,32,22,.16)}
 .ftr{background:rgba(250,246,239,.972);border-radius:0 0 18px 18px;
-  box-shadow:0 22px 70px rgba(20,16,42,.16)}
+  box-shadow:0 22px 70px rgba(42,32,22,.16)}
 /* on phones the column is full-bleed, so square the corners off */
 @media(max-width:820px){
   main,.ftr{border-radius:0;box-shadow:none}

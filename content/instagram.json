@@ -18,6 +18,43 @@
   },
   "posts": [
     {
+      "id": "DfmwPCZAi1D",
+      "kind": "carousel",
+      "label": "The Sahra Trail kit in daylight: the tee, the 2-in-1 Shorts and the liner pocket",
+      "topic": "trail",
+      "guides": [
+        "/trail/"
+      ],
+      "wear": [
+        "/products/sahra-trail-kit/",
+        "The Sahra Trail Kit"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/10_TRAIL-daylight-carousel_FOR-APPROVAL"
+    },
+    {
+      "id": "Dfl6jdwE9XR",
+      "kind": "carousel",
+      "label": "The 11.11 sale, piece by piece: eight pieces, one card each",
+      "topic": "shop",
+      "wear": [
+        "/shop/",
+        "The shop"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/business-suite-upload",
+      "srcNote": "Slides are the ten posted files 03_Wed11_1111am_house_CAROUSEL_sale10_slide01 to slide10 (trimmed from 13); sale prices on the slides end Sun 15 Nov."
+    },
+    {
+      "id": "DfkLeCijsdm",
+      "kind": "reel",
+      "label": "The Sahel Polo on the model: the antique-gold mark and the tipped collar and cuffs",
+      "topic": "sahel",
+      "wear": [
+        "/products/the-sahel-polo/",
+        "The Sahel Polo"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/01_Tue10_7pm_house_REEL_Sahel-Polo.mp4"
+    },
+    {
       "id": "DfedudpiIBB",
       "account": "trail",
       "kind": "carousel",

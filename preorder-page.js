@@ -130,7 +130,7 @@ const capSizes = s => String(s).replace(/(\(max-width:\s*(\d+)px\)\s*)(\d+)vw/, 
 function imgTag(im, o = {}) {
   const w = im.w || 720, h = im.h || 900, lw = im.lw || 1200;
   const alt = o.alt != null ? o.alt : esc(im.alt) + (im.mock && o.mockAlt !== false ? ', studio mock-up' : '');
-  const fit = isTall(im) ? ` style="object-fit:contain;background:${o.bg || '#DCD5C8'}"` : '';
+  const fit = isTall(im) ? ` style="object-fit:contain;background:${o.bg || '#E5E1D9'}"` : '';
   return `<img${o.cls ? ` class="${o.cls}"` : ''}${o.zoom ? ` data-zoom="/assets/preorder/${im.k}-1200.webp"` : ''} src="/assets/preorder/${im.k}-720.webp" srcset="/assets/preorder/${im.k}-480.webp 480w, /assets/preorder/${im.k}-720.webp ${w}w, /assets/preorder/${im.k}-1200.webp ${lw}w" sizes="${capSizes(o.sizes || '(max-width: 900px) 50vw, 300px')}" width="${w}" height="${h}" alt="${alt}"${o.eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${fit}>`;
 }
 const mockTag = (im, cls) => im && im.mock ? `<i${cls ? ` class="${cls}"` : ''}>Mock-up</i>` : '';
@@ -258,19 +258,19 @@ const CSS = `${SZ.CSS}${TSZ.CSS}
 
 .po-page{background:#FAF6EF;color:#2A2016}
 .po-wrap{max-width:1180px;margin:0 auto;padding:22px 20px 70px}
-.po-crumb{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5B48;margin:0 0 16px}
+.po-crumb{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B6256;margin:0 0 16px}
 .po-crumb a{color:inherit}
 .po-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:start}
 .po-gal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.po-fig{position:relative;margin:0;background:#ECE4D6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
+.po-fig{position:relative;margin:0;background:#F2EDE6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
 .po-fig:first-child{grid-column:1/-1}
 .po-fig.po-tall{aspect-ratio:2/3}
-.po-gal .po-fig{cursor:zoom-in}.po-gal .po-fig:focus-visible{outline:3px solid #A95A21;outline-offset:3px}
-.po-zoomhint{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5B48;margin:8px 2px 0}.po-fig.po-tall img{object-fit:contain}
+.po-gal .po-fig{cursor:zoom-in}.po-gal .po-fig:focus-visible{outline:3px solid #7E4114;outline-offset:3px}
+.po-zoomhint{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B6256;margin:8px 2px 0}.po-fig.po-tall img{object-fit:contain}
 .po-fig img{width:100%;height:100%;object-fit:cover;display:block}
 ${CYCLE_CSS}
 .po-fig figcaption{position:absolute;left:10px;top:10px;font:11px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
-.po-ph{margin:0;aspect-ratio:4/5;border-radius:10px;background:#1C1A18;color:#E9DFCF;display:flex;align-items:center;justify-content:center;text-align:center;grid-column:1/-1}
+.po-ph{margin:0;aspect-ratio:4/5;border-radius:10px;background:#2A2016;color:#E5E1D9;display:flex;align-items:center;justify-content:center;text-align:center;grid-column:1/-1}
 .po-ph b{display:block;font:600 30px/1.1 'Cormorant Garamond',Georgia,serif;margin-bottom:10px}
 .po-ph span{font:12px 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
 .po-buy{position:sticky;top:90px}
@@ -278,33 +278,33 @@ ${CYCLE_CSS}
 .po-buy h1{font:600 clamp(32px,4vw,46px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 10px;letter-spacing:-.01em}
 .po-line{font:500 16px/1.45 Jost,system-ui,sans-serif;margin:0 0 14px;color:#2A2016}
 .po-price{font:600 26px/1.2 Jost,system-ui,sans-serif;margin:0 0 6px}
-.po-note{font:15px/1.5 Jost,system-ui,sans-serif;margin:0 0 6px;color:#3E3326}
-.po-colour{font:14px/1.5 Jost,system-ui,sans-serif;color:#5C4E3C;margin:0 0 16px}
+.po-note{font:15px/1.5 Jost,system-ui,sans-serif;margin:0 0 6px;color:#4A4136}
+.po-colour{font:14px/1.5 Jost,system-ui,sans-serif;color:#4A4136;margin:0 0 16px}
 .po-tabby{font:14px/1.6 Jost,system-ui,sans-serif;margin:10px 0 4px}
 .po-tabby img{height:20px;width:auto;display:inline-block;vertical-align:-5px;margin:0 1px 0 5px}
-.po-tabby-fine{font:12px/1.5 Jost,system-ui,sans-serif;color:#5C4E3C;margin:0 0 18px}
+.po-tabby-fine{font:12px/1.5 Jost,system-ui,sans-serif;color:#4A4136;margin:0 0 18px}
 .po-sizes{border:0;margin:0 0 14px;padding:0}
-.po-sizes legend{font:12px 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;color:#3E3326}
+.po-sizes legend{font:12px 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;color:#4A4136}
 .po-sz{display:flex;gap:8px;flex-wrap:wrap}
-.po-sz button{min-width:56px;min-height:46px;border:1px solid rgba(42,32,22,.35);background:#FFFDF9;border-radius:8px;font:500 16px Jost,system-ui,sans-serif;color:#2A2016;cursor:pointer}
+.po-sz button{min-width:56px;min-height:46px;border:1px solid rgba(42,32,22,.35);background:#FAF6EF;border-radius:8px;font:500 16px Jost,system-ui,sans-serif;color:#2A2016;cursor:pointer}
 .po-sz button[aria-pressed="true"]{background:#2A2016;color:#FAF6EF;border-color:#2A2016}
 .po-sz button:disabled{opacity:.5;border-style:dashed;cursor:not-allowed}
-.po-sz button:focus-visible,.po-go:focus-visible{outline:3px solid #A95A21;outline-offset:2px}
+.po-sz button:focus-visible,.po-go:focus-visible{outline:3px solid #7E4114;outline-offset:2px}
 .po-go{width:100%;min-height:54px;border:0;border-radius:999px;background:#2A2016;color:#FAF6EF;font:600 16px Jost,system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;margin:4px 0 10px}
-.po-go:disabled{background:#8C8172;cursor:not-allowed}
+.po-go:disabled{background:#6B6256;cursor:not-allowed}
 .po-msg{font:14px/1.5 Jost,system-ui,sans-serif;color:#7E4114;min-height:1.5em;margin:0 0 8px}
-.po-closed{font:500 16px/1.5 Jost,system-ui,sans-serif;background:#F0E7D8;border-radius:10px;padding:14px 16px;margin:6px 0 16px}
+.po-closed{font:500 16px/1.5 Jost,system-ui,sans-serif;background:#F3DDB8;border-radius:10px;padding:14px 16px;margin:6px 0 16px}
 .po-wait{margin:0 0 18px}
-.po-wait label{display:block;font:12px 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;color:#3E3326}
+.po-wait label{display:block;font:12px 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;color:#4A4136}
 .po-wait-r{display:flex;gap:8px;flex-wrap:wrap}
-.po-wait-r input[type=email]{flex:1 1 200px;min-height:50px;border-radius:999px;border:1px solid rgba(42,32,22,.35);padding:0 18px;font:16px Jost,system-ui,sans-serif;background:#FFFDF9;color:#2A2016}
+.po-wait-r input[type=email]{flex:1 1 200px;min-height:50px;border-radius:999px;border:1px solid rgba(42,32,22,.35);padding:0 18px;font:16px Jost,system-ui,sans-serif;background:#FAF6EF;color:#2A2016}
 .po-wait-r button{min-height:50px;padding:0 24px;border:0;border-radius:999px;background:#2A2016;color:#FAF6EF;font:600 15px Jost,system-ui,sans-serif;cursor:pointer}
 .po-wait-ok,.po-wait-err{display:none;font:15px/1.5 Jost,system-ui,sans-serif;margin:10px 0 0}
-.po-wait-err{color:#9b3a25}
+.po-wait-err{color:#7E4114}
 .po-wait.done .po-wait-f,.po-wait.done .po-small{display:none}.po-wait.done .po-wait-ok{display:block}.po-wait.err .po-wait-err{display:block}.po-wait.loading button{opacity:.6}
 .po-ask{font:15px/1.5 Jost,system-ui,sans-serif;margin:6px 0 14px}
 .po-ask a,.po-small a{color:#7E4114}
-.po-small{font:14px/1.55 Jost,system-ui,sans-serif;color:#3E3326;margin:0 0 6px}
+.po-small{font:14px/1.55 Jost,system-ui,sans-serif;color:#4A4136;margin:0 0 6px}
 .po-sib{font:14px/1.5 Jost,system-ui,sans-serif;margin:0 0 14px}
 .po-sib a{color:#7E4114}
 .po-rv{max-width:760px;margin:30px auto 0;padding:18px 18px 14px;border:1px solid rgba(42,32,22,.14);border-radius:16px;background:#fff}
@@ -312,9 +312,9 @@ ${CYCLE_CSS}
 .po-rv-l{list-style:none;margin:12px 0 8px;padding:0;display:grid;gap:14px}
 .po-rv-l li{padding:12px 0 0;border-top:1px solid rgba(42,32,22,.12)}
 .po-rv-l p{margin:4px 0 6px;font:400 15.5px/1.55 Jost,system-ui,sans-serif;color:#2A2016}
-.po-rv-l span{display:block;font:400 13px/1.4 Jost,system-ui,sans-serif;color:#5C5148}
+.po-rv-l span{display:block;font:400 13px/1.4 Jost,system-ui,sans-serif;color:#6B6256}
 .po-rv-l .po-rv-on{margin-top:2px}
-.po-rv-s{color:#9C521B;font-size:14px;letter-spacing:1px;font-weight:400}
+.po-rv-s{color:#7E4114;font-size:14px;letter-spacing:1px;font-weight:400}
 @media(min-width:900px){.po-rv-l{grid-template-columns:1fr 1fr;gap:22px}}
 .po-story{margin:44px 0 0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px}
 .po-story h2{font:600 28px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 12px}
@@ -327,7 +327,7 @@ ${CYCLE_CSS}
 .po-card{display:block;text-decoration:none;color:#2A2016}
 .po-card .po-fig{aspect-ratio:4/5}
 .po-card b{display:block;font:500 16px/1.35 Jost,system-ui,sans-serif;margin:8px 0 2px}
-.po-card span{font:14px Jost,system-ui,sans-serif;color:#5C4E3C}
+.po-card span{font:14px Jost,system-ui,sans-serif;color:#4A4136}
 @media(max-width:900px){
   .po-grid,.po-story{grid-template-columns:1fr;gap:22px}
   .po-buy{position:static}
@@ -340,30 +340,30 @@ ${CYCLE_CSS}
 /* 28 Oct 2026 (conversion fixes): trust next to the price, the reassurance a cold visitor needs right above the button,
    and a sticky bar on phones so the buy button is never more than a thumb away */
 .po-rate{display:inline-flex;align-items:center;gap:8px;font:14px/1.4 Jost,system-ui,sans-serif;color:#2A2016;text-decoration:none;margin:2px 0 10px}
-.po-rate b{color:#9C521B;letter-spacing:1px;font-weight:400}
+.po-rate b{color:#7E4114;letter-spacing:1px;font-weight:400}
 .po-rate span{text-decoration:underline;text-decoration-color:rgba(126,65,20,.4);text-underline-offset:3px}
-.po-assure{list-style:none;margin:6px 0 12px;padding:12px 14px;border-radius:12px;background:#F1E8D9;font:14.5px/1.5 Jost,system-ui,sans-serif;color:#2A2016}
+.po-assure{list-style:none;margin:6px 0 12px;padding:12px 14px;border-radius:12px;background:#F3DDB8;font:14.5px/1.5 Jost,system-ui,sans-serif;color:#2A2016}
 .po-assure li{position:relative;padding-left:22px;margin:3px 0}
-.po-assure li::before{content:"";position:absolute;left:2px;top:.45em;width:11px;height:6px;border-left:2px solid #2E7D5B;border-bottom:2px solid #2E7D5B;transform:rotate(-45deg)}
+.po-assure li::before{content:"";position:absolute;left:2px;top:.45em;width:11px;height:6px;border-left:2px solid #3F6B3A;border-bottom:2px solid #3F6B3A;transform:rotate(-45deg)}
 .po-sizes.flash{animation:poFlash 1.1s ease}
-@keyframes poFlash{0%,100%{background:transparent}25%,60%{background:rgba(233,185,120,.35)}}
+@keyframes poFlash{0%,100%{background:transparent}25%,60%{background:rgba(243,221,184,.35)}}
 .po-sizes{border-radius:12px;transition:background .3s}
 #buybar.po-bar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:rgba(250,246,239,.97);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid rgba(42,32,22,.14);
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));display:none;gap:10px;align-items:center;box-shadow:0 -8px 24px rgba(24,17,9,.08);transform:translateY(110%);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));display:none;gap:10px;align-items:center;box-shadow:0 -8px 24px rgba(42,32,22,.08);transform:translateY(110%);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 #buybar.po-bar.on{transform:none}
 #buybar .pb-txt{min-width:0;flex:1}
 #buybar .pb-p{display:block;font:600 16px/1.2 Jost,system-ui,sans-serif;color:#2A2016}
-#buybar .pb-s{display:block;font:12.5px/1.3 Jost,system-ui,sans-serif;color:#5C4E3C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#buybar .pb-s{display:block;font:12.5px/1.3 Jost,system-ui,sans-serif;color:#4A4136;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #buybar .pb-sz{display:flex;gap:6px}
-#buybar .pb-sz button{min-width:40px;min-height:44px;padding:0 6px;border:1px solid rgba(42,32,22,.35);background:#FFFDF9;border-radius:8px;font:500 15px Jost,system-ui,sans-serif;color:#2A2016}
+#buybar .pb-sz button{min-width:40px;min-height:44px;padding:0 6px;border:1px solid rgba(42,32,22,.35);background:#FAF6EF;border-radius:8px;font:500 15px Jost,system-ui,sans-serif;color:#2A2016}
 #buybar .pb-sz button[aria-pressed="true"]{background:#2A2016;color:#FAF6EF;border-color:#2A2016}
 #buybar .pb-sz button:disabled{opacity:.45;border-style:dashed}
 #buybar .pb-go{min-height:48px;padding:0 18px;border:0;border-radius:999px;background:#2A2016;color:#FAF6EF;font:600 15px Jost,system-ui,sans-serif;white-space:nowrap}
-#buybar .pb-go:disabled{background:#8C8172}
+#buybar .pb-go:disabled{background:#6B6256}
 #buybar.pb-has-sz .pb-txt{display:none}
 @media(max-width:900px){#buybar.po-bar{display:flex}}
 @media(max-width:360px){#buybar .pb-sz button{min-width:36px;padding:0 4px}}
-@media(prefers-reduced-motion:reduce){#buybar.po-bar{transition:none}.po-sizes.flash{animation:none;background:rgba(233,185,120,.3)}}
+@media(prefers-reduced-motion:reduce){#buybar.po-bar{transition:none}.po-sizes.flash{animation:none;background:rgba(243,221,184,.3)}}
 `;
 
 /* 30 Oct 2026: the old buy box (buyBox) and its script (CLIENT) gave way to the Specimen Sheet: specimen.js + assets/sahra-specimen.js */
@@ -508,18 +508,18 @@ const NB_CSS = `<style>
 .nb{max-width:1180px;margin:0 auto;padding:34px 20px 10px}
 .nb-k{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;margin:0 0 8px}
 .nb h2{font:600 clamp(26px,3vw,36px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#2A2016}
-.nb-l{font:16px/1.55 Jost,system-ui,sans-serif;margin:0 0 16px;color:#3E3326;max-width:62ch}
+.nb-l{font:16px/1.55 Jost,system-ui,sans-serif;margin:0 0 16px;color:#4A4136;max-width:62ch}
 .nb-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
 .nb-c{display:block;text-decoration:none;color:#2A2016}
-.nb-f{display:block;position:relative;margin:0;background:#ECE4D6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
+.nb-f{display:block;position:relative;margin:0;background:#F2EDE6;border-radius:10px;overflow:hidden;aspect-ratio:4/5}
 .nb-f img{width:100%;height:100%;object-fit:cover;display:block}
 ${CYCLE_CSS}
 .nb-f .cut-b,.pcard-img .cut-b{position:absolute;left:8px;bottom:8px;z-index:2;font:600 10.5px/1 Jost,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:5px 8px;border-radius:999px;background:rgba(42,32,22,.82);color:#FAF6EF;pointer-events:none}
 .nb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .nb-c b{display:block;font:500 16px/1.35 Jost,system-ui,sans-serif;margin:8px 0 2px}
-.nb-c small{display:block;font:13px/1.45 Jost,system-ui,sans-serif;color:#5C4E3C}
+.nb-c small{display:block;font:13px/1.45 Jost,system-ui,sans-serif;color:#4A4136}
 .nb-c .nb-p{font:500 14px Jost,system-ui,sans-serif;color:#2A2016;margin-top:2px}
-.nb-c:focus-visible{outline:3px solid #A95A21;outline-offset:3px;border-radius:10px}
+.nb-c:focus-visible{outline:3px solid #7E4114;outline-offset:3px;border-radius:10px}
 .nb-a{display:inline-block;margin:16px 0 0;font:600 15px Jost,system-ui,sans-serif;color:#7E4114}
 @media(max-width:700px){.nb{padding:26px 16px 6px}.nb-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 </style>`;
@@ -559,7 +559,7 @@ function newCard(p, fitsLabel) {
    choosing a Founding fit never changes a Sahel card. newCard() stays for the designed line pages (/sahel/, /trail/, the
    home Lines band). Colour swatches: the Pantone TCX colours of the Sahel cloth (Lagoon as in content/sahel-pieces.json). */
 const RV = require('./reviews-render.js');
-const SWATCH = { 'Jet Set': '#262C2A', 'Estate Blue': '#233658', 'Lagoon': '#0EAAAE', 'Salute': '#282B34', 'Black': '#1B1B1B' };
+const SWATCH = { 'Jet Set': '#2A2016', 'Estate Blue': '#2A2016', 'Lagoon': '#2A2016', 'Salute': '#2A2016', 'Black': '#2A2016' };
 function specChips(p) {
   const det = (p.details || []).filter(x => !/neck label/i.test(x)).join(' | ');
   const c = [];
@@ -580,7 +580,7 @@ function specChips(p) {
 function bigCard(p, i) {
   const im = p.images[0], href = `/products/${p.handle}/`;
   const zoom = `<button type="button" class="pcard-zoom" data-zoom="/assets/preorder/${im ? im.k : ''}-1200.webp" aria-label="Zoom ${esc(p.plain || p.name)}"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`;
-  const img = im ? `<span class="pcard-img" style="background:#ECE4D6"><a class="pcard-imglink" href="${href}" tabindex="-1" data-cycle>${cycleImgs(p, { sizes: '(max-width: 560px) 50vw, 300px' })}</a>${mockTag(im)}<em class="cut-b">${cut(p).replace('\u2019', '&rsquo;')}</em>${zoom}</span>` : '';
+  const img = im ? `<span class="pcard-img" style="background:#F2EDE6"><a class="pcard-imglink" href="${href}" tabindex="-1" data-cycle>${cycleImgs(p, { sizes: '(max-width: 560px) 50vw, 300px' })}</a>${mockTag(im)}<em class="cut-b">${cut(p).replace('\u2019', '&rsquo;')}</em>${zoom}</span>` : '';
   const place = p.place ? `Inspired by ${p.place[0]}` : p.line === 'trail' ? 'Sahra Trail' : 'Sahel &middot; the Coast Edition';
   const hex = SWATCH[p.colour];
   const colour = p.colour ? `<span class="pcard-col">${hex ? `<span class="pcard-sw" style="background:${hex}"></span>` : ''}${p.colour}</span>` : '';
@@ -606,10 +606,10 @@ const BIG_CSS = `<style>
 .pcard-st{font:13px/1.4 Jost,system-ui,sans-serif;color:#3F6B3A}
 .sfp{position:relative;display:flex;flex-direction:column;min-width:0}.sfp>.pcard{display:none;flex:1}.sfp>.pcard.on{display:flex}
 .sfp:not(:has(>.pcard:not(.sbf-off))){display:none}
-.sfp-sw{position:absolute;top:10px;inset-inline-start:10px;z-index:3;display:inline-flex;padding:3px;border-radius:999px;background:rgba(20,15,34,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);gap:2px;max-width:calc(100% - 20px)}
-.sfp-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(247,239,226,.8);cursor:pointer;line-height:1.2;white-space:nowrap}
-.sfp-sw button.on{background:#F7EFE2;color:#2B2620;font-weight:600}
-.sfp-sw button:focus-visible{outline:2px solid #E9B978;outline-offset:1px}
+.sfp-sw{position:absolute;top:10px;inset-inline-start:10px;z-index:3;display:inline-flex;padding:3px;border-radius:999px;background:rgba(42,32,22,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);gap:2px;max-width:calc(100% - 20px)}
+.sfp-sw button{font:inherit;font-size:11px;letter-spacing:.3px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:rgba(250,246,239,.8);cursor:pointer;line-height:1.2;white-space:nowrap}
+.sfp-sw button.on{background:#FAF6EF;color:#2A2016;font-weight:600}
+.sfp-sw button:focus-visible{outline:2px solid #F3DDB8;outline-offset:1px}
 @media(max-width:560px){.sfp-sw{top:6px;inset-inline-start:6px;max-width:calc(100% - 12px);padding:2px}.sfp-sw button{font-size:10px;letter-spacing:0;padding:5px 6px}.pcard-st{font-size:12px}}
 </style><script>(function(){if(window.__sfp)return;window.__sfp=1;document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.sfp-sw button');if(!b)return;e.preventDefault();e.stopPropagation();var w=b.closest('.sfp'),i=b.getAttribute('data-i');
 [].forEach.call(w.querySelectorAll('.sfp-sw button'),function(x){var on=x.getAttribute('data-i')===i;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});
@@ -643,17 +643,17 @@ const trailLede = () => 'Sahra Trail has <a href="/size-guide/#trail">its own si
    the guides that name the place. Same stage rules as everywhere else. */
 function pieceFor(placeId) { return products().find(p => p.place && p.place[1] === placeId && primary(p)) || null; }
 const PB_CSS = `<style>
-.spb{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:center;max-width:860px;margin:34px auto;padding:20px;border-radius:18px;background:#0E1A2E;color:#F4ECDF}
-.spb-f{position:relative;display:block;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#1B2A40}
+.spb{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:center;max-width:860px;margin:34px auto;padding:20px;border-radius:18px;background:#2A2016;color:#FAF6EF}
+.spb-f{position:relative;display:block;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#2A2016}
 .spb-f img{width:100%;height:100%;object-fit:cover;display:block}
 ${CYCLE_CSS}
-.spb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(244,236,223,.92);color:#0E1A2E}
-.spb-k{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#D9C3A5;margin:0 0 8px}
-.spb h2{font:600 clamp(26px,3vw,34px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#F4ECDF}
-.spb p{font:15.5px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#E9DFCF}
-.spb-p{font-weight:600;color:#F4ECDF!important}
-.spb-a{display:inline-block;margin-top:6px;background:#F4ECDF;color:#0E1A2E;font:600 15px Jost,system-ui,sans-serif;padding:12px 22px;border-radius:999px;text-decoration:none}
-.spb-a:focus-visible{outline:3px solid #D9C3A5;outline-offset:3px}
+.spb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
+.spb-k{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#F3DDB8;margin:0 0 8px}
+.spb h2{font:600 clamp(26px,3vw,34px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#FAF6EF}
+.spb p{font:15.5px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#E5E1D9}
+.spb-p{font-weight:600;color:#FAF6EF!important}
+.spb-a{display:inline-block;margin-top:6px;background:#FAF6EF;color:#2A2016;font:600 15px Jost,system-ui,sans-serif;padding:12px 22px;border-radius:999px;text-decoration:none}
+.spb-a:focus-visible{outline:3px solid #F3DDB8;outline-offset:3px}
 @media(max-width:640px){.spb{grid-template-columns:1fr;margin:26px 16px;padding:16px}.spb-f{max-width:240px}}
 </style>`;
 function pieceBlock(placeId, lead) {
@@ -661,7 +661,7 @@ function pieceBlock(placeId, lead) {
   const im = p.images[0], first = String(p.story).split(/(?<=\.)\s/)[0];
   const tee = isTee(p), noun = tee ? 'tee' : /hoodie/i.test(p.kind) ? 'hoodie' : 'piece';
   return stageHead() + PB_CSS + `<section class="spb" id="tee" data-match="sahel" aria-label="${esc(p.name.replace(/&amp;/g, '&'))}">
-  ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true" data-cycle>${cardSet(p).map((x, i) => imgTag(x, { alt: '', sizes: '240px', bg: '#1B2A40', cls: i ? '' : 'on' })).join('')}${mockTag(im)}</a>` : ''}
+  ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true" data-cycle>${cardSet(p).map((x, i) => imgTag(x, { alt: '', sizes: '240px', bg: '#2A2016', cls: i ? '' : 'on' })).join('')}${mockTag(im)}</a>` : ''}
   <div><p class="spb-k">${lead || `The ${noun} drawn from this place`} &middot; Sahel</p><h2>${p.name}</h2><p>${first}</p>
   <p class="spb-p">${cardPrice(p.price, 'span', false, p.handle)}${p.fitsList ? ' &middot; ' + bothFits(p) : ''}</p>
   <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}${im && im.mock ? 'The image is a studio mock-up.' : 'Photographed from the real piece.'}</p>
@@ -675,22 +675,22 @@ function homeBand() {
   const pick = ['khor-fakkan-bay-tee-super-oversized', 'al-aqah-reef-tee-super-oversized', 'barr-and-bahr-hoodie', 'sahra-trail-kit'].map(h => products().find(x => x.handle === h)).filter(Boolean)
     .map(p => onSale(p) ? p : products().find(x => x.handle === (primaryHandle(p) || 'the-sahel-polo'))).filter(Boolean);
   const css = `<style>
-.lb{background:#0E1A2E;color:#F4ECDF;padding:46px 20px 50px;position:relative;z-index:1}
+.lb{background:#2A2016;color:#FAF6EF;padding:46px 20px 50px;position:relative;z-index:1}
 .lb-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:34px;align-items:center}
-.lb-k{font:12px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#D9C3A5;margin:0 0 10px}
-.lb h2{font:600 clamp(30px,3.6vw,46px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 12px;color:#F4ECDF;letter-spacing:-.01em}
-.lb p{font:16px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#E9DFCF;max-width:44ch}
-.lb-d{color:#D9C3A5!important}
-.lb-a{display:inline-block;margin-top:12px;background:#F4ECDF;color:#0E1A2E;font:600 15px Jost,system-ui,sans-serif;padding:14px 26px;border-radius:999px;text-decoration:none}
-.lb-a:focus-visible,.lb-c:focus-visible{outline:3px solid #D9C3A5;outline-offset:3px}
+.lb-k{font:12px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#F3DDB8;margin:0 0 10px}
+.lb h2{font:600 clamp(30px,3.6vw,46px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 12px;color:#FAF6EF;letter-spacing:-.01em}
+.lb p{font:16px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#E5E1D9;max-width:44ch}
+.lb-d{color:#F3DDB8!important}
+.lb-a{display:inline-block;margin-top:12px;background:#FAF6EF;color:#2A2016;font:600 15px Jost,system-ui,sans-serif;padding:14px 26px;border-radius:999px;text-decoration:none}
+.lb-a:focus-visible,.lb-c:focus-visible{outline:3px solid #F3DDB8;outline-offset:3px}
 .lb-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.lb-c{display:block;color:#F4ECDF;text-decoration:none}
-.lb-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#1B2A40}
+.lb-c{display:block;color:#FAF6EF;text-decoration:none}
+.lb-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#2A2016}
 .lb-c img{width:100%;height:100%;object-fit:cover;display:block}
 ${CYCLE_CSS}
-.lb-c i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(244,236,223,.92);color:#0E1A2E}
+.lb-c i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .lb-c b{display:block;font:500 15px/1.3 Jost,system-ui,sans-serif;margin:8px 0 1px}
-.lb-c small{font:13px Jost,system-ui,sans-serif;color:#C9BBA6}
+.lb-c small{font:13px Jost,system-ui,sans-serif;color:#F3DDB8}
 @media(max-width:860px){.lb{padding:34px 16px 38px}.lb-in{grid-template-columns:1fr;gap:20px}.lb-g{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px}.lb-c{flex:0 0 42%;scroll-snap-align:start}}
 </style>`;
   return stageHead() + css + `<section class="lb" id="s-launch" aria-labelledby="lbH"><div class="lb-in"><div>
@@ -700,7 +700,7 @@ ${CYCLE_CSS}
     inc('st1', '<p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
     `<p class="st2">Designed in the UAE for everyone who loves it.</p>
     <a class="lb-a" href="/new/">` + inc('st0', '<span class="st0">See the pieces</span>') + inc('st1', '<span class="st1">Pre-order now</span>') + `<span class="st2">Shop the new pieces</span> &rarr;</a>
-  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 42vw, 200px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', false, p.handle)}</a>`).join('') +
+  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 42vw, 200px', bg: '#2A2016' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', false, p.handle)}</a>`).join('') +
   `</div></div></section>`;
 }
 
@@ -711,33 +711,33 @@ ${CYCLE_CSS}
 function homeHero() {
   const designs = pickNew(p => p.line === 'sahel', true);
   const css = `<style>
-.ph{position:relative;z-index:2;background:#0B1526;color:#F4ECDF;padding:calc(var(--nav-h,62px) + 18px) 0 0;overflow:hidden}
+.ph{position:relative;z-index:2;background:#2A2016;color:#FAF6EF;padding:calc(var(--nav-h,62px) + 18px) 0 0;overflow:hidden}
 .ph-in{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:min(78vh,760px)}
 .ph-t{display:flex;flex-direction:column;justify-content:center;padding:40px 48px 40px 24px}
-.ph-k{font:400 12px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#A9E0DA;margin:0 0 14px}
-.ph h2{font:500 clamp(42px,5.6vw,76px)/1.0 'Cormorant Garamond',Georgia,serif;margin:0 0 18px;color:#F4ECDF;letter-spacing:-.01em;text-wrap:balance}
-.ph-o{display:inline-block;align-self:flex-start;font:600 clamp(18px,2vw,22px)/1.3 Jost,system-ui,sans-serif;color:#0B1526;background:#E9B978;padding:10px 16px;border-radius:10px;margin:0 0 16px}
-.ph-s{font:17px/1.55 Jost,system-ui,sans-serif;color:#E9DFCF;margin:0 0 22px;max-width:40ch}
-.ph-a{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 28px;border-radius:999px;background:#F4ECDF;color:#0B1526;font:600 16px Jost,system-ui,sans-serif;text-decoration:none}
+.ph-k{font:400 12px/1.5 'Space Mono',ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#F3DDB8;margin:0 0 14px}
+.ph h2{font:500 clamp(42px,5.6vw,76px)/1.0 'Cormorant Garamond',Georgia,serif;margin:0 0 18px;color:#FAF6EF;letter-spacing:-.01em;text-wrap:balance}
+.ph-o{display:inline-block;align-self:flex-start;font:600 clamp(18px,2vw,22px)/1.3 Jost,system-ui,sans-serif;color:#2A2016;background:#F3DDB8;padding:10px 16px;border-radius:10px;margin:0 0 16px}
+.ph-s{font:17px/1.55 Jost,system-ui,sans-serif;color:#E5E1D9;margin:0 0 22px;max-width:40ch}
+.ph-a{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 28px;border-radius:999px;background:#FAF6EF;color:#2A2016;font:600 16px Jost,system-ui,sans-serif;text-decoration:none}
 .ph-a:hover{background:#FFFFFF}
 .ph-tr{margin:16px 0 0;font:15px/1.5 Jost,system-ui,sans-serif}
-.ph-tr a{color:#F4ECDF;text-decoration:underline;text-decoration-color:#0FAAAF;text-underline-offset:4px}
-.ph-a:focus-visible,.ph-tr a:focus-visible,.ph-c:focus-visible{outline:3px solid #A9E0DA;outline-offset:3px}
+.ph-tr a{color:#FAF6EF;text-decoration:underline;text-decoration-color:#2A2016;text-underline-offset:4px}
+.ph-a:focus-visible,.ph-tr a:focus-visible,.ph-c:focus-visible{outline:3px solid #F3DDB8;outline-offset:3px}
 .ph-img{position:relative;min-height:420px}
 .ph-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
 .ph-g{max-width:1240px;margin:0 auto;padding:22px 24px 30px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
-.ph-c{display:block;color:#F4ECDF;text-decoration:none}
-.ph-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E9E0D3}
+.ph-c{display:block;color:#FAF6EF;text-decoration:none}
+.ph-c span{display:block;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E5E1D9}
 .ph-c img{width:100%;height:100%;object-fit:cover;display:block}
 ${CYCLE_CSS}
 .ph-c i{position:absolute;left:6px;top:6px;font:400 9.5px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;font-style:normal;padding:4px 6px;border-radius:4px;background:rgba(250,246,239,.94);color:#2A2016}
 .ph-c b{display:block;font:500 14px/1.3 Jost,system-ui,sans-serif;margin:8px 0 2px}
-.ph-c small{display:block;font:13px/1.35 Jost,system-ui,sans-serif;color:#E9B978}
+.ph-c small{display:block;font:13px/1.35 Jost,system-ui,sans-serif;color:#F3DDB8}
 @media(max-width:860px){
   .ph{padding-top:calc(var(--nav-h,62px) + 4px)}
   .ph-in{display:block;min-height:0;position:relative}
   .ph-img{position:absolute;inset:0;min-height:0}
-  .ph-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(11,21,38,.1) 0%,rgba(11,21,38,.55) 34%,rgba(11,21,38,.92) 62%,#0B1526 100%)}
+  .ph-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(42,32,22,.1) 0%,rgba(42,32,22,.55) 34%,rgba(42,32,22,.92) 62%,#2A2016 100%)}
   .ph-t{position:relative;z-index:1;min-height:calc(86vh - var(--nav-h,62px));justify-content:flex-end;padding:120px 18px 24px}
   .ph h2{font-size:clamp(40px,11vw,52px)}
   .ph-s{font-size:16px}
@@ -759,7 +759,7 @@ ${CYCLE_CSS}
       <p class="ph-tr"><a href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p>
     </div>
   </div>
-  <div class="ph-g">` + designs.map(p => `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#1B2A40' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', true, p.handle)}</a>`).join('') + `</div>
+  <div class="ph-g">` + designs.map(p => `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#2A2016' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', true, p.handle)}</a>`).join('') + `</div>
 </section>`;
   /* 3 Nov 2026 (Faheem: "Let's put the hero slides back on top of homepage. Sahel out now can have a narrow band below
      it"): from stage 2 the full Sahel first screen is gone; the hero slideshow is first again and homeNowBand() sits
@@ -777,7 +777,7 @@ ${CYCLE_CSS}
       <p class="ph-tr"><a href="/trail/#pieces" data-track="home_preorder_trail">Sahra Trail running kit is on pre-order too &rarr;</a></p>
     </div>
   </div>
-  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#1B2A40' })}${mockTag(im)}</span><b>${p.name}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
+  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#2A2016' })}${mockTag(im)}</span><b>${p.name}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
 </section>`);
 }
 
@@ -794,25 +794,25 @@ function homeNowBand() {
   if (stageNow() !== 2) return '';
   const real = pickNew(p => p.line === 'sahel', true).filter(p => p.images[0] && !p.images[0].mock);
   return stageHead() + `<style>
-.pn{position:relative;z-index:2;background:#0B1526;color:#F4ECDF;padding:18px 20px;border-bottom:1px solid rgba(169,224,218,.2)}
+.pn{position:relative;z-index:2;background:#2A2016;color:#FAF6EF;padding:18px 20px;border-bottom:1px solid rgba(243,221,184,.2)}
 .pn-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px 28px;align-items:center}
-.pn-k{font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#A9E0DA;margin:0 0 4px}
-.pn h2{font:500 clamp(26px,2.6vw,34px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 4px;color:#F4ECDF}
-.pn-s{font:14.5px/1.45 Jost,system-ui,sans-serif;color:#E9DFCF;margin:0}
+.pn-k{font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#F3DDB8;margin:0 0 4px}
+.pn h2{font:500 clamp(26px,2.6vw,34px)/1.05 'Cormorant Garamond',Georgia,serif;margin:0 0 4px;color:#FAF6EF}
+.pn-s{font:14.5px/1.45 Jost,system-ui,sans-serif;color:#E5E1D9;margin:0}
 .pn-g{display:flex;gap:8px;justify-content:center;min-width:0}
-.pn-c{display:block;flex:0 0 auto;width:64px;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:#1B2A40}
+.pn-c{display:block;flex:0 0 auto;width:64px;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:#2A2016}
 .pn-c img{width:100%;height:100%;object-fit:cover;display:block}
 .pn-a{display:flex;flex-direction:column;align-items:flex-end;gap:8px}.pn-a p{margin:0}.pn-b{gap:8px}
-.pn-b{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;background:#F4ECDF;color:#0B1526;font:600 15px Jost,system-ui,sans-serif;text-decoration:none;white-space:nowrap}
+.pn-b{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;background:#FAF6EF;color:#2A2016;font:600 15px Jost,system-ui,sans-serif;text-decoration:none;white-space:nowrap}
 .pn-b:hover{background:#FFFFFF}
-.pn-tr{font:14px/1.4 Jost,system-ui,sans-serif;color:#F4ECDF;text-decoration:underline;text-decoration-color:#0FAAAF;text-underline-offset:4px}
-.pn-b:focus-visible,.pn-tr:focus-visible,.pn-c:focus-visible{outline:3px solid #A9E0DA;outline-offset:3px}
+.pn-tr{font:14px/1.4 Jost,system-ui,sans-serif;color:#FAF6EF;text-decoration:underline;text-decoration-color:#2A2016;text-underline-offset:4px}
+.pn-b:focus-visible,.pn-tr:focus-visible,.pn-c:focus-visible{outline:3px solid #7E4114;outline-offset:3px}
 /* phones: title and Shop Sahel on one row, the photos under them; the delivery line is already in the trust strip above, and Sahra Trail has its own band below */
 @media(max-width:860px){.pn{padding:14px 16px 16px}.pn-in{grid-template-columns:minmax(0,1fr) auto;gap:12px}.pn-in>div:first-child{grid-column:1;grid-row:1}.pn-a{grid-column:2;grid-row:1}.pn-g{grid-column:1/-1;grid-row:2;justify-content:space-between}.pn-c{width:calc((100% - 40px) / 6);max-width:64px}.pn-s,.pn-a p+p{display:none}.pn-k{display:none}.pn h2{font-size:27px;margin:0}.pn-b{min-height:44px;padding:0 18px;font-size:14.5px}}
 </style><section class="pn st2" id="s-sahel-now" aria-labelledby="pnH">
   <div class="pn-in">
     <div><p class="pn-k">Sahel &middot; The Coast Edition</p><h2 id="pnH">Sahel is out now</h2><p class="pn-s">Seven designs from the UAE coast. In stock, with free next-day UAE delivery over AED 100.</p></div>
-    <div class="pn-g">` + real.map(p => `<a class="pn-c" href="/products/${p.handle}/" aria-label="${p.name}">${imgTag(p.images[0], { sizes: '64px', alt: '', bg: '#1B2A40' })}</a>`).join('') + `</div>
+    <div class="pn-g">` + real.map(p => `<a class="pn-c" href="/products/${p.handle}/" aria-label="${p.name}">${imgTag(p.images[0], { sizes: '64px', alt: '', bg: '#2A2016' })}</a>`).join('') + `</div>
     <div class="pn-a"><p><a class="pn-b" href="/sahel/#pieces" data-track="home_sahel_band">Shop Sahel <span aria-hidden="true">&rarr;</span></a></p><p><a class="pn-tr" href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p></div>
   </div>
 </section>`;
@@ -851,7 +851,7 @@ html body .hl .pcard-zoom{display:none!important}
 html body .hl .pcards .hl-all{aspect-ratio:auto;min-height:220px;border-radius:14px}
 /* the Founding Edition card, brought to the house card */
 html body .collection .card{display:flex;flex-direction:column;border:1px solid rgba(42,32,22,.14)!important;border-radius:14px!important;box-shadow:none!important;background:#FFFFFF;overflow:hidden}
-html body .collection .card:hover{transform:none;box-shadow:0 10px 26px rgba(43,37,32,.10)!important}
+html body .collection .card:hover{transform:none;box-shadow:0 10px 26px rgba(42,32,22,.10)!important}
 html body .collection .card .card-body{display:flex;flex-direction:column;flex:1 1 auto;gap:6px;padding:12px 12px 14px!important}
 html body .collection .card .card-name{order:1;min-height:2.5em;margin:0!important;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:17px!important;line-height:1.25!important;color:#2A2016}
 html body .collection .card .card-rv,html body .collection .card .pcard-rv{order:2}
@@ -882,20 +882,20 @@ function homeLines() {
 .hl .nb-l{margin:0 0 18px}
 .hl .nb-l a{color:#2A2016;text-decoration:underline;text-decoration-color:rgba(126,65,20,.45);text-underline-offset:3px}
 .hl-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.hl-all{display:flex;flex-direction:column;justify-content:flex-end;gap:6px;aspect-ratio:4/5;border-radius:10px;padding:18px;text-decoration:none;background:#0E1A2E;color:#F4ECDF}
+.hl-all{display:flex;flex-direction:column;justify-content:flex-end;gap:6px;aspect-ratio:4/5;border-radius:10px;padding:18px;text-decoration:none;background:#2A2016;color:#FAF6EF}
 .hl-all b{font:600 24px/1.1 'Cormorant Garamond',Georgia,serif}
-.hl-all small{font:14px/1.45 Jost,system-ui,sans-serif;color:#D9C3A5}
+.hl-all small{font:14px/1.45 Jost,system-ui,sans-serif;color:#F3DDB8}
 .hl-all span{font:600 15px Jost,system-ui,sans-serif;margin-top:6px}
-.hl-all.trail{background:#3B2A1C}
-.hl-all:focus-visible{outline:3px solid #A95A21;outline-offset:3px}
-.hl-tote{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:22px;align-items:center;padding:18px;border-radius:14px;background:#F1E8D9;color:#2A2016;text-decoration:none;max-width:760px}
-.hl-tote span{display:block;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E5DACA}
+.hl-all.trail{background:#2A2016}
+.hl-all:focus-visible{outline:3px solid #7E4114;outline-offset:3px}
+.hl-tote{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:22px;align-items:center;padding:18px;border-radius:14px;background:#F3DDB8;color:#2A2016;text-decoration:none;max-width:760px}
+.hl-tote span{display:block;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#E5E1D9}
 .hl-tote img{width:100%;height:100%;object-fit:cover;display:block}
 .hl-tote b{display:block;font:600 24px/1.15 'Cormorant Garamond',Georgia,serif;margin:0 0 6px}
-.hl-tote p{font:15.5px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#4A3E31}
+.hl-tote p{font:15.5px/1.55 Jost,system-ui,sans-serif;margin:0 0 8px;color:#4A4136}
 .hl-tote em{font:600 15px Jost,system-ui,sans-serif;font-style:normal;color:#7E4114}
 .hl-more{margin:14px 0 0!important}
-.hl-tote:focus-visible{outline:3px solid #A95A21;outline-offset:3px}
+.hl-tote:focus-visible{outline:3px solid #7E4114;outline-offset:3px}
 @media(max-width:860px){.hl{gap:36px;margin-top:36px}.hl-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hl-all{padding:14px}.hl-all b{font-size:21px}.hl-tote{grid-template-columns:minmax(0,120px) minmax(0,1fr);gap:14px;padding:12px}.hl-tote b{font-size:21px}.hl-tote p{font-size:14.5px}}
 </style>`;
   const k = (line) => line + ' &middot; ' + inc('st0', '<span class="st0">on pre-order from Wed 28 Oct</span>') + inc('st1', '<span class="st1">on pre-order, 20% off until Thu 29 Oct</span>') + '<span class="st2">new</span>';

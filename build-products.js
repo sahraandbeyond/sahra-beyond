@@ -2,7 +2,7 @@
    build-products.js — generates /products/<slug>/index.html
    Source of truth: content/products/*.json  (editable in Decap CMS → Products)
    Keep the product's --theme equal to its section colour on the shop page
-   (shop THEMES[]): Al Quaa #181109 · Liwa #E7D6B8 · Hajar #C6BFD3.
+   (shop THEMES[]): Al Quaa #2A2016 · Liwa #F3DDB8 · Hajar #F3DDB8.
    ========================================================================== */
 const fs = require('fs');
 const RV = require('./reviews-render.js');
@@ -270,19 +270,19 @@ ${crumbTrail(p).map((c, i) => `{"@type":"ListItem","position":${i + 1},"name":${
 /* ==================================================================
    PRODUCT PAGE TEMPLATE — Sahra & Beyond
    PALETTE MUST MATCH the product's section colour on the shop page
-   (shop THEMES[]): Al Quaa #181109 · Liwa #E7D6B8 · Hajar #C6BFD3.
+   (shop THEMES[]): Al Quaa #2A2016 · Liwa #F3DDB8 · Hajar #F3DDB8.
    GENERATED FILE — do not edit directly. Edit content/products/<id>.json
    (Decap CMS -> Products) and re-run: node build.js
    ================================================================== */
 :root{
   --sand:#FAF6EF;--paper:#FFF;--ink:#2A2016;--mist:#6B6256;
-  --clay:#A95A21;--clay-deep:#7E4114;--gold:#E9B978;
+  --clay:#7E4114;--clay-deep:#7E4114;--gold:#F3DDB8;
   /* PRODUCT PALETTE — generated from content/products/${p.id}.json (must match the shop section colour) */
   --theme:${p.theme};--theme-2:${p.theme2};--accent:${p.accent};
   /* contrast-aware tokens, swapped by .dark-bg */
   --txt:#2A2016;--txt-soft:#6B6256;--line:rgba(42,32,22,.13);--edge:rgba(42,32,22,.58);--card:rgba(255,255,255,.66);--chip:rgba(42,32,22,.05);
 }
-body.dark-bg{--txt:#F4EFE6;--txt-soft:rgba(244,239,230,.62);--line:rgba(255,255,255,.16);--edge:rgba(255,255,255,.5);--card:rgba(15,11,6,.55);--chip:rgba(255,255,255,.06)}
+body.dark-bg{--txt:#FAF6EF;--txt-soft:rgba(250,246,239,.62);--line:rgba(255,255,255,.16);--edge:rgba(255,255,255,.5);--card:rgba(42,32,22,.55);--chip:rgba(255,255,255,.06)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{overflow-x:hidden;scroll-behavior:smooth}
 body{font-family:Jost,system-ui,sans-serif;color:var(--txt);background:var(--sand);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
@@ -317,7 +317,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid cur
 #progress i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--clay),var(--gold));transform:scaleX(0);transform-origin:0 50%}
 
 /* ---------- chrome ---------- */
-.note{background:#181109;color:var(--gold);text-align:center;font-size:11px;padding:8px;font-family:'Space Mono',monospace;position:relative;z-index:3}
+.note{background:#2A2016;color:var(--gold);text-align:center;font-size:11px;padding:8px;font-family:'Space Mono',monospace;position:relative;z-index:3}
 nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;
   background:color-mix(in srgb,var(--nav-bg,#FAF6EF) 82%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);transition:background .5s}
 .logo{display:flex;align-items:center;gap:11px}
@@ -359,7 +359,7 @@ body.dark-bg .crumb a:hover{color:var(--gold)}
    "GULAR FIT". Markup cannot be cropped. */
 .gal-fit{position:absolute;left:14px;bottom:14px;z-index:3;
   font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;
-  text-transform:uppercase;color:#FFF6E8;background:rgba(24,17,9,.82);
+  text-transform:uppercase;color:#FAF6EF;background:rgba(42,32,22,.82);
   padding:8px 12px;border-radius:2px;pointer-events:none}
 @media(max-width:700px){.gal-fit{left:10px;top:10px;bottom:auto;font-size:9px;letter-spacing:1px;padding:5px 8px;max-width:calc(100% - 20px)}}   /* 13 Oct 2026: top-left on phones, off the print */  /* above the zoom hint: the model badge is a full sentence now (8 Sep) */
 .gal-thumbs{display:flex;gap:10px;margin-top:13px}
@@ -378,7 +378,7 @@ body.dark-bg .buy h1 em{color:var(--gold)}
 .price{font-family:'Space Mono',monospace;font-size:19px;letter-spacing:1px;margin:6px 0 5px}
 .vat{font-size:12px;color:var(--txt-soft);margin-bottom:22px}
 .pdp-rating{display:inline-flex;align-items:center;gap:8px;margin:-4px 0 12px;text-decoration:none;color:var(--txt-soft)}
-.pdp-rating .rv-stars{color:#B5651F;letter-spacing:1px}
+.pdp-rating .rv-stars{color:#7E4114;letter-spacing:1px}
 .pdp-rating-n{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.04em}
 .pdp-rating:hover .pdp-rating-n{text-decoration:underline}
 .pdp-rating .rl-s{display:none}
@@ -401,7 +401,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .sb-curwrap{display:inline-flex;align-items:center;gap:8px}
 .sb-curhint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mist,#6B6256)}
 .sb-curpick{appearance:none;-webkit-appearance:none;font-family:'Space Mono',monospace;font-size:12px;color:inherit;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;padding:10px 32px 10px 14px;min-height:44px;cursor:pointer}
-.sb-curpick option{color:#33271B;background:#fff}
+.sb-curpick option{color:#2A2016;background:#fff}
 .sb-curpick:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 /* ---- product image auto-cycle (Faheem, 31 Aug: every shirt, everywhere,
    shows ALL its photos). Stacked absolutely per the cross-fade guard. ---- */
@@ -441,7 +441,7 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
 .btn::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent);transform:skewX(-20deg);transition:left .6s}
 .btn:hover::after{left:130%}
 .btn:hover{background:var(--clay-deep);transform:translateY(-2px)}
-body.dark-bg .btn{background:var(--gold);color:#181109}
+body.dark-bg .btn{background:var(--gold);color:#2A2016}
 body.dark-bg .btn:hover{background:#fff}
 .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--edge,rgba(42,32,22,.58))}
 .btn.ghost:hover{background:var(--txt);color:var(--sand)}
@@ -470,7 +470,7 @@ table.sz td:first-child{font-weight:600}
 .sz-prov{border:1px solid var(--clay);border-left:3px solid var(--clay);background:var(--card);backdrop-filter:blur(6px);border-radius:12px;padding:14px 18px;margin-top:16px;font-size:14px;max-width:62ch}
 
 /* --- lightbox (matches the shop's photo viewer) --- */
-.lb{position:fixed;inset:0;z-index:200;background:rgba(12,8,4,.94);display:none;align-items:center;justify-content:center;padding:32px}
+.lb{position:fixed;inset:0;z-index:200;background:rgba(42,32,22,.94);display:none;align-items:center;justify-content:center;padding:32px}
 .lb.open{display:flex}
 .lb img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:8px}
 .lb-btn{position:absolute;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);color:#fff;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s}
@@ -512,9 +512,9 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 .gal-fit.warnfit{background:#7E4114;color:#fff;letter-spacing:.6px}
 .gal-main img.fit-contain{object-fit:contain;background:var(--chip)}
 .gal-thumbs img.fit-contain{object-fit:contain;background:var(--chip)}
-.gal-pause{position:absolute;top:14px;right:14px;z-index:4;width:40px;height:40px;border:none;border-radius:50%;background:rgba(20,14,10,.45);color:#fff;font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.gal-pause:hover{background:rgba(20,14,10,.7)}
-.gal-pause:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
+.gal-pause{position:absolute;top:14px;right:14px;z-index:4;width:40px;height:40px;border:none;border-radius:50%;background:rgba(42,32,22,.45);color:#fff;font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gal-pause:hover{background:rgba(42,32,22,.7)}
+.gal-pause:focus-visible{outline:2px solid #F3DDB8;outline-offset:2px}
 .gal-model{margin:10px 2px 0;font-family:'Space Mono',monospace;font-size:13px;line-height:1.5;letter-spacing:.3px;color:var(--txt-soft)}
 .gal-model-alt{border-left:2px solid currentColor;padding:2px 0 2px 9px;color:var(--txt)}
 .gal-model-off{display:none}
@@ -523,8 +523,8 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 .fit-warn{margin:-4px 0 14px;font-size:14px;line-height:1.55;color:var(--txt,#2A2016);padding:10px 12px;border:1px solid rgba(42,32,22,.14);border-radius:10px;background:rgba(255,255,255,.55)}
 .fit-warn b{font-weight:700}
 .fit-warn a{color:var(--clay-deep,#7E4114);font-weight:600}
-body.dark-bg .fit-warn{color:#F7EFE2;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
-.fit-warn a{color:var(--gold,#E9B978)}
+body.dark-bg .fit-warn{color:#FAF6EF;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
+.fit-warn a{color:var(--gold,#F3DDB8)}
 .fit-warn a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .pdp-echo{margin:8px 0 0;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.3px;color:var(--txt-soft)}
 .fitc{display:grid;gap:8px;padding:12px 14px;border:1px solid var(--edge);border-radius:3px;background:var(--card)}
@@ -536,7 +536,7 @@ body.dark-bg .fit-warn{color:#F7EFE2;border-color:rgba(255,255,255,.2);backgroun
 .sz-out{display:block;font-size:9px;letter-spacing:.6px;margin-top:2px;color:#6B6256}
 /* 7 Oct 2026: live remaining count on the chip itself, 3 or fewer only (handover: low-stock counts) */
 .sz-left{display:block;font-size:10px;font-weight:600;letter-spacing:.3px;line-height:1;margin-top:2px;color:#7E4114;white-space:nowrap}
-.pdp-size.sel .sz-left{color:#2B2520}
+.pdp-size.sel .sz-left{color:#2A2016}
 .gal-main:focus-visible{outline:2px solid #7E4114;outline-offset:3px}
 .sz-chip{font-family:'Space Mono',monospace;font-size:12px;padding:9px 15px;border:1px solid var(--edge,rgba(42,32,22,.58));border-radius:999px;background:var(--chip)}
 .sz-chip.out{opacity:.42;text-decoration:line-through}
@@ -550,23 +550,23 @@ body.dark-bg .fit-warn{color:#F7EFE2;border-color:rgba(255,255,255,.2);backgroun
 .wl-form input:focus{outline:none;border-color:var(--clay)}
 .wl-form button{height:50px;padding:0 26px;flex:none}
 .wl-msg{font-size:12px;color:var(--txt-soft);margin-top:11px;font-family:'Space Mono',monospace;letter-spacing:.4px}
-.wl-ok{display:none;font-size:13.5px;margin-top:11px;color:#4C6E46;font-family:'Space Mono',monospace}
-body.dark-bg .wl-ok{color:#A9C99A}
+.wl-ok{display:none;font-size:13.5px;margin-top:11px;color:#3F6B3A;font-family:'Space Mono',monospace}
+body.dark-bg .wl-ok{color:#F2EDE6}
 [data-waitlist-wrap].done .wl-form,[data-waitlist-wrap].done .wl-msg{display:none}
 [data-waitlist-wrap].done .wl-ok{display:block}
-[data-waitlist-wrap].err .wl-form input{border-color:#b5462f}
-[data-waitlist-wrap].err .wl-msg{color:#b5462f}
+[data-waitlist-wrap].err .wl-form input{border-color:#7E4114}
+[data-waitlist-wrap].err .wl-msg{color:#7E4114}
 
 /* ---------- sticky buy bar ---------- */
 #buybar{position:fixed;left:0;right:0;bottom:0;z-index:120;transform:translateY(110%);transition:transform .45s cubic-bezier(.4,0,.2,1);
-  background:rgba(24,17,9,.93);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.12);color:#F4EFE6}
+  background:rgba(42,32,22,.93);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.12);color:#FAF6EF}
 #buybar.on{transform:none}
 .bb-inner{max-width:1200px;margin:0 auto;padding:12px 26px;display:flex;align-items:center;gap:18px}
 .bb-thumb{width:44px;height:52px;border-radius:7px;object-fit:cover;flex:none}
 .bb-txt{flex:1;min-width:0}
 .bb-name{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bb-sub{font-family:'Space Mono',monospace;font-size:10.5px;color:rgba(244,239,230,.6)}
-#buybar .btn{background:var(--gold);color:#181109;padding:13px 26px;flex:none}
+.bb-sub{font-family:'Space Mono',monospace;font-size:10.5px;color:rgba(250,246,239,.6)}
+#buybar .btn{background:var(--gold);color:#2A2016;padding:13px 26px;flex:none}
 #buybar .btn:hover{background:#fff}
 @media(max-width:620px){.bb-thumb,.bb-sub{display:none}.bb-inner{padding:10px 16px;gap:12px}#buybar .btn{padding:12px 18px;font-size:12px}}
 /* 13 Oct 2026, second pass (mobile UX review): on phones the size row sat below the first
@@ -577,8 +577,8 @@ body.dark-bg .wl-ok{color:#A9C99A}
 @media(max-width:620px){
   #buybar.has-sizes .bb-txt{display:none}
   #buybar.has-sizes .bb-sizes{display:flex;gap:6px;flex:none}
-  .bb-sizes button{width:40px;height:44px;border-radius:9px;border:1px solid rgba(244,239,230,.38);background:transparent;color:#F4EFE6;font:600 13px/1 'Jost',system-ui,sans-serif;cursor:pointer;padding:0}
-  .bb-sizes button[aria-pressed="true"]{background:#F4EFE6;color:#181109;border-color:#F4EFE6}
+  .bb-sizes button{width:40px;height:44px;border-radius:9px;border:1px solid rgba(250,246,239,.38);background:transparent;color:#FAF6EF;font:600 13px/1 'Jost',system-ui,sans-serif;cursor:pointer;padding:0}
+  .bb-sizes button[aria-pressed="true"]{background:#FAF6EF;color:#2A2016;border-color:#FAF6EF}
   .bb-sizes button:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
   .bb-sizes button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   #buybar.has-sizes .btn{flex:1;min-width:0;padding:12px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -643,7 +643,7 @@ body.dark-bg .rel-place{color:var(--gold)}
 .rel-name{font-family:'Cormorant Garamond',serif;font-size-adjust:.44;font-size:20px;font-weight:600;margin:7px 0 4px}
 .rel-price{font-size:14px;color:var(--txt-soft)}
 
-footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:52px 24px 90px;font-size:12px;position:relative;z-index:2}
+footer{background:#2A2016;color:rgba(255,255,255,.55);text-align:center;padding:52px 24px 90px;font-size:12px;position:relative;z-index:2}
 .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-bottom:16px}
 .foot-links a{color:rgba(255,255,255,.72);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;transition:color .3s}
 .foot-links a:hover{color:var(--gold)}
@@ -700,19 +700,19 @@ footer{background:#181109;color:rgba(255,255,255,.55);text-align:center;padding:
   .mnav{display:block}
   .nav-links,.hdr-nav{display:none!important}
   .m-panel{display:block;position:fixed;left:0;right:0;top:0;z-index:110;padding:78px 22px 26px;
-    background:rgba(24,17,9,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    background:rgba(42,32,22,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
     transform:translateY(-102%);transition:transform .38s cubic-bezier(.4,0,.2,1);
     box-shadow:0 18px 50px rgba(0,0,0,.4);max-height:100dvh;overflow:auto}
   .m-panel.open{transform:translateY(0)}
-  .m-panel a{display:block;padding:15px 4px;color:#F7EFE2;text-decoration:none;font-size:19px;
-    letter-spacing:.3px;border-bottom:1px solid rgba(247,239,226,.12)}
+  .m-panel a{display:block;padding:15px 4px;color:#FAF6EF;text-decoration:none;font-size:19px;
+    letter-spacing:.3px;border-bottom:1px solid rgba(250,246,239,.12)}
   .m-panel a:last-child{border-bottom:0}
-  .m-panel a.active,.m-panel a[aria-current="page"]{color:#E9B978}
+  .m-panel a.active,.m-panel a[aria-current="page"]{color:#F3DDB8}
   .m-panel a::after{display:none!important}
   .m-close{position:absolute;top:12px;right:14px;width:44px;height:44px;display:flex;
     align-items:center;justify-content:center;background:none;border:0;cursor:pointer;
-    color:#F7EFE2;font-size:34px;line-height:1;padding:0;border-radius:50%}
-  .m-close:active{background:rgba(247,239,226,.12)}
+    color:#FAF6EF;font-size:34px;line-height:1;padding:0;border-radius:50%}
+  .m-close:active{background:rgba(250,246,239,.12)}
 
   /* The mark is 300x40, so at 26px tall it renders ~195px wide and left the
      hamburger no room — the two collided on a 360px screen. */
@@ -780,7 +780,7 @@ img,svg,video{max-width:100%;height:auto}
      movement rather than a cut-off wash */
   .loc-hero{background-size:150% 150%}
 }
-@media(hover:none){*{-webkit-tap-highlight-color:rgba(233,185,120,.25)}}
+@media(hover:none){*{-webkit-tap-highlight-color:rgba(243,221,184,.25)}}
 
 
 /* ---- PDP buy box -------------------------------------------------------
@@ -797,27 +797,27 @@ img,svg,video{max-width:100%;height:auto}
   background:rgba(255,255,255,.55);border-radius:10px;font-size:14px;font-weight:500;
   cursor:pointer;transition:transform .18s,background .18s,border-color .18s,box-shadow .18s;color:inherit}
 .pdp-size:hover:not(:disabled){transform:translateY(-3px)}
-.pdp-size:disabled{cursor:not-allowed;background:#ECE6DC!important;border-color:#DDD5C8!important;color:#6B6256!important;opacity:1}
+.pdp-size:disabled{cursor:not-allowed;background:#F2EDE6!important;border-color:#E5E1D9!important;color:#6B6256!important;opacity:1}
 /* 25 Sep (persona review): sold-out chips read as faint strike-throughs; now a grey chip with the words in full */
-.pdp-size:disabled .sz-out{font-size:10px;letter-spacing:.3px;color:#5E564B}
+.pdp-size:disabled .sz-out{font-size:10px;letter-spacing:.3px;color:#6B6256}
 html body .pdp-size:disabled,html body .pdp-size[disabled]{text-decoration:none!important}
 /* selection has to be unmistakable — a filled gold chip with dark type */
-.pdp-size.sel{background:#E9B978;border-color:#E9B978;color:#2B2520;font-weight:700;
-  box-shadow:0 0 0 3px rgba(233,185,120,.30)}
-.pdp-size:focus-visible{outline:2px solid #E9B978;outline-offset:2px}
+.pdp-size.sel{background:#F3DDB8;border-color:#F3DDB8;color:#2A2016;font-weight:700;
+  box-shadow:0 0 0 3px rgba(243,221,184,.30)}
+.pdp-size:focus-visible{outline:2px solid #F3DDB8;outline-offset:2px}
 .pdp-add{width:100%;min-height:52px;font-size:15px}
 .pdp-add:disabled{opacity:.45;cursor:not-allowed}
 .pdp-msg{min-height:20px;margin:9px 0 4px;font-size:13.5px}
 .pdp-msg a{text-decoration:underline}
-.pdp-msg.ok{color:#2F7A55}
-.pdp-msg.err{color:#B4462F}
+.pdp-msg.ok{color:#3F6B3A}
+.pdp-msg.err{color:#7E4114}
 .dark-bg .pdp-size{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.28)}
-.dark-bg .pdp-size.sel{background:#E9B978;border-color:#E9B978;color:#2B2520}
+.dark-bg .pdp-size.sel{background:#F3DDB8;border-color:#F3DDB8;color:#2A2016}
 /* cart badge in the header */
 .hdr-cart{position:relative;background:none;border:0;cursor:pointer;font-size:19px;
   padding:8px;line-height:1;color:inherit;min-width:44px;min-height:44px}
 .hdr-cart .cart-count{position:absolute;top:2px;right:0;min-width:18px;height:18px;border-radius:9px;
-  background:#E9B978;color:#2B2520;font-family:Jost,sans-serif;font-size:11px;font-weight:700;
+  background:#F3DDB8;color:#2A2016;font-family:Jost,sans-serif;font-size:11px;font-weight:700;
   display:none;align-items:center;justify-content:center;padding:0 4px}
 
 /* ---- fabric line + bars (10 Sep) ---------------------------------------- */
@@ -827,7 +827,7 @@ html body .pdp-size:disabled,html body .pdp-size[disabled]{text-decoration:none!
 .fbar{display:grid;grid-template-columns:136px 1fr 118px;align-items:center;gap:12px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
 .fbar-l{color:var(--txt-soft)}
 .fbar-t{display:flex;gap:4px}
-.fbar-t i{flex:1;height:7px;border-radius:999px;background:rgba(122,104,84,.22)}
+.fbar-t i{flex:1;height:7px;border-radius:999px;background:rgba(107,98,86,.22)}
 .fbar-t i.on{background:currentColor}
 .fbar-v{color:var(--txt);text-align:right;text-transform:none;letter-spacing:0;font-weight:700;white-space:nowrap}
 @media(max-width:560px){.fbar{grid-template-columns:1fr auto;grid-template-areas:"l v" "t t";gap:6px 10px}.fbar-l{grid-area:l}.fbar-v{grid-area:v}.fbar-t{grid-area:t}}
@@ -841,9 +841,9 @@ html body .pdp-size:disabled,html body .pdp-size[disabled]{text-decoration:none!
    the nav, crumb, canvas and gallery chrome, which sit on the journey itself.
    Anything that went gold on the dark stops goes back to clay inside a panel. */
 .buy,.sec,.place-inner{--txt:#2A2016;--txt-soft:#4A4136;--line:rgba(42,32,22,.14);--edge:rgba(42,32,22,.58);--card:rgba(255,255,255,.72);--chip:rgba(42,32,22,.05);
-  color:var(--txt);background:rgba(252,249,242,.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
-  border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 18px 50px rgba(20,14,8,.12)}
-@supports not (backdrop-filter:blur(1px)){.buy,.sec,.place-inner{background:rgba(252,249,242,.97)}}
+  color:var(--txt);background:rgba(250,246,239,.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 18px 50px rgba(42,32,22,.12)}
+@supports not (backdrop-filter:blur(1px)){.buy,.sec,.place-inner{background:rgba(250,246,239,.97)}}
 .buy{padding:30px 32px;align-self:start}
 .sec{padding:60px 48px;margin:28px 0}
 .sec+.sec{border-top:1px solid rgba(42,32,22,.1)}
@@ -856,10 +856,10 @@ body.dark-bg .buy .btn:hover,body.dark-bg .sec .btn:hover,body.dark-bg .place-in
 body.dark-bg .buy .btn.ghost,body.dark-bg .sec .btn.ghost{background:transparent;color:var(--txt);border-color:var(--edge)}
 body.dark-bg .buy .btn.ghost:hover,body.dark-bg .sec .btn.ghost:hover{background:var(--txt);color:var(--sand)}
 body.dark-bg .buy .fit-warn{color:var(--txt);border-color:rgba(42,32,22,.14);background:rgba(255,255,255,.55)}
-body.dark-bg .buy .pdp-add:disabled{color:#5C5148;border-color:#8A7F73;background:transparent}
+body.dark-bg .buy .pdp-add:disabled{color:#6B6256;border-color:#6B6256;background:transparent}
 body.dark-bg .buy .pdp-size{background:rgba(255,255,255,.55);border-color:rgba(42,32,22,.32);color:var(--txt)}
-body.dark-bg .buy .pdp-size.sel{background:#E9B978;border-color:#E9B978;color:#2B2520}
-body.dark-bg .buy .wl-ok{color:#2F7A55}
+body.dark-bg .buy .pdp-size.sel{background:#F3DDB8;border-color:#F3DDB8;color:#2A2016}
+body.dark-bg .buy .wl-ok{color:#3F6B3A}
 body.dark-bg .sec .care li::before,body.dark-bg .sec .faq summary::after{color:var(--clay)}
 body.dark-bg .sec .faq summary:hover{color:var(--clay-deep)}
 body.dark-bg .sec .rv-stars,body.dark-bg .sec .rv-card .rv-stars{color:#8F6212}
@@ -878,7 +878,7 @@ ${RV.CSS}
 .fitv ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 .fitv li{display:grid;grid-template-columns:92px 1fr 38px;align-items:center;gap:8px}
 .fitv i{display:block;height:6px;border-radius:99px;background:rgba(42,32,22,.12);position:relative;overflow:hidden}
-.fitv i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#B5651F;border-radius:99px}
+.fitv i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#7E4114;border-radius:99px}
 .fitv b{text-align:right;font-weight:600;color:var(--txt)}
 @media(max-width:700px){
   body.buy-page .note{display:none}
@@ -893,8 +893,8 @@ ${RV.CSS}
   .gal-main,.gal-thumbs,.gal-model{order:2}
   .gal-thumbs{margin-top:-2px}
   .buy-body{order:3}
-  .buy-head,.buy-body{color:var(--txt);background:rgba(252,249,242,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
-    border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 12px 34px rgba(20,14,8,.12)}
+  .buy-head,.buy-body{color:var(--txt);background:rgba(250,246,239,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+    border:1px solid rgba(42,32,22,.1);border-radius:12px;box-shadow:0 12px 34px rgba(42,32,22,.12)}
   .buy-head{padding:12px 16px 10px}
   .buy-body{padding:14px 16px 18px}
   .buy-head .buy-top{margin-bottom:6px;gap:4px 12px}
@@ -919,7 +919,7 @@ ${RV.CSS}
 .pdp-subm{display:none}
 .pdp-now[hidden]{display:none!important}
 #reviews .rv-list.rv-compact .rv-card:nth-child(n+4){display:none}
-#reviews .rv-showall{display:block;margin:10px auto 0;padding:12px 22px;border:1px solid #33271B;border-radius:999px;background:#fff;color:#33271B;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+#reviews .rv-showall{display:block;margin:10px auto 0;padding:12px 22px;border:1px solid #2A2016;border-radius:999px;background:#fff;color:#2A2016;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
 @media(max-width:700px){
   .buy-head .fabric-line,.buy-head .pdp-rating,.buy-head .fitv{display:none!important}
   .pdp-subm{display:block;order:2;padding:0 2px}
@@ -932,11 +932,11 @@ ${RV.CSS}
      made these headings near-white on a cream card (Faheem's screenshot, 24 Sep). Width is
      pinned to the viewport so the three cards line up whichever parent they sit in. */
   .pdp-acc{box-sizing:border-box;width:calc(100vw - 28px);max-width:none;margin:0 0 12px calc(50% - 50vw + 14px);
-    border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#FAF6EF;color:#2A2016;overflow:hidden;box-shadow:0 8px 24px rgba(20,14,8,.10)}
+    border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#FAF6EF;color:#2A2016;overflow:hidden;box-shadow:0 8px 24px rgba(42,32,22,.10)}
   .pdp-acc-h{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;padding:18px 18px;background:none;border:0;cursor:pointer;
     font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:22px;font-weight:600;color:#2A2016!important;text-align:left;opacity:1}
   .pdp-acc-h span{color:#2A2016!important;opacity:1}
-  .pdp-acc-h i{font-style:normal;font-family:Jost,sans-serif;font-size:24px;font-weight:400;color:#9C521B;transition:transform .25s}
+  .pdp-acc-h i{font-style:normal;font-family:Jost,sans-serif;font-size:24px;font-weight:400;color:#7E4114;transition:transform .25s}
   .pdp-acc-h[aria-expanded="true"] i{transform:rotate(45deg)}
   .pdp-acc-b>section{margin:0!important;border-radius:0!important;box-shadow:none!important}
   .pdp-acc-b>section.sec{padding:10px 12px 20px!important}
@@ -947,11 +947,11 @@ ${RV.CSS}
   .pdp-acc-x{padding:6px 18px 12px;color:#2A2016}
   .pdp-acc-x .lede{font-size:15.5px;line-height:1.65;margin:0 0 10px;color:#2A2016}
   .pdp-acc-x .occasion,.pdp-acc-x .spec-strip,.pdp-acc-x .colourway{margin:0 0 12px}
-  .pdp-acc-x .pdp-ans-foot{margin:0 0 12px;font-size:14px;line-height:1.6;color:#4A3F33}
+  .pdp-acc-x .pdp-ans-foot{margin:0 0 12px;font-size:14px;line-height:1.6;color:#4A4136}
   .pdp-acc-x .pdp-ans-foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
   .pdp-acc-b .shipcards{margin:4px 0 14px}
   html body .pdp-acc-x .occasion,html body .pdp-acc-x .cw-txt,html body .pdp-acc-x .cw-txt em,html body .pdp-acc-x .cw-txt strong,
-  html body .pdp-acc-x .fbar-l,html body .pdp-acc-x .fbar-v,html body .pdp-acc-x .spec-strip li{color:#4A3F33!important;opacity:1!important}
+  html body .pdp-acc-x .fbar-l,html body .pdp-acc-x .fbar-v,html body .pdp-acc-x .spec-strip li{color:#4A4136!important;opacity:1!important}
   html body .pdp-acc-x .colourway{background:rgba(42,32,22,.05);border-color:rgba(42,32,22,.14)}
   html body .pdp-acc-x .fbar-t i{background:rgba(42,32,22,.14)}html body .pdp-acc-x .fbar-t i.on{background:#2A2016}
 }
@@ -990,41 +990,41 @@ body:has(.m-panel.open) #buybar,body:has(.m-panel.open) .sb-wa{transform:transla
 @media(max-width:700px){.pdp-bundle-m{display:block;margin:0 0 10px}}
 .bt-ship{display:none}
 .pdp-trust-m{display:none}
-.pdp-fits{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:12px;margin:0 0 12px}.pdp-fit:first-child{border-radius:11px 0 0 11px}.pdp-fit:last-child{border-radius:0 11px 11px 0}.pdp-fit:focus-visible{outline:2px solid var(--clay-deep,#9C521B);outline-offset:-2px;z-index:1;position:relative}
-.pdp-fit{display:flex;flex-direction:column;gap:2px;padding:9px 12px;text-decoration:none;color:var(--txt-soft,#5A5046);background:transparent;transition:background .2s,color .2s}
-.pdp-fit b{font-weight:600;font-size:14px;color:var(--txt,#2B2620)}.pdp-fit span{font-size:11.5px;line-height:1.3}
-.pdp-fit.on{background:var(--txt,#2B2620);color:rgba(255,255,255,.75)}.pdp-fit.on b{color:#fff}
-.pdp-fit:not(.on):hover{background:rgba(43,37,32,.05)}
-body.dark-bg .pdp-fit.on{background:#F4EFE6;color:rgba(43,37,32,.7)}body.dark-bg .pdp-fit.on b{color:#2B2620}
-.pdp-model{color:var(--txt-soft,#5A5046)}
-.pdp-exch{font-size:12.5px;line-height:1.4;color:var(--txt-soft,#5A5046);margin:6px 0 0}
-.pdp-wallets{font-size:12px;color:var(--txt-soft,#5A5046);text-align:center;margin:8px 0 0;letter-spacing:.2px}
+.pdp-fits{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:12px;margin:0 0 12px}.pdp-fit:first-child{border-radius:11px 0 0 11px}.pdp-fit:last-child{border-radius:0 11px 11px 0}.pdp-fit:focus-visible{outline:2px solid var(--clay-deep,#7E4114);outline-offset:-2px;z-index:1;position:relative}
+.pdp-fit{display:flex;flex-direction:column;gap:2px;padding:9px 12px;text-decoration:none;color:var(--txt-soft,#6B6256);background:transparent;transition:background .2s,color .2s}
+.pdp-fit b{font-weight:600;font-size:14px;color:var(--txt,#2A2016)}.pdp-fit span{font-size:11.5px;line-height:1.3}
+.pdp-fit.on{background:var(--txt,#2A2016);color:rgba(255,255,255,.75)}.pdp-fit.on b{color:#fff}
+.pdp-fit:not(.on):hover{background:rgba(42,32,22,.05)}
+body.dark-bg .pdp-fit.on{background:#FAF6EF;color:rgba(42,32,22,.7)}body.dark-bg .pdp-fit.on b{color:#2A2016}
+.pdp-model{color:var(--txt-soft,#6B6256)}
+.pdp-exch{font-size:12.5px;line-height:1.4;color:var(--txt-soft,#6B6256);margin:6px 0 0}
+.pdp-wallets{font-size:12px;color:var(--txt-soft,#6B6256);text-align:center;margin:8px 0 0;letter-spacing:.2px}
 .pdp-wallets{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 6px;max-width:215px;margin-left:auto;margin-right:auto}
-.pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#5A5046)}
-.pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(51,39,27,.22);border-radius:5px;background:#fff;color:#33271B;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
-.pdp-wallets.pdp-wallets-line{display:block;max-width:none;font-size:12.5px;line-height:1.5;color:var(--txt-soft,#5A5046);margin:10px 0 0;text-align:center}
-.pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#5A5046)}
-.pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:#5A5046;margin:0 0 8px}.pdp-pair-h b{color:#2B2620;font-weight:600}
+.pdp-wallets .pw-lab{width:100%;font-size:11.5px;color:var(--txt-soft,#6B6256)}
+.pdp-wallets .pw{display:inline-block;padding:2px 6px;border:1px solid rgba(42,32,22,.22);border-radius:5px;background:#fff;color:#2A2016;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap}
+.pdp-wallets.pdp-wallets-line{display:block;max-width:none;font-size:12.5px;line-height:1.5;color:var(--txt-soft,#6B6256);margin:10px 0 0;text-align:center}
+.pdp-tote{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;color:var(--txt-soft,#6B6256)}
+.pdp-pair{margin:14px 0 0}.pdp-pair-h{font-size:13px;line-height:1.4;color:#6B6256;margin:0 0 8px}.pdp-pair-h b{color:#2A2016;font-weight:600}
 /* 18 Oct 2026 (conversion panel): the strip sits on the light buy card, so its colours never follow body.dark-bg */
-body.dark-bg .pdp-pair-h{color:#5A5046}body.dark-bg .pdp-pair-h b,body.dark-bg .pdp-pair-c{color:#2B2620}body.dark-bg .pdp-pair-c small{color:#5A5046}body.dark-bg .pdp-pair-c{border-color:rgba(43,38,32,.16)}
+body.dark-bg .pdp-pair-h{color:#6B6256}body.dark-bg .pdp-pair-h b,body.dark-bg .pdp-pair-c{color:#2A2016}body.dark-bg .pdp-pair-c small{color:#6B6256}body.dark-bg .pdp-pair-c{border-color:rgba(42,32,22,.16)}
 .pdp-pair-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pdp-pair-c{display:flex;gap:9px;align-items:center;padding:6px;border:1px solid rgba(43,38,32,.16);border-radius:12px;text-decoration:none;color:#2B2620;min-width:0}
+.pdp-pair-c{display:flex;gap:9px;align-items:center;padding:6px;border:1px solid rgba(42,32,22,.16);border-radius:12px;text-decoration:none;color:#2A2016;min-width:0}
 .pdp-pair-c img{width:44px;height:55px;border-radius:7px;object-fit:cover;flex:none}
-.pdp-pair-c span{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.25}.pdp-pair-c small{font-size:11.5px;color:#5A5046}
+.pdp-pair-c span{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.25}.pdp-pair-c small{font-size:11.5px;color:#6B6256}
 .pdp-pair-c:hover{border-color:var(--accent)}
 /* 18 Oct 2026: the old dark-bg cream rule for the pair strip is gone; the strip sits on the pale buy card, which never darkens */
-.pdp-tote img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none}.pdp-tote b{color:var(--txt,#2B2620);font-weight:600}.pdp-tote a{color:var(--clay-deep,#9C521B)}
-.pdp-why{margin:12px 0 0;display:grid;gap:8px}.pdp-why div{display:grid;gap:2px}.pdp-why dt{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-soft,#5A5046)}.pdp-why dd{margin:0;font-size:13.5px;line-height:1.45;color:var(--txt,#2B2620)}.pdp-why a{color:var(--clay-deep,#9C521B)}
-.pdp-add.pulse .pdp-add-l{animation:none}.pdp-sizes.pulse .pdp-size{animation:pdpPulse .5s ease 2}@keyframes pdpPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06);border-color:var(--clay-deep,#9C521B)}}
+.pdp-tote img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none}.pdp-tote b{color:var(--txt,#2A2016);font-weight:600}.pdp-tote a{color:var(--clay-deep,#7E4114)}
+.pdp-why{margin:12px 0 0;display:grid;gap:8px}.pdp-why div{display:grid;gap:2px}.pdp-why dt{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-soft,#6B6256)}.pdp-why dd{margin:0;font-size:13.5px;line-height:1.45;color:var(--txt,#2A2016)}.pdp-why a{color:var(--clay-deep,#7E4114)}
+.pdp-add.pulse .pdp-add-l{animation:none}.pdp-sizes.pulse .pdp-size{animation:pdpPulse .5s ease 2}@keyframes pdpPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06);border-color:var(--clay-deep,#7E4114)}}
 @media(prefers-reduced-motion:reduce){.pdp-sizes.pulse .pdp-size{animation:none}}
 .pdp-sizehelp{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;margin:8px 0 12px;font-size:14px}
-.pdp-sizehelp a{color:var(--clay-deep,#9C521B);text-decoration:underline;text-underline-offset:3px}
-.pdp-sizehelp .pdp-other{color:var(--txt-soft,#5A5046)}
+.pdp-sizehelp a{color:var(--clay-deep,#7E4114);text-decoration:underline;text-underline-offset:3px}
+.pdp-sizehelp .pdp-other{color:var(--txt-soft,#6B6256)}
 /* 13 Oct 2026: phone gallery count and dots (desktop keeps the thumbnails) */
 .gal-dots{display:none;position:absolute;left:0;right:0;bottom:10px;z-index:3;align-items:center;justify-content:center;gap:10px;pointer-events:none}
-.gal-n{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;color:#fff;background:rgba(24,17,9,.82);padding:3px 8px;border-radius:20px}
+.gal-n{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;color:#fff;background:rgba(42,32,22,.82);padding:3px 8px;border-radius:20px}
 .gal-n b{font-weight:400}
-.gal-sw{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;color:#2B2620;background:rgba(255,246,232,.92);padding:3px 9px;border-radius:20px;transition:opacity .4s}
+.gal-sw{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1px;color:#2A2016;background:rgba(250,246,239,.92);padding:3px 9px;border-radius:20px;transition:opacity .4s}
 .gal-main[data-seen] .gal-sw{opacity:0}
 h1 .nw{white-space:nowrap}
 /* 13 Oct 2026: phones - a long title is set on two lines once the serif arrives; reserving them stops the price and sizes jumping (CLS 0.09 on Hajar) */
@@ -1078,7 +1078,7 @@ h1 .nw{white-space:nowrap}
   .pdp-buy .pdp-stock{margin:0 0 6px!important;font-size:12px!important}
   .pdp-buy .pdp-reassure{display:none}
   .buy-body .buy-trust{display:none!important}
-  .pdp-trust-m{display:block!important;margin:8px 0 0;text-align:center;font-size:13px!important;line-height:1.4!important;color:var(--txt-soft,#5A5046)}
+  .pdp-trust-m{display:block!important;margin:8px 0 0;text-align:center;font-size:13px!important;line-height:1.4!important;color:var(--txt-soft,#6B6256)}
   .pdp-buy .pdp-msg:empty{display:none}
   .pdp-trust-m span{font-size:inherit!important;letter-spacing:inherit!important;font-family:inherit!important}
   html body.buy-page p.pdp-trust-m,html body p.pdp-trust-m{font-size:13.5px!important;line-height:1.4!important}
@@ -1147,7 +1147,7 @@ ${SP.top(SPS, {
                  by Faheem on the preview). The UAE flag is a 4-rect inline
                  SVG — identical on every OS — and the GCC card names its
                  countries in words. 🌍 is an ordinary emoji and is safe. -->
-            <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#00732F"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> United Arab Emirates</b>
+            <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#3F6B3A"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> United Arab Emirates</b>
               <span>Next working day, all seven emirates — order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
               <span>Free returns and exchanges within 14 days</span></div>
             <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
@@ -1415,8 +1415,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   var sand=hexToRgb('#FAF6EF'),body=document.body,nav=document.querySelector('nav'),raf=0,cur=sand;
   /* sahra-sky.css paints main with an almost-opaque cream pane so text on the
      46 content pages always has something solid under it. On a product page
-     that pane sat ON TOP of this colour journey: the body went to #181109 and
-     #1B1430, body.dark-bg switched the text to #F4EFE6 — and the reader still
+     that pane sat ON TOP of this colour journey: the body went to #2A2016 and
+     #2A2016, body.dark-bg switched the text to #FAF6EF — and the reader still
      saw cream, so two thirds of every PDP rendered light text on a light pane
      at 1.06:1. The background and the text colour must be driven together or
      they drift apart exactly like this. /shop/ never had the bug because it
@@ -1484,19 +1484,19 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     if(SCENE==='galaxy'){
       // nebula band
       var g=ctx.createLinearGradient(0,H*0.1,W,H*0.55);
-      g.addColorStop(0,'rgba(120,90,180,0)');g.addColorStop(.5,'rgba(150,120,200,'+(dark?0.10:0.05)+')');g.addColorStop(1,'rgba(120,90,180,0)');
+      g.addColorStop(0,'rgba(243,221,184,0)');g.addColorStop(.5,'rgba(243,221,184,'+(dark?0.10:0.05)+')');g.addColorStop(1,'rgba(243,221,184,0)');
       ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
       for(var i=0;i<stars.length;i++){var s=stars[i];
         var y=s.y-sy*0.05*s.s;y=((y%H)+H)%H;
         var a=(0.35+0.65*(0.5+0.5*Math.sin(t*s.s+s.p)))*(dark?0.95:0.30);
-        ctx.beginPath();ctx.fillStyle='rgba(255,248,232,'+a+')';ctx.arc(s.x,y,s.r,0,6.2832);ctx.fill();}
+        ctx.beginPath();ctx.fillStyle='rgba(250,246,239,'+a+')';ctx.arc(s.x,y,s.r,0,6.2832);ctx.fill();}
       shootIn-=dt;
       if(!shooter&&shootIn<=0){shooter={x:rnd(W*.5,W),y:rnd(H*.05,H*.4),vx:-rnd(340,520)*DPR,vy:rnd(120,220)*DPR,life:0,max:.9};shootIn=rnd(5,11);}
       if(shooter){shooter.life+=dt;var f=shooter.life/shooter.max;
         if(f>=1){shooter=null;}
         else{var hx=shooter.x+shooter.vx*shooter.life,hy=shooter.y+shooter.vy*shooter.life,op=Math.sin(f*Math.PI)*(dark?.9:.35);
           var lg=ctx.createLinearGradient(hx,hy,hx-shooter.vx*.12,hy-shooter.vy*.12);
-          lg.addColorStop(0,'rgba(255,246,223,'+op+')');lg.addColorStop(1,'rgba(255,246,223,0)');
+          lg.addColorStop(0,'rgba(250,246,239,'+op+')');lg.addColorStop(1,'rgba(250,246,239,0)');
           ctx.strokeStyle=lg;ctx.lineWidth=1.6*DPR;ctx.beginPath();ctx.moveTo(hx,hy);ctx.lineTo(hx-shooter.vx*.12,hy-shooter.vy*.12);ctx.stroke();}}
     } else {
       // dunes / mountains — layered ridges
@@ -1513,13 +1513,13 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
           ctx.lineTo(px,py);
         }
         ctx.lineTo(W,H);ctx.closePath();
-        ctx.fillStyle=(dark?'rgba(255,255,255,':'rgba(60,45,30,')+(R.op*(dark?.5:1))+')';
+        ctx.fillStyle=(dark?'rgba(255,255,255,':'rgba(42,32,22,')+(R.op*(dark?.5:1))+')';
         ctx.fill();
       }
       for(var j=0;j<motes.length;j++){var mo=motes[j];
         mo.x+=mo.vx*DPR;mo.y+=mo.vy*DPR;
         if(mo.x>W+4)mo.x=-4;if(mo.y<-4)mo.y=H+4;if(mo.y>H+4)mo.y=-4;
-        ctx.beginPath();ctx.fillStyle=(dark?'rgba(255,246,225,':'rgba(120,90,50,')+mo.o+')';
+        ctx.beginPath();ctx.fillStyle=(dark?'rgba(250,246,239,':'rgba(126,65,20,')+mo.o+')';
         ctx.arc(mo.x,mo.y,mo.r,0,6.2832);ctx.fill();}
     }
   }
@@ -1630,7 +1630,6 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
   if(location.hash){ var t=document.getElementById(location.hash.slice(1)); if(t){ openFor(t); setTimeout(function(){ t.scrollIntoView(); },50); } }
 })();
 </script>
-<script src="/assets/sahra-sky.js?v=7f91b618" defer></script>
 <script src="/assets/sahra-cart.js?v=124ea926" defer></script>
 ${SP.SCRIPT}
 <script src="/assets/sahra-sizefinder.js" defer></script>

@@ -9,8 +9,8 @@
 .sbn-trig{display:inline-flex;align-items:center;gap:2px}
 .sbn-caret{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;margin:0 0 0 -2px;background:none;border:0;cursor:pointer;color:inherit;border-radius:50%}
 .sbn-caret svg{width:11px;height:11px;transition:transform .25s}
-.sbn-caret:hover,.sbn-caret:focus-visible{color:#B4823C}
-.sbn-caret:focus-visible{outline:2px solid #C99A55;outline-offset:2px}
+.sbn-caret:hover,.sbn-caret:focus-visible{color:#7E4114}
+.sbn-caret:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
 .sbn-open .sbn-caret svg{transform:rotate(180deg)}
 .hdr-nav .sbn-trig{flex:0 0 auto}
 .hdr-nav .sbn-caret{width:24px;height:24px;margin-left:-10px;margin-right:0}
@@ -28,9 +28,9 @@
 .sbn-open{z-index:140!important}
 
 .sbn-panel{position:absolute;left:0;right:0;top:100%;z-index:130;
-  background:#FAF6EF;color:#33271B;
-  border-top:1px solid rgba(51,39,27,.1);border-bottom:1px solid rgba(51,39,27,.12);
-  box-shadow:0 30px 60px -30px rgba(51,39,27,.45);
+  background:#FAF6EF;color:#2A2016;
+  border-top:1px solid rgba(42,32,22,.1);border-bottom:1px solid rgba(42,32,22,.12);
+  box-shadow:0 30px 60px -30px rgba(42,32,22,.45);
   padding:26px max(28px,calc((100% - 1180px)/2)) 20px;
   display:grid;grid-template-columns:1.05fr .95fr 1.1fr 1.25fr 1.15fr;gap:24px 24px;
   opacity:0;visibility:hidden;transform:translateY(-6px);
@@ -38,24 +38,24 @@
   font-family:Jost,system-ui,-apple-system,'Segoe UI',sans-serif;text-align:left;letter-spacing:0;text-transform:none}
 .sbn-open .sbn-panel{opacity:1;visibility:visible;transform:none;transition:opacity .18s ease,transform .22s ease,visibility 0s}
 .sbn-col{min-width:0}
-.sbn-h{display:block;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8E7F6C;margin:0 0 10px;font-weight:400}
-.sbn-panel a.sbn-l{display:flex;align-items:baseline;gap:8px;padding:6px 0;color:#33271B;text-decoration:none;font-size:15px;font-weight:500;line-height:1.35;opacity:1;background:none;border-radius:0;box-shadow:none;letter-spacing:0;text-transform:none}
+.sbn-h{display:block;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B6256;margin:0 0 10px;font-weight:400}
+.sbn-panel a.sbn-l{display:flex;align-items:baseline;gap:8px;padding:6px 0;color:#2A2016;text-decoration:none;font-size:15px;font-weight:500;line-height:1.35;opacity:1;background:none;border-radius:0;box-shadow:none;letter-spacing:0;text-transform:none}
 .sbn-panel a.sbn-l::after{display:none!important}
-.sbn-panel a.sbn-l:hover{color:#B4823C;background:none}
-.sbn-panel a.sbn-l small{font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.04em;color:#8E7F6C;font-weight:400}
-.sbn-panel a.sbn-l.sbn-all{margin-top:6px;padding-top:10px;border-top:1px solid rgba(51,39,27,.1);font-size:13px;font-weight:600}
-.sbn-feat{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;padding:12px;border:1px solid rgba(51,39,27,.1);border-radius:12px;background:#FFFDF9;text-decoration:none;color:#33271B}
-.sbn-feat:hover{border-color:#C99A55}
+.sbn-panel a.sbn-l:hover{color:#7E4114;background:none}
+.sbn-panel a.sbn-l small{font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.04em;color:#6B6256;font-weight:400}
+.sbn-panel a.sbn-l.sbn-all{margin-top:6px;padding-top:10px;border-top:1px solid rgba(42,32,22,.1);font-size:13px;font-weight:600}
+.sbn-feat{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;padding:12px;border:1px solid rgba(42,32,22,.1);border-radius:12px;background:#FAF6EF;text-decoration:none;color:#2A2016}
+.sbn-feat:hover{border-color:#F3DDB8}
 .sbn-feat img{width:96px;height:120px;object-fit:cover;border-radius:8px;display:block}
-.sbn-badge{display:inline-block;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#B4823C;border:1px solid #C99A55;background:#FBF0DC;padding:3px 8px;border-radius:2px;margin-bottom:8px}
+.sbn-badge{display:inline-block;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7E4114;border:1px solid #F3DDB8;background:#FAF6EF;padding:3px 8px;border-radius:2px;margin-bottom:8px}
 .sbn-feat b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:500;font-size:19px;line-height:1.15;margin-bottom:4px;text-transform:none;letter-spacing:0}
-.sbn-feat span{display:block;font-size:13px;color:#6B5B48;line-height:1.4}
-.sbn-foot{grid-column:1/-1;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 20px;border-top:1px solid rgba(51,39,27,.1);padding-top:12px;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:11px;color:#6B5B48}
+.sbn-feat span{display:block;font-size:13px;color:#6B6256;line-height:1.4}
+.sbn-foot{grid-column:1/-1;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 20px;border-top:1px solid rgba(42,32,22,.1);padding-top:12px;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:11px;color:#6B6256}
 
 /* the phone menu gets group labels from the script */
-.m-panel .sbn-mh{display:block;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#B9A88C;padding:18px 4px 4px}
+.m-panel .sbn-mh{display:block;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#F3DDB8;padding:18px 4px 4px}
 .m-panel .sbn-mh:first-of-type{padding-top:0}
-.m-panel a.sbn-sub{font-size:16px;padding:11px 4px 11px 14px;color:#EDE3D2}
+.m-panel a.sbn-sub{font-size:16px;padding:11px 4px 11px 14px;color:#F3DDB8}
 
 @media(max-width:820px){.sbn-panel,.sbn-caret{display:none!important}.sbn-hide{display:none!important}}
 @media(prefers-reduced-motion:reduce){.sbn-panel,.sbn-caret svg{transition:none}}
@@ -78,15 +78,15 @@
 /* Sahra Trail (24 Sep 2026): top-bar link with a 'Soon' tag, and its mega-menu column */
 .sbn-trail{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .sbn-soon{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;line-height:1;
-  padding:3px 6px;border-radius:999px;background:#285C5C;color:#EADBC4}
-.sbn-trailcard{display:flex;align-items:center;gap:12px;padding:12px;margin:0 0 6px;border-radius:12px;background:#285C5C;color:#D9C3A5;text-decoration:none}
+  padding:3px 6px;border-radius:999px;background:#2A2016;color:#F3DDB8}
+.sbn-trailcard{display:flex;align-items:center;gap:12px;padding:12px;margin:0 0 6px;border-radius:12px;background:#2A2016;color:#F3DDB8;text-decoration:none}
 .sbn-trailcard svg{width:44px;height:40px;flex:none}
-.sbn-trailcard b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:18px;line-height:1.15;color:#F3E7D3}
-.sbn-trailcard small{display:block;font-size:12.5px;line-height:1.35;color:#D9C3A5}
-.sbn-trailcard:hover{background:#1F4B4B}
+.sbn-trailcard b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:18px;line-height:1.15;color:#F3DDB8}
+.sbn-trailcard small{display:block;font-size:12.5px;line-height:1.35;color:#F3DDB8}
+.sbn-trailcard:hover{background:#2A2016}
 @media(max-width:1180px) and (min-width:821px){.sbn-trail .sbn-soon{display:none}}
-.sbn-trail.active,.sbn-trail[aria-current]{background:#285C5C!important;color:#F3E7D3!important}
-.sbn-trail.active .sbn-soon{background:#D9C3A5;color:#1F4B4B}
+.sbn-trail.active,.sbn-trail[aria-current]{background:#2A2016!important;color:#F3DDB8!important}
+.sbn-trail.active .sbn-soon{background:#F3DDB8;color:#2A2016}
 
 /* ambient sound: in the menu on phones, not floating in the thumb zone (24 Sep 2026) */
 @media(max-width:700px){.ambient-btn{display:none!important}}
@@ -111,9 +111,9 @@
 }
 
 /* Sahel (6 Oct 2026): top-bar link in the edition's Estate Blue; a second heading inside the Trail column */
-.sbn-sahel .sbn-soon{background:#233658;color:#F4ECDF}
-.sbn-sahel.active,.sbn-sahel[aria-current]{background:#233658!important;color:#F4ECDF!important}
-.sbn-sahel.active .sbn-soon{background:#D9C3A5;color:#233658}
+.sbn-sahel .sbn-soon{background:#2A2016;color:#FAF6EF}
+.sbn-sahel.active,.sbn-sahel[aria-current]{background:#2A2016!important;color:#FAF6EF!important}
+.sbn-sahel.active .sbn-soon{background:#F3DDB8;color:#2A2016}
 .sbn-h2{margin-top:14px}
 @media(max-width:1280px) and (min-width:821px){.sbn-trail .sbn-soon{display:none}}
 
@@ -121,15 +121,15 @@
    The dark Trail and Sahel headers colour every link inside .hdr cream (body.trail-page .hdr a, specificity
    0,2,2), which beat the panel's own .sbn-panel a.sbn-l (0,2,1) and left cream text on the cream panel.
    The panel is always light, so its colours are locked here whatever theme the host header uses. */
-.sbn-panel{color:#33271B!important}
-.sbn-panel a.sbn-l,.sbn-panel .sbn-feat,.sbn-panel .sbn-feat b{color:#33271B!important}
-.sbn-panel a.sbn-l:hover,.sbn-panel a.sbn-l:focus-visible{color:#B4823C!important}
-.sbn-panel a.sbn-l small,.sbn-panel .sbn-h{color:#8E7F6C!important}
-.sbn-panel .sbn-feat span{color:#6B5B48!important}
-.sbn-panel .sbn-badge{color:#B4823C!important}
-.sbn-panel a.sbn-trailcard,.sbn-panel .sbn-trailcard small{color:#D9C3A5!important}
-.sbn-panel .sbn-trailcard b{color:#F3E7D3!important}
-.sbn-panel .sbn-foot,.sbn-panel .sbn-foot a{color:#6B5B48!important}
+.sbn-panel{color:#2A2016!important}
+.sbn-panel a.sbn-l,.sbn-panel .sbn-feat,.sbn-panel .sbn-feat b{color:#2A2016!important}
+.sbn-panel a.sbn-l:hover,.sbn-panel a.sbn-l:focus-visible{color:#7E4114!important}
+.sbn-panel a.sbn-l small,.sbn-panel .sbn-h{color:#6B6256!important}
+.sbn-panel .sbn-feat span{color:#6B6256!important}
+.sbn-panel .sbn-badge{color:#7E4114!important}
+.sbn-panel a.sbn-trailcard,.sbn-panel .sbn-trailcard small{color:#F3DDB8!important}
+.sbn-panel .sbn-trailcard b{color:#F3DDB8!important}
+.sbn-panel .sbn-foot,.sbn-panel .sbn-foot a{color:#6B6256!important}
 
 /* 21 Oct 2026 (r62, phone navigation panel): the header is reachable on every page again.
    assets/sahra-sky.css flattens header/.hdr/nav to position:relative (18 Aug), which silently
@@ -150,8 +150,8 @@ header.sb-top,nav.sb-top{position:sticky;top:0;z-index:60}
   nav.sb-top.sb-stuck{background:var(--nav-bg,#FAF6EF)}
   #nav.sb-smart.sb-stuck.solid{background:#FAF6EF}
   /* the dark Trail and Sahel headers likewise */
-  body.trail-page header.sb-top.sb-stuck{background:#0A0F17}
-  body.sahel-page header.sb-top.sb-stuck{background:#0E1A2E}
+  body.trail-page header.sb-top.sb-stuck{background:#2A2016}
+  body.sahel-page header.sb-top.sb-stuck{background:#2A2016}
 }
 @media(prefers-reduced-motion:reduce){.sb-smart,html:has(.sb-smart) .lg-tabs{transition:none}}
 /* anchor jumps land below the header (place pages set their own, with the tabs) */
@@ -159,10 +159,10 @@ html:has(.sb-top):not(:has(.lg-tabs)){scroll-padding-top:76px}
 
 /* 24 Oct 2026: Men / Women tiles at the top of the phone menu */
 .m-panel .sbn-gender{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px 0 10px}
-.m-panel .sbn-gender a{display:flex;align-items:center;justify-content:center;min-height:56px;border:1px solid rgba(237,227,210,.28);border-radius:12px;font-size:19px;color:#FAF6EF;padding:0;text-decoration:none}
-.m-panel .sbn-gender a[aria-current="page"]{background:#FAF6EF;color:#1E1712;border-color:#FAF6EF}
+.m-panel .sbn-gender a{display:flex;align-items:center;justify-content:center;min-height:56px;border:1px solid rgba(243,221,184,.28);border-radius:12px;font-size:19px;color:#FAF6EF;padding:0;text-decoration:none}
+.m-panel .sbn-gender a[aria-current="page"]{background:#FAF6EF;color:#2A2016;border-color:#FAF6EF}
 @media(min-width:1101px){.sbn-panel .sbn-l{white-space:nowrap}}
 
 /* 27 Oct 2026: the new lines lead the phone menu */
-a.sbn-mnew{display:flex!important;align-items:center;min-height:48px;margin:4px 0 18px;padding:0 16px!important;border-radius:12px;background:#0E1A2E!important;color:#F4ECDF!important;font-weight:600;text-decoration:none}
+a.sbn-mnew{display:flex!important;align-items:center;min-height:48px;margin:4px 0 18px;padding:0 16px!important;border-radius:12px;background:#F3DDB8!important;color:#2A2016!important;font-weight:600;text-decoration:none}
 a.sbn-mnew::after{content:"\2192";margin-left:auto;padding-left:10px}
