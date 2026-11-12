@@ -103,7 +103,7 @@ try{new MutationObserver(function(m){for(var i=0;i<m.length;i++)if(m[i].addedNod
     return{type:t,lang:ar?'ar':'en',product:a==='products'?(s[1]||''):''};};
   window.SB_POS=function(card){try{var g=card.closest('.pcards')||card.parentNode,seen=[],n=0,me=card.closest('.sfp')||card,cs=g.querySelectorAll('.pcard[data-handle],.card[data-handle],a.card');
     for(var i=0;i<cs.length;i++){var s=cs[i].closest('.sfp')||cs[i];if(seen.indexOf(s)>=0)continue;seen.push(s);if(!s.offsetParent)continue;n++;if(s===me)return n;}}catch(e){}return 0;};
-  window.SB_PLACE={specimen:'Product page',pdp:'Product page','product-page':'Product page',card:'Product card',shop:'Shop page',bag:'Bag','second-tee':'Bag suggestion','cart-trail-bag':'Bag suggestion','guide-bar':'Guide page bar','tote-page':'Tote page',home:'Homepage card','journey-grid-quick-add':'Homepage card','journey-ring-quick-add':'Homepage ring','journey-place-quick-add':'Homepage place card','journey-place-card':'Homepage place card','hero-ring':'Homepage ring',related:'Related products',menu:'Menu',instagram:'Instagram block',link:'Text link'};
+  window.SB_PLACE={specimen:'Product page','specimen-bar':'Product page bar',pdp:'Product page','product-page':'Product page',card:'Product card',shop:'Shop page',bag:'Bag','second-tee':'Bag suggestion','cart-trail-bag':'Bag suggestion','guide-bar':'Guide page bar','tote-page':'Tote page',home:'Homepage card','journey-grid-quick-add':'Homepage card','journey-ring-quick-add':'Homepage ring','journey-place-quick-add':'Homepage place card','journey-place-card':'Homepage place card','hero-ring':'Homepage ring',related:'Related products',menu:'Menu',instagram:'Instagram block',link:'Text link'};
   window.track=window.track||function(n,p){try{p=p||{};var C=window.SB_CAT||{};
     var ec=/^(view_item|view_item_list|select_item|add_to_cart|remove_from_cart|view_cart|begin_checkout|add_to_wishlist)$/.test(n);
     if(ec){
@@ -1045,7 +1045,7 @@ h1 .nw{white-space:nowrap}
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=e5762a32">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=2a20f450">
 <link rel="preload" as="image" href="/shirts/card/emptyquarter-model-stand.webp" imagesrcset="/shirts/card/emptyquarter-model-stand.webp 534w, /shirts/emptyquarter-model-stand.webp 1067w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high">
-<link rel="stylesheet" href="/assets/sahra-specimen.css?v=f4a92609">
+<link rel="stylesheet" href="/assets/sahra-specimen.css?v=91bd9a76">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/products/empty-quarter-oversized/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/products/empty-quarter-oversized/">
@@ -1621,7 +1621,10 @@ body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3
 </nav>
 
 <main id="main">
-<!-- data-bg drives the scroll-linked background journey (same technique as the shop page) -->
+<!-- data-bg drives the scroll-linked background journey (same technique as the shop page).
+     12 Nov 2026 (Faheem, phone screenshot: "Why's the background darker at this part of the page than above"; chose
+     "Plain cream, no fade"): this cream stop is the only one, so the page stays cream all the way down, like the Sahel
+     and Sahra Trail pages. The fade to the design's dark theme began halfway down the buy area, which has no panel. -->
 <!-- 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top on all 22 product pages (specimen.js) -->
 <div data-bg="#FAF6EF">
 <section class="ss ss-founding" data-ss style="--ss-top:151px">
@@ -1650,7 +1653,7 @@ body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3
     <div class="ss-body">
       <p class="ss-stat"><span class="sb-ship-uae">In stock. Order by 2 pm for next-working-day delivery in the UAE.</span><span class="sb-ship-gcc">In stock. GCC delivery in 3–5 working days.</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7–14 working days.</span></p>
       <div class="ss-fits" role="group" aria-label="Fit"><a href="/products/empty-quarter-regular/" class=""><b>Regular</b><span>Sits on the shoulder</span></a><a href="/products/empty-quarter-oversized/" class="on" aria-current="page"><b>Oversized</b><span>Dropped shoulder, wider body</span></a></div>
-      <p class="ss-help">Not sure of your size? <a href="#fit" class="pdp-chart">See the size chart</a>. Male model in the dunes is 182 cm, wearing L. Male and female models at the lake wear M.</p>
+      <p class="ss-help"><a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. Male model in the dunes is 182 cm, wearing L. Male and female models at the lake wear M.</p>
       <div class="ssb" id="ssBuy" role="region" aria-label="Buy Empty Quarter" data-handle="empty-quarter-oversized" data-kit="0" data-one="0" data-gift="1" data-line="founding" data-price="199">
       <div class="ssb-r1"><div class="ssb-sz" role="group" aria-label="Size" data-group="size"><button type="button" data-size="S" aria-pressed="false">S</button><button type="button" data-size="M" aria-pressed="false">M</button><button type="button" data-size="L" aria-pressed="false">L</button><button type="button" data-size="XL" aria-pressed="false">XL</button></div><button type="button" class="ssb-add" id="ssAdd">Add to bag</button></div>
       <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p"><!--sbs--><sbs-g class="sbs-grp"><span class="sb-price sbs-now sbs1" data-handle="empty-quarter-oversized" data-aed="99.50">AED 99.50</span> <!--/sbs--><span class="sb-price sbs-was" data-sbsp data-handle="empty-quarter-oversized" data-aed="199">AED 199</span><!--sbs--> <sbs-t class="sbs-tag sbs1">50% off</sbs-t></sbs-g><!--/sbs--></span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × <!--sbs--><span class="sbs1">24.88</span><span class="sbs0"><!--/sbs-->49.75<!--sbs--></span><!--/sbs--> with Tabby</span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p><div class="ssb-fit" role="group" aria-label="Fit"><a href="/products/empty-quarter-regular/" class=""><b>Regular</b></a><a href="/products/empty-quarter-oversized/" class="on" aria-current="page"><b>Oversized</b></a></div></div>
@@ -1745,7 +1748,7 @@ body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3
     <h2>Oversized fit: drop shoulder, <em>worn on its own</em></h2>
     <p>Take your normal size for the intended relaxed fit; size down only if you want it just slightly loose. This is not simply a size up — the shoulder is deliberately dropped and the body cut wider, so it reads as a silhouette rather than a big t-shirt. Designed to be worn on its own; the drop shoulder fights a fitted jacket.</p>
     <p><strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.</p>
-    <div class="sfind" data-sizefinder data-fit="oversized" data-chart='{"regular":[["S",48.3],["M",50.8],["L",55.9],["XL",61]],"oversized":[["S",57.1],["M",59.7],["L",63.5],["XL",67.3]]}'></div>
+    <div class="sfind" id="size-finder" data-sizefinder data-fit="oversized" data-chart='{"regular":[["S",48.3],["M",50.8],["L",55.9],["XL",61]],"oversized":[["S",57.1],["M",59.7],["L",63.5],["XL",67.3]]}'></div>
     <div class="sz-wrap">
       <table class="sz">
         <caption class="sz-cap">Founding Edition &middot; Oversized fit &middot; garment measured flat</caption>
@@ -1783,7 +1786,7 @@ body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3
   </section>
 </div>
 
-<div class="wrap" data-bg="#2A2016">
+<div class="wrap">
   
 
   
@@ -2317,8 +2320,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-cart.js?v=cbb261ec" defer></script>
-<script src="/assets/sahra-specimen.js?v=797d26ff" defer></script>
-<script src="/assets/sahra-sizefinder.js?v=85725595" defer></script>
+<script src="/assets/sahra-specimen.js?v=0c6f544d" defer></script>
+<script src="/assets/sahra-sizefinder.js?v=7947b93c" defer></script>
 <script src="/assets/sahra-market.js?v=be20a079" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;

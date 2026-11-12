@@ -24,7 +24,7 @@
   var TX = AR ? {
     height: 'الطول', build: 'البنية', fit: 'القصّة', regular: 'ريجولر', oversized: 'أوفرسايز',
     slim: 'نحيف', average: 'متوسط', broad: 'عريض',
-    head: 'تشتري لشخص آخر؟ <b>اعرف مقاسك حسب الطول</b>',
+    head: '<b>اعثر على مقاسك</b> بحسب الطول والبنية',
     fine: 'نقطة بداية مبنية على قياسات الصدر المعتادة لهذا الطول وهذه البنية. إن أمكن، قِس قميصًا يناسبك جيدًا وقارنه بالجدول.',
     under: function (h) { return 'أقل من ' + h + ' سم (' + iso(inch(h)) + ')'; },
     over: function (h) { return 'أكثر من ' + h + ' سم (' + iso(inch(h)) + ')'; },
@@ -32,11 +32,12 @@
     tryIt: function (s, cm, inc) { return 'جرّب المقاس <b>' + s + '</b> &middot; عرض الصدر ' + cm + ' سم (' + inc + ' بوصة) والقطعة مسطّحة.'; },
     largest: function (s, cm) { return 'أكبر مقاس لدينا <b>' + s + '</b> (عرض الصدر ' + cm + ' سم والقطعة مسطّحة) وقد يكون ضيقًا عليك. راجع الجدول، أو راسلنا على واتساب.'; },
     pick: function (s) { return 'اختر ' + s; },
+    picked: function (s) { return 'تم اختيار ' + s; },
     gone: function (s) { return 'نفدت الكمية من المقاس ' + s + ' في هذا التصميم.'; }
   } : {
     height: 'Height', build: 'Build', fit: 'Fit', regular: 'Regular', oversized: 'Oversized',
     slim: 'Slim', average: 'Average', broad: 'Broad',
-    head: 'Buying for someone else? <b>Find a size by height</b>',
+    head: '<b>Find your fit</b> from height and build',
     fine: 'A starting point from typical chest sizes for that height and build. If you can, measure a shirt that fits well and match it to the chart.',
     under: function (h) { return 'Under ' + h + ' cm (' + inch(h) + ')'; },
     over: function (h) { return 'Over ' + h + ' cm (' + inch(h) + ')'; },
@@ -44,6 +45,7 @@
     tryIt: function (s, cm, inc) { return 'Try <b>' + s + '</b> &middot; ' + cm + ' cm (' + inc + '″) across the chest, flat.'; },
     largest: function (s, cm) { return 'Our largest is <b>' + s + '</b> (' + cm + ' cm across the chest, flat) and may be snug. Check the chart, or message us on WhatsApp.'; },
     pick: function (s) { return 'Select ' + s; },
+    picked: function (s) { return s + ' selected'; },
     gone: function (s) { return s + ' is sold out in this design.'; }
   };
   var BUILD = { slim: -6, average: 0, broad: 7 };
@@ -85,12 +87,21 @@
       var html = TX.tryIt(r.size, r.flat, Math.round(r.flat / 2.54 * 2) / 2);
       if (r.over) html = TX.largest(r.size, r.flat);
       out.innerHTML = html;
-      var sizes = document.getElementById('pdpSizes');
+      /* 12 Nov 2026: the product pages' sizes live in the buy sheet (#ssBuy, assets/sahra-specimen.js) since 30 Oct;
+         the old #pdpSizes chips are gone, so "Select M" had stopped appearing */
+      var sheet = document.querySelector('#ssBuy .ssb-sz[data-group="size"]');
+      var sizes = document.getElementById('pdpSizes') || sheet;
       if (sizes && !r.over) {
-        var chip = [].filter.call(sizes.querySelectorAll('.pdp-size'), function (x) { return x.firstChild && x.firstChild.nodeValue === r.size; })[0];
+        var chip = sheet ? sheet.querySelector('button[data-size="' + r.size + '"]') : [].filter.call(sizes.querySelectorAll('.pdp-size'), function (x) { return x.firstChild && x.firstChild.nodeValue === r.size; })[0];
         if (chip && !chip.disabled) {
           var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'sf-pick'; btn.textContent = TX.pick(r.size);
-          btn.addEventListener('click', function () { chip.click(); var buy = document.getElementById('pdpBuy') || sizes; try { buy.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { buy.scrollIntoView(); } });
+          btn.addEventListener('click', function () {
+            if (chip.getAttribute('aria-pressed') !== 'true') chip.click();
+            /* the sheet is either the card under the price or the bar at the bottom; the bar needs no scrolling */
+            var buy = document.getElementById('pdpBuy') || document.getElementById('ssBuy') || sizes, fixed = getComputedStyle(buy).position === 'fixed';
+            if (!fixed) { try { buy.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { buy.scrollIntoView(); } }
+            btn.textContent = TX.picked ? TX.picked(r.size) : btn.textContent;
+          });
           out.appendChild(document.createTextNode(' ')); out.appendChild(btn);
         } else if (chip && chip.disabled) {
           out.insertAdjacentHTML('beforeend', ' <span class="sf-so">' + TX.gone(r.size) + '</span>');

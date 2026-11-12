@@ -103,7 +103,7 @@ try{new MutationObserver(function(m){for(var i=0;i<m.length;i++)if(m[i].addedNod
     return{type:t,lang:ar?'ar':'en',product:a==='products'?(s[1]||''):''};};
   window.SB_POS=function(card){try{var g=card.closest('.pcards')||card.parentNode,seen=[],n=0,me=card.closest('.sfp')||card,cs=g.querySelectorAll('.pcard[data-handle],.card[data-handle],a.card');
     for(var i=0;i<cs.length;i++){var s=cs[i].closest('.sfp')||cs[i];if(seen.indexOf(s)>=0)continue;seen.push(s);if(!s.offsetParent)continue;n++;if(s===me)return n;}}catch(e){}return 0;};
-  window.SB_PLACE={specimen:'Product page',pdp:'Product page','product-page':'Product page',card:'Product card',shop:'Shop page',bag:'Bag','second-tee':'Bag suggestion','cart-trail-bag':'Bag suggestion','guide-bar':'Guide page bar','tote-page':'Tote page',home:'Homepage card','journey-grid-quick-add':'Homepage card','journey-ring-quick-add':'Homepage ring','journey-place-quick-add':'Homepage place card','journey-place-card':'Homepage place card','hero-ring':'Homepage ring',related:'Related products',menu:'Menu',instagram:'Instagram block',link:'Text link'};
+  window.SB_PLACE={specimen:'Product page','specimen-bar':'Product page bar',pdp:'Product page','product-page':'Product page',card:'Product card',shop:'Shop page',bag:'Bag','second-tee':'Bag suggestion','cart-trail-bag':'Bag suggestion','guide-bar':'Guide page bar','tote-page':'Tote page',home:'Homepage card','journey-grid-quick-add':'Homepage card','journey-ring-quick-add':'Homepage ring','journey-place-quick-add':'Homepage place card','journey-place-card':'Homepage place card','hero-ring':'Homepage ring',related:'Related products',menu:'Menu',instagram:'Instagram block',link:'Text link'};
   window.track=window.track||function(n,p){try{p=p||{};var C=window.SB_CAT||{};
     var ec=/^(view_item|view_item_list|select_item|add_to_cart|remove_from_cart|view_cart|begin_checkout|add_to_wishlist)$/.test(n);
     if(ec){
@@ -1039,7 +1039,7 @@ h1 .nw{white-space:nowrap}
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=e5762a32">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=2a20f450">
 <link rel="preload" as="image" href="/shirts/card/polo-dune-front.webp" imagesrcset="/shirts/card/polo-dune-front.webp 800w, /shirts/polo-dune-front.webp 1080w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high">
-<link rel="stylesheet" href="/assets/sahra-specimen.css?v=f4a92609">
+<link rel="stylesheet" href="/assets/sahra-specimen.css?v=91bd9a76">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/products/sand-polo/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/products/sand-polo/">
@@ -1618,7 +1618,10 @@ body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3
 </nav>
 
 <main id="main">
-<!-- data-bg drives the scroll-linked background journey (same technique as the shop page) -->
+<!-- data-bg drives the scroll-linked background journey (same technique as the shop page).
+     12 Nov 2026 (Faheem, phone screenshot: "Why's the background darker at this part of the page than above"; chose
+     "Plain cream, no fade"): this cream stop is the only one, so the page stays cream all the way down, like the Sahel
+     and Sahra Trail pages. The fade to the design's dark theme began halfway down the buy area, which has no panel. -->
 <!-- 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top on all 22 product pages (specimen.js) -->
 <div data-bg="#FAF6EF">
 <section class="ss ss-founding" data-ss style="--ss-top:151px">
@@ -1647,7 +1650,7 @@ body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3
     <div class="ss-body">
       <p class="ss-stat"><span class="sb-ship-uae">متوفر. اطلب قبل الساعة 2 ظهرًا للتوصيل في يوم العمل التالي داخل الإمارات.</span><span class="sb-ship-gcc">متوفر. التوصيل إلى دول الخليج خلال 3 إلى 5 أيام عمل.</span><span class="sb-ship-intl">متوفر. التوصيل العالمي خلال 7 إلى 14 يوم عمل.</span></p>
       
-      <p class="ss-help">البولو مصمّم على جدول مقاسات تيشيرت ريجولر. لست متأكدًا من مقاسك؟ <a href="#fit" class="pdp-chart">اطّلع على جدول المقاسات</a>. </p>
+      <p class="ss-help">البولو مصمّم على جدول مقاسات تيشيرت ريجولر. <a href="#size-finder" class="pdp-chart">اعثر على مقاسك بأداة المقاسات</a>. </p>
       <div class="ssb" id="ssBuy" role="region" aria-label="اشترِ بولو صحراء" data-handle="sand-polo" data-kit="0" data-one="0" data-gift="1" data-line="founding" data-price="229">
       <div class="ssb-r1"><div class="ssb-sz" role="group" aria-label="المقاس" data-group="size"><button type="button" data-size="S" aria-pressed="false">S</button><button type="button" data-size="M" aria-pressed="false">M</button><button type="button" data-size="L" aria-pressed="false">L</button><button type="button" data-size="XL" aria-pressed="false">XL</button></div><button type="button" class="ssb-add" id="ssAdd">أضف إلى السلة</button></div>
       <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p"><!--sbs--><sbs-g class="sbs-grp"><span class="sb-price sbs-now sbs1" data-handle="sand-polo" data-aed="68.70">68.70 درهمًا</span> <!--/sbs--><span class="sb-price sbs-was" data-sbsp data-handle="sand-polo" data-aed="229">229 درهمًا</span><!--sbs--> <sbs-t class="sbs-tag sbs1">خصم 70%</sbs-t></sbs-g><!--/sbs--></span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × <!--sbs--><span class="sbs1">17.18</span><span class="sbs0"><!--/sbs-->57.25<!--sbs--></span><!--/sbs--> مع تابي</span></span><span class="ssb-dl"><span class="sb-ship-uae">توصيل مجاني للطلبات فوق 100 درهم</span><span class="sb-ship-gcc">التوصيل إلى دول الخليج 3 إلى 5 أيام</span><span class="sb-ship-intl">توصيل عالمي</span> · إرجاع خلال 14 يومًا</span></p></div>
@@ -1729,7 +1732,7 @@ body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3
 
 
 
-<div class="wrap" data-bg="#F3DDB8">
+<div class="wrap">
   <section class="sec reveal" id="design">
     <span class="snum">02 — التصميم</span>
     <h2>هادئ <em>عن قصد</em></h2>
@@ -1760,7 +1763,7 @@ body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3
     <h2>بمقاسات <em>التيشيرتات</em></h2>
     <p>البولو مصمّم بمواصفات تيشيرتات ريجولر نفسها، فيناسبه الحرف نفسه الذي تلبسه في تيشيرت ريجولر. راجع جدول المقاسات أدناه قبل الطلب. كمّه مركّب عند الكتف الطبيعي — ولا توجد قصّة أوفرسايز من البولو.</p>
     <p><strong>قصّة رجالية</strong>، بمقاسات S وM وL وXL. القياسات أدناه هي قياسات القطعة لا الجسم، فاعتمد عليها بدل التخمين من الحرف الذي تلبسه عادة.</p>
-    <div class="sfind" data-sizefinder data-fit="regular" data-chart='{"regular":[["S",48.3],["M",50.8],["L",55.9],["XL",61]],"oversized":[["S",57.1],["M",59.7],["L",63.5],["XL",67.3]]}'></div>
+    <div class="sfind" id="size-finder" data-sizefinder data-fit="regular" data-chart='{"regular":[["S",48.3],["M",50.8],["L",55.9],["XL",61]],"oversized":[["S",57.1],["M",59.7],["L",63.5],["XL",67.3]]}'></div>
     <div class="sz-wrap">
       <table class="sz">
         <caption class="sz-cap">الإصدار التأسيسي &middot; قصّة ريجولر &middot; القطعة مقاسة مسطّحة</caption>
@@ -2331,8 +2334,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-cart.js?v=cbb261ec" defer></script>
-<script src="/assets/sahra-specimen.js?v=797d26ff" defer></script>
-<script src="/assets/sahra-sizefinder.js?v=85725595" defer></script>
+<script src="/assets/sahra-specimen.js?v=0c6f544d" defer></script>
+<script src="/assets/sahra-sizefinder.js?v=7947b93c" defer></script>
 <script src="/assets/sahra-market.js?v=be20a079" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;

@@ -179,33 +179,59 @@
   var VS = null, sel = {}, live = false, busy = false;
   function say(t) { if (msg) { msg.textContent = t || ''; buy.classList.toggle('has-msg', !!t); syncH(); } }
   /* the sheet's height drives the page's bottom padding on phones, so nothing hides behind it */
-  function syncH() { try { de.style.setProperty('--ss-h', Math.ceil(buy.getBoundingClientRect().height) + 'px'); } catch (e) {} }
+  function syncH() { if (mode === 'inl') { if (!de.style.getPropertyValue('--ss-h')) de.style.setProperty('--ss-h', (barH || 66) + 'px'); return; } try { de.style.setProperty('--ss-h', Math.ceil(buy.getBoundingClientRect().height) + 'px'); } catch (e) {} }
   de.classList.add('ss-page');
   /* The sheet floats outside the page's stacking contexts (main, section and .wrap carry z-index), or a
      later section or the footer would paint over it. Phones: fixed to the bottom of the screen from the
      start. Desktop: a card under the price, which docks to the bottom of the screen once it has scrolled
      away, and steps aside for the footer, like the old buy bar. A placeholder keeps its place. */
   var ph = document.createElement('div'); ph.className = 'ssb-ph'; buy.parentNode.insertBefore(ph, buy);
+  /* 12 Nov 2026 (Faheem, phone screenshot: "The size and add to bag buttons should be there below the price in addition
+     to being the floating bottom menu. This should be there for all product pages. A user could be finding them below
+     the price and might miss that these are on the floating bar"). On a phone the sheet has a second home right under
+     the price (phM). While that place is on screen the sizes and the button sit there, in the page; when it is off
+     screen, above or below, the same sheet is the bar at the bottom. One sheet, so a size chosen in one is chosen in
+     the other. The swap happens where the two meet, as the place under the price scrolls past the top of the bar. */
+  var head = document.querySelector('.ss-head'), phM = document.createElement('div'); phM.className = 'ssb-ph ssb-ph-m';
+  if (head && head.parentNode) head.parentNode.insertBefore(phM, head.nextSibling);
   var mqPh = window.matchMedia ? matchMedia('(max-width:899px)') : { matches: true };
-  var floating = false, foot = document.querySelector('footer'), footOn = false;
-  function setFloat(on) {
-    if (on === floating) return; floating = on;
-    if (on) { if (!mqPh.matches) ph.style.height = buy.offsetHeight + 'px'; document.body.appendChild(buy); }
-    else { ph.style.height = ''; ph.parentNode.insertBefore(buy, ph.nextSibling); }
-    buy.classList.toggle('float', on && !mqPh.matches);
+  var floating = false, mode = '', inlH = 0, barH = 0, foot = document.querySelector('footer'), footOn = false;
+  function put(m) {
+    if (m === mode) return;
+    var h = buy.offsetHeight;
+    if (mode === 'inl' && h) inlH = h;   /* the card may have grown (a message under the sizes): the bar's place keeps its real height */
+    mode = m; floating = m === 'float';
+    buy.classList.remove('inl'); ph.style.height = ''; phM.style.height = '';
+    if (m === 'float') {
+      if (!mqPh.matches) ph.style.height = h + 'px'; else if (phM.parentNode) phM.style.height = inlH + 'px';
+      document.body.appendChild(buy);
+    } else if (m === 'inl') { phM.appendChild(buy); buy.classList.add('inl', 'seen'); inlH = buy.offsetHeight || inlH || 70; }
+    else ph.parentNode.insertBefore(buy, ph.nextSibling);
+    buy.classList.toggle('float', floating && !mqPh.matches);
     syncH();
   }
+  function setFloat(on) { put(on ? 'float' : 'home'); }
   var raf = 0;
   function place() {
     raf = 0;
-    if (mqPh.matches) { buy.classList.remove('float', 'away'); setFloat(true); return; }
+    if (mqPh.matches) {
+      buy.classList.remove('float', 'away');
+      if (!phM.parentNode) { put('float'); return; }
+      if (!inlH) put('inl');
+      if (floating) barH = buy.offsetHeight;
+      var r = phM.getBoundingClientRect(), top = r.top, bottom = r.top + inlH;
+      /* under the price while any of it shows between the header and the top of the bar */
+      put(bottom > 72 && top < innerHeight - (barH || 66) ? 'inl' : 'float');
+      if (floating) barH = buy.offsetHeight;
+      return;
+    }
     var past = (floating ? ph : buy).getBoundingClientRect().bottom < 64;
-    setFloat(past);
+    put(past ? 'float' : 'home');
     buy.classList.toggle('away', floating && footOn);
   }
   function req() { if (!raf) raf = requestAnimationFrame(place); }
   addEventListener('scroll', req, { passive: true }); addEventListener('resize', req, { passive: true });
-  if (mqPh.addEventListener) mqPh.addEventListener('change', function () { setFloat(false); place(); });
+  if (mqPh.addEventListener) mqPh.addEventListener('change', function () { put('home'); inlH = 0; place(); });
   if (foot && 'IntersectionObserver' in window) new IntersectionObserver(function (e) { footOn = e[0].isIntersecting; req(); }).observe(foot);
   place();
   syncH(); addEventListener('resize', syncH, { passive: true }); setTimeout(syncH, 600);
@@ -250,7 +276,8 @@
     var b = e.target.closest && e.target.closest('.ssb-sz button'); if (!b || b.disabled) return;
     var g = b.closest('.ssb-sz').getAttribute('data-group'), z = b.getAttribute('data-size');
     sel[g] = z; say(''); paint(); fitLinks();
-    var sp = { item_id: handle, size: z, via: 'specimen', ad: window.SB_AD ? 1 : 0 }; if (g !== 'size') sp.part = g;   /* the kit has two size rows: tee and short */
+    /* 12 Nov 2026: 'specimen-bar' when the sheet is the bar at the bottom, so reports can tell it from the sizes under the price */
+    var sp = { item_id: handle, size: z, via: floating ? 'specimen-bar' : 'specimen', ad: window.SB_AD ? 1 : 0 }; if (g !== 'size') sp.part = g;   /* the kit has two size rows: tee and short */
     tr('size_select', sp);
   });
   function needSize() {
@@ -275,7 +302,7 @@
     if (buy.getAttribute('data-gift') === '0') opts.gift = false;
     window.SahraCart.add(v.id, 1, opts).then(function () {
       busy = false; add.disabled = false; add.textContent = 'Add to bag';
-      tr('add_to_cart', { item_id: handle, size: v.title, via: 'specimen' });
+      tr('add_to_cart', { item_id: handle, size: v.title, via: floating ? 'specimen-bar' : 'specimen' });
     }, function () {
       busy = false; add.disabled = false; add.textContent = 'Add to bag';
       say('That did not go into your bag. Please try again, or message us on WhatsApp.');

@@ -150,7 +150,23 @@ html body .ssb .ssb-p .sb-price{font:600 14.5px/1.2 Jost,system-ui,sans-serif!im
   html.ss-page .sb-fcart.on,html.ss-page .sb-fcart{bottom:calc(var(--ss-h,112px) + 12px)}
   html.ss-page .sb-wa{display:none!important}
   html body:has(.m-panel.open) .ssb{transform:translateY(130%);visibility:hidden}
+  /* 12 Nov 2026 (Faheem: the sizes and Add to bag under the price too): the sheet's place under the price, and the
+     sheet when it sits there - a card in the page, not the bar */
+  .ssb-ph.ssb-ph-m{order:4;height:auto}   /* the desktop placeholder rule sets every .ssb-ph to height 0 */
+  html body .ssb.inl{position:relative;left:auto;right:auto;bottom:auto;max-width:none;margin:0;z-index:auto;border:1px solid rgba(42,32,22,.12);border-radius:20px;box-shadow:0 14px 34px -26px rgba(42,32,22,.45);animation:none;padding:10px 12px;transform:none;visibility:visible}
+  html body .ssb.inl .ssb-msg{margin-top:8px}
+  html body .ssb.seen{animation:none}   /* the bar slides in once, not every time it takes over from the card */
+  /* the kit's two rows of sizes, in the narrower card: room for the whole word on the button */
+  html body .ssb.inl.kit{padding:8px}
+  html body .ssb.inl.kit .ssb-sz{gap:4px}
+  html body .ssb.inl.kit .ssb-sz button{min-width:38px;height:38px}
+  html body .ssb.inl.kit .ssb-gl{min-width:36px}
 }
+/* the kit's button is two rows tall, so a long label (the Arabic one) wraps instead of being cut */
+html body .ssb.kit .ssb-add{white-space:normal;line-height:1.2!important;text-overflow:clip}
+@media(max-width:899px){
+}
+@media(min-width:900px){.ssb-ph-m{display:none}}
 /* 10 Nov 2026 (site scorecard, seven of eight reviewers; Faheem: "One-row buy bar"): on a phone the sheet is one row,
    the sizes and the button. Its second row (price, Tabby, delivery and returns, the fit switch) repeated what the page
    already says under the title and made the bar 144px tall, a sixth of the screen. The page keeps every one of those

@@ -206,7 +206,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
     <h2>${p.fitHeading || 'Size &amp; <em>fit</em>'}</h2>
     <p>${p.fitWho || ''}</p>
     <p>${p.garment === 'polo' ? '<strong>Men&rsquo;s cut</strong>, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from the letter size you usually wear.' : '<strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.'}${esc(p.fitExtra||"")}</p>
-    ${/* 25 Sep 2026: size finder for people buying for someone else (assets/sahra-sizefinder.js) */''}<div class="sfind" data-sizefinder data-fit="${p.fit === 'oversized' ? 'oversized' : 'regular'}" data-chart='${JSON.stringify({ regular: (SIZING.regular || []).map(function (r) { return [r[0], r[2]]; }), oversized: (SIZING.oversized || []).map(function (r) { return [r[0], r[2]]; }) })}'></div>
+    ${/* 25 Sep 2026: size finder for people buying for someone else (assets/sahra-sizefinder.js) */''}<div class="sfind" id="size-finder" data-sizefinder data-fit="${p.fit === 'oversized' ? 'oversized' : 'regular'}" data-chart='${JSON.stringify({ regular: (SIZING.regular || []).map(function (r) { return [r[0], r[2]]; }), oversized: (SIZING.oversized || []).map(function (r) { return [r[0], r[2]]; }) })}'></div>
     <div class="sz-wrap">
       <table class="sz">
         <caption class="sz-cap">Founding Edition &middot; ${p.fit === 'oversized' ? 'Oversized fit' : 'Regular fit'} &middot; garment measured flat</caption>
@@ -1104,14 +1104,17 @@ ${SP.HEAD}
 </nav>
 
 <main id="main">
-<!-- data-bg drives the scroll-linked background journey (same technique as the shop page) -->
+<!-- data-bg drives the scroll-linked background journey (same technique as the shop page).
+     12 Nov 2026 (Faheem, phone screenshot: "Why's the background darker at this part of the page than above"; chose
+     "Plain cream, no fade"): this cream stop is the only one, so the page stays cream all the way down, like the Sahel
+     and Sahra Trail pages. The fade to the design's dark theme began halfway down the buy area, which has no panel. -->
 <!-- 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top on all 22 product pages (specimen.js) -->
 <div data-bg="#FAF6EF">
 ${SP.top(SPS, {
   crumb: `<nav class="ss-crumb" aria-label="Breadcrumb">${crumbTrail(p).map(c => c[1] ? `<a href="${c[1]}">${esc(c[0])}</a>` : `<span aria-current="page">${esc(c[0])}</span>`).join('<i aria-hidden="true">/</i>')}</nav>`,
   h1: esc(productH1(p)).replace('T-Shirt', '<span class="nw">T-Shirt</span>'),
   rating: RV.ratingLine(designHandles(p)),
-  help: `<p class="ss-help">${p.garment === 'polo' ? 'The polo is graded to the Regular tee chart. ' : ''}Not sure of your size? <a href="#fit" class="pdp-chart">See the size chart</a>. ${p.modelInfo ? esc(String(p.modelInfo).split(' \u00b7 ').slice(1).join('. ')) + '.' : ''}</p>`,
+  help: `<p class="ss-help">${p.garment === 'polo' ? 'The polo is graded to the Regular tee chart. ' : ''}<a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. ${/* 12 Nov 2026 (Faheem: "Instead of saying not sure of your size, let's just say something like find your fit with our size finder and this takes the user to the height etc criteria") */''}${p.modelInfo ? esc(String(p.modelInfo).split(' \u00b7 ').slice(1).join('. ')) + '.' : ''}</p>`,
   extra: `${pairStrip(p, all)}
       <dl class="pdp-why">
         <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? 'Piqu\u00e9 cotton, embroidered.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? 'Combed cotton, pre-washed, embroidered rather than printed.' : 'Combed cotton, pre-washed, printed direct to the garment with an embroidered mark.')} Designed in the UAE.</dd></div>
@@ -1216,7 +1219,7 @@ ${LEAN ? `<div class="wrap lean-first">${FIT_HTML.replace('04 — Size &amp; fit
     <ul class="care">${careList(p.care)}</ul>
     <p>How a heavyweight tee compares with the shirt you already own is on our <a href="/fabric/">fabric page</a>.</p>
   </section>
-</div>` : ''}${!LEAN && p.placeSlug ? `<section class="place-band" data-bg="${p.theme}">
+</div>` : ''}${!LEAN && p.placeSlug ? `<section class="place-band">
   <div class="wrap place-inner">
     <div class="reveal">
       <span class="snum">01 — The place behind it</span>
@@ -1237,7 +1240,7 @@ ${LEAN ? `<div class="wrap lean-first">${FIT_HTML.replace('04 — Size &amp; fit
   </div>
 </section>` : ``}
 
-<div class="wrap" data-bg="${p.theme2}">
+<div class="wrap">
   ${LEAN ? '' : `<section class="sec reveal" id="design">
     <span class="snum">02 — The design</span>
     <h2>${p.designHeading}</h2>
