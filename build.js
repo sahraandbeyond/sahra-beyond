@@ -4071,7 +4071,7 @@ console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.le
     if (!MARK.test(html)) continue;
     const raw = RV.homepageBand({ compact: true });   /* 3 cards, the rest behind Show more (24 Sep 2026: ~4 phone screens of reviews) */
     const band = raw ? '<style>' + RV.CSS + '</style>' + raw : '';
-    const next = html.replace(MARK, '<!--REVIEWS:START-->' + band + '<!--REVIEWS:END-->');
+    const next = html.replace(MARK, () => '<!--REVIEWS:START-->' + band + '<!--REVIEWS:END-->');   /* a function: a "$" in a review is text, not a replacement pattern */
     if (next !== html) {
       fs.writeFileSync(file, next);
       console.log(band ? `  \u2713 homepage review band (${f})` : `  \u00b7 homepage review band empty - not enough reviews yet (${f})`);
@@ -4126,7 +4126,7 @@ console.log('Build complete: ' + locations.length + ' locations, ' + LANDINGS.le
 
   const payload = Object.keys(data).length ? `<script>
 (function(){var RV=${JSON.stringify(data)};
-function stars(v){var n=Math.max(0,Math.min(5,Math.floor(v||0)));
+function stars(v){var n=Math.max(0,Math.min(5,Math.floor(+(v||0).toFixed(1))));
  return '<span class="rv-stars" aria-hidden="true">'+'★'.repeat(n)+'☆'.repeat(5-n)+'</span>';}
 function paint(){var done=0;
  Object.keys(RV).forEach(function(h){
@@ -4147,8 +4147,8 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
     if (!MARK.test(html)) continue;
-    let next = html.replace(MARK, '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
-    if (BANDMARK.test(next)) next = next.replace(BANDMARK, '<!--RV_BAND:START-->' + (bandHtml ? '<style>' + RV.CSS + '</style>' + bandHtml : '') + '<!--RV_BAND:END-->');
+    let next = html.replace(MARK, () => '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
+    if (BANDMARK.test(next)) next = next.replace(BANDMARK, () => '<!--RV_BAND:START-->' + (bandHtml ? '<style>' + RV.CSS + '</style>' + bandHtml : '') + '<!--RV_BAND:END-->');
     if (next !== html) {
       fs.writeFileSync(file, next);
       console.log(payload ? `  ✓ shop star ratings (${f})` : `  · shop star ratings: no reviews yet (${f})`);
@@ -4206,7 +4206,7 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
 
   const payload = Object.keys(data).length ? `<script>
 (function(){var RV=${JSON.stringify(data)};
-function stars(v){var n=Math.max(0,Math.min(5,Math.floor(v||0)));
+function stars(v){var n=Math.max(0,Math.min(5,Math.floor(+(v||0).toFixed(1))));
  return '<span class="rv-stars" aria-hidden="true">'+'★'.repeat(n)+'☆'.repeat(5-n)+'</span>';}
 function paint(){var done=0;
  Object.keys(RV).forEach(function(h){
@@ -4225,7 +4225,7 @@ if(!paint()){var n=0,iv=setInterval(function(){if(paint()||++n>40)clearInterval(
     if (!fs.existsSync(file)) continue;
     let html = fs.readFileSync(file, 'utf8');
     if (!MARK.test(html)) continue;
-    const next = html.replace(MARK, '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
+    const next = html.replace(MARK, () => '<!--RV_SHOP:START-->' + payload + '<!--RV_SHOP:END-->');
     if (next !== html) {
       fs.writeFileSync(file, next);
       console.log(payload ? `  ✓ shop star ratings (${f})` : `  · shop star ratings: no reviews yet (${f})`);

@@ -19,6 +19,15 @@ const path = require('path');
 
 const DIR = path.join(__dirname, 'content', 'reviews');
 
+/* 12 Nov 2026 (Faheem, on the failing Judge.me sync: "As written, automatic"). Everything a review
+   brings to a page (its text, the buyer's name, a count, a date) is marked data-ar-rule="kind|args".
+   ar-mirror.js lifts those elements out before it builds the Arabic page, so a new review never needs
+   a new dictionary entry, and ar-reviews.js writes the Arabic by rule. Keep the marker on every new
+   review-driven element, or the twice-daily sync will stop at the Arabic parity check again. */
+const ym = iso => (/^\d{4}-\d{2}/.exec(String(iso || '')) || [''])[0];
+/* a name inside a marker: escaped, and "|" (the argument separator) written as an entity */
+const arg = s => esc(s).replace(/\|/g, '&#124;');
+
 /* Judge.me bodies arrive with Windows line endings (\r\n). Left in, every
    build on a different OS re-flips the built pages and they show up as
    modified for nothing. Normalise once, here. */
@@ -35,6 +44,11 @@ function productName(handle) {
   try {
     const d = JSON.parse(fs.readFileSync(path.join(PRODUCT_DIR, handle + '.json'), 'utf8'));
     return (_names[handle] = d.name || null);
+  } catch (e) { /* not a Founding Edition piece */ }
+  /* 12 Nov 2026: Sahel and Sahra Trail pieces carry reviews too; their names live in preorder-page.js */
+  try {
+    const p = require('./preorder-page.js').products().find(x => x.handle === handle);
+    return (_names[handle] = p ? String(p.plain || p.name).replace(/&amp;/g, '&') : null);
   } catch (e) { return (_names[handle] = null); }
 }
 
@@ -58,9 +72,9 @@ const HIDDEN_PHOTO_IDS = ['1788003745'];
 function shownPhotos(list) {
   return (list || []).filter(u => !HIDDEN_PHOTO_IDS.some(id => String(u).includes('/' + id + '__')));
 }
-function photoLink(u, alt) {
+function photoLink(u, alt, piece) {
   return `<a class="rv-photo-a" href="${esc(fullSize(u))}" target="_blank" rel="noopener"` +
-         ` aria-label="Open customer photo full size"><img class="rv-photo" src="${esc(u)}" alt="${esc(alt)}" width="84" height="84" loading="lazy"></a>`;
+         ` aria-label="Open customer photo full size"><img class="rv-photo" src="${esc(u)}" alt="${esc(alt)}" width="84" height="84" loading="lazy" data-ar-rule="rv-alt|${arg(piece || '')}"></a>`;
 }
 /* One per page is enough; the guard makes any duplicate a no-op. Kept
    dependency-free and delegated so photos injected after load still work. */
@@ -140,9 +154,13 @@ function stars(rating) {
      beside the text "4.5 / 5". Understating by half a star is a safe error;
      overstating a rating is not, and the precise figure is always shown next
      to the stars anyway. */
-  const n = Math.max(0, Math.min(5, Math.floor(Number(rating) || 0)));
+  /* 12 Nov 2026: floor the figure as it is SHOWN (one decimal), so 4.96 reads "5.0 / 5" beside five
+     stars and not beside four. 4.5 still paints four. */
+  const n = starCount(rating);
   return `<span class="rv-stars" aria-hidden="true">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</span>`;
 }
+
+function starCount(rating) { return Math.max(0, Math.min(5, Math.floor(Number((Number(rating) || 0).toFixed(1))))); }
 
 function fmtDate(iso) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(iso || ''))) return '';
@@ -156,7 +174,7 @@ function fmtDate(iso) {
 function cardRating(handle) {
   const d = load(handle);
   if (!d) return '';
-  return `<span class="pcard-rv">${stars(d.average)}` +
+  return `<span class="pcard-rv" data-ar-rule="rv-card|${d.average.toFixed(1)}|${d.count}">${stars(d.average)}` +
          `<span class="pcard-rv-n">${d.average.toFixed(1)} · ${d.count} review${d.count === 1 ? '' : 's'}</span></span>`;
 }
 
@@ -202,7 +220,7 @@ function ratingLine(designHandles) {
      the price. A short label that keeps the scope honest ("store reviews") swaps in there. */
   /* 18 Oct 2026 (conversion panel): a pooled figure beside the price read as the product's own rating. The scope is now visible, not only in the aria-label. */
   const short = pr.scope === 'design' ? `${d.average.toFixed(1)} (${n})` : `${d.average.toFixed(1)} · ${n} across the range`;
-  return `<a class="pdp-rating" href="#reviews">${stars(d.average)}<span class="pdp-rating-n"><span class="rl-f">${label} &rarr;</span><span class="rl-s" aria-label="${d.average.toFixed(1)} out of 5, ${n} review${n === 1 ? '' : 's'}${pr.scope === 'design' ? '' : ' across the store'}">${short}</span></span></a>`;
+  return `<a class="pdp-rating" href="#reviews">${stars(d.average)}<span class="pdp-rating-n" data-ar-rule="rv-line|${pr.scope}|${d.average.toFixed(1)}|${n}"><span class="rl-f">${label} &rarr;</span><span class="rl-s" aria-label="${d.average.toFixed(1)} out of 5, ${n} review${n === 1 ? '' : 's'}${pr.scope === 'design' ? '' : ' across the store'}">${short}</span></span></a>`;
 }
 /** Up to n short quotes for the buy box: first sentence, 25-140 characters. */
 function quotes(designHandles, n) {
@@ -216,7 +234,7 @@ function quotes(designHandles, n) {
     let first = (body.match(/^.{20,160}?[.!?](\s|$)/) || [body])[0].trim();
     if (first.length > 140) first = first.slice(0, 137).replace(/\s+\S*$/, '') + '…';
     if (first.length < 20) return;
-    picks.push(`<li><q>${esc(first)}</q><span>${esc(String(r.name || '').split(' ')[0])}${r.verified ? ' · verified buyer' : ''}</span></li>`);
+    picks.push(`<li><q data-ar-rule="ugc">${esc(first)}</q><span data-ar-rule="rv-by|${r.verified ? 1 : 0}">${esc(String(r.name || '').split(' ')[0])}${r.verified ? ' · verified buyer' : ''}</span></li>`);
   });
   return picks.length ? `<ul class="pdp-quotes" aria-label="What buyers say">${picks.join('')}</ul>` : '';
 }
@@ -232,45 +250,49 @@ function fitVerdict(designHandles) {
   if (f.length < FIT_MIN) return '';
   const pct = k => Math.round(100 * f.filter(x => x === k).length / f.length);
   const rows = [['small', 'Runs small'], ['true', 'As expected'], ['large', 'Runs large']]
-    .map(([k, l]) => `<li><span>${l}</span><i style="--w:${pct(k)}%"></i><b>${pct(k)}%</b></li>`).join('');
-  return `<div class="fitv"><p class="fitv-h">How it fits &mdash; ${f.length} buyers of this design</p><ul>${rows}</ul></div>`;
+    .map(([k, l]) => `<li><span data-ar-rule="fit-l|${k}">${l}</span><i style="--w:${pct(k)}%"></i><b>${pct(k)}%</b></li>`).join('');
+  return `<div class="fitv"><p class="fitv-h" data-ar-rule="fit-h|${f.length}">How it fits &mdash; ${f.length} buyers of this design</p><ul>${rows}</ul></div>`;
 }
 
-function productSection(handle, productName, designHandles) {
+/* opts.bare (12 Nov 2026): the same section for the Sahel and Sahra Trail pages, which have their own
+   page frame (no numbered sections, no .wrap) and never borrow the rest of the store's reviews. */
+function productSection(handle, productName, designHandles, opts) {
+  opts = opts || {};
   const pr = designHandles ? pooled(designHandles) : null;
   const d = pr ? pr.d : load(handle);
   if (!d) return '';
   const storeWide = pr && pr.scope === 'store';
+  if (opts.bare && storeWide) return '';
   const verifiedN = d.reviews.filter(r => r.verified).length;
 
   const cards = d.reviews.map(r => {
     const photos = shownPhotos(r.photos).slice(0, 2).map(u =>
-      photoLink(u, `Customer photo of ${storeWide ? (r.productTitle || 'a Sahra & Beyond piece') : productName}`)).join('');
+      photoLink(u, `Customer photo of ${storeWide ? (r.productTitle || 'a Sahra & Beyond piece') : productName}`, storeWide ? (r.productTitle || '') : productName)).join('');
     const about = (storeWide || (designHandles && r.handle && r.handle !== handle)) && r.productTitle
-      ? `<span class="rv-about">On ${esc(r.productTitle)}</span>` : '';
+      ? `<span class="rv-about" data-ar-rule="rv-on|${arg(r.productTitle)}">On ${esc(r.productTitle)}</span>` : '';
     const when = fmtDate(r.date);
     return `
         <li class="rv-card">
           ${stars(r.rating)}
           ${about}
-          ${r.title ? `<strong class="rv-title">${esc(r.title)}</strong>` : ''}
-          <p class="rv-text">${esc(r.body)}</p>
+          ${r.title ? `<strong class="rv-title" data-ar-rule="ugc">${esc(r.title)}</strong>` : ''}
+          <p class="rv-text" data-ar-rule="ugc">${esc(r.body)}</p>
           ${photos ? `<span class="rv-photos">${photos}</span>` : ''}
-          <span class="rv-meta">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}${when ? ' · ' + when : ''}</span>
-          ${r.reply ? `<p class="rv-reply"><strong>Sahra &amp; Beyond:</strong> ${esc(r.reply)}</p>` : ''}
+          <span class="rv-meta" data-ar-rule="rv-meta|${r.verified ? 1 : 0}|${ym(r.date)}">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}${when ? ' · ' + when : ''}</span>
+          ${r.reply ? `<p class="rv-reply" data-ar-rule="rv-reply"><strong>Sahra &amp; Beyond:</strong> ${esc(r.reply)}</p>` : ''}
         </li>`;
   }).join('');
 
   return `
-    <section class="sec reveal reviews" id="reviews" aria-labelledby="rv-h">
-      <div class="wrap">
-        <span class="snum">08 &mdash; What buyers say</span>
+    <section class="${opts.bare ? 'po-rv po-rv-own reviews' : 'sec reveal reviews'}" id="reviews" aria-labelledby="rv-h">
+      <div${opts.bare ? '' : ' class="wrap"'}>
+        ${opts.bare ? '' : '<span class="snum">08 &mdash; What buyers say</span>'}
         <h2 id="rv-h">${storeWide ? 'Reviews across Sahra &amp; Beyond' : 'Reviews'}</h2>
         ${storeWide ? `<p class="rv-scope">This design has no reviews yet, so these are from buyers of our other pieces.</p>` : ''}
         <div class="rv-aggregate">
           ${stars(d.average)}
           <span class="rv-score">${d.average.toFixed(1)} / 5</span>
-          <span class="rv-count">from ${d.count} review${d.count === 1 ? '' : 's'}${verifiedN ? ` &middot; ${verifiedN} verified buyer${verifiedN === 1 ? '' : 's'}` : ''}</span>
+          <span class="rv-count" data-ar-rule="rv-from|${d.count}|${verifiedN}">from ${d.count} review${d.count === 1 ? '' : 's'}${verifiedN ? ` &middot; ${verifiedN} verified buyer${verifiedN === 1 ? '' : 's'}` : ''}</span>
         </div>
         <ul class="rv-list">${cards}
         </ul>
@@ -318,7 +340,7 @@ function homepageBand(opts) {
       <div class="rv-aggregate">
         ${stars(avg)}
         <span class="rv-score">${avg.toFixed(1)} / 5</span>
-        <span class="rv-count">from ${count} review${count === 1 ? '' : 's'}</span>
+        <span class="rv-count" data-ar-rule="rv-from|${count}|0">from ${count} review${count === 1 ? '' : 's'}</span>
       </div>
       <div class="rv-filters" data-rv-filters>
         <!-- no counts on the chips: the band shows the newest 6 while the aggregate counts every
@@ -352,14 +374,14 @@ function homepageBand(opts) {
           const body = cut ? r.body.slice(0, 417).trim() + '…' : r.body;
           const pname = isProduct ? productName(r.product) : null;
           const link = isProduct
-            ? `<a class="rv-more" href="/products/${esc(r.product)}/#reviews">${cut ? 'Read the full review' : ('See it on ' + esc(pname || 'the product page'))} &rarr;</a>`
+            ? `<a class="rv-more" href="/products/${esc(r.product)}/#reviews"><span data-ar-rule="${cut ? 'rv-read' : 'rv-see|' + arg(pname || '')}">${cut ? 'Read the full review' : ('See it on ' + esc(pname || 'the product page'))} &rarr;</span></a>`
             : '';
           return `
         <li class="rv-card" data-rating="${Number(r.rating) || 0}" data-date="${esc(r.date || '')}">
           ${stars(r.rating)}
-          <p class="rv-text">${esc(body)}</p>
+          <p class="rv-text" data-ar-rule="ugc">${esc(body)}</p>
           ${shownPhotos(r.photos).length ? `<span class="rv-photos">${shownPhotos(r.photos).slice(0, 2).map(u => photoLink(u, 'Customer photo')).join('')}</span>` : ''}
-          <span class="rv-meta">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}${fmtDate(r.date) ? ' · ' + fmtDate(r.date) : ''}</span>
+          <span class="rv-meta" data-ar-rule="rv-meta|${r.verified ? 1 : 0}|${ym(r.date)}">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}${fmtDate(r.date) ? ' · ' + fmtDate(r.date) : ''}</span>
           ${link}
         </li>`; }).join('')}
       </ul>
@@ -461,4 +483,4 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 .pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#6B6256;margin-top:4px;text-transform:uppercase}
 `;
 
-module.exports = { productName, load, loadAll, stars, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN, merge, pooled, ratingLine, quotes, fitVerdict, FIT_MIN };
+module.exports = { productName, load, loadAll, stars, starCount, arg, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN, merge, pooled, ratingLine, quotes, fitVerdict, FIT_MIN };

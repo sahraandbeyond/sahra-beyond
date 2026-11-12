@@ -85,12 +85,66 @@ function englishPages() {
 }
 const arUrl = u => HAND[u] || ('/ar' + u);
 
+/* ---------- review-driven elements (12 Nov 2026) ----------
+   Faheem, 12 Nov 2026, on why the Judge.me sync kept failing: "As written, automatic". Any element
+   marked data-ar-rule="kind|args" (reviews-render.js, preorder-page.js) is lifted out of the page
+   before it is cut into units, so nothing a review brings (its text, the buyer's name, a count, a
+   date) ever becomes a dictionary key, and the sync can publish a new review with no translator.
+   seal() swaps each such element for a one-tag stand-in (<arx-iN> inline, <arx-bN> block);
+   unseal() puts it back, written in Arabic by ar-reviews.js. */
+const AR_RULES = require('./ar-reviews.js');
+const SEALED = /^<arx-[ib]\d+>$/;
+const VOID = new Set(['img', 'br', 'input', 'hr', 'meta', 'link', 'source', 'wbr']);
+function seal(html) {
+  const items = [];
+  if (html.indexOf('data-ar-rule="') === -1) return { html, items };
+  /* never inside a script, a style block or a comment */
+  const skip = [];
+  html.replace(/<!--[\s\S]*?-->|<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, (m, t, i) => { skip.push([i, i + m.length]); return m; });
+  const inSkip = i => skip.some(([a, b]) => i >= a && i < b);
+  const re = /<([a-zA-Z][a-zA-Z0-9]*)\b[^>]*\sdata-ar-rule="[^"]*"[^>]*>/g;
+  let out = '', pos = 0, m;
+  while ((m = re.exec(html))) {
+    if (m.index < pos || inSkip(m.index)) continue;
+    const tag = m[1].toLowerCase(), open = m[0];
+    let end = m.index + open.length, inner = '', close = '';
+    if (!VOID.has(tag) && !/\/>$/.test(open)) {
+      const tre = new RegExp('<' + tag + '\\b[^>]*>|</' + tag + '\\s*>', 'gi');
+      tre.lastIndex = end; let depth = 1, t;
+      while ((t = tre.exec(html))) { if (t[0][1] === '/') { if (--depth === 0) break; } else if (!/\/>$/.test(t[0])) depth++; }
+      if (!t) continue;   /* no closing tag: leave the element to the ordinary path, where it shows as pending */
+      inner = html.slice(end, t.index); close = t[0]; end = t.index + close.length;
+    }
+    out += html.slice(pos, m.index) + '<arx-' + (INLINE.has(tag) ? 'i' : 'b') + items.length + '>';
+    items.push({ open, inner, close, tag });
+    pos = end; re.lastIndex = end;
+  }
+  return { html: out + html.slice(pos), items };
+}
+let UI_DICT = null;
+function uiDict() {
+  if (UI_DICT) return UI_DICT;
+  try { UI_DICT = JSON.parse(fs.readFileSync(path.join(DICT_DIR, 'ui.json'), 'utf8')); } catch (e) { UI_DICT = {}; }
+  return UI_DICT;
+}
+function unseal(s, items, dict, has) {
+  if (!items.length) return s;
+  const T = { dict, ui: uiDict() };
+  return s.replace(/<arx-[ib](\d+)>/g, (m, i) => {
+    const el = items[+i]; if (!el) return '';
+    /* links inside a lifted element still lead to the Arabic page */
+    const inner = el.inner.replace(/<a\b[^>]*>/gi, t => rewriteHref(t, has));
+    return AR_RULES.apply({ open: el.open, inner, close: el.close, tag: el.tag }, T);
+  });
+}
+
 /* ---------- units ---------- */
 const norm = s => s.replace(/\s+/g, ' ').trim();
 function tagName(t) { const m = /^<\/?([a-zA-Z][a-zA-Z0-9-]*)/.exec(t); return m ? m[1].toLowerCase() : ''; }
 function isUnitToken(t) {
   if (t[0] !== '<' || t === '<') return 'text';
   if (t.startsWith('<!--')) return null;
+  if (SEALED.test(t)) return t[5] === 'i' ? 'tag' : null;   /* a lifted review element: inline ones ride in the run, block ones end it */
   const n = tagName(t);
   if (!n) return null;
   if (/^<(script|style|svg|noscript|template|textarea|pre)\b/i.test(t)) return null;
@@ -113,6 +167,9 @@ function unitKey(run) {
 function unitCore(run) {
   const tags = []; let s = '';
   run.forEach(t => {
+    /* a lifted review element that follows a tag travels with that tag instead of taking a placeholder,
+       so a card or a line has the same key with and without it (a first review does not change the key) */
+    if (SEALED.test(t) && tags.length && /⟦\d+⟧\s*$/.test(s)) { tags[tags.length - 1] += t; return; }
     if (t[0] === '<' && t !== '<') { tags.push(t); s += '⟦' + tags.length + '⟧'; }
     else s += t;
   });
@@ -144,7 +201,7 @@ const escAttr = s => String(s).replace(/&(?![a-z]+;|#\d+;)/gi, '&amp;').replace(
 
 /* ---------- extract: every unit and attribute string on the mirrored pages ---------- */
 function extractPage(html, add) {
-  const toks = html.match(TOKEN) || [];
+  const toks = seal(html).html.match(TOKEN) || [];
   let run = [];
   const flush = () => { if (run.length) { const u = unitKey(run); if (u) add(u.key); } run = []; };
   for (const t of toks) {
@@ -176,7 +233,8 @@ function rewriteHref(tag, has) {
 
 /* ---------- build one Arabic page ---------- */
 function mirrorPage(html, page, dict, has, missU, missA, bad) {
-  const toks = html.match(TOKEN) || [];
+  const sealed = seal(html);
+  const toks = sealed.html.match(TOKEN) || [];
   const out = []; let run = [];
   const flush = () => {
     if (!run.length) return;
@@ -197,7 +255,7 @@ function mirrorPage(html, page, dict, has, missU, missA, bad) {
     if (k) run.push(t); else { flush(); out.push(t); }
   }
   flush();
-  let s = out.join('');
+  let s = unseal(out.join(''), sealed.items, dict, has);
   /* relative URLs ("../../shirts/x.webp") point somewhere else from /ar/..., so resolve them against
      the English page's directory into root-relative paths (in attributes, srcsets, inline scripts and CSS) */
   const segs = page.url.replace(/[^/]*$/, '').split('/').filter(Boolean);
@@ -471,7 +529,7 @@ function parity() {
   return { pages: pages.length, missingPages, pending };
 }
 
-module.exports = { build, extract, englishPages, arUrl, parity };
+module.exports = { build, extract, englishPages, arUrl, parity, _test: { seal, extractPage, mirrorPage, loadDict } };
 if (require.main === module) {
   if (process.argv[2] === 'extract') extract();
   else if (process.argv[2] === 'list') englishPages().forEach(p => console.log(p.url));

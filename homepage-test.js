@@ -939,7 +939,15 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
     check('r118: the filled % off pill is off cards; the percentage shows once, as plain text, beside a product page price', /sbs-t\{display:none/.test(page) && /html\[data-sale="1"\] \.ss-price sbs-t\.sbs-tag/.test(page) && !/sbs-t\{[^}]*background:#7E4114/.test(page) && /<s class="sbs-was|sbs-was/.test(page));
     check('r118: the sale line in the top bar shows on shopping pages only', /var SHOPPING = /.test(wel) && /STAGES\[k\]\.promo && !SHOPPING/.test(wel));
     check('r118: the phone buy bar is one row (its second row is hidden under 900px) and the page carries the Tabby line', /@media\(max-width:899px\)\{\s*html body \.ssb \.ssb-r2\{display:none\}/.test(scss) && !/\.ss-body \.ss-tabby\{display:none!important\}/.test(scss) && /<p class="ss-tbp"><span class="ssb-tb/.test(kfb) && /<p class="ss-tbp">/.test(tee));
-    check('r118: Sahel pages show two labelled Founding Edition reviews and the size the model wears; Sahra Trail pages show neither reviews nor a rating', /id="first-reviews"/.test(kfb) && /no reviews of its own yet/.test(kfb) && (kfb.match(/<li><b class="po-rv-s"/g) || []).length === 2 && /class="ss-help">The model wears S\. /.test(kfb) && !/id="first-reviews"/.test(tee) && !/<a class="po-rate"/.test(tee) && !/<a class="po-rate"/.test(kit));
+    check('r118: Sahel pages show two labelled Founding Edition reviews and the size the model wears; Sahra Trail pages show neither reviews nor a rating', (function () {
+      /* 12 Nov 2026: once a piece has reviews of its own (the Judge.me sync brings them in with nobody watching), its page shows those instead, so this check follows the review files */
+      var RVt = require('./reviews-render.js'), ownOf = function (hs) { return !!RVt.merge(hs); };
+      var kOwn = ownOf(['khor-fakkan-bay-tee-regular', 'khor-fakkan-bay-tee-super-oversized', 'khor-fakkan-bay-tee-oversized']);
+      var kOk = kOwn ? (/<section class="po-rv po-rv-own reviews" id="reviews"/.test(kfb) && !/id="first-reviews"/.test(kfb) && /<a class="po-rate" href="#reviews">/.test(kfb))
+        : (/id="first-reviews"/.test(kfb) && /no reviews of its own yet/.test(kfb) && (kfb.match(/<li><b class="po-rv-s"/g) || []).length === 2);
+      var tOk = function (h, hs) { return ownOf(hs) ? /<a class="po-rate" href="#reviews">/.test(h) && /id="reviews"/.test(h) : !/<a class="po-rate"/.test(h); };
+      return kOk && /class="ss-help">The model wears S\. /.test(kfb) && !/id="first-reviews"/.test(tee) && tOk(tee, ['sahra-trail-tee']) && tOk(kit, ['sahra-trail-kit']);
+    })());
     /* 10 Nov 2026 (r119, site scorecard; Faheem: "Phone category row", "Lighter pages") */
     var tsh = rd('t-shirts/index.html'), shp = rd('shop/index.html');
     { const act = rd('activewear/index.html'), trl = rd('trail/index.html'), arh = rd('ar/index.html');
@@ -1034,6 +1042,41 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     const ab = fs.readFileSync(path.join(__dirname, 'about', 'index.html'), 'utf8'), sh = fs.readFileSync(path.join(__dirname, 'sahel', 'index.html'), 'utf8');
     check('palette: About and Sahel carry no navy or purple ground', !/#0E0A1F|#14102A|#39295A|#0E1A2E|#0B1526|rgba?\(20, ?16, ?42|rgba?\(14, ?26, ?46/i.test(ab + sh));
     check('palette: the sign-up block is a solid ink ground', /\.news\{[^}]*#2A2016/.test(fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8')));
+  }
+  /* 12 Nov 2026 (Faheem: "Why does judge me review sync keep failing"; "As written, automatic"). A new
+     Judge.me review must never need a new Arabic dictionary entry, or the twice-daily sync stops at the
+     Arabic parity check, as it did from 11 Nov. Review-driven elements carry data-ar-rule and are written
+     in Arabic by rule (ar-reviews.js). */
+  {
+    const AM = require('./ar-mirror.js')._test, AR = require('./ar-reviews.js');
+    const dict = AM.loadDict();
+    const keysOf = h => { const k = []; AM.extractPage(h, x => k.push(x)); return k; };
+    const page = { url: '/x/', rel: 'x/index.html' };
+    const mirror = h => AM.mirrorPage('<html><head></head><body>' + h + '</body></html>', page, dict, () => false, new Set(), new Set(), new Set());
+    const card = '<li class="rv-card"><span class="rv-stars" aria-hidden="true">★★★★☆</span> <span class="rv-about" data-ar-rule="rv-on|Qqq Piece">On Qqq Piece</span> <strong class="rv-title" data-ar-rule="ugc">Zzq title never seen</strong> <p class="rv-text" data-ar-rule="ugc">Zzq body never seen before.</p> <span class="rv-photos"><a class="rv-photo-a" href="https://x/y.jpg" aria-label="Open customer photo full size"><img class="rv-photo" src="https://x/y.jpg" alt="Customer photo of Qqq Piece" data-ar-rule="rv-alt|Qqq Piece"></a></span> <span class="rv-meta" data-ar-rule="rv-meta|1|2027-01">Zed Buyer · Verified buyer · January 2027</span> <a class="rv-more" href="/products/q/#reviews"><span data-ar-rule="rv-see|Qqq Piece">See it on Qqq Piece &rarr;</span></a> <p class="rv-reply" data-ar-rule="rv-reply"><strong>Sahra &amp; Beyond:</strong> Zzq reply never seen.</p></li>';
+    const agg = '<div class="rv-aggregate"><span class="rv-stars" aria-hidden="true">★★★★☆</span> <span class="rv-score">4.8 / 5</span> <span class="rv-count" data-ar-rule="rv-from|41|39">from 41 reviews &middot; 39 verified buyers</span></div>';
+    const fresh = keysOf('<ul>' + card + '</ul>' + agg).filter(k => dict[k] == null);
+    check('reviews: a review nobody has translated adds no string to the Arabic to-do list', fresh.length === 0, fresh.join(' | ').slice(0, 200));
+    const ar = mirror('<ul>' + card + '</ul>' + agg);
+    check('reviews: on the Arabic page the review stays as written and its labels are in Arabic', /<p class="rv-text" data-ar-rule="ugc" dir="auto">Zzq body never seen before\.<\/p>/.test(ar) && ar.indexOf('Zed Buyer · مشترٍ موثّق · يناير 2027') > -1 && ar.indexOf('من 41 تقييمًا &middot; 39 مشتريًا موثّقًا') > -1 && ar.indexOf('alt="صورة من عميل: Qqq Piece"') > -1 && !/<arx-/.test(ar), ar.slice(ar.indexOf('<body>'), ar.indexOf('<body>') + 300));
+    const name = '<span class="pcard-b"><a class="pcard-t" href="/products/q/">Qqq Piece</a>', rest = '<span class="pcard-place">Inspired by Qqq</span></span>';
+    const rated = '<span class="pcard-rv" data-ar-rule="rv-card|5.0|1"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pcard-rv-n">5.0 · 1 review</span></span>';
+    check('reviews: a card has the same Arabic key with and without its first review', keysOf(name + rated + rest).join('|') === keysOf(name + rest).join('|') && keysOf(name + '\n ' + rated + '\n ' + rest).join('|') === keysOf(name + '\n \n ' + rest).join('|'), keysOf(name + rated + rest).join('|'));
+    check('reviews: Arabic counts agree in number', AR.reviews(1) === 'تقييم واحد' && AR.reviews(2) === 'تقييمان' && AR.reviews(2, true) === 'تقييمين' && AR.reviews(7) === '7 تقييمات' && AR.reviews(19) === '19 تقييمًا' && AR.reviews(100) === '100 تقييم' && AR.buyers(2) === 'مشتريان موثّقان' && AR.buyers(7) === '7 مشترين موثّقين');
+    const RVsrc = fs.readFileSync(path.join(__dirname, 'reviews-render.js'), 'utf8'), POsrc = fs.readFileSync(path.join(__dirname, 'preorder-page.js'), 'utf8');
+    check('reviews: every review-driven element is marked for the Arabic rules', ['class="pcard-rv" data-ar-rule="rv-card|', 'class="pdp-rating-n" data-ar-rule="rv-line|', '<q data-ar-rule="ugc">', 'class="rv-title" data-ar-rule="ugc"', 'class="rv-text" data-ar-rule="ugc"', 'class="rv-meta" data-ar-rule="rv-meta|', 'class="rv-count" data-ar-rule="rv-from|', 'class="rv-about" data-ar-rule="rv-on|', 'class="rv-reply" data-ar-rule="rv-reply"', 'data-ar-rule="rv-alt|'].every(x => RVsrc.indexOf(x) > -1) && (RVsrc.match(/class="rv-text" data-ar-rule="ugc"/g) || []).length === 2 && ['<p data-ar-rule="ugc">', 'data-ar-rule="rv-bought|', 'data-ar-rule="rv-all|', 'data-ar-rule="rv-founding|', 'data-ar-rule="rv-design|'].every(x => POsrc.indexOf(x) > -1));
+    const had = fs.readFileSync(path.join(__dirname, 'ar', 'index.html'), 'utf8'), bodies = had.match(/<p class="rv-text"[^>]*>/g) || [];
+    check('reviews: every review on the Arabic homepage is shown as its buyer wrote it', bodies.length >= 3 && bodies.every(t => /data-ar-rule="ugc" dir="auto"/.test(t)) && AR.apply({ open: '<p data-ar-rule="ugc">', inner: 'Reviews', close: '</p>', tag: 'p' }, { dict: { Reviews: 'x' }, ui: {} }) === '<p data-ar-rule="ugc" dir="auto">Reviews</p>');
+    const hd = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+    check('reviews: the built homepage band carries the markers', (hd.match(/<p class="rv-text" data-ar-rule="ugc">/g) || []).length >= 3 && /<span class="rv-count" data-ar-rule="rv-from\|\d+\|0">from \d+ reviews<\/span>/.test(hd));
+    const SY = fs.readFileSync(path.join(__dirname, 'sync-reviews.js'), 'utf8');
+    check('reviews: the sync knows the Sahel and Sahra Trail products', /require\('\.\/preorder-page\.js'\)\.handles\(\)/.test(SY) && require('./preorder-page.js').handles().indexOf('barr-and-bahr-hoodie') > -1);
+    const kinds = s => (s.match(/data-ar-rule="(?:\$\{[^}]*'|\$\{cut \? ')?([a-z-]+)/g) || []).map(x => x.replace(/^.*["']/, ''));
+    const used = [...new Set(kinds(RVsrc).concat(kinds(POsrc)).concat(['rv-read', 'rv-see']))].filter(k => k !== 'kind');   /* 'kind' is the word in the explanatory comment */
+    check('reviews: every rule named in the page builders exists', used.length >= 14 && used.every(k => typeof AR.RULES[k] === 'function'), used.filter(k => typeof AR.RULES[k] !== 'function').join(' '));
+    check('reviews: a dollar sign or a bar in a review cannot break the Arabic page', (function () { const o = AR.apply({ open: '<img alt="x" data-ar-rule="rv-alt|A$&amp;B&#124;C">', inner: '', close: '', tag: 'img' }, { dict: {}, ui: {} }); return o.indexOf('alt="صورة من عميل: A$&B|C"') > -1 && (o.match(/alt="/g) || []).length === 1; })());
+    const RV2 = require('./reviews-render.js');
+    check('reviews: the stars follow the figure shown beside them', RV2.starCount(4.96) === 5 && RV2.starCount(4.94) === 4 && RV2.starCount(4.5) === 4 && RV2.starCount(5) === 5 && RV2.productName('barr-and-bahr-hoodie') != null);
   }
   const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
   check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);

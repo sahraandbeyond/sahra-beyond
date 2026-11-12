@@ -58,9 +58,18 @@ deploy the site.
 }
 
 /* the product handles we actually publish */
-const HANDLES = fs.existsSync(PRODUCT_DIR)
+const FOUNDING_HANDLES = fs.existsSync(PRODUCT_DIR)
   ? fs.readdirSync(PRODUCT_DIR).filter(f => f.endsWith('.json')).map(f => f.replace(/\.json$/, ''))
   : [];
+/* 12 Nov 2026 (Faheem: publish Sahel and Sahra Trail reviews "on their product pages"). Until now only
+   the seven Founding Edition products were known here, so the first review of the Barr & Bahr Hoodie
+   (11 Nov) matched no handle and was dropped with a warning. The Sahel and Sahra Trail pages are built
+   by preorder-page.js under their Shopify handles, so its list is the list. */
+const NEW_LINE_HANDLES = (function () {
+  try { return require('./preorder-page.js').handles(); }
+  catch (e) { console.log(`  ! Sahel and Sahra Trail handles could not be read (${e.message}); only the Founding Edition is synced.`); return []; }
+})();
+const HANDLES = [...new Set([...FOUNDING_HANDLES, ...NEW_LINE_HANDLES])];
 
 /* The Judge.me PUBLIC widget displays these reviews as "Anonymous" even though
    the private API returns the buyers' real names. Whatever a platform chooses
@@ -226,6 +235,17 @@ async function fetchPage(page) {
 
   const total = publishable.length;
   console.log(`\nsync-reviews — ${all.length} fetched, ${total} approved and publishable`);
+
+  /* 12 Nov 2026: this runs twice a day with nobody watching. An answer with no reviews at all, while the
+     site is showing some, is far more likely a Judge.me fault than every review being withdrawn at once;
+     writing it would take every review off the site. Stop instead, loudly. To really clear the reviews,
+     delete the files in content/reviews by hand. */
+  const onSite = fs.existsSync(OUT_DIR) ? fs.readdirSync(OUT_DIR).filter(f => f.endsWith('.json')).length : 0;
+  if (!total && onSite) {
+    console.log(`\n  ✗ Judge.me returned no publishable reviews, but the site has ${onSite} review file(s). Nothing was written.\n`);
+    if (process.env.GITHUB_ACTIONS) console.log('::error title=sync-reviews::Judge.me returned no reviews while the site has some; nothing was changed.');
+    process.exit(1);
+  }
 
   if (orphans.length) {
     console.log(`\n  ! ${orphans.length} review(s) could not be matched to a product handle:`);

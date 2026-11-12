@@ -380,21 +380,42 @@ function firstReviews() {
     for (const d of RV.loadAll()) for (const r of d.reviews) flat.push(Object.assign({}, r, { product: d.handle }));
     const total = flat.length;
     const design = h => String(h).replace(/-(regular|oversized)$/, '');
-    const ok = flat.filter(r => r.product !== '_shop' && r.verified && r.name && !/^anonymous$/i.test(r.name.trim()) && Number(r.rating) === 5 && r.body && r.body.length >= 60 && r.body.length <= 240).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || String(a.name).localeCompare(String(b.name)) || String(a.product).localeCompare(String(b.product)));
+    /* 12 Nov 2026: Sahel and Sahra Trail pieces now carry reviews of their own; this block and the line
+       under the name still speak for the Founding Edition only, as they say */
+    const own = new Set(products().map(x => x.handle));
+    const ok = flat.filter(r => r.product !== '_shop' && !own.has(r.product) && r.verified && r.name && !/^anonymous$/i.test(r.name.trim()) && Number(r.rating) === 5 && r.body && r.body.length >= 60 && r.body.length <= 240).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || String(a.name).localeCompare(String(b.name)) || String(a.product).localeCompare(String(b.product)));
     const pick = [];
     for (const r of ok) { if (pick.length < 2 && !pick.some(x => design(x.product) === design(r.product))) pick.push(r); }
     if (pick.length < 2) return '';
     const month = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' }); };
     return `<section class="po-rv" id="first-reviews" aria-labelledby="poRvH"><h2 id="poRvH">From buyers of our first pieces</h2>
     <p class="po-small">This piece is new and has no reviews of its own yet. These are from customers who bought the Founding Edition.</p>
-    <ul class="po-rv-l">${pick.map(r => `<li><b class="po-rv-s" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b><p>${esc(r.body)}</p><span>${esc(r.name.trim())} \u00b7 Verified buyer${month(r.date) ? ' \u00b7 ' + month(r.date) : ''}</span><span class="po-rv-on">Bought: ${esc(RV.productName(r.product) || 'a Founding Edition piece')}</span></li>`).join('')}</ul>
-    <p class="po-small"><a href="/#s-reviews">All ${total} reviews &rarr;</a></p></section>`;
+    <ul class="po-rv-l">${pick.map(r => `<li><b class="po-rv-s" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</b><p data-ar-rule="ugc">${esc(r.body)}</p><span data-ar-rule="rv-meta|1|${String(r.date || '').slice(0, 7)}">${esc(r.name.trim())} \u00b7 Verified buyer${month(r.date) ? ' \u00b7 ' + month(r.date) : ''}</span><span class="po-rv-on" data-ar-rule="rv-bought|${RV.arg(RV.productName(r.product) || '')}">Bought: ${esc(RV.productName(r.product) || 'a Founding Edition piece')}</span></li>`).join('')}</ul>
+    <p class="po-small"><a href="/#s-reviews"><span data-ar-rule="rv-all|${total}">All ${total} reviews &rarr;</span></a></p></section>`;
   } catch (e) { return ''; }
 }
-const RATING = (function () { try { const a = require('./reviews-render.js').loadAll(); let n = 0, t = 0; a.forEach(d => { n += d.count; t += d.average * d.count; });
-  return n >= 5 ? `${(t / n).toFixed(1)} from ${n} customer reviews of our Founding Edition` : ''; } catch (e) { return ''; } })();
+const RATING_D = (function () { try { const own = new Set(products().map(x => x.handle)); const a = require('./reviews-render.js').loadAll().filter(d => !own.has(d.handle)); let n = 0, t = 0; a.forEach(d => { n += d.count; t += d.average * d.count; });
+  return n >= 5 ? { avg: (t / n).toFixed(1), n } : null; } catch (e) { return null; } })();
+const RATING = RATING_D ? `${RATING_D.avg} from ${RATING_D.n} customer reviews of our Founding Edition` : '';
+
+/* 12 Nov 2026 (Faheem: Sahel and Sahra Trail reviews "on their product pages"). A piece's own reviews,
+   every fit of the design together, as on the Founding Edition pages. Until a design has one, the page
+   keeps the two Founding Edition reviews (Sahel) or nothing (Sahra Trail). */
+function designHandlesOf(p) { return p.fitsList ? p.fitsList.map(f => f.handle) : [p.handle]; }
+function ownReviews(p) {
+  try {
+    const RV = require('./reviews-render.js');
+    const d = RV.merge(designHandlesOf(p)); if (!d) return null;
+    const avg = d.average.toFixed(1), n = d.count, k = RV.starCount(d.average);
+    return {
+      line: `<a class="po-rate" href="#reviews"><b aria-hidden="true">${'&#9733;'.repeat(k)}${'&#9734;'.repeat(5 - k)}</b><span data-ar-rule="rv-design|${avg}|${n}">${avg} &middot; ${n} review${n === 1 ? '' : 's'} of this design</span></a>`,
+      section: `<style>${RV.CSS}.po-rv-own{max-width:900px;padding:22px 18px 16px}.po-rv-own h2{margin:0 0 12px}.po-rv-own .rv-aggregate{margin-bottom:16px}.po-rv-own .rv-card{background:#fff}@media(min-width:900px){.po-rv-own{padding:28px 28px 20px}}</style>` + RV.productSection(p.handle, String(p.plain || p.name).replace(/&amp;/g, '&'), designHandlesOf(p), { bare: true })
+    };
+  } catch (e) { console.log(`  ! reviews for ${p.handle} could not be shown: ${e.message}`); return null; }
+}
 
 function productPage(p, all, SITE, stage) {
+  const own = ownReviews(p);
   const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name) && onSale(o)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
   const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
@@ -417,13 +438,13 @@ function productPage(p, all, SITE, stage) {
     crumb: `<nav class="ss-crumb" aria-label="Breadcrumb"><a href="/">Home</a><i aria-hidden="true">/</i><a href="/new/#${p.line}">${p.line === 'sahel' ? 'Sahel' : 'Sahra Trail'}</a><i aria-hidden="true">/</i><span aria-current="page">${p.title}</span></nav>`,
     h1: p.title,
     tabby: false,   /* the Sahel and Trail pages never loaded Tabby's widget; the sheet carries the Tabby line */
-    rating: RATING && p.line === 'sahel' ? `<a class="po-rate" href="${firstReviews() ? '#first-reviews' : '/#s-reviews'}"><b aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</b><span>${RATING}</span></a>` : '',   /* 10 Nov 2026: not on Sahra Trail, whose running wear has no reviews of its own (Trail merge handoff, step 8) */
+    rating: own ? own.line : RATING && p.line === 'sahel' ? `<a class="po-rate" href="${firstReviews() ? '#first-reviews' : '/#s-reviews'}"><b aria-hidden="true">${'&#9733;'.repeat(Math.floor(+RATING_D.avg))}${'&#9734;'.repeat(5 - Math.floor(+RATING_D.avg))}</b><span data-ar-rule="rv-founding|${RATING_D.avg}|${RATING_D.n}">${RATING}</span></a>` : '',   /* 10 Nov 2026: not on Sahra Trail, whose running wear has no reviews of its own (Trail merge handoff, step 8) */
     help,
     extra: `<p class="po-small">${p.noTote ? 'Free delivery across the UAE on orders over AED 100. Returns within 14 days of delivery.' : 'Free delivery across the UAE on orders over AED 100, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
       <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>`
   })}
   <div class="po-wrap">
-  ${p.line === 'sahel' ? firstReviews() : ''}
+  ${own ? own.section : p.line === 'sahel' ? firstReviews() : ''}
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
