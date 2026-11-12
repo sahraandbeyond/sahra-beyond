@@ -946,7 +946,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
       var kOk = kOwn ? (/<section class="po-rv po-rv-own reviews" id="reviews"/.test(kfb) && !/id="first-reviews"/.test(kfb) && /<a class="po-rate" href="#reviews">/.test(kfb))
         : (/id="first-reviews"/.test(kfb) && /no reviews of its own yet/.test(kfb) && (kfb.match(/<li><b class="po-rv-s"/g) || []).length === 2);
       var tOk = function (h, hs) { return ownOf(hs) ? /<a class="po-rate" href="#reviews">/.test(h) && /id="reviews"/.test(h) : !/<a class="po-rate"/.test(h); };
-      return kOk && /class="ss-help">The model wears S\. /.test(kfb) && !/id="first-reviews"/.test(tee) && tOk(tee, ['sahra-trail-tee']) && tOk(kit, ['sahra-trail-kit']);
+      return kOk && /class="ss-help">(<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>\. )?The model wears S\. /.test(kfb) && !/id="first-reviews"/.test(tee) && tOk(tee, ['sahra-trail-tee']) && tOk(kit, ['sahra-trail-kit']);
     })());
     /* 10 Nov 2026 (r119, site scorecard; Faheem: "Phone category row", "Lighter pages") */
     var tsh = rd('t-shirts/index.html'), shp = rd('shop/index.html');
@@ -1086,6 +1086,25 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     const sjs = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-specimen.js'), 'utf8'), scss2 = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-specimen.css'), 'utf8');
     check('product pages: on a phone the sizes and Add to bag have a place under the price as well as the bar', /phM\.className = 'ssb-ph ssb-ph-m'/.test(sjs) && /head\.parentNode\.insertBefore\(phM, head\.nextSibling\)/.test(sjs) && /\.ssb-ph\.ssb-ph-m\{order:4;height:auto\}/.test(scss2) && /html body \.ssb\.inl\{position:relative/.test(scss2) && /@media\(min-width:900px\)\{\.ssb-ph-m\{display:none\}\}/.test(scss2));
     check('analytics: a size or an add from the bar is told apart from the one under the price', /via: floating \? 'specimen-bar' : 'specimen'/.test(sjs) && /'specimen-bar':'Product page bar'/.test(fs.readFileSync(path.join(__dirname, 'ga4.js'), 'utf8')));
+  }
+  /* 12 Nov 2026: Size finder 2 (Faheem chose all four upgrades after the panel review: on every product page, better
+     questions, an honest answer, opens as a sheet) */
+  {
+    const has = h => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); return /<div class="sfind" id="size-finder" data-sizefinder data-sf='/.test(pg) && /<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/.test(pg) && /\/assets\/sahra-sizefinder\.js/.test(pg); };
+    const withF = ['al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'sand-polo', 'khor-fakkan-bay-tee-regular', 'khor-fakkan-bay-tee-super-oversized', 'barr-and-bahr-hoodie', 'sahra-trail-tee', 'sahra-trail-2-in-1-short', 'sahra-trail-kit'];
+    check('size finder: on every product page that has a chart, with the link under the price', withF.every(has), withF.filter(h => !has(h)).join(' '));
+    check('size finder: not offered where there is no chart (the Sahel Polo, the bag)', ['the-sahel-polo', 'trailhead-bag'].every(h => !/data-sizefinder/.test(fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'))));
+    const sfjs = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-sizefinder.js'), 'utf8');
+    const W = { readyState: 'complete', documentElement: { getAttribute: () => 'en' }, querySelectorAll: () => [], getElementById: () => 1, head: { appendChild() {} }, createElement: () => ({}) };
+    const ctx = { window: {}, document: W }; require('vm').runInNewContext(sfjs, ctx);
+    const F = ctx.window.SBSizeFinder, D = require('./sizefinder-data.js');
+    const man = F.body({ who: 'm', cm: 175, kg: 85 }), tall = F.body({ who: 'm', cm: 190, kg: 102 }), small = F.body({ who: 'w', cm: 157, kg: 50 });
+    const fr = F.garment(D.founding('regular'), man, 'designed'), so = F.garment(D.sahel('teeSuperOversized'), man, 'designed'), fo = F.garment(D.founding('oversized'), small, 'designed');
+    const kt = F.bands(D.trail('tee'), tall.chest, 'designed'), ks = F.bands(D.trail('short'), tall.waist, 'designed');
+    check('size finder: the answers for sample people follow the charts', fr.best.size === 'L' && !fr.alt && so.best.size === 'M' && so.alt && so.alt.size === 'S' && fo.best.size === 'S' && fo.under && kt.best.size === 'XL' && ks.best.size === 'XL' && ks.over,
+      [fr.best.size, so.best.size, so.alt && so.alt.size, fo.best.size, kt.best.size, ks.best.size].join(' '));
+    check('size finder: "roomier" and "closer" move the answer the right way', F.garment(D.founding('regular'), man, 'closer').best.size === 'M' && F.garment(D.founding('regular'), F.body({ who: 'm', cm: 175, kg: 75 }), 'roomier').best.size === 'L');
+    check('size finder: the closed sheet never covers the page, and its text is not overridden by the product page text rule', /\.sfx\[hidden\]\{display:none!important\}/.test(sfjs) && /html body :is\(\.sfx,\.sfind\) \.sf-big\{/.test(sfjs));
   }
   const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
   check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);

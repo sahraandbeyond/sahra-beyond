@@ -3062,7 +3062,9 @@ function sizeTableHtml() {
   const polo = (SIZING.polo && SIZING.polo.available === false)
     ? `<h3>The polo</h3><p class="sgnote">${SIZING.polo.note}</p>` : '';
   /* 25 Sep 2026: size finder (assets/sahra-sizefinder.js) - height and build to a starting size */
-  const finder = `<div class="sfind" data-sizefinder data-fit="choose" data-chart='${JSON.stringify({ regular: SIZING.regular.map(r => [r[0], r[2]]), oversized: (SIZING.oversized || []).map(r => [r[0], r[2]]) })}'></div><script src="/assets/sahra-sizefinder.js" defer></script>`;
+  /* 12 Nov 2026: Size finder 2, every piece on one finder (sizefinder-data.js) */
+  const SFD = require('./sizefinder-data.js');
+  const finder = SFD.mount(SFD.all(), { inline: true }) + SFD.SCRIPT;
   return finder + tbl('Founding Edition, Regular fit','regular',SIZING.regularIntent||'') + tbl('Founding Edition, Oversized fit','oversized',SIZING.oversizedIntent||'') + method + polo;
 }
 
