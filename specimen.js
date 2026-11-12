@@ -81,6 +81,22 @@ const NOTES = {
   'sand-polo': [[50, 63, 'The mark is stitched into the cloth rather than printed onto it: tonal and raised.']]
 };
 
+/* 12 Nov 2026 (Faheem: "why the art note numbers are not appearing?", then "Numbers on the model photo"). Since 8 Nov the
+   Sahel tee pages show a model photo in the Art tab, so the numbers placed on the flat artwork above no longer fit. These
+   place the same notes, in the same order, on each page's own Art photo (content/sahel-photos.json stage.art), as % of the
+   4:5 photo; placed by eye against each photograph. null = that part of the art is not in the photo (the number stays in
+   the list below). Two notes that sit close together are nudged apart so the numbers do not touch. */
+const NOTES_MODEL = {
+  'khor-fakkan-bay-tee-regular': [[42, 40], [33, 56], [53, 63]],
+  'khor-fakkan-bay-tee-super-oversized': [[52, 30], [25, 80], null],
+  'al-hamra-pearl-diver-tee-regular': [[50, 39], [53, 74], [44, 57]],
+  'al-hamra-pearl-diver-tee-super-oversized': [[41, 35], [47, 55], [34, 46]],
+  'al-aqah-reef-tee-regular': [[40, 26], [45, 52]],
+  'al-aqah-reef-tee-super-oversized': [[56, 21], [58, 43]],
+  'shams-tee-regular': [[52, 41], [40, 51]],
+  'shams-tee-super-oversized': [[57, 40], [48, 52]]
+};
+
 /* ---- the photographs of each piece -----------------------------------------
    face: which side opens the page (the art side). Founding: per fit; the
    Regular dune shoot and the Oversized dune model (182 cm, wears L). */
@@ -195,7 +211,8 @@ function fromPreorder(p) {
     fits: fitted ? p.fitsList.slice().sort((a, b) => FIT_ORDER.indexOf(a.fit) - FIT_ORDER.indexOf(b.fit)).map(f => ({ fit: f.fit, href: `/products/${f.handle}/`, onSale: !PAUSED[f.handle] })) : null,
     kind: p.kind, cut: p.oneSize ? 'One size' : (p.line === 'trail' || /polo/i.test(p.kind || '') ? 'Men’s cut' : 'Unisex'), colour: p.colour || '',
     place: p.place ? [p.place[0], null, `/locations/${p.place[1]}/`] : null,
-    face: D.face, views, notes: (NOTES[p.key] || []).map(n => ({ x: n[0], y: n[1], t: n[2] })), spec,
+    face: D.face, views, notes: (NOTES[p.key] || []).map((n, i) => { const m = ST && NOTES_MODEL[p.handle]; const at = m ? m[i] : [n[0], n[1]]; return { x: at ? at[0] : null, y: at ? at[1] : null, t: n[2] }; }),
+    modelPins: !!(ST && NOTES_MODEL[p.handle]), spec,
     pair: false, gift: !p.noTote, chart: p.line === 'sahel' && !/polo/i.test(p.kind || '') ? '#size-chart' : null,
     chartNote: null, model: '', kit: !!p.kit, oneSize: !!p.oneSize,
     onModel: onModelSet(p)
@@ -229,10 +246,11 @@ function stage(s, altBase) {
   const order = s.views.slice();
   const first = order.find(v => v.k === s.face) || order[0];
   const on = first.k;
-  const notes = s.notes.length && s.views.some(v => v.k === 'art' && !v.model);   /* no pins on a model photo (8 Nov 2026) */
+  /* no pins on a model photo (8 Nov 2026), unless that photo has its own pin places (NOTES_MODEL, 12 Nov 2026) */
+  const notes = s.notes.length && s.views.some(v => v.k === 'art' && (!v.model || s.modelPins));
   /* 30 Oct 2026 (QA B1): the tabs sit ON the photo, at the top, so the buy sheet can never cover them */
   const tabs = s.views.length > 1 ? `<div class="ss-tabs" role="tablist" aria-label="Photos">${s.views.map(v => `<button type="button" role="tab" class="ss-tab${v.k === on ? ' on' : ''}" id="ssT-${v.k}" data-v="${v.k}" aria-selected="${v.k === on}" aria-controls="ssV-${v.k}">${v.label}</button>`).join('')}</div>` : '';
-  const pins = notes ? `<div class="ss-pins" aria-label="Numbered notes on the artwork">${s.notes.map((n, i) => `<button type="button" class="ss-pin" data-i="${i}" style="left:${n.x}%;top:${n.y}%" aria-label="Note ${i + 1}: ${esc(n.t)}">${i + 1}</button>`).join('')}</div>` : '';
+  const pins = notes ? `<div class="ss-pins" aria-label="Numbered notes on the artwork">${s.notes.map((n, i) => n.x == null ? '' : `<button type="button" class="ss-pin" data-i="${i}" style="left:${n.x}%;top:${n.y}%" aria-label="Note ${i + 1}: ${esc(n.t)}">${i + 1}</button>`).join('')}</div>` : '';
   const figs = s.views.map(v => {
     v.alt = v.mAlt || `${altBase}, ${v.k === 'art' ? 'close-up of the artwork' : v.k === 'worn' ? 'worn' : v.k}${v.mock ? ', studio mock-up' : ''}`;
     const boxed = v.k === 'art' && notes;   /* the annotated photo sits between the tabs and the note, whole, so no pin hides under either */

@@ -1106,6 +1106,15 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     check('size finder: "roomier" and "closer" move the answer the right way', F.garment(D.founding('regular'), man, 'closer').best.size === 'M' && F.garment(D.founding('regular'), F.body({ who: 'm', cm: 175, kg: 75 }), 'roomier').best.size === 'L');
     check('size finder: the closed sheet never covers the page, and its text is not overridden by the product page text rule', /\.sfx\[hidden\]\{display:none!important\}/.test(sfjs) && /html body :is\(\.sfx,\.sfind\) \.sf-big\{/.test(sfjs));
   }
+  /* 12 Nov 2026 (Faheem: "Top banner should also say shipping worldwide" -> "Worldwide only"; "why the art note numbers are not
+     appearing?" -> "Numbers on the model photo") */
+  {
+    const wjs = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-welcome.js'), 'utf8');
+    check('top bar: says we ship worldwide to every visitor, on every screen', /var SHIP = AR \? 'نشحن إلى جميع أنحاء العالم' : 'We ship worldwide';/.test(wjs) && /sbw-msg-ship/.test(wjs) && !/sb-ship-uae">Free next-day UAE delivery over AED 100/.test(wjs) && !/Sahel and Sahra Trail are out/.test(wjs));
+    const pins = h => (fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8').match(/<button type="button" class="ss-pin" data-i="\d"/g) || []).length;
+    const want = { 'khor-fakkan-bay-tee-regular': 3, 'khor-fakkan-bay-tee-super-oversized': 2, 'al-hamra-pearl-diver-tee-regular': 3, 'al-hamra-pearl-diver-tee-super-oversized': 3, 'al-aqah-reef-tee-regular': 2, 'al-aqah-reef-tee-super-oversized': 2, 'shams-tee-regular': 2, 'shams-tee-super-oversized': 2, 'al-quaa-galaxy-regular': 2, 'barr-and-bahr-hoodie': 3 };
+    check('art notes: the numbers are on the Art photo of every Sahel tee page (model photos) and the Founding pages', Object.keys(want).every(h => pins(h) === want[h]), Object.keys(want).map(h => h + ':' + pins(h)).join(' '));
+  }
   const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
   check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);
   ['size-guide', 'fabric'].forEach(k => check('/' + k + '/ is a reading page: no listing stylesheet', !/<style id="house">/.test(fs.readFileSync(path.join(__dirname, k, 'index.html'), 'utf8'))));

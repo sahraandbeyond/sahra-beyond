@@ -48,9 +48,14 @@
     setTimeout(hydrate, 8000);   /* a slow third-party request can hold the load event */
     ['touchstart', 'mouseenter', 'focusin'].forEach(function (k) { (stage.parentNode || stage).addEventListener(k, hydrate, { passive: true, once: true }); });
   }
-  function noteText(i) { var p = pins[i]; return p ? (p.getAttribute('aria-label') || '').replace(/^(?:Note|\u0645\u0644\u0627\u062d\u0638\u0629) \d+: /, '') : ''; }
+  /* a note may have no number on the photo (12 Nov 2026: a part of the art outside a model photo), so pins are found by data-i */
+  function pinAt(i) { for (var k = 0; k < pins.length; k++) if (+pins[k].getAttribute('data-i') === i) return pins[k]; return null; }
+  function noteText(i) {
+    var p = pinAt(i); if (p) return (p.getAttribute('aria-label') || '').replace(/^(?:Note|\u0645\u0644\u0627\u062d\u0638\u0629) \d+: /, '');
+    var b = listBtns[i], sp = b && b.querySelector('span'); return sp ? sp.textContent : '';
+  }
   function setNote(i) {
-    pins.forEach(function (p, k) { p.classList.toggle('on', k === i); p.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+    pins.forEach(function (p) { var on = +p.getAttribute('data-i') === i; p.classList.toggle('on', on); p.setAttribute('aria-pressed', on ? 'true' : 'false'); });
     listBtns.forEach(function (b, k) { b.classList.toggle('on', k === i); });
     if (!noteEl) return;
     if (i == null || i < 0) { noteEl.innerHTML = '<b>i</b><span>Tap a number on the print to read what is drawn there.</span>'; }

@@ -75,17 +75,19 @@
     { from: Date.UTC(2026, 9, 27, 18, 45, 0), href: '/sahel/#pieces',   /* 27 Oct 2026: opened early (Faheem) */
       en: 'Sahel and Sahra Trail: pre-order open, 20% off until Thu 29 Oct, 23:59.',   /* 23 Oct 2026: scoped to the new lines; the 20% is on them only */
       ar: 'ساحل وصحراء تريل: الطلب المسبق متاح بخصم 20% حتى الخميس 29 أكتوبر، 23:59.' },
-    { from: Date.UTC(2026, 9, 29, 20, 0, 0), href: '/new/',
-      en: 'Sahel and Sahra Trail are out. Designed in the UAE for everyone who loves it.',
-      ar: 'ساحل وصحراء تريل متوفران الآن. صُمّما في الإمارات لكل من يحبّها.' },
+    { from: Date.UTC(2026, 9, 29, 20, 0, 0), href: '/shop/',
+      /* 12 Nov 2026 (Faheem: "Remove Sahel and trail are out now") */
+      en: 'Designed in the UAE for everyone who loves it.',
+      ar: 'صُمّمت في الإمارات لكل من يحبّها.' },
     /* 3 Nov 2026 (Faheem, r99): the 11.11 sale, live from the push until Sun 15 Nov 23:59 UAE (sale.js END).
        No timer, no urgency beyond the end date. At Mon 16 Nov 00:00 UAE the bar goes back to the stage-2 line. */
     { from: Date.UTC(2026, 10, 2, 20, 0, 0), href: '/shop/', promo: ['sale-1111', '11.11 Sale'],   /* GA4 view_promotion / select_promotion */
       en: '11.11 Sale: up to 70% off. Ends Sun 15 Nov.',
       ar: 'تخفيضات 11.11: خصم يصل إلى 70%. ينتهي العرض الأحد 15 نوفمبر.' },
-    { from: Date.UTC(2026, 10, 15, 20, 0, 0), href: '/new/',
-      en: 'Sahel and Sahra Trail are out. Designed in the UAE for everyone who loves it.',
-      ar: 'ساحل وصحراء تريل متوفران الآن. صُمّما في الإمارات لكل من يحبّها.' }
+    { from: Date.UTC(2026, 10, 15, 20, 0, 0), href: '/shop/',
+      /* 12 Nov 2026 (Faheem: "Remove Sahel and trail are out now") */
+      en: 'Designed in the UAE for everyone who loves it.',
+      ar: 'صُمّمت في الإمارات لكل من يحبّها.' }
   ];
   /* ?sbstage=0|1|2|3|4 previews a stage (for checking before the date; nothing is stored) */
   var forced = null;
@@ -102,9 +104,9 @@
     return k;
   }
 
-  var SHIP = AR
-    ? '<span class="sb-ship-uae">توصيل مجاني في اليوم التالي داخل الإمارات للطلبات فوق 100 درهم</span><span class="sb-ship-gcc">التوصيل إلى دول الخليج خلال 3&ndash;5 أيام</span><span class="sb-ship-intl">توصيل دولي</span>'
-    : '<span class="sb-ship-uae">Free next-day UAE delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery in 3&ndash;5 days</span><span class="sb-ship-intl">Worldwide delivery</span>';
+  /* 12 Nov 2026 (Faheem: "Top banner should also say shipping worldwide"; chose "Worldwide only"): one line for every
+     visitor and every screen. The UAE free-delivery promise stays on product pages, in the bag and at checkout. */
+  var SHIP = AR ? 'نشحن إلى جميع أنحاء العالم' : 'We ship worldwide';
   function esc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
   /* ---------------------------------------------------------------- bar */
@@ -123,10 +125,12 @@
       '<span class="sbw-sheen"></span>' +
       '<span class="sbw-bar-in">' +
         '<span class="sbw-dot" aria-hidden="true"></span>' +
-        '<span class="sbw-msg"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + esc(AR ? S.ar : S.en) + '</span>' +
+        '<span class="sbw-msg"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + esc(AR ? S.ar : S.en) +
+          /* below 1240px the delivery line has no room beside the message, so it follows it (12 Nov 2026) */
+          (k === 1 ? '' : ' <span class="sbw-msg-ship">' + SHIP + (AR ? '.' : '.') + '</span>') + '</span>' +
         /* no next-day promise beside the pre-order stage: those pieces ship from Fri 30 Oct */
-        (k === 1 ? '' : '<span class="sbw-sep sbw-hide-sm sbw-shipwrap" aria-hidden="true">&middot;</span>' +
-        '<span class="sbw-hide-sm sbw-ship sbw-shipwrap"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + SHIP + '</span>') +
+        (k === 1 ? '' : '<span class="sbw-sep sbw-shipwrap" aria-hidden="true">&middot;</span>' +
+        '<span class="sbw-ship sbw-shipwrap"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + SHIP + '</span>') +
       '</span>';
   }
   render();

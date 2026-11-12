@@ -359,6 +359,10 @@ html[lang="ar"] .sbw-code b{font-family:var(--mono,'Space Mono',monospace)!impor
 a.sbw-bar,a.sbw-bar:visited{text-decoration:none;color:#2A2016}
 .sbw-msg{font-weight:700;letter-spacing:1.6px}
 @media(max-width:1239px){.sbw-wrap .sbw-shipwrap{display:none!important}}
+/* 12 Nov 2026 (Faheem: "Top banner should also say shipping worldwide"): where the delivery line cannot sit beside the
+   message, it follows the message instead */
+.sbw-msg-ship{font-weight:500;white-space:nowrap}
+@media(min-width:1240px){.sbw-msg-ship{display:none}}
 @media(max-width:620px){
   :root{--sbw-h:40px}
   .sbw-note .sbw-bar-in{justify-content:center;flex-wrap:nowrap;gap:8px}
