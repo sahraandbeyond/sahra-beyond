@@ -1,9 +1,24 @@
 {
  "handle": "_shop",
- "count": 6,
+ "count": 7,
  "average": 5,
- "syncedAt": "2026-10-24",
+ "syncedAt": "2026-11-12",
  "reviews": [
+  {
+   "id": 1414523193,
+   "rating": 5,
+   "title": "",
+   "body": "Excellent from order to delivery- and product itself ⭐️",
+   "name": "Liza",
+   "date": "2026-11-11",
+   "verified": false,
+   "photos": [],
+   "handle": "judgeme-shop-reviews",
+   "externalId": 0,
+   "productTitle": "Judge.me Shop Reviews",
+   "reply": "",
+   "fit": null
+  },
   {
    "id": 1394138380,
    "rating": 5,
