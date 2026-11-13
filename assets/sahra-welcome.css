@@ -414,6 +414,8 @@ html body .news[data-waitlist-wrap].done.w-no .news-ok:not(.news-ok-no),html bod
 html body .news[data-waitlist-wrap].done .news-fine{display:none!important}
 html body .news[data-waitlist-wrap].done.w-no .news-ok-no,html body .news[data-waitlist-wrap].done.w-sent .news-ok-sent{display:block!important}
 .done .sbc-err{display:none!important}
+/* 13 Nov 2026 (Faheem, phone): once signed up, the sheet keeps only the close cross, not "No thanks" */
+.sbc-card.done .sbc-no{display:none!important}
 @media(max-width:420px){.sbc-form{flex-direction:column}.sbc-form button{width:100%}}
 
 /* the sheet: a card at the foot of the screen on a phone, in the corner on a computer; not a pop-up over the page */
