@@ -245,6 +245,46 @@
   ],
   "redirects": [
     {
+      "source": "/products/al-aqah-reef-tee-oversized",
+      "destination": "/products/al-aqah-reef-tee-super-oversized/",
+      "permanent": true
+    },
+    {
+      "source": "/products/al-aqah-reef-tee-oversized/",
+      "destination": "/products/al-aqah-reef-tee-super-oversized/",
+      "permanent": true
+    },
+    {
+      "source": "/products/barr-and-bahr-hoodie-oversized",
+      "destination": "/products/barr-and-bahr-hoodie/",
+      "permanent": true
+    },
+    {
+      "source": "/products/barr-and-bahr-hoodie-oversized/",
+      "destination": "/products/barr-and-bahr-hoodie/",
+      "permanent": true
+    },
+    {
+      "source": "/ar/products/al-aqah-reef-tee-oversized",
+      "destination": "/ar/products/al-aqah-reef-tee-super-oversized/",
+      "permanent": true
+    },
+    {
+      "source": "/ar/products/al-aqah-reef-tee-oversized/",
+      "destination": "/ar/products/al-aqah-reef-tee-super-oversized/",
+      "permanent": true
+    },
+    {
+      "source": "/ar/products/barr-and-bahr-hoodie-oversized",
+      "destination": "/ar/products/barr-and-bahr-hoodie/",
+      "permanent": true
+    },
+    {
+      "source": "/ar/products/barr-and-bahr-hoodie-oversized/",
+      "destination": "/ar/products/barr-and-bahr-hoodie/",
+      "permanent": true
+    },
+    {
       "source": "/locations/wadi-shab",
       "destination": "/wadis/",
       "permanent": true

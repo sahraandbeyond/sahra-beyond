@@ -1115,6 +1115,15 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     const want = { 'khor-fakkan-bay-tee-regular': 3, 'khor-fakkan-bay-tee-super-oversized': 2, 'al-hamra-pearl-diver-tee-regular': 3, 'al-hamra-pearl-diver-tee-super-oversized': 3, 'al-aqah-reef-tee-regular': 2, 'al-aqah-reef-tee-super-oversized': 2, 'shams-tee-regular': 2, 'shams-tee-super-oversized': 2, 'al-quaa-galaxy-regular': 2, 'barr-and-bahr-hoodie': 3 };
     check('art notes: the numbers are on the Art photo of every Sahel tee page (model photos) and the Founding pages', Object.keys(want).every(h => pins(h) === want[h]), Object.keys(want).map(h => h + ':' + pins(h)).join(' '));
   }
+  /* 13 Nov 2026 (Faheem: "Al Aqaa tee and Barr and Bahr Hoodie are not coming back in oversized. Remove that fit option for these two") */
+  {
+    const gone = ['al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie-oversized'];
+    const V = JSON.parse(fs.readFileSync(path.join(__dirname, 'vercel.json'), 'utf8'));
+    check('retired fits: no page, no link and no sitemap entry for the Al Aqah Reef and Barr & Bahr Oversized fits', gone.every(h => !fs.existsSync(path.join(__dirname, 'products', h)) && !fs.existsSync(path.join(__dirname, 'ar', 'products', h))) &&
+      !gone.some(h => fs.readFileSync(path.join(__dirname, 'sitemap.xml'), 'utf8').indexOf(h) > -1) &&
+      !['sahel', 'new', 'shop', 'hoodies', 'products/al-aqah-reef-tee-regular', 'products/barr-and-bahr-hoodie', 'products/khor-fakkan-bay-tee-oversized'].some(pg => gone.some(h => fs.readFileSync(path.join(__dirname, pg, 'index.html'), 'utf8').indexOf('/products/' + h + '/') > -1)));
+    check('retired fits: their old addresses go to the fit on sale, in English and Arabic', gone.every(h => ['', '/ar'].every(l => V.redirects.some(r => r.source === l + '/products/' + h + '/' && /\/products\/(al-aqah-reef-tee-super-oversized|barr-and-bahr-hoodie)\/$/.test(r.destination) && r.permanent))));
+  }
   const men = fs.readFileSync(path.join(__dirname, 'men', 'index.html'), 'utf8');
   check('/men/: each Founding Edition tee is one card with its two fits on the switch', (men.match(/<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular<\/button><button type="button" data-i="1" aria-pressed="false">Oversized<\/button>/g) || []).length === 3);
   ['size-guide', 'fabric'].forEach(k => check('/' + k + '/ is a reading page: no listing stylesheet', !/<style id="house">/.test(fs.readFileSync(path.join(__dirname, k, 'index.html'), 'utf8'))));

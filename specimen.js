@@ -138,10 +138,13 @@ const FIT_COPY = { founding: { Regular: 'Sits on the shoulder', Oversized: 'Drop
    Oversized (paused) and Super Oversized, which keeps the hoodie's original handle so its links keep working. */
 const HOODIES = new Set(['barr-and-bahr-hoodie', 'ras-al-khor-hoodie']);
 const FIT_ORDER = ['Regular', 'Oversized', 'Super Oversized'];
+/* 13 Nov 2026 (Faheem): the Oversized fit of these two is not coming back (preorder-page.js RETIRED) */
+const NO_OVERSIZED = new Set(['al-aqah-reef-tee', 'barr-and-bahr-hoodie']);
 function suffixes(k) {
-  if (HOODIES.has(k)) return { Oversized: '-oversized', 'Super Oversized': '' };
-  if (FITTED.has(k)) return FOUNDING[k] ? { Regular: '-regular', Oversized: '-oversized' } : { Regular: '-regular', Oversized: '-oversized', 'Super Oversized': '-super-oversized' };
-  return null;
+  const x = HOODIES.has(k) ? { Oversized: '-oversized', 'Super Oversized': '' }
+    : FITTED.has(k) ? (FOUNDING[k] ? { Regular: '-regular', Oversized: '-oversized' } : { Regular: '-regular', Oversized: '-oversized', 'Super Oversized': '-super-oversized' }) : null;
+  if (x && NO_OVERSIZED.has(k)) delete x.Oversized;
+  return x;
 }
 
 /* Founding captions: the size of the person in the photo, from the product JSON (tags) or its modelInfo */
@@ -305,8 +308,9 @@ function fitSwitch(s, cls) {
    (tees: <design>-super-oversized; hoodies: their original handle). The Oversized fit returns later, in a new
    production run cut to the original (Founding Edition) Oversized size; until then these six handles have no
    Shopify product. Remove a handle from this list to sell it again. */
-const PAUSED = { 'khor-fakkan-bay-tee-oversized': 1, 'al-aqah-reef-tee-oversized': 1, 'al-hamra-pearl-diver-tee-oversized': 1, 'shams-tee-oversized': 1,
-  'barr-and-bahr-hoodie-oversized': 1, 'ras-al-khor-hoodie-oversized': 1 };
+/* 13 Nov 2026: al-aqah-reef-tee-oversized and barr-and-bahr-hoodie-oversized are retired, not paused (preorder-page.js RETIRED) */
+const PAUSED = { 'khor-fakkan-bay-tee-oversized': 1, 'al-hamra-pearl-diver-tee-oversized': 1, 'shams-tee-oversized': 1,
+  'ras-al-khor-hoodie-oversized': 1 };
 /* the note on a paused Oversized page (31 Oct 2026): what is happening, and where the design can be bought now */
 function pausedNote(s) {
   const sup = fitHref(s, 'Super Oversized'), reg = fitHref(s, 'Regular');

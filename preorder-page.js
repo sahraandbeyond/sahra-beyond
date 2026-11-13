@@ -74,6 +74,9 @@ const SIZES = ['S', 'M', 'L', 'XL'];
    The order here is the order of the product list (the first fit on sale is the one a one-card-per-design list shows). */
 const FITS = { tee: [['regular', 'Regular'], ['super-oversized', 'Super Oversized'], ['oversized', 'Oversized']],
   hoodie: [['', 'Super Oversized'], ['oversized', 'Oversized']] };
+/* 13 Nov 2026 (Faheem: "Al Aqaa tee and Barr and Bahr Hoodie are not coming back in oversized. Remove that fit option for
+   these two"). Their Oversized pages are gone; vercel.json sends the old addresses to the fit that is on sale. */
+const RETIRED = new Set(['al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie-oversized']);
 const FIT_DETAILS = { Regular: ['Regular fit'], Oversized: ['Oversized fit'], 'Super Oversized': ['Super Oversized fit', 'Drop shoulder'] };
 const SZ = require('./sahel-sizing.js');
 const TSZ = require('./trail-sizing.js');   /* 10 Nov 2026: Sahra Trail size charts (the Tee, the 2-in-1 Short, both on the Kit) */
@@ -218,7 +221,7 @@ function products() {
     const plain = p.plain || p.name;
     const images = PHOTOS[p.key] ? photoList(p.key) : p.img ? (p.front ? [mock(p.img + '-front', plain + ', front'), mock(p.img + '-back', plain + ', back')] : [mock(p.img + '-back', plain + ', back'), mock(p.img + '-front', plain + ', front')]) : [];
     if (p.fits) {
-      const fl = FITS[p.fits].map(([f, F]) => ({ fit: F, handle: f ? `${p.key}-${f}` : p.key }));
+      const fl = FITS[p.fits].map(([f, F]) => ({ fit: F, handle: f ? `${p.key}-${f}` : p.key })).filter(x => !RETIRED.has(x.handle));
       fl.forEach(x => { x.onSale = !SP.PAUSED[x.handle]; });
       fl.forEach(({ fit: F, handle }) => out.push({ line: 'sahel', handle, title: `${p.name} &mdash; ${F}`, plain: `${plain} — ${F}`, name: p.name, fit: F, fitsList: fl,
         colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images: modelFirst(handle, `${p.name.replace(/^The /, '')} in ${F}`, images), place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
