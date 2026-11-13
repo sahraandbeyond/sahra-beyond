@@ -1320,7 +1320,7 @@ ${SP.nextPiece(SPS)}
   ${FG.guidesHtml(null, AR_CORE)}<style>${FG.FOOT_GUIDES_CSS}${IG.CSS}.foot-pay{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:6px 0 10px}.ig-prod .ig-rail-sec{margin:0}.ig-prod{padding-top:56px;padding-bottom:56px}html body .sec .ig-head h2.ig-eyebrow{font-family:'Space Mono',monospace!important;font-size:10.5px!important;letter-spacing:2.6px!important;line-height:1.5!important;margin:0!important;max-width:none!important;color:var(--txt-soft)!important}html body .ig-card h3.ig-label{font-size:17px!important;line-height:1.2!important;letter-spacing:0!important;margin:0!important;max-width:none!important}</style>
   ${IG.footerRowHtml()}
   <div class="foot-soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram — @sahraandbeyond.ae</a></div>
-  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
+  <div class="foot-pay">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · <img class="sb-tlogo sb-tlogo-foot" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></div>
   <div class="foot-notop" style="font-size:12px;line-height:1.5;max-width:520px;margin:4px auto 10px;opacity:.8">Sahra &amp; Beyond is a UAE clothing brand. Our place guides are free and independent: we don&rsquo;t run, sell or book tours, trips or transport.</div>
   <div class="foot-copy">Designed in the UAE for everyone who loves it.<br>© 2026 Sahra &amp; Beyond</div>
 </footer>

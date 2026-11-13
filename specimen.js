@@ -325,7 +325,7 @@ function sheet(s) {
   return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}${(s.fits || []).some(f => f.fit === 'Super Oversized') ? ' data-fitwide="1"' : ''}>
       <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd"${PAUSED[s.handle] ? ' disabled' : ''}>${PAUSED[s.handle] ? 'Back soon' : 'Add to bag'}</button></div>${PAUSED[s.handle] ? `
       <p class="ssb-paused">${pausedNote(s)}</p>` : ''}
-      <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with Tabby</span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
+      <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
       <p class="ssb-msg" id="ssMsg" role="status" aria-live="polite"></p>
     </div>`;
 }
@@ -348,8 +348,8 @@ function top(s, o = {}) {
       <h1 class="ss-h1">${o.h1 || esc(s.name)}</h1>
       ${o.rating || ''}
       <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two Founding Edition tees, AED 359</span>` : ''}</p>
-      <p class="ss-kind">${kind}</p>${/* 10 Nov 2026: the phone buy bar is one row now, so the Tabby instalment it carried is said here on the pages that have no Tabby widget of their own (Sahel, Sahra Trail). Hidden on desktop, where the buy card still shows it. */''}${o.tabby === false && !PAUSED[s.handle] ? `
-      <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 × ${quarter(s.price)} with Tabby</span></p>` : ''}
+      <p class="ss-kind">${kind}</p>${/* 10 Nov 2026: the phone buy bar is one row now, so the Tabby instalment it carried is said here on the pages that have no Tabby widget of their own (Sahel, Sahra Trail). Hidden on desktop, where the buy card still shows it. */''}${/* 13 Nov 2026 (Faheem): this line, with Tabby's logo, on every product page, beside Tabby's widget lower down */''}${!PAUSED[s.handle] ? `
+      <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 × ${quarter(s.price)} with <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></p>` : ''}
     </div>
     <div class="ss-body">
       ${status}
@@ -362,7 +362,7 @@ function top(s, o = {}) {
         <li><span class="sb-ship-uae">Free 14-day returns and size exchanges in the UAE.${s.line === 'founding' ? ' If your size has gone, a full refund.' : ''}</span><span class="sb-ship-gcc">14-day returns; duties, if any, are paid on arrival.</span><span class="sb-ship-intl">14-day returns; duties, if any, are paid on arrival.</span></li>
         ${s.gift ? '<li>The <a href="/tote/">Sahra Tote</a>, free with every order.</li>' : ''}
       </ul>
-      <p class="ss-trust">Secure checkout \u00b7 Apple Pay, Google Pay, Shop Pay, Visa, Mastercard<span class="sb-ship-uae">, Tabby</span></p>
+      <p class="ss-trust">Secure checkout \u00b7 Apple Pay, Google Pay, Shop Pay, Visa, Mastercard<span class="sb-ship-uae">, <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></p>
       ${o.extra || ''}
     </div>
   </div>

@@ -380,7 +380,7 @@
       dUae: 'Free, next working day', dUae15: 'AED 15, next working day', dGcc: 'AED 50, free over AED 390', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
       away: 'AED {n} away from free delivery', unlocked: 'Free delivery unlocked',
       rUae: 'Free for 14 days', rX: 'Within 14 days', rX14: '14-day returns', dUaeLine: 'Free delivery, next working day \u00b7 free 14-day returns', appliedN: 'Pair price applied to all {n} Founding Edition tees', tabbyRow: '4 payments of {p}, no interest',
-      checkout: 'Checkout', payUae: 'Apple Pay, Google Pay, Shop Pay, card or Tabby at checkout', payX: 'Apple Pay, Google Pay, Shop Pay or card at checkout',
+      checkout: 'Checkout', payUae: 'Apple Pay, Google Pay, Shop Pay, card or <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"> at checkout', payX: 'Apple Pay, Google Pay, Shop Pay or card at checkout',
       gift: 'This is a gift', giftMsg: 'Gift message (optional)', giftPh: 'Happy birthday, from all of us', giftHide: 'Hide prices on the packing slip', giftNote: 'We’ll include your message with the order.',
       added: 'Added to your bag', viewBag: 'View bag', closePeek: 'Close',
       second: 'Add a second: the pair is AED 359', secondIn: '{n} in {s}, {f}', addBtn: 'Add', adding: 'Adding…', other: 'Other sizes', regular: 'regular', oversized: 'oversized',
@@ -403,7 +403,7 @@
       dUae: 'مجاني، في يوم العمل التالي', dUae15: '15 درهمًا، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 390 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
       away: 'يبقى {n} درهمًا للتوصيل المجاني', unlocked: 'التوصيل مجاني لهذا الطلب',
       rUae: 'مجانًا خلال 14 يومًا', rX: 'خلال 14 يومًا', rX14: 'إرجاع خلال 14 يومًا', dUaeLine: 'توصيل مجاني في يوم العمل التالي · إرجاع مجاني خلال 14 يومًا', appliedN: 'طُبّق سعر القطعتين على التيشيرتات {n} من الإصدار التأسيسي', tabbyRow: '4 دفعات بدون فوائد، كل دفعة {p}',
-      checkout: 'إتمام الشراء', payUae: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay، البطاقة أو تابي', payX: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay أو البطاقة',
+      checkout: 'إتمام الشراء', payUae: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay، البطاقة أو <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="تابي" width="41" height="16" decoding="async">', payX: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay أو البطاقة',
       gift: 'هذا الطلب هدية', giftMsg: 'رسالة الهدية (اختياري)', giftPh: 'كل عام وأنتم بخير', giftHide: 'إخفاء الأسعار في قسيمة التغليف', giftNote: 'سنرفق رسالتك مع الطلب.',
       added: 'أُضيفت إلى سلّتك', viewBag: 'عرض السلة', closePeek: 'إغلاق',
       second: 'أضف تيشيرتًا ثانيًا: القطعتان بـ 359 درهمًا', secondIn: '{n}، المقاس {s}، {f}', addBtn: 'أضف', adding: 'جارٍ الإضافة…', other: 'مقاسات أخرى', regular: 'ريجولر', oversized: 'أوفرسايز',
@@ -1635,11 +1635,13 @@
   var SCRIPT = 'https://checkout.tabby.ai/tabby-promo.js';
   var ready = null, n = 0;
 
+  /* 13 Nov 2026: Arabic pages (/ar/, lang="ar") get Tabby's own Arabic widget; nothing set data-tabby-lang there before */
+  function isAr(el) { return el.getAttribute('data-tabby-lang') === 'ar' || /^ar/i.test(document.documentElement.getAttribute('lang') || '') || /^\/ar(\/|$)/.test(location.pathname); }
   function aed(p) { var v = Math.round(p * 100) / 100; return 'AED ' + (v % 1 === 0 ? v.toFixed(0) : v.toFixed(2)); }
   function staticLine(el, price) {
     if (!(price > 0)) { el.hidden = true; return; }
     el.hidden = false;
-    if (el.getAttribute('data-tabby-lang') === 'ar') { el.hidden = true; return; }   /* Arabic copy comes from Tabby's widget only, never our translation */
+    if (isAr(el)) { el.hidden = true; return; }   /* Arabic copy comes from Tabby's widget only, never our translation */
     el.innerHTML = '<span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of ' + aed(price / 4) + '</span>';
   }
   function load() {
@@ -1659,7 +1661,7 @@
       el.innerHTML = ''; el.appendChild(box);
       try {
         new window.TabbyPromo({ selector: '#' + box.id, currency: 'AED', price: price.toFixed(2),
-          lang: el.getAttribute('data-tabby-lang') === 'ar' ? 'ar' : 'en', source: el.getAttribute('data-tabby-source') || 'product',
+          lang: isAr(el) ? 'ar' : 'en', source: el.getAttribute('data-tabby-source') || 'product',
           shouldInheritBg: true, publicKey: TABBY_PUBLIC_KEY, merchantCode: TABBY_MERCHANT_CODE });
         el.hidden = false; el.classList.add('is-widget');
       } catch (e) { staticLine(el, price); }
@@ -1679,7 +1681,7 @@
       /* 11.11 sale (r99, sale.js): the page carries the sale price; once the sale is over, the full price */
       var full = parseFloat(el.getAttribute('data-tabby-full'));
       if (full > 0 && !(window.SB_SALE && window.SB_SALE.on && window.SB_SALE.on())) { p = full; el.setAttribute('data-tabby-price', String(full)); staticLine(el, full); }
-      if (el.getAttribute('data-tabby-lang') === 'ar' && !TABBY_PUBLIC_KEY) { el.hidden = true; return; }
+      if (isAr(el) && !TABBY_PUBLIC_KEY) { el.hidden = true; return; }
       /* the widget waits for the page to finish loading, so it never competes with the first photo */
       if (TABBY_PUBLIC_KEY && TABBY_MERCHANT_CODE) {
         var go = function () { setTimeout(function () { widget(el, p); }, 300); };

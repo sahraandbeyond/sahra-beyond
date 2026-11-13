@@ -385,3 +385,7 @@ html body .sb-drawer .sb-fitn a,html body .sb-drawer .sb-bundle a,html body .sb-
 .sb-drawer .sb-free.sb-x-mkt{color:var(--ink2)}
 .sb-drawer .sb-free .sb-free-t{display:block;margin:2px 0 3px;color:var(--ink2)}
 .sb-pk-t b{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* 13 Nov 2026 (Faheem: "Wherever tabby is mentioned, it should be the official tabby logo"): Tabby's own badge (identical to the logo in its widget) in place of the word in payment lines. Sentences keep the word. */
+.sb-tlogo{display:inline-block;height:1.15em;width:auto;vertical-align:-0.22em;margin:0 .1em;border:0}
+.sb-tlogo.sb-tlogo-foot{height:14px;vertical-align:-3px}

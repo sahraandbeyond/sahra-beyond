@@ -1126,7 +1126,7 @@ function footerHtml(ar) {
   ${FG.guidesHtml(null, AR_CORE_PUBLIC)}
   ${IG.footerRowHtml()}
   <div class="links" style="margin:10px 0 2px"><span data-sb-curslot></span></div>
-  <div class="links" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.75">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · Tabby</div>
+  <div class="links" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.75">Visa · Mastercard · Apple Pay · Google Pay · Shop Pay · <img class="sb-tlogo sb-tlogo-foot" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></div>
   <div class="links legal"><a href="/policies.html#shipping">Shipping</a> · <a href="/policies.html#returns">Returns &amp; refunds</a> · <a href="/policies.html#terms">Terms of sale</a> · <a href="/policies.html#privacy">Privacy</a> · <a href="/contact/">Contact &amp; business details</a> <span class="ft-wa"> &middot; <a href="https://wa.me/971585449946" target="_blank" rel="noopener">WhatsApp us</a></span></div>
   <div class="links ft-notop" style="font-size:12.5px;max-width:520px;margin:8px auto 10px;opacity:.85">Sahra &amp; Beyond is a UAE clothing brand. Our place guides are free and independent: we don&rsquo;t run, sell or book tours, trips or transport.</div>
   <div>© ${new Date().getFullYear()} Sahra &amp; Beyond · ${LAUNCHED ? '<a href="/shop/" style="color:#7E4114;font-weight:600;text-decoration:none">Shop the tees</a>' : '<a href="/#join" style="color:#7E4114;font-weight:600;text-decoration:none">Join the waitlist</a>'}</div>`;
