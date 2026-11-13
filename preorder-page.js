@@ -451,6 +451,7 @@ function productPage(p, all, SITE, stage) {
   })}
   <div class="po-wrap">
   ${own ? own.section : p.line === 'sahel' ? firstReviews() : ''}
+  ${/* 13 Nov 2026 (Faheem, email capture): the welcome code under the reviews on every product page */''}${require('./capture.js').block('pdp')}
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>

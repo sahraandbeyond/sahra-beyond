@@ -1813,8 +1813,8 @@ body.feed-page .crumbs,body.feed-page .crumbs a{color:#6B6256!important}
 /* a focus ring on a dark page is sand, not clay (clay on ink measures 2:1) */
 body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3DDB8!important}
 </style>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=b1d9d881">
-<script src="/assets/sahra-welcome.js?v=9eecbf5a" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=63bf5ad8">
+<script src="/assets/sahra-welcome.js?v=dd2fac7a" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=b2e166cc">
 <script src="/assets/sahra-nav.js?v=c2bea5be" data-sbn defer></script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/">
@@ -2138,7 +2138,16 @@ html body .p7 h2{margin:0;padding:0;font-family:'Cormorant Garamond',Georgia,ser
         <div class="qual-item"><b>Designed in the UAE</b><span>Original artwork, each design drawn from a real place in the Emirates.</span></div>
       </div>
     </div>
-    <!--HOMELINES:START--><style>html[data-stage="0"] .st1,html[data-stage="0"] .st2,html[data-stage="0"] .st12,html[data-stage="1"] .st0,html[data-stage="1"] .st2,html[data-stage="1"] .st02,html[data-stage="2"] .st0,html[data-stage="2"] .st1,html[data-stage="2"] .st01,html:not([data-stage]) .st0,html:not([data-stage]) .st1,html:not([data-stage]) .st01{display:none!important}</style>
+    <!--CAPTURE:HOME--><section class="sbc-blk" id="welcome-code" data-waitlist-wrap aria-labelledby="sbc-home-h">
+  <span class="sbc-eye">Welcome</span>
+  <h2 id="sbc-home-h">AED 50 off your first order</h2>
+  <p class="sbc-p">On orders over AED 199. Leave your email and we send you a code, valid for 14 days. You also hear about each new release first.</p>
+  <form class="sbc-form" data-waitlist data-source="home" novalidate><input type="email" name="email" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required><button type="submit">Email me my code</button></form>
+  <p class="sbc-err" data-err role="alert">Please enter a valid email address.</p>
+  <p class="sbc-ok" role="status">Check your inbox. Your code is on its way, and it lasts 14 days.</p><p class="sbc-ok sbc-ok-no" role="status">You are on the list. The welcome code is for a first order, and this email has ordered with us before.</p><p class="sbc-ok sbc-ok-sent" role="status">You are on the list. We have already sent a welcome code to this email.</p>
+  <p class="sbc-fine">One code per person. Unsubscribe any time.</p>
+</section><!--CAPTURE:END-->
+<!--HOMELINES:START--><style>html[data-stage="0"] .st1,html[data-stage="0"] .st2,html[data-stage="0"] .st12,html[data-stage="1"] .st0,html[data-stage="1"] .st2,html[data-stage="1"] .st02,html[data-stage="2"] .st0,html[data-stage="2"] .st1,html[data-stage="2"] .st01,html:not([data-stage]) .st0,html:not([data-stage]) .st1,html:not([data-stage]) .st01{display:none!important}</style>
 <script>(function(){var d=document.documentElement,T1=1793126700000,T2=1793304000000;function k(){var n=Date.now(),s=n>=T2?2:n>=T1?1:0;try{var m=/[?&]sbstage=([012])/.exec(location.search||'');if(m)s=+m[1];}catch(e){}return s;}
 function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttribute('data-stage',String(s));try{document.dispatchEvent(new CustomEvent('sb:stage',{detail:{stage:s}}));}catch(e){}}}
 set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
@@ -2735,18 +2744,7 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
 .hq details p{font:16px/1.65 Jost,system-ui,sans-serif;color:#4A4136;margin:0 0 18px;max-width:64ch}
 .hq details p a{color:#2A2016;text-underline-offset:3px}
 </style>
-<section class="stop j-news" id="s-news" data-tod="night" data-bg="night">
-  <div class="j-wrap"><div class="col">
-    <span class="j-eyebrow rv">Join the journey</span>
-    <h2 class="rv">Hear about <em style="font-style:normal">the next drop</em></h2>
-    <p class="lede rv">Get notified about the next drop — new tees, restocks, and the stories behind each design. No spam.</p>
-    <div class="wl rv" data-waitlist-wrap>
-      <form class="wl-form" data-waitlist data-source="home-drop" data-endpoint="https://app.kit.com/forms/9627814/subscriptions" novalidate><input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required><button type="submit" class="magnetic">Notify me</button></form>
-      <p class="wl-msg">Join the list. We tell you about each release the evening before it opens.</p>
-      <p class="wl-ok">You&rsquo;re on the list. We tell you about each release the evening before it opens.</p>
-    </div>
-  </div></div>
-</section>
+<!-- 13 Nov 2026: the sign-up moved up, under the Founding Edition grid (capture.js block "home") -->
 
 
 <footer>
@@ -3310,13 +3308,13 @@ document.querySelectorAll('[data-rv-filters]').forEach(function(bar){
        z: [start, end] zoom   pan: [[x,y] start, [x,y] end]   par: parallax
        grade: [tint amount, dim, haze, exposure]
        light: [x, y (screen dir of the sun), relief strength, dust (frac) + night flag (>=1)] */
-  /* 10 Nov 2026: five stops now, in page order (hero, collection, reviews, Instagram, newsletter); the three place stops left with r116; the places and story stops went with their sections */
+  /* 10 Nov 2026: five stops now, in page order (hero, collection, reviews, Instagram, newsletter); 13 Nov 2026: four, the newsletter stop is gone; the three place stops left with r116; the places and story stops went with their sections */
   var STOPS = [
     { bg: 'liwa',  z: [1.28, 1.12], pan: [[-0.010, 0.010], [ 0.014, 0.000]], par: 0.8, tint: '#F3DDB8', grade: [0.08, 1.00, 0.12, 1.02], haze: '#F3DDB8', light: [-0.75, 0.55, 0.35, 0.55] },  /* 1 hero (continues) */
     { bg: 'paper', z: [1, 1], pan: [[0, 0], [0, 0]], par: 0, tint: '#ffffff', grade: [0, 1, 0, 1], haze: '#ffffff', light: [0, 1, 0, 0] },  /* 5 collection */
     { bg: 'paper', z: [1, 1], pan: [[0, 0], [0, 0]], par: 0, tint: '#ffffff', grade: [0, 1, 0, 1], haze: '#ffffff', light: [0, 1, 0, 0] },  /* 6 reviews */
-    { bg: 'liwa',  z: [1.42, 1.28], pan: [[-0.024, 0.014], [-0.010, 0.010]], par: 0.8, tint: '#F3DDB8', grade: [0.10, 0.96, 0.10, 1.00], haze: '#F3DDB8', light: [-0.75, 0.55, 0.35, 0.55] },  /* 0 film */
-    { bg: 'night', z: [1.30, 1.06], pan: [[ 0.006, -0.020], [ 0.000, -0.058]], par: 0.6, tint: '#ffffff', grade: [0.00, 0.72, 0.04, 0.95], haze: '#2A2016', light: [ 0.30, 0.90, 0.10, 1.10] }  /* 10 newsletter: up into the sky */
+    { bg: 'liwa',  z: [1.42, 1.28], pan: [[-0.024, 0.014], [-0.010, 0.010]], par: 0.8, tint: '#F3DDB8', grade: [0.10, 0.96, 0.10, 1.00], haze: '#F3DDB8', light: [-0.75, 0.55, 0.35, 0.55] }  /* 0 film */
+    /* 13 Nov 2026: the newsletter stop went when the sign-up moved up under the Founding Edition grid (capture.js) */
   ];
 
   var journey = { seg: 0, t: 0 };

@@ -385,3 +385,100 @@ html[lang="ar"] .sbw-note .sbw-msg,.sb-topbar,.sb-topbar *{
    the no-JS delivery note) */
 .trust-row div,body>.note,body>.note *{font-family:var(--sans,Jost,system-ui,sans-serif)!important;text-transform:none!important;letter-spacing:.01em!important}
 .trust-row div{font-size:14px!important;font-weight:500}
+
+/* ==========================================================================
+   13 Nov 2026 — email capture (Faheem: "we need to maximize email capture").
+   The welcome code offer in four places, all handled by sahra-welcome.js:
+   .sbc-sheet  the gentle sheet that rises once a visitor has read some of the page
+   .sbc-bag    one line in the bag, opening a small form in place
+   .sbc-blk    the block on every product page and the tile in the /shop/ grid (built by capture.js)
+   .sbc-bis    "Tell me when it's back" on a sold-out size or a fit that is back soon (sahra-specimen.js)
+   ========================================================================== */
+.sbc-form{display:flex;gap:8px;margin:14px 0 0;max-width:460px}
+.sbc-form input{flex:1;min-width:0;height:48px;padding:0 16px;box-sizing:border-box;border:1px solid rgba(42,32,22,.28);border-radius:999px;background:#FFFFFF;color:#2A2016;font:400 16px/1 Jost,system-ui,sans-serif}
+.sbc-form input:focus-visible{outline:2px solid #7E4114;outline-offset:2px;border-color:#7E4114}
+.sbc-form button{flex:none;height:48px;padding:0 20px;border:0;border-radius:999px;background:#2A2016;color:#FAF6EF;font:600 15px/1 Jost,system-ui,sans-serif!important;letter-spacing:.01em!important;text-transform:none!important;cursor:pointer;white-space:nowrap}
+.sbc-form button:hover{background:#7E4114}
+.sbc-form button:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.sbc-form button:disabled{opacity:.7;cursor:default}
+.sbc-err{display:none;margin:10px 0 0;color:#7E4114;font:500 14.5px/1.45 Jost,system-ui,sans-serif}
+.err .sbc-err{display:block!important}
+.sbc-ok{display:none;margin:12px 0 0;color:#3F6B3A;font:500 15.5px/1.5 Jost,system-ui,sans-serif}
+.done .sbc-form{display:none}
+.done .sbc-ok{display:block}
+.sbc-ok-no,.sbc-ok-sent,.done .sbc-ok-no,.done .sbc-ok-sent,.done.w-no .sbc-ok,.done.w-sent .sbc-ok{display:none}
+.done.w-no .sbc-ok-no,.done.w-sent .sbc-ok-sent{display:block}
+/* the shared newsletter block (build.js newsletterBlock): the same three answers */
+html body .news[data-waitlist-wrap] .news-ok-no,html body .news[data-waitlist-wrap] .news-ok-sent,
+html body .news[data-waitlist-wrap].done.w-no .news-ok:not(.news-ok-no),html body .news[data-waitlist-wrap].done.w-sent .news-ok:not(.news-ok-sent),
+html body .news[data-waitlist-wrap].done .news-fine{display:none!important}
+html body .news[data-waitlist-wrap].done.w-no .news-ok-no,html body .news[data-waitlist-wrap].done.w-sent .news-ok-sent{display:block!important}
+.done .sbc-err{display:none!important}
+@media(max-width:420px){.sbc-form{flex-direction:column}.sbc-form button{width:100%}}
+
+/* the sheet: a card at the foot of the screen on a phone, in the corner on a computer; not a pop-up over the page */
+.sbc-sheet{position:fixed;z-index:140;left:0;right:0;bottom:0;padding:0 10px calc(10px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.sbc-sheet[hidden]{display:none!important}
+.sbc-card{position:relative;max-width:440px;margin:0 auto;padding:22px 20px 16px;background:#FAF6EF;color:#2A2016;border:1px solid rgba(42,32,22,.12);border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.22);pointer-events:auto;
+  transform:translateY(24px);opacity:0;transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .26s}
+.sbc-sheet.on .sbc-card{transform:none;opacity:1}
+@media(min-width:900px){.sbc-sheet{left:auto;right:24px;bottom:100px;padding:0}.sbc-card{width:400px}}
+@media(prefers-reduced-motion:reduce){.sbc-card{transition:none}}
+.sbc-eye{display:block;font:500 12.5px/1.2 Jost,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#7E4114;margin:0 0 6px}
+.sbc-card h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:30px;line-height:1.08;margin:0 36px 8px 0;color:#2A2016;text-wrap:balance}
+.sbc-sheet[dir="rtl"] .sbc-card h2{margin:0 0 8px 36px}
+.sbc-p{margin:0;font:400 15.5px/1.55 Jost,system-ui,sans-serif;color:#4A4136}
+.sbc-fine{margin:12px 0 0;font:400 13px/1.5 Jost,system-ui,sans-serif;color:#6B6256}
+.sbc-no{border:0;background:none;padding:0 0 0 6px;font:inherit;color:#2A2016;text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:24px}
+.sbc-x{position:absolute;top:10px;right:10px;width:44px;height:44px;border:0;border-radius:50%;background:none;color:#2A2016;font-size:18px;line-height:1;cursor:pointer}
+.sbc-sheet[dir="rtl"] .sbc-x{right:auto;left:10px}
+.sbc-x:hover{background:rgba(42,32,22,.06)}
+.sbc-x:focus-visible,.sbc-no:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.sbc-card .sbc-form{max-width:none}
+/* the buy bar sits at the foot of product pages on a phone: the card rises above it */
+@media(max-width:899px){html.ss-page .sbc-sheet{bottom:var(--ss-h,112px)}}
+
+/* the bag line */
+.sbc-bag{margin:0 0 12px;padding:10px 12px;border:1px dashed rgba(42,32,22,.25);border-radius:12px;background:#FFFFFF}
+.sbc-bag-t{display:block;width:100%;border:0;background:none;padding:2px 0;text-align:inherit;font:500 14.5px/1.45 Jost,system-ui,sans-serif;color:#2A2016;cursor:pointer;min-height:24px}
+.sbc-bag-t u{color:#7E4114;text-underline-offset:3px;white-space:nowrap}
+.sbc-bag .sbc-form{margin-top:10px}
+.sbc-bag .sbc-form input,.sbc-bag .sbc-form button{height:44px}
+.sbc-bag.done .sbc-bag-t{display:none}
+.sb-cap-done .sbc-bag:not(.done){display:none}
+
+/* the block on product pages and the tile on /shop/ */
+.sbc-blk{max-width:900px;margin:28px auto;padding:26px 22px;background:#F3DDB8;color:#2A2016;border-radius:18px}
+.sbc-blk .sbc-eye{color:#7E4114}
+.sbc-blk h2{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:clamp(28px,6vw,38px);line-height:1.08;margin:0 0 8px;color:#2A2016;text-wrap:balance}
+.sbc-blk .sbc-p{max-width:60ch}
+.sbc-blk .sbc-ok{color:#2A2016}
+@media(min-width:900px){.sbc-blk{padding:32px 34px}}
+.pcards .sbc-tile{grid-column:1/-1;margin:6px 0}
+
+/* Tell me when it's back */
+.sbc-bis{margin:10px 0 0;font:400 15px/1.5 Jost,system-ui,sans-serif;color:#2A2016}
+.sbc-bis-t{border:0;background:none;padding:0;font:inherit;font-weight:500;color:#7E4114;text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:24px}
+.sbc-bis-f{margin-top:8px;padding:14px;border:1px solid rgba(42,32,22,.15);border-radius:14px;background:#FFFFFF}
+.sbc-bis-f[hidden]{display:none}
+.sbc-bis-f label{display:block;font:500 14px/1.4 Jost,system-ui,sans-serif;margin:0 0 6px}
+.sbc-bis-sz{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px}
+.sbc-bis-sz button{min-width:48px;height:40px;padding:0 12px;border:1px solid rgba(42,32,22,.3);border-radius:999px;background:#FFFFFF;color:#2A2016;font:500 15px/1 Jost,system-ui,sans-serif;cursor:pointer}
+.sbc-bis-sz button[aria-pressed="true"]{background:#2A2016;color:#FAF6EF;border-color:#2A2016}
+.sbc-bis-sz button:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.sbc-bis .sbc-form{margin-top:10px}
+/* the page-wide input and legibility rules (legibility.js, the homepage's own form styles) are more specific than the
+   ones above: the sign-up fields keep their size everywhere */
+html body .sbc-form input[type=email]{height:48px!important;min-height:48px!important;padding:0 16px!important;font-size:16px!important;line-height:1!important;border-radius:999px!important;margin:0!important}
+html body .sbc-bag .sbc-form input[type=email]{height:44px!important;min-height:44px!important}
+@media(max-width:620px){
+  .sbc-card{padding:18px 18px 12px}
+  .sbc-card h2{font-size:26px;margin-bottom:6px}
+  .sbc-card .sbc-p{font-size:15px;line-height:1.5}
+  .sbc-card .sbc-form{margin-top:12px}
+}
+.sbc-card .sbc-fine{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
+.sbc-card .sbc-no{padding:0}
+html body .sbc-card h2{font-size:30px!important;line-height:1.08!important}
+html body .sbc-blk h2{font-size:clamp(28px,6vw,38px)!important;line-height:1.08!important}
+@media(max-width:620px){html body .sbc-card h2{font-size:25px!important}html body .sbc-card .sbc-p{font-size:15px!important;line-height:1.5!important}}

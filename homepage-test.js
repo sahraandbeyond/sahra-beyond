@@ -1208,6 +1208,42 @@ console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
   const fw = { 'al-quaa-galaxy-regular': /<div class="ss-fits" role="group" aria-label="Fit"><a href="\/products\/al-quaa-galaxy-regular\/" class="on" aria-current="page">[\s\S]*?<a href="\/products\/al-quaa-galaxy-oversized\/" class="">[\s\S]*?<p class="ss-help">[\s\S]*?<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/, 'al-quaa-galaxy-oversized': /<div class="ss-fits" role="group" aria-label="Fit"><a href="\/products\/al-quaa-galaxy-regular\/" class="">[\s\S]*?<a href="\/products\/al-quaa-galaxy-oversized\/" class="on" aria-current="page">[\s\S]*?<p class="ss-help">[\s\S]*?<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/, 'sand-polo': /<p class="ss-help">The polo is graded to the Regular tee chart\. <a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/ };
   Object.entries(fw).forEach(([h, re]) => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); check('PDP ' + h + ': a size-finder link above the buy sheet, no slim-fit warning', re.test(pg) && /<div class="sfind" id="size-finder" data-sizefinder/.test(pg) && !/runs slim|one size up/i.test(pg) && (h !== 'sand-polo' || !/class="ss-fits"/.test(pg)) && pg.indexOf('<p class="ss-help">') < pg.indexOf('id="ssBuy"') && pg.indexOf('id="ssBuy"') < pg.indexOf('id="ssAdd"') && /data-size="XL"/.test(pg)); });
 }
+/* ---- 13 Nov 2026: email capture (Faheem chose the welcome code, a gentle sheet, every product page, Tell me when it's back) ---- */
+console.log('\n\x1b[1memail capture\x1b[0m');
+{
+  const rd = p => fs.readFileSync(path.join(__dirname, p), 'utf8');
+  const prods = fs.readdirSync(path.join(__dirname, 'products')).filter(h => fs.existsSync(path.join(__dirname, 'products', h, 'index.html')));
+  const noBlk = prods.filter(h => (rd('products/' + h + '/index.html').match(/class="sbc-blk/g) || []).length !== 1);
+  check('every product page carries one welcome code block', !noBlk.length, noBlk.join(', '));
+  const arNo = prods.filter(h => fs.existsSync(path.join(__dirname, 'ar/products', h, 'index.html')) && !/خصم 50 درهمًا على طلبك الأول/.test(rd('ar/products/' + h + '/index.html')));
+  check('every Arabic product page carries it in Arabic', !arNo.length, arNo.join(', '));
+  const blkForm = /<section class="sbc-blk[^"]*" id="welcome-code" data-waitlist-wrap[\s\S]*?<form class="sbc-form" data-waitlist data-source="pdp"/;
+  check('the product block is a sign-up form the shared capture handles (data-waitlist, source pdp)', blkForm.test(rd('products/khor-fakkan-bay-tee-regular/index.html')) && blkForm.test(rd('products/al-quaa-galaxy-regular/index.html')));
+  const kfb = rd('products/khor-fakkan-bay-tee-regular/index.html');
+  check('Sahel page: the block sits under the reviews, before the story', kfb.indexOf('id="welcome-code"') > kfb.indexOf('rv-design') && kfb.indexOf('id="welcome-code"') < kfb.indexOf('class="po-story"'));
+  const aq = rd('products/al-quaa-galaxy-regular/index.html');
+  check('Founding page: the block sits under the reviews, before More from the drop', aq.indexOf('id="welcome-code"') > aq.indexOf('id="reviews"') && aq.indexOf('id="welcome-code"') < aq.indexOf('id="more"'));
+  const home = rd('index.html');
+  check('homepage: the block sits between the Founding Edition grid and the Sahel and Trail lines', home.indexOf('<!--CAPTURE:HOME-->') > home.indexOf('id="grid"') && home.indexOf('<!--CAPTURE:HOME-->') < home.indexOf('<!--HOMELINES:START-->') && /data-source="home"/.test(home));
+  check('homepage: the old newsletter stop is gone and STOPS[] matches the stops', !/id="s-news"/.test(home) && (home.match(/<section class="stop\b/g) || []).length === 4 && !/bg: 'night'/.test(home.slice(home.indexOf('var STOPS'), home.indexOf('];', home.indexOf('var STOPS')))));
+  const shop = rd('shop/index.html');
+  const g = shop.slice(shop.indexOf('id="shopGrid"'), shop.indexOf('id="shopNone"'));
+  check('/shop/: the welcome code row sits inside the grid after the first six pieces', /class="sbc-blk sbc-tile"/.test(g) && (g.slice(0, g.indexOf('sbc-tile')).match(/<div class="sg-i"/g) || []).length === 6 && !/<section class="news"/.test(shop));
+  const cat = rd('t-shirts/index.html');
+  check('category pages: the newsletter block carries the offer', /AED 50 off your first order/.test(cat) && /Email me my code/.test(cat) && !/Hear about the next drop/.test(cat));
+  const w = rd('assets/sahra-welcome.js');
+  check('the sheet: 40% of the page or 25 s past the first screen, once every 14 days, never after signing up',
+    /y \/ H < 0\.4 && Date\.now\(\) - t0 < 25000/.test(w) && /innerHeight \* 0\.9/.test(w) && /DAYS14 = 14 \* 864e5/.test(w) && /if \(isDone\(\)/.test(w));
+  check('the sheet stays away from the bag, the size finder and a form already on screen', /sbDrawer/.test(w) && /\.sfx:not\(\[hidden\]\)/.test(w) && /\[data-waitlist-wrap\]/.test(w));
+  check('the bag line and the shared bind are exported for "Tell me when it\'s back"', /window\.SBCapture = \{ bind: bind/.test(w) && /id = 'sbWc'/.test(w));
+  const sp = rd('assets/sahra-specimen.js');
+  check('"Tell me when it\'s back": on a paused fit and on sold-out sizes, sends the piece and the size', /function bisMount\(\)/.test(sp) && /name="piece"/.test(sp) && /name="size"/.test(sp) && /SBCapture\.form\('bis'/.test(sp));
+  const api = rd('api/subscribe.js');
+  check('api: a first-time sign-up earns welcome-code and welcome-code-sent, a buyer neither', /const WELCOME = \['welcome-code', 'welcome-code-sent'\]/.test(api) && /numberOfOrders/.test(api));
+  check('api: back in stock tag bis-<handle>-<size>', /tags\.push\('bis-' \+ bisPiece/.test(api));
+  const css = rd('assets/sahra-welcome.css');
+  check('no colour outside the palette in the capture styles', !/#(?!2A2016|FAF6EF|F3DDB8|7E4114|4A4136|6B6256|FFFFFF|3F6B3A)[0-9A-Fa-f]{6}/.test(css.slice(css.indexOf('13 Nov 2026 — email capture'))));
+}
 console.log('\n' + (fail ? '\x1b[31m' : '\x1b[32m') + pass + ' passed, ' + fail + ' failed\x1b[0m');
 process.exit(fail ? 1 : 0);
 }).catch(e => { console.error(e); process.exit(1); });

@@ -281,6 +281,8 @@ for (const f of ['index.html', 'shop-preview.html']) {
        .replace(/<!--IG:FOOT-->[\s\S]*?<!--\/IG:FOOT-->/, '<!--IG:FOOT--><style>' + IG.CSS + FITPAIR_CSS + '</style>' + IG.footerRowHtml() + '<!--/IG:FOOT-->')
        .replace(/<!--IG:JS-->[\s\S]*?<!--\/IG:JS-->/, '<!--IG:JS--><script>' + IG.JS + '</script><script>' + FITPAIR_JS + '</script><!--/IG:JS-->');
   /* 24 Oct 2026 (homepage SEO panel): intrinsic width and height on every home image, so the browser reserves the space (CLS) */
+  /* 13 Nov 2026 (Faheem, email capture): the welcome code block under the Founding Edition grid, from capture.js */
+  if (f === 'index.html') n = n.replace(/<!--CAPTURE:HOME-->[\s\S]*?<!--CAPTURE:END-->/, () => '<!--CAPTURE:HOME-->' + require('./capture.js').block('home') + '<!--CAPTURE:END-->');
   if (f === 'index.html') n = addImgDims(n, '.');
   if (n !== h0) fs.writeFileSync(fp, n);
 }
@@ -572,15 +574,17 @@ function newsletterBlock() {
      to join a waitlist, months after the collection went on sale. Unlike
      shopBlock it never had a LAUNCHED branch. It now sells what is live and
      captures email for the NEXT drop, with the old wording kept for rollback. */
+  /* 13 Nov 2026 (Faheem, email capture): the block now carries the welcome code offer, in the words of capture.js */
+  const CAP = require('./capture.js').T;
   const eyebrow = LAUNCHED
-    ? 'Sahra &amp; Beyond &middot; The list'
+    ? 'Sahra &amp; Beyond &middot; ' + CAP.eye
     : 'Sahra &amp; Beyond &middot; First drop coming';
   const blurb = LAUNCHED
-    ? 'Tees, polos and hoodies designed in the UAE, many drawn from real places across the Emirates. Join the list. We tell you about each release the evening before it opens.'   /* 23 Oct 2026: no longer "Next up: Sahel", since the block now sits on pages selling Sahel */
+    ? CAP.p   /* 23 Oct 2026: no longer "Next up: Sahel", since the block now sits on pages selling Sahel */
     : 'The first drop of original UAE-inspired tees is coming — plus the places and stories behind every design. Be first to know.';
-  const btn = LAUNCHED ? 'Join the list' : 'Join the waitlist';
+  const btn = LAUNCHED ? CAP.btn : 'Join the waitlist';
   const ok = LAUNCHED
-    ? 'You&rsquo;re on the list. We tell you about each release the evening before it opens.'
+    ? CAP.yes
     : 'You&rsquo;re on the list. See you at the drop. &#10022;';
   const shopCta = LAUNCHED
     ? `<a class="btn news-shop" href="/shop/">Shop the collection &rarr;</a>`
@@ -590,7 +594,7 @@ function newsletterBlock() {
      over by assets/sahra-welcome.js: saved to Shopify with consent, success shown only once stored. */
   return `<section class="news" data-waitlist-wrap><div class="news-stars"></div><div class="news-in">
     <span class="news-eyebrow">${eyebrow}</span>
-    <h2>${LAUNCHED ? 'Hear about the next drop' : 'Be first to see the next drop'}</h2><p>${esc(blurb)}</p>
+    <h2>${LAUNCHED ? CAP.h : 'Be first to see the next drop'}</h2><p>${esc(blurb)}</p>
     ${shopCta}
     <form class="news-form" data-waitlist data-source="news" novalidate>
       <input type="email" name="email_address" placeholder="you@email.com" required aria-label="Email address">
@@ -598,6 +602,9 @@ function newsletterBlock() {
     </form>
     <p class="news-err" data-err role="alert" style="display:none;margin:12px 0 0;font-size:15px">Please enter a valid email address.</p>
     <p class="news-ok" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:18px;color:#F3DDB8">${ok}</p>
+    ${LAUNCHED ? `<p class="news-ok news-ok-no" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:18px;color:#F3DDB8">${CAP.no}</p>
+    <p class="news-ok news-ok-sent" style="display:none;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:normal;font-size:18px;color:#F3DDB8">${CAP.sent}</p>
+    <p class="news-fine" style="margin:14px 0 0;font-size:13px;color:rgba(255,255,255,.7)">${CAP.fine}</p>` : ''}
     </div>
     </section>`;
 }
@@ -3799,12 +3806,13 @@ document.addEventListener('click',function(e){if(e.target.closest&&e.target.clos
   <div class="sx-bar" id="shopBar"><div class="sx-in"><div class="sx-chips" role="group" aria-label="Show">${CHIPS.map(([k, t], i) => `<button type="button" data-f="${k}" aria-pressed="${i ? 'false' : 'true'}" data-track="shop_chip_${k.replace(/-/g, '_')}">${t}</button>`).join('')}</div><span class="sx-n" aria-live="polite">${total} pieces</span></div></div>
   <div class="sx-main">
     ${PO.stageHead()}${PO.NB_CSS()}${PO.BIG_CSS()}
-    <div class="nb"><div class="pcards nb-pc" id="shopGrid">${sahelCards}${foundingCards}${trailCards}${extraCards}</div><p class="sx-none" id="shopNone" hidden>Nothing in this range at that discount.</p></div>
+    <div class="nb"><div class="pcards nb-pc" id="shopGrid">${(all => { /* 13 Nov 2026 (Faheem: "Move homepage/shop forms up"): the welcome code row after the first six pieces */
+      const at = all.split('<div class="sg-i"', 7).slice(0, 7).join('<div class="sg-i"').length; return at < all.length ? all.slice(0, at) + require('./capture.js').tile() + all.slice(at) : all + require('./capture.js').tile(); })(sahelCards + foundingCards + trailCards + extraCards)}</div><p class="sx-none" id="shopNone" hidden>Nothing in this range at that discount.</p></div>
     <p class="sx-note">${PO.newLede()} The <a href="/tote/">Sahra Tote</a> comes free with every clothing order.</p>
     <p class="sx-note">Giving a tee for Eid Al Etihad on 2 December? <a href="/national-day/">National Day t-shirts and gifts</a> &middot; <a href="/gifts/">Gift ideas</a></p>
  </div>
   </main>
-  <div class="sx-main sx-after">${newsletterBlock()}</div>
+  ${/* 13 Nov 2026: the sign-up moved up, into the grid (capture.js tile) */''}
   <section class="sx-map" id="s-places" aria-labelledby="sxMapH"><div class="sx-mw"><p class="sx-mk">The places</p><h2 id="sxMapH">Every piece has a pin on the map</h2>${require('./place-map.js').homeBlock(ROOT)}</div></section>
   ${js}`;
     write('shop/index.html', shell({ title, desc, canonical, jsonld, bodyHtml: body, activeNav: navKeyFor('shop'), bodyClass: 'buy-page ls-page shop-page', image: `${SITE}/assets/open/open-1080.webp` }));

@@ -104,8 +104,18 @@ function shopify(domain, token, query, variables) {
 }
 
 const FIND = `query Find($q: String!) {
+  customers(first: 1, query: $q) { edges { node { id tags numberOfOrders emailMarketingConsent { marketingState } } } }
+}`;
+
+/* 13 Nov 2026: the same search without numberOfOrders, if Shopify ever refuses that field. The welcome code then
+   goes by the welcome-code-sent tag alone, and the discount itself still only works for customers with no orders. */
+const FIND_BASIC = `query Find($q: String!) {
   customers(first: 1, query: $q) { edges { node { id tags emailMarketingConsent { marketingState } } } }
 }`;
+const find = (domain, token, q) => shopify(domain, token, FIND, { q }).catch(err => {
+  if (!/shopify_graphql/.test(err && err.message || '')) throw err;
+  return shopify(domain, token, FIND_BASIC, { q });
+});
 
 const CREATE = `mutation Create($input: CustomerInput!) {
   customerCreate(input: $input) { customer { id } userErrors { field message } }
@@ -173,12 +183,21 @@ module.exports = async (req, res) => {
     'ras-al-khor-hoodie', 'sahra-trail-tee', 'sahra-trail-2-in-1-short', 'sahra-trail-kit',
     /* 31 Oct 2026: the Super Oversized tees and the Oversized hoodies (paused, back soon) */
     'khor-fakkan-bay-tee-super-oversized', 'al-hamra-pearl-diver-tee-super-oversized', 'al-aqah-reef-tee-super-oversized', 'shams-tee-super-oversized',
-    'barr-and-bahr-hoodie-oversized', 'ras-al-khor-hoodie-oversized'];
-  const ALLOWED = { tee_size: ['s', 'm', 'l', 'xl'], short_size: ['s', 'm', 'l', 'xl'], piece: PIECES };
+    'barr-and-bahr-hoodie-oversized', 'ras-al-khor-hoodie-oversized',
+    /* 13 Nov 2026: the Founding Edition pieces, for "Tell me when it's back" on a sold-out size */
+    'al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'empty-quarter-regular', 'empty-quarter-oversized',
+    'hajar-mountains-regular', 'hajar-mountains-oversized', 'sand-polo'];
+  const SIZES = ['s', 'm', 'l', 'xl'];
+  const ALLOWED = { tee_size: SIZES, short_size: SIZES, piece: PIECES, size: SIZES };
   Object.keys(ALLOWED).forEach(key => {
     const val = String(fields[key] || '').trim().toLowerCase();
     if (ALLOWED[key].includes(val)) tags.push('f-' + key + '-' + val);
   });
+  /* 13 Nov 2026 (Faheem: "Tell me when it's back"): a sign-up on a sold-out size or a fit that is back soon carries one tag
+     naming the piece and the size, bis-<handle>-<size>, so the back-in-stock email reaches exactly the people waiting for it.
+     A fit that is back soon may come without a size: bis-<handle>. */
+  const bisPiece = String(fields.piece || '').trim().toLowerCase(), bisSize = String(fields.size || '').trim().toLowerCase();
+  if (source === 'bis' && PIECES.includes(bisPiece)) tags.push('bis-' + bisPiece + (SIZES.includes(bisSize) ? '-' + bisSize : ''));
   /* 8 Oct 2026: sign-ups from Arabic pages are tagged so a confirmation email can be sent in Arabic */
   if (String(fields.lang || '').toLowerCase() === 'ar') tags.push('lang-ar');
   const consent = {
@@ -187,11 +206,28 @@ module.exports = async (req, res) => {
     consentUpdatedAt: new Date().toISOString()
   };
 
+  /* 13 Nov 2026 (Faheem chose a welcome code: AED 50 off a first order over AED 199, valid 14 days). The code is one
+     Shopify discount that only customers in the segment "tag welcome-code, no orders" can use, once each. Here the sign-up
+     earns the two tags: welcome-code (Shopify Flow emails the code, sends a reminder on day 10 and removes this tag on
+     day 14, which ends it) and welcome-code-sent (kept for good, so signing up again never starts a second 14 days).
+     Someone who has ordered before gets neither: the code is for a first order. */
+  const WELCOME = ['welcome-code', 'welcome-code-sent'];
+  const earns = node => !node || (Number(node.numberOfOrders || 0) === 0 && !(node.tags || []).includes('welcome-code-sent'));
+  /* what the visitor is told: true (the code is on its way), 'sent' (it went to this address before: a second sign-up,
+     or a retry after a lost response), false (this address has ordered before) */
+  const state = node => earns(node) ? true : (node && Number(node.numberOfOrders || 0) === 0 ? 'sent' : false);
+  /* tags that carry the welcome code must be written, or no email goes out: a failure here is a failure to store */
+  async function addTags(token, id, list, must) {
+    const r = await shopify(domain, token, ADD_TAGS, { id, tags: list }).catch(e => { if (must) throw e; return null; });
+    const errs = r && r.tagsAdd && r.tagsAdd.userErrors;
+    if (must && errs && errs.length) throw new Error('tags: ' + errs[0].message);
+  }
+
   /* One pass over Shopify with a given token. Pulled out of the handler so a 401
      - a token revoked or rotated before its 24h was up - can be retried once with
      a fresh one instead of silently dropping the address. */
   async function store(token) {
-    const found = await shopify(domain, token, FIND, { q: `email:"${escapeQuery(email)}"` });
+    const found = await find(domain, token, `email:"${escapeQuery(email)}"`);
     const node = found && found.customers && found.customers.edges[0] && found.customers.edges[0].node;
 
     if (node) {
@@ -203,12 +239,13 @@ module.exports = async (req, res) => {
       });
       const errs = up.customerEmailMarketingConsentUpdate.userErrors;
       if (errs && errs.length) throw new Error('consent: ' + errs[0].message);
-      await shopify(domain, token, ADD_TAGS, { id: node.id, tags }).catch(() => {});
-      return res.status(200).json({ ok: true, stored: true, created: false });
+      const welcome = state(node);
+      await addTags(token, node.id, welcome === true ? tags.concat(WELCOME) : tags, welcome === true);
+      return res.status(200).json({ ok: true, stored: true, created: false, welcome });
     }
 
     const made = await shopify(domain, token, CREATE, {
-      input: { email: email, tags: tags, emailMarketingConsent: consent }
+      input: { email: email, tags: tags.concat(WELCOME), emailMarketingConsent: consent }
     });
     const cErrs = made.customerCreate.userErrors;
     if (cErrs && cErrs.length) {
@@ -217,14 +254,15 @@ module.exports = async (req, res) => {
       const msg = cErrs[0].message || '';
       if (/taken|already/i.test(msg)) {
         /* 8 Oct 2026: the address exists but search missed it; still record which list they joined */
-        const again = await shopify(domain, token, FIND, { q: `email:"${escapeQuery(email)}"` }).catch(() => null);
+        const again = await find(domain, token, `email:"${escapeQuery(email)}"`).catch(() => null);
         const n = again && again.customers && again.customers.edges[0] && again.customers.edges[0].node;
-        if (n) await shopify(domain, token, ADD_TAGS, { id: n.id, tags }).catch(() => {});
-        return res.status(200).json({ ok: true, stored: !!n, created: false });
+        const w = n ? state(n) : false;
+        if (n) await addTags(token, n.id, w === true ? tags.concat(WELCOME) : tags, w === true);
+        return res.status(200).json({ ok: true, stored: !!n, created: false, welcome: w });
       }
       throw new Error('create: ' + msg);
     }
-    return res.status(200).json({ ok: true, stored: true, created: true });
+    return res.status(200).json({ ok: true, stored: true, created: true, welcome: true });
   }
 
   try {

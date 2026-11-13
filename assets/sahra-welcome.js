@@ -48,7 +48,7 @@
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (j) {
         if (r.status === 400) throw new Error('email');
-        return { stored: !!(j && j.stored) };
+        return { stored: !!(j && j.stored), welcome: j ? j.welcome : undefined };
       });
     });
   }
@@ -204,17 +204,21 @@
      handler to [data-waitlist] that posts to Kit. Cloning the node drops those
      listeners, which is the only way to retire Kit without hand-editing ~60
      generated pages. Same wrap classes, so the existing CSS states still work. */
-  (function takeover() {
-    var forms = document.querySelectorAll('form[data-waitlist]');
-    for (var i = 0; i < forms.length; i++) (function (old) {
-      var f = old.cloneNode(true);
-      old.parentNode.replaceChild(f, old);
+  /* 13 Nov 2026: one function per form, exported as window.SBCapture.bind, so forms made after this file has run (the
+     sign-up sheet, the bag line, "Tell me when it's back") are handled exactly like the forms in the page. */
+  function bind(old) {
+      if (old.__sbBound) return;
+      var f = old.parentNode ? old.cloneNode(true) : old;
+      if (old.parentNode) old.parentNode.replaceChild(f, old);
+      f.__sbBound = 1;
       var wrapEl = f.closest('[data-waitlist-wrap]') || f.parentNode;
       var src = f.getAttribute('data-source') || 'waitlist';
       /* 25 Oct 2026: the shared newsletter block says data-source="news"; tag it with the page it sits on */
       if (src === 'news') { var seg = (location.pathname || '/').split('/').filter(Boolean)[0] || 'home'; src = ('news-' + seg).slice(0, 24); }
       f.removeAttribute('data-endpoint');
       var inp = f.querySelector('input[type=email], input[name=email_address], input[name=email]');
+      /* the bad-email wording, kept before anything else can write to the error line */
+      var e0 = wrapEl.querySelector('.tr-err, .sh-err, [data-err]'); if (e0 && !e0.hasAttribute('data-bad-email')) e0.setAttribute('data-bad-email', e0.textContent);
       /* the error line goes back to its bad-email wording as soon as the visitor edits the address */
       var resetErr = function () { var x = wrapEl.querySelector('[data-err]'); if (x) x.style.display = 'none';
         var y = wrapEl.querySelector('[data-bad-email]'); if (y) y.textContent = y.getAttribute('data-bad-email'); };
@@ -229,9 +233,13 @@
         if (b) { b.disabled = true; b.textContent = t('Adding…', 'جارٍ الإضافة…'); }
         var errEl = wrapEl.querySelector('.tr-err, .sh-err, [data-err]');
         if (errEl && !errEl.hasAttribute('data-bad-email')) errEl.setAttribute('data-bad-email', errEl.textContent);
-        var settle = function () {
+        var settle = function (o) {
+          /* the success line says whether a welcome code is on its way: the API knows if this address has ordered before */
+          if (o && o.welcome === false) wrapEl.classList.add('w-no');
+          else if (o && o.welcome === 'sent') wrapEl.classList.add('w-sent');
           wrapEl.classList.remove('loading', 'err');
           wrapEl.classList.add('done');
+          done(true, wrapEl);
           ev('waitlist_signup', { source: src });
           /* 25 Oct 2026 (retention audit): the standard lead events, so ads can learn from sign-ups.
              Meta Lead is mirrored to TikTok SubmitForm by assets/tiktok-pixel.js. */
@@ -257,7 +265,7 @@
         if (AR) { fields = fields || {}; fields.lang = 'ar'; }
         var attempt = function (n) {
           post(email, src, fields).then(function (o) {
-            if (o.stored) return settle();
+            if (o.stored) return settle(o);
             if (n < 1) return setTimeout(function () { attempt(n + 1); }, 1500);
             fail(false);
           }, function (err) {
@@ -268,6 +276,139 @@
         };
         attempt(0);
       });
-    })(forms[i]);
+      return f;
+  }
+
+  /* ------------------------------------------------ the welcome code offer */
+  /* 13 Nov 2026 (Faheem: "we need to maximize email capture"). He chose a welcome code (AED 50 off a first order over
+     AED 199, valid for 14 days, emailed by Shopify Flow, never shown on the site), said on the forms and in a gentle sheet. */
+  var OFFER = {
+    eye: t('Welcome', 'أهلًا بك'),
+    h: t('AED 50 off your first order', 'خصم 50 درهمًا على طلبك الأول'),
+    p: t('On orders over AED 199. Leave your email and we send you a code, valid for 14 days. You also hear about each new release first.',
+         'على الطلبات التي تزيد على 199 درهمًا. اترك بريدك الإلكتروني ونرسل إليك رمزًا صالحًا لمدة 14 يومًا، وتكون أول من يعرف بكل إصدار جديد.'),
+    btn: t('Email me my code', 'أرسلوا لي الرمز'),
+    yes: t('Check your inbox. Your code is on its way, and it lasts 14 days.', 'تفقّد بريدك الإلكتروني. الرمز في طريقه إليك، وهو صالح لمدة 14 يومًا.'),
+    no: t('You are on the list. The welcome code is for a first order, and this email has ordered with us before.', 'أنت الآن على القائمة. رمز الترحيب للطلب الأول فقط، وقد سبق الطلب بهذا البريد الإلكتروني.'),
+    sent: t('You are on the list. We have already sent a welcome code to this email.', 'أنت الآن على القائمة. سبق أن أرسلنا رمز ترحيب إلى هذا البريد الإلكتروني.'),
+    bad: t('Please enter a valid email address.', 'يُرجى إدخال بريد إلكتروني صحيح.'),
+    fine: t('One code per person. Unsubscribe any time.', 'رمز واحد لكل شخص. يمكنك إلغاء الاشتراك في أي وقت.'),
+    no2: t('No thanks', 'لا، شكرًا'),
+    close: t('Close', 'إغلاق'),
+    ph: t('you@email.com', 'you@email.com')
+  };
+  /* remembered in this browser only: a sign-up hides the sheet and the bag line for good, a dismissal for 14 days */
+  var K_DONE = 'sb_cap_done', K_SEEN = 'sb_cap_seen', DAYS14 = 14 * 864e5;
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function isDone() { return !!lsGet(K_DONE); }
+  /* signed up through any form: the sheet goes, unless it was the sheet's own form (it shows its confirmation) */
+  function done(v, from) { if (v) lsSet(K_DONE, String(Date.now())); document.documentElement.classList.add('sb-cap-done');
+    if (v && sheet && !sheet.hidden && !(from && sheet.contains(from))) hideSheet(); }
+  if (isDone()) document.documentElement.classList.add('sb-cap-done');
+
+  function formHtml(src, opts) {
+    opts = opts || {};
+    return '<form class="sbc-form" data-waitlist data-source="' + src + '" novalidate>' +
+      '<input type="email" name="email" placeholder="' + OFFER.ph + '" aria-label="' + t('Email address', 'البريد الإلكتروني') + '" autocomplete="email" required' + (opts.id ? ' id="' + opts.id + '"' : '') + '>' +
+      '<button type="submit">' + (opts.btn || OFFER.btn) + '</button></form>' +
+      '<p class="sbc-err" data-err role="alert">' + OFFER.bad + '</p>' +
+      '<p class="sbc-ok" role="status">' + (opts.yes || OFFER.yes) + '</p><p class="sbc-ok sbc-ok-no" role="status">' + (opts.no || OFFER.no) + '</p><p class="sbc-ok sbc-ok-sent" role="status">' + (opts.sent || OFFER.sent) + '</p>';
+  }
+
+  /* the sheet: rises once the visitor has read some of the page (40% of it, or 25 seconds once past the first screen),
+     never on the first screen, never over the bag, the size finder or a form already in view, once every 14 days,
+     and never again after signing up */
+  var sheet = null;
+  function makeSheet() {
+    if (sheet) return sheet;
+    sheet = document.createElement('div');
+    sheet.className = 'sbc-sheet';
+    sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'false'); sheet.setAttribute('aria-labelledby', 'sbcH');
+    if (AR) { sheet.setAttribute('dir', 'rtl'); sheet.setAttribute('lang', 'ar'); }
+    sheet.hidden = true;
+    sheet.innerHTML = '<div class="sbc-card" data-waitlist-wrap>' +
+      '<button type="button" class="sbc-x" aria-label="' + OFFER.close + '">&#10005;</button>' +
+      '<span class="sbc-eye">' + OFFER.eye + '</span><h2 id="sbcH">' + OFFER.h + '</h2><p class="sbc-p">' + OFFER.p + '</p>' +
+      formHtml('sheet', { id: 'sbcEmail' }) +
+      '<p class="sbc-fine">' + OFFER.fine + ' <button type="button" class="sbc-no">' + OFFER.no2 + '</button></p></div>';
+    document.body.appendChild(sheet);
+    bind(sheet.querySelector('form'));
+    var shut = function (why) { hideSheet(why); };
+    sheet.querySelector('.sbc-x').addEventListener('click', function () { shut('close'); });
+    sheet.querySelector('.sbc-no').addEventListener('click', function () { shut('no_thanks'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sheet && !sheet.hidden) shut('escape'); });
+    return sheet;
+  }
+  var sheetFrom = '';
+  function showSheet(from) {
+    makeSheet();
+    if (!sheet.hidden) return;
+    sheetFrom = from || 'auto';
+    sheet.hidden = false;
+    requestAnimationFrame(function () { sheet.classList.add('on'); });
+    lsSet(K_SEEN, String(Date.now()));
+    ev('signup_sheet', { action: 'shown', trigger: sheetFrom, page: location.pathname });
+  }
+  function hideSheet(why) {
+    if (!sheet || sheet.hidden) return;
+    sheet.classList.remove('on');
+    var s0 = sheet; setTimeout(function () { s0.hidden = true; }, 260);
+    if (why) ev('signup_sheet', { action: why, trigger: sheetFrom, page: location.pathname });
+  }
+  var SKIP_SHEET = /^\/(ar\/)?(admin|h)(\/|$)/;
+  function busy() {
+    var d = document.getElementById('sbDrawer'); if (d && d.classList.contains('on')) return true;
+    var pk = document.getElementById('sbPeek'); if (pk && !pk.hidden) return true;
+    if (document.querySelector('.sfx:not([hidden])')) return true;
+    var a = document.activeElement; if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return true;
+    var w = document.querySelectorAll('[data-waitlist-wrap]');
+    for (var i = 0; i < w.length; i++) { if (sheet && sheet.contains(w[i])) continue; var r = w[i].getBoundingClientRect(); if (r.height && r.top < innerHeight && r.bottom > 0) return true; }
+    return false;
+  }
+  (function autoSheet() {
+    if (isDone() || SKIP_SHEET.test(location.pathname || '/')) return;
+    var seen = +lsGet(K_SEEN) || 0; if (seen && Date.now() - seen < DAYS14) return;
+    var t0 = Date.now(), fired = false, iv = 0, raf = 0;
+    function check() {
+      raf = 0;
+      if (fired || isDone()) return stop();
+      var y = window.scrollY || document.documentElement.scrollTop || 0;
+      var H = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      var past = y > innerHeight * 0.9;
+      if (!past) return;
+      if (y / H < 0.4 && Date.now() - t0 < 25000) return;
+      if (busy()) return;
+      fired = true; stop(); showSheet(y / H >= 0.4 ? 'scroll' : 'time');
+    }
+    function q() { if (!raf) raf = requestAnimationFrame(check); }
+    function stop() { removeEventListener('scroll', q); if (iv) clearInterval(iv); }
+    addEventListener('scroll', q, { passive: true });
+    iv = setInterval(check, 2000);
+  })();
+
+  /* the line in the bag: opens a small form in place, so nobody leaves the bag to get the code */
+  function bagLine() {
+    var foot = document.getElementById('sbFoot'); if (!foot || document.getElementById('sbWc')) return !!foot;
+    var box = document.createElement('div');
+    box.className = 'sbc-bag'; box.id = 'sbWc'; box.setAttribute('data-waitlist-wrap', '');
+    box.innerHTML = '<button type="button" class="sbc-bag-t" aria-expanded="false">' + t('First order? Get AED 50 off over AED 199.', 'طلبك الأول؟ احصل على خصم 50 درهمًا على ما يزيد على 199 درهمًا.') +
+      ' <u>' + t('Get my code', 'أريد الرمز') + '</u></button><div class="sbc-bag-f" hidden>' +
+      formHtml('bag', { btn: t('Send', 'أرسل'), yes: t('Check your inbox. Your code is on its way: paste it at checkout.', 'تفقّد بريدك الإلكتروني. الرمز في طريقه إليك: الصقه عند الدفع.') }) + '</div>';
+    foot.insertBefore(box, foot.firstChild);
+    bind(box.querySelector('form'));
+    var tg = box.querySelector('.sbc-bag-t'), fm = box.querySelector('.sbc-bag-f');
+    tg.addEventListener('click', function () { var open = fm.hidden; fm.hidden = !open; tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) { ev('signup_sheet', { action: 'bag_open', page: location.pathname }); var i = fm.querySelector('input'); if (i) try { i.focus(); } catch (e) {} } });
+    return true;
+  }
+  /* the bag is built the first time it is needed: watch for it */
+  if (!bagLine() && window.MutationObserver) { var mo = new MutationObserver(function () { if (bagLine()) mo.disconnect(); }); mo.observe(document.body, { childList: true }); }
+
+  window.SBCapture = { bind: bind, open: showSheet, form: formHtml, offer: OFFER, done: isDone };
+
+  (function takeover() {
+    var forms = document.querySelectorAll('form[data-waitlist]');
+    for (var i = 0; i < forms.length; i++) bind(forms[i]);
   })();
 })();

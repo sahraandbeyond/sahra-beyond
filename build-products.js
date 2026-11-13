@@ -1302,6 +1302,7 @@ ${TABBY_FAQ}
   ${/* 4 Oct 2026: the posts tagged to this design (content/instagram.json), between the questions and the reviews */''}${IG.railHtml(IG.forProduct(p.id), { title: 'Seen on our feed' }) ? `<section class="sec reveal ig-prod" id="feed">${IG.railHtml(IG.forProduct(p.id), { title: 'Seen on our feed' })}</section>` : ''}
 
 ${RV.productSection(p.id, p.name, designHandles(p))}
+${/* 13 Nov 2026 (Faheem, email capture): the welcome code under the reviews on every product page */''}${require('./capture.js').block('pdp')}
   <section class="sec reveal" id="more">
     <span class="snum">09 — The collection</span>
     <h2>More from <em>the drop</em></h2>

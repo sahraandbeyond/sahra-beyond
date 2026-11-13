@@ -12,7 +12,7 @@ function mkRes() {
   r.end = ()=>r;
   return r;
 }
-const calls = [];
+const calls = [], vars = [];
 function stub(plan) {
   global.fetch = async (url, opt) => {
     const body = opt && opt.body ? JSON.parse(opt.body) : {};
@@ -22,6 +22,7 @@ function stub(plan) {
       return { ok: t.ok, status: t.status, json: async () => t.body };
     }
     calls.push('GQL:' + (body.query||'').trim().split(/[\s(]/)[1]);
+    vars.push(body.variables || {});
     const g = plan.gql.shift();
     return { ok: g.ok, status: g.status, json: async () => g.body };
   };
@@ -91,4 +92,60 @@ async function run(name, env, plan, expect, email) {
   console.log((ok?'PASS':'FAIL').padEnd(5), 'warm container reuses one token'.padEnd(34),
               JSON.stringify({ tokenExchanges: tokenCalls, both: !!(r1._j.stored && r2._j.stored) }));
   if (!ok) process.exitCode = 1;
+  /* 13 Nov 2026: the welcome code. A first-time sign-up earns welcome-code and welcome-code-sent; a buyer, or someone who
+     already had the code, earns neither; a sold-out size sign-up carries bis-<handle>-<size>. */
+  async function tagsFor(name, found, body, expect) {
+    calls.length = 0; vars.length = 0;
+    for (const k of ['SHOPIFY_ADMIN_TOKEN','SHOPIFY_CLIENT_ID','SHOPIFY_CLIENT_SECRET']) delete process.env[k];
+    Object.assign(process.env, {SHOPIFY_STORE_DOMAIN:'s.myshopify.com', SHOPIFY_ADMIN_TOKEN:'shpat_legacy'});
+    const FOUND = found ? { ok:true, status:200, body:{ data:{ customers:{ edges:[{ node: found }] } } } } : NO_CUST;
+    const CONSENTED = { ok:true, status:200, body:{ data:{ customerEmailMarketingConsentUpdate:{ customer:{id:'gid://x/2'}, userErrors:[] } } } };
+    const TAGGED = { ok:true, status:200, body:{ data:{ tagsAdd:{ userErrors:[] } } } };
+    stub({ token:[], gql: found ? [FOUND, CONSENTED, TAGGED] : [FOUND, CREATED] });
+    const res = mkRes();
+    await freshHandler()({ method:'POST', body }, res);
+    const v = vars[vars.length - 1] || {};
+    const tags = (v.tags || (v.input && v.input.tags) || []).join(',');
+    const got = { welcome: res._j.welcome, tags };
+    const pass = String(got.welcome) === String(expect.welcome) && expect.has.every(t => tags.split(',').includes(t)) && (expect.not || []).every(t => !tags.split(',').includes(t));
+    console.log((pass?'PASS':'FAIL').padEnd(5), name.padEnd(34), JSON.stringify(got));
+    if (!pass) { console.log('      expected', JSON.stringify(expect)); process.exitCode = 1; }
+  }
+  await tagsFor('welcome: new customer', null, { email:'n@example.com', source:'sheet' },
+    { welcome:true, has:['site-signup','src-sheet','welcome-code','welcome-code-sent'] });
+  await tagsFor('welcome: no orders yet (abandoned)', { id:'gid://x/2', tags:[], numberOfOrders:'0' }, { email:'a@example.com', source:'pdp' },
+    { welcome:true, has:['welcome-code','welcome-code-sent'] });
+  await tagsFor('welcome: a buyer gets none', { id:'gid://x/2', tags:[], numberOfOrders:'2' }, { email:'b@example.com', source:'pdp' },
+    { welcome:false, has:['site-signup'], not:['welcome-code','welcome-code-sent'] });
+  await tagsFor('welcome: never twice (told: sent)', { id:'gid://x/2', tags:['welcome-code-sent'], numberOfOrders:'0' }, { email:'c@example.com', source:'sheet' },
+    { welcome:'sent', has:['site-signup'], not:['welcome-code'] });
+  await tagsFor('back in stock: piece and size', null, { email:'d@example.com', source:'bis', fields:{ piece:'al-quaa-galaxy-oversized', size:'M' } },
+    { welcome:true, has:['src-bis','bis-al-quaa-galaxy-oversized-m','f-piece-al-quaa-galaxy-oversized','f-size-m'] });
+  await tagsFor('back in stock: fit back soon', null, { email:'e@example.com', source:'bis', fields:{ piece:'ras-al-khor-hoodie-oversized' } },
+    { welcome:true, has:['bis-ras-al-khor-hoodie-oversized'] });
+  await tagsFor('back in stock: unknown piece ignored', null, { email:'f@example.com', source:'bis', fields:{ piece:'not-a-piece', size:'m' } },
+    { welcome:true, has:['src-bis'], not:['bis-not-a-piece-m'] });
+  /* a welcome tag that fails to write is a failed sign-up (no code email would go out), so the visitor is asked to retry */
+  {
+    calls.length = 0; vars.length = 0;
+    Object.assign(process.env, {SHOPIFY_STORE_DOMAIN:'s.myshopify.com', SHOPIFY_ADMIN_TOKEN:'shpat_legacy'});
+    const FOUND = { ok:true, status:200, body:{ data:{ customers:{ edges:[{ node:{ id:'gid://x/9', tags:[], numberOfOrders:'0' } }] } } } };
+    const CONSENTED = { ok:true, status:200, body:{ data:{ customerEmailMarketingConsentUpdate:{ customer:{id:'gid://x/9'}, userErrors:[] } } } };
+    const TAGFAIL = { ok:true, status:200, body:{ data:{ tagsAdd:{ userErrors:[{ field:'tags', message:'nope' }] } } } };
+    stub({ token:[], gql:[FOUND, CONSENTED, TAGFAIL] });
+    const res = mkRes(); await freshHandler()({ method:'POST', body:{ email:'g@example.com', source:'sheet' } }, res);
+    const ok = res._j.stored === false;
+    console.log((ok?'PASS':'FAIL').padEnd(5), 'welcome tag not written: not stored'.padEnd(34), JSON.stringify({ stored: res._j.stored }));
+    if (!ok) process.exitCode = 1;
+  }
+  /* Shopify refusing numberOfOrders falls back to the plain search */
+  {
+    calls.length = 0; vars.length = 0;
+    const GQLERR = { ok:true, status:200, body:{ errors:[{ message:"Field 'numberOfOrders' doesn't exist" }] } };
+    stub({ token:[], gql:[GQLERR, NO_CUST, CREATED] });
+    const res = mkRes(); await freshHandler()({ method:'POST', body:{ email:'h@example.com', source:'sheet' } }, res);
+    const ok = res._j.stored === true && res._j.welcome === true;
+    console.log((ok?'PASS':'FAIL').padEnd(5), 'numberOfOrders refused: fallback'.padEnd(34), JSON.stringify({ stored: res._j.stored, welcome: res._j.welcome, calls: calls.join(' ') }));
+    if (!ok) process.exitCode = 1;
+  }
 })();

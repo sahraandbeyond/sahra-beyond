@@ -316,7 +316,7 @@
   var waitAdd = false, tries = 0;
   function load() {
     /* paused piece (30 Oct 2026): not for sale while the fit is adjusted; nothing to load */
-    if (buy && buy.getAttribute('data-paused') === '1') { add.disabled = true; [].forEach.call(buy.querySelectorAll('[data-size]'), function (b) { b.disabled = true; }); return; }
+    if (buy && buy.getAttribute('data-paused') === '1') { add.disabled = true; [].forEach.call(buy.querySelectorAll('[data-size]'), function (b) { b.disabled = true; }); bisMount(); return; }
     if (!window.SahraCart || !window.SahraCart.variants) { if (tries++ < 60) { setTimeout(load, 150); return; } say('Sizes are not loading. Refresh the page, or message us on WhatsApp.'); return; }
     var t = setTimeout(function () { if (!live) say('Sizes are taking a while. Refresh the page, or message us on WhatsApp.'); }, 9000);
     window.SahraCart.variants(handle).then(function (vs) {
@@ -325,9 +325,63 @@
       VS = vs; live = true; say('');
       /* a size tapped before stock arrived that has since sold out */
       ['size', 'tee', 'short'].forEach(function (g) { if (sel[g] && !avail(g, sel[g])) { say(sel[g] + ' is sold out. Please choose another size.'); delete sel[g]; } });
-      var go = waitAdd; waitAdd = false; busy = false; paint();
+      var go = waitAdd; waitAdd = false; busy = false; paint(); bisMount();
       if (go && pick() && !add.getAttribute('data-alt')) add.click();   /* a tap made before stock loaded never becomes a redirect */
     }, function () { clearTimeout(t); say('Sizes are not loading. Refresh the page, or message us on WhatsApp.'); });
+  }
+  /* 13 Nov 2026 (Faheem, email capture: "Tell me when it's back"). Under the stock line, on a fit that is back soon or a
+     piece with a size sold out: the visitor picks the size and leaves an email. api/subscribe.js tags them
+     bis-<handle>-<size>, and Shopify Flow emails them when that size is back. The kit (two sizes) is left out. */
+  function bisMount() {
+    if (kit || !window.SBCapture || document.getElementById('sbcBis')) return;
+    var stat = document.querySelector('.ss-stat'); if (!stat) return;
+    var AR = /^ar\b/i.test(document.documentElement.getAttribute('lang') || '') || /^\/ar\//.test(location.pathname || '');
+    var T = function (en, ar) { return AR ? ar : en; };
+    var paused = buy.getAttribute('data-paused') === '1';
+    var sizes = [];
+    [].forEach.call(buy.querySelectorAll('.ssb-sz button[data-size]'), function (b) { var z = b.getAttribute('data-size'); if (sizes.indexOf(z) < 0) sizes.push(z); });
+    var out;
+    if (paused) out = one ? [] : sizes;
+    else if (!VS) return;
+    else if (one) { if (VS.some(function (v) { return v.availableForSale; })) return; out = []; }
+    else { out = sizes.filter(function (z) { return !avail('size', z); }); if (!out.length) return; }
+    var whole = paused || (VS && !VS.some(function (v) { return v.availableForSale; }));
+    var box = document.createElement('div');
+    box.className = 'sbc-bis'; box.id = 'sbcBis'; box.setAttribute('data-waitlist-wrap', '');
+    var chosen = out.length === 1 ? out[0] : (sel.size && out.indexOf(sel.size) >= 0 ? sel.size : '');
+    box.innerHTML = '<button type="button" class="sbc-bis-t" aria-expanded="false" aria-controls="sbcBisF">' +
+      (whole ? T('Tell me when it\'s back', 'أخبروني عند عودته') : T('Size sold out? Tell me when it\'s back', 'نفد مقاسك؟ أخبروني عند توفره')) + '</button>' +
+      '<div class="sbc-bis-f" id="sbcBisF" hidden>' +
+      (out.length > 1 ? '<label id="sbcBisL">' + T('Which size?', 'أي مقاس؟') + '</label><div class="sbc-bis-sz" role="group" aria-labelledby="sbcBisL">' +
+        out.map(function (z) { return '<button type="button" data-z="' + z + '" aria-pressed="' + (z === chosen ? 'true' : 'false') + '">' + z + '</button>'; }).join('') + '</div>' : '') +
+      window.SBCapture.form('bis', {
+        btn: T('Tell me', 'أخبروني'),
+        yes: T('Done. We email you when it is back. Your AED 50 welcome code is on its way too.', 'تم. نراسلك عند عودته، ورمز ترحيب بخصم 50 درهمًا في طريقه إليك أيضًا.'),
+        no: T('Done. We email you when it is back.', 'تم. نراسلك عند عودته.'),
+        sent: T('Done. We email you when it is back.', 'تم. نراسلك عند عودته.')
+      }) + '</div>';
+    stat.parentNode.insertBefore(box, stat.nextSibling);
+    var f = box.querySelector('form');
+    f.insertAdjacentHTML('beforeend', '<input type="hidden" name="piece" value="' + handle + '"><input type="hidden" name="size" value="' + (chosen ? chosen.toLowerCase() : '') + '">');
+    f = window.SBCapture.bind(f) || box.querySelector('form');
+    var hid = f.querySelector('input[name=size]');
+    var tg = box.querySelector('.sbc-bis-t'), panel = box.querySelector('.sbc-bis-f');
+    tg.addEventListener('click', function () { var open = panel.hidden; panel.hidden = !open; tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) tr('bis_open', { item_id: handle, size: chosen || '' }); });
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.sbc-bis-sz button'); if (!b) return;
+      chosen = b.getAttribute('data-z'); hid.value = chosen.toLowerCase();
+      [].forEach.call(box.querySelectorAll('.sbc-bis-sz button'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      var er = box.querySelector('.sbc-err'); if (er) { er.style.display = 'none'; er.textContent = er.getAttribute('data-bad-email') || window.SBCapture.offer.bad; }
+    });
+    /* a size first, when there is more than one sold out to choose from. On the box, in the capture phase, so it runs
+       before the shared sign-up handler on the form in every browser. A fit that is back soon may be asked for without a size. */
+    box.addEventListener('submit', function (e) {
+      if (!paused && out.length > 1 && !hid.value) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        var er = box.querySelector('.sbc-err'); if (er) { er.textContent = T('Choose the size you are waiting for.', 'اختر المقاس الذي تنتظره.'); er.style.display = 'block'; }
+      }
+    }, true);
   }
   /* the Regular / Oversized links carry the chosen size, so switching fit keeps it (QA nice 10) */
   function fitLinks() {
