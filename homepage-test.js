@@ -938,7 +938,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
     var kfb = rd('products/khor-fakkan-bay-tee-regular/index.html'), scss = rd('assets/sahra-specimen.css'), wel = rd('assets/sahra-welcome.js');
     check('r118: the filled % off pill is off cards; the percentage shows once, as plain text, beside a product page price', /sbs-t\{display:none/.test(page) && /html\[data-sale="1"\] \.ss-price sbs-t\.sbs-tag/.test(page) && !/sbs-t\{[^}]*background:#7E4114/.test(page) && /<s class="sbs-was|sbs-was/.test(page));
     check('r118: the sale line in the top bar shows on shopping pages only', /var SHOPPING = /.test(wel) && /STAGES\[k\]\.promo && !SHOPPING/.test(wel));
-    check('tabby logo: the payment lines show Tabby\'s own badge, not the word', /class="ss-trust">[^<]*<span class="sb-ship-uae">, <img class="sb-tlogo" src="\/assets\/tabby-badge.svg" alt="Tabby"/.test(kfb) && /with <img class="sb-tlogo"/.test(kfb) && !/with Tabby</.test(kfb));
+    check('tabby (14 Nov: the line under the price and the widget only): the price line shows Tabby\'s badge, no checkout-line logo', /with <img class="sb-tlogo"/.test(kfb) && !/with Tabby</.test(kfb) && !/class="ss-trust"/.test(kfb) && /sb-tabby-pdp/.test(kfb));
     check('r118 (13 Nov: Tabby widget on Sahel and Trail pages too): the phone buy bar is one row (its second row is hidden under 900px) and the page carries Tabby\'s widget slot', /@media\(max-width:899px\)\{\s*html body \.ssb \.ssb-r2\{display:none\}/.test(scss) && !/\.ss-body \.ss-tabby\{display:none!important\}/.test(scss) && /<div class="sb-tabby sb-tabby-pdp/.test(kfb) && /<div class="sb-tabby sb-tabby-pdp/.test(tee) && /<p class="ss-tbp"><span class="ssb-tb[^"]*">4 × [^<]*(<[^>]*>[^<]*)*? with <img class="sb-tlogo"/.test(kfb) && /<p class="ss-tbp">/.test(rd('products/al-quaa-galaxy-regular/index.html')));
     check('r118: Sahel pages show two labelled Founding Edition reviews and the size the model wears; Sahra Trail pages show neither reviews nor a rating', (function () {
       /* 12 Nov 2026: once a piece has reviews of its own (the Judge.me sync brings them in with nobody watching), its page shows those instead, so this check follows the review files */
@@ -1207,23 +1207,24 @@ console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
   /* 30 Oct 2026 (Specimen Sheet): the fit switch is a Regular | Oversized control on the page and in the buy sheet, the
      size-chart link sits in the help line above the sheet, and the sheet carries the sizes and Add to bag */
   const fw = { 'al-quaa-galaxy-regular': /<div class="ss-fits" role="group" aria-label="Fit"><a href="\/products\/al-quaa-galaxy-regular\/" class="on" aria-current="page">[\s\S]*?<a href="\/products\/al-quaa-galaxy-oversized\/" class="">[\s\S]*?<p class="ss-help">[\s\S]*?<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/, 'al-quaa-galaxy-oversized': /<div class="ss-fits" role="group" aria-label="Fit"><a href="\/products\/al-quaa-galaxy-regular\/" class="">[\s\S]*?<a href="\/products\/al-quaa-galaxy-oversized\/" class="on" aria-current="page">[\s\S]*?<p class="ss-help">[\s\S]*?<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/, 'sand-polo': /<p class="ss-help">The polo is graded to the Regular tee chart\. <a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/ };
-  Object.entries(fw).forEach(([h, re]) => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); check('PDP ' + h + ': a size-finder link above the buy sheet, no slim-fit warning', re.test(pg) && /<div class="sfind" id="size-finder" data-sizefinder/.test(pg) && !/runs slim|one size up/i.test(pg) && (h !== 'sand-polo' || !/class="ss-fits"/.test(pg)) && pg.indexOf('<p class="ss-help">') < pg.indexOf('id="ssBuy"') && pg.indexOf('id="ssBuy"') < pg.indexOf('id="ssAdd"') && /data-size="XL"/.test(pg)); });
+  Object.entries(fw).forEach(([h, re]) => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); check('PDP ' + h + ': a size-finder line under the sizes and Add to bag (14 Nov), no slim-fit warning', re.test(pg) && /<div class="sfind" id="size-finder" data-sizefinder/.test(pg) && !/runs slim|one size up/i.test(pg) && (h !== 'sand-polo' || !/class="ss-fits"/.test(pg)) && pg.indexOf('<p class="ss-help">') > pg.indexOf('id="ssAdd"') && pg.indexOf('id="ssBuy"') < pg.indexOf('id="ssAdd"') && /data-size="XL"/.test(pg)); });
 }
 /* ---- 13 Nov 2026: email capture (Faheem chose the welcome code, a gentle sheet, every product page, Tell me when it's back) ---- */
 console.log('\n\x1b[1memail capture\x1b[0m');
 {
   const rd = p => fs.readFileSync(path.join(__dirname, p), 'utf8');
   const prods = fs.readdirSync(path.join(__dirname, 'products')).filter(h => fs.existsSync(path.join(__dirname, 'products', h, 'index.html')));
-  const noBlk = prods.filter(h => (rd('products/' + h + '/index.html').match(/class="sbc-blk/g) || []).length !== 1);
-  check('every product page carries one welcome code block', !noBlk.length, noBlk.join(', '));
+  /* 14 Nov 2026 (Faheem: "Text link only"): on product pages the welcome code is one line that opens the sheet */
+  const noBlk = prods.filter(h => { const t = rd('products/' + h + '/index.html'); return (t.match(/class="sbc-link"/g) || []).length !== 1 || /class="sbc-blk/.test(t); });
+  check('every product page carries one welcome code line (no form block)', !noBlk.length, noBlk.join(', '));
   const arNo = prods.filter(h => fs.existsSync(path.join(__dirname, 'ar/products', h, 'index.html')) && !/خصم 50 درهمًا على طلبك الأول/.test(rd('ar/products/' + h + '/index.html')));
   check('every Arabic product page carries it in Arabic', !arNo.length, arNo.join(', '));
-  const blkForm = /<section class="sbc-blk[^"]*" id="welcome-code" data-waitlist-wrap[\s\S]*?<form class="sbc-form" data-waitlist data-source="pdp"/;
-  check('the product block is a sign-up form the shared capture handles (data-waitlist, source pdp)', blkForm.test(rd('products/khor-fakkan-bay-tee-regular/index.html')) && blkForm.test(rd('products/al-quaa-galaxy-regular/index.html')));
+  const blkForm = /<p class="sbc-link"><a href="#welcome-code" data-sbc-open="pdp">/;
+  check('the product line opens the welcome sheet (data-sbc-open, source pdp)', blkForm.test(rd('products/khor-fakkan-bay-tee-regular/index.html')) && blkForm.test(rd('products/al-quaa-galaxy-regular/index.html')) && /data-sbc-open/.test(rd('assets/sahra-welcome.js')));
   const kfb = rd('products/khor-fakkan-bay-tee-regular/index.html');
-  check('Sahel page: the block sits under the reviews, before the story', kfb.indexOf('id="welcome-code"') > kfb.indexOf('rv-design') && kfb.indexOf('id="welcome-code"') < kfb.indexOf('class="po-story"'));
+  check('Sahel page: the line sits after the row of pieces, before the next piece', kfb.indexOf('class="sbc-link"') > kfb.indexOf('class="po-more"') && kfb.indexOf('class="sbc-link"') < kfb.indexOf('class="ss-next"'));
   const aq = rd('products/al-quaa-galaxy-regular/index.html');
-  check('Founding page: the block sits under the reviews, before More from the drop', aq.indexOf('id="welcome-code"') > aq.indexOf('id="reviews"') && aq.indexOf('id="welcome-code"') < aq.indexOf('id="more"'));
+  check('Founding page: the line sits after More from the drop, before the next piece', aq.indexOf('class="sbc-link"') > aq.indexOf('id="more"') && aq.indexOf('class="sbc-link"') < aq.indexOf('class="ss-next"'));
   const home = rd('index.html');
   check('homepage: the block sits between the Founding Edition grid and the Sahel and Trail lines', home.indexOf('<!--CAPTURE:HOME-->') > home.indexOf('id="grid"') && home.indexOf('<!--CAPTURE:HOME-->') < home.indexOf('<!--HOMELINES:START-->') && /data-source="home"/.test(home));
   check('homepage: the old newsletter stop is gone and STOPS[] matches the stops', !/id="s-news"/.test(home) && (home.match(/<section class="stop\b/g) || []).length === 4 && !/bg: 'night'/.test(home.slice(home.indexOf('var STOPS'), home.indexOf('];', home.indexOf('var STOPS')))));

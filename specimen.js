@@ -329,12 +329,22 @@ function sheet(s) {
       <p class="ssb-msg" id="ssMsg" role="status" aria-live="polite"></p>
     </div>`;
 }
-/* The top of every product page. o: { crumb, h1, rating, help, extra, tabby } (HTML strings) */
+/* The top of every product page. o: { crumb, h1, rating, help, extra, tabby } (HTML strings)
+   14 Nov 2026 (Faheem: "Our product pages still look very cluttered compared to other major brands"; review panel of a
+   consumer psychologist, a premium creative director and a conversion strategist, claude/REVIEW-product-pages-panel-14-Nov-2026.md).
+   The page answers the shopper's questions in the order they come: what is it and what does it cost (title, price, the
+   Tabby line, stars), which fit and which size (the fit switch, then the sizes and Add to bag, then one line with the size
+   finder), then one promise line (delivery, returns, tote). The stock line, the three ticks and the secure-checkout line
+   became that one line; the payment logos live in the footer. */
+const TBL = '<img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async">';
+function promise(s) {
+  if (PAUSED[s.handle]) return `<p class="ss-stat">Not available to order while this fit is re-cut. Back soon.</p>`;
+  return `<p class="ss-promise1"><span class="sb-ship-uae">In stock. Next-working-day delivery across the UAE, order by 2 pm. Free over AED 100 \u00b7 Free 14-day returns and exchanges${s.gift ? ' \u00b7 Free <a href="/tote/">Sahra Tote</a> with every order' : ''}</span><span class="sb-ship-gcc">In stock. GCC delivery in 3\u20135 working days, free over AED 390 \u00b7 14-day returns</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7\u201314 working days \u00b7 14-day returns</span></p>`;
+}
 function top(s, o = {}) {
   const altBase = s.name.replace(/&amp;/g, '&') + (s.colour ? ` in ${s.colour}` : '');
-  const eyebrow = `<p class="ss-eb"><span>${LINES[s.line]}</span>${s.place ? ` · <a href="${s.place[2]}">Drawn from ${esc(s.place[0])}${s.place[1] ? ', ' + esc(s.place[1]) : ''}</a>` : ''}</p>`;
-  const kind = [s.kind, s.colour ? `Colour: ${esc(s.colour)}` : '', s.cut].filter(Boolean).join(' · ');
-  const status = PAUSED[s.handle] ? `<p class="ss-stat">Not available to order while this fit is re-cut. Back soon.</p>` : `<p class="ss-stat"><span class="sb-ship-uae">In stock. Order by 2 pm for next-working-day delivery in the UAE.</span><span class="sb-ship-gcc">In stock. GCC delivery in 3–5 working days.</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7–14 working days.</span></p>`;
+  const eyebrow = `<p class="ss-eb"><span>${LINES[s.line]}</span>${s.place ? ` \u00b7 <a href="${s.place[2]}">Drawn from ${esc(s.place[0])}${s.place[1] ? ', ' + esc(s.place[1]) : ''}</a>` : ''}</p>`;
+  const kind = [s.kind, s.colour ? `Colour: ${esc(s.colour)}` : '', s.cut].filter(Boolean).join(' \u00b7 ');
   return `<section class="ss ss-${s.line}" data-ss style="--ss-top:${s.line === 'founding' ? 151 : 135}px">
   <div class="ss-media">
     ${o.crumb || ''}
@@ -346,23 +356,17 @@ function top(s, o = {}) {
     <div class="ss-head">
       ${eyebrow}
       <h1 class="ss-h1">${o.h1 || esc(s.name)}</h1>
+      <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two Founding Edition tees, AED 359</span>` : ''}</p>${!PAUSED[s.handle] ? `
+      <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 \u00d7 ${quarter(s.price)} with ${TBL}</span></p>` : ''}
       ${o.rating || ''}
-      <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two Founding Edition tees, AED 359</span>` : ''}</p>
-      <p class="ss-kind">${kind}</p>${/* 10 Nov 2026: the phone buy bar is one row now, so the Tabby instalment it carried is said here on the pages that have no Tabby widget of their own (Sahel, Sahra Trail). Hidden on desktop, where the buy card still shows it. */''}${/* 13 Nov 2026 (Faheem): this line, with Tabby's logo, on every product page, beside Tabby's widget lower down */''}${!PAUSED[s.handle] ? `
-      <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 × ${quarter(s.price)} with <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></p>` : ''}
+      <p class="ss-kind">${kind}</p>
+      ${fitSwitch(s, 'ss-fits')}
     </div>
     <div class="ss-body">
-      ${status}
-      ${fitSwitch(s, 'ss-fits')}
-      ${o.help || ''}
       ${sheet(s)}
+      ${o.help || ''}
       ${o.tabby === false ? '' : `<div class="sb-tabby sb-tabby-pdp ss-tabby sb-aed-only" data-tabby-price="${s.price}" data-tabby-source="product"><span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of AED ${quarter(s.price)}</span></div>`}
-      <ul class="ss-promise">
-        <li><span class="sb-ship-uae">Next-working-day delivery across the UAE, order by 2 pm. Free on orders over AED 100, AED 15 below that.</span><span class="sb-ship-gcc">GCC delivery in 3–5 working days, free over AED 390.</span><span class="sb-ship-intl">Worldwide delivery in 7–14 working days.</span></li>
-        <li><span class="sb-ship-uae">Free 14-day returns and size exchanges in the UAE.${s.line === 'founding' ? ' If your size has gone, a full refund.' : ''}</span><span class="sb-ship-gcc">14-day returns; duties, if any, are paid on arrival.</span><span class="sb-ship-intl">14-day returns; duties, if any, are paid on arrival.</span></li>
-        ${s.gift ? '<li>The <a href="/tote/">Sahra Tote</a>, free with every order.</li>' : ''}
-      </ul>
-      <p class="ss-trust">Secure checkout \u00b7 Apple Pay, Google Pay, Shop Pay, Visa, Mastercard<span class="sb-ship-uae">, <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></p>
+      ${promise(s)}
       ${o.extra || ''}
     </div>
   </div>

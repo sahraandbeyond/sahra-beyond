@@ -405,6 +405,11 @@
   /* the bag is built the first time it is needed: watch for it */
   if (!bagLine() && window.MutationObserver) { var mo = new MutationObserver(function () { if (bagLine()) mo.disconnect(); }); mo.observe(document.body, { childList: true }); }
 
+  /* 14 Nov 2026: the one-line link on product pages opens the sheet (capture.js link) */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-sbc-open]'); if (!a) return;
+    e.preventDefault(); showSheet(a.getAttribute('data-sbc-open') || 'link');
+  });
   window.SBCapture = { bind: bind, open: showSheet, form: formHtml, offer: OFFER, done: isDone };
 
   (function takeover() {

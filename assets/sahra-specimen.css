@@ -315,3 +315,105 @@ html body .ss .ss-om-img{display:block;width:100%;height:100%;max-width:none;obj
    button, now a link to the other fit, takes the row so its label is read whole. */
 html body .ssb.is-out .ssb-sz{display:none}
 html body .ssb .ssb-add.is-alt{font-size:15px!important;white-space:nowrap}
+
+/* ==== 14 Nov 2026: the calmer product page (review panel; claude/REVIEW-product-pages-panel-14-Nov-2026.md) ====
+   Faheem: "Our product pages still look very cluttered compared to other major brands". On a phone the first screen is the
+   photo, the title, the price with the Tabby line and the stars; then the fit, the sizes and Add to bag in one block, the size
+   finder line, Tabby's widget and one promise line. The photo tabs are dots on the photo (swipe or tap); the breadcrumb is
+   desktop only. One text rhythm: Cormorant for the title, Jost for the rest, Space Mono for the line label only. */
+.ss-promise1{position:relative;margin:4px 0 0;padding:0 0 0 24px;font-size:14px;line-height:1.5;color:var(--ss-ink2)}
+.ss-promise1::before{content:"";position:absolute;left:4px;top:6px;width:10px;height:5px;border-left:1.6px solid #3F6B3A;border-bottom:1.6px solid #3F6B3A;transform:rotate(-45deg)}
+[dir="rtl"] .ss-promise1{padding:0 24px 0 0}[dir="rtl"] .ss-promise1::before{left:auto;right:4px}
+.ss-promise1 a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+html body .ss p.ss-promise1{font-size:14px!important;line-height:1.5!important}
+.ss-head .ss-fits{margin:16px 0 0}
+.ss-head .pdp-rating,.ss-head .po-rate{margin:6px 0 2px}
+html body .ss .ss-tabby.sb-tabby-pdp{margin:2px 0 4px}
+@media(max-width:899px){
+  .ss{gap:14px}
+  html body .ss .ss-crumb{display:none}
+  .ss-head{order:4}.ss-body{order:5}.ss-om{order:6}.ss-art{order:7}
+  .ss-body{display:flex;flex-direction:column;gap:12px}
+  .ss-body>.ss-help{margin:0}
+  /* the photo: full width of the page, the dots on it */
+  .ss-stage{width:100%}
+  .ss-stage .ss-tabs{top:auto;bottom:12px;left:50%;right:auto;transform:translateX(-50%);gap:10px;padding:7px 10px;background:rgba(250,246,239,.72);box-shadow:none}
+  .ss-stage .ss-tab{position:relative;flex:0 0 auto;width:7px;height:7px;min-height:0;padding:0;border-radius:50%;background:rgba(42,32,22,.32);font-size:0!important;color:transparent;box-shadow:none}
+  .ss-stage .ss-tab::after{content:"";position:absolute;inset:-12px -8px}
+  .ss-stage .ss-tab.on{background:#2A2016;box-shadow:none}
+  .ss-stage .ss-cap,.ss-stage.art-on .ss-cap{top:12px;bottom:auto}
+  .ss-stage.has-tabs .ss-mock{top:46px}
+  .ss-stage.art-on .ss-tabs{bottom:74px}
+  .ss-v.boxed .ss-artbox{top:52px;height:calc(100% - 140px)}
+  /* name and price */
+  html body .ss .ss-h1{font-size:30px;margin:0 0 4px}
+  html body .ss .ss-price .sb-price{font-size:22px!important}
+  html body .ss p.ss-eb{margin:0 0 2px}
+  html body .ss p.ss-kind{font-size:14px!important}
+}
+@media(min-width:900px){
+  /* desktop: the model photos sit two by two under the main photo, so the column of photos is long and the buy column
+     beside it stays in view while you look; no floating bar (assets/sahra-specimen.js) */
+  .ss-om-nav{display:none!important}
+  .ss-om-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;overflow:visible;margin:0;padding:0}
+  .ss-om-row li{flex:none}
+  .ss-info{top:96px}
+  .ss-body{display:flex;flex-direction:column;gap:12px}
+  .ss-body>.ssb{margin:0}
+  .ss-body>.ss-help{margin:0}
+}
+
+/* ---- 14 Nov 2026: below the buy block (review panel) ----
+   Reviews first, then the details as closed groups separated by hairlines (no cards, no shadows), one row of other
+   pieces, the welcome-code line and the next piece. Section numbers ("01 —", "08 —") are gone from product pages. */
+html.ss-page .snum{display:none!important}
+html body .pdp-acc{box-sizing:border-box;width:auto;max-width:760px;margin:0 auto;border:0;border-top:1px solid rgba(42,32,22,.14);border-radius:0;background:transparent;box-shadow:none;overflow:visible;color:#2A2016}
+html body .pdp-acc+.pdp-acc{margin-top:0}
+html body .pdp-acc:not(:has(+ .pdp-acc)){border-bottom:1px solid rgba(42,32,22,.14)}
+html body .pdp-acc-h{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;padding:20px 2px;background:none;border:0;cursor:pointer;list-style:none;
+  font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-size:22px;font-weight:600;line-height:1.2;color:#2A2016;text-align:start}
+html body .pdp-acc-h::-webkit-details-marker{display:none}
+html body .pdp-acc-h i{font-style:normal;font-family:Jost,sans-serif;font-size:24px;font-weight:300;color:#7E4114;transition:transform .25s}
+html body .pdp-acc-h[aria-expanded="true"] i,html body details.pdp-acc[open]>.pdp-acc-h i{transform:rotate(45deg)}
+html body .pdp-acc-t{display:block;width:100%;margin:-8px 0 0;padding:0 2px 20px;border:0;background:none;text-align:start;cursor:pointer;font:400 15px/1.6 Jost,system-ui,sans-serif;color:#4A4136}
+html body .pdp-acc-t b,html body .pdp-acc-ts b{display:inline-block;margin-top:6px;font-weight:500;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
+html body .pdp-acc.open .pdp-acc-t{display:none}
+html body p.pdp-acc-ts{margin:-8px 0 0;padding:0 2px 20px;font-size:15px!important;line-height:1.6!important;color:#4A4136}
+html body details.pdp-acc[open]>.pdp-acc-ts{display:none}
+html body details.pdp-acc>section{padding:0 2px 22px;margin:0;border:0;background:none;box-shadow:none}
+html body .pdp-acc-b{padding:0 0 18px}
+/* the reviews block, moved up: calm, no numbered label */
+html body .pdp-rv-up{padding-top:8px}
+html body .pdp-rv-up #reviews{padding-top:28px;padding-bottom:28px}
+/* one row of other pieces: four, two per row on a phone, four across on a desktop */
+@media(min-width:900px){html body .rel-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+html body .po-wrap>details.pdp-acc{max-width:760px;margin-left:auto;margin-right:auto}
+/* the reviews and the row of pieces: on the page, not in floating panels; each review shows its first five lines */
+html.ss-page body .pdp-rv-up .sec.reviews,html.ss-page body #more.sec{background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;margin:0 auto!important;max-width:1180px}
+html.ss-page body .pdp-rv-up .sec.reviews{padding:36px 2px 28px!important}
+html.ss-page body #more.sec{padding:36px 2px 12px!important;border-top:1px solid rgba(42,32,22,.14)!important}
+@media(min-width:900px){html.ss-page body .pdp-rv-up .sec.reviews,html.ss-page body #more.sec{padding-left:32px!important;padding-right:32px!important}}
+html.ss-page #reviews .rv-text{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+html.ss-page #reviews .rv-list:not(.rv-compact) .rv-text{-webkit-line-clamp:unset;display:block}
+/* the details groups keep the page's 16px gutters on a phone */
+@media(max-width:899px){html body .pdp-acc{width:calc(100% - 32px)}html body .po-wrap>details.pdp-acc{width:auto}}
+/* the row of pieces: two by two on a phone */
+@media(max-width:899px){html body .rel-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}html body .rel-grid .rel-name{font-size:17px!important}}
+/* the Sahel and Sahra Trail groups are <details>: a closed one shows only its <summary>, so the story's first lines live in it */
+html body details.pdp-acc>summary.pdp-acc-h{font-family:'Cormorant Garamond',Georgia,serif!important;font-size:22px!important;font-weight:600!important;line-height:1.2!important;color:#2A2016!important;letter-spacing:0!important;text-transform:none!important}
+html body details.pdp-acc>summary.pdp-acc-h.has-ts{display:block}
+html body .pdp-acc-hr{display:flex;align-items:center;justify-content:space-between;gap:12px}
+html body details.pdp-acc>summary .pdp-acc-ts{display:block;margin:8px 0 0;font:400 15px/1.6 Jost,system-ui,sans-serif!important;color:#4A4136!important}
+html body details.pdp-acc[open]>summary .pdp-acc-ts{display:none}
+/* Tabby's required legal line: small print */
+html body .ss p.po-tabby-fine{font-size:12px!important;line-height:1.5!important;color:#6B6256!important;margin:0!important}
+/* the first-reviews block on new pieces: on the page, not a card */
+html.ss-page body .po-rv{background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding-left:2px!important;padding-right:2px!important}
+/* desktop: the buy card is the sizes and the button only; its second row (price, Tabby, delivery, a second fit switch)
+   served the floating bar, which is gone, and repeated the column above it. The Tabby line shows under the price. */
+@media(min-width:900px){
+  html body .ssb .ssb-r2{display:none}
+  html body .ss p.ss-tbp{display:block}
+  .ss-next a{margin:0 auto}
+}
+@media(min-width:900px){html body .po-more .po-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}

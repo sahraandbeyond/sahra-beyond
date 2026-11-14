@@ -419,7 +419,7 @@ function ownReviews(p) {
 
 function productPage(p, all, SITE, stage) {
   const own = ownReviews(p);
-  const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name) && onSale(o)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i);
+  const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name) && onSale(o)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i).slice(0, 4);   /* 14 Nov 2026: one row of four (review panel) */
   const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
   /* 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top and buy sheet as the Founding Edition pages (specimen.js) */
@@ -434,7 +434,7 @@ function productPage(p, all, SITE, stage) {
   /* 12 Nov 2026 (Size finder 2, Faheem: "On every product page"): the help line leads to the size finder, which opens as a sheet */
   const SFD = require('./sizefinder-data.js'), sf = paused ? '' : SFD.mount(SFD.forNewLine(p, SZ, TSZ), { handle: p.handle });
   const find = sf ? `<a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. ` : '';
-  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">${find}${worn}Sahel has its own size chart, cut larger than the Founding Edition. <a href="#size-chart">See the Sahel size chart</a>. Still unsure? ${ask}Message us.</a></p>` : TSZ.keyFor(p) ? `<p class="ss-help">${find}Sahra Trail has its own size chart. <a href="#size-chart">See the ${p.kit ? 'size charts for the tee and the short' : 'Sahra Trail size chart'}</a>. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
+  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">${find}${worn}Still unsure? ${ask}Message us.</a></p>` : TSZ.keyFor(p) ? `<p class="ss-help">${find}Sahra Trail has its own sizes, separate from our tees. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
   const sup = (p.fitsList || []).find(f => f.fit === 'Super Oversized' && f.onSale), reg = (p.fitsList || []).find(f => f.fit === 'Regular' && f.onSale);
   const pausedChart = paused && p.line === 'sahel' && p.fit === 'Oversized'
     ? `<section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask">The Oversized chart will be published when the fit returns. Until then, see ${[sup ? `<a href="/products/${sup.handle}/#size-chart">Super Oversized</a>` : '', reg ? `<a href="/products/${reg.handle}/#size-chart">Regular</a>` : ''].filter(Boolean).join(' and ')}.</p><p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : '';
@@ -446,20 +446,20 @@ function productPage(p, all, SITE, stage) {
     /* 13 Nov 2026 (Faheem): Tabby's official widget on every product page, Sahel and Sahra Trail too (it was tabby: false) */
     rating: own ? own.line : RATING && p.line === 'sahel' ? `<a class="po-rate" href="${firstReviews() ? '#first-reviews' : '/#s-reviews'}"><b aria-hidden="true">${'&#9733;'.repeat(Math.floor(+RATING_D.avg))}${'&#9734;'.repeat(5 - Math.floor(+RATING_D.avg))}</b><span data-ar-rule="rv-founding|${RATING_D.avg}|${RATING_D.n}">${RATING}</span></a>` : '',   /* 10 Nov 2026: not on Sahra Trail, whose running wear has no reviews of its own (Trail merge handoff, step 8) */
     help,
-    extra: `<p class="po-small">${p.noTote ? 'Free delivery across the UAE on orders over AED 100. Returns within 14 days of delivery.' : 'Free delivery across the UAE on orders over AED 100, and the <a href="/tote/">Sahra Tote</a> free with every order. Returns within 14 days of delivery, and free size exchanges within the UAE, subject to stock.'} You can cancel free of charge any time before your order ships. <a href="/policies.html#returns">Returns and refunds</a></p>
-      <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>`
+    /* 14 Nov 2026 (review panel): the delivery and returns paragraph repeated the promise line; Tabby's legal line stays */
+    extra: `<p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>`
   })}
   <div class="po-wrap">
   ${own ? own.section : p.line === 'sahel' ? firstReviews() : ''}
-  ${/* 13 Nov 2026 (Faheem, email capture): the welcome code under the reviews on every product page */''}${require('./capture.js').block('pdp')}
+  ${/* 14 Nov 2026 (review panel): the story is the reason to buy, but opt-in: a closed group with its first lines showing */''}<details class="pdp-acc po-acc"><summary class="pdp-acc-h has-ts"><span class="pdp-acc-hr"><span>${p.line === 'sahel' ? 'The story and the design' : 'The piece and the details'}</span><i aria-hidden="true">+</i></span><span class="pdp-acc-ts">${teaser(p.story)} <b>Read the story</b></span></summary>
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
       <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.images.some(i => i.studio) ? '' : p.line === 'sahel' ? 'Photographed from the real piece.' : ''} Designed in the UAE.</p></div>
-  </section>
-  ${pausedChart}${sf ? sf + SFD.SCRIPT : ''}${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}${TSZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>${p.kit ? 'Size charts' : 'Size chart'}</h2>${TSZ.block(TSZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart: <a href="/size-guide/#trail">the size guide &rarr;</a></p></section>` : ''}
+  </section></details>
+  ${pausedChart}${(SZ.keyFor(p) || TSZ.keyFor(p) || sf) ? `<details class="pdp-acc po-acc" id="size-chart-g"><summary class="pdp-acc-h"><span>${p.kit ? 'Size charts' : 'Size chart'}</span><i aria-hidden="true">+</i></summary>${sf ? sf + SFD.SCRIPT : ''}${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}${TSZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>${p.kit ? 'Size charts' : 'Size chart'}</h2>${TSZ.block(TSZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart: <a href="/size-guide/#trail">the size guide &rarr;</a></p></section>` : ''}</details>` : ''}
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
-  ${crossLines(p, card)}
+  ${/* 14 Nov 2026 (Faheem: "One row + Next piece"): the other new line and the Founding Edition rows moved to the homepage and shop */''}${require('./capture.js').link('pdp')}
   </div>
   ${SP.nextPiece(S)}
 </main>
@@ -485,6 +485,11 @@ function foundingImgs(handle, img, alt) {
   } catch (e) {}
   if (!list.length) list = [[`/shirts/card/${img}.webp`, alt]];
   return list.map(([src, a], i) => `<img${i ? '' : ' class="on"'} src="${src}" width="800" height="1000" alt="${esc(String(a || alt).replace(/&amp;/g, '&'))}" loading="lazy" decoding="async">`).join('');
+}
+/* 14 Nov 2026: the first lines of the story, shown under the closed story group (plain text, about 170 characters) */
+function teaser(html) {
+  const t = String(html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  return t.length > 170 ? t.slice(0, t.lastIndexOf(' ', 165)) + '\u2026' : t;
 }
 function crossLines(p, card) {
   const other = pickNew(o => o.line !== p.line && o.line !== undefined && !o.inHand, true).slice(0, 4);

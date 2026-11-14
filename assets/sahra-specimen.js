@@ -23,6 +23,11 @@
   function tr(n, p) { try { if (window.track) window.track(n, p); } catch (e) {} }
   var handle = (buy && buy.getAttribute('data-handle')) || (stage && stage.getAttribute('data-handle')) || '';
 
+  /* 14 Nov 2026: the details are closed groups (<details class="pdp-acc">); a link to anything inside one opens it first */
+  function openTo(id) { var t = id && document.getElementById(id); if (!t) return; for (var d = t.closest && t.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) d.open = true; }
+  document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a[href^="#"]'); if (a) openTo(a.getAttribute('href').slice(1)); }, true);
+  if (location.hash) openTo(location.hash.slice(1));
+  addEventListener('hashchange', function () { openTo(location.hash.slice(1)); });
   /* ---------------- the stage ---------------- */
   var figs = stage ? [].slice.call(stage.querySelectorAll('.ss-v')) : [];
   var tabs = [].slice.call(document.querySelectorAll('.ss-tab'));
@@ -230,9 +235,9 @@
       if (floating) barH = buy.offsetHeight;
       return;
     }
-    var past = (floating ? ph : buy).getBoundingClientRect().bottom < 64;
-    put(past ? 'float' : 'home');
-    buy.classList.toggle('away', floating && footOn);
+    /* 14 Nov 2026 (Faheem chose the desktop two columns): the buy card stays in its column, which stays in view beside
+       the photos; no floating bar on desktop */
+    put('home');
   }
   function req() { if (!raf) raf = requestAnimationFrame(place); }
   addEventListener('scroll', req, { passive: true }); addEventListener('resize', req, { passive: true });
@@ -334,7 +339,7 @@
      bis-<handle>-<size>, and Shopify Flow emails them when that size is back. The kit (two sizes) is left out. */
   function bisMount() {
     if (kit || !window.SBCapture || document.getElementById('sbcBis')) return;
-    var stat = document.querySelector('.ss-stat'); if (!stat) return;
+    var stat = document.querySelector('.ss-stat') || document.querySelector('.ss-promise1'); if (!stat) return;   /* 14 Nov 2026: the stock line became the promise line */
     var AR = /^ar\b/i.test(document.documentElement.getAttribute('lang') || '') || /^\/ar\//.test(location.pathname || '');
     var T = function (en, ar) { return AR ? ar : en; };
     var paused = buy.getAttribute('data-paused') === '1';

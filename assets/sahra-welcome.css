@@ -484,3 +484,10 @@ html body .sbc-bag .sbc-form input[type=email]{height:44px!important;min-height:
 html body .sbc-card h2{font-size:30px!important;line-height:1.08!important}
 html body .sbc-blk h2{font-size:clamp(28px,6vw,38px)!important;line-height:1.08!important}
 @media(max-width:620px){html body .sbc-card h2{font-size:25px!important}html body .sbc-card .sbc-p{font-size:15px!important;line-height:1.5!important}}
+
+/* 14 Nov 2026: the welcome code as one quiet line on product pages */
+.sbc-link{max-width:760px;margin:28px auto 8px;padding:0 16px;text-align:center;font:400 15px/1.5 Jost,system-ui,sans-serif;color:#4A4136}
+html body p.sbc-link{font-size:15px!important;line-height:1.5!important}
+.sbc-link a{color:inherit;text-decoration:none}
+.sbc-link a span{color:#7E4114;text-decoration:underline;text-underline-offset:3px}
+html.sb-cap-done .sbc-link{display:none}

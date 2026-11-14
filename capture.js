@@ -50,4 +50,8 @@ function block(src, opts = {}) {
 /* /shop/: the block as a full-width row inside the product grid, after the first rows of cards */
 const tile = () => block('shop', { cls: 'sbc-tile', id: 'welcome-code' });
 
-module.exports = { T, block, tile, form };
+/* 14 Nov 2026 (Faheem: "Text link only" on product pages): one quiet line that opens the welcome sheet
+   (assets/sahra-welcome.js); hidden once this browser has signed up (html.sb-cap-done) */
+const link = src => `<p class="sbc-link"><a href="#welcome-code" data-sbc-open="${src}">AED 50 off your first order. <span>Get your code</span></a></p>`;
+
+module.exports = { T, block, tile, form, link };

@@ -143,8 +143,8 @@ function related(p, all){
   // the same design in the other fit is the single most useful next click
   var sib=list.filter(function(x){return p.siblingOf && x.siblingOf===p.siblingOf;});
   var rest=list.filter(function(x){return !(p.siblingOf && x.siblingOf===p.siblingOf);})
-               .filter(function(x,i,a){return a.findIndex(function(y){return y.siblingOf&&y.siblingOf===x.siblingOf;})===i;});
-  var others=sib.concat(rest).slice(0,2);
+               .filter(function(x,i,a){return !x.siblingOf||a.findIndex(function(y){return y.siblingOf&&y.siblingOf===x.siblingOf;})===i;});   /* 14 Nov 2026: a piece with one fit (the polo) is kept, so the row has four */
+  var others=sib.concat(rest).slice(0,4);   /* 14 Nov 2026: one row of four (review panel) */
   return others.map(function(o){
     var eyebrow = o.placeName ? 'Inspired by '+esc(o.placeName) : esc(o.eyebrow||'Sahra &amp; Beyond');
     return '      <a class="rel" href="/products/'+o.id+'/">\n'
@@ -919,7 +919,7 @@ ${RV.CSS}
 /* 24 Sep 2026 (phone layout review, Faheem approved): photo first, fewer lines above it */
 .pdp-subm{display:none}
 .pdp-now[hidden]{display:none!important}
-#reviews .rv-list.rv-compact .rv-card:nth-child(n+4){display:none}
+#reviews .rv-list.rv-compact .rv-card:nth-child(n+3){display:none}
 #reviews .rv-showall{display:block;margin:10px auto 0;padding:12px 22px;border:1px solid #2A2016;border-radius:999px;background:#fff;color:#2A2016;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
 @media(max-width:700px){
   .buy-head .fabric-line,.buy-head .pdp-rating,.buy-head .fitv{display:none!important}
@@ -1116,14 +1116,10 @@ ${SP.top(SPS, {
   h1: esc(productH1(p)).replace('T-Shirt', '<span class="nw">T-Shirt</span>'),
   rating: RV.ratingLine(designHandles(p)),
   help: `<p class="ss-help">${p.garment === 'polo' ? 'The polo is graded to the Regular tee chart. ' : ''}<a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. ${/* 12 Nov 2026 (Faheem: "Instead of saying not sure of your size, let's just say something like find your fit with our size finder and this takes the user to the height etc criteria") */''}${p.modelInfo ? esc(String(p.modelInfo).split(' \u00b7 ').slice(1).join('. ')) + '.' : ''}</p>`,
-  extra: `${pairStrip(p, all)}
-      <dl class="pdp-why">
-        <div><dt>Why <span class="sb-price" data-handle="${esc(p.id)}" data-aed="${esc(String(p.price))}">AED ${esc(String(p.price))}</span></dt><dd>${p.garment === 'polo' ? 'Piqu\u00e9 cotton, embroidered.' : (!/DTG/i.test(String(p.decoration || '') + ' ' + String(p.printChip || '')) ? 'Combed cotton, pre-washed, embroidered rather than printed.' : 'Combed cotton, pre-washed, printed direct to the garment with an embroidered mark.')} Designed in the UAE.</dd></div>
-        <div><dt>Unsure of size?</dt><dd>Measure a tee you like, flat, pit to pit, and match the number in the <a href="#fit">chart</a>. UAE exchanges are free for 14 days.</dd></div>
-      </dl>
-      ${RV.quotes(designHandles(p), 2)}`
+  extra: ''   /* 14 Nov 2026 (review panel): the pair strip, the Why/Unsure block and the two quotes repeated the reviews, the size help and the cross-sell */
 })}
 </div>
+${/* 14 Nov 2026 (review panel: proof belongs next to the decision): the reviews right after the buy block, before the details */''}<div class="wrap pdp-rv-up">${RV.productSection(p.id, p.name, designHandles(p))}</div>
 <div class="wrap">
       <section class="sec pdp-answers ss-answers" aria-label="Details">
         ${/* 13 Oct 2026 (retention audit, rank 8): the story is why people clicked the ad, so it starts open */''}<details class="pdp-ans pdp-ans-story" open>
@@ -1299,10 +1295,8 @@ ${TABBY_FAQ}
     </div>
   </section>
 
-  ${/* 4 Oct 2026: the posts tagged to this design (content/instagram.json), between the questions and the reviews */''}${IG.railHtml(IG.forProduct(p.id), { title: 'Seen on our feed' }) ? `<section class="sec reveal ig-prod" id="feed">${IG.railHtml(IG.forProduct(p.id), { title: 'Seen on our feed' })}</section>` : ''}
+  ${/* 14 Nov 2026 (Faheem: "One row + Next piece"; the Instagram feed row comes off product pages) */''}
 
-${RV.productSection(p.id, p.name, designHandles(p))}
-${/* 13 Nov 2026 (Faheem, email capture): the welcome code under the reviews on every product page */''}${require('./capture.js').block('pdp')}
   <section class="sec reveal" id="more">
     <span class="snum">09 — The collection</span>
     <h2>More from <em>the drop</em></h2>
@@ -1310,7 +1304,8 @@ ${/* 13 Nov 2026 (Faheem, email capture): the welcome code under the reviews on 
 ${related(p, all)}
     </div>
   </section>
-  ${/* 27 Oct 2026 (Faheem: "Cross-sell between lines"): the new lines on every Founding Edition page */''}<div class="po-x" style="position:relative;z-index:2;background:#FAF6EF;color:#2A2016;border-radius:16px;max-width:1180px;margin:40px auto;padding:6px 0 26px">${require('./preorder-page.js').foundingCross()}</div>
+  ${/* 14 Nov 2026: one cross-sell row (review panel); the Sahel and Sahra Trail row moved to the homepage and shop */''}
+  ${/* 14 Nov 2026 (Faheem: "Text link only"): the welcome code is one quiet line that opens the sheet, after the row of pieces */''}${require('./capture.js').link('pdp')}
 </div>
 ${SP.nextPiece(SPS)}
 </main>
@@ -1578,7 +1573,8 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
    three closed groups - the tee page ran to twelve screens. Desktop is untouched.
    A link to anything inside a closed group (e.g. #fit, #care) opens it first. */
 (function(){
-  if(!window.matchMedia||!matchMedia('(max-width:700px)').matches) return;
+  /* 14 Nov 2026 (review panel; Faheem chose the calmer page and the desktop two columns): the same closed groups on every
+     screen size, not only phones, so the desktop page is no longer fifteen screens of open sections */
   var q=function(s){return document.querySelector(s);};
   /* 25 Sep 2026 (persona review): the page carried two sets of fold-outs - the seven
      short rows under Add to cart and these groups below, plus a separate questions card.
@@ -1615,18 +1611,25 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
     var h=box.querySelector('.pdp-acc-h');
     /* 18 Oct 2026 (conversion panel): r50 marked the story <details> open, but this phone script folds it into
        the first accordion, so it rendered at 0 px. The story group now starts open; the place is why people clicked. */
-    if(gi===0){ h.setAttribute('aria-expanded','true'); body.hidden=false; body.querySelectorAll('.reveal,.stagger').forEach(function(r){r.classList.add('in','vis','shown');}); }
+    /* 14 Nov 2026 (review panel: the story is the reason to buy, but opt-in; it ran 2,000 px open before the reviews):
+       every group starts closed; the story group shows its first lines under its title, and a tap opens the rest */
+    if(gi===0){ var ld=body.querySelector('.lede'); var tx=ld?(ld.textContent||'').replace(/\\s+/g,' ').trim():'';
+      if(tx){ var cut=tx.length>170?tx.slice(0,tx.lastIndexOf(' ',165))+'\u2026':tx;
+        var tz=document.createElement('button'); tz.type='button'; tz.className='pdp-acc-t'; tz.innerHTML='<span></span><b>Read the story</b>';
+        tz.querySelector('span').textContent=cut; box.insertBefore(tz,body);
+        tz.addEventListener('click',function(){ h.click(); }); } }
     h.addEventListener('click',function(){ var open=h.getAttribute('aria-expanded')!=='true';
-      h.setAttribute('aria-expanded',open?'true':'false'); body.hidden=!open;
+      h.setAttribute('aria-expanded',open?'true':'false'); body.hidden=!open; box.classList.toggle('open',open);
       if(open){ body.querySelectorAll('.reveal,.stagger').forEach(function(r){r.classList.add('in','vis','shown');}); } });
     made.push(box);
   });
   function openFor(el){ made.forEach(function(b){ if(b.contains(el)){ var h=b.querySelector('.pdp-acc-h'); if(h.getAttribute('aria-expanded')!=='true') h.click(); } }); }
   document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return;
+    if(a.getAttribute('href')==='#size-finder') return;   /* 14 Nov 2026: the size finder opens as a sheet; its group stays closed behind it */
     var t=document.getElementById(a.getAttribute('href').slice(1)); if(t) openFor(t); },true);
   /* reviews: three cards, the rest one tap away (the section ran to seven phone screens) */
   var rl=document.querySelector('#reviews .rv-list');
-  if(rl && rl.querySelectorAll('.rv-card').length>3 && !rl.parentNode.querySelector('.rv-showall')){
+  if(rl && rl.querySelectorAll('.rv-card').length>2 && !rl.parentNode.querySelector('.rv-showall')){
     rl.classList.add('rv-compact');
     var sb=document.createElement('button'); sb.type='button'; sb.className='rv-showall'; sb.textContent='Show more reviews';
     sb.addEventListener('click',function(){ rl.classList.remove('rv-compact'); sb.hidden=true; });
