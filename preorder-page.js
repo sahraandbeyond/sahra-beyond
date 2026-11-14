@@ -642,7 +642,8 @@ function bigCard(p, i) {
 function designCards(p, fitsLabel) {
   if (!fitsLabel || !p.fitsList) return bigCard(p);
   const all = products();
-  const fits = p.fitsList.filter(f => f.onSale).map(f => all.find(x => x.handle === f.handle)).filter(Boolean);
+  const ORD = ['Regular', 'Oversized', 'Super Oversized'];   /* 14 Nov 2026: the fits read in size order on the card's tabs */
+  const fits = p.fitsList.filter(f => f.onSale).map(f => all.find(x => x.handle === f.handle)).filter(Boolean).sort((x, y) => ORD.indexOf(x.fit) - ORD.indexOf(y.fit));
   if (fits.length < 2) return bigCard(p);
   return `<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit">${fits.map((f, i) => `<button type="button"${i ? '' : ' class="on"'} data-i="${i}" aria-pressed="${i ? 'false' : 'true'}">${f.fit}</button>`).join('')}</div>${fits.map((f, i) => bigCard(f, i)).join('')}</div>`;
 }
@@ -658,8 +659,10 @@ const BIG_CSS = `<style>
 .sfp-sw button:focus-visible{outline:2px solid #F3DDB8;outline-offset:1px}
 @media(max-width:560px){.sfp-sw{top:6px;inset-inline-start:6px;max-width:calc(100% - 12px);padding:2px}.sfp-sw button{font-size:10px;letter-spacing:0;padding:5px 6px}.pcard-st{font-size:12px}}
 </style><script>(function(){if(window.__sfp)return;window.__sfp=1;document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.sfp-sw button');if(!b)return;e.preventDefault();e.stopPropagation();var w=b.closest('.sfp'),i=b.getAttribute('data-i');
+var tgt=[].filter.call(w.children,function(c){return c.classList.contains('pcard')&&c.getAttribute('data-i')===i;})[0];if(tgt&&tgt.classList.contains('sbf-off'))return;   /* 14 Nov 2026: a fit hidden by the discount filter stays hidden */
 [].forEach.call(w.querySelectorAll('.sfp-sw button'),function(x){var on=x.getAttribute('data-i')===i;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});
 [].forEach.call(w.children,function(c){if(c.classList.contains('pcard'))c.classList.toggle('on',c.getAttribute('data-i')===i);});
+if(e.detail===0){var nb=w.querySelector('.pcard.on .sfp-sw button[data-i="'+i+'"]');if(nb)nb.focus();}   /* 14 Nov 2026: keyboard focus follows into the card now shown */
 var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.getAttribute('data-handle')?{item_id:on.getAttribute('data-handle'),via:'card'}:{fit:b.textContent,via:'card'});},true);})();</script>`;
 function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', moreText = 'See every new piece', pre = '', compact = false }) {
   if (!list.length && !pre) return '';
@@ -948,7 +951,6 @@ function homeLines() {
 html body .hl .hl-g::-webkit-scrollbar{display:none}
 html body .hl .hl-g>*{flex:0 0 max(45%,162px);max-width:230px;min-width:0;scroll-snap-align:start}
 html body .hl .pcards.hl-g>.hl-all{flex-basis:max(45%,162px);aspect-ratio:auto;min-height:0}
-html body .hl .hl-g .sfp-sw button{padding:0 6px!important;font-size:10.5px!important;letter-spacing:0!important}
 .hl-more{margin-top:0!important}}
 @media(max-width:860px){.hl{gap:36px;margin-top:36px}.hl-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hl-all{padding:14px}.hl-all b{font-size:21px}.hl-tote{grid-template-columns:minmax(0,120px) minmax(0,1fr);gap:14px;padding:12px}.hl-tote b{font-size:21px}.hl-tote p{font-size:14.5px}}
 </style>`;

@@ -216,8 +216,10 @@ const FITPAIR_CSS = `.fitpair{position:relative;display:flex;flex-direction:colu
 }`;
 const FITPAIR_JS = `(function(){var pairs=[].slice.call(document.querySelectorAll('.fitpair'));if(!pairs.length)return;var saved=null;try{saved=localStorage.getItem('sb_fit');}catch(e){}
 function set(fit,remember){pairs.forEach(function(w){w.setAttribute('data-fit',fit);[].forEach.call(w.querySelectorAll('.fitpair-sw button'),function(b){var on=b.getAttribute('data-fit')===fit;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});});if(remember){try{localStorage.setItem('sb_fit',fit);}catch(e){}}}
+/* 14 Nov 2026 (Faheem: fit tabs under the name): each card gets the pair's switch as text tabs under its name; the pill over the photo is hidden */
+pairs.forEach(function(w){var sw=w.querySelector(':scope>.fitpair-sw');if(!sw)return;[].forEach.call(w.querySelectorAll('.card-name'),function(n){if(n.parentNode.querySelector('.fitpair-tabs'))return;var t=sw.cloneNode(true);t.className='fitpair-sw fitpair-tabs';n.parentNode.insertBefore(t,n.nextSibling);});w.classList.add('fp-tabbed');});
 if(saved==='oversized')set('oversized',false);
-document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.fitpair-sw button');if(!b)return;e.preventDefault();e.stopPropagation();set(b.getAttribute('data-fit'),true);if(window.track)track('fit_switch',{fit:b.getAttribute('data-fit'),via:'card'});},true);
+document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.fitpair-sw button');if(!b)return;e.preventDefault();e.stopPropagation();var f=b.getAttribute('data-fit'),w=b.closest('.fitpair');set(f,true);if(e.detail===0&&w){var nb=w.querySelector('.fitpair-tabs button[data-fit="'+f+'"]');var vis=[].filter.call(w.querySelectorAll('.fitpair-tabs button[data-fit="'+f+'"]'),function(x){return x.offsetParent!==null;})[0];if(vis||nb)(vis||nb).focus();}if(window.track)track('fit_switch',{fit:f,via:'card'});},true);
 })();`;
 
 /* Arabic core pages (/ar/, /ar/about/, /ar/contact/): false = not in the sitemap and no visible
@@ -5421,6 +5423,33 @@ applyTikTokPixel();
   });
   walk(ROOT);
   console.log(`  ✓ one badge per card: the cut tag shows under the name on ${cards} card(s)` + (pages ? ` (${pages} page(s) updated)` : ''));
+})();
+
+/* ---------- fit tabs under the name (14 Nov 2026) ------------------------
+   Faheem (phone screenshot of /sahel/: "For pill looks weird. Either fix it or find an alternate solution for the 3 fits";
+   chose "Fit tabs under the name"). With three Sahel fits the pill over the photo could not fit a phone card. The fit
+   switch of every one-card-per-design block (.sfp) now sits under the product name as a row of text tabs, in each fit's
+   card, and the photo carries no control. The tabs keep the switch's buttons (data-i), so the existing .sfp script works
+   unchanged. Runs on every built page, EN and /ar/, after the Arabic mirror, so the Arabic tabs keep their Arabic words.
+   Idempotent: it only acts on a switch still above the cards. */
+(function () {
+  let pages = 0, blocks = 0;
+  const rx = /<div class="sfp"><div class="sfp-sw"([^>]*)>((?:(?!<\/div>)[\s\S])*)<\/div>((?:\s*<article\b[\s\S]*?<\/article>)+)\s*<\/div>/g;   /* the Founding generators pretty-print, so whitespace may sit between the cards */
+  const walk = d => fs.readdirSync(d, { withFileTypes: true }).forEach(e => {
+    const f = path.join(d, e.name);
+    if (e.isDirectory()) { if (!/^(node_modules|\.git|_backup|_drafts|admin|docs|pp)$/.test(e.name)) walk(f); return; }
+    if (!/\.html$/.test(e.name)) return;
+    const src = fs.readFileSync(f, 'utf8');
+    if (src.indexOf('<div class="sfp"><div class="sfp-sw"') < 0) return;
+    const out = src.replace(rx, (all, attrs, buttons, cards) => {
+      blocks++;
+      const tabs = `<div class="sfp-sw sfp-tabs"${attrs}>${buttons}</div>`;
+      return `<div class="sfp">${cards.replace(/(<a class="pcard-t"[^>]*>[\s\S]*?<\/a>)/g, (m) => m + tabs)}</div>`;
+    });
+    if (out !== src) { fs.writeFileSync(f, out); pages++; }
+  });
+  walk(ROOT);
+  console.log(`  ✓ fit tabs under the name: ${blocks} card switch(es) on ${pages} page(s)`);
 })();
 
 /* ---------- head-tag guard (1 Oct 2026, SEO handover item 4) -------------

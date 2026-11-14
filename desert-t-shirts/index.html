@@ -908,7 +908,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 <script src="/assets/sahra-welcome.js?v=cfcc44d6" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=b2e166cc">
 <script src="/assets/sahra-nav.js?v=83e87810" data-sbn defer></script>
-<link rel="stylesheet" href="/assets/sahra-system.css?v=04e091c3">
+<link rel="stylesheet" href="/assets/sahra-system.css?v=c94116de">
 <script src="/assets/sahra-measure.js?v=994865e3" defer></script>
 <link rel="preconnect" href="https://checkout.sahraandbeyond.ae">
 <script src="/assets/sahra-zoom.js?v=4e07cdf6" defer></script>
@@ -1666,9 +1666,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 .sfp-sw button:focus-visible{outline:2px solid #F3DDB8;outline-offset:1px}
 @media(max-width:560px){.sfp-sw{top:6px;inset-inline-start:6px;max-width:calc(100% - 12px);padding:2px}.sfp-sw button{font-size:10px;letter-spacing:0;padding:5px 6px}.pcard-st{font-size:12px}}
 </style><script>(function(){if(window.__sfp)return;window.__sfp=1;document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.sfp-sw button');if(!b)return;e.preventDefault();e.stopPropagation();var w=b.closest('.sfp'),i=b.getAttribute('data-i');
+var tgt=[].filter.call(w.children,function(c){return c.classList.contains('pcard')&&c.getAttribute('data-i')===i;})[0];if(tgt&&tgt.classList.contains('sbf-off'))return;   /* 14 Nov 2026: a fit hidden by the discount filter stays hidden */
 [].forEach.call(w.querySelectorAll('.sfp-sw button'),function(x){var on=x.getAttribute('data-i')===i;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});
 [].forEach.call(w.children,function(c){if(c.classList.contains('pcard'))c.classList.toggle('on',c.getAttribute('data-i')===i);});
-var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.getAttribute('data-handle')?{item_id:on.getAttribute('data-handle'),via:'card'}:{fit:b.textContent,via:'card'});},true);})();</script><section class="nb hg hg-sale" aria-label="Desert T-Shirts"><div class="pcards nb-pc"><div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular</button><button type="button" data-i="1" aria-pressed="false">Oversized</button></div>
+if(e.detail===0){var nb=w.querySelector('.pcard.on .sfp-sw button[data-i="'+i+'"]');if(nb)nb.focus();}   /* 14 Nov 2026: keyboard focus follows into the card now shown */
+var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.getAttribute('data-handle')?{item_id:on.getAttribute('data-handle'),via:'card'}:{fit:b.textContent,via:'card'});},true);})();</script><section class="nb hg hg-sale" aria-label="Desert T-Shirts"><div class="pcards nb-pc"><div class="sfp">
     <article class="pcard on" data-i="0" data-handle="al-quaa-galaxy-regular">
       <span class="pcard-img" style="background:#2A2016">
         <a class="pcard-imglink" href="/products/al-quaa-galaxy-regular/" tabindex="-1" data-cycle>
@@ -1678,7 +1680,7 @@ var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.ge
         <button type="button" class="pcard-zoom" data-zoom="/shirts/alquaa-dune-back.jpg" aria-label="Zoom Al Quaa Galaxy — Regular"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </span>
       <span class="pcard-b">
-        <a class="pcard-t" data-cut="Unisex" href="/products/al-quaa-galaxy-regular/">Al Quaa Galaxy — Regular</a>
+        <a class="pcard-t" data-cut="Unisex" href="/products/al-quaa-galaxy-regular/">Al Quaa Galaxy — Regular</a><div class="sfp-sw sfp-tabs" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular</button><button type="button" data-i="1" aria-pressed="false">Oversized</button></div>
         <span class="pcard-rv" data-ar-rule="rv-card|5.0|2"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pcard-rv-n">5.0 · 2 reviews</span></span>
         <span class="pcard-place">Inspired by Al Quaa</span>
         <span class="pcard-spec"><span class="pc-same">Cotton</span><span>Regular fit</span><span>DTG + embroidery</span><span class="pc-same">Unisex S&ndash;XL</span></span>
@@ -1696,7 +1698,7 @@ var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.ge
         <button type="button" class="pcard-zoom" data-zoom="/shirts/alquaa-model-back.jpg" aria-label="Zoom Al Quaa Galaxy — Oversized"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </span>
       <span class="pcard-b">
-        <a class="pcard-t" data-cut="Unisex" href="/products/al-quaa-galaxy-oversized/">Al Quaa Galaxy — Oversized</a>
+        <a class="pcard-t" data-cut="Unisex" href="/products/al-quaa-galaxy-oversized/">Al Quaa Galaxy — Oversized</a><div class="sfp-sw sfp-tabs" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular</button><button type="button" data-i="1" aria-pressed="false">Oversized</button></div>
         <span class="pcard-rv" data-ar-rule="rv-card|5.0|5"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pcard-rv-n">5.0 · 5 reviews</span></span>
         <span class="pcard-place">Inspired by Al Quaa</span>
         <span class="pcard-spec"><span class="pc-same">Cotton</span><span>Oversized fit</span><span>DTG + embroidery</span><span class="pc-same">Unisex S&ndash;XL</span></span>
@@ -1704,7 +1706,7 @@ var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.ge
         <span class="pcard-bundle sb-aed-only sbs0" data-sbsp>Any 2 tees &middot; AED 359</span>
         <span class="pcard-foot"><span class="pcard-p"><!--sbs--><sbs-g class="sbs-grp"><span class="sb-price sbs-now sbs1" data-handle="al-quaa-galaxy-oversized" data-aed="99.50">AED 99.50</span> <!--/sbs--><span class="sb-price sbs-was" data-sbsp data-handle="al-quaa-galaxy-oversized" data-aed="199">AED 199</span><!--sbs--> <sbs-t class="sbs-tag sbs1">50% off</sbs-t></sbs-g><!--/sbs--></span><a class="pcard-cta" href="/products/al-quaa-galaxy-oversized/">Full details &rarr;</a></span>
       </span>
-    </article></div><div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular</button><button type="button" data-i="1" aria-pressed="false">Oversized</button></div>
+    </article></div><div class="sfp">
     <article class="pcard on" data-i="0" data-handle="empty-quarter-regular">
       <span class="pcard-img" style="background:#F3DDB8">
         <a class="pcard-imglink" href="/products/empty-quarter-regular/" tabindex="-1" data-cycle>
@@ -1714,7 +1716,7 @@ var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.ge
         <button type="button" class="pcard-zoom" data-zoom="/shirts/emptyquarter-dune-front.jpg" aria-label="Zoom Empty Quarter — Regular"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </span>
       <span class="pcard-b">
-        <a class="pcard-t" data-cut="Unisex" href="/products/empty-quarter-regular/">Empty Quarter — Regular</a>
+        <a class="pcard-t" data-cut="Unisex" href="/products/empty-quarter-regular/">Empty Quarter — Regular</a><div class="sfp-sw sfp-tabs" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular</button><button type="button" data-i="1" aria-pressed="false">Oversized</button></div>
         <span class="pcard-rv" data-ar-rule="rv-card|5.0|2"><span class="rv-stars" aria-hidden="true">★★★★★</span><span class="pcard-rv-n">5.0 · 2 reviews</span></span>
         <span class="pcard-place">Inspired by Liwa</span>
         <span class="pcard-spec"><span class="pc-same">Cotton</span><span>Regular fit</span><span>Embroidered</span><span class="pc-same">Unisex S&ndash;XL</span></span>
@@ -1732,7 +1734,7 @@ var on=w.querySelector('.pcard.on');if(window.track)track('fit_switch',on&&on.ge
         <button type="button" class="pcard-zoom" data-zoom="/shirts/emptyquarter-model-stand.jpg" aria-label="Zoom Empty Quarter — Oversized"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       </span>
       <span class="pcard-b">
-        <a class="pcard-t" data-cut="Unisex" href="/products/empty-quarter-oversized/">Empty Quarter — Oversized</a>
+        <a class="pcard-t" data-cut="Unisex" href="/products/empty-quarter-oversized/">Empty Quarter — Oversized</a><div class="sfp-sw sfp-tabs" role="group" aria-label="Fit"><button type="button" class="on" data-i="0" aria-pressed="true">Regular</button><button type="button" data-i="1" aria-pressed="false">Oversized</button></div>
         
         <span class="pcard-place">Inspired by Liwa</span>
         <span class="pcard-spec"><span class="pc-same">Cotton</span><span>Oversized fit</span><span>Embroidered</span><span class="pc-same">Unisex S&ndash;XL</span></span>
@@ -2048,8 +2050,10 @@ addB.addEventListener('click',function(){if(!sel){msg('Choose a size first.');re
 })();</script>
 <script>(function(){var pairs=[].slice.call(document.querySelectorAll('.fitpair'));if(!pairs.length)return;var saved=null;try{saved=localStorage.getItem('sb_fit');}catch(e){}
 function set(fit,remember){pairs.forEach(function(w){w.setAttribute('data-fit',fit);[].forEach.call(w.querySelectorAll('.fitpair-sw button'),function(b){var on=b.getAttribute('data-fit')===fit;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});});if(remember){try{localStorage.setItem('sb_fit',fit);}catch(e){}}}
+/* 14 Nov 2026 (Faheem: fit tabs under the name): each card gets the pair's switch as text tabs under its name; the pill over the photo is hidden */
+pairs.forEach(function(w){var sw=w.querySelector(':scope>.fitpair-sw');if(!sw)return;[].forEach.call(w.querySelectorAll('.card-name'),function(n){if(n.parentNode.querySelector('.fitpair-tabs'))return;var t=sw.cloneNode(true);t.className='fitpair-sw fitpair-tabs';n.parentNode.insertBefore(t,n.nextSibling);});w.classList.add('fp-tabbed');});
 if(saved==='oversized')set('oversized',false);
-document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.fitpair-sw button');if(!b)return;e.preventDefault();e.stopPropagation();set(b.getAttribute('data-fit'),true);if(window.track)track('fit_switch',{fit:b.getAttribute('data-fit'),via:'card'});},true);
+document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('.fitpair-sw button');if(!b)return;e.preventDefault();e.stopPropagation();var f=b.getAttribute('data-fit'),w=b.closest('.fitpair');set(f,true);if(e.detail===0&&w){var nb=w.querySelector('.fitpair-tabs button[data-fit="'+f+'"]');var vis=[].filter.call(w.querySelectorAll('.fitpair-tabs button[data-fit="'+f+'"]'),function(x){return x.offsetParent!==null;})[0];if(vis||nb)(vis||nb).focus();}if(window.track)track('fit_switch',{fit:f,via:'card'});},true);
 })();</script>
 </body>
 </html>
