@@ -331,8 +331,8 @@ html[data-sale="1"] body.sahel-page .sh-shop-in:not(:has(.sbf)) .pcards{margin-t
   <section class="sh-intro" data-plate="1" data-stop="The Surface" aria-labelledby="shIntro">
     <div class="sh-rv">
       <p class="sh-num">The Coast Edition</p>
-      <h2 id="shIntro">Seven designs from the UAE coast</h2>
-      <p class="sh-lede">Sahel means the coast. The Founding Edition came from the desert and the mountains; Sahel follows the shoreline: the bay at Khor Fakkan, the pearling town of Al Jazirah Al Hamra, the reef off Al Aqah, the flamingos of Ras Al Khor, and the place where the desert meets the sea. ${/* 31 Oct 2026 (Faheem): Super Oversized, drop shoulder, a third fit */''}${Object.keys(require('./specimen.js').PAUSED).length ? 'Four tees in Regular and Super Oversized, a polo and two hoodies. Super Oversized has a dropped shoulder; our Oversized fit is being re-cut and will be back soon.' : 'Four tees in Regular, Oversized and Super Oversized, a polo and two hoodies.'} Designed in the UAE.</p>
+      <h2 id="shIntro">Nine designs, from the coast to Al Qudra</h2>
+      <p class="sh-lede">Sahel means the coast. The Founding Edition came from the desert and the mountains; Sahel follows the shoreline: the bay at Khor Fakkan, the pearling town of Al Jazirah Al Hamra, the reef off Al Aqah, the flamingos of Ras Al Khor and of the Al Qudra lakes, and the place where the desert meets the sea. ${/* 31 Oct 2026 (Faheem): Super Oversized, drop shoulder, a third fit */''}${/* 14 Nov 2026: the Oversized fit is back (cut to our original Oversized size) and two Oversized-only pieces joined */''}Five tees, three hoodies and a polo. The tees come in Regular, Oversized and Super Oversized, which has a dropped shoulder; the Al Qudra Lakes Tee and the Khor Fakkan Hoodie are cut Oversized. Designed in the UAE.</p>
     </div>
   </section>
   <section class="sh-shop" id="pieces" data-plate="2" data-stop="The Reef" aria-labelledby="shPieces">
@@ -349,7 +349,7 @@ html[data-sale="1"] body.sahel-page .sh-shop-in:not(:has(.sbf)) .pcards{margin-t
 <script src="/assets/sahra-sahel.js" defer></script>`;
 
   const canonical = `${SITE}/sahel/`;
-  const DESC = ST.stageNow() >= 1 ? 'Sahel (ساحل) is the Coast Edition from Sahra & Beyond: seven pieces designed in the UAE and drawn from the coast. ' + (ST.stageNow() === 1 ? 'Pre-order open.' : 'Out now.') : T.desc;
+  const DESC = ST.stageNow() >= 1 ? 'Sahel (ساحل) is the Coast Edition from Sahra & Beyond: nine pieces designed in the UAE, drawn from the coast and the Al Qudra lakes. ' + (ST.stageNow() === 1 ? 'Pre-order open.' : 'Out now.') : T.desc;
   write('sahel/index.html', shell({
     title: T.title, desc: DESC, canonical, bodyClass: 'sahel-page', activeNav: 'sahel',
     image: `${SITE}/assets/sahel/sahel-og.jpg`,

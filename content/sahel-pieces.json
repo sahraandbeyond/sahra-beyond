@@ -1,5 +1,5 @@
 {
-  "_note": "Sahel product names, places and map pins. Source: MASTER_BRIEF Decision Log 2026-10-05 'Sahel product names now carry a place' and HANDOFF-2026-10-05-sahel-product-names.md. 'Snoopy' never appears in a garment name (Peanuts trademark); it stays only as the place name. Tees take the short design name on cards and pins and add 'Tee' where the name stands alone. Before the reveal sahel-page.js prints the name and the type only (Faheem, 6 Oct); colour, place and price wait for STATE 'reveal'. Arabic product names are not written yet (they need Faheem's read). 14 Oct 2026 (Faheem, HANDOFF-2026-10-14-sahel-names-colour-stories-for-site): shuweihat-hoodie is now the Barr & Bahr Hoodie (an idea name, so no place pin) and sahel-logo-tee is now the Shams Tee; the ids are kept so links and builds stay stable. Al Aqah Reef's colour is Lagoon (#0EAAAE on screen). 'story' is the story-card text (print set v6) for the product pages; it is data only and is not printed in the teaser state. The Arabic names (البر والبحر, شمس) wait for Faheem's native read and are not stored here.",
+  "_note": "Sahel product names, places and map pins. Source: MASTER_BRIEF Decision Log 2026-10-05 'Sahel product names now carry a place' and HANDOFF-2026-10-05-sahel-product-names.md. 'Snoopy' never appears in a garment name (Peanuts trademark); it stays only as the place name. Tees take the short design name on cards and pins and add 'Tee' where the name stands alone. Before the reveal sahel-page.js prints the name and the type only (Faheem, 6 Oct); colour, place and price wait for STATE 'reveal'. Arabic product names are not written yet (they need Faheem's read). 14 Oct 2026 (Faheem, HANDOFF-2026-10-14-sahel-names-colour-stories-for-site): shuweihat-hoodie is now the Barr & Bahr Hoodie (an idea name, so no place pin) and sahel-logo-tee is now the Shams Tee; the ids are kept so links and builds stay stable. Al Aqah Reef's colour is Lagoon (#0EAAAE on screen). 'story' is the story-card text (print set v6) for the product pages; it is data only and is not printed in the teaser state. The Arabic names (البر والبحر, شمس) wait for Faheem's native read and are not stored here. 14 Nov 2026 (Faheem): two new pieces, both Oversized only: the Al Qudra Lakes Tee (Demitasse, AED 199, pinned to the Al Qudra lakes guide, love-lake) and the Khor Fakkan Hoodie (Salute, AED 229, the Barr & Bahr front with Khor Fakkan Bay on the back).",
   "pieces": [
     {
       "id": "khor-fakkan-bay",
@@ -34,6 +34,23 @@
       "placeSlug": "al-jazirah-al-hamra",
       "was": "Pearl Diver tee",
       "story": "Al Jazirah Al Hamra, the Red Island, is a coral-stone pearling town on the Ras Al Khaimah coast, left empty around 1970. Every summer the boats of this coast sailed for the big dive, from June to the end of September. A diver went down on a stone weight, filled his basket with oysters and tugged the rope to be hauled up."
+    },
+    {
+      "id": "al-qudra-lakes",
+      "design": "Al Qudra Lakes",
+      "name": "Al Qudra Lakes Tee",
+      "type": "tee",
+      "label": "Tee",
+      "colour": "Demitasse",
+      "price": 199,
+      "fits": [
+        "Oversized"
+      ],
+      "placeName": "Al Qudra Lakes",
+      "placeSlug": "love-lake",
+      "was": "new, 14 Nov 2026",
+      "colourHex": "#40332B",
+      "story": "Al Qudra is a chain of man-made lakes in the desert south of Dubai, ringed by ghaf trees and reeds. Late in the day the low sun lays a line of light across the water and the flamingos wade out into it. We drew the far shore at that hour: the trees, the sun on the lake and the flamingos standing in it. The same shore sits small on the chest."
     },
     {
       "id": "al-aqah-reef",
@@ -108,6 +125,22 @@
       "placeSlug": "ras-al-khor",
       "was": "Sahel Hoodie, Estate Blue",
       "story": "Ras Al Khor means the head of the creek: a protected wetland where Dubai Creek ends, in the middle of the city. Low on the back, greater flamingos wade there at dusk, with the mangroves behind them. Above them runs the whole UAE coast in a single line of sand thread, with Sahel written beneath it in Arabic and English."
+    },
+    {
+      "id": "khor-fakkan-hoodie",
+      "design": "Khor Fakkan Hoodie",
+      "name": "Khor Fakkan Hoodie",
+      "type": "hoodie",
+      "label": "Hoodie",
+      "colour": "Salute",
+      "price": 229,
+      "fits": [
+        "Oversized"
+      ],
+      "placeName": "Khor Fakkan",
+      "placeSlug": "khor-fakkan-beach",
+      "was": "new, 14 Nov 2026 (on the invoice as Barr & Bahr Hoodie)",
+      "story": "On Sharjah's east coast the Hajar Mountains come straight down to the Gulf of Oman, around one sweep of pale sand. The lower back carries Khor Fakkan Bay as we drew it for the tee: bare ridges, the beach and a dhow on still water. Above it, one line of sand thread traces the whole UAE coast, with Sahel written beneath it in Arabic and English."
     }
   ]
 }

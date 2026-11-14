@@ -53,6 +53,8 @@
     /* 31 Oct 2026: the Super Oversized tees (the current stock) and the paused Oversized hoodies */
     'khor-fakkan-bay-tee-super-oversized': 'pm-khor-fakkan-bay-tee-super-oversized-02-back', 'al-hamra-pearl-diver-tee-super-oversized': 'pm-al-hamra-pearl-diver-tee-super-oversized-02-back', 'al-aqah-reef-tee-super-oversized': 'pm-al-aqah-reef-tee-super-oversized-02-back', 'shams-tee-super-oversized': 'pm-shams-tee-super-oversized-01-front',
     'barr-and-bahr-hoodie-oversized': 'ph-barr-04-front', 'ras-al-khor-hoodie-oversized': 'ph-rakh-06-front',
+    /* 14 Nov 2026: the two new Oversized-only pieces (studio mock-ups) */
+    'al-qudra-lakes-tee-oversized': 'qudra-back', 'khor-fakkan-hoodie-oversized': 'kfh-back',
     'barr-and-bahr-hoodie': 'ph-barr-04-front', 'ras-al-khor-hoodie': 'ph-rakh-06-front', 'sahra-trail-tee': 'pm2-sahra-trail-kit-01-lunge', 'sahra-trail-2-in-1-short': 'pm2-sahra-trail-short-04-side', 'sahra-trail-kit': 'pm2-sahra-trail-kit-01-lunge' };
   /* 8 Nov 2026 (Faheem: "Everywhere should be models first"): the bag shows the model photo that opens each product page (paused fits keep the flat-lay) */
   var PRE_IN_HAND = true;   /* 30 Oct 2026 (Faheem: "In stock, ships next day"). Was:  set true (with IN_HAND in preorder-page.js) once Faheem confirms the pieces are in hand */
@@ -423,6 +425,7 @@
     'khor-fakkan-bay-tee-super-oversized': 'تيشيرت خليج خورفكان — سوبر أوفرسايز', 'al-aqah-reef-tee-super-oversized': 'تيشيرت شعاب العقة — سوبر أوفرسايز',
     'al-hamra-pearl-diver-tee-super-oversized': 'تيشيرت غوّاص اللؤلؤ في الحمرا — سوبر أوفرسايز', 'shams-tee-super-oversized': 'تيشيرت شمس — سوبر أوفرسايز',
     'barr-and-bahr-hoodie-oversized': 'هودي برّ وبحر — أوفرسايز', 'ras-al-khor-hoodie-oversized': 'هودي رأس الخور — أوفرسايز',
+    'al-qudra-lakes-tee-oversized': 'تيشيرت بحيرات القدرة — أوفرسايز', 'khor-fakkan-hoodie-oversized': 'هودي خورفكان — أوفرسايز',
     'sahra-trail-2-in-1-short': 'شورت صحراء تريل 2 في 1', 'sahra-trail-kit': 'طقم صحراء تريل', 'trailhead-bag': 'حقيبة ترايلهيد', 'sahra-tote': 'حقيبة صحراء القماشية' };
   /* the name a shopper reads: Arabic on Arabic pages, else Shopify's title; short drops the fit */
   function nameOf(h, title, short) {
@@ -448,7 +451,8 @@
   var THUMB = { 'al-quaa-galaxy-regular': '/shirts/card/alquaa-dune-back.webp', 'al-quaa-galaxy-oversized': '/shirts/card/alquaa-model-back.webp', 'empty-quarter-regular': '/shirts/card/emptyquarter-dune-front.webp', 'empty-quarter-oversized': '/shirts/card/emptyquarter-model-stand.webp',
     'hajar-mountains-regular': '/shirts/card/hajar-dune-back.webp', 'hajar-mountains-oversized': '/shirts/card/hajar-model-back.webp', 'sand-polo': '/shirts/card/polo-dune-front.webp',
     'barr-and-bahr-hoodie': 'ph-barr-01-back', 'ras-al-khor-hoodie': 'ph-rakh-01-back', 'the-sahel-polo': 'pm-the-sahel-polo-01-front', 'trailhead-bag': 'trail-bag-front',
-    'barr-and-bahr-hoodie-oversized': 'ph-barr-01-back', 'ras-al-khor-hoodie-oversized': 'ph-rakh-01-back' };
+    'barr-and-bahr-hoodie-oversized': 'ph-barr-01-back', 'ras-al-khor-hoodie-oversized': 'ph-rakh-01-back',
+    'al-qudra-lakes-tee-oversized': 'qudra-back', 'khor-fakkan-hoodie-oversized': 'kfh-back' };
   var MOCKS = {};   /* 8 Nov 2026 (Faheem): no Mock-up label on the Trail and Sahel Polo images */
   function thumbOf(h, m) {
     var t = THUMB[h] || PRE[h];
@@ -457,7 +461,7 @@
     if (real) return real.replace('/shirts/', '/shirts/card/').replace(/\.(jpe?g|png)$/i, '.webp');
     return (m && m.product && m.product.featuredImage) ? m.product.featuredImage.url : '';
   }
-  var SAHEL_TEE = /^(khor-fakkan-bay-tee|al-hamra-pearl-diver-tee|al-aqah-reef-tee|shams-tee)-/;
+  var SAHEL_TEE = /^(khor-fakkan-bay-tee|al-hamra-pearl-diver-tee|al-aqah-reef-tee|al-qudra-lakes-tee|shams-tee)-/;
   function $(id) { return document.getElementById(id); }
   function reducedMotion() { try { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; } }
   function raf(fn) { return (window.requestAnimationFrame || function (f) { return setTimeout(f, 16); })(fn); }
@@ -958,7 +962,7 @@
          it (one size, one tap); a bag with a single Sahel piece is shown the rest of Sahel. */
       var hs = realLines.map(function (l) { return (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; });
       var trailIn = hs.some(function (h) { return /^sahra-trail-/.test(h); }), bagIn = hs.indexOf('trailhead-bag') >= 0;
-      var sahelN = 0; realLines.forEach(function (l) { var h = (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; if (/^(khor-fakkan-bay|al-hamra-pearl-diver|al-aqah-reef|shams-tee|the-sahel-polo|barr-and-bahr|ras-al-khor)/.test(h)) sahelN += l.quantity; });
+      var sahelN = 0; realLines.forEach(function (l) { var h = (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; if (/^(khor-fakkan-bay|khor-fakkan-hoodie|al-hamra-pearl-diver|al-aqah-reef|al-qudra-lakes|shams-tee|the-sahel-polo|barr-and-bahr|ras-al-khor)/.test(h)) sahelN += l.quantity; });
       if (trailIn && !bagIn && cur === 'AED') {
         el.className = 'sb-bundle sb-second';
         show('<img src="/assets/preorder/trail-bag-front-480.webp" alt="" width="40" height="50" loading="lazy"><span class="sb-second-t"><b>' + T('bagT') + '</b><br>' + T('bagSub') + '</span>' +

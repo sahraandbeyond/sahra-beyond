@@ -184,6 +184,8 @@ module.exports = async (req, res) => {
     /* 31 Oct 2026: the Super Oversized tees and the Oversized hoodies (paused, back soon) */
     'khor-fakkan-bay-tee-super-oversized', 'al-hamra-pearl-diver-tee-super-oversized', 'al-aqah-reef-tee-super-oversized', 'shams-tee-super-oversized',
     'barr-and-bahr-hoodie-oversized', 'ras-al-khor-hoodie-oversized',
+    /* 14 Nov 2026: the two new Oversized-only pieces */
+    'al-qudra-lakes-tee-oversized', 'khor-fakkan-hoodie-oversized',
     /* 13 Nov 2026: the Founding Edition pieces, for "Tell me when it's back" on a sold-out size */
     'al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'empty-quarter-regular', 'empty-quarter-oversized',
     'hajar-mountains-regular', 'hajar-mountains-oversized', 'sand-polo'];

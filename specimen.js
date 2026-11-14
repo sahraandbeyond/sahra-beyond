@@ -113,6 +113,9 @@ const PRE = {
   'shams-tee': { face: 'front', back: 'ph2-shams-04-back', front: 'ph-shams-01-front', art: 'ph-shams-02-detail-mark' },
   'barr-and-bahr-hoodie': { face: 'back', back: 'ph-barr-01-back', front: 'ph-barr-04-front', art: 'ph-barr-05-detail-dunes-wave', worn: 'ph-barr-02-back-hood-down', wornCap: 'Worn with the hood down' },
   'ras-al-khor-hoodie': { face: 'back', back: 'ph-rakh-01-back', front: 'ph-rakh-06-front', art: 'ph-rakh-04-detail-flamingos', worn: 'ph-rakh-05-front-model' },
+  /* 14 Nov 2026 (Faheem): two new Sahel pieces, Oversized only, shown on studio mock-ups until they are photographed */
+  'al-qudra-lakes-tee': { face: 'back', back: 'qudra-back', front: 'qudra-front', mock: true },
+  'khor-fakkan-hoodie': { face: 'back', back: 'kfh-back', front: 'kfh-front', mock: true },
   /* 8 Nov 2026 (Faheem: "real photos first"): the polo and Trail pages open on a male model photo (the Worn view, shown first), then the studio images */
   'the-sahel-polo': { face: 'worn', back: 'polo-back', front: 'polo-front', worn: 'pm-the-sahel-polo-01-front' },   /* 8 Nov 2026: no Mock-up label (Faheem) */
   'sahra-trail-tee': { face: 'worn', back: 'trail-tee-back', front: 'trail-tee-front', art: 'trail-chest', artCap: 'Close-up of the sample', worn: 'pm2-sahra-trail-kit-01-lunge' },   /* 9 Nov 2026: the daylight model leads */
@@ -123,24 +126,28 @@ const PRE = {
 /* "Next piece" runs through each line in the order of its collection page */
 const ORDER = {
   founding: ['al-quaa-galaxy', 'empty-quarter', 'hajar-mountains', 'sand-polo'],
-  sahel: ['khor-fakkan-bay-tee', 'al-aqah-reef-tee', 'al-hamra-pearl-diver-tee', 'shams-tee', 'barr-and-bahr-hoodie', 'ras-al-khor-hoodie', 'the-sahel-polo'],
+  sahel: ['khor-fakkan-bay-tee', 'al-aqah-reef-tee', 'al-hamra-pearl-diver-tee', 'al-qudra-lakes-tee', 'shams-tee', 'barr-and-bahr-hoodie', 'ras-al-khor-hoodie', 'khor-fakkan-hoodie', 'the-sahel-polo'],
   trail: ['sahra-trail-tee', 'sahra-trail-2-in-1-short', 'sahra-trail-kit', 'trailhead-bag']
 };
 const FITTED = new Set(['al-quaa-galaxy', 'empty-quarter', 'hajar-mountains', 'khor-fakkan-bay-tee', 'al-aqah-reef-tee', 'al-hamra-pearl-diver-tee', 'shams-tee']);
 const NAMES = { 'al-quaa-galaxy': 'Al Quaa Galaxy Tee', 'empty-quarter': 'Empty Quarter Tee', 'hajar-mountains': 'Hajar Mountains Tee', 'sand-polo': 'The Sahra Polo',
   'khor-fakkan-bay-tee': 'Khor Fakkan Bay Tee', 'al-aqah-reef-tee': 'Al Aqah Reef Tee', 'al-hamra-pearl-diver-tee': 'Al Hamra Pearl Diver Tee', 'shams-tee': 'Shams Tee',
   'barr-and-bahr-hoodie': 'Barr &amp; Bahr Hoodie', 'ras-al-khor-hoodie': 'Ras Al Khor Hoodie', 'the-sahel-polo': 'The Sahel Polo',
+  'al-qudra-lakes-tee': 'Al Qudra Lakes Tee', 'khor-fakkan-hoodie': 'Khor Fakkan Hoodie',
   'sahra-trail-tee': 'Sahra Trail Tee', 'sahra-trail-2-in-1-short': 'Sahra Trail 2-in-1 Short', 'sahra-trail-kit': 'Sahra Trail Kit', 'trailhead-bag': 'The Trailhead Bag' };
 const LINES = { founding: 'Founding Edition', sahel: 'Sahel, the Coast Edition', trail: 'Sahra Trail' };
 const FIT_COPY = { founding: { Regular: 'Sits on the shoulder', Oversized: 'Dropped shoulder, wider body' }, sahel: { Regular: 'A straight regular fit', Oversized: 'Looser, wider through the body', 'Super Oversized': 'Drop shoulder, our roomiest cut' } };
 /* 31 Oct 2026 (Faheem: Super Oversized with drop shoulder, a third fit): the handle suffix of each fit, per design.
    Sahel tees: Regular, Oversized (paused, being re-cut) and Super Oversized (the current stock). Sahel hoodies:
    Oversized (paused) and Super Oversized, which keeps the hoodie's original handle so its links keep working. */
-const HOODIES = new Set(['barr-and-bahr-hoodie', 'ras-al-khor-hoodie']);
+const HOODIES = new Set(['barr-and-bahr-hoodie', 'ras-al-khor-hoodie', 'khor-fakkan-hoodie']);
+/* 14 Nov 2026: pieces made in one fit only, Oversized (handle <key>-oversized) */
+const ONLY_OVERSIZED = new Set(['al-qudra-lakes-tee', 'khor-fakkan-hoodie']);
 const FIT_ORDER = ['Regular', 'Oversized', 'Super Oversized'];
 /* 13 Nov 2026 (Faheem): the Oversized fit of these two is not coming back (preorder-page.js RETIRED) */
 const NO_OVERSIZED = new Set(['al-aqah-reef-tee', 'barr-and-bahr-hoodie']);
 function suffixes(k) {
+  if (ONLY_OVERSIZED.has(k)) return { Oversized: '-oversized' };
   const x = HOODIES.has(k) ? { Oversized: '-oversized', 'Super Oversized': '' }
     : FITTED.has(k) ? (FOUNDING[k] ? { Regular: '-regular', Oversized: '-oversized' } : { Regular: '-regular', Oversized: '-oversized', 'Super Oversized': '-super-oversized' }) : null;
   if (x && NO_OVERSIZED.has(k)) delete x.Oversized;
@@ -309,8 +316,9 @@ function fitSwitch(s, cls) {
    production run cut to the original (Founding Edition) Oversized size; until then these six handles have no
    Shopify product. Remove a handle from this list to sell it again. */
 /* 13 Nov 2026: al-aqah-reef-tee-oversized and barr-and-bahr-hoodie-oversized are retired, not paused (preorder-page.js RETIRED) */
-const PAUSED = { 'khor-fakkan-bay-tee-oversized': 1, 'al-hamra-pearl-diver-tee-oversized': 1, 'shams-tee-oversized': 1,
-  'ras-al-khor-hoodie-oversized': 1 };
+/* 14 Nov 2026 (Faheem: "The updated oversized sizes are back"): the Khor Fakkan Bay and Al Hamra Pearl Diver tees and the
+   Ras Al Khor Hoodie are back in Oversized, cut to the original Oversized size; the Shams Tee's Oversized stays paused */
+const PAUSED = { 'shams-tee-oversized': 1 };
 /* the note on a paused Oversized page (31 Oct 2026): what is happening, and where the design can be bought now */
 function pausedNote(s) {
   const sup = fitHref(s, 'Super Oversized'), reg = fitHref(s, 'Regular');
@@ -343,7 +351,7 @@ function promise(s) {
 }
 function top(s, o = {}) {
   const altBase = s.name.replace(/&amp;/g, '&') + (s.colour ? ` in ${s.colour}` : '');
-  const eyebrow = `<p class="ss-eb"><span>${LINES[s.line]}</span>${s.place ? ` \u00b7 <a href="${s.place[2]}">Drawn from ${esc(s.place[0])}${s.place[1] ? ', ' + esc(s.place[1]) : ''}</a>` : ''}</p>`;
+  const eyebrow = `<p class="ss-eb"><span>${LINES[s.line]}</span>${s.place ? ` \u00b7 <a href="${s.place[2]}">${esc(s.place[0])}${s.place[1] ? ', ' + esc(s.place[1]) : ''}</a>` : ''}</p>`;
   const kind = [s.kind, s.colour ? `Colour: ${esc(s.colour)}` : '', s.cut].filter(Boolean).join(' \u00b7 ');
   return `<section class="ss ss-${s.line}" data-ss style="--ss-top:${s.line === 'founding' ? 151 : 135}px">
   <div class="ss-media">
@@ -356,16 +364,16 @@ function top(s, o = {}) {
     <div class="ss-head">
       ${eyebrow}
       <h1 class="ss-h1">${o.h1 || esc(s.name)}</h1>
+      ${/* 14 Nov 2026 (site scorecard r139: the sticky size bar hid the stars on a phone's first screen): the stars sit under the title */''}${o.rating || ''}
       <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two Founding Edition tees, AED 359</span>` : ''}</p>${!PAUSED[s.handle] ? `
       <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 \u00d7 ${quarter(s.price)} with ${TBL}</span></p>` : ''}
-      ${o.rating || ''}
       <p class="ss-kind">${kind}</p>
       ${fitSwitch(s, 'ss-fits')}
     </div>
     <div class="ss-body">
       ${sheet(s)}
       ${o.help || ''}
-      ${o.tabby === false ? '' : `<div class="sb-tabby sb-tabby-pdp ss-tabby sb-aed-only" data-tabby-price="${s.price}" data-tabby-source="product"><span class="sb-tabby-t">Pay in 4 with <b>Tabby</b>: 4 interest-free payments of AED ${quarter(s.price)}</span></div>`}
+      ${/* 14 Nov 2026 (Faheem, after the r139 scorecard: "Line under price only"): Tabby shows once, as the line under the price; the widget box is gone */''}
       ${promise(s)}
       ${o.extra || ''}
     </div>

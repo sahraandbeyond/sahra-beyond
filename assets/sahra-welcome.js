@@ -410,6 +410,8 @@
     var a = e.target.closest && e.target.closest('[data-sbc-open]'); if (!a) return;
     e.preventDefault(); showSheet(a.getAttribute('data-sbc-open') || 'link');
   });
+  /* 14 Nov 2026 (homepage: the welcome block became the one-line link): an old /#welcome-code link opens the sheet */
+  if (location.hash === '#welcome-code' && !document.getElementById('welcome-code') && !isDone()) setTimeout(function () { showSheet('hash'); }, 600);
   window.SBCapture = { bind: bind, open: showSheet, form: formHtml, offer: OFFER, done: isDone };
 
   (function takeover() {

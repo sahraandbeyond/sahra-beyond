@@ -111,3 +111,10 @@ html body .news[data-waitlist-wrap].done .news-ok{display:block!important}
 html body .news[data-waitlist-wrap].loading .news-form button{opacity:.6}
 html body .news [data-err]{color:#F3DDB8!important}
 html body .news[data-waitlist-wrap].err [data-err]{display:block!important}
+
+/* 14 Nov 2026 (r139 scorecard, Faheem: "Move it under the name"): the Unisex / Men's cut / One size tag is a quiet line
+   under the card's name (build.js copies it into data-cut on the name link); the tag on the photo is hidden, so the photo
+   carries only the fit pills */
+html body .pcard .pcard-img .cut-b{display:none!important}
+html body .pcard .pcard-t[data-cut]::after{content:attr(data-cut);display:block;margin:3px 0 0;font:400 10px/1.3 'Space Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#6B6256;font-style:normal;font-size-adjust:none}
+html[dir="rtl"] body .pcard .pcard-t[data-cut]::after{font-family:var(--sans);letter-spacing:0;text-transform:none;font-size:12px}

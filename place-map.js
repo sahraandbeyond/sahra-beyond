@@ -30,11 +30,13 @@ const LINE = {
   'khor-fakkan-beach': 'Where the Hajar Mountains come straight down to the Gulf of Oman.',
   'al-jazirah-al-hamra': 'A coral-stone pearling town on the Ras Al Khaimah coast.',
   'snoopy-island': 'A rock island off Al Aqah beach, with a reef around it.',
-  'ras-al-khor': 'The wetland where Dubai Creek ends, in the middle of the city.'
+  'ras-al-khor': 'The wetland where Dubai Creek ends, in the middle of the city.',
+  /* 14 Nov 2026: the Al Qudra Lakes Tee, pinned to the Al Qudra lakes guide (Love Lake) */
+  'love-lake': 'Man-made lakes in the desert south of Dubai, where flamingos wade.'
 };
 /* label placement for crowded pins: [x offset, y offset, text-anchor], in map units */
 const LAB = { 'wadi-naqab': [79, -40, 'end'], 'al-jazirah-al-hamra': [-30, 9, 'end'], 'snoopy-island': [-31, -1, 'end'],
-  'khor-fakkan-beach': [-30, 9, 'end'], 'ras-al-khor': [-16, 39, 'end'] };
+  'khor-fakkan-beach': [-30, 9, 'end'], 'ras-al-khor': [-16, 39, 'end'], 'love-lake': [16, 14, 'start'] };
 /* hero tiles already on the home page (shirts/hs-<key>-a-720.webp) */
 const TILE = { 'al-quaa-desert': 'galaxy', 'liwa': 'eq', 'wadi-naqab': 'hajar' };
 /* orientation only: two cities, small and grey */

@@ -6,8 +6,8 @@ const fs = require('fs');
 const path = require('path');
 
 const D = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sahel-sizing.json'), 'utf8'));
-/* the charts in use (31 Oct 2026): teeOversized is kept in the file but not shown until the re-cut Oversized fit returns */
-for (const k of ['teeRegular', 'teeSuperOversized', 'hoodie']) {
+/* the charts in use (14 Nov 2026: the Oversized fit is back, on the original Oversized charts) */
+for (const k of ['teeRegular', 'teeSuperOversized', 'teeOversized', 'hoodie', 'hoodieOversized']) {
   if (!D[k] || !D[k].rows || D[k].rows.length !== 4) throw new Error('FATAL: content/sahel-sizing.json ' + k + ' must have four rows, S to XL.');
   if (D[k].rows.some(r => !/^(S|M|L|XL)$/.test(r[0]))) throw new Error('FATAL: content/sahel-sizing.json ' + k + ': sizes are S, M, L and XL only.');
   if (!D.compare || !D.compare[k]) throw new Error('FATAL: content/sahel-sizing.json compare.' + k + ' is missing.');
@@ -19,8 +19,11 @@ function keyFor(p) {
   if (!p || p.line !== 'sahel') return null;
   const kind = String(p.kind || '');
   if (/polo/i.test(kind)) return null;
-  if (/hoodie/i.test(kind)) return p.fit === 'Super Oversized' || !p.fit ? 'hoodie' : null;
-  return p.fit === 'Super Oversized' ? 'teeSuperOversized' : p.fit === 'Regular' || !p.fit ? 'teeRegular' : null;
+  /* 14 Nov 2026: a fit that is still paused (the Shams Tee's Oversized) shows no chart until it returns */
+  const own = (p.fitsList || []).find(f => f.handle === p.handle);
+  if (own && own.onSale === false) return null;
+  if (/hoodie/i.test(kind)) return p.fit === 'Super Oversized' || !p.fit ? 'hoodie' : p.fit === 'Oversized' ? 'hoodieOversized' : null;
+  return p.fit === 'Super Oversized' ? 'teeSuperOversized' : p.fit === 'Oversized' ? 'teeOversized' : p.fit === 'Regular' || !p.fit ? 'teeRegular' : null;
 }
 
 const FSZ = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sizing.json'), 'utf8'));   /* the Founding Edition chart */
@@ -57,7 +60,7 @@ function table(key) {
     <tbody>${t.cols.map((c, ci) => `<tr><th scope="row">${c}</th>${t.rows.map(r => `<td>${cell(r[1 + ci * 2], r[2 + ci * 2])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 function method(key) {
-  const rows = D.method.filter(m => key === 'hoodie' || !/hoodies/.test(m));
+  const rows = D.method.filter(m => /^hoodie/.test(key) || !/hoodies/.test(m));
   return `<details class="ssz-how"><summary>How these are measured</summary><ul>${rows.map(m => `<li>${m}</li>`).join('')}</ul><p>${D.tolerance}</p></details>`;
 }
 /* the block for a product page or the size guide */
@@ -65,7 +68,7 @@ function block(key, opts = {}) {
   const t = D[key];
   return `${opts.heading ? `<h3 class="ssz-h">${t.label}</h3>` : ''}<p class="ssz-intent">${t.intent}</p>
   ${table(key)}
-  <p class="ssz-diff"><strong>Not the Founding Edition chart.</strong> ${D.compare[key]}</p>
+  <p class="ssz-diff"><strong>${key === 'teeOversized' ? 'The Founding Edition Oversized chart.' : 'Not the Founding Edition chart.'}</strong> ${D.compare[key]}</p>
   ${method(key)}`;
 }
 const CSS = `

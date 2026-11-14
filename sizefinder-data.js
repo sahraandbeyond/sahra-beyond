@@ -24,7 +24,7 @@ const path = require('path');
 const J = f => JSON.parse(fs.readFileSync(path.join(__dirname, 'content', f), 'utf8'));
 const F = J('sizing.json'), S = J('sahel-sizing.json'), T = J('trail-sizing.json');
 
-const TARGET = { regular: 10, oversized: 20, superOversized: 27, hoodie: 28 };
+const TARGET = { regular: 10, oversized: 20, superOversized: 27, hoodie: 28, hoodieOversized: 20 };   /* 14 Nov 2026: the Oversized hoodie is the original hoodie chart, 1.5 in closer than the Super Oversized */
 /* [size, full chest cm, length cm] from a row [size, chest in, chest cm flat, length in, length cm, ...] */
 const garmentRows = rows => rows.map(r => [r[0], Math.round(r[2] * 2 * 10) / 10, r[4]]);
 
@@ -38,10 +38,10 @@ function polo() {
 }
 function sahel(key) {
   const d = S[key]; if (!d || !d.rows) return null;
-  const target = key === 'hoodie' ? TARGET.hoodie : key === 'teeSuperOversized' ? TARGET.superOversized : key === 'teeRegular' ? TARGET.regular : null;
+  const target = { hoodie: TARGET.hoodie, hoodieOversized: TARGET.hoodieOversized, teeSuperOversized: TARGET.superOversized, teeOversized: TARGET.oversized, teeRegular: TARGET.regular }[key];
   if (target == null) return null;
-  const label = { teeRegular: 'Sahel tee, Regular', teeSuperOversized: 'Sahel tee, Super Oversized', hoodie: 'Sahel hoodie, Super Oversized' }[key];
-  const labelAr = { teeRegular: 'تيشيرت ساحل، ريجولر', teeSuperOversized: 'تيشيرت ساحل، سوبر أوفرسايز', hoodie: 'هودي ساحل، سوبر أوفرسايز' }[key];
+  const label = { teeRegular: 'Sahel tee, Regular', teeSuperOversized: 'Sahel tee, Super Oversized', teeOversized: 'Sahel tee, Oversized', hoodie: 'Sahel hoodie, Super Oversized', hoodieOversized: 'Sahel hoodie, Oversized' }[key];
+  const labelAr = { teeRegular: 'تيشيرت ساحل، ريجولر', teeSuperOversized: 'تيشيرت ساحل، سوبر أوفرسايز', teeOversized: 'تيشيرت ساحل، أوفرسايز', hoodie: 'هودي ساحل، سوبر أوفرسايز', hoodieOversized: 'هودي ساحل، أوفرسايز' }[key];
   return { kind: 'garment', id: 'sahel-' + key, label, labelAr, target, sizes: garmentRows(d.rows) };
 }
 /* "91&ndash;96" -> [91, 96] */
@@ -74,7 +74,7 @@ function forNewLine(p, SZ, TSZ) {
 }
 /* the size guide: every piece, chosen from a list */
 function all() {
-  return { pieces: [founding('regular'), founding('oversized'), polo(), sahel('teeRegular'), sahel('teeSuperOversized'), sahel('hoodie'), trail('tee'), trail('short')].filter(Boolean), choose: true };
+  return { pieces: [founding('regular'), founding('oversized'), polo(), sahel('teeRegular'), sahel('teeOversized'), sahel('teeSuperOversized'), sahel('hoodieOversized'), sahel('hoodie'), trail('tee'), trail('short')].filter(Boolean), choose: true };
 }
 /* the markup: an anchor the help line opens, and the data the script reads */
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/</g, '&lt;');
