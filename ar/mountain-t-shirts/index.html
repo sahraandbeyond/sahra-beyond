@@ -97,7 +97,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
 <script>
-  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+  window.SB_LIVE=/(^|\.)sahraandbeyond\.ae$/i.test(location.hostname);
+  window.sbLater=window.sbLater||(window.SB_LIVE?0:function(){})||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
     function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
     if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
@@ -154,7 +155,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
 <script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"CollectionPage","name":"تيشيرتات جبلية","description":"تيشيرتات جبلية مستوحاة من سلسلة الحجر في الإمارات: القمم بخطوط الكنتور على الصدر، والصخر الأحمر مطبوع على الظهر. قطن، وبقصّتين.","url":"https://www.sahraandbeyond.ae/ar/mountain-t-shirts/","inLanguage":"ar"},{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"جبال الحجر — ريجولر","url":"https://www.sahraandbeyond.ae/ar/products/hajar-mountains-regular/"},{"@type":"ListItem","position":2,"name":"جبال الحجر — أوفرسايز","url":"https://www.sahraandbeyond.ae/ar/products/hajar-mountains-oversized/"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"https://www.sahraandbeyond.ae/ar/"},{"@type":"ListItem","position":2,"name":"التيشيرتات","item":"https://www.sahraandbeyond.ae/ar/t-shirts/"},{"@type":"ListItem","position":3,"name":"تيشيرتات جبلية","item":"https://www.sahraandbeyond.ae/ar/mountain-t-shirts/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"هل هذا قميص للمشي؟","acceptedAnswer":{"@type":"Answer","text":"لا، ونفضّل أن نقولها صراحة. هو تيشيرت قطني ثقيل لا قطعة تقنية، ولن يمتص العرق كما يفعل قميص المشي الصناعي. صُنع للطريق إلى المكان، وأمسية المخيم، وكل ما بعدها."}},{"@type":"Question","name":"أي جبال عليه؟","acceptedAnswer":{"@type":"Answer","text":"جبال الحجر، السلسلة التي تمتد في الإمارات الشمالية إلى عُمان. التصميم مستوحى من وادي نقب أسفل جبل يانس في رأس الخيمة."}},{"@type":"Question","name":"كم سعره، وكم يستغرق التوصيل؟","acceptedAnswer":{"@type":"Answer","text":"199 درهمًا، بقصّة ريجولر أو أوفرسايز. في الإمارات التوصيل مجاني للطلبات فوق 100 درهم ويصل في يوم العمل التالي إن طلبت قبل الساعة 2 ظهرًا."}}],"inLanguage":"ar"}]</script>

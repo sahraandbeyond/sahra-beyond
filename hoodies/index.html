@@ -97,7 +97,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
 <script>
-  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+  window.SB_LIVE=/(^|\.)sahraandbeyond\.ae$/i.test(location.hostname);
+  window.sbLater=window.sbLater||(window.SB_LIVE?0:function(){})||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
     function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
     if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
@@ -154,7 +155,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
 <script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"CollectionPage","name":"Hoodies in Dubai & the UAE","description":"The Barr & Bahr Hoodie and the Ras Al Khor Hoodie from Sahel, the Coast Edition: the UAE coastline embroidered across the back. AED 229, designed in the UAE.","url":"https://www.sahraandbeyond.ae/hoodies/"},{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Barr & Bahr Hoodie — Super Oversized","url":"https://www.sahraandbeyond.ae/products/barr-and-bahr-hoodie/"},{"@type":"ListItem","position":2,"name":"Ras Al Khor Hoodie — Super Oversized","url":"https://www.sahraandbeyond.ae/products/ras-al-khor-hoodie/"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"Hoodies in Dubai & the UAE","item":"https://www.sahraandbeyond.ae/hoodies/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much are the hoodies?","acceptedAnswer":{"@type":"Answer","text":"Both are AED 229, in sizes S to XL. Delivery is free across the UAE."}},{"@type":"Question","name":"When do they ship?","acceptedAnswer":{"@type":"Answer","text":"Both hoodies are in stock and ship the next working day, with free delivery across the UAE."}},{"@type":"Question","name":"What size should I take?","acceptedAnswer":{"@type":"Answer","text":"The hoodies are Super Oversized, with a dropped shoulder, and most people take one size down from their usual size. On the Sahel size chart in our size guide they measure 24.5 inches across the chest at S, 25.5 at M, 26.5 at L and 28 at XL, laid flat. Measure a hoodie you like and match the number. Size exchanges within the UAE are free within 14 days of delivery, subject to stock."}}]}]</script>

@@ -97,7 +97,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
 <script>
-  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+  window.SB_LIVE=/(^|\.)sahraandbeyond\.ae$/i.test(location.hostname);
+  window.sbLater=window.sbLater||(window.SB_LIVE?0:function(){})||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
     function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
     if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
@@ -154,7 +155,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
 <script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"AboutPage","name":"About Sahra & Beyond — A UAE Clothing Brand","description":"The story behind Sahra & Beyond — a UAE apparel brand built around real places: a dark-sky desert, the first dunes of the Empty Quarter, a red-rock wadi in the Hajar. Tees, polos and hoodies, designed in the UAE.","url":"https://www.sahraandbeyond.ae/about/"},{"@context":"https://schema.org","@type":"Organization","@id":"https://www.sahraandbeyond.ae/#organization","name":"Sahra & Beyond","alternateName":["Sahra and Beyond","Sahra Beyond"],"legalName":"SAHRA AND BEYOND FZE LLC","url":"https://www.sahraandbeyond.ae/","logo":"https://www.sahraandbeyond.ae/icon-512.png","slogan":"Designed in the UAE for everyone who loves it.","email":"hello@sahraandbeyond.ae","telephone":"+971585449946","sameAs":["https://instagram.com/sahraandbeyond.ae"]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"About","item":"https://www.sahraandbeyond.ae/about/"}]}]</script>

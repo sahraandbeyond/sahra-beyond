@@ -90,7 +90,8 @@ try{new MutationObserver(function(m){for(var i=0;i<m.length;i++)if(m[i].addedNod
 <meta name="twitter:image" content="https://www.sahraandbeyond.ae/uploads/og/products/hajar-mountains-regular.jpg">
 <!-- Google Analytics 4 -->
 <script>
-  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+  window.SB_LIVE=/(^|\.)sahraandbeyond\.ae$/i.test(location.hostname);
+  window.sbLater=window.sbLater||(window.SB_LIVE?0:function(){})||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
     function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
     if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
@@ -147,7 +148,7 @@ try{new MutationObserver(function(m){for(var i=0;i<m.length;i++)if(m[i].addedNod
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
 <script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <link rel="icon" href="/icon.svg" type="image/svg+xml">

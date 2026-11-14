@@ -97,7 +97,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
 <script>
-  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+  window.SB_LIVE=/(^|\.)sahraandbeyond\.ae$/i.test(location.hostname);
+  window.sbLater=window.sbLater||(window.SB_LIVE?0:function(){})||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
     function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
     if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
@@ -154,7 +155,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
 <script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"مسارات المشي في الإمارات حسب الصعوبة","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/","itemListElement":[{"@type":"ListItem","position":1,"name":"مسار وادي شيص الطبيعي","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/wadi-shees/"},{"@type":"ListItem","position":2,"name":"مسار الطيبة","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/al-taiba/"},{"@type":"ListItem","position":3,"name":"مسار برج الربيع","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/al-rabi/"},{"@type":"ListItem","position":4,"name":"من سد الرفيصة إلى استراحة السحوب","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/al-rafisah/"},{"@type":"ListItem","position":5,"name":"مسار الريحام","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/al-riham/"},{"@type":"ListItem","position":6,"name":"مسار وادي شاه، جبل جيس","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/wadi-shah/"},{"@type":"ListItem","position":7,"name":"مسار قمة الغاف، جبل جيس","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/jebel-jais-hike/"},{"@type":"ListItem","position":8,"name":"الواحة المخفية، وادي شاه (جبل جيس)","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/hidden-oasis/"},{"@type":"ListItem","position":9,"name":"من وادي نقب إلى وادي كب","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/wadi-naqab-to-wadi-kub/"},{"@type":"ListItem","position":10,"name":"جبل يانس","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/jebel-yanas/"},{"@type":"ListItem","position":11,"name":"من وادي القدعة إلى قرية القدعة","url":"https://www.sahraandbeyond.ae/ar/trail/hikes/wadi-qadaah/"}]}]</script>

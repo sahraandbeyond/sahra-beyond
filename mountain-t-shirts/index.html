@@ -97,7 +97,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
 <script>
-  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+  window.SB_LIVE=/(^|\.)sahraandbeyond\.ae$/i.test(location.hostname);
+  window.sbLater=window.sbLater||(window.SB_LIVE?0:function(){})||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
     function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
     if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
@@ -154,7 +155,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
 <script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"CollectionPage","name":"Mountain T-Shirts","description":"Mountain t-shirts drawn from the Hajar range in the UAE: the peaks in contour lines on the front, red rock printed across the back. cotton, two fits.","url":"https://www.sahraandbeyond.ae/mountain-t-shirts/"},{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hajar Mountains — Regular","url":"https://www.sahraandbeyond.ae/products/hajar-mountains-regular/"},{"@type":"ListItem","position":2,"name":"Hajar Mountains — Oversized","url":"https://www.sahraandbeyond.ae/products/hajar-mountains-oversized/"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sahraandbeyond.ae/"},{"@type":"ListItem","position":2,"name":"T-Shirts","item":"https://www.sahraandbeyond.ae/t-shirts/"},{"@type":"ListItem","position":3,"name":"Mountain T-Shirts","item":"https://www.sahraandbeyond.ae/mountain-t-shirts/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this a hiking shirt?","acceptedAnswer":{"@type":"Answer","text":"No, and we would rather say so. It is a heavyweight cotton t-shirt, not a technical garment — it will not wick sweat the way a synthetic hiking shirt does. It is made for the drive out, the evening at camp and everywhere after."}},{"@type":"Question","name":"Which mountains are on it?","acceptedAnswer":{"@type":"Answer","text":"The Hajar Mountains, the range that runs through the northern Emirates and into Oman. The design is inspired by Wadi Naqab, below Jebel Yanas in Ras Al Khaimah."}},{"@type":"Question","name":"How much is it, and how fast is delivery?","acceptedAnswer":{"@type":"Answer","text":"AED 199, in Regular or Oversized. In the UAE, delivery is free on orders over AED 100 and arrives the next working day when you order by 2 pm."}}]}]</script>

@@ -97,7 +97,8 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <!-- Google Analytics 4 -->
 <script>
-  window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+  window.SB_LIVE=/(^|\.)sahraandbeyond\.ae$/i.test(location.hostname);
+  window.sbLater=window.sbLater||(window.SB_LIVE?0:function(){})||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
     function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
     if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
@@ -154,7 +155,7 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
-<script src="/assets/meta-pixel.js?v=20d6c4dd" defer></script>
+<script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
 <script src="/assets/tiktok-pixel.js?v=b477bdc0" data-ttq defer></script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1392180882887027&ev=PageView&noscript=1"></noscript>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"UAE hikes by grade","url":"https://www.sahraandbeyond.ae/trail/hikes/","itemListElement":[{"@type":"ListItem","position":1,"name":"Wadi Shees Nature Trail","url":"https://www.sahraandbeyond.ae/trail/hikes/wadi-shees/"},{"@type":"ListItem","position":2,"name":"Al Taiba Trail","url":"https://www.sahraandbeyond.ae/trail/hikes/al-taiba/"},{"@type":"ListItem","position":3,"name":"Al Rabi Tower Trail","url":"https://www.sahraandbeyond.ae/trail/hikes/al-rabi/"},{"@type":"ListItem","position":4,"name":"Al Rafisah Dam to Al Suhub Rest House","url":"https://www.sahraandbeyond.ae/trail/hikes/al-rafisah/"},{"@type":"ListItem","position":5,"name":"Al Riham Trail","url":"https://www.sahraandbeyond.ae/trail/hikes/al-riham/"},{"@type":"ListItem","position":6,"name":"Wadi Shah Trail, Jebel Jais","url":"https://www.sahraandbeyond.ae/trail/hikes/wadi-shah/"},{"@type":"ListItem","position":7,"name":"Ghaf Summit Trail, Jebel Jais","url":"https://www.sahraandbeyond.ae/trail/hikes/jebel-jais-hike/"},{"@type":"ListItem","position":8,"name":"Hidden Oasis, Wadi Shah (Jebel Jais)","url":"https://www.sahraandbeyond.ae/trail/hikes/hidden-oasis/"},{"@type":"ListItem","position":9,"name":"Wadi Naqab to Wadi Kub","url":"https://www.sahraandbeyond.ae/trail/hikes/wadi-naqab-to-wadi-kub/"},{"@type":"ListItem","position":10,"name":"Jebel Yanas","url":"https://www.sahraandbeyond.ae/trail/hikes/jebel-yanas/"},{"@type":"ListItem","position":11,"name":"Wadi Qada'ah to Qada'ah village","url":"https://www.sahraandbeyond.ae/trail/hikes/wadi-qadaah/"}]}]</script>

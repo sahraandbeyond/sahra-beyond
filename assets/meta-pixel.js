@@ -92,6 +92,7 @@
       };
       if (userData) payload.user_data = userData;
 
+      if (window.SB_LIVE === false) return;   /* 13 Nov 2026: no server-side copy from test copies or previews (ga4.js) */
       fetch(CAPI_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

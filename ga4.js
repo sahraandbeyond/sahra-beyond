@@ -37,7 +37,11 @@ const ATTENTION = `(function(){var ad=0;try{ad=/[?&](gclid|gbraid|wbraid|fbclid|
    key, or the page's load event plus an idle moment (at most 2.5 s), or 8 s, whichever comes first. The cost:
    a visitor who leaves within about 3 s without touching the page is no longer seen by GA4 or TikTok (Meta
    still gets its server-side copy through /api/meta-capi). */
-const LATER = `window.sbLater=window.sbLater||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
+/* 13 Nov 2026 (Faheem, after Claude's test runs on a local copy showed up as adds in Analytics): the tag libraries
+   (GA4, Meta, TikTok) load only on the real site, www.sahraandbeyond.ae. Local copies, test runs and Vercel previews
+   queue events and never send them. */
+const LATER = `window.SB_LIVE=/(^|\\.)sahraandbeyond\\.ae$/i.test(location.hostname);
+  window.sbLater=window.sbLater||(window.SB_LIVE?0:function(){})||(function(){var q=[],ran=0;function run(){if(ran)return;ran=1;for(var i=0;i<q.length;i++){try{q[i]()}catch(e){}}q=null;}
     function idle(){(window.requestIdleCallback||function(f){setTimeout(f,1200)})(run,{timeout:2500});}
     if(document.readyState==='complete')idle();else addEventListener('load',idle);setTimeout(run,8000);
     ['pointerdown','touchstart','keydown'].forEach(function(k){addEventListener(k,run,{once:true,passive:true,capture:true});});addEventListener('scroll',run,{once:true,passive:true});
