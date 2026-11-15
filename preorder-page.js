@@ -949,9 +949,17 @@ function homeLines() {
    swipe sideways, about two and a quarter cards wide, so the next card shows at the edge; desktop keeps the grid */
 @media(max-width:860px){html body .hl .hl-g{display:flex!important;grid-template-columns:none!important;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:16px;gap:12px;margin:0 -16px;padding:2px 16px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 html body .hl .hl-g::-webkit-scrollbar{display:none}
-html body .hl .hl-g>*{flex:0 0 max(45%,162px);max-width:230px;min-width:0;scroll-snap-align:start}
-html body .hl .pcards.hl-g>.hl-all{flex-basis:max(45%,162px);aspect-ratio:auto;min-height:0}
+html body .hl .hl-g>*{flex:0 0 41%;max-width:220px;min-width:0;scroll-snap-align:start}   /* 14 Nov 2026 (Faheem: "It's not clear that this is actually a slide"): narrower, so the third card clearly shows at the edge */
+html body .hl .pcards.hl-g>.hl-all{flex-basis:41%;aspect-ratio:auto;min-height:0}
+.hl-swipe{display:flex;align-items:center;gap:8px;margin:0 0 10px;font:500 13px/1.3 Jost,system-ui,sans-serif;color:#7E4114}
+.hl-swipe b{font-weight:500}.hl-swipe i{font-style:normal;display:inline-block;animation:hlNudge 1.6s ease-in-out 3}
+@keyframes hlNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+html[dir="rtl"] .hl-swipe i{animation-name:hlNudgeR}@keyframes hlNudgeR{0%,100%{transform:translateX(0)}50%{transform:translateX(-5px)}}
+.hl-track{position:relative;height:3px;margin:12px 0 0;border-radius:3px;background:rgba(42,32,22,.12);overflow:hidden}
+.hl-track i{position:absolute;top:0;bottom:0;inset-inline-start:0;width:30%;border-radius:3px;background:#7E4114;transition:transform .12s linear}
+@media(prefers-reduced-motion:reduce){.hl-swipe i{animation:none}.hl-track i{transition:none}}
 .hl-more{margin-top:0!important}}
+@media(min-width:861px){.hl-swipe,.hl-track{display:none}}
 @media(max-width:860px){.hl{gap:36px;margin-top:36px}.hl-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hl-all{padding:14px}.hl-all b{font-size:21px}.hl-tote{grid-template-columns:minmax(0,120px) minmax(0,1fr);gap:14px;padding:12px}.hl-tote b{font-size:21px}.hl-tote p{font-size:14.5px}}
 </style>`;
   const k = (line) => line + ' &middot; ' + inc('st0', '<span class="st0">on pre-order from Wed 28 Oct</span>') + inc('st1', '<span class="st1">on pre-order, 20% off until Thu 29 Oct</span>') + '<span class="st2">new</span>';
@@ -962,15 +970,20 @@ html body .hl .pcards.hl-g>.hl-all{flex-basis:max(45%,162px);aspect-ratio:auto;m
     <p class="nb-k">${k('Sahel, the Coast Edition')}</p>
     <h3 id="hlS">Sahel: nine designs, from the coast to Al Qudra</h3>
     <p class="nb-l">Five tees, three hoodies and a polo, drawn from Khor Fakkan, Al Aqah, Al Jazirah Al Hamra, Ras Al Khor and the Al Qudra lakes. ${inc('st1', '<span class="st1">Ships from Fri 30 Oct. </span>')}Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition.</p>
+    <p class="hl-swipe" aria-hidden="true"><b>Swipe to see all ${sahel.length} designs</b> <i>&rarr;</i></p>
     <div class="pcards nb-pc hl-g">${sahel.map(p => designCards(p, true)).join('')}<a class="hl-all" href="/sahel/#pieces" data-track="home_lines_sahel"><b>All of Sahel</b><small>Every piece, every fit, the story behind the coast.</small><span>${inc('st1', '<span class="st1">Pre-order Sahel</span>')}<span class="st02">Shop Sahel</span> &rarr;</span></a></div>
+    <div class="hl-track" aria-hidden="true"><i></i></div>
   </section>
   <section class="hl-sec" id="home-trail" aria-labelledby="hlT">
     <p class="nb-k">${k('Sahra Trail running wear')}</p>
     <h3 id="hlT">Sahra Trail: the tee, the 2-in-1 short and the kit</h3>
     <p class="nb-l">Running wear marked with the Two Ridges, plus the Trailhead Bag. Men&rsquo;s cuts; the bag is one size. Sahra Trail has <a href="/size-guide/#trail">its own size chart</a>.</p>
+    <p class="hl-swipe" aria-hidden="true"><b>Swipe to see all ${trail.filter(onSale).length} pieces</b> <i>&rarr;</i></p>
     <div class="pcards nb-pc hl-g">${trail.filter(onSale).map(p => designCards(p, false)).join('')}</div>
+    <div class="hl-track" aria-hidden="true"><i></i></div>
     <a class="nb-a" href="/trail/#pieces" data-track="home_lines_trail">Shop Sahra Trail &rarr;</a>
   </section>
+  <script>(function(){[].forEach.call(document.querySelectorAll('.hl .hl-g'),function(r){var t=r.parentNode.querySelector('.hl-track i');if(!t)return;function u(){var w=r.scrollWidth,c=r.clientWidth;if(w<=c+2){t.parentNode.style.display='none';return;}var f=c/w,x=Math.abs(r.scrollLeft)/(w-c);t.style.width=(f*100)+'%';var d=getComputedStyle(r).direction==='rtl'?-1:1;t.style.transform='translateX('+(d*x*(1-f)/f*100)+'%)';}r.addEventListener('scroll',u,{passive:true});addEventListener('resize',u);u();});})();</script>
   <p class="nb-l hl-more"><a href="/accessories/">Accessories</a> &middot; <a href="/gifts/">UAE gifts</a> &middot; <a href="/under-150/">Under AED 150</a> &middot; <a href="/shop/">Shop everything</a></p>
 </div>`;
 }
