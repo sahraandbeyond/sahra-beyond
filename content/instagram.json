@@ -18,6 +18,96 @@
   },
   "posts": [
     {
+      "id": "DfxDcRklrhE",
+      "kind": "carousel",
+      "label": "The Shams Tee on him and on her: one small mark in sand thread on the chest",
+      "topic": "sahel",
+      "wear": [
+        "/products/shams-tee-regular/",
+        "The Shams Tee"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/business-suite-upload",
+      "srcNote": "Slides are the four posted files: 15_Sun15_7pm_house_CAROUSEL_Shams-palB_slide1, then 08_Sun15_7pm_house_CAROUSEL_Shams_slide2 to slide4."
+    },
+    {
+      "id": "Dfueq5Zme5K",
+      "kind": "reel",
+      "label": "The Al Aqah Reef Tee on the model: a turtle on the chest, a reef across the back",
+      "topic": "sahel",
+      "places": [
+        "snoopy-island"
+      ],
+      "guides": [
+        "/snorkeling/",
+        "/fujairah-beaches/"
+      ],
+      "wear": [
+        "/products/al-aqah-reef-tee-regular/",
+        "The Al Aqah Reef Tee"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/business-suite-upload/16_Sat14_7pm_house_REEL_Al-Aqah-Reef_palB_bs.mp4",
+      "srcNote": "Site cover is the posted cover, 16_Sat14_7pm_house_REEL_Al-Aqah-Reef_palB_COVER.jpg, cropped to 4:5."
+    },
+    {
+      "id": "DftMOrIkiu5",
+      "kind": "reel",
+      "label": "The Trail 2-in-1 Shorts and the Sahra Trail Kit: two layers, one stride",
+      "topic": "trail",
+      "guides": [
+        "/trail/"
+      ],
+      "wear": [
+        "/products/sahra-trail-2-in-1-short/",
+        "The Trail 2-in-1 Shorts"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/business-suite-upload/18_Sat14_7am_house_REEL_Trail-Kit-Shorts_v4_bs.mp4",
+      "srcNote": "Site cover is the posted daylight cover, 14_Sat14_7am_house_REEL_Trail-Kit-Shorts_palB_COVER_v2.jpg, cropped to 4:5."
+    },
+    {
+      "id": "DfrWbcCByo7",
+      "kind": "photo",
+      "label": "Out of office until the inbox comes back, in the Hajar Mountains Tee",
+      "topic": "product",
+      "products": [
+        "hajar-mountains-oversized"
+      ],
+      "wear": [
+        "/products/hajar-mountains-oversized/",
+        "The Hajar Mountains Tee"
+      ],
+      "src": "OUTLOOK-OOO-13-Nov-2026/OOO_feed_4x5.jpg"
+    },
+    {
+      "id": "DfqncOUjBuM",
+      "kind": "reel",
+      "label": "The Sahra Trail Tee before sunrise: reflective front and back, open mesh at the sides",
+      "topic": "trail",
+      "guides": [
+        "/trail/"
+      ],
+      "wear": [
+        "/products/sahra-trail-tee/",
+        "The Sahra Trail Tee"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/business-suite-upload/12_Fri13_7am_house_REEL_Trail-Tee_palB_bs.mp4",
+      "srcNote": "Site cover is the daylight cover Faheem chose on 13 Nov, 12_Fri13_7am_house_REEL_Trail-Tee_palB_COVER_v2.jpg, cropped to 4:5."
+    },
+    {
+      "id": "DfpVB7ClIj9",
+      "kind": "carousel",
+      "label": "The Al Hamra Pearl Diver Tee on him and on her: the diver on the back, the oyster on the chest",
+      "topic": "sahel",
+      "places": [
+        "al-jazirah-al-hamra"
+      ],
+      "wear": [
+        "/products/al-hamra-pearl-diver-tee-regular/",
+        "The Al Hamra Pearl Diver Tee"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/business-suite-upload",
+      "srcNote": "Slides are the four posted files 04_Thu12_7pm_house_CAROUSEL_Pearl-Diver_slide1 to slide4."
+    },
+    {
       "id": "DfmwPCZAi1D",
       "kind": "carousel",
       "label": "The Sahra Trail kit in daylight: the tee, the 2-in-1 Shorts and the liner pocket",
@@ -53,6 +143,21 @@
         "The Sahel Polo"
       ],
       "src": "DRIP-MALE-MODEL-9-Nov-2026/01_Tue10_7pm_house_REEL_Sahel-Polo.mp4"
+    },
+    {
+      "id": "DfhloFrI7Wm",
+      "kind": "reel",
+      "label": "The Sahra Trail kit out on a run: the tee and the 2-in-1 Shorts",
+      "topic": "trail",
+      "guides": [
+        "/trail/"
+      ],
+      "wear": [
+        "/products/sahra-trail-kit/",
+        "The Sahra Trail Kit"
+      ],
+      "src": "TIKTOK-REPOST/inbox/DfhloFrI7Wm_trail-kit-salah_original.mp4",
+      "srcNote": "Source is the original Faheem sent on 12 Nov (536x954), so the site cover is upscaled from it. Collab post on @sahraandbeyond.ae with @salah_nammari."
     },
     {
       "id": "DfedudpiIBB",

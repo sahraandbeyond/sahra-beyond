@@ -161,7 +161,7 @@ const SAHEL = [
     story: 'Al Jazirah Al Hamra, the Red Island, is a coral-stone pearling town on the Ras Al Khaimah coast, left empty around 1970. Every summer the boats of this coast sailed for the big dive, from June to the end of September. A diver went down on a stone weight, filled his basket with oysters and tugged the rope to be hauled up.',
     details: ['Cotton', 'DTG printed', 'Our mark embroidered at the back neck', 'Printed neck label'] },
   /* 14 Nov 2026 (Faheem: "We also have one new shirt"; Sahel, AED 199, Oversized only). Studio mock-ups until it is photographed. */
-  { key: 'al-qudra-lakes-tee', name: 'Al Qudra Lakes Tee', seo: 'Al Qudra Lakes Flamingo Graphic T-Shirt', kind: 'Graphic T-shirt', md: 'cotton in Demitasse, DTG printed back and left chest', colour: 'Demitasse', price: 199, fits: 'oversizedOnly', img: 'qudra', place: ['Al Qudra Lakes', 'love-lake'],
+  { key: 'al-qudra-lakes-tee', name: 'Al Qudra Lakes Tee', seo: 'Al Qudra Lakes Flamingo Graphic T-Shirt', kind: 'Graphic T-shirt', md: 'cotton in Demitasse, DTG printed back and left chest', colour: 'Demitasse', price: 199, fits: 'oversizedOnly', img: 'qudra', studio: true, place: ['Al Qudra Lakes', 'love-lake'],
     story: 'Al Qudra is a chain of man-made lakes in the desert south of Dubai, ringed by ghaf trees and reeds. Late in the day the low sun lays a line of light across the water and the flamingos wade out into it. We drew the far shore at that hour: the trees, the sun on the lake and the flamingos standing in it. The same shore sits small on the chest.',
     details: ['Cotton', 'DTG printed back and left chest', 'Printed neck label'] },
   { key: 'al-aqah-reef-tee', name: 'Al Aqah Reef Tee', seo: 'Al Aqah Reef Graphic T-Shirt', kind: 'Graphic T-shirt', md: 'cotton in Lagoon, DTG printed front and back', colour: 'Lagoon', price: 199, fits: 'tee', img: 'reef', place: ['Al Aqah', 'snoopy-island'],
@@ -181,7 +181,7 @@ const SAHEL = [
     details: ['The UAE coastline embroidered in sand thread across the back', 'Lower-back artwork DTG printed', 'Printed neck label'] },
   /* 14 Nov 2026 (Faheem: "This is actually Khor Fakkan hoodie"; "Color and Front remains same as Barr and Bahr"). Oversized only,
      AED 229, studio mock-ups (front as the Barr & Bahr; back built from the Khor Fakkan Bay print file and the coastline) */
-  { key: 'khor-fakkan-hoodie', name: 'Khor Fakkan Hoodie', seo: 'Khor Fakkan Hoodie, Khor Fakkan Bay and the UAE Coast', kind: 'Hoodie', md: 'Khor Fakkan Bay low on the back and the UAE coastline in sand thread, in Salute', colour: 'Salute', price: 229, fits: 'oversizedOnly', img: 'kfh', place: ['Khor Fakkan', 'khor-fakkan-beach'],
+  { key: 'khor-fakkan-hoodie', name: 'Khor Fakkan Hoodie', seo: 'Khor Fakkan Hoodie, Khor Fakkan Bay and the UAE Coast', kind: 'Hoodie', md: 'Khor Fakkan Bay low on the back and the UAE coastline in sand thread, in Salute', colour: 'Salute', price: 229, fits: 'oversizedOnly', img: 'kfh', studio: true, place: ['Khor Fakkan', 'khor-fakkan-beach'],
     story: "On Sharjah's east coast the Hajar Mountains come straight down to the Gulf of Oman, around one sweep of pale sand. The lower back carries Khor Fakkan Bay as we drew it for the tee: bare ridges, the beach and a dhow on still water. Above it, one line of sand thread traces the whole UAE coast, with Sahel written beneath it in Arabic and English.",
     details: ['Our mark embroidered on the chest', 'The UAE coastline embroidered in sand thread across the back', 'Lower-back artwork DTG printed', 'Printed neck label'] }
 ];
@@ -230,7 +230,10 @@ function products() {
   const out = [];
   SAHEL.forEach(p => {
     const plain = p.plain || p.name;
-    const images = PHOTOS[p.key] ? photoList(p.key) : p.img ? (p.front ? [mock(p.img + '-front', plain + ', front'), mock(p.img + '-back', plain + ', back')] : [mock(p.img + '-back', plain + ', back'), mock(p.img + '-front', plain + ', front')]) : [];
+    /* 16 Nov 2026 (Faheem: "For Al Qudra shirt, remove 'mockup'"; the Khor Fakkan Hoodie too): `studio: true` draws the studio
+       images with no Mock-up label or alt note, as the polo and Trail since 8 Nov; the copy never says they were photographed */
+    const im1 = p.studio ? studio : mock;
+    const images = PHOTOS[p.key] ? photoList(p.key) : p.img ? (p.front ? [im1(p.img + '-front', plain + ', front'), im1(p.img + '-back', plain + ', back')] : [im1(p.img + '-back', plain + ', back'), im1(p.img + '-front', plain + ', front')]) : [];
     if (p.fits) {
       const fl = FITS[p.fits].map(([f, F]) => ({ fit: F, handle: f ? `${p.key}-${f}` : p.key })).filter(x => !RETIRED.has(x.handle));
       fl.forEach(x => { x.onSale = !SP.PAUSED[x.handle]; });
@@ -431,7 +434,7 @@ function ownReviews(p) {
 function productPage(p, all, SITE, stage) {
   const own = ownReviews(p);
   const others = all.filter(o => o.line === p.line && o.handle !== p.handle && !(o.name === p.name) && onSale(o)).filter((o, i, a) => a.findIndex(x => x.name === o.name) === i).slice(0, 4);   /* 14 Nov 2026: one row of four (review panel) */
-  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${o.name}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
+  const card = o => `<a class="po-card" href="/products/${o.handle}/">${o.images.length ? `<div class="po-fig" data-cycle>${cycleImgs(o, { sizes: '(max-width: 900px) 50vw, 220px' })}${o.images[0].mock ? '<figcaption class="po-mock">Mock-up</figcaption>' : ''}</div>` : `<div class="po-ph"><div><span>Photo to follow</span></div></div>`}<b>${cardName(o)}</b>${cardPrice(o.price, 'span', o.inHand, o.handle)}</a>`;
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
   /* 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top and buy sheet as the Founding Edition pages (specimen.js) */
   const S = SP.fromPreorder(p);
@@ -590,9 +593,9 @@ function newCard(p, fitsLabel) {
   const fig = im ? `<span class="nb-f" data-cycle>${cycleImgs(p, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
   const sub = fitsLabel && p.fit ? `${p.kind} &middot; ${bothFits(p)}` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
   const href = `/products/${p.handle}/`;
-  if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${onSale(p) ? cardPrice(p.price, 'span', true, p.handle) : 'Back soon'}</small>`
+  if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${cardName(p)}</b><small>${sub}</small><small class="nb-p">${onSale(p) ? cardPrice(p.price, 'span', true, p.handle) : 'Back soon'}</small>`
     + inc('st0', `<small class="st0">On sale from Wed 28 Oct</small>`) + `<small class="st12">In stock, ships next working day</small></a>`;
-  return `<a class="nb-c" href="${href}">${fig}<b>${p.name}</b><small>${sub}</small><small class="nb-p">${onSale(p) ? cardPrice(p.price, 'span', false, p.handle) : 'Back soon'}</small>`
+  return `<a class="nb-c" href="${href}">${fig}<b>${cardName(p)}</b><small>${sub}</small><small class="nb-p">${onSale(p) ? cardPrice(p.price, 'span', false, p.handle) : 'Back soon'}</small>`
     + inc('st0', `<small class="st0">Pre-order opens Wed 28 Oct</small>`) + inc('st1', `<small class="st1">Pre-order, ships from Fri 30 Oct</small>`)
     + (IN_HAND ? '' : `<small class="st2">Pre-order, ships from Fri 30 Oct</small>`) + `</a>`;
 }
@@ -623,6 +626,9 @@ function specChips(p) {
   else c.push(cut(p) === 'Unisex' ? 'Unisex S&ndash;XL' : 'Men&rsquo;s S&ndash;XL');
   return c;
 }
+/* 16 Nov 2026 (Faheem: "mention oversized in shirt title"): a design sold in one fit only (Al Qudra Lakes Tee, Khor Fakkan
+   Hoodie) has no fit tabs, so its card title carries the fit: "Al Qudra Lakes Tee — Oversized", as on its page, in Shopify and the cart */
+const cardName = p => p.fitsList && p.fitsList.length === 1 && p.title ? p.title : p.name;
 function bigCard(p, i) {
   const im = p.images[0], href = `/products/${p.handle}/`;
   const zoom = `<button type="button" class="pcard-zoom" data-zoom="/assets/preorder/${im ? im.k : ''}-1200.webp" aria-label="Zoom ${esc(p.plain || p.name)}"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`;
@@ -636,7 +642,7 @@ function bigCard(p, i) {
     ? inc('st0', `<span class="pcard-st st0">On sale from Wed 28 Oct</span>`) + `<span class="pcard-st st12">In stock, ships next working day</span>`
     : inc('st0', `<span class="pcard-st st0">Pre-order opens Wed 28 Oct</span>`) + inc('st1', `<span class="pcard-st st1">Pre-order, ships from Fri 30 Oct</span>`) + (IN_HAND ? '' : `<span class="pcard-st st2">Pre-order, ships from Fri 30 Oct</span>`);
   const noqa = p.oneSize || /kit/i.test(p.handle) ? ' data-noqa' : '';   /* quick add would offer "Default Title", or 16 tee/short pairs */
-  return `<article class="pcard${i != null ? (i ? '' : ' on') : ''}" data-handle="${p.handle}"${i != null ? ` data-i="${i}"` : ''}${noqa}>${img}<span class="pcard-b"><a class="pcard-t" href="${href}">${p.name}</a>${RV.cardRating(p.handle)}<span class="pcard-place">${place}</span><span class="pcard-spec">${chips}</span>${colour}${stock}<span class="pcard-foot"><span class="pcard-p">${price}</span><a class="pcard-cta" href="${href}">Full details &rarr;</a></span></span></article>`;
+  return `<article class="pcard${i != null ? (i ? '' : ' on') : ''}" data-handle="${p.handle}"${i != null ? ` data-i="${i}"` : ''}${noqa}>${img}<span class="pcard-b"><a class="pcard-t" href="${href}">${cardName(p)}</a>${RV.cardRating(p.handle)}<span class="pcard-place">${place}</span><span class="pcard-spec">${chips}</span>${colour}${stock}<span class="pcard-foot"><span class="pcard-p">${price}</span><a class="pcard-cta" href="${href}">Full details &rarr;</a></span></span></article>`;
 }
 /* one design: its fits on sale behind a switch, or the one card */
 function designCards(p, fitsLabel) {
@@ -713,7 +719,7 @@ function pieceBlock(placeId, lead) {
   ${im ? `<a class="spb-f" href="/products/${p.handle}/" tabindex="-1" aria-hidden="true" data-cycle>${cardSet(p).map((x, i) => imgTag(x, { alt: '', sizes: '240px', bg: '#2A2016', cls: i ? '' : 'on' })).join('')}${mockTag(im)}</a>` : ''}
   <div><p class="spb-k">${lead || `The ${noun} drawn from this place`} &middot; Sahel</p><h2>${p.name}</h2><p>${first}</p>
   <p class="spb-p">${cardPrice(p.price, 'span', false, p.handle)}${p.fitsList ? ' &middot; ' + bothFits(p) : ''}</p>
-  <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}${im && im.mock ? 'The image is a studio mock-up.' : 'Photographed from the real piece.'}</p>
+  <p>${inc('st0', '<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time. </span>')}${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct. '}${im && im.mock ? 'The image is a studio mock-up.' : im && im.studio ? '' : 'Photographed from the real piece.'}</p>
   <a class="spb-a" href="/products/${p.handle}/">See the ${noun} &rarr;</a></div>
 </section>`;
 }
@@ -749,7 +755,7 @@ ${CYCLE_CSS}
     inc('st1', '<p class="st1">Pre-order is open: 20% off the new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</p>') +
     `<p class="st2">Designed in the UAE for everyone who loves it.</p>
     <a class="lb-a" href="/new/">` + inc('st0', '<span class="st0">See the pieces</span>') + inc('st1', '<span class="st1">Pre-order now</span>') + `<span class="st2">Shop the new pieces</span> &rarr;</a>
-  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 42vw, 200px', bg: '#2A2016' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', false, p.handle)}</a>`).join('') +
+  </div><div class="lb-g">` + pick.map(p => `<a class="lb-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 42vw, 200px', bg: '#2A2016' })}${mockTag(p.images[0])}</span><b>${cardName(p)}</b>${cardPrice(p.price, 'small', false, p.handle)}</a>`).join('') +
   `</div></div></section>`;
 }
 
@@ -808,7 +814,7 @@ ${CYCLE_CSS}
       <p class="ph-tr"><a href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p>
     </div>
   </div>
-  <div class="ph-g">` + designs.map(p => `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#2A2016' })}${mockTag(p.images[0])}</span><b>${p.name}</b>${cardPrice(p.price, 'small', true, p.handle)}</a>`).join('') + `</div>
+  <div class="ph-g">` + designs.map(p => `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#2A2016' })}${mockTag(p.images[0])}</span><b>${cardName(p)}</b>${cardPrice(p.price, 'small', true, p.handle)}</a>`).join('') + `</div>
 </section>`;
   /* 3 Nov 2026 (Faheem: "Let's put the hero slides back on top of homepage. Sahel out now can have a narrow band below
      it"): from stage 2 the full Sahel first screen is gone; the hero slideshow is first again and homeNowBand() sits
@@ -826,7 +832,7 @@ ${CYCLE_CSS}
       <p class="ph-tr"><a href="/trail/#pieces" data-track="home_preorder_trail">Sahra Trail running kit is on pre-order too &rarr;</a></p>
     </div>
   </div>
-  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#2A2016' })}${mockTag(im)}</span><b>${p.name}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
+  <div class="ph-g">` + designs.map(p => { const im = p.images[0]; return `<a class="ph-c" href="/products/${p.handle}/"><span data-cycle>${cycleImgs(p, { sizes: '(max-width: 860px) 38vw, 160px', bg: '#2A2016' })}${mockTag(im)}</span><b>${cardName(p)}</b><small>${money(pre(p.price))}, pre-order price</small></a>`; }).join('') + `</div>
 </section>`);
 }
 
