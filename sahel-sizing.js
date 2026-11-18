@@ -1,7 +1,7 @@
 /* Sahel size charts (27 Oct 2026, Faheem supplied the charts).
    Sahel is cut on its own pattern, larger than the Founding Edition, so it gets its own tables
    everywhere a Sahel piece is sold, and every chart says which line it belongs to.
-   Data: content/sahel-sizing.json (S to XL only). No chart yet: the Sahel Polo. Sahra Trail has its own (trail-sizing.js). */
+   Data: content/sahel-sizing.json (S to XL only). The Sahel Polo uses the Sahel Regular tee chart (Faheem, 18 Nov 2026: "Sahel polo is same size as sahel regular tee"). Sahra Trail has its own (trail-sizing.js). */
 const fs = require('fs');
 const path = require('path');
 
@@ -18,7 +18,7 @@ for (const k of ['teeRegular', 'teeSuperOversized', 'teeOversized', 'hoodie', 'h
 function keyFor(p) {
   if (!p || p.line !== 'sahel') return null;
   const kind = String(p.kind || '');
-  if (/polo/i.test(kind)) return null;
+  if (/polo/i.test(kind)) return 'teeRegular';   /* 18 Nov 2026 (Faheem): same sizes as the Sahel Regular tee */
   /* 14 Nov 2026: a fit that is still paused (the Shams Tee's Oversized) shows no chart until it returns */
   const own = (p.fitsList || []).find(f => f.handle === p.handle);
   if (own && own.onSale === false) return null;
@@ -66,7 +66,7 @@ function method(key) {
 /* the block for a product page or the size guide */
 function block(key, opts = {}) {
   const t = D[key];
-  return `${opts.heading ? `<h3 class="ssz-h">${t.label}</h3>` : ''}<p class="ssz-intent">${t.intent}</p>
+  return `${opts.heading ? `<h3 class="ssz-h">${t.label}</h3>` : ''}${opts.polo ? '<p class="ssz-intent"><strong>The Sahel Polo has the same sizes as the Sahel Regular tee</strong>, so this is its chart.</p>' : `<p class="ssz-intent">${t.intent}</p>`}
   ${table(key)}
   <p class="ssz-diff"><strong>${key === 'teeOversized' ? 'The Founding Edition Oversized chart.' : 'Not the Founding Edition chart.'}</strong> ${D.compare[key]}</p>
   ${method(key)}`;

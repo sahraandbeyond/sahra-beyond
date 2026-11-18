@@ -47,6 +47,8 @@ function sahel(key) {
   const labelAr = { teeRegular: 'تيشيرت ساحل، ريجولر', teeSuperOversized: 'تيشيرت ساحل، سوبر أوفرسايز', teeOversized: 'تيشيرت ساحل، أوفرسايز', hoodie: 'هودي ساحل، سوبر أوفرسايز', hoodieOversized: 'هودي ساحل، أوفرسايز' }[key];
   return { kind: 'garment', id: 'sahel-' + key, label, labelAr, target, sizes: garmentRows(d.rows) };
 }
+/* 18 Nov 2026 (Faheem): the Sahel Polo has the Sahel Regular tee sizes */
+function sahelPolo() { const x = sahel('teeRegular'); return x ? Object.assign(x, { id: 'sahel-polo', label: 'The Sahel Polo', labelAr: 'بولو ساحل' }) : null; }
 /* "91&ndash;96" -> [91, 96] */
 const band = s => String(s).replace(/&ndash;|–/g, '-').split('-').map(Number);
 function trail(part) {
@@ -69,7 +71,7 @@ function forFounding(p) {
 }
 function forNewLine(p, SZ, TSZ) {
   const sk = SZ.keyFor(p);
-  if (sk) { const x = sahel(sk); return x ? { pieces: [x] } : null; }
+  if (sk) { const x = sahel(sk); if (x && /polo/i.test(p.kind || '')) Object.assign(x, { id: 'sahel-polo', label: 'The Sahel Polo', labelAr: 'بولو ساحل' }); return x ? { pieces: [x] } : null; }
   const tk = TSZ.keyFor(p);
   if (tk === 'kit') return { pieces: [trail('tee'), trail('short')], kit: true };
   if (tk) return { pieces: [trail(tk)] };
@@ -77,7 +79,7 @@ function forNewLine(p, SZ, TSZ) {
 }
 /* the size guide: every piece, chosen from a list */
 function all() {
-  return { pieces: [founding('regular'), founding('oversized'), polo(), sahel('teeRegular'), sahel('teeOversized'), sahel('teeSuperOversized'), sahel('hoodieOversized'), sahel('hoodie'), trail('tee'), trail('short')].filter(Boolean), choose: true };
+  return { pieces: [founding('regular'), founding('oversized'), polo(), sahelPolo(), sahel('teeRegular'), sahel('teeOversized'), sahel('teeSuperOversized'), sahel('hoodieOversized'), sahel('hoodie'), trail('tee'), trail('short')].filter(Boolean), choose: true };
 }
 /* the markup: an anchor the help line opens, and the data the script reads */
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/</g, '&lt;');
