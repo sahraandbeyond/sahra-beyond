@@ -125,8 +125,6 @@ const GA4_HEAD = `<!-- Google Analytics 4 -->
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>
-${/* Vercel Speed Insights is on (real-visitor LCP and INP). Web Analytics answers 404 until it is
-     switched on in the Vercel dashboard (Analytics tab, Enable); the tag then starts counting
-     with no further change, including visits that leave before GA4 has loaded. */''}<script defer src="/_vercel/insights/script.js"></script>
-<script defer src="/_vercel/speed-insights/script.js"></script>`;
+${/* Vercel Speed Insights is on (real-visitor LCP and INP). 17 Nov 2026 (blocker audit, Faheem: "Housekeeping"): the Vercel
+     Web Analytics tag is gone; it answered 404 on every page because Web Analytics was never switched on. */''}<script defer src="/_vercel/speed-insights/script.js"></script>`;
 module.exports = { GA4_ID, GA4_HEAD, CLARITY_ID };

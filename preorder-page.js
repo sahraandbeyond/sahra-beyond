@@ -438,7 +438,6 @@ function productPage(p, all, SITE, stage) {
   const placeLink = p.place ? `<p class="po-small">The place: <a href="/locations/${p.place[1]}/">${p.place[0]} &rarr;</a></p>` : '';
   /* 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top and buy sheet as the Founding Edition pages (specimen.js) */
   const S = SP.fromPreorder(p);
-  const ask = `<a href="${WA}?text=${encodeURIComponent('Hi, a size question about ' + (/^The /.test(p.plain) ? p.plain : 'the ' + p.plain) + ' before I order.')}" target="_blank" rel="noopener">`;
   /* 31 Oct 2026: the fit line by the sizes on a Super Oversized page; a paused Oversized page has no chart until the fit returns */
   const fitLine = p.fit === 'Super Oversized' ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Roomy, with a dropped shoulder. Most people take one size down from their usual size.' : 'Super Oversized, drop shoulder: about one size bigger than our Founding Edition Oversized. If you know your Founding size, go one size down.'}</p>`
     /* 14 Nov 2026: the Oversized fit is back on the original Oversized charts */
@@ -450,7 +449,10 @@ function productPage(p, all, SITE, stage) {
   /* 12 Nov 2026 (Size finder 2, Faheem: "On every product page"): the help line leads to the size finder, which opens as a sheet */
   const SFD = require('./sizefinder-data.js'), sf = paused ? '' : SFD.mount(SFD.forNewLine(p, SZ, TSZ), { handle: p.handle });
   const find = sf ? `<a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. ` : '';
-  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">${find}${worn}Still unsure? ${ask}Message us.</a></p>` : TSZ.keyFor(p) ? `<p class="ss-help">${find}Sahra Trail has its own sizes, separate from our tees. Still unsure? ${ask}Message us.</a></p>` : `<p class="ss-help">No size chart for this piece yet. Unsure of your size? ${ask}Message us before you order.</a></p>`;
+  /* 17 Nov 2026 (WhatsApp fit help, Faheem): the WhatsApp question now sits once, under the fit (specimen.js waLine), so the
+     "Still unsure? Message us." links are gone from this line; it carries the free size exchange instead (UAE visitors only) */
+  const exch = `<span class="sb-ship-uae ss-exch"> Free size exchanges in the UAE.</span>`;
+  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">${find}${worn}${exch}</p>` : TSZ.keyFor(p) ? `<p class="ss-help">${find}Sahra Trail has its own sizes, separate from our tees.${exch}</p>` : `<p class="ss-help">No size chart for this piece yet.${exch}</p>`;
   const sup = (p.fitsList || []).find(f => f.fit === 'Super Oversized' && f.onSale), reg = (p.fitsList || []).find(f => f.fit === 'Regular' && f.onSale);
   const pausedChart = paused && p.line === 'sahel' && p.fit === 'Oversized'
     ? `<section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask">The Oversized chart will be published when the fit returns. Until then, see ${[sup ? `<a href="/products/${sup.handle}/#size-chart">Super Oversized</a>` : '', reg ? `<a href="/products/${reg.handle}/#size-chart">Regular</a>` : ''].filter(Boolean).join(' and ')}.</p><p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : '';

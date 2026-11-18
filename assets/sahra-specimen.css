@@ -417,3 +417,29 @@ html.ss-page body .po-rv{background:none!important;border:0!important;box-shadow
   .ss-next a{margin:0 auto}
 }
 @media(min-width:900px){html body .po-more .po-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ---- 17 Nov 2026: WhatsApp fit help (Faheem: "Add Whatsapp link near fit selection") ----
+   One quiet line under the fit tabs, above the sizes: the WhatsApp glyph in ink, no box, no badge, no green. The whole line
+   is the tap target (44px tall); "Ask us on WhatsApp" is the underlined part. */
+html body .ss p.ss-wa{margin:10px 0 0;font-size:14.5px!important;line-height:1.4!important}
+.ss-wa-a{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--ss-ink2);text-decoration:none}
+.ss-wa-a b{font-weight:500;color:var(--ss-ink);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.ss-wa-a:hover b{color:var(--ss-copper-d)}
+.ss-wa-a:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:3px;border-radius:6px}
+.ss-wa-i{flex:0 0 auto;color:var(--ss-ink)}
+@media(max-width:899px){html body .ss p.ss-wa{margin:6px 0 -4px}}
+
+/* ---- 17 Nov 2026: blocker audit fixes (Faheem approved all four) ----
+   1. Price on the first screen: on a phone the bar at the bottom carries the price on its button, "Add to bag" over
+      "AED 199" (one line was cut off beside four sizes on a 390 px phone);
+      not on the card under the price, where the price is right above it. data-pr is set by assets/sahra-specimen.js. */
+@media(max-width:899px){
+  html body .ssb:not(.inl) .ssb-add[data-pr]::after{content:attr(data-pr);display:block;margin-top:4px;font-size:13px;font-weight:500;line-height:1;letter-spacing:.01em;color:rgba(250,246,239,.86)}
+}
+/* 2. Sold-out sizes: a line through the size, still tappable ("L is sold out. Tell me when it's back" under the sizes) */
+html body .ssb .ssb-sz button.is-out{position:relative;background:#FAF6EF!important;color:#6B6256!important;border-style:dashed!important;cursor:pointer;overflow:hidden}
+html body .ssb .ssb-sz button.is-out::after{content:"";position:absolute;left:18%;right:18%;top:50%;border-top:1.5px solid #6B6256;transform:rotate(-38deg)}
+.ssb-msg .ssb-bis-go{display:inline;margin:0;padding:4px 0;border:0;background:none;color:#7E4114;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+/* 4. Housekeeping: the Trail Kit's size buttons at the 44 px tap size, like every other page */
+html body .ssb.kit .ssb-sz button,html body .ssb.inl.kit .ssb-sz button{min-width:44px;height:44px}
+html body .ssb.inl.kit .ssb-gl{min-width:34px}

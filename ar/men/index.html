@@ -85,7 +85,6 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>
-<script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
@@ -841,7 +840,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 <link rel="stylesheet" href="/assets/sahra-rtl.css?v=d330296d">
 <script src="/assets/sahra-ar-ui.js?v=7215090c" defer></script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=2e42fdf5">
-<script src="/assets/sahra-welcome.js?v=cfcc44d6" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=165d9662" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=b2e166cc">
 <script src="/assets/sahra-nav.js?v=83e87810" data-sbn defer></script>
 <link rel="stylesheet" href="/assets/sahra-system.css?v=c94116de">
@@ -1519,6 +1518,9 @@ html body.ls-page .news .news-eyebrow{font-size:var(--h-label)!important}
 </style>
   <style>
 .ho{position:relative;display:block;overflow:hidden;background:#2A2016;color:#FAF6EF;height:min(104vw,460px)}
+/* 17 Nov 2026 (blocker audit, Faheem: "Shop: products on screen 1"): on a phone the /shop/ opener is a band, not a full
+   screen, so the chips and the first row of products show without scrolling */
+@media(max-width:599px){html body .ho[data-ho="shop"]{height:min(58vw,250px)}html body .ho[data-ho="shop"] .ho-d{display:none}}
 .ho picture{position:absolute;inset:0;display:block}
 .ho img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--ho-m,50% 30%)}
 .ho::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(42,32,22,.86) 0,rgba(42,32,22,.7) 22%,rgba(42,32,22,.48) 38%,rgba(42,32,22,.16) 50%,rgba(42,32,22,0) 60%)}
@@ -1557,7 +1559,7 @@ html body .ho .ho-c a:hover{text-decoration:underline}
   html body .ho .ho-c a:hover{color:#FFFFFF}
 }
 </style>
-  <section class="ho" aria-labelledby="hoH" style="--ho-m:50% 60%;--ho-d:50% 10%">
+  <section class="ho" aria-labelledby="hoH" data-ho="men" style="--ho-m:50% 60%;--ho-d:50% 10%">
     <picture><source media="(max-width:599px)" srcset="/assets/open/men-m-780.webp" width="780" height="936"><img src="/assets/open/men-720.webp" srcset="/assets/open/men-720.webp 720w, /assets/open/men-1076.webp 1076w" sizes="(min-width:600px) 62vw, 100vw" width="1076" height="1345" alt="عارض يرتدي تيشيرت شمس عند البحر" fetchpriority="high" decoding="async"></picture>
     <div class="ho-t"><nav class="ho-c" aria-label="مسار التنقل"><a href="/ar/">الرئيسية</a> &lsaquo; <span>تيشيرتات رجالية وبولو وهوديات وملابس رياضية</span></nav><p class="ho-k">المتجر · الرجال</p><h1 id="hoH"><span style="white-space:nowrap">تيشيرتات</span> رجالية وبولو وهوديات وملابس رياضية</h1><p class="ho-d">كل ما نصنعه: التيشيرتات والهوديات والبولو وصحراء تريل</p></div>
   </section>

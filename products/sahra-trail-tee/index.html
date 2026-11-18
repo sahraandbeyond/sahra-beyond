@@ -85,7 +85,6 @@ try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.
   var _app=(document.referrer||'').indexOf('android-app://')===0||/[?&]platform=android/i.test(location.search);
   gtag('set','user_properties',{platform:_app?'app':'web'});
 </script>
-<script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <!-- Meta Pixel + Conversions API -->
 <script src="/assets/meta-pixel.js?v=3e480d3a" defer></script>
@@ -838,7 +837,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/products/sahra-trail-tee/">
 <link rel="alternate" hreflang="x-default" href="https://www.sahraandbeyond.ae/products/sahra-trail-tee/">
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=2e42fdf5">
-<script src="/assets/sahra-welcome.js?v=cfcc44d6" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=165d9662" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=b2e166cc">
 <script src="/assets/sahra-nav.js?v=83e87810" data-sbn defer></script>
 <link rel="stylesheet" href="/assets/sahra-system.css?v=c94116de">
@@ -1403,7 +1402,7 @@ function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttri
 set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
 /* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
 function days(){try{var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).split('-'),n=Math.round((Date.UTC(2026,9,28)-Date.UTC(+t[0],t[1]-1,+t[2]))/864e5),x=n>1?'That is in '+n+' days.':n===1?'That is tomorrow.':n===0?'That is today.':'';[].forEach.call(document.querySelectorAll('[data-days]'),function(e){e.textContent=x;});}catch(e){}}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><link rel="preload" as="image" href="/assets/preorder/pm2-sahra-trail-kit-01-lunge-720.webp" imagesrcset="/assets/preorder/pm2-sahra-trail-kit-01-lunge-480.webp 480w, /assets/preorder/pm2-sahra-trail-kit-01-lunge-720.webp 720w, /assets/preorder/pm2-sahra-trail-kit-01-lunge-1200.webp 1200w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high"><link rel="stylesheet" href="/assets/sahra-specimen.css?v=e2be58c6"><style>
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><link rel="preload" as="image" href="/assets/preorder/pm2-sahra-trail-kit-01-lunge-720.webp" imagesrcset="/assets/preorder/pm2-sahra-trail-kit-01-lunge-480.webp 480w, /assets/preorder/pm2-sahra-trail-kit-01-lunge-720.webp 720w, /assets/preorder/pm2-sahra-trail-kit-01-lunge-1200.webp 1200w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high"><link rel="stylesheet" href="/assets/sahra-specimen.css?v=4830cdbb"><style>
 .ssz-wrap{overflow-x:auto;border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#fff;margin:10px 0 0}
 table.ssz{width:100%;border-collapse:collapse;font-family:Jost,system-ui,sans-serif}
 table.ssz caption{caption-side:top;text-align:left;font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B6256;padding:10px 12px 4px}
@@ -1570,6 +1569,7 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
       <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 × 34.75 with <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></p>
       <p class="ss-kind">Running T-shirt · Men’s cut</p>
       
+      <p class="ss-wa"><a class="ss-wa-a" href="https://wa.me/971585449946?text=Hi%2C%20I'm%20looking%20at%20the%20Sahra%20Trail%20Tee.%20Which%20size%20should%20I%20get%3F%20I'm%20__%20cm%2C%20__%20kg%20and%20usually%20wear%20__." target="_blank" rel="noopener" data-wa="fit_help" data-wa-name="Sahra Trail Tee" data-wa-fit="" data-handle="sahra-trail-tee"><svg class="ss-wa-i" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15s-.77.96-.94 1.16c-.17.2-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.27-.2-.57-.35z"/><path fill="currentColor" d="M12.04 2A9.9 9.9 0 0 0 2.1 11.9c0 1.75.46 3.46 1.33 4.97L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01A9.9 9.9 0 0 0 22 11.94 9.9 9.9 0 0 0 12.04 2zm0 18.1a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.38 8.24 8.24 0 0 1 14.07-5.83 8.2 8.2 0 0 1 2.42 5.84 8.24 8.24 0 0 1-8.25 8.24z"/></svg><span>Not sure about the fit or size? <b>Ask us on WhatsApp</b></span></a></p>
     </div>
     <div class="ss-body">
       <div class="ssb" id="ssBuy" role="region" aria-label="Buy Sahra Trail Tee" data-handle="sahra-trail-tee" data-kit="0" data-one="0" data-gift="1" data-line="trail" data-price="139">
@@ -1577,7 +1577,7 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
       <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p"><span class="sb-price" data-handle="sahra-trail-tee" data-aed="139">AED 139</span></span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × 34.75 with <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p></div>
       <p class="ssb-msg" id="ssMsg" role="status" aria-live="polite"></p>
     </div>
-      <p class="ss-help"><a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. Sahra Trail has its own sizes, separate from our tees. Still unsure? <a href="https://wa.me/971585449946?text=Hi%2C%20a%20size%20question%20about%20the%20Sahra%20Trail%20Tee%20before%20I%20order." target="_blank" rel="noopener">Message us.</a></p>
+      <p class="ss-help"><a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. Sahra Trail has its own sizes, separate from our tees.<span class="sb-ship-uae ss-exch"> Free size exchanges in the UAE.</span></p>
       
       <p class="ss-promise1"><span class="sb-ship-uae">In stock. Next-working-day delivery across the UAE, order by 2 pm. Free over AED 100 · Free 14-day returns and exchanges · Free <a href="/tote/">Sahra Tote</a> with every order</span><span class="sb-ship-gcc">In stock. GCC delivery in 3–5 working days, free over AED 390 · 14-day returns</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7–14 working days · 14-day returns</span></p>
       <p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>
@@ -1592,7 +1592,7 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
     <div><h2>Details</h2><ul><li>Raglan sleeves</li><li>Mesh side panels</li><li>Covered seams</li><li>Reflective Two Ridges symbol under the collar</li></ul>
       <p class="po-small" style="margin-top:12px"> Designed in the UAE.</p></div>
   </section></details>
-  <details class="pdp-acc po-acc" id="size-chart-g"><summary class="pdp-acc-h"><span>Size chart</span><i aria-hidden="true">+</i></summary><div class="sfind" id="size-finder" data-sizefinder data-sf='{"pieces":[{"kind":"bands","part":"tee","id":"trail-tee","label":"Sahra Trail Tee","labelAr":"تيشيرت صحراء تريل","sizes":[["S",91,96],["M",96,101],["L",101,106],["XL",106,111]],"garment":[["S",108,71],["M",115.6,73.5],["L",123.2,76],["XL",130.8,78.5]]}],"handle":"sahra-trail-tee"}'></div><script src="/assets/sahra-sizefinder.js?v=4fe37e69" defer></script><section class="po-size" id="size-chart"><h2>Size chart</h2><div class="ssz-wrap"><table class="ssz ssz-body">
+  <details class="pdp-acc po-acc" id="size-chart-g"><summary class="pdp-acc-h"><span>Size chart</span><i aria-hidden="true">+</i></summary><div class="sfind" id="size-finder" data-sizefinder data-sf='{"pieces":[{"kind":"bands","part":"tee","id":"trail-tee","label":"Sahra Trail Tee","labelAr":"تيشيرت صحراء تريل","sizes":[["S",91,96],["M",96,101],["L",101,106],["XL",106,111]],"garment":[["S",108,71],["M",115.6,73.5],["L",123.2,76],["XL",130.8,78.5]]}],"handle":"sahra-trail-tee"}'></div><script src="/assets/sahra-sizefinder.js?v=58a34d8c" defer></script><section class="po-size" id="size-chart"><h2>Size chart</h2><div class="ssz-wrap"><table class="ssz ssz-body">
     <caption>Sahra Trail &middot; your size, by body measurement</caption>
     <thead><tr><th scope="col">Size</th><th scope="col">Your chest</th><th scope="col">Height</th></tr></thead>
     <tbody><tr><th scope="row">S</th><td><bdi dir="ltr">91&ndash;96</bdi>&nbsp;cm<small dir="ltr">36&ndash;38&Prime;</small></td><td><bdi dir="ltr">168&ndash;176</bdi>&nbsp;cm</td></tr><tr><th scope="row">M</th><td><bdi dir="ltr">96&ndash;101</bdi>&nbsp;cm<small dir="ltr">38&ndash;40&Prime;</small></td><td><bdi dir="ltr">174&ndash;182</bdi>&nbsp;cm</td></tr><tr><th scope="row">L</th><td><bdi dir="ltr">101&ndash;106</bdi>&nbsp;cm<small dir="ltr">40&ndash;42&Prime;</small></td><td><bdi dir="ltr">178&ndash;186</bdi>&nbsp;cm</td></tr><tr><th scope="row">XL</th><td><bdi dir="ltr">106&ndash;111</bdi>&nbsp;cm<small dir="ltr">42&ndash;44&Prime;</small></td><td><bdi dir="ltr">182&ndash;190</bdi>&nbsp;cm</td></tr></tbody></table></div>
@@ -1610,7 +1610,7 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
   </div>
   <div class="ss-next"><a href="/products/sahra-trail-2-in-1-short/"><span class="ss-next-i"><img src="/assets/preorder/pm2-sahra-trail-short-04-side-720.webp" width="720" height="900" alt="" loading="lazy" decoding="async"></span><span class="ss-next-t"><small>Next piece</small><b>Sahra Trail 2-in-1 Short</b><span>Sahra Trail</span></span><span class="ss-next-a" aria-hidden="true">→</span></a></div>
 </main>
-<script src="/assets/sahra-specimen.js?v=f2a35feb" defer></script>
+<script src="/assets/sahra-specimen.js?v=bc765722" defer></script>
 <footer class="ftr"><div class="ftr-tagline">Designed in the UAE for everyone who loves it.</div>
   <div class="soc"><a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">Instagram</a></div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>

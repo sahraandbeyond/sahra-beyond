@@ -218,8 +218,23 @@
     } else if (m === 'inl') { phM.appendChild(buy); buy.classList.add('inl', 'seen'); inlH = buy.offsetHeight || inlH || 70; }
     else ph.parentNode.insertBefore(buy, ph.nextSibling);
     buy.classList.toggle('float', floating && !mqPh.matches);
+    barPrice();
     syncH();
   }
+  /* 17 Nov 2026 (blocker audit, Faheem: "Price on first screen"): on a phone the first screen is the photo and the bar,
+     so the bar's button carries the price ("Add to bag · AED 199"), in the visitor's currency as shown on the page.
+     CSS shows it only while the sheet is the bar at the bottom (assets/sahra-specimen.css, .ssb-add[data-pr]). */
+  function barPrice() {
+    try {
+      var p = document.querySelector('.ss-price .sb-price'); if (!p || !add) return;
+      var t = (p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim();
+      var bt = add.textContent || '', go = t && !add.disabled && !add.classList.contains('is-alt') && !/sold|unavailable|adding|added|checking|\u0646\u0641\u062f|\u063a\u064a\u0631 \u0645\u062a\u0627\u062d/i.test(bt);
+      if (go) add.setAttribute('data-pr', t); else add.removeAttribute('data-pr');
+    } catch (e) {}
+  }
+  try { if (window.MutationObserver) { var mo = new MutationObserver(function () { barPrice(); }), spx = document.querySelector('.ss-price');
+    if (spx) mo.observe(spx, { childList: true, subtree: true, characterData: true });
+    if (add) mo.observe(add, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['disabled', 'class'] }); } } catch (e) {}
   function setFloat(on) { put(on ? 'float' : 'home'); }
   var raf = 0;
   function place() {
@@ -260,7 +275,11 @@
       var g = box.getAttribute('data-group');
       [].forEach.call(box.querySelectorAll('button'), function (b) {
         var z = b.getAttribute('data-size'), ok = !VS || avail(g, z);
-        b.disabled = !!(VS && !ok);
+        /* 17 Nov 2026 (blocker audit, Faheem: "Sold-out sizes clear"): a sold-out size is marked (a line through it) and
+           still answers a tap, with "L is sold out" and a way to be told when it is back, instead of a dead button */
+        b.disabled = false;
+        b.classList.toggle('is-out', !!(VS && !ok));
+        if (VS && !ok) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
         b.setAttribute('aria-pressed', sel[g] === z ? 'true' : 'false');
         b.setAttribute('aria-label', z + (VS && !ok ? ', sold out' : ''));
       });
@@ -285,16 +304,39 @@
   buy.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('.ssb-sz button'); if (!b || b.disabled) return;
     var g = b.closest('.ssb-sz').getAttribute('data-group'), z = b.getAttribute('data-size');
+    if (b.classList.contains('is-out')) { soldOut(z); tr('size_soldout_tap', { item_id: handle, size: z, via: floating ? 'specimen-bar' : 'specimen' }); return; }
     sel[g] = z; say(''); paint(); fitLinks();
     /* 12 Nov 2026: 'specimen-bar' when the sheet is the bar at the bottom, so reports can tell it from the sizes under the price */
     var sp = { item_id: handle, size: z, via: floating ? 'specimen-bar' : 'specimen', ad: window.SB_AD ? 1 : 0 }; if (g !== 'size') sp.part = g;   /* the kit has two size rows: tee and short */
     tr('size_select', sp);
   });
+  /* a tap on a sold-out size: say so under the sizes, with the "Tell me when it's back" sign-up one tap away */
+  function soldOut(z) {
+    if (!msg) return;
+    var AR = /^ar\b/i.test(document.documentElement.getAttribute('lang') || '');
+    var hasBis = !kit && !!window.SBCapture;
+    msg.innerHTML = '';
+    msg.appendChild(document.createTextNode(AR ? '\u0645\u0642\u0627\u0633 ' + z + ' \u0646\u0641\u062f. ' : z + ' is sold out. '));
+    if (hasBis) {
+      var l = document.createElement('button'); l.type = 'button'; l.className = 'ssb-bis-go';
+      l.textContent = AR ? '\u0623\u062e\u0628\u0631\u0648\u0646\u064a \u0639\u0646\u062f \u062a\u0648\u0641\u0631\u0647' : 'Tell me when it\u2019s back';
+      l.addEventListener('click', function () {
+        bisMount(); var box = document.getElementById('sbcBis'); if (!box) return;
+        var t = box.querySelector('.sbc-bis-t'), panel = box.querySelector('.sbc-bis-f');
+        if (panel && panel.hidden && t) t.click();
+        var zb = box.querySelector('.sbc-bis-sz button[data-z="' + z + '"]'); if (zb) zb.click();
+        try { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { box.scrollIntoView(); }
+        var em = box.querySelector('input[type=email]'); if (em) setTimeout(function () { try { em.focus({ preventScroll: true }); } catch (e) {} }, 450);
+      });
+      msg.appendChild(l);
+    } else msg.appendChild(document.createTextNode(AR ? '\u0627\u062e\u062a\u0631 \u0645\u0642\u0627\u0633\u064b\u0627 \u0622\u062e\u0631.' : 'Please choose another size.'));
+    buy.classList.add('has-msg'); syncH();
+  }
   function needSize() {
     say(kit ? 'Choose a size for the tee and the short first.' : 'Choose your size first.');
     var boxes = buy.querySelectorAll('.ssb-sz');
     [].forEach.call(boxes, function (x) { x.classList.remove('flash'); void x.offsetWidth; x.classList.add('flash'); });
-    var f = buy.querySelector('.ssb-sz button:not(:disabled)'); if (f) try { f.focus({ preventScroll: true }); } catch (e) {}
+    var f = buy.querySelector('.ssb-sz button:not(:disabled):not(.is-out)'); if (f) try { f.focus({ preventScroll: true }); } catch (e) {}
   }
   /* the photo that folds into the bag: the one on show */
   function srcImg() { var f = figs[cur]; return f ? f.querySelector('img') : null; }
@@ -403,4 +445,54 @@
   try { var q = /[?&]size=(S|M|L|XL)\b/.exec(location.search || ''); if (q && !kit && !one) { sel.size = q[1]; fitLinks(); } } catch (e) {}
   paint();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load); else load();
+})();
+
+/* 17 Nov 2026 (WhatsApp fit help, claude/HANDOFF-Website-whatsapp-fit-help-17-Nov-2026.md): at tap time the prefilled
+   message gets the size the buyer has picked (if any), Arabic pages get the Arabic message, and the tap is counted:
+   GA4 whatsapp_click (placement fit_help, the product, fit and size) and Meta Contact (TikTok mirrors it). No personal
+   data is sent. Analytics only load on www.sahraandbeyond.ae (ga4.js), so test copies send nothing. */
+(function () {
+  var NUM = '971585449946';
+  function picked() {
+    var buy = document.getElementById('ssBuy'); if (!buy) return '';
+    var out = [];
+    [].forEach.call(buy.querySelectorAll('.ssb-sz'), function (g) {
+      var b = g.querySelector('button[aria-pressed="true"]'); if (!b) return;
+      var lab = g.querySelector('.ssb-gl');
+      out.push((lab ? lab.textContent.trim() + ' ' : '') + b.getAttribute('data-size'));
+    });
+    return out.join(', ');
+  }
+  function msg(a) {
+    var ar = document.documentElement.getAttribute('lang') === 'ar';
+    var name = a.getAttribute('data-wa-name') || '', fit = a.getAttribute('data-wa-fit') || '', size = picked();
+    if (ar) {
+      var h = document.querySelector('.ss-h1'); var nm = h ? h.textContent.replace(/\s+/g, ' ').trim() : name;
+      return 'مرحبًا، أنا أشاهد ' + nm + '. أي مقاس يناسبني؟ طولي __ سم، ووزني __ كغ، وعادةً ألبس مقاس __.' + (size ? ' كنت أفكر في مقاس ' + size + '.' : '');
+    }
+    var the = /^The /.test(name) ? name : 'the ' + name;
+    if (fit && name.toLowerCase().indexOf(fit.toLowerCase()) >= 0) fit = '';
+    return "Hi, I'm looking at " + the + (fit ? ' (' + fit + ')' : '') + ". Which size should I get? I'm __ cm, __ kg and usually wear __." + (size ? ' I was thinking ' + size + '.' : '');
+  }
+  function refresh(a) { a.href = 'https://wa.me/' + NUM + '?text=' + encodeURIComponent(msg(a)); }
+  function init() {
+    var links = document.querySelectorAll('a[data-wa="fit_help"]'); if (!links.length) return;
+    [].forEach.call(links, function (a) {
+      refresh(a);
+      a.addEventListener('pointerdown', function () { refresh(a); });
+      a.addEventListener('focus', function () { refresh(a); });
+      a.addEventListener('click', function () {
+        refresh(a);
+        var h = a.getAttribute('data-handle') || '', fit = a.getAttribute('data-wa-fit') || '', size = picked();
+        var variant = [fit, size].filter(Boolean).join(' / ') || 'none';
+        try { if (window.track) window.track('whatsapp_click', { placement: 'fit_help', item_id: h, item_name: a.getAttribute('data-wa-name') || '', item_variant: variant, fit: fit || undefined, size: size || undefined }); } catch (e) {}
+        try { if (window.sbMeta) window.sbMeta('Contact', { content_ids: [h], content_name: a.getAttribute('data-wa-name') || '', content_type: 'product', contact_reason: 'fit_help' }); } catch (e) {}
+      });
+    });
+    /* the size buttons: keep the link current as sizes are picked, so a long-press "copy link" carries it too */
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.closest && e.target.closest('#ssBuy .ssb-sz button')) setTimeout(function () { [].forEach.call(links, refresh); }, 0);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

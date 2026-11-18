@@ -106,6 +106,9 @@ const fs = require('fs'), path = require('path');
 let OPEN = {}; try { OPEN = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'openers.json'), 'utf8')); delete OPEN._; } catch (e) {}
 const HOUSE_CSS = `<style>
 .ho{position:relative;display:block;overflow:hidden;background:#2A2016;color:#FAF6EF;height:min(104vw,460px)}
+/* 17 Nov 2026 (blocker audit, Faheem: "Shop: products on screen 1"): on a phone the /shop/ opener is a band, not a full
+   screen, so the chips and the first row of products show without scrolling */
+@media(max-width:599px){html body .ho[data-ho="shop"]{height:min(58vw,250px)}html body .ho[data-ho="shop"] .ho-d{display:none}}
 .ho picture{position:absolute;inset:0;display:block}
 .ho img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--ho-m,50% 30%)}
 .ho::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(42,32,22,.86) 0,rgba(42,32,22,.7) 22%,rgba(42,32,22,.48) 38%,rgba(42,32,22,.16) 50%,rgba(42,32,22,0) 60%)}
@@ -151,7 +154,7 @@ function house(slug, { h1, line = '', crumbs = '', id = 'hoH', kickerHtml = '' }
   const o = OPEN[slug]; if (!o) return '';
   const k = key(slug);
   return `${HOUSE_CSS}
-  <section class="ho${o.words === 'top' ? ' ho-top' : ''}" aria-labelledby="${id}" style="--ho-m:${o.mpos || '50% 30%'};--ho-d:${o.dpos || '50% 40%'}">
+  <section class="ho${o.words === 'top' ? ' ho-top' : ''}" aria-labelledby="${id}" data-ho="${slug}" style="--ho-m:${o.mpos || '50% 30%'};--ho-d:${o.dpos || '50% 40%'}">
     <picture><source media="(max-width:599px)" srcset="/assets/open/${k}-m-780.webp" width="780" height="936"><img src="/assets/open/${k}-720.webp" srcset="/assets/open/${k}-720.webp 720w, /assets/open/${k}-1076.webp 1076w" sizes="(min-width:600px) 62vw, 100vw" width="1076" height="1345" alt="${escA(o.alt)}" fetchpriority="high" decoding="async"></picture>
     <div class="ho-t">${crumbs ? `<nav class="ho-c" aria-label="Breadcrumb">${crumbs}</nav>` : ''}<p class="ho-k">${kickerHtml || escA(o.kicker)}</p><h1 id="${id}">${h1}</h1>${line ? `<p class="ho-d">${line}</p>` : ''}</div>
   </section>`;

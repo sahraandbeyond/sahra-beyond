@@ -337,6 +337,28 @@ function sheet(s) {
       <p class="ssb-msg" id="ssMsg" role="status" aria-live="polite"></p>
     </div>`;
 }
+/* 17 Nov 2026 (Faheem, from the ads review: "Add Whatsapp link near fit selection to encourage users to reach out to us to
+   confirm sizes"; claude/HANDOFF-Website-whatsapp-fit-help-17-Nov-2026.md). One quiet line straight under the fit tabs (or
+   under the cut line on a one-fit piece), above the sizes, so the question can be asked at the moment of doubt. No reply-time
+   promise (Faheem, 17 Nov). The prefilled message names the piece and fit; assets/sahra-specimen.js adds the chosen size and
+   the Arabic message at tap time, and sends whatsapp_click (placement fit_help) and Meta/TikTok Contact. Not on one-size
+   pieces (the tote, the bag) or fits not for sale. */
+const WA_NUM = '971585449946';
+const plainText = h => String(h || '').replace(/<[^>]*>/g, '').replace(/&mdash;/g, '\u2014').replace(/&amp;/g, '&').replace(/&rsquo;/g, '\u2019').replace(/&eacute;/g, '\u00e9').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim();
+const WA_GLYPH = '<svg class="ss-wa-i" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15s-.77.96-.94 1.16c-.17.2-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.27-.2-.57-.35z"/><path fill="currentColor" d="M12.04 2A9.9 9.9 0 0 0 2.1 11.9c0 1.75.46 3.46 1.33 4.97L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01A9.9 9.9 0 0 0 22 11.94 9.9 9.9 0 0 0 12.04 2zm0 18.1a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.38 8.24 8.24 0 0 1 14.07-5.83 8.2 8.2 0 0 1 2.42 5.84 8.24 8.24 0 0 1-8.25 8.24z"/></svg>';
+function waMsg(name, fit) {
+  const the = /^The /.test(name) ? name : 'the ' + name;
+  if (fit && name.toLowerCase().indexOf(fit.toLowerCase()) >= 0) fit = '';   /* "Hajar Mountains Oversized T-Shirt" already says it */
+  return `Hi, I'm looking at ${the}${fit ? ` (${fit})` : ''}. Which size should I get? I'm __ cm, __ kg and usually wear __.`;
+}
+function waLine(s, h1) {
+  if (s.oneSize || PAUSED[s.handle]) return '';
+  const fit = s.fit || '';
+  let name = plainText(h1 || s.name);
+  if (fit) name = name.replace(new RegExp('\\s*\u2014\\s*' + fit + '$'), '');
+  const href = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(waMsg(name, fit))}`;
+  return `<p class="ss-wa"><a class="ss-wa-a" href="${href}" target="_blank" rel="noopener" data-wa="fit_help" data-wa-name="${esc(name)}" data-wa-fit="${esc(fit)}" data-handle="${s.handle}">${WA_GLYPH}<span>Not sure about the fit or size? <b>Ask us on WhatsApp</b></span></a></p>`;
+}
 /* The top of every product page. o: { crumb, h1, rating, help, extra, tabby } (HTML strings)
    14 Nov 2026 (Faheem: "Our product pages still look very cluttered compared to other major brands"; review panel of a
    consumer psychologist, a premium creative director and a conversion strategist, claude/REVIEW-product-pages-panel-14-Nov-2026.md).
@@ -369,6 +391,7 @@ function top(s, o = {}) {
       <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 \u00d7 ${quarter(s.price)} with ${TBL}</span></p>` : ''}
       <p class="ss-kind">${kind}</p>
       ${fitSwitch(s, 'ss-fits')}
+      ${waLine(s, o.h1)}
     </div>
     <div class="ss-body">
       ${sheet(s)}

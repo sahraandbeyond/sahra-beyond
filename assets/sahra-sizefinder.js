@@ -131,7 +131,7 @@
 
   /* ---------- the page's buy sheet ---------- */
   function sizeBtn(group, s) { return document.querySelector('#ssBuy .ssb-sz[data-group="' + group + '"] button[data-size="' + s + '"]'); }
-  function soldOut(group, s) { var b = sizeBtn(group, s); return !!(b && b.disabled); }
+  function soldOut(group, s) { var b = sizeBtn(group, s); return !!(b && (b.disabled || b.classList.contains('is-out'))); }
   function otherFit() { var a = document.querySelector('.ss-fits a:not(.on)'); if (!a) return null; var b = a.querySelector('b'); return { href: a.getAttribute('href'), name: (b ? b.textContent : a.textContent).trim() }; }
 
   /* ---------- markup ---------- */
@@ -268,7 +268,7 @@
         bt.addEventListener('click', function () {
           var chosen = bt.getAttribute('data-kit') ? picks.map(function (x) { return [x.group, x.pick]; }) : [['size', bt.getAttribute('data-s')]];
           var last = null;
-          chosen.forEach(function (c) { var x = sizeBtn(c[0], c[1]); if (x && !x.disabled) { if (x.getAttribute('aria-pressed') !== 'true') x.click(); last = x; } });
+          chosen.forEach(function (c) { var x = sizeBtn(c[0], c[1]); if (x && !soldOut(c[0], c[1])) { if (x.getAttribute('aria-pressed') !== 'true') x.click(); last = x; } });
           flush(); track('size_finder_select', { size: chosen.map(function (c) { return c[1]; }).join(' / ') });
           hide();
           var buy = document.getElementById('ssBuy');

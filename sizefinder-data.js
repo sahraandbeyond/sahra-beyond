@@ -24,7 +24,10 @@ const path = require('path');
 const J = f => JSON.parse(fs.readFileSync(path.join(__dirname, 'content', f), 'utf8'));
 const F = J('sizing.json'), S = J('sahel-sizing.json'), T = J('trail-sizing.json');
 
-const TARGET = { regular: 10, oversized: 20, superOversized: 27, hoodie: 28, hoodieOversized: 20 };   /* 14 Nov 2026: the Oversized hoodie is the original hoodie chart, 1.5 in closer than the Super Oversized */
+/* 17 Nov 2026 (Faheem, on the blocker audit: a 182 cm, 79 kg man who wants the Founding Edition Oversized tee as designed
+   takes M; the finder said S): the Oversized tee is aimed at 23 cm of room (was 20), so a build between S and M lands on M.
+   The Sahel Oversized tee is on the same chart, so it follows. The Oversized hoodie keeps its own 20. */
+const TARGET = { regular: 10, oversized: 23, superOversized: 27, hoodie: 28, hoodieOversized: 20 };   /* 14 Nov 2026: the Oversized hoodie is the original hoodie chart, 1.5 in closer than the Super Oversized */
 /* [size, full chest cm, length cm] from a row [size, chest in, chest cm flat, length in, length cm, ...] */
 const garmentRows = rows => rows.map(r => [r[0], Math.round(r[2] * 2 * 10) / 10, r[4]]);
 
