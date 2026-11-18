@@ -480,7 +480,8 @@ function build({ quiet } = {}) {
     const ar = mirrorPage(html, p, dict, has, missU, missA, bad);
     const dest = path.join(ROOT, 'ar', p.rel);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.writeFileSync(dest, ar); n++;
+    /* r146 (18 Nov 2026): a price span still in English ("AED 229") reads as Arabic before the market script runs */
+    fs.writeFileSync(dest, ar.replace(/(<span class="sb-price"[^>]*\bdata-aed="(\d+)"[^>]*>)AED \2(<\/span>)/g, '$1$2 درهمًا$3')); n++;
     if (addHreflangToEnglish(p.file, p)) h++;
   });
   const sm = addToSitemap(pages.map(p => arUrl(p.url)));

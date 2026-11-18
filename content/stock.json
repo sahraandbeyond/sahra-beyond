@@ -1,0 +1,182 @@
+{
+ "updated": "2026-11-18T11:53:34.117Z",
+ "stock": {
+  "al-quaa-galaxy-regular": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "al-quaa-galaxy-oversized": {
+   "S": false,
+   "M": false,
+   "L": false,
+   "XL": false
+  },
+  "empty-quarter-regular": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "empty-quarter-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "hajar-mountains-regular": {
+   "S": false,
+   "M": true,
+   "L": true,
+   "XL": false
+  },
+  "hajar-mountains-oversized": {
+   "S": true,
+   "M": true,
+   "L": false,
+   "XL": true
+  },
+  "sand-polo": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "sahra-tote-founding-edition-gift": {
+   "Default Title": true
+  },
+  "sahra-tote": {
+   "Default Title": true
+  },
+  "sahra-trail-tee": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "sahra-trail-2-in-1-short": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "sahra-trail-kit": {
+   "S / S": true,
+   "S / M": true,
+   "S / L": true,
+   "S / XL": true,
+   "M / S": true,
+   "M / M": true,
+   "M / L": true,
+   "M / XL": true,
+   "L / S": true,
+   "L / M": true,
+   "L / L": true,
+   "L / XL": true,
+   "XL / S": true,
+   "XL / M": true,
+   "XL / L": true,
+   "XL / XL": true
+  },
+  "khor-fakkan-bay-tee-regular": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "khor-fakkan-bay-tee-super-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "al-hamra-pearl-diver-tee-regular": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "al-hamra-pearl-diver-tee-super-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "al-aqah-reef-tee-regular": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "al-aqah-reef-tee-super-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "shams-tee-regular": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "shams-tee-super-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "the-sahel-polo": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "barr-and-bahr-hoodie": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "ras-al-khor-hoodie": {
+   "S": false,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "trailhead-bag": {
+   "Default Title": true
+  },
+  "khor-fakkan-bay-tee-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "al-hamra-pearl-diver-tee-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "ras-al-khor-hoodie-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "al-qudra-lakes-tee-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  },
+  "khor-fakkan-hoodie-oversized": {
+   "S": true,
+   "M": true,
+   "L": true,
+   "XL": true
+  }
+ }
+}

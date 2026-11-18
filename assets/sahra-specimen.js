@@ -187,7 +187,8 @@
   var kit = buy.getAttribute('data-kit') === '1', one = buy.getAttribute('data-one') === '1';
   var add = document.getElementById('ssAdd'), msg = document.getElementById('ssMsg');
   var VS = null, sel = {}, live = false, busy = false;
-  function say(t) { if (msg) { msg.textContent = t || ''; buy.classList.toggle('has-msg', !!t); syncH(); } }
+  var soldTok = 0;   /* r146 review: a late answer about another fit never lands on a newer message */
+  function say(t) { soldTok++; if (msg) { msg.textContent = t || ''; buy.classList.toggle('has-msg', !!t); syncH(); } }
   /* the sheet's height drives the page's bottom padding on phones, so nothing hides behind it */
   function syncH() { if (mode === 'inl') { if (!de.style.getPropertyValue('--ss-h')) de.style.setProperty('--ss-h', (barH || 66) + 'px'); return; } try { de.style.setProperty('--ss-h', Math.ceil(buy.getBoundingClientRect().height) + 'px'); } catch (e) {} }
   de.classList.add('ss-page');
@@ -278,15 +279,21 @@
         /* 17 Nov 2026 (blocker audit, Faheem: "Sold-out sizes clear"): a sold-out size is marked (a line through it) and
            still answers a tap, with "L is sold out" and a way to be told when it is back, instead of a dead button */
         b.disabled = false;
-        b.classList.toggle('is-out', !!(VS && !ok));
-        if (VS && !ok) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
+        /* 18 Nov 2026: until live stock arrives, the build's snapshot (content/stock.json) stands, so a size sold out at the
+           last deploy is marked from the first paint instead of looking available for a few seconds */
+        if (VS) {
+          b.classList.toggle('is-out', !ok);
+          if (!ok) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
+          b.setAttribute('aria-label', z + (!ok ? ', sold out' : ''));
+        }
         b.setAttribute('aria-pressed', sel[g] === z ? 'true' : 'false');
-        b.setAttribute('aria-label', z + (VS && !ok ? ', sold out' : ''));
       });
     });
     if (busy) return;
     if (buy && buy.getAttribute('data-paused') === '1') return;
     if (VS && !VS.some(function (v) { return v.availableForSale; })) {
+      /* 18 Nov 2026: a fit with no size left no longer says "In stock" in the promise line */
+      [].forEach.call(document.querySelectorAll('.ss-promise1'), function (x) { x.classList.add('is-out'); });
       /* 10 Nov 2026 (landing-page audit): a fit with no size left was a dead end (a grey "Sold out" button). Where the piece has
          another fit on sale, the button leads to it. It says only that this fit is sold out, never that the other is in stock. */
       var alt = document.querySelector('.ssb-fit a:not(.on)[href]') || document.querySelector('.ss-fits a:not(.on)[href]');
@@ -297,6 +304,7 @@
       return;
     }
     add.removeAttribute('data-alt'); add.classList.remove('is-alt'); var bar0 = add.closest ? add.closest('.ssb') : null; if (bar0) bar0.classList.remove('is-out');
+    if (VS) [].forEach.call(document.querySelectorAll('.ss-promise1.is-out'), function (x) { x.classList.remove('is-out'); });
     add.disabled = false;
     var v = pick();
     add.textContent = (v && !v.availableForSale) ? 'Sold out in that size' : 'Add to bag';
@@ -315,6 +323,7 @@
     if (!msg) return;
     var AR = /^ar\b/i.test(document.documentElement.getAttribute('lang') || '');
     var hasBis = !kit && !!window.SBCapture;
+    var tok = ++soldTok; msg.__z = z;
     msg.innerHTML = '';
     msg.appendChild(document.createTextNode(AR ? '\u0645\u0642\u0627\u0633 ' + z + ' \u0646\u0641\u062f. ' : z + ' is sold out. '));
     if (hasBis) {
@@ -331,6 +340,23 @@
       msg.appendChild(l);
     } else msg.appendChild(document.createTextNode(AR ? '\u0627\u062e\u062a\u0631 \u0645\u0642\u0627\u0633\u064b\u0627 \u0622\u062e\u0631.' : 'Please choose another size.'));
     buy.classList.add('has-msg'); syncH();
+    /* 18 Nov 2026 (persona audit; Faheem chose "a sold-out size links to the same size in the other fit"): if another fit
+       of this design has the size, say so with a link that opens it with the size chosen */
+    if (kit || !window.SahraCart || !window.SahraCart.variants) return;
+    [].forEach.call(document.querySelectorAll('.ss-fits a[href]:not(.on)'), function (a) {
+      var m = /\/products\/([a-z0-9-]+)\//.exec(a.getAttribute('href') || ''); if (!m) return;
+      var b = a.querySelector('b'), fit = (b ? b.textContent : a.textContent).trim();
+      window.SahraCart.variants(m[1]).then(function (vs) {
+        if (tok !== soldTok || msg.__z !== z) return;
+        if (!vs || !vs.some(function (v) { return v.title === z && v.availableForSale; })) return;
+        if (!msg.querySelector('.ssb-bis-go, .ssb-fit-go') && !msg.textContent) return;
+        if (msg.querySelector('.ssb-fit-go[data-fit="' + fit + '"]')) return;
+        var l = document.createElement('a'); l.className = 'ssb-fit-go'; l.setAttribute('data-fit', fit);
+        l.href = '/' + (AR ? 'ar/' : '') + 'products/' + m[1] + '/?size=' + z;
+        l.textContent = AR ? '\u0645\u0642\u0627\u0633 ' + z + ' \u0645\u062a\u0648\u0641\u0631 \u0628\u0642\u0635\u0651\u0629 ' + fit + ' \u2190' : z + ' is in stock in ' + fit + ' \u2192';
+        msg.appendChild(document.createTextNode(' \u00b7 ')); msg.appendChild(l); syncH();
+      }, function () {});
+    });
   }
   function needSize() {
     say(kit ? 'Choose a size for the tee and the short first.' : 'Choose your size first.');
@@ -495,4 +521,14 @@
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+/* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "Payment line by the price"): the Tabby line opens what it means */
+(function () {
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest && e.target.closest('.ss-tb-open'); if (!b) return;
+    var t = document.getElementById(b.getAttribute('aria-controls')); if (!t) return;
+    var open = t.hidden; t.hidden = !open; b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    try { if (open && window.track) window.track('tabby_info_open', { placement: 'price_line' }); } catch (x) {}
+  });
 })();

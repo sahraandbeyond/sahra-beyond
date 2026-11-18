@@ -86,6 +86,42 @@ function mount(cfg, opts = {}) {
   const data = Object.assign({}, cfg, opts.handle ? { handle: opts.handle } : {});
   return `<div class="sfind" id="size-finder" data-sizefinder${opts.inline ? ' data-inline="1"' : ''} data-sf='${esc(JSON.stringify(data))}'></div>`;
 }
+/* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "Plain fit guide"): three reference people and the size the size
+   finder gives each of them in this piece, as designed, with the finder's own word for the room. Worked out at build time
+   by the same script the page runs (assets/sahra-sizefinder.js), so the guide and the finder can never disagree. Plain
+   words only: nothing assumes the visitor knows our other charts. No model heights (Faheem, 1 and 18 Nov). */
+let FINDER = null;
+function finder() {
+  if (FINDER) return FINDER;
+  const src = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-sizefinder.js'), 'utf8');
+  const W = { readyState: 'complete', documentElement: { getAttribute: () => 'en' }, querySelectorAll: () => [], getElementById: () => 1, head: { appendChild() {} }, createElement: () => ({}) };
+  const ctx = { window: {}, document: W }; require('vm').runInNewContext(src, ctx);
+  FINDER = ctx.window.SBSizeFinder; return FINDER;
+}
+const PEOPLE = [['m', 172, 68, 'Man, 172 cm, 68 kg'], ['m', 182, 82, 'Man, 182 cm, 82 kg'], ['w', 160, 55, 'Woman, 160 cm, 55 kg']];
+const ROOM = r => r < 4 ? 'close to the body' : r < 10 ? 'a clean, regular fit' : r < 18 ? 'relaxed' : r < 31 ? 'loose and oversized' : 'very roomy';
+/* r146 review: a size that is sold out says so, and the smallest size says when it sits roomier than designed */
+const STOCKF = (function () { try { return JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'stock.json'), 'utf8')).stock || {}; } catch (e) { return {}; } })();
+function outOf(handle, z) {
+  const st = handle && STOCKF[handle]; if (!st) return false;
+  const k = Object.keys(st).filter(x => x.split(' / ').indexOf(z) !== -1); if (!k.length) return false;
+  return !k.some(x => st[x]);
+}
+function glance(cfg, opts = {}) {
+  try {
+    if (!cfg || !cfg.pieces || cfg.pieces.length !== 1 || cfg.pieces[0].kind !== 'garment') return '';
+    const st = opts.handle && STOCKF[opts.handle];
+    if (st && Object.keys(st).length && Object.keys(st).every(k => !st[k])) return '';
+    const F = finder(), piece = cfg.pieces[0];
+    const li = PEOPLE.map(([who, cm, kg, label]) => {
+      const r = F.garment(piece, F.body({ who, cm, kg }), 'designed'), z = r.best.size;
+      const small = r.best.i === 0 && r.best.room > piece.target + 6 ? ', our smallest size' : '';
+      const out = outOf(opts.handle, z) ? ' &middot; sold out' : '';
+      return `<li><span>${label}</span> <b data-ar-rule="keep" dir="ltr">${z}</b> <i>${ROOM(r.best.room)}${small}${out}</i></li>`;
+    }).join('');
+    return `<div class="ss-glance"><p class="ss-gl-h">Fit guide, as designed</p><ul>${li}</ul></div>`;
+  } catch (e) { console.log('  ! fit guide: ' + e.message); return ''; }
+}
 const SCRIPT = '<script src="/assets/sahra-sizefinder.js" defer></script>';
 
-module.exports = { founding, polo, sahel, trail, forFounding, forNewLine, all, mount, SCRIPT, TARGET };
+module.exports = { glance, founding, polo, sahel, trail, forFounding, forNewLine, all, mount, SCRIPT, TARGET };

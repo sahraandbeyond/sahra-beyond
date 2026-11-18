@@ -105,7 +105,7 @@ function sbStage() {
     /* 8 Oct 2026: prices public after the reveal. 22 Oct 2026: pre-order opens Wed 28 Oct for everyone (no head start) */
     /* 23 Oct 2026: the product pages are live before pre-order opens, so the rows link to them at every stage */
     /* 23 Oct 2026: in the pre-order window the price shown is the pre-order price (Faheem: "Show AED 159.20") */
-    row(['/products/sahra-trail-tee/', 'Sahra Trail Tee', sbStage() === 1 ? 'AED 111.20' : 'AED 139']) + row(['/products/sahra-trail-2-in-1-short/', 'Sahra Trail 2-in-1 Short', sbStage() === 1 ? 'AED 135.20' : 'AED 169']) + row(['/products/sahra-trail-kit/', 'The Kit, Tee + Short', sbStage() === 1 ? 'AED 246.40' : 'AED 308']) + row(['/products/trailhead-bag/', 'The Trailhead Bag', 'AED 50']) +
+    row(['/products/sahra-trail-tee/', 'Sahra Trail Tee', sbStage() === 1 ? 'AED 111.20' : 'AED 139']) + row(['/products/sahra-trail-2-in-1-short/', 'Sahra Trail 2-in-1 Short', sbStage() === 1 ? 'AED 135.20' : 'AED 169']) + row(['/products/sahra-trail-kit/', 'The Kit, Tee + Short', sbStage() === 1 ? 'AED 246.40' : 'AED 279']) + row(['/products/trailhead-bag/', 'The Trailhead Bag', 'AED 50']) +
       row(['/new/#trail', sbStage() === 0 ? 'See the pieces' : sbStage() === 1 ? 'Pre-order Sahra Trail' : 'Shop Sahra Trail', '', 'sbn-all']) +
     /* 24 Oct 2026: the Sahel row moved to the Collections column */
     '</div>' +
@@ -216,7 +216,7 @@ function sbStage() {
       a.textContent = ar ? 'English' : 'العربية';   /* the same word the /ar/ pages use */
       /* 25 Sep (persona review): an Arabic-first shopper never found the switch inside the
          menu. Phones get a one-glyph button in the header bar itself. */
-      if (cls === 'sbl-m') a.innerHTML = '<span class="sbl-full">' + (ar ? 'English' : 'العربية') + '</span><span class="sbl-short" aria-hidden="true">' + (ar ? 'EN' : 'ع') + '</span>';
+      if (cls === 'sbl-m') a.innerHTML = '<span class="sbl-full">' + (ar ? 'English' : 'العربية') + '</span><span class="sbl-short" aria-hidden="true">' + (ar ? 'EN' : 'عربي') + '</span>';   /* 18 Nov 2026 (persona audit): a word, not a bare "ع"; "العربية" in full overlapped the wordmark at 390px */
       a.setAttribute('aria-label', ar ? 'Read this page in English' : 'اقرأ بالعربية — Arabic');
       a.addEventListener('click', function () { try { if (window.track) track('language_switch', { to: ar ? 'en' : 'ar', from_path: p }); } catch (e) {} });
       return a;
@@ -236,7 +236,31 @@ function sbStage() {
       document.documentElement.classList.add('sbl-in-menu');
     }
   }
-  function later() { setTimeout(place, 0); }
+  /* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "Arabic for Arabic phones"): a phone or browser set to Arabic that
+     lands on an English page (most ads link to English pages) is offered the Arabic page in one slim line under the
+     header. Once dismissed or used, it stays away for the visit. */
+  function offer() {
+    try {
+      var html = document.documentElement, ar = (html.getAttribute('lang') || '').slice(0, 2) === 'ar';
+      if (ar || document.querySelector('.sbl-offer')) return;
+      var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || '']);
+      if (String(langs[0] || '').slice(0, 2).toLowerCase() !== 'ar') return;
+      try { if (sessionStorage.getItem('sb_ar_offer')) return; } catch (e) {}
+      var sw = document.querySelector('.sbl-lang'); if (!sw) return;
+      var bar = document.createElement('div'); bar.className = 'sbl-offer'; bar.setAttribute('dir', 'rtl'); bar.setAttribute('lang', 'ar');
+      bar.innerHTML = '<a href="' + sw.getAttribute('href') + '">\u0627\u0639\u0631\u0636 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629 \u0628\u0627\u0644\u0639\u0631\u0628\u064a\u0629 \u2190</a><button type="button" aria-label="\u0625\u063a\u0644\u0627\u0642">\u00d7</button>';
+      var hdr = document.querySelector('.hdr') || document.getElementById('nav') || document.querySelector('header');
+      var host = hdr && hdr.parentNode ? hdr : null;
+      if (host) host.parentNode.insertBefore(bar, host.nextSibling); else document.body.insertBefore(bar, document.body.firstChild);
+      var done = function () { try { sessionStorage.setItem('sb_ar_offer', '1'); } catch (e) {} };
+      bar.querySelector('a').addEventListener('click', function () { done(); try { if (window.track) track('language_switch', { to: 'ar', from_path: location.pathname, via: 'ar_offer' }); } catch (e) {} });
+      bar.querySelector('button').addEventListener('click', function () { done(); bar.remove(); });
+      if (!document.getElementById('sbl-offer-css')) { var st = document.createElement('style'); st.id = 'sbl-offer-css';
+        st.textContent = '.sbl-offer{display:flex;align-items:center;justify-content:center;gap:10px;padding:6px 16px 6px 44px;position:relative;background:#F3DDB8;color:#2A2016;font:500 14px/1.4 system-ui,sans-serif}.sbl-offer a{color:#2A2016;text-decoration:underline;text-underline-offset:3px;min-height:32px;display:inline-flex;align-items:center}.sbl-offer button{position:absolute;left:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;border:0;background:none;color:#2A2016;font-size:20px;cursor:pointer}';
+        document.head.appendChild(st); }
+    } catch (e) {}
+  }
+  function later() { setTimeout(function () { place(); offer(); }, 0); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', later); else later();
 })();
 

@@ -443,3 +443,31 @@ html body .ssb .ssb-sz button.is-out::after{content:"";position:absolute;left:18
 /* 4. Housekeeping: the Trail Kit's size buttons at the 44 px tap size, like every other page */
 html body .ssb.kit .ssb-sz button,html body .ssb.inl.kit .ssb-sz button{min-width:44px;height:44px}
 html body .ssb.inl.kit .ssb-gl{min-width:34px}
+
+/* ---- 18 Nov 2026: ad-visitor persona audit (Faheem chose: proof under the title, plain fit guide, payment line) ---- */
+/* one buyer's words under the stars */
+html body .ss p.ss-proof{margin:4px 0 6px;font-size:14px!important;line-height:1.45!important;color:var(--ss-ink2)}
+.ss-proof q{display:block;font-style:normal;color:var(--ss-ink)}
+.ss-proof q::before{content:"\201C"}.ss-proof q::after{content:"\201D"}
+.ss-proof-by,.ss-proof-on{display:inline;color:var(--ss-ink3);font-size:13px}
+.ss-proof-on::before{content:"\00b7\00a0"}
+/* Tabby: the line opens a plain explanation */
+html body .ss .ss-tb-open{display:inline-flex;align-items:center;gap:4px;min-height:32px;padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer;text-align:start}
+.ss-tb-open .ss-tb-nf{text-decoration:underline;text-underline-offset:3px;color:var(--ss-copper-d)}
+.ss-tb-open:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:3px;border-radius:4px}
+html body .ss p.ss-tb-t{margin:2px 0 8px;padding:10px 12px;border-radius:10px;background:#F3DDB8;color:var(--ss-ink);font-size:13.5px!important;line-height:1.45!important}
+html body .ss p.ss-pay{margin:0 0 6px;font-size:13px!important;line-height:1.45!important;color:var(--ss-ink3)}
+/* the fit guide: three reference people and their size, from the size finder */
+.ss-glance{margin:2px 0 0}
+html body .ss .ss-glance p.ss-gl-h{margin:0 0 4px;font-size:12.5px!important;letter-spacing:.06em;text-transform:uppercase;color:var(--ss-ink3)}
+.ss-glance ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:max-content 1.4em minmax(0,1fr);align-items:baseline;gap:3px 10px;font-size:14px;line-height:1.4;color:var(--ss-ink2)}
+.ss-glance li{display:contents}
+.ss-glance li b{color:var(--ss-ink)}
+.ss-glance li span{white-space:nowrap}
+.ss-glance li i{font-style:normal;color:var(--ss-ink3)}
+/* Arabic pages: a review written in English carries a small tag */
+.rv-lang{display:inline-block;margin-inline-end:6px;padding:1px 7px;border-radius:999px;background:#F3DDB8;color:#4A4136;font-size:11.5px;vertical-align:1px}
+.sf-fitalt{margin-top:6px}
+/* a fit with no size left: no "In stock" in the promise line */
+.ss-promise1.is-out .ss-instock{display:none}
+.ssb-msg .ssb-fit-go{color:#7E4114;text-decoration:underline;text-underline-offset:3px;padding:4px 0}

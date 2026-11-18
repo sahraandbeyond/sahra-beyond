@@ -491,3 +491,8 @@ html body p.sbc-link{font-size:15px!important;line-height:1.5!important}
 .sbc-link a{color:inherit;text-decoration:none}
 .sbc-link a span{color:#7E4114;text-decoration:underline;text-underline-offset:3px}
 html.sb-cap-done .sbc-link{display:none}
+/* 18 Nov 2026 (persona audit): the delivery line beside the house line follows the market too */
+.sbw-msg-ship .sb-ship-gcc,.sbw-msg-ship .sb-ship-intl{display:none}
+html[data-market="gcc"] .sbw-msg-ship .sb-ship-uae,html[data-market="intl"] .sbw-msg-ship .sb-ship-uae{display:none}
+html[data-market="gcc"] .sbw-msg-ship .sb-ship-gcc,html[data-market="intl"] .sbw-msg-ship .sb-ship-intl{display:inline}
+@media(max-width:430px){.sbw-msg-ship .sbw-x{display:none}}

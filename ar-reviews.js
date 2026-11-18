@@ -80,7 +80,11 @@ const RULES = {
      Arabic pages in the language its buyer wrote it; dir="auto" lets each one run in its own direction.
      The Arabic translations made earlier for the first 19 reviews stay in content/ar-mirror, unused. */
   ugc(a, el) {
-    return { open: /\sdir="/.test(el.open) ? el.open : setAttr(el.open, 'dir', 'auto') };
+    const open = /\sdir="/.test(el.open) ? el.open : setAttr(el.open, 'dir', 'auto');
+    /* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "Arabic pages tag English reviews"): a review written in English
+       keeps its words, with a small Arabic tag in front so it reads as a buyer's own words, not an untranslated page */
+    if (/class="rv-text"/.test(el.open) && !/[\u0600-\u06FF]/.test(el.inner)) return { open, inner: `<span class="rv-lang" dir="rtl" lang="ar">بالإنجليزية</span> ${el.inner}` };
+    return { open };
   },
   /* product card: stars and "5.0 · 2 reviews" */
   'rv-card'(a, el) {
@@ -108,6 +112,9 @@ const RULES = {
   'rv-bought'(a, el, T) { return { inner: `القطعة المشتراة: ${a[0] ? arName(a[0], T) : 'قطعة من الإصدار التأسيسي'}` }; },
   /* "On <piece>" above a review of another fit or piece */
   'rv-on'(a, el, T) { return { inner: `عن ${arName(a[0], T)}` }; },
+  'rv-store'() { return { inner: 'مراجعة لمتجرنا' }; },
+  /* 18 Nov 2026: text that reads the same in both languages (a size letter in the fit guide: S, M, L, XL) */
+  keep() { return {}; },
   /* "5.0 · 2 reviews of this design" under a Sahel or Sahra Trail piece's name */
   'rv-design'(a) { return { inner: `${a[0]} &middot; ${reviews(a[1])} لهذا التصميم` }; },
   /* "All 20 reviews →" */
@@ -146,7 +153,7 @@ function apply(el, T) {
   /* the reviewed wording first: an element whose whole text is a dictionary entry keeps that entry */
   const k = norm(el.inner);
   let r;
-  if (parts[0] !== 'ugc' && k && plain(el.inner) && T.dict[k] != null && !/[<>]/.test(T.dict[k])) r = { inner: T.dict[k] };
+  if (parts[0] !== 'ugc' && parts[0] !== 'keep' && k && plain(el.inner) && T.dict[k] != null && !/[<>]/.test(T.dict[k])) r = { inner: T.dict[k] };
   else r = rule(parts.slice(1), el, T) || {};
   return (r.open != null ? r.open : el.open) + (r.inner != null ? r.inner : el.inner) + el.close;
 }

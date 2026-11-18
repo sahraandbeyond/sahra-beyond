@@ -197,8 +197,8 @@ const TRAIL = [
     details: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'],
     images: [model('pm2-sahra-trail-short-04-side', 'Model wearing the Sahra Trail 2-in-1 Short, side view, hand in the pocket'), model('pm-sahra-trail-2-in-1-short-01-leg-close-up', 'Model wearing the Sahra Trail 2-in-1 Short, close-up of the leg'), studio('trail-short-front', 'Sahra Trail 2-in-1 running shorts, front'), studio('trail-short-back', 'Sahra Trail 2-in-1 running shorts, back'),
       real('trail-shortsymbol', 'The Two Ridges symbol and the name on the leg, close up'), real('trail-shortname', 'SAHRA TRAIL on the leg, close up')] },
-  { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', seo: 'Sahra Trail Running Kit: Tee and 2-in-1 Shorts', kind: 'Running kit', md: 'the Sahra Trail Tee and the Sahra Trail 2-in-1 Short together, with a size chosen for each', price: 308, kit: true,   /* 8 Nov 2026 (Faheem): no kit discount; the kit is the tee + short at their own prices (139 + 169) */
-    lede: 'The Sahra Trail Tee and the Sahra Trail 2-in-1 Short together in one order, with a size chosen for each. Tee, AED 139. Short, AED 169.',
+  { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', seo: 'Sahra Trail Running Kit: Tee and 2-in-1 Shorts', kind: 'Running kit', md: 'the Sahra Trail Tee and the Sahra Trail 2-in-1 Short together, with a size chosen for each', price: 279, kit: true,   /* 18 Nov 2026 (Faheem, after the persona audit: "Trail Kit AED 279"): the kit saves AED 29 on the tee + short (139 + 169 = 308); replaces the 8 Nov "no kit discount" */
+    lede: 'The Sahra Trail Tee and the Sahra Trail 2-in-1 Short together in one order, with a size chosen for each. Bought apart, the tee is AED 139 and the short AED 169: the kit saves AED 29.',
     details: ['The Sahra Trail Tee', 'The Sahra Trail 2-in-1 Short', 'Choose a size for each'],
     images: [model('pm2-sahra-trail-kit-01-lunge', 'Model wearing the Sahra Trail Kit, stretching in a lunge, front view'), model('pm-sahra-trail-kit-01-running-side', 'Model wearing the Sahra Trail Kit, running, side view'), studio('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), studio('trail-kit-back', 'Sahra Trail Kit, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-shortsymbol', 'The Two Ridges symbol on the short, close up')] },
@@ -439,9 +439,12 @@ function productPage(p, all, SITE, stage) {
   /* 30 Oct 2026 (Faheem approved): the Specimen Sheet, the same top and buy sheet as the Founding Edition pages (specimen.js) */
   const S = SP.fromPreorder(p);
   /* 31 Oct 2026: the fit line by the sizes on a Super Oversized page; a paused Oversized page has no chart until the fit returns */
-  const fitLine = p.fit === 'Super Oversized' ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Roomy, with a dropped shoulder. Most people take one size down from their usual size.' : 'Super Oversized, drop shoulder: about one size bigger than our Founding Edition Oversized. If you know your Founding size, go one size down.'}</p>`
+  /* 18 Nov 2026 (persona audit; Faheem chose "Plain fit guide"): plain words about the cut, with no reference to our other
+     charts (new visitors don't know the Founding Edition sizes); the fit guide below gives sizes for three reference people */
+  const fitLine = p.fit === 'Super Oversized' ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Super Oversized: roomy, with a dropped shoulder.' : 'Super Oversized: dropped shoulder, our roomiest cut.'}</p>`
     /* 14 Nov 2026: the Oversized fit is back on the original Oversized charts */
-    : p.fit === 'Oversized' && onSale(p) ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Our original Oversized hoodie: relaxed, and closer than the Super Oversized. Take your usual size.' : 'Our original Oversized cut, on the same chart as our Founding Edition Oversized. If you know your Founding size, take the same size.'}</p>` : '';
+    : p.fit === 'Oversized' && onSale(p) ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Oversized: relaxed, with a dropped shoulder; closer than our Super Oversized.' : 'Oversized: dropped shoulder, relaxed through the body.'}</p>`
+    : p.fit === 'Regular' && onSale(p) ? `<p class="ss-help ss-fitline">Regular: a straight cut that sits on the shoulder.</p>` : '';
   const paused = !onSale(p);
   /* 10 Nov 2026 (site scorecard, behavioural review: the fit answer sat four screens below the size buttons): the size the
      model wears is said beside the size help, where every photo on the page is the same size */
@@ -452,7 +455,8 @@ function productPage(p, all, SITE, stage) {
   /* 17 Nov 2026 (WhatsApp fit help, Faheem): the WhatsApp question now sits once, under the fit (specimen.js waLine), so the
      "Still unsure? Message us." links are gone from this line; it carries the free size exchange instead (UAE visitors only) */
   const exch = `<span class="sb-ship-uae ss-exch"> Free size exchanges in the UAE.</span>`;
-  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">${find}${worn}${exch}</p>` : TSZ.keyFor(p) ? `<p class="ss-help">${find}Sahra Trail has its own sizes, separate from our tees.${exch}</p>` : `<p class="ss-help">No size chart for this piece yet.${exch}</p>`;
+  const glance = paused ? '' : SFD.glance(SFD.forNewLine(p, SZ, TSZ), { handle: p.handle });
+  const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">${find}${worn}${exch}</p>${glance}` : TSZ.keyFor(p) ? `<p class="ss-help">${find}Sahra Trail has its own sizes, separate from our tees.${exch}</p>` : `<p class="ss-help">No size chart for this piece yet.${exch}</p>`;
   const sup = (p.fitsList || []).find(f => f.fit === 'Super Oversized' && f.onSale), reg = (p.fitsList || []).find(f => f.fit === 'Regular' && f.onSale);
   const pausedChart = paused && p.line === 'sahel' && p.fit === 'Oversized'
     ? `<section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask">The Oversized chart will be published when the fit returns. Until then, see ${[sup ? `<a href="/products/${sup.handle}/#size-chart">Super Oversized</a>` : '', reg ? `<a href="/products/${reg.handle}/#size-chart">Regular</a>` : ''].filter(Boolean).join(' and ')}.</p><p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : '';
@@ -464,6 +468,9 @@ function productPage(p, all, SITE, stage) {
     /* 14 Nov 2026 (Faheem): Tabby as one line under the price; the widget box is gone (it was on every product page from 13 Nov) */
     rating: own ? own.line : RATING && p.line === 'sahel' ? `<a class="po-rate" href="${firstReviews() ? '#first-reviews' : '/#s-reviews'}"><b aria-hidden="true">${'&#9733;'.repeat(Math.floor(+RATING_D.avg))}${'&#9734;'.repeat(5 - Math.floor(+RATING_D.avg))}</b><span data-ar-rule="rv-founding|${RATING_D.avg}|${RATING_D.n}">${RATING}</span></a>` : '',   /* 10 Nov 2026: not on Sahra Trail, whose running wear has no reviews of its own (Trail merge handoff, step 8) */
     help,
+    /* 18 Nov 2026 (persona audit): one buyer's words under the stars; a Sahel piece with no reviews of its own quotes another
+       piece and says which. Not on Sahra Trail: a cotton-tee review says nothing about running kit. */
+    proof: p.line === 'sahel' ? require('./reviews-render.js').proofQuote(designHandlesOf(p), { handle: p.handle }) : '',
     /* 14 Nov 2026 (review panel): the delivery and returns paragraph repeated the promise line; Tabby's legal line stays */
     extra: `<p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>`
   })}
@@ -513,7 +520,7 @@ function crossLines(p, card) {
   const other = pickNew(o => o.line !== p.line && o.line !== undefined && !o.inHand, true).slice(0, 4);
   const fe = FOUNDING.map(([h, n, img, alt, pr]) => `<a class="po-card" href="/products/${h}/"><div class="po-fig" data-cycle>${foundingImgs(h, img, alt)}</div><b>${n}</b><span><span class="sb-price" data-handle="${h}" data-aed="${pr}">${money(pr)}</span> &middot; in stock</span></a>`).join('');
   return `${other.length ? `<section class="po-more po-cross"><h2>${p.line === 'sahel' ? (IN_HAND ? 'Also new: Sahra Trail' : 'Also on pre-order: Sahra Trail') : (IN_HAND ? 'Also new: Sahel' : 'Also on pre-order: Sahel')}</h2><div class="po-cards">${other.map(card).join('')}</div></section>` : ''}
-  <section class="po-more po-cross"><h2>The Founding Edition, in stock</h2><p class="po-small" style="margin:-4px 0 14px">Ships next working day.<span class="sb-aed-only"> Any two Founding Edition tees for AED 359.</span> They have their own size chart.</p><div class="po-cards">${fe}</div></section>`;
+  <section class="po-more po-cross"><h2>The Founding Edition, in stock</h2><p class="po-small" style="margin:-4px 0 14px">Ships next working day.<span class="sb-aed-only"> Any two AED 199 tees for AED 359.</span> They have their own size chart.</p><div class="po-cards">${fe}</div></section>`;
 }
 /* the reverse row, for the Founding Edition product pages (build-products.js) */
 function foundingCross() {
@@ -644,7 +651,7 @@ function bigCard(p, i) {
     ? inc('st0', `<span class="pcard-st st0">On sale from Wed 28 Oct</span>`) + `<span class="pcard-st st12">In stock, ships next working day</span>`
     : inc('st0', `<span class="pcard-st st0">Pre-order opens Wed 28 Oct</span>`) + inc('st1', `<span class="pcard-st st1">Pre-order, ships from Fri 30 Oct</span>`) + (IN_HAND ? '' : `<span class="pcard-st st2">Pre-order, ships from Fri 30 Oct</span>`);
   const noqa = p.oneSize || /kit/i.test(p.handle) ? ' data-noqa' : '';   /* quick add would offer "Default Title", or 16 tee/short pairs */
-  return `<article class="pcard${i != null ? (i ? '' : ' on') : ''}" data-handle="${p.handle}"${i != null ? ` data-i="${i}"` : ''}${noqa}>${img}<span class="pcard-b"><a class="pcard-t" href="${href}">${cardName(p)}</a>${RV.cardRating(p.handle)}<span class="pcard-place">${place}</span><span class="pcard-spec">${chips}</span>${colour}${stock}<span class="pcard-foot"><span class="pcard-p">${price}</span><a class="pcard-cta" href="${href}">Full details &rarr;</a></span></span></article>`;
+  return `<article class="pcard${i != null ? (i ? '' : ' on') : ''}" data-handle="${p.handle}"${i != null ? ` data-i="${i}"` : ''}${noqa}>${img}<span class="pcard-b"><a class="pcard-t" href="${href}">${cardName(p)}</a>${RV.cardRating(p.handle)}<span class="pcard-place">${place}</span><span class="pcard-spec">${chips}</span>${colour}${Number(p.price) === 199 && /T-shirt/i.test(p.kind || '') ? '<span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>' : ''}${stock}<span class="pcard-foot"><span class="pcard-p">${price}</span><a class="pcard-cta" href="${href}">Full details &rarr;</a></span></span></article>`;
 }
 /* one design: its fits on sale behind a switch, or the one card */
 function designCards(p, fitsLabel) {

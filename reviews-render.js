@@ -209,6 +209,34 @@ function pooled(designHandles) {
   const sd = merge(allHandles());
   return sd ? { scope: 'store', d: sd } : null;
 }
+/* 18 Nov 2026 (ad-visitor persona audit): how much a review helps a stranger decide. Longer, specific, verified, with a photo
+   scores higher; very short ones (under 60 characters, e.g. "Good information which represent by graphics deaign .")
+   sink. Used to order the reviews and to pick the one quote under the title. Never changes what a review says. */
+function quality(r) {
+  const body = String(r.body || '').replace(/\s+/g, ' ').trim();
+  let q = Math.min(body.length, 240) + (Number(r.rating) || 0) * 10 + (r.verified ? 25 : 0) + ((r.photos || []).length ? 40 : 0);
+  if (body.length < 60) q -= 300;
+  if (/\b(fabric|quality|fit|soft|print|stitch|detail|size)/i.test(body)) q += 30;
+  if (/^anonymous$/i.test(String(r.name || '').trim())) q -= 20;
+  return q;
+}
+/* one short sentence for under the title: from this design when it has a strong review, else from the rest of the store,
+   labelled with the piece it is about, so a review of another piece never reads as a review of this one */
+function proofQuote(designHandles, opts) {
+  opts = opts || {};
+  /* this page's own piece first (a review of the Regular fit can describe another colour), then the rest of the design */
+  const pick = rs => rs.filter(r => Number(r.rating) >= 5 && String(r.body || '').trim().length >= 60).sort((a, b) => ((a.handle === opts.handle ? 0 : 1) - (b.handle === opts.handle ? 0 : 1)) || (quality(b) - quality(a)))[0];
+  const dd = merge(designHandles || []);
+  let r = dd && pick(dd.reviews), scope = 'design';
+  if (!r && opts.store !== false) { const sd = merge(allHandles()); r = sd && pick(sd.reviews); scope = 'store'; }
+  if (!r) return '';
+  const body = String(r.body || '').replace(/\s+/g, ' ').trim();
+  let first = (body.match(/^.{40,170}?[.!?](\s|$)/) || [body])[0].trim();
+  if (first.length > 150) first = first.slice(0, 147).replace(/\s+\S*$/, '') + '…';
+  const name = /^anonymous$/i.test(String(r.name || '').trim()) ? '' : String(r.name || '').trim().split(' ')[0];
+  const on = scope === 'store' && r.handle !== '_shop' && productName(r.handle) ? productName(r.handle) : '';
+  return `<p class="ss-proof"><q data-ar-rule="ugc">${esc(first)}</q> <span class="ss-proof-by" data-ar-rule="rv-by|${r.verified ? 1 : 0}">${esc(name || 'Verified buyer')}${r.verified && name ? ' · verified buyer' : ''}</span>${on ? ` <span class="ss-proof-on" data-ar-rule="rv-on|${arg(on)}">On ${esc(on)}</span>` : scope === 'store' ? ` <span class="ss-proof-on" data-ar-rule="rv-store">A review of our store</span>` : ''}</p>`;
+}
 /** The line beside the price. */
 function ratingLine(designHandles) {
   const pr = pooled(designHandles); if (!pr) return '';
@@ -264,8 +292,11 @@ function productSection(handle, productName, designHandles, opts) {
   const storeWide = pr && pr.scope === 'store';
   if (opts.bare && storeWide) return '';
   const verifiedN = d.reviews.filter(r => r.verified).length;
+  /* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "Proof under the title"): this piece's own reviews first, then the
+     rest of the design, each group strongest first (score below), so a two-line review with a typo no longer leads */
+  const ordered = d.reviews.slice().sort((a, b) => ((a.handle === handle ? 0 : 1) - (b.handle === handle ? 0 : 1)) || (quality(b) - quality(a)) || String(b.date || '').localeCompare(String(a.date || '')));
 
-  const cards = d.reviews.map(r => {
+  const cards = ordered.map(r => {
     const photos = shownPhotos(r.photos).slice(0, 2).map(u =>
       photoLink(u, `Customer photo of ${storeWide ? (r.productTitle || 'a Sahra & Beyond piece') : productName}`, storeWide ? (r.productTitle || '') : productName)).join('');
     const about = (storeWide || (designHandles && r.handle && r.handle !== handle)) && r.productTitle
@@ -483,4 +514,4 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 .pdp-quotes span{display:block;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.6px;color:#6B6256;margin-top:4px;text-transform:uppercase}
 `;
 
-module.exports = { productName, load, loadAll, stars, starCount, arg, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN, merge, pooled, ratingLine, quotes, fitVerdict, FIT_MIN };
+module.exports = { quality, proofQuote, productName, load, loadAll, stars, starCount, arg, cardRating, productSection, homepageBand, CSS, HOMEPAGE_MIN, merge, pooled, ratingLine, quotes, fitVerdict, FIT_MIN };

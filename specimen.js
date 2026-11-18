@@ -223,7 +223,8 @@ function fromPreorder(p) {
     place: p.place ? [p.place[0], null, `/locations/${p.place[1]}/`] : null,
     face: D.face, views, notes: (NOTES[p.key] || []).map((n, i) => { const m = ST && NOTES_MODEL[p.handle]; const at = m ? m[i] : [n[0], n[1]]; return { x: at ? at[0] : null, y: at ? at[1] : null, t: n[2] }; }),
     modelPins: !!(ST && NOTES_MODEL[p.handle]), spec,
-    pair: false, gift: !p.noTote, chart: p.line === 'sahel' && !/polo/i.test(p.kind || '') ? '#size-chart' : null,
+    pair: p.line === 'sahel' && /T-shirt/i.test(p.kind || '') && Number(p.price) === 199,   /* 18 Nov 2026: the pair price covers every AED 199 tee */
+    gift: !p.noTote, chart: p.line === 'sahel' && !/polo/i.test(p.kind || '') ? '#size-chart' : null,
     chartNote: null, model: '', kit: !!p.kit, oneSize: !!p.oneSize,
     onModel: onModelSet(p)
   };
@@ -326,9 +327,20 @@ function pausedNote(s) {
   const now = [sup ? `<a href="${sup}">Super Oversized</a> (drop shoulder)` : '', reg ? `<a href="${reg}">Regular</a>` : ''].filter(Boolean);
   return `Our Oversized fit is being re-cut to our original Oversized size and will be back soon.${now.length ? ` This design is available now in ${now.join(' and ')}.` : ''}`;
 }
+/* 18 Nov 2026 (persona audit; Faheem chose "Honest stock, no flicker"): the sizes for sale at the last build
+   (content/stock.json, written by stock-snapshot.js); the page script replaces it with live stock a moment later */
+const STOCK = (function () { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'content', 'stock.json'), 'utf8')).stock || {}; } catch (e) { return {}; } })();
+function snapOut(handle, g, z) {
+  const st = STOCK[handle]; if (!st) return false;
+  const t = Object.keys(st); if (!t.length) return false;
+  if (g === 'size') return st[z] === false;
+  const i = g === 'tee' ? 0 : 1;
+  return !t.some(k => k.split(' / ')[i] === z && st[k]);
+}
+function allOut(handle) { const st = STOCK[handle]; return !!st && Object.keys(st).length > 0 && Object.keys(st).every(k => !st[k]); }
 function sheet(s) {
-  const btn = z => `<button type="button" data-size="${z}" aria-pressed="false">${z}</button>`;
-  const group = (g, label, show) => `<div class="ssb-sz" role="group" aria-label="${label}" data-group="${g}">${show ? `<span class="ssb-gl">${show}</span>` : ''}${['S', 'M', 'L', 'XL'].map(btn).join('')}</div>`;
+  const btn = (z, g) => snapOut(s.handle, g, z) ? `<button type="button" data-size="${z}" aria-pressed="false" class="is-out" aria-disabled="true" aria-label="${z}, sold out">${z}</button>` : `<button type="button" data-size="${z}" aria-pressed="false">${z}</button>`;
+  const group = (g, label, show) => `<div class="ssb-sz" role="group" aria-label="${label}" data-group="${g}">${show ? `<span class="ssb-gl">${show}</span>` : ''}${['S', 'M', 'L', 'XL'].map(z => btn(z, g)).join('')}</div>`;
   const sizes = s.oneSize ? `<span class="ssb-one">One size</span>` : s.kit ? `<div class="ssb-kit">${group('tee', 'Tee size', 'Tee')}${group('short', 'Short size', 'Short')}</div>` : group('size', 'Size');
   return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}${(s.fits || []).some(f => f.fit === 'Super Oversized') ? ' data-fitwide="1"' : ''}>
       <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd"${PAUSED[s.handle] ? ' disabled' : ''}>${PAUSED[s.handle] ? 'Back soon' : 'Add to bag'}</button></div>${PAUSED[s.handle] ? `
@@ -369,7 +381,7 @@ function waLine(s, h1) {
 const TBL = '<img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async">';
 function promise(s) {
   if (PAUSED[s.handle]) return `<p class="ss-stat">Not available to order while this fit is re-cut. Back soon.</p>`;
-  return `<p class="ss-promise1"><span class="sb-ship-uae">In stock. Next-working-day delivery across the UAE, order by 2 pm. Free over AED 100 \u00b7 Free 14-day returns and exchanges${s.gift ? ' \u00b7 Free <a href="/tote/">Sahra Tote</a> with every order' : ''}</span><span class="sb-ship-gcc">In stock. GCC delivery in 3\u20135 working days, free over AED 390 \u00b7 14-day returns</span><span class="sb-ship-intl">In stock. Worldwide delivery in 7\u201314 working days \u00b7 14-day returns</span></p>`;
+  return `<p class="ss-promise1${allOut(s.handle) ? ' is-out' : ''}"><span class="sb-ship-uae"><span class="ss-instock">In stock. </span>Next-working-day delivery across the UAE, order by 2 pm. Free over AED 100 \u00b7 Free 14-day returns and exchanges${s.gift ? ' \u00b7 Free <a href="/tote/">Sahra Tote</a> with every order' : ''}</span><span class="sb-ship-gcc"><span class="ss-instock">In stock. </span>GCC delivery in 3\u20135 working days, free over AED 229 \u00b7 14-day returns</span><span class="sb-ship-intl"><span class="ss-instock">In stock. </span>Worldwide delivery in 7\u201314 working days \u00b7 14-day returns</span></p>`;
 }
 function top(s, o = {}) {
   const altBase = s.name.replace(/&amp;/g, '&') + (s.colour ? ` in ${s.colour}` : '');
@@ -387,8 +399,11 @@ function top(s, o = {}) {
       ${eyebrow}
       <h1 class="ss-h1">${o.h1 || esc(s.name)}</h1>
       ${/* 14 Nov 2026 (site scorecard r139: the sticky size bar hid the stars on a phone's first screen): the stars sit under the title */''}${o.rating || ''}
-      <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two Founding Edition tees, AED 359</span>` : ''}</p>${!PAUSED[s.handle] ? `
-      <p class="ss-tbp"><span class="ssb-tb sb-ship-uae sb-aed-only">4 \u00d7 ${quarter(s.price)} with ${TBL}</span></p>` : ''}
+      ${o.proof || ''}
+      <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two AED 199 tees, AED 359</span>` : ''}</p>${!PAUSED[s.handle] ? `
+      <p class="ss-tbp"><button type="button" class="ssb-tb ss-tb-open sb-ship-uae sb-aed-only" aria-expanded="false" aria-controls="ssTbT-${s.handle}">4 \u00d7 ${quarter(s.price)} with ${TBL} <span class="ss-tb-nf">interest-free</span></button></p>
+      <p class="ss-tb-t" id="ssTbT-${s.handle}" hidden>${/* 18 Nov 2026 (persona audit; Faheem chose "Payment line by the price"): what Tabby means, in plain words, one tap away */''}Split ${money(s.price)} into 4 payments of ${money(Number(quarter(s.price)))}: the first today, then one every 2 weeks. No interest, and no fees when you pay on time. Tabby confirms at checkout.</p>` : ''}
+      ${!PAUSED[s.handle] ? `<p class="ss-pay"><span class="sb-ship-uae">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 Tabby \u00b7 No cash on delivery</span><span class="sb-ship-gcc">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 Tabby \u00b7 No cash on delivery</span><span class="sb-ship-intl">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 No cash on delivery</span></p>` : ''}
       <p class="ss-kind">${kind}</p>
       ${fitSwitch(s, 'ss-fits')}
       ${waLine(s, o.h1)}

@@ -173,7 +173,9 @@
      product list). Sahel tees share the T-Shirt product type, so the type is no longer enough. */
   function isTee(l) {
     var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle;
-    return !!h && TEES.some(function (t) { return t.h === h; });
+    /* 18 Nov 2026 (Faheem: the pair price on every AED 199 tee): the Sahel tees at AED 199 count too; the Shams Tee and the
+       Sahra Trail Tee (AED 139) do not */
+    return !!h && (TEES.some(function (t) { return t.h === h; }) || /^(khor-fakkan-bay-tee|al-hamra-pearl-diver-tee|al-aqah-reef-tee|al-qudra-lakes-tee)-/.test(h));
   }
   function money(a, c) {
     /* Arabic pages: "199 درهم", through the market layer's own formatter (30 Oct 2026) */
@@ -371,15 +373,15 @@
   var STR = {
     en: {
       bag: 'Bag', yourBag: 'Your bag', close: 'Close bag', empty: 'Your bag is empty.', emptySub: 'Every piece is drawn from a real place in the UAE.', shop: 'Shop all pieces',
-      piece1: '1 piece', pieces: '{n} pieces', size: 'Size {s}', changeSize: 'Change size, now {s}', loadingSizes: 'Loading sizes…', soldOut: 'sold out',
+      piece1: '1 piece', pieces: '{n} pieces', plusTote: ' + free tote', going: 'Taking you to secure checkout\u2026', size: 'Size {s}', changeSize: 'Change size, now {s}', loadingSizes: 'Loading sizes…', soldOut: 'sold out',
       teeShort: 'Tee {a} · Short {b}', oneSize: 'One size', remove: 'Remove', removeA: 'Remove {t}', removed: 'Removed {t}', undo: 'Undo',
       dec: 'One fewer', inc: 'One more', qty: 'Quantity', capped: 'No more in this size',
       tote: 'The Sahra Tote', yoursFree: 'yours free', toteSub: 'Free with every order', free: 'Free',
       pairPrice: 'pair price', afterDiscount: 'price applied', prePrice: 'pre-order price',
-      applied: 'Pair price applied: any two Founding Edition tees for AED 359', appliedX: 'Pair price applied: the two-tee price',
+      applied: 'Pair price applied: any two AED 199 tees for AED 359', appliedX: 'Pair price applied: the two-tee price',
       sahelFit: 'Sahel runs larger than the Founding Edition.', sahelChart: 'Sahel size chart', trailFit: 'Sahra Trail is its own pattern.', trailChart: 'Sahra Trail size chart',
       total: 'Total', delivery: 'Delivery', returns: 'Returns', tabby: 'Tabby',
-      dUae: 'Free, next working day', dUae15: 'AED 15, next working day', dGcc: 'AED 50, free over AED 390', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
+      dUae: 'Free, next working day', dUae15: 'AED 15, next working day', dGcc: 'AED 50, free over AED 229', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
       away: 'AED {n} away from free delivery', unlocked: 'Free delivery unlocked',
       rUae: 'Free for 14 days', rX: 'Within 14 days', rX14: '14-day returns', dUaeLine: 'Free delivery, next working day \u00b7 free 14-day returns', appliedN: 'Pair price applied to all {n} Founding Edition tees', tabbyRow: '4 payments of {p}, no interest',
       checkout: 'Checkout', payUae: 'Apple Pay, Google Pay, Shop Pay, card or <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"> at checkout', payX: 'Apple Pay, Google Pay, Shop Pay or card at checkout',
@@ -393,16 +395,16 @@
     },
     ar: {
       bag: 'السلة', yourBag: 'سلّتك', close: 'إغلاق السلة', empty: 'سلّتك فارغة.', emptySub: 'كل قطعة مستوحاة من مكان حقيقي في الإمارات.', shop: 'تسوّق كل القطع',
-      piece1: 'قطعة واحدة', piece2: 'قطعتان', pieces: '{n} قطع', piecesMany: '{n} قطعة',
+      piece1: 'قطعة واحدة', piece2: 'قطعتان', plusTote: ' + حقيبة هدية مجانية', going: 'جارٍ نقلك إلى صفحة الدفع الآمن\u2026', pieces: '{n} قطع', piecesMany: '{n} قطعة',
       size: 'المقاس {s}', changeSize: 'تغيير المقاس، الآن {s}', loadingSizes: 'جارٍ تحميل المقاسات…', soldOut: 'نفد',
       teeShort: 'التيشيرت {a} · الشورت {b}', oneSize: 'مقاس واحد', remove: 'إزالة', removeA: 'إزالة {t}', removed: 'أُزيل: {t}', undo: 'تراجع',
       dec: 'إنقاص الكمية', inc: 'زيادة الكمية', qty: 'الكمية', capped: 'لا مزيد بهذا المقاس',
       tote: 'حقيبة صحراء القماشية', yoursFree: 'هدية مجانية', toteSub: 'مجانًا مع كل طلب', free: 'مجانًا',
       pairPrice: 'سعر القطعتين', afterDiscount: 'السعر المطبّق', prePrice: 'سعر الطلب المسبق',
-      applied: 'طُبّق سعر القطعتين: أي تيشيرتين من الإصدار التأسيسي مقابل 359 درهمًا', appliedX: 'طُبّق سعر القطعتين',
+      applied: 'طُبّق سعر القطعتين: أي تيشيرتين بسعر 199 درهمًا مقابل 359 درهمًا', appliedX: 'طُبّق سعر القطعتين',
       sahelFit: 'مقاسات ساحل أوسع من الإصدار التأسيسي.', sahelChart: 'جدول مقاسات ساحل', trailFit: 'لصحراء تريل نمط قصّ خاص بها.', trailChart: 'جدول مقاسات صحراء تريل',
       total: 'المجموع', delivery: 'التوصيل', returns: 'الإرجاع', tabby: 'تابي',
-      dUae: 'مجاني، في يوم العمل التالي', dUae15: '15 درهمًا، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 390 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
+      dUae: 'مجاني، في يوم العمل التالي', dUae15: '15 درهمًا، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 229 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
       away: 'يبقى {n} درهمًا للتوصيل المجاني', unlocked: 'التوصيل مجاني لهذا الطلب',
       rUae: 'مجانًا خلال 14 يومًا', rX: 'خلال 14 يومًا', rX14: 'إرجاع خلال 14 يومًا', dUaeLine: 'توصيل مجاني في يوم العمل التالي · إرجاع مجاني خلال 14 يومًا', appliedN: 'طُبّق سعر القطعتين على التيشيرتات {n} من الإصدار التأسيسي', tabbyRow: '4 دفعات بدون فوائد، كل دفعة {p}',
       checkout: 'إتمام الشراء', payUae: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay، البطاقة أو <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="تابي" width="41" height="16" decoding="async">', payX: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay أو البطاقة',
@@ -502,13 +504,15 @@
         '<div class="sb-db" id="sbScroll">' +
           '<div class="sb-lines" id="sbBody"><p class="sb-empty">' + T('empty') + '</p></div>' +
           '<p class="sb-applied" id="sbApplied" hidden></p>' +
-          '<div class="sb-bundle" id="sbBundle" hidden></div>' +
+          /* 18 Nov 2026 (persona audit; Faheem chose "gift message moved up in the bag"): the gift row sits right under the
+             pieces, above the suggestions, so it is not half hidden behind the total on a laptop screen */
           /* the gift row: the message travels on the Shopify order as its note, with Gift (and Hide prices) attributes */
           '<div class="sb-giftopt" id="sbGiftRow" hidden><label class="sb-giftl"><input type="checkbox" id="sbGiftChk"> <span>' + T('gift') + '</span></label>' +
             '<div class="sb-giftbox" id="sbGiftBox" hidden><label class="sb-giftml" for="sbGiftMsg">' + T('giftMsg') + '</label>' +
             '<textarea id="sbGiftMsg" rows="2" maxlength="250" placeholder="' + T('giftPh') + '"></textarea>' +
             '<label class="sb-gifthide"><input type="checkbox" id="sbGiftHide"> <span>' + T('giftHide') + '</span></label>' +
             '<p class="sb-gifth">' + T('giftNote') + '</p></div></div>' +
+          '<div class="sb-bundle" id="sbBundle" hidden></div>' +
         '</div>' +
         '<div class="sb-undo" id="sbUndo" role="status" aria-live="polite" hidden><span id="sbUndoT"></span><button type="button" id="sbUndoB">' + T('undo') + '</button></div>' +
         '<div class="sb-df" id="sbFoot" hidden>' +
@@ -873,7 +877,7 @@
       if (bu) { bu.hidden = true; bu.innerHTML = ''; }
       return;
     }
-    if (cnt) cnt.textContent = piecesT(realQty());
+    if (cnt) cnt.textContent = piecesT(realQty()) + (gifts.length ? T('plusTote') : '');   /* 18 Nov 2026: "1 piece + free tote", as checkout counts 2 */
 
     /* the tote is listed last, whatever order Shopify returns */
     body.innerHTML = err + realLines.concat(gifts).map(function (l) {
@@ -971,7 +975,7 @@
       else hide();
     })();
 
-    /* Delivery and returns, by market. Honest maths only: the thresholds (UAE AED 100 from 5 Nov 2026, GCC AED 390)
+    /* Delivery and returns, by market. Honest maths only: the thresholds (UAE AED 100 from 5 Nov 2026, GCC AED 229 from 18 Nov 2026)
        are in AED, so they are only counted down on a bag priced in AED. */
     var UAE_FREE = 100;
     (function () {
@@ -979,9 +983,9 @@
       var x = '';
       if (mkt === 'gcc') {
         if (cur !== 'AED') x = T('dGccX');
-        else if (amt >= 390) x = T('dGccFree') + ' \u00b7 ' + T('unlocked');
-        else { var left = 390 - amt, lt = left % 1 === 0 ? left.toFixed(0) : left.toFixed(2);
-          x = T('dGcc') + '<span class="sb-free-t">' + T('away', { n: lt }) + '</span><span class="sb-free-bar"><span style="width:' + Math.max(6, Math.round(amt / 390 * 100)) + '%"></span></span>'; }
+        else if (amt >= 229) x = T('dGccFree') + ' \u00b7 ' + T('unlocked');
+        else { var left = 229 - amt, lt = left % 1 === 0 ? left.toFixed(0) : left.toFixed(2);
+          x = T('dGcc') + '<span class="sb-free-t">' + T('away', { n: lt }) + '</span><span class="sb-free-bar"><span style="width:' + Math.max(6, Math.round(amt / 229 * 100)) + '%"></span></span>'; }
         el.className = 'sb-free sb-x-mkt';
         el.innerHTML = T('delivery') + ': ' + x.replace(/(<span class="sb-free-t">)/, ' \u00b7 ' + T('rX14') + '$1') + (x.indexOf('sb-free-t') < 0 ? ' \u00b7 ' + T('rX14') : '');
       } else if (mkt === 'intl') { el.className = 'sb-free sb-x-mkt'; el.innerHTML = T('delivery') + ': ' + T('dIntl') + ' \u00b7 ' + T('rX14'); }
@@ -1010,6 +1014,7 @@
       try { var g0 = JSON.parse(localStorage.getItem('sb_gift') || 'null');
         if (g0 && CART && g0.cart === CART.id) { chk.checked = !!g0.on; ta.value = g0.msg || ''; if (hideP) hideP.checked = !!g0.hide; box.hidden = !g0.on; } } catch (e) {}
       if (gr && gr.classList) gr.classList.toggle('on', !!chk.checked);
+      chk.addEventListener('change', function () { if (chk.checked && box) setTimeout(function () { try { box.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {} }, 60); });
       var t = null, last = null, pend = null, noteSet = false;
       function save() {
         if (!CART || !CART.id) return Promise.resolve();
@@ -1381,6 +1386,12 @@
   }
   function goCheckout(url) {
     url = coUrl(url);
+    /* 18 Nov 2026 (persona audit; Faheem chose "Checkout clean-up"): Shopify's checkout can take a few seconds to open on a
+       phone; the button says what is happening instead of looking frozen */
+    ['sbGo', 'sbPkGo'].forEach(function (id) { var el = $(id); if (el) { if (el.__t == null) el.__t = el.innerHTML; el.classList.add('is-going'); el.setAttribute('aria-busy', 'true'); el.textContent = T('going'); } });
+    /* r146 review: if the browser never leaves (a blocked pop-up, a slow network), the button comes back after 8 seconds */
+    setTimeout(function () { ['sbGo', 'sbPkGo'].forEach(function (id) { var el = $(id); if (el && el.__t != null && el.classList.contains('is-going')) { el.innerHTML = el.__t; el.classList.remove('is-going'); el.removeAttribute('aria-busy'); } }); }, 8000);
+    if (!window.__sbGoBack) { window.__sbGoBack = 1; addEventListener('pageshow', function () { ['sbGo', 'sbPkGo'].forEach(function (id) { var el = $(id); if (el && el.__t != null) { el.innerHTML = el.__t; el.classList.remove('is-going'); el.removeAttribute('aria-busy'); } }); }); }
     beginCheckout();
     var done = false; function nav() { if (done) return; done = true; location.href = url; }
     saveAttrs().then(nav, nav); setTimeout(nav, 1000);

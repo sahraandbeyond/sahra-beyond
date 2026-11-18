@@ -1098,7 +1098,7 @@ ${SP.HEAD}
 <div id="grain"></div>
 <div id="progress"><i></i></div>
 
-<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; free over AED 100</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 390</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
+<div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; free over AED 100</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 229</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav class="sb-top">
   <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div><div class="logo-a sb-house">Designed in the UAE for everyone who loves it.</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -1115,7 +1115,8 @@ ${SP.top(SPS, {
   crumb: `<nav class="ss-crumb" aria-label="Breadcrumb">${crumbTrail(p).map(c => c[1] ? `<a href="${c[1]}">${esc(c[0])}</a>` : `<span aria-current="page">${esc(c[0])}</span>`).join('<i aria-hidden="true">/</i>')}</nav>`,
   h1: esc(productH1(p)).replace('T-Shirt', '<span class="nw">T-Shirt</span>'),
   rating: RV.ratingLine(designHandles(p)),
-  help: `<p class="ss-help">${p.garment === 'polo' ? 'The polo is graded to the Regular tee chart. ' : ''}<a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>.<span class="sb-ship-uae ss-exch"> Free size exchanges in the UAE.</span> ${/* 17 Nov 2026 (WhatsApp fit help, Faheem: "Under the sizes"): the free size exchange beside the size choice, UAE visitors only. 12 Nov 2026 (Faheem: "Instead of saying not sure of your size, let's just say something like find your fit with our size finder and this takes the user to the height etc criteria") */''}${/* 14 Nov 2026 (r139 scorecard): the size the model wears is already on the photo, so it is not repeated here */''}</p>`,
+  proof: RV.proofQuote(designHandles(p), { handle: p.id }),   /* 18 Nov 2026 (persona audit): one buyer's words under the stars */
+  help: `<p class="ss-help">${p.garment === 'polo' ? 'The polo is graded to the Regular tee chart. ' : ''}<a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>.<span class="sb-ship-uae ss-exch"> Free size exchanges in the UAE.</span> ${/* 17 Nov 2026 (WhatsApp fit help, Faheem: "Under the sizes"): the free size exchange beside the size choice, UAE visitors only. 12 Nov 2026 (Faheem: "Instead of saying not sure of your size, let's just say something like find your fit with our size finder and this takes the user to the height etc criteria") */''}${/* 14 Nov 2026 (r139 scorecard): the size the model wears is already on the photo, so it is not repeated here */''}</p>${SFD.glance(SFD.forFounding(p), { handle: p.id })}`,
   extra: `<p class="po-tabby-fine sb-ship-uae">Pay Later (Short Term Credit) is provided by Tabby LLC. Terms and conditions apply. For more information or to contact us, visit tabby.ai.</p>`   /* 14 Nov 2026 (r139 scorecard, Tabby as one line: Tabby's required legal line, as on the Sahel and Trail pages). 14 Nov 2026 (review panel): the pair strip, the Why/Unsure block and the two quotes repeated the reviews, the size help and the cross-sell */
 })}
 </div>
@@ -1139,7 +1140,7 @@ ${/* 14 Nov 2026 (review panel: proof belongs next to the decision): the reviews
           </div>` : ''}
         </details>
         <details class="pdp-ans">
-          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">next-day &middot; free over AED 100</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 390</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
+          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">next-day &middot; free over AED 100</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 229</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
           <div class="shipcards">
             <!-- No regional-indicator (flag) emoji anywhere in these cards:
                  Windows renders them as bare letter codes, so the six-flag GCC string became
@@ -1151,7 +1152,7 @@ ${/* 14 Nov 2026 (review panel: proof belongs next to the decision): the reviews
               <span>Next working day, all seven emirates — order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
               <span>Free returns and exchanges within 14 days</span></div>
             <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
-              <span>3–5 working days — AED 50, <strong>free over AED 390</strong></span>
+              <span>3–5 working days — AED 50, <strong>free over AED 229</strong></span>
               <span>Duties, if any, are payable on arrival</span></div>
             <div class="shipcard shipcard-intl"><b>🌍 Worldwide</b>
               <span>7–14 working days — AED 80</span>

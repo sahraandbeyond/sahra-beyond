@@ -27,8 +27,8 @@
   function iso(x) { return '⁦' + x + '⁩'; }
   function inch(cm) { var i = Math.round(cm / 2.54); return Math.floor(i / 12) + '′' + (i % 12) + '″'; }
   var TX = AR ? {
-    title: 'اعثر على مقاسك', open: 'افتح أداة المقاسات', close: 'إغلاق',
-    cardH: '<b>اعثر على مقاسك</b> بحسب الطول والوزن',
+    title: 'اعرف مقاسك', open: 'افتح أداة المقاسات', close: 'إغلاق',
+    cardH: '<b>اعرف مقاسك</b> بحسب الطول والوزن',
     who: 'لمن هذه القطعة؟', man: 'رجل', woman: 'امرأة',
     height: 'الطول', weight: 'الوزن', choose: 'اختر',
     usual: 'مقاسك المعتاد في الماركات الأخرى (اختياري)', notSure: 'لست متأكدًا',
@@ -41,7 +41,7 @@
     orR: function (s) { return 'أو <b>' + s + '</b> لقصّة أوسع'; },
     between: 'أنت بين مقاسين.',
     room: function (cm, w) { return 'نحو ' + cm + ' سم من المساحة حول الصدر: ' + w + '.'; },
-    roomW: ['قريبة من الجسم', 'قصّة ريجولر مرتبة', 'مريحة', 'واسعة بأسلوب أوفرسايز', 'واسعة جدًا'],
+    roomW: ['قريبة من الجسم', 'قصّة ريجولر مرتبة', 'مريحة', 'قصّة أوفرسايز', 'واسعة جدًا'],
     hem: ['تنتهي عند حزام البنطال', 'تنتهي عند الورك', 'تنتهي عند أعلى الساقين تقريبًا', 'تنزل تحت الوركين بقليل', 'تنزل إلى أعلى الفخذ'],
     hemS: function (w) { return 'وبطولك ' + w + '.'; },
     band: function (what, cm) { return 'صُمّمت لـ' + what + ' ' + iso(cm) + ' سم.'; }, bandChest: 'صدر', bandWaist: 'خصر',
@@ -50,6 +50,7 @@
     smallest: function (s) { return '<b>' + s + '</b> أصغر مقاس لدينا، وسيكون أوسع مما صُمّم له.'; },
     gone: function (s) { return 'المقاس ' + s + ' نفد في هذه القطعة.'; },
     otherFit: function (f) { return 'جرّب ' + f; }, ask: 'اسألنا على واتساب',
+    closerFit: function (f) { return 'تريدها أقرب إلى الجسم؟ جرّب قصّة ' + f; }, roomierFit: function (f) { return 'تريد مساحة أكبر؟ جرّب قصّة ' + f; },
     pick: function (s) { return 'اختر ' + s; }, pickKit: function (a, b) { return 'اختر التيشيرت ' + a + ' والشورت ' + b; },
     tee: 'التيشيرت', short: 'الشورت',
     fine: 'نقطة بداية من قياسات معتادة لهذا الطول والوزن، وليست قياسًا. استبدال المقاس مجاني داخل الإمارات.',
@@ -78,6 +79,7 @@
     smallest: function (s) { return '<b>' + s + '</b> is our smallest size, and it will sit roomier than it is designed to.'; },
     gone: function (s) { return s + ' is sold out in this piece.'; },
     otherFit: function (f) { return 'Try the ' + f + ' fit'; }, ask: 'Ask us on WhatsApp',
+    closerFit: function (f) { return 'Want it closer to the body? Try the ' + f + ' fit'; }, roomierFit: function (f) { return 'Want more room? Try the ' + f + ' fit'; },
     pick: function (s) { return 'Select ' + s; }, pickKit: function (a, b) { return 'Select tee ' + a + ' and short ' + b; },
     tee: 'Tee', short: 'Short',
     fine: 'A starting point from typical measurements for that height and weight, not a fitting. Size exchanges are free in the UAE.',
@@ -132,6 +134,14 @@
   /* ---------- the page's buy sheet ---------- */
   function sizeBtn(group, s) { return document.querySelector('#ssBuy .ssb-sz[data-group="' + group + '"] button[data-size="' + s + '"]'); }
   function soldOut(group, s) { var b = sizeBtn(group, s); return !!(b && (b.disabled || b.classList.contains('is-out'))); }
+  /* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "the finder suggests another fit when the answer is very roomy or
+     tight"): the fits on this page in their order (Regular, Oversized, Super Oversized), and the one beside this one */
+  function nextFit(step) {
+    var as = [].slice.call(document.querySelectorAll('.ss-fits a[href]')), i = -1;
+    as.forEach(function (a, k) { if (a.classList.contains('on')) i = k; });
+    var a = i < 0 ? null : as[i + step]; if (!a) return null;
+    var b = a.querySelector('b'); return { href: a.getAttribute('href'), name: (b ? b.textContent : a.textContent).trim() };
+  }
   function otherFit() { var a = document.querySelector('.ss-fits a:not(.on)'); if (!a) return null; var b = a.querySelector('b'); return { href: a.getAttribute('href'), name: (b ? b.textContent : a.textContent).trim() }; }
 
   /* ---------- markup ---------- */
@@ -234,6 +244,11 @@
       if (r.alt) h += '<p class="sf-note">' + TX.between + '</p>';
       if (r.over) h += '<p class="sf-note">' + TX.largest(r.best.size) + '</p>';
       if (r.under) h += '<p class="sf-note">' + TX.smallest(r.best.size) + '</p>';
+      if (piece.kind !== 'bands' && !cfg.choose) {
+        var tgt = piece.target + (SHIFT[pref] || 0), nf = null;
+        if (r.under || r.best.room > tgt + 6) { nf = nextFit(-1); if (nf) h += '<p class="sf-alts sf-fitalt"><a href="' + nf.href + '">' + TX.closerFit(nf.name) + ' &rarr;</a></p>'; }
+        else if (r.over || r.best.room < 4) { nf = nextFit(1); if (nf) h += '<p class="sf-alts sf-fitalt"><a href="' + nf.href + '">' + TX.roomierFit(nf.name) + ' &rarr;</a></p>'; }
+      }
       var pick = r.best.size, alt = r.alt ? r.alt.size : null, gone = false;
       if (group && soldOut(group, pick)) {
         gone = true; h += '<p class="sf-note sf-so">' + TX.gone(pick) + '</p>';

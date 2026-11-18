@@ -107,6 +107,11 @@
   /* 12 Nov 2026 (Faheem: "Top banner should also say shipping worldwide"; chose "Worldwide only"): one line for every
      visitor and every screen. The UAE free-delivery promise stays on product pages, in the bag and at checkout. */
   var SHIP = AR ? 'نشحن إلى جميع أنحاء العالم' : 'We ship worldwide';
+  /* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "UAE banner for UAE", changing the 12 Nov "Worldwide only"): a
+     visitor in the UAE reads the UAE promise; GCC and worldwide visitors keep "We ship worldwide". The market classes
+     (html[data-market], assets/sahra-market.js) pick which one shows; before the market is known the UAE line shows. */
+  var SHIP_UAE = AR ? 'توصيل مجاني في اليوم التالي داخل الإمارات للطلبات فوق 100 درهم<span class="sbw-x"> · استبدال مجاني خلال 14 يومًا</span>' : 'Free next-day UAE delivery over AED 100<span class="sbw-x"> · free 14-day exchanges</span>';   /* the exchange half steps aside on a narrow phone */
+  var SHIPS = function (dot) { return '<span class="sb-ship-uae">' + SHIP_UAE + dot + '</span><span class="sb-ship-gcc">' + SHIP + dot + '</span><span class="sb-ship-intl">' + SHIP + dot + '</span>'; };
   function esc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
   /* ---------------------------------------------------------------- bar */
@@ -127,10 +132,10 @@
         '<span class="sbw-dot" aria-hidden="true"></span>' +
         '<span class="sbw-msg"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + esc(AR ? S.ar : S.en) +
           /* below 1240px the delivery line has no room beside the message, so it follows it (12 Nov 2026) */
-          (k === 1 ? '' : ' <span class="sbw-msg-ship">' + SHIP + (AR ? '.' : '.') + '</span>') + '</span>' +
+          (k === 1 ? '' : ' <span class="sbw-msg-ship">' + SHIPS('.') + '</span>') + '</span>' +
         /* no next-day promise beside the pre-order stage: those pieces ship from Fri 30 Oct */
         (k === 1 ? '' : '<span class="sbw-sep sbw-shipwrap" aria-hidden="true">&middot;</span>' +
-        '<span class="sbw-ship sbw-shipwrap"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + SHIP + '</span>') +
+        '<span class="sbw-ship sbw-shipwrap"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + SHIPS('') + '</span>') +
       '</span>';
   }
   render();
