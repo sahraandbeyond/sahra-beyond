@@ -18,6 +18,51 @@
   },
   "posts": [
     {
+      "id": "Df43_akhdmr",
+      "kind": "reel",
+      "label": "Open world, no loading screen: Wadi Esfini, Al Qudra Lakes and Al Rams, all shot by us",
+      "topic": "places",
+      "guides": [
+        "/places/"
+      ],
+      "wear": [
+        "/products/khor-fakkan-bay-tee-regular/",
+        "The Khor Fakkan Bay Tee"
+      ],
+      "src": "GTA-NOD-19-Nov-2026/v2_game-look/g1v2_reel_open-world.mp4",
+      "srcNote": "Site cover is the posted cover, g1v2_reel_open-world_COVER.jpg, cropped to 4:5."
+    },
+    {
+      "id": "Df4xwl_lZ6Q",
+      "kind": "carousel",
+      "label": "The story behind the Khor Fakkan Bay Tee: the place, the name and the drawing",
+      "topic": "sahel",
+      "places": [
+        "khor-fakkan-beach"
+      ],
+      "wear": [
+        "/products/khor-fakkan-bay-tee-regular/",
+        "The Khor Fakkan Bay Tee"
+      ],
+      "src": "STORY-BEHIND-SERIES/01_khor-fakkan-bay",
+      "srcNote": "Slides are the seven posted image slides, 01_khor-fakkan-bay_slide01 to slide07, as WebP; slide 7 shows the full price, AED 199."
+    },
+    {
+      "id": "DfzoOaCDQeO",
+      "kind": "reel",
+      "label": "The Khor Fakkan Bay Tee on the model: the mountains, the beach and the dhow across the back",
+      "topic": "sahel",
+      "places": [
+        "khor-fakkan-beach"
+      ],
+      "wear": [
+        "/products/khor-fakkan-bay-tee-regular/",
+        "The Khor Fakkan Bay Tee"
+      ],
+      "src": "DRIP-MALE-MODEL-9-Nov-2026/business-suite-upload/17_Mon16_7pm_house_REEL_Khor-Fakkan-Bay-T18_palB_bs.mp4",
+      "srcNote": "Site cover is the posted cover, 17_Mon16_7pm_house_REEL_Khor-Fakkan-Bay-T18_palB_COVER.jpg, cropped to 4:5."
+    },
+    {
       "id": "DfxDcRklrhE",
       "kind": "carousel",
       "label": "The Shams Tee on him and on her: one small mark in sand thread on the chest",

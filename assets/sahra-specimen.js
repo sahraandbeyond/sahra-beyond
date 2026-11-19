@@ -29,6 +29,10 @@
   if (location.hash) openTo(location.hash.slice(1));
   addEventListener('hashchange', function () { openTo(location.hash.slice(1)); });
   /* ---------------- the stage ---------------- */
+  /* 19 Nov 2026: the loop as the first view exists only for Meta ad visitors (html.sb-vf, set in the head); for everyone else
+     it leaves the stage before anything counts the photos */
+  var vf = de.classList.contains('sb-vf');
+  if (stage && !vf) [stage.querySelector('.ss-v-loop'), document.querySelector('.ss-tab-loop')].forEach(function (x) { if (x) x.parentNode.removeChild(x); });
   var figs = stage ? [].slice.call(stage.querySelectorAll('.ss-v')) : [];
   var tabs = [].slice.call(document.querySelectorAll('.ss-tab'));
   var pins = stage ? [].slice.call(stage.querySelectorAll('.ss-pin')) : [];
@@ -37,6 +41,14 @@
   var cap = stage && stage.querySelector('.ss-cap'), mockTag = stage && stage.querySelector('.ss-mock');
   var cur = 0;
   figs.forEach(function (f, i) { if (f.classList.contains('on')) cur = i; });
+  var lpf = stage && stage.querySelector('.ss-v-loop');
+  if (lpf) {
+    cur = figs.indexOf(lpf);
+    figs.forEach(function (x) { x.classList.toggle('on', x === lpf); });
+    tabs.forEach(function (t) { var on = t.getAttribute('data-v') === 'loop'; t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+    if (mockTag) mockTag.hidden = true; if (cap) cap.hidden = true;
+    stage.classList.add('vf-on');
+  }
 
   var hydrated = false;
   function hydrate() {
@@ -80,6 +92,30 @@
     if (noteEl) { noteEl.hidden = k !== 'art'; if (k === 'art' && why !== 'pin') setNote(-1); }
     if (k !== 'art') pins.forEach(function (p) { p.classList.remove('on'); });
     cur = i;
+    lpSync();
+  }
+  /* the loop in the stage plays only while it is the photo shown, the stage is on screen and the tab is visible; it loads
+     after the page has loaded. A visitor's pause holds. The button follows what the video really does. */
+  var lpv = lpf && lpf.querySelector('video'), lpt = lpf && lpf.querySelector('.ss-loop-t'), lpHeld = false, lpReady = false, lpVis = false;
+  var LPW = /^ar\b/i.test(de.getAttribute('lang') || '') ? ['\u0625\u064a\u0642\u0627\u0641', '\u062a\u0634\u063a\u064a\u0644'] : ['Pause', 'Play'];
+  function lpSync() {
+    if (!lpv) return;
+    if (lpReady && lpVis && !lpHeld && !document.hidden && lpf.classList.contains('on')) {
+      if (lpv.getAttribute('data-src')) { lpv.src = lpv.getAttribute('data-src'); lpv.removeAttribute('data-src'); }
+      var pr = lpv.play(); if (pr && pr.catch) pr.catch(function () {});
+    } else if (!lpv.paused) lpv.pause();
+  }
+  if (lpv) {
+    lpv.addEventListener('playing', function () { if (lpt) { lpt.hidden = false; lpt.textContent = LPW[0]; } });
+    lpv.addEventListener('pause', function () { if (lpt) lpt.textContent = LPW[1]; });
+    lpv.addEventListener('error', function () { lpv.hidden = true; if (lpt) lpt.hidden = true; });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { lpVis = es[es.length - 1].intersectionRatio >= 0.35; lpSync(); }, { threshold: [0, 0.35, 0.7] }).observe(stage); else lpVis = true;
+    document.addEventListener('visibilitychange', lpSync);
+    var lpGo = function () { lpReady = true; lpSync(); };
+    if (document.readyState === 'complete') setTimeout(lpGo, 300); else addEventListener('load', function () { setTimeout(lpGo, 300); });
+    setTimeout(lpGo, 8000);   /* a slow third-party request can hold the load event */
+    if (lpt) lpt.addEventListener('click', function (e) { e.stopPropagation(); lpHeld = !lpHeld; lpSync(); tr(lpHeld ? 'loop_pause' : 'loop_play', { item_id: handle, where: 'stage' }); });
+    tr('loop_first', { item_id: handle });
   }
   tabs.forEach(function (t) {
     t.addEventListener('click', function () {
@@ -121,21 +157,53 @@
       }
     }, { passive: true });
     stage.addEventListener('click', function (e) {
-      if (swiped || (e.target.closest && e.target.closest('.ss-pin,.ss-tabs,.ss-note'))) return;
+      if (swiped || (e.target.closest && e.target.closest('.ss-pin,.ss-tabs,.ss-note,.ss-loop-t'))) return;
       zoom();
     });
   } else if (stage) stage.addEventListener('click', function (e) { if (!(e.target.closest && e.target.closest('.ss-pin,.ss-tabs,.ss-note'))) zoom(); });
   if (stage) stage.addEventListener('keydown', function (e) { if (e.target === stage && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); zoom(); } });
   function zoom() {
     if (!window.SahraZoom || !figs.length) return;
-    var list = figs.map(function (f) { var im = f.querySelector('img'); return { src: f.getAttribute('data-full') || (im && (im.currentSrc || im.src)), alt: (im && im.alt) || '' }; });
-    try { window.SahraZoom.open(list, cur); } catch (e) { return; }
+    if (figs[cur] === lpf) return;   /* the loop is not zoomed; its button pauses it */
+    var still = figs.filter(function (f) { return f !== lpf; });
+    var list = still.map(function (f) { var im = f.querySelector('img'); return { src: f.getAttribute('data-full') || (im && (im.currentSrc || im.src)), alt: (im && im.alt) || '' }; });
+    try { window.SahraZoom.open(list, still.indexOf(figs[cur])); } catch (e) { return; }
     tr('image_zoom', { item_id: handle });
   }
 
   /* ---------------- On the model (2 Nov 2026) ----------------
      The model photos load only after the page has loaded and once their row is near the screen (or at the first touch,
      focus or arrow), so the stage's first photo keeps the bandwidth. A tap opens them in the zoom viewer. */
+  /* ---------------- Beach-shoot loop (19 Nov 2026) ----------------
+     A silent 7-second loop of the model wearing the design. It loads only after the page has loaded and once it is near the
+     screen, plays while it is on screen and pauses when it leaves. Reduced motion or data saver: the still frame only.
+     A Pause / Play button (WCAG 2.2.2), and a visitor's pause holds. */
+  var lp = document.querySelector('[data-loop]');
+  if (lp) (function () {
+    var v = lp.querySelector('video'), t = lp.querySelector('.ss-loop-t'); if (!v) return;
+    var still = reduced || (navigator.connection && navigator.connection.saveData);
+    if (still || !('IntersectionObserver' in window)) return;
+    var AR = /^ar\b/i.test(de.getAttribute('lang') || '');
+    var W = AR ? ['إيقاف', 'تشغيل'] : ['Pause', 'Play'];
+    var ready = false, on = false, held = false;
+    function load() { if (v.getAttribute('data-src')) { v.src = v.getAttribute('data-src'); v.removeAttribute('data-src'); } }
+    function sync() {
+      if (!ready) return;
+      if (on && !held && !document.hidden) { load(); var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else v.pause();
+    }
+    /* the button follows what the video really does (r147 review): shown once it plays, its word from the media events */
+    function label() { if (t) t.textContent = v.paused ? W[1] : W[0]; }
+    v.addEventListener('playing', function () { if (t) t.hidden = false; label(); });
+    v.addEventListener('pause', label);
+    v.addEventListener('error', function () { if (t) t.hidden = true; });
+    new IntersectionObserver(function (es) { var e = es[es.length - 1]; on = e.isIntersecting && (e.intersectionRatio >= 0.35 || e.intersectionRect.height >= innerHeight * 0.6); sync(); }, { threshold: [0, 0.2, 0.35, 0.6] }).observe(lp);
+    document.addEventListener('visibilitychange', sync);
+    function go() { ready = true; sync(); }
+    if (document.readyState === 'complete') setTimeout(go, 300); else addEventListener('load', function () { setTimeout(go, 300); });
+    setTimeout(go, 8000);   /* as the model photos: a slow third-party request can hold the load event */
+    if (t) t.addEventListener('click', function () { held = !held; sync(); tr(held ? 'loop_pause' : 'loop_play', { item_id: handle }); });
+  })();
+
   var om = document.querySelector('[data-om]');
   if (om) (function () {
     var row = om.querySelector('.ss-om-row'), cells = [].slice.call(om.querySelectorAll('.ss-om-f')), bs = [].slice.call(om.querySelectorAll('.ss-om-b'));

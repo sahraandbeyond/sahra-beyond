@@ -224,10 +224,27 @@ function fromPreorder(p) {
     face: D.face, views, notes: (NOTES[p.key] || []).map((n, i) => { const m = ST && NOTES_MODEL[p.handle]; const at = m ? m[i] : [n[0], n[1]]; return { x: at ? at[0] : null, y: at ? at[1] : null, t: n[2] }; }),
     modelPins: !!(ST && NOTES_MODEL[p.handle]), spec,
     pair: p.line === 'sahel' && /T-shirt/i.test(p.kind || '') && Number(p.price) === 199,   /* 18 Nov 2026: the pair price covers every AED 199 tee */
-    gift: !p.noTote, chart: p.line === 'sahel' && !/polo/i.test(p.kind || '') ? '#size-chart' : null,
+    gift: !p.noTote, chart: p.line === 'sahel' ? '#size-chart' : null,   /* 18 Nov 2026: the Sahel Polo has the Sahel Regular tee chart */
     chartNote: null, model: '', kit: !!p.kit, oneSize: !!p.oneSize,
-    onModel: onModelSet(p)
+    onModel: onModelSet(p),
+    loop: loopFor(p)
   };
+}
+/* 19 Nov 2026 (Faheem approved the eight beach-shoot loops; handoff claude/HANDOFF-Website-beach-shoot-loops-19-Nov-2026.md):
+   a silent 7-second loop of the model wearing the design, on every fit page of that design. Faheem: "Don't say a size on it",
+   so it sits in its own spot, apart from the "Model wears" row. Files: assets/loops/<design>-720.mp4 and -poster.webp. */
+const VFIRST = ['al-aqah-reef', 'al-hamra-pearl-diver'];
+const LOOPS = { 'al-aqah-reef': 'The Al Aqah Reef Tee', 'al-hamra-pearl-diver': 'The Al Hamra Pearl Diver Tee', 'khor-fakkan-bay': 'The Khor Fakkan Bay Tee', 'the-sahel-polo': 'The Sahel Polo' };
+function loopFor(p) {
+  const d = Object.keys(LOOPS).find(k => p.handle === k || p.handle.indexOf(k + '-tee-') === 0); if (!d) return null;
+  const fs = require('fs'), path = require('path'), dir = path.join(__dirname, 'assets', 'loops');
+  const mp4 = path.join(dir, d + '-720.mp4'), poster = path.join(dir, d + '-poster.webp');
+  if (!fs.existsSync(mp4) || !fs.existsSync(poster)) return null;
+  const v = f => require('crypto').createHash('md5').update(fs.readFileSync(f)).digest('hex').slice(0, 8);
+  return { src: `/assets/loops/${d}-720.mp4?v=${v(mp4)}`, poster: `/assets/loops/${d}-poster.webp?v=${v(poster)}`, label: `${LOOPS[d]} worn by the sea`,
+    /* 19 Nov 2026 (Faheem chose "Ad visitors: Reef + Pearl" after the video-first review): visitors from the Meta video ads open
+       on the loop on these two designs, whose loops start on the back artwork; everyone else keeps the back photo first */
+    first: VFIRST.indexOf(d) !== -1 };
 }
 /* 2 Nov 2026 (Faheem approved every photo and its order): the five model photos of a Sahel page (content/sahel-photos.json
    onModel, per handle), with the size the model wears. The alt says what the photo shows, never where it was taken. */
@@ -260,7 +277,9 @@ function stage(s, altBase) {
   /* no pins on a model photo (8 Nov 2026), unless that photo has its own pin places (NOTES_MODEL, 12 Nov 2026) */
   const notes = s.notes.length && s.views.some(v => v.k === 'art' && (!v.model || s.modelPins));
   /* 30 Oct 2026 (QA B1): the tabs sit ON the photo, at the top, so the buy sheet can never cover them */
-  const tabs = s.views.length > 1 ? `<div class="ss-tabs" role="tablist" aria-label="Photos">${s.views.map(v => `<button type="button" role="tab" class="ss-tab${v.k === on ? ' on' : ''}" id="ssT-${v.k}" data-v="${v.k}" aria-selected="${v.k === on}" aria-controls="ssV-${v.k}">${v.label}</button>`).join('')}</div>` : '';
+  const VF = s.loop && s.loop.first;   /* the loop as the first view, for Meta ad visitors only (html.sb-vf, set in the head) */
+  const vfTab = VF ? `<button type="button" role="tab" class="ss-tab ss-tab-loop" id="ssT-loop" data-v="loop" aria-selected="false" aria-controls="ssV-loop">Video</button>` : '';
+  const tabs = s.views.length > 1 || VF ? `<div class="ss-tabs" role="tablist" aria-label="Photos">${vfTab}${s.views.map(v => `<button type="button" role="tab" class="ss-tab${v.k === on ? ' on' : ''}" id="ssT-${v.k}" data-v="${v.k}" aria-selected="${v.k === on}" aria-controls="ssV-${v.k}">${v.label}</button>`).join('')}</div>` : '';
   const pins = notes ? `<div class="ss-pins" aria-label="Numbered notes on the artwork">${s.notes.map((n, i) => n.x == null ? '' : `<button type="button" class="ss-pin" data-i="${i}" style="left:${n.x}%;top:${n.y}%" aria-label="Note ${i + 1}: ${esc(n.t)}">${i + 1}</button>`).join('')}</div>` : '';
   const figs = s.views.map(v => {
     v.alt = v.mAlt || `${altBase}, ${v.k === 'art' ? 'close-up of the artwork' : v.k === 'worn' ? 'worn' : v.k}${v.mock ? ', studio mock-up' : ''}`;
@@ -268,8 +287,9 @@ function stage(s, altBase) {
     const blur = (v.tall || boxed) ? `<span class="ss-blur" aria-hidden="true"${v === first ? ` style="background-image:url(${v.src})"` : ` data-bg="${v.src}"`}></span>` : '';
     return `<figure class="ss-v${v.k === on ? ' on' : ''}${v.tall ? ' tall' : ''}${boxed ? ' boxed' : ''}" id="ssV-${v.k}"${s.views.length > 1 ? ` role="tabpanel" aria-labelledby="ssT-${v.k}"` : ''} data-v="${v.k}" data-cap="${esc(v.cap)}"${v.mock ? ' data-mock="1"' : ''} data-full="${v.full}">${blur}${boxed ? `<div class="ss-artbox">${imgTag(v, v === first)}${pins}</div>` : imgTag(v, v === first)}</figure>`;
   }).join('');
+  const vfFig = VF ? `<figure class="ss-v ss-v-loop" id="ssV-loop" role="tabpanel" aria-labelledby="ssT-loop" data-v="loop" data-cap="" data-full="${s.loop.poster}"><img class="ss-img ss-lp-img" src="${s.loop.poster}" width="720" height="900" alt="" decoding="async" style="object-fit:cover"><video class="ss-lp-v" poster="${s.loop.poster}" muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback width="720" height="900" data-src="${s.loop.src}" aria-label="${esc(s.loop.label)}"></video><button type="button" class="ss-loop-t" hidden>Pause</button></figure>` : '';
   return `<div class="ss-stage${s.views.some(v => v.tall) ? ' has-tall' : ''}${tabs ? ' has-tabs' : ''}" id="ssStage" tabindex="0" role="group" aria-roledescription="photos" aria-label="${esc(altBase)}: photos. Tap to zoom." data-handle="${s.handle}">
-      ${figs}
+      ${vfFig}${figs}
       ${tabs}
       <span class="ss-mock"${first.mock ? '' : ' hidden'}>Mock-up</span>
       <span class="ss-cap"${first.cap ? '' : ' hidden'}>${esc(first.cap)}</span>
@@ -287,6 +307,13 @@ function onModel(s) {
   return `<section class="ss-om" id="on-model" aria-labelledby="ssOmH" data-om>
       <div class="ss-om-hd"><h2 class="ss-om-h" id="ssOmH">On the model</h2>${M.size ? `<p class="ss-om-sz">Model wears <bdi>${esc(M.size)}</bdi></p>` : M.mixed ? '<p class="ss-om-sz">Size worn is on each photo</p>' : ''}<span class="ss-om-nav"><button type="button" class="ss-om-b" data-d="-1" aria-label="Previous photo">&lsaquo;</button><button type="button" class="ss-om-b" data-d="1" aria-label="Next photo">&rsaquo;</button></span></div>
       <ul class="ss-om-row">${figs}</ul>
+    </section>`;
+}
+function loopBlock(s) {
+  const L = s.loop; if (!L) return '';
+  return `<section class="ss-loop${L.first ? ' ss-loop-vf' : ''}" data-loop>
+      <video class="ss-loop-v" muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback width="720" height="900" poster="${L.poster}" data-src="${L.src}" aria-label="${esc(L.label)}"></video>
+      <button type="button" class="ss-loop-t" hidden>Pause</button>
     </section>`;
 }
 function artBlock(s) {
@@ -391,6 +418,7 @@ function top(s, o = {}) {
   <div class="ss-media">
     ${o.crumb || ''}
     ${stage(s, altBase)}
+    ${loopBlock(s)}
     ${onModel(s)}
     ${artBlock(s)}
   </div>
@@ -449,7 +477,10 @@ const SCRIPT = '<script src="/assets/sahra-specimen.js" defer></script>';
 /* the first photograph, preloaded so it paints with the page (LCP) */
 function preload(s) {
   const v = s.views.find(x => x.k === s.face) || s.views[0]; if (!v) return '';
-  return `<link rel="preload" as="image" href="${v.src}" imagesrcset="${v.srcset}" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high">`;
+  /* 19 Nov 2026: a visitor from a Meta ad (fbclid, or utm_source meta / facebook / instagram, kept for the session) opens on the
+     loop on the Al Aqah Reef and Pearl Diver pages; the flag is set before the page paints, and the loop's still is fetched first */
+  const vf = s.loop && s.loop.first ? `<script>(function(){var m=/[?&](fbclid=|utm_source=(meta|facebook|fb|instagram|ig)(&|$))/i.test(location.search);try{if(m)sessionStorage.setItem('sb_meta','1');else m=sessionStorage.getItem('sb_meta')==='1';}catch(e){}try{if(!m||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)||(navigator.connection&&navigator.connection.saveData))return;document.documentElement.classList.add('sb-vf');var l=document.createElement('link');l.rel='preload';l.as='image';l.href='${s.loop.poster}';l.setAttribute('fetchpriority','high');document.head.appendChild(l);}catch(e){}})();</script>` : '';
+  return `${vf}<link rel="preload" as="image" href="${v.src}" imagesrcset="${v.srcset}" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high">`;
 }
 
 module.exports = { PAUSED, fromFounding, fromPreorder, top, sheet, nextPiece, preload, HEAD, SCRIPT, NOTES, LINES, money };

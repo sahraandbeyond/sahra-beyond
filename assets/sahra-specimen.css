@@ -33,6 +33,14 @@ html body .ss .ss-crumb span{color:var(--ss-ink3)!important}
 .ss-stage:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:3px}
 .ss-v{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .32s ease;z-index:1}
 .ss-v.on{opacity:1;z-index:2}
+/* 19 Nov 2026: the loop as the first view, for Meta ad visitors only (html.sb-vf); hidden for everyone else before the script runs */
+html:not(.sb-vf) .ss-v-loop,html:not(.sb-vf) .ss-tab-loop,.sb-vf .ss-loop-vf{display:none!important}
+.sb-vf .ss-stage:not(.vf-on) .ss-v-loop{opacity:1;z-index:3}
+.sb-vf .ss-stage:not(.vf-on) .ss-tab.on{background:transparent;box-shadow:none;color:var(--ss-ink2)}
+.sb-vf .ss-stage:not(.vf-on) .ss-tab-loop{background:var(--ss-paper);color:var(--ss-ink);box-shadow:0 1px 4px rgba(42,32,22,.14)}
+html body .ss-stage .ss-v-loop .ss-img,html body .ss-stage .ss-lp-v{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
+html body .ss-stage .ss-lp-v{z-index:2}
+.ss-v-loop .ss-loop-t{z-index:4}
 html body .ss-stage .ss-img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;z-index:1}
 .ss-v.tall .ss-img{object-fit:contain!important}
 .ss-blur{position:absolute;inset:-8%;background-size:cover;background-position:center;filter:blur(22px) saturate(1.05);opacity:.9;transform:scale(1.04);z-index:0}
@@ -287,6 +295,10 @@ html body .ss-stage .ss-tabs{width:auto;max-width:none}
    Phones: after the name and price (order 5, before the annotated artwork), a row that scrolls sideways, one and a half
    photos wide, bleeding to the screen edges. Desktop: under the photo in the left column, with arrow buttons. */
 .ss-om{order:5;min-width:0}
+.ss-loop{order:5;position:relative;min-width:0;width:100%;border-radius:14px;overflow:hidden;background:#E5E1D9;aspect-ratio:4/5}
+html body .ss .ss-loop-v{display:block;width:100%;height:100%;max-width:none;object-fit:cover}
+.ss-loop-t{position:absolute;inset-inline-end:10px;bottom:10px;min-height:36px;padding:6px 14px;border:0;border-radius:999px;background:rgba(42,32,22,.72);color:#fff;font:500 13px/1.2 Jost,system-ui,sans-serif;cursor:pointer}
+.ss-loop-t:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .ss-om-hd{display:flex;align-items:baseline;gap:4px 12px;flex-wrap:wrap;margin:0 2px 8px}
 html body .ss .ss-om-h{font-family:'Cormorant Garamond',Georgia,serif;font-size-adjust:.44;font-weight:600;font-size:26px;line-height:1.1;margin:0;color:var(--ss-ink)}
 .ss-om-sz{margin:0;font-size:14.5px;line-height:1.4;color:var(--ss-ink2)}
@@ -307,6 +319,7 @@ html body .ss .ss-om-img{display:block;width:100%;height:100%;max-width:none;obj
 .ss-om-f:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:2px}
 @media(min-width:900px){
   .ss-media>.ss-om{max-width:620px;width:100%;align-self:center}
+  .ss-media>.ss-loop{max-width:620px;align-self:center;margin-bottom:14px}
   .ss-om-row{margin:0;padding:0 0 4px;scroll-padding:0}
   .ss-om-row li{flex-basis:calc((100% - 16px) / 2.5)}
 }
@@ -332,7 +345,7 @@ html body .ss .ss-tabby.sb-tabby-pdp{margin:2px 0 4px}
 @media(max-width:899px){
   .ss{gap:14px}
   html body .ss .ss-crumb{display:none}
-  .ss-head{order:4}.ss-body{order:5}.ss-om{order:6}.ss-art{order:7}
+  .ss-head{order:4}.ss-body{order:5}.ss-loop{order:6}.ss-om{order:6}.ss-art{order:7}
   .ss-body{display:flex;flex-direction:column;gap:12px}
   .ss-body>.ss-help{margin:0}
   /* the photo: full width of the page, the dots on it */
