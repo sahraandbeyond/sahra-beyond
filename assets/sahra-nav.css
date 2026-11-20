@@ -55,7 +55,9 @@
 /* the phone menu gets group labels from the script */
 .m-panel .sbn-mh{display:block;font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#F3DDB8;padding:18px 4px 4px}
 .m-panel .sbn-mh:first-of-type{padding-top:0}
-.m-panel a.sbn-sub{font-size:16px;padding:11px 4px 11px 14px;color:#F3DDB8}
+.m-panel a.sbn-sub{font-size:16px;padding-block:11px;padding-inline:14px 4px;color:#F3DDB8}
+.m-panel a.sbn-fit{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.m-panel .sbn-fitd{font-size:.8em;font-weight:300;color:#F3DDB8;text-align:end}
 
 @media(max-width:820px){.sbn-panel,.sbn-caret{display:none!important}.sbn-hide{display:none!important}}
 @media(prefers-reduced-motion:reduce){.sbn-panel,.sbn-caret svg{transition:none}}
@@ -168,3 +170,5 @@ a.sbn-mnew{display:flex!important;align-items:center;min-height:48px;margin:4px 
 a.sbn-mnew::after{content:"\2192";margin-left:auto;padding-left:10px}
 /* 18 Nov 2026 (persona audit): the phone switch reads "عربي" (a word, not a bare letter) at a size that leaves the wordmark clear */
 @media(max-width:560px){html:not([lang^="ar"]) .sbl-lang.sbl-m{font-size:15px;font-weight:600;min-width:36px}}
+/* 20 Nov 2026: the menu on the Arabic pages; Arabic is never set in the Latin monospace, spaced or in capitals */
+html[lang^="ar"] .sbn-panel small,html[lang^="ar"] .sbn-panel .sbn-h,html[lang^="ar"] .sbn-panel .sbn-badge,html[lang^="ar"] .sbn-panel .sbn-foot,html[lang^="ar"] .m-panel .sbn-mh,html[lang^="ar"] #mobileNav .sbn-mh{font-family:inherit;letter-spacing:0;text-transform:none}

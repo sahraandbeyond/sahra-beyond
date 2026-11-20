@@ -974,6 +974,12 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
         var css = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-specimen.css'), 'utf8');
         return ok && off && /html:not\(\.sb-vf\) \.ss-v-loop/.test(css);
       })());
+      check('r149 fit menu: three fit pages (EN and AR), each listing only its own fit, linked from the phone and desktop menus in both languages', (function () {
+        var nav = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-nav.js'), 'utf8');
+        var F = { regular: /-regular\/|sand-polo|the-sahel-polo/, oversized: /-oversized\//, 'super-oversized': /-super-oversized\/|barr-and-bahr-hoodie\/|ras-al-khor-hoodie\// };
+        var pages = Object.keys(F).every(function (k) { return ['', 'ar/'].every(function (a) { var x = fs.readFileSync(path.join(__dirname, a + 'fit', k, 'index.html'), 'utf8'); var hs = (x.match(/href="(?:\/ar)?\/products\/[a-z0-9-]+\/"/g) || []).filter(function (h) { return !/'\+/.test(h); }); return hs.length >= 5 && hs.every(function (h) { return F[k].test(h) && (k === 'oversized' ? !/super-oversized/.test(h) : true); }); }); });
+        return pages && /\['\/fit\/regular\/', 'Regular', 'Straight cut'\]/.test(nav) && /mh\('Shop by fit'\)/.test(nav) && /'Shop by fit': '[^']+'/.test(nav) && /a\[href="\/ar\/shop\/"\]/.test(nav);
+      })());
       check('r146 payment: the Tabby line opens a plain explanation and the payment line says no cash on delivery', /class="ssb-tb ss-tb-open[^"]*" aria-expanded="false"/.test(hj) && /No interest, and no fees when you pay on time/.test(hj) && /<p class="ss-pay">.*No cash on delivery/.test(hj));
       check('r146 fit guide: three reference people with their size, from the size finder, and no Founding jargon on Sahel pages', /<div class="ss-glance"><p class="ss-gl-h">Fit guide, as designed<\/p>/.test(hj) && /<div class="ss-glance">/.test(kfb) && !/If you know your Founding size/.test(kfb));
       check('r146 stock: a size sold out at build is marked from the first paint (Hajar Oversized L), and "In stock" can step aside', (function () { try { const st = JSON.parse(rd('content/stock.json')).stock['hajar-mountains-oversized']; return st && st.L === false ? /<button type="button" data-size="L" aria-pressed="false" class="is-out" aria-disabled="true"/.test(hj) : true; } catch (e) { return false; } })() && /<span class="ss-instock">In stock\. <\/span>/.test(hj));

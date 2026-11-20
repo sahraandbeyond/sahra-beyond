@@ -3693,6 +3693,35 @@ COMMERCE.forEach(P => {
     body: sizeNote,
     items: fItems(wFounding).concat(nItems(wSahel), [['The Sahra Tote', '/tote/']], nItems(bag)) });
   const under = PO.pickNew(p => p.price < 150, true);
+  /* 20 Nov 2026 (Faheem: "In main menu, there needs to be the 3 fit options which lead users to products with regular oversized
+     or super oversized fits"; chose "Every piece in that fit" and a "Shop by fit" menu group): one page per fit, every
+     garment cut that way (tees, polos, hoodies), one card per fit page, no fit switch. The polos are Regular (each is graded
+     to its line's Regular tee chart). Sahra Trail and the bags have no fit and are left out. A piece sold out in every
+     size is left out (content/stock.json). The words match the fit line on the product pages. */
+  const STOCKF = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'stock.json'), 'utf8')).stock || {}; } catch (e) { return {}; } })();
+  const soldOutAll = h => { const st = STOCKF[h]; return !!st && Object.keys(st).length > 0 && Object.keys(st).every(k => !st[k]); };
+  const fitF = p => p.garment === 'polo' ? 'Regular' : /-oversized$/.test(p.id) ? 'Oversized' : 'Regular';
+  const fitN = p => p.fit || (/polo/i.test(p.kind || '') ? 'Regular' : '');
+  const FITS = [
+    { slug: 'fit/regular', fit: 'Regular', h1: 'Regular fit', lede: 'A straight cut that sits on the shoulder: our tees in Regular and both polos',
+      title: 'Regular Fit T-Shirts and Polos in the UAE | Sahra & Beyond',
+      desc: 'Every Sahra & Beyond piece in the Regular fit: tees with a straight cut that sits on the shoulder, and the Sahra and Sahel polos. Designed in the UAE, sizes S to XL. Free delivery across the UAE on orders over AED 100.' },
+    { slug: 'fit/oversized', fit: 'Oversized', h1: 'Oversized fit', lede: 'Dropped shoulder, relaxed through the body: our tees and hoodies in Oversized',
+      title: 'Oversized T-Shirts and Hoodies in the UAE | Sahra & Beyond',
+      desc: 'Every Sahra & Beyond piece in the Oversized fit: tees and hoodies with a dropped shoulder, relaxed through the body. Designed in the UAE, sizes S to XL. Free delivery across the UAE on orders over AED 100.' },
+    { slug: 'fit/super-oversized', fit: 'Super Oversized', h1: 'Super Oversized fit', lede: 'Dropped shoulder, our roomiest cut: our tees and hoodies in Super Oversized',
+      title: 'Super Oversized T-Shirts and Hoodies in the UAE | Sahra & Beyond',
+      desc: 'Every Sahra & Beyond piece in the Super Oversized fit: our roomiest cut, with a dropped shoulder, in tees and hoodies. Designed in the UAE, sizes S to XL. Free delivery across the UAE on orders over AED 100.' }
+  ];
+  FITS.forEach(F => {
+    const fl = founding.filter(p => fitF(p) === F.fit && F.fit !== 'Super Oversized' && !soldOutAll(p.id));
+    const nl = PO.pickNew(p => p.line === 'sahel' && fitN(p) === F.fit && !soldOutAll(p.handle));
+    const other = FITS.filter(x => x !== F).map(x => `<a href="/${x.slug}/">${x.h1}</a>`).join(' &middot; ');
+    page({ slug: F.slug, h1: F.h1, grad: 'Dunes', title: F.title, desc: F.desc, lede: F.lede,
+      block: houseGrid({ founding: fl, news: nl, fits: false, label: F.h1 }),
+      body: `<div class="content"><p><strong>About the sizes.</strong> The Founding Edition and Sahel are cut on different patterns, so each piece has its own size chart on its page. Everything comes in S to XL, cut unisex except the polos, which are men's. <a href="/size-guide/">Find your size &rarr;</a></p><p>Other fits: ${other}.</p></div>`,
+      items: fItems(fl).concat(nItems(nl)) });
+  });
   page({ slug: 'under-150', h1: 'Under AED 150', grad: 'Dunes',
     title: 'Gifts and Tees Under AED 150 | Sahra & Beyond',
     desc: 'Sahra & Beyond pieces under AED 150: the Shams Tee, the Sahra Trail Tee, the Sahra Tote and the Trailhead Bag. Designed in the UAE, free delivery across the UAE on orders over AED 100.',
@@ -4036,7 +4065,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat(['', ...require('./trail-hikes.js').ORDER.concat(require('./trail-hikes.js').EXTRA).map(x => x + '/')].map(x => ({ u: `${SITE}/trail/hikes/${x}`, m: buildDate, p: '0.7' })))   /* Sahra Trail hikes for the QR cards (6 Oct 2026) */
   .concat([{ u: `${SITE}/sahel/`, m: buildDate, p: '0.8' }])   /* Sahel teaser page (6 Oct 2026) */
   .concat([{ u: `${SITE}/hoodies/`, m: buildDate, p: '0.9' }])   /* /hoodies/ live from 23 Oct 2026 */
-    .concat(['men', 'women', 'under-150'].map(x => ({ u: `${SITE}/${x}/`, m: buildDate, p: '0.8' })))   /* 24 Oct 2026 */
+    .concat(['men', 'women', 'under-150', 'fit/regular', 'fit/oversized', 'fit/super-oversized'].map(x => ({ u: `${SITE}/${x}/`, m: buildDate, p: '0.8' })))   /* fit pages: 20 Nov 2026 */   /* 24 Oct 2026 */
   .concat(['accessories', 'activewear'].map(x => ({ u: `${SITE}/${x}/`, m: buildDate, p: '0.8' })))   /* 23 Oct 2026 */
   .concat([`${SITE}/new/`].concat(require('./preorder-page.js').urls(SITE)).map(u => ({ u, m: buildDate, p: '0.9' })))   /* Sahel and Sahra Trail pages: in the sitemap from 23 Oct (Faheem: live before pre-order opens) */
   .concat(fs.existsSync(path.join(ROOT, 'feed', 'index.html')) ? [{ u: `${SITE}/feed/`, m: buildDate, p: '0.5' }] : [])   /* every Instagram post with where it lives on the site (4 Oct 2026); /q/ pages are noindex */
