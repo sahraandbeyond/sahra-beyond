@@ -640,6 +640,9 @@ function specChips(p) {
 /* 16 Nov 2026 (Faheem: "mention oversized in shirt title"): a design sold in one fit only (Al Qudra Lakes Tee, Khor Fakkan
    Hoodie) has no fit tabs, so its card title carries the fit: "Al Qudra Lakes Tee — Oversized", as on its page, in Shopify and the cart */
 const cardName = p => p.fitsList && p.fitsList.length === 1 && p.title ? p.title : p.name;
+/* 21 Nov 2026 (Faheem: "Ras Al Khor Hoodie names don't include oversized and super oversized"): every product card names its fit
+   ("Ras Al Khor Hoodie — Oversized"), as the Founding Edition cards always have, also inside the fit switch, where each fit's
+   card carries its own title */
 function bigCard(p, i) {
   const im = p.images[0], href = `/products/${p.handle}/`;
   const zoom = `<button type="button" class="pcard-zoom" data-zoom="/assets/preorder/${im ? im.k : ''}-1200.webp" aria-label="Zoom ${esc(p.plain || p.name)}"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>`;
@@ -653,7 +656,7 @@ function bigCard(p, i) {
     ? inc('st0', `<span class="pcard-st st0">On sale from Wed 28 Oct</span>`) + `<span class="pcard-st st12">In stock, ships next working day</span>`
     : inc('st0', `<span class="pcard-st st0">Pre-order opens Wed 28 Oct</span>`) + inc('st1', `<span class="pcard-st st1">Pre-order, ships from Fri 30 Oct</span>`) + (IN_HAND ? '' : `<span class="pcard-st st2">Pre-order, ships from Fri 30 Oct</span>`);
   const noqa = p.oneSize || /kit/i.test(p.handle) ? ' data-noqa' : '';   /* quick add would offer "Default Title", or 16 tee/short pairs */
-  return `<article class="pcard${i != null ? (i ? '' : ' on') : ''}" data-handle="${p.handle}"${i != null ? ` data-i="${i}"` : ''}${noqa}>${img}<span class="pcard-b"><a class="pcard-t" href="${href}">${cardName(p)}</a>${RV.cardRating(p.handle)}<span class="pcard-place">${place}</span><span class="pcard-spec">${chips}</span>${colour}${Number(p.price) === 199 && /T-shirt/i.test(p.kind || '') ? '<span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>' : ''}${stock}<span class="pcard-foot"><span class="pcard-p">${price}</span><a class="pcard-cta" href="${href}">Full details &rarr;</a></span></span></article>`;
+  return `<article class="pcard${i != null ? (i ? '' : ' on') : ''}" data-handle="${p.handle}"${i != null ? ` data-i="${i}"` : ''}${noqa}>${img}<span class="pcard-b"><a class="pcard-t" href="${href}">${p.fit && p.title ? p.title : cardName(p)}</a>${RV.cardRating(p.handle)}<span class="pcard-place">${place}</span><span class="pcard-spec">${chips}</span>${colour}${Number(p.price) === 199 && /T-shirt/i.test(p.kind || '') ? '<span class="pcard-bundle sb-aed-only">Any 2 tees &middot; AED 359</span>' : ''}${stock}<span class="pcard-foot"><span class="pcard-p">${price}</span><a class="pcard-cta" href="${href}">Full details &rarr;</a></span></span></article>`;
 }
 /* one design: its fits on sale behind a switch, or the one card */
 function designCards(p, fitsLabel) {
