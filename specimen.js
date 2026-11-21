@@ -224,7 +224,8 @@ function fromPreorder(p) {
     face: D.face, views, notes: (NOTES[p.key] || []).map((n, i) => { const m = ST && NOTES_MODEL[p.handle]; const at = m ? m[i] : [n[0], n[1]]; return { x: at ? at[0] : null, y: at ? at[1] : null, t: n[2] }; }),
     modelPins: !!(ST && NOTES_MODEL[p.handle]), spec,
     pair: p.line === 'sahel' && /T-shirt/i.test(p.kind || '') && Number(p.price) === 199,   /* 18 Nov 2026: the pair price covers every AED 199 tee */
-    gift: !p.noTote, chart: p.line === 'sahel' ? '#size-chart' : null,   /* 18 Nov 2026: the Sahel Polo has the Sahel Regular tee chart */
+    gift: !p.noTote, trailBag: /^sahra-trail-(tee|2-in-1-short|kit)$/.test(p.handle),   /* 20 Nov 2026: the Trailhead Bag free with any Trail piece */
+    chart: p.line === 'sahel' ? '#size-chart' : null,   /* 18 Nov 2026: the Sahel Polo has the Sahel Regular tee chart */
     chartNote: null, model: '', kit: !!p.kit, oneSize: !!p.oneSize,
     onModel: onModelSet(p),
     loop: loopFor(p)
@@ -408,7 +409,7 @@ function waLine(s, h1) {
 const TBL = '<img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async">';
 function promise(s) {
   if (PAUSED[s.handle]) return `<p class="ss-stat">Not available to order while this fit is re-cut. Back soon.</p>`;
-  return `<p class="ss-promise1${allOut(s.handle) ? ' is-out' : ''}"><span class="sb-ship-uae"><span class="ss-instock">In stock. </span>Next-working-day delivery across the UAE, order by 2 pm. Free over AED 100 \u00b7 Free 14-day returns and exchanges${s.gift ? ' \u00b7 Free <a href="/tote/">Sahra Tote</a> with every order' : ''}</span><span class="sb-ship-gcc"><span class="ss-instock">In stock. </span>GCC delivery in 3\u20135 working days, free over AED 229 \u00b7 14-day returns</span><span class="sb-ship-intl"><span class="ss-instock">In stock. </span>Worldwide delivery in 7\u201314 working days \u00b7 14-day returns</span></p>`;
+  return `<p class="ss-promise1${allOut(s.handle) ? ' is-out' : ''}"><span class="sb-ship-uae"><span class="ss-instock">In stock. </span>Next-working-day delivery across the UAE, order by 2 pm. Free over AED 100 \u00b7 Free 14-day returns and exchanges${s.gift ? ' \u00b7 Free <a href="/tote/">Sahra Tote</a> with every order' : ''}${s.trailBag ? ' \u00b7 Free <a href="/products/trailhead-bag/">Trailhead Bag</a> with Sahra Trail' : ''}</span><span class="sb-ship-gcc"><span class="ss-instock">In stock. </span>GCC delivery in 3\u20135 working days, free over AED 229 \u00b7 14-day returns</span><span class="sb-ship-intl"><span class="ss-instock">In stock. </span>Worldwide delivery in 7\u201314 working days \u00b7 14-day returns</span></p>`;
 }
 function top(s, o = {}) {
   const altBase = s.name.replace(/&amp;/g, '&') + (s.colour ? ` in ${s.colour}` : '');

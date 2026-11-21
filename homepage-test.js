@@ -980,6 +980,17 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
         var pages = Object.keys(F).every(function (k) { return ['', 'ar/'].every(function (a) { var x = fs.readFileSync(path.join(__dirname, a + 'fit', k, 'index.html'), 'utf8'); var hs = (x.match(/href="(?:\/ar)?\/products\/[a-z0-9-]+\/"/g) || []).filter(function (h) { return !/'\+/.test(h); }); return hs.length >= 5 && hs.every(function (h) { return F[k].test(h) && (k === 'oversized' ? !/super-oversized/.test(h) : true); }); }); });
         return pages && /\['\/fit\/regular\/', 'Regular', 'Straight cut'\]/.test(nav) && /mh\('Shop by fit'\)/.test(nav) && /'Shop by fit': '[^']+'/.test(nav) && /a\[href="\/ar\/shop\/"\]/.test(nav);
       })());
+      check('r150 SEO: product titles fit in 60 characters and descriptions in 160, hoodies carry their fabric, a fully sold-out piece says OutOfStock, and Activewear has its questions', (function () {
+        var ent = function (x) { return x.replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"'); };
+        var ok = fs.readdirSync(path.join(__dirname, 'products')).filter(function (h) { return fs.existsSync(path.join(__dirname, 'products', h, 'index.html')); }).every(function (h) {
+          var x = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'), t = ent((/<title>([^<]*)/.exec(x) || [])[1] || ''), d = ent((/<meta name="description" content="([^"]*)"/.exec(x) || [])[1] || '');
+          return t.length > 20 && t.length <= 60 && d.length > 60 && d.length <= 160; });
+        var hood = /"material":"100% cotton brushed-back fleece"/.test(fs.readFileSync(path.join(__dirname, 'products', 'ras-al-khor-hoodie', 'index.html'), 'utf8'));
+        var st = {}; try { st = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'stock.json'), 'utf8')).stock || {}; } catch (e) {}
+        var sold = Object.keys(st).filter(function (h) { var v = st[h]; return Object.keys(v).length && Object.keys(v).every(function (k) { return !v[k]; }) && fs.existsSync(path.join(__dirname, 'products', h, 'index.html')); }).every(function (h) { return /schema\.org\/OutOfStock/.test(fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8')); });
+        var aw = fs.readFileSync(path.join(__dirname, 'activewear', 'index.html'), 'utf8');
+        return ok && hood && sold && /"@type":\s*"FAQPage"/.test(aw) && /How much do I save with the Kit\?/.test(aw);
+      })());
       check('r146 payment: the Tabby line opens a plain explanation and the payment line says no cash on delivery', /class="ssb-tb ss-tb-open[^"]*" aria-expanded="false"/.test(hj) && /No interest, and no fees when you pay on time/.test(hj) && /<p class="ss-pay">.*No cash on delivery/.test(hj));
       check('r146 fit guide: three reference people with their size, from the size finder, and no Founding jargon on Sahel pages', /<div class="ss-glance"><p class="ss-gl-h">Fit guide, as designed<\/p>/.test(hj) && /<div class="ss-glance">/.test(kfb) && !/If you know your Founding size/.test(kfb));
       check('r146 stock: a size sold out at build is marked from the first paint (Hajar Oversized L), and "In stock" can step aside', (function () { try { const st = JSON.parse(rd('content/stock.json')).stock['hajar-mountains-oversized']; return st && st.L === false ? /<button type="button" data-size="L" aria-pressed="false" class="is-out" aria-disabled="true"/.test(hj) : true; } catch (e) { return false; } })() && /<span class="ss-instock">In stock\. <\/span>/.test(hj));

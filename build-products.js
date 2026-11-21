@@ -6,7 +6,9 @@
    ========================================================================== */
 const fs = require('fs');
 const RV = require('./reviews-render.js');
-const SFD = require('./sizefinder-data.js');   /* 12 Nov 2026: Size finder 2 */
+const SFD = require('./sizefinder-data.js');
+/* 20 Nov 2026 (SEO check): a piece sold out in every size tells Google so (content/stock.json, read at build time) */
+const FSOLD = h => { try { const st = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'stock.json'), 'utf8')).stock[h]; return !!st && Object.keys(st).length > 0 && Object.keys(st).every(k => !st[k]); } catch (e) { return false; } };   /* 12 Nov 2026: Size finder 2 */
 const SP = require('./specimen.js');   /* 30 Oct 2026: the Specimen Sheet and its buy sheet */
 const FG = require('./footer-guides.js');
 const IG = require('./instagram-feed.js');   /* 4 Oct 2026: 'Seen on our feed' rail and the footer row */
@@ -261,7 +263,7 @@ ${/* 13 Oct 2026 (speed review): the font files and the live-stock request each 
 "description":${J(p.ldDesc)},
 "brand":{"@type":"Brand","name":"Sahra & Beyond"},
 "material":${J(p.garment === 'polo' ? '100% cotton piqué' : '100% combed ring-spun cotton')},
-"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},${ldRating(p)}${ldReviews(p)}${ldGroup(p, SITE)}"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"priceValidUntil":"${new Date().getFullYear() + 1}-12-31","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/",${LD_SHIP}}}
+"color":${J(p.colourName+" (Pantone "+p.colourPantone+")")},${ldRating(p)}${ldReviews(p)}${ldGroup(p, SITE)}"offers":{"@type":"Offer","priceCurrency":"AED","price":${J(String(p.price))},"priceValidUntil":"${new Date().getFullYear() + 1}-12-31","availability":"https://schema.org/${FSOLD(p.id) ? 'OutOfStock' : 'InStock'}","itemCondition":"https://schema.org/NewCondition","url":"${SITE}/products/${p.id}/",${LD_SHIP}}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[

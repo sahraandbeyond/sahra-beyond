@@ -189,17 +189,17 @@ const SAHEL = [
 const TRAIL = [
   { handle: 'sahra-trail-tee', name: 'Sahra Trail Tee', seo: 'Sahra Trail Running T-Shirt', kind: 'Running T-shirt', md: 'raglan sleeves, mesh side panels, covered seams and a reflective Two Ridges symbol', price: 139,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Ocean-inspired print.',
-    details: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'],
+    details: ['95% polyester, 5% elastane', 'Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'],   /* fabric: Faheem, 20 Nov 2026 */
     images: [model('pm2-sahra-trail-kit-01-lunge', 'Model wearing the Sahra Trail Tee, stretching in a lunge, front view'), model('pm-sahra-trail-tee-01-running-back', 'Model wearing the Sahra Trail Tee, running, back view'), studio('trail-tee-front', 'Sahra Trail Tee, front'), studio('trail-tee-back', 'Sahra Trail Tee, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-mesh', 'The mesh side panel, close up'), real('trail-backsymbol', 'The Two Ridges symbol, close up')] },
   { handle: 'sahra-trail-2-in-1-short', name: 'Sahra Trail 2-in-1 Short', seo: '2-in-1 Running Shorts, Sahra Trail', kind: '2-in-1 running shorts', md: 'a hidden inner liner, a bonded phone pocket, a zip pocket for keys and an internal drawcord', price: 169,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Wave-inspired graphic.',
-    details: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'],
+    details: ['Woven outer: 95% polyester, 5% elastane, 4-way stretch', 'Knit liner: 87% polyester, 13% elastane', 'Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'],   /* fabric: Faheem, 20 Nov 2026, ratios from the short supplier pack v1.4 */
     images: [model('pm2-sahra-trail-short-04-side', 'Model wearing the Sahra Trail 2-in-1 Short, side view, hand in the pocket'), model('pm-sahra-trail-2-in-1-short-01-leg-close-up', 'Model wearing the Sahra Trail 2-in-1 Short, close-up of the leg'), studio('trail-short-front', 'Sahra Trail 2-in-1 running shorts, front'), studio('trail-short-back', 'Sahra Trail 2-in-1 running shorts, back'),
       real('trail-shortsymbol', 'The Two Ridges symbol and the name on the leg, close up'), real('trail-shortname', 'SAHRA TRAIL on the leg, close up')] },
   { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', seo: 'Sahra Trail Running Kit: Tee and 2-in-1 Shorts', kind: 'Running kit', md: 'the Sahra Trail Tee and the Sahra Trail 2-in-1 Short together, with a size chosen for each', price: 279, kit: true,   /* 18 Nov 2026 (Faheem, after the persona audit: "Trail Kit AED 279"): the kit saves AED 29 on the tee + short (139 + 169 = 308); replaces the 8 Nov "no kit discount" */
     lede: 'The Sahra Trail Tee and the Sahra Trail 2-in-1 Short together in one order, with a size chosen for each. Bought apart, the tee is AED 139 and the short AED 169: the kit saves AED 29.',
-    details: ['The Sahra Trail Tee', 'The Sahra Trail 2-in-1 Short', 'Choose a size for each'],
+    details: ['The Sahra Trail Tee: 95% polyester, 5% elastane', 'The Sahra Trail 2-in-1 Short: woven polyester-elastane outer, knit liner', 'Choose a size for each'],
     images: [model('pm2-sahra-trail-kit-01-lunge', 'Model wearing the Sahra Trail Kit, stretching in a lunge, front view'), model('pm-sahra-trail-kit-01-running-side', 'Model wearing the Sahra Trail Kit, running, side view'), studio('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), studio('trail-kit-back', 'Sahra Trail Kit, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-shortsymbol', 'The Two Ridges symbol on the short, close up')] },
   /* 23 Oct 2026 (Faheem): the canvas drawstring bag, 100 in hand, AED 50, on sale with Trail from Wed 28 Oct 08:00 UAE.
@@ -210,7 +210,7 @@ const TRAIL = [
   { handle: 'trailhead-bag', name: 'The Trailhead Bag', seo: 'Canvas Drawstring Bag, The Trailhead Bag', kind: 'Canvas drawstring bag', md: 'natural canvas with the Two Ridges mark and SAHRA TRAIL DUBAI printed in sand, rope drawstrings that close the top and carry it on your back', price: 50,
     inHand: true, oneSize: true, noTote: true,
     lede: 'A natural canvas drawstring bag with the Two Ridges mark and SAHRA TRAIL DUBAI printed on the front in sand. Rope drawstrings close the top and carry it on your back. Sized for what you take to the trailhead: a layer, water, keys.',
-    details: ['Natural canvas', 'Two Ridges mark and SAHRA TRAIL DUBAI printed in sand', 'Rope drawstrings, worn as shoulder straps', 'One size'],
+    details: ['Free with any Sahra Trail tee, short or Kit', 'Natural canvas', 'Two Ridges mark and SAHRA TRAIL DUBAI printed in sand', 'Rope drawstrings, worn as shoulder straps', 'One size'],   /* 20 Nov 2026 (Faheem): free with Trail, one per order; AED 50 on its own */
     images: [real('trail-bag-front', 'The Trailhead Bag: natural canvas drawstring bag with the Sahra Trail Two Ridges mark', 'The real bag')] }
 ];
 
@@ -1009,23 +1009,56 @@ html[dir="rtl"] .hl-swipe i{animation-name:hlNudgeR}@keyframes hlNudgeR{0%,100%{
    (T-Shirt, Polo Shirt, Hoodie, Running Shorts) and the fit; metas say what it is, the price and delivery.
    Metas never carry the 20% wording, so nothing in a search snippet goes stale on Fri 30 Oct. */
 const LINE = { sahel: 'Sahel, the Coast Edition', trail: 'Sahra Trail' };
-function seoTitle(p) { return `${p.seo}${p.fit ? `, ${p.fit} Fit` : ''} | Sahra & Beyond`; }
+/* 20 Nov 2026 (SEO check, Faheem: "Go ahead"): Google shows about 60 characters of a title and about 155 of a description,
+   so the brand is added only when it fits, the longest hoodie names are shorter, and each piece has one short line in plain
+   words (what it is, the fit, the colour, what is on it). Facts only from the product data and the approved ad copy. */
+const SEO_NAME = { 'barr-and-bahr': 'Barr & Bahr Embroidered Hoodie', 'ras-al-khor-hoodie': 'Ras Al Khor Flamingo Hoodie', 'khor-fakkan-hoodie': 'Khor Fakkan Graphic Hoodie' };
+const SEO_HOOK = {
+  'khor-fakkan-bay': 'black cotton, Khor Fakkan Bay printed on the back',
+  'al-hamra-pearl-diver': 'navy cotton, a pearl diver and dhow printed on the back',
+  'al-qudra-lakes': 'cotton in Demitasse, Al Qudra flamingos printed on the back',
+  'al-aqah-reef': 'cotton in Lagoon, reef on the back and a turtle on the front',
+  'shams': 'black cotton, our mark embroidered in sand thread on the chest',
+  'the-sahel-polo': 'black mercerised piqué, antique-gold tipping and an embroidered mark',
+  'barr-and-bahr': 'cotton fleece, the UAE coastline embroidered across the back',
+  'ras-al-khor-hoodie': 'navy cotton fleece, Ras Al Khor flamingos on the back',
+  'khor-fakkan-hoodie': 'cotton fleece, Khor Fakkan Bay on the back and the UAE coastline',
+  'sahra-trail-tee': 'running T-shirt in powder blue, raglan sleeves, mesh side panels',
+  'sahra-trail-2-in-1-short': 'running shorts with a hidden liner, phone pocket and zip pocket',
+  'sahra-trail-kit': 'the running tee and 2-in-1 shorts together, AED 29 less than apart',
+  'trailhead-bag': 'canvas drawstring bag with rope straps, printed in sand' };
+const seoKey = p => Object.keys(SEO_HOOK).concat(Object.keys(SEO_NAME)).find(k => p.handle === k || p.handle.indexOf(k + '-') === 0 || p.key === k) || '';
+function seoTitle(p) {
+  const base = `${SEO_NAME[seoKey(p)] || p.seo}${p.fit ? `, ${p.fit} Fit` : ''}`;
+  return base.length + 17 <= 60 ? `${base} | Sahra & Beyond` : base;
+}
 const fitPhrase = p => p.fit === 'Super Oversized' ? ', Super Oversized with a dropped shoulder' : '';
 function seoDesc(p, stage) {
-  const ship = p.inHand ? (stage === 0 ? ' On sale from Wed 28 Oct.' : ' In stock.') : IN_HAND ? '' : stage === 0 ? ' Pre-order opens Wed 28 Oct; ships from Fri 30 Oct.' : ' Pre-order; ships from Fri 30 Oct.';
-  return `${p.plain}: ${p.md}${fitPhrase(p)}. ${LINE[p.line]}, designed in the UAE. ${money(p.price)}, free delivery across the UAE on orders over AED 100.${ship}`;
+  const hook = SEO_HOOK[seoKey(p)];
+  if (!hook) return `${p.plain}: ${p.md}${fitPhrase(p)}. Designed in the UAE. ${money(p.price)}, free UAE delivery over AED 100.`;
+  const nm = (p.name || p.plain).replace(/&amp;/g, '&') + (p.fit ? `, ${p.fit} fit` : '');
+  const full = `${nm}: ${hook}. Designed in the UAE. ${money(p.price)}, free UAE delivery over AED 100.`;
+  return full.length <= 158 ? full : `${nm}: ${hook}. ${money(p.price)}, free UAE delivery over AED 100.`;
 }
+/* the fabric, as the neck labels say it (Sahel tees and hoodies: 100% cotton) */
+/* 20 Nov 2026 (Faheem): the Trail Tee is 95% polyester / 5% elastane; the short is a woven outer and a knit liner, both polyester and
+   elastane, ratios from the supplier pack v1.4 (outer 95/5, liner 87/13) */
+const TRAIL_MATERIAL = { 'sahra-trail-tee': '95% polyester, 5% elastane', 'sahra-trail-2-in-1-short': 'Woven outer 95% polyester, 5% elastane; knit liner 87% polyester, 13% elastane', 'sahra-trail-kit': 'Tee 95% polyester, 5% elastane; short woven outer 95% polyester, 5% elastane, knit liner 87% polyester, 13% elastane' };
+const SEO_MATERIAL = p => TRAIL_MATERIAL[p.handle] ? TRAIL_MATERIAL[p.handle] : p.line !== 'sahel' ? undefined : /hoodie/i.test(p.kind || '') ? '100% cotton brushed-back fleece' : /polo/i.test(p.kind || '') ? 'Mercerised cotton piqué' : '100% cotton';
+const SEO_COLOUR = { 'sahra-trail-tee': 'Powder Blue', 'sahra-trail-2-in-1-short': 'Charcoal', 'sahra-trail-kit': 'Powder Blue / Charcoal' };
+function allSoldOut(h) { try { const st = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'content', 'stock.json'), 'utf8')).stock[h]; return !!st && Object.keys(st).length > 0 && Object.keys(st).every(k => !st[k]); } catch (e) { return false; } }
 const RETURNS = { '@type': 'MerchantReturnPolicy', applicableCountry: 'AE', returnPolicyCountry: 'AE', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
   merchantReturnDays: 14, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn' };
 /* 5 Nov 2026: UAE delivery is free from AED 100, AED 15 below (Shopify rate); the offer states the rate for its own price */
 const SHIP_UAE = price => ({ '@type': 'OfferShippingDetails', shippingRate: { '@type': 'MonetaryAmount', value: +price < 100 ? '15' : '0', currency: 'AED' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' } });
 function productLd(p, url, img, desc, stage, SITE) {
   const inWindow = stage === 1 && !p.inHand;
-  const prod = { '@context': 'https://schema.org', '@type': 'Product', name: p.plain, sku: p.handle, description: desc, url, image: img ? [img] : undefined,
-    brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' }, color: p.colour || undefined,
+  const more = (p.images || []).slice(1, 3).map(i => `${SITE}/assets/preorder/${i.k}-1200.webp`).filter(u => require('fs').existsSync(require('path').join(__dirname, u.replace(SITE + '/', ''))));
+  const prod = { '@context': 'https://schema.org', '@type': 'Product', name: p.plain, sku: p.handle, description: desc, url, image: img ? [img].concat(more) : undefined,
+    brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' }, color: p.colour || SEO_COLOUR[p.handle] || undefined, material: SEO_MATERIAL(p),
     offers: { '@type': 'Offer', price: (inWindow ? pre(p.price) : p.price).toFixed(2), priceCurrency: 'AED', url,
       priceValidUntil: inWindow ? '2026-10-29' : `${new Date(now()).getUTCFullYear() + 1}-12-31`, itemCondition: 'https://schema.org/NewCondition',
-      availability: require('./specimen.js').PAUSED[p.handle] ? 'https://schema.org/OutOfStock' : p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE(inWindow ? pre(p.price) : p.price)], hasMerchantReturnPolicy: RETURNS } };
+      availability: require('./specimen.js').PAUSED[p.handle] || allSoldOut(p.handle) ? 'https://schema.org/OutOfStock' : p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE(inWindow ? pre(p.price) : p.price)], hasMerchantReturnPolicy: RETURNS } };
   if (p.fitsList) { prod.inProductGroupWithID = p.key;
     prod.isVariantOf = { '@type': 'ProductGroup', productGroupID: p.key, name: p.name.replace(/&amp;/g, '&'), url: `${SITE}/products/${primaryHandle(p) || p.handle}/`, variesBy: ['https://schema.org/size'] }; }
   const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [

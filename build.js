@@ -3119,7 +3119,7 @@ const COMMERCE = [
     /* 25 Oct 2026 (Faheem: be found for "UAE t shirts"): the phrase leads the title, H1 and description; Dubai stays in the title */
     h1: 'UAE T-Shirts, Drawn from Real Places',
     title: 'UAE T-Shirts & Graphic Tees in Dubai | Sahra & Beyond',
-    desc: 'UAE t-shirts drawn from real places: the desert, the mountains and the coast. graphic tees, Regular or Oversized, from AED 139. Free next-day UAE delivery over AED 100.',
+    desc: 'UAE t-shirts drawn from real places: the desert, the mountains and the coast. Graphic tees in three fits, from AED 139. Free next-day UAE delivery over AED 100.',
     catNav: true,
     intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight combed ring-spun cotton.\n\nThe Founding Edition is three designs in two fits. Al Quaa Galaxy and Hajar Mountains are printed direct to garment, so the ink sits in the cotton rather than on top of it; Empty Quarter is embroidered. Each comes in a straight Regular fit or a drop-shoulder Oversized, S to XL. If you are buying in Dubai, Abu Dhabi or anywhere in the UAE, delivery is free on orders over AED 100 and arrives the next working day on orders placed by 2 pm.\n\nSahel, the Coast Edition, adds four tees, in stock now: Khor Fakkan Bay, Al Hamra Pearl Diver and Al Aqah Reef, drawn from the east coast and the Ras Al Khaimah shore, and the Shams Tee, with our mark embroidered in sand thread on the chest. Each comes in Regular and Oversized.",
     sections: [
@@ -3293,7 +3293,7 @@ const CATEGORIES = [
     h1:'Regular Fit T-Shirts',
     title:'Regular Fit T-Shirts — UAE Designs | Sahra & Beyond',
     newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' && p.fit === 'Regular'),
-    desc:'Our regular fit t-shirts — a straight, precise cut with a set shoulder. combed cotton, original UAE designs, S–XL. Free delivery across the UAE on orders over AED 100.',
+    desc:'Regular fit t-shirts: a straight cut with a set shoulder, in cotton with original UAE designs, sizes S to XL. Free UAE delivery over AED 100.',
     intro:"Regular is the fit to take if you layer. It sits on the shoulder and falls straight rather than hanging off it, with a 2″ chest step per size above M. Check the Founding Edition size chart before you order (Sahel tees have their own).\n\nEvery design in the collection comes in this fit, cut unisex, in sizes S to XL. Same combed ring-spun cotton, same ribbed collar and taped seams as the oversized cut; the difference is entirely in the silhouette.",
     sections: [{"h2": "A straight cut, measured rather than felt", "body": "Letters mean different things at different brands, so go by the numbers. The Regular fit follows classic US/international grading: the shoulder seam sits at your natural shoulder point rather than dropped below it, and the body skims rather than hanging.\n\nMeasured flat, pit to pit: S is 19″, M is 20″, L is 22″ and XL is 24″ — a 2″ step per size above M. Those are garment measurements taken flat, not body measurements, and they come straight from the graded specification our manufacturer produced against. Every measurement holds a tolerance of ±0.5″; anything outside it is rejected at QC before it ships.\n\nThat precision is the point. If you know the flat chest measurement of a shirt you already like, you know your size here without guessing what a given brand means by Regular."}, {"h2": "How to use the measurements", "body": "Take a t-shirt you already own and wear happily. Lay it flat, smooth out the creases, and measure straight across from armhole seam to armhole seam, about an inch below the armhole. That single number is directly comparable to ours — do not double it. Our chart is flat garment measurements throughout, so 20″ on your shirt means our M.\n\nThe step is fixed and known: 2″ per size above M. If your measurement lands between two sizes, the ±0.5″ tolerance gives some room either way. Take the smaller size for a closer fit through the chest and shoulders, the larger for more ease.\n\nThe cut is unisex, S to XL. There is no separate men's or women's grade, and we do not produce an XXL — so the chart above is the whole range, not a subset of it."}, {"h2": "What the construction is doing", "body": "Every Regular tee is combed, ring-spun cotton. Combing removes the shorter fibres before spinning, which is what gives the cloth its smooth, dense hand instead of a looser, hairier surface.\n\nFrom there the details are about longevity rather than decoration. The shoulders carry woven shoulder taping — not cotton tape — which stops the seam stretching out under the weight of the garment over time. Seams are double-stitched. The body is side-seamed, built from front and back panels joined at the sides rather than a single tube, which holds its shape far better through repeated washing.\n\nThe cotton is pre-shrunk before cutting, so the fit you measure is close to the fit you keep. And the collar label is printed rather than woven, because a woven label against the back of the neck is a common source of irritation and we would rather you forget it is there."}, {"h2": "Layering", "body": "A true-to-size cut is a layering cut. Because the Regular fit follows the measurements rather than adding hidden room, it sits cleanly under an overshirt or light knit without bulking the silhouette — a base layer that disappears rather than competing with what is over it.\n\nIt works alone too. The heavyweight cotton has enough substance to stand on its own through the warmer months without clinging or showing every seam beneath an open shirt.\n\nAnd because the grading is fixed and published, building a wardrobe from a few pieces stays simple. Your size in one Sahra & Beyond Regular tee is your size in all of them, and in the polo, which is graded to the same specification."}],
     faqs: [{"q": "How do I choose my Regular size?", "a": "Use the chart. Measured flat, pit to pit, M is 20″, L is 22″ and XL is 24″, with the shoulder seam at your natural shoulder point. Measure a shirt you like and match the number. Tolerance is ±0.5″."}, {"q": "How do I measure myself for the right size?", "a": "Do not measure yourself — measure a shirt. Lay a t-shirt you already like flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to our chart. Our figures are flat garment measurements, so there is no doubling involved."}, {"q": "My measurement falls between two sizes.", "a": "There is a ±0.5″ tolerance on every measurement, so you have some latitude. Take the smaller size to sit closer to the body, the larger for more ease through the chest. The shoulder seam position does not change between sizes."}, {"q": "What does the fabric feel like?", "a": "Dense and smooth rather than thin. It is combed, ring-spun cotton — combing strips out the shorter fibres before spinning, which is what produces that hand. Enough weight to hold its shape through a day without feeling heavy."}, {"q": "Will it shrink?", "a": "The cotton is pre-shrunk before cutting, so you should not see meaningful shrinkage. A cool wash and air drying will keep both the fabric and the shape at their best."}, {"q": "What are delivery and returns?", "a": "UAE: next-day delivery to all seven emirates for orders placed by 2 pm, free on orders over AED 100 and AED 15 below that. GCC: 3–5 working days, free over AED 229. Worldwide: 7–14 working days. Returns and exchanges are accepted for 14 days, unworn with tags attached — free within the UAE; international customers cover return shipping."}] },
@@ -3308,7 +3308,7 @@ const CATEGORIES = [
   { slug:'polos', related: [["/national-day/", "UAE National Day t-shirts", "Eid Al Etihad, 2 December"], ["/gifts/", "Gifts from the UAE", "For leaving gifts and visitors"]], cat:'polos', emoji:'✦', catBg:'Dunes',
     h1:'Polo Shirts in Dubai & the UAE',
     title:'Polo Shirts in Dubai & the UAE — Embroidered Piqué',
-    desc:'Two embroidered polos, designed in the UAE: The Sahra Polo in sand (piqué) and The Sahel Polo in black mercerised piqué. AED 229. Free UAE delivery over AED 100.',
+    desc:'Two embroidered polos designed in the UAE: the Sahra Polo in sand piqué and the Sahel Polo in black mercerised piqué. AED 229, free UAE delivery over AED 100.',
     shopText: 'Shop the Sahra Polo',
     newList: () => require('./preorder-page.js').pickNew(p => p.handle === 'the-sahel-polo'), newHeading: 'The Sahel Polo',
     intro:"Two polos, both embroidered rather than printed, both in sizes S to XL, both AED 229.\n\nThe Sahra Polo, from the Founding Edition, is sand-coloured cotton piqué, a different knit from the tees, and it shows in how the collar stands after a season rather than curling. It is sized to the same specification as the Regular fit tees.\n\nThe Sahel Polo, from Sahel, the Coast Edition, is black mercerised piqué with antique-gold tipping on the collar and cuffs and our mark in antique-gold thread on the left chest. It is in stock and ships the next working day. It has the same sizes as the Sahel Regular tee, S to XL.",
@@ -3575,7 +3575,7 @@ COMMERCE.forEach(P => {
   const canonical = `${SITE}/hoodies/`;
   const H = { h1: 'Hoodies in Dubai & the UAE',
     title: 'Hoodies in Dubai & UAE: Embroidered Coastline | Sahra & Beyond',
-    desc: 'The Barr & Bahr, Ras Al Khor and Khor Fakkan hoodies from Sahel, the Coast Edition: the UAE coastline embroidered across the back. AED 229, designed in the UAE.' };
+    desc: 'The Barr & Bahr, Ras Al Khor and Khor Fakkan hoodies: the UAE coast on the back, in cotton fleece, Oversized or Super Oversized. AED 229, designed in the UAE.' };
   const faqs = [
     ['How much are the hoodies?', 'Each is AED 229, in sizes S to XL. Delivery is free across the UAE.'],
     HPAUSED ? ['Can I order one now?', 'Not just now. We are adjusting the fit of both hoodies, and they will be back soon. Message us on WhatsApp if you would like to hear when they return.'] : ['When do they ship?', 'The hoodies are in stock and ship the next working day, with free delivery across the UAE.'],
@@ -3616,7 +3616,7 @@ COMMERCE.forEach(P => {
    preorder-page.js so prices and the 28 Oct stages match everywhere else. */
 (function buildAccessoriesActivewear() {
   const PO = require('./preorder-page.js');
-  const page = ({ slug, h1, title, desc, lede, grad, block, body, items }) => {
+  const page = ({ slug, h1, title, desc, lede, grad, block, body, items, faqs }) => {
     const canonical = `${SITE}/${slug}/`;
     const jsonld = [
       { "@context": "https://schema.org", "@type": "CollectionPage", "name": h1, "description": desc, "url": canonical },
@@ -3624,6 +3624,9 @@ COMMERCE.forEach(P => {
       { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
         { "@type": "ListItem", "position": 2, "name": h1, "item": canonical } ] } ];
+    /* 20 Nov 2026: a landing page may carry questions, shown on the page and marked up for Google */
+    if (faqs && faqs.length) jsonld.push({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } })) });
+    const faqHtml = faqs && faqs.length ? `<section class="faq content"><h2>Frequently asked questions</h2>${faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
     const html = `
   <section class="loc-hero" style="--hero-grad:${CAT_BG[grad]}">
     <div class="loc-hero-inner">
@@ -3635,6 +3638,7 @@ COMMERCE.forEach(P => {
   <main>
     ${block}
     ${body}
+    ${faqHtml}
     ${newsletterBlock()}
     <p class="back"><a href="/shop/">All products &rarr;</a></p>
   </main>`;
@@ -3649,16 +3653,38 @@ COMMERCE.forEach(P => {
     desc: 'The Sahra Tote and the Trailhead Bag from Sahra Trail: natural canvas bags designed in the UAE, AED 50 each. Free delivery across the UAE on orders over AED 100.',
     lede: 'Two canvas bags: the Sahra Tote and the Trailhead Bag',
     block: houseGrid({ pre: toteCard, news: bag, fits: false, label: 'Canvas bags' }),
-    body: `<div class="content"><p>The Sahra Tote is natural canvas with our mark and wordmark printed in terracotta, flat-bottomed with long shoulder handles. It comes free with every clothing order, and you can buy a second one here. The Trailhead Bag is the Sahra Trail drawstring bag: natural canvas with the Two Ridges mark printed in sand, and rope drawstrings that carry it on your back. It is on sale now, with Sahra Trail.</p></div>`,
+    body: `<div class="content"><p>The Sahra Tote is natural canvas with our mark and wordmark printed in terracotta, flat-bottomed with long shoulder handles. It comes free with every clothing order, and you can buy a second one here. The Trailhead Bag is the Sahra Trail drawstring bag: natural canvas with the Two Ridges mark printed in sand, and rope drawstrings that carry it on your back. It comes free with any Sahra Trail tee, short or Kit, one per order, and you can buy one on its own here.</p></div>`,
     items: [['The Sahra Tote', '/tote/'], ['The Trailhead Bag', '/products/trailhead-bag/']] });
   /* Activewear: every Sahra Trail piece */
   const trail = PO.pickNew(p => p.line === 'trail');
+  /* 20 Nov 2026 (SEO check, Faheem: "Go ahead"): the thinnest product page grew a buying guide and questions, in plain words and
+     only with facts from the product data; Sahra Trail's fabric is left out until the supplier spec arrives (18 Nov). */
+  const TRAIL_FAQ = [
+    ['What is in the Sahra Trail range?', 'The Sahra Trail Tee (AED 139), the Sahra Trail 2-in-1 Short (AED 169) and the Kit with both (AED 279). Every Sahra Trail order comes with the Trailhead Bag free, and the Sahra Tote too.'],
+    ['What sizes are the tee and the short?', 'Both come in S, M, L and XL, in a men’s cut. Sahra Trail has its own size chart, separate from our cotton tees, and the size finder on each page works from your height and weight.'],
+    ['How much do I save with the Kit?', 'Bought apart, the tee and the short are AED 308. The Kit is AED 279, so it saves AED 29, and you choose a size for each piece.'],
+    ['What is in the 2-in-1 Short?', 'An outer short with a hidden inner liner, a phone pocket bonded to the liner, a zip pocket for keys and cards, and an internal drawcord.'],
+    ['What are they made of?', 'The tee is 95% polyester and 5% elastane. The short has a woven outer in 95% polyester and 5% elastane, with four-way stretch, and a knit liner in 87% polyester and 13% elastane.'],
+    ['How fast is delivery?', 'Delivery is free across the UAE on orders over AED 100, and orders placed before 2 pm arrive the next working day. Sizes can be exchanged free within 14 days in the UAE.']
+  ];
   page({ slug: 'activewear', h1: 'Activewear: Sahra Trail', grad: 'Mountains',
-    title: 'Activewear in Dubai & the UAE: Running Tee, 2-in-1 Shorts | Sahra Trail',
-    desc: 'Sahra Trail, trail and run wear designed in the UAE: the Sahra Trail Tee, the 2-in-1 Short, the Kit and the Trailhead Bag. Free delivery across the UAE on orders over AED 100.',
+    title: 'Running Tee & 2-in-1 Shorts in Dubai | Sahra Trail',
+    desc: 'Sahra Trail running wear designed in the UAE: a running tee, 2-in-1 shorts with a phone pocket, the Kit and a canvas bag. Free UAE delivery over AED 100.',
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE',
     block: houseGrid({ news: trail, fits: false, label: 'Sahra Trail', note: PO.trailLede() + ' <a href="/trail/">About Sahra Trail</a>.' }),
-    body: `<div class="content"><p>Sahra Trail is for the trails, wadis and ridges of the UAE. The Sahra Trail Tee has raglan sleeves, mesh side panels and covered seams, with the reflective Two Ridges symbol under the collar. The 2-in-1 Short has a hidden inner liner with a bonded phone pocket, a zip pocket for keys and cards, and an internal drawcord. The Kit is the two together. Sahra Trail has <a href="/size-guide/#trail">its own size chart</a>; <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about Sahra Trail before I order.')}" target="_blank" rel="noopener">message us</a> if you are unsure of your size.</p></div>`,
+    faqs: TRAIL_FAQ,
+    body: `<div class="content">
+      <h2>Running wear for UAE trails and roads</h2>
+      <p>Sahra Trail is for the trails, wadis and ridges of the UAE, and for the early run before work. Every piece is designed in the UAE and carries the reflective Two Ridges symbol.</p>
+      <h2>The Sahra Trail Tee</h2>
+      <p>A running T-shirt in powder blue with an ocean-inspired print, in 95% polyester and 5% elastane. Raglan sleeves let your arms swing freely, mesh panels run down the sides, the seams are covered so they sit flat against the skin, and the Two Ridges symbol under the collar is reflective. <a href="/products/sahra-trail-tee/">The Sahra Trail Tee, AED 139 &rarr;</a></p>
+      <h2>The Sahra Trail 2-in-1 Short</h2>
+      <p>Running shorts in charcoal with a wave-inspired graphic. The outer is woven, 95% polyester and 5% elastane, with four-way stretch; inside is a hidden knit liner, 87% polyester and 13% elastane, with a phone pocket bonded to it, so your phone does not bounce; there is a zip pocket for keys and cards, and an internal drawcord. <a href="/products/sahra-trail-2-in-1-short/">The 2-in-1 Short, AED 169 &rarr;</a></p>
+      <h2>The Kit and the Trailhead Bag</h2>
+      <p>The Kit is the tee and the short together for AED 279, AED 29 less than buying them apart, with a size chosen for each. The Trailhead Bag, a natural canvas drawstring bag with rope straps for kit, water and keys, comes free with any Sahra Trail order, one per order, and is AED 50 on its own. <a href="/products/sahra-trail-kit/">The Kit &rarr;</a> &middot; <a href="/products/trailhead-bag/">The Trailhead Bag &rarr;</a></p>
+      <h2>Sizing</h2>
+      <p>The tee and the short come in S to XL, in a men’s cut, on <a href="/size-guide/#trail">their own size chart</a>. <a href="https://wa.me/971585449946?text=${encodeURIComponent('Hi, a size question about Sahra Trail before I order.')}" target="_blank" rel="noopener">Message us</a> if you are unsure of your size.</p>
+    </div>`,
     items: trail.map(p => [p.plain, `/products/${p.handle}/`]) });
 
   /* 24 Oct 2026 (Faheem, after the navigation panel): shop by Men and Women, and Under AED 150.
@@ -3705,13 +3731,13 @@ COMMERCE.forEach(P => {
   const FITS = [
     { slug: 'fit/regular', fit: 'Regular', h1: 'Regular fit', lede: 'A straight cut that sits on the shoulder: our tees in Regular and both polos',
       title: 'Regular Fit T-Shirts and Polos in the UAE | Sahra & Beyond',
-      desc: 'Every Sahra & Beyond piece in the Regular fit: tees with a straight cut that sits on the shoulder, and the Sahra and Sahel polos. Designed in the UAE, sizes S to XL. Free delivery across the UAE on orders over AED 100.' },
+      desc: 'Every Sahra & Beyond piece in the Regular fit: tees cut straight on the shoulder and both polos. Designed in the UAE, S to XL. Free UAE delivery over AED 100.' },
     { slug: 'fit/oversized', fit: 'Oversized', h1: 'Oversized fit', lede: 'Dropped shoulder, relaxed through the body: our tees and hoodies in Oversized',
       title: 'Oversized T-Shirts and Hoodies in the UAE | Sahra & Beyond',
-      desc: 'Every Sahra & Beyond piece in the Oversized fit: tees and hoodies with a dropped shoulder, relaxed through the body. Designed in the UAE, sizes S to XL. Free delivery across the UAE on orders over AED 100.' },
+      desc: 'Our tees and hoodies in the Oversized fit: a dropped shoulder, relaxed through the body. Designed in the UAE, S to XL. Free UAE delivery over AED 100.' },
     { slug: 'fit/super-oversized', fit: 'Super Oversized', h1: 'Super Oversized fit', lede: 'Dropped shoulder, our roomiest cut: our tees and hoodies in Super Oversized',
       title: 'Super Oversized T-Shirts and Hoodies in the UAE | Sahra & Beyond',
-      desc: 'Every Sahra & Beyond piece in the Super Oversized fit: our roomiest cut, with a dropped shoulder, in tees and hoodies. Designed in the UAE, sizes S to XL. Free delivery across the UAE on orders over AED 100.' }
+      desc: 'Our tees and hoodies in the Super Oversized fit, our roomiest cut, with a dropped shoulder. Designed in the UAE, S to XL. Free UAE delivery over AED 100.' }
   ];
   FITS.forEach(F => {
     const fl = founding.filter(p => fitF(p) === F.fit && F.fit !== 'Super Oversized' && !soldOutAll(p.id));
@@ -4610,8 +4636,8 @@ const AR_PDP_NOINDEX = true;
       /* 8 Oct 2026 (Faheem): the reveal is public with prices, so the page shows them. Held on the site until confirmed:
          the fabric line and "Lines from the seabed off Khor Fakkan" (both in the Reel). The site loop is cut without them. */
       rv: {
-        tee: { name: 'Sahra Trail Tee', price: 'AED 139', line: 'Ocean-inspired print.', feats: ['Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'], alt: 'Sahra Trail Tee in powder blue with the ocean-inspired print, front and back' },
-        short: { name: 'Sahra Trail 2-in-1 Short', price: 'AED 169', line: 'Wave-inspired graphic.', feats: ['Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'], alt: 'Sahra Trail 2-in-1 Shorts in charcoal with the wave-inspired graphic, front and back' },
+        tee: { name: 'Sahra Trail Tee', price: 'AED 139', line: 'Ocean-inspired print.', feats: ['95% polyester, 5% elastane', 'Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'], alt: 'Sahra Trail Tee in powder blue with the ocean-inspired print, front and back' },
+        short: { name: 'Sahra Trail 2-in-1 Short', price: 'AED 169', line: 'Wave-inspired graphic.', feats: ['Woven 95% polyester, 5% elastane outer; knit 87% polyester, 13% elastane liner', 'Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'], alt: 'Sahra Trail 2-in-1 Shorts in charcoal with the wave-inspired graphic, front and back' },
         kit: { name: 'The Kit', price: 'AED 279', line: 'The Tee and the 2-in-1 Shorts together.', save: 'Save AED 29', alt: 'The Sahra Trail Kit: the Tee and the 2-in-1 Shorts' },
         renders: '', mock: '',   /* 8 Nov 2026 (Faheem): no Mock-up / renders labels on the Trail images */
         film: 'The reveal', filmAlt: 'Sahra Trail reveal film, muted: the Tee and the 2-in-1 Shorts and their details', pause: 'Pause film', play: 'Play film',
@@ -4645,8 +4671,8 @@ const AR_PDP_NOINDEX = true;
       ],
       firstH: 'الدفعة الأولى', firstSub: 'قطعتان والطقم.',
       rv: {
-        tee: { name: 'تيشيرت صحراء تريل', price: '139 درهمًا', line: 'نقشة مستوحاة من البحر.', feats: ['أكمام راجلان', 'ألواح شبكية على الجانبين', 'درزات مغطّاة', 'شعار القمّتين العاكس أسفل الياقة'], alt: 'تيشيرت صحراء تريل باللون الأخضر المزرق بنقشة مستوحاة من البحر، من الأمام والخلف' },
-        short: { name: 'شورت صحراء تريل 2 في 1', price: '169 درهمًا', line: 'رسمة مستوحاة من الأمواج.', feats: ['شورتان في واحد، مع بطانة داخلية مخفية', 'جيب للهاتف ملتصق بالبطانة', 'جيب بسحّاب للمفاتيح والبطاقات', 'رباط داخلي', 'شعار القمّتين العاكس'], alt: 'شورت صحراء تريل 2 في 1 باللون الفحمي برسمة مستوحاة من الأمواج، من الأمام والخلف' },
+        tee: { name: 'تيشيرت صحراء تريل', price: '139 درهمًا', line: 'نقشة مستوحاة من البحر.', feats: ['95% بوليستر، 5% إيلاستين', 'أكمام راجلان', 'ألواح شبكية على الجانبين', 'درزات مغطّاة', 'شعار القمّتين العاكس أسفل الياقة'], alt: 'تيشيرت صحراء تريل باللون الأزرق الفاتح بنقشة مستوحاة من البحر، من الأمام والخلف' },
+        short: { name: 'شورت صحراء تريل 2 في 1', price: '169 درهمًا', line: 'رسمة مستوحاة من الأمواج.', feats: ['طبقة خارجية منسوجة 95% بوليستر و5% إيلاستين، وبطانة محبوكة 87% بوليستر و13% إيلاستين', 'شورتان في واحد، مع بطانة داخلية مخفية', 'جيب للهاتف ملتصق بالبطانة', 'جيب بسحّاب للمفاتيح والبطاقات', 'رباط داخلي', 'شعار القمّتين العاكس'], alt: 'شورت صحراء تريل 2 في 1 باللون الفحمي برسمة مستوحاة من الأمواج، من الأمام والخلف' },
         kit: { name: 'الطقم', price: '279 درهمًا', line: 'التيشيرت والشورت 2 في 1 معًا.', save: 'وفّر 29 درهمًا', alt: 'طقم صحراء تريل: التيشيرت والشورت 2 في 1' },
         renders: '', mock: '', film: 'فيلم الكشف', filmAlt: 'فيلم الكشف عن صحراء تريل بلا صوت: التيشيرت والشورت 2 في 1 وتفاصيلهما', pause: 'إيقاف الفيلم', play: 'تشغيل الفيلم',
         cta: 'انضم إلى القائمة', ctaSub: ''   /* 22 Oct 2026: 24-hour promise removed; no replacement until an Emirati reader approves one */

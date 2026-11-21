@@ -64,7 +64,7 @@
 
   /* quantity is part of this fragment and MUST stay rendered - see bug 2 */
   var CFRAG = 'id checkoutUrl totalQuantity buyerIdentity{countryCode} cost{subtotalAmount{amount currencyCode}}' +
-    'lines(first:100){edges{node{id quantity cost{totalAmount{amount currencyCode} subtotalAmount{amount currencyCode}} ' +
+    'lines(first:100){edges{node{id quantity attributes{key value} cost{totalAmount{amount currencyCode} subtotalAmount{amount currencyCode}} ' +
     'discountAllocations{discountedAmount{amount currencyCode} ... on CartAutomaticDiscountAllocation{title}} ' +
     'merchandise{... on ProductVariant{id title availableForSale quantityAvailable ' +
     'price{amount currencyCode} compareAtPrice{amount currencyCode} product{title handle productType featuredImage{url}}}}}}}';
@@ -230,7 +230,7 @@
      syncGift() is chained OUTSIDE the queued closure: calling queue() from
      inside a queued function and awaiting it would deadlock the chain. */
   function afterMutation(c) {
-    return syncGift().then(function () { return CART || c; });
+    return syncGift().then(syncBag).then(function () { return CART || c; });
   }
   /* opts.gift === false: this item does not earn the free tote (it IS a tote).
      Only affects the empty-cart path, which has to decide before a cart exists;
@@ -272,6 +272,7 @@
   var GIFT_VARIANT = 'gid://shopify/ProductVariant/47389880615100';
   var GIFT_ADD = 'mutation($id:ID!,$l:[CartLineInput!]!){cartLinesAdd(cartId:$id,lines:$l){cart{' + CFRAG + '}userErrors{message}}}';
   var GIFT_RM  = 'mutation($id:ID!,$l:[ID!]!){cartLinesRemove(cartId:$id,lineIds:$l){cart{' + CFRAG + '}userErrors{message}}}';
+  var GIFT_SET = 'mutation($id:ID!,$l:[CartLineUpdateInput!]!){cartLinesUpdate(cartId:$id,lines:$l){cart{' + CFRAG + '}userErrors{message}}}';
 
   function isGift(node) {
     return !!(node && node.merchandise && node.merchandise.id === GIFT_VARIANT);
@@ -301,8 +302,42 @@
   }
   function realQty() {
     var n = 0;
-    cartNodes().forEach(function (l) { if (!isGift(l)) n += (l.quantity || 0); });
+    cartNodes().forEach(function (l) { if (!isGift(l) && !isFreeBag(l)) n += (l.quantity || 0); });
     return n;
+  }
+  /* ---- the Trailhead Bag, free with Sahra Trail (20 Nov 2026, Faheem: "drawstring bag with trail items"; chose one bag per
+     order with any Trail piece, given free on the real bag) ----------------------------------------------------------------
+     When the cart holds a Sahra Trail Tee, 2-in-1 Short or Kit, the real Trailhead Bag is added once, marked _free=trail, and
+     Shopify's automatic discount "Free Trailhead Bag with Sahra Trail" (one per order) takes it to AED 0. It goes when the
+     last Trail piece goes. A bag the customer added themselves is never touched, and while one is in the cart no free one is
+     added (Shopify's discount makes that one free instead). Same three rules as the tote: never breaks a real add, goes
+     through the queue, never recurses. */
+  var BAG_VARIANT = 'gid://shopify/ProductVariant/48480571916476';
+  var TRAIL_PIECE = /^sahra-trail-(tee|2-in-1-short|kit)$/;
+  function isFreeBag(node) {
+    return !!(node && node.merchandise && node.merchandise.id === BAG_VARIANT && (node.attributes || []).some(function (a) { return a.key === '_free' && a.value === 'trail'; }));
+  }
+  function trailQty() {
+    var n = 0;
+    cartNodes().forEach(function (l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; if (TRAIL_PIECE.test(h || '')) n += (l.quantity || 0); });
+    return n;
+  }
+  function syncBag() {
+    return queue(function () {
+      if (!CART || !CART.id) return CART;
+      var nodes = cartNodes(), free = null, own = false;
+      nodes.forEach(function (n) { if (isFreeBag(n)) free = n; else if (n.merchandise && n.merchandise.id === BAG_VARIANT) own = true; });
+      var t = trailQty(), op = null;
+      if (t > 0 && !free && !own) op = { m: GIFT_ADD, v: { id: CART.id, l: [{ merchandiseId: BAG_VARIANT, quantity: 1, attributes: [{ key: '_free', value: 'trail' }] }] }, k: 'cartLinesAdd' };
+      else if (free && (t === 0 || own)) op = { m: GIFT_RM, v: { id: CART.id, l: [free.id] }, k: 'cartLinesRemove' };
+      else if (free && free.quantity > 1) op = { m: GIFT_SET, v: { id: CART.id, l: [{ id: free.id, quantity: 1 }] }, k: 'cartLinesUpdate' };
+      if (!op) return CART;
+      return sf(op.m, op.v).then(function (d) {
+        var r = d && d[op.k];
+        if (r && r.cart && !(r.userErrors && r.userErrors.length)) { CART = r.cart; draw(); }
+        return CART;
+      }).catch(function () { return CART; });
+    });
   }
   /* What earns the free tote: anything the customer paid for that is not itself
      a tote. Kept separate from realQty, which is the badge count and must still
@@ -340,13 +375,14 @@
          is the oldest line — and only switch to the new cart if it carries every
          real item the customer had; otherwise fall back to the plain add. */
       var reals = cartNodes().filter(function (n) { return !isGift(n); })
-        .map(function (n) { return { merchandiseId: n.merchandise.id, quantity: n.quantity }; });
+        .map(function (n) { var o = { merchandiseId: n.merchandise.id, quantity: n.quantity }; if (n.attributes && n.attributes.length) o.attributes = n.attributes.map(function (a) { return { key: a.key, value: a.value }; }); return o; });   /* line attributes travel too (the free Trailhead Bag's _free mark) */
       return sf('mutation($l:[CartLineInput!]!,$cc:CountryCode!,$a:[AttributeInput!]){cartCreate(input:{lines:$l,buyerIdentity:{countryCode:$cc},attributes:$a}){cart{' + CFRAG + '}userErrors{message}}}',
                 { l: [{ merchandiseId: GIFT_VARIANT, quantity: 1 }].concat(reals), cc: BUYER_CC, a: (CREATE_ATTR = attrNow()) })
         .then(function (d) {
           var r = d && d.cartCreate, c = r && r.cart;
+          var want = reals.reduce(function (n, x) { return n + x.quantity; }, 0);
           var kept = c ? (c.lines.edges || []).reduce(function (n, e) { return n + (isGift(e.node) ? 0 : e.node.quantity); }, 0) : -1;
-          if (!c || (r.userErrors && r.userErrors.length) || kept !== real || !giftIn(c)) return run();
+          if (!c || (r.userErrors && r.userErrors.length) || kept !== want || !giftIn(c)) return run();
           CART = c; setCid(c.id); attrOk(attrKey(c.id, CREATE_ATTR)); draw();
           return CART;
         }, run);
@@ -373,7 +409,7 @@
   var STR = {
     en: {
       bag: 'Bag', yourBag: 'Your bag', close: 'Close bag', empty: 'Your bag is empty.', emptySub: 'Every piece is drawn from a real place in the UAE.', shop: 'Shop all pieces',
-      piece1: '1 piece', pieces: '{n} pieces', plusTote: ' + free tote', going: 'Taking you to secure checkout\u2026', size: 'Size {s}', changeSize: 'Change size, now {s}', loadingSizes: 'Loading sizes…', soldOut: 'sold out',
+      piece1: '1 piece', pieces: '{n} pieces', plusTote: ' + free tote', plusBag: ' + free bag', freeBagT: 'The Trailhead Bag', freeBagSub: 'Free with Sahra Trail', going: 'Taking you to secure checkout\u2026', size: 'Size {s}', changeSize: 'Change size, now {s}', loadingSizes: 'Loading sizes…', soldOut: 'sold out',
       teeShort: 'Tee {a} · Short {b}', oneSize: 'One size', remove: 'Remove', removeA: 'Remove {t}', removed: 'Removed {t}', undo: 'Undo',
       dec: 'One fewer', inc: 'One more', qty: 'Quantity', capped: 'No more in this size',
       tote: 'The Sahra Tote', yoursFree: 'yours free', toteSub: 'Free with every order', free: 'Free',
@@ -395,7 +431,7 @@
     },
     ar: {
       bag: 'السلة', yourBag: 'سلّتك', close: 'إغلاق السلة', empty: 'سلّتك فارغة.', emptySub: 'كل قطعة مستوحاة من مكان حقيقي في الإمارات.', shop: 'تسوّق كل القطع',
-      piece1: 'قطعة واحدة', piece2: 'قطعتان', plusTote: ' + حقيبة هدية مجانية', going: 'جارٍ نقلك إلى صفحة الدفع الآمن\u2026', pieces: '{n} قطع', piecesMany: '{n} قطعة',
+      piece1: 'قطعة واحدة', piece2: 'قطعتان', plusTote: ' + حقيبة هدية مجانية', plusBag: ' + حقيبة ترايلهيد مجانية', freeBagT: 'حقيبة ترايلهيد', freeBagSub: 'مجانًا مع صحراء تريل', going: 'جارٍ نقلك إلى صفحة الدفع الآمن\u2026', pieces: '{n} قطع', piecesMany: '{n} قطعة',
       size: 'المقاس {s}', changeSize: 'تغيير المقاس، الآن {s}', loadingSizes: 'جارٍ تحميل المقاسات…', soldOut: 'نفد',
       teeShort: 'التيشيرت {a} · الشورت {b}', oneSize: 'مقاس واحد', remove: 'إزالة', removeA: 'إزالة {t}', removed: 'أُزيل: {t}', undo: 'تراجع',
       dec: 'إنقاص الكمية', inc: 'زيادة الكمية', qty: 'الكمية', capped: 'لا مزيد بهذا المقاس',
@@ -866,8 +902,8 @@
        UAE delivery is free, so an AED 0 order would otherwise look orderable.
        Shopify also refuses it (the UAE rate needs TOTAL_PRICE >= 1), but the
        UI must not offer what the server will reject. */
-    var realLines = lines.filter(function (l) { return !isGift(l); });
-    var gifts = lines.filter(isGift);
+    var realLines = lines.filter(function (l) { return !isGift(l) && !isFreeBag(l); });
+    var gifts = lines.filter(isGift).concat(lines.filter(isFreeBag));
     var cnt = $('sbCountT'), gr = $('sbGiftRow'), bu = $('sbBundle');
     if (!realLines.length) {
       body.innerHTML = err + '<div class="sb-empty"><p>' + T('empty') + '</p><small>' + T('emptySub') + '</small><a href="' + (AR ? '/ar/shop/' : '/shop/') + '">' + T('shop') + '</a></div>';
@@ -877,7 +913,7 @@
       if (bu) { bu.hidden = true; bu.innerHTML = ''; }
       return;
     }
-    if (cnt) cnt.textContent = piecesT(realQty()) + (gifts.length ? T('plusTote') : '');   /* 18 Nov 2026: "1 piece + free tote", as checkout counts 2 */
+    if (cnt) cnt.textContent = piecesT(realQty()) + (lines.some(isGift) ? T('plusTote') : '') + (lines.some(isFreeBag) ? T('plusBag') : '');   /* 18 Nov 2026: "1 piece + free tote", as checkout counts 2 */
 
     /* the tote is listed last, whatever order Shopify returns */
     body.innerHTML = err + realLines.concat(gifts).map(function (l) {
@@ -885,6 +921,15 @@
       var q = l.quantity;
       /* The gift has no product page (headless-only), so no link; and no
          quantity or remove controls - it is not the customer's to manage. */
+      if (isFreeBag(l)) {
+        return '<div class="sb-line sb-gift sb-gift-bag">' +
+          '<span class="sb-th"><img src="/assets/preorder/trail-bag-front-480.webp" alt="" width="64" height="80" loading="lazy"></span>' +
+          '<div class="sb-lt">' +
+            '<span class="sb-gift-t">' + T('freeBagT') + ' &mdash; ' + T('yoursFree') + '</span>' +
+            '<span class="sb-gift-p"><small>' + T('freeBagSub') + '</small></span>' +
+          '</div>' +
+        '</div>';
+      }
       if (isGift(l)) {
         return '<div class="sb-line sb-gift">' +
           '<span class="sb-th"><img src="/shirts/tote-band.webp" alt="" width="64" height="64" loading="lazy"></span>' +
@@ -967,7 +1012,8 @@
       var hs = realLines.map(function (l) { return (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; });
       var trailIn = hs.some(function (h) { return /^sahra-trail-/.test(h); }), bagIn = hs.indexOf('trailhead-bag') >= 0;
       var sahelN = 0; realLines.forEach(function (l) { var h = (l.merchandise && l.merchandise.product && l.merchandise.product.handle) || ''; if (/^(khor-fakkan-bay|khor-fakkan-hoodie|al-hamra-pearl-diver|al-aqah-reef|al-qudra-lakes|shams-tee|the-sahel-polo|barr-and-bahr|ras-al-khor)/.test(h)) sahelN += l.quantity; });
-      if (trailIn && !bagIn && cur === 'AED') {
+      /* 20 Nov 2026: the Trailhead Bag now comes free with any Trail piece, so the AED 50 offer is never shown */
+      if (false && trailIn && !bagIn && cur === 'AED') {
         el.className = 'sb-bundle sb-second';
         show('<img src="/assets/preorder/trail-bag-front-480.webp" alt="" width="40" height="50" loading="lazy"><span class="sb-second-t"><b>' + T('bagT') + '</b><br>' + T('bagSub') + '</span>' +
           '<button type="button" class="sb-second-add" data-handle="trailhead-bag" data-size="">' + T('addBtn') + '</button>');
