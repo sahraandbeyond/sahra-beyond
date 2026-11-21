@@ -980,6 +980,14 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
         var pages = Object.keys(F).every(function (k) { return ['', 'ar/'].every(function (a) { var x = fs.readFileSync(path.join(__dirname, a + 'fit', k, 'index.html'), 'utf8'); var hs = (x.match(/href="(?:\/ar)?\/products\/[a-z0-9-]+\/"/g) || []).filter(function (h) { return !/'\+/.test(h); }); return hs.length >= 5 && hs.every(function (h) { return F[k].test(h) && (k === 'oversized' ? !/super-oversized/.test(h) : true); }); }); });
         return pages && /\['\/fit\/regular\/', 'Regular', 'Straight cut'\]/.test(nav) && /mh\('Shop by fit'\)/.test(nav) && /'Shop by fit': '[^']+'/.test(nav) && /a\[href="\/ar\/shop\/"\]/.test(nav);
       })());
+      check('r154 gifts: a Trail piece in the bag means the Trailhead Bag replaces the tote, Trail pages never seed the tote, and no page says Trail orders also get the tote', (function () {
+        var cj = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-cart.js'), 'utf8');
+        var rule = /function giftEarningQty\(\) \{[\s\S]{0,600}if \(trailQty\(\) > 0\) return 0;/.test(cj);
+        var tp = fs.readFileSync(path.join(__dirname, 'products', 'sahra-trail-tee', 'index.html'), 'utf8');
+        var noSeed = /data-gift="0"/.test(tp) && !/Free <a href="\/tote\/">Sahra Tote<\/a>/.test(tp) && /Free <a href="\/products\/trailhead-bag\/">Trailhead Bag<\/a> with Sahra Trail/.test(tp);
+        var aw = fs.readFileSync(path.join(__dirname, 'activewear', 'index.html'), 'utf8');
+        return rule && noSeed && !/and the Sahra Tote too/.test(aw) && /in place of the Sahra Tote/.test(aw);
+      })());
       check('r150 SEO: product titles fit in 60 characters and descriptions in 160, hoodies carry their fabric, a fully sold-out piece says OutOfStock, and Activewear has its questions', (function () {
         var ent = function (x) { return x.replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"'); };
         var ok = fs.readdirSync(path.join(__dirname, 'products')).filter(function (h) { return fs.existsSync(path.join(__dirname, 'products', h, 'index.html')); }).every(function (h) {

@@ -347,6 +347,9 @@
     /* 23 Oct 2026 (Faheem: "Every order"): the free tote comes with every order, pre-orders included
        (reverses the 22 Oct Founding-only default) */
     /* 23 Oct 2026 (Faheem): the Trailhead Bag on its own does not earn the tote either ("No tote with bag-only orders") */
+    /* 21 Nov 2026 (Faheem: "Sahra tote should not go with trail orders if we're giving away the drawstring bag";
+       chose "Bag only" for mixed orders): any Trail piece means the Trailhead Bag replaces the tote. */
+    if (trailQty() > 0) return 0;
     cartNodes().forEach(function (l) { var h = l && l.merchandise && l.merchandise.product && l.merchandise.product.handle; if (!isGift(l) && !isTote(l) && h !== 'trailhead-bag') n += (l.quantity || 0); });
     return n;
   }
@@ -412,7 +415,7 @@
       piece1: '1 piece', pieces: '{n} pieces', plusTote: ' + free tote', plusBag: ' + free bag', freeBagT: 'The Trailhead Bag', freeBagSub: 'Free with Sahra Trail', going: 'Taking you to secure checkout\u2026', size: 'Size {s}', changeSize: 'Change size, now {s}', loadingSizes: 'Loading sizes…', soldOut: 'sold out',
       teeShort: 'Tee {a} · Short {b}', oneSize: 'One size', remove: 'Remove', removeA: 'Remove {t}', removed: 'Removed {t}', undo: 'Undo',
       dec: 'One fewer', inc: 'One more', qty: 'Quantity', capped: 'No more in this size',
-      tote: 'The Sahra Tote', yoursFree: 'yours free', toteSub: 'Free with every order', free: 'Free',
+      tote: 'The Sahra Tote', yoursFree: 'yours free', toteSub: 'Free with your order', free: 'Free',
       pairPrice: 'pair price', afterDiscount: 'price applied', prePrice: 'pre-order price',
       applied: 'Pair price applied: any two AED 199 tees for AED 359', appliedX: 'Pair price applied: the two-tee price',
       sahelFit: 'Sahel runs larger than the Founding Edition.', sahelChart: 'Sahel size chart', trailFit: 'Sahra Trail is its own pattern.', trailChart: 'Sahra Trail size chart',
@@ -435,7 +438,7 @@
       size: 'المقاس {s}', changeSize: 'تغيير المقاس، الآن {s}', loadingSizes: 'جارٍ تحميل المقاسات…', soldOut: 'نفد',
       teeShort: 'التيشيرت {a} · الشورت {b}', oneSize: 'مقاس واحد', remove: 'إزالة', removeA: 'إزالة {t}', removed: 'أُزيل: {t}', undo: 'تراجع',
       dec: 'إنقاص الكمية', inc: 'زيادة الكمية', qty: 'الكمية', capped: 'لا مزيد بهذا المقاس',
-      tote: 'حقيبة صحراء القماشية', yoursFree: 'هدية مجانية', toteSub: 'مجانًا مع كل طلب', free: 'مجانًا',
+      tote: 'حقيبة صحراء القماشية', yoursFree: 'هدية مجانية', toteSub: 'مجانًا مع طلبك', free: 'مجانًا',
       pairPrice: 'سعر القطعتين', afterDiscount: 'السعر المطبّق', prePrice: 'سعر الطلب المسبق',
       applied: 'طُبّق سعر القطعتين: أي تيشيرتين بسعر 199 درهمًا مقابل 359 درهمًا', appliedX: 'طُبّق سعر القطعتين',
       sahelFit: 'مقاسات ساحل أوسع من الإصدار التأسيسي.', sahelChart: 'جدول مقاسات ساحل', trailFit: 'لصحراء تريل نمط قصّ خاص بها.', trailChart: 'جدول مقاسات صحراء تريل',

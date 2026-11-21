@@ -560,7 +560,7 @@ document.getElementById('gbarOpen').addEventListener('click',openSheet);
 document.getElementById('gsheetX').addEventListener('click',closeSheet);
 sheet.addEventListener('click',function(e){if(e.target===sheet)closeSheet();});
 addEventListener('keydown',function(e){if(e.key==='Escape'&&!sheet.hidden)closeSheet();});
-addB.addEventListener('click',function(){if(!sel){msg('Choose a size first.');return;}addB.disabled=true;addB.textContent='Adding\u2026';SahraCart.add(sel.id,1).then(function(){closeSheet({keepLock:true});addB.disabled=false;addB.textContent='Add another';if(window.track)track('add_to_cart',{item_id:handle,size:sel.title,via:'guide-bar'});}).catch(function(){addB.disabled=false;addB.textContent='Add to bag';msg('Could not add. Please try again.');});});
+addB.addEventListener('click',function(){if(!sel){msg('Choose a size first.');return;}addB.disabled=true;addB.textContent='Adding\u2026';SahraCart.add(sel.id,1,/^sahra-trail-(tee|2-in-1-short|kit)$/.test(handle)?{gift:false}:undefined).then(function(){closeSheet({keepLock:true});addB.disabled=false;addB.textContent='Add another';if(window.track)track('add_to_cart',{item_id:handle,size:sel.title,via:'guide-bar'});}).catch(function(){addB.disabled=false;addB.textContent='Add to bag';msg('Could not add. Please try again.');});});
 })();`;
 /* essays as folds (5 Sep 2026): products first, reading on request */
 function foldsBlock(sections, eyebrow) {
@@ -2759,12 +2759,12 @@ if (SHOP_FROM_TEMPLATE && (LAUNCHED || REVEALED)) (function () {
 (function () {
   const canonical = `${SITE}/tote/`;
   const title = 'The Sahra Tote — Natural Canvas Tote Bag | Sahra & Beyond';
-  const desc = 'The Sahra Tote in natural canvas, AED 50 — and free with every order. Free next-day delivery across the UAE on orders over AED 100.';
+  const desc = 'The Sahra Tote in natural canvas, AED 50, and free with any order that has no Sahra Trail piece. Free next-day delivery across the UAE on orders over AED 100.';
   const img = `${SITE}/shirts/tote-model.jpg`;
   const jsonld = [
     { "@context": "https://schema.org", "@type": "Product",
       "name": "The Sahra Tote", "image": [img], "brand": { "@type": "Brand", "name": "Sahra & Beyond" },
-      "description": 'A natural canvas tote carrying the Sahra & Beyond mark, printed in terracotta. Free with every order.',
+      "description": 'A natural canvas tote carrying the Sahra & Beyond mark, printed in terracotta. Free with every order without Sahra Trail; Trail orders get the Trailhead Bag.',
       "offers": Object.assign({ "@type": "Offer", "url": canonical, "priceCurrency": "AED", "price": "50", "priceValidUntil": `${new Date().getFullYear() + 1}-12-31`,
         "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition", "seller": { "@type": "Organization", "name": "Sahra & Beyond" } },
         /* 5 Nov 2026: a tote on its own is under AED 100, so its UAE delivery rate is AED 15 */
@@ -2824,7 +2824,7 @@ body.tote-page main{max-width:1180px}
     <nav class="crumbs"><a href="/">Home</a> &rsaquo; <a href="/shop/">Shop</a> &rsaquo; <span>The Sahra Tote</span></nav>
     <div class="tt">
       <div class="tt-media">
-        <span class="tt-flag">Free with every order</span>
+        <span class="tt-flag">Free with any order without Sahra Trail</span>
         <img src="/shirts/tote-model.jpg" alt="The Sahra Tote in natural canvas, carried over the shoulder" width="1080" height="1350" fetchpriority="high" decoding="async">
       </div>
       <div class="tt-buy">
@@ -2834,7 +2834,7 @@ body.tote-page main{max-width:1180px}
         <p class="tt-price"><span class="tt-n"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></span></p>
         <div class="tt-gift">
           <b>You do not have to buy one</b>
-          <p>A tote comes free with every order of clothing &mdash; add any tee, polo, hoodie or Sahra Trail piece to your bag and it is added at no charge. This page is for anyone who wants a second one, or the tote on its own. <a href="/shop/">Shop the collection &rarr;</a></p>
+          <p>A tote comes free with every order &mdash; add any Sahel or Founding Edition tee, polo or hoodie to your bag and it is added at no charge. Orders with a Sahra Trail piece get the Trailhead Bag instead. This page is for anyone who wants a second one, or the tote on its own. <a href="/shop/">Shop the collection &rarr;</a></p>
         </div>
         <button class="btn tt-add" id="toteAdd" type="button" disabled>Loading&hellip;</button>
         <p class="tt-also" style="margin:14px 0 0;font-size:15px">Also in canvas: <a href="/products/trailhead-bag/">The Trailhead Bag</a>, the Sahra Trail drawstring bag, AED 50.</p>
@@ -2847,7 +2847,7 @@ body.tote-page main{max-width:1180px}
           <li><b>Natural canvas</b> &mdash; undyed, so it wears in rather than out.</li>
           <li><b>The mark, printed in terracotta</b> &mdash; the same lockup as the collar labels.</li>
           <li><b>Long handles</b>, cut to sit on the shoulder rather than the forearm.</li>
-          <li><b>Free with every clothing order</b>.</li>
+          <li><b>Free with every order</b>, or the Trailhead Bag when the order includes Sahra Trail.</li>
         </ul>
       </div>
     </div>
@@ -2875,7 +2875,7 @@ body.tote-page main{max-width:1180px}
     var e=d&&d.data&&d.data.product&&d.data.product.variants&&d.data.product.variants.edges;
     var n=e&&e[0]&&e[0].node;
     if(!n){ btn.textContent='Open the shop'; btn.disabled=false; btn.onclick=function(){location.href='/shop/';}; return; }
-    if(!n.availableForSale){ btn.textContent='Sold out'; say('Out of stock for now — a tote still comes free with every order.'); return; }
+    if(!n.availableForSale){ btn.textContent='Sold out'; say('Out of stock for now — a tote still comes free with every order without Sahra Trail.'); return; }
     VID=n.id; btn.disabled=false; btn.textContent='Add to bag';
   })
   .catch(function(){ btn.textContent='Open the shop'; btn.disabled=false; btn.onclick=function(){location.href='/shop/';}; });
@@ -3152,7 +3152,7 @@ const COMMERCE = [
     sections: [
       { h2: 'Which design for which person', body: "Al Quaa Galaxy is the Milky Way over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back of a black tee. It suits the person who drives out of the city to look at the stars.\n\nHajar Mountains is a topographic line drawing of the Hajar peaks, printed on grey. It is the one for hikers and anyone who heads for Ras Al Khaimah when the weather turns.\n\nEmpty Quarter is a tonal sun setting over the dunes of Liwa, embroidered on beige with no print at all. It suits desert drivers and anyone who prefers a quieter shirt.\n\nThe Sahra Polo is piqué with an embroidered mark, for someone who would rather wear a collar.\n\nEvery tee is combed cotton, in Regular or Oversized, sizes S to XL: AED 199, or AED 139 for the Shams Tee. Any two AED 199 tees are AED 359." },
       { h2: 'Getting it in time for 2 December', body: "In the UAE, orders placed by 2 pm on a working day are dispatched the same day and delivered the next working day, free on orders over AED 100 and AED 15 below that. Public holidays are not working days, so order a few days before the National Day holiday rather than on the eve.\n\nGCC orders (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait) take 3 to 5 working days, at AED 50 or free over AED 229. The rest of the world takes 7 to 14 working days, at AED 80." },
-      { h2: 'Giving it as a gift', body: "Tick 'This is a gift' in your bag and add a message: we include it with the order. Every order comes with the Sahra Tote, free. If the size is wrong, exchanges within the UAE are free within 14 days of delivery, as long as the shirt is unworn with its tags on." },
+      { h2: 'Giving it as a gift', body: "Tick 'This is a gift' in your bag and add a message: we include it with the order. Every order comes with the Sahra Tote free, or the Trailhead Bag if it includes Sahra Trail. If the size is wrong, exchanges within the UAE are free within 14 days of delivery, as long as the shirt is unworn with its tags on." },
       { h2: 'Wear the place, then go there', body: "The National Day weekend falls in the cool season, the best time of year to see the places behind the designs. Each one has its own guide: how to get there, when to go, the real risks and what to pack." }
     ],
     related: [
@@ -3166,7 +3166,7 @@ const COMMERCE = [
     faqs: [
       ['Do you sell UAE National Day t-shirts?', "Yes, though not flag prints. Our tees are drawn from real places in the Emirates: the Al Quaa night sky, the Hajar peaks at Wadi Naqab and the Liwa dunes. The Founding Edition tees are AED 199 in Regular or Oversized, sizes S to XL; the Sahel tees are AED 199 and the Shams Tee AED 139."],
       ['Will my order arrive before 2 December?', "In the UAE, orders placed by 2 pm on a working day are delivered the next working day. Public holidays are not working days, so order a few days ahead of the National Day holiday. GCC orders take 3 to 5 working days."],
-      ['Can I send it as a gift?', "Yes. Tick 'This is a gift' in your bag and add a message, and we include it with the order. Every order also comes with the Sahra Tote, free."],
+      ['Can I send it as a gift?', "Yes. Tick 'This is a gift' in your bag and add a message, and we include it with the order. Every order also comes with the Sahra Tote free, or the Trailhead Bag if it includes Sahra Trail."],
       ['How much do they cost?', "The Founding Edition and Sahel tees are AED 199, and any two of them are AED 359. The Shams Tee is AED 139, the polos and hoodies AED 229 and the Sahra Trail Kit AED 279. UAE delivery is free on orders over AED 100."],
       ['What is Eid Al Etihad?', "It is the name used for the UAE's National Day celebrations on 2 December, which mark the union of the emirates in 1971. Eid Al Etihad means the celebration of the union."]
     ]
@@ -3185,13 +3185,13 @@ const COMMERCE = [
       { h2: 'A leaving gift for someone moving away', body: "This is the one we hear about most. Someone has spent five, ten, twenty years here, and they are going home. What do you give them?\n\nA skyline t-shirt is a joke gift. But a shirt carrying the night sky over Al Quaa, or the dune ridges of Liwa, is a specific memory of a specific place — the kind of thing that gets kept and worn rather than put in a drawer. If they camped in the desert, drove out to see the stars, or hiked the wadis, they will recognise it immediately." },
       { h2: 'For someone who loves the outdoors here', body: "If the person you are buying for spends their weekends camping, dune driving, stargazing or hiking, the design will land. Each of our t-shirts comes from a place they can drive to, and every product page tells the story of that place — including the coordinates.\n\nHeavyweight combed cotton means it is a shirt they will actually keep wearing, not a novelty they wear once." },
       { h2: 'For a visitor who wants something real', body: "Visitors often want something from the UAE that is not obviously made for visitors. A t-shirt from a small UAE brand, tied to a place beyond the city, is a better answer than anything in the departures hall — and it packs flat." },
-      { h2: 'Practical things', body: "By budget: the Sahra Tote is AED 50, the Shams Tee and the Sahra Trail Tee AED 139, the other tees AED 199 (any two AED 199 tees for AED 359), the polos and hoodies AED 229, and the Sahra Trail Kit AED 279. Every order comes with the Sahra Tote, free. The tees come in Regular and Oversized fits, cut unisex; the polos are a men's cut; everything is S to XL. In the UAE, delivery is next working day to all seven emirates for orders placed by 2 pm, and free on orders over AED 100 (AED 15 below that) — and we now ship worldwide too. Exact delivery cost is always shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
+      { h2: 'Practical things', body: "By budget: the Sahra Tote is AED 50, the Shams Tee and the Sahra Trail Tee AED 139, the other tees AED 199 (any two AED 199 tees for AED 359), the polos and hoodies AED 229, and the Sahra Trail Kit AED 279. Every order comes with the Sahra Tote free, or the Trailhead Bag if it includes Sahra Trail. The tees come in Regular and Oversized fits, cut unisex; the polos are a men's cut; everything is S to XL. In the UAE, delivery is next working day to all seven emirates for orders placed by 2 pm, and free on orders over AED 100 (AED 15 below that) — and we now ship worldwide too. Exact delivery cost is always shown at checkout before you pay.\n\nIf you are unsure about size, exchanges within the UAE are free within 14 days of delivery, as long as the piece is unworn with tags attached. If you are buying as a gift and want to be certain, email us and we will help you choose." }
     ],
     related: [['/national-day/', 'UAE National Day t-shirts', 'Eid Al Etihad, 2 December']],
     faqs: [
       ['What is a good leaving gift for an expat in the UAE?', 'Something tied to a specific place they know rather than a generic city souvenir. Our t-shirts are each based on a real location in the Emirates — the dark sky at Al Quaa, the dunes at Liwa, the Hajar mountains — so the gift is a memory of somewhere they have actually been.'],
       ['Can I exchange it if the size is wrong?', 'Yes. Exchanges within the UAE are free within 14 days of delivery, subject to stock, as long as the item is unworn, unwashed and still has its tags.'],
-      ['How much do they cost?', 'The tees are AED 199, apart from the Shams Tee at AED 139, and any two AED 199 tees are AED 359. The polos and hoodies are AED 229 and the Sahra Trail Kit is AED 279. UAE delivery is free on orders over AED 100 and every order includes a free Sahra Tote.'],
+      ['How much do they cost?', 'The tees are AED 199, apart from the Shams Tee at AED 139, and any two AED 199 tees are AED 359. The polos and hoodies are AED 229 and the Sahra Trail Kit is AED 279. UAE delivery is free on orders over AED 100 and every order includes a free Sahra Tote, or the Trailhead Bag when it includes Sahra Trail.'],
       ['Do you ship outside the UAE?', 'Yes — worldwide, from Dubai. GCC orders (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait) arrive in 3–5 working days at AED 50, free over AED 229. The rest of the world is 7–14 working days at AED 80. Any import duties are payable on arrival.']
     ]
   },
@@ -3647,20 +3647,20 @@ COMMERCE.forEach(P => {
   /* Accessories: the Sahra Tote (its own page, /tote/) and the Trailhead Bag */
   const bag = PO.pickNew(p => p.handle === 'trailhead-bag');
   /* 3 Nov 2026: the tote as the same product card as every other piece (PO.bigCard / productCard) */
-  const toteCard = `<article class="pcard"><span class="pcard-img" style="background:#F2EDE6"><a class="pcard-imglink" href="/tote/" tabindex="-1"><img src="/shirts/card/tote-model.webp" width="720" height="900" alt="The Sahra Tote in natural canvas, carried over the shoulder" loading="lazy" decoding="async"></a><em class="cut-b">One size</em><button type="button" class="pcard-zoom" data-zoom="/shirts/card/tote-model.webp" aria-label="Zoom The Sahra Tote"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></span><span class="pcard-b"><a class="pcard-t" href="/tote/">The Sahra Tote</a><span class="pcard-place">Sahra &amp; Beyond</span><span class="pcard-spec"><span>Natural canvas</span><span>One size</span></span><span class="pcard-st">Free with every clothing order</span><span class="pcard-foot"><span class="pcard-p"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></span><a class="pcard-cta" href="/tote/">Full details &rarr;</a></span></span></article>`;
+  const toteCard = `<article class="pcard"><span class="pcard-img" style="background:#F2EDE6"><a class="pcard-imglink" href="/tote/" tabindex="-1"><img src="/shirts/card/tote-model.webp" width="720" height="900" alt="The Sahra Tote in natural canvas, carried over the shoulder" loading="lazy" decoding="async"></a><em class="cut-b">One size</em><button type="button" class="pcard-zoom" data-zoom="/shirts/card/tote-model.webp" aria-label="Zoom The Sahra Tote"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.2 15.2 20 20M10.5 7.8v5.4M7.8 10.5h5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></span><span class="pcard-b"><a class="pcard-t" href="/tote/">The Sahra Tote</a><span class="pcard-place">Sahra &amp; Beyond</span><span class="pcard-spec"><span>Natural canvas</span><span>One size</span></span><span class="pcard-st">Free with orders without Sahra Trail</span><span class="pcard-foot"><span class="pcard-p"><span class="sb-price" data-handle="sahra-tote" data-aed="50">AED 50</span></span><a class="pcard-cta" href="/tote/">Full details &rarr;</a></span></span></article>`;
   page({ slug: 'accessories', h1: 'Accessories', grad: 'Dunes',
     title: 'Accessories: Canvas Tote and Drawstring Bag | Sahra & Beyond',
     desc: 'The Sahra Tote and the Trailhead Bag from Sahra Trail: natural canvas bags designed in the UAE, AED 50 each. Free delivery across the UAE on orders over AED 100.',
     lede: 'Two canvas bags: the Sahra Tote and the Trailhead Bag',
     block: houseGrid({ pre: toteCard, news: bag, fits: false, label: 'Canvas bags' }),
-    body: `<div class="content"><p>The Sahra Tote is natural canvas with our mark and wordmark printed in terracotta, flat-bottomed with long shoulder handles. It comes free with every clothing order, and you can buy a second one here. The Trailhead Bag is the Sahra Trail drawstring bag: natural canvas with the Two Ridges mark printed in sand, and rope drawstrings that carry it on your back. It comes free with any Sahra Trail tee, short or Kit, one per order, and you can buy one on its own here.</p></div>`,
+    body: `<div class="content"><p>The Sahra Tote is natural canvas with our mark and wordmark printed in terracotta, flat-bottomed with long shoulder handles. It comes free with every order without a Sahra Trail piece, and you can buy a second one here. The Trailhead Bag is the Sahra Trail drawstring bag: natural canvas with the Two Ridges mark printed in sand, and rope drawstrings that carry it on your back. It comes free with any Sahra Trail tee, short or Kit, one per order and in place of the tote, and you can buy one on its own here.</p></div>`,
     items: [['The Sahra Tote', '/tote/'], ['The Trailhead Bag', '/products/trailhead-bag/']] });
   /* Activewear: every Sahra Trail piece */
   const trail = PO.pickNew(p => p.line === 'trail');
   /* 20 Nov 2026 (SEO check, Faheem: "Go ahead"): the thinnest product page grew a buying guide and questions, in plain words and
      only with facts from the product data; Sahra Trail's fabric is left out until the supplier spec arrives (18 Nov). */
   const TRAIL_FAQ = [
-    ['What is in the Sahra Trail range?', 'The Sahra Trail Tee (AED 139), the Sahra Trail 2-in-1 Short (AED 169) and the Kit with both (AED 279). Every Sahra Trail order comes with the Trailhead Bag free, and the Sahra Tote too.'],
+    ['What is in the Sahra Trail range?', 'The Sahra Trail Tee (AED 139), the Sahra Trail 2-in-1 Short (AED 169) and the Kit with both (AED 279). Every Sahra Trail order comes with the Trailhead Bag free, in place of the Sahra Tote.'],
     ['What sizes are the tee and the short?', 'Both come in S, M, L and XL, in a men’s cut. Sahra Trail has its own size chart, separate from our cotton tees, and the size finder on each page works from your height and weight.'],
     ['How much do I save with the Kit?', 'Bought apart, the tee and the short are AED 308. The Kit is AED 279, so it saves AED 29, and you choose a size for each piece.'],
     ['What is in the 2-in-1 Short?', 'An outer short with a hidden inner liner, a phone pocket bonded to the liner, a zip pocket for keys and cards, and an internal drawcord.'],
@@ -3753,7 +3753,7 @@ COMMERCE.forEach(P => {
     desc: 'Sahra & Beyond pieces under AED 150: the Shams Tee, the Sahra Trail Tee, the Sahra Tote and the Trailhead Bag. Designed in the UAE, free delivery across the UAE on orders over AED 100.',
     lede: 'The Shams Tee, the Sahra Trail Tee and two canvas bags',
     block: houseGrid({ news: under, post: toteCard, label: 'Under AED 150', note: PO.newLede() }),
-    body: '<div class="content"><p>The Sahra Tote comes free with every clothing order, so you only buy it here for a second one. The Trailhead Bag is in stock and ships next working day. <a href="/gifts/">More gift ideas &rarr;</a></p></div>',
+    body: '<div class="content"><p>The Sahra Tote comes free with every order, so you only buy it here for a second one. Orders with Sahra Trail get the Trailhead Bag instead. The Trailhead Bag is in stock and ships next working day. <a href="/gifts/">More gift ideas &rarr;</a></p></div>',
     items: [['The Sahra Tote', '/tote/']].concat(nItems(under)) });
 
   /* ======================================================================
@@ -3881,7 +3881,7 @@ document.addEventListener('click',function(e){if(e.target.closest&&e.target.clos
     ${PO.stageHead()}${PO.NB_CSS()}${PO.BIG_CSS()}
     <div class="nb"><div class="pcards nb-pc" id="shopGrid">${(all => { /* 13 Nov 2026 (Faheem: "Move homepage/shop forms up"): the welcome code row after the first six pieces */
       const at = all.split('<div class="sg-i"', 7).slice(0, 7).join('<div class="sg-i"').length; return at < all.length ? all.slice(0, at) + require('./capture.js').tile() + all.slice(at) : all + require('./capture.js').tile(); })(sahelCards + foundingCards + trailCards + extraCards)}</div><p class="sx-none" id="shopNone" hidden>Nothing in this range at that discount.</p></div>
-    <p class="sx-note">${PO.newLede()} The <a href="/tote/">Sahra Tote</a> comes free with every clothing order.</p>
+    <p class="sx-note">${PO.newLede()} The <a href="/tote/">Sahra Tote</a> comes free with every order, or the Trailhead Bag when it includes Sahra Trail.</p>
     <p class="sx-note">Giving a tee for Eid Al Etihad on 2 December? <a href="/national-day/">National Day t-shirts and gifts</a> &middot; <a href="/gifts/">Gift ideas</a></p>
  </div>
   </main>
@@ -4542,7 +4542,8 @@ const AR_PDP_NOINDEX = true;
   function go(toCheckout){
     if(!sel){ say(S.pick); var f=sizes.querySelector('.arp-size:not([disabled])'); if(f) f.focus(); return; }
     add.disabled=true; add.textContent=S.adding;
-    SahraCart.add(sel.id,1,toCheckout?{open:false}:undefined).then(function(){
+    var o=toCheckout?{open:false}:{}; if(/^sahra-trail-(tee|2-in-1-short|kit)$/.test(handle)) o.gift=false;   /* 21 Nov 2026: Trail pieces earn the Trailhead Bag, not the tote */
+    SahraCart.add(sel.id,1,o).then(function(){
       if(window.track) try{track(toCheckout?'buy_now':'add_to_cart',{item_id:handle,size:sel.title,lang:'ar'});}catch(e){}
       if(toCheckout){ var st=SahraCart.state&&SahraCart.state(); if(st&&st.checkoutUrl){ if(SahraCart.goCheckout) SahraCart.goCheckout(st.checkoutUrl); else location.href=st.checkoutUrl; return; } }
       add.disabled=false; add.textContent=S.add; say(S.added);

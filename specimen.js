@@ -224,7 +224,7 @@ function fromPreorder(p) {
     face: D.face, views, notes: (NOTES[p.key] || []).map((n, i) => { const m = ST && NOTES_MODEL[p.handle]; const at = m ? m[i] : [n[0], n[1]]; return { x: at ? at[0] : null, y: at ? at[1] : null, t: n[2] }; }),
     modelPins: !!(ST && NOTES_MODEL[p.handle]), spec,
     pair: p.line === 'sahel' && /T-shirt/i.test(p.kind || '') && Number(p.price) === 199,   /* 18 Nov 2026: the pair price covers every AED 199 tee */
-    gift: !p.noTote, trailBag: /^sahra-trail-(tee|2-in-1-short|kit)$/.test(p.handle),   /* 20 Nov 2026: the Trailhead Bag free with any Trail piece */
+    gift: !p.noTote && !/^sahra-trail-(tee|2-in-1-short|kit)$/.test(p.handle), trailBag: /^sahra-trail-(tee|2-in-1-short|kit)$/.test(p.handle),   /* 21 Nov 2026: Trail pieces earn the bag, not the tote */   /* 20 Nov 2026: the Trailhead Bag free with any Trail piece */
     chart: p.line === 'sahel' ? '#size-chart' : null,   /* 18 Nov 2026: the Sahel Polo has the Sahel Regular tee chart */
     chartNote: null, model: '', kit: !!p.kit, oneSize: !!p.oneSize,
     onModel: onModelSet(p),
