@@ -27,25 +27,26 @@ const F = J('sizing.json'), S = J('sahel-sizing.json'), T = J('trail-sizing.json
 /* 17 Nov 2026 (Faheem, on the blocker audit: a 182 cm, 79 kg man who wants the Founding Edition Oversized tee as designed
    takes M; the finder said S): the Oversized tee is aimed at 23 cm of room (was 20), so a build between S and M lands on M.
    The Sahel Oversized tee is on the same chart, so it follows. The Oversized hoodie keeps its own 20. */
-const TARGET = { regular: 10, oversized: 23, superOversized: 27, hoodie: 28, hoodieOversized: 20 };   /* 14 Nov 2026: the Oversized hoodie is the original hoodie chart, 1.5 in closer than the Super Oversized */
+const TARGET = { regular: 10, relaxed: 15, oversized: 23, superOversized: 27, hoodie: 28, hoodieOversized: 20 };   /* 22 Nov 2026 (Faheem: the Sahel Regular is shown as Relaxed): aimed at relaxed room, 15 cm, the middle of 10-18 */   /* 14 Nov 2026: the Oversized hoodie is the original hoodie chart, 1.5 in closer than the Super Oversized */
 /* [size, full chest cm, length cm] from a row [size, chest in, chest cm flat, length in, length cm, ...] */
 const garmentRows = rows => rows.map(r => [r[0], Math.round(r[2] * 2 * 10) / 10, r[4]]);
 
 function founding(fit) {
   const rows = fit === 'oversized' ? F.oversized : F.regular;
   if (!rows) return null;
-  return { kind: 'garment', id: 'founding-' + fit, label: fit === 'oversized' ? 'Founding Edition, Oversized' : 'Founding Edition, Regular', labelAr: fit === 'oversized' ? 'الإصدار التأسيسي، أوفرسايز' : 'الإصدار التأسيسي، ريجولر', target: fit === 'oversized' ? TARGET.oversized : TARGET.regular, sizes: garmentRows(rows) };
+  return { kind: 'garment', fitKey: fit === 'oversized' ? 'oversized' : 'regular', id: 'founding-' + fit, label: fit === 'oversized' ? 'Founding Edition, Oversized' : 'Founding Edition, Regular', labelAr: fit === 'oversized' ? 'الإصدار التأسيسي، أوفرسايز' : 'الإصدار التأسيسي، ريجولر', target: fit === 'oversized' ? TARGET.oversized : TARGET.regular, sizes: garmentRows(rows) };
 }
 function polo() {
-  return F.regular ? { kind: 'garment', id: 'polo', label: 'The Sahra Polo', labelAr: 'بولو صحراء', target: TARGET.regular, sizes: garmentRows(F.regular) } : null;
+  return F.regular ? { kind: 'garment', fitKey: 'regular', id: 'polo', label: 'The Sahra Polo', labelAr: 'بولو صحراء', target: TARGET.regular, sizes: garmentRows(F.regular) } : null;
 }
 function sahel(key) {
   const d = S[key]; if (!d || !d.rows) return null;
-  const target = { hoodie: TARGET.hoodie, hoodieOversized: TARGET.hoodieOversized, teeSuperOversized: TARGET.superOversized, teeOversized: TARGET.oversized, teeRegular: TARGET.regular }[key];
+  const target = { hoodie: TARGET.hoodie, hoodieOversized: TARGET.hoodieOversized, teeSuperOversized: TARGET.superOversized, teeOversized: TARGET.oversized, teeRegular: TARGET.relaxed }[key];
+  const fitKey = { hoodie: 'superOversized', hoodieOversized: 'oversized', teeSuperOversized: 'superOversized', teeOversized: 'oversized', teeRegular: 'relaxed' }[key];
   if (target == null) return null;
-  const label = { teeRegular: 'Sahel tee, Regular', teeSuperOversized: 'Sahel tee, Super Oversized', teeOversized: 'Sahel tee, Oversized', hoodie: 'Sahel hoodie, Super Oversized', hoodieOversized: 'Sahel hoodie, Oversized' }[key];
-  const labelAr = { teeRegular: 'تيشيرت ساحل، ريجولر', teeSuperOversized: 'تيشيرت ساحل، سوبر أوفرسايز', teeOversized: 'تيشيرت ساحل، أوفرسايز', hoodie: 'هودي ساحل، سوبر أوفرسايز', hoodieOversized: 'هودي ساحل، أوفرسايز' }[key];
-  return { kind: 'garment', id: 'sahel-' + key, label, labelAr, target, sizes: garmentRows(d.rows) };
+  const label = { teeRegular: 'Sahel tee, Relaxed', teeSuperOversized: 'Sahel tee, Super Oversized', teeOversized: 'Sahel tee, Oversized', hoodie: 'Sahel hoodie, Super Oversized', hoodieOversized: 'Sahel hoodie, Oversized' }[key];
+  const labelAr = { teeRegular: 'تيشيرت ساحل، ريلاكسد', teeSuperOversized: 'تيشيرت ساحل، سوبر أوفرسايز', teeOversized: 'تيشيرت ساحل، أوفرسايز', hoodie: 'هودي ساحل، سوبر أوفرسايز', hoodieOversized: 'هودي ساحل، أوفرسايز' }[key];
+  return { kind: 'garment', id: 'sahel-' + key, label, labelAr, target, fitKey, sahel: key !== 'teeOversized', sizes: garmentRows(d.rows) };   /* the Sahel Oversized is on the Founding Edition Oversized chart, so no 'cut large' note */
 }
 /* 18 Nov 2026 (Faheem): the Sahel Polo has the Sahel Regular tee sizes */
 function sahelPolo() { const x = sahel('teeRegular'); return x ? Object.assign(x, { id: 'sahel-polo', label: 'The Sahel Polo', labelAr: 'بولو ساحل' }) : null; }
@@ -100,7 +101,7 @@ function finder() {
   const ctx = { window: {}, document: W }; require('vm').runInNewContext(src, ctx);
   FINDER = ctx.window.SBSizeFinder; return FINDER;
 }
-const PEOPLE = [['m', 172, 68, 'Man, 172 cm, 68 kg'], ['m', 182, 82, 'Man, 182 cm, 82 kg'], ['w', 160, 55, 'Woman, 160 cm, 55 kg']];
+const PEOPLE = [['m', 172, 68, 'Man, 172 cm, 68 kg'], ['m', 182, 82, 'Man, 182 cm, 82 kg'], ['m', 188, 92, 'Man, 188 cm, 92 kg'], ['w', 160, 55, 'Woman, 160 cm, 55 kg']];
 const ROOM = r => r < 4 ? 'close to the body' : r < 10 ? 'a clean, regular fit' : r < 18 ? 'relaxed' : r < 31 ? 'loose and oversized' : 'very roomy';
 /* r146 review: a size that is sold out says so, and the smallest size says when it sits roomier than designed */
 const STOCKF = (function () { try { return JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'stock.json'), 'utf8')).stock || {}; } catch (e) { return {}; } })();
@@ -109,6 +110,20 @@ function outOf(handle, z) {
   const k = Object.keys(st).filter(x => x.split(' / ').indexOf(z) !== -1); if (!k.length) return false;
   return !k.some(x => st[x]);
 }
+/* 22 Nov 2026 (Faheem, fit panel: "Fix the fit guide"): the guide said "loose and oversized" under every fit, even Regular,
+   and sent all three reference people to a sold-out size on the most-viewed hoodie. Now:
+   - each line says how the size sits against THIS fit's design, in the fit's own word ("relaxed, as designed",
+     "super oversized, roomier than designed, our smallest size"), so the fits read differently;
+   - a sold-out size is never the answer: the nearest size in stock is given, with how it sits, and the sold-out size named;
+   - a fourth reference person, 188 cm, 92 kg, for tall men and gift buyers;
+   - on Sahel pieces, one line under the heading: Sahel is cut larger, so go by the guide, not the letter you usually take. */
+const FIT_WORD = { regular: 'regular', relaxed: 'relaxed', oversized: 'oversized', superOversized: 'super oversized' };
+function feel(piece, i, room) {
+  const w = FIT_WORD[piece.fitKey] || 'as designed', d = room - piece.target, last = piece.sizes.length - 1;
+  if (d > 6) return `${w}, roomier than designed${i === 0 ? ', our smallest size' : ''}`;
+  if (d < -6) return `${w}, closer than designed${i === last ? ', our largest size' : ''}`;
+  return `${w}, as designed`;
+}
 function glance(cfg, opts = {}) {
   try {
     if (!cfg || !cfg.pieces || cfg.pieces.length !== 1 || cfg.pieces[0].kind !== 'garment') return '';
@@ -116,12 +131,19 @@ function glance(cfg, opts = {}) {
     if (st && Object.keys(st).length && Object.keys(st).every(k => !st[k])) return '';
     const F = finder(), piece = cfg.pieces[0];
     const li = PEOPLE.map(([who, cm, kg, label]) => {
-      const r = F.garment(piece, F.body({ who, cm, kg }), 'designed'), z = r.best.size;
-      const small = r.best.i === 0 && r.best.room > piece.target + 6 ? ', our smallest size' : '';
-      const out = outOf(opts.handle, z) ? ' &middot; sold out' : '';
-      return `<li><span>${label}</span> <b data-ar-rule="keep" dir="ltr">${z}</b> <i>${ROOM(r.best.room)}${small}${out}</i></li>`;
+      const body = F.body({ who, cm, kg }), r = F.garment(piece, body, 'designed');
+      let i = r.best.i, z = r.best.size, room = r.best.room, note = '';
+      if (outOf(opts.handle, z)) {
+        /* the nearest size in stock, by how close its room is to the design */
+        const alts = piece.sizes.map((row, k) => ({ k, z: row[0], room: row[1] - body.chest })).filter(a => !outOf(opts.handle, a.z))
+          .sort((a, b) => Math.abs(a.room - piece.target) - Math.abs(b.room - piece.target));
+        if (alts.length) { note = ` &middot; ${z} is sold out`; i = alts[0].k; z = alts[0].z; room = alts[0].room; }
+        else note = ' &middot; sold out';
+      }
+      return `<li><span>${label}</span> <b data-ar-rule="keep" dir="ltr">${z}</b> <i>${feel(piece, i, room)}${note}</i></li>`;
     }).join('');
-    return `<div class="ss-glance"><p class="ss-gl-h">Fit guide, as designed</p><ul>${li}</ul></div>`;
+    const sahelNote = piece.sahel ? '<p class="ss-gl-n">Sahel is cut large, so go by this guide rather than the size you usually take.</p>' : '';
+    return `<div class="ss-glance"><p class="ss-gl-h">Fit guide, as designed</p>${sahelNote}<ul>${li}</ul></div>`;
   } catch (e) { console.log('  ! fit guide: ' + e.message); return ''; }
 }
 const SCRIPT = '<script src="/assets/sahra-sizefinder.js" defer></script>';

@@ -32,7 +32,7 @@ function sbStage() {
     'By type': 'حسب النوع', 'T-shirts': 'التيشيرتات', 'Three fits': 'ثلاث قصّات', 'Polos': 'البولو', 'Sahra, Sahel': 'صحراء وساحل', 'Hoodies': 'الهوديات',
     'Sahel': 'ساحل', 'Activewear': 'ملابس رياضية', 'Sahra Trail': 'صحراء تريل', 'Accessories': 'الإكسسوارات', 'Two bags': 'حقيبتان',
     'Find your size': 'اعرف مقاسك', 'Collections': 'المجموعات', 'Founding Edition': 'الإصدار التأسيسي', 'In stock': 'متوفر', 'The Coast Edition': 'إصدار الساحل',
-    'Shop by fit': 'تسوّق حسب القصّة', 'Regular': 'ريجولر', 'Straight cut': 'قصّة مستقيمة', 'Oversized': 'أوفرسايز', 'Dropped shoulder': 'كتف نازل',
+    'Shop by fit': 'تسوّق حسب القصّة', 'Regular': 'ريجولر', 'Regular and Relaxed': 'ريجولر وريلاكسد', 'Straight cut': 'قصّة مستقيمة', 'Oversized': 'أوفرسايز', 'Dropped shoulder': 'كتف نازل',
     'Super Oversized': 'سوبر أوفرسايز', 'Our roomiest': 'أوسع قصّاتنا', 'Sahel, the Coast Edition': 'ساحل، إصدار الساحل',
     'Nine designs, from the UAE coast to the Al Qudra lakes: five tees, three hoodies and a polo.': 'تسعة تصاميم، من ساحل الإمارات إلى بحيرات القدرة: خمسة تيشيرتات وثلاث هوديات وبولو.',
     'tees · Sahra Polo · printed collar labels': 'تيشيرتات · بولو صحراء · بطاقة ياقة مطبوعة', 'Order by 2 pm UAE time → next working day, free': 'اطلب قبل الساعة 2 ظهرًا بتوقيت الإمارات ← توصيل مجاني في يوم العمل التالي',
@@ -76,7 +76,7 @@ function sbStage() {
       ['/trail/', 'Sahra Trail', 'Activewear'],
       [null, 'Shop by fit'],
       /* 20 Nov 2026 (Faheem): three fit pages, every piece in that fit */
-      ['/fit/regular/', 'Regular', 'Straight cut'],
+      ['/fit/regular/', 'Regular and Relaxed', 'Straight cut'],
       ['/fit/oversized/', 'Oversized', 'Dropped shoulder'],
       ['/fit/super-oversized/', 'Super Oversized', 'Our roomiest']
     ]}
@@ -197,7 +197,7 @@ function sbStage() {
     frag.appendChild(ma('/under-150/', 'Under AED 150', true));
     /* 20 Nov 2026 (Faheem: "the 3 fit options"; chose a "Shop by fit" group): every piece in that fit, with the fit in plain words */
     frag.appendChild(mh('Shop by fit'));
-    [['/fit/regular/', 'Regular', 'Straight cut'], ['/fit/oversized/', 'Oversized', 'Dropped shoulder'], ['/fit/super-oversized/', 'Super Oversized', 'Our roomiest']].forEach(function (f) {
+    [['/fit/regular/', 'Regular and Relaxed', 'Straight cut'], ['/fit/oversized/', 'Oversized', 'Dropped shoulder'], ['/fit/super-oversized/', 'Super Oversized', 'Our roomiest']].forEach(function (f) {
       var a = ma(f[0], f[1], true); a.classList.add('sbn-fit'); var d = document.createElement('span'); d.className = 'sbn-fitd'; d.textContent = T(f[2]); a.appendChild(d); frag.appendChild(a);
     });
     frag.appendChild(mh('Collections'));

@@ -79,7 +79,12 @@ const FITS = { tee: [['regular', 'Regular'], ['super-oversized', 'Super Oversize
 /* 13 Nov 2026 (Faheem: "Al Aqaa tee and Barr and Bahr Hoodie are not coming back in oversized. Remove that fit option for
    these two"). Their Oversized pages are gone; vercel.json sends the old addresses to the fit that is on sale. */
 const RETIRED = new Set(['al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie-oversized']);
-const FIT_DETAILS = { Regular: ['Regular fit'], Oversized: ['Oversized fit'], 'Super Oversized': ['Super Oversized fit', 'Drop shoulder'] };
+/* 22 Nov 2026 (Faheem, fit panel: "Rename Regular to Relaxed"): the Sahel Regular tee is cut on a larger pattern (S is 22" flat,
+   as wide as a Founding Edition Oversized S), so customers see it as Relaxed. Inside the code and in the handles it is still
+   fit 'Regular' (keyFor, the /fit/regular/ page, -regular URLs); only what is printed changes. The Founding Edition Regular is unchanged. */
+const FIT_LABEL = f => f === 'Regular' ? 'Relaxed' : f;
+const fitLab = p => p && p.fit ? (p.fitLabel || p.fit) : '';
+const FIT_DETAILS = { Regular: ['Relaxed fit'], Oversized: ['Oversized fit'], 'Super Oversized': ['Super Oversized fit', 'Drop shoulder'] };
 const SZ = require('./sahel-sizing.js');
 const TSZ = require('./trail-sizing.js');   /* 10 Nov 2026: Sahra Trail size charts (the Tee, the 2-in-1 Short, both on the Kit) */
 const SP = require('./specimen.js');   /* 30 Oct 2026: the Specimen Sheet (product pages) */   /* 27 Oct 2026: the Sahel size charts */
@@ -91,7 +96,7 @@ function foundingMatch(key) {
   if (key === 'teeSuperOversized') return SZ.foundingToSuper();
   const fRows = key === 'teeRegular' ? FSZ.regular : null;
   if (!fRows || !SZ.D[key]) return '';
-  const sRows = SZ.D[key].rows, fit = 'Regular';
+  const sRows = SZ.D[key].rows, fit = 'Regular', sFit = 'Relaxed';   /* 22 Nov 2026: the Sahel side is printed as Relaxed */
   const minS = Math.min(...sRows.map(r => r[1]));
   const exact = [], near = [], small = [];
   fRows.forEach(([fz, fc]) => {
@@ -105,7 +110,7 @@ function foundingMatch(key) {
   });
   const smallest = sRows.slice().sort((a, b) => a[1] - b[1])[0];
   const parts = exact.concat(near);
-  if (small.length) parts.push(`Founding ${small.join(' and ')} ${small.length > 1 ? 'are' : 'is'} smaller than any Sahel ${fit} size, so Sahel ${smallest[0]} (${smallest[1]}&Prime;) is the closest`);
+  if (small.length) parts.push(`Founding ${small.join(' and ')} ${small.length > 1 ? 'are' : 'is'} smaller than any Sahel ${sFit} size, so Sahel ${smallest[0]} (${smallest[1]}&Prime;) is the closest`);
   return `<p class="po-ask po-match">Already wear our Founding Edition ${fit}? Go by the chest measurement, not the letter: ${parts.join('; ')}.</p>`;
 }
 const mock = (k, alt) => ({ k, alt, mock: true });
@@ -237,8 +242,9 @@ function products() {
     if (p.fits) {
       const fl = FITS[p.fits].map(([f, F]) => ({ fit: F, handle: f ? `${p.key}-${f}` : p.key })).filter(x => !RETIRED.has(x.handle));
       fl.forEach(x => { x.onSale = !SP.PAUSED[x.handle]; });
-      fl.forEach(({ fit: F, handle }) => out.push({ line: 'sahel', handle, title: `${p.name} &mdash; ${F}`, plain: `${plain} — ${F}`, name: p.name, fit: F, fitsList: fl,
-        colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images: modelFirst(handle, `${p.name.replace(/^The /, '')} in ${F}`, images), place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
+      fl.forEach(x => { x.label = FIT_LABEL(x.fit); });
+      fl.forEach(({ fit: F, handle }) => out.push({ line: 'sahel', handle, title: `${p.name} &mdash; ${FIT_LABEL(F)}`, plain: `${plain} — ${FIT_LABEL(F)}`, name: p.name, fit: F, fitLabel: FIT_LABEL(F), fitsList: fl,
+        colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images: modelFirst(handle, `${p.name.replace(/^The /, '')} in ${FIT_LABEL(F)}`, images), place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
         onModel: !SP.PAUSED[handle] && ON_MODEL[handle] && ON_MODEL[handle].photos ? ON_MODEL[handle] : null }));
     }
     else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
@@ -444,9 +450,9 @@ function productPage(p, all, SITE, stage) {
   const fitLine = p.fit === 'Super Oversized' ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Super Oversized: roomy, with a dropped shoulder.' : 'Super Oversized: dropped shoulder, our roomiest cut.'}</p>`
     /* 14 Nov 2026: the Oversized fit is back on the original Oversized charts */
     : p.fit === 'Oversized' && onSale(p) ? `<p class="ss-help ss-fitline">${/hoodie/i.test(p.kind) ? 'Oversized: relaxed, with a dropped shoulder; closer than our Super Oversized.' : 'Oversized: dropped shoulder, relaxed through the body.'}</p>`
-    : p.fit === 'Regular' && onSale(p) ? `<p class="ss-help ss-fitline">Regular: a straight cut that sits on the shoulder.</p>`
+    : p.fit === 'Regular' && onSale(p) ? `<p class="ss-help ss-fitline">Relaxed: a straight cut, roomy through the body.</p>`
     /* 18 Nov 2026 (Faheem: "Sahel polo is same size as sahel regular tee") */
-    : /polo/i.test(p.kind || '') ? `<p class="ss-help ss-fitline">Same sizes as our Sahel Regular tee.</p>` : '';
+    : /polo/i.test(p.kind || '') ? `<p class="ss-help ss-fitline">Same sizes as our Sahel Relaxed tee.</p>` : '';
   const paused = !onSale(p);
   /* 10 Nov 2026 (site scorecard, behavioural review: the fit answer sat four screens below the size buttons): the size the
      model wears is said beside the size help, where every photo on the page is the same size */
@@ -461,14 +467,16 @@ function productPage(p, all, SITE, stage) {
   const help = p.oneSize || paused ? '' : SZ.keyFor(p) ? `${fitLine}<p class="ss-help">${find}${worn}${exch}</p>${glance}` : TSZ.keyFor(p) ? `<p class="ss-help">${find}Sahra Trail has its own sizes, separate from our tees.${exch}</p>` : `<p class="ss-help">No size chart for this piece yet.${exch}</p>`;
   const sup = (p.fitsList || []).find(f => f.fit === 'Super Oversized' && f.onSale), reg = (p.fitsList || []).find(f => f.fit === 'Regular' && f.onSale);
   const pausedChart = paused && p.line === 'sahel' && p.fit === 'Oversized'
-    ? `<section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask">The Oversized chart will be published when the fit returns. Until then, see ${[sup ? `<a href="/products/${sup.handle}/#size-chart">Super Oversized</a>` : '', reg ? `<a href="/products/${reg.handle}/#size-chart">Regular</a>` : ''].filter(Boolean).join(' and ')}.</p><p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : '';
+    ? `<section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask">The Oversized chart will be published when the fit returns. Until then, see ${[sup ? `<a href="/products/${sup.handle}/#size-chart">Super Oversized</a>` : '', reg ? `<a href="/products/${reg.handle}/#size-chart">Relaxed</a>` : ''].filter(Boolean).join(' and ')}.</p><p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : '';
   return `${stageHead()}${SP.preload(S)}${SP.HEAD}<style>${CSS}</style>
 <main class="po-main">
   ${SP.top(S, {
     crumb: `<nav class="ss-crumb" aria-label="Breadcrumb"><a href="/">Home</a><i aria-hidden="true">/</i><a href="/new/#${p.line}">${p.line === 'sahel' ? 'Sahel' : 'Sahra Trail'}</a><i aria-hidden="true">/</i><span aria-current="page">${p.title}</span></nav>`,
     h1: p.title,
     /* 14 Nov 2026 (Faheem): Tabby as one line under the price; the widget box is gone (it was on every product page from 13 Nov) */
-    rating: own ? own.line : RATING && p.line === 'sahel' ? `<a class="po-rate" href="${firstReviews() ? '#first-reviews' : '/#s-reviews'}"><b aria-hidden="true">${'&#9733;'.repeat(Math.floor(+RATING_D.avg))}${'&#9734;'.repeat(5 - Math.floor(+RATING_D.avg))}</b><span data-ar-rule="rv-founding|${RATING_D.avg}|${RATING_D.n}">${RATING}</span></a>` : '',   /* 10 Nov 2026: not on Sahra Trail, whose running wear has no reviews of its own (Trail merge handoff, step 8) */
+    /* 22 Nov 2026 (Faheem, fit panel): a Sahel piece with no reviews of its own no longer shows the Founding Edition rating, a
+       different, smaller cut; the quoted buyer below still says which piece they bought */
+    rating: own ? own.line : false && RATING && p.line === 'sahel' ? `<a class="po-rate" href="${firstReviews() ? '#first-reviews' : '/#s-reviews'}"><b aria-hidden="true">${'&#9733;'.repeat(Math.floor(+RATING_D.avg))}${'&#9734;'.repeat(5 - Math.floor(+RATING_D.avg))}</b><span data-ar-rule="rv-founding|${RATING_D.avg}|${RATING_D.n}">${RATING}</span></a>` : '',   /* 10 Nov 2026: not on Sahra Trail, whose running wear has no reviews of its own (Trail merge handoff, step 8) */
     help,
     /* 18 Nov 2026 (persona audit): one buyer's words under the stars; a Sahel piece with no reviews of its own quotes another
        piece and says which. Not on Sahra Trail: a cotton-tee review says nothing about running kit. */
@@ -596,13 +604,13 @@ const forWomen = p => cut(p) !== 'Men\u2019s cut';
    tee while its Oversized is being re-cut, "Super Oversized fit" for a hoodie */
 const FIT_LIST_ORDER = ['Regular', 'Oversized', 'Super Oversized'];
 const bothFits = p => {
-  const on = (p && p.fitsList ? p.fitsList.filter(f => f.onSale).map(f => f.fit) : [p && p.fit].filter(Boolean)).sort((a, b) => FIT_LIST_ORDER.indexOf(a) - FIT_LIST_ORDER.indexOf(b));
+  const on = (p && p.fitsList ? p.fitsList.filter(f => f.onSale).map(f => f.fit) : [p && p.fit].filter(Boolean)).sort((a, b) => FIT_LIST_ORDER.indexOf(a) - FIT_LIST_ORDER.indexOf(b)).map(f => p && p.line === 'sahel' ? FIT_LABEL(f) : f);
   return !on.length ? '' : on.length === 1 ? `${on[0]} fit` : on.length === 2 ? on.join(' or ') : on.slice(0, -1).join(', ') + ' or ' + on[on.length - 1];
 };
 function newCard(p, fitsLabel) {
   const im = p.images[0];
   const fig = im ? `<span class="nb-f" data-cycle>${cycleImgs(p, { sizes: '(max-width: 700px) 50vw, 280px' })}${mockTag(im)}<em class="cut-b">${cut(p)}</em></span>` : '';
-  const sub = fitsLabel && p.fit ? `${p.kind} &middot; ${bothFits(p)}` : `${p.kind}${p.fit ? ` &middot; ${p.fit} fit` : ''}`;
+  const sub = fitsLabel && p.fit ? `${p.kind} &middot; ${bothFits(p)}` : `${p.kind}${p.fit ? ` &middot; ${fitLab(p)} fit` : ''}`;
   const href = `/products/${p.handle}/`;
   if (p.inHand) return `<a class="nb-c" href="${href}">${fig}<b>${cardName(p)}</b><small>${sub}</small><small class="nb-p">${onSale(p) ? cardPrice(p.price, 'span', true, p.handle) : 'Back soon'}</small>`
     + inc('st0', `<small class="st0">On sale from Wed 28 Oct</small>`) + `<small class="st12">In stock, ships next working day</small></a>`;
@@ -628,7 +636,7 @@ function specChips(p) {
   else if (/canvas/i.test(det)) c.push('Natural canvas');
   else if (/mesh/i.test(det)) c.push('Mesh side panels');
   else if (/liner/i.test(p.md || '')) c.push('Inner liner');
-  if (p.fit) c.push(`${p.fit} fit`);
+  if (p.fit) c.push(`${fitLab(p)} fit`);
   const dtg = /DTG/i.test(det), emb = /embroider|thread/i.test(det);
   if (dtg || emb) c.push(dtg && emb ? 'DTG + embroidery' : dtg ? 'DTG print' : 'Embroidered');
   else if (/printed/i.test(det)) c.push('Printed');
@@ -665,7 +673,16 @@ function designCards(p, fitsLabel) {
   const ORD = ['Regular', 'Oversized', 'Super Oversized'];   /* 14 Nov 2026: the fits read in size order on the card's tabs */
   const fits = p.fitsList.filter(f => f.onSale).map(f => all.find(x => x.handle === f.handle)).filter(Boolean).sort((x, y) => ORD.indexOf(x.fit) - ORD.indexOf(y.fit));
   if (fits.length < 2) return bigCard(p);
-  return `<div class="sfp"><div class="sfp-sw" role="group" aria-label="Fit">${fits.map((f, i) => `<button type="button"${i ? '' : ' class="on"'} data-i="${i}" aria-pressed="${i ? 'false' : 'true'}">${f.fit}</button>`).join('')}</div>${fits.map((f, i) => bigCard(f, i)).join('')}</div>`;
+  /* 22 Nov 2026 (Faheem, fit panel: "Grid: one card per fit"): every fit on sale is its own card, named with its fit, side by
+     side in size order; no switch on the card (the product page keeps its fit buttons, with the chest of each fit) */
+  return fits.map(f => bigCard(f)).join('');
+}
+/* the same cards as a list, one per fit on sale (the /shop/ grid wraps each in its own cell) */
+function designCardList(p) {
+  if (!p.fitsList) return [bigCard(p)];
+  const all = products(), ORD = ['Regular', 'Oversized', 'Super Oversized'];
+  const fits = p.fitsList.filter(f => f.onSale).map(f => all.find(x => x.handle === f.handle)).filter(Boolean).sort((x, y) => ORD.indexOf(x.fit) - ORD.indexOf(y.fit));
+  return fits.length ? fits.map(f => bigCard(f)) : [bigCard(p)];
 }
 const BIG_CSS = `<style>
 .nb .pcards.nb-pc{margin:6px 0 4px}
@@ -1032,14 +1049,14 @@ const SEO_HOOK = {
   'trailhead-bag': 'canvas drawstring bag with rope straps, printed in sand' };
 const seoKey = p => Object.keys(SEO_HOOK).concat(Object.keys(SEO_NAME)).find(k => p.handle === k || p.handle.indexOf(k + '-') === 0 || p.key === k) || '';
 function seoTitle(p) {
-  const base = `${SEO_NAME[seoKey(p)] || p.seo}${p.fit ? `, ${p.fit} Fit` : ''}`;
+  const base = `${SEO_NAME[seoKey(p)] || p.seo}${p.fit ? `, ${fitLab(p)} Fit` : ''}`;
   return base.length + 17 <= 60 ? `${base} | Sahra & Beyond` : base;
 }
 const fitPhrase = p => p.fit === 'Super Oversized' ? ', Super Oversized with a dropped shoulder' : '';
 function seoDesc(p, stage) {
   const hook = SEO_HOOK[seoKey(p)];
   if (!hook) return `${p.plain}: ${p.md}${fitPhrase(p)}. Designed in the UAE. ${money(p.price)}, free UAE delivery over AED 100.`;
-  const nm = (p.name || p.plain).replace(/&amp;/g, '&') + (p.fit ? `, ${p.fit} fit` : '');
+  const nm = (p.name || p.plain).replace(/&amp;/g, '&') + (p.fit ? `, ${fitLab(p)} fit` : '');
   const full = `${nm}: ${hook}. Designed in the UAE. ${money(p.price)}, free UAE delivery over AED 100.`;
   return full.length <= 158 ? full : `${nm}: ${hook}. ${money(p.price)}, free UAE delivery over AED 100.`;
 }
@@ -1096,6 +1113,7 @@ module.exports = function buildPreorder({ shell, write, SITE }) {
   console.log(`  ✓ pre-order: ${all.length} product pages + /new/ (stage ${stage}${IN_HAND ? ', in hand' : ''})`);
 };
 module.exports.stageNow = stageNow;
+module.exports.designCardList = designCardList;
 module.exports.stageHead = stageHead;
 module.exports.inc = inc;
 module.exports.homeBand = homeBand;

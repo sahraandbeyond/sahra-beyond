@@ -44,7 +44,7 @@ function superRows() {
 function foundingToSuper() {
   if (!D.teeSuperOversized || !FSZ.oversized) return '';
   const q = n => `${n}&Prime;`;
-  const rows = superRows().map(r => `<tr><th scope="row">${r.fz} <small>${q(r.fc)}</small></th><td>${r.none ? `No close match. The closest is Sahel Regular ${r.reg[0]} <small>${q(r.reg[1])}</small>` : `${r.best[0]} <small>${q(r.best[1])}</small>${r.tie ? `, or ${r.tie[0]} <small>${q(r.tie[1])}</small> for a roomier fit` : ''}`}</td></tr>`).join('');
+  const rows = superRows().map(r => `<tr><th scope="row">${r.fz} <small>${q(r.fc)}</small></th><td>${r.none ? `No close match. The closest is Sahel Relaxed ${r.reg[0]} <small>${q(r.reg[1])}</small>` : `${r.best[0]} <small>${q(r.best[1])}</small>${r.tie ? `, or ${r.tie[0]} <small>${q(r.tie[1])}</small> for a roomier fit` : ''}`}</td></tr>`).join('');
   return `<div class="po-match"><p class="po-ask">Already wear our Founding Edition Oversized? Super Oversized runs about one size bigger, so go one size down. By chest, measured flat:</p>
   <div class="ssz-wrap"><table class="ssz ssz-match"><caption>Founding Edition Oversized to Sahel Super Oversized</caption><thead><tr><th scope="col">Founding Edition Oversized</th><th scope="col">Sahel Super Oversized</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
 }
@@ -66,7 +66,7 @@ function method(key) {
 /* the block for a product page or the size guide */
 function block(key, opts = {}) {
   const t = D[key];
-  return `${opts.heading ? `<h3 class="ssz-h">${t.label}</h3>` : ''}${opts.polo ? '<p class="ssz-intent"><strong>The Sahel Polo has the same sizes as the Sahel Regular tee</strong>, so this is its chart.</p>' : `<p class="ssz-intent">${t.intent}</p>`}
+  return `${opts.heading ? `<h3 class="ssz-h">${t.label}</h3>` : ''}${opts.polo ? '<p class="ssz-intent"><strong>The Sahel Polo has the same sizes as the Sahel Relaxed tee</strong>, so this is its chart.</p>' : `<p class="ssz-intent">${t.intent}</p>`}
   ${table(key)}
   <p class="ssz-diff"><strong>${key === 'teeOversized' ? 'The Founding Edition Oversized chart.' : 'Not the Founding Edition chart.'}</strong> ${D.compare[key]}</p>
   ${method(key)}`;

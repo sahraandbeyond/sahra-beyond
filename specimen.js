@@ -136,7 +136,23 @@ const NAMES = { 'al-quaa-galaxy': 'Al Quaa Galaxy Tee', 'empty-quarter': 'Empty 
   'al-qudra-lakes-tee': 'Al Qudra Lakes Tee', 'khor-fakkan-hoodie': 'Khor Fakkan Hoodie',
   'sahra-trail-tee': 'Sahra Trail Tee', 'sahra-trail-2-in-1-short': 'Sahra Trail 2-in-1 Short', 'sahra-trail-kit': 'Sahra Trail Kit', 'trailhead-bag': 'The Trailhead Bag' };
 const LINES = { founding: 'Founding Edition', sahel: 'Sahel, the Coast Edition', trail: 'Sahra Trail' };
-const FIT_COPY = { founding: { Regular: 'Sits on the shoulder', Oversized: 'Dropped shoulder, wider body' }, sahel: { Regular: 'A straight regular fit', Oversized: 'Looser, wider through the body', 'Super Oversized': 'Drop shoulder, our roomiest cut' } };
+/* 22 Nov 2026 (Faheem, fit panel): each fit says how it really fits, and the chest of a size M under it, so the fits can be
+   compared at a glance. The Sahel 'Regular' is printed as Relaxed (it is cut larger than a usual regular tee). */
+const FIT_COPY = { founding: { Regular: 'Sits on the shoulder', Oversized: 'Dropped shoulder, wider body' },
+  sahel: { Regular: 'Straight cut, roomy through the body', Oversized: 'Dropped shoulder, boxier', 'Super Oversized': 'Drop shoulder, our roomiest cut' },
+  hoodie: { Oversized: 'Roomy, closer than Super Oversized', 'Super Oversized': 'Drop shoulder, our roomiest cut' } };
+const fitShown = (s, f) => s.line === 'sahel' && f === 'Regular' ? 'Relaxed' : f;
+/* the chest of a size M, flat, from the published charts: [inches, cm] */
+const CHEST_M = (function () {
+  const row = rows => { const r = (rows || []).find(x => x[0] === 'M'); return r ? [r[1], Math.round(r[2])] : null; };
+  let F = {}, D = {};
+  try { F = require('./content/sizing.json'); } catch (e) {}
+  try { D = require('./sahel-sizing.js').D || {}; } catch (e) {}
+  const g = k => D[k] && row(D[k].rows);
+  return { founding: { Regular: row(F.regular), Oversized: row(F.oversized) },
+    sahel: { Regular: g('teeRegular'), Oversized: g('teeOversized'), 'Super Oversized': g('teeSuperOversized') },
+    hoodie: { Oversized: g('hoodieOversized'), 'Super Oversized': g('hoodie') } };
+})();
 /* 31 Oct 2026 (Faheem: Super Oversized with drop shoulder, a third fit): the handle suffix of each fit, per design.
    Sahel tees: Regular, Oversized (paused, being re-cut) and Super Oversized (the current stock). Sahel hoodies:
    Oversized (paused) and Super Oversized, which keeps the hoodie's original handle so its links keep working. */
@@ -250,7 +266,7 @@ function loopFor(p) {
 /* 2 Nov 2026 (Faheem approved every photo and its order): the five model photos of a Sahel page (content/sahel-photos.json
    onModel, per handle), with the size the model wears. The alt says what the photo shows, never where it was taken. */
 function modelAlt(p, view) {
-  const nm = String(p.name).replace(/&amp;/g, '&').replace(/^The /, ''), fit = p.fit && !HOODIES.has(p.key) ? ` in ${p.fit}` : '';
+  const nm = String(p.name).replace(/&amp;/g, '&').replace(/^The /, ''), fit = p.fit && !HOODIES.has(p.key) ? ` in ${p.line === 'sahel' && p.fit === 'Regular' ? 'Relaxed' : p.fit}` : '';
   return `Model wearing the ${nm}${fit}, ${view}`;
 }
 function onModelSet(p) {
@@ -332,10 +348,12 @@ function priceSpan(s) { return `<span class="sb-price" data-handle="${s.handle}"
 const fitHref = (s, f) => { const x = (s.fits || []).find(o => o.fit === f && o.onSale); return x ? x.href : ''; };
 function fitSwitch(s, cls) {
   if (!s.fits) return '';
-  const copy = FIT_COPY[s.line] || FIT_COPY.sahel;
+  const grp = HOODIES.has(s.key) ? 'hoodie' : s.line === 'founding' ? 'founding' : 'sahel';
+  const copy = FIT_COPY[grp] || FIT_COPY.sahel, chest = CHEST_M[grp] || {};
   const list = cls === 'ss-fits' ? s.fits : s.fits.filter(f => f.onSale || f.fit === s.fit);
   if (list.length < 2) return '';
-  return `<div class="${cls}" role="group" aria-label="Fit"${list.length > 2 ? ' data-n="' + list.length + '"' : ''}>${list.map(({ fit: f, href, onSale }) => `<a href="${href}" class="${s.fit === f ? 'on' : ''}"${s.fit === f ? ' aria-current="page"' : ''}><b>${f}</b>${cls === 'ss-fits' ? `<span>${onSale ? copy[f] : 'Back soon'}</span>` : ''}</a>`).join('')}</div>`;
+  const cm = f => chest[f] ? `<small class="ss-fitm">M is ${chest[f][1]} cm (${chest[f][0]}&Prime;) across</small>` : '';
+  return `<div class="${cls}" role="group" aria-label="Fit"${list.length > 2 ? ' data-n="' + list.length + '"' : ''}>${list.map(({ fit: f, href, onSale }) => `<a href="${href}" class="${s.fit === f ? 'on' : ''}"${s.fit === f ? ' aria-current="page"' : ''}><b>${fitShown(s, f)}</b>${cls === 'ss-fits' ? `<span>${onSale ? copy[f] : 'Back soon'}</span>${onSale ? cm(f) : ''}` : ''}</a>`).join('')}</div>`;
 }
 /* Handles not for sale (their pages say "Back soon"). 30 Oct 2026: the Sahel Oversized tees and the hoodies ran
    a size large and were withdrawn. 31 Oct 2026 (Faheem): "For all new oversized shirts and hoodies, let's rebrand
@@ -352,7 +370,7 @@ const PAUSED = { 'shams-tee-oversized': 1 };
 function pausedNote(s) {
   const sup = fitHref(s, 'Super Oversized'), reg = fitHref(s, 'Regular');
   if (HOODIES.has(s.key)) return `Our Oversized hoodie is being re-cut and will be back soon. ${sup ? `This hoodie is available now in <a href="${sup}">Super Oversized</a>, with a dropped shoulder.` : '<a href="/sahel/">See what is available from Sahel</a>.'}`;
-  const now = [sup ? `<a href="${sup}">Super Oversized</a> (drop shoulder)` : '', reg ? `<a href="${reg}">Regular</a>` : ''].filter(Boolean);
+  const now = [sup ? `<a href="${sup}">Super Oversized</a> (drop shoulder)` : '', reg ? `<a href="${reg}">${fitShown(s, 'Regular')}</a>` : ''].filter(Boolean);
   return `Our Oversized fit is being re-cut to our original Oversized size and will be back soon.${now.length ? ` This design is available now in ${now.join(' and ')}.` : ''}`;
 }
 /* 18 Nov 2026 (persona audit; Faheem chose "Honest stock, no flicker"): the sizes for sale at the last build
@@ -393,7 +411,7 @@ function waMsg(name, fit) {
 }
 function waLine(s, h1) {
   if (s.oneSize || PAUSED[s.handle]) return '';
-  const fit = s.fit || '';
+  const fit = s.fit ? fitShown(s, s.fit) : '';   /* 22 Nov 2026: the Sahel Regular is Relaxed in the message too */
   let name = plainText(h1 || s.name);
   if (fit) name = name.replace(new RegExp('\\s*\u2014\\s*' + fit + '$'), '');
   const href = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(waMsg(name, fit))}`;

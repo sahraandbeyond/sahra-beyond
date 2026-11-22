@@ -366,7 +366,7 @@
          another fit on sale, the button leads to it. It says only that this fit is sold out, never that the other is in stock. */
       var alt = document.querySelector('.ssb-fit a:not(.on)[href]') || document.querySelector('.ss-fits a:not(.on)[href]');
       var ah = alt ? (alt.getAttribute('href') || '').replace(/\?size=[A-Z]+$/, '') : '';
-      var an = /-super-oversized\/$/.test(ah) ? 'Sold out: see the Super Oversized fit' : /-oversized\/$/.test(ah) ? 'Sold out: see the Oversized fit' : /-regular\/$/.test(ah) ? 'Sold out: see the Regular fit' : '';
+      var an = /-super-oversized\/$/.test(ah) ? 'Sold out: see the Super Oversized fit' : /-oversized\/$/.test(ah) ? 'Sold out: see the Oversized fit' : /-regular\/$/.test(ah) ? (buy && buy.getAttribute('data-line') === 'sahel' ? 'Sold out: see the Relaxed fit' : 'Sold out: see the Regular fit') : '';   /* 22 Nov 2026: the Sahel Regular is shown as Relaxed */
       if (an) { add.disabled = false; add.textContent = an; add.setAttribute('data-alt', ah); add.classList.add('is-alt'); var bar = add.closest ? add.closest('.ssb') : null; if (bar) bar.classList.add('is-out'); }
       else { add.disabled = true; add.textContent = 'Sold out'; }
       return;

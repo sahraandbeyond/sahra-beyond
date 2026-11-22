@@ -469,15 +469,17 @@
     'al-qudra-lakes-tee-oversized': 'تيشيرت بحيرات القدرة — أوفرسايز', 'khor-fakkan-hoodie-oversized': 'هودي خورفكان — أوفرسايز',
     'sahra-trail-2-in-1-short': 'شورت صحراء تريل 2 في 1', 'sahra-trail-kit': 'طقم صحراء تريل', 'trailhead-bag': 'حقيبة ترايلهيد', 'sahra-tote': 'حقيبة صحراء القماشية' };
   /* the name a shopper reads: Arabic on Arabic pages, else Shopify's title; short drops the fit */
+  var SAHEL_REL = /^(khor-fakkan-bay|al-hamra-pearl-diver|al-aqah-reef|shams)-tee-regular$/;   /* 22 Nov 2026 (Faheem, fit panel): Sahel Regular is printed as Relaxed */
   function nameOf(h, title, short) {
     h = h || '';
     if (AR) {
       if (AR_NAME[h]) return short ? AR_NAME[h].replace(/ — .*$/, '') : AR_NAME[h];
       var m = /^(.*?)-(regular|super-oversized|oversized)$/.exec(h);
-      if (m && AR_NAME[m[1]]) return AR_NAME[m[1]].replace(/ — .*$/, '') + (short ? '' : ' — ' + (m[2] === 'regular' ? 'ريجولر' : m[2] === 'oversized' ? 'أوفرسايز' : 'سوبر أوفرسايز'));
+      if (m && AR_NAME[m[1]]) return AR_NAME[m[1]].replace(/ — .*$/, '') + (short ? '' : ' — ' + (m[2] === 'regular' ? (SAHEL_REL.test(h) ? 'ريلاكسد' : 'ريجولر') : m[2] === 'oversized' ? 'أوفرسايز' : 'سوبر أوفرسايز'));
     }
     var t = String(title || '');
-    return short ? t.replace(/\s+[\u2014-]\s+(Regular|Super Oversized|Oversized)$/, '') : t;
+    if (SAHEL_REL.test(h)) t = t.replace(/(\s+[\u2014-]\s+)Regular$/, '$1Relaxed');   /* 22 Nov 2026: the Sahel Regular tee is shown as Relaxed */
+    return short ? t.replace(/\s+[\u2014-]\s+(Regular|Relaxed|Super Oversized|Oversized)$/, '') : t;
   }
   function T(k, a) {
     var s = (AR && STR.ar[k] != null) ? STR.ar[k] : (STR.en[k] != null ? STR.en[k] : k);

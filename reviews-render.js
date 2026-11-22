@@ -225,14 +225,14 @@ function quality(r) {
 function proofQuote(designHandles, opts) {
   opts = opts || {};
   /* this page's own piece first (a review of the Regular fit can describe another colour), then the rest of the design */
-  const pick = rs => rs.filter(r => Number(r.rating) >= 5 && String(r.body || '').trim().length >= 60).sort((a, b) => ((a.handle === opts.handle ? 0 : 1) - (b.handle === opts.handle ? 0 : 1)) || (quality(b) - quality(a)))[0];
+  /* 22 Nov 2026 (Faheem, fit panel): the quoted sentence never carries an exclamation mark (house style); the next best review is used */
+  const firstOf = r => { const body = String(r.body || '').replace(/\s+/g, ' ').trim(); let f = (body.match(/^.{40,170}?[.!?](\s|$)/) || [body])[0].trim(); if (f.length > 150) f = f.slice(0, 147).replace(/\s+\S*$/, '') + '…'; return f; };
+  const pick = rs => rs.filter(r => Number(r.rating) >= 5 && String(r.body || '').trim().length >= 60 && !/!/.test(firstOf(r))).sort((a, b) => ((a.handle === opts.handle ? 0 : 1) - (b.handle === opts.handle ? 0 : 1)) || (quality(b) - quality(a)))[0];
   const dd = merge(designHandles || []);
   let r = dd && pick(dd.reviews), scope = 'design';
   if (!r && opts.store !== false) { const sd = merge(allHandles()); r = sd && pick(sd.reviews); scope = 'store'; }
   if (!r) return '';
-  const body = String(r.body || '').replace(/\s+/g, ' ').trim();
-  let first = (body.match(/^.{40,170}?[.!?](\s|$)/) || [body])[0].trim();
-  if (first.length > 150) first = first.slice(0, 147).replace(/\s+\S*$/, '') + '…';
+  const first = firstOf(r);
   const name = /^anonymous$/i.test(String(r.name || '').trim()) ? '' : String(r.name || '').trim().split(' ')[0];
   const on = scope === 'store' && r.handle !== '_shop' && productName(r.handle) ? productName(r.handle) : '';
   return `<p class="ss-proof"><q data-ar-rule="ugc">${esc(first)}</q> <span class="ss-proof-by" data-ar-rule="rv-by|${r.verified ? 1 : 0}">${esc(name || 'Verified buyer')}${r.verified && name ? ' · verified buyer' : ''}</span>${on ? ` <span class="ss-proof-on" data-ar-rule="rv-on|${arg(on)}">On ${esc(on)}</span>` : scope === 'store' ? ` <span class="ss-proof-on" data-ar-rule="rv-store">A review of our store</span>` : ''}</p>`;

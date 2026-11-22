@@ -105,6 +105,7 @@ html body .ss .ss-art h2{font-family:'Cormorant Garamond',Georgia,serif;font-siz
 .ss-fits a{display:flex;flex-direction:column;gap:1px;padding:10px 12px;text-decoration:none;color:var(--ss-ink3);min-height:48px}
 .ss-fits a b{font-weight:600;font-size:15px;color:var(--ss-ink)}
 .ss-fits a span{font-size:12.5px;line-height:1.3}
+.ss-fits a small.ss-fitm{display:block;margin-top:3px;font-size:12px;line-height:1.25;font-variant-numeric:tabular-nums;color:inherit}   /* 22 Nov 2026: the chest of a size M in each fit */
 .ss-fits a.on{background:var(--ss-ink);color:rgba(250,246,239,.78)}
 .ss-fits a.on b{color:#FAF6EF}
 .ss-fits a:focus-visible{outline:2px solid var(--ss-copper-d);outline-offset:-3px}
@@ -473,6 +474,7 @@ html body .ss p.ss-pay{margin:0 0 6px;font-size:13px!important;line-height:1.45!
 /* the fit guide: three reference people and their size, from the size finder */
 .ss-glance{margin:2px 0 0}
 html body .ss .ss-glance p.ss-gl-h{margin:0 0 4px;font-size:12.5px!important;letter-spacing:.06em;text-transform:uppercase;color:var(--ss-ink3)}
+html body .ss .ss-glance p.ss-gl-n{margin:0 0 6px;font-size:13.5px!important;line-height:1.4;color:var(--ss-ink2)}   /* 22 Nov 2026: the Sahel note under the fit guide heading */
 .ss-glance ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:max-content 1.4em minmax(0,1fr);align-items:baseline;gap:3px 10px;font-size:14px;line-height:1.4;color:var(--ss-ink2)}
 .ss-glance li{display:contents}
 .ss-glance li b{color:var(--ss-ink)}
