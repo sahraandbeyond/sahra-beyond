@@ -78,7 +78,7 @@ const FITS = { tee: [['regular', 'Regular'], ['super-oversized', 'Super Oversize
   oversizedOnly: [['oversized', 'Oversized']] };
 /* 13 Nov 2026 (Faheem: "Al Aqaa tee and Barr and Bahr Hoodie are not coming back in oversized. Remove that fit option for
    these two"). Their Oversized pages are gone; vercel.json sends the old addresses to the fit that is on sale. */
-const RETIRED = new Set(['al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie-oversized']);
+const RETIRED = new Set(['al-aqah-reef-tee-oversized', 'barr-and-bahr-hoodie-oversized', 'shams-tee-oversized']);   /* 22 Nov 2026 (Faheem: "Shams tee is not coming back in oversized") */
 /* 22 Nov 2026 (Faheem, fit panel: "Rename Regular to Relaxed"): the Sahel Regular tee is cut on a larger pattern (S is 22" flat,
    as wide as a Founding Edition Oversized S), so customers see it as Relaxed. Inside the code and in the handles it is still
    fit 'Regular' (keyFor, the /fit/regular/ page, -regular URLs); only what is printed changes. The Founding Edition Regular is unchanged. */

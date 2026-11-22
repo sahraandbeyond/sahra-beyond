@@ -161,7 +161,7 @@ const HOODIES = new Set(['barr-and-bahr-hoodie', 'ras-al-khor-hoodie', 'khor-fak
 const ONLY_OVERSIZED = new Set(['al-qudra-lakes-tee', 'khor-fakkan-hoodie']);
 const FIT_ORDER = ['Regular', 'Oversized', 'Super Oversized'];
 /* 13 Nov 2026 (Faheem): the Oversized fit of these two is not coming back (preorder-page.js RETIRED) */
-const NO_OVERSIZED = new Set(['al-aqah-reef-tee', 'barr-and-bahr-hoodie']);
+const NO_OVERSIZED = new Set(['al-aqah-reef-tee', 'barr-and-bahr-hoodie', 'shams-tee']);   /* 22 Nov 2026: and the Shams Tee */
 function suffixes(k) {
   if (ONLY_OVERSIZED.has(k)) return { Oversized: '-oversized' };
   const x = HOODIES.has(k) ? { Oversized: '-oversized', 'Super Oversized': '' }
@@ -365,7 +365,7 @@ function fitSwitch(s, cls) {
 /* 13 Nov 2026: al-aqah-reef-tee-oversized and barr-and-bahr-hoodie-oversized are retired, not paused (preorder-page.js RETIRED) */
 /* 14 Nov 2026 (Faheem: "The updated oversized sizes are back"): the Khor Fakkan Bay and Al Hamra Pearl Diver tees and the
    Ras Al Khor Hoodie are back in Oversized, cut to the original Oversized size; the Shams Tee's Oversized stays paused */
-const PAUSED = { 'shams-tee-oversized': 1 };
+const PAUSED = {};   /* 22 Nov 2026: the Shams Oversized is retired, not paused (preorder-page.js RETIRED) */
 /* the note on a paused Oversized page (31 Oct 2026): what is happening, and where the design can be bought now */
 function pausedNote(s) {
   const sup = fitHref(s, 'Super Oversized'), reg = fitHref(s, 'Regular');

@@ -370,6 +370,26 @@
       "permanent": true
     },
     {
+      "source": "/products/shams-tee-oversized",
+      "destination": "/products/shams-tee-super-oversized/",
+      "permanent": true
+    },
+    {
+      "source": "/products/shams-tee-oversized/",
+      "destination": "/products/shams-tee-super-oversized/",
+      "permanent": true
+    },
+    {
+      "source": "/ar/products/shams-tee-oversized",
+      "destination": "/ar/products/shams-tee-super-oversized/",
+      "permanent": true
+    },
+    {
+      "source": "/ar/products/shams-tee-oversized/",
+      "destination": "/ar/products/shams-tee-super-oversized/",
+      "permanent": true
+    },
+    {
       "source": "/h/1",
       "destination": "/trail/hikes/wadi-shees/?utm_source=trail-card&utm_medium=qr&utm_campaign=hike-1",
       "permanent": false
