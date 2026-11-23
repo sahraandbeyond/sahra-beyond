@@ -18,6 +18,116 @@
   },
   "posts": [
     {
+      "id": "DgDE9jrh_Kz",
+      "kind": "reel",
+      "label": "The Shams Tee at last light: one small mark in sand thread, on him and on her",
+      "topic": "sahel",
+      "wear": [
+        "/products/shams-tee-regular/",
+        "The Shams Tee"
+      ],
+      "src": "FEED-15-20-Nov-2026/p02_reel_shams_last-light/p02_reel_shams_last-light.mp4",
+      "srcNote": "Site cover is the posted cover, p02_reel_shams_last-light_COVER.jpg, cropped to 4:5."
+    },
+    {
+      "id": "DgCbx3nBOnT",
+      "kind": "reel",
+      "label": "The Khor Fakkan Bay Tee by the sea: bare ridges, a sweep of sand and a dhow across the back",
+      "topic": "sahel",
+      "places": [
+        "khor-fakkan-beach"
+      ],
+      "wear": [
+        "/products/khor-fakkan-bay-tee-regular/",
+        "The Khor Fakkan Bay Tee"
+      ],
+      "src": "BEACH-SHOOT-19-Nov-2026/REELS/KhorFakkanBay_reel_916.mp4",
+      "srcNote": "Site cover is the posted cover, KhorFakkanBay_reel_cover.jpg, cropped to 4:5."
+    },
+    {
+      "id": "DgAgPqNB4GS",
+      "kind": "reel",
+      "label": "The Al Hamra Pearl Diver Tee by the sea: the diver on the rope across the back, the oyster on the chest",
+      "topic": "sahel",
+      "places": [
+        "al-jazirah-al-hamra"
+      ],
+      "wear": [
+        "/products/al-hamra-pearl-diver-tee-regular/",
+        "The Al Hamra Pearl Diver Tee"
+      ],
+      "src": "BEACH-SHOOT-19-Nov-2026/REELS/PearlDiver_reel_916.mp4",
+      "srcNote": "Site cover is the posted cover, PearlDiver_reel_cover.jpg, cropped to 4:5."
+    },
+    {
+      "id": "Df97ba8BiM-",
+      "kind": "reel",
+      "label": "The Al Aqah Reef Tee by the sea: reef and rock across the back, a turtle on the front",
+      "topic": "sahel",
+      "places": [
+        "snoopy-island"
+      ],
+      "guides": [
+        "/snorkeling/",
+        "/fujairah-beaches/"
+      ],
+      "wear": [
+        "/products/al-aqah-reef-tee-regular/",
+        "The Al Aqah Reef Tee"
+      ],
+      "src": "BEACH-SHOOT-19-Nov-2026/REELS/AlAqahReef_reel_916.mp4",
+      "srcNote": "Site cover is the posted cover, AlAqahReef_reel_cover.jpg, cropped to 4:5."
+    },
+    {
+      "id": "Df9Ky9QhSgp",
+      "kind": "carousel",
+      "label": "Our original Oversized fit is back: three Sahel pieces return and two new ones come in Oversized only",
+      "topic": "sahel",
+      "wear": [
+        "/sahel/",
+        "Sahel"
+      ],
+      "src": "OVERSIZED-BACK-20-Nov-2026",
+      "srcNote": "Slides are the seven posted image slides, oversized-back_01 to _07, as WebP. Slide 1 shows the Khor Fakkan Bay Tee in Super Oversized (marked on the slide); slides 5 and 6 are studio images of the new Al Qudra Lakes Tee and Khor Fakkan Hoodie (marked STUDIO IMAGE on the slides). Slides 2 to 6 show the full prices, AED 199 and 229."
+    },
+    {
+      "id": "Df9EaHzwnOp",
+      "kind": "carousel",
+      "label": "Mountain or desert: the Hajar Mountains Tee or the Empty Quarter Tee",
+      "topic": "product",
+      "products": [
+        "hajar-mountains-regular",
+        "hajar-mountains-oversized",
+        "empty-quarter-regular",
+        "empty-quarter-oversized"
+      ],
+      "places": [
+        "hajar-mountains",
+        "empty-quarter"
+      ],
+      "wear": [
+        "/t-shirts/",
+        "The tees"
+      ],
+      "src": "FEED-15-20-Nov-2026/p01_which-two_mountain-or-desert",
+      "srcNote": "Slides are the six posted image slides, p01_which-two_mountain-or-desert_01 to _06, as WebP; slide 6 shows the full prices, AED 199 each."
+    },
+    {
+      "id": "Df7WjLmOHxZ",
+      "kind": "carousel",
+      "label": "Side quests for the weekend: Wadi Esfini, Al Qudra Lakes and Al Rams, with the Khor Fakkan Bay Tee as the loadout",
+      "topic": "places",
+      "guides": [
+        "/places/"
+      ],
+      "wear": [
+        "/products/khor-fakkan-bay-tee-regular/",
+        "The Khor Fakkan Bay Tee"
+      ],
+      "src": "GTA-NOD-19-Nov-2026/v2_game-look",
+      "srcNote": "Slides are the five posted image slides, the game-look set g2v2_side-quests_01 to _05, as WebP (the plainer g2_side-quests set was not posted); slide 5 shows the full price, AED 199."
+    },
+    {
       "id": "Df43_akhdmr",
       "kind": "reel",
       "label": "Open world, no loading screen: Wadi Esfini, Al Qudra Lakes and Al Rams, all shot by us",

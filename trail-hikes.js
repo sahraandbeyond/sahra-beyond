@@ -239,6 +239,10 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root, notOp
     <p class="hk-foot">Last checked ${when(d)}${d.n ? ` &middot; Route ${d.n} of 6 &middot; ${esc(SITE.replace('https://', ''))}/h/${d.n}` : ''}</p>
   </section>
 
+  <section class="hk-sec"><h2>What to wear</h2>
+    <p>Our running and trail wear, designed in the UAE: the <a href="/products/sahra-trail-tee/">Sahra Trail Tee</a>, the <a href="/products/sahra-trail-2-in-1-short/">Sahra Trail 2-in-1 Short</a> and <a href="/products/sahra-trail-kit/">the Kit</a> that pairs them. <a href="/activewear/">All Sahra Trail activewear &rarr;</a></p>
+  </section>
+
   <section class="hk-sec"><h2>More</h2>
     <div class="hk-next">
       ${others.slice(0, 1).map(o => `<a href="/trail/hikes/${o.slug}/"><small>${esc(o.grade)}${o.n ? ` &middot; route ${o.n}` : ' &middot; Ras Al Khaimah'}</small><b>${esc(o.name)}</b><span>${esc(o.facts.distance)}</span></a>`).join('')}
@@ -285,12 +289,74 @@ module.exports = function buildTrailHikes({ shell, write, SITE, esc, root, notOp
   </section>
   <section class="hk-sec"><h2>Before any of them</h2>
     <ul><li>The season is roughly October to April. In summer the heat makes these routes dangerous.</li><li>Start at first light, carry more water than you think you need, and tell someone your route and return time.</li><li>Stay out of wadis in rain or when rain is forecast: they flood fast.</li><li>Police 999, ambulance 998.</li></ul>
-    <p>More in our <a href="/hiking/">guide to hiking in the UAE</a>, and our kit for it: <a href="/trail/">Sahra Trail</a>.</p>
+    <p>More in our <a href="/hiking/">guide to hiking in the UAE</a> and our <a href="/trail/running-in-the-uae/">guide to trail running in the UAE</a>, and our kit for it: <a href="/activewear/">Sahra Trail activewear</a>.</p>
   </section>
 </main>`;
   write('trail/hikes/index.html', shell({ title: ititle, desc: idesc, canonical: iurl, bodyHtml: ibody, activeNav: 'trail', bodyClass: 'buy-page hike-page',
     jsonld: [{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'UAE hikes by grade', url: iurl,
       itemListElement: ALL.map((d, i) => ({ '@type': 'ListItem', position: i + 1, name: d.name, url: `${SITE}/trail/hikes/${d.slug}/` })) }] }));
+
+  /* ---- /trail/running-in-the-uae/ : the trail running guide (23 Nov 2026, Faheem: "Our brand is nowhere to be found in
+     activewear space"; chose "Trail running guide + links"). Built only from what this module already publishes: the season
+     and the "before any of them" lines of the index, the six mountain rules approved for the 9 Oct carousel (RAK Tourism,
+     Visit Jebel Jais, police and NCM flood warnings as reported by Gulf News), and each route's own figures. It never calls a
+     route safe or runnable, and the kit is named with its facts only (no performance claims). ---- */
+  {
+    const gurl = `${SITE}/trail/running-in-the-uae/`;
+    const latest = ALL.map(d => d.lastChecked).sort().pop();
+    const lastTxt = when({ lastChecked: latest }).replace(/^\d+ /, '');
+    const RULES = [
+      ['Never alone', 'Tell someone your route and when you will be back. Phone signal is often poor in the mountains.'],
+      ['Water', 'Carry more water than you think you need. Visit Jebel Jais advises at least 3 litres a person on its mountain trails.'],
+      ['Heat', 'Start early and skip the middle of the day. The season is roughly October to April.'],
+      ['Wadis', 'Stay out of flowing water. Floods can come with no rain visible nearby.'],
+      ['Turn-back time', 'Set it before you start and keep it, so you finish before dark.'],
+      ['Leave nothing', 'Take your rubbish home and leave the trail as you found it.']
+    ];
+    const GFAQ = [
+      ['When is the trail running season in the UAE?', 'Roughly October to April. In summer the heat makes the mountain routes dangerous; start at first light and avoid the hot middle of the day.'],
+      ['Where can you go trail running in the UAE?', 'Mostly in the Hajar Mountains of Ras Al Khaimah, Fujairah and Sharjah. This page lists eleven hiking routes there with their distance, climb and grade. They are walking routes, and each route page gives the trailhead, the ground, the open status and the sources.'],
+      ['Are Fujairah trails open all year?', 'No. Fujairah trails open only in the official hiking season, which the operator announces each year. The 2026 to 2027 season opened on 25 September 2026.'],
+      ['What should I wear for trail running in the UAE?', 'Running wear, a hat and sunscreen, and shoes with grip for loose rock. Sahra Trail, our activewear line designed in the UAE, makes a running tee and 2-in-1 running shorts with a phone pocket.']
+    ];
+    const rows = ALL.slice().sort((a, b) => ['Easy', 'Moderate', 'Difficult'].indexOf(a.grade) - ['Easy', 'Moderate', 'Difficult'].indexOf(b.grade)).map(d =>
+      `<tr><td><a href="/trail/hikes/${d.slug}/">${esc(d.name)}</a></td><td>${esc(d.emirate)}</td><td><span class="hk-badge ${gcls(d.grade)}">${esc(d.grade)}</span></td><td>${esc(d.report.distance)}</td><td>${esc(d.report.climb || 'Not confirmed')}</td></tr>`).join('');
+    const gbody = `${CSS}<style>.hk-sec ul.tg-rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 0;padding:0;list-style:none}.tg-rules li{background:#FAF6EF;border:1px solid rgba(42,32,22,.14);border-radius:14px;padding:14px 16px;margin:0}.tg-rules b{display:block;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#7E4114;margin-bottom:4px}.tg-wrap{overflow-x:auto}.tg-t{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}.tg-t th{text-align:left;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#6B6256;padding:8px 10px;border-bottom:2px solid rgba(42,32,22,.2)}.tg-t td{padding:10px;border-bottom:1px solid rgba(42,32,22,.1);color:#2A2016;vertical-align:top}.tg-t a{color:#7E4114}.tg-t .hk-badge{font-size:10.5px;padding:4px 9px}.tg-faq details{border-bottom:1px solid rgba(42,32,22,.14);padding:12px 0}.tg-faq summary{cursor:pointer;font-weight:600;font-size:16.5px;color:#2A2016}.tg-faq p{margin:8px 0 0}@media(max-width:640px){.hk-sec ul.tg-rules{grid-template-columns:1fr}}</style>
+<section class="hk-hero"><div class="hk-hero-in">
+  <p class="hk-crumbs"><a href="/trail/">Sahra Trail</a> &rsaquo; Trail running in the UAE</p>
+  <h1>Trail running in the UAE</h1>
+  <p class="hk-where">When to go, the mountain rules, and eleven hiking routes in Sharjah, Fujairah and Ras Al Khaimah.</p>
+</div></section>
+<main class="hk-main">
+  ${NOTOP}
+  <section class="hk-sec" style="margin-top:26px"><p class="hk-intro">Trail running in the UAE happens mostly in the Hajar Mountains, in Ras Al Khaimah, Fujairah and Sharjah. The season is roughly October to April; in summer the heat makes the mountain routes dangerous. Start at first light, carry more water than you think you need, and tell someone your route and return time.</p>
+    <p class="hk-foot">Last checked ${esc(lastTxt)}</p></section>
+  <section class="hk-sec"><h2>When to go</h2>
+    <p>The season runs roughly from October to April, with November to March the coolest months. Sharjah's trail guidance, as reported by Sharjah24 and Al Etihad, is to be out between sunrise and shortly before sunset and to avoid the hot, humid hours and heavy rain. Fujairah trails open only in the official hiking season, which the operator announces each year: the 2026 to 2027 season opened on 25 September 2026.</p>
+  </section>
+  <section class="hk-sec"><h2>Six rules for the mountains</h2>
+    <ul class="tg-rules">${RULES.map(r => `<li><b>${esc(r[0])}</b>${esc(r[1])}</li>`).join('')}</ul>
+    <p style="margin-top:12px;font-size:14.5px;color:#4A4136">From RAK Tourism's mountain safety guidance, Visit Jebel Jais, and police and National Centre of Meteorology flood warnings as reported by Gulf News. In an emergency call 999 (police) or 998 (ambulance).</p>
+  </section>
+  <section class="hk-sec"><h2>Hiking routes in the Hajar Mountains</h2>
+    <p>Eleven hiking routes we have researched, easiest first. These are walking routes: each page gives the trailhead, the ground, the open status and the sources, so read it before you go. The open status is not confirmed for some of them, including the routes at Jebel Jais.</p>
+    <div class="tg-wrap"><table class="tg-t"><thead><tr><th>Route</th><th>Emirate</th><th>Grade</th><th>Distance</th><th>Climb</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p style="margin-top:12px"><a href="/trail/hikes/">All the routes, with photos and how we grade &rarr;</a></p>
+  </section>
+  <section class="hk-sec"><h2>What to wear</h2>
+    <p>Sahra Trail is the activewear line of Sahra &amp; Beyond, designed in the UAE. The <a href="/products/sahra-trail-tee/">Sahra Trail Tee</a> is a running T-shirt in 95% polyester and 5% elastane, with raglan sleeves, mesh side panels and a reflective Two Ridges symbol. The <a href="/products/sahra-trail-2-in-1-short/">Sahra Trail 2-in-1 Short</a> has a woven outer, a hidden knit liner with a bonded phone pocket, and a zip pocket for keys. <a href="/products/sahra-trail-kit/">The Kit</a> pairs them. Add a hat, sunscreen and shoes with grip for loose rock.</p>
+    <p><a href="/activewear/">All Sahra Trail activewear &rarr;</a></p>
+  </section>
+  <section class="hk-sec tg-faq"><h2>Questions</h2>${GFAQ.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>
+  <section class="hk-sec"><p>More in our <a href="/hiking/">guide to hiking in the UAE</a>, <a href="/wadis/">wadis in the UAE</a> and <a href="/mountain-escapes/">mountain escapes</a>.</p></section>
+</main>`;
+    write('trail/running-in-the-uae/index.html', shell({ title: 'Trail Running in the UAE: Season, Rules and Routes', desc: 'Trail running in the UAE: when to go, six mountain rules, and eleven hiking routes in Sharjah, Fujairah and Ras Al Khaimah with distance, climb and grade.', canonical: gurl, bodyHtml: gbody, activeNav: 'trail', bodyClass: 'buy-page hike-page',
+      jsonld: [
+        { '@context': 'https://schema.org', '@type': 'Article', headline: 'Trail running in the UAE', url: gurl, datePublished: '2026-11-23', dateModified: new Date().toISOString().slice(0, 10), author: { '@type': 'Organization', name: 'Sahra & Beyond' }, publisher: { '@type': 'Organization', name: 'Sahra & Beyond', url: SITE + '/' } },
+        { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: GFAQ.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) },
+        { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Sahra Trail', item: SITE + '/trail/' }, { '@type': 'ListItem', position: 2, name: 'Trail running in the UAE', item: gurl }] }
+      ] }));
+  }
 
   /* ---- /h/<n>/ : the address the QR encodes. Static, so it survives a host change. ---- */
   H.forEach(d => {

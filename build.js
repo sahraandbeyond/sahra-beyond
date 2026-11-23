@@ -3617,7 +3617,7 @@ COMMERCE.forEach(P => {
    preorder-page.js so prices and the 28 Oct stages match everywhere else. */
 (function buildAccessoriesActivewear() {
   const PO = require('./preorder-page.js');
-  const page = ({ slug, h1, title, desc, lede, grad, block, body, items, faqs }) => {
+  const page = ({ slug, h1, title, desc, lede, grad, block, body, items, faqs, extraLd }) => {
     const canonical = `${SITE}/${slug}/`;
     const jsonld = [
       { "@context": "https://schema.org", "@type": "CollectionPage", "name": h1, "description": desc, "url": canonical },
@@ -3626,6 +3626,7 @@ COMMERCE.forEach(P => {
         { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
         { "@type": "ListItem", "position": 2, "name": h1, "item": canonical } ] } ];
     /* 20 Nov 2026: a landing page may carry questions, shown on the page and marked up for Google */
+    if (extraLd) jsonld.push(...extraLd);   /* 23 Nov 2026: the activewear page names the Sahra Trail brand for Google */
     if (faqs && faqs.length) jsonld.push({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqs.map(q => ({ "@type": "Question", "name": q[0], "acceptedAnswer": { "@type": "Answer", "text": q[1] } })) });
     const faqHtml = faqs && faqs.length ? `<section class="faq content"><h2>Frequently asked questions</h2>${faqs.map(q => `<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}</section>` : '';
     const html = `
@@ -3660,7 +3661,13 @@ COMMERCE.forEach(P => {
   const trail = PO.pickNew(p => p.line === 'trail');
   /* 20 Nov 2026 (SEO check, Faheem: "Go ahead"): the thinnest product page grew a buying guide and questions, in plain words and
      only with facts from the product data; Sahra Trail's fabric is left out until the supplier spec arrives (18 Nov). */
+  /* 23 Nov 2026 (Faheem: "Why aren't we showing up in search when we search 'UAE based activewear brand'"; chose the
+     activewear pages rework): /activewear/ is the page for "UAE activewear brand" searches and says plainly what Sahra Trail
+     is and where it is from; /trail/ takes "trail running clothing UAE". Facts only, no performance claims (Trail rule). */
   const TRAIL_FAQ = [
+    ['Is Sahra Trail a UAE brand?', 'Yes. Sahra Trail is the activewear line of Sahra & Beyond, a clothing brand based in the UAE, and every piece is designed in the UAE. Orders ship from the UAE, next working day across the Emirates.'],
+    ['What activewear does Sahra Trail make?', 'Running and trail wear: the Sahra Trail Tee, a running T-shirt; the Sahra Trail 2-in-1 Short, running shorts with an inner liner and a phone pocket; and the Kit, which pairs them. The Trailhead Bag, a canvas drawstring bag, comes free with any Sahra Trail order.'],
+    ['Who is Sahra Trail for?', 'Runners and hikers in the UAE, on roads, trails and wadis. The tee and the short are cut for men, in sizes S to XL.'],
     ['What is in the Sahra Trail range?', 'The Sahra Trail Tee (AED 139), the Sahra Trail 2-in-1 Short (AED 169) and the Kit with both (AED 279). Every Sahra Trail order comes with the Trailhead Bag free, in place of the Sahra Tote.'],
     ['What sizes are the tee and the short?', 'Both come in S, M, L and XL, in a men’s cut. Sahra Trail has its own size chart, separate from our cotton tees, and the size finder on each page works from your height and weight.'],
     ['How much do I save with the Kit?', 'Bought apart, the tee and the short are AED 308. The Kit is AED 279, so it saves AED 29, and you choose a size for each piece.'],
@@ -3668,15 +3675,19 @@ COMMERCE.forEach(P => {
     ['What are they made of?', 'The tee is 95% polyester and 5% elastane. The short has a woven outer in 95% polyester and 5% elastane, with four-way stretch, and a knit liner in 87% polyester and 13% elastane.'],
     ['How fast is delivery?', 'Delivery is free across the UAE on orders over AED 100, and orders placed before 2 pm arrive the next working day. Sizes can be exchanged free within 14 days in the UAE.']
   ];
-  page({ slug: 'activewear', h1: 'Activewear: Sahra Trail', grad: 'Mountains',
-    title: 'Running Tee & 2-in-1 Shorts in Dubai | Sahra Trail',
-    desc: 'Sahra Trail running wear designed in the UAE: a running tee, 2-in-1 shorts with a phone pocket, the Kit and a canvas bag. Free UAE delivery over AED 100.',
-    lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE',
+  page({ slug: 'activewear', h1: 'Activewear, designed in the UAE', grad: 'Mountains',
+    title: 'UAE Activewear Brand: Running and Trail Wear | Sahra Trail',
+    desc: 'Sahra Trail, the activewear line of UAE brand Sahra & Beyond: a running tee, 2-in-1 shorts and the Kit, designed in the UAE. Free UAE delivery over AED 100.',
+    lede: 'Sahra Trail: running and trail wear from Sahra &amp; Beyond, a homegrown UAE brand',
+    extraLd: [{ '@context': 'https://schema.org', '@type': 'Brand', name: 'Sahra Trail', url: `${SITE}/activewear/`, description: 'Running and trail wear designed in the UAE; the activewear line of Sahra & Beyond.' },
+      { '@context': 'https://schema.org', '@type': 'Organization', name: 'Sahra & Beyond', url: `${SITE}/`, address: { '@type': 'PostalAddress', addressCountry: 'AE' }, brand: [{ '@type': 'Brand', name: 'Sahra Trail' }] }],
     block: houseGrid({ news: trail, fits: false, label: 'Sahra Trail', note: PO.trailLede() + ' <a href="/trail/">About Sahra Trail</a>.' }),
     faqs: TRAIL_FAQ,
     body: `<div class="content">
-      <h2>Running wear for UAE trails and roads</h2>
-      <p>Sahra Trail is for the trails, wadis and ridges of the UAE, and for the early run before work. Every piece is designed in the UAE and carries the reflective Two Ridges symbol.</p>
+      <h2>A homegrown UAE activewear brand</h2>
+      <p>Sahra Trail is the activewear line of Sahra &amp; Beyond, a clothing brand based in the UAE. It makes running and trail wear for the trails, wadis and ridges of the Emirates, and for the early run before work: a running tee, 2-in-1 running shorts and the Kit that pairs them. Every piece is designed in the UAE, carries the reflective Two Ridges symbol and ships from the UAE, next working day across the Emirates.</p>
+      <h2>Where to run</h2>
+      <p>Our <a href="/trail/running-in-the-uae/">guide to trail running in the UAE</a> covers the season, the mountain safety rules and eleven hiking routes, and <a href="/trail/hikes/">UAE hikes, by grade</a> gives the distance, climb, time and trailhead for eleven routes in Sharjah, Fujairah and Ras Al Khaimah.</p>
       <h2>The Sahra Trail Tee</h2>
       <p>A running T-shirt in powder blue with an ocean-inspired print, in 95% polyester and 5% elastane. Raglan sleeves let your arms swing freely, mesh panels run down the sides, the seams are covered so they sit flat against the skin, and the Two Ridges symbol under the collar is reflective. <a href="/products/sahra-trail-tee/">The Sahra Trail Tee, AED 139 &rarr;</a></p>
       <h2>The Sahra Trail 2-in-1 Short</h2>
@@ -4089,6 +4100,7 @@ const entries = [{ u: `${SITE}/`, m: buildDate, p: '1.0' }]
   .concat([{ u: `${SITE}/journal/`, m: buildDate, p: '0.7' }])
   .concat([{ u: `${SITE}/trail/`, m: buildDate, p: '0.8' }])
   .concat(['', ...require('./trail-hikes.js').ORDER.concat(require('./trail-hikes.js').EXTRA).map(x => x + '/')].map(x => ({ u: `${SITE}/trail/hikes/${x}`, m: buildDate, p: '0.7' })))   /* Sahra Trail hikes for the QR cards (6 Oct 2026) */
+  .concat([{ u: `${SITE}/trail/running-in-the-uae/`, m: buildDate, p: '0.7' }])   /* 23 Nov 2026: the trail running guide */
   .concat([{ u: `${SITE}/sahel/`, m: buildDate, p: '0.8' }])   /* Sahel teaser page (6 Oct 2026) */
   .concat([{ u: `${SITE}/hoodies/`, m: buildDate, p: '0.9' }])   /* /hoodies/ live from 23 Oct 2026 */
     .concat(['men', 'women', 'under-150', 'fit/regular', 'fit/oversized', 'fit/super-oversized'].map(x => ({ u: `${SITE}/${x}/`, m: buildDate, p: '0.8' })))   /* fit pages: 20 Nov 2026 */   /* 24 Oct 2026 */
@@ -4613,8 +4625,9 @@ const AR_PDP_NOINDEX = true;
   const L = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'sahra-trail-lockup.json'), 'utf8'));
   const T = {
     en: {
-      title: 'Sahra Trail: Running Tee & 2-in-1 Shorts, Designed in the UAE',
-      desc: 'Sahra Trail from Sahra & Beyond: the Trail Tee (AED 139), the 2-in-1 Shorts (AED 169) and the Kit (AED 279), designed in the UAE for its wadis and ridges.',
+      /* 23 Nov 2026 (SEO, Faheem): /trail/ takes "trail running clothing UAE"; /activewear/ takes "UAE activewear brand" */
+      title: 'Trail Running Clothing in the UAE | Sahra Trail',
+      desc: 'Trail running clothing designed in the UAE: the Sahra Trail Tee (AED 139), 2-in-1 Shorts (AED 169) and the Kit (AED 279), with UAE hikes by grade.',
       eyebrow: 'A new line from Sahra &amp; Beyond',
       kicker: 'Running &amp; trail kit &middot; designed in the UAE',
       h1: 'Choose the climb.',   /* the Sahra Trail tagline (Faheem, 6 Oct 2026): exactly this, with the full stop */
@@ -5009,6 +5022,7 @@ ${lang === 'ar' ? `  ${chapters}
     <div class="content"><h2>${T.en.about.h}</h2><p>${T.en.about.p[0]}</p><p>${T.en.about.p[1]}</p></div>
     <nav class="catnav" aria-label="More from Sahra Trail">
       <a href="/trail/hikes/"><b>UAE hikes, by grade</b><span>Distance, climb, time and trailhead for each route</span></a>
+      <a href="/trail/running-in-the-uae/"><b>Trail running in the UAE</b><span>The season, the mountain rules and where to start</span></a>
       <a href="/shop/"><b>The whole collection</b><span>Tees, polos and hoodies from Sahra &amp; Beyond</span></a>
     </nav>
     ${newsletterBlock()}

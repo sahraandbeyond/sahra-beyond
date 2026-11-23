@@ -998,6 +998,14 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
         var q = (rk.match(/<p class="ss-proof"><q data-ar-rule="ugc">([^<]*)<\/q>/) || [])[1] || '';
         return fits && name && noF && q.length > 20 && q.indexOf('!') < 0;
       })());
+      check('r157 activewear SEO: /activewear/ targets "UAE activewear brand" with Brand data and brand questions, /trail/ targets trail running clothing, the trail running guide exists in EN and AR and is in the sitemap, and hike and mountain pages link the Trail pieces', (function () {
+        var a = rd('activewear/index.html'), t = rd('trail/index.html'), g = rd('trail/running-in-the-uae/index.html'), ga = rd('ar/trail/running-in-the-uae/index.html'), sm = rd('sitemap.xml'), hk = rd('trail/hikes/al-rabi/index.html'), jj = rd('locations/jebel-jais/index.html'), kf = rd('locations/khor-fakkan-beach/index.html');
+        var lds = [a, g].every(function (x) { return (x.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g) || []).every(function (b) { try { JSON.parse(b.replace(/^<script[^>]*>|<\/script>$/g, '')); return true; } catch (e) { return false; } }); });
+        return /<title>UAE Activewear Brand: Running and Trail Wear \| Sahra Trail<\/title>/.test(a) && /"@type":\s*"Brand",\s*"name":\s*"Sahra Trail"/.test(a) && /Is Sahra Trail a UAE brand\?/.test(a)
+          && /<title>Trail Running Clothing in the UAE \| Sahra Trail<\/title>/.test(t) && /href="\/trail\/running-in-the-uae\/"/.test(t)
+          && /<h1>Trail running in the UAE<\/h1>/.test(g) && /Six rules for the mountains/.test(g) && !/\b(is|are) (perfectly |completely |very )?safe\b/i.test(g) && ga.length > 1000 && /trail\/running-in-the-uae\//.test(sm) && lds
+          && /What to wear<\/h2>[\s\S]*?products\/sahra-trail-tee\//.test(hk) && /What to wear on the trail/.test(jj) && !/What to wear on the trail/.test(kf);
+      })());
       check('r154 gifts: a Trail piece in the bag means the Trailhead Bag replaces the tote, Trail pages never seed the tote, and no page says Trail orders also get the tote', (function () {
         var cj = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-cart.js'), 'utf8');
         var rule = /function giftEarningQty\(\) \{[\s\S]{0,600}if \(trailQty\(\) > 0\) return 0;/.test(cj);
