@@ -111,7 +111,9 @@
     if (typeof orig !== 'function' || orig.__ttqWrapped) return false;
     var wrapped = function (name, customData, userData) {
       var r = orig.apply(this, arguments);
-      try { if (MIRROR[name]) sbTikTok(MIRROR[name], toTikTok(customData)); } catch (e) {}
+      /* 24 Nov 2026: Meta's AddToCart now carries the Shopify product ID for Meta's catalogue; the ids TikTok has always
+         had ride along in _tt, so TikTok's events are unchanged */
+      try { if (MIRROR[name]) { var cdT = customData || {}; if (cdT._tt) { var m = {}, k; for (k in cdT) if (k !== '_tt') m[k] = cdT[k]; for (k in cdT._tt) m[k] = cdT._tt[k]; cdT = m; } sbTikTok(MIRROR[name], toTikTok(cdT)); } } catch (e) {}
       return r;
     };
     wrapped.__ttqWrapped = true;

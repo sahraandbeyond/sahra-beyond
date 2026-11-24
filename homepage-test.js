@@ -897,6 +897,22 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   const head = page.slice(0, page.indexOf('</head>'));
   check('index.html is indexable (no robots noindex)', !/name="robots"[^>]*noindex/.test(head));
   check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond \| UAE Clothing Brand: Tees &amp; Hoodies in Dubai<\/title>/.test(page));   /* 24 Oct 2026: homepage SEO panel title; 24 Nov 2026: Dubai (brand search) */
+  /* r159 (24 Nov 2026, Meta catalogue match): product events name the numeric Shopify product ID (the catalogue's Group ID) */
+  (function () {
+    const mp = fs.readFileSync(path.join(__dirname, 'assets/meta-pixel.js'), 'utf8');
+    const cart = fs.readFileSync(path.join(__dirname, 'assets/sahra-cart.js'), 'utf8');
+    const ids = {}; (mp.match(/var PIDS = \{([\s\S]*?)\};/) || ['', ''])[1].replace(/'([a-z0-9-]+)': '(\d+)'/g, (m, h, n) => { ids[h] = n; });
+    check('r159: Sahra Trail Tee maps to catalogue group 9629119217852', ids['sahra-trail-tee'] === '9629119217852' && ids['hajar-mountains-regular'] === '9498369917116');
+    const miss = [];
+    for (const dir of ['products', 'ar/products']) for (const d of fs.readdirSync(path.join(__dirname, dir))) {
+      const f = path.join(__dirname, dir, d, 'index.html'); if (!fs.existsSync(f)) continue;
+      const m = /id="ssBuy"[^>]*data-handle="([^"]+)"|data-handle="([^"]+)"[^>]*id="ssBuy"/.exec(fs.readFileSync(f, 'utf8'));
+      const h = m && (m[1] || m[2]); if (h && !ids[h]) miss.push(dir + '/' + d + ' (' + h + ')');
+    }
+    check('r159: every product page (EN and AR) has its Shopify product ID in meta-pixel.js' + (miss.length ? ' — missing: ' + miss.join(', ') : ''), miss.length === 0);
+    check('r159: ViewContent, AddToCart and InitiateCheckout send content_type product_group', /sbMeta\('ViewContent', \{\s*content_type: pid \? 'product_group'/.test(mp) && /sbMeta\('AddToCart', \{\s*content_type: pid \? 'product_group'/.test(cart) && /'InitiateCheckout'[\s\S]{0,300}content_type: 'product_group'/.test(cart));
+    check('r159: keys starting with _ (the TikTok mirror\'s _tt) are never sent to Meta', /if \(_k\.charAt\(0\) === '_'\) delete cd\[_k\]/.test(mp));
+  })();
   /* r158 (24 Nov 2026, brand search): one brand description everywhere, every official account, the Follow line in every footer */
   (function () {
     const lds = h => [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap(m => { try { const d = JSON.parse(m[1]); return Array.isArray(d) ? d : [d]; } catch (e) { return [{ bad: 1 }]; } });

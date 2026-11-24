@@ -67,7 +67,7 @@
     'lines(first:100){edges{node{id quantity attributes{key value} cost{totalAmount{amount currencyCode} subtotalAmount{amount currencyCode}} ' +
     'discountAllocations{discountedAmount{amount currencyCode} ... on CartAutomaticDiscountAllocation{title}} ' +
     'merchandise{... on ProductVariant{id title availableForSale quantityAvailable ' +
-    'price{amount currencyCode} compareAtPrice{amount currencyCode} product{title handle productType featuredImage{url}}}}}}}';
+    'price{amount currencyCode} compareAtPrice{amount currencyCode} product{id title handle productType featuredImage{url}}}}}}}';   /* 24 Nov 2026: product id for the Meta catalogue (meta-pixel.js) */
 
   function sf(q, vars) {
     return fetch('https://' + S.domain + '/api/' + S.v + '/graphql.json', {
@@ -882,12 +882,23 @@
     try {
       if (!window.sbMeta || !CART || !CART.cost) return;
       var nodes = (CART.lines && CART.lines.edges || []).map(function (e) { return e.node; });
+      /* 24 Nov 2026: one entry per product (numeric Shopify product ID, as the Meta catalogue groups them), quantities summed */
+      var ids = [], qty = {};
+      nodes.forEach(function (l) {
+        var m = l && l.merchandise, n = m && m.product ? pidNum(m.product.id) : (m ? sbPid().byVariant[m.id] : '');
+        if (!n) return;
+        if (!qty[n]) { qty[n] = 0; ids.push(n); }
+        qty[n] += (l.quantity | 0) || 1;
+      });
       window.sbMeta('InitiateCheckout', { value: Number(CART.cost.subtotalAmount.amount) || 0, currency: CART.cost.subtotalAmount.currencyCode || 'AED',
-        num_items: CART.totalQuantity || nodes.length, content_type: 'product', content_ids: nodes.map(function (l) { return (l && l.merchandise && l.merchandise.id) || ''; }).filter(Boolean) });
+        num_items: CART.totalQuantity || nodes.length, content_type: 'product_group', content_ids: ids.length ? ids : undefined,
+        contents: ids.length ? ids.map(function (n) { return { id: n, quantity: qty[n] }; }) : undefined });
     } catch (e) {}
   }
 
   function draw() {
+    /* 24 Nov 2026: every line in the bag names its product, so a later add of the same variant knows its Meta catalogue ID */
+    try { ((CART && CART.lines && CART.lines.edges) || []).forEach(function (e) { var m = e.node && e.node.merchandise; if (m && m.product) rememberPid(m.product.handle, m.product.id, [m.id]); }); } catch (e) {}
     ensureUI();
     var body = $('sbBody'), foot = $('sbFoot');
     if (!body || !foot) return;
@@ -1174,18 +1185,28 @@
        price, read from the page's Product JSON-LD by /assets/meta-pixel.js.
        Elsewhere (the shop grid) we still send the variant id so the event is
        never lost, just without a value. */
+    /* 24 Nov 2026: Meta gets the variant's numeric Shopify product ID with content_type 'product_group' (the
+       catalogue's Group ID). value and currency are unchanged. The TikTok mirror (tiktok-pixel.js) still gets the
+       old ids through _tt, which meta-pixel.js never sends to Meta, so TikTok's AddToCart is as before. */
     try {
       if (window.sbMeta) {
         var _p = window.__SB_PRODUCT || {};
         var _id = _p.sku || variantId;
-        window.sbMeta('AddToCart', {
-          content_type: 'product',
-          content_ids: [_id],
-          content_name: _p.name,
-          contents: [{ id: _id, quantity: want }],
-          value: _p.price ? Number(_p.price) * want : undefined,
-          currency: _p.currency || 'AED'
-        });
+        /* no product ID found: send what was sent before rather than an event with no ids */
+        var _fire = function (pid) {
+          window.sbMeta('AddToCart', {
+            content_type: pid ? 'product_group' : 'product',
+            content_ids: [pid || _id],
+            content_name: _p.name,
+            contents: [{ id: pid || _id, quantity: want }],
+            value: _p.price ? Number(_p.price) * want : undefined,
+            currency: _p.currency || 'AED',
+            _tt: { content_type: 'product', content_ids: [_id], contents: [{ id: _id, quantity: want }] }
+          });
+        };
+        var _known = sbPid().byVariant[variantId];
+        if (_known) _fire(_known);
+        else variantPid(variantId).then(_fire, function () { _fire(''); });
       }
     } catch (e) {}
     return queue(function () {
@@ -1332,8 +1353,37 @@
   }
 
   function variants(handle) {
-    return sf('query($h:String!){product(handle:$h){variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}', { h: handle })
-      .then(function (d) { return d.product ? d.product.variants.edges.map(function (e) { return e.node; }) : []; });
+    return sf('query($h:String!){product(handle:$h){id variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}', { h: handle })
+      .then(function (d) {
+        if (!d.product) return [];
+        var vs = d.product.variants.edges.map(function (e) { return e.node; });
+        rememberPid(handle, d.product.id, vs.map(function (v) { return v.id; }));
+        return vs;
+      });
+  }
+
+  /* ---- Shopify product IDs for the Meta catalogue (24 Nov 2026) ---------
+     The catalogue groups products by numeric Shopify product ID. meta-pixel.js holds
+     a handle -> id table (window.sbPid); every Storefront answer that names a product
+     adds to it, so a variant added from any grid can be named by its product. */
+  function sbPid() { return window.sbPid || (window.sbPid = { byHandle: {}, byVariant: {} }); }
+  function pidNum(g) { var m = /(\d+)\s*$/.exec(String(g || '')); return m ? m[1] : ''; }
+  function rememberPid(handle, gid, vids) {
+    var n = pidNum(gid), P = sbPid(); if (!n) return;
+    if (handle) P.byHandle[handle] = n;
+    (vids || []).forEach(function (v) { if (v) P.byVariant[v] = n; });
+  }
+  function productId(handle) {
+    var n = sbPid().byHandle[handle];
+    if (n) return Promise.resolve(n);
+    return sf('query($h:String!){product(handle:$h){id}}', { h: handle })
+      .then(function (d) { if (d.product) rememberPid(handle, d.product.id); return sbPid().byHandle[handle] || ''; });
+  }
+  function variantPid(vid) {
+    var n = sbPid().byVariant[vid];
+    if (n) return Promise.resolve(n);
+    return sf('query($id:ID!){node(id:$id){... on ProductVariant{product{id handle}}}}', { id: vid })
+      .then(function (d) { var p = d && d.node && d.node.product; if (p) rememberPid(p.handle, p.id, [vid]); return sbPid().byVariant[vid] || ''; });
   }
 
   /* ---- market / currency bridge --------------------------------------
@@ -1448,7 +1498,7 @@
     saveAttrs().then(nav, nav); setTimeout(nav, 1000);
   }
   window.SahraCart = {
-    add: add, open: open, close: close, variants: variants, goCheckout: goCheckout, swap: swap, peek: showPeek,
+    add: add, open: open, close: close, variants: variants, productId: productId, goCheckout: goCheckout, swap: swap, peek: showPeek,
     refresh: function () { return refresh().then(afterMutation); },
     setQty: setQty, remove: function (l) { return setQty(l, 0); },
     setCountry: setCountry,
