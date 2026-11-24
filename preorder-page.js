@@ -876,6 +876,13 @@ ${CYCLE_CSS}
 /* 3 Nov 2026 (Faheem: "Sahel out now can have a narrow band below it"): a narrow band under the homepage hero slideshow,
    stage 2 only. Small photos of the Sahel pieces that have real photographs (a mock-up is never shown without its label,
    and a thumbnail is too small to carry one), the out-now line, Shop Sahel and the Sahra Trail link. */
+/* 24 Nov 2026 (Faheem, search): a link to the National Day page from the home page until Eid Al Etihad. The page sat at #9 to #11
+   for "uae national day t-shirt"; a link from the home page tells Google it matters. The line leaves the build after 2 December
+   and hides itself in the browser from 3 December (UAE time), so a page built earlier never shows it late. */
+function ndLine() {
+  if (new Date() > new Date('2026-12-02T20:00:00Z')) return '';
+  return `<style>.pn-nd{grid-column:1/-1;margin:0;text-align:center}.pn-nd .pn-tr{font-size:14.5px}</style><p class="pn-nd"><a class="pn-tr" href="/national-day/" data-track="home_national_day">National Day t-shirts for 2 December &rarr;</a></p><script>try{if(new Date()>new Date('2026-12-02T20:00:00Z')){var e=document.querySelector('.pn-nd');e&&e.remove()}}catch(e){}</script>`;
+}
 function homeNowBand() {
   if (stageNow() !== 2) return '';
   const real = pickNew(p => p.line === 'sahel', true).filter(p => p.images[0] && !p.images[0].mock);
@@ -899,7 +906,7 @@ function homeNowBand() {
   <div class="pn-in">
     <div><p class="pn-k">Sahel &middot; The Coast Edition</p><h2 id="pnH">Sahel is out now</h2><p class="pn-s">Nine designs, from the UAE coast to the Al Qudra lakes. In stock, with free next-day UAE delivery over AED 100.</p></div>
     <div class="pn-g">` + real.map(p => `<a class="pn-c" href="/products/${p.handle}/" aria-label="${p.name}">${imgTag(p.images[0], { sizes: '64px', alt: '', bg: '#2A2016' })}</a>`).join('') + `</div>
-    <div class="pn-a"><p><a class="pn-b" href="/sahel/#pieces" data-track="home_sahel_band">Shop Sahel <span aria-hidden="true">&rarr;</span></a></p><p><a class="pn-tr" href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p></div>
+    <div class="pn-a"><p><a class="pn-b" href="/sahel/#pieces" data-track="home_sahel_band">Shop Sahel <span aria-hidden="true">&rarr;</span></a></p><p><a class="pn-tr" href="/trail/#pieces" data-track="home_sahel_trail">Sahra Trail running kit is out now too &rarr;</a></p></div>${ndLine()}
   </div>
 </section>`;
 }

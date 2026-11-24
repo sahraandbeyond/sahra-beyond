@@ -290,6 +290,17 @@ for (const f of ['index.html', 'shop-preview.html']) {
   /* 14 Nov 2026 (r139 scorecard, Faheem: "Welcome block to a text link"): one line that opens the sign-up sheet, as on the product pages */
   if (f === 'index.html') n = n.replace(/<!--CAPTURE:HOME-->[\s\S]*?<!--CAPTURE:END-->/, () => '<!--CAPTURE:HOME-->' + require('./capture.js').link('home') + '<!--CAPTURE:END-->');
   if (f === 'index.html') n = addImgDims(n, '.');
+  /* 24 Nov 2026 (brand search): the home page's WebSite and Organization descriptions come from brand-entity.js, so the
+     names, accounts and the Sahra Trail line are the same on every page that describes the brand. Idempotent: the
+     Sahra Trail script is removed and written again on every build. */
+  if (f === 'index.html') {
+    const BEx = require('./brand-entity.js');
+    const ORG_EXTRA = { contactPoint: { '@type': 'ContactPoint', telephone: '+971585449946', email: 'hello@sahraandbeyond.ae', contactType: 'customer support', areaServed: 'AE', availableLanguage: ['en', 'ar'] },
+      hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'AE', returnPolicyCountry: 'AE', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: 14, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn' } };
+    n = n.replace(/<script type="application\/ld\+json">\n\{"@context":"https:\/\/schema\.org","@type":"Brand","name":"Sahra Trail"[^\n]*\n<\/script>\n/g, '')
+      .replace(/\{"@context":"https:\/\/schema\.org","@type":"WebSite","@id":"https:\/\/www\.sahraandbeyond\.ae\/#website"[^\n]*\}(?=\n<\/script>)/, () => JSON.stringify(BEx.website()))
+      .replace(/(\{"@context":"https:\/\/schema\.org","@type":"Organization","@id":"https:\/\/www\.sahraandbeyond\.ae\/#organization"[^\n]*\}\n<\/script>\n)/, () => JSON.stringify(BEx.org(ORG_EXTRA)) + '\n</script>\n<script type="application/ld+json">\n' + JSON.stringify(BEx.trailBrand()) + '\n</script>\n');
+  }
   if (n !== h0) fs.writeFileSync(fp, n);
 }
 const PRODUCTS_ALL = buildProducts.loadProducts(ROOT);
@@ -299,8 +310,10 @@ PRODUCTS_ALL.forEach(p => { if (p.placeSlug && !PRODUCT_BY_PLACE[p.placeSlug]) P
 // one entry per DESIGN for inline modules, so content pages don't show seven near-identical cards
 const DESIGNS = PRODUCTS_ALL.filter(p => p.fit !== 'oversized').sort((a,b)=>(a.order||0)-(b.order||0));
 const BY_CATEGORY = cat => PRODUCTS_ALL.filter(p => p.category === cat).sort((a,b)=>(a.order||0)-(b.order||0));
-// Instagram only — the single official channel
-const social = { instagram: (settings.social && settings.social.instagram) || 'https://instagram.com/sahraandbeyond.ae' };
+/* 24 Nov 2026 (Faheem, brand search): every official account, from content/settings.json via brand-entity.js
+   (Instagram, TikTok, YouTube, Facebook). Before this only Instagram was linked. */
+const BE = require('./brand-entity.js');
+const social = Object.assign({ instagram: 'https://instagram.com/sahraandbeyond.ae' }, settings.social || {});
 const CAT_HASH = { Camping: 'camping', Wadis: 'wadis', Mountains: 'mountains', Coast: 'coast', Dunes: 'dunes', Heritage: 'heritage' };
 const WEATHER_KEY = settings.weatherKey || '';
 const packingData = readJSON(path.join(ROOT, 'content/packing.json'));
@@ -1125,9 +1138,8 @@ main,.ftr{position:relative;z-index:1}
    previews and full snippets; gated pages (unreviewed Arabic, drafts) are noindex,follow. */
 function robotsMeta(noindex) { return `<meta name="robots" content="${noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large,max-snippet:-1'}">`; }
 function footerHtml(ar) {
-  const soc = ['instagram', 'tiktok', 'youtube'].filter(k => social[k]).map(k => `<a href="${esc(social[k])}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join('');
+  /* 24 Nov 2026: the account links moved into the guides block ("Follow Sahra & Beyond", brand-entity.js) so every page has them once */
   return `${ar ? '' : `<div class="ftr-tagline">${esc(TAGLINE)}</div>`}
-  <div class="soc">${soc}</div>
   <div class="links"><a href="https://checkout.sahraandbeyond.ae/account" rel="nofollow">Orders</a> · <a href="/about/">About us</a> · <a href="/contact/">Contact</a></div>
   ${FG.guidesHtml(null, AR_CORE_PUBLIC)}
   ${IG.footerRowHtml()}
@@ -2398,10 +2410,9 @@ function contactWays() {
   const canonical = `${SITE}/about/`;
   const title = 'About Sahra & Beyond — A UAE Clothing Brand';
   const desc = 'The story behind Sahra & Beyond — a UAE apparel brand built around real places: a dark-sky desert, the first dunes of the Empty Quarter, a red-rock wadi in the Hajar. Tees, polos and hoodies, designed in the UAE.';
-  const sameAs = [social.instagram, social.tiktok, social.youtube].filter(Boolean);
   const jsonld = [
-    { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical },
-    { "@context": "https://schema.org", "@type": "Organization", "@id": SITE + "/#organization", "name": "Sahra & Beyond", "alternateName": ["Sahra and Beyond", "Sahra Beyond"], "legalName": "SAHRA AND BEYOND FZE LLC", "url": SITE + "/", "logo": SITE + "/icon-512.png", "slogan": TAGLINE, "email": "hello@sahraandbeyond.ae", "telephone": "+971585449946", "sameAs": sameAs },
+    { "@context": "https://schema.org", "@type": "AboutPage", "name": title, "description": desc, "url": canonical, "about": { "@id": SITE + "/#organization" } },
+    BE.org(), BE.trailBrand(),
     { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
       { "@type": "ListItem", "position": 2, "name": "About", "item": canonical }
@@ -2677,21 +2688,8 @@ if (SHOP_FROM_TEMPLATE && (LAUNCHED || REVEALED)) (function () {
   const jsonld = [{
     "@context": "https://schema.org", "@type": "ContactPage",
     "name": title, "url": canonical,
-    "mainEntity": {
-      "@type": "Organization",
-      "name": "SAHRA AND BEYOND FZE LLC",
-      "alternateName": ["Sahra & Beyond", "Sahra and Beyond", "Sahra Beyond"],
-      "url": SITE,
-      "email": "hello@sahraandbeyond.ae",
-      "telephone": "+971585449946",
-      "sameAs": ["https://instagram.com/sahraandbeyond.ae"],
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Business Centre, Sharjah Publishing City Free Zone",
-        "addressLocality": "Sharjah",
-        "addressCountry": "AE",
-        "postOfficeBox": "73111"
-      },
+    /* 24 Nov 2026: the full brand description (brand-entity.js), with the contact point */
+    "mainEntity": Object.assign((({ ["@context"]: _c, ...o }) => o)(BE.org()), {
       "contactPoint": [{
         "@type": "ContactPoint",
         "contactType": "customer support",
@@ -2700,7 +2698,7 @@ if (SHOP_FROM_TEMPLATE && (LAUNCHED || REVEALED)) (function () {
         "areaServed": "Worldwide",
         "availableLanguage": ["en", "ar"]
       }]
-    }
+    })
   }];
   const body = `
   <section class="loc-hero" style="--hero-grad:linear-gradient(160deg,#2A2016 0%,#2A2016 40%,#2A2016 72%,#2A2016 100%)">
@@ -2732,7 +2730,7 @@ if (SHOP_FROM_TEMPLATE && (LAUNCHED || REVEALED)) (function () {
           <li><strong>Office address</strong> &middot; Business Centre, Sharjah Publishing City Free Zone, Sharjah, United Arab Emirates</li>
           <li><strong>P.O. Box</strong> &middot; 73111</li>
           <li><strong>Country</strong> &middot; United Arab Emirates</li>
-          <li><strong>Instagram</strong> &middot; <a href="https://instagram.com/sahraandbeyond.ae" target="_blank" rel="noopener">@sahraandbeyond.ae</a></li>
+          ${/* 24 Nov 2026: every official account (brand-entity.js) */''}${BE.SOCIAL.map(([n, u]) => `<li><strong>${n}</strong> &middot; <a href="${esc(u)}" target="_blank" rel="noopener me">${n === 'YouTube' ? 'Sahra and Beyond' : '@sahraandbeyond.ae'}</a></li>`).join('\n          ')}
         </ul>
       </div>
       <div class="content"><p class="sgnote">The same details, with our full terms, sit on the <a href="/policies.html#contact">policies page</a>.</p></div>
@@ -3117,8 +3115,9 @@ const COMMERCE = [
     newList: () => require('./preorder-page.js').pickNew(p => require('./preorder-page.js').isTee(p), true), newFits: true,
     items: ["al-quaa-galaxy-regular", "al-quaa-galaxy-oversized", "hajar-mountains-regular", "hajar-mountains-oversized", "empty-quarter-regular", "empty-quarter-oversized"],
     /* 25 Oct 2026 (Faheem: be found for "UAE t shirts"): the phrase leads the title, H1 and description; Dubai stays in the title */
-    h1: 'UAE T-Shirts, Drawn from Real Places',
-    title: 'UAE T-Shirts & Graphic Tees in Dubai | Sahra & Beyond',
+    /* 24 Nov 2026 (Faheem, search): retitled for the searches Search Console shows us on page 2 or 3 for */ 
+    h1: 'UAE Graphic T-Shirts, Drawn from Real Places',
+    title: 'Graphic Tees & T-Shirts in Dubai, UAE | Sahra & Beyond',
     desc: 'UAE t-shirts drawn from real places: the desert, the mountains and the coast. Graphic tees in three fits, from AED 139. Free next-day UAE delivery over AED 100.',
     catNav: true,
     intro: "Most UAE t-shirts fall into two camps: airport souvenirs with a camel and a skyline, or imported fast fashion with nothing to do with this country at all. We wanted a third option — a t-shirt that means something to someone who actually lives here.\n\nEvery Sahra & Beyond t-shirt starts at a real place in the Emirates. Not a landmark you have seen on a postcard, but the places people drive out to on a Friday: one of the darkest accessible skies in the country, the edge of the Empty Quarter, a wadi in the northern mountains. Each design is original artwork, printed or embroidered on heavyweight combed ring-spun cotton.\n\nThe Founding Edition is three designs in two fits. Al Quaa Galaxy and Hajar Mountains are printed direct to garment, so the ink sits in the cotton rather than on top of it; Empty Quarter is embroidered. Each comes in a straight Regular fit or a drop-shoulder Oversized, S to XL. If you are buying in Dubai, Abu Dhabi or anywhere in the UAE, delivery is free on orders over AED 100 and arrives the next working day on orders placed by 2 pm.\n\nSahel, the Coast Edition, adds four tees, in stock now: Khor Fakkan Bay, Al Hamra Pearl Diver and Al Aqah Reef, drawn from the east coast and the Ras Al Khaimah shore, and the Shams Tee, with our mark embroidered in sand thread on the chest. Each comes in Regular and Oversized.",
@@ -3141,11 +3140,13 @@ const COMMERCE = [
        10 Feb 1972); the 53rd was in 2024 (Khaleej Times, 12 Nov 2024), so 2026 is the 55th. No holiday
        dates are stated: they are announced by the government each year. */
     slug: 'national-day', emoji: '✦', cat: 'Dunes',
-    h1: 'UAE National Day 2026: Eid Al Etihad T-Shirts & Gifts',
-    title: 'UAE National Day 2026 T-Shirts & Gifts — Eid Al Etihad',
+    /* 24 Nov 2026 (Faheem, search): Search Console had this page at #9 to #11 for "uae national day t-shirt" and "uae national day
+       shirt"; the title and H1 now lead with those words. */
+    h1: 'UAE National Day T-Shirts: Eid Al Etihad 2026',
+    title: 'UAE National Day T-Shirts 2026 | Eid Al Etihad Shirts & Gifts',
     items: ['al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'hajar-mountains-regular', 'hajar-mountains-oversized', 'empty-quarter-regular', 'empty-quarter-oversized', 'sand-polo'],
     newList: () => require('./preorder-page.js').pickNew(p => p.line === 'sahel' || p.handle === 'sahra-trail-kit', true), newFits: true, newHeading: 'From Sahel and Sahra Trail: in stock, shipping next working day',
-    desc: 'T-shirts for Eid Al Etihad drawn from real UAE places: the Al Quaa night sky, the Hajar peaks, the Liwa dunes. cotton, free next-day UAE delivery over AED 100.',
+    desc: 'UAE National Day t-shirts for Eid Al Etihad on 2 December, drawn from real UAE places. Order by 2 pm for next-day delivery in Dubai and across the UAE.',
     lede: 'For Eid Al Etihad on 2 December: shirts drawn from the land itself',
     foldsTitle: 'Choosing, timing and gifting',
     intro: "A t-shirt drawn from a real place in the Emirates, to give or wear for Eid Al Etihad, UAE National Day, on Wednesday 2 December 2026.\n\nOn 2 December the UAE marks Eid Al Etihad, its National Day: the anniversary of the union of 1971, when six emirates came together as one country, with Ras Al Khaimah joining in February 1972. This year is the 55th.\n\nMost National Day t-shirts carry a slogan. Ours carry a place. Each design is drawn from somewhere real in the Emirates: the Milky Way rising over the desert at Al Quaa in Abu Dhabi, the Hajar peaks above Wadi Naqab in Ras Al Khaimah, and the dune ridges of Liwa at the edge of the Empty Quarter. They are shirts to wear on the day, and every weekend after it.",
@@ -3168,6 +3169,7 @@ const COMMERCE = [
       ['Will my order arrive before 2 December?', "In the UAE, orders placed by 2 pm on a working day are delivered the next working day. Public holidays are not working days, so order a few days ahead of the National Day holiday. GCC orders take 3 to 5 working days."],
       ['Can I send it as a gift?', "Yes. Tick 'This is a gift' in your bag and add a message, and we include it with the order. Every order also comes with the Sahra Tote free, or the Trailhead Bag if it includes Sahra Trail."],
       ['How much do they cost?', "The Founding Edition and Sahel tees are AED 199, and any two of them are AED 359. The Shams Tee is AED 139, the polos and hoodies AED 229 and the Sahra Trail Kit AED 279. UAE delivery is free on orders over AED 100."],
+      ['Are the National Day t-shirts for men or women?', "Both. The Founding Edition and Sahel tees are cut unisex, in sizes S to XL. The Sahra Polo, the Sahel Polo and the Sahra Trail pieces are cut for men."],
       ['What is Eid Al Etihad?', "It is the name used for the UAE's National Day celebrations on 2 December, which mark the union of the emirates in 1971. Eid Al Etihad means the celebration of the union."]
     ]
   },
@@ -3262,14 +3264,14 @@ const CATEGORIES = [
     pick: p => /^hajar-mountains-/.test(p.id),
     h1:'Mountain T-Shirts',
     title:'Mountain T-Shirts & Graphic Tees — Hajar Mountains, UAE',
-    desc:'Mountain t-shirts drawn from the Hajar range in the UAE: the peaks in contour lines on the front, red rock printed across the back. cotton, two fits.',
+    desc:'Mountain t-shirts drawn from the Hajar range in the UAE: the peaks in contour lines on the front, red rock printed across the back. Cotton, two fits.',
     intro:"Most mountain t-shirts carry a peak that could be anywhere — a stock silhouette with a slogan underneath. Ours has one range on it, and it is this country's: the Hajar Mountains, which run through the northern Emirates and on into Oman.\n\nThe design takes the language of a topographic map literally. The peaks on the front are reduced to contour lines; the red rock itself is printed across the back, with the coordinates beneath it. It is inspired by Wadi Naqab, a seasonal wadi high in the Hajar below Jebel Yanas, in Ras Al Khaimah.\n\nOne design, two cuts: a straight Regular and a true drop-shoulder Oversized.",
     sections: [
       { h2: 'Printed, and where', body: "The mountain graphic is printed direct to garment: the ink goes into the cotton rather than sitting on top of it as a film, so it stays soft and the fabric keeps breathing. The small mark above it is embroidered." },
       { h2: 'The cloth and the fit', body: "combed ring-spun cotton, in Flint Gray, cut unisex in S to XL.\n\nRegular is a straight cut with a set shoulder. Oversized has a true dropped shoulder, the seam sitting 2–3″ below your natural shoulder, so the width reads as a shape rather than a bigger shirt. Check your size in the chart before you order." }
     ],
     faqs: [
-      { q:'Is this a hiking shirt?', a:'No, and we would rather say so. It is a heavyweight cotton t-shirt, not a technical garment — it will not wick sweat the way a synthetic hiking shirt does. It is made for the drive out, the evening at camp and everywhere after.' },
+      { q:'Is this a hiking shirt?', a:'No, and we would rather say so. It is a heavyweight cotton t-shirt, not a technical garment — it will not wick sweat the way a synthetic hiking shirt does. It is made for the drive out, the evening at camp and everywhere after. For the climb itself, the Sahra Trail Tee is our tee for running and the trail.' },
       { q:'Which mountains are on it?', a:'The Hajar Mountains, the range that runs through the northern Emirates and into Oman. The design is inspired by Wadi Naqab, below Jebel Yanas in Ras Al Khaimah.' },
       { q:'How much is it, and how fast is delivery?', a:'AED 199, in Regular or Oversized. In the UAE, delivery is free on orders over AED 100 and arrives the next working day when you order by 2 pm.' }
     ] },
@@ -3278,7 +3280,7 @@ const CATEGORIES = [
     pick: p => /^(empty-quarter|al-quaa-galaxy)-/.test(p.id),
     h1:'Desert T-Shirts',
     title:'Desert T-Shirts & Graphic Tees — Liwa and Al Quaa, UAE',
-    desc:'Desert t-shirts from the UAE: an embroidered sun over the dunes of Liwa, and the Milky Way over Al Quaa. cotton, in Regular and Oversized fits.',
+    desc:'Desert t-shirts from the UAE: an embroidered sun over the dunes of Liwa, and the Milky Way over Al Quaa. Cotton, in Regular and Oversized fits.',
     intro:"Two of our designs come from the desert, and they come from opposite ends of the same day.\n\nThe Empty Quarter tee is the evening: a tonal sun setting over the dune ridges of Liwa, on the northern edge of the Rub' al Khali. It is embroidered rather than printed — thread laid into the cloth, sand on sand.\n\nThe Al Quaa Galaxy tee is the night that follows: the Milky Way as it rises over Al Quaa, one of the darkest accessible skies in the Emirates, printed across the back with a small embroidered mark on the chest.\n\nBoth come in a straight Regular and a true drop-shoulder Oversized.",
     sections: [
       { h2: 'Embroidered or printed', body: "The two desert designs are made differently, on purpose. The Empty Quarter is embroidered throughout, with no print anywhere on it. The Al Quaa Galaxy is printed direct to garment across the back — the ink goes into the cotton rather than sitting on top — with the mark on the chest embroidered." },
@@ -3299,15 +3301,15 @@ const CATEGORIES = [
     faqs: [{"q": "How do I choose my Regular size?", "a": "Use the chart. Measured flat, pit to pit, M is 20″, L is 22″ and XL is 24″, with the shoulder seam at your natural shoulder point. Measure a shirt you like and match the number. Tolerance is ±0.5″."}, {"q": "How do I measure myself for the right size?", "a": "Do not measure yourself — measure a shirt. Lay a t-shirt you already like flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to our chart. Our figures are flat garment measurements, so there is no doubling involved."}, {"q": "My measurement falls between two sizes.", "a": "There is a ±0.5″ tolerance on every measurement, so you have some latitude. Take the smaller size to sit closer to the body, the larger for more ease through the chest. The shoulder seam position does not change between sizes."}, {"q": "What does the fabric feel like?", "a": "Dense and smooth rather than thin. It is combed, ring-spun cotton — combing strips out the shorter fibres before spinning, which is what produces that hand. Enough weight to hold its shape through a day without feeling heavy."}, {"q": "Will it shrink?", "a": "The cotton is pre-shrunk before cutting, so you should not see meaningful shrinkage. A cool wash and air drying will keep both the fabric and the shape at their best."}, {"q": "What are delivery and returns?", "a": "UAE: next-day delivery to all seven emirates for orders placed by 2 pm, free on orders over AED 100 and AED 15 below that. GCC: 3–5 working days, free over AED 229. Worldwide: 7–14 working days. Returns and exchanges are accepted for 14 days, unworn with tags attached — free within the UAE; international customers cover return shipping."}] },
   { slug:'t-shirts/oversized', related: [["/national-day/", "UAE National Day t-shirts", "Eid Al Etihad, 2 December"], ["/gifts/", "Gifts from the UAE", "For leaving gifts and visitors"]], cat:'oversized-tees', emoji:'▯', catBg:'Camping',
     h1:'Oversized T-Shirts in Dubai & the UAE',
-    title:'Oversized T-Shirts Dubai & UAE — Heavyweight Tees',
+    title:'Oversized T-Shirts in Dubai & the UAE | Drop-Shoulder Tees',   /* 24 Nov 2026 (Faheem, search): retitled for the searches Search Console shows us on page 2 or 3 for */
     desc:'Oversized drop-shoulder tees in cotton, S–XL, from AED 139. Any two AED 199 tees for AED 359. Free delivery in Dubai and across the UAE on orders over AED 100.',
     newList: () => require('./preorder-page.js').pickNew(p => require('./preorder-page.js').isTee(p) && (p.fit === 'Super Oversized' || p.fit === 'Oversized')),   /* 31 Oct 2026: Sahel's Super Oversized tees are listed here; 14 Nov 2026: and its Oversized tees, back on the original Oversized chart */
     intro:"This is a true oversized cut, not a size up. The shoulder seam is deliberately dropped 2–3″ below your natural shoulder point and the body is cut wider, so the shape reads as a silhouette rather than a big t-shirt.\n\nCut unisex, S to XL. Take your normal size for the intended fit; size down only if you want it slightly loose. Designed to be worn on its own — a fitted jacket fights the drop shoulder. Sizes S to XL.\n\nIt wears the way streetwear does, with straight or wide trousers and clean trainers, and the cotton is heavy enough that the drop shoulder holds its line instead of collapsing.",
     sections: [{"h2": "What a real drop shoulder is", "body": "There is a meaningful difference between an oversized cut and simply buying your usual size up, and it comes down to where the shoulder seam sits.\n\nIn the Regular fit that seam stays at your natural shoulder point at every size. Going up a size adds width through the chest, but the shoulder does not move — you get a roomier version of the same silhouette. A true drop shoulder is a different pattern, not a larger copy of the same one. On the Oversized fit the seam is set 2–3″ below the natural shoulder point, out over the arm.\n\nThat is what creates the shape. Not extra fabric hanging off a standard cut, but a garment drafted from the start to sit differently on the body. It is why sizing up in a Regular and taking the Oversized in your usual size produce genuinely different results, even at a similar chest measurement."}, {"h2": "Width, not length", "body": "At M the Oversized measures 23.5″ across the chest against 20″ for the Regular — 3.5″ more at the same letter, measured flat, pit to pit. That difference is doing the work people often credit to length. The Oversized tee is not dramatically longer; it is wider, and width combined with the dropped seam is what builds the silhouette.\n\nThe full range, flat: S is 22.5″, M is 23.5″, L is 25″ and XL is 26.5″. Note that the step differs from the Regular fit — 1.5″ per size above M here, against 2″ there — so the two charts are not interchangeable and the gap between the fits narrows slightly as the sizes go up. Tolerance is ±0.5″ on every measurement.\n\nThe effect is a garment that sits away from the chest and shoulders rather than skimming them, with the sleeve opening set further along the arm."}, {"h2": "Why a looser cut wears cooler", "body": "In UAE heat, how cloth sits against skin matters as much as the cloth itself. The extra width through the chest and shoulders means the cotton is not pulled taut against the body — there is room for air to move between fabric and skin instead of the shirt sitting flush.\n\nThis is a function of the cut, not of anything special about the fabric. It is the same combed, ring-spun cotton used across the Regular fit and the polo, simply draped more loosely because of the drop shoulder and the wider chest. A looser garment also moves more independently of the body as you do, which is part of why an oversized silhouette tends to feel less close over a long day outdoors.\n\nA practical reason to choose the cut, alongside the look of it."}, {"h2": "Choosing your size", "body": "Because this fit is built on width rather than length, sizing comes down to how much room you want through the chest and shoulders rather than how tall you are.\n\nMeasure an oversized piece you already like the fit of: lay it flat and measure straight across from armhole seam to armhole seam, an inch below the armhole. Compare that number directly to ours — S 22.5″, M 23.5″, L 25″, XL 26.5″. These are flat garment measurements, so there is no doubling involved.\n\nDo not assume your Regular fit letter carries across. The Oversized is a different pattern with a different grading step, so it is worth checking the number rather than defaulting to habit. Between two sizes, the smaller gives a defined drop shoulder and the larger pushes the silhouette looser still. The range is S to XL, unisex; we do not produce an XXL."}],
-    faqs: [{"q": "How do I choose a size in the Oversized fit?", "a": "Compare flat chest measurements rather than assuming your usual letter carries across — this is a different pattern from the Regular, not the same shirt made larger. Measured flat, pit to pit: S 22.5″, M 23.5″, L 25″, XL 26.5″."}, {"q": "What is the difference between this and sizing up in the Regular fit?", "a": "Sizing up in the Regular adds chest width but keeps the shoulder seam at your natural shoulder point — a roomier version of the same silhouette. The Oversized sets that seam 2–3″ below it, on a pattern drafted for a drop shoulder. At M it is also 3.5″ wider in the chest. The two are not interchangeable."}, {"q": "Do the two fits use the same size steps?", "a": "No. Above M the Regular fit steps 2″ per size and the Oversized steps 1.5″, so the difference between the fits narrows slightly at the larger end. Read whichever chart applies to the fit you are buying."}, {"q": "Is the fabric different from the Regular tee?", "a": "No. Both are combed, ring-spun cotton with the same double-stitched seams and woven shoulder taping. The difference is entirely in the pattern — a wider chest and a dropped shoulder seam."}, {"q": "Does it need different care?", "a": "No. The cotton is pre-shrunk before cutting, so shrinkage should be minimal. A cool wash and air drying keeps the shape and the fabric at their best."}, {"q": "What are delivery and returns?", "a": "Next-day delivery UAE-wide for orders placed by 2 pm, free on orders over AED 100 and AED 15 below that. GCC in 3–5 working days, free over AED 229; worldwide in 7–14. Returns accepted for 14 days, unworn with tags on — free within the UAE, return postage on international orders is on the customer."}] },
+    faqs: [{"q": "Are these baggy t-shirts?", "a": "Roomy rather than sloppy. The Oversized has a dropped shoulder and a wider body, and the Super Oversized is our roomiest cut, for the baggier look. Each piece has its own size chart and a size finder that works from your height and weight."}, {"q": "How do I choose a size in the Oversized fit?", "a": "Compare flat chest measurements rather than assuming your usual letter carries across — this is a different pattern from the Regular, not the same shirt made larger. Measured flat, pit to pit: S 22.5″, M 23.5″, L 25″, XL 26.5″."}, {"q": "What is the difference between this and sizing up in the Regular fit?", "a": "Sizing up in the Regular adds chest width but keeps the shoulder seam at your natural shoulder point — a roomier version of the same silhouette. The Oversized sets that seam 2–3″ below it, on a pattern drafted for a drop shoulder. At M it is also 3.5″ wider in the chest. The two are not interchangeable."}, {"q": "Do the two fits use the same size steps?", "a": "No. Above M the Regular fit steps 2″ per size and the Oversized steps 1.5″, so the difference between the fits narrows slightly at the larger end. Read whichever chart applies to the fit you are buying."}, {"q": "Is the fabric different from the Regular tee?", "a": "No. Both are combed, ring-spun cotton with the same double-stitched seams and woven shoulder taping. The difference is entirely in the pattern — a wider chest and a dropped shoulder seam."}, {"q": "Does it need different care?", "a": "No. The cotton is pre-shrunk before cutting, so shrinkage should be minimal. A cool wash and air drying keeps the shape and the fabric at their best."}, {"q": "What are delivery and returns?", "a": "Next-day delivery UAE-wide for orders placed by 2 pm, free on orders over AED 100 and AED 15 below that. GCC in 3–5 working days, free over AED 229; worldwide in 7–14. Returns accepted for 14 days, unworn with tags on — free within the UAE, return postage on international orders is on the customer."}] },
   { slug:'polos', related: [["/national-day/", "UAE National Day t-shirts", "Eid Al Etihad, 2 December"], ["/gifts/", "Gifts from the UAE", "For leaving gifts and visitors"]], cat:'polos', emoji:'✦', catBg:'Dunes',
     h1:'Polo Shirts in Dubai & the UAE',
-    title:'Polo Shirts in Dubai & the UAE — Embroidered Piqué',
+    title:'UAE Polo Shirts in Dubai: Embroidered Piqué Polos',   /* 24 Nov 2026 (Faheem, search): retitled for the searches Search Console shows us on page 2 or 3 for */
     desc:'Two embroidered polos designed in the UAE: the Sahra Polo in sand piqué and the Sahel Polo in black mercerised piqué. AED 229, free UAE delivery over AED 100.',
     shopText: 'Shop the Sahra Polo',
     newList: () => require('./preorder-page.js').pickNew(p => p.handle === 'the-sahel-polo'), newHeading: 'The Sahel Polo',
@@ -3673,14 +3675,14 @@ COMMERCE.forEach(P => {
     ['How much do I save with the Kit?', 'Bought apart, the tee and the short are AED 308. The Kit is AED 279, so it saves AED 29, and you choose a size for each piece.'],
     ['What is in the 2-in-1 Short?', 'An outer short with a hidden inner liner, a phone pocket bonded to the liner, a zip pocket for keys and cards, and an internal drawcord.'],
     ['What are they made of?', 'The tee is 95% polyester and 5% elastane. The short has a woven outer in 95% polyester and 5% elastane, with four-way stretch, and a knit liner in 87% polyester and 13% elastane.'],
+    ['Do you make a t-shirt for hiking in the UAE?', 'The Sahra Trail Tee is our tee for running and the trail, in a men’s cut, S to XL. Our cotton graphic tees, like the Hajar Mountains tee, are for the drive out and the evening after rather than the climb.'],
     ['How fast is delivery?', 'Delivery is free across the UAE on orders over AED 100, and orders placed before 2 pm arrive the next working day. Sizes can be exchanged free within 14 days in the UAE.']
   ];
   page({ slug: 'activewear', h1: 'Activewear, designed in the UAE', grad: 'Mountains',
     title: 'UAE Activewear Brand: Running and Trail Wear | Sahra Trail',
     desc: 'Sahra Trail, the activewear line of UAE brand Sahra & Beyond: a running tee, 2-in-1 shorts and the Kit, designed in the UAE. Free UAE delivery over AED 100.',
     lede: 'Sahra Trail: running and trail wear from Sahra &amp; Beyond, a homegrown UAE brand',
-    extraLd: [{ '@context': 'https://schema.org', '@type': 'Brand', name: 'Sahra Trail', url: `${SITE}/activewear/`, description: 'Running and trail wear designed in the UAE; the activewear line of Sahra & Beyond.' },
-      { '@context': 'https://schema.org', '@type': 'Organization', name: 'Sahra & Beyond', url: `${SITE}/`, address: { '@type': 'PostalAddress', addressCountry: 'AE' }, brand: [{ '@type': 'Brand', name: 'Sahra Trail' }] }],
+    extraLd: [BE.trailBrand(), BE.org()],   /* 24 Nov 2026: the shared brand description (brand-entity.js) */
     block: houseGrid({ news: trail, fits: false, label: 'Sahra Trail', note: PO.trailLede() + ' <a href="/trail/">About Sahra Trail</a>.' }),
     faqs: TRAIL_FAQ,
     body: `<div class="content">
@@ -3745,7 +3747,7 @@ COMMERCE.forEach(P => {
       title: 'Regular and Relaxed Fit T-Shirts and Polos in the UAE',
       desc: 'Straight cut tees from Sahra & Beyond: the Founding Edition in Regular, Sahel in Relaxed, and both polos. Designed in the UAE, S to XL. Free UAE delivery over AED 100.' },
     { slug: 'fit/oversized', fit: 'Oversized', h1: 'Oversized fit', lede: 'Dropped shoulder, relaxed through the body: our tees and hoodies in Oversized',
-      title: 'Oversized T-Shirts and Hoodies in the UAE | Sahra & Beyond',
+      title: 'Oversized Fit: Tees and Hoodies | Sahra & Beyond',   /* 24 Nov 2026: "oversized t-shirts" is /t-shirts/oversized/'s search; this page no longer competes with it */
       desc: 'Our tees and hoodies in the Oversized fit: a dropped shoulder, relaxed through the body. Designed in the UAE, S to XL. Free UAE delivery over AED 100.' },
     { slug: 'fit/super-oversized', fit: 'Super Oversized', h1: 'Super Oversized fit', lede: 'Dropped shoulder, our roomiest cut: our tees and hoodies in Super Oversized',
       title: 'Super Oversized T-Shirts and Hoodies in the UAE | Sahra & Beyond',
@@ -3757,7 +3759,7 @@ COMMERCE.forEach(P => {
     const other = FITS.filter(x => x !== F).map(x => `<a href="/${x.slug}/">${x.h1}</a>`).join(' &middot; ');
     page({ slug: F.slug, h1: F.h1, grad: 'Dunes', title: F.title, desc: F.desc, lede: F.lede,
       block: houseGrid({ founding: fl, news: nl, fits: false, label: F.h1 }),
-      body: `<div class="content"><p><strong>About the sizes.</strong> The Founding Edition and Sahel are cut on different patterns, so each piece has its own size chart on its page. Everything comes in S to XL, cut unisex except the polos, which are men's. <a href="/size-guide/">Find your size &rarr;</a></p><p>Other fits: ${other}.</p></div>`,
+      body: `<div class="content">${F.fit === 'Oversized' ? '<p><a href="/t-shirts/oversized/">All oversized t-shirts, with the fit explained &rarr;</a></p>' : ''}<p><strong>About the sizes.</strong> The Founding Edition and Sahel are cut on different patterns, so each piece has its own size chart on its page. Everything comes in S to XL, cut unisex except the polos, which are men's. <a href="/size-guide/">Find your size &rarr;</a></p><p>Other fits: ${other}.</p></div>`,
       items: fItems(fl).concat(nItems(nl)) });
   });
   page({ slug: 'under-150', h1: 'Under AED 150', grad: 'Dunes',

@@ -896,7 +896,21 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   const page = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   const head = page.slice(0, page.indexOf('</head>'));
   check('index.html is indexable (no robots noindex)', !/name="robots"[^>]*noindex/.test(head));
-  check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond \| UAE Clothing Brand: Graphic Tees, Polos, Hoodies<\/title>/.test(page));   /* 24 Oct 2026: homepage SEO panel title */
+  check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond \| UAE Clothing Brand: Tees &amp; Hoodies in Dubai<\/title>/.test(page));   /* 24 Oct 2026: homepage SEO panel title; 24 Nov 2026: Dubai (brand search) */
+  /* r158 (24 Nov 2026, brand search): one brand description everywhere, every official account, the Follow line in every footer */
+  (function () {
+    const lds = h => [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap(m => { try { const d = JSON.parse(m[1]); return Array.isArray(d) ? d : [d]; } catch (e) { return [{ bad: 1 }]; } });
+    const L = lds(page), org = L.find(x => x['@type'] === 'Organization');
+    check('r158: home Organization lists Instagram, TikTok, YouTube and Facebook', !!org && ['instagram.com/sahraandbeyond.ae', 'tiktok.com/@sahraandbeyond.ae', 'youtube.com/channel/', 'facebook.com/sahraandbeyond.ae'].every(u => (org.sameAs || []).some(s => s.includes(u))));
+    check('r158: home Organization names Sahra and serves Dubai, address stays Sharjah', !!org && org.alternateName.includes('Sahra') && JSON.stringify(org.areaServed).includes('Dubai') && org.address.addressLocality === 'Sharjah');
+    check('r158: exactly one Sahra Trail brand on the home page (idempotent build)', L.filter(x => x['@type'] === 'Brand' && x.name === 'Sahra Trail').length === 1 && !L.some(x => x.bad));
+    const ab = fs.readFileSync(path.join(__dirname, 'about/index.html'), 'utf8');
+    check('r158: About carries the same Organization @id', lds(ab).some(x => x['@type'] === 'Organization' && x['@id'] === 'https://www.sahraandbeyond.ae/#organization' && (x.sameAs || []).length === 4));
+    const pages = ['index.html', 'products/sand-polo/index.html', 'locations/khor-fakkan-beach/index.html', 'shop/index.html', 'ar/index.html', 'ar/products/sand-polo/index.html'];
+    check('r158: the Follow line is in the footer once, on hand-made, product, place, listing and Arabic pages', pages.every(f => { const h = fs.readFileSync(path.join(__dirname, f), 'utf8'); return (h.match(/class="fg-soc"/g) || []).length === 1 && /tiktok\.com\/@sahraandbeyond\.ae/.test(h); }));
+    const nd = fs.readFileSync(path.join(__dirname, 'national-day/index.html'), 'utf8');
+    check('r158: National Day page leads with "UAE National Day T-Shirts"', /<title>UAE National Day T-Shirts 2026 \| Eid Al Etihad Shirts &amp; Gifts<\/title>/.test(nd) && !/\. cotton,/.test(nd));
+  })();
   check('index.html canonical is the root', /<link rel="canonical" href="https:\/\/www\.sahraandbeyond\.ae\/">/.test(head));
   check('index.html does not load Lenis (native scroll drives the journey)', !/lenis/i.test(head));
   check('the seven grid cards are real links (the missing-quote bug never returns)',
