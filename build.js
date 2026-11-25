@@ -4628,8 +4628,9 @@ const AR_PDP_NOINDEX = true;
   const T = {
     en: {
       /* 23 Nov 2026 (SEO, Faheem): /trail/ takes "trail running clothing UAE"; /activewear/ takes "UAE activewear brand" */
-      title: 'Trail Running Clothing in the UAE | Sahra Trail',
-      desc: 'Trail running clothing designed in the UAE: the Sahra Trail Tee (AED 139), 2-in-1 Shorts (AED 169) and the Kit (AED 279), with UAE hikes by grade.',
+      /* 25 Nov 2026 (Faheem: "We should be the first result for Sahra trail"): the brand name leads, so the page answers the brand search */
+      title: 'Sahra Trail | Trail Running Clothing Designed in the UAE',
+      desc: 'Sahra Trail: trail running clothing designed in the UAE. The running tee (AED 139), 2-in-1 shorts (AED 169) and the Kit (AED 279), with UAE hikes by grade.',
       eyebrow: 'A new line from Sahra &amp; Beyond',
       kicker: 'Running &amp; trail kit &middot; designed in the UAE',
       h1: 'Choose the climb.',   /* the Sahra Trail tagline (Faheem, 6 Oct 2026): exactly this, with the full stop */
@@ -5014,7 +5015,8 @@ ${lang === 'ar' ? `  ${chapters}
     const trail = PO.pickNew(p => p.line === 'trail');
     const mark = `<svg class="ho-mk" viewBox="31 31 205 183" aria-hidden="true" focusable="false"><path transform="${L.tr}" fill-rule="evenodd" d="${L.far}"/><path transform="${L.tr}" fill-rule="evenodd" d="${L.near}"/></svg>`;
     const jsonld = [
-      { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahra Trail', description: T.en.desc, url: canonical, isPartOf: { '@type': 'WebSite', name: 'Sahra & Beyond', url: SITE + '/' } },
+      { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sahra Trail', description: T.en.desc, url: canonical, isPartOf: { '@type': 'WebSite', name: 'Sahra & Beyond', url: SITE + '/' }, about: { '@id': SITE + '/trail/#brand' } },
+      BE.trailBrand(), BE.org(),   /* 25 Nov 2026: /trail/ is the Sahra Trail brand's home page (brand-entity.js) */
       { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Sahra Trail', itemListElement: trail.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.plain, url: `${SITE}/products/${p.handle}/` })) },
       { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Sahra Trail', item: canonical }] }
     ];

@@ -897,6 +897,16 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   const head = page.slice(0, page.indexOf('</head>'));
   check('index.html is indexable (no robots noindex)', !/name="robots"[^>]*noindex/.test(head));
   check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond \| UAE Clothing Brand: Tees &amp; Hoodies in Dubai<\/title>/.test(page));   /* 24 Oct 2026: homepage SEO panel title; 24 Nov 2026: Dubai (brand search) */
+  /* r160 (25 Nov 2026, "We should be the first result for Sahra trail"): /trail/ is the Sahra Trail brand's home page */
+  (function () {
+    const lds = h => [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap(m => { try { const d = JSON.parse(m[1]); return Array.isArray(d) ? d : [d]; } catch (e) { return [{ bad: 1 }]; } });
+    const t = fs.readFileSync(path.join(__dirname, 'trail/index.html'), 'utf8'), L = lds(t), b = L.find(x => x['@type'] === 'Brand');
+    check('r160: /trail/ leads its title with Sahra Trail and declares the brand (home page, parent, account)', /<title>Sahra Trail \| /.test(t) && !!b && b['@id'] === 'https://www.sahraandbeyond.ae/trail/#brand' && b.parentOrganization['@id'] === 'https://www.sahraandbeyond.ae/#organization' && (b.sameAs || []).includes('https://www.instagram.com/sahratrail/') && !L.some(x => x.bad));
+    const titles = ['sahra-trail-tee', 'sahra-trail-2-in-1-short', 'sahra-trail-kit', 'trailhead-bag'].map(h => (fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8').match(/<title>([^<]*)<\/title>/) || [])[1] || '');
+    check('r160: every Trail product title leads with Sahra Trail', titles.every(x => /^Sahra Trail /.test(x)));
+    const tee = lds(fs.readFileSync(path.join(__dirname, 'products/sahra-trail-tee/index.html'), 'utf8')).find(x => x['@type'] === 'Product');
+    check('r160: Trail products name the Sahra Trail brand by its @id', !!tee && tee.brand && tee.brand['@id'] === 'https://www.sahraandbeyond.ae/trail/#brand');
+  })();
   /* r159 (24 Nov 2026, Meta catalogue match): product events name the numeric Shopify product ID (the catalogue's Group ID) */
   (function () {
     const mp = fs.readFileSync(path.join(__dirname, 'assets/meta-pixel.js'), 'utf8');
@@ -1032,7 +1042,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
         var a = rd('activewear/index.html'), t = rd('trail/index.html'), g = rd('trail/running-in-the-uae/index.html'), ga = rd('ar/trail/running-in-the-uae/index.html'), sm = rd('sitemap.xml'), hk = rd('trail/hikes/al-rabi/index.html'), jj = rd('locations/jebel-jais/index.html'), kf = rd('locations/khor-fakkan-beach/index.html');
         var lds = [a, g].every(function (x) { return (x.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g) || []).every(function (b) { try { JSON.parse(b.replace(/^<script[^>]*>|<\/script>$/g, '')); return true; } catch (e) { return false; } }); });
         return /<title>UAE Activewear Brand: Running and Trail Wear \| Sahra Trail<\/title>/.test(a) && /"@type":\s*"Brand",\s*"name":\s*"Sahra Trail"/.test(a) && /Is Sahra Trail a UAE brand\?/.test(a)
-          && /<title>Trail Running Clothing in the UAE \| Sahra Trail<\/title>/.test(t) && /href="\/trail\/running-in-the-uae\/"/.test(t)
+          && /<title>Sahra Trail \| Trail Running Clothing Designed in the UAE<\/title>/.test(t) && /href="\/trail\/running-in-the-uae\/"/.test(t)
           && /<h1>Trail running in the UAE<\/h1>/.test(g) && /Six rules for the mountains/.test(g) && !/\b(is|are) (perfectly |completely |very )?safe\b/i.test(g) && ga.length > 1000 && /trail\/running-in-the-uae\//.test(sm) && lds
           && /What to wear<\/h2>[\s\S]*?products\/sahra-trail-tee\//.test(hk) && /What to wear on the trail/.test(jj) && !/What to wear on the trail/.test(kf);
       })());
@@ -1117,7 +1127,9 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     const hpT = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), feed = fs.readFileSync(path.join(__dirname, 'feed', 'index.html'), 'utf8');
     check('/ar/trail/: the range line stays in English (Faheem, 6 Oct and 11 Nov 2026)', /<h1 id="hoH">Choose the climb\.\u200e<\/h1>/.test(tar) && !/اختر الصعود/.test(tar));
     check('posts from the old Trail account are left off the site feed (Faheem, 11 Nov 2026)', (() => { const IGD = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'instagram.json'), 'utf8')); const ids = IGD.posts.filter(p => p.account === 'trail').map(p => p.id); return ids.length > 0 && ids.every(id => !feed.includes('data-id="' + id + '"') && !hpT.includes('data-id="' + id + '"')); })());
-    check('the old Trail account is not named anywhere on the built site', ['index.html','feed/index.html','trail/index.html','hiking/index.html','ar/index.html','ar/feed/index.html','ar/trail/index.html','products/sahra-trail-tee/index.html','products/sahra-trail-kit/index.html','products/sahra-trail-2-in-1-short/index.html'].every(f => !/sahratrail/i.test(fs.readFileSync(path.join(__dirname, f), 'utf8'))));
+    /* 25 Nov 2026 (Faheem chose "Sahra Trail brand data ... the @sahratrail Instagram as its account"): the account may appear in the
+       Sahra Trail Brand's sameAs for Google, and nowhere a visitor can see or tap */
+    check('the old Trail account is not named anywhere a visitor sees on the built site', ['index.html','feed/index.html','trail/index.html','hiking/index.html','ar/index.html','ar/feed/index.html','ar/trail/index.html','products/sahra-trail-tee/index.html','products/sahra-trail-kit/index.html','products/sahra-trail-2-in-1-short/index.html'].every(f => !/sahratrail/i.test(fs.readFileSync(path.join(__dirname, f), 'utf8').replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, ''))));
     check('one Instagram account to follow: no "Follow @sahratrail" button on the site', !/Follow @sahratrail/.test(hpT) && !/Follow @sahratrail/.test(feed) && /Follow @sahraandbeyond\.ae/.test(hpT + feed));
   }
   /* 11 Nov 2026 (r126): Google Analytics. Every product event carries the same product fields, and the card Quick add reaches GA4. */

@@ -192,17 +192,18 @@ const SAHEL = [
 ];
 /* Trail features: the /trail/ page's own list (build.js, 8 Oct). No performance claims; "reflective", never "glows". */
 const TRAIL = [
-  { handle: 'sahra-trail-tee', name: 'Sahra Trail Tee', seo: 'Sahra Trail Running T-Shirt', kind: 'Running T-shirt', md: 'raglan sleeves, mesh side panels, covered seams and a reflective Two Ridges symbol', price: 139,
+  /* 25 Nov 2026 (Faheem, "Sahra trail" search): every Trail product title leads with Sahra Trail */
+  { handle: 'sahra-trail-tee', name: 'Sahra Trail Tee', seo: 'Sahra Trail Tee: Running T-Shirt Designed in the UAE', kind: 'Running T-shirt', md: 'raglan sleeves, mesh side panels, covered seams and a reflective Two Ridges symbol', price: 139,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Ocean-inspired print.',
     details: ['95% polyester, 5% elastane', 'Raglan sleeves', 'Mesh side panels', 'Covered seams', 'Reflective Two Ridges symbol under the collar'],   /* fabric: Faheem, 20 Nov 2026 */
     images: [model('pm2-sahra-trail-kit-01-lunge', 'Model wearing the Sahra Trail Tee, stretching in a lunge, front view'), model('pm-sahra-trail-tee-01-running-back', 'Model wearing the Sahra Trail Tee, running, back view'), studio('trail-tee-front', 'Sahra Trail Tee, front'), studio('trail-tee-back', 'Sahra Trail Tee, back'),
       real('trail-chest', 'The Sahra Trail chest lockup, close up'), real('trail-mesh', 'The mesh side panel, close up'), real('trail-backsymbol', 'The Two Ridges symbol, close up')] },
-  { handle: 'sahra-trail-2-in-1-short', name: 'Sahra Trail 2-in-1 Short', seo: '2-in-1 Running Shorts, Sahra Trail', kind: '2-in-1 running shorts', md: 'a hidden inner liner, a bonded phone pocket, a zip pocket for keys and an internal drawcord', price: 169,
+  { handle: 'sahra-trail-2-in-1-short', name: 'Sahra Trail 2-in-1 Short', seo: 'Sahra Trail 2-in-1 Short: Running Shorts with Liner', kind: '2-in-1 running shorts', md: 'a hidden inner liner, a bonded phone pocket, a zip pocket for keys and an internal drawcord', price: 169,
     lede: 'Trail and run wear from Sahra &amp; Beyond, designed in the UAE. Wave-inspired graphic.',
     details: ['Woven outer: 95% polyester, 5% elastane, 4-way stretch', 'Knit liner: 87% polyester, 13% elastane', 'Two shorts in one, with a hidden inner liner', 'Bonded phone pocket in the liner', 'Zip pocket for keys and cards', 'Internal drawcord', 'Reflective Two Ridges symbol'],   /* fabric: Faheem, 20 Nov 2026, ratios from the short supplier pack v1.4 */
     images: [model('pm2-sahra-trail-short-04-side', 'Model wearing the Sahra Trail 2-in-1 Short, side view, hand in the pocket'), model('pm-sahra-trail-2-in-1-short-01-leg-close-up', 'Model wearing the Sahra Trail 2-in-1 Short, close-up of the leg'), studio('trail-short-front', 'Sahra Trail 2-in-1 running shorts, front'), studio('trail-short-back', 'Sahra Trail 2-in-1 running shorts, back'),
       real('trail-shortsymbol', 'The Two Ridges symbol and the name on the leg, close up'), real('trail-shortname', 'SAHRA TRAIL on the leg, close up')] },
-  { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', seo: 'Sahra Trail Running Kit: Tee and 2-in-1 Shorts', kind: 'Running kit', md: 'the Sahra Trail Tee and the Sahra Trail 2-in-1 Short together, with a size chosen for each', price: 279, kit: true,   /* 18 Nov 2026 (Faheem, after the persona audit: "Trail Kit AED 279"): the kit saves AED 29 on the tee + short (139 + 169 = 308); replaces the 8 Nov "no kit discount" */
+  { handle: 'sahra-trail-kit', name: 'Sahra Trail Kit', seo: 'Sahra Trail Kit: Running Tee and 2-in-1 Shorts', kind: 'Running kit', md: 'the Sahra Trail Tee and the Sahra Trail 2-in-1 Short together, with a size chosen for each', price: 279, kit: true,   /* 18 Nov 2026 (Faheem, after the persona audit: "Trail Kit AED 279"): the kit saves AED 29 on the tee + short (139 + 169 = 308); replaces the 8 Nov "no kit discount" */
     lede: 'The Sahra Trail Tee and the Sahra Trail 2-in-1 Short together in one order, with a size chosen for each. Bought apart, the tee is AED 139 and the short AED 169: the kit saves AED 29.',
     details: ['The Sahra Trail Tee: 95% polyester, 5% elastane', 'The Sahra Trail 2-in-1 Short: woven polyester-elastane outer, knit liner', 'Choose a size for each'],
     images: [model('pm2-sahra-trail-kit-01-lunge', 'Model wearing the Sahra Trail Kit, stretching in a lunge, front view'), model('pm-sahra-trail-kit-01-running-side', 'Model wearing the Sahra Trail Kit, running, side view'), studio('trail-kit-front', 'Sahra Trail Kit, front: the tee and the 2-in-1 short'), studio('trail-kit-back', 'Sahra Trail Kit, back'),
@@ -212,7 +213,7 @@ const TRAIL = [
      In hand, so it is not a pre-order: no 20% pre-order price (the Shopify discount covers the 14 pre-order products only),
      ships next working day, one size. On its own it does not earn the free tote (Faheem, 23 Oct; assets/sahra-cart.js).
      The image is Faheem's photo of the real bag, cut out onto the studio backdrop: a real photo, captioned as one. */
-  { handle: 'trailhead-bag', name: 'The Trailhead Bag', seo: 'Canvas Drawstring Bag, The Trailhead Bag', kind: 'Canvas drawstring bag', md: 'natural canvas with the Two Ridges mark and SAHRA TRAIL DUBAI printed in sand, rope drawstrings that close the top and carry it on your back', price: 50,
+  { handle: 'trailhead-bag', name: 'The Trailhead Bag', seo: 'Sahra Trail Trailhead Bag: Canvas Drawstring Bag', kind: 'Canvas drawstring bag', md: 'natural canvas with the Two Ridges mark and SAHRA TRAIL DUBAI printed in sand, rope drawstrings that close the top and carry it on your back', price: 50,
     inHand: true, oneSize: true, noTote: true,
     lede: 'A natural canvas drawstring bag with the Two Ridges mark and SAHRA TRAIL DUBAI printed on the front in sand. Rope drawstrings close the top and carry it on your back. Sized for what you take to the trailhead: a layer, water, keys.',
     details: ['Free with any Sahra Trail tee, short or Kit', 'Natural canvas', 'Two Ridges mark and SAHRA TRAIL DUBAI printed in sand', 'Rope drawstrings, worn as shoulder straps', 'One size'],   /* 20 Nov 2026 (Faheem): free with Trail, one per order; AED 50 on its own */
@@ -1082,7 +1083,7 @@ function productLd(p, url, img, desc, stage, SITE) {
   const inWindow = stage === 1 && !p.inHand;
   const more = (p.images || []).slice(1, 3).map(i => `${SITE}/assets/preorder/${i.k}-1200.webp`).filter(u => require('fs').existsSync(require('path').join(__dirname, u.replace(SITE + '/', ''))));
   const prod = { '@context': 'https://schema.org', '@type': 'Product', name: p.plain, sku: p.handle, description: desc, url, image: img ? [img].concat(more) : undefined,
-    brand: { '@type': 'Brand', name: p.line === 'sahel' ? 'Sahra & Beyond' : 'Sahra Trail' }, color: p.colour || SEO_COLOUR[p.handle] || undefined, material: SEO_MATERIAL(p),
+    brand: p.line === 'sahel' ? { '@type': 'Brand', name: 'Sahra & Beyond' } : { '@type': 'Brand', name: 'Sahra Trail', '@id': 'https://www.sahraandbeyond.ae/trail/#brand', url: 'https://www.sahraandbeyond.ae/trail/' },   /* 25 Nov 2026: the Sahra Trail brand (brand-entity.js) */ color: p.colour || SEO_COLOUR[p.handle] || undefined, material: SEO_MATERIAL(p),
     offers: { '@type': 'Offer', price: (inWindow ? pre(p.price) : p.price).toFixed(2), priceCurrency: 'AED', url,
       priceValidUntil: inWindow ? '2026-10-29' : `${new Date(now()).getUTCFullYear() + 1}-12-31`, itemCondition: 'https://schema.org/NewCondition',
       availability: require('./specimen.js').PAUSED[p.handle] || allSoldOut(p.handle) ? 'https://schema.org/OutOfStock' : p.inHand ? (stage === 0 ? 'https://schema.org/PreSale' : 'https://schema.org/InStock') : IN_HAND ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', shippingDetails: [SHIP_UAE(inWindow ? pre(p.price) : p.price)], hasMerchantReturnPolicy: RETURNS } };

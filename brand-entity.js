@@ -33,7 +33,11 @@ const NAMES = ['Sahra and Beyond', 'Sahra Beyond', 'Sahra', 'صحراء وما �
 const AREAS = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain', 'United Arab Emirates']
   .map(n => n === 'United Arab Emirates' ? { '@type': 'Country', name: n } : { '@type': 'City', name: n });
 const ADDRESS = { '@type': 'PostalAddress', streetAddress: 'Business Centre, Sharjah Publishing City Free Zone', addressLocality: 'Sharjah', addressCountry: 'AE', postOfficeBox: '73111' };
-const TRAIL = { '@type': 'Brand', '@id': SITE + '/trail/#brand', name: 'Sahra Trail', url: SITE + '/trail/', description: 'Running and trail wear designed in the UAE; the activewear line of Sahra & Beyond.' };
+/* 25 Nov 2026: /trail/ is the brand's home page; @sahratrail is kept as the brand's Instagram (a pointer to the house account since
+   the 10 Nov merge) and ranks for "sahra trail", so it is named as the brand's account. The Two Ridges is a range mark, not a logo
+   (11 Nov look rules), so the brand gets an image, not a logo. */
+const TRAIL = { '@type': 'Brand', '@id': SITE + '/trail/#brand', name: 'Sahra Trail', url: SITE + '/trail/', description: 'Running and trail wear designed in the UAE; the activewear line of Sahra & Beyond.',
+  image: SITE + '/assets/trail/sahra-trail-og.png', sameAs: ['https://www.instagram.com/sahratrail/'] };
 
 function org(extra) {
   return Object.assign({
@@ -51,7 +55,7 @@ function website() {
   return { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE + '/#website', name: 'Sahra & Beyond', alternateName: NAMES.slice(0, 3), url: SITE + '/', description: 'Premium tees, polos and hoodies, designed in the UAE for everyone who loves it.', publisher: { '@id': SITE + '/#organization' }, inLanguage: 'en' };
 }
 function trailBrand() {
-  return { '@context': 'https://schema.org', '@type': 'Brand', name: TRAIL.name, '@id': TRAIL['@id'], url: TRAIL.url, description: TRAIL.description, parentOrganization: { '@id': SITE + '/#organization' } };
+  return { '@context': 'https://schema.org', '@type': 'Brand', name: TRAIL.name, alternateName: 'صحراء تريل', '@id': TRAIL['@id'], url: TRAIL.url, description: TRAIL.description, image: TRAIL.image, sameAs: TRAIL.sameAs, parentOrganization: { '@id': SITE + '/#organization' } };
 }
 
 /* the footer line: plain links, the brand names stay in Latin in Arabic too */
