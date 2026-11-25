@@ -897,6 +897,15 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   const head = page.slice(0, page.indexOf('</head>'));
   check('index.html is indexable (no robots noindex)', !/name="robots"[^>]*noindex/.test(head));
   check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond \| UAE Clothing Brand: Tees &amp; Hoodies in Dubai<\/title>/.test(page));   /* 24 Oct 2026: homepage SEO panel title; 24 Nov 2026: Dubai (brand search) */
+  /* r161 (25 Nov 2026, Faheem: "The hero slides don't have Khor fakkan hoodie"): every piece in its category slide */
+  (function () {
+    const h = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+    const slide = c => { const i = h.indexOf('data-cat="' + c + '"'); return h.slice(i, h.indexOf('</div></div>', i)); };
+    const hd = slide('hoodies'), ts = slide('t-shirts');
+    check('r161: the Hoodies slide shows all three hoodies', ['barr-and-bahr-hoodie', 'ras-al-khor-hoodie', 'khor-fakkan-hoodie-oversized'].every(x => hd.includes('data-handle="' + x + '"')) && /data-n="3" style="--n:3"/.test(hd));
+    check('r161: the Khor Fakkan Hoodie shows the darkened Salute images (kfhd-*) everywhere, never the grey kfh-*', ['index.html', 'products/khor-fakkan-hoodie-oversized/index.html', 'hoodies/index.html', 'ar/index.html'].every(f => { const x = fs.readFileSync(path.join(__dirname, f), 'utf8'); return /kfhd-back-/.test(x) && !/\/kfh-(back|front)-/.test(x); }));
+    check('r161: the T-shirts slide shows all eight designs, Al Qudra Lakes included', ts.includes('data-handle="al-qudra-lakes-tee-oversized"') && /data-n="8" style="--n:8"/.test(ts) && (ts.match(/class="hx-c[ "]/g) || []).length === 8);
+  })();
   /* r160 (25 Nov 2026, "We should be the first result for Sahra trail"): /trail/ is the Sahra Trail brand's home page */
   (function () {
     const lds = h => [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap(m => { try { const d = JSON.parse(m[1]); return Array.isArray(d) ? d : [d]; } catch (e) { return [{ bad: 1 }]; } });

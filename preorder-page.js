@@ -186,7 +186,8 @@ const SAHEL = [
     details: ['The UAE coastline embroidered in sand thread across the back', 'Lower-back artwork DTG printed', 'Printed neck label'] },
   /* 14 Nov 2026 (Faheem: "This is actually Khor Fakkan hoodie"; "Color and Front remains same as Barr and Bahr"). Oversized only,
      AED 229, studio mock-ups (front as the Barr & Bahr; back built from the Khor Fakkan Bay print file and the coastline) */
-  { key: 'khor-fakkan-hoodie', name: 'Khor Fakkan Hoodie', seo: 'Khor Fakkan Hoodie, Khor Fakkan Bay and the UAE Coast', kind: 'Hoodie', md: 'Khor Fakkan Bay low on the back and the UAE coastline in sand thread, in Salute', colour: 'Salute', price: 229, fits: 'oversizedOnly', img: 'kfh', studio: true, place: ['Khor Fakkan', 'khor-fakkan-beach'],
+  /* 25 Nov 2026 (Faheem: "the hoodie mockup shows as grey. It needs to be much darker, almost black"): kfhd-* are the studio images darkened to Salute */
+  { key: 'khor-fakkan-hoodie', name: 'Khor Fakkan Hoodie', seo: 'Khor Fakkan Hoodie, Khor Fakkan Bay and the UAE Coast', kind: 'Hoodie', md: 'Khor Fakkan Bay low on the back and the UAE coastline in sand thread, in Salute', colour: 'Salute', price: 229, fits: 'oversizedOnly', img: 'kfhd', studio: true, place: ['Khor Fakkan', 'khor-fakkan-beach'],
     story: "On Sharjah's east coast the Hajar Mountains come straight down to the Gulf of Oman, around one sweep of pale sand. The lower back carries Khor Fakkan Bay as we drew it for the tee: bare ridges, the beach and a dhow on still water. Above it, one line of sand thread traces the whole UAE coast, with Sahel written beneath it in Arabic and English.",
     details: ['Our mark embroidered on the chest', 'The UAE coastline embroidered in sand thread across the back', 'Lower-back artwork DTG printed', 'Printed neck label'] }
 ];

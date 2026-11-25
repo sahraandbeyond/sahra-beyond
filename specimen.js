@@ -115,7 +115,7 @@ const PRE = {
   'ras-al-khor-hoodie': { face: 'back', back: 'ph-rakh-01-back', front: 'ph-rakh-06-front', art: 'ph-rakh-04-detail-flamingos', worn: 'ph-rakh-05-front-model' },
   /* 14 Nov 2026 (Faheem): two new Sahel pieces, Oversized only, on studio images until they are photographed; (16 Nov) no Mock-up label */
   'al-qudra-lakes-tee': { face: 'back', back: 'qudra-back', front: 'qudra-front' },
-  'khor-fakkan-hoodie': { face: 'back', back: 'kfh-back', front: 'kfh-front' },
+  'khor-fakkan-hoodie': { face: 'back', back: 'kfhd-back', front: 'kfhd-front' },   /* 25 Nov 2026 (Faheem): the studio images darkened to Salute, almost black; new names so no browser keeps the grey ones */
   /* 8 Nov 2026 (Faheem: "real photos first"): the polo and Trail pages open on a male model photo (the Worn view, shown first), then the studio images */
   'the-sahel-polo': { face: 'worn', back: 'polo-back', front: 'polo-front', worn: 'pm-the-sahel-polo-01-front' },   /* 8 Nov 2026: no Mock-up label (Faheem) */
   'sahra-trail-tee': { face: 'worn', back: 'trail-tee-back', front: 'trail-tee-front', art: 'trail-chest', artCap: 'Close-up of the sample', worn: 'pm2-sahra-trail-kit-01-lunge' },   /* 9 Nov 2026: the daylight model leads */
