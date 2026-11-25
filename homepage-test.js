@@ -897,6 +897,22 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
   const head = page.slice(0, page.indexOf('</head>'));
   check('index.html is indexable (no robots noindex)', !/name="robots"[^>]*noindex/.test(head));
   check('index.html title carries no preview suffix', /<title>Sahra &amp; Beyond \| UAE Clothing Brand: Tees &amp; Hoodies in Dubai<\/title>/.test(page));   /* 24 Oct 2026: homepage SEO panel title; 24 Nov 2026: Dubai (brand search) */
+  /* r163 (25 Nov 2026, size chart panel; Faheem: "Both now"): the size chart as the last view of the stage, and a "Size chart"
+     link by the sizes that opens it in a sheet; words in the page (so the Arabic mirror translates them), table copied in the
+     browser from the page's own chart; never on a one-size piece */
+  (function () {
+    const rd = f => fs.readFileSync(path.join(__dirname, f), 'utf8');
+    const sized = ['products/khor-fakkan-bay-tee-regular/index.html', 'products/al-quaa-galaxy-oversized/index.html', 'products/sahra-trail-kit/index.html', 'products/ras-al-khor-hoodie/index.html', 'ar/products/khor-fakkan-bay-tee-regular/index.html'];
+    check('r163: sized product pages carry the chart view (last), its tab, the link above the sizes and the sheet', sized.every(f => { const h = rd(f); const figs = [...h.matchAll(/<figure class="ss-v[^"]*" id="ssV-([a-z-]+)"/g)].map(m => m[1]); return figs[figs.length - 1] === 'chart' && /id="ssT-chart"/.test(h) && /class="ssb-chl" data-chart-open="link"/.test(h) && /id="ssChs" role="dialog"/.test(h); }));
+    check('r163: one-size pieces have no size chart view, link or sheet', !/ss-v-chart|ssb-chl|id="ssChs"/.test(rd('products/trailhead-bag/index.html')));
+    check('r163: the chart view never comes first', sized.every(f => !/<figure class="ss-v on[^"]*" id="ssV-chart"/.test(rd(f))));
+    check('r163: Arabic chart words are translated', /جدول المقاسات كاملًا/.test(rd('ar/products/khor-fakkan-bay-tee-regular/index.html')) && !/Full size chart/.test(rd('ar/products/khor-fakkan-bay-tee-regular/index.html')));
+  })();
+  /* r162 (25 Nov 2026, Faheem: "our mark needs to have Arabic Sahra below it"): every header shows the whole mark */
+  (function () {
+    const pages = ['index.html', 'ar/index.html', 'shop/index.html', 'products/sand-polo/index.html', 'products/khor-fakkan-bay-tee-regular/index.html', 'trail/index.html', 'about/index.html', 'locations/khor-fakkan-beach/index.html', 'policies.html'];
+    check('r162: headers use the whole mark (ridges, sun and صحراء), never the old line-only strip', pages.every(f => { const x = fs.readFileSync(path.join(__dirname, f), 'utf8'); return /src="\/logo\/mark-full-dark\.png"/.test(x) && !/src="\/logo\/mark-(dark|light)\.png"/.test(x); }) && fs.existsSync(path.join(__dirname, 'logo/mark-full-dark.png')) && fs.existsSync(path.join(__dirname, 'logo/mark-full-light.png')));
+  })();
   /* r161 (25 Nov 2026, Faheem: "The hero slides don't have Khor fakkan hoodie"): every piece in its category slide */
   (function () {
     const h = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');

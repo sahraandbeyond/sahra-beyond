@@ -33,7 +33,87 @@
      it leaves the stage before anything counts the photos */
   var vf = de.classList.contains('sb-vf');
   if (stage && !vf) [stage.querySelector('.ss-v-loop'), document.querySelector('.ss-tab-loop')].forEach(function (x) { if (x) x.parentNode.removeChild(x); });
+  /* ---------------- the size chart (25 Nov 2026) ----------------
+     The last view of the stage and the sheet from "Size chart" by the sizes. Both copy the page's own chart (#size-chart on
+     Sahel and Sahra Trail pages, #fit on the Founding Edition), so the numbers cannot differ. The view shows the first table
+     with the model's size marked; the sheet shows the whole chart. No chart on the page: the view, its tab, the link and the
+     sheet go. Events: size_chart_view (the view shown), size_chart_open (from the link or the view), size_chart_finder. */
+  (function () {
+    var chf = stage && stage.querySelector('.ss-v-chart'), chs = document.getElementById('ssChs');
+    var src = document.getElementById('size-chart') || document.getElementById('fit');
+    var tbls = src ? [].slice.call(src.querySelectorAll('table.ssz, table.sz')) : [];
+    function drop() {
+      [chf, document.getElementById('ssT-chart'), chs].concat([].slice.call(document.querySelectorAll('.ssb-r0'))).forEach(function (x) { if (x && x.parentNode) x.parentNode.removeChild(x); });
+      var tl0 = document.querySelector('.ss-tabs');   /* a one-photo page keeps no one-tab tab list */
+      if (tl0 && tl0.querySelectorAll('.ss-tab').length < 2 && tl0.parentNode) { tl0.parentNode.removeChild(tl0); if (stage) stage.classList.remove('has-tabs'); }
+    }
+    if (!tbls.length) { drop(); return; }
+    function clean(n) { [n].concat([].slice.call(n.querySelectorAll('[id]'))).forEach(function (x) { x.removeAttribute('id'); }); return n; }
+    function wrapOf(t) { var w = t.parentNode; return (w && /(^|\s)s?sz-wrap(\s|$)/.test(w.className)) ? w : t; }
+    /* the fit, as the page names it (the selected fit button), for "Size chart, Relaxed" */
+    var fitB = document.querySelector('.ss-fits a.on b, .ss-fits .on b, .ss-fit b');
+    var fit = fitB ? (fitB.textContent || '').trim() : '';
+    var ar = /^ar\b/i.test(de.getAttribute('lang') || '');
+    [].forEach.call(document.querySelectorAll('.ss-chv-fit'), function (x) { x.textContent = fit ? (ar ? '، ' : ', ') + fit : ''; });
+    if (chf) {
+      var box = chf.querySelector('[data-chv]'), w = clean(wrapOf(tbls[0]).cloneNode(true));
+      box.appendChild(w);
+      /* the model's size, marked in the table: a column (sizes across) or a row (sizes down) */
+      var ms = chf.getAttribute('data-msize');
+      if (ms) {
+        var t = box.querySelector('table'), head = t && t.querySelector('thead tr'), col = -1;
+        if (head) [].forEach.call(head.children, function (c, i) { if ((c.textContent || '').trim() === ms) col = i; });
+        if (col > 0) [].forEach.call(t.querySelectorAll('tr'), function (r) { var c = r.children[col]; if (c) c.classList.add('ss-chv-on'); });
+        else [].forEach.call(t ? t.querySelectorAll('tbody tr') : [], function (r) { var h = r.children[0]; if (h && (h.textContent || '').trim() === ms) r.classList.add('ss-chv-on'); });
+      }
+      if (!document.querySelector('[data-sizefinder], #size-finder')) [].forEach.call(chf.querySelectorAll('.ss-chv-f'), function (a) { a.parentNode.removeChild(a); });
+    }
+    if (!chs) return;
+    document.body.appendChild(chs);
+    var body = chs.querySelector('[data-chs]');
+    [].forEach.call(src.querySelectorAll('.ssz-wrap, .sz-wrap, h3.ssz-h, .ssz-intent, .ssz-diff, .po-match, details.ssz-how'), function (n) {
+      if (n.closest('.ssz-wrap, .sz-wrap') && n.className.indexOf('wrap') < 0) return;
+      body.appendChild(clean(n.cloneNode(true)));
+    });
+    if (!body.querySelector('table')) tbls.forEach(function (t) { body.appendChild(clean(wrapOf(t).cloneNode(true))); });
+    if (!document.querySelector('[data-sizefinder], #size-finder')) [].forEach.call(chs.querySelectorAll('.ss-chv-f'), function (a) { a.parentNode.removeChild(a); });
+    var back = null, panel = chs.querySelector('.ss-chs-p'), hideT = null;
+    function open(from, el) {
+      clearTimeout(hideT); back = el || document.activeElement; chs.hidden = false; de.classList.add('ss-chs-on');
+      requestAnimationFrame(function () { chs.classList.add('in'); try { panel.focus({ preventScroll: true }); } catch (e) {} });
+      tr('size_chart_open', { item_id: handle, from: from });
+    }
+    function close() {
+      if (chs.hidden) return; chs.classList.remove('in'); de.classList.remove('ss-chs-on');
+      clearTimeout(hideT); hideT = setTimeout(function () { chs.hidden = true; }, reduced ? 0 : 220);
+      if (back && back.focus) try { back.focus({ preventScroll: true }); } catch (e) {}
+    }
+    document.addEventListener('click', function (e) {
+      var o = e.target.closest && e.target.closest('[data-chart-open]');
+      if (o) { e.preventDefault(); e.stopPropagation(); open(o.getAttribute('data-chart-open'), o); return; }
+      if (e.target.closest && e.target.closest('[data-chs-x]')) { e.preventDefault(); close(); }
+    });
+    /* "Find your fit" in the chart: the size finder takes over (its own listener opens it), so the chart steps aside first.
+       window capture runs before the finder's document capture listener. */
+    addEventListener('click', function (e) {
+      var f = e.target.closest && e.target.closest('[data-chf]'); if (!f) return;
+      tr('size_chart_finder', { item_id: handle, from: f.getAttribute('data-chf') });
+      if (!chs.hidden) { chs.classList.remove('in'); chs.hidden = true; de.classList.remove('ss-chs-on'); }
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      if (chs.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key === 'Tab') {
+        var f = [].slice.call(chs.querySelectorAll('a[href],button,summary,[tabindex]:not([tabindex="-1"])')).filter(function (x) { return x.offsetParent !== null; });
+        if (!f.length) return; var a = f[0], z = f[f.length - 1];
+        if (e.shiftKey && (document.activeElement === a || document.activeElement === panel)) { e.preventDefault(); z.focus(); }
+        else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+      }
+    });
+  })();
   var figs = stage ? [].slice.call(stage.querySelectorAll('.ss-v')) : [];
+  var chf0 = stage && stage.querySelector('.ss-v-chart');
+  if (chf0 && !chf0.classList.contains('on')) chf0.setAttribute('inert', '');   /* its links are not reachable while another view shows */
   var tabs = [].slice.call(document.querySelectorAll('.ss-tab'));
   var pins = stage ? [].slice.call(stage.querySelectorAll('.ss-pin')) : [];
   var noteEl = document.getElementById('ssNote');
@@ -83,7 +163,7 @@
     i = (i % figs.length + figs.length) % figs.length;
     hydrate();
     var f = figs[i], k = f.getAttribute('data-v');
-    figs.forEach(function (x, j) { x.classList.toggle('on', j === i); });
+    figs.forEach(function (x, j) { x.classList.toggle('on', j === i); if (x === chf0) { if (j === i) x.removeAttribute('inert'); else x.setAttribute('inert', ''); } });
     tabs.forEach(function (t) { var on = t.getAttribute('data-v') === k; t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
     stage.classList.toggle('art-on', k === 'art');
     var c = f.getAttribute('data-cap') || '';
@@ -93,7 +173,9 @@
     if (k !== 'art') pins.forEach(function (p) { p.classList.remove('on'); });
     cur = i;
     lpSync();
+    if (k === 'chart' && !chSeen) { chSeen = true; tr('size_chart_view', { item_id: handle, via: why || '' }); }
   }
+  var chSeen = false;
   /* the loop in the stage plays only while it is the photo shown, the stage is on screen and the tab is visible; it loads
      after the page has loaded. A visitor's pause holds. The button follows what the video really does. */
   var lpv = lpf && lpf.querySelector('video'), lpt = lpf && lpf.querySelector('.ss-loop-t'), lpHeld = false, lpReady = false, lpVis = false;
@@ -147,7 +229,7 @@
   /* swipe between the photos (phones); a swipe is never a zoom tap */
   if (stage && figs.length > 1) {
     var sx = null, sy = null, swiped = false, swipes = 0;
-    stage.addEventListener('touchstart', function (e) { var t = e.touches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });
+    stage.addEventListener('touchstart', function (e) { if (e.target.closest && e.target.closest('.ss-chv-t')) { sx = null; return; } var t = e.touches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });   /* 25 Nov 2026: scrolling the size chart sideways is not a swipe */
     stage.addEventListener('touchend', function (e) {
       if (sx === null) return; var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
       if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3) {
@@ -157,15 +239,15 @@
       }
     }, { passive: true });
     stage.addEventListener('click', function (e) {
-      if (swiped || (e.target.closest && e.target.closest('.ss-pin,.ss-tabs,.ss-note,.ss-loop-t'))) return;
+      if (swiped || (e.target.closest && e.target.closest('.ss-pin,.ss-tabs,.ss-note,.ss-loop-t,.ss-chv'))) return;
       zoom();
     });
-  } else if (stage) stage.addEventListener('click', function (e) { if (!(e.target.closest && e.target.closest('.ss-pin,.ss-tabs,.ss-note'))) zoom(); });
+  } else if (stage) stage.addEventListener('click', function (e) { if (!(e.target.closest && e.target.closest('.ss-pin,.ss-tabs,.ss-note,.ss-chv'))) zoom(); });
   if (stage) stage.addEventListener('keydown', function (e) { if (e.target === stage && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); zoom(); } });
   function zoom() {
     if (!window.SahraZoom || !figs.length) return;
-    if (figs[cur] === lpf) return;   /* the loop is not zoomed; its button pauses it */
-    var still = figs.filter(function (f) { return f !== lpf; });
+    if (figs[cur] === lpf || figs[cur] === chf0) return;   /* the loop is not zoomed; its button pauses it. Nor is the size chart (25 Nov 2026) */
+    var still = figs.filter(function (f) { return f !== lpf && f !== chf0; });
     var list = still.map(function (f) { var im = f.querySelector('img'); return { src: f.getAttribute('data-full') || (im && (im.currentSrc || im.src)), alt: (im && im.alt) || '' }; });
     try { window.SahraZoom.open(list, still.indexOf(figs[cur])); } catch (e) { return; }
     tr('image_zoom', { item_id: handle });

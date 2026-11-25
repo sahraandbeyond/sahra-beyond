@@ -172,3 +172,11 @@ a.sbn-mnew::after{content:"\2192";margin-left:auto;padding-left:10px}
 @media(max-width:560px){html:not([lang^="ar"]) .sbl-lang.sbl-m{font-size:15px;font-weight:600;min-width:36px}}
 /* 20 Nov 2026: the menu on the Arabic pages; Arabic is never set in the Latin monospace, spaced or in capitals */
 html[lang^="ar"] .sbn-panel small,html[lang^="ar"] .sbn-panel .sbn-h,html[lang^="ar"] .sbn-panel .sbn-badge,html[lang^="ar"] .sbn-panel .sbn-foot,html[lang^="ar"] .m-panel .sbn-mh,html[lang^="ar"] #mobileNav .sbn-mh{font-family:inherit;letter-spacing:0;text-transform:none}
+
+/* 25 Nov 2026 (Faheem, phone screenshot: "our mark needs to have Arabic Sahra below it. Currently it's not complete"):
+   every header now shows the whole mark (the ridges, the sun and صحراء beneath, rendered from mark-paths.js, the traced
+   master). It is taller than the old line-art strip, so it is sized by height and comes last so it wins every older rule. */
+html body :is(.logo,.brand,.sb-logo) img[src^="/logo/mark-full-"]{height:44px!important;width:auto!important;max-width:none!important;object-fit:contain}
+@media(min-width:900px){html body :is(.logo,.brand,.sb-logo) img[src^="/logo/mark-full-"]{height:52px!important}}
+@media(max-width:389px){html body :is(.logo,.brand,.sb-logo) img[src^="/logo/mark-full-"]{height:40px!important}}
+@media(max-width:340px){html body :is(.logo,.brand,.sb-logo) img[src^="/logo/mark-full-"]{height:36px!important}}

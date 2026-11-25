@@ -1102,7 +1102,7 @@ ${SP.HEAD}
 
 <div class="note" data-sb-rotate><span class="sb-rot on"><span class="sb-ship-uae">↺ Next-day delivery across the UAE<span class="note-x"> &nbsp;·&nbsp; order by 2 pm &nbsp;·&nbsp; free over AED 100</span></span><span class="sb-ship-gcc">✈ GCC delivery 3&ndash;5 working days &nbsp;·&nbsp; Free over AED 229</span><span class="sb-ship-intl">✈ Worldwide delivery 7&ndash;14 working days</span></span><span class="sb-rot">✦ Founding Edition &nbsp;·&nbsp; ✦ Designed in the UAE</span><span class="sb-rot">↺ 14-day returns &nbsp;·&nbsp; free within the UAE</span></div>
 <nav class="sb-top">
-  <a class="logo" href="/"><img class="logo-img" src="/logo/mark-dark.png" alt="" width="300" height="40"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div><div class="logo-a sb-house">Designed in the UAE for everyone who loves it.</div></div></a>
+  <a class="logo" href="/"><img class="logo-img" src="/logo/mark-full-dark.png" alt="" width="375" height="160"><div><div class="logo-a">Sahra</div><div class="logo-b">&amp; Beyond</div><div class="logo-a sb-house">Designed in the UAE for everyone who loves it.</div></div></a>
   <!-- Faheem, 13 Sep: Contact belongs in the menu. "Home" comes out rather than the bar growing to eight - the logo already links home. --><div class="nav-links"><a href="/#collection">Collection</a><a href="${SHOP_URL}" class="shoplink">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polo</a><a href="/about/">About</a><a href="/contact/">Contact</a></div><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 

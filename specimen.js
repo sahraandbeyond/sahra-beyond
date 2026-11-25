@@ -287,6 +287,23 @@ function imgTag(v, first) {
   /* r88 speed: frames after the first carry data-src and are fetched after the page has loaded or at the first tap */
   return `<img class="ss-img" data-src="${v.src}" data-srcset="${v.srcsetLo}" data-sizes="${sizes}" width="${v.w}" height="${v.h}" alt="${alt}" decoding="async" style="${style}">`;
 }
+/* ---- the size chart: last view of the stage, and a sheet from the link by the sizes (25 Nov 2026) ----------------
+   Faheem asked a panel whether a size chart at the end of the photos would help buyers; it said yes with conditions (live
+   text, never first, site only, Arabic in step) and that a link beside the sizes matters more; he chose both. The words are
+   written here so the Arabic mirror translates them; the table itself is copied in the browser from the page's own chart
+   (#size-chart on Sahel and Sahra Trail pages, #fit on the Founding Edition), so it always shows the same numbers. A page
+   with no chart (one-size pieces) drops all three. */
+function chartOn(s) { return !s.oneSize && !PAUSED[s.handle]; }
+function chartFig(s) {
+  const msize = s.onModel && s.onModel.size ? s.onModel.size : '';
+  const how = s.kit ? 'Measure your chest at its fullest point, with the tape level and snug, and find it in the chart.'
+    : 'Lay a top you own flat and measure straight across the chest, just under the arms. Compare it with the chest row.';
+  return `<figure class="ss-v ss-v-chart" id="ssV-chart" role="tabpanel" aria-labelledby="ssT-chart" data-v="chart" data-cap=""${msize ? ` data-msize="${esc(msize)}"` : ''}><div class="ss-chv"><p class="ss-chv-k"><span class="ss-chv-h">Size chart</span><span class="ss-chv-fit"></span></p><div class="ss-chv-t" data-chv></div>${msize ? `<p class="ss-chv-mw"><i aria-hidden="true"></i>Model wears <bdi>${esc(msize)}</bdi></p>` : ''}<p class="ss-chv-m">${how}</p><p class="ss-chv-a"><a class="ss-chv-f" href="#size-finder" data-chf="slide">Find your fit</a><button type="button" class="ss-chv-all" data-chart-open="slide">Full size chart</button></p></div></figure>`;
+}
+function chartSheet(s) {
+  if (!chartOn(s)) return '';
+  return `<div class="ss-chs" id="ssChs" role="dialog" aria-modal="true" aria-labelledby="ssChsH" hidden><div class="ss-chs-bg" data-chs-x></div><div class="ss-chs-p" tabindex="-1"><div class="ss-chs-hd"><h2 id="ssChsH"><span class="ss-chv-h">Size chart</span><span class="ss-chv-fit"></span></h2><button type="button" class="ss-chs-x" data-chs-x aria-label="Close the size chart"><span aria-hidden="true">&times;</span></button></div><div class="ss-chs-b" data-chs></div><p class="ss-chv-a"><a class="ss-chv-f" href="#size-finder" data-chf="sheet">Find your fit</a></p></div></div>`;
+}
 function stage(s, altBase) {
   const order = s.views.slice();
   const first = order.find(v => v.k === s.face) || order[0];
@@ -296,17 +313,21 @@ function stage(s, altBase) {
   /* 30 Oct 2026 (QA B1): the tabs sit ON the photo, at the top, so the buy sheet can never cover them */
   const VF = s.loop && s.loop.first;   /* the loop as the first view, for Meta ad visitors only (html.sb-vf, set in the head) */
   const vfTab = VF ? `<button type="button" role="tab" class="ss-tab ss-tab-loop" id="ssT-loop" data-v="loop" aria-selected="false" aria-controls="ssV-loop">Video</button>` : '';
-  const tabs = s.views.length > 1 || VF ? `<div class="ss-tabs" role="tablist" aria-label="Photos">${vfTab}${s.views.map(v => `<button type="button" role="tab" class="ss-tab${v.k === on ? ' on' : ''}" id="ssT-${v.k}" data-v="${v.k}" aria-selected="${v.k === on}" aria-controls="ssV-${v.k}">${v.label}</button>`).join('')}</div>` : '';
+  /* 25 Nov 2026 (Faheem, after the size chart panel: "Both now"): the size chart is the last view of the stage, never the first.
+     The table is the page's own chart, copied in by assets/sahra-specimen.js, so its numbers can never differ from it. */
+  const CH = chartOn(s);
+  const chTab = CH ? `<button type="button" role="tab" class="ss-tab ss-tab-chart" id="ssT-chart" data-v="chart" aria-selected="false" aria-controls="ssV-chart">Size chart</button>` : '';
+  const tabs = s.views.length > 1 || VF || CH ? `<div class="ss-tabs" role="tablist" aria-label="Photos">${vfTab}${s.views.map(v => `<button type="button" role="tab" class="ss-tab${v.k === on ? ' on' : ''}" id="ssT-${v.k}" data-v="${v.k}" aria-selected="${v.k === on}" aria-controls="ssV-${v.k}">${v.label}</button>`).join('')}${chTab}</div>` : '';
   const pins = notes ? `<div class="ss-pins" aria-label="Numbered notes on the artwork">${s.notes.map((n, i) => n.x == null ? '' : `<button type="button" class="ss-pin" data-i="${i}" style="left:${n.x}%;top:${n.y}%" aria-label="Note ${i + 1}: ${esc(n.t)}">${i + 1}</button>`).join('')}</div>` : '';
   const figs = s.views.map(v => {
     v.alt = v.mAlt || `${altBase}, ${v.k === 'art' ? 'close-up of the artwork' : v.k === 'worn' ? 'worn' : v.k}${v.mock ? ', studio mock-up' : ''}`;
     const boxed = v.k === 'art' && notes;   /* the annotated photo sits between the tabs and the note, whole, so no pin hides under either */
     const blur = (v.tall || boxed) ? `<span class="ss-blur" aria-hidden="true"${v === first ? ` style="background-image:url(${v.src})"` : ` data-bg="${v.src}"`}></span>` : '';
-    return `<figure class="ss-v${v.k === on ? ' on' : ''}${v.tall ? ' tall' : ''}${boxed ? ' boxed' : ''}" id="ssV-${v.k}"${s.views.length > 1 ? ` role="tabpanel" aria-labelledby="ssT-${v.k}"` : ''} data-v="${v.k}" data-cap="${esc(v.cap)}"${v.mock ? ' data-mock="1"' : ''} data-full="${v.full}">${blur}${boxed ? `<div class="ss-artbox">${imgTag(v, v === first)}${pins}</div>` : imgTag(v, v === first)}</figure>`;
+    return `<figure class="ss-v${v.k === on ? ' on' : ''}${v.tall ? ' tall' : ''}${boxed ? ' boxed' : ''}" id="ssV-${v.k}"${s.views.length > 1 || CH ? ` role="tabpanel" aria-labelledby="ssT-${v.k}"` : ''} data-v="${v.k}" data-cap="${esc(v.cap)}"${v.mock ? ' data-mock="1"' : ''} data-full="${v.full}">${blur}${boxed ? `<div class="ss-artbox">${imgTag(v, v === first)}${pins}</div>` : imgTag(v, v === first)}</figure>`;
   }).join('');
   const vfFig = VF ? `<figure class="ss-v ss-v-loop" id="ssV-loop" role="tabpanel" aria-labelledby="ssT-loop" data-v="loop" data-cap="" data-full="${s.loop.poster}"><img class="ss-img ss-lp-img" src="${s.loop.poster}" width="720" height="900" alt="" decoding="async" style="object-fit:cover"><video class="ss-lp-v" poster="${s.loop.poster}" muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback width="720" height="900" data-src="${s.loop.src}" aria-label="${esc(s.loop.label)}"></video><button type="button" class="ss-loop-t" hidden>Pause</button></figure>` : '';
   return `<div class="ss-stage${s.views.some(v => v.tall) ? ' has-tall' : ''}${tabs ? ' has-tabs' : ''}" id="ssStage" tabindex="0" role="group" aria-roledescription="photos" aria-label="${esc(altBase)}: photos. Tap to zoom." data-handle="${s.handle}">
-      ${vfFig}${figs}
+      ${vfFig}${figs}${CH ? chartFig(s) : ''}
       ${tabs}
       <span class="ss-mock"${first.mock ? '' : ' hidden'}>Mock-up</span>
       <span class="ss-cap"${first.cap ? '' : ' hidden'}>${esc(first.cap)}</span>
@@ -389,6 +410,7 @@ function sheet(s) {
   const group = (g, label, show) => `<div class="ssb-sz" role="group" aria-label="${label}" data-group="${g}">${show ? `<span class="ssb-gl">${show}</span>` : ''}${['S', 'M', 'L', 'XL'].map(z => btn(z, g)).join('')}</div>`;
   const sizes = s.oneSize ? `<span class="ssb-one">One size</span>` : s.kit ? `<div class="ssb-kit">${group('tee', 'Tee size', 'Tee')}${group('short', 'Short size', 'Short')}</div>` : group('size', 'Size');
   return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}${(s.fits || []).some(f => f.fit === 'Super Oversized') ? ' data-fitwide="1"' : ''}>
+      ${chartOn(s) ? `<div class="ssb-r0"><button type="button" class="ssb-chl" data-chart-open="link" aria-haspopup="dialog" aria-controls="ssChs"><i aria-hidden="true"></i>Size chart</button></div>` : ''}
       <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd"${PAUSED[s.handle] ? ' disabled' : ''}>${PAUSED[s.handle] ? 'Back soon' : 'Add to bag'}</button></div>${PAUSED[s.handle] ? `
       <p class="ssb-paused">${pausedNote(s)}</p>` : ''}
       <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
@@ -436,7 +458,7 @@ function top(s, o = {}) {
   return `<section class="ss ss-${s.line}" data-ss style="--ss-top:${s.line === 'founding' ? 151 : 135}px">
   <div class="ss-media">
     ${o.crumb || ''}
-    ${stage(s, altBase)}
+    ${stage(s, altBase)}${chartSheet(s)}
     ${loopBlock(s)}
     ${onModel(s)}
     ${artBlock(s)}
