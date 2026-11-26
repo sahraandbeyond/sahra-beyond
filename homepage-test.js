@@ -907,6 +907,14 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
     check('r163: one-size pieces have no size chart view, link or sheet', !/ss-v-chart|ssb-chl|id="ssChs"/.test(rd('products/trailhead-bag/index.html')));
     check('r163: the chart view never comes first', sized.every(f => !/<figure class="ss-v on[^"]*" id="ssV-chart"/.test(rd(f))));
     check('r163: Arabic chart words are translated', /جدول المقاسات كاملًا/.test(rd('ar/products/khor-fakkan-bay-tee-regular/index.html')) && !/Full size chart/.test(rd('ar/products/khor-fakkan-bay-tee-regular/index.html')));
+    /* r164 (26 Nov 2026, Faheem: "Simplify the size finder... sliding scales and live animated dummy"; chose "A: drawn figure") */
+    { const sj = rd('assets/sahra-sizefinder.js');
+      check('r164: size finder 3: sliders with steppers and unit chips, a drawn figure, try-on chips, the answer badge', /type="range"/.test(sj) && /data-st="/.test(sj) && /data-unit="/.test(sj) && /function figure\(stage, api\)/.test(sj) && /data-try="/.test(sj) && /sf3-badge/.test(sj));
+      check('r164: inputs folded: usual size and measurements under Fine-tune, waist only where there is a short', /class="sf3-fine"/.test(sj) && /hasShort \? '<label><span class="sf3-lb">' \+ TX\.waist/.test(sj));
+      check('r164: Arabic in the same push (start, sliders, units, figure note)', /اضغط للبدء/.test(sj) && /وحدة الطول/.test(sj) && /المجسّم توضيح للمقاس/.test(sj));
+      check('r164: inputs remembered for the visit, GA4 try event, page behind made inert while open', /sessionStorage\.setItem\('sbsf'/.test(sj) && /size_finder_try/.test(sj) && /setAttribute\('inert', ''\)/.test(sj));
+      check('r164: the figure wears the piece in its cloth colour', /"color":"#272C2A"/.test(rd('products/khor-fakkan-bay-tee-regular/index.html')) && /"color":"#282B34"/.test(rd('products/barr-and-bahr-hoodie/index.html')));
+      check('r164: the figure is described as an illustration, not a photo', /The figure is an illustration of fit drawn from our size chart/.test(sj)); }
   })();
   /* r162 (25 Nov 2026, Faheem: "our mark needs to have Arabic Sahra below it"): every header shows the whole mark */
   (function () {
@@ -1271,7 +1279,7 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
     check('size finder: the answers for sample people follow the charts', fr.best.size === 'L' && !fr.alt && so.best.size === 'M' && so.alt && so.alt.size === 'S' && fo.best.size === 'S' && kt.best.size === 'XL' && ks.best.size === 'XL' && ks.over,
       [fr.best.size, so.best.size, so.alt && so.alt.size, fo.best.size, kt.best.size, ks.best.size].join(' '));
     check('size finder: "roomier" and "closer" move the answer the right way', F.garment(D.founding('regular'), man, 'closer').best.size === 'M' && F.garment(D.founding('regular'), F.body({ who: 'm', cm: 175, kg: 75 }), 'roomier').best.size === 'L');
-    check('size finder: the closed sheet never covers the page, and its text is not overridden by the product page text rule', /\.sfx\[hidden\]\{display:none!important\}/.test(sfjs) && /html body :is\(\.sfx,\.sfind\) \.sf-big\{/.test(sfjs));
+    check('size finder: the closed sheet never covers the page, and its text is not overridden by the product page text rule', /\.sfx\[hidden\]\{display:none!important\}/.test(sfjs) && /html body \.sfind \.sf-h\{/.test(sfjs) && /only div and span inside/.test(sfjs));
   }
   /* 12 Nov 2026 (Faheem: "Top banner should also say shipping worldwide" -> "Worldwide only"; "why the art note numbers are not
      appearing?" -> "Numbers on the model photo") */

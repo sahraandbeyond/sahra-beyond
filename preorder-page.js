@@ -460,7 +460,7 @@ function productPage(p, all, SITE, stage) {
      model wears is said beside the size help, where every photo on the page is the same size */
   const worn = S.onModel && S.onModel.size ? `The model wears ${S.onModel.size}. ` : '';
   /* 12 Nov 2026 (Size finder 2, Faheem: "On every product page"): the help line leads to the size finder, which opens as a sheet */
-  const SFD = require('./sizefinder-data.js'), sf = paused ? '' : SFD.mount(SFD.forNewLine(p, SZ, TSZ), { handle: p.handle });
+  const SFD = require('./sizefinder-data.js'), sf = paused ? '' : SFD.mount(SFD.forNewLine(p, SZ, TSZ), { handle: p.handle, color: p.colour });
   const find = sf ? `<a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. ` : '';
   /* 17 Nov 2026 (WhatsApp fit help, Faheem): the WhatsApp question now sits once, under the fit (specimen.js waLine), so the
      "Still unsure? Message us." links are gone from this line; it carries the free size exchange instead (UAE visitors only) */

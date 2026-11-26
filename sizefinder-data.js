@@ -84,9 +84,13 @@ function all() {
 }
 /* the markup: an anchor the help line opens, and the data the script reads */
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/</g, '&lt;');
+/* 26 Nov 2026 (Size finder 3): the figure wears the piece in its own cloth colour. Founding Edition products carry a hex
+   (content/products/*.json colourHex); the Sahel cloths are named (Pantone TCX), so they are looked up here. */
+const CLOTH = { 'Jet Set': '#272C2A', 'Estate Blue': '#2A3B57', 'Lagoon': '#0EAAAE', 'Salute': '#282B34', 'Black': '#1C1C1E', 'Demitasse': '#40332B', 'Beige': '#D5BA98' };
+const hex = c => (c && /^#[0-9a-f]{6}$/i.test(c)) ? c : (CLOTH[c] || '');
 function mount(cfg, opts = {}) {
   if (!cfg || !cfg.pieces || !cfg.pieces.length || cfg.pieces.some(x => !x)) return '';
-  const data = Object.assign({}, cfg, opts.handle ? { handle: opts.handle } : {});
+  const data = Object.assign({}, cfg, opts.handle ? { handle: opts.handle } : {}, hex(opts.color) ? { color: hex(opts.color) } : {});
   return `<div class="sfind" id="size-finder" data-sizefinder${opts.inline ? ' data-inline="1"' : ''} data-sf='${esc(JSON.stringify(data))}'></div>`;
 }
 /* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "Plain fit guide"): three reference people and the size the size
@@ -148,4 +152,4 @@ function glance(cfg, opts = {}) {
 }
 const SCRIPT = '<script src="/assets/sahra-sizefinder.js" defer></script>';
 
-module.exports = { glance, founding, polo, sahel, trail, forFounding, forNewLine, all, mount, SCRIPT, TARGET };
+module.exports = { hex, glance, founding, polo, sahel, trail, forFounding, forNewLine, all, mount, SCRIPT, TARGET };

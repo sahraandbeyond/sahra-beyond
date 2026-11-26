@@ -18,6 +18,69 @@
   },
   "posts": [
     {
+      "id": "DgKzUsIMhug",
+      "kind": "carousel",
+      "label": "The story behind the Ras Al Khor Hoodie: the head of the creek, the flamingos and the coast in sand thread",
+      "topic": "sahel",
+      "places": [
+        "ras-al-khor"
+      ],
+      "wear": [
+        "/products/ras-al-khor-hoodie/",
+        "The Ras Al Khor Hoodie"
+      ],
+      "src": "FEED-15-20-Nov-2026/p05_story-behind-02_ras-al-khor-hoodie",
+      "srcNote": "Slides are the seven posted image slides, 02_ras-al-khor-hoodie_slide01 to slide07, as WebP; slide 7 shows the full price, AED 229. The Reel cut in the same folder (02_ras-al-khor-hoodie_REEL_T12) is a separate trial reel and is not used here."
+    },
+    {
+      "id": "DgKKLCnJaQN",
+      "kind": "reel",
+      "label": "Into the Print: the Hajar Mountains Tee and the Al Aqah Reef Tee, real footage joined by AI-made transitions",
+      "topic": "brand",
+      "wear": [
+        "/products/hajar-mountains-regular/",
+        "The Hajar Mountains Tee"
+      ],
+      "src": "INTO-THE-PRINT-24-Nov-2026/IntoThePrint_v3_916_M1_upload.mp4",
+      "srcNote": "Site cover is the posted cover, IntoThePrint_v3_cover.jpg, cropped to 4:5 (real footage of the Hajar Mountains Tee). The Reel's two transitions are AI-generated; every garment and named place is real footage, and the post carries the AI label. No products or places keys, so it stays off product pages (13 Oct rule) and place pages."
+    },
+    {
+      "id": "DgIOmzlTCBa",
+      "kind": "reel",
+      "label": "One drive: Al Qudra Lakes for the last hour of light, in the Barr & Bahr Hoodie",
+      "topic": "places",
+      "wear": [
+        "/products/barr-and-bahr-hoodie/",
+        "The Barr & Bahr Hoodie"
+      ],
+      "src": "FEED-15-20-Nov-2026/p04_reel_one-drive_al-qudra-lakes/p04_reel_one-drive_al-qudra-lakes.mp4",
+      "srcNote": "Site cover is the posted cover, p04_reel_one-drive_al-qudra-lakes_COVER.jpg, cropped to 4:5."
+    },
+    {
+      "id": "DgFpu9VFVmp",
+      "kind": "carousel",
+      "label": "The Sahel Polo on the model by the sea: the back, the antique-gold mark and the tipped sleeves",
+      "topic": "sahel",
+      "wear": [
+        "/products/the-sahel-polo/",
+        "The Sahel Polo"
+      ],
+      "src": "FEED-15-20-Nov-2026/p03_on-the-model_sahel-polo",
+      "srcNote": "Slides are the five posted image slides, p03_on-the-model_sahel-polo_01 to _05, as WebP; slide 5 shows the full price, AED 229."
+    },
+    {
+      "id": "DgFAmLOoLgG",
+      "kind": "reel",
+      "label": "The Sahel Polo by the sea: black mercerised piqué, gold tipping and the mark in antique-gold thread",
+      "topic": "sahel",
+      "wear": [
+        "/products/the-sahel-polo/",
+        "The Sahel Polo"
+      ],
+      "src": "BEACH-SHOOT-19-Nov-2026/REELS/SahelPolo_reel_916.mp4",
+      "srcNote": "Site cover is the posted cover, SahelPolo_reel_cover.jpg, cropped to 4:5."
+    },
+    {
       "id": "DgDE9jrh_Kz",
       "kind": "reel",
       "label": "The Shams Tee at last light: one small mark in sand thread, on him and on her",

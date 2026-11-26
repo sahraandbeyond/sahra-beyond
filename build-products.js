@@ -209,7 +209,7 @@ function page(p, all, SITE, SHOP_URL, LAUNCHED){
     <h2>${p.fitHeading || 'Size &amp; <em>fit</em>'}</h2>
     <p>${p.fitWho || ''}</p>
     <p>${p.garment === 'polo' ? '<strong>Men&rsquo;s cut</strong>, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from the letter size you usually wear.' : '<strong>Cut unisex</strong> — one cut worn by everyone, in S, M, L and XL. The measurements below are the garment, not a body, so use them rather than guessing from a menswear or womenswear size.'}${esc(p.fitExtra||"")}</p>
-    ${/* 25 Sep 2026: size finder for people buying for someone else (assets/sahra-sizefinder.js) */''}${SFD.mount(SFD.forFounding(p), { handle: p.id })}
+    ${/* 25 Sep 2026: size finder for people buying for someone else (assets/sahra-sizefinder.js) */''}${SFD.mount(SFD.forFounding(p), { handle: p.id, color: p.colourHex })}
     <div class="sz-wrap">
       <table class="sz">
         <caption class="sz-cap">Founding Edition &middot; ${p.fit === 'oversized' ? 'Oversized fit' : 'Regular fit'} &middot; garment measured flat</caption>
