@@ -318,6 +318,10 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
   object-fit:cover;object-position:center 30%;padding:0}
 [data-cycle] img.on{opacity:1;z-index:3;will-change:opacity}
 [data-cycle] img.was{opacity:1;transition:none;z-index:2;will-change:opacity}
+/* 26 Nov 2026: a card that borrows another fit's model photos says which fit the model wears */
+[data-cycle]>i.cyc-worn{position:absolute;left:8px;top:8px;max-width:calc(100% - 16px);z-index:5;padding:3px 8px;border-radius:99px;background:rgba(250,246,239,.92);color:#2A2016;font:500 10.5px/1.2 Jost,system-ui,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;pointer-events:none}
+[dir=rtl] [data-cycle]>i.cyc-worn{font-family:inherit}
+[dir=rtl] [data-cycle]>i.cyc-worn{left:auto;right:8px}
 /* .was is the OUTGOING frame, pinned fully opaque beneath the incoming one
    for the length of the fade. Fading both at once left the stack only 75%
    covered at the midpoint (1 - .5*.5), so the card's sand gradient pulsed

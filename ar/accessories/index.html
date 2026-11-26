@@ -316,6 +316,10 @@ html[data-market="intl"] .sb-ship-intl{display:inline}
   object-fit:cover;object-position:center 30%;padding:0}
 [data-cycle] img.on{opacity:1;z-index:3;will-change:opacity}
 [data-cycle] img.was{opacity:1;transition:none;z-index:2;will-change:opacity}
+/* 26 Nov 2026: a card that borrows another fit's model photos says which fit the model wears */
+[data-cycle]>i.cyc-worn{position:absolute;left:8px;top:8px;max-width:calc(100% - 16px);z-index:5;padding:3px 8px;border-radius:99px;background:rgba(250,246,239,.92);color:#2A2016;font:500 10.5px/1.2 Jost,system-ui,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;pointer-events:none}
+[dir=rtl] [data-cycle]>i.cyc-worn{font-family:inherit}
+[dir=rtl] [data-cycle]>i.cyc-worn{left:auto;right:8px}
 /* .was is the OUTGOING frame, pinned fully opaque beneath the incoming one
    for the length of the fade. Fading both at once left the stack only 75%
    covered at the midpoint (1 - .5*.5), so the card's sand gradient pulsed
@@ -1584,6 +1588,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 [data-cycle] img.on{opacity:1;z-index:3;will-change:opacity}
 [data-cycle] img.was{opacity:1;transition:none;z-index:2;will-change:opacity}
 [data-cycle]>i,[data-cycle]>em,[data-cycle]>figcaption{z-index:5!important}
+[data-cycle]>i.cyc-worn{position:absolute;left:8px;top:8px;max-width:calc(100% - 16px);padding:3px 8px;border-radius:99px;background:rgba(250,246,239,.92);color:#2A2016;font:500 10.5px/1.2 Jost,system-ui,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;pointer-events:none}
+[dir=rtl] [data-cycle]>i.cyc-worn{font-family:inherit}
+[dir=rtl] [data-cycle]>i.cyc-worn{left:auto;right:8px}
 .nb-f .cut-b,.pcard-img .cut-b{position:absolute;left:8px;bottom:8px;z-index:2;font:600 10.5px/1 Jost,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:5px 8px;border-radius:999px;background:rgba(42,32,22,.82);color:#FAF6EF;pointer-events:none}
 .nb-f i{position:absolute;left:8px;top:8px;font:10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;padding:5px 7px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .nb-c b{display:block;font:500 16px/1.35 Jost,system-ui,sans-serif;margin:8px 0 2px}

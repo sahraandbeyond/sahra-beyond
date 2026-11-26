@@ -915,6 +915,17 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
       check('r164: inputs remembered for the visit, GA4 try event, page behind made inert while open', /sessionStorage\.setItem\('sbsf'/.test(sj) && /size_finder_try/.test(sj) && /setAttribute\('inert', ''\)/.test(sj));
       check('r164: the figure wears the piece in its cloth colour', /"color":"#272C2A"/.test(rd('products/khor-fakkan-bay-tee-regular/index.html')) && /"color":"#282B34"/.test(rd('products/barr-and-bahr-hoodie/index.html')));
       check('r164: the figure is described as an illustration, not a photo', /The figure is an illustration of fit drawn from our size chart/.test(sj)); }
+    /* r165 (26 Nov 2026, Faheem: "On shop page, the old flat lay photos are showing. We need model photos on all photo slides";
+       chose "All product cards" and "Same design, other fit") */
+    { const FLAT = /\/assets\/preorder\/(ph\d?-(kfb|pearl|reef|shams)-|polo-(front|back)-|trail-(tee|short|kit|chest|mesh|backsymbol|shortsymbol|shortname)-)/;
+      const stacks = h => (h.match(/<(a|span|div)\b[^>]*\sdata-cycle\b[^>]*>[\s\S]*?<\/\1>/g) || []);
+      const pages = ['shop/index.html', 'ar/shop/index.html', 'index.html', 'ar/index.html', 'sahel/index.html', 't-shirts/index.html', 'polos/index.html', 'hoodies/index.html', 'activewear/index.html', 'trail/index.html', 'fit/oversized/index.html', 'products/khor-fakkan-bay-tee-regular/index.html'].filter(f => fs.existsSync(path.join(__dirname, f)));
+      const bad = pages.filter(f => stacks(rd(f)).some(x => FLAT.test(x)));
+      check('r165: no flat-lay or studio photo in any card slideshow (shop, home, category, Sahel, Trail pages, EN and AR)', !bad.length, bad.join(' '));
+      const sh = rd('shop/index.html'), card = h => (sh.match(new RegExp('<article class="pcard" data-handle="' + h + '">[\\s\\S]*?</article>')) || [''])[0];
+      check('r165: an Oversized card with no model photos of its own shows the same print in Super Oversized, labelled', /pm-khor-fakkan-bay-tee-super-oversized-/.test(card('khor-fakkan-bay-tee-oversized')) && /<i class="cyc-worn">Model wears Super Oversized<\/i>/.test(card('khor-fakkan-bay-tee-oversized')) && /cyc-worn/.test(card('al-hamra-pearl-diver-tee-oversized')));
+      check('r165: the card zoom opens a model photo too', !/data-zoom="\/assets\/preorder\/(ph\d?-(kfb|pearl|reef|shams)-|polo-(front|back)-)/.test(sh));
+      check('r165: model cards show more of the approved model photos (up to eight)', (card('khor-fakkan-bay-tee-regular').match(/pm-khor-fakkan-bay-tee-regular-/g) || []).length >= 10 && (card('barr-and-bahr-hoodie').match(/<img/g) || []).length <= 8); }
   })();
   /* r162 (25 Nov 2026, Faheem: "our mark needs to have Arabic Sahra below it"): every header shows the whole mark */
   (function () {
