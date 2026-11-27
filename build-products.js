@@ -498,6 +498,8 @@ table.sz td:first-child{font-weight:600}
 .pdp-ans .lede{font-size:16.5px;line-height:1.7;margin:0 0 12px;max-width:none}
 .pdp-ans .occasion{margin:0 0 14px}
 .pdp-ans .spec-strip{margin:2px 0 14px}
+.dl-vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#delivery .dl-foot{margin:12px 0 0;font-size:15px;line-height:1.6;color:#4A4136}#delivery .dl-foot a{color:#7E4114}
 .pdp-ans .made-in{margin:0 0 14px;font-size:15px;line-height:1.5;color:#4A4136}
 .pdp-ans .colourway{margin:0 0 14px}
 .pdp-ans{border-bottom:1px solid var(--line)}
@@ -1269,12 +1271,8 @@ ${careList(p.care)}
     </ul>
   </section>`}
 
-  ${LEAN ? `<section class="sec reveal" id="delivery"><span class="snum">04 — Delivery &amp; returns</span><h2>Next-day UAE delivery and free exchanges</h2><p>Next-day delivery across the UAE on orders placed by 2 pm on a working day, free on orders over AED 100 (AED 15 below that); free returns and size or fit exchanges within the UAE for 14 days. The detail is in our <a href="/policies.html#shipping">delivery and returns policy</a>.</p></section>` : `<section class="sec reveal" id="delivery">
-    <span class="snum">06 — Delivery &amp; returns</span>
-    <h2>Next-day UAE delivery and free <em>exchanges</em></h2>
-    <p>Order before 2 pm UAE time on a working day and it ships the same day, arriving the next working day anywhere in the UAE. Delivery is free on orders over AED 100 and AED 15 below that. You'll get tracking by email as soon as it's on its way.</p>
-    <p>Returns are free within the UAE — you have 14 days from delivery to send something back unworn, unwashed and with tags on, and exchanges for a different size or fit are free too, subject to stock. Full detail is on the <a href="/policies.html#returns" style="border-bottom:1px solid currentColor">policies page</a>.</p>
-  </section>`}
+  ${/* r168 (audit round 3): the same delivery section as every Sahel and Sahra Trail page: the cards (moved in from the answers
+     block by the page script, after the heading) and the one closing line from delivery-block.js, with the refund timing */''}<section class="sec reveal" id="delivery"><h2 class="dl-vh">Delivery, returns and exchanges</h2><p class="dl-foot">${require('./delivery-block.js').FOOT} <a href="/policies.html#shipping">Full policy</a></p></section>
 
   <section class="sec reveal" id="faq">
     <span class="snum">07 — Questions</span>

@@ -54,7 +54,7 @@
     var fitB = document.querySelector('.ss-fits a.on b, .ss-fits .on b, .ss-fit b');
     var fit = fitB ? (fitB.textContent || '').trim() : '';
     var ar = /^ar\b/i.test(de.getAttribute('lang') || '');
-    [].forEach.call(document.querySelectorAll('.ss-chv-fit'), function (x) { x.textContent = fit ? (ar ? '، ' : ', ') + fit : ''; });
+    [].forEach.call(document.querySelectorAll('.ss-chv-fit'), function (x) { if (fit) x.textContent = (ar ? '، ' : ', ') + fit; });   /* r168: a piece with no fit buttons keeps its own label (the Sahel Polo) */
     if (chf) {
       var box = chf.querySelector('[data-chv]'), w = clean(wrapOf(tbls[0]).cloneNode(true));
       box.appendChild(w);
@@ -165,7 +165,7 @@
     var f = figs[i], k = f.getAttribute('data-v');
     figs.forEach(function (x, j) { x.classList.toggle('on', j === i); if (x === chf0) { if (j === i) x.removeAttribute('inert'); else x.setAttribute('inert', ''); } });
     tabs.forEach(function (t) { var on = t.getAttribute('data-v') === k; t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
-    stage.classList.toggle('art-on', k === 'art');
+    stage.classList.toggle('art-on', k === 'art'); stage.classList.toggle('chart-on', k === 'chart');
     var c = f.getAttribute('data-cap') || '';
     if (cap) { cap.textContent = c; cap.hidden = !c; }
     if (mockTag) mockTag.hidden = f.getAttribute('data-mock') !== '1';

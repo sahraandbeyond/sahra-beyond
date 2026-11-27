@@ -179,7 +179,7 @@
       });
     } catch (e) {}
   }
-  window.SBMoney = { paint: function (root) { amts(root); } };
+  window.SBMoney = { paint: function (root) { amts(root); }, rate: function () { return cur && cur !== 'AED' && lastMap && lastMap.__ref ? lastMap.__ref / REF_AED : null; } };
   function localise() {
     var handles = handlesOnPage();
     if (!cur) return;

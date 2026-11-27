@@ -527,7 +527,7 @@ function productPage(p, all, SITE, stage) {
   })}
   <div class="po-wrap">
   ${own ? own.section : p.line === 'sahel' ? firstReviews() : ''}
-  ${/* 14 Nov 2026 (review panel): the story is the reason to buy, but opt-in: a closed group with its first lines showing */''}<details class="pdp-acc po-acc"><summary class="pdp-acc-h has-ts"><span class="pdp-acc-hr"><span>${p.line === 'sahel' ? 'The story and the design' : 'The piece and the details'}</span><i aria-hidden="true">+</i></span><span class="pdp-acc-ts">${teaser(p.story)} <b>Read the story</b></span></summary>
+  ${/* 14 Nov 2026 (review panel): the story is the reason to buy, but opt-in: a closed group with its first lines showing */''}<details class="pdp-acc po-acc"><summary class="pdp-acc-h has-ts"><span class="pdp-acc-hr"><span>${p.line === 'sahel' ? 'The story and the design' : 'The piece and the details'}</span><i aria-hidden="true">+</i></span><span class="pdp-acc-ts">${teaser(p.story).replace(/AED (\d+(?:\.\d+)?)/g, (m, a) => `<span class="sb-amt" data-aed="${a}"${(AMT_OF[p.handle] || {})[a] || ''}>AED ${a}</span>`)} <b>Read the story</b></span></summary>
   <section class="po-story">
     <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${String(p.story).replace(/AED (\d+(?:\.\d+)?)/g, (m, a) => `<span class="sb-amt" data-aed="${a}"${(AMT_OF[p.handle] || {})[a] || ''}>AED ${a}</span>`)}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>

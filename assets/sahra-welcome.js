@@ -441,10 +441,14 @@
      itself shows on the page (a AED 199 tee in USD), the AED 199 threshold reads as that converted price, rounded up, and
      the AED 50 off is rounded down, so the line never promises more than checkout gives. Shopify converts the code. */
   (function offerLocal() {
-    var de = document.documentElement, AEDRX = [[/AED 50\b/g, 50, 'd'], [/AED 199\b/g, 199, 't'], [/50 درهمًا/g, 50, 'd'], [/199 درهمًا/g, 199, 't']];
+    /* r168 (audit round 3): whole numbers only ("150 درهمًا" in the menu was read as "1" + "50 درهمًا") */
+    var de = document.documentElement, AEDRX = [[/(^|[^\d.,])AED 50\b/g, 50, 'd'], [/(^|[^\d.,])AED 199\b/g, 199, 't'], [/(^|[^\d.,])50 درهمًا/g, 50, 'd'], [/(^|[^\d.,])199 درهمًا/g, 199, 't']];
     var SEL = '[class*="sbc"],[class*="sbw"],[id^="sbw"],[id^="sbc"],[id="sbWc"]';
     function rate() {
       var cur = de.getAttribute('data-price-cur'); if (!cur || cur === 'AED') return null;
+      /* r168 (audit round 3): the same rate as every other converted amount on the site (assets/sahra-market.js), so the
+         offer reads the same on every page (it was SAR 208 on one page and SAR 209 on another) */
+      try { var sr = window.SBMoney && window.SBMoney.rate(); if (sr) return { cur: cur, r: sr }; } catch (e) {}
       var els = document.querySelectorAll('.sb-price[data-aed]');
       for (var i = 0; i < els.length; i++) {
         var a = parseFloat(els[i].getAttribute('data-aed')), tx = els[i].textContent || '';
@@ -466,10 +470,10 @@
           var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null), node;
           while ((node = w.nextNode())) {
             var orig = node.__sbo != null ? node.__sbo : node.nodeValue;
-            if (!/AED 50\b|AED 199\b|50 درهمًا|199 درهمًا/.test(orig)) continue;
+            if (!/(^|[^\d.,])(AED 50\b|AED 199\b|50 درهمًا|199 درهمًا)/.test(orig)) continue;
             node.__sbo = orig;
             var out = orig;
-            if (R) AEDRX.forEach(function (x) { out = out.replace(x[0], fmt(amt(x[1] * R.r, x[2] === 't'), R.cur)); });
+            if (R) AEDRX.forEach(function (x) { out = out.replace(x[0], function (m, pre) { return pre + fmt(amt(x[1] * R.r, x[2] === 't'), R.cur); }); });
             if (node.nodeValue !== out) node.nodeValue = out;
           }
         });

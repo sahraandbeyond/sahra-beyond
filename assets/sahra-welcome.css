@@ -299,15 +299,16 @@ html[data-market="intl"] .sbw-rot .sb-ship-intl,html[data-market="intl"] .sbw-sh
   .sbw-wrap .sbw-bar-in{flex-wrap:nowrap}
 }
 body:not(.sbw-on):not(:has(.sb-topbar)){padding-top:var(--sbw-h)}
-.sbw-wrap{height:var(--sbw-h);overflow:hidden}
-.sbw-wrap .sbw-bar{height:100%;padding-top:0;padding-bottom:0;display:flex;align-items:center;justify-content:center}
+/* r168 (audit round 3): the band is at least --sbw-h tall and grows with large text instead of clipping it */
+.sbw-wrap{min-height:var(--sbw-h);overflow:hidden}
+.sbw-wrap .sbw-bar{min-height:var(--sbw-h);height:auto;padding-top:2px;padding-bottom:2px;display:flex;align-items:center;justify-content:center}
 /* 30 Sep 2026 (Faheem, phone screenshot: "the top bars can be slimmer"; the pill was also
    clipped at the bottom, because the solo bar's line-height ran into the pill): one 30px
    line on phones, pill centred inside it, on every page type. */
 @media(max-width:620px){
   :root{--sbw-h:1.875rem}
-  .sbw-bar{padding:0 12px!important;height:var(--sbw-h);line-height:1.2}
-  .sbw-bar-in{height:100%;align-items:center}
+  .sbw-bar{padding:2px 12px!important;min-height:var(--sbw-h);height:auto;line-height:1.2}
+  .sbw-bar-in{min-height:100%;align-items:center}
   .sbw-go{padding:3px 9px;font-size:9px;line-height:1.2}
   .sbw-dot{width:5px;height:5px}
 }
@@ -496,3 +497,5 @@ html.sb-cap-done .sbc-link{display:none}
 html[data-market="gcc"] .sbw-msg-ship .sb-ship-uae,html[data-market="intl"] .sbw-msg-ship .sb-ship-uae{display:none}
 html[data-market="gcc"] .sbw-msg-ship .sb-ship-gcc,html[data-market="intl"] .sbw-msg-ship .sb-ship-intl{display:inline}
 @media(max-width:430px){.sbw-msg-ship .sbw-x{display:none}}
+/* r168: the delivery line may wrap on a phone (long GCC line, large text) rather than run off the edge */
+@media(max-width:620px){.sbw-msg-ship{white-space:normal}.sbw-note .sbw-msg{text-wrap:balance}}

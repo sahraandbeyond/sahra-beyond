@@ -320,6 +320,8 @@ table.sz td:first-child{font-weight:600}
 .pdp-ans .lede{font-size:16.5px;line-height:1.7;margin:0 0 12px;max-width:none}
 .pdp-ans .occasion{margin:0 0 14px}
 .pdp-ans .spec-strip{margin:2px 0 14px}
+.dl-vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#delivery .dl-foot{margin:12px 0 0;font-size:15px;line-height:1.6;color:#4A4136}#delivery .dl-foot a{color:#7E4114}
 .pdp-ans .made-in{margin:0 0 14px;font-size:15px;line-height:1.5;color:#4A4136}
 .pdp-ans .colourway{margin:0 0 14px}
 .pdp-ans{border-bottom:1px solid var(--line)}
@@ -974,7 +976,7 @@ h1 .nw{white-space:nowrap}
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=e5762a32">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=459d07a2">
 <link rel="preload" as="image" href="/shirts/card/emptyquarter-dune-front.webp" imagesrcset="/shirts/card/emptyquarter-dune-front.webp 800w, /shirts/emptyquarter-dune-front.webp 1080w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high">
-<link rel="stylesheet" href="/assets/sahra-specimen.css?v=e5a56e08">
+<link rel="stylesheet" href="/assets/sahra-specimen.css?v=c3ec9aa5">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/products/empty-quarter-regular/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/products/empty-quarter-regular/">
@@ -982,8 +984,8 @@ h1 .nw{white-space:nowrap}
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/sahra-rtl.css?v=d330296d">
 <script src="/assets/sahra-ar-ui.js?v=78db0744" defer></script>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=01c6df35">
-<script src="/assets/sahra-welcome.js?v=55e3a76e" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=3b8723af">
+<script src="/assets/sahra-welcome.js?v=1e922c06" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=0e04262e">
 <script src="/assets/sahra-nav.js?v=ee987bd5" data-sbn defer></script>
 <link rel="stylesheet" href="/assets/sahra-system.css?v=c94116de">
@@ -1791,12 +1793,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
     </ul>
   </section>
 
-  <section class="sec reveal" id="delivery">
-    <span class="snum">06 — التوصيل والإرجاع</span>
-    <h2>توصيل في اليوم التالي في الإمارات و<em>استبدال مجاني</em></h2>
-    <p>اطلب قبل الساعة 2 ظهرًا بتوقيت الإمارات في يوم عمل ويُشحن في اليوم نفسه، ويصل في يوم العمل التالي إلى أي مكان في الإمارات. التوصيل مجاني للطلبات فوق 100 درهم، و15 درهمًا لما دون ذلك. يصلك التتبع بالبريد الإلكتروني فور خروج الطلب.</p>
-    <p>الإرجاع مجاني داخل الإمارات: لديك 14 يومًا من التوصيل لتعيد القطعة غير ملبوسة وغير مغسولة وعليها بطاقاتها، والاستبدال بمقاس أو قصّة مختلفة مجاني أيضًا حسب توفر المخزون. التفاصيل الكاملة في <a href="/ar/policies.html#returns" style="border-bottom:1px solid currentColor">صفحة السياسات</a>.</p>
-  </section>
+  <section class="sec reveal" id="delivery"><h2 class="dl-vh">التوصيل والإرجاع والاستبدال</h2><p class="dl-foot">اطلب قبل الساعة 2 ظهرًا بتوقيت الإمارات في يوم عمل للشحن في اليوم نفسه. الإرجاع خلال 14 يومًا للقطع غير الملبوسة وعليها بطاقاتها: مجاني داخل الإمارات، ويتحمل العملاء من خارجها تكلفة شحن الإرجاع. نُصدر المبلغ المسترد خلال 5 إلى 7 أيام عمل من وصول المرتجع. <a href="/ar/policies.html#shipping">السياسة كاملة</a></p></section>
 
   <section class="sec reveal" id="faq">
     <span class="snum">07 — الأسئلة</span>
@@ -2240,9 +2237,9 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-cart.js?v=5dbf950c" defer></script>
-<script src="/assets/sahra-specimen.js?v=0a9f01ba" defer></script>
-<script src="/assets/sahra-sizefinder.js?v=c950aa1e" defer></script>
-<script src="/assets/sahra-market.js?v=11f2c57f" defer></script>
+<script src="/assets/sahra-specimen.js?v=43647000" defer></script>
+<script src="/assets/sahra-sizefinder.js?v=7a376c6a" defer></script>
+<script src="/assets/sahra-market.js?v=f4f99b0d" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

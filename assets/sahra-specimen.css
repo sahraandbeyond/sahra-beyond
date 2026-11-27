@@ -550,3 +550,6 @@ html.ss-chs-on,html.ss-chs-on body{overflow:hidden}
   html body .ssb.kit .ssb-add{min-height:48px}
   html body .ssb .ssb-r2{flex-wrap:wrap}
 }
+
+/* r168 (audit round 3): on the size chart the dots sit on a solid band, so the chart's last lines never show through them on a small phone */
+@media(max-width:899px){html body .ss-stage.chart-on .ss-tabs{background:#FAF6EF;box-shadow:0 0 0 6px #FAF6EF}}

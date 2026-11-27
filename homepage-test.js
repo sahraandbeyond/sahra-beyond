@@ -505,6 +505,16 @@ console.log('\n\x1b[1mshop page - the free tote is never listed\x1b[0m');
     check('r167: shop search knows both languages (data-q)', /data-q="Khor Fakkan Bay Tee تيشيرت خليج خورفكان/.test(bs));
     check('r167: Sahel Polo chart says it is the polo', /<caption>The Sahel Polo &middot; the Relaxed tee sizes/.test(rp('products/the-sahel-polo/index.html')));
   }
+  { /* r168 (27 Nov 2026): audit round 3 */
+    const rp = f => { try { return fs.readFileSync(path.join(__dirname, f), 'utf8'); } catch (e) { return ''; } };
+    const WL = rp('assets/sahra-welcome.js'), eq = rp('products/empty-quarter-regular/index.html');
+    check('r168: the offer rewriter only touches whole amounts ("150 درهمًا" stays) and uses the site-wide rate', /\(\^\|\[\^\\d\.,\]\)50 درهمًا/.test(WL) && /window\.SBMoney\.rate\(\)/.test(WL));
+    check('r168: Founding pages use the shared delivery closing line with the refund timing', /<section class="sec reveal" id="delivery"><h2 class="dl-vh">Delivery, returns and exchanges<\/h2><p class="dl-foot">Order by 2 pm UAE time on a working day for same-day dispatch\. [^<]*We issue refunds within 5–7 working days/.test(eq) && !/Next-day UAE delivery and free/.test(eq));
+    check('r168: the top banner grows with large text instead of clipping', /\.sbw-wrap\{min-height:var\(--sbw-h\);overflow:hidden\}/.test(rp('assets/sahra-welcome.css')));
+    check('r168: the size finder close button sits in the header corner at every text size', /\.sf3-hd \.sfx-x\{position:absolute;top:4px;inset-inline-end:4px\}/.test(rp('assets/sahra-sizefinder.js')));
+    check('r168: the Sahel Polo chart slide names the polo', /<span class="ss-chv-fit">, Sahel Polo \(the Relaxed tee sizes\)<\/span>/.test(rp('products/the-sahel-polo/index.html')));
+    check('r168: the Kit teaser\'s AED figures follow the visitor\'s currency', /<span class="pdp-acc-ts">[^]*?<span class="sb-amt" data-aed="139" data-of="sahra-trail-tee">AED 139<\/span>/.test(rp('products/sahra-trail-kit/index.html')));
+  }
   check('/ar/shop/ is the same grid, in Arabic', (ars.match(/<div class="sg-i" /g) || []).length === 28 && /id="shopBar"/.test(ars) && !/UAE graphic|Polos and hoodies|28 pieces|Nothing in this range|Graphic t-shirts, polos|Search tees|Price, low to high/.test(ars));
 }
 

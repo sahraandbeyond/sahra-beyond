@@ -320,6 +320,8 @@ table.sz td:first-child{font-weight:600}
 .pdp-ans .lede{font-size:16.5px;line-height:1.7;margin:0 0 12px;max-width:none}
 .pdp-ans .occasion{margin:0 0 14px}
 .pdp-ans .spec-strip{margin:2px 0 14px}
+.dl-vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#delivery .dl-foot{margin:12px 0 0;font-size:15px;line-height:1.6;color:#4A4136}#delivery .dl-foot a{color:#7E4114}
 .pdp-ans .made-in{margin:0 0 14px;font-size:15px;line-height:1.5;color:#4A4136}
 .pdp-ans .colourway{margin:0 0 14px}
 .pdp-ans{border-bottom:1px solid var(--line)}
@@ -974,7 +976,7 @@ h1 .nw{white-space:nowrap}
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=e5762a32">
 <link rel="stylesheet" href="/assets/sahra-cart.css?v=459d07a2">
 <link rel="preload" as="image" href="/shirts/card/alquaa-model-back.webp" imagesrcset="/shirts/card/alquaa-model-back.webp 538w, /shirts/alquaa-model-back.webp 1076w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high">
-<link rel="stylesheet" href="/assets/sahra-specimen.css?v=e5a56e08">
+<link rel="stylesheet" href="/assets/sahra-specimen.css?v=c3ec9aa5">
 <script>try{var g=sessionStorage.getItem('sb_geo');if(g&&/^[A-Z]{2}$/.test(g)){document.documentElement.setAttribute('data-market',g==='AE'?'uae':(['SA','QA','OM','BH','KW'].indexOf(g)>-1?'gcc':'intl'));}}catch(e){}</script>
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/products/al-quaa-galaxy-oversized/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/products/al-quaa-galaxy-oversized/">
@@ -982,8 +984,8 @@ h1 .nw{white-space:nowrap}
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/sahra-rtl.css?v=d330296d">
 <script src="/assets/sahra-ar-ui.js?v=78db0744" defer></script>
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=01c6df35">
-<script src="/assets/sahra-welcome.js?v=55e3a76e" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=3b8723af">
+<script src="/assets/sahra-welcome.js?v=1e922c06" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=0e04262e">
 <script src="/assets/sahra-nav.js?v=ee987bd5" data-sbn defer></script>
 <link rel="stylesheet" href="/assets/sahra-system.css?v=c94116de">
@@ -1811,7 +1813,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 
   
 
-  <section class="sec reveal" id="delivery"><span class="snum">04 — التوصيل والإرجاع</span><h2>توصيل في اليوم التالي في الإمارات واستبدال مجاني</h2><p>توصيل في اليوم التالي في أنحاء الإمارات للطلبات التي تصل قبل الساعة 2 ظهرًا في يوم عمل، مجاني للطلبات فوق 100 درهم، و15 درهمًا لما دون ذلك؛ وإرجاع مجاني واستبدال مجاني للمقاس أو القصّة داخل الإمارات خلال 14 يومًا. التفاصيل في <a href="/ar/policies.html#shipping">سياسة التوصيل والإرجاع</a>.</p></section>
+  <section class="sec reveal" id="delivery"><h2 class="dl-vh">التوصيل والإرجاع والاستبدال</h2><p class="dl-foot">اطلب قبل الساعة 2 ظهرًا بتوقيت الإمارات في يوم عمل للشحن في اليوم نفسه. الإرجاع خلال 14 يومًا للقطع غير الملبوسة وعليها بطاقاتها: مجاني داخل الإمارات، ويتحمل العملاء من خارجها تكلفة شحن الإرجاع. نُصدر المبلغ المسترد خلال 5 إلى 7 أيام عمل من وصول المرتجع. <a href="/ar/policies.html#shipping">السياسة كاملة</a></p></section>
 
   <section class="sec reveal" id="faq">
     <span class="snum">07 — الأسئلة</span>
@@ -2255,9 +2257,9 @@ var TOUCH=matchMedia('(hover: none), (pointer: coarse)').matches;
 })();
 </script>
 <script src="/assets/sahra-cart.js?v=5dbf950c" defer></script>
-<script src="/assets/sahra-specimen.js?v=0a9f01ba" defer></script>
-<script src="/assets/sahra-sizefinder.js?v=c950aa1e" defer></script>
-<script src="/assets/sahra-market.js?v=11f2c57f" defer></script>
+<script src="/assets/sahra-specimen.js?v=43647000" defer></script>
+<script src="/assets/sahra-sizefinder.js?v=7a376c6a" defer></script>
+<script src="/assets/sahra-market.js?v=f4f99b0d" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

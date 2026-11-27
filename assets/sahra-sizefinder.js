@@ -816,7 +816,9 @@
     '@media(max-height:660px) and (min-height:561px){.sf3-kit .sf3-stage{height:126px}.sf3-stage{height:168px}.sf3-read{min-height:calc(2.7em + 8px);padding-bottom:4px}.sf3-ctl{gap:10px}}' +
     '@media(max-height:560px){.sf3-view{position:static}.sf3-stage{height:200px}}' +
     '.sf3-tight .sf3-view{position:static}.sf3-tight .sf3-stage{height:clamp(110px,20svh,170px)}' +
-    '@media(max-width:360px){.sf3-hd h2{order:0}.sfx-x{order:1}.sf3-whohd{order:2;flex:1 1 100%}}' +
+    /* r168 (audit round 3): the close button sits in the header's top corner at every text size; the title and the Man / Woman
+       switch wrap beside it */
+    '.sf3-hd{position:relative}html body .sf3 .sf3-hd{padding-inline-end:54px}.sf3-hd .sfx-x{position:absolute;top:4px;inset-inline-end:4px}' +
     '.sf3-hd h2 small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}' +
     '@media(max-width:340px){.sf3-stage{height:150px}.sf3-tries{padding-top:8px}.sf3-chips button{min-height:40px}.sf3-ctl{gap:8px}.sf3-st{flex-basis:40px;width:40px;height:40px}}' +
     '@media(prefers-reduced-motion:reduce){.sfx,.sfx-p.sf3,.sf3-badge,.sf3-stage>svg.fig{transition:none}.sf3-idle input[type=range]::-webkit-slider-thumb{animation:none}}';
