@@ -500,7 +500,9 @@ function productPage(p, all, SITE, stage) {
   const worn = S.onModel && S.onModel.size ? `The model wears ${S.onModel.size}. ` : '';
   /* 12 Nov 2026 (Size finder 2, Faheem: "On every product page"): the help line leads to the size finder, which opens as a sheet */
   const SFD = require('./sizefinder-data.js'), sf = paused ? '' : SFD.mount(SFD.forNewLine(p, SZ, TSZ), { handle: p.handle, color: p.colour });
-  const find = sf ? `<a href="#size-finder" class="pdp-chart">Find your fit with our size finder</a>. ` : '';
+  /* 27 Nov 2026 (size finder placement panel): the finder's way in is now the button above the sizes (specimen.js sheet()); this
+     line keeps the model's size and the free exchange */
+  const find = '';
   /* 17 Nov 2026 (WhatsApp fit help, Faheem): the WhatsApp question now sits once, under the fit (specimen.js waLine), so the
      "Still unsure? Message us." links are gone from this line; it carries the free size exchange instead (UAE visitors only) */
   const exch = `<span class="sb-ship-uae ss-exch"> Free size exchanges in the UAE.</span>`;

@@ -515,6 +515,16 @@ console.log('\n\x1b[1mshop page - the free tote is never listed\x1b[0m');
     check('r168: the Sahel Polo chart slide names the polo', /<span class="ss-chv-fit">, Sahel Polo \(the Relaxed tee sizes\)<\/span>/.test(rp('products/the-sahel-polo/index.html')));
     check('r168: the Kit teaser\'s AED figures follow the visitor\'s currency', /<span class="pdp-acc-ts">[^]*?<span class="sb-amt" data-aed="139" data-of="sahra-trail-tee">AED 139<\/span>/.test(rp('products/sahra-trail-kit/index.html')));
   }
+  { /* r169 (27 Nov 2026): size finder placement panel (A, B, C, D, E, F; WhatsApp below the buy card) */
+    const rp = f => { try { return fs.readFileSync(path.join(__dirname, f), 'utf8'); } catch (e) { return ''; } };
+    const SF = rp('assets/sahra-sizefinder.js'), k = rp('products/khor-fakkan-bay-tee-regular/index.html');
+    check('r169 A: a "Find your size" button above the sizes and a pill beside "Size chart" in the bar; no old text link', k.indexOf('class="ssb-sf"') > -1 && k.indexOf('class="ssb-sf"') < k.indexOf('class="ssb-r1"') && /<a class="ssb-sfp" href="#size-finder" data-sf-entry="bar">/.test(k) && !/class="pdp-chart">Find your fit/.test(k));
+    check('r169 B: answers kept in this browser after Select, "Your size" shown on every product page and the size ringed', /localStorage\.setItem\('sbsf_sel'/.test(SF) && /function yours\(\)/.test(SF) && /sf-yours/.test(SF));
+    check('r169 C: the chart sheet leads with Find your size', /<p class="ss-chv-a ss-chs-top"><a class="ss-chv-f" href="#size-finder" data-chf="sheet">Find your size<\/a>/.test(k));
+    check('r169 D: a fully sold-out fit sends the finder to the other fit', /TX\.goFit\(ofit\.name\)/.test(SF));
+    check('r169 E: Select says what it chose', /picked: function \(s\) \{ return 'Size ' \+ s \+ ' selected, from your size finder\.'/.test(SF));
+    check('r169 F: /shop/ has a Find your size link to the size guide finder', /<a class="sx-sf" href="\/size-guide\/#finder"/.test(rp('shop/index.html')));
+  }
   check('/ar/shop/ is the same grid, in Arabic', (ars.match(/<div class="sg-i" /g) || []).length === 28 && /id="shopBar"/.test(ars) && !/UAE graphic|Polos and hoodies|28 pieces|Nothing in this range|Graphic t-shirts, polos|Search tees|Price, low to high/.test(ars));
 }
 
@@ -1075,7 +1085,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
     { const fs = require('fs'), path = require('path');
       const pdps = [].concat(...['products', 'ar/products'].map(d => { try { return fs.readdirSync(path.join(__dirname, d)).map(x => d + '/' + x + '/index.html').filter(f => fs.existsSync(path.join(__dirname, f))); } catch (e) { return []; } }));
       const sellable = pdps.filter(f => { const x = rd(f); return /id="ssBuy"/.test(x) && !/data-one="1"/.test(x) && !/data-paused="1"/.test(x); });
-      check('r145 (17 Nov: WhatsApp fit help): one "Ask us on WhatsApp" line on every sellable product page, EN and AR (' + sellable.length + ' pages), after the fit tabs and before the sizes', sellable.length > 40 && sellable.every(f => { const x = rd(f), i = x.indexOf('class="ss-wa"'), k = x.indexOf('class="ss-fits"'); return (x.match(/class="ss-wa"/g) || []).length === 1 && i > 0 && i < x.indexOf('id="ssBuy"') && (k < 0 || k < i) && /href="https:\/\/wa\.me\/971585449946\?text=Hi%2C%20I'm%20looking%20at%20/.test(x); }));
+      check('r145 (17 Nov: WhatsApp fit help): one "Ask us on WhatsApp" line on every sellable product page, EN and AR (' + sellable.length + ' pages), below the buy card (27 Nov, placement panel)', sellable.length > 40 && sellable.every(f => { const x = rd(f), i = x.indexOf('class="ss-wa"'), k = x.indexOf('class="ss-fits"'); return (x.match(/class="ss-wa"/g) || []).length === 1 && i > 0 && i > x.indexOf('id="ssAdd"') /* 27 Nov: moved below the buy card */ && (k < 0 || k < i) && /href="https:\/\/wa\.me\/971585449946\?text=Hi%2C%20I'm%20looking%20at%20/.test(x); }));
       check('r145: the prefilled WhatsApp message names the piece and the fit', /wa\.me\/971585449946\?text=Hi%2C%20I'm%20looking%20at%20the%20Khor%20Fakkan%20Bay%20Tee%20\(Super%20Oversized\)\.%20Which%20size%20should%20I%20get%3F/.test(rd('products/khor-fakkan-bay-tee-super-oversized/index.html')) && /data-wa-fit="Super Oversized"/.test(rd('products/khor-fakkan-bay-tee-super-oversized/index.html')));
       check('r145: the old "Still unsure? Message us." size links are gone from product pages; the size line carries "Free size exchanges in the UAE" (UAE visitors only)', pdps.every(f => !/Still unsure\?|Message us before you order|ما زلت غير متأكد/.test(rd(f))) && sellable.every(f => /<span class="sb-ship-uae ss-exch">/.test(rd(f))));
       check('r145: tapping the line sends GA4 whatsapp_click (placement fit_help, product, fit and size) and Meta Contact', (function (j) { return /window\.track\('whatsapp_click', \{ placement: 'fit_help', item_id: h/.test(j) && /item_variant: variant/.test(j) && /window\.sbMeta\('Contact'/.test(j) && /a\[data-wa="fit_help"\]/.test(j); })(rd('assets/sahra-specimen.js')));
@@ -1172,7 +1182,7 @@ console.log('\n\x1b[1mhomepage - the scroll journey\x1b[0m');
       var kOk = kOwn ? (/<section class="po-rv po-rv-own reviews" id="reviews"/.test(kfb) && !/id="first-reviews"/.test(kfb) && /<a class="po-rate" href="#reviews">/.test(kfb))
         : (/id="first-reviews"/.test(kfb) && /no reviews of its own yet/.test(kfb) && (kfb.match(/<li><b class="po-rv-s"/g) || []).length === 2);
       var tOk = function (h, hs) { return ownOf(hs) ? /<a class="po-rate" href="#reviews">/.test(h) && /id="reviews"/.test(h) : !/<a class="po-rate"/.test(h); };
-      return kOk && /class="ss-help">(<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>\. )?The model wears S\. /.test(kfb) && !/id="first-reviews"/.test(tee) && tOk(tee, ['sahra-trail-tee']) && tOk(kit, ['sahra-trail-kit']);
+      return kOk && /class="ss-help">(<a class="ssb-sf" href="#size-finder" data-sf-entry="card">\. )?The model wears S\. /.test(kfb) && !/id="first-reviews"/.test(tee) && tOk(tee, ['sahra-trail-tee']) && tOk(kit, ['sahra-trail-kit']);
     })());
     /* 10 Nov 2026 (r119, site scorecard; Faheem: "Phone category row", "Lighter pages") */
     var tsh = rd('t-shirts/index.html'), shp = rd('shop/index.html');
@@ -1318,9 +1328,9 @@ console.log('\n\x1b[1mStage 3 - the house look on every listing page\x1b[0m');
   /* 12 Nov 2026: Size finder 2 (Faheem chose all four upgrades after the panel review: on every product page, better
      questions, an honest answer, opens as a sheet) */
   {
-    const has = h => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); return /<div class="sfind" id="size-finder" data-sizefinder data-sf='/.test(pg) && /<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/.test(pg) && /\/assets\/sahra-sizefinder\.js/.test(pg); };
+    const has = h => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); return /<div class="sfind" id="size-finder" data-sizefinder data-sf='/.test(pg) && /<a class="ssb-sf" href="#size-finder" data-sf-entry="card">/.test(pg) && /<a class="ssb-sfp" href="#size-finder" data-sf-entry="bar">/.test(pg) && /\/assets\/sahra-sizefinder\.js/.test(pg); };
     const withF = ['al-quaa-galaxy-regular', 'al-quaa-galaxy-oversized', 'sand-polo', 'khor-fakkan-bay-tee-regular', 'khor-fakkan-bay-tee-super-oversized', 'barr-and-bahr-hoodie', 'sahra-trail-tee', 'sahra-trail-2-in-1-short', 'sahra-trail-kit'];
-    check('size finder: on every product page that has a chart, with the link under the price', withF.every(has), withF.filter(h => !has(h)).join(' '));
+    check('size finder: on every product page that has a chart, with a button above the sizes and a pill in the bar (27 Nov placement panel)', withF.every(has), withF.filter(h => !has(h)).join(' '));
     check('size finder: not offered where there is no chart (the bag)', ['trailhead-bag'].every(h => !/data-sizefinder/.test(fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'))));
     const sfjs = fs.readFileSync(path.join(__dirname, 'assets', 'sahra-sizefinder.js'), 'utf8');
     const W = { readyState: 'complete', documentElement: { getAttribute: () => 'en' }, querySelectorAll: () => [], getElementById: () => 1, head: { appendChild() {} }, createElement: () => ({}) };
@@ -1435,7 +1445,7 @@ console.log('\n\x1b[1mbuying pages - products first\x1b[0m');
   /* 12 Nov 2026 (Faheem): the help line leads to the size finder ("Find your fit with our size finder"), which sits in the size section */
   /* 30 Oct 2026 (Specimen Sheet): the fit switch is a Regular | Oversized control on the page and in the buy sheet, the
      size-chart link sits in the help line above the sheet, and the sheet carries the sizes and Add to bag */
-  const fw = { 'al-quaa-galaxy-regular': /<div class="ss-fits" role="group" aria-label="Fit"><a href="\/products\/al-quaa-galaxy-regular\/" class="on" aria-current="page">[\s\S]*?<a href="\/products\/al-quaa-galaxy-oversized\/" class="">[\s\S]*?<p class="ss-help">[\s\S]*?<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/, 'al-quaa-galaxy-oversized': /<div class="ss-fits" role="group" aria-label="Fit"><a href="\/products\/al-quaa-galaxy-regular\/" class="">[\s\S]*?<a href="\/products\/al-quaa-galaxy-oversized\/" class="on" aria-current="page">[\s\S]*?<p class="ss-help">[\s\S]*?<a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/, 'sand-polo': /<p class="ss-help">The polo is graded to the Regular tee chart\. <a href="#size-finder" class="pdp-chart">Find your fit with our size finder<\/a>/ };
+  const fw = { 'al-quaa-galaxy-regular': /<div class="ss-fits" role="group" aria-label="Fit"><a href="\/products\/al-quaa-galaxy-regular\/" class="on" aria-current="page">[\s\S]*?<a href="\/products\/al-quaa-galaxy-oversized\/" class="">[\s\S]*?<a class="ssb-sf" href="#size-finder" data-sf-entry="card">/, 'al-quaa-galaxy-oversized': /<div class="ss-fits" role="group" aria-label="Fit"><a href="\/products\/al-quaa-galaxy-regular\/" class="">[\s\S]*?<a href="\/products\/al-quaa-galaxy-oversized\/" class="on" aria-current="page">[\s\S]*?<a class="ssb-sf" href="#size-finder" data-sf-entry="card">/, 'sand-polo': /<a class="ssb-sf" href="#size-finder" data-sf-entry="card">[\s\S]*?<p class="ss-help">The polo is graded to the Regular tee chart\. / };
   Object.entries(fw).forEach(([h, re]) => { const pg = fs.readFileSync(path.join(__dirname, 'products', h, 'index.html'), 'utf8'); check('PDP ' + h + ': a size-finder line under the sizes and Add to bag (14 Nov), no slim-fit warning', re.test(pg) && /<div class="sfind" id="size-finder" data-sizefinder/.test(pg) && !/runs slim|one size up/i.test(pg) && (h !== 'sand-polo' || !/class="ss-fits"/.test(pg)) && pg.indexOf('<p class="ss-help">') > pg.indexOf('id="ssAdd"') && pg.indexOf('id="ssBuy"') < pg.indexOf('id="ssAdd"') && /data-size="XL"/.test(pg)); });
 }
 /* ---- 13 Nov 2026: email capture (Faheem chose the welcome code, a gentle sheet, every product page, Tell me when it's back) ---- */

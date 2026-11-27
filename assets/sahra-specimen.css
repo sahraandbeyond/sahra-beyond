@@ -553,3 +553,30 @@ html.ss-chs-on,html.ss-chs-on body{overflow:hidden}
 
 /* r168 (audit round 3): on the size chart the dots sit on a solid band, so the chart's last lines never show through them on a small phone */
 @media(max-width:899px){html body .ss-stage.chart-on .ss-tabs{background:#FAF6EF;box-shadow:0 0 0 6px #FAF6EF}}
+/* 27 Nov 2026 (size finder placement panel; Faheem chose A + B + C): the size finder's way in.
+   In the card: a full-width button right above the sizes. In the bar at the bottom: a pill beside "Size chart".
+   After first use both read "Your size" (assets/sahra-sizefinder.js). */
+html body .ssb-sf{display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;min-height:52px;margin:0 0 8px;padding:8px 12px;border:1px solid rgba(126,65,20,.45);border-radius:12px;background:#FFFFFF;color:#2A2016!important;text-decoration:none!important;font:400 15px/1.3 Jost,system-ui,sans-serif}
+html body .ssb-sf:hover{border-color:#7E4114}
+html body .ssb-sf:focus-visible,html body .ssb-sfp:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+html body .ssb-sf-i{flex:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:#F3DDB8;color:#7E4114}
+html body .ssb-sf-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+html body .ssb-sf-a b{font-weight:600;color:#7E4114}
+html body .ssb-sf-s{font-size:13px;color:#6B6256}
+html body .ssb-sf-c{flex:none;font-size:24px;line-height:1;color:#7E4114}
+html body .ssb-sf.is-yours{background:#FAF6EF}
+html body .ssb-sf.is-yours .ssb-sf-a b{color:#2A2016}
+html body .ssb-sf-ch{font-weight:500;color:#7E4114;text-decoration:underline;text-underline-offset:3px}
+html body .ssb-r0{align-items:center;gap:6px 14px;flex-wrap:wrap}
+html body .ssb-sfp{display:none;align-items:center;gap:6px;min-height:32px;padding:0 12px 0 4px;border-radius:999px;background:#F3DDB8;color:#2A2016!important;font:600 14px/1 Jost,system-ui,sans-serif;text-decoration:none!important}
+html body .ssb-sfp .ssb-sf-i{width:24px;height:24px;background:#FFFFFF}
+html body .ssb-sfp .ssb-sf-i svg{width:11px;height:15px}
+/* the button shows in the card; the pill only in the bar (phones: the sheet when it is not in the page; desktop: .float) */
+@media(max-width:899px){html body .ssb:not(.inl) .ssb-sf{display:none}html body .ssb:not(.inl) .ssb-sfp{display:inline-flex}}
+html body .ssb.float .ssb-sf{display:none}
+html body .ssb.float .ssb-sfp{display:inline-flex}
+/* the size the shopper's finder gives on this page, ringed */
+html body .ssb-sz button.sf-yours:not([aria-pressed="true"]):not(.is-out){box-shadow:inset 0 0 0 2px #7E4114}
+/* the chart sheet: the finder first */
+html body .ss-chs-top{margin:4px 0 14px;gap:6px 14px}
+html body .ss-chs-or{font-size:14px;color:#6B6256}

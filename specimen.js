@@ -303,11 +303,11 @@ function chartFig(s) {
   const msize = s.onModel && s.onModel.size ? s.onModel.size : '';
   const how = s.kit ? 'Measure your chest at its fullest point, with the tape level and snug, and find it in the chart.'
     : 'Lay a top you own flat and measure straight across the chest, just under the arms. Compare it with the chest row.';
-  return `<figure class="ss-v ss-v-chart" id="ssV-chart" role="tabpanel" aria-labelledby="ssT-chart" data-v="chart" data-cap=""${msize ? ` data-msize="${esc(msize)}"` : ''}><div class="ss-chv"><p class="ss-chv-k"><span class="ss-chv-h">Size chart</span><span class="ss-chv-fit">${s.handle === 'the-sahel-polo' ? ', Sahel Polo (the Relaxed tee sizes)' : ''}</span></p>${msize ? `<p class="ss-chv-mw"><i aria-hidden="true"></i>Model wears <bdi>${esc(msize)}</bdi></p>` : ''}<div class="ss-chv-t" data-chv></div><p class="ss-chv-m">${how}</p><p class="ss-chv-a"><a class="ss-chv-f" href="#size-finder" data-chf="slide">Find your fit</a><button type="button" class="ss-chv-all" data-chart-open="slide">Full size chart</button></p></div></figure>`;
+  return `<figure class="ss-v ss-v-chart" id="ssV-chart" role="tabpanel" aria-labelledby="ssT-chart" data-v="chart" data-cap=""${msize ? ` data-msize="${esc(msize)}"` : ''}><div class="ss-chv"><p class="ss-chv-k"><span class="ss-chv-h">Size chart</span><span class="ss-chv-fit">${s.handle === 'the-sahel-polo' ? ', Sahel Polo (the Relaxed tee sizes)' : ''}</span></p>${msize ? `<p class="ss-chv-mw"><i aria-hidden="true"></i>Model wears <bdi>${esc(msize)}</bdi></p>` : ''}<div class="ss-chv-t" data-chv></div><p class="ss-chv-m">${how}</p><p class="ss-chv-a"><a class="ss-chv-f" href="#size-finder" data-chf="slide">Find your size</a><button type="button" class="ss-chv-all" data-chart-open="slide">Full size chart</button></p></div></figure>`;
 }
 function chartSheet(s) {
   if (!chartOn(s)) return '';
-  return `<div class="ss-chs" id="ssChs" role="dialog" aria-modal="true" aria-labelledby="ssChsH" hidden><div class="ss-chs-bg" data-chs-x></div><div class="ss-chs-p" tabindex="-1"><div class="ss-chs-hd"><h2 id="ssChsH"><span class="ss-chv-h">Size chart</span><span class="ss-chv-fit">${s.handle === 'the-sahel-polo' ? ', Sahel Polo (the Relaxed tee sizes)' : ''}</span></h2><button type="button" class="ss-chs-x" data-chs-x aria-label="Close the size chart"><span aria-hidden="true">&times;</span></button></div><div class="ss-chs-b" data-chs></div><p class="ss-chv-a"><a class="ss-chv-f" href="#size-finder" data-chf="sheet">Find your fit</a></p></div></div>`;
+  return `<div class="ss-chs" id="ssChs" role="dialog" aria-modal="true" aria-labelledby="ssChsH" hidden><div class="ss-chs-bg" data-chs-x></div><div class="ss-chs-p" tabindex="-1"><div class="ss-chs-hd"><h2 id="ssChsH"><span class="ss-chv-h">Size chart</span><span class="ss-chv-fit">${s.handle === 'the-sahel-polo' ? ', Sahel Polo (the Relaxed tee sizes)' : ''}</span></h2><button type="button" class="ss-chs-x" data-chs-x aria-label="Close the size chart"><span aria-hidden="true">&times;</span></button></div>${/* 27 Nov 2026 (placement panel, C): the finder first, above the table */''}<p class="ss-chv-a ss-chs-top"><a class="ss-chv-f" href="#size-finder" data-chf="sheet">Find your size</a><span class="ss-chs-or">or read the chart below</span></p><div class="ss-chs-b" data-chs></div></div></div>`;
 }
 function stage(s, altBase) {
   const order = s.views.slice();
@@ -410,12 +410,17 @@ function snapOut(handle, g, z) {
   return !t.some(k => k.split(' / ')[i] === z && st[k]);
 }
 function allOut(handle) { const st = STOCK[handle]; return !!st && Object.keys(st).length > 0 && Object.keys(st).every(k => !st[k]); }
+/* a small standing figure, the size finder's mark (27 Nov 2026) */
+const SF_GLYPH = '<svg viewBox="0 0 16 22" width="14" height="19" focusable="false"><circle cx="8" cy="3.2" r="2.6" fill="currentColor"/><path d="M4.2 7.4h7.6l1.3 6.3-1.6.4-1.1-4.3v11.6H8.9l-.9-6.6-.9 6.6H5.6V9.8l-1.1 4.3-1.6-.4z" fill="currentColor"/></svg>';
 function sheet(s) {
   const btn = (z, g) => snapOut(s.handle, g, z) ? `<button type="button" data-size="${z}" aria-pressed="false" class="is-out" aria-disabled="true" aria-label="${z}, sold out">${z}</button>` : `<button type="button" data-size="${z}" aria-pressed="false">${z}</button>`;
   const group = (g, label, show) => `<div class="ssb-sz" role="group" aria-label="${label}" data-group="${g}">${show ? `<span class="ssb-gl">${show}</span>` : ''}${['S', 'M', 'L', 'XL'].map(z => btn(z, g)).join('')}</div>`;
   const sizes = s.oneSize ? `<span class="ssb-one">One size</span>` : s.kit ? `<div class="ssb-kit">${group('tee', 'Tee size', 'Tee')}${group('short', 'Short size', 'Short')}</div>` : group('size', 'Size');
   return `<div class="ssb${s.kit ? ' kit' : ''}${s.oneSize ? ' one' : ''}" id="ssBuy" role="region" aria-label="Buy ${esc(s.name.replace(/&amp;/g, '&'))}" data-handle="${s.handle}" data-kit="${s.kit ? 1 : 0}" data-one="${s.oneSize ? 1 : 0}" data-gift="${s.gift ? 1 : 0}" data-line="${s.line}" data-price="${s.price}"${PAUSED[s.handle] ? ' data-paused="1"' : ''}${(s.fits || []).some(f => f.fit === 'Super Oversized') ? ' data-fitwide="1"' : ''}>
-      ${chartOn(s) ? `<div class="ssb-r0"><button type="button" class="ssb-chl" data-chart-open="link" aria-haspopup="dialog" aria-controls="ssChs"><i aria-hidden="true"></i>Size chart</button></div>` : ''}
+      ${/* 27 Nov 2026 (size finder placement panel; Faheem chose A + B): the size finder is a button right above the sizes in the
+         card, and a pill beside "Size chart" in the bar at the bottom, so it is on the first screen; after first use both read
+         "Your size" (assets/sahra-sizefinder.js yours()) */''}${chartOn(s) ? `<a class="ssb-sf" href="#size-finder" data-sf-entry="card"><span class="ssb-sf-i" aria-hidden="true">${SF_GLYPH}</span><span class="ssb-sf-t"><span class="ssb-sf-a">Not sure of your size? <b>Find your size</b></span><small class="ssb-sf-s">From your height and weight</small></span><span class="ssb-sf-c" aria-hidden="true">&rsaquo;</span></a>
+      <div class="ssb-r0"><a class="ssb-sfp" href="#size-finder" data-sf-entry="bar"><span class="ssb-sf-i" aria-hidden="true">${SF_GLYPH}</span><span class="ssb-sfp-t">Find your size</span></a><button type="button" class="ssb-chl" data-chart-open="link" aria-haspopup="dialog" aria-controls="ssChs"><i aria-hidden="true"></i>Size chart</button></div>` : ''}
       <div class="ssb-r1">${sizes}<button type="button" class="ssb-add" id="ssAdd"${PAUSED[s.handle] ? ' disabled' : ''}>${PAUSED[s.handle] ? 'Back soon' : 'Add to bag'}</button></div>${PAUSED[s.handle] ? `
       <p class="ssb-paused">${pausedNote(s)}</p>` : ''}
       <div class="ssb-r2"><p class="ssb-meta"><span class="ssb-l1"><span class="ssb-p">${priceSpan(s)}</span><span class="ssb-tb sb-ship-uae sb-aed-only"> · 4 × ${quarter(s.price)} with <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"></span></span><span class="ssb-dl"><span class="sb-ship-uae">Free delivery over AED 100</span><span class="sb-ship-gcc">GCC delivery 3–5 days</span><span class="sb-ship-intl">Worldwide delivery</span> · 14-day returns</span></p>${fitSwitch(s, 'ssb-fit')}</div>
@@ -480,11 +485,11 @@ function top(s, o = {}) {
       ${!PAUSED[s.handle] ? `<p class="ss-pay"><span class="sb-ship-uae">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 Tabby \u00b7 No cash on delivery</span><span class="sb-ship-gcc">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 Tabby \u00b7 No cash on delivery</span><span class="sb-ship-intl">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 No cash on delivery</span></p>` : ''}
       <p class="ss-kind">${kind}</p>
       ${fitSwitch(s, 'ss-fits')}
-      ${waLine(s, o.h1)}
     </div>
     <div class="ss-body">
       ${sheet(s)}
       ${o.help || ''}
+      ${/* 27 Nov 2026 (Faheem, placement panel: "Move it below the buy card"): the size finder leads; WhatsApp is the fallback */''}${waLine(s, o.h1)}
       ${/* 14 Nov 2026 (Faheem, after the r139 scorecard: "Line under price only"): Tabby shows once, as the line under the price; the widget box is gone */''}
       ${promise(s)}
       ${o.extra || ''}

@@ -59,6 +59,9 @@
     smallest: function (s) { return s + ' أصغر مقاس لدينا، وسيكون أوسع مما صُمّم له.'; },
     gone: function (s) { return 'المقاس ' + s + ' نفد في هذه القطعة.'; }, nearest: function (s) { return 'أقرب مقاس متوفر هو ' + s + '.'; },
     seeFit: function (f) { return 'شاهد قصّة ' + f; }, ask: 'اسألنا على واتساب',
+    yourSize: 'مقاسك:', yourSizes: 'مقاساتك:', fromFinder: 'من أداة المقاسات', change: 'تغيير', soldHere: 'نفد في هذه القصّة',
+    picked: function (s) { return 'اخترنا المقاس ' + s + ' من أداة المقاسات.'; }, pickedKit: function (t, h) { return 'اخترنا التيشيرت ' + t + ' والشورت ' + h + ' من أداة المقاسات.'; },
+    goFit: function (f) { return 'اعثر على مقاسك بقصّة ' + f; }, teeW: 'التيشيرت', shortW: 'الشورت',
     closerFit: function (f) { return 'تريدها أقرب إلى الجسم؟ جرّب قصّة ' + f; }, roomierFit: function (f) { return 'تريد مساحة أكبر؟ جرّب قصّة ' + f; },
     pick: function (s) { return 'اختر ' + s; }, pickKit: function (a, b) { return 'اختر التيشيرت ' + a + ' والشورت ' + b; },
     suggest: function (s) { return 'ننصح بـ' + s; }, bestMatch: 'الأنسب', atChest: 'عند الصدر', atWaist: 'عند الخصر',
@@ -92,6 +95,9 @@
     smallest: function (s) { return s + ' is our smallest size, and it will sit roomier than it is designed to.'; },
     gone: function (s) { return s + ' is sold out in this piece.'; }, nearest: function (s) { return s + ' is the closest size in stock.'; },
     seeFit: function (f) { return 'See the ' + f + ' fit'; }, ask: 'Ask us on WhatsApp',
+    yourSize: 'Your size:', yourSizes: 'Your sizes:', fromFinder: 'From your size finder', change: 'Change', soldHere: 'sold out in this fit',
+    picked: function (s) { return 'Size ' + s + ' selected, from your size finder.'; }, pickedKit: function (t, h) { return 'Tee ' + t + ' and short ' + h + ' selected, from your size finder.'; },
+    goFit: function (f) { return 'Find your size in the ' + f + ' fit'; }, teeW: 'Tee', shortW: 'Short',
     closerFit: function (f) { return 'Want it closer to the body? Try the ' + f + ' fit'; }, roomierFit: function (f) { return 'Want more room? Try the ' + f + ' fit'; },
     pick: function (s) { return 'Select ' + s; }, pickKit: function (a, b) { return 'Select tee ' + a + ' and short ' + b; },
     suggest: function (s) { return 'We suggest ' + s; }, bestMatch: 'best match', atChest: 'at chest', atWaist: 'at waist',
@@ -381,8 +387,13 @@
     m: '<svg viewBox="0 0 60 120" aria-hidden="true"><g fill="currentColor" opacity=".55"><ellipse cx="30" cy="11" rx="7" ry="8.5"/><path d="M19 24q11-5 22 0l5 3 3 30-5 1-3-22v26l2 52h-8l-4-46-4 46h-8l2-52V36l-3 22-5-1 3-30z"/></g></svg>',
     w: '<svg viewBox="0 0 60 120" aria-hidden="true"><g fill="currentColor" opacity=".55"><ellipse cx="30" cy="11" rx="6.5" ry="8"/><path d="M21 24q9-4 18 0l4 3 3 29-5 1-3-20 1 13 5 17-6 2 2 43h-7l-3-40-3 40h-7l2-43-6-2 5-17 1-13-3 20-5-1 3-29z"/></g></svg>'
   };
-  function remember(S) { try { sessionStorage.setItem('sbsf', JSON.stringify({ who: S.who, cm: S.cm, kg: S.kg, pref: S.pref, usual: S.usual, chest: S.chest, waist: S.waist, full: S.full, hu: S.hu, wu: S.wu, tH: S.tH, tK: S.tK })); } catch (e) {} }
-  function recall() { try { return JSON.parse(sessionStorage.getItem('sbsf') || 'null'); } catch (e) { return null; } }
+  function memOf(S) { return JSON.stringify({ who: S.who, cm: S.cm, kg: S.kg, pref: S.pref, usual: S.usual, chest: S.chest, waist: S.waist, full: S.full, hu: S.hu, wu: S.wu, tH: S.tH, tK: S.tK }); }
+  function remember(S) { try { sessionStorage.setItem('sbsf', memOf(S)); } catch (e) {} }
+  /* 27 Nov 2026 (size finder placement panel; Faheem chose B, "remember their size"): once a shopper has pressed Select, their
+     answers are kept in this browser (localStorage, nothing leaves it) and every product page shows the size they give there */
+  function keep(S) { try { localStorage.setItem('sbsf_sel', memOf(S)); } catch (e) {} }
+  function kept() { try { return JSON.parse(localStorage.getItem('sbsf_sel') || 'null'); } catch (e) { return null; } }
+  function recall() { try { return JSON.parse(sessionStorage.getItem('sbsf') || 'null') || kept(); } catch (e) { return null; } }
 
   function init(el) {
     if (el.__sf) return; el.__sf = 1;
@@ -585,8 +596,11 @@
           var ok = R.list.every(function (x) { return !x.out(x.tr.size); });
           go.disabled = !ok; go.innerHTML = ok ? TX.pickKit(T0.tr.size, Sh.tr.size) : TX.gone(R.list.filter(function (x) { return x.out(x.tr.size); })[0].tr.size); alt.hidden = true;
         } else {
-          var pick = main.tr.size;
-          if (main.out(pick)) { go.disabled = true; go.textContent = TX.gone(pick); }
+          var pick = main.tr.size, allGone = main.rows.every(function (r) { return main.out(r.size); }), ofit = allGone ? fits.filter(function (f) { return !f.on; })[0] : null;
+          go.removeAttribute('data-href');
+          /* 27 Nov 2026 (placement panel, D): every size of this fit is sold out: the button takes the shopper to the same design's other fit */
+          if (ofit) { go.disabled = false; go.textContent = TX.goFit(ofit.name); go.setAttribute('data-href', ofit.href + '#size-finder'); }
+          else if (main.out(pick)) { go.disabled = true; go.textContent = TX.gone(pick); }
           else { go.disabled = false; go.innerHTML = TX.pick(pick) + (pick !== main.best && !main.gone ? '<small>' + TX.suggest(main.best) + '</small>' : ''); }
           var other = pick === main.best ? (main.r.alt ? main.r.alt.size : '') : (!main.gone ? main.best : '');
           if (other && !main.out(other)) {
@@ -666,12 +680,30 @@
       var last = null;
       chosen.forEach(function (c) { var x = sizeBtn(c[0], c[1]); if (x && !soldOut(c[0], c[1])) { if (x.getAttribute('aria-pressed') !== 'true') x.click(); last = x; } });
       flush(); track('size_finder_select', { size: chosen.map(function (c) { return c[1]; }).join(' / ') });
-      hide();
+      keep(S); remember(S);
+      hide(); yours();
+      /* 27 Nov 2026 (placement panel, E): say what was chosen, under the sizes */
+      var said = chosen.length > 1 ? TX.pickedKit(chosen[0][1], chosen[1][1]) : TX.picked(chosen[0][1]);
+      setTimeout(function () { var m = document.getElementById('ssMsg'); if (m) { m.textContent = said; var b = document.getElementById('ssBuy'); if (b) b.classList.add('has-msg'); } }, 350);
       var buy = document.getElementById('ssBuy');
       if (buy && getComputedStyle(buy).position !== 'fixed') try { buy.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { buy.scrollIntoView(); }
       if (last) setTimeout(function () { try { last.focus({ preventScroll: true }); } catch (e) {} }, 260);
     }
 
+    /* ---------- B (27 Nov 2026): "Your size" on the page, from answers kept in this browser ---------- */
+    function yours() {
+      if (!onPage || inline || !kept() || !S.who) return;
+      var Rr = compute(); if (!Rr) return;
+      var T1 = topOf(Rr), S1 = shortOf(Rr), fitOn = (fitLinks().filter(function (f) { return f.on; })[0] || {}).name || '';
+      var big = document.querySelector('#ssBuy .ssb-sf'), pill = document.querySelector('#ssBuy .ssb-sfp-t');
+      [].forEach.call(document.querySelectorAll('#ssBuy .ssb-sz button.sf-yours'), function (b) { b.classList.remove('sf-yours'); });
+      var label, short;
+      if (cfg.kit && T1 && S1) { label = TX.yourSizes + ' <b>' + TX.teeW + ' ' + T1.best + ' · ' + TX.shortW + ' ' + S1.best + '</b>'; short = TX.yourSizes + ' ' + T1.best + ' · ' + S1.best; }
+      else { var m = T1 || S1; label = TX.yourSize + ' <b>' + m.best + '</b>' + (m.gone ? ', ' + TX.soldHere : fitOn ? ' · ' + esc(fitOn) : ''); short = TX.yourSize + ' ' + m.best + (m.gone ? ' · ' + TX.soldWord : ''); }
+      Rr.list.forEach(function (x) { var b = sizeBtn(x.group, x.best); if (b && !x.gone) b.classList.add('sf-yours'); });
+      if (big) { big.classList.add('is-yours'); var a = big.querySelector('.ssb-sf-a'), sm = big.querySelector('.ssb-sf-s'); if (a) a.innerHTML = label; if (sm) sm.innerHTML = TX.fromFinder + ' · <span class="ssb-sf-ch">' + TX.change + '</span>'; }
+      if (pill) pill.textContent = short;
+    }
     /* ---------- events ---------- */
     function step(k, d) {
       if (k === 'h') { S.cm = Math.max(140, Math.min(210, S.hu === 'ft' ? (Math.round(S.cm / 2.54) + d) * 2.54 : Math.round(S.cm) + d)); S.tH = true; }
@@ -705,6 +737,7 @@
       if (t.hasAttribute('data-st')) { if (fromPointer) { fromPointer = false; return; } return step(t.getAttribute('data-st'), +t.getAttribute('data-d')); }
       if (t.hasAttribute('data-unit')) { var w = t.getAttribute('data-unit').split(':'); if (w[0] === 'h') S.hu = w[1]; else S.wu = w[1]; remember(S); return paintNums(); }
       if (t.hasAttribute('data-fitgo')) { remember(S); flush(); return; }
+      if (t.classList.contains('sf3-go') && t.getAttribute('data-href')) { remember(S); flush(); location.href = t.getAttribute('data-href'); return; }
       if (t.classList.contains('sf3-go') && R) {
         if (cfg.kit) return pickSizes(R.list.map(function (x) { return [x.group, x.tr.size]; }));
         var m = topOf(R) || shortOf(R); return pickSizes([[m.group, m.tr.size]]);
@@ -746,6 +779,14 @@
       if (location.hash === '#size-finder') setTimeout(show, 300);
     }
     paint('init');
+    /* stock arrives a moment after load (assets/sahra-specimen.js): the ring follows it */
+    if (onPage && !inline) {
+      yours();
+      /* r169 review: live stock marks sizes sold out a moment after load (assets/sahra-specimen.js); the answer follows it */
+      var yT = 0, sz = document.querySelectorAll('#ssBuy .ssb-sz');
+      try { if (window.MutationObserver && sz.length) { var sig = function () { return [].map.call(document.querySelectorAll('#ssBuy .ssb-sz button'), function (b) { return (b.disabled || b.classList.contains('is-out')) ? 1 : 0; }).join(''); }, last = sig();
+        var mo = new MutationObserver(function () { var now = sig(); if (now === last) return; last = now; clearTimeout(yT); yT = setTimeout(yours, 80); });   /* stock changes only: yours() itself changes classes */ [].forEach.call(sz, function (g) { mo.observe(g, { subtree: true, attributes: true, attributeFilter: ['class', 'disabled', 'aria-disabled'] }); }); } } catch (e) {}
+    }
   }
 
   /* house colours; text in rem so it follows the phone's text size; every control at least 44 px (unit chips 32 px);
