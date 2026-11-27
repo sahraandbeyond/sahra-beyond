@@ -131,6 +131,7 @@
   }
 
   // ---- price rewriting ----
+  var REF_H = 'the-sahel-polo', REF_AED = 229;
   function handlesOnPage() {
     var seen = {}, out = [];
     document.querySelectorAll('.sb-price[data-handle]').forEach(function (el) {
@@ -151,23 +152,37 @@
       var p = (was && was[h] && /(^|\s)sbs-was(\s|$)/.test(el.getAttribute('class') || '') && was[h]) || map[h];
       if (p) el.textContent = p;
     });
+    lastMap = map; amts(document);
+  }
+  /* r167 (audit round 2): AED amounts outside a price (thresholds, fees, savings) in the visitor's currency, on any part of the page,
+     including parts drawn later (the top banner, the bag): window.SBMoney.paint(el) */
+  var lastMap = null;
+  function amts(root) {
+    var map = (cur && cur !== 'AED' && lastMap) || {};
     /* 27 Nov 2026 (site audit: GCC visitors read SAR prices beside "free over AED 229"): a threshold (.sb-thr[data-aed]) is shown
        in the visitor's currency at the rate Shopify's own prices on this page imply, rounded up, so it never promises less */
     try {
-      var rate = 0;
-      document.querySelectorAll('.sb-price[data-handle][data-aed]').forEach(function (el) {
+      var rate = map.__ref ? map.__ref / REF_AED : 0;
+      if (!rate) document.querySelectorAll('.sb-price[data-handle][data-aed]').forEach(function (el) {
         var t = map[el.getAttribute('data-handle')], a = parseFloat(el.getAttribute('data-aed'));
         var n = t && parseFloat(String(t).replace(/[^0-9.]/g, '')); if (n && a && n / a > rate) rate = n / a;   /* the highest rate on the page: never understates */
       });
-      document.querySelectorAll('.sb-thr[data-aed]').forEach(function (el) {
-        var a = parseFloat(el.getAttribute('data-aed'));
-        el.textContent = rate && cur && cur !== 'AED' ? fmt(Math.ceil(a * rate), cur) : fmt(a, 'AED');
+      /* .sb-thr: a free-delivery threshold, rounded up (never promises less); .sb-amt: any other AED amount (a saving, a fee), rounded */
+      (root || document).querySelectorAll('.sb-thr[data-aed],.sb-amt[data-aed]').forEach(function (el) {
+        if (el.__txt == null) el.__txt = el.textContent;   /* the page's own wording, put back in AED */
+        if (!cur || cur === 'AED' || !(map.__ref || rate)) { el.textContent = el.__txt; return; }
+        var a = parseFloat(el.getAttribute('data-aed')), up = el.classList.contains('sb-thr'), df = el.getAttribute('data-diff');
+        var of = el.getAttribute('data-of'); if (of && map.__raw && map.__raw[of] != null && cur && cur !== 'AED') { el.textContent = fmt(map.__raw[of], cur); return; }
+        if (df && map.__raw && cur && cur !== 'AED') { var pr = df.split('|'), plus = 0, ok = true; pr[0].split(',').forEach(function (h) { if (map.__raw[h] == null) ok = false; else plus += map.__raw[h]; });
+          if (ok && map.__raw[pr[1]] != null && plus > map.__raw[pr[1]]) { el.textContent = fmt(Math.round((plus - map.__raw[pr[1]]) * 100) / 100, cur); return; } }
+        el.textContent = rate && cur && cur !== 'AED' ? fmt(a === REF_AED && map.__ref ? map.__ref : (up ? Math.ceil(a * rate) : Math.round(a * rate)), cur) : fmt(a, 'AED');
       });
     } catch (e) {}
   }
+  window.SBMoney = { paint: function (root) { amts(root); } };
   function localise() {
     var handles = handlesOnPage();
-    if (!cur || !handles.length) return;
+    if (!cur) return;
     if (cur === 'AED') {
       document.documentElement.setAttribute('data-price-cur', 'AED');
       // The AED numbers are baked into the HTML — restore them from the
@@ -175,12 +190,19 @@
       document.querySelectorAll('.sb-price[data-aed]').forEach(function (el) {
         el.textContent = fmt(el.getAttribute('data-aed'), 'AED');
       });
+      lastMap = null; amts(document);
       return;
     }
     if (priceCache[cur]) { paint(priceCache[cur], wasCache[cur]); return; }
+    lastMap = null; amts(document);   /* until this currency's prices arrive, amounts read in AED, never in the last currency's numbers */
     var entry = null;
     for (var i = 0; i < CURRENCIES.length; i++) if (CURRENCIES[i].c === cur) entry = CURRENCIES[i];
     if (!entry) return;
+    /* r167 (audit round 2): every page also asks for one reference piece priced AED 229 (the Sahel Polo), so the rate used for
+       thresholds and other AED amounts is the same on every page (it read SAR 240 on a tee page and SAR 243 on the Kit) */
+    if (handles.indexOf(REF_H) < 0) handles = handles.concat([REF_H]);
+    /* a saving shown as the difference of real prices (the Kit: tee + short - kit) asks for those pieces too */
+    document.querySelectorAll('.sb-amt[data-diff],.sb-amt[data-of]').forEach(function (el) { (el.getAttribute('data-diff') || el.getAttribute('data-of')).split(/[,|]/).forEach(function (h) { if (h && handles.indexOf(h) < 0) handles = handles.concat([h]); }); });
     var q = 'query { ' + handles.map(function (h, i) {
       return 'p' + i + ': product(handle: "' + h.replace(/[^a-z0-9-]/g, '') + '") { handle priceRange { minVariantPrice { amount currencyCode } } compareAtPriceRange { minVariantPrice { amount currencyCode } } }';
     }).join(' ') + ' }';
@@ -194,7 +216,8 @@
         // multi-currency is not live for this country. Show nothing rather
         // than a number checkout will contradict.
         if (mv.currencyCode !== cur) { honoured = false; return; }
-        map[p.handle] = fmt(mv.amount, cur);
+        map[p.handle] = fmt(mv.amount, cur); if (p.handle === REF_H) map.__ref = parseFloat(mv.amount);
+        (map.__raw || (map.__raw = {}))[p.handle] = parseFloat(mv.amount);
         var cv = p.compareAtPriceRange && p.compareAtPriceRange.minVariantPrice;
         if (cv && cv.currencyCode === cur && parseFloat(cv.amount) > parseFloat(mv.amount)) was[p.handle] = fmt(cv.amount, cur);
       });

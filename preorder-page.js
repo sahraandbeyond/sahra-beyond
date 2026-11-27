@@ -186,6 +186,8 @@ const CYCLE_CSS = `[data-cycle]{position:relative}
 [data-cycle]>i.cyc-worn{position:absolute;left:8px;top:8px;max-width:calc(100% - 16px);padding:3px 8px;border-radius:99px;background:rgba(250,246,239,.92);color:#2A2016;font:500 10.5px/1.2 Jost,system-ui,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;pointer-events:none}
 [dir=rtl] [data-cycle]>i.cyc-worn{font-family:inherit}
 [dir=rtl] [data-cycle]>i.cyc-worn{left:auto;right:8px}`;
+/* r167 (audit round 2): AED amounts in a story follow the visitor's currency; these ones are real prices, so they read Shopify's own figure */
+const AMT_OF = { 'sahra-trail-kit': { 139: ' data-of="sahra-trail-tee"', 169: ' data-of="sahra-trail-2-in-1-short"', 29: ' data-diff="sahra-trail-tee,sahra-trail-2-in-1-short|sahra-trail-kit"' } };
 /* r166 (site audit #3 and #4): the Fabric and care and Delivery accordions */
 const FC_CSS_TXT = `.po-fc,.po-dl{padding:4px 0 8px}.po-fc-l{margin:0 0 10px;font-size:15px;line-height:1.6;color:#2A2016}.po-fc h3{margin:14px 0 6px;font:600 15px/1.3 Jost,system-ui,sans-serif;color:#2A2016}.po-fc ul{margin:0 0 10px;padding-inline-start:20px;font-size:14.5px;line-height:1.6;color:#4A4136}
 .shipcards{display:grid;gap:8px;margin:4px 0 12px}.shipcard{display:grid;gap:4px;padding:12px 14px;border:1px solid rgba(42,32,22,.14);border-radius:10px;background:#fff;font-size:14px;line-height:1.5;color:#4A4136}.shipcard b{color:#2A2016;font-size:14px}.shipcard strong{color:#2A2016}
@@ -527,7 +529,7 @@ function productPage(p, all, SITE, stage) {
   ${own ? own.section : p.line === 'sahel' ? firstReviews() : ''}
   ${/* 14 Nov 2026 (review panel): the story is the reason to buy, but opt-in: a closed group with its first lines showing */''}<details class="pdp-acc po-acc"><summary class="pdp-acc-h has-ts"><span class="pdp-acc-hr"><span>${p.line === 'sahel' ? 'The story and the design' : 'The piece and the details'}</span><i aria-hidden="true">+</i></span><span class="pdp-acc-ts">${teaser(p.story)} <b>Read the story</b></span></summary>
   <section class="po-story">
-    <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${p.story}</p>${placeLink}</div>
+    <div><h2>${p.line === 'sahel' ? 'The story' : 'The piece'}</h2><p>${String(p.story).replace(/AED (\d+(?:\.\d+)?)/g, (m, a) => `<span class="sb-amt" data-aed="${a}"${(AMT_OF[p.handle] || {})[a] || ''}>AED ${a}</span>`)}</p>${placeLink}</div>
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
       <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.images.some(i => i.studio) ? '' : p.line === 'sahel' ? 'Photographed from the real piece.' : ''} Designed in the UAE.</p></div>
   </section></details>
@@ -1163,18 +1165,8 @@ function fabricCareHtml(p) {
 }
 /* the Founding Edition delivery cards, by market (html[data-market] puts the visitor's own first) */
 const DELIVERY_HTML = `<details class="pdp-acc po-acc" id="delivery-g"><summary class="pdp-acc-h"><span>Delivery, returns and exchanges</span><i aria-hidden="true">+</i></summary><section class="po-dl">
-  <div class="shipcards">
-    <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#3F6B3A"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> United Arab Emirates</b>
-      <span>Next working day to every emirate, Al Ain included: order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
-      <span>Free returns and size or fit exchanges within 14 days</span></div>
-    <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
-      <span>3–5 working days: AED 50, <strong>free over <span class="sb-thr" data-aed="229">AED 229</span></strong></span>
-      <span>Duties, if any, are payable on arrival</span></div>
-    <div class="shipcard shipcard-intl"><b>Worldwide</b>
-      <span>7–14 working days: AED 80</span>
-      <span>Duties and import taxes are payable on arrival</span></div>
-  </div>
-  <p class="po-small">Order by 2 pm UAE time on a working day for same-day dispatch. Returns within 14 days, unworn with tags: free within the UAE; international customers cover return postage. We issue refunds within 5–7 working days of the return arriving. <a href="/policies.html#shipping">Full policy</a></p></section></details>`;
+  ${require('./delivery-block.js').CARDS}
+  <p class="po-small">${require('./delivery-block.js').FOOT} <a href="/policies.html#shipping">Full policy</a></p></section></details>`;
 
 module.exports = function buildPreorder({ shell, write, SITE }) {
   const stage = stageNow();

@@ -83,7 +83,8 @@ const RULES = {
     const open = /\sdir="/.test(el.open) ? el.open : setAttr(el.open, 'dir', 'auto');
     /* 18 Nov 2026 (ad-visitor persona audit; Faheem chose "Arabic pages tag English reviews"): a review written in English
        keeps its words, with a small Arabic tag in front so it reads as a buyer's own words, not an untranslated page */
-    if (/class="rv-text"/.test(el.open) && !/[\u0600-\u06FF]/.test(el.inner)) return { open, inner: `<span class="rv-lang" dir="rtl" lang="ar">بالإنجليزية</span> ${el.inner}` };
+    /* 27 Nov 2026 (audit round 2): every review body, not only the list's: the quote under the title and the product page's review row too */
+    if (!/class="rv-title"/.test(el.open) && !/[\u0600-\u06FF]/.test(el.inner) && !/class="rv-lang"/.test(el.inner)) return { open, inner: `<span class="rv-lang" dir="rtl" lang="ar">بالإنجليزية</span> ${el.inner}` };
     return { open };
   },
   /* product card: stars and "5.0 · 2 reviews" */

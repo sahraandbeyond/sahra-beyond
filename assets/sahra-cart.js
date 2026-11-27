@@ -421,7 +421,7 @@
       applied: 'Pair price applied: any two AED 199 tees for AED 359', appliedX: 'Pair price applied: the two-tee price',
       sahelFit: 'Sahel runs larger than the Founding Edition.', sahelChart: 'Sahel size chart', trailFit: 'Sahra Trail is its own pattern.', trailChart: 'Sahra Trail size chart',
       total: 'Total', delivery: 'Delivery', returns: 'Returns', tabby: 'Tabby',
-      dUae: 'Free, next working day', dUae15: 'AED 15, next working day', dGcc: 'AED 50, free over AED 229', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
+      dUae: 'Free, next working day', dUae15: 'AED 15, next working day', dGcc: 'AED 50, free over AED 229', dGccFree: 'Free', dGccX: '<span class="sb-amt" data-aed="50">AED 50</span>, free over <span class="sb-thr" data-aed="229">AED 229</span>, 3–5 working days', dIntl: '<span class="sb-amt" data-aed="80">AED 80</span>, 7–14 working days',
       away: 'AED {n} away from free delivery', unlocked: 'Free delivery unlocked',
       rUae: 'Free for 14 days', rX: 'Within 14 days', rX14: '14-day returns', dUaeLine: 'Free delivery, next working day \u00b7 free 14-day returns', appliedN: 'Pair price applied: {n} AED 199 tees at AED 179.50 each', tabbyRow: '4 payments of {p}, no interest',
       checkout: 'Checkout', payUae: 'Apple Pay, Google Pay, Shop Pay, card or <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"> at checkout', payX: 'Apple Pay, Google Pay, Shop Pay or card at checkout',
@@ -444,7 +444,7 @@
       applied: 'طُبّق سعر القطعتين: أي تيشيرتين بسعر 199 درهمًا مقابل 359 درهمًا', appliedX: 'طُبّق سعر القطعتين',
       sahelFit: 'مقاسات ساحل أوسع من الإصدار التأسيسي.', sahelChart: 'جدول مقاسات ساحل', trailFit: 'لصحراء تريل نمط قصّ خاص بها.', trailChart: 'جدول مقاسات صحراء تريل',
       total: 'المجموع', delivery: 'التوصيل', returns: 'الإرجاع', tabby: 'تابي',
-      dUae: 'مجاني، في يوم العمل التالي', dUae15: '15 درهمًا، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 229 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
+      dUae: 'مجاني، في يوم العمل التالي', dUae15: '15 درهمًا، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 229 درهمًا', dGccFree: 'مجاني', dGccX: '<span class="sb-amt" data-aed="50">50 درهمًا</span>، ومجاني فوق <span class="sb-thr" data-aed="229">229 درهمًا</span>، من 3 إلى 5 أيام عمل', dIntl: '<span class="sb-amt" data-aed="80">80 درهمًا</span>، من 7 إلى 14 يوم عمل',
       away: 'يبقى {n} درهمًا للتوصيل المجاني', unlocked: 'التوصيل مجاني لهذا الطلب',
       rUae: 'مجانًا خلال 14 يومًا', rX: 'خلال 14 يومًا', rX14: 'إرجاع خلال 14 يومًا', dUaeLine: 'توصيل مجاني في يوم العمل التالي · إرجاع مجاني خلال 14 يومًا', appliedN: 'طُبّق سعر القطعتين: {n} تيشيرتات بسعر 199 درهمًا، كلٌّ منها بـ 179.50 درهمًا', tabbyRow: '4 دفعات بدون فوائد، كل دفعة {p}',
       checkout: 'إتمام الشراء', payUae: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay، البطاقة أو <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="تابي" width="41" height="16" decoding="async">', payX: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay أو البطاقة',
@@ -580,7 +580,8 @@
     $('sbX').addEventListener('click', close);
     $('sbOv').addEventListener('click', close);
     addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { hidePeek(); close(); return; }
+      /* r167 (audit round 2): Escape on the peek alone closes the peek and gives focus back to Add to bag; the drawer's own close only when it is open */
+      if (e.key === 'Escape') { var dd = $('sbDrawer'); hidePeek(); if (dd && dd.classList.contains('on')) close(); return; }
       if (e.key !== 'Tab') return;
       var d = $('sbDrawer');
       if (!d || !d.classList.contains('on')) return;
@@ -824,11 +825,13 @@
          moves to Checkout in the peek (it was lost to the page body, with Checkout the 38th Tab stop); the peek stays
          while focus is inside it */
       announce(T('added') + ': ' + $('sbPkName').textContent + ', ' + ($('sbPkMeta').textContent || ''));
-      if (KEYED) { peekFrom = document.activeElement; setTimeout(function () { try { $('sbPkGo').focus({ preventScroll: true }); } catch (e) {} }, 60); }
+      if (KEYED) { peekFrom = (document.activeElement && document.activeElement !== document.body) ? document.activeElement : lastReal; setTimeout(function () { try { $('sbPkGo').focus({ preventScroll: true }); } catch (e) {} }, 60); }
       clearTimeout(peekT); peekT = setTimeout(function wait() { if (pk.contains(document.activeElement)) { peekT = setTimeout(wait, 2000); return; } hidePeek(); }, 6000);
     } catch (e) {}
   }
-  var KEYED = false, liveEl = null, peekFrom = null;
+  var KEYED = false, liveEl = null, peekFrom = null, lastReal = null;
+  /* the last control a shopper was on outside the peek (Add to bag is often disabled, so blurred, while the add runs) */
+  document.addEventListener('focusin', function (e) { var t = e.target; if (t && t !== document.body && !(t.closest && t.closest('#sbPeek'))) lastReal = t; }, true);
   document.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Tab') KEYED = true; }, true);
   document.addEventListener('pointerdown', function () { KEYED = false; }, true);
   function announce(msg) {
@@ -841,7 +844,10 @@
     clearTimeout(peekT);
     var pk = $('sbPeek'); if (!pk || pk.hidden) return;
     /* r166 review: a keyboard shopper's focus goes back to where the add came from, not to the page body */
-    if (pk.contains(document.activeElement) && peekFrom && document.contains(peekFrom)) { try { peekFrom.focus({ preventScroll: true }); } catch (e) {} }
+    if (pk.contains(document.activeElement) || document.activeElement === document.body) {
+      var back = (peekFrom && document.contains(peekFrom) && !peekFrom.disabled) ? peekFrom : document.querySelector('.ssb-add:not([disabled]),#ssBuy,.sb-add:not([disabled])');
+      if (back && (peekFrom || pk.contains(document.activeElement))) { try { back.focus({ preventScroll: true }); } catch (e) {} }
+    }
     peekFrom = null;
     pk.classList.remove('on');
     setTimeout(function () { if (!pk.classList.contains('on')) pk.hidden = true; }, reducedMotion() ? 0 : 320);
@@ -1082,6 +1088,8 @@
         el.className = 'sb-free sb-x-mkt';
         el.innerHTML = T('delivery') + ': ' + x.replace(/(<span class="sb-free-t">)/, ' \u00b7 ' + T('rX14') + '$1') + (x.indexOf('sb-free-t') < 0 ? ' \u00b7 ' + T('rX14') : '');
       } else if (mkt === 'intl') { el.className = 'sb-free sb-x-mkt'; el.innerHTML = T('delivery') + ': ' + T('dIntl') + ' \u00b7 ' + T('rX14'); }
+      /* r167 (audit round 2): the GCC and worldwide fee and threshold in the bag's currency (assets/sahra-market.js) */
+      if (mkt === 'gcc' || mkt === 'intl') try { if (window.SBMoney) window.SBMoney.paint(el); } catch (e) {}
       else {
         /* 22 Oct 2026: a bag holding pre-order pieces does not promise next-day delivery for them */
         var anyPre = !PRE_IN_HAND && cartNodes().some(isPre);

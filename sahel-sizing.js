@@ -49,13 +49,13 @@ function foundingToSuper() {
   <div class="ssz-wrap"><table class="ssz ssz-match"><caption>Founding Edition Oversized to Sahel Super Oversized</caption><thead><tr><th scope="col">Founding Edition Oversized</th><th scope="col">Sahel Super Oversized</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
 }
 const cell = (i, c) => `${i}&Prime;<small>${Number(c).toFixed(1)}&nbsp;cm</small>`;
-function table(key) {
+function table(key, polo) {
   /* measurements down the side, sizes across (as on the supplied charts), so even the six-row hoodie
      chart fits a phone without sideways scrolling */
   const t = D[key];
   const sizes = t.rows.map(r => r[0]);
   return `<div class="ssz-wrap"><table class="ssz">
-    <caption>Sahel &middot; ${t.label.replace(/^Sahel /, '')} &middot; measured flat</caption>
+    <caption>${polo ? 'The Sahel Polo &middot; the Relaxed tee sizes' : `Sahel &middot; ${t.label.replace(/^Sahel /, '')}`} &middot; measured flat</caption>
     <thead><tr><th scope="col">Measurement</th>${sizes.map(z => `<th scope="col">${z}</th>`).join('')}</tr></thead>
     <tbody>${t.cols.map((c, ci) => `<tr><th scope="row">${c}</th>${t.rows.map(r => `<td>${cell(r[1 + ci * 2], r[2 + ci * 2])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
@@ -67,7 +67,7 @@ function method(key) {
 function block(key, opts = {}) {
   const t = D[key];
   return `${opts.heading ? `<h3 class="ssz-h">${t.label}</h3>` : ''}${opts.polo ? '<p class="ssz-intent"><strong>The Sahel Polo has the same sizes as the Sahel Relaxed tee</strong>, so this is its chart.</p>' : `<p class="ssz-intent">${t.intent}</p>`}
-  ${table(key)}
+  ${table(key, opts.polo)}
   <p class="ssz-diff"><strong>${key === 'teeOversized' ? 'The Founding Edition Oversized chart.' : 'Not the Founding Edition chart.'}</strong> ${D.compare[key]}</p>
   ${method(key)}`;
 }

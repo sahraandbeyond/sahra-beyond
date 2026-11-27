@@ -1145,24 +1145,8 @@ ${/* 14 Nov 2026 (review panel: proof belongs next to the decision): the reviews
         </details>
         <details class="pdp-ans">
           <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">next-day &middot; free over AED 100</span><span class="sb-ship-gcc">GCC 3–5 days · free over <span class="sb-thr" data-aed="229">AED 229</span></span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
-          <div class="shipcards">
-            <!-- No regional-indicator (flag) emoji anywhere in these cards:
-                 Windows renders them as bare letter codes, so the six-flag GCC string became
-                 the gibberish "SAQAOMBHKW" for every Windows visitor (caught
-                 by Faheem on the preview). The UAE flag is a 4-rect inline
-                 SVG — identical on every OS — and the GCC card names its
-                 countries in words. 🌍 is an ordinary emoji and is safe. -->
-            <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#3F6B3A"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> United Arab Emirates</b>
-              <span>Next working day to all seven emirates, Al Ain included — order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
-              <span>Free returns and exchanges within 14 days</span></div>
-            <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
-              <span>3–5 working days — AED 50, <strong>free over <span class="sb-thr" data-aed="229">AED 229</span></strong></span>
-              <span>Duties, if any, are payable on arrival</span></div>
-            <div class="shipcard shipcard-intl"><b>🌍 Worldwide</b>
-              <span>7–14 working days — AED 80</span>
-              <span>Duties and import taxes are payable on arrival</span></div>
-          </div>
-          <p class="pdp-ans-foot">Order by 2 pm UAE time for same-day dispatch · 14-day returns, unworn with tags — free within the UAE; international customers cover return postage. <a href="/policies.html#shipping">Full policy &rarr;</a></p>
+          ${/* r167 (audit round 2): the same delivery block as every other product page (delivery-block.js) */ require('./delivery-block.js').CARDS}
+          <p class="pdp-ans-foot">${require('./delivery-block.js').FOOT} <a href="/policies.html#shipping">Full policy &rarr;</a></p>
         </details>
         <details class="pdp-ans">
           <summary>Fit at a glance</summary>

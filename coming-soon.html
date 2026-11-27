@@ -276,7 +276,7 @@ html:not(.imm) .journey-cue{display:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#grain{display:none}}
 .paymarks{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:14px 0 4px}.paymarks svg{height:24px;width:auto;border:1px solid rgba(0,0,0,.12);border-radius:5px;background:#fff}.paymarks-t{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.88)}</style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' anim-ready';}</script>
-<style data-legib>
+<style data-skip>.sb-skip{position:fixed;top:8px;inset-inline-start:8px;z-index:100000;padding:10px 16px;border-radius:8px;background:#2A2016;color:#FAF6EF!important;font:600 15px/1.2 Jost,system-ui,sans-serif;text-decoration:none;transform:translateY(-200%)}.sb-skip:focus{transform:none;outline:2px solid #F3DDB8;outline-offset:2px}</style><style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
    rule that sets the serif family carries font-size-adjust:.44 - it renders at
@@ -826,8 +826,11 @@ body.feed-page .crumbs,body.feed-page .crumbs a{color:#6B6256!important}
 body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3DDB8!important}
 </style>
 <script src="/assets/tiktok-pixel.js?v=0fe3e185" data-ttq defer></script>
+
+
+
 </head>
-<body>
+<body><a class="sb-skip" href="#headline">Skip to content</a>
 <div id="preload"><div class="pm"></div><div class="pt">Sahra &amp; Beyond</div></div>
 <div id="progress"><i></i></div>
 <div id="grain"></div>

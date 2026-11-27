@@ -502,6 +502,8 @@ html body .ss-chv-t th,html body .ss-chv-t td{padding-top:7px!important;padding-
 html body .ss-chv-k,html body .ss-chs h2{margin:0;font:500 24px/1.1 'Cormorant Garamond',Georgia,serif;color:#2A2016;letter-spacing:0;max-width:none}
 html body .ss-chv-t{overflow-x:auto;-webkit-overflow-scrolling:touch}
 html body .ss-chv-t .ssz-wrap,html body .ss-chv-t .sz-wrap{margin:0;border-radius:12px;background:#FFFFFF}
+/* r167 (audit round 2): a chart wider than a small phone shows a soft shadow at the edge that scrolls, so the hidden XL column is not missed */
+html body .ssz-wrap,html body .sz-wrap,html body .ss-chv-t .ssz-wrap,html body .ss-chv-t .sz-wrap{background:linear-gradient(90deg,#fff 30%,rgba(255,255,255,0)) left center/28px 100% no-repeat local,linear-gradient(270deg,#fff 30%,rgba(255,255,255,0)) right center/28px 100% no-repeat local,radial-gradient(farthest-side at 0 50%,rgba(42,32,22,.22),rgba(42,32,22,0)) left center/12px 100% no-repeat scroll,radial-gradient(farthest-side at 100% 50%,rgba(42,32,22,.22),rgba(42,32,22,0)) right center/12px 100% no-repeat scroll,#fff}
 html body .ss-chv-t table{font-size:13px;min-width:0!important}
 html body .ss-chv-t caption{font-size:12px;color:#6B6256}
 html body .ss-chv-on{background:rgba(243,221,184,.55)!important;box-shadow:inset 0 0 0 1px rgba(126,65,20,.25)}

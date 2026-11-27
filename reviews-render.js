@@ -230,7 +230,8 @@ function proofQuote(designHandles, opts) {
   const pick = rs => rs.filter(r => Number(r.rating) >= 5 && String(r.body || '').trim().length >= 60 && !/!/.test(firstOf(r))).sort((a, b) => ((a.handle === opts.handle ? 0 : 1) - (b.handle === opts.handle ? 0 : 1)) || (quality(b) - quality(a)))[0];
   const dd = merge(designHandles || []);
   let r = dd && pick(dd.reviews), scope = 'design';
-  if (!r && opts.store !== false) { const sd = merge(allHandles()); r = sd && pick(sd.reviews); scope = 'store'; }
+  /* 27 Nov 2026 (Faheem, audit round 2: "Own reviews only"): no quote from another piece; a page with no review of its own design shows none */
+  if (!r && opts.store === true) { const sd = merge(allHandles()); r = sd && pick(sd.reviews); scope = 'store'; }
   if (!r) return '';
   const first = firstOf(r);
   const name = /^anonymous$/i.test(String(r.name || '').trim()) ? '' : String(r.name || '').trim().split(' ')[0];
@@ -465,7 +466,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 .rv-card .rv-stars{font-size:14px;margin-bottom:8px;display:block}
 .rv-title{display:block;font-size:15px;margin-bottom:6px}
 .rv-text{font-size:14.5px;font-style:italic;line-height:1.65;margin:0 0 10px}
-html[lang=ar] .rv-text[lang=en]{direction:ltr;text-align:left}html[lang=ar] .rv-text[lang=en]::before{content:"بالإنجليزية: ";display:block;direction:rtl;text-align:right;font-style:normal;font-size:12px;color:#6B6256}
+html[lang=ar] .rv-text[lang=en]{direction:ltr;text-align:left}
 .rv-photos{display:flex;gap:8px;margin-bottom:10px}
 .rv-photo{width:72px;height:72px;object-fit:cover;border-radius:2px}
 .rv-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--txt-soft,#6B6256)}

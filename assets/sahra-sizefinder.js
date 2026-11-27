@@ -629,6 +629,15 @@
     }
     function flush() { clearTimeout(sendT); if (!pending) return; var sig = JSON.stringify(pending); if (sig !== sent) { sent = sig; track('size_finder', pending); } pending = null; }
 
+    /* ---------- r167 (27 Nov 2026, audit round 2, large text): when the sticky figure leaves too little room under it for the
+       sliders (big text, a short phone), the figure stops sticking and shrinks, so height and weight can always be reached ---------- */
+    function tight() {
+      if (!sheet || sheet.hidden) return;
+      var b = q('.sf3-body'), v = q('.sf3-view'), p = q('.sfx-p'); if (!b || !v || !p) return;
+      p.classList.remove('sf3-tight');
+      if (b.clientHeight - v.offsetHeight < 120) p.classList.add('sf3-tight');
+    }
+    if (sheet) { addEventListener('resize', tight); try { if (window.ResizeObserver) var ro = new ResizeObserver(function () { tight(); }); ro.observe(q('.sf3-hd')); ro.observe(q('.sf3-view')); } catch (e) {} }
     /* ---------- open and close ---------- */
     var hideT = 0, app = null;
     function show() {
@@ -642,7 +651,7 @@
       app = [].slice.call(document.body.children).filter(function (c) { return c !== sheet && !c.hasAttribute('inert') && c.tagName !== 'SCRIPT'; });
       app.forEach(function (c) { c.setAttribute('inert', ''); });
       q('.sf3-body').scrollTop = 0;
-      requestAnimationFrame(function () { sheet.classList.add('on'); var t = sheet.querySelector('h2'); try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } paint('open'); });
+      requestAnimationFrame(function () { sheet.classList.add('on'); var t = sheet.querySelector('h2'); try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } paint('open'); tight(); });
       track('size_finder_open', {});
     }
     function hide() {
@@ -759,7 +768,7 @@
     '.sf3-body{flex:1;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
     '.sf3-view{position:sticky;top:0;z-index:2;background:#fff;border-bottom:1px solid var(--line)}.sf3-inline .sf3-view{position:static}' +
     '.sf3-stage{position:relative;height:clamp(180px,30svh,300px);background:radial-gradient(120% 90% at 50% 100%,#E8DCC8,#F1E9DC 70%);overflow:hidden;border-top:1px solid var(--line)}' +
-    'html body .sf3-stage>svg.fig{position:absolute;inset:0;width:100%;height:100%;max-width:none;transition:opacity .2s}' +
+    'html body .sf3-stage>svg.fig{position:absolute;inset:0;width:100%;height:100%;max-width:none;transition:opacity .2s;direction:ltr}' +   /* r167: in Arabic the ruler numbers anchored the wrong way and the marker crossed them */
     '.sf3-badge{position:absolute;top:10px;inset-inline-end:12px;z-index:3;min-width:74px;padding:6px 12px 7px;text-align:center;background:var(--glass);border:1px solid var(--line);border-radius:10px;transition:transform .2s}' +
     '.sf3-badge[hidden]{display:none}.sf3-badge b{display:block;font:600 2rem/1 "Cormorant Garamond",Georgia,serif;color:var(--ink)}' +
     '.sf3-bl,.sf3-bo{display:block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}[dir=rtl] .sf3-bl,[dir=rtl] .sf3-bo{letter-spacing:0;font-size:.75rem}' +
@@ -806,6 +815,9 @@
     '@media(max-height:720px) and (min-height:561px){.sf3-stage{height:178px}.sf3-ctl{gap:10px;padding-top:8px}}.sf3-kit .sf3-stage{height:clamp(140px,22svh,240px)}.sf3-kit .sf3-read{font-size:.8rem;min-height:0}.sf3-kit .sf3-tries{gap:6px}.sf3-kit .sf3-chips button{min-height:40px}' +
     '@media(max-height:660px) and (min-height:561px){.sf3-kit .sf3-stage{height:126px}.sf3-stage{height:168px}.sf3-read{min-height:calc(2.7em + 8px);padding-bottom:4px}.sf3-ctl{gap:10px}}' +
     '@media(max-height:560px){.sf3-view{position:static}.sf3-stage{height:200px}}' +
+    '.sf3-tight .sf3-view{position:static}.sf3-tight .sf3-stage{height:clamp(110px,20svh,170px)}' +
+    '@media(max-width:360px){.sf3-hd h2{order:0}.sfx-x{order:1}.sf3-whohd{order:2;flex:1 1 100%}}' +
+    '.sf3-hd h2 small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}' +
     '@media(max-width:340px){.sf3-stage{height:150px}.sf3-tries{padding-top:8px}.sf3-chips button{min-height:40px}.sf3-ctl{gap:8px}.sf3-st{flex-basis:40px;width:40px;height:40px}}' +
     '@media(prefers-reduced-motion:reduce){.sfx,.sfx-p.sf3,.sf3-badge,.sf3-stage>svg.fig{transition:none}.sf3-idle input[type=range]::-webkit-slider-thumb{animation:none}}';
   function all() {

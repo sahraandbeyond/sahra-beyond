@@ -111,7 +111,11 @@
      visitor in the UAE reads the UAE promise; GCC and worldwide visitors keep "We ship worldwide". The market classes
      (html[data-market], assets/sahra-market.js) pick which one shows; before the market is known the UAE line shows. */
   var SHIP_UAE = AR ? 'توصيل مجاني في اليوم التالي داخل الإمارات للطلبات فوق 100 درهم<span class="sbw-x"> · استبدال مجاني خلال 14 يومًا</span>' : 'Free next-day UAE delivery over AED 100<span class="sbw-x"> · free 14-day exchanges</span>';   /* the exchange half steps aside on a narrow phone */
-  var SHIPS = function (dot) { return '<span class="sb-ship-uae">' + SHIP_UAE + dot + '</span><span class="sb-ship-gcc">' + SHIP + dot + '</span><span class="sb-ship-intl">' + SHIP + dot + '</span>'; };
+  /* 27 Nov 2026 (audit round 2): GCC and worldwide visitors read their own delivery line, with the cost or the free-delivery
+     threshold in their own currency (assets/sahra-market.js window.SBMoney), instead of the bare "We ship worldwide" */
+  var SHIP_GCC = AR ? 'التوصيل إلى دول الخليج خلال 3 إلى 5 أيام عمل، مجاني فوق <span class="sb-thr" data-aed="229">229 درهمًا</span>' : 'GCC delivery in 3–5 working days, free over <span class="sb-thr" data-aed="229">AED 229</span>';
+  var SHIP_INTL = AR ? 'نشحن إلى جميع أنحاء العالم خلال 7 إلى 14 يوم عمل' : 'We ship worldwide in 7–14 working days';
+  var SHIPS = function (dot) { return '<span class="sb-ship-uae">' + SHIP_UAE + dot + '</span><span class="sb-ship-gcc">' + SHIP_GCC + dot + '</span><span class="sb-ship-intl">' + SHIP_INTL + dot + '</span>'; };
   function esc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
   /* ---------------------------------------------------------------- bar */
@@ -137,6 +141,7 @@
         (k === 1 ? '' : '<span class="sbw-sep sbw-shipwrap" aria-hidden="true">&middot;</span>' +
         '<span class="sbw-ship sbw-shipwrap"' + (AR ? ' dir="rtl" lang="ar"' : '') + '>' + SHIPS('') + '</span>') +
       '</span>';
+    try { if (window.SBMoney) window.SBMoney.paint(bar); } catch (e) {}
   }
   render();
   /* a page left open across a stage boundary switches by itself */
@@ -159,7 +164,7 @@
   wrap.className = 'sbw-wrap';
 
   if (host) { host.classList.add('sbw-host'); host.insertBefore(wrap, host.firstChild); }
-  else { wrap.classList.add('sbw-solo'); document.body.insertBefore(wrap, document.body.firstChild); }
+  else { wrap.classList.add('sbw-solo'); var sk = document.querySelector('body > .sb-skip, body > .skip-link'); document.body.insertBefore(wrap, sk ? sk.nextSibling : document.body.firstChild); }   /* r167: the skip link stays the first Tab stop */
   document.body.classList.add('sbw-on');
 
 

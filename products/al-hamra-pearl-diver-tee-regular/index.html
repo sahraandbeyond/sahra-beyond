@@ -785,7 +785,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 .rv-card .rv-stars{font-size:14px;margin-bottom:8px;display:block}
 .rv-title{display:block;font-size:15px;margin-bottom:6px}
 .rv-text{font-size:14.5px;font-style:italic;line-height:1.65;margin:0 0 10px}
-html[lang=ar] .rv-text[lang=en]{direction:ltr;text-align:left}html[lang=ar] .rv-text[lang=en]::before{content:"بالإنجليزية: ";display:block;direction:rtl;text-align:right;font-style:normal;font-size:12px;color:#6B6256}
+html[lang=ar] .rv-text[lang=en]{direction:ltr;text-align:left}
 .rv-photos{display:flex;gap:8px;margin-bottom:10px}
 .rv-photo{width:72px;height:72px;object-fit:cover;border-radius:2px}
 .rv-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--txt-soft,#6B6256)}
@@ -836,20 +836,20 @@ html[lang=ar] .rv-text[lang=en]{direction:ltr;text-align:left}html[lang=ar] .rv-
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=e5762a32">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=5c7216f2">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=459d07a2">
 
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/products/al-hamra-pearl-diver-tee-regular/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/products/al-hamra-pearl-diver-tee-regular/">
 <link rel="alternate" hreflang="x-default" href="https://www.sahraandbeyond.ae/products/al-hamra-pearl-diver-tee-regular/">
-<link rel="stylesheet" href="/assets/sahra-welcome.css?v=5bfed8d6">
-<script src="/assets/sahra-welcome.js?v=8581279e" data-sbw defer></script>
+<link rel="stylesheet" href="/assets/sahra-welcome.css?v=01c6df35">
+<script src="/assets/sahra-welcome.js?v=55e3a76e" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=0e04262e">
 <script src="/assets/sahra-nav.js?v=ee987bd5" data-sbn defer></script>
 <link rel="stylesheet" href="/assets/sahra-system.css?v=c94116de">
 <script src="/assets/sahra-measure.js?v=994865e3" defer></script>
 <link rel="preconnect" href="https://checkout.sahraandbeyond.ae">
 <script src="/assets/sahra-zoom.js?v=4e07cdf6" defer></script>
-<style data-legib>
+<style data-skip>.sb-skip{position:fixed;top:8px;inset-inline-start:8px;z-index:100000;padding:10px 16px;border-radius:8px;background:#2A2016;color:#FAF6EF!important;font:600 15px/1.2 Jost,system-ui,sans-serif;text-decoration:none;transform:translateY(-200%)}.sb-skip:focus{transform:none;outline:2px solid #F3DDB8;outline-offset:2px}</style><style data-legib>
 /* ---- Type change, 18 Sep 2026: Cormorant Garamond + Jost (Faheem) ----
    Cormorant runs small (x-height .386/em against Playfair's .514), so every
    rule that sets the serif family carries font-size-adjust:.44 - it renders at
@@ -1399,7 +1399,7 @@ body.feed-page .crumbs,body.feed-page .crumbs a{color:#6B6256!important}
 body.dark-bg a:focus-visible,body.dark-bg button:focus-visible{outline-color:#F3DDB8!important}
 </style>
 </head>
-<body class="po-page">
+<body class="po-page"><a class="sb-skip" href="#sb-main">Skip to content</a>
 <header class="hdr sb-top"><a class="brand" href="/"><img src="/logo/mark-full-dark.png" alt="Sahra &amp; Beyond" width="375" height="160"><span class="brand-text"><span class="brand-sahra">Sahra</span><span class="brand-beyond">&amp; Beyond</span><span class="brand-sahra sb-house">Designed in the UAE for everyone who loves it.</span></span></a><nav class="hdr-nav"><a href="/#collection">Collection</a><a href="/shop/">Shop</a><a href="/places/">Places</a><a href="/t-shirts/">T-Shirts</a><a href="/polos/">Polos</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav><button class="mnav" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button></header>
 <style>html[data-stage="0"] .st1,html[data-stage="0"] .st2,html[data-stage="0"] .st12,html[data-stage="1"] .st0,html[data-stage="1"] .st2,html[data-stage="1"] .st02,html[data-stage="2"] .st0,html[data-stage="2"] .st1,html[data-stage="2"] .st01,html:not([data-stage]) .st0,html:not([data-stage]) .st1,html:not([data-stage]) .st01{display:none!important}</style>
 <script>(function(){var d=document.documentElement,T1=1793126700000,T2=1793304000000;function k(){var n=Date.now(),s=n>=T2?2:n>=T1?1:0;try{var m=/[?&]sbstage=([012])/.exec(location.search||'');if(m)s=+m[1];}catch(e){}return s;}
@@ -1407,7 +1407,7 @@ function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttri
 set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
 /* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
 function days(){try{var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).split('-'),n=Math.round((Date.UTC(2026,9,28)-Date.UTC(+t[0],t[1]-1,+t[2]))/864e5),x=n>1?'That is in '+n+' days.':n===1?'That is tomorrow.':n===0?'That is today.':'';[].forEach.call(document.querySelectorAll('[data-days]'),function(e){e.textContent=x;});}catch(e){}}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><script>(function(){var m=/[?&](fbclid=|utm_source=(meta|facebook|fb|instagram|ig)(&|$))/i.test(location.search);try{if(m)sessionStorage.setItem('sb_meta','1');else m=sessionStorage.getItem('sb_meta')==='1';}catch(e){}try{if(!m||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)||(navigator.connection&&navigator.connection.saveData))return;document.documentElement.classList.add('sb-vf');var l=document.createElement('link');l.rel='preload';l.as='image';l.href='/assets/loops/al-hamra-pearl-diver-poster.webp?v=f9d33301';l.setAttribute('fetchpriority','high');document.head.appendChild(l);}catch(e){}})();</script><link rel="preload" as="image" href="/assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-720.webp" imagesrcset="/assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-480.webp 480w, /assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-720.webp 720w, /assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-1200.webp 1200w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high"><link rel="stylesheet" href="/assets/sahra-specimen.css?v=a1f5225f"><style>
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><script>(function(){var m=/[?&](fbclid=|utm_source=(meta|facebook|fb|instagram|ig)(&|$))/i.test(location.search);try{if(m)sessionStorage.setItem('sb_meta','1');else m=sessionStorage.getItem('sb_meta')==='1';}catch(e){}try{if(!m||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)||(navigator.connection&&navigator.connection.saveData))return;document.documentElement.classList.add('sb-vf');var l=document.createElement('link');l.rel='preload';l.as='image';l.href='/assets/loops/al-hamra-pearl-diver-poster.webp?v=f9d33301';l.setAttribute('fetchpriority','high');document.head.appendChild(l);}catch(e){}})();</script><link rel="preload" as="image" href="/assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-720.webp" imagesrcset="/assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-480.webp 480w, /assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-720.webp 720w, /assets/preorder/pm-al-hamra-pearl-diver-tee-regular-02-back-1200.webp 1200w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high"><link rel="stylesheet" href="/assets/sahra-specimen.css?v=e5a56e08"><style>
 .ssz-wrap{overflow-x:auto;border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#fff;margin:10px 0 0}
 table.ssz{width:100%;border-collapse:collapse;font-family:Jost,system-ui,sans-serif}
 table.ssz caption{caption-side:top;text-align:left;font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B6256;padding:10px 12px 4px}
@@ -1554,7 +1554,7 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
 @media(max-width:360px){#buybar .pb-sz button{min-width:36px;padding:0 4px}}
 @media(prefers-reduced-motion:reduce){#buybar.po-bar{transition:none}.po-sizes.flash{animation:none;background:rgba(243,221,184,.3)}}
 </style>
-<main class="po-main">
+<main id="sb-main" class="po-main">
   <section class="ss ss-sahel" data-ss style="--ss-top:135px">
   <div class="ss-media">
     <nav class="ss-crumb" aria-label="Breadcrumb"><a href="/">Home</a><i aria-hidden="true">/</i><a href="/new/#sahel">Sahel</a><i aria-hidden="true">/</i><span aria-current="page">Al Hamra Pearl Diver Tee &mdash; Relaxed</span></nav>
@@ -1582,7 +1582,7 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
       <p class="ss-eb"><span>Sahel, the Coast Edition</span> · <a href="/locations/al-jazirah-al-hamra/">Al Jazirah Al Hamra</a></p>
       <h1 class="ss-h1">Al Hamra Pearl Diver Tee &mdash; Relaxed</h1>
       
-      <p class="ss-proof"><q data-ar-rule="ugc">Safe to say Sahra &amp; Beyond nailed it. The attention to detail is remarkable.</q> <span class="ss-proof-by" data-ar-rule="rv-by|1">nabeel · verified buyer</span> <span class="ss-proof-on" data-ar-rule="rv-on|Empty Quarter — Regular">On Empty Quarter — Regular</span></p>
+      
       <p class="ss-pr"><span class="ss-price"><span class="sb-price" data-handle="al-hamra-pearl-diver-tee-regular" data-aed="199">AED 199</span></span><span class="ss-pair sb-aed-only">Any two AED 199 tees, AED 359; each extra one AED 179.50</span></p>
       <p class="ss-tbp"><button type="button" class="ssb-tb ss-tb-open sb-ship-uae sb-aed-only" aria-expanded="false" aria-controls="ssTbT-al-hamra-pearl-diver-tee-regular">4 × 49.75 with <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"> <span class="ss-tb-nf">interest-free</span></button></p>
       <p class="ss-tb-t" id="ssTbT-al-hamra-pearl-diver-tee-regular" hidden>Split AED 199 into 4 payments of AED 49.75: the first today, then one every 2 weeks. No interest, and no fees when you pay on time. Tabby confirms at checkout.</p>
@@ -1626,14 +1626,14 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
       <span>Next working day to every emirate, Al Ain included: order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
       <span>Free returns and size or fit exchanges within 14 days</span></div>
     <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
-      <span>3–5 working days: AED 50, <strong>free over <span class="sb-thr" data-aed="229">AED 229</span></strong></span>
+      <span>3–5 working days: <span class="sb-amt" data-aed="50">AED 50</span>, <strong>free over <span class="sb-thr" data-aed="229">AED 229</span></strong></span>
       <span>Duties, if any, are payable on arrival</span></div>
     <div class="shipcard shipcard-intl"><b>Worldwide</b>
-      <span>7–14 working days: AED 80</span>
+      <span>7–14 working days: <span class="sb-amt" data-aed="80">AED 80</span></span>
       <span>Duties and import taxes are payable on arrival</span></div>
   </div>
   <p class="po-small">Order by 2 pm UAE time on a working day for same-day dispatch. Returns within 14 days, unworn with tags: free within the UAE; international customers cover return postage. We issue refunds within 5–7 working days of the return arriving. <a href="/policies.html#shipping">Full policy</a></p></section></details>
-  <details class="pdp-acc po-acc" id="size-chart-g"><summary class="pdp-acc-h"><span>Size chart</span><i aria-hidden="true">+</i></summary><div class="sfind" id="size-finder" data-sizefinder data-sf='{"pieces":[{"kind":"garment","id":"sahel-teeRegular","label":"Sahel tee, Relaxed","labelAr":"تيشيرت ساحل، ريلاكسد","target":15,"fitKey":"relaxed","sahel":true,"sizes":[["S",111.8,71.1],["M",116.8,73.7],["L",122,76.2],["XL",127,78.7]]}],"handle":"al-hamra-pearl-diver-tee-regular","color":"#2A3B57"}'></div><script src="/assets/sahra-sizefinder.js?v=8a611fa9" defer></script><section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask po-match">Already wear our Founding Edition Regular? Go by the chest measurement, not the letter: Founding L (22&Prime;) is a Sahel S; Founding XL (24&Prime;) is a Sahel L; Founding S and M are smaller than any Sahel Relaxed size, so Sahel S (22&Prime;) is the closest.</p><p class="ssz-intent">A straight cut, roomy through the body: cut larger than a usual regular tee, so many people take a size smaller than usual.</p>
+  <details class="pdp-acc po-acc" id="size-chart-g"><summary class="pdp-acc-h"><span>Size chart</span><i aria-hidden="true">+</i></summary><div class="sfind" id="size-finder" data-sizefinder data-sf='{"pieces":[{"kind":"garment","id":"sahel-teeRegular","label":"Sahel tee, Relaxed","labelAr":"تيشيرت ساحل، ريلاكسد","target":15,"fitKey":"relaxed","sahel":true,"sizes":[["S",111.8,71.1],["M",116.8,73.7],["L",122,76.2],["XL",127,78.7]]}],"handle":"al-hamra-pearl-diver-tee-regular","color":"#2A3B57"}'></div><script src="/assets/sahra-sizefinder.js?v=c950aa1e" defer></script><section class="po-size" id="size-chart"><h2>Size chart</h2><p class="po-ask po-match">Already wear our Founding Edition Regular? Go by the chest measurement, not the letter: Founding L (22&Prime;) is a Sahel S; Founding XL (24&Prime;) is a Sahel L; Founding S and M are smaller than any Sahel Relaxed size, so Sahel S (22&Prime;) is the closest.</p><p class="ssz-intent">A straight cut, roomy through the body: cut larger than a usual regular tee, so many people take a size smaller than usual.</p>
   <div class="ssz-wrap"><table class="ssz">
     <caption>Sahel &middot; tees, Relaxed fit &middot; measured flat</caption>
     <thead><tr><th scope="col">Measurement</th><th scope="col">S</th><th scope="col">M</th><th scope="col">L</th><th scope="col">XL</th></tr></thead>
@@ -1722,8 +1722,8 @@ html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
-<script src="/assets/sahra-cart.js?v=22981bbe" defer></script>
-<script src="/assets/sahra-market.js?v=7aa1ded7" defer></script>
+<script src="/assets/sahra-cart.js?v=5dbf950c" defer></script>
+<script src="/assets/sahra-market.js?v=11f2c57f" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -3140,7 +3140,7 @@ const COMMERCE = [
     related: [['/national-day/', 'UAE National Day t-shirts', 'For Eid Al Etihad, 2 December'], ['/gifts/', 'Gifts from the UAE', 'Leaving gifts that are not touristy']],
     faqs: [
       ['Where can I buy UAE t-shirts online?', 'Here. Sahra & Beyond is a clothing brand designed in the UAE, and every t-shirt is drawn from a real place in the Emirates: the Al Quaa night sky, the Hajar peaks, the Liwa dunes and, in Sahel, the coast. They are cotton, sizes S to XL: the Founding Edition in Regular and Oversized fits, Sahel in Relaxed and Super Oversized, from AED 139, with next-day delivery across the UAE when you order by 2 pm, free on orders over AED 100.'],
-      ['Where do you ship?', 'We ship worldwide from Dubai. In the UAE: next-day delivery to all seven emirates, free on orders over AED 100 and AED 15 below that — order by 2 pm and it arrives the next working day. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 229. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.'],
+      ['Where do you ship?', 'We ship worldwide from the UAE. In the UAE: next-day delivery to all seven emirates, free on orders over AED 100 and AED 15 below that — order by 2 pm and it arrives the next working day. GCC (Saudi Arabia, Qatar, Oman, Bahrain, Kuwait): 3–5 working days, AED 50, free over AED 229. Everywhere else: 7–14 working days, AED 80. Any import duties on international orders are payable on arrival. Exact cost always appears at checkout before you pay.'],
       ['What size should I order?', 'The Founding Edition tees come in Regular and Oversized fits and the Sahel tees in Relaxed and Super Oversized, S to XL; the polos come in one fit. Our size guide has full flat-lay measurements for both lines, plus a method for measuring a t-shirt you already own to find your match. The Founding Edition and Sahel are cut differently: Sahel runs larger, so use the Sahel chart for a Sahel tee rather than the size you took before.'],
       ['What is the cotton, exactly?', '100% combed ring-spun cotton, with no polyester. Combing strips out the short fibres and ring-spinning twists what remains into a smoother, stronger yarn — that is where the weight and the hand come from. We describe the yarn we actually buy and make no certification claims we cannot show you.']
     ]
@@ -3243,10 +3243,10 @@ const COMMERCE = [
   {
     slug: 'size-guide', emoji: '▱', cat: 'Coast',
     /* 27 Oct 2026 (Faheem): Sahel has its own charts; the page says plainly that the two lines size differently */
-    h1: 'Size guide: Founding Edition and Sahel',
-    title: 'T-Shirt & Hoodie Size Guide: Founding Edition and Sahel',
+    h1: 'Size guide: Founding Edition, Sahel and Sahra Trail',   /* r167 (audit round 2): the page has the Trail charts too */
+    title: 'Size Guide: T-Shirts, Hoodies & Sahra Trail | Sahra & Beyond',
     desc: 'Flat-lay measurements for Sahra & Beyond tees and hoodies. The Founding Edition and Sahel are cut differently, so each has its own chart, in inches and centimetres.',
-    intro: "There are two charts on this page, because the two lines are cut differently. The Founding Edition (Al Quaa Galaxy, Hajar Mountains, Empty Quarter and the Sahra Polo) has one chart. Sahel, the Coast Edition, has its own, and runs larger: a Sahel Relaxed S is 22″ across the chest, a Founding Edition Regular S is 19″. Use the chart for the piece you are buying, and go by the measurement rather than the size you usually take.\n\nOur t-shirts and hoodies are cut unisex — one cut worn by everyone, in sizes S to XL, with no separate men's or women's version — and the tees come in Regular and Oversized for the Founding Edition, and in Relaxed, Oversized and Super Oversized (drop shoulder) for Sahel. The polos are a men's cut, S to XL, in one fit. Every figure below is a garment measurement taken flat, not a body measurement. Both inches and centimetres are shown.",
+    intro: "Each line has its own charts, because they are cut differently. The Founding Edition (Al Quaa Galaxy, Hajar Mountains, Empty Quarter and the Sahra Polo) has one chart. Sahel, the Coast Edition, has its own, and runs larger: a Sahel Relaxed S is 22″ across the chest, a Founding Edition Regular S is 19″. Sahra Trail has its own charts too. Use the chart for the piece you are buying, and go by the measurement rather than the size you usually take.\n\nOur t-shirts and hoodies are cut unisex — one cut worn by everyone, in sizes S to XL, with no separate men's or women's version — and the tees come in Regular and Oversized for the Founding Edition, and in Relaxed, Oversized and Super Oversized (drop shoulder) for Sahel. The polos are a men's cut, S to XL, in one fit. Every figure below is a garment measurement taken flat, not a body measurement. Both inches and centimetres are shown.",
     sizeTable: true,
     sections: [
       { h2: 'Regular or oversized?', body: "Regular is a classic straight cut with the shoulder seam at your natural shoulder, and it layers cleanly under a shacket or jacket. Check your size in the chart before you order: measure a shirt you like flat, pit to pit, and match the number.\n\nOversized is a deliberately wider cut with a dropped shoulder and more room through the body. It is designed to be worn on its own rather than layered. The oversized cut already adds width, so compare the chart rather than going by the letter." },
@@ -3797,7 +3797,13 @@ COMMERCE.forEach(P => {
     const desc = 'Graphic t-shirts, polos, hoodies and Sahra Trail running wear, designed in the UAE. Tees from AED 139; any two AED 199 tees for AED 359. Free UAE delivery over AED 100.';
     const kindOf = p => /hoodie/i.test(p.kind || '') ? 'hoodie' : /polo/i.test(p.kind || '') ? 'polo' : p.oneSize ? 'bag' : p.kit ? 'kit' : /short/i.test(p.kind || '') ? 'short' : 'tee';
     /* r166 (27 Nov 2026, site audit #12): each cell carries its price, for the price chip and the sort */
-    const wrap = (line, kind, html) => { const m = html.match(/class="[^"]*\bsb-price" data-handle="[^"]+" data-aed="([\d.]+)"/); return `<div class="sg-i" data-line="${line}" data-kind="${kind}"${m ? ` data-aed="${m[1]}"` : ''}>${html}</div>`; };
+    /* r167 (audit round 2): a search word in either language finds the piece (data-q carries the English and Arabic names) */
+    const ARD = (() => { const d = {}; try { for (const f of fs.readdirSync(path.join(ROOT, 'content', 'ar-mirror'))) if (/^t\d+\.json$/.test(f)) Object.assign(d, JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'ar-mirror', f), 'utf8'))); } catch (e) {} return d; })();
+    const KIND_W = { tee: 't-shirt tee تيشيرت', hoodie: 'hoodie هودي', polo: 'polo بولو', short: 'shorts short شورت', kit: 'kit طقم', bag: 'bag حقيبة' };
+    const qOf = (kind, html) => { const t = ((html.match(/class="pcard-t"[^>]*>([^<]*)</) || [])[1] || '').split(/\s*&mdash;\s*|\s+—\s+/)[0].trim();
+      const ar = ARD[t] || ARD[t.replace(/^The /, '')] || ARD['The ' + t] || ''; return `${t} ${ar} ${KIND_W[kind] || ''}`.replace(/&amp;/g, '&').replace(/"/g, '').replace(/\s+/g, ' ').trim(); };
+    const LINE_W = { sahel: 'sahel ساحل', founding: 'founding edition الإصدار التأسيسي', trail: 'sahra trail activewear صحراء تريل ملابس رياضية', extra: '' };
+    const wrap = (line, kind, html) => { const m = html.match(/class="[^"]*\bsb-price" data-handle="[^"]+" data-aed="([\d.]+)"/); return `<div class="sg-i" data-line="${line}" data-kind="${kind}"${m ? ` data-aed="${m[1]}"` : ''} data-q="${qOf(kind, html)} ${LINE_W[line] || ''}">${html}</div>`; };
     /* Founding Edition: one card per design, Regular and Oversized on the card's own switch (the Sahel pattern) */
     const designs = [];
     founding.forEach(p => { const k = String(p.id).replace(/-(regular|oversized)$/, ''); let d = designs.find(x => x.k === k); if (!d) designs.push(d = { k, fits: [] }); d.fits.push(p); });
@@ -3900,9 +3906,11 @@ function ok(e,f){var k=e.getAttribute('data-kind');if(f==='all')return true;if(f
 var qIn=document.getElementById('shopQ'),sortSel=document.getElementById('shopSort'),tile=grid.querySelector('.sbc-tile'),cur='all';
 function norm(t){return String(t||'').toLowerCase().replace(/[\u064B-\u065F\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/\s+/g,' ').trim();}
 items.forEach(function(e,i){e.__o=i;e.__t=null;});var noneBase=none?none.textContent:'';
-function txt(e){if(e.__t===null){var c=e.querySelector('.pcard');e.__t=norm((c?c.textContent:e.textContent)+' '+(e.getAttribute('data-kind')||'')+' '+(e.getAttribute('data-line')||''));}return e.__t;}
+function txt(e){if(e.__t===null){var c=e.querySelector('.pcard');e.__t=norm((c?c.textContent:e.textContent)+' '+(e.getAttribute('data-q')||'')+' '+(e.getAttribute('data-kind')||'')+' '+(e.getAttribute('data-line')||''));}return e.__t;}
 function qOk(e){var q=norm(qIn&&qIn.value);if(!q)return true;var t=txt(e);return q.split(' ').every(function(w){return t.indexOf(w)>-1;});}
-function apply(){items.forEach(function(e){e.classList.toggle('sg-off',!(ok(e,cur)&&qOk(e)));});if(none){var q=qIn&&qIn.value.trim();none.textContent=q?(AR?'لا توجد قطعة تطابق هذا البحث.':'Nothing matches that search. Try a place, a colour or a piece.'):noneBase;}count();}
+function apply(){items.forEach(function(e){e.classList.toggle('sg-off',!(ok(e,cur)&&qOk(e)));});
+/* r167 (audit round 2): the welcome card steps aside while a chip or a search is on, so the results come first */
+if(tile)tile.style.display=(cur!=='all'||(qIn&&qIn.value.trim()))?'none':'';if(none){var q=qIn&&qIn.value.trim();none.textContent=q?(AR?'لا توجد قطعة تطابق هذا البحث.':'Nothing matches that search. Try a place, a colour or a piece.'):noneBase;}count();}
 function resort(){var v=sortSel?sortSel.value:'';var arr=items.slice().sort(function(a,b){if(!v)return a.__o-b.__o;var d=(+(a.getAttribute('data-aed')||0))-(+(b.getAttribute('data-aed')||0));return (v==='price-desc'?-d:d)||a.__o-b.__o;});
 arr.forEach(function(e){grid.appendChild(e);});if(tile){var at=arr[6];if(at)grid.insertBefore(tile,at);else grid.appendChild(tile);}}
 if(qIn)qIn.addEventListener('input',function(){apply();});
@@ -5577,6 +5585,39 @@ applyTikTokPixel();
   });
   walk(ROOT);
   console.log(`  ✓ fit tabs under the name: ${blocks} card switch(es) on ${pages} page(s)`);
+})();
+
+/* ---------- skip link (27 Nov 2026, audit round 2, keyboard shopper) ---------------------------------------------------
+   Every page starts with a "Skip to content" link, shown only on keyboard focus, that jumps past the header (11 Tab stops)
+   to the page's <main> (or its h1). Replaced on every build, so it is the same everywhere, Arabic pages included. */
+(function skipLinks() {
+  const CSS = '<style data-skip>.sb-skip{position:fixed;top:8px;inset-inline-start:8px;z-index:100000;padding:10px 16px;border-radius:8px;background:#2A2016;color:#FAF6EF!important;font:600 15px/1.2 Jost,system-ui,sans-serif;text-decoration:none;transform:translateY(-200%)}.sb-skip:focus{transform:none;outline:2px solid #F3DDB8;outline-offset:2px}</style>';
+  let n = 0;
+  (function walk(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['node_modules', '.git', '_backup', '_drafts', '.vercel', 'assets', 'admin', 'docs'].includes(e.name)) continue;
+      const f = path.join(d, e.name);
+      if (e.isDirectory()) { walk(f); continue; }
+      if (!e.name.endsWith('.html')) continue;
+      let h = fs.readFileSync(f, 'utf8'); const src = h;
+      if (!/<body[^>]*>/i.test(h) || !/<\/head>/i.test(h)) continue;
+      h = h.replace(/<style data-skip>[\s\S]*?<\/style>/, '').replace(/<a class="sb-skip"[^>]*>[^<]*<\/a>/g, '');
+      /* the <body> tag and the target are looked for after </head> only (a head comment can say "<body>") */
+      const cut = h.search(/<\/head>/i); let head = h.slice(0, cut), tail = h.slice(cut);
+      if (/class="skip-link"/.test(tail)) { if (h !== src) { fs.writeFileSync(f, h); n++; } continue; }   /* the page has its own (home, shop) */
+      let id = null;
+      const bm = /<body[^>]*>/i.exec(tail); if (!bm) continue;
+      const mm = /<main\b[^>]*>/i.exec(tail);
+      if (mm) { const im = /\sid="([^"]+)"/.exec(mm[0]); if (im) id = im[1]; else { id = 'sb-main'; tail = tail.slice(0, mm.index) + mm[0].replace(/^<main/i, '<main id="sb-main"') + tail.slice(mm.index + mm[0].length); } }
+      else { const hm = /<h1\b[^>]*>/i.exec(tail); if (!hm) continue; const im = /\sid="([^"]+)"/.exec(hm[0]); if (im) id = im[1]; else { id = 'sb-main'; tail = tail.slice(0, hm.index) + hm[0].replace(/^<h1/i, '<h1 id="sb-main" tabindex="-1"') + tail.slice(hm.index + hm[0].length); } }
+      const ar = /<html[^>]*\slang="ar"/i.test(head);
+      head = /<style data-legib>/.test(head) ? head.replace('<style data-legib>', CSS + '<style data-legib>') : head + CSS + '\n';
+      tail = tail.replace(/<body[^>]*>/i, m => `${m}<a class="sb-skip" href="#${id}">${ar ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>`);
+      h = head + tail;
+      if (h !== src) { fs.writeFileSync(f, h); n++; }
+    }
+  })(__dirname);
+  console.log(`  ✓ skip link on ${n} page(s) updated`);
 })();
 
 /* ---------- head-tag guard (1 Oct 2026, SEO handover item 4) -------------

@@ -271,7 +271,7 @@ function mirrorPage(html, page, dict, has, missU, missA, bad) {
   s = s.replace(/<meta property="og:locale" content="[^"]*">/i, '<meta property="og:locale" content="ar_AE">');
   s = s.replace(/<link rel="alternate" hreflang="[^"]*" href="[^"]*">\n?/gi, '');
   const alts = `<link rel="alternate" hreflang="en" href="${enAbs}">\n<link rel="alternate" hreflang="ar" href="${arAbs}">\n<link rel="alternate" hreflang="x-default" href="${enAbs}">\n`;
-  const fonts = '<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="/assets/sahra-rtl.css">\n';
+  const fonts = '<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="/assets/sahra-rtl.css">\n';
   s = s.replace(/<\/head>/i, alts + fonts + '</head>');
   if (!/<meta property="og:locale"/i.test(s)) s = s.replace(/(<meta property="og:url" content="[^"]*">)/i, '$1\n<meta property="og:locale" content="ar_AE">');
   /* JSON-LD (QA S10, 30 Oct 2026): the page's structured data speaks Arabic too - see ldArabic() */

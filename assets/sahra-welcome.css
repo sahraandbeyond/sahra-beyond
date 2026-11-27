@@ -293,7 +293,7 @@ html[data-market="intl"] .sbw-rot .sb-ship-intl,html[data-market="intl"] .sbw-sh
    (CLS 0.26-0.34 on every guide). This sheet is render-blocking, so it reserves the
    bar's exact band before the script runs, and the solo bar is held to that height.
    One line at every width: the delivery line drops out between 621 and 959px. */
-:root{--sbw-h:44px}
+:root{--sbw-h:2.75rem}   /* r167: rem, so the band grows with the reader's text size instead of clipping it */
 @media(min-width:621px) and (max-width:959px){
   .sbw-wrap .sbw-hide-sm{display:none}
   .sbw-wrap .sbw-bar-in{flex-wrap:nowrap}
@@ -305,7 +305,7 @@ body:not(.sbw-on):not(:has(.sb-topbar)){padding-top:var(--sbw-h)}
    clipped at the bottom, because the solo bar's line-height ran into the pill): one 30px
    line on phones, pill centred inside it, on every page type. */
 @media(max-width:620px){
-  :root{--sbw-h:30px}
+  :root{--sbw-h:1.875rem}
   .sbw-bar{padding:0 12px!important;height:var(--sbw-h);line-height:1.2}
   .sbw-bar-in{height:100%;align-items:center}
   .sbw-go{padding:3px 9px;font-size:9px;line-height:1.2}
@@ -364,7 +364,7 @@ a.sbw-bar,a.sbw-bar:visited{text-decoration:none;color:#2A2016}
 .sbw-msg-ship{font-weight:500;white-space:nowrap}
 @media(min-width:1240px){.sbw-msg-ship{display:none}}
 @media(max-width:620px){
-  :root{--sbw-h:40px}
+  :root{--sbw-h:2.5rem}
   .sbw-note .sbw-bar-in{justify-content:center;flex-wrap:nowrap;gap:8px}
   .sbw-note .sbw-msg{white-space:normal;text-align:center;letter-spacing:.5px;line-height:1.3;font-size:10px}
   .sbw-note .sbw-dot{flex:0 0 auto}
