@@ -371,8 +371,14 @@
     for (var i = 0; i < w.length; i++) { if (sheet && sheet.contains(w[i])) continue; var r = w[i].getBoundingClientRect(); if (r.height && r.top < innerHeight && r.bottom > 0) return true; }
     return false;
   }
+  /* 27 Nov 2026 (site audit, Faheem: "Make all updates"): the sheet covered 35-45% of the screen while all five phone
+     shoppers read fabric, reviews and the size table. It no longer opens by itself on a product page (the bag line and the
+     page's own text link stay), and elsewhere only from the second page of a visit, so a first look is never covered. */
+  var PDP_RX = /^\/(ar\/)?products\//;
+  var VIEWS = (function () { try { var n = (+sessionStorage.getItem('sbw_pv') || 0) + 1; sessionStorage.setItem('sbw_pv', String(n)); return n; } catch (e) { return 1; } })();
   (function autoSheet() {
     if (isDone() || SKIP_SHEET.test(location.pathname || '/')) return;
+    if (PDP_RX.test(location.pathname || '/') || VIEWS < 2) return;
     var seen = +lsGet(K_SEEN) || 0; if (seen && Date.now() - seen < DAYS14) return;
     var t0 = Date.now(), fired = false, iv = 0, raf = 0;
     function check() {
@@ -397,8 +403,8 @@
     var foot = document.getElementById('sbFoot'); if (!foot || document.getElementById('sbWc')) return !!foot;
     var box = document.createElement('div');
     box.className = 'sbc-bag'; box.id = 'sbWc'; box.setAttribute('data-waitlist-wrap', '');
-    box.innerHTML = '<button type="button" class="sbc-bag-t" aria-expanded="false">' + t('First order? Get AED 50 off over AED 199.', 'طلبك الأول؟ احصل على خصم 50 درهمًا على ما يزيد على 199 درهمًا.') +
-      ' <u>' + t('Get my code', 'أريد الرمز') + '</u></button><div class="sbc-bag-f" hidden>' +
+    box.innerHTML = '<button type="button" class="sbc-bag-t" aria-expanded="false">' + t('First order? AED 50 off over AED 199.', 'طلبك الأول؟ خصم 50 درهمًا فوق 199 درهمًا.') +
+      ' <u>' + t('Get code', 'الرمز') + '</u></button><div class="sbc-bag-f" hidden>' +
       formHtml('bag', { btn: t('Send', 'أرسل'), yes: t('Check your inbox. Your code is on its way: paste it at checkout.', 'تفقّد بريدك الإلكتروني. الرمز في طريقه إليك: الصقه عند الدفع.') }) + '</div>';
     foot.insertBefore(box, foot.firstChild);
     bind(box.querySelector('form'));

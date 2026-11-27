@@ -389,3 +389,8 @@ html body .sb-drawer .sb-fitn a,html body .sb-drawer .sb-bundle a,html body .sb-
 /* 13 Nov 2026 (Faheem: "Wherever tabby is mentioned, it should be the official tabby logo"): Tabby's own badge (identical to the logo in its widget) in place of the word in payment lines. Sentences keep the word. */
 .sb-tlogo{display:inline-block;height:1.15em;width:auto;vertical-align:-0.22em;margin:0 .1em;border:0}
 .sb-tlogo.sb-tlogo-foot{height:14px;vertical-align:-3px}
+/* 27 Nov 2026 (site audit: on a phone the pair suggestion sat under the bag footer until the shopper scrolled): it stays
+   in view at the foot of the bag's scrolling area */
+.sb-drawer .sb-bundle.sb-second{position:sticky;bottom:0;z-index:2;box-shadow:0 -6px 14px -10px rgba(42,32,22,.35)}
+/* 27 Nov 2026 (site audit, large text at 150-200%): the added-to-bag peek stacks instead of clipping its words and Checkout */
+@media(max-width:359px){.sb-pk-main{flex-wrap:wrap;gap:8px}.sb-pk-view{flex-basis:100%}.sb-pk-f{flex-wrap:wrap}.sb-pk-f .sb-pk-go{flex:1 1 100%;text-align:center}}

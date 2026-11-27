@@ -785,6 +785,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 .rv-card .rv-stars{font-size:14px;margin-bottom:8px;display:block}
 .rv-title{display:block;font-size:15px;margin-bottom:6px}
 .rv-text{font-size:14.5px;font-style:italic;line-height:1.65;margin:0 0 10px}
+html[lang=ar] .rv-text[lang=en]{direction:ltr;text-align:left}html[lang=ar] .rv-text[lang=en]::before{content:"بالإنجليزية: ";display:block;direction:rtl;text-align:right;font-style:normal;font-size:12px;color:#6B6256}
 .rv-photos{display:flex;gap:8px;margin-bottom:10px}
 .rv-photo{width:72px;height:72px;object-fit:cover;border-radius:2px}
 .rv-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--txt-soft,#6B6256)}
@@ -835,7 +836,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 
 </style>
 <link rel="stylesheet" href="/assets/sahra-sky.css?v=e5762a32">
-<link rel="stylesheet" href="/assets/sahra-cart.css?v=14244266">
+<link rel="stylesheet" href="/assets/sahra-cart.css?v=5c7216f2">
 
 <link rel="alternate" hreflang="en" href="https://www.sahraandbeyond.ae/products/sahra-trail-2-in-1-short/">
 <link rel="alternate" hreflang="ar" href="https://www.sahraandbeyond.ae/ar/products/sahra-trail-2-in-1-short/">
@@ -844,7 +845,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 <link rel="stylesheet" href="/assets/sahra-rtl.css?v=d330296d">
 <script src="/assets/sahra-ar-ui.js?v=78db0744" defer></script>
 <link rel="stylesheet" href="/assets/sahra-welcome.css?v=5bfed8d6">
-<script src="/assets/sahra-welcome.js?v=95727f74" data-sbw defer></script>
+<script src="/assets/sahra-welcome.js?v=8581279e" data-sbw defer></script>
 <link rel="stylesheet" href="/assets/sahra-nav.css?v=0e04262e">
 <script src="/assets/sahra-nav.js?v=ee987bd5" data-sbn defer></script>
 <link rel="stylesheet" href="/assets/sahra-system.css?v=c94116de">
@@ -1409,7 +1410,7 @@ function set(){var s=k();if(d.getAttribute('data-stage')!==String(s)){d.setAttri
 set();if(!/[?&]sbstage=/.test(location.search||'')){var n=Date.now(),nx=n<T1?T1:n<T2?T2:0;if(nx&&nx-n<864e5)setTimeout(set,nx-n+300);}
 /* 23 Oct 2026: how far off the opening is, in days, by the UAE calendar. Updates on each visit; never a ticking clock. */
 function days(){try{var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).split('-'),n=Math.round((Date.UTC(2026,9,28)-Date.UTC(+t[0],t[1]-1,+t[2]))/864e5),x=n>1?'That is in '+n+' days.':n===1?'That is tomorrow.':n===0?'That is today.':'';[].forEach.call(document.querySelectorAll('[data-days]'),function(e){e.textContent=x;});}catch(e){}}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><link rel="preload" as="image" href="/assets/preorder/pm2-sahra-trail-short-04-side-720.webp" imagesrcset="/assets/preorder/pm2-sahra-trail-short-04-side-480.webp 480w, /assets/preorder/pm2-sahra-trail-short-04-side-720.webp 720w, /assets/preorder/pm2-sahra-trail-short-04-side-1200.webp 1200w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high"><link rel="stylesheet" href="/assets/sahra-specimen.css?v=2925abfe"><style>
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',days);else days();})();</script><link rel="preload" as="image" href="/assets/preorder/pm2-sahra-trail-short-04-side-720.webp" imagesrcset="/assets/preorder/pm2-sahra-trail-short-04-side-480.webp 480w, /assets/preorder/pm2-sahra-trail-short-04-side-720.webp 720w, /assets/preorder/pm2-sahra-trail-short-04-side-1200.webp 1200w" imagesizes="(max-width: 899px) 92vw, 560px" fetchpriority="high"><link rel="stylesheet" href="/assets/sahra-specimen.css?v=a1f5225f"><style>
 .ssz-wrap{overflow-x:auto;border:1px solid rgba(42,32,22,.16);border-radius:12px;background:#fff;margin:10px 0 0}
 table.ssz{width:100%;border-collapse:collapse;font-family:Jost,system-ui,sans-serif}
 table.ssz caption{caption-side:top;text-align:left;font:400 11px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B6256;padding:10px 12px 4px}
@@ -1457,6 +1458,9 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
 [data-cycle]>i.cyc-worn{position:absolute;left:8px;top:8px;max-width:calc(100% - 16px);padding:3px 8px;border-radius:99px;background:rgba(250,246,239,.92);color:#2A2016;font:500 10.5px/1.2 Jost,system-ui,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;pointer-events:none}
 [dir=rtl] [data-cycle]>i.cyc-worn{font-family:inherit}
 [dir=rtl] [data-cycle]>i.cyc-worn{left:auto;right:8px}
+.po-fc,.po-dl{padding:4px 0 8px}.po-fc-l{margin:0 0 10px;font-size:15px;line-height:1.6;color:#2A2016}.po-fc h3{margin:14px 0 6px;font:600 15px/1.3 Jost,system-ui,sans-serif;color:#2A2016}.po-fc ul{margin:0 0 10px;padding-inline-start:20px;font-size:14.5px;line-height:1.6;color:#4A4136}
+.shipcards{display:grid;gap:8px;margin:4px 0 12px}.shipcard{display:grid;gap:4px;padding:12px 14px;border:1px solid rgba(42,32,22,.14);border-radius:10px;background:#fff;font-size:14px;line-height:1.5;color:#4A4136}.shipcard b{color:#2A2016;font-size:14px}.shipcard strong{color:#2A2016}
+html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html[data-market="intl"] .shipcard-intl{order:-1;border-color:rgba(42,32,22,.4)}.shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}.shipsub{font-weight:400;font-size:12px;color:#6B6256;margin-inline-start:4px}
 .po-fig figcaption{position:absolute;left:10px;top:10px;font:11px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .po-ph{margin:0;aspect-ratio:4/5;border-radius:10px;background:#2A2016;color:#E5E1D9;display:flex;align-items:center;justify-content:center;text-align:center;grid-column:1/-1}
 .po-ph b{display:block;font:600 30px/1.1 'Cormorant Garamond',Georgia,serif;margin-bottom:10px}
@@ -1594,7 +1598,7 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
     </div>
       <p class="ss-help"><a href="#size-finder" class="pdp-chart">اعرف مقاسك بأداة المقاسات</a>. لصحراء تريل مقاسات خاصة بها، منفصلة عن تيشيرتاتنا.<span class="sb-ship-uae ss-exch"> تبديل المقاس مجاني داخل الإمارات.</span></p>
       
-      <p class="ss-promise1"><span class="sb-ship-uae"><span class="ss-instock">متوفر. </span>توصيل في يوم العمل التالي في أنحاء الإمارات، اطلب قبل الساعة 2 ظهرًا. مجاني للطلبات فوق 100 درهم · إرجاع واستبدال مجاني خلال 14 يومًا · <a href="/ar/products/trailhead-bag/">حقيبة ترايلهيد</a> مجانًا مع صحراء تريل</span><span class="sb-ship-gcc"><span class="ss-instock">متوفر. </span>التوصيل إلى دول الخليج خلال 3 إلى 5 أيام عمل، ومجاني فوق 229 درهمًا · إرجاع خلال 14 يومًا</span><span class="sb-ship-intl"><span class="ss-instock">متوفر. </span>التوصيل العالمي خلال 7 إلى 14 يوم عمل · إرجاع خلال 14 يومًا</span></p>
+      <p class="ss-promise1"><span class="sb-ship-uae"><span class="ss-instock">متوفر. </span>توصيل في يوم العمل التالي إلى كل إمارة، والعين ضمنها، اطلب قبل الساعة 2 ظهرًا. مجاني للطلبات فوق 100 درهم · إرجاع واستبدال مجاني خلال 14 يومًا · <a href="/ar/products/trailhead-bag/">حقيبة تريلهيد</a> مجانًا مع صحراء تريل</span><span class="sb-ship-gcc"><span class="ss-instock">متوفر. </span>التوصيل إلى دول الخليج خلال 3 إلى 5 أيام عمل، مجاني فوق <span class="sb-thr" data-aed="229">229 درهمًا</span> · إرجاع خلال 14 يومًا</span><span class="sb-ship-intl"><span class="ss-instock">متوفر. </span>توصيل عالمي خلال 7 إلى 14 يوم عمل · إرجاع خلال 14 يومًا</span></p>
       <p class="po-tabby-fine sb-ship-uae">خدمة «ادفع لاحقًا» (ائتمان قصير الأجل) مقدَّمة من Tabby LLC. تنطبق الشروط والأحكام. لمزيد من المعلومات أو للتواصل معنا، زر tabby.ai.</p>
     </div>
   </div>
@@ -1607,7 +1611,18 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
     <div><h2>التفاصيل</h2><ul><li>طبقة خارجية منسوجة: 95% بوليستر، 5% إيلاستين، مطاطية في 4 اتجاهات</li><li>بطانة محبوكة: 87% بوليستر، 13% إيلاستين</li><li>شورتان في واحد، مع بطانة داخلية مخفية</li><li>جيب هاتف مُلصَق في البطانة</li><li>جيب بسحّاب للمفاتيح والبطاقات</li><li>رباط داخلي</li><li>رمز الحافتين العاكس</li></ul>
       <p class="po-small" style="margin-top:12px"> صُمّمت في الإمارات.</p></div>
   </section></details>
-  <details class="pdp-acc po-acc" id="size-chart-g"><summary class="pdp-acc-h"><span>جدول المقاسات</span><i aria-hidden="true">+</i></summary><div class="sfind" id="size-finder" data-sizefinder data-sf='{"pieces":[{"kind":"bands","part":"short","id":"trail-short","label":"Sahra Trail 2-in-1 Short","labelAr":"شورت صحراء تريل 2 في 1","sizes":[["S",76,81],["M",81,86],["L",86,91],["XL",91,96]]}],"handle":"sahra-trail-2-in-1-short"}'></div><script src="/assets/sahra-sizefinder.js?v=8bb1dddc" defer></script><section class="po-size" id="size-chart"><h2>جدول المقاسات</h2><div class="ssz-wrap"><table class="ssz ssz-body">
+  <details class="pdp-acc po-acc" id="fabric-care"><summary class="pdp-acc-h"><span>القماش والعناية</span><i aria-hidden="true">+</i></summary><section class="po-fc">
+    <p class="po-fc-l"><b>الطبقة الخارجية منسوجة من 95% بوليستر و5% إيلاستين، والبطانة محبوكة من 87% بوليستر و13% إيلاستين.</b> طبقة خارجية خفيفة مرنة فوق بطانة محبوكة ناعمة.</p>
+    <p class="po-fc-l">صُمّم في الإمارات. وصُنع في باكستان.</p>
+    <h3>العناية</h3><ul><li>اغسله بماء بارد ومقلوبًا.</li><li>بلا منعّم أقمشة وبلا مبيّض.</li><li>انشره ليجف في الهواء.</li><li>لا تكوِه.</li></ul>
+    </section></details><details class="pdp-acc po-acc" id="delivery-g"><summary class="pdp-acc-h"><span>التوصيل والإرجاع والاستبدال</span><i aria-hidden="true">+</i></summary><section class="po-dl">
+  <div class="shipcards">
+    <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#3F6B3A"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> الإمارات العربية المتحدة</b> <span>يوم العمل التالي إلى كل إمارة، والعين ضمنها: اطلب قبل الساعة 2 ظهرًا. <strong>مجاني للطلبات فوق 100 درهم</strong>، و15 درهمًا لما دون ذلك</span> <span>إرجاع مجاني واستبدال المقاس أو القصّة خلال 14 يومًا</span></div>
+    <div class="shipcard shipcard-gcc"><b>دول الخليج <span class="shipsub">السعودية · قطر · عُمان · البحرين · الكويت</span></b> <span>3 إلى 5 أيام عمل: 50 درهمًا، <strong>أو مجانًا فوق <span class="sb-thr" data-aed="229">229 درهمًا</span></strong></span> <span>تُدفع الرسوم الجمركية، إن وُجدت، عند الوصول</span></div>
+    <div class="shipcard shipcard-intl"><b>عالميًا</b> <span>7 إلى 14 يوم عمل: 80 درهمًا</span> <span>تُدفع الرسوم الجمركية وضرائب الاستيراد عند الوصول</span></div>
+  </div>
+  <p class="po-small">اطلب قبل الساعة 2 ظهرًا بتوقيت الإمارات في يوم عمل للشحن في اليوم نفسه. الإرجاع خلال 14 يومًا للقطع غير الملبوسة وعليها بطاقاتها: مجاني داخل الإمارات، ويتحمل العملاء من خارجها تكلفة شحن الإرجاع. نُصدر المبلغ المسترد خلال 5 إلى 7 أيام عمل من وصول المرتجع. <a href="/ar/policies.html#shipping">السياسة كاملة</a></p></section></details>
+  <details class="pdp-acc po-acc" id="size-chart-g"><summary class="pdp-acc-h"><span>جدول المقاسات</span><i aria-hidden="true">+</i></summary><div class="sfind" id="size-finder" data-sizefinder data-sf='{"pieces":[{"kind":"bands","part":"short","id":"trail-short","label":"Sahra Trail 2-in-1 Short","labelAr":"شورت صحراء تريل 2 في 1","sizes":[["S",76,81],["M",81,86],["L",86,91],["XL",91,96]]}],"handle":"sahra-trail-2-in-1-short"}'></div><script src="/assets/sahra-sizefinder.js?v=8a611fa9" defer></script><section class="po-size" id="size-chart"><h2>جدول المقاسات</h2><div class="ssz-wrap"><table class="ssz ssz-body">
     <caption>صحراء تريل &middot; مقاسك بحسب قياس الجسم</caption>
     <thead><tr><th scope="col">المقاس</th><th scope="col">خصرك</th><th scope="col">طول القامة</th></tr></thead>
     <tbody><tr><th scope="row">S</th><td><bdi dir="ltr">76&ndash;81</bdi>&nbsp;سم<small dir="ltr">30&ndash;32&Prime;</small></td><td><bdi dir="ltr">168&ndash;176</bdi>&nbsp;سم</td></tr><tr><th scope="row">M</th><td><bdi dir="ltr">81&ndash;86</bdi>&nbsp;سم<small dir="ltr">32&ndash;34&Prime;</small></td><td><bdi dir="ltr">174&ndash;182</bdi>&nbsp;سم</td></tr><tr><th scope="row">L</th><td><bdi dir="ltr">86&ndash;91</bdi>&nbsp;سم<small dir="ltr">34&ndash;36&Prime;</small></td><td><bdi dir="ltr">178&ndash;186</bdi>&nbsp;سم</td></tr><tr><th scope="row">XL</th><td><bdi dir="ltr">91&ndash;96</bdi>&nbsp;سم<small dir="ltr">36&ndash;38&Prime;</small></td><td><bdi dir="ltr">182&ndash;190</bdi>&nbsp;سم</td></tr></tbody></table></div>
@@ -1702,8 +1717,8 @@ table.ssz.ssz-body tbody th{font-size:14.5px}
   addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
 <script>/* time-limited notes (e.g. this month's dark-sky window) hide themselves once their date passes, even before the next build */(function(){var t=new Date().toISOString().slice(0,10);[].forEach.call(document.querySelectorAll('[data-until]'),function(e){if(t>e.getAttribute('data-until'))e.hidden=true;});})();</script>
 <!-- one cart and one sky for the whole site, so pages cannot drift apart -->
-<script src="/assets/sahra-cart.js?v=b49c99d0" defer></script>
-<script src="/assets/sahra-market.js?v=be20a079" defer></script>
+<script src="/assets/sahra-cart.js?v=22981bbe" defer></script>
+<script src="/assets/sahra-market.js?v=7aa1ded7" defer></script>
 <script>(function(){
 var cards=[].slice.call(document.querySelectorAll('.ig-card'));if(!cards.length&&!document.querySelector('.ig-foot-card'))return;
 var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

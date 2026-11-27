@@ -151,6 +151,19 @@
       var p = (was && was[h] && /(^|\s)sbs-was(\s|$)/.test(el.getAttribute('class') || '') && was[h]) || map[h];
       if (p) el.textContent = p;
     });
+    /* 27 Nov 2026 (site audit: GCC visitors read SAR prices beside "free over AED 229"): a threshold (.sb-thr[data-aed]) is shown
+       in the visitor's currency at the rate Shopify's own prices on this page imply, rounded up, so it never promises less */
+    try {
+      var rate = 0;
+      document.querySelectorAll('.sb-price[data-handle][data-aed]').forEach(function (el) {
+        var t = map[el.getAttribute('data-handle')], a = parseFloat(el.getAttribute('data-aed'));
+        var n = t && parseFloat(String(t).replace(/[^0-9.]/g, '')); if (n && a && n / a > rate) rate = n / a;   /* the highest rate on the page: never understates */
+      });
+      document.querySelectorAll('.sb-thr[data-aed]').forEach(function (el) {
+        var a = parseFloat(el.getAttribute('data-aed'));
+        el.textContent = rate && cur && cur !== 'AED' ? fmt(Math.ceil(a * rate), cur) : fmt(a, 'AED');
+      });
+    } catch (e) {}
   }
   function localise() {
     var handles = handlesOnPage();

@@ -307,7 +307,7 @@ function productSection(handle, productName, designHandles, opts) {
           ${stars(r.rating)}
           ${about}
           ${r.title ? `<strong class="rv-title" data-ar-rule="ugc">${esc(r.title)}</strong>` : ''}
-          <p class="rv-text" data-ar-rule="ugc">${esc(r.body)}</p>
+          <p class="rv-text" data-ar-rule="ugc"${/[\u0600-\u06FF]/.test(r.body || '') ? ' lang="ar"' : ' lang="en"'}>${esc(r.body)}</p>
           ${photos ? `<span class="rv-photos">${photos}</span>` : ''}
           <span class="rv-meta" data-ar-rule="rv-meta|${r.verified ? 1 : 0}|${ym(r.date)}">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}${when ? ' · ' + when : ''}</span>
           ${r.reply ? `<p class="rv-reply" data-ar-rule="rv-reply"><strong>Sahra &amp; Beyond:</strong> ${esc(r.reply)}</p>` : ''}
@@ -410,7 +410,7 @@ function homepageBand(opts) {
           return `
         <li class="rv-card" data-rating="${Number(r.rating) || 0}" data-date="${esc(r.date || '')}">
           ${stars(r.rating)}
-          <p class="rv-text" data-ar-rule="ugc">${esc(body)}</p>
+          <p class="rv-text" data-ar-rule="ugc"${/[\u0600-\u06FF]/.test(body || '') ? ' lang="ar"' : ' lang="en"'}>${esc(body)}</p>
           ${shownPhotos(r.photos).length ? `<span class="rv-photos">${shownPhotos(r.photos).slice(0, 2).map(u => photoLink(u, 'Customer photo')).join('')}</span>` : ''}
           <span class="rv-meta" data-ar-rule="rv-meta|${r.verified ? 1 : 0}|${ym(r.date)}">${esc(r.name)}${r.verified ? ' · Verified buyer' : ''}${fmtDate(r.date) ? ' · ' + fmtDate(r.date) : ''}</span>
           ${link}
@@ -465,6 +465,7 @@ body.dark-bg .rv-stars{color:#F3DDB8}
 .rv-card .rv-stars{font-size:14px;margin-bottom:8px;display:block}
 .rv-title{display:block;font-size:15px;margin-bottom:6px}
 .rv-text{font-size:14.5px;font-style:italic;line-height:1.65;margin:0 0 10px}
+html[lang=ar] .rv-text[lang=en]{direction:ltr;text-align:left}html[lang=ar] .rv-text[lang=en]::before{content:"بالإنجليزية: ";display:block;direction:rtl;text-align:right;font-style:normal;font-size:12px;color:#6B6256}
 .rv-photos{display:flex;gap:8px;margin-bottom:10px}
 .rv-photo{width:72px;height:72px;object-fit:cover;border-radius:2px}
 .rv-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--txt-soft,#6B6256)}

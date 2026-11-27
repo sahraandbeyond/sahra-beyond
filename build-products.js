@@ -498,6 +498,7 @@ table.sz td:first-child{font-weight:600}
 .pdp-ans .lede{font-size:16.5px;line-height:1.7;margin:0 0 12px;max-width:none}
 .pdp-ans .occasion{margin:0 0 14px}
 .pdp-ans .spec-strip{margin:2px 0 14px}
+.pdp-ans .made-in{margin:0 0 14px;font-size:15px;line-height:1.5;color:#4A4136}
 .pdp-ans .colourway{margin:0 0 14px}
 .pdp-ans{border-bottom:1px solid var(--line)}
 .pdp-ans summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:10px;padding:14px 2px;font-weight:600;font-size:14px;color:var(--txt)}
@@ -1135,6 +1136,7 @@ ${/* 14 Nov 2026 (review panel: proof belongs next to the decision): the reviews
           <ul class="spec-strip">
             <li><strong>${p.garment === 'polo' ? 'Men&rsquo;s cut' : 'Unisex'}</strong> &middot; S&ndash;XL</li>${(p.specChips || ['Combed cotton','Ribbed crew neck','Taped collar &amp; shoulder seams']).map(function(c){return '<li>'+c+'</li>';}).join('')}<li>${p.printChip}</li>
           </ul>
+          <p class="made-in">Designed in the UAE. Made in Pakistan.</p>${/* r166 (27 Nov 2026, Faheem: "Made in Pakistan") */''}
           ${p.colourHex ? `<div class="colourway">
             <span class="sw" style="background:${p.colourHex}" role="img" aria-label="Colour swatch: ${esc(p.colourName)}, Pantone ${esc(p.colourPantone)}"></span>
             <span class="cw-txt"><strong>${esc(p.colourName)}</strong> &middot; Pantone ${esc(p.colourPantone)}
@@ -1142,7 +1144,7 @@ ${/* 14 Nov 2026 (review panel: proof belongs next to the decision): the reviews
           </div>` : ''}
         </details>
         <details class="pdp-ans">
-          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">next-day &middot; free over AED 100</span><span class="sb-ship-gcc">GCC 3–5 days · free over AED 229</span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
+          <summary>Delivery &amp; returns <span class="pdp-ans-hint"><span class="sb-ship-uae">next-day &middot; free over AED 100</span><span class="sb-ship-gcc">GCC 3–5 days · free over <span class="sb-thr" data-aed="229">AED 229</span></span><span class="sb-ship-intl">worldwide 7–14 days</span></span></summary>
           <div class="shipcards">
             <!-- No regional-indicator (flag) emoji anywhere in these cards:
                  Windows renders them as bare letter codes, so the six-flag GCC string became
@@ -1151,10 +1153,10 @@ ${/* 14 Nov 2026 (review panel: proof belongs next to the decision): the reviews
                  SVG — identical on every OS — and the GCC card names its
                  countries in words. 🌍 is an ordinary emoji and is safe. -->
             <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#3F6B3A"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> United Arab Emirates</b>
-              <span>Next working day, all seven emirates — order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
+              <span>Next working day to all seven emirates, Al Ain included — order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
               <span>Free returns and exchanges within 14 days</span></div>
             <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
-              <span>3–5 working days — AED 50, <strong>free over AED 229</strong></span>
+              <span>3–5 working days — AED 50, <strong>free over <span class="sb-thr" data-aed="229">AED 229</span></strong></span>
               <span>Duties, if any, are payable on arrival</span></div>
             <div class="shipcard shipcard-intl"><b>🌍 Worldwide</b>
               <span>7–14 working days — AED 80</span>
@@ -1264,10 +1266,11 @@ ${cards(p.designCards)}
     <div class="cols stagger">
       <div class="item"><b>${esc(p.printCardTitle)}</b><span>${esc(p.printCardBody)}</span></div>
       <div class="item"><b>${p.fitsCardTitle || 'Unisex, two fits'}</b><span>${p.fitsCardBody || 'Regular (straight, set shoulder) or Oversized (relaxed, drop-shoulder). Same tee, two very different silhouettes.'}</span></div>
-      <div class="item"><b>Designed in the UAE</b><span>Original artwork, drawn from a real place in the Emirates.</span></div>
+      <div class="item"><b>Designed in the UAE, made in Pakistan</b><span>Original artwork, drawn from a real place in the Emirates, cut and sewn in Pakistan.</span></div>
     </div>
     <div class="note-box">${(function(){
-      return 'Not sure how a heavyweight tee compares with the 180gsm shirt you already own? We wrote the comparison out in full &mdash; the whole 150&ndash;280gsm scale, and which weight actually makes sense in a Gulf summer &mdash; on our <a href="/fabric/">fabric and GSM guide</a>.';
+      /* 27 Nov 2026 (Faheem: GSM figures "Off product pages, keep /fabric/"): the feel in words here, the numbers on /fabric/ */
+      return 'Wondering how our cotton compares with the tees you already own, and which weight makes sense in a Gulf summer? We wrote it out in full in our <a href="/fabric/">fabric guide</a>.';
     })()}</div>
   </section>`}
 

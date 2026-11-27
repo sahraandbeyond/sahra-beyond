@@ -79,8 +79,12 @@ function forNewLine(p, SZ, TSZ) {
   return null;
 }
 /* the size guide: every piece, chosen from a list */
+/* 27 Nov 2026 (site audit: the size guide's finder gave a size with no way to shop it): each piece names where it is sold */
+const SHOP = { 'founding-regular': '/t-shirts/regular/', 'founding-oversized': '/t-shirts/oversized/', polo: '/products/sand-polo/', 'sahel-polo': '/products/the-sahel-polo/',
+  'sahel-teeRegular': '/fit/regular/', 'sahel-teeOversized': '/fit/oversized/', 'sahel-teeSuperOversized': '/fit/super-oversized/', 'sahel-hoodieOversized': '/hoodies/', 'sahel-hoodie': '/hoodies/',
+  'trail-tee': '/products/sahra-trail-tee/', 'trail-short': '/products/sahra-trail-2-in-1-short/' };
 function all() {
-  return { pieces: [founding('regular'), founding('oversized'), polo(), sahelPolo(), sahel('teeRegular'), sahel('teeOversized'), sahel('teeSuperOversized'), sahel('hoodieOversized'), sahel('hoodie'), trail('tee'), trail('short')].filter(Boolean), choose: true };
+  return { pieces: [founding('regular'), founding('oversized'), polo(), sahelPolo(), sahel('teeRegular'), sahel('teeOversized'), sahel('teeSuperOversized'), sahel('hoodieOversized'), sahel('hoodie'), trail('tee'), trail('short')].filter(Boolean).map(p => Object.assign({}, p, { shop: SHOP[p.id] })), choose: true };
 }
 /* the markup: an anchor the help line opens, and the data the script reads */
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/</g, '&lt;');
@@ -144,10 +148,10 @@ function glance(cfg, opts = {}) {
         if (alts.length) { note = ` &middot; ${z} is sold out`; i = alts[0].k; z = alts[0].z; room = alts[0].room; }
         else note = ' &middot; sold out';
       }
-      return `<li><span>${label}</span> <b data-ar-rule="keep" dir="ltr">${z}</b> <i>${feel(piece, i, room)}${note}</i></li>`;
+      return `<li><span>${label}</span> <b data-ar-rule="keep" dir="ltr">${z}</b> <i>${feel(piece, i, room)} &middot; ${Math.round(room)} cm of room${note}</i></li>`;   /* 27 Nov 2026 (audit): the room in cm, so a looser fit's bigger size reads as the look, not a mistake */
     }).join('');
     const sahelNote = piece.sahel ? '<p class="ss-gl-n">Sahel is cut large, so go by this guide rather than the size you usually take.</p>' : '';
-    return `<div class="ss-glance"><p class="ss-gl-h">Fit guide, as designed</p>${sahelNote}<ul>${li}</ul></div>`;
+    return `<div class="ss-glance"><p class="ss-gl-h">Fit guide: the size for this fit's look</p>${sahelNote}<ul>${li}</ul></div>`;
   } catch (e) { console.log('  ! fit guide: ' + e.message); return ''; }
 }
 const SCRIPT = '<script src="/assets/sahra-sizefinder.js" defer></script>';

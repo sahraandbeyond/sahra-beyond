@@ -62,7 +62,11 @@
     closerFit: function (f) { return 'تريدها أقرب إلى الجسم؟ جرّب قصّة ' + f; }, roomierFit: function (f) { return 'تريد مساحة أكبر؟ جرّب قصّة ' + f; },
     pick: function (s) { return 'اختر ' + s; }, pickKit: function (a, b) { return 'اختر التيشيرت ' + a + ' والشورت ' + b; },
     suggest: function (s) { return 'ننصح بـ' + s; }, bestMatch: 'الأنسب', atChest: 'عند الصدر', atWaist: 'عند الخصر',
-    tee: 'التيشيرت', short: 'الشورت', kitFits: function (z, what, a, b) { return '<b>' + z + '</b> لـ' + what + ' <bdi dir="ltr">' + a + '–' + b + '</bdi> سم.'; },
+    tee: 'التيشيرت', short: 'الشورت', shopIn: function (p, z) { return 'تسوّق ' + p + ' بالمقاس ' + z; },
+    fitW: { regular: 'ريجولر', relaxed: 'ريلاكسد', oversized: 'أوفرسايز', superOversized: 'سوبر أوفرسايز' },
+    asDesigned: function (f) { return 'بقصّة ' + f + ' كما صُمّمت'; }, roomierThan: function (f) { return 'أوسع مما صُمّمت له قصّة ' + f; }, closerThan: function (f) { return 'أقرب إلى الجسم مما صُمّمت له قصّة ' + f; },
+    sahelLarge: 'قصّة ساحل أوسع من معظم الماركات، لذا يختار كثيرون هنا مقاسًا أصغر من المعتاد.', mensCut: 'قصّة رجالية. يمكن للنساء ارتداؤها، وتكون أوسع عند الكتفين.',
+    knowMeas: 'أعرف قياساتي', fullL: 'جسمي أعرض عند الوسط', kitFits: function (z, what, a, b) { return '<b>' + z + '</b> لـ' + what + ' <bdi dir="ltr">' + a + '–' + b + '</bdi> سم.'; },
     fineprint: 'نقطة بداية من قياسات معتادة لهذا الطول والوزن، وليست قياسًا. المجسّم توضيح للمقاس مبني على جدول المقاسات. استبدال المقاس مجاني داخل الإمارات.',
     cm: 'سم', ft: 'قدم', kg: 'كغ', lb: 'رطل', unitH: 'وحدة الطول', unitW: 'وحدة الوزن'
   } : {
@@ -91,7 +95,11 @@
     closerFit: function (f) { return 'Want it closer to the body? Try the ' + f + ' fit'; }, roomierFit: function (f) { return 'Want more room? Try the ' + f + ' fit'; },
     pick: function (s) { return 'Select ' + s; }, pickKit: function (a, b) { return 'Select tee ' + a + ' and short ' + b; },
     suggest: function (s) { return 'We suggest ' + s; }, bestMatch: 'best match', atChest: 'at chest', atWaist: 'at waist',
-    tee: 'Tee', short: 'Short', kitFits: function (z, what, a, b) { return '<b>' + z + '</b> fits a ' + what + ' of ' + a + '–' + b + ' cm.'; },
+    tee: 'Tee', short: 'Short', shopIn: function (p, z) { return 'Shop ' + p + ' in ' + z; },
+    fitW: { regular: 'regular', relaxed: 'relaxed', oversized: 'oversized', superOversized: 'super oversized' },
+    asDesigned: function (f) { return 'a ' + f + ' fit, as designed'; }, roomierThan: function (f) { return 'roomier than the ' + f + ' design'; }, closerThan: function (f) { return 'closer than the ' + f + ' design'; },
+    sahelLarge: 'Sahel is cut larger than most brands, so many people take a size smaller than usual here.', mensCut: 'A men\'s cut. Women can wear it; it sits roomier through the shoulders.',
+    knowMeas: 'I know my measurements', fullL: 'I\'m fuller at the middle', kitFits: function (z, what, a, b) { return '<b>' + z + '</b> fits a ' + what + ' of ' + a + '–' + b + ' cm.'; },
     fineprint: 'A starting point from typical measurements for this height and weight, not a fitting. The figure is an illustration of fit drawn from our size chart. Size exchanges are free in the UAE.',
     cm: 'cm', ft: 'ft', kg: 'kg', lb: 'lb', unitH: 'Height unit', unitW: 'Weight unit'
   };
@@ -102,6 +110,9 @@
     var c = a.who === 'w' ? 52 + 0.5 * a.kg + 0.05 * a.cm : 52 + 0.45 * a.kg + 0.05 * a.cm;
     var w = (a.who === 'w' ? 10 : 18) + 0.62 * a.kg + 0.12 * a.cm;
     if (a.usual && USUAL[a.who][a.usual]) c = (c + USUAL[a.who][a.usual]) / 2;
+    /* 27 Nov 2026 (site audit, Faheem: "Make all updates"): an optional "fuller at the middle" adds 4 cm to the estimated
+       chest and 6 cm to the waist (the 1 Nov engine's fuller build); a measurement still replaces the estimate */
+    if (a.full) { c += 4; w += 6; }
     var cm = { c: !!a.chest, w: !!a.waist };
     if (a.chest) c = a.chest; if (a.waist) w = a.waist;
     return { chest: c, waist: w, measured: cm };
@@ -370,7 +381,7 @@
     m: '<svg viewBox="0 0 60 120" aria-hidden="true"><g fill="currentColor" opacity=".55"><ellipse cx="30" cy="11" rx="7" ry="8.5"/><path d="M19 24q11-5 22 0l5 3 3 30-5 1-3-22v26l2 52h-8l-4-46-4 46h-8l2-52V36l-3 22-5-1 3-30z"/></g></svg>',
     w: '<svg viewBox="0 0 60 120" aria-hidden="true"><g fill="currentColor" opacity=".55"><ellipse cx="30" cy="11" rx="6.5" ry="8"/><path d="M21 24q9-4 18 0l4 3 3 29-5 1-3-20 1 13 5 17-6 2 2 43h-7l-3-40-3 40h-7l2-43-6-2 5-17 1-13-3 20-5-1 3-29z"/></g></svg>'
   };
-  function remember(S) { try { sessionStorage.setItem('sbsf', JSON.stringify({ who: S.who, cm: S.cm, kg: S.kg, pref: S.pref, usual: S.usual, chest: S.chest, waist: S.waist, hu: S.hu, wu: S.wu, tH: S.tH, tK: S.tK })); } catch (e) {} }
+  function remember(S) { try { sessionStorage.setItem('sbsf', JSON.stringify({ who: S.who, cm: S.cm, kg: S.kg, pref: S.pref, usual: S.usual, chest: S.chest, waist: S.waist, full: S.full, hu: S.hu, wu: S.wu, tH: S.tH, tK: S.tK })); } catch (e) {} }
   function recall() { try { return JSON.parse(sessionStorage.getItem('sbsf') || 'null'); } catch (e) { return null; } }
 
   function init(el) {
@@ -379,9 +390,9 @@
     if (!cfg || !cfg.pieces || !cfg.pieces.length) return;
     var inline = el.getAttribute('data-inline') === '1', u = 'sf' + (++uidN);
     var onPage = !cfg.choose && !!document.getElementById('ssBuy');
-    var S = { who: '', cm: 175, kg: 75, pref: 'designed', usual: '', chest: 0, waist: 0, hu: 'cm', wu: 'kg', tH: false, tK: false, pi: 0, tried: {} };
+    var S = { who: '', cm: 175, kg: 75, pref: 'designed', usual: '', chest: 0, waist: 0, full: false, hu: 'cm', wu: 'kg', tH: false, tK: false, pi: 0, tried: {} };
     var mem = recall(); if (mem && (mem.who === 'm' || mem.who === 'w')) for (var k in mem) if (k in S) S[k] = mem[k];
-    var hasShort = cfg.pieces.some(function (p) { return p.part === 'short'; });
+    var hasShort = cfg.pieces.some(function (p) { return p.part === 'short'; }), hasBands = cfg.pieces.some(function (p) { return p.kind === 'bands'; });
     var pieceLabel = function (p) { return AR && p.labelAr ? p.labelAr : p.label; };
 
     /* ---------- markup ---------- */
@@ -403,10 +414,12 @@
       '<div class="sf3-nums">' + slider('h', TX.height, 140, 210, [['cm', TX.cm], ['ft', TX.ft]], TX.unitH) + slider('k', TX.weight, 40, 150, [['kg', TX.kg], ['lb', TX.lb]], TX.unitW) + '</div>' +
       '<div class="sf3-row"><span class="sf3-lb">' + TX.fit + '</span>' + seg('pref', [['closer', TX.closer], ['designed', TX.designed], ['roomier', TX.roomier]], TX.fit) + '</div>' +
       '<div class="sf3-notes"></div>' +
-      '<details class="sf3-fine"><summary>' + TX.fine + '</summary><div class="sf3-fg"><div><span class="sf3-lb">' + TX.usual + '</span><div class="sf3-usual" role="group" dir="ltr">' +
+      /* 27 Nov 2026 (site audit): on Sahra Trail, runners who know their chest and waist see the fields at once */
+      '<details class="sf3-fine"' + (hasBands ? ' open' : '') + '><summary>' + (hasBands ? TX.knowMeas : TX.fine) + '</summary><div class="sf3-fg"><div><span class="sf3-lb">' + TX.usual + '</span><div class="sf3-usual" role="group" dir="ltr">' +
       ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map(function (s) { return '<button type="button" data-usual="' + s + '" aria-pressed="false">' + s + '</button>'; }).join('') + '</div></div>' +
       '<div class="sf3-two"><label><span class="sf3-lb">' + TX.chest + '</span><input type="number" inputmode="numeric" min="60" max="160" data-in="chest"></label>' +
-      (hasShort ? '<label><span class="sf3-lb">' + TX.waist + '</span><input type="number" inputmode="numeric" min="50" max="160" data-in="waist"></label>' : '') + '</div></div></details>' +
+      (hasShort ? '<label><span class="sf3-lb">' + TX.waist + '</span><input type="number" inputmode="numeric" min="50" max="160" data-in="waist"></label>' : '') + '</div>' +
+      '<div class="sf3-full" role="group" aria-label="' + esc(TX.fullL) + '"><button type="button" data-full="1" aria-pressed="false">' + TX.fullL + '</button></div></div></details>' +
       '</div><div class="sf3-fp">' + TX.fineprint + '</div>';
     var host, sheet = null, opener = null;
     if (inline) {
@@ -417,8 +430,8 @@
       sheet = document.createElement('div'); sheet.className = 'sfx'; sheet.hidden = true;
       /* the product's own name, and the fit when the piece has one ("Sahel tee, Relaxed" -> "Relaxed") */
       var h1 = document.querySelector('h1'), fitW = cfg.pieces.length === 1 ? (pieceLabel(cfg.pieces[0]).split(/[,،]\s*/)[1] || '') : '';
-      var h1t = h1 ? h1.textContent.replace(/\s+/g, ' ').trim() : '', sub = h1t ? h1t + (fitW && h1t.toLowerCase().indexOf(fitW.toLowerCase()) < 0 ? ' · ' + fitW : '') : cfg.pieces.map(pieceLabel).join(' + ');
-      sheet.innerHTML = '<div class="sfx-p sf3' + (cfg.kit ? ' sf3-kit' : '') + '" role="dialog" aria-modal="true" aria-labelledby="' + u + 'T"><div class="sf3-hd"><h2 id="' + u + 'T" tabindex="-1">' + TX.title + '<small>' + esc(sub) + '</small></h2>' +
+      var h1t = h1 ? h1.textContent.replace(/\s+/g, ' ').trim() : '', sub = h1t ? (h1t + (fitW && h1t.toLowerCase().indexOf(fitW.toLowerCase()) < 0 ? ' — ' + fitW : '')) : cfg.pieces.map(pieceLabel).join(' + ');
+      sheet.innerHTML = '<div class="sfx-p sf3' + (cfg.kit ? ' sf3-kit' : '') + '" role="dialog" aria-modal="true" aria-labelledby="' + u + 'T"><div class="sf3-hd"><h2 id="' + u + 'T" tabindex="-1">' + TX.title + sub.split(/\s+[—–]\s+|,\s*(?=Regular Fit|Oversized Fit)/).map(function (x) { return '<small>' + esc(x) + '</small>'; }).join('') + '</h2>' +
         '<div class="sf3-whohd" hidden>' + seg('who', [['m', TX.man], ['w', TX.woman]], TX.start) + '</div><button type="button" class="sfx-x" aria-label="' + TX.close + '">&times;</button></div>' +
         '<div class="sf3-body">' + bodyHtml + '</div>' + (onPage ? '<div class="sf3-foot"><button type="button" class="sf3-go" disabled></button><button type="button" class="sf3-alt" hidden></button></div>' : '') + '</div>';
       document.body.appendChild(sheet); host = sheet;
@@ -433,7 +446,7 @@
     function pieces() { return cfg.choose ? [cfg.pieces[S.pi] || cfg.pieces[0]] : cfg.pieces; }
     function compute() {
       if (!S.who) return null;
-      var a = { who: S.who, cm: S.cm, kg: S.kg, usual: S.usual, chest: S.chest, waist: S.waist }, b = body(a);
+      var a = { who: S.who, cm: S.cm, kg: S.kg, usual: S.usual, chest: S.chest, waist: S.waist, full: S.full }, b = body(a);
       var list = pieces().map(function (p, n) {
         var group = onPage ? (cfg.kit ? (p.part === 'short' ? 'short' : 'tee') : 'size') : null, key = p.part || 'size';
         var out = function (s) { return !!group && soldOut(group, s); };
@@ -487,6 +500,7 @@
       qa('[data-who]').forEach(function (b) { if (b.closest('.sf3-seg')) b.setAttribute('aria-pressed', String(b.getAttribute('data-who') === S.who)); });
       qa('[data-pref]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-pref') === S.pref)); });
       qa('[data-usual]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-usual') === S.usual)); });
+      qa('[data-full]').forEach(function (b) { b.setAttribute('aria-pressed', String(!!S.full)); });
       paintNums();
       R = compute();
       var go = q('.sf3-go'), alt = q('.sf3-alt');
@@ -531,7 +545,8 @@
         } else if (x.p.kind === 'bands') {
           l = TX.on(tr.size) + TX.band(x.p.part === 'short' ? TX.bandWaist : TX.bandChest, tr.lo, tr.hi) + (tr.len ? ' ' + TX.hemS(TX.hem[hemIdx(tr.len, S.cm)]) : '');
         } else {
-          var rr = Math.round(tr.room), ri = roomIdx(tr.room), word = ri === 4 && tr.room <= x.r.t + 6 ? TX.roomyDesigned : TX.roomW[ri];
+          /* 27 Nov 2026 (site audit: a Relaxed tee read "loose and oversized"): the word says how it sits against THIS fit's design */
+          var rr = Math.round(tr.room), dd = tr.room - x.r.t, fw = TX.fitW[x.p.fitKey] || TX.fitW.regular, word = dd > 6 ? TX.roomierThan(fw) : dd < -6 ? TX.closerThan(fw) : TX.asDesigned(fw);
           l = TX.on(tr.size) + (rr < 0 ? TX.tight(-rr) : TX.room(rr, word)) + ' ' + TX.hemS(TX.hem[hemIdx(tr.len, S.cm)]);
         }
         line += (line ? ' ' : '') + (cfg.kit ? '<span class="sf3-k">' + (x.p.part === 'short' ? TX.short : TX.tee) + '</span> ' : '') + l;
@@ -555,9 +570,14 @@
           else if (x.r.over || x.r.best.room < 4) { nf = nextFit(1); if (nf) n += '<div><a href="' + esc(nf.href) + '#size-finder" data-fitgo="1">' + esc(TX.roomierFit(nf.name)) + ' &rarr;</a></div>'; }
         }
       });
+      /* 27 Nov 2026 (site audit): Sahel is cut large (a man who wears L elsewhere is told S or M); the men's cut pieces say who they suit */
+      if (R.list.some(function (x) { return x.p.sahel && x.p.kind !== 'bands'; })) n += '<div>' + TX.sahelLarge + '</div>';
+      if (S.who === 'w' && R.list.some(function (x) { return /polo|trail/.test(x.p.id); })) n += '<div>' + TX.mensCut + '</div>';
       var anyC = R.list.some(function (x) { return x.p.part !== 'short'; }), anyW = !!Sh;
       if (anyC) n += '<div>' + (S.chest ? TX.using('c', Math.round(S.chest)) : (S.tH || S.tK ? TX.est('c', Math.round(R.b.chest)) : '')) + '</div>';
       if (anyW) n += '<div>' + (S.waist ? TX.using('w', Math.round(S.waist)) : (S.tH || S.tK ? TX.est('w', Math.round(R.b.waist)) : '')) + '</div>';
+      /* 27 Nov 2026 (site audit): on the size guide the answer leads to the shop */
+      if (cfg.choose && main.p.shop) n = '<div><a class="sf3-shop" href="' + esc(main.p.shop) + '">' + esc(TX.shopIn(pieceLabel(main.p), main.tr.size)) + ' &rarr;</a></div>' + n;
       q('.sf3-notes').innerHTML = n.replace(/<div><\/div>/g, '');
       /* footer */
       if (go) {
@@ -671,6 +691,7 @@
       if (t.hasAttribute('data-who')) return setWho(t.getAttribute('data-who'));
       if (t.hasAttribute('data-pref')) { S.pref = t.getAttribute('data-pref'); return paint('in'); }
       if (t.hasAttribute('data-usual')) { S.usual = S.usual === t.getAttribute('data-usual') ? '' : t.getAttribute('data-usual'); return paint('in'); }
+      if (t.hasAttribute('data-full')) { S.full = !S.full; return paint('in'); }
       if (t.hasAttribute('data-try')) { var v = t.getAttribute('data-try').split(':'); S.tried[v[0]] = v[1]; track('size_finder_try', { size: v[1] }); return paint('try'); }
       if (t.hasAttribute('data-st')) { if (fromPointer) { fromPointer = false; return; } return step(t.getAttribute('data-st'), +t.getAttribute('data-d')); }
       if (t.hasAttribute('data-unit')) { var w = t.getAttribute('data-unit').split(':'); if (w[0] === 'h') S.hu = w[1]; else S.wu = w[1]; remember(S); return paintNums(); }
@@ -730,9 +751,9 @@
     '.sf3{--ink:#2A2016;--ink2:#4A4136;--ink3:#6B6256;--copper:#7E4114;--cream:#FAF6EF;--sand:#F3DDB8;--sand2:#EFE6D7;--line:rgba(42,32,22,.12);--line2:rgba(42,32,22,.24);--line3:rgba(42,32,22,.4);--track:#A39079;--body:#E6D9C5;--bodyline:#A8977F;--glass:rgba(255,253,249,.92);color:var(--ink);font:400 1rem/1.45 Jost,system-ui,-apple-system,"Segoe UI",sans-serif;text-align:start}' +
     '[dir=rtl] .sf3{font-family:inherit}.sf3 *{box-sizing:border-box}.sf3 bdi{unicode-bidi:isolate}' +
     'html body .sf3 button,html body .sf3 select,html body .sf3 input{font:inherit;color:inherit;letter-spacing:normal;text-transform:none;margin:0}' +
-    '.sf3-hd{display:flex;align-items:center;gap:8px;padding:10px 8px 6px 16px}[dir=rtl] .sf3-hd{padding:10px 16px 6px 8px}' +
-    'html body .sf3-hd h2{margin:0!important;flex:1;min-width:0;font:600 1.4rem/1.1 "Cormorant Garamond",Georgia,serif!important;color:var(--ink)!important;outline:none;letter-spacing:0!important}[dir=rtl] .sf3-hd h2{font-family:inherit!important;font-size:1.2rem!important}' +
-    '.sf3-hd h2 small{display:block;margin-top:2px;font:400 .78rem/1.35 Jost,system-ui,sans-serif;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}[dir=rtl] .sf3-hd h2 small{font-family:inherit}' +
+    '.sf3-hd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:10px 8px 6px 16px}[dir=rtl] .sf3-hd{padding:10px 16px 6px 8px}' +
+    'html body .sf3-hd h2{margin:0!important;flex:1 1 150px;min-width:0;overflow-wrap:normal;word-break:normal;font:600 1.4rem/1.1 "Cormorant Garamond",Georgia,serif!important;color:var(--ink)!important;outline:none;letter-spacing:0!important}[dir=rtl] .sf3-hd h2{font-family:inherit!important;font-size:1.2rem!important}' +
+    '.sf3-hd h2 small{display:block;margin-top:2px;font:400 .78rem/1.35 Jost,system-ui,sans-serif;color:var(--ink3)}[dir=rtl] .sf3-hd h2 small{font-family:inherit}' +
     '.sfx-x{flex:0 0 44px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);font-size:26px;line-height:1;cursor:pointer}' +
     '.sf3-whohd[hidden]{display:none}.sf3-whohd .sf3-seg{padding:2px}.sf3-whohd .sf3-seg button{min-height:36px;padding:0 10px;font-size:.82rem}' +
     '.sf3-body{flex:1;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
@@ -768,9 +789,10 @@
     '.sf3 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-12px;border-radius:50%;background:#fff;border:2px solid var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.18)}' +
     '.sf3 input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:var(--track)}.sf3 input[type=range]::-moz-range-progress{height:6px;border-radius:6px;background:var(--copper)}.sf3 input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--ink)}' +
     '.sf3-idle input[type=range]::-webkit-slider-thumb{animation:sf3n 1.6s ease-in-out 2}@keyframes sf3n{50%{box-shadow:0 0 0 8px rgba(126,65,20,.18)}}' +
-    '.sf3-notes{display:grid;gap:4px;font-size:.85rem;color:var(--ink2)}.sf3-notes:empty{display:none}.sf3-notes a{color:var(--copper);font-weight:600}.sf3-w{color:var(--copper);font-weight:500}' +
+    '.sf3-notes .sf3-shop{display:inline-block;margin:2px 0 4px;font-size:.95rem}.sf3-notes{display:grid;gap:4px;font-size:.85rem;color:var(--ink2)}.sf3-notes:empty{display:none}.sf3-notes a{color:var(--copper);font-weight:600}.sf3-w{color:var(--copper);font-weight:500}' +
     '.sf3-fine{border-top:1px solid var(--line);padding-top:6px}.sf3-fine summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-size:.9rem;color:var(--ink2)}' +
     '.sf3-fg{display:grid;gap:12px;padding:6px 0 4px}.sf3-usual{display:flex;flex-wrap:wrap;gap:6px}.sf3-usual button{min-width:48px;min-height:44px;border:1px solid var(--line3);border-radius:8px;background:#fff;cursor:pointer}.sf3-usual button[aria-pressed=true]{background:var(--ink);color:#fff}' +
+    '.sf3-full button{min-height:44px;padding:0 14px;border:1px solid var(--line3);border-radius:8px;background:#fff;cursor:pointer}.sf3-full button[aria-pressed=true]{background:var(--ink);color:#fff}' +
     '.sf3-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sf3 input[type=number],.sf3-sel{width:100%;min-height:44px;padding:0 10px;border:1px solid var(--line3);border-radius:8px;background:#fff}' +
     '.sf3-fp{padding:0 16px 14px;font-size:.75rem;line-height:1.45;color:var(--ink3)}' +
     '.sf3-foot{display:flex;gap:10px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);background:#fff}' +
@@ -784,6 +806,7 @@
     '@media(max-height:720px) and (min-height:561px){.sf3-stage{height:178px}.sf3-ctl{gap:10px;padding-top:8px}}.sf3-kit .sf3-stage{height:clamp(140px,22svh,240px)}.sf3-kit .sf3-read{font-size:.8rem;min-height:0}.sf3-kit .sf3-tries{gap:6px}.sf3-kit .sf3-chips button{min-height:40px}' +
     '@media(max-height:660px) and (min-height:561px){.sf3-kit .sf3-stage{height:126px}.sf3-stage{height:168px}.sf3-read{min-height:calc(2.7em + 8px);padding-bottom:4px}.sf3-ctl{gap:10px}}' +
     '@media(max-height:560px){.sf3-view{position:static}.sf3-stage{height:200px}}' +
+    '@media(max-width:340px){.sf3-stage{height:150px}.sf3-tries{padding-top:8px}.sf3-chips button{min-height:40px}.sf3-ctl{gap:8px}.sf3-st{flex-basis:40px;width:40px;height:40px}}' +
     '@media(prefers-reduced-motion:reduce){.sfx,.sfx-p.sf3,.sf3-badge,.sf3-stage>svg.fig{transition:none}.sf3-idle input[type=range]::-webkit-slider-thumb{animation:none}}';
   function all() {
     if (!document.getElementById('sfCss')) { var s = document.createElement('style'); s.id = 'sfCss'; s.textContent = CSS; document.head.appendChild(s); }

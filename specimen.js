@@ -184,7 +184,8 @@ function foundingTags() {
   return _ftags;
 }
 function foundingCap(name, p, fitKey) {
-  if (/^(alquaa|emptyquarter|hajar)-model-/.test(name) && /182 cm/.test(p.modelInfo || '')) return 'Model is 182 cm, wears L · Oversized fit';
+  /* 27 Nov 2026 (Faheem, on the audit: "Remove model height"): the size only, as on every other page */
+  if (/^(alquaa|emptyquarter|hajar)-model-/.test(name) && /dunes wears L/.test(p.modelInfo || '')) return 'Model wears L · Oversized fit';
   if (/-model-/.test(name)) return foundingTags()[name] || '';
   const t = foundingTags()[name]; if (t) return t;
   if (/-dune-(back|front)$/.test(name) && fitKey === 'regular' && !/^polo/.test(name)) {
@@ -223,8 +224,12 @@ function fromPreorder(p) {
   /* 8 Nov 2026 (Faheem: "Replace front back and art with real model shots on all shirts"): a Sahel tee page with a `stage` in
      content/sahel-photos.json shows model photos in its Back, Front and Art tabs (female model first); the flat-lays leave the
      tabs. The alt is the model-photo alt. Art pins are not drawn on a model photo (stage(): v.model). */
-  const ST = p.onModel && p.onModel.stage;
-  const views = ST ? ['back', 'front', 'art'].filter(k => ST[k]).map(k => Object.assign(pre(ST[k].k), { k, label: k[0].toUpperCase() + k.slice(1), cap: '', name: ST[k].k, model: true, mAlt: modelAlt(p, ST[k].view) }))
+  /* 27 Nov 2026 (site audit): a fit with no model photos of its own (Khor Fakkan Bay and Pearl Diver Oversized) opened on a
+     flat-lay; it now leads with the same print's Super Oversized model photos, captioned with the fit the model wears, as
+     its cards do (r165) */
+  const BM = !(p.onModel && p.onModel.stage) && p.borrowedModel;
+  const ST = (p.onModel && p.onModel.stage) || (BM && BM.stage);
+  const views = ST ? ['back', 'front', 'art'].filter(k => ST[k]).map(k => Object.assign(pre(ST[k].k), { k, label: k[0].toUpperCase() + k.slice(1), cap: BM ? `Model wears ${BM.worn}` : '', name: ST[k].k, model: true, mAlt: BM ? `Model wearing the ${String(p.name).replace(/&amp;/g, '&')} in ${BM.worn}, ${ST[k].view}` : modelAlt(p, ST[k].view) }))
     : [mk('back', 'Back', D.back), mk('front', 'Front', D.front, D.frontCap), mk('art', 'Art', D.art, D.artCap), mk('worn', 'Worn', D.worn, D.wornCap)].filter(Boolean);
   if (D.face === 'worn' && views.some(v => v.k === 'worn')) views.unshift(views.splice(views.findIndex(v => v.k === 'worn'), 1)[0]);   /* the model photo is the first tab too */
   views.forEach(v => { if (v.h / v.w > 1.35) v.tall = true; });
@@ -237,8 +242,8 @@ function fromPreorder(p) {
     fits: fitted ? p.fitsList.slice().sort((a, b) => FIT_ORDER.indexOf(a.fit) - FIT_ORDER.indexOf(b.fit)).map(f => ({ fit: f.fit, href: `/products/${f.handle}/`, onSale: !PAUSED[f.handle] })) : null,
     kind: p.kind, cut: p.oneSize ? 'One size' : (p.line === 'trail' || /polo/i.test(p.kind || '') ? 'Men’s cut' : 'Unisex'), colour: p.colour || '',
     place: p.place ? [p.place[0], null, `/locations/${p.place[1]}/`] : null,
-    face: D.face, views, notes: (NOTES[p.key] || []).map((n, i) => { const m = ST && NOTES_MODEL[p.handle]; const at = m ? m[i] : [n[0], n[1]]; return { x: at ? at[0] : null, y: at ? at[1] : null, t: n[2] }; }),
-    modelPins: !!(ST && NOTES_MODEL[p.handle]), spec,
+    face: D.face, views, notes: (NOTES[p.key] || []).map((n, i) => { const m = ST && !BM && NOTES_MODEL[p.handle]; const at = m ? m[i] : [n[0], n[1]]; return { x: at ? at[0] : null, y: at ? at[1] : null, t: n[2] }; }),
+    modelPins: !!(ST && !BM && NOTES_MODEL[p.handle]), spec,
     pair: p.line === 'sahel' && /T-shirt/i.test(p.kind || '') && Number(p.price) === 199,   /* 18 Nov 2026: the pair price covers every AED 199 tee */
     gift: !p.noTote && !/^sahra-trail-(tee|2-in-1-short|kit)$/.test(p.handle), trailBag: /^sahra-trail-(tee|2-in-1-short|kit)$/.test(p.handle),   /* 21 Nov 2026: Trail pieces earn the bag, not the tote */   /* 20 Nov 2026: the Trailhead Bag free with any Trail piece */
     chart: p.line === 'sahel' ? '#size-chart' : null,   /* 18 Nov 2026: the Sahel Polo has the Sahel Regular tee chart */
@@ -298,7 +303,7 @@ function chartFig(s) {
   const msize = s.onModel && s.onModel.size ? s.onModel.size : '';
   const how = s.kit ? 'Measure your chest at its fullest point, with the tape level and snug, and find it in the chart.'
     : 'Lay a top you own flat and measure straight across the chest, just under the arms. Compare it with the chest row.';
-  return `<figure class="ss-v ss-v-chart" id="ssV-chart" role="tabpanel" aria-labelledby="ssT-chart" data-v="chart" data-cap=""${msize ? ` data-msize="${esc(msize)}"` : ''}><div class="ss-chv"><p class="ss-chv-k"><span class="ss-chv-h">Size chart</span><span class="ss-chv-fit"></span></p><div class="ss-chv-t" data-chv></div>${msize ? `<p class="ss-chv-mw"><i aria-hidden="true"></i>Model wears <bdi>${esc(msize)}</bdi></p>` : ''}<p class="ss-chv-m">${how}</p><p class="ss-chv-a"><a class="ss-chv-f" href="#size-finder" data-chf="slide">Find your fit</a><button type="button" class="ss-chv-all" data-chart-open="slide">Full size chart</button></p></div></figure>`;
+  return `<figure class="ss-v ss-v-chart" id="ssV-chart" role="tabpanel" aria-labelledby="ssT-chart" data-v="chart" data-cap=""${msize ? ` data-msize="${esc(msize)}"` : ''}><div class="ss-chv"><p class="ss-chv-k"><span class="ss-chv-h">Size chart</span><span class="ss-chv-fit"></span></p>${msize ? `<p class="ss-chv-mw"><i aria-hidden="true"></i>Model wears <bdi>${esc(msize)}</bdi></p>` : ''}<div class="ss-chv-t" data-chv></div><p class="ss-chv-m">${how}</p><p class="ss-chv-a"><a class="ss-chv-f" href="#size-finder" data-chf="slide">Find your fit</a><button type="button" class="ss-chv-all" data-chart-open="slide">Full size chart</button></p></div></figure>`;
 }
 function chartSheet(s) {
   if (!chartOn(s)) return '';
@@ -449,7 +454,7 @@ function waLine(s, h1) {
 const TBL = '<img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async">';
 function promise(s) {
   if (PAUSED[s.handle]) return `<p class="ss-stat">Not available to order while this fit is re-cut. Back soon.</p>`;
-  return `<p class="ss-promise1${allOut(s.handle) ? ' is-out' : ''}"><span class="sb-ship-uae"><span class="ss-instock">In stock. </span>Next-working-day delivery across the UAE, order by 2 pm. Free over AED 100 \u00b7 Free 14-day returns and exchanges${s.gift ? ' \u00b7 Free <a href="/tote/">Sahra Tote</a> with every order' : ''}${s.trailBag ? ' \u00b7 Free <a href="/products/trailhead-bag/">Trailhead Bag</a> with Sahra Trail' : ''}</span><span class="sb-ship-gcc"><span class="ss-instock">In stock. </span>GCC delivery in 3\u20135 working days, free over AED 229 \u00b7 14-day returns</span><span class="sb-ship-intl"><span class="ss-instock">In stock. </span>Worldwide delivery in 7\u201314 working days \u00b7 14-day returns</span></p>`;
+  return `<p class="ss-promise1${allOut(s.handle) ? ' is-out' : ''}"><span class="sb-ship-uae"><span class="ss-instock">In stock. </span>Next-working-day delivery to every emirate, Al Ain included, order by 2 pm. Free over AED 100 \u00b7 Free 14-day returns and exchanges${s.gift ? ' \u00b7 Free <a href="/tote/">Sahra Tote</a> with every order (the <a href="/products/trailhead-bag/">Trailhead Bag</a> with Sahra Trail)' : ''}${s.trailBag ? ' \u00b7 Free <a href="/products/trailhead-bag/">Trailhead Bag</a> with Sahra Trail' : ''}</span><span class="sb-ship-gcc"><span class="ss-instock">In stock. </span>GCC delivery in 3\u20135 working days, free over <span class="sb-thr" data-aed="229">AED 229</span> \u00b7 14-day returns</span><span class="sb-ship-intl"><span class="ss-instock">In stock. </span>Worldwide delivery in 7\u201314 working days \u00b7 14-day returns</span></p>`;
 }
 function top(s, o = {}) {
   const altBase = s.name.replace(/&amp;/g, '&') + (s.colour ? ` in ${s.colour}` : '');
@@ -469,7 +474,7 @@ function top(s, o = {}) {
       <h1 class="ss-h1">${o.h1 || esc(s.name)}</h1>
       ${/* 14 Nov 2026 (site scorecard r139: the sticky size bar hid the stars on a phone's first screen): the stars sit under the title */''}${o.rating || ''}
       ${o.proof || ''}
-      <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two AED 199 tees, AED 359</span>` : ''}</p>${!PAUSED[s.handle] ? `
+      <p class="ss-pr"><span class="ss-price">${priceSpan(s)}</span>${s.pair ? `<span class="ss-pair sb-aed-only">Any two AED 199 tees, AED 359; each extra one AED 179.50</span>` : ''}${s.handle === 'sahra-trail-kit' ? `<span class="ss-pair sb-aed-only">AED 29 less than the tee and short bought apart</span>` : ''}</p>${!PAUSED[s.handle] ? `
       <p class="ss-tbp"><button type="button" class="ssb-tb ss-tb-open sb-ship-uae sb-aed-only" aria-expanded="false" aria-controls="ssTbT-${s.handle}">4 \u00d7 ${quarter(s.price)} with ${TBL} <span class="ss-tb-nf">interest-free</span></button></p>
       <p class="ss-tb-t" id="ssTbT-${s.handle}" hidden>${/* 18 Nov 2026 (persona audit; Faheem chose "Payment line by the price"): what Tabby means, in plain words, one tap away */''}Split ${money(s.price)} into 4 payments of ${money(Number(quarter(s.price)))}: the first today, then one every 2 weeks. No interest, and no fees when you pay on time. Tabby confirms at checkout.</p>` : ''}
       ${!PAUSED[s.handle] ? `<p class="ss-pay"><span class="sb-ship-uae">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 Tabby \u00b7 No cash on delivery</span><span class="sb-ship-gcc">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 Tabby \u00b7 No cash on delivery</span><span class="sb-ship-intl">Apple Pay \u00b7 Google Pay \u00b7 Card \u00b7 No cash on delivery</span></p>` : ''}

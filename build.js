@@ -3065,6 +3065,12 @@ const SIZING = (function(){
 })();
 const SAHEL_SZ = require('./sahel-sizing.js');   /* 27 Oct 2026: Sahel size charts */
 const TRAIL_SZ = require('./trail-sizing.js');   /* 10 Nov 2026: Sahra Trail size charts */
+/* 27 Nov 2026 (site audit, Lisa on desktop: the chart and the finder started 2.5 screens down, after the hero and three tee
+   cards): on the size guide the finder comes first, then the chart links; the tee cards move below the charts */
+function sizeFinderTop() {
+  const SFD = require('./sizefinder-data.js');
+  return `<section class="guide-sec" id="finder"><h2>Find your size</h2><p class="sgintent">Choose a piece, then your height and weight. Every chart is below.</p>${SFD.mount(SFD.all(), { inline: true }) + SFD.SCRIPT}</section>`;
+}
 function sizeTableHtml() {
   if (!SIZING.regular || !SIZING.regular.length) return '';
   const cell = (i,c) => `<span class="sz-in">${i}&Prime;</span><span class="sz-sep"> / </span><span class="sz-cm">${c}&nbsp;cm</span>`;
@@ -3080,7 +3086,8 @@ function sizeTableHtml() {
   /* 12 Nov 2026: Size finder 2, every piece on one finder (sizefinder-data.js) */
   const SFD = require('./sizefinder-data.js');
   const finder = SFD.mount(SFD.all(), { inline: true }) + SFD.SCRIPT;
-  return finder + tbl('Founding Edition, Regular fit','regular',SIZING.regularIntent||'') + tbl('Founding Edition, Oversized fit','oversized',SIZING.oversizedIntent||'') + method + polo;
+  /* 27 Nov 2026 (site audit): the finder moved to the top of the size guide (sizeFinderTop) */
+  return tbl('Founding Edition, Regular fit','regular',SIZING.regularIntent||'') + tbl('Founding Edition, Oversized fit','oversized',SIZING.oversizedIntent||'') + method + polo;
 }
 
 /* The GSM comparison table.
@@ -3495,7 +3502,7 @@ COMMERCE.forEach(P => {
   <main>
     ${''/* 10 Nov 2026 (Stage 3): the 'Pick your place' strip on /t-shirts/ showed the three Founding tees a second time, above the grid; the grid is now the first thing under the opener */}
     ${P.catNav || Array.isArray(P.items) ? '' : `<div class="content">${paras(P.intro)}</div>`}
-    ${/* 12 Oct 2026 (SEO and UX pass): on /t-shirts/ the five fit and theme tiles sat above the grid, so the first price was at 1,240 px on a phone. The grid now comes first. */''}${/^(national-day|gifts)$/.test(P.slug) ? GIFT_CHIPS : ''}${HEROES.OPEN[P.slug] ? houseGrid({ founding: PRODUCTS_ALL.filter(p => p.garment !== 'polo').sort((a, b) => (a.order || 0) - (b.order || 0)), news: P.newList ? P.newList() : [], fits: true, label: P.h1, note: require('./preorder-page.js').newLede() }) : `${collectionBlock(null, P.slug === 't-shirts')}
+    ${/* 12 Oct 2026 (SEO and UX pass): on /t-shirts/ the five fit and theme tiles sat above the grid, so the first price was at 1,240 px on a phone. The grid now comes first. */''}${/^(national-day|gifts)$/.test(P.slug) ? GIFT_CHIPS : ''}${P.sizeTable ? '' : HEROES.OPEN[P.slug] ? houseGrid({ founding: PRODUCTS_ALL.filter(p => p.garment !== 'polo').sort((a, b) => (a.order || 0) - (b.order || 0)), news: P.newList ? P.newList() : [], fits: true, label: P.h1, note: require('./preorder-page.js').newLede() }) : `${collectionBlock(null, P.slug === 't-shirts')}
     ${P.newList ? require('./preorder-page.js').newBlock({ list: P.newList(), heading: P.newHeading || 'Sahel, the Coast Edition: four new tees', lede: require('./preorder-page.js').newLede(), fitsLabel: !!P.newFits }) : ''}`}
     ${P.catNav ? `<nav class="catnav" aria-label="Shop by category">
       <a href="/t-shirts/regular/"><b>Regular fit</b><span>Straight cut, set shoulder</span></a>
@@ -3508,10 +3515,11 @@ COMMERCE.forEach(P => {
     </nav>` : ''}
     ${P.catNav || Array.isArray(P.items) ? `<div class="content">${paras(P.intro)}</div>` : ''}
     ${P.slug === 't-shirts' ? RV.homepageBand({ compact: true }) : ''}
+    ${P.sizeTable ? sizeFinderTop() : ''}
     ${P.sizeTable ? `<nav class="sg-jump" aria-label="Size charts"><a href="#founding">Founding Edition chart</a><a href="#sahel">Sahel chart</a><a href="#trail">Sahra Trail chart</a></nav>
     <section class="guide-sec" id="founding"><h2>Founding Edition</h2><p class="sgintent">For Al Quaa Galaxy, Hajar Mountains, Empty Quarter and the Sahra Polo. Not for Sahel or Sahra Trail pieces, which have their own charts below.</p>${sizeTableHtml()}</section>
     <section class="guide-sec" id="sahel"><h2>Sahel, the Coast Edition</h2><p class="sgintent">For the Khor Fakkan Bay, Al Hamra Pearl Diver, Al Aqah Reef, Al Qudra Lakes and Shams tees and the Barr &amp; Bahr, Ras Al Khor and Khor Fakkan hoodies. Sahel Relaxed and Super Oversized are cut on their own pattern and run larger than the Founding Edition; Sahel Oversized is our original Oversized cut, on the Founding Edition Oversized chart. Super Oversized has a dropped shoulder. The Sahel Polo has the same sizes as the Sahel Relaxed tee, so use the Relaxed chart below.</p>${SAHEL_SZ.block('teeRegular', { heading: true })}${SAHEL_SZ.block('teeOversized', { heading: true })}${SAHEL_SZ.block('teeSuperOversized', { heading: true })}<h3 class="ssz-h">From the Founding Edition Oversized to Super Oversized</h3>${SAHEL_SZ.foundingToSuper()}${SAHEL_SZ.block('hoodieOversized', { heading: true })}${SAHEL_SZ.block('hoodie', { heading: true })}${/* 14 Nov 2026: the Oversized fit is back (Faheem) */''}<style>${SAHEL_SZ.CSS}.sg-jump{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 6px}.sg-jump a{display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border:1px solid #2A2016;border-radius:999px;color:#2A2016;text-decoration:none;font:500 14px Jost,system-ui,sans-serif}#founding,#sahel,#trail{scroll-margin-top:96px}${TRAIL_SZ.CSS}</style></section>
-    <section class="guide-sec" id="trail"><h2>Sahra Trail</h2><p class="sgintent">For the Sahra Trail Tee and the Sahra Trail 2-in-1 Short, and for the Sahra Trail Kit, where you choose a size for each. The Trailhead Bag is one size.</p>${TRAIL_SZ.block('all')}</section>` : ''}
+    <section class="guide-sec" id="trail"><h2>Sahra Trail</h2><p class="sgintent">For the Sahra Trail Tee and the Sahra Trail 2-in-1 Short, and for the Sahra Trail Kit, where you choose a size for each. The Trailhead Bag is one size.</p>${TRAIL_SZ.block('all')}</section>${collectionBlock(null, false)}` : ''}
     ${P.gsmTable ? `<section class="guide-sec" id="gsm-table"><h2>Every t-shirt weight, compared</h2><p class="sgintent">GSM is grams per square metre &mdash; how much a square metre of the cloth weighs. It is the single most useful number on a t-shirt spec, and almost nobody selling t-shirts in the UAE explains it. Here is the whole scale.</p>${gsmTableHtml()}</section>` : ''}
     ${sectionsHtml}
     ${P.related ? `<nav class="catnav" aria-label="Related">${P.related.map(r => `<a href="${r[0]}"><b>${esc(r[1])}</b><span>${esc(r[2])}</span></a>`).join('')}</nav>` : ''}
@@ -3788,7 +3796,8 @@ COMMERCE.forEach(P => {
     const title = 'Shop UAE T-Shirts, Polos & Hoodies | Sahra & Beyond';
     const desc = 'Graphic t-shirts, polos, hoodies and Sahra Trail running wear, designed in the UAE. Tees from AED 139; any two AED 199 tees for AED 359. Free UAE delivery over AED 100.';
     const kindOf = p => /hoodie/i.test(p.kind || '') ? 'hoodie' : /polo/i.test(p.kind || '') ? 'polo' : p.oneSize ? 'bag' : p.kit ? 'kit' : /short/i.test(p.kind || '') ? 'short' : 'tee';
-    const wrap = (line, kind, html) => `<div class="sg-i" data-line="${line}" data-kind="${kind}">${html}</div>`;
+    /* r166 (27 Nov 2026, site audit #12): each cell carries its price, for the price chip and the sort */
+    const wrap = (line, kind, html) => { const m = html.match(/class="[^"]*\bsb-price" data-handle="[^"]+" data-aed="([\d.]+)"/); return `<div class="sg-i" data-line="${line}" data-kind="${kind}"${m ? ` data-aed="${m[1]}"` : ''}>${html}</div>`; };
     /* Founding Edition: one card per design, Regular and Oversized on the card's own switch (the Sahel pattern) */
     const designs = [];
     founding.forEach(p => { const k = String(p.id).replace(/-(regular|oversized)$/, ''); let d = designs.find(x => x.k === k); if (!d) designs.push(d = { k, fits: [] }); d.fits.push(p); });
@@ -3804,7 +3813,8 @@ COMMERCE.forEach(P => {
        The free gift tote is a different Shopify product and is never listed. */
     const extraCards = wrap('extra', 'bag', toteCard);
     const total = ((sahelCards + foundingCards + trailCards + extraCards).match(/<div class="sg-i" /g) || []).length;
-    const CHIPS = [['all', 'All'], ['sahel', 'Sahel'], ['founding', 'Founding Edition'], ['trail', 'Sahra Trail'], ['polos-hoodies', 'Polos and hoodies']];
+    /* r166 (site audit #12): what a piece is first (T-shirts, Hoodies, Polos, Activewear, Under AED 150), then the two ranges */
+    const CHIPS = [['all', 'All'], ['tee', 'T-shirts'], ['hoodie', 'Hoodies'], ['polo', 'Polos'], ['trail', 'Activewear'], ['under-150', 'Under AED 150'], ['sahel', 'Sahel'], ['founding', 'Founding Edition']];
     const prod = p => ({ '@type': 'Product', name: p.name, image: SITE + (p.imgMain || p.imgFront || '/shirts/alquaa-dune-back.jpg'), description: p.shareDesc || p.ldDesc || p.seoDesc || '', sku: p.sku || undefined,
       brand: { '@type': 'Brand', name: 'Sahra & Beyond' }, url: `${SITE}/products/${p.id}/`,
       offers: { '@type': 'Offer', priceCurrency: 'AED', price: String(p.price), availability: 'https://schema.org/InStock', url: `${SITE}/products/${p.id}/` } });
@@ -3850,6 +3860,18 @@ body.shop-page,.sx-wrap,.sx-main{overflow-anchor:none}
 .shop-page .sbf-c{flex:none;min-height:40px;padding:0 13px;font-size:13.5px;background:none}
 .shop-page .sbf-c[aria-pressed="true"]{background:#2A2016}
 .shop-page .sbf-n{display:none}
+/* r166 (site audit #12): search and sort, above the grid */
+.sx-vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.sx-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.sx-q{position:relative;flex:1 1 220px;min-width:0}
+.sx-q svg{position:absolute;inset-inline-start:13px;top:50%;width:17px;height:17px;transform:translateY(-50%);pointer-events:none;color:#6B6256}
+html body .sx-q input{box-sizing:border-box;width:100%;min-height:44px;margin:0;padding:0 14px 0 40px;border:1px solid rgba(42,32,22,.3);border-radius:999px;background:#fff;color:#2A2016;font:400 16px/1.2 Jost,system-ui,sans-serif;-webkit-appearance:none;appearance:none}
+html[dir="rtl"] body .sx-q input{padding:0 40px 0 14px}
+.sx-q input::placeholder{color:#6B6256}
+.sx-q input:focus-visible,.sx-sort select:focus-visible{outline:2px solid #7E4114;outline-offset:2px}
+.sx-sort{flex:0 1 auto;display:flex;align-items:center;gap:6px;font:400 14px/1 Jost,system-ui,sans-serif;color:#4A4136}
+html body .sx-sort select{min-height:44px;margin:0;padding:0 30px 0 12px;border:1px solid rgba(42,32,22,.3);border-radius:999px;background:#FAF6EF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%232A2016' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;color:#2A2016;font:500 14.5px/1 Jost,system-ui,sans-serif;-webkit-appearance:none;appearance:none}
+html[dir="rtl"] body .sx-sort select{padding:0 12px 0 30px;background-position:left 12px center}
 .sx-main .nb{margin:0;padding:0;max-width:none}
 .sx-main .pcards.nb-pc{margin:0}
 .sg-i{display:contents}
@@ -3872,21 +3894,32 @@ var chips=[].slice.call(bar.querySelectorAll('button[data-f]')),items=[].slice.c
 var AR=/^ar/i.test(document.documentElement.lang||'');
 function count(){var s=0;items.forEach(function(e){if(e.classList.contains('sg-off'))return;var c=e.querySelectorAll('.pcard');for(var i=0;i<c.length;i++){if(!c[i].classList.contains('sbf-off')&&(!c[i].closest('.sfp')||c[i].classList.contains('on'))){s++;break;}}});
 var t=AR?('عدد القطع: '+s):(s+(s===1?' piece':' pieces'));if(n&&n.textContent!==t)n.textContent=t;if(none)none.hidden=s>0;}
-function ok(e,f){return f==='all'||(f==='polos-hoodies'?/^(polo|hoodie)$/.test(e.getAttribute('data-kind')):e.getAttribute('data-line')===f);}
+var KINDS={tee:1,hoodie:1,polo:1};
+function ok(e,f){var k=e.getAttribute('data-kind');if(f==='all')return true;if(f==='polos-hoodies')return /^(polo|hoodie)$/.test(k);if(KINDS[f])return k===f;if(f==='under-150')return +(e.getAttribute('data-aed')||0)<150;return e.getAttribute('data-line')===f;}
+/* r166 (site audit #12): a search box and a price sort, on top of the chips */
+var qIn=document.getElementById('shopQ'),sortSel=document.getElementById('shopSort'),tile=grid.querySelector('.sbc-tile'),cur='all';
+function norm(t){return String(t||'').toLowerCase().replace(/[\u064B-\u065F\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/\s+/g,' ').trim();}
+items.forEach(function(e,i){e.__o=i;e.__t=null;});var noneBase=none?none.textContent:'';
+function txt(e){if(e.__t===null){var c=e.querySelector('.pcard');e.__t=norm((c?c.textContent:e.textContent)+' '+(e.getAttribute('data-kind')||'')+' '+(e.getAttribute('data-line')||''));}return e.__t;}
+function qOk(e){var q=norm(qIn&&qIn.value);if(!q)return true;var t=txt(e);return q.split(' ').every(function(w){return t.indexOf(w)>-1;});}
+function apply(){items.forEach(function(e){e.classList.toggle('sg-off',!(ok(e,cur)&&qOk(e)));});if(none){var q=qIn&&qIn.value.trim();none.textContent=q?(AR?'لا توجد قطعة تطابق هذا البحث.':'Nothing matches that search. Try a place, a colour or a piece.'):noneBase;}count();}
+function resort(){var v=sortSel?sortSel.value:'';var arr=items.slice().sort(function(a,b){if(!v)return a.__o-b.__o;var d=(+(a.getAttribute('data-aed')||0))-(+(b.getAttribute('data-aed')||0));return (v==='price-desc'?-d:d)||a.__o-b.__o;});
+arr.forEach(function(e){grid.appendChild(e);});if(tile){var at=arr[6];if(at)grid.insertBefore(tile,at);else grid.appendChild(tile);}}
+if(qIn)qIn.addEventListener('input',function(){apply();});
+if(sortSel)sortSel.addEventListener('change',function(){resort();});
 /* the top of the list (the discount row included) under the header and the chips */
 function goGrid(){requestAnimationFrame(function(){scrollTo(0,Math.max(0,Math.round(main.getBoundingClientRect().top+scrollY-bar.offsetHeight-hh())));});}
 /* bring the pressed chip into the middle of its row (the row scrolls sideways on a phone); never moves the page */
 function showChip(c){if(!row||!c||row.scrollWidth<=row.clientWidth)return;var x=c.offsetLeft-(row.clientWidth-c.offsetWidth)/2;try{row.scrollTo({left:x,behavior:'smooth'});}catch(e){row.scrollLeft=x;}}
-function set(f,user){if(!chips.some(function(c){return c.getAttribute('data-f')===f;}))f='all';
+function set(f,user){if(f!=='polos-hoodies'&&!chips.some(function(c){return c.getAttribute('data-f')===f;}))f='all';
 var stuck=bar.getBoundingClientRect().top<=hh()+2;
-items.forEach(function(e){e.classList.toggle('sg-off',!ok(e,f));});
+cur=f;apply();
 chips.forEach(function(c){var on=c.getAttribute('data-f')===f;c.setAttribute('aria-pressed',on?'true':'false');if(on)showChip(c);});
-count();
 if(user){try{history.replaceState(null,'',f==='all'?location.pathname+location.search:'#'+f);}catch(e){}if(stuck)goGrid();}}
 chips.forEach(function(c){c.addEventListener('click',function(){set(c.getAttribute('data-f'),1);});});
 /* #sahel, #founding, #trail and #polos-hoodies open the page filtered; so do the old #shop-sahel and #shop-trail */
-var MAP={'shop-sahel':'sahel','shop-trail':'trail'};chips.forEach(function(c){var k=c.getAttribute('data-f');if(k!=='all')MAP[k]=k;});
-function fromHash(){var h=(location.hash||'').replace('#','');if(MAP[h]){set(MAP[h],0);goGrid();}}
+var MAP={'shop-sahel':'sahel','shop-trail':'trail','polos-hoodies':'polos-hoodies','activewear':'trail','hoodies':'hoodie','polos':'polo','t-shirts':'tee','gifts':'under-150'};chips.forEach(function(c){var k=c.getAttribute('data-f');if(k!=='all')MAP[k]=k;});
+function fromHash(){var h=(location.hash||'').replace('#','');if(h==='search'&&qIn){goGrid();setTimeout(function(){try{qIn.focus({preventScroll:true});}catch(e){qIn.focus();}},250);return;}if(MAP[h]){set(MAP[h],0);goGrid();}}
 fromHash();addEventListener('hashchange',fromHash);
 /* the discount row (sale.js) hides cards with .sbf-off: recount after it has run, and when the sale ends */
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.sbf-c'))setTimeout(count,0);});document.addEventListener('sb:sale',function(){setTimeout(count,0);});document.addEventListener('DOMContentLoaded',function(){setTimeout(count,0);});addEventListener('load',function(){setTimeout(count,60);});})();</script>`;
@@ -3896,6 +3929,7 @@ document.addEventListener('click',function(e){if(e.target.closest&&e.target.clos
   <div class="sx-bar" id="shopBar"><div class="sx-in"><div class="sx-chips" role="group" aria-label="Show">${CHIPS.map(([k, t], i) => `<button type="button" data-f="${k}" aria-pressed="${i ? 'false' : 'true'}" data-track="shop_chip_${k.replace(/-/g, '_')}">${t}</button>`).join('')}</div><span class="sx-n" aria-live="polite">${total} pieces</span></div></div>
   <div class="sx-main">
     ${PO.stageHead()}${PO.NB_CSS()}${PO.BIG_CSS()}
+    <div class="sx-tools" role="search"><label class="sx-q"><span class="sx-vh">Search the shop</span><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="shopQ" placeholder="Search tees, hoodies, places" autocomplete="off" enterkeyhint="search" data-track="shop_search"></label><label class="sx-sort"><span class="sx-vh">Sort</span><select id="shopSort" data-track="shop_sort"><option value="">Featured</option><option value="price-asc">Price, low to high</option><option value="price-desc">Price, high to low</option></select></label></div>
     <div class="nb"><div class="pcards nb-pc" id="shopGrid">${(all => { /* 13 Nov 2026 (Faheem: "Move homepage/shop forms up"): the welcome code row after the first six pieces */
       const at = all.split('<div class="sg-i"', 7).slice(0, 7).join('<div class="sg-i"').length; return at < all.length ? all.slice(0, at) + require('./capture.js').tile() + all.slice(at) : all + require('./capture.js').tile(); })(sahelCards + foundingCards + trailCards + extraCards)}</div><p class="sx-none" id="shopNone" hidden>Nothing in this range at that discount.</p></div>
     <p class="sx-note">${PO.newLede()} The <a href="/tote/">Sahra Tote</a> comes free with every order, or the Trailhead Bag when it includes Sahra Trail.</p>

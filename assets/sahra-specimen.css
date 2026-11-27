@@ -491,6 +491,10 @@ html body .ss .ss-glance p.ss-gl-n{margin:0 0 6px;font-size:13.5px!important;lin
 html body .ss-v-chart{background:#FAF6EF;display:flex;align-items:center;justify-content:center;overflow:auto}
 html body .ss-chv{width:100%;max-height:100%;padding:16px 14px 52px;display:flex;flex-direction:column;gap:8px;color:#2A2016;font:15px/1.45 Jost,system-ui,sans-serif;text-align:start}
 html body .ss-chv>*{flex-shrink:0}
+/* r166 (27 Nov 2026, site audit #26): a tall chart (the hoodies, the Kit, any chart on a small phone or in Arabic) used to
+   overflow the centred box, so its last lines ran under the dots. Now the slide scrolls and the box keeps 52px clear above them. */
+html body .ss-v-chart{display:block;overscroll-behavior:contain}
+html body .ss-chv{max-height:none;min-height:100%;justify-content:center;box-sizing:border-box}
 html body .ss-stage.has-tabs .ss-chv{padding-top:62px}
 @media(max-width:899px){html body .ss-stage.has-tabs .ss-chv{padding-top:18px}}
 html body .ss-chv-t caption{display:none}
@@ -533,3 +537,14 @@ html body .ss-chs .ss-chv-a{margin-top:14px}
 html.ss-chs-on,html.ss-chs-on body{overflow:hidden}
 @media(min-width:900px){html body .ss-chs{align-items:center}html body .ss-chs-p{border-radius:22px;max-height:82vh;padding:22px 24px}}
 @media(prefers-reduced-motion:reduce){html body .ss-chs-bg,html body .ss-chs-p{transition:none}}
+/* 27 Nov 2026 (site audit, Faheem: "Make all updates"): with large text (150-200%) the phone's width in CSS pixels drops
+   below 360 and the buy sheet squeezed Add to bag to a sliver. Below 360 px it stacks: the sizes on one row, a full-width
+   Add to bag under them, the price and delivery line below that. */
+@media(max-width:359px){
+  html body .ssb .ssb-r1{flex-wrap:wrap}
+  html body .ssb .ssb-sz{flex:1 1 100%;flex-wrap:wrap;justify-content:flex-start}
+  html body .ssb .ssb-kit{flex:1 1 100%}
+  html body .ssb .ssb-add{flex:1 1 100%;white-space:normal;height:auto;min-height:48px;padding:8px 12px}
+  html body .ssb.kit .ssb-add{min-height:48px}
+  html body .ssb .ssb-r2{flex-wrap:wrap}
+}

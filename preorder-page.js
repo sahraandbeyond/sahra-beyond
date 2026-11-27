@@ -186,6 +186,10 @@ const CYCLE_CSS = `[data-cycle]{position:relative}
 [data-cycle]>i.cyc-worn{position:absolute;left:8px;top:8px;max-width:calc(100% - 16px);padding:3px 8px;border-radius:99px;background:rgba(250,246,239,.92);color:#2A2016;font:500 10.5px/1.2 Jost,system-ui,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;pointer-events:none}
 [dir=rtl] [data-cycle]>i.cyc-worn{font-family:inherit}
 [dir=rtl] [data-cycle]>i.cyc-worn{left:auto;right:8px}`;
+/* r166 (site audit #3 and #4): the Fabric and care and Delivery accordions */
+const FC_CSS_TXT = `.po-fc,.po-dl{padding:4px 0 8px}.po-fc-l{margin:0 0 10px;font-size:15px;line-height:1.6;color:#2A2016}.po-fc h3{margin:14px 0 6px;font:600 15px/1.3 Jost,system-ui,sans-serif;color:#2A2016}.po-fc ul{margin:0 0 10px;padding-inline-start:20px;font-size:14.5px;line-height:1.6;color:#4A4136}
+.shipcards{display:grid;gap:8px;margin:4px 0 12px}.shipcard{display:grid;gap:4px;padding:12px 14px;border:1px solid rgba(42,32,22,.14);border-radius:10px;background:#fff;font-size:14px;line-height:1.5;color:#4A4136}.shipcard b{color:#2A2016;font-size:14px}.shipcard strong{color:#2A2016}
+html[data-market="uae"] .shipcard-uae,html[data-market="gcc"] .shipcard-gcc,html[data-market="intl"] .shipcard-intl{order:-1;border-color:rgba(42,32,22,.4)}.shipflag{width:19px;height:13px;border-radius:2px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(42,32,22,.15)}.shipsub{font-weight:400;font-size:12px;color:#6B6256;margin-inline-start:4px}`;
 const real = (k, alt, cap) => ({ k, alt, mock: false, cap });
 
 /* Story paragraphs: the approved card stories (14 Oct handover; content/sahel-pieces.json). */
@@ -278,7 +282,8 @@ function products() {
       fl.forEach(x => { x.label = FIT_LABEL(x.fit); });
       fl.forEach(({ fit: F, handle }) => out.push({ line: 'sahel', handle, title: `${p.name} &mdash; ${FIT_LABEL(F)}`, plain: `${plain} — ${FIT_LABEL(F)}`, name: p.name, fit: F, fitLabel: FIT_LABEL(F), fitsList: fl,
         colour: p.colour, price: p.price, story: p.story, details: FIT_DETAILS[F].concat(p.details), images: modelFirst(handle, `${p.name.replace(/^The /, '')} in ${FIT_LABEL(F)}`, images), place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
-        onModel: !SP.PAUSED[handle] && ON_MODEL[handle] && ON_MODEL[handle].photos ? ON_MODEL[handle] : null }));
+        onModel: !SP.PAUSED[handle] && ON_MODEL[handle] && ON_MODEL[handle].photos ? ON_MODEL[handle] : null,
+        borrowedModel: !ON_MODEL[handle] && !SP.PAUSED[handle] && ON_MODEL[`${p.key}-super-oversized`] && ON_MODEL[`${p.key}-super-oversized`].stage ? { stage: ON_MODEL[`${p.key}-super-oversized`].stage, worn: 'Super Oversized' } : null }));
     }
     else out.push({ line: 'sahel', handle: p.key, title: p.name, plain, name: p.name, colour: p.colour, price: p.price, story: p.story, details: p.details, images, place: p.place, key: p.key, seo: p.seo, kind: p.kind, md: p.md,
       onModel: ON_MODEL[p.key] && ON_MODEL[p.key].photos ? ON_MODEL[p.key] : null });
@@ -325,6 +330,7 @@ const CSS = `${SZ.CSS}${TSZ.CSS}
 .po-zoomhint{font:12px/1.4 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B6256;margin:8px 2px 0}.po-fig.po-tall img{object-fit:contain}
 .po-fig img{width:100%;height:100%;object-fit:cover;display:block}
 ${CYCLE_CSS}
+${FC_CSS_TXT}
 .po-fig figcaption{position:absolute;left:10px;top:10px;font:11px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:4px;background:rgba(250,246,239,.92);color:#2A2016}
 .po-ph{margin:0;aspect-ratio:4/5;border-radius:10px;background:#2A2016;color:#E5E1D9;display:flex;align-items:center;justify-content:center;text-align:center;grid-column:1/-1}
 .po-ph b{display:block;font:600 30px/1.1 'Cormorant Garamond',Georgia,serif;margin-bottom:10px}
@@ -525,6 +531,7 @@ function productPage(p, all, SITE, stage) {
     <div><h2>Details</h2><ul>${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
       <p class="po-small" style="margin-top:12px">${p.images.length && p.images.every(i => i.mock) ? 'The studio images are mock-ups. We will add photos of the real pieces when they arrive.' : p.images.some(i => i.mock) ? (p.images[0].mock ? 'The images marked Mock-up are studio mock-ups; the close-ups are photographed from the sample.' : 'Photographed from the real piece. The image marked Mock-up is a studio mock-up until that side is photographed.') : p.inHand ? 'Photographed from the real bag, on a studio backdrop.' : p.images.some(i => i.studio) ? '' : p.line === 'sahel' ? 'Photographed from the real piece.' : ''} Designed in the UAE.</p></div>
   </section></details>
+  ${fabricCareHtml(p)}${DELIVERY_HTML}
   ${pausedChart}${(SZ.keyFor(p) || TSZ.keyFor(p) || sf) ? `<details class="pdp-acc po-acc" id="size-chart-g"><summary class="pdp-acc-h"><span>${p.kit ? 'Size charts' : 'Size chart'}</span><i aria-hidden="true">+</i></summary>${sf ? sf + SFD.SCRIPT : ''}${SZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>Size chart</h2>${/* 30 Oct 2026 (r89): the Founding Edition to Sahel size note sits with the chart */''}${/polo/i.test(p.kind || '') ? '' : foundingMatch(SZ.keyFor(p))}${SZ.block(SZ.keyFor(p), { polo: /polo/i.test(p.kind || '') })}<p class="po-small" style="margin-top:12px">Every chart, both lines: <a href="/size-guide/#sahel">the size guide &rarr;</a></p></section>` : ''}${TSZ.keyFor(p) ? `<section class="po-size" id="size-chart"><h2>${p.kit ? 'Size charts' : 'Size chart'}</h2>${TSZ.block(TSZ.keyFor(p))}<p class="po-small" style="margin-top:12px">Every chart: <a href="/size-guide/#trail">the size guide &rarr;</a></p></section>` : ''}</details>` : ''}
   ${others.length ? `<section class="po-more"><h2>${p.line === 'sahel' ? 'More from Sahel' : 'More from Sahra Trail'}</h2><div class="po-cards">${others.map(card).join('')}</div></section>` : ''}
   ${/* 14 Nov 2026 (Faheem: "One row + Next piece"): the other new line and the Founding Edition rows moved to the homepage and shop */''}${require('./capture.js').link('pdp')}
@@ -751,7 +758,7 @@ function newBlock({ list, heading, lede, kicker, fitsLabel, more = '/new/', more
 const newLede = () => inc('st0', `<span class="st0">On pre-order from Wed 28 Oct at 8 AM, UAE time.</span>`)
   + inc('st1', `<span class="st1">Pre-order is open: 20% off these new pieces until Thu 29 Oct, 23:59. Ships from Fri 30 Oct.</span>`)
   + `<span class="st2">${IN_HAND ? '' : 'Pre-orders ship from Fri 30 Oct.'}</span>`
-  + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. Sahra Trail has <a href="/size-guide/#trail">its own chart</a> too. No chart yet for the Sahel Polo: <a href="https://wa.me/971585449946" target="_blank" rel="noopener">message us</a> about your size before you order.';
+  + ' Sahel has <a href="/size-guide/#sahel">its own size chart</a>, cut larger than the Founding Edition. Sahra Trail has <a href="/size-guide/#trail">its own chart</a> too. The Sahel Polo takes the same sizes as the Sahel Relaxed tee.';   /* 27 Nov 2026 (audit): was "No chart yet for the Sahel Polo", stale since 18 Nov */
 
 /* 10 Nov 2026 (landing-page audit): the Sahra Trail blocks carried the Sahel lede ("Sahel has its own size chart..."), which
    is about another line. Trail gets its own line: the true state of its sizing, and nothing about Sahel. */
@@ -1127,6 +1134,47 @@ function productLd(p, url, img, desc, stage, SITE) {
     { '@type': 'ListItem', position: 3, name: p.plain, item: url }] };
   return [prod, crumbs];
 }
+
+/* 27 Nov 2026 (site audit, Faheem: "Make all updates. Hoodies are 100% cotton. Sahel polo is 100% mercerized cotton ...
+   Made in Pakistan"): 20 of the 27 product pages (Sahel, the hoodies, the Sahel Polo, Sahra Trail, the bag) had no fabric feel,
+   no care and no delivery and returns section; the Founding Edition pages had all three. Every piece now has "Fabric and care"
+   and "Delivery, returns and exchanges", English and Arabic (the mirror). Feel is in words, never a GSM figure (Faheem: GSM
+   "off product pages, keep /fabric/"). Care follows the Founding Edition care list for printed cotton, the same habits for
+   embroidery, and the Sahra Trail neck-label care line (wash cold, inside out; no softener, no bleach; hang dry; do not iron). */
+const CARE_PRINT = ['Machine wash cold, inside out: heat is what fades a print fastest.', 'Wash with similar colours, on a gentle cycle.', 'Hang to dry. Tumble drying is the main cause of shrinkage and cracking.', 'Do not iron directly on the print; iron inside out if you need to.', 'Skip bleach and fabric softener; softener coats the fibres and dulls the finish.'];
+const CARE_STITCH = ['Machine wash cold, inside out.', 'Wash with similar colours, on a gentle cycle.', 'Hang to dry. Tumble drying is the main cause of shrinkage.', 'Iron inside out, never directly on the embroidery.', 'Skip bleach and fabric softener.'];
+const CARE_TRAIL = ['Wash cold, inside out.', 'No fabric softener and no bleach.', 'Hang to dry.', 'Do not iron.'];
+function fabricOf(p) {
+  const k = p.key || p.handle, kind = String(p.kind || '');
+  if (/^sahra-trail-/.test(p.handle)) return { what: TRAIL_MATERIAL[p.handle], feel: p.handle === 'sahra-trail-2-in-1-short' ? 'A light woven outer with stretch over a soft knit liner.' : p.handle === 'sahra-trail-kit' ? 'A light, stretchy knit tee and a woven short with a soft knit liner.' : 'A light, stretchy knit with mesh side panels.', care: CARE_TRAIL };
+  if (p.handle === 'trailhead-bag') return { what: 'Natural canvas, with a drawstring', feel: '', care: ['Spot clean with a damp cloth.'] };
+  if (/hoodie/i.test(kind)) return { what: '100% cotton', feel: 'Cotton fleece, brushed soft on the inside.', care: CARE_STITCH.map(x => x.replace('the embroidery', 'the print or the embroidery')) };
+  if (/polo/i.test(kind)) return { what: '100% mercerised cotton piqué', feel: 'Mercerised for a smooth hand and a soft sheen.', care: CARE_STITCH.concat(['Dry it on a hanger to keep the collar in shape.']) };
+  const stitched = /embroider/i.test(kind) || /^shams-/.test(k);
+  return { what: '100% cotton', feel: 'Heavyweight cotton jersey: soft, substantial and made to keep its shape.', care: stitched ? CARE_STITCH : CARE_PRINT };
+}
+function fabricCareHtml(p) {
+  const f = fabricOf(p);
+  return `<details class="pdp-acc po-acc" id="fabric-care"><summary class="pdp-acc-h"><span>Fabric and care</span><i aria-hidden="true">+</i></summary><section class="po-fc">
+    <p class="po-fc-l"><b>${f.what}.</b>${f.feel ? ' ' + f.feel : ''}${p.md && !/^sahra-trail-|^trailhead-bag$/.test(p.handle) ? ` ${String(p.md).replace(/^[^,]*(cotton|piqué|fleece)[^,]*,?\s*/i, '').replace(/^./, c => c.toUpperCase())}${/[.]$/.test(p.md) ? '' : '.'}` : ''}</p>
+    <p class="po-fc-l">Designed in the UAE. Made in Pakistan.</p>
+    <h3>Care</h3><ul>${f.care.map(c => `<li>${c}</li>`).join('')}</ul>
+    ${/cotton/i.test(f.what) ? '<p class="po-small">More on our cotton in <a href="/fabric/">the fabric guide</a>.</p>' : ''}</section></details>`;
+}
+/* the Founding Edition delivery cards, by market (html[data-market] puts the visitor's own first) */
+const DELIVERY_HTML = `<details class="pdp-acc po-acc" id="delivery-g"><summary class="pdp-acc-h"><span>Delivery, returns and exchanges</span><i aria-hidden="true">+</i></summary><section class="po-dl">
+  <div class="shipcards">
+    <div class="shipcard shipcard-uae"><b><svg class="shipflag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#3F6B3A"/><rect y="13.3" width="30" height="6.7" fill="#000"/><rect width="8" height="20" fill="#FF0000"/></svg> United Arab Emirates</b>
+      <span>Next working day to every emirate, Al Ain included: order by 2 pm. <strong>Free on orders over AED 100</strong>, AED 15 below that</span>
+      <span>Free returns and size or fit exchanges within 14 days</span></div>
+    <div class="shipcard shipcard-gcc"><b>GCC <span class="shipsub">Saudi Arabia · Qatar · Oman · Bahrain · Kuwait</span></b>
+      <span>3–5 working days: AED 50, <strong>free over <span class="sb-thr" data-aed="229">AED 229</span></strong></span>
+      <span>Duties, if any, are payable on arrival</span></div>
+    <div class="shipcard shipcard-intl"><b>Worldwide</b>
+      <span>7–14 working days: AED 80</span>
+      <span>Duties and import taxes are payable on arrival</span></div>
+  </div>
+  <p class="po-small">Order by 2 pm UAE time on a working day for same-day dispatch. Returns within 14 days, unworn with tags: free within the UAE; international customers cover return postage. We issue refunds within 5–7 working days of the return arriving. <a href="/policies.html#shipping">Full policy</a></p></section></details>`;
 
 module.exports = function buildPreorder({ shell, write, SITE }) {
   const stage = stageNow();

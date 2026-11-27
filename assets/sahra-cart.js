@@ -114,7 +114,8 @@
     if (!off && was) return '<span class="sb-lp"><b>' + money(m.price.amount, m.price.currencyCode) + '</b> <s class="sb-lp-was">' + money(was.amount, was.currencyCode) + '</s></span>';
     if (!off) return '<span>' + money(m.price.amount, m.price.currencyCode) + '</span>';
     /* the pre-order 20%: the price paid, named, with no struck-through list price (Faheem, 22 Oct 2026) */
-    if (isPre(l)) return '<span class="sb-lp"><b>' + money(parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1), l.cost.totalAmount.currencyCode) + '</b> <small>' + T('prePrice') + '</small></span>';
+    /* 27 Nov 2026 (site audit): the pre-order ended on 30 Oct; a pair-priced Sahel tee was labelled "pre-order price" */
+    if (isPre(l) && !PRE_IN_HAND) return '<span class="sb-lp"><b>' + money(parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1), l.cost.totalAmount.currencyCode) + '</b> <small>' + T('prePrice') + '</small></span>';
     var unit = parseFloat(l.cost.totalAmount.amount) / (l.quantity || 1);
     /* 25 Oct 2026 (retention audit): the pair price, named like the pre-order price, with no struck-through
        list price (brand rule: no strike-through prices) */
@@ -422,7 +423,7 @@
       total: 'Total', delivery: 'Delivery', returns: 'Returns', tabby: 'Tabby',
       dUae: 'Free, next working day', dUae15: 'AED 15, next working day', dGcc: 'AED 50, free over AED 229', dGccFree: 'Free', dGccX: '3–5 working days, shown at checkout', dIntl: '7–14 working days, shown at checkout',
       away: 'AED {n} away from free delivery', unlocked: 'Free delivery unlocked',
-      rUae: 'Free for 14 days', rX: 'Within 14 days', rX14: '14-day returns', dUaeLine: 'Free delivery, next working day \u00b7 free 14-day returns', appliedN: 'Pair price applied to all {n} Founding Edition tees', tabbyRow: '4 payments of {p}, no interest',
+      rUae: 'Free for 14 days', rX: 'Within 14 days', rX14: '14-day returns', dUaeLine: 'Free delivery, next working day \u00b7 free 14-day returns', appliedN: 'Pair price applied: {n} AED 199 tees at AED 179.50 each', tabbyRow: '4 payments of {p}, no interest',
       checkout: 'Checkout', payUae: 'Apple Pay, Google Pay, Shop Pay, card or <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="Tabby" width="41" height="16" decoding="async"> at checkout', payX: 'Apple Pay, Google Pay, Shop Pay or card at checkout',
       gift: 'This is a gift', giftMsg: 'Gift message (optional)', giftPh: 'Happy birthday, from all of us', giftHide: 'Hide prices on the packing slip', giftNote: 'We’ll include your message with the order.',
       added: 'Added to your bag', viewBag: 'View bag', closePeek: 'Close',
@@ -445,7 +446,7 @@
       total: 'المجموع', delivery: 'التوصيل', returns: 'الإرجاع', tabby: 'تابي',
       dUae: 'مجاني، في يوم العمل التالي', dUae15: '15 درهمًا، في يوم العمل التالي', dGcc: '50 درهمًا، ومجاني فوق 229 درهمًا', dGccFree: 'مجاني', dGccX: 'من 3 إلى 5 أيام عمل، تظهر التكلفة عند الدفع', dIntl: 'من 7 إلى 14 يوم عمل، تظهر التكلفة عند الدفع',
       away: 'يبقى {n} درهمًا للتوصيل المجاني', unlocked: 'التوصيل مجاني لهذا الطلب',
-      rUae: 'مجانًا خلال 14 يومًا', rX: 'خلال 14 يومًا', rX14: 'إرجاع خلال 14 يومًا', dUaeLine: 'توصيل مجاني في يوم العمل التالي · إرجاع مجاني خلال 14 يومًا', appliedN: 'طُبّق سعر القطعتين على التيشيرتات {n} من الإصدار التأسيسي', tabbyRow: '4 دفعات بدون فوائد، كل دفعة {p}',
+      rUae: 'مجانًا خلال 14 يومًا', rX: 'خلال 14 يومًا', rX14: 'إرجاع خلال 14 يومًا', dUaeLine: 'توصيل مجاني في يوم العمل التالي · إرجاع مجاني خلال 14 يومًا', appliedN: 'طُبّق سعر القطعتين: {n} تيشيرتات بسعر 199 درهمًا، كلٌّ منها بـ 179.50 درهمًا', tabbyRow: '4 دفعات بدون فوائد، كل دفعة {p}',
       checkout: 'إتمام الشراء', payUae: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay، البطاقة أو <img class="sb-tlogo" src="/assets/tabby-badge.svg" alt="تابي" width="41" height="16" decoding="async">', payX: 'الدفع عند إتمام الشراء: Apple Pay، Google Pay، Shop Pay أو البطاقة',
       gift: 'هذا الطلب هدية', giftMsg: 'رسالة الهدية (اختياري)', giftPh: 'كل عام وأنتم بخير', giftHide: 'إخفاء الأسعار في قسيمة التغليف', giftNote: 'سنرفق رسالتك مع الطلب.',
       added: 'أُضيفت إلى سلّتك', viewBag: 'عرض السلة', closePeek: 'إغلاق',
@@ -819,12 +820,29 @@
       pk.hidden = false; pk.classList.remove('on');
       raf(function () { raf(function () { pk.classList.add('on'); }); });
       warmCheckout();
-      clearTimeout(peekT); peekT = setTimeout(hidePeek, 6000);
+      /* 27 Nov 2026 (site audit, keyboard and screen-reader shopper): the add is announced, and a keyboard shopper's focus
+         moves to Checkout in the peek (it was lost to the page body, with Checkout the 38th Tab stop); the peek stays
+         while focus is inside it */
+      announce(T('added') + ': ' + $('sbPkName').textContent + ', ' + ($('sbPkMeta').textContent || ''));
+      if (KEYED) { peekFrom = document.activeElement; setTimeout(function () { try { $('sbPkGo').focus({ preventScroll: true }); } catch (e) {} }, 60); }
+      clearTimeout(peekT); peekT = setTimeout(function wait() { if (pk.contains(document.activeElement)) { peekT = setTimeout(wait, 2000); return; } hidePeek(); }, 6000);
+    } catch (e) {}
+  }
+  var KEYED = false, liveEl = null, peekFrom = null;
+  document.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Tab') KEYED = true; }, true);
+  document.addEventListener('pointerdown', function () { KEYED = false; }, true);
+  function announce(msg) {
+    try {
+      if (!liveEl) { liveEl = document.createElement('div'); liveEl.setAttribute('role', 'status'); liveEl.setAttribute('aria-live', 'polite'); liveEl.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap'; document.body.appendChild(liveEl); }
+      liveEl.textContent = ''; setTimeout(function () { liveEl.textContent = msg; }, 30);
     } catch (e) {}
   }
   function hidePeek() {
     clearTimeout(peekT);
     var pk = $('sbPeek'); if (!pk || pk.hidden) return;
+    /* r166 review: a keyboard shopper's focus goes back to where the add came from, not to the page body */
+    if (pk.contains(document.activeElement) && peekFrom && document.contains(peekFrom)) { try { peekFrom.focus({ preventScroll: true }); } catch (e) {} }
+    peekFrom = null;
     pk.classList.remove('on');
     setTimeout(function () { if (!pk.classList.contains('on')) pk.hidden = true; }, reducedMotion() ? 0 : 320);
   }
@@ -1015,12 +1033,25 @@
            Shopify's own automatic discount on the six Founding Edition tees at two or more. */
         var have = realLines.filter(isTee)[0], hm = have && have.merchandise, hh = hm && hm.product && hm.product.handle || '';
         var fit = /oversized/.test(hh) ? 'oversized' : 'regular', size = hm && hm.title || '';
-        var pick = TEES.filter(function (t) { return t.h !== hh && t.fit === fit && t.name !== (TEES.filter(function (x) { return x.h === hh; })[0] || {}).name; })[0] || TEES.filter(function (t) { return t.h !== hh; })[0];
-        if (pick && cur === 'AED') {
-          el.className = 'sb-bundle sb-second';
-          show('<img src="' + pick.img + '" alt="" width="40" height="50" loading="lazy"><span class="sb-second-t"><b>' + T('second') + '</b><br>' + T('secondIn', { n: esc(nameOf(pick.h, pick.name, true)), s: '<span dir="ltr">' + esc(size) + '</span>', f: T(fit) }) + '</span>' +
-            '<button type="button" class="sb-second-add" data-handle="' + pick.h + '" data-size="' + esc(size) + '">' + T('addBtn') + '</button>');
-        } else { el.className = 'sb-bundle'; show(T('secondX') + ' <a href="/t-shirts/">' + T('shopTees') + ' ' + ARR + '</a>'); }
+        /* 27 Nov 2026 (site audit: the suggestion was a sold-out tee that only said so after the tap): the candidates in order
+           (same fit and another design first), and the first one with this size in stock is offered; none, the plain link */
+        var myName = (TEES.filter(function (x) { return x.h === hh; })[0] || {}).name;
+        var cands = TEES.filter(function (t) { return t.h !== hh && t.fit === fit && t.name !== myName; }).concat(TEES.filter(function (t) { return t.h !== hh && (t.fit !== fit || t.name === myName); }));
+        var plain = function () { el.className = 'sb-bundle'; show(T('secondX') + ' <a href="/t-shirts/">' + T('shopTees') + ' ' + ARR + '</a>'); };
+        if (!cands.length || cur !== 'AED') { plain(); return; }
+        hide();
+        var tok = (el.__tok = (el.__tok || 0) + 1);
+        (function next(i) {
+          if (tok !== el.__tok) return;
+          var pick = cands[i]; if (!pick) { plain(); return; }
+          stockOf(pick.h, size).then(function (ok) {
+            if (tok !== el.__tok) return;
+            if (!ok) return next(i + 1);
+            el.className = 'sb-bundle sb-second';
+            show('<img src="' + pick.img + '" alt="" width="40" height="50" loading="lazy"><span class="sb-second-t"><b>' + T('second') + '</b><br>' + T('secondIn', { n: esc(nameOf(pick.h, pick.name, true)), s: '<span dir="ltr">' + esc(size) + '</span>', f: T(fit) }) + '</span>' +
+              '<button type="button" class="sb-second-add" data-handle="' + pick.h + '" data-size="' + esc(size) + '">' + T('addBtn') + '</button>');
+          }, function () { next(i + 1); });
+        })(0);
         return;
       }
       /* 27 Oct 2026 (Faheem: "Cross-sell between lines"): a Sahra Trail bag without the Trailhead Bag is offered
@@ -1352,6 +1383,12 @@
       });
   }
 
+  /* is this size of this product in stock? (one Storefront query per product, kept for the visit) */
+  var STOCK_Q = {};
+  function stockOf(handle, size) {
+    if (!STOCK_Q[handle]) STOCK_Q[handle] = variants(handle).then(function (vs) { return vs; }, function () { return null; });
+    return STOCK_Q[handle].then(function (vs) { if (!vs) return false; return vs.some(function (v) { return (size ? v.title === size : true) && v.availableForSale; }); });
+  }
   function variants(handle) {
     return sf('query($h:String!){product(handle:$h){id variants(first:20){edges{node{id title availableForSale quantityAvailable}}}}}', { h: handle })
       .then(function (d) {
